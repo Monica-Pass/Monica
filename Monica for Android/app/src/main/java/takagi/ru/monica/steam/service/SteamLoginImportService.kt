@@ -210,6 +210,11 @@ class SteamLoginImportService(
         ) : LoginResult()
     }
 
+    sealed class AuthorizedDeviceRevokeResult {
+        object Success : AuthorizedDeviceRevokeResult()
+        data class Failure(val message: String) : AuthorizedDeviceRevokeResult()
+    }
+
     sealed class QrLoginResult {
         data class ChallengeRequired(
             val pendingSessionId: String,
@@ -259,6 +264,107 @@ class SteamLoginImportService(
         password = password,
         purpose = LoginPurpose.SESSION_ONLY
     )
+
+    suspend fun revokeAuthorizedDevice(
+        userName: String,
+        password: String,
+        sharedSecret: String,
+        tokenId: String
+    ): AuthorizedDeviceRevokeResult = withContext(Dispatchers.IO) {
+        if (userName.isBlank() || password.isBlank() || sharedSecret.isBlank()) {
+            return@withContext AuthorizedDeviceRevokeResult.Failure(
+                "Steam account name, password, and authenticator secret are required"
+            )
+        }
+        val signedTokenId = parseUnsigned64AsSignedLong(tokenId)
+            ?: return@withContext AuthorizedDeviceRevokeResult.Failure(
+                "Steam authorized-device token is invalid"
+            )
+
+        runCatching {
+            val rsaResponse = getWithQuery(
+                URL_RSA_KEY,
+                mapOf("account_name" to userName.trim())
+            ) ?: return@runCatching AuthorizedDeviceRevokeResult.Failure(
+                "Could not obtain Steam password encryption key"
+            )
+            val rsaPayload = rsaResponse.responseObject()
+            val publicKeyMod = rsaPayload?.string("publickey_mod").orEmpty()
+            val publicKeyExp = rsaPayload?.string("publickey_exp").orEmpty()
+            val timeStamp = rsaPayload?.string("timestamp").orEmpty()
+            if (publicKeyMod.isBlank() || publicKeyExp.isBlank() || timeStamp.isBlank()) {
+                return@runCatching AuthorizedDeviceRevokeResult.Failure(
+                    "Steam password encryption response is incomplete"
+                )
+            }
+            val encryptedPassword = encryptPasswordWithRsa(password, publicKeyMod, publicKeyExp)
+                ?: return@runCatching AuthorizedDeviceRevokeResult.Failure(
+                    "Could not encrypt the Steam password"
+                )
+            val begin = beginAuthSessionViaCredentialsWithProtobuf(
+                userName = userName.trim(),
+                encryptedPassword = encryptedPassword,
+                encryptionTimestamp = timeStamp,
+                throwApiErrors = true
+            ) ?: return@runCatching AuthorizedDeviceRevokeResult.Failure(
+                "Steam rejected the device-removal authentication request"
+            )
+            val session = PendingAuthSession(
+                flow = AuthFlow.AUTH_API,
+                purpose = LoginPurpose.SESSION_ONLY,
+                userName = userName.trim(),
+                clientId = begin.clientId,
+                requestId = begin.requestId,
+                steamId = begin.steamId,
+                allowedConfirmations = begin.challenges
+            )
+            val secondsRemaining = SteamTotp.secondsRemaining(System.currentTimeMillis() / 1000L)
+            if (secondsRemaining <= 2) delay((secondsRemaining + 1L) * 1000L)
+            val code = SteamTotp.generateAuthCode(
+                sharedSecret,
+                System.currentTimeMillis() / 1000L
+            )
+            when (
+                val submitted = submitSteamGuardCodeWithProtobuf(
+                    session = session,
+                    code = code,
+                    confirmationType = AUTH_CODE_TYPE_DEVICE
+                )
+            ) {
+                SteamGuardSubmitResult.Accepted -> Unit
+                is SteamGuardSubmitResult.Failure -> {
+                    return@runCatching AuthorizedDeviceRevokeResult.Failure(submitted.message)
+                }
+                SteamGuardSubmitResult.UnsupportedSession -> {
+                    return@runCatching AuthorizedDeviceRevokeResult.Failure(
+                        "Steam device-removal authentication is unsupported"
+                    )
+                }
+            }
+            val tokens = pollForAuthorizedDeviceRevocation(session, signedTokenId)
+                ?: return@runCatching AuthorizedDeviceRevokeResult.Failure(
+                    "Steam device removal timed out"
+                )
+            val cleanupRequest = SteamProtoWriter().apply {
+                writeString(1, tokens.refreshToken)
+                writeVarint(2, 1L)
+            }
+            steamApi.callProtobuf(
+                iface = "IAuthenticationService",
+                method = "RevokeToken",
+                request = cleanupRequest,
+                accessToken = tokens.accessToken
+            )
+            AuthorizedDeviceRevokeResult.Success
+        }.getOrElse { error ->
+            android.util.Log.e(TAG, "revokeAuthorizedDevice failed: ${error.message}", error)
+            AuthorizedDeviceRevokeResult.Failure(
+                mapEresultToMessage((error as? SteamApiException)?.eResult)
+                    ?: error.message
+                    ?: "Steam authorized-device removal failed"
+            )
+        }
+    }
 
     private suspend fun beginLoginInternal(
         userName: String,
@@ -539,10 +645,16 @@ class SteamLoginImportService(
         val refreshToken: String?
     )
 
+    private data class TemporaryAuthTokens(
+        val accessToken: String,
+        val refreshToken: String
+    )
+
     private fun beginAuthSessionViaCredentialsWithProtobuf(
         userName: String,
         encryptedPassword: String,
-        encryptionTimestamp: String
+        encryptionTimestamp: String,
+        throwApiErrors: Boolean = false
     ): BeginAuthSessionData? {
         val timestamp = encryptionTimestamp.toLongOrNull() ?: return null
         val request = SteamProtoWriter().apply {
@@ -573,6 +685,7 @@ class SteamLoginImportService(
                 TAG,
                 "BeginAuthSessionViaCredentials protobuf failed: eResult=${error.eResult}, message=${error.message}"
             )
+            if (throwApiErrors) throw error
             return null
         } catch (error: Exception) {
             android.util.Log.w(
@@ -844,6 +957,43 @@ class SteamLoginImportService(
             return pollForTokenWithProtobuf(authIds, steamId, maxAttempts, pendingResult, purpose)
         }
         return pollForTokenWithForm(clientId, requestId, steamId, maxAttempts, pendingResult, purpose)
+    }
+
+    private suspend fun pollForAuthorizedDeviceRevocation(
+        session: PendingAuthSession,
+        tokenToRevoke: Long
+    ): TemporaryAuthTokens? {
+        val authIds = buildAuthApiSessionIds(
+            session.clientId,
+            session.requestId,
+            session.steamId
+        ) ?: return null
+        var clientId = authIds.clientId
+        repeat(MAX_POLL_ATTEMPTS) { attempt ->
+            val request = SteamProtoWriter().apply {
+                writeUint64(1, clientId)
+                writeBytes(2, authIds.requestId)
+                writeFixed64(3, tokenToRevoke)
+            }
+            val fields = SteamProtoReader(
+                steamApi.callProtobuf(
+                    iface = "IAuthenticationService",
+                    method = "PollAuthSessionStatus",
+                    request = request
+                )
+            ).parse()
+            fields[1]?.asLong?.takeIf { it != 0L }?.let { clientId = it }
+            val refreshToken = fields[3]?.asString
+            val accessToken = fields[4]?.asString
+            if (!accessToken.isNullOrBlank() && !refreshToken.isNullOrBlank()) {
+                return TemporaryAuthTokens(
+                    accessToken = accessToken,
+                    refreshToken = refreshToken
+                )
+            }
+            if (attempt < MAX_POLL_ATTEMPTS - 1) delay(POLL_INTERVAL_MS)
+        }
+        return null
     }
 
     private suspend fun pollForTokenWithProtobuf(

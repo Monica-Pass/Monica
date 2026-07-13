@@ -10,6 +10,25 @@ import takagi.ru.monica.data.BottomNavVisibility
 
 class SteamBoundaryGuardTest {
     @Test
+    fun standardReleaseBuildDisablesTheBrokenLintVitalGate() {
+        val buildScript = projectFile("app/build.gradle").readText()
+
+        assertTrue(buildScript.contains("checkReleaseBuilds false"))
+        assertTrue(buildScript.contains("checkDependencies false"))
+    }
+
+    @Test
+    fun authorizedDeviceRemovalDoesNotRetainTheRejectedSteamCmRuntime() {
+        val rules = projectFile("app/proguard-rules.pro").readText()
+        val buildScript = projectFile("app/build.gradle").readText()
+
+        assertFalse(rules.contains("in.dragonbra.javasteam"))
+        assertFalse(rules.contains("io.ktor.client.engine.cio"))
+        assertFalse(buildScript.contains("in.dragonbra:javasteam"))
+        assertFalse(buildScript.contains("com.google.protobuf:protobuf-java"))
+    }
+
+    @Test
     fun steamDockIsPresentButHiddenByDefault() {
         val oldVisibleOrder = listOf(
             BottomNavContentTab.VAULT_V2,
@@ -203,6 +222,42 @@ class SteamBoundaryGuardTest {
         assertFalse(source.contains("steamId=${'$'}steamId"))
         assertFalse(source.contains("Legacy RSA response invalid: ${'$'}response"))
         assertFalse(source.contains("message=${'$'}{responseMessage ?: \"\"}"))
+    }
+
+    @Test
+    fun steamAuthorizedDeviceRemovalUsesCredentialAuthPollForOneDevice() {
+        val screenSource = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+        ).readText()
+        val viewModelSource = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt"
+        ).readText()
+        val loginServiceSource = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/service/SteamLoginImportService.kt"
+        ).readText()
+
+        assertTrue(screenSource.contains("steam_authorized_device_revoke_password_warning"))
+        assertTrue(screenSource.contains("onRevokeAuthorizedDevice: (SteamAuthorizedDevice, String, String) -> Unit"))
+        assertTrue(screenSource.contains("viewModel.revokeAuthorizedDevice("))
+        assertTrue(screenSource.contains("value = revokeUserName"))
+        assertTrue(screenSource.contains("onRevokeDevice(device, revokeUserName.trim(), revokePassword)"))
+        assertTrue(screenSource.contains("showRevokePasswordPicker"))
+        assertTrue(screenSource.contains("PasswordEntryPickerBottomSheet("))
+        assertTrue(screenSource.contains("R.string.steam_current_device"))
+        assertTrue(viewModelSource.contains("fun revokeAuthorizedDevice("))
+        assertTrue(viewModelSource.contains("loginImportService.revokeAuthorizedDevice("))
+        assertTrue(viewModelSource.contains("transport=auth_poll"))
+        assertTrue(loginServiceSource.contains("writeFixed64(3, tokenToRevoke)"))
+        assertTrue(loginServiceSource.contains("method = \"PollAuthSessionStatus\""))
+        assertTrue(loginServiceSource.contains("method = \"RevokeToken\""))
+        assertTrue(loginServiceSource.contains("throwApiErrors = true"))
+        assertFalse(loginServiceSource.contains("method = \"RevokeRefreshToken\""))
+
+        val revokeBlock = viewModelSource
+            .substringAfter("fun revokeAuthorizedDevice(")
+            .substringBefore("fun respondPendingLogin(")
+        assertFalse(revokeBlock.contains("getOrDefault(false)"))
+        assertFalse(revokeBlock.contains("steam_login_response_failed"))
     }
 
     @Test
@@ -478,7 +533,7 @@ class SteamBoundaryGuardTest {
         assertTrue(detailContent.contains("SteamMissingSteamIdPromptCard("))
         assertTrue(detailContent.contains("hasIdentitySecret = !account.identitySecret.isNullOrBlank()"))
         assertTrue(detailContent.contains("SteamAuthorizedDevicesSection("))
-        assertTrue(detailContent.contains("onRevokeAuthorizedDevice: (SteamAuthorizedDevice) -> Unit"))
+        assertTrue(detailContent.contains("onRevokeAuthorizedDevice: (SteamAuthorizedDevice, String, String) -> Unit"))
         assertTrue(source.contains("uiState.authorizedDevices"))
         assertTrue(source.contains("editRemarkAccount"))
         assertTrue(source.contains("viewModel.updateDisplayName(account.id, remark)"))
@@ -491,15 +546,22 @@ class SteamBoundaryGuardTest {
         assertTrue(source.contains("ClipboardUtils.copyToClipboard("))
         assertTrue(source.contains("sensitive = true"))
         assertTrue(source.contains("R.string.steam_revocation_code_copied"))
+        assertTrue(source.contains("steam_credential_bindings"))
+        assertTrue(source.contains("steam_revoke_credential_set"))
+        assertTrue(source.contains("credentialPreferences.edit().putLong(credentialPreferenceKey, entry.id)"))
+        assertTrue(source.contains("useBoundCredential = boundUserName.isNotBlank() && boundPassword.isNotBlank()"))
+        assertTrue(source.contains("R.string.steam_revoke_credential_auto_verify"))
         assertTrue(source.contains("R.string.steam_remark_optional_label"))
         assertTrue(source.contains("remarkNameOrEmpty()"))
         assertTrue(source.contains("steamIdCompletionAccountId"))
-        assertTrue(source.contains("viewModel.beginSteamIdCompletionLogin(account.id, userName, password)"))
+        assertTrue(source.contains("viewModel.beginSteamIdCompletionLogin(account.id, userName, password, credentialEntryId)"))
+        assertTrue(source.contains("boundCredentialPassword"))
+        assertTrue(source.contains("copiedMessageRes = R.string.steam_login_password_copied"))
         assertTrue(source.contains("titleRes = R.string.steam_steamid_completion_login_title"))
         assertTrue(source.contains("showRemarkField = false"))
         assertTrue(source.contains("if (scanQr != null && account != null && account.hasRealSteamId)"))
         assertTrue(source.contains("viewModel.refreshAuthorizedDevices(animatedDetailAccount.id)"))
-        assertTrue(source.contains("viewModel.revokeAuthorizedDevice(animatedDetailAccount.id, device)"))
+        assertTrue(source.contains("viewModel.revokeAuthorizedDevice("))
 
         val missingSteamIdPromptContent = source
             .substringAfter("private fun SteamMissingSteamIdPromptCard(")
@@ -518,13 +580,17 @@ class SteamBoundaryGuardTest {
         assertTrue(authorizedDevicesContent.contains("onRefresh"))
         assertTrue(authorizedDevicesContent.contains("pendingRevokeDevice"))
         assertTrue(authorizedDevicesContent.contains("AlertDialog("))
-        assertTrue(authorizedDevicesContent.contains("onRevokeDevice(device)"))
+        assertTrue(authorizedDevicesContent.contains("onRevokeDevice(device, revokeUserName.trim(), revokePassword)"))
+        assertTrue(authorizedDevicesContent.contains("PasswordVisualTransformation()"))
+        assertTrue(authorizedDevicesContent.contains("passwordEntriesForPicker"))
+        assertTrue(authorizedDevicesContent.contains("pickerSecurityManager.decryptData(entry.username)"))
+        assertTrue(authorizedDevicesContent.contains("pickerSecurityManager.decryptData(entry.password)"))
 
         val authorizedDeviceRowContent = source
             .substringAfter("private fun SteamAuthorizedDeviceRow(")
             .substringBefore("@Composable\nprivate fun AuthorizedDeviceDetails(")
-        assertTrue(authorizedDeviceRowContent.contains("onRequestRevoke: () -> Unit"))
-        assertTrue(authorizedDeviceRowContent.contains("TextButton(onClick = onRequestRevoke)"))
+        assertTrue(authorizedDeviceRowContent.contains("onRequestRevoke"))
+        assertTrue(authorizedDeviceRowContent.contains("!device.isCurrent"))
 
         val confirmationsContent = source
             .substringAfter("private fun SteamConfirmationsContent(")
@@ -850,12 +916,14 @@ class SteamBoundaryGuardTest {
             .substringAfter("steamAccountRebindAccount?.let { account ->")
             .substringBefore("uiState.pendingMaFileSteamIdRequest")
         assertTrue(rebindDialog.contains("SteamLoginImportDialog("))
-        assertTrue(rebindDialog.contains("viewModel.beginSteamAccountRebindLogin(account.id, userName, password)"))
+        assertTrue(rebindDialog.contains("viewModel.beginSteamAccountRebindLogin(account.id, userName, password, credentialEntryId)"))
         assertTrue(rebindDialog.contains("R.string.steam_account_rebind_login_title"))
         assertTrue(rebindDialog.contains("R.string.steam_account_rebind_login_message"))
         assertTrue(rebindDialog.contains("showRemarkField = false"))
 
-        assertTrue(viewModelSource.contains("fun beginSteamAccountRebindLogin(accountId: Long, userName: String, password: String)"))
+        assertTrue(viewModelSource.contains("fun beginSteamAccountRebindLogin("))
+        assertTrue(viewModelSource.contains("pendingLoginCredentialEntryId = credentialEntryId"))
+        assertTrue(viewModelSource.contains("putLong(\"steam_${'$'}{result.steamId}_password_entry_id\", entryId)"))
         assertTrue(viewModelSource.contains("pendingLoginRebindAccount = true"))
         assertTrue(viewModelSource.contains("loginImportService.beginSessionLogin(userName, password)"))
         assertTrue(viewModelSource.contains("val isRebind = pendingLoginRebindAccount"))
@@ -1034,10 +1102,12 @@ class SteamBoundaryGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/network/SteamAuthorizedDeviceService.kt"
         ).readText()
         assertTrue(authorizedDeviceServiceSource.contains("method = \"EnumerateTokens\""))
-        assertTrue(authorizedDeviceServiceSource.contains("method = \"RevokeRefreshToken\""))
         assertTrue(authorizedDeviceServiceSource.contains("writeBool(1, false)"))
-        assertTrue(authorizedDeviceServiceSource.contains("writeFixed64(1, tokenId)"))
-        assertTrue(authorizedDeviceServiceSource.contains("SteamLoginApprovalSigner.tokenSignature"))
+        assertFalse(authorizedDeviceServiceSource.contains("fun deauthorizeAll("))
+        assertFalse(authorizedDeviceServiceSource.contains("twofactor/manage_action"))
+        assertFalse(authorizedDeviceServiceSource.contains("method = \"RevokeRefreshToken\""))
+        assertFalse(authorizedDeviceServiceSource.contains("SteamLoginApprovalSigner.tokenSignature"))
+        assertFalse(authorizedDeviceServiceSource.contains("SteamCmRefreshTokenRevoker"))
         assertTrue(authorizedDeviceServiceSource.contains("fields[9]?.bytes?.let(::parseUsage)"))
         assertTrue(authorizedDeviceServiceSource.contains("fields[10]?.bytes?.let(::parseUsage)"))
 

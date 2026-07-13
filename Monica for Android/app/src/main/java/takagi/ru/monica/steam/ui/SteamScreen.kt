@@ -584,8 +584,8 @@ fun SteamScreen(
                 viewModel.cancelSteamLoginChallenge()
                 steamIdCompletionAccountId = null
             },
-            onBeginLogin = { userName, password, _ ->
-                viewModel.beginSteamIdCompletionLogin(account.id, userName, password)
+            onBeginLogin = { userName, password, _, credentialEntryId ->
+                viewModel.beginSteamIdCompletionLogin(account.id, userName, password, credentialEntryId)
             },
             onSubmitLoginCode = viewModel::submitSteamLoginCode,
             titleRes = R.string.steam_steamid_completion_login_title,
@@ -602,8 +602,8 @@ fun SteamScreen(
                 viewModel.cancelSteamLoginChallenge()
                 steamAccountRebindAccountId = null
             },
-            onBeginLogin = { userName, password, _ ->
-                viewModel.beginSteamAccountRebindLogin(account.id, userName, password)
+            onBeginLogin = { userName, password, _, credentialEntryId ->
+                viewModel.beginSteamAccountRebindLogin(account.id, userName, password, credentialEntryId)
             },
             onSubmitLoginCode = viewModel::submitSteamLoginCode,
             titleRes = R.string.steam_account_rebind_login_title,
@@ -1060,8 +1060,13 @@ fun SteamScreen(
                             onCompleteSteamIdLogin = { steamIdCompletionAccountId = animatedDetailAccount.id },
                             onRefreshLogins = { viewModel.refreshPendingLogins() },
                             onRefreshAuthorizedDevices = { viewModel.refreshAuthorizedDevices(animatedDetailAccount.id) },
-                            onRevokeAuthorizedDevice = { device ->
-                                viewModel.revokeAuthorizedDevice(animatedDetailAccount.id, device)
+                            onRevokeAuthorizedDevice = { device, userName, password ->
+                                viewModel.revokeAuthorizedDevice(
+                                    animatedDetailAccount.id,
+                                    device,
+                                    userName,
+                                    password
+                                )
                             },
                             onRespondPending = viewModel::respondPendingLogin,
                             onRespondQr = viewModel::respondQr
@@ -1138,6 +1143,7 @@ fun SteamScreen(
             }
         }
     }
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -1675,7 +1681,7 @@ private fun SteamAccountDetailContent(
     onCompleteSteamIdLogin: () -> Unit,
     onRefreshLogins: () -> Unit,
     onRefreshAuthorizedDevices: () -> Unit,
-    onRevokeAuthorizedDevice: (SteamAuthorizedDevice) -> Unit,
+    onRevokeAuthorizedDevice: (SteamAuthorizedDevice, String, String) -> Unit,
     onRespondPending: (SteamPendingLogin, Boolean) -> Unit,
     onRespondQr: (String, Boolean) -> Unit
 ) {
@@ -1801,6 +1807,38 @@ private fun SteamAccountCredentialCard(
     onEditRemark: () -> Unit
 ) {
     var revocationCodeVisible by rememberSaveable(account.id) { mutableStateOf(false) }
+    val pickerSecurityManager = remember(context) { SecurityManager(context) }
+    val passwordDatabase = remember(context) { PasswordDatabase.getDatabase(context) }
+    val passwordEntries by passwordDatabase.passwordEntryDao()
+        .getAllPasswordEntries()
+        .collectAsState(initial = emptyList())
+    val credentialPreferences = remember(context) {
+        context.getSharedPreferences("steam_credential_bindings", Context.MODE_PRIVATE)
+    }
+    val credentialPreferenceKey = remember(account.steamId) {
+        "steam_${account.steamId}_password_entry_id"
+    }
+    var credentialEntryId by rememberSaveable(account.steamId) {
+        mutableStateOf(
+            credentialPreferences.getLong(credentialPreferenceKey, -1L)
+                .takeIf { it > 0L }
+        )
+    }
+    val boundCredentialEntry = passwordEntries.firstOrNull {
+        it.id == credentialEntryId && !it.isDeleted && !it.isArchived
+    }
+    val boundCredentialUserName = boundCredentialEntry?.let { entry ->
+        runCatching { pickerSecurityManager.decryptData(entry.username) }
+            .getOrNull()?.trim().takeUnless { it.isNullOrBlank() }
+            ?: entry.username.trim()
+    }.orEmpty()
+    val boundCredentialPassword = boundCredentialEntry?.let { entry ->
+        runCatching { pickerSecurityManager.decryptData(entry.password) }
+            .getOrNull()?.trim().takeUnless { it.isNullOrBlank() }
+            ?: entry.password.trim()
+    }.orEmpty()
+    var boundPasswordVisible by rememberSaveable(account.id) { mutableStateOf(false) }
+    var showCredentialPicker by remember { mutableStateOf(false) }
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -1842,6 +1880,46 @@ private fun SteamAccountCredentialCard(
                 context = context,
                 clipboard = clipboard
             )
+            Text(
+                text = stringResource(R.string.steam_revoke_credential_label),
+                style = MaterialTheme.typography.labelLarge
+            )
+            Text(
+                text = boundCredentialEntry?.title
+                    ?: stringResource(R.string.steam_revoke_credential_not_set),
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            if (boundCredentialEntry != null) {
+                SteamDetailInfoRow(
+                    label = stringResource(R.string.steam_login_account_label),
+                    value = boundCredentialUserName,
+                    context = context,
+                    clipboard = clipboard
+                )
+                SteamSensitiveInfoRow(
+                    label = stringResource(R.string.steam_login_password_label),
+                    value = boundCredentialPassword,
+                    visible = boundPasswordVisible,
+                    onToggleVisibility = { boundPasswordVisible = !boundPasswordVisible },
+                    context = context,
+                    copiedMessageRes = R.string.steam_login_password_copied
+                )
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                OutlinedButton(onClick = { showCredentialPicker = true }) {
+                    Icon(Icons.Default.Key, contentDescription = null)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(stringResource(if (boundCredentialEntry == null) R.string.steam_revoke_credential_set else R.string.steam_revoke_credential_change))
+                }
+                if (boundCredentialEntry != null) {
+                    TextButton(onClick = {
+                        credentialPreferences.edit().remove(credentialPreferenceKey).apply()
+                        credentialEntryId = null
+                    }) {
+                        Text(stringResource(R.string.steam_revoke_credential_clear))
+                    }
+                }
+            }
             SteamSensitiveInfoRow(
                 label = stringResource(R.string.steam_revocation_code_label),
                 value = account.revocationCode.orEmpty(),
@@ -1850,6 +1928,25 @@ private fun SteamAccountCredentialCard(
                 context = context
             )
         }
+    }
+
+    if (showCredentialPicker) {
+        PasswordEntryPickerBottomSheet(
+            visible = true,
+            title = stringResource(R.string.select_password_to_bind),
+            passwords = passwordEntries.filter { !it.isDeleted && !it.isArchived },
+            onDismiss = { showCredentialPicker = false },
+            onSelect = { entry ->
+                credentialPreferences.edit().putLong(credentialPreferenceKey, entry.id).apply()
+                credentialEntryId = entry.id
+                showCredentialPicker = false
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.steam_revoke_credential_bound),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        )
     }
 }
 
@@ -1890,7 +1987,8 @@ private fun SteamSensitiveInfoRow(
     value: String,
     visible: Boolean,
     onToggleVisibility: () -> Unit,
-    context: Context
+    context: Context,
+    @StringRes copiedMessageRes: Int = R.string.steam_revocation_code_copied
 ) {
     val hasValue = value.isNotBlank()
     Row(
@@ -1931,7 +2029,7 @@ private fun SteamSensitiveInfoRow(
                     )
                     Toast.makeText(
                         context,
-                        context.getString(R.string.steam_revocation_code_copied),
+                        context.getString(copiedMessageRes),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -2627,36 +2725,124 @@ private fun SteamAuthorizedDevicesSection(
     account: SteamAccount,
     devices: List<SteamAuthorizedDevice>,
     onRefresh: () -> Unit,
-    onRevokeDevice: (SteamAuthorizedDevice) -> Unit
+    onRevokeDevice: (SteamAuthorizedDevice, String, String) -> Unit
 ) {
+    val context = LocalContext.current
+    val pickerSecurityManager = remember(context) { SecurityManager(context) }
+    val passwordDatabase = remember(context) { PasswordDatabase.getDatabase(context) }
+    val passwordEntriesForPicker by passwordDatabase.passwordEntryDao()
+        .getAllPasswordEntries()
+        .collectAsState(initial = emptyList())
     var pendingRevokeDevice by remember { mutableStateOf<SteamAuthorizedDevice?>(null) }
+    var revokeUserName by remember(account.id, account.accountName) {
+        mutableStateOf(account.accountName)
+    }
+    var revokePassword by remember { mutableStateOf("") }
+    var showRevokePasswordPicker by remember { mutableStateOf(false) }
+    var useBoundCredential by remember { mutableStateOf(false) }
+    val credentialPreferences = remember(context) {
+        context.getSharedPreferences("steam_credential_bindings", Context.MODE_PRIVATE)
+    }
+    val credentialPreferenceKey = remember(account.steamId) {
+        "steam_${account.steamId}_password_entry_id"
+    }
 
     pendingRevokeDevice?.let { device ->
         AlertDialog(
-            onDismissRequest = { pendingRevokeDevice = null },
+            onDismissRequest = {
+                pendingRevokeDevice = null
+                useBoundCredential = false
+                revokeUserName = account.accountName
+                revokePassword = ""
+            },
             title = { Text(stringResource(R.string.steam_authorized_devices_label)) },
             text = {
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     AuthorizedDeviceDetails(device)
+                    Text(stringResource(R.string.steam_authorized_device_revoke_password_warning))
+                    if (useBoundCredential) {
+                        Text(
+                            stringResource(R.string.steam_revoke_credential_auto_verify),
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    } else {
+                        OutlinedButton(
+                            onClick = { showRevokePasswordPicker = true },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Icon(Icons.Default.Key, contentDescription = null)
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(stringResource(R.string.autofill_select_password))
+                        }
+                        OutlinedTextField(
+                            value = revokeUserName,
+                            onValueChange = { revokeUserName = it },
+                            label = { Text(stringResource(R.string.steam_login_account_label)) },
+                            singleLine = true
+                        )
+                        OutlinedTextField(
+                            value = revokePassword,
+                            onValueChange = { revokePassword = it },
+                            label = { Text(stringResource(R.string.steam_login_password_label)) },
+                            singleLine = true,
+                            visualTransformation = PasswordVisualTransformation()
+                        )
+                    }
                 }
             },
             confirmButton = {
                 TextButton(
+                    enabled = revokeUserName.isNotBlank() && revokePassword.isNotBlank(),
                     onClick = {
-                        onRevokeDevice(device)
+                        onRevokeDevice(device, revokeUserName.trim(), revokePassword)
                         pendingRevokeDevice = null
+                        useBoundCredential = false
+                        revokeUserName = account.accountName
+                        revokePassword = ""
                     }
                 ) {
                     Text(
-                        text = stringResource(R.string.delete),
+                        text = stringResource(R.string.remove),
                         color = MaterialTheme.colorScheme.error
                     )
                 }
             },
             dismissButton = {
-                TextButton(onClick = { pendingRevokeDevice = null }) {
+                TextButton(
+                    onClick = {
+                        pendingRevokeDevice = null
+                        useBoundCredential = false
+                        revokeUserName = account.accountName
+                        revokePassword = ""
+                    }
+                ) {
                     Text(stringResource(R.string.cancel))
                 }
+            }
+        )
+    }
+
+    if (showRevokePasswordPicker && pendingRevokeDevice != null) {
+        PasswordEntryPickerBottomSheet(
+            visible = true,
+            title = stringResource(R.string.select_password_to_bind),
+            passwords = passwordEntriesForPicker.filter { !it.isDeleted && !it.isArchived },
+            onDismiss = { showRevokePasswordPicker = false },
+            onSelect = { entry ->
+                revokeUserName = runCatching {
+                    pickerSecurityManager.decryptData(entry.username)
+                }.getOrNull()?.trim().takeUnless { it.isNullOrBlank() }
+                    ?: entry.username.trim()
+                revokePassword = runCatching {
+                    pickerSecurityManager.decryptData(entry.password)
+                }.getOrNull()?.trim().takeUnless { it.isNullOrBlank() }
+                    ?: entry.password.trim()
+                showRevokePasswordPicker = false
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.steam_login_fill_from_password_applied),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         )
     }
@@ -2703,7 +2889,27 @@ private fun SteamAuthorizedDevicesSection(
                 devices.forEach { device ->
                     SteamAuthorizedDeviceRow(
                         device = device,
-                        onRequestRevoke = { pendingRevokeDevice = device }
+                        onRequestRevoke = {
+                            val boundEntryId = credentialPreferences
+                                .getLong(credentialPreferenceKey, -1L)
+                            val boundEntry = passwordEntriesForPicker.firstOrNull {
+                                it.id == boundEntryId && !it.isDeleted && !it.isArchived
+                            }
+                            val boundUserName = boundEntry?.let { entry ->
+                                runCatching { pickerSecurityManager.decryptData(entry.username) }
+                                    .getOrNull()?.trim().takeUnless { it.isNullOrBlank() }
+                                    ?: entry.username.trim()
+                            }.orEmpty()
+                            val boundPassword = boundEntry?.let { entry ->
+                                runCatching { pickerSecurityManager.decryptData(entry.password) }
+                                    .getOrNull()?.trim().takeUnless { it.isNullOrBlank() }
+                                    ?: entry.password.trim()
+                            }.orEmpty()
+                            pendingRevokeDevice = device
+                            useBoundCredential = boundUserName.isNotBlank() && boundPassword.isNotBlank()
+                            revokeUserName = boundUserName.ifBlank { account.accountName }
+                            revokePassword = boundPassword
+                        }
                     )
                 }
             }
@@ -2737,14 +2943,16 @@ private fun SteamAuthorizedDeviceRow(
                 )
                 Text(
                     text = stringResource(
-                        if (device.loggedIn) {
+                        if (device.isCurrent) {
+                            R.string.steam_current_device
+                        } else if (device.loggedIn) {
                             R.string.steam_device_logged_in
                         } else {
                             R.string.steam_device_logged_out
                         }
                     ),
                     style = MaterialTheme.typography.labelMedium,
-                    color = if (device.loggedIn) {
+                    color = if (device.isCurrent || device.loggedIn) {
                         MaterialTheme.colorScheme.primary
                     } else {
                         MaterialTheme.colorScheme.onSurfaceVariant
@@ -2752,19 +2960,22 @@ private fun SteamAuthorizedDeviceRow(
                 )
             }
             AuthorizedDeviceDetails(device)
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
-                TextButton(onClick = onRequestRevoke) {
-                    Text(
-                        text = stringResource(R.string.remove),
-                        color = MaterialTheme.colorScheme.error
-                    )
+            if (!device.isCurrent) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(onClick = onRequestRevoke) {
+                        Text(
+                            text = stringResource(R.string.remove),
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
                 }
             }
         }
     }
+
 }
 
 @Composable
@@ -4236,7 +4447,7 @@ private fun SteamLoginImportDialog(
     pendingChallenge: SteamLoginChallengeUi?,
     availableCodeAccounts: List<SteamAccount>,
     onDismissRequest: () -> Unit,
-    onBeginLogin: (String, String, String) -> Unit,
+    onBeginLogin: (String, String, String, Long?) -> Unit,
     onSubmitLoginCode: (String) -> Unit,
     @StringRes titleRes: Int = R.string.steam_login_title,
     @StringRes descriptionRes: Int? = null,
@@ -4254,6 +4465,7 @@ private fun SteamLoginImportDialog(
     var loginName by remember { mutableStateOf("") }
     var loginPassword by remember { mutableStateOf("") }
     var loginDisplayName by remember { mutableStateOf("") }
+    var selectedPasswordEntryId by remember { mutableStateOf<Long?>(null) }
     var challengeCode by remember { mutableStateOf("") }
     var showSteamPasswordPicker by remember { mutableStateOf(false) }
     var showMonicaCodePicker by remember { mutableStateOf(false) }
@@ -4383,7 +4595,7 @@ private fun SteamLoginImportDialog(
                         if (waitingForCode) {
                             onSubmitLoginCode(challengeCode)
                         } else {
-                            onBeginLogin(loginName, loginPassword, loginDisplayName)
+                            onBeginLogin(loginName, loginPassword, loginDisplayName, selectedPasswordEntryId)
                         }
                     },
                     enabled = if (waitingForCode) {
@@ -4445,6 +4657,7 @@ private fun SteamLoginImportDialog(
 
                 loginName = resolvedUsername
                 loginPassword = resolvedPassword
+                selectedPasswordEntryId = entry.id
                 showSteamPasswordPicker = false
                 Toast.makeText(
                     context,

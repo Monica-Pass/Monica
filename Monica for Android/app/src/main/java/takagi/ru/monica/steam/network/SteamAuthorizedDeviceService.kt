@@ -1,7 +1,5 @@
 package takagi.ru.monica.steam.network
 
-import java.math.BigInteger
-import takagi.ru.monica.steam.core.SteamLoginApprovalSigner
 import takagi.ru.monica.steam.data.SteamAccount
 
 data class SteamAuthorizedDevice(
@@ -10,7 +8,8 @@ data class SteamAuthorizedDevice(
     val platformType: Int,
     val loggedIn: Boolean,
     val firstSeen: SteamAuthorizedDeviceUsage?,
-    val lastSeen: SteamAuthorizedDeviceUsage?
+    val lastSeen: SteamAuthorizedDeviceUsage?,
+    val isCurrent: Boolean = false
 )
 
 data class SteamAuthorizedDeviceUsage(
@@ -41,36 +40,21 @@ class SteamAuthorizedDeviceService(
             )
         ).parseAll()
 
+        val requestingToken = fields
+            .firstOrNull { it.number == 2 }
+            ?.asFixed64UnsignedString
+            .orEmpty()
+
         return fields
             .filter { it.number == 1 && it.bytes != null }
             .mapNotNull { field ->
                 field.bytes?.let(::parseDevice)
             }
-    }
-
-    fun revoke(account: SteamAccount, device: SteamAuthorizedDevice): Boolean {
-        val token = account.accessToken ?: return false
-        val tokenId = parseUnsigned64AsSignedLong(device.tokenId) ?: return false
-        val steamId = account.steamId.toLongOrNull() ?: return false
-        val request = SteamProtoWriter().apply {
-            writeFixed64(1, tokenId)
-            writeFixed64(2, steamId)
-            writeVarint(3, 1L)
-            writeBytes(
-                4,
-                SteamLoginApprovalSigner.tokenSignature(
-                    sharedSecretBase64 = account.sharedSecret,
-                    tokenId = tokenId
+            .map { device ->
+                device.copy(
+                    isCurrent = requestingToken.isNotBlank() && device.tokenId == requestingToken
                 )
-            )
-        }
-        api.callProtobuf(
-            iface = "IAuthenticationService",
-            method = "RevokeRefreshToken",
-            request = request,
-            accessToken = token
-        )
-        return true
+            }
     }
 
     private fun parseDevice(bytes: ByteArray): SteamAuthorizedDevice? {
@@ -98,19 +82,4 @@ class SteamAuthorizedDeviceService(
         )
     }
 
-    private fun parseUnsigned64AsSignedLong(value: String): Long? {
-        val big = runCatching { BigInteger(value.trim()) }.getOrNull() ?: return null
-        if (big < BigInteger.ZERO || big > UNSIGNED_LONG_MAX) return null
-        return if (big > SIGNED_LONG_MAX) {
-            big.subtract(UNSIGNED_LONG_BASE).longValueExact()
-        } else {
-            big.longValueExact()
-        }
-    }
-
-    companion object {
-        private val UNSIGNED_LONG_MAX = BigInteger.ONE.shiftLeft(64).subtract(BigInteger.ONE)
-        private val SIGNED_LONG_MAX = BigInteger.valueOf(Long.MAX_VALUE)
-        private val UNSIGNED_LONG_BASE = BigInteger.ONE.shiftLeft(64)
-    }
 }

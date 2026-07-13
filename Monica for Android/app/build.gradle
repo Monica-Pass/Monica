@@ -276,6 +276,9 @@ source_root=${rootDir.absolutePath}
         // Avoid scanning dependency-provided lint registries; one of them intermittently
         // crashes ASM migration with NegativeArraySizeException in lintVitalAnalyzeRelease.
         checkDependencies false
+        // lintVital still loads dependency registries even when checkDependencies is false.
+        // Disable the broken release gate so Android Studio's normal assembleRelease works.
+        checkReleaseBuilds false
     }
     packaging {
         resources {
