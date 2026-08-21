@@ -1690,6 +1690,23 @@
     <string name="webdav_enter_decrypt_password">Enter Decryption Password</string>
     <string name="webdav_decrypt_password_hint">Password to decrypt backup</string>
     <string name="webdav_decryption_failed">Decryption failed: Wrong password or corrupted file</string>
+
+    <!-- WebDAV HTTPS certificate verification -->
+    <string name="webdav_tls_title">HTTPS Certificate Verification</string>
+    <string name="webdav_tls_description">Controls how the server\'s HTTPS certificate is checked. Only relax this if your server uses a private certificate.</string>
+    <string name="webdav_tls_mode_system_title">System verification (recommended)</string>
+    <string name="webdav_tls_mode_system_desc">Certificate must be issued by a trusted CA and match the hostname.</string>
+    <string name="webdav_tls_mode_self_signed_title">Allow self-signed certificates</string>
+    <string name="webdav_tls_mode_self_signed_desc">Also accepts a self-signed chain. Signature, expiry and hostname are still verified.</string>
+    <string name="webdav_tls_mode_untrusted_title">Allow untrusted certificates</string>
+    <string name="webdav_tls_mode_untrusted_desc">Accepts any certificate and skips hostname checks. No protection against interception.</string>
+    <string name="webdav_tls_current_mode">Current: %s</string>
+    <string name="webdav_tls_changed">Certificate verification updated. Test the connection again.</string>
+    <string name="webdav_tls_relaxed_banner">Certificate verification is relaxed. Backups contain your entire vault.</string>
+    <string name="webdav_tls_confirm_title">Weaken certificate verification?</string>
+    <string name="webdav_tls_confirm_self_signed">Your backups contain the whole vault. A self-signed certificate cannot be verified by any authority, so make sure the server is one you control.\n\nSignature, expiry and hostname are still checked.</string>
+    <string name="webdav_tls_confirm_untrusted">This disables TLS identity checks entirely. Anyone able to intercept the connection can impersonate your server and capture the backup, which contains your whole vault.\n\nOnly use this on a network you trust, and switch back afterwards.</string>
+    <string name="webdav_tls_confirm_accept">I understand, continue</string>
     
     <!-- WebDAV Auto Backup -->
     <string name="webdav_auto_backup">Auto Backup</string>

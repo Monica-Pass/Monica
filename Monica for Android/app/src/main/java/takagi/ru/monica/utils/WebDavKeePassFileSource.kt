@@ -2,11 +2,12 @@ package takagi.ru.monica.utils
 
 import android.content.Context
 import com.thegrizzlylabs.sardineandroid.DavResource
-import com.thegrizzlylabs.sardineandroid.impl.OkHttpSardine
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import takagi.ru.monica.data.KeepassRemoteSource
 import takagi.ru.monica.security.SecurityManager
+import takagi.ru.monica.webdav.WebDavCredentials
+import takagi.ru.monica.webdav.WebDavGateway
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -28,11 +29,10 @@ class WebDavKeePassFileSource(
     private val normalizedRemotePath = normalizeOptionalRemotePath(remotePath)
     private val remoteUrl = buildRemoteUrl(normalizedServerUrl, normalizedRemotePath)
     private val sardine by lazy {
-        OkHttpSardine().apply {
-            if (username.isNotBlank() || password.isNotBlank()) {
-                setCredentials(username.trim(), password)
-            }
-        }
+        // 走统一的 Gateway：除了预置式 Basic 鉴权、速率限制与超时，
+        // 这里还需要继承用户选择的 HTTPS 证书校验档位。
+        // 历史实现直接裸构造 sardine 并调用 setCredentials，会绕过全部这些配置。
+        WebDavGateway.buildClient(WebDavCredentials(username.trim(), password))
     }
 
     override suspend fun stat(): FileSourceStat = withContext(Dispatchers.IO) {

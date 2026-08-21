@@ -41,6 +41,7 @@ import takagi.ru.monica.utils.BackupRestoreApplier
 import takagi.ru.monica.utils.RestoreResult
 import takagi.ru.monica.utils.WebDavHelper
 import takagi.ru.monica.utils.AutoBackupManager
+import takagi.ru.monica.webdav.WebDavTlsMode
 import takagi.ru.monica.utils.CustomFieldBackupEntry
 import takagi.ru.monica.data.PasswordEntry
 import takagi.ru.monica.data.CustomField
@@ -200,6 +201,11 @@ fun WebDavBackupScreen(
     var encryptionEnabled by remember { mutableStateOf(false) }
     var encryptionPassword by remember { mutableStateOf("") }
     var encryptionPasswordVisible by remember { mutableStateOf(false) }
+
+    // HTTPS 证书校验档位
+    var tlsMode by remember { mutableStateOf(WebDavTlsMode.DEFAULT) }
+    // 待用户二次确认的放宽档位；null 表示无待确认项
+    var pendingTlsMode by remember { mutableStateOf<WebDavTlsMode?>(null) }
     
     // 选择性备份状态
     var backupPreferences by remember { mutableStateOf(takagi.ru.monica.data.BackupPreferences()) }
@@ -243,6 +249,9 @@ fun WebDavBackupScreen(
         val encryptionConfig = webDavHelper.getEncryptionConfig()
         encryptionEnabled = encryptionConfig.enabled
         encryptionPassword = encryptionConfig.password
+
+        // 加载 HTTPS 证书校验档位
+        tlsMode = webDavHelper.getTlsMode()
         
         // 加载备份偏好设置
         backupPreferences = webDavHelper.getBackupPreferences()
@@ -602,6 +611,28 @@ fun WebDavBackupScreen(
                 }
             }
             }
+
+            // HTTPS 证书校验设置卡片
+            // 未配置时紧跟在「测试连接」下方，便于握手失败的用户就地放宽档位；
+            // 已配置时作为连接级设置继续可见。
+            WebDavTlsModeCard(
+                selectedMode = tlsMode,
+                onModeSelected = { mode ->
+                    if (mode == tlsMode) return@WebDavTlsModeCard
+                    if (mode.isRelaxed) {
+                        // 放宽档位一律需要二次确认
+                        pendingTlsMode = mode
+                    } else {
+                        tlsMode = mode
+                        webDavHelper.setTlsMode(mode)
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.webdav_tls_changed),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            )
             
             // 自动备份设置卡片 (仅在配置成功后显示)
             if (isConfigured) {
@@ -1075,6 +1106,24 @@ fun WebDavBackupScreen(
                 Toast.makeText(
                     context,
                     context.getString(R.string.webdav_fill_from_password_applied),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        )
+    }
+
+    // 放宽证书校验前的二次确认
+    pendingTlsMode?.let { candidate ->
+        WebDavTlsRelaxConfirmDialog(
+            mode = candidate,
+            onDismiss = { pendingTlsMode = null },
+            onConfirm = {
+                pendingTlsMode = null
+                tlsMode = candidate
+                webDavHelper.setTlsMode(candidate)
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.webdav_tls_changed),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -2003,6 +2052,178 @@ private suspend fun loadBackups(
         },
         onFailure = { e ->
             onResult(emptyList(), e.message)
+        }
+    )
+}
+
+/** 档位标题的字符串资源。 */
+@Composable
+private fun tlsModeTitle(mode: WebDavTlsMode): String = stringResource(
+    when (mode) {
+        WebDavTlsMode.SYSTEM_DEFAULT -> R.string.webdav_tls_mode_system_title
+        WebDavTlsMode.ALLOW_SELF_SIGNED -> R.string.webdav_tls_mode_self_signed_title
+        WebDavTlsMode.ALLOW_UNTRUSTED -> R.string.webdav_tls_mode_untrusted_title
+    }
+)
+
+/** 档位说明的字符串资源。 */
+@Composable
+private fun tlsModeDescription(mode: WebDavTlsMode): String = stringResource(
+    when (mode) {
+        WebDavTlsMode.SYSTEM_DEFAULT -> R.string.webdav_tls_mode_system_desc
+        WebDavTlsMode.ALLOW_SELF_SIGNED -> R.string.webdav_tls_mode_self_signed_desc
+        WebDavTlsMode.ALLOW_UNTRUSTED -> R.string.webdav_tls_mode_untrusted_desc
+    }
+)
+
+/** 档位图标；风险递增对应盾牌图标的三种状态。 */
+private fun tlsModeIcon(mode: WebDavTlsMode): ImageVector = when (mode) {
+    WebDavTlsMode.SYSTEM_DEFAULT -> Icons.Default.VerifiedUser
+    WebDavTlsMode.ALLOW_SELF_SIGNED -> Icons.Default.GppMaybe
+    WebDavTlsMode.ALLOW_UNTRUSTED -> Icons.Default.GppBad
+}
+
+/**
+ * HTTPS 证书校验档位选择卡片。
+ *
+ * 复用本页 [RestoreModeOptionCard] 的单选卡片视觉：选中项换用
+ * `secondaryContainer` 背景 + 2dp 强调色描边 + 尾部 RadioButton。
+ * 强调色按风险分级：默认档用 primary，自签名用 tertiary，放行档用 error。
+ */
+@Composable
+private fun WebDavTlsModeCard(
+    selectedMode: WebDavTlsMode,
+    onModeSelected: (WebDavTlsMode) -> Unit,
+) {
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(
+                    text = stringResource(R.string.webdav_tls_title),
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = stringResource(R.string.webdav_tls_description),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                WebDavTlsMode.entries.forEach { mode ->
+                    RestoreModeOptionCard(
+                        title = tlsModeTitle(mode),
+                        description = tlsModeDescription(mode),
+                        icon = tlsModeIcon(mode),
+                        selected = selectedMode == mode,
+                        accentColor = when (mode) {
+                            WebDavTlsMode.SYSTEM_DEFAULT -> MaterialTheme.colorScheme.primary
+                            WebDavTlsMode.ALLOW_SELF_SIGNED -> MaterialTheme.colorScheme.tertiary
+                            WebDavTlsMode.ALLOW_UNTRUSTED -> MaterialTheme.colorScheme.error
+                        },
+                        onClick = { onModeSelected(mode) },
+                    )
+                }
+            }
+
+            // 仅在偏离平台默认时提示风险，避免对绝大多数用户产生噪音。
+            if (selectedMode.isRelaxed) {
+                Surface(
+                    color = MaterialTheme.colorScheme.errorContainer,
+                    shape = MaterialTheme.shapes.large,
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 14.dp, vertical = 12.dp),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Warning,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onErrorContainer,
+                            modifier = Modifier.size(20.dp),
+                        )
+                        Text(
+                            text = stringResource(R.string.webdav_tls_relaxed_banner),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onErrorContainer,
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+/**
+ * 放宽证书校验前的二次确认弹窗。
+ *
+ * 两个放宽档位的风险量级不同，因此文案分开：自签名仍有链校验与主机名校验，
+ * 放行档则完全没有身份认证。确认按钮在放行档上使用 error 色以示警。
+ */
+@Composable
+private fun WebDavTlsRelaxConfirmDialog(
+    mode: WebDavTlsMode,
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit,
+) {
+    val isUntrusted = mode == WebDavTlsMode.ALLOW_UNTRUSTED
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        icon = {
+            Icon(
+                imageVector = tlsModeIcon(mode),
+                contentDescription = null,
+                tint = if (isUntrusted) {
+                    MaterialTheme.colorScheme.error
+                } else {
+                    MaterialTheme.colorScheme.tertiary
+                },
+            )
+        },
+        title = { Text(stringResource(R.string.webdav_tls_confirm_title)) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(
+                    text = tlsModeTitle(mode),
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                Text(
+                    text = stringResource(
+                        if (isUntrusted) {
+                            R.string.webdav_tls_confirm_untrusted
+                        } else {
+                            R.string.webdav_tls_confirm_self_signed
+                        }
+                    ),
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = onConfirm,
+                colors = if (isUntrusted) {
+                    ButtonDefaults.textButtonColors(
+                        contentColor = MaterialTheme.colorScheme.error
+                    )
+                } else {
+                    ButtonDefaults.textButtonColors()
+                }
+            ) {
+                Text(stringResource(R.string.webdav_tls_confirm_accept))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.cancel))
+            }
         }
     )
 }

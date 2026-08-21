@@ -366,6 +366,9 @@ dependencies {
     testImplementation libs.junit
     testImplementation libs.kotlin.coroutines.test
     testImplementation 'com.squareup.okhttp3:mockwebserver:4.12.0'
+    // HeldCertificate lets the WebDAV TLS tests serve a real self-signed chain
+    // instead of asserting on OkHttp internals. Version pinned to match okhttp.
+    testImplementation 'com.squareup.okhttp3:okhttp-tls:4.12.0'
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core
     androidTestImplementation platform(libs.androidx.compose.bom)

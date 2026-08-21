@@ -22,6 +22,7 @@ import takagi.ru.monica.utils.AppLauncherIconManager
 import takagi.ru.monica.security.SessionManager
 import takagi.ru.monica.utils.SettingsManager
 import takagi.ru.monica.webdav.WebDavBackoffState
+import takagi.ru.monica.webdav.WebDavTlsSettings
 import takagi.ru.monica.workers.KeePassRemoteUploadWorker
 
 /**
@@ -56,6 +57,8 @@ class MonicaApplication : Application() {
         MdbxDiagLogger.initialize(this)
         syncLauncherEntryPointsWithSettings()
         WebDavBackoffState.attachPersistence(this)
+        // 必须早于任何 WebDAV 客户端构造，否则后台备份会用默认档位建连。
+        WebDavTlsSettings.attachPersistence(this)
         scheduleKeePassRemoteUploadRecovery()
         scheduleAttachmentHousekeeping()
     }

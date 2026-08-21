@@ -1664,6 +1664,23 @@
     <string name="webdav_enter_decrypt_password">输入解密密码</string>
     <string name="webdav_decrypt_password_hint">用于解密备份的密码</string>
     <string name="webdav_decryption_failed">解密失败: 密码错误或文件已损坏</string>
+
+    <!-- WebDAV HTTPS 证书校验 -->
+    <string name="webdav_tls_title">HTTPS 证书校验</string>
+    <string name="webdav_tls_description">控制如何校验服务器的 HTTPS 证书。仅在服务器使用私有证书时才需要放宽。</string>
+    <string name="webdav_tls_mode_system_title">系统校验（推荐）</string>
+    <string name="webdav_tls_mode_system_desc">证书必须由受信任的 CA 签发，且主机名必须匹配。</string>
+    <string name="webdav_tls_mode_self_signed_title">允许自签名证书</string>
+    <string name="webdav_tls_mode_self_signed_desc">额外接受自签名证书链；签名、有效期与主机名仍会校验。</string>
+    <string name="webdav_tls_mode_untrusted_title">允许不受信证书</string>
+    <string name="webdav_tls_mode_untrusted_desc">接受任意证书且跳过主机名校验，无法防御中间人窃听。</string>
+    <string name="webdav_tls_current_mode">当前：%s</string>
+    <string name="webdav_tls_changed">证书校验方式已更新，请重新测试连接。</string>
+    <string name="webdav_tls_relaxed_banner">证书校验已放宽。备份文件包含你的整个密码库。</string>
+    <string name="webdav_tls_confirm_title">确认放宽证书校验？</string>
+    <string name="webdav_tls_confirm_self_signed">备份文件包含你的整个密码库。自签名证书无法由任何权威机构验证，请确认该服务器由你自己掌控。\n\n签名、有效期与主机名仍会校验。</string>
+    <string name="webdav_tls_confirm_untrusted">这会完全关闭 TLS 身份认证。任何能够劫持该连接的人都可以冒充你的服务器并取走备份，而备份中包含你的整个密码库。\n\n请仅在可信网络下临时使用，用完后及时切回。</string>
+    <string name="webdav_tls_confirm_accept">我已了解，继续</string>
     
     <!-- WebDAV Auto Backup -->
     <string name="webdav_auto_backup">自动备份</string>

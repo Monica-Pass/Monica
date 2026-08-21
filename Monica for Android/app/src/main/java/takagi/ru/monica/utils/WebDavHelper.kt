@@ -1197,6 +1197,8 @@ class WebDavHelper(
         securityManager.removeProtectedString(SECURE_KEY_USERNAME)
         securityManager.removeProtectedString(SECURE_KEY_PASSWORD)
         securityManager.removeProtectedString(SECURE_KEY_ENCRYPTION_PASSWORD)
+        // 连接配置被清空后，放宽过的证书校验档位不应残留给下一台服务器。
+        takagi.ru.monica.webdav.WebDavTlsSettings.reset(context)
         serverUrl = ""
         username = ""
         password = ""
@@ -5418,9 +5420,11 @@ class WebDavHelper(
 
     private fun createSardineClient(): Sardine {
         // 通过统一的 Gateway 构造，确保所有请求都经过预置式 Basic 鉴权、
-        // 速率限制与 User-Agent 拦截器链（与 Kazumi webdav_client 一致）。
+        // 速率限制与 User-Agent 拦截器链（与 Kazumi webdav_client 一致），
+        // 并应用用户选择的 HTTPS 证书校验档位。
         return takagi.ru.monica.webdav.WebDavGateway.buildClient(
-            takagi.ru.monica.webdav.WebDavCredentials(username, password)
+            credentials = takagi.ru.monica.webdav.WebDavCredentials(username, password),
+            tlsMode = takagi.ru.monica.webdav.WebDavTlsSettings.currentMode(context)
         )
     }
 
@@ -5760,6 +5764,26 @@ class WebDavHelper(
         enableEncryption = enabled
         encryptionPassword = password
         saveConfig()
+    }
+
+    /**
+     * 当前的 HTTPS 证书校验档位。
+     */
+    fun getTlsMode(): takagi.ru.monica.webdav.WebDavTlsMode =
+        takagi.ru.monica.webdav.WebDavTlsSettings.currentMode(context)
+
+    /**
+     * 切换 HTTPS 证书校验档位。
+     *
+     * 档位影响 OkHttp 客户端的构造，因此已建立的 sardine 实例必须重建，
+     * 否则新档位只会在下次冷启动后生效。
+     */
+    fun setTlsMode(mode: takagi.ru.monica.webdav.WebDavTlsMode) {
+        takagi.ru.monica.webdav.WebDavTlsSettings.setMode(context, mode)
+        if (serverUrl.isNotEmpty()) {
+            sardine = createSardineClient()
+        }
+        android.util.Log.d("WebDavHelper", "TLS verification mode set to $mode")
     }
 
     private fun migrateLegacyConfigIfNeeded(prefs: android.content.SharedPreferences) {
