@@ -1,0 +1,50 @@
+{
+  "schema": "monica-mdbx3-runtime-provenance-v1",
+  "status": "preview",
+  "source": {
+    "repository": "https://github.com/Monica-Pass/Mdbx",
+    "commit": "d1d3cc4fdff4e33fcb70099b3e7df36eeae43ba4",
+    "tree": "15559f82628560cb4020a2b54aa9aa16651add9e",
+    "build_script_fix": "90005c8c608c952093a4522ffa507a562e2e39a4"
+  },
+  "runtime": {
+    "name": "MDBX3",
+    "version": "3.0.0-alpha.1",
+    "storage_format": "MDBX-2",
+    "writable_storage_format": "MDBX-2",
+    "ffi_namespace": "mdbx_ffi",
+    "native_library": "libmdbx_ffi.so",
+    "compatibility_profile": "mdbx3-mdbx2-drop-in-v1"
+  },
+  "build": {
+    "profile": "mdbx3-release",
+    "target": "android-api-21",
+    "ndk": "28.2.13676358",
+    "rust": "1.86.0",
+    "cargo_ndk": "4.1.2",
+    "strip": "llvm-strip --strip-all --keep-section=.note.gnu.build-id"
+  },
+  "abi": {
+    "required_symbols": 535,
+    "verified_checksums": 237,
+    "uniffi_contract_version": 30,
+    "release_gate": "passed"
+  },
+  "artifacts": {
+    "arm64-v8a": {
+      "bytes": 7387976,
+      "sha256": "6938359102c60d06fdd407e4b56de4f8e8a42df14f4c33503cdb0f5b8f0e1df6",
+      "build_id": "00240243472e6cb3563d2bc3ad2a5bc9dcae24c3"
+    },
+    "armeabi-v7a": {
+      "bytes": 5720752,
+      "sha256": "f637b8ebe74877c31f23a6f8c4b0b96e15548ef6d3d8971fb2ad253b64faa401",
+      "build_id": "e16edbfc9e5bcb6a120908690816c35c48ec8fad"
+    },
+    "x86_64": {
+      "bytes": 8778240,
+      "sha256": "d64df80bc90e76641e68ae2916adade0694b07285b5e69e70b75614794ccaaeb",
+      "build_id": "b5f45b1e7a5e3a35be16b45cd2566c5e8c8997fe"
+    }
+  }
+}

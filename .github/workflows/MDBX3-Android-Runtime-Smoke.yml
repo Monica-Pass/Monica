@@ -15,7 +15,7 @@ permissions:
   contents: read
 
 env:
-  MDBX_COMMIT: 5cf8af697727095654884e0a76bec6ca12d0ce6b
+  MDBX_COMMIT: d1d3cc4fdff4e33fcb70099b3e7df36eeae43ba4
   RUST_VERSION: 1.86.0
   CARGO_NDK_VERSION: 4.1.2
   NDK_VERSION: 28.2.13676358
@@ -86,7 +86,7 @@ jobs:
           test -f "$candidate"
 
           llvm_bin="$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin"
-          "$llvm_bin/llvm-strip" --strip-all "$candidate"
+          "$llvm_bin/llvm-strip" --strip-all --keep-section=.note.gnu.build-id "$candidate"
           python3 scripts/verify-mdbx3-ffi-abi.py verify-exports \
             --baseline crates/mdbx-ffi/abi/mdbx2-uniffi-bindings-v1.json \
             --nm "$llvm_bin/llvm-nm" \
