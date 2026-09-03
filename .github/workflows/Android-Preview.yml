@@ -82,6 +82,13 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Verify bundled MDBX3 runtime provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$GITHUB_WORKSPACE"
+          python3 .github/scripts/verify_mdbx3_bundled_runtime.py
+
       - name: Validate signing secrets
         if: github.event_name != 'pull_request'
         shell: bash
