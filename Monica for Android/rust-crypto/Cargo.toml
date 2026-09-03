@@ -1,0 +1,17 @@
+[package]
+name = "monica-rust-crypto"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.74"
+publish = false
+license = "GPL-3.0-only"
+description = "Security-sensitive cryptographic core for Monica"
+
+[lib]
+path = "src/lib.rs"
+crate-type = ["rlib"]
+
+[dependencies]
+argon2 = { version = "0.5.3", default-features = false, features = ["alloc"] }
+pbkdf2 = { version = "0.12.2", default-features = false, features = ["hmac"] }
+sha2 = { version = "0.10.9", default-features = false }

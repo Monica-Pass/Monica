@@ -1,0 +1,273 @@
+name: MDBX3 Android Runtime Smoke
+
+on:
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - '.github/workflows/MDBX3-Android-Runtime-Smoke.yml'
+      - 'Monica for Android/app/src/androidTest/**'
+      - 'Monica for Android/mdbx-engine/**'
+      - 'Monica for Android/rust-jni/**'
+      - 'Monica for Android/rust-crypto/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  MDBX_COMMIT: 5cf8af697727095654884e0a76bec6ca12d0ce6b
+  RUST_VERSION: 1.86.0
+  CARGO_NDK_VERSION: 4.1.2
+  NDK_VERSION: 28.2.13676358
+
+jobs:
+  runtime-smoke:
+    name: MDBX3 x86_64 runtime compatibility
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout Monica
+        uses: actions/checkout@v4
+        with:
+          path: monica
+
+      - name: Checkout pinned MDBX3 source
+        uses: actions/checkout@v4
+        with:
+          repository: Monica-Pass/Mdbx
+          ref: ${{ env.MDBX_COMMIT }}
+          path: mdbx
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-read-only: true
+
+      - name: Install pinned Rust and Android native toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          rustup toolchain install "$RUST_VERSION" --profile minimal
+          rustup default "$RUST_VERSION"
+          rustup target add x86_64-linux-android
+
+          ndk_path="$ANDROID_SDK_ROOT/ndk/$NDK_VERSION"
+          if [ ! -d "$ndk_path" ]; then
+            sdkmanager_path="$(find "$ANDROID_SDK_ROOT/cmdline-tools" -type f -name sdkmanager -print -quit)"
+            if [ -z "$sdkmanager_path" ]; then
+              echo "sdkmanager not found under $ANDROID_SDK_ROOT/cmdline-tools" >&2
+              exit 1
+            fi
+            yes | "$sdkmanager_path" "ndk;$NDK_VERSION" >/dev/null
+          fi
+          test -d "$ndk_path"
+          echo "ANDROID_NDK_HOME=$ndk_path" >> "$GITHUB_ENV"
+          cargo install cargo-ndk --version "$CARGO_NDK_VERSION" --locked
+
+      - name: Build MDBX3 x86_64 candidate
+        working-directory: mdbx
+        shell: bash
+        run: |
+          set -euo pipefail
+          cargo ndk \
+            -t x86_64 \
+            -P 21 \
+            -o "$GITHUB_WORKSPACE/mdbx3-jniLibs" \
+            build -p mdbx-ffi --profile mdbx3-release
+
+          candidate="$GITHUB_WORKSPACE/mdbx3-jniLibs/x86_64/libmdbx_ffi.so"
+          test -f "$candidate"
+
+          llvm_bin="$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin"
+          "$llvm_bin/llvm-strip" --strip-all "$candidate"
+          python3 scripts/verify-mdbx3-ffi-abi.py verify-exports \
+            --baseline crates/mdbx-ffi/abi/mdbx2-uniffi-bindings-v1.json \
+            --nm "$llvm_bin/llvm-nm" \
+            --library "x86_64=$candidate" \
+            --output "$GITHUB_WORKSPACE/mdbx3-x86_64-abi-report.json"
+
+      - name: Build Monica Rust JNI for emulator
+        working-directory: "monica/Monica for Android"
+        shell: bash
+        run: |
+          set -euo pipefail
+          (
+            cd rust-jni
+            cargo ndk \
+              -t x86_64 \
+              -o ../app/src/main/jniLibs \
+              build --release
+          )
+          test -f app/src/main/jniLibs/x86_64/libmonica_rust_jni.so
+
+      - name: Overlay MDBX3 candidate into emulator ABI
+        shell: bash
+        run: |
+          set -euo pipefail
+          src="$GITHUB_WORKSPACE/mdbx3-jniLibs/x86_64/libmdbx_ffi.so"
+          dst="$GITHUB_WORKSPACE/monica/Monica for Android/mdbx-engine/src/main/jniLibs/x86_64/libmdbx_ffi.so"
+          test -f "$src"
+          test -f "$dst"
+          cp "$src" "$dst"
+          cmp -s "$src" "$dst"
+          echo "MDBX3 x86_64 candidate overlaid into the checked-out test workspace only."
+
+      - name: Grant Gradle wrapper execute permission
+        working-directory: "monica/Monica for Android"
+        shell: bash
+        run: chmod +x gradlew
+
+      - name: Prebuild and lock instrumentation APKs before starting emulator
+        working-directory: "monica/Monica for Android"
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./gradlew \
+            :app:assembleDebug \
+            :app:assembleDebugAndroidTest \
+            --no-daemon \
+            --stacktrace \
+            -PincludeX86TestAbi
+
+          candidate="$GITHUB_WORKSPACE/mdbx3-jniLibs/x86_64/libmdbx_ffi.so"
+          expected="$(sha256sum "$candidate" | awk '{print $1}')"
+          debug_dir="$GITHUB_WORKSPACE/monica/Monica for Android/app/build/outputs/apk/debug"
+          mapfile -t apks < <(find "$debug_dir" -maxdepth 1 -type f -iname '*.apk' | sort)
+          test "${#apks[@]}" -gt 0
+
+          selected=""
+          for apk in "${apks[@]}"; do
+            if unzip -Z1 "$apk" | grep -qx 'lib/x86_64/libmdbx_ffi.so'; then
+              actual="$(unzip -p "$apk" 'lib/x86_64/libmdbx_ffi.so' | sha256sum | awk '{print $1}')"
+              test "$actual" = "$expected" || {
+                echo "MDBX3 candidate packaging hash mismatch in $apk" >&2
+                exit 1
+              }
+              if [ -n "$selected" ]; then
+                echo "More than one Debug APK contains x86_64 libmdbx_ffi.so" >&2
+                exit 1
+              fi
+              selected="$apk"
+            fi
+          done
+          test -n "$selected" || {
+            echo "No prebuilt Debug APK contained x86_64 libmdbx_ffi.so" >&2
+            exit 1
+          }
+
+          test_dir="$GITHUB_WORKSPACE/monica/Monica for Android/app/build/outputs/apk/androidTest/debug"
+          mapfile -t test_apks < <(find "$test_dir" -type f -iname '*.apk' | sort)
+          test "${#test_apks[@]}" -eq 1 || {
+            printf 'Expected exactly one AndroidTest APK, found %s\n' "${#test_apks[@]}" >&2
+            printf '%s\n' "${test_apks[@]}" >&2
+            exit 1
+          }
+
+          echo "MDBX3_DEBUG_APK=$selected" >> "$GITHUB_ENV"
+          echo "MDBX3_TEST_APK=${test_apks[0]}" >> "$GITHUB_ENV"
+          printf 'Locked runtime app APK: %s\n' "$selected"
+          printf 'Locked runtime test APK: %s\n' "${test_apks[0]}"
+
+      - name: Write deterministic MDBX3 runtime script
+        shell: bash
+        run: |
+          set -euo pipefail
+          runtime_script="$GITHUB_WORKSPACE/run-mdbx3-runtime-tests.sh"
+          cat > "$runtime_script" <<'BASH'
+          #!/usr/bin/env bash
+          set -euo pipefail
+          test -f "$MDBX3_DEBUG_APK"
+          test -f "$MDBX3_TEST_APK"
+
+          adb wait-for-device
+          adb install -r "$MDBX3_DEBUG_APK"
+          adb install -r "$MDBX3_TEST_APK"
+
+          mkdir -p "$GITHUB_WORKSPACE/mdbx3-instrumentation-logs"
+          instrumentation_list="$GITHUB_WORKSPACE/mdbx3-instrumentation-logs/instrumentation-list.txt"
+          adb shell pm list instrumentation | tr -d '\r' | tee "$instrumentation_list"
+          instrumentation_line="$(grep '(target=takagi.ru.monica)' "$instrumentation_list" | head -n 1)"
+          test -n "$instrumentation_line" || {
+            echo "No instrumentation runner targeting takagi.ru.monica was installed" >&2
+            exit 1
+          }
+          instrumentation="${instrumentation_line#instrumentation:}"
+          instrumentation="${instrumentation%% *}"
+          printf 'Using instrumentation: %s\n' "$instrumentation"
+
+          test_classes=(
+            takagi.ru.monica.repository.Mdbx2CreationInstrumentedTest
+            takagi.ru.monica.repository.Mdbx2FeatureParityInstrumentedTest
+            takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+            takagi.ru.monica.repository.Mdbx2MigrationInstrumentedTest
+            takagi.ru.monica.repository.MdbxVaultStoreInstrumentedCompatibilityTest
+            takagi.ru.monica.utils.Mdbx2BackupInstrumentedTest
+            takagi.ru.monica.rustcore.BitwardenRustKdfInstrumentedTest
+          )
+
+          for test_class in "${test_classes[@]}"; do
+            safe_name="${test_class//./_}"
+            log_file="$GITHUB_WORKSPACE/mdbx3-instrumentation-logs/${safe_name}.txt"
+            echo "Running $test_class"
+            set +e
+            adb shell am instrument -w -r \
+              -e class "$test_class" \
+              "$instrumentation" | tr -d '\r' | tee "$log_file"
+            adb_status=${PIPESTATUS[0]}
+            set -e
+
+            test "$adb_status" -eq 0 || {
+              echo "adb instrumentation command failed for $test_class" >&2
+              exit "$adb_status"
+            }
+            if grep -Eq 'FAILURES!!!|INSTRUMENTATION_FAILED|shortMsg=Process crashed' "$log_file"; then
+              echo "Instrumentation reported a failure for $test_class" >&2
+              exit 1
+            fi
+            grep -Eq '^OK \([1-9][0-9]* tests?\)' "$log_file" || {
+              echo "Instrumentation did not report a non-zero passing test count for $test_class" >&2
+              exit 1
+            }
+          done
+          BASH
+          chmod +x "$runtime_script"
+
+      - name: Enable KVM
+        shell: bash
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' \
+            | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Run deterministic MDBX3 and Rust KDF instrumentation suite
+        uses: ReactiveCircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          target: default
+          profile: pixel_6
+          disable-animations: true
+          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          working-directory: "monica/Monica for Android"
+          script: bash "$GITHUB_WORKSPACE/run-mdbx3-runtime-tests.sh"
+
+      - name: Upload MDBX3 runtime reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mdbx3-runtime-smoke-reports
+          path: |
+            mdbx3-x86_64-abi-report.json
+            mdbx3-instrumentation-logs/**
+            monica/Monica for Android/app/build/reports/androidTests/**
+            monica/Monica for Android/app/build/outputs/androidTest-results/**
+          if-no-files-found: warn
+          retention-days: 7

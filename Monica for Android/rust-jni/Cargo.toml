@@ -1,11 +1,11 @@
 [package]
 name = "monica-rust-jni"
-version = "0.3.0"
+version = "0.5.0"
 edition = "2021"
 rust-version = "1.74"
 publish = false
 license = "GPL-3.0-only"
-description = "Android JNI bridge for Monica password-list runtime core"
+description = "Android JNI bridge for Monica runtime and cryptographic cores"
 
 [lib]
 path = "src/lib.rs"
@@ -13,3 +13,4 @@ crate-type = ["cdylib"]
 
 [dependencies]
 jni = "0.21"
+monica-rust-crypto = { path = "../rust-crypto" }

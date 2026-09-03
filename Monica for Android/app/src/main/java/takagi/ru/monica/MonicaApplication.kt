@@ -11,10 +11,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
-import org.koin.core.logger.Level
 import takagi.ru.monica.attachments.AttachmentContainer
 import takagi.ru.monica.data.AppLauncherIcon
 import takagi.ru.monica.data.AppLauncherLabel
@@ -33,8 +29,7 @@ import takagi.ru.monica.workers.KeePassRemoteUploadWorker
 /**
  * Monica 应用程序入口
  *
- * 负责初始化全局依赖注入容器（Koin）。安全关键的锁状态检查仍然在首帧前同步完成；
- * 与首帧无关的恢复、清理和诊断则延迟到启动安静期执行。
+ * 安全关键的锁状态检查仍然在首帧前同步完成；与首帧无关的恢复、清理和诊断则延迟到启动安静期执行。
  */
 class MonicaApplication : Application() {
 
@@ -58,7 +53,6 @@ class MonicaApplication : Application() {
             reason = "application_on_create"
         )
 
-        initKoin()
         SyncTaskRunner.installNetworkGate(AndroidSyncNetworkGate(this))
 
         // Logger initialization no longer performs file writes on this thread.
@@ -67,16 +61,6 @@ class MonicaApplication : Application() {
         WebDavCertificateTrustStore.attach(this)
 
         schedulePostLaunchMaintenance()
-    }
-
-    /**
-     * 初始化 Koin 依赖注入框架
-     */
-    private fun initKoin() {
-        startKoin {
-            androidLogger(Level.NONE)
-            androidContext(this@MonicaApplication)
-        }
     }
 
     /**

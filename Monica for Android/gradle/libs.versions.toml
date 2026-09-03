@@ -33,7 +33,6 @@ playServicesAuth = "21.5.1"  # Google Play Services Auth for SMS Retriever API a
 credentials = "1.2.2"  # Credential Manager for Passkeys (Android 14+)
 work = "2.8.1"  # WorkManager for auto backup
 reorderable = "3.0.0"  # Compose Reorderable for drag-and-drop sorting
-koin = "3.5.6"  # Koin dependency injection for autofill architecture
 baselineProfile = "1.3.4"
 benchmarkMacro = "1.3.4"
 uiAutomator = "2.3.0"
@@ -130,10 +129,6 @@ androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx"
 # Reorderable for drag-and-drop sorting
 reorderable = { group = "sh.calvin.reorderable", name = "reorderable", version.ref = "reorderable" }
 
-# Koin Dependency Injection (for autofill modularization)
-koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
-koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
-koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 androidx-benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmarkMacro" }
 androidx-test-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiAutomator" }
 

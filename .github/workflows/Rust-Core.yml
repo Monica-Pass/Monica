@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "Monica for Android/rust-core/**"
+      - "Monica for Android/rust-crypto/**"
       - "Monica for Android/rust-jni/**"
       - ".github/workflows/Rust-Core.yml"
   push:
@@ -11,6 +12,7 @@ on:
       - main
     paths:
       - "Monica for Android/rust-core/**"
+      - "Monica for Android/rust-crypto/**"
       - "Monica for Android/rust-jni/**"
       - ".github/workflows/Rust-Core.yml"
 
@@ -40,6 +42,15 @@ jobs:
 
       - name: Run core tests
         run: cargo test --manifest-path rust-core/Cargo.toml --all-targets --all-features
+
+      - name: Check crypto formatting
+        run: cargo fmt --manifest-path rust-crypto/Cargo.toml --all -- --check
+
+      - name: Run crypto Clippy
+        run: cargo clippy --manifest-path rust-crypto/Cargo.toml --all-targets --all-features -- -D warnings
+
+      - name: Run crypto tests
+        run: cargo test --manifest-path rust-crypto/Cargo.toml --all-targets --all-features
 
       - name: Check JNI formatting
         run: cargo fmt --manifest-path rust-jni/Cargo.toml --all -- --check

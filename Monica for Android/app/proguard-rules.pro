@@ -77,9 +77,7 @@
     public static *** i(...);
 }
 
-# Koin 依赖注入
--keep class org.koin.** { *; }
--keep interface org.koin.** { *; }
+# Koin 由代码引用驱动收缩；不要整包 keep，否则 R8 无法移除已废弃的 DI 壳。
 -dontwarn org.koin.**
 
 # 确保实体类不被混淆 (特别是用于 JSON 序列化的)

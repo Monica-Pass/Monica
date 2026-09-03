@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lint>
+    <!--
+      BigInteger.longValueExact() is API 31 in Android's desugared API model.
+      SteamLoginImportService guards both call sites with explicit BigInteger
+      bounds before conversion, so this compatibility warning is a false
+      positive for the minSdk 26 implementation. Keep the suppression scoped
+      to this exact API usage instead of weakening NewApi checks globally.
+    -->
+    <issue id="NewApi">
+        <ignore regexp="longValueExact" />
+    </issue>
+</lint>

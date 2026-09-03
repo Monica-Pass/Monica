@@ -316,11 +316,6 @@ dependencies {
     // Reorderable for drag-and-drop sorting
     implementation libs.reorderable
 
-    // Koin Dependency Injection (for autofill modularization)
-    implementation libs.koin.android
-    implementation libs.koin.androidx.compose
-    implementation libs.koin.core
-
     // Markdown rendering
     implementation libs.commonmark
     implementation 'org.commonmark:commonmark-ext-gfm-tables:0.22.0'
@@ -373,4 +368,3 @@ dependencies {
     debugImplementation libs.androidx.ui.tooling
     debugImplementation libs.androidx.ui.test.manifest
 }
-

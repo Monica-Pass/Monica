@@ -1,9 +1,14 @@
 package takagi.ru.monica.ime
 
 import android.icu.text.Transliterator
+import android.os.Build
 
 internal val imeSortKeyTransliterator: Transliterator? by lazy(LazyThreadSafetyMode.NONE) {
-    runCatching { Transliterator.getInstance("Any-Latin; Latin-ASCII") }.getOrNull()
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        runCatching { Transliterator.getInstance("Any-Latin; Latin-ASCII") }.getOrNull()
+    } else {
+        null
+    }
 }
 
 internal fun normalizedImeSortKey(raw: String): String {
@@ -11,9 +16,15 @@ internal fun normalizedImeSortKey(raw: String): String {
     if (trimmed.isEmpty()) return "#"
     val source = if (trimmed.none { it.code > 0x7F }) {
         trimmed
+    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        val transliterator = imeSortKeyTransliterator
+        if (transliterator == null) {
+            trimmed
+        } else {
+            runCatching { transliterator.transliterate(trimmed) }.getOrDefault(trimmed)
+        }
     } else {
-        val transliterator = imeSortKeyTransliterator ?: return trimmed
-        runCatching { transliterator.transliterate(trimmed) }.getOrDefault(trimmed)
+        trimmed
     }
     return buildString(source.length) {
         source.forEach { char ->

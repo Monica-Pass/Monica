@@ -17,6 +17,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import takagi.ru.monica.attachments.model.Attachment
 import takagi.ru.monica.attachments.model.AttachmentDownloadState
+import takagi.ru.monica.attachments.model.AttachmentOwner
 import takagi.ru.monica.attachments.model.AttachmentSource
 import takagi.ru.monica.attachments.storage.AttachmentKeyVault
 import takagi.ru.monica.attachments.storage.AttachmentStorage
@@ -315,7 +316,7 @@ class Mdbx2HardeningInstrumentedTest {
             expectAnyFailure {
                 AttachmentContainer.facade(context).addAttachment(
                     AttachmentFacade.UploadRequest(
-                        parentPasswordId = passwordId,
+                        owner = AttachmentOwner.password(passwordId),
                         source = AttachmentSource.LOCAL,
                         uri = Uri.fromFile(sourceFile),
                         isPlusActivated = true

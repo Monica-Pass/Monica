@@ -11,133 +11,87 @@ import java.security.MessageDigest
 import java.security.SecureRandom
 import javax.crypto.Cipher
 import javax.crypto.Mac
-import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.GCMParameterSpec
 import javax.crypto.spec.IvParameterSpec
-import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
+import takagi.ru.monica.rustcore.RustBitwardenKdfCore
 
 /**
- * Bitwarden 加密核心模块
- * 
- * 实现 Bitwarden 的加密/解密逻辑，参考 Keyguard 项目
- * 
- * 密钥派生流程:
- * 1. 使用 PBKDF2-SHA256 或 Argon2id 从主密码派生 Master Key
- * 2. 使用 HKDF-SHA256 从 Master Key 派生 Master Password Hash (用于认证)
- * 3. 从 Master Key 派生 Stretched Master Key (64字节 = 32字节 encKey + 32字节 macKey)
- * 4. 使用 Stretched Master Key 解密 Protected Symmetric Key
- * 5. 使用 Symmetric Key 解密/加密 Cipher 数据
- * 
- * CipherString 格式:
- * - Type 0: AES-256-CBC (不含 MAC)
- * - Type 2: AES-256-CBC + HMAC-SHA256 (标准格式)
- * 
- * 安全注意:
- * - 所有密钥必须在使用后清零
- * - 内存中的敏感数据生命周期要尽量短
+ * Bitwarden encryption core.
+ *
+ * Protocol normalization remains in Kotlin while 32-byte PBKDF2-SHA256 and
+ * Argon2id KDF work prefer the Rust JNI core. The existing implementations stay
+ * available as compatibility fallbacks if the native core cannot be loaded or
+ * rejects a request.
  */
 object BitwardenCrypto {
     private const val MAX_CIPHER_STRING_LENGTH = 1024 * 1024
     private const val MAX_BASE64_PART_LENGTH = 1024 * 1024
     private const val ARGON2_JVM_FALLBACK_MAX_MEMORY_MB = 64
-    
-    // 加密类型常量
+
     const val CIPHER_TYPE_AES_CBC = 0
     const val CIPHER_TYPE_AES_CBC_HMAC = 2
-    
-    // 密钥长度
-    private const val AES_KEY_SIZE = 32   // 256 bits
-    private const val MAC_KEY_SIZE = 32   // 256 bits
-    private const val IV_SIZE = 16        // 128 bits
+
+    private const val AES_KEY_SIZE = 32
+    private const val MAC_KEY_SIZE = 32
+    private const val IV_SIZE = 16
     private const val SEND_KEY_MATERIAL_SIZE = 16
     private val nativeArgon2 by lazy { Argon2Kt() }
-    
-    /**
-     * 对称加密密钥 - 包含加密密钥和 MAC 密钥
-     */
+
     data class SymmetricCryptoKey(
-        val encKey: ByteArray,  // 32 字节 AES-256 密钥
-        val macKey: ByteArray   // 32 字节 HMAC-SHA256 密钥
+        val encKey: ByteArray,
+        val macKey: ByteArray
     ) {
         init {
             require(encKey.size == AES_KEY_SIZE) { "encKey must be 32 bytes" }
             require(macKey.size == MAC_KEY_SIZE) { "macKey must be 32 bytes" }
         }
-        
-        /**
-         * 清除密钥材料
-         */
+
         fun clear() {
             encKey.fill(0)
             macKey.fill(0)
         }
-        
+
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
             if (other !is SymmetricCryptoKey) return false
             return encKey.contentEquals(other.encKey) && macKey.contentEquals(other.macKey)
         }
-        
+
         override fun hashCode(): Int {
             var result = encKey.contentHashCode()
             result = 31 * result + macKey.contentHashCode()
             return result
         }
     }
-    
-    /**
-     * 解析后的 CipherString
-     */
+
     data class ParsedCipherString(
         val type: Int,
         val iv: ByteArray,
         val data: ByteArray,
         val mac: ByteArray?
     )
-    
-    // ========== 密钥派生 ==========
-    
-    /**
-     * 使用 PBKDF2-SHA256 派生 Master Key
-     * 
-     * 参考 keyguard: 使用 BouncyCastle 直接处理字节数组
-     * 
-     * @param password 用户主密码
-     * @param salt 盐值 (通常是小写的 email)
-     * @param iterations 迭代次数 (默认 600000)
-     * @return 32 字节的 Master Key
-     */
+
     fun deriveMasterKeyPbkdf2(
         password: String,
         salt: String,
         iterations: Int = 600000
     ): ByteArray {
-        // 使用 BouncyCastle 的 PKCS5S2ParametersGenerator
-        // 与 keyguard 保持一致，直接使用字节数组
-        // 注意: salt 应该已经被调用者小写化，这里不再重复处理
         val passwordBytes = password.toByteArray(StandardCharsets.UTF_8)
         val saltBytes = salt.toByteArray(StandardCharsets.UTF_8)
-        return pbkdf2Sha256(
-            seed = passwordBytes,
-            salt = saltBytes,
-            iterations = iterations,
-            length = 32
-        )
+        return try {
+            pbkdf2Sha256(
+                seed = passwordBytes,
+                salt = saltBytes,
+                iterations = iterations,
+                length = 32
+            )
+        } finally {
+            passwordBytes.fill(0)
+            saltBytes.fill(0)
+        }
     }
-    
-    /**
-     * 使用 Argon2id 派生 Master Key
-     * 
-     * 参考 keyguard: salt 需要先做 SHA256 哈希
-     * 
-     * @param password 用户主密码
-     * @param salt 盐值
-     * @param iterations 迭代次数 (默认 3)
-     * @param memory 内存大小 MB (默认 64)
-     * @param parallelism 并行度 (默认 4)
-     * @return 32 字节的 Master Key
-     */
+
     fun deriveMasterKeyArgon2(
         password: String,
         salt: String,
@@ -146,30 +100,46 @@ object BitwardenCrypto {
         parallelism: Int = 4
     ): ByteArray {
         val passwordBytes = password.toByteArray(StandardCharsets.UTF_8)
-        // 注意: salt 应该已经被调用者小写化，这里不再重复处理
         val saltBytes = salt.toByteArray(StandardCharsets.UTF_8)
-        
-        // keyguard: val saltHash = hashSha256(salt)
         val saltHash = MessageDigest.getInstance("SHA-256").digest(saltBytes)
 
         return try {
-            deriveMasterKeyArgon2Native(
+            val memoryKiB = argon2MemoryKiB(memory)
+            val rustResult = RustBitwardenKdfCore.deriveArgon2id(
                 passwordBytes = passwordBytes,
-                saltHash = saltHash,
+                saltBytes = saltHash,
                 iterations = iterations,
-                memory = memory,
+                memoryKiB = memoryKiB,
                 parallelism = parallelism
             )
+            if (rustResult != null) {
+                if (rustResult.size == AES_KEY_SIZE) {
+                    rustResult
+                } else {
+                    rustResult.fill(0)
+                    deriveMasterKeyArgon2LegacyNative(
+                        passwordBytes = passwordBytes,
+                        saltHash = saltHash,
+                        iterations = iterations,
+                        memory = memory,
+                        parallelism = parallelism
+                    )
+                }
+            } else {
+                deriveMasterKeyArgon2LegacyNative(
+                    passwordBytes = passwordBytes,
+                    saltHash = saltHash,
+                    iterations = iterations,
+                    memory = memory,
+                    parallelism = parallelism
+                )
+            }
         } catch (nativeError: Throwable) {
-            if (nativeError is CancellationException) {
-                throw nativeError
-            }
-            if (nativeError is ThreadDeath) {
-                throw nativeError
-            }
+            if (nativeError is CancellationException) throw nativeError
+            if (nativeError is ThreadDeath) throw nativeError
             if (memory > ARGON2_JVM_FALLBACK_MAX_MEMORY_MB) {
                 throw IllegalStateException(
-                    "Bitwarden Argon2id KDF requires ${memory}MB memory; native Argon2 failed " +
+                    "Bitwarden Argon2id KDF requires ${memory}MB memory; native KDF failed " +
                         "and JVM fallback is disabled to avoid Android heap OOM.",
                     nativeError
                 )
@@ -190,7 +160,8 @@ object BitwardenCrypto {
         }
     }
 
-    private fun deriveMasterKeyArgon2Native(
+    /** Legacy argon2kt native path retained only as a compatibility fallback. */
+    private fun deriveMasterKeyArgon2LegacyNative(
         passwordBytes: ByteArray,
         saltHash: ByteArray,
         iterations: Int,
@@ -214,7 +185,7 @@ object BitwardenCrypto {
                 tCostInIterations = iterations,
                 mCostInKibibyte = argon2MemoryKiB(memory),
                 parallelism = parallelism,
-                hashLengthInBytes = 32,
+                hashLengthInBytes = AES_KEY_SIZE,
                 version = Argon2Version.V13
             )
             val hash = result.rawHashAsByteArray()
@@ -234,24 +205,24 @@ object BitwardenCrypto {
         memory: Int,
         parallelism: Int
     ): ByteArray {
-        // 使用 BouncyCastle 的 Argon2 实现作为低内存兼容回退。
         val params = org.bouncycastle.crypto.params.Argon2Parameters.Builder(
             org.bouncycastle.crypto.params.Argon2Parameters.ARGON2_id
         )
-            .withSalt(saltHash)  // 使用 SHA256 哈希后的 salt
+            .withSalt(saltHash)
             .withIterations(iterations)
             .withMemoryAsKB(argon2MemoryKiB(memory))
             .withParallelism(parallelism)
             .withVersion(org.bouncycastle.crypto.params.Argon2Parameters.ARGON2_VERSION_13)
             .build()
-        
+
         val generator = org.bouncycastle.crypto.generators.Argon2BytesGenerator()
         generator.init(params)
-        
-        val hash = ByteArray(32)
+
+        val hash = ByteArray(AES_KEY_SIZE)
         try {
             generator.generateBytes(passwordBytes, hash)
         } catch (error: OutOfMemoryError) {
+            hash.fill(0)
             throw BitwardenKdfMemoryException(
                 requestedMemoryMb = memory,
                 maxHeapMb = Runtime.getRuntime().maxMemory() / (1024L * 1024L),
@@ -261,7 +232,6 @@ object BitwardenCrypto {
                 )
             )
         }
-        
         return hash
     }
 
@@ -269,9 +239,7 @@ object BitwardenCrypto {
         if (buffer.isReadOnly) return
         val duplicate = buffer.duplicate()
         duplicate.clear()
-        while (duplicate.hasRemaining()) {
-            duplicate.put(0.toByte())
-        }
+        while (duplicate.hasRemaining()) duplicate.put(0.toByte())
     }
 
     private fun argon2MemoryKiB(memoryMb: Int): Int {
@@ -282,36 +250,30 @@ object BitwardenCrypto {
             throw IllegalArgumentException("Bitwarden Argon2id KDF memory is too large: ${memoryMb}MB", e)
         }
     }
-    
-    /**
-     * 从 Master Key 派生 Master Password Hash (用于服务器认证)
-     * 
-     * 使用 PBKDF2-SHA256，1 次迭代
-     * 参考 keyguard 实现：seed = masterKey (原始字节), salt = password (字节)
-     * 返回 标准 Base64 编码的结果 (不是 URL-safe!)
-     */
+
     fun deriveMasterPasswordHash(
         masterKey: ByteArray,
         password: String
     ): String {
-        // 使用 BouncyCastle 的 PKCS5S2ParametersGenerator
-        // 这是正确的实现方式，直接使用原始字节作为 seed 和 salt
         val passwordBytes = password.toByteArray(StandardCharsets.UTF_8)
-        val hash = pbkdf2Sha256(
-            seed = masterKey,
-            salt = passwordBytes,
-            iterations = 1,
-            length = 32
-        )
-        // keyguard 使用标准 Base64，不是 URL-safe
-        val result = Base64.encodeToString(hash, Base64.NO_WRAP)
-        
-        return result
+        var hash: ByteArray? = null
+        return try {
+            hash = pbkdf2Sha256(
+                seed = masterKey,
+                salt = passwordBytes,
+                iterations = 1,
+                length = AES_KEY_SIZE
+            )
+            Base64.encodeToString(hash, Base64.NO_WRAP)
+        } finally {
+            hash?.fill(0)
+            passwordBytes.fill(0)
+        }
     }
-    
+
     /**
-     * 使用 BouncyCastle 实现的 PBKDF2-SHA256
-     * 直接接受原始字节数组，不需要转换为 char[]
+     * Prefer byte-oriented Rust PBKDF2 for Bitwarden's 32-byte KDF output.
+     * BouncyCastle remains the exact byte-semantics fallback.
      */
     private fun pbkdf2Sha256(
         seed: ByteArray,
@@ -319,6 +281,18 @@ object BitwardenCrypto {
         iterations: Int,
         length: Int
     ): ByteArray {
+        if (length == AES_KEY_SIZE) {
+            val rustResult = RustBitwardenKdfCore.derivePbkdf2Sha256(
+                passwordBytes = seed,
+                saltBytes = salt,
+                iterations = iterations
+            )
+            if (rustResult != null) {
+                if (rustResult.size == length) return rustResult
+                rustResult.fill(0)
+            }
+        }
+
         val generator = org.bouncycastle.crypto.generators.PKCS5S2ParametersGenerator(
             org.bouncycastle.crypto.digests.SHA256Digest()
         )
@@ -326,28 +300,24 @@ object BitwardenCrypto {
         val params = generator.generateDerivedMacParameters(length * 8)
         return (params as org.bouncycastle.crypto.params.KeyParameter).key
     }
-    
-    /**
-     * 使用标准 Android SecretKeyFactory 实现的 PBKDF2-SHA256
-     * 用于对比验证 BouncyCastle 实现
-     */
+
     fun pbkdf2Sha256Standard(
         password: ByteArray,
         salt: ByteArray,
         iterations: Int,
         length: Int
     ): ByteArray {
-        // 将 ByteArray 转换为 CharArray（这是标准 API 的要求）
         val passwordChars = password.map { (it.toInt() and 0xFF).toChar() }.toCharArray()
         val spec = javax.crypto.spec.PBEKeySpec(passwordChars, salt, iterations, length * 8)
-        val factory = javax.crypto.SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
-        val key = factory.generateSecret(spec)
-        return key.encoded
+        return try {
+            val factory = javax.crypto.SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
+            factory.generateSecret(spec).encoded
+        } finally {
+            spec.clearPassword()
+            passwordChars.fill('\u0000')
+        }
     }
-    
-    /**
-     * 对比测试两种 PBKDF2 实现
-     */
+
     fun comparePbkdf2Implementations(
         password: String,
         salt: String,
@@ -355,45 +325,40 @@ object BitwardenCrypto {
     ): String {
         val passwordBytes = password.toByteArray(StandardCharsets.UTF_8)
         val saltBytes = salt.toByteArray(StandardCharsets.UTF_8)
-        
-        val bcResult = pbkdf2Sha256(passwordBytes, saltBytes, iterations, 32)
-        val stdResult = pbkdf2Sha256Standard(passwordBytes, saltBytes, iterations, 32)
-        
-        val bcHex = bcResult.joinToString("") { "%02x".format(it) }
-        val stdHex = stdResult.joinToString("") { "%02x".format(it) }
-        
-        return """
-            BouncyCastle: $bcHex
-            Standard API: $stdHex
-            Match: ${bcHex == stdHex}
-        """.trimIndent()
+        var preferredResult: ByteArray? = null
+        var stdResult: ByteArray? = null
+        return try {
+            val preferred = pbkdf2Sha256(passwordBytes, saltBytes, iterations, AES_KEY_SIZE)
+            preferredResult = preferred
+            val standard = pbkdf2Sha256Standard(passwordBytes, saltBytes, iterations, AES_KEY_SIZE)
+            stdResult = standard
+
+            val matches = MessageDigest.isEqual(preferred, standard)
+            val preferredHex = preferred.joinToString("") { "%02x".format(it) }
+            val stdHex = standard.joinToString("") { "%02x".format(it) }
+            """
+                Preferred: $preferredHex
+                Standard API: $stdHex
+                Match: $matches
+            """.trimIndent()
+        } finally {
+            preferredResult?.fill(0)
+            stdResult?.fill(0)
+            passwordBytes.fill(0)
+            saltBytes.fill(0)
+        }
     }
-    
-    /**
-     * 从 Master Key 扩展为 Stretched Key (64 字节)
-     * 使用 HKDF-SHA256
-     */
+
     fun stretchMasterKey(masterKey: ByteArray): SymmetricCryptoKey {
-        // HKDF-Expand with info = "enc" for encryption key
-        val encKey = hkdfExpand(masterKey, "enc".toByteArray(), 32)
-        // HKDF-Expand with info = "mac" for MAC key
-        val macKey = hkdfExpand(masterKey, "mac".toByteArray(), 32)
-        
+        val encKey = hkdfExpand(masterKey, "enc".toByteArray(), AES_KEY_SIZE)
+        val macKey = hkdfExpand(masterKey, "mac".toByteArray(), MAC_KEY_SIZE)
         return SymmetricCryptoKey(encKey, macKey)
     }
 
-    /**
-     * 生成 Bitwarden Send 的原始密钥材料（16字节）
-     */
     fun generateSendKeyMaterial(): ByteArray {
-        val bytes = ByteArray(SEND_KEY_MATERIAL_SIZE)
-        SecureRandom().nextBytes(bytes)
-        return bytes
+        return ByteArray(SEND_KEY_MATERIAL_SIZE).also { SecureRandom().nextBytes(it) }
     }
 
-    /**
-     * 根据 Send 密钥材料派生 Send 对称密钥（enc+mac）
-     */
     fun deriveSendKey(keyMaterial: ByteArray): SymmetricCryptoKey {
         require(keyMaterial.size == SEND_KEY_MATERIAL_SIZE) {
             "Send key material must be 16 bytes"
@@ -405,50 +370,57 @@ object BitwardenCrypto {
             info = "send".toByteArray(StandardCharsets.UTF_8),
             length = 64
         )
-        val encKey = fullKey.copyOfRange(0, 32)
-        val macKey = fullKey.copyOfRange(32, 64)
-        return SymmetricCryptoKey(encKey, macKey)
+        return try {
+            SymmetricCryptoKey(
+                encKey = fullKey.copyOfRange(0, AES_KEY_SIZE),
+                macKey = fullKey.copyOfRange(AES_KEY_SIZE, AES_KEY_SIZE + MAC_KEY_SIZE)
+            )
+        } finally {
+            fullKey.fill(0)
+        }
     }
 
-    /**
-     * Send 访问密码哈希（PBKDF2-SHA256, 100000 iterations）
-     */
     fun hashSendPassword(password: String, keyMaterial: ByteArray): String {
-        val hash = pbkdf2Sha256(
-            seed = password.toByteArray(StandardCharsets.UTF_8),
-            salt = keyMaterial,
-            iterations = 100_000,
-            length = 32
-        )
-        return Base64.encodeToString(hash, Base64.NO_WRAP)
+        val passwordBytes = password.toByteArray(StandardCharsets.UTF_8)
+        var hash: ByteArray? = null
+        return try {
+            hash = pbkdf2Sha256(
+                seed = passwordBytes,
+                salt = keyMaterial,
+                iterations = 100_000,
+                length = AES_KEY_SIZE
+            )
+            Base64.encodeToString(hash, Base64.NO_WRAP)
+        } finally {
+            hash?.fill(0)
+            passwordBytes.fill(0)
+        }
     }
-    
-    /**
-     * HKDF-Expand (SHA-256)
-     */
+
     private fun hkdfExpand(prk: ByteArray, info: ByteArray, length: Int): ByteArray {
         val mac = Mac.getInstance("HmacSHA256")
         mac.init(SecretKeySpec(prk, "HmacSHA256"))
-        
-        val hashLen = 32  // SHA-256 输出长度
+
+        val hashLen = 32
         val n = (length + hashLen - 1) / hashLen
-        
         val output = ByteArray(length)
         var t = ByteArray(0)
         var pos = 0
-        
+
         for (i in 1..n) {
+            val previous = t
             mac.reset()
-            mac.update(t)
+            mac.update(previous)
             mac.update(info)
             mac.update(i.toByte())
             t = mac.doFinal()
-            
+            if (previous.isNotEmpty()) previous.fill(0)
+
             val copyLen = minOf(hashLen, length - pos)
             System.arraycopy(t, 0, output, pos, copyLen)
             pos += copyLen
         }
-        
+        t.fill(0)
         return output
     }
 
@@ -456,36 +428,28 @@ object BitwardenCrypto {
         val mac = Mac.getInstance("HmacSHA256")
         mac.init(SecretKeySpec(salt, "HmacSHA256"))
         val prk = mac.doFinal(seed)
-        return hkdfExpand(prk = prk, info = info, length = length)
+        return try {
+            hkdfExpand(prk = prk, info = info, length = length)
+        } finally {
+            prk.fill(0)
+        }
     }
-    
-    // ========== CipherString 解析 ==========
-    
-    /**
-     * 解析 CipherString
-     * 格式: type.iv|data|mac 或 type.iv|data
-     */
+
     fun parseCipherString(cipherString: String): ParsedCipherString {
         require(cipherString.isNotBlank()) { "Cipher string is blank" }
         require(cipherString.length <= MAX_CIPHER_STRING_LENGTH) {
             "Cipher string too large: ${cipherString.length}"
         }
         val dotIndex = cipherString.indexOf('.')
-        if (dotIndex == -1) {
-            // 假设类型 0
-            return parseCipherStringParts(0, cipherString)
-        }
-        
-        val type = cipherString.substring(0, dotIndex).toIntOrNull() 
+        if (dotIndex == -1) return parseCipherStringParts(CIPHER_TYPE_AES_CBC, cipherString)
+
+        val type = cipherString.substring(0, dotIndex).toIntOrNull()
             ?: throw IllegalArgumentException("Invalid cipher type")
-        val rest = cipherString.substring(dotIndex + 1)
-        
-        return parseCipherStringParts(type, rest)
+        return parseCipherStringParts(type, cipherString.substring(dotIndex + 1))
     }
-    
+
     private fun parseCipherStringParts(type: Int, data: String): ParsedCipherString {
         val parts = data.split('|')
-        
         return when (type) {
             CIPHER_TYPE_AES_CBC -> {
                 require(parts.size >= 2) { "AES-CBC requires at least iv|data" }
@@ -516,9 +480,7 @@ object BitwardenCrypto {
             "Cipher part too large: $partName, len=${part.length}, type=$type"
         }
 
-        val normalized = part
-            .replace('-', '+')
-            .replace('_', '/')
+        val normalized = part.replace('-', '+').replace('_', '/')
         val padding = (4 - normalized.length % 4) % 4
         val padded = if (padding == 0) normalized else normalized + "=".repeat(padding)
 
@@ -531,90 +493,63 @@ object BitwardenCrypto {
             )
         }
     }
-    
-    // ========== 解密 ==========
-    
-    /**
-     * 解密 CipherString
-     * 
-     * @param cipherString 加密字符串
-     * @param key 对称密钥
-     * @return 解密后的明文
-     */
+
     fun decrypt(cipherString: String, key: SymmetricCryptoKey): ByteArray {
-        val parsed = parseCipherString(cipherString)
-        return decrypt(parsed, key)
+        return decrypt(parseCipherString(cipherString), key)
     }
-    
-    /**
-     * 解密 CipherString (字符串结果)
-     */
+
     fun decryptToString(cipherString: String, key: SymmetricCryptoKey): String {
         val decrypted = decrypt(cipherString, key)
-        return String(decrypted, StandardCharsets.UTF_8)
+        return try {
+            String(decrypted, StandardCharsets.UTF_8)
+        } finally {
+            decrypted.fill(0)
+        }
     }
-    
-    /**
-     * 解密已解析的 CipherString
-     */
+
     fun decrypt(parsed: ParsedCipherString, key: SymmetricCryptoKey): ByteArray {
-        // 验证 MAC (如果有)
         if (parsed.mac != null) {
             val computedMac = computeMac(parsed.iv, parsed.data, key.macKey)
-            if (!MessageDigest.isEqual(computedMac, parsed.mac)) {
-                throw SecurityException("MAC verification failed")
+            try {
+                if (!MessageDigest.isEqual(computedMac, parsed.mac)) {
+                    throw SecurityException("MAC verification failed")
+                }
+            } finally {
+                computedMac.fill(0)
             }
         }
-        
-        // AES-256-CBC 解密
+
         val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
         cipher.init(
             Cipher.DECRYPT_MODE,
             SecretKeySpec(key.encKey, "AES"),
             IvParameterSpec(parsed.iv)
         )
-        
         return cipher.doFinal(parsed.data)
     }
-    
-    /**
-     * 解密 Protected Symmetric Key (从登录响应中获取)
-     * 
-     * @param encryptedKey 加密的 protectedKey
-     * @param masterKey 扩展后的主密钥
-     * @return 解密后的对称密钥
-     */
+
     fun decryptSymmetricKey(
         encryptedKey: String,
         masterKey: SymmetricCryptoKey
     ): SymmetricCryptoKey {
         val decrypted = decrypt(encryptedKey, masterKey)
-        
-        require(decrypted.size == 64) { 
-            "Decrypted key should be 64 bytes, got ${decrypted.size}" 
+        return try {
+            require(decrypted.size == 64) {
+                "Decrypted key should be 64 bytes, got ${decrypted.size}"
+            }
+            SymmetricCryptoKey(
+                encKey = decrypted.copyOfRange(0, AES_KEY_SIZE),
+                macKey = decrypted.copyOfRange(AES_KEY_SIZE, AES_KEY_SIZE + MAC_KEY_SIZE)
+            )
+        } finally {
+            decrypted.fill(0)
         }
-        
-        return SymmetricCryptoKey(
-            encKey = decrypted.copyOfRange(0, 32),
-            macKey = decrypted.copyOfRange(32, 64)
-        )
     }
-    
-    // ========== 加密 ==========
-    
-    /**
-     * 加密为 CipherString (Type 2: AES-CBC-HMAC)
-     * 
-     * @param plaintext 明文
-     * @param key 对称密钥
-     * @return CipherString 格式的密文
-     */
+
     fun encrypt(plaintext: ByteArray, key: SymmetricCryptoKey): String {
-        // 生成随机 IV
         val iv = ByteArray(IV_SIZE)
         SecureRandom().nextBytes(iv)
-        
-        // AES-256-CBC 加密
+
         val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
         cipher.init(
             Cipher.ENCRYPT_MODE,
@@ -622,30 +557,29 @@ object BitwardenCrypto {
             IvParameterSpec(iv)
         )
         val encrypted = cipher.doFinal(plaintext)
-        
-        // 计算 MAC
         val mac = computeMac(iv, encrypted, key.macKey)
-        
-        // 构建 CipherString
-        val ivBase64 = Base64.encodeToString(iv, Base64.NO_WRAP)
-        val dataBase64 = Base64.encodeToString(encrypted, Base64.NO_WRAP)
-        val macBase64 = Base64.encodeToString(mac, Base64.NO_WRAP)
-        
-        return "$CIPHER_TYPE_AES_CBC_HMAC.$ivBase64|$dataBase64|$macBase64"
+
+        return try {
+            val ivBase64 = Base64.encodeToString(iv, Base64.NO_WRAP)
+            val dataBase64 = Base64.encodeToString(encrypted, Base64.NO_WRAP)
+            val macBase64 = Base64.encodeToString(mac, Base64.NO_WRAP)
+            "$CIPHER_TYPE_AES_CBC_HMAC.$ivBase64|$dataBase64|$macBase64"
+        } finally {
+            iv.fill(0)
+            encrypted.fill(0)
+            mac.fill(0)
+        }
     }
-    
-    /**
-     * 加密字符串
-     */
+
     fun encryptString(plaintext: String, key: SymmetricCryptoKey): String {
-        return encrypt(plaintext.toByteArray(StandardCharsets.UTF_8), key)
+        val plaintextBytes = plaintext.toByteArray(StandardCharsets.UTF_8)
+        return try {
+            encrypt(plaintextBytes, key)
+        } finally {
+            plaintextBytes.fill(0)
+        }
     }
-    
-    // ========== 辅助方法 ==========
-    
-    /**
-     * 计算 HMAC-SHA256 MAC
-     */
+
     private fun computeMac(iv: ByteArray, data: ByteArray, macKey: ByteArray): ByteArray {
         val mac = Mac.getInstance("HmacSHA256")
         mac.init(SecretKeySpec(macKey, "HmacSHA256"))
@@ -653,10 +587,7 @@ object BitwardenCrypto {
         mac.update(data)
         return mac.doFinal()
     }
-    
-    /**
-     * 安全清除字节数组
-     */
+
     fun clearBytes(vararg arrays: ByteArray) {
         arrays.forEach { it.fill(0) }
     }

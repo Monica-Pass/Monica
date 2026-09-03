@@ -32,7 +32,6 @@ import android.content.Intent
 import android.net.Uri
 import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
-import java.io.IOException
 import java.io.OutputStream
 import takagi.ru.monica.R
 import takagi.ru.monica.utils.ScreenshotProtection
@@ -93,17 +92,13 @@ fun SupportAuthorScreen(
         }
     }
 
-    // 加载assets中的图片
+    // 只保留一份二维码资源，避免 assets 与 drawable 重复打包。
     LaunchedEffect(Unit) {
         hasStoragePermission = ContextCompat.checkSelfPermission(context, storagePermission) == PackageManager.PERMISSION_GRANTED
-        try {
-            val inputStream = context.assets.open("support_author.jpg")
-            val bitmap = BitmapFactory.decodeStream(inputStream)
+        val bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.support_author_qr)
+        if (bitmap != null) {
             originalBitmap = bitmap
             imageBitmap = bitmap.asImageBitmap()
-            inputStream.close()
-        } catch (e: IOException) {
-            // 图片加载失败
         }
     }
     

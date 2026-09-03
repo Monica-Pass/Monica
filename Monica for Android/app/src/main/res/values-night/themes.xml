@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Theme.Monica" parent="android:Theme.Material.NoActionBar">
         <!-- 启动预览窗口与 Material 3 夜间背景保持一致 -->
         <item name="android:windowBackground">@color/monica_startup_background</item>
         <item name="android:statusBarColor">@color/monica_startup_background</item>
         <item name="android:navigationBarColor">@color/monica_startup_background</item>
         <item name="android:windowLightStatusBar">false</item>
-        <item name="android:windowLightNavigationBar">false</item>
-        <item name="android:enforceStatusBarContrast">false</item>
-        <item name="android:enforceNavigationBarContrast">false</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
+        <item name="android:enforceStatusBarContrast" tools:targetApi="29">false</item>
+        <item name="android:enforceNavigationBarContrast" tools:targetApi="29">false</item>
     </style>
 </resources>

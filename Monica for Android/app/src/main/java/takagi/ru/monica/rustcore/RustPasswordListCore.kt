@@ -1,5 +1,6 @@
 package takagi.ru.monica.rustcore
 
+import java.io.ByteArrayOutputStream
 import takagi.ru.monica.data.PasswordEntry
 
 /**
@@ -10,6 +11,8 @@ import takagi.ru.monica.data.PasswordEntry
  * batch, callers get null and must keep the Kotlin/Room fallback path.
  */
 object RustPasswordListCore {
+    private const val METADATA_BATCH_MAGIC = 0x3146504D // "MPF1" as little-endian u32.
+
     @Volatile
     private var loadAttempted = false
 
@@ -40,33 +43,12 @@ object RustPasswordListCore {
         if (query.isBlank()) return entries
         if (!ensureLoaded()) return null
 
-        val size = entries.size
-        val titles = Array(size) { "" }
-        val usernames = Array(size) { "" }
-        val websites = Array(size) { "" }
-        val appNames = Array(size) { "" }
-        val appPackageNames = Array(size) { "" }
-
-        // Fill all JNI columns in one traversal rather than allocating five
-        // temporary List instances through map().
-        for (index in entries.indices) {
-            val entry = entries[index]
-            titles[index] = entry.title
-            usernames[index] = entry.username
-            websites[index] = entry.website
-            appNames[index] = entry.appName
-            appPackageNames[index] = entry.appPackageName
-        }
-
+        // Pack all searchable, non-secret metadata into one versioned UTF-8 frame.
+        // JNI now crosses the Java/native boundary once for the whole list instead
+        // of retrieving five Java String objects for every password row.
+        val metadata = encodeMetadata(entries)
         val selectedIndices = runCatching {
-            nativeFilterIndices(
-                titles = titles,
-                usernames = usernames,
-                websites = websites,
-                appNames = appNames,
-                appPackageNames = appPackageNames,
-                query = query,
-            )
+            nativeFilterIndices(metadata = metadata, query = query)
         }.getOrNull() ?: return null
 
         return buildList(selectedIndices.size) {
@@ -76,6 +58,37 @@ object RustPasswordListCore {
                 }
             }
         }
+    }
+
+    private fun encodeMetadata(entries: List<PasswordEntry>): ByteArray {
+        // Cap only the pre-allocation hint; ByteArrayOutputStream still grows for
+        // larger lists and no entry/functionality is truncated.
+        val initialCapacity = 8 + entries.size.coerceAtMost(2048) * 96
+        val output = ByteArrayOutputStream(initialCapacity)
+        writeIntLe(output, METADATA_BATCH_MAGIC)
+        writeIntLe(output, entries.size)
+
+        for (entry in entries) {
+            writeUtf8(output, entry.title)
+            writeUtf8(output, entry.username)
+            writeUtf8(output, entry.website)
+            writeUtf8(output, entry.appName)
+            writeUtf8(output, entry.appPackageName)
+        }
+        return output.toByteArray()
+    }
+
+    private fun writeUtf8(output: ByteArrayOutputStream, value: String) {
+        val bytes = value.toByteArray(Charsets.UTF_8)
+        writeIntLe(output, bytes.size)
+        output.write(bytes)
+    }
+
+    private fun writeIntLe(output: ByteArrayOutputStream, value: Int) {
+        output.write(value and 0xff)
+        output.write((value ushr 8) and 0xff)
+        output.write((value ushr 16) and 0xff)
+        output.write((value ushr 24) and 0xff)
     }
 
     fun diagnosticLabel(): String = if (!ensureLoaded()) {
@@ -92,11 +105,7 @@ object RustPasswordListCore {
 
     @JvmStatic
     private external fun nativeFilterIndices(
-        titles: Array<String>,
-        usernames: Array<String>,
-        websites: Array<String>,
-        appNames: Array<String>,
-        appPackageNames: Array<String>,
+        metadata: ByteArray,
         query: String,
     ): IntArray?
 }

@@ -39,16 +39,16 @@ jobs:
     defaults:
       run:
         working-directory: "Monica for Android"
-    
+
     steps:
       - uses: actions/checkout@v6
-      
+
       - name: Set up JDK 17
         uses: actions/setup-java@v5
         with:
           java-version: '17'
           distribution: 'temurin'
-          
+
       - name: Cache Gradle
         uses: actions/cache@v5
         with:
@@ -78,10 +78,10 @@ jobs:
           )
           test -f app/src/main/jniLibs/arm64-v8a/libmonica_rust_jni.so
           test -f app/src/main/jniLibs/armeabi-v7a/libmonica_rust_jni.so
-          
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-        
+
       - name: Validate signing secrets
         if: github.event_name != 'pull_request'
         shell: bash
@@ -138,6 +138,21 @@ jobs:
         if: github.event_name == 'pull_request'
         run: ./gradlew :app:assembleDebug --stacktrace -PpreviewVersionSuffix=$PREVIEW_VERSION_SUFFIX
 
+      - name: Build unsigned Release APK for PR size validation
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: |
+          set -o pipefail
+          ./gradlew --stop
+          ./gradlew :app:assembleRelease \
+            --no-daemon \
+            --stacktrace \
+            --info \
+            -Pkotlin.incremental=false \
+            -Dkotlin.compiler.execution.strategy=in-process \
+            -PpreviewVersionSuffix=$PREVIEW_VERSION_SUFFIX \
+            2>&1 | tee "$RUNNER_TEMP/preview-build.log"
+
       - name: Build Release APK
         if: github.event_name != 'pull_request'
         shell: bash
@@ -185,6 +200,56 @@ jobs:
             echo "::error title=Rust JNI missing::armeabi-v7a library was not packaged."
             exit 1
           }
+
+      - name: Collect APK size report
+        if: always()
+        shell: bash
+        run: |
+          report="$RUNNER_TEMP/apk-size-report.txt"
+          : > "$report"
+          mapfile -t apks < <(find app/build/outputs/apk -type f -iname '*.apk' | sort)
+
+          if [ "${#apks[@]}" -eq 0 ]; then
+            echo "No APK generated." | tee -a "$report"
+            exit 0
+          fi
+
+          for apk in "${apks[@]}"; do
+            bytes="$(stat -c '%s' "$apk")"
+            mib="$(awk -v b="$bytes" 'BEGIN { printf "%.2f", b / 1048576 }')"
+            sha="$(sha256sum "$apk" | awk '{print $1}')"
+            {
+              echo "============================================================"
+              echo "APK: $apk"
+              echo "Bytes: $bytes"
+              echo "MiB: $mib"
+              echo "SHA-256: $sha"
+              echo "Largest 30 uncompressed ZIP entries:"
+              unzip -l "$apk" \
+                | awk 'NR > 3 && $1 ~ /^[0-9]+$/ && NF >= 4 { print $1 "\t" $4 }' \
+                | sort -nr \
+                | awk 'NR <= 30'
+              echo
+            } | tee -a "$report"
+          done
+
+          echo "APK size report written to $report"
+
+      - name: Upload APK size report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: apk-size-report
+          path: ${{ runner.temp }}/apk-size-report.txt
+          if-no-files-found: error
+
+      - name: Upload PR unsigned Release APKs
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v7
+        with:
+          name: pr-unsigned-release-apks
+          path: Monica for Android/app/build/outputs/apk/release/*.APK
+          if-no-files-found: error
 
       - name: Upload preview build log
         if: always()
@@ -281,7 +346,7 @@ jobs:
           name: "⚠️ Development Preview (${{ steps.preview_meta.outputs.preview_version_suffix }})"
           body: |
             > **⚠️ 注意：这是一个自动构建的开发预览版本 (Development Preview)**
-            > 
+            >
             > 此版本用于快速体验最新代码，可能包含未完成的功能或 Bug。
             > 正式使用请下载下面的 Stable 版本。
             > 但是实际上 Stable 版本可能不如这个预览版本更新，毕竟 Stable 版本需要经过更多的测试和验证。
