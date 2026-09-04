@@ -12,6 +12,8 @@ import takagi.ru.monica.data.resolveOwnership
 import takagi.ru.monica.data.model.CardWalletDataCodec
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.contentOrNull
@@ -36,6 +38,13 @@ class SecureItemRepository(
     }
 
     private val json = Json { ignoreUnknownKeys = true }
+    // MainActivity creates several secure-item ViewModels at once. They all
+    // used to scan the complete secure_items table independently during init,
+    // competing for the same Room executor and delaying the first visible
+    // list. Keep the one-time legacy repair single-flight per repository.
+    private val legacyRepairMutex = Mutex()
+    @Volatile
+    private var legacyRepairCompleted = false
 
     private data class TotpFingerprint(
         val issuer: String,
@@ -598,15 +607,23 @@ class SecureItemRepository(
     suspend fun repairLegacyDetachedKeePassItems(
         databaseExists: suspend (Long) -> Boolean = { false }
     ): Int {
-        val items = secureItemDao.getAllItems().first()
-        val staleIds = items
-            .filter { isLegacyDetachedKeePassItem(it, databaseExists) }
-            .map { it.id }
-        if (staleIds.isEmpty()) return 0
+        if (legacyRepairCompleted) return 0
+        return legacyRepairMutex.withLock {
+            if (legacyRepairCompleted) return@withLock 0
 
-        secureItemDao.clearKeePassBindingForIds(staleIds)
-        Log.i(TAG, "Detached legacy KeePass-local secure item bindings: count=${staleIds.size}")
-        return staleIds.size
+            val items = secureItemDao.getAllItems().first()
+            val staleIds = items
+                .filter { isLegacyDetachedKeePassItem(it, databaseExists) }
+                .map { it.id }
+            if (staleIds.isNotEmpty()) {
+                secureItemDao.clearKeePassBindingForIds(staleIds)
+                Log.i(TAG, "Detached legacy KeePass-local secure item bindings: count=${staleIds.size}")
+            }
+            // Mark only after the scan and optional write succeed. An
+            // exception/cancellation leaves the repair eligible for retry.
+            legacyRepairCompleted = true
+            staleIds.size
+        }
     }
 
     private suspend fun isLegacyDetachedKeePassItem(

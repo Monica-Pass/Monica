@@ -280,7 +280,10 @@ fun TotpListContent(
     val totpItems = remember(parsedTotpItems) { parsedTotpItems.map { it.item } }
     val totpDataById = remember(parsedTotpItems) { parsedTotpItems.associate { it.item.id to it.totpData } }
     val searchQuery by viewModel.searchQuery.collectAsState()
-    val passwords by passwordViewModel.allPasswords.collectAsState(initial = emptyList())
+    // The list only needs titles for bound-password delete messaging. Use the
+    // metadata-only stream so entering the authenticator does not decrypt every
+    // password just to build this lookup map.
+    val passwords by passwordViewModel.allPasswordsForUi.collectAsState(initial = emptyList())
     val passwordMap = remember(passwords) { passwords.associateBy { it.id } }
     val haptic = rememberHapticFeedback()
     val focusManager = LocalFocusManager.current

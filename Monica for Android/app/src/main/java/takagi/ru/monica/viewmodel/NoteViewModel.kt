@@ -127,7 +127,9 @@ class NoteViewModel(
     val draftStorageTarget: StateFlow<NoteDraftStorageTarget> = _draftStorageTarget.asStateFlow()
 
     init {
-        viewModelScope.launch {
+        // The repair is shared with the other secure-item ViewModels and is
+        // intentionally kept off the main dispatcher during app startup.
+        viewModelScope.launch(Dispatchers.Default) {
             repairLegacyDetachedKeePassItems()
         }
     }

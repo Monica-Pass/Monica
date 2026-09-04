@@ -274,7 +274,9 @@ class TotpViewModel(
 
     init {
         restoreLastCategoryFilter()
-        viewModelScope.launch {
+        // Legacy binding repair scans the shared secure-item table. Keep it
+        // off the main dispatcher so it cannot delay the first authenticator frame.
+        viewModelScope.launch(Dispatchers.Default) {
             repairLegacyDetachedKeePassItems()
         }
     }
@@ -354,7 +356,11 @@ class TotpViewModel(
         }
     }
 
-    private val allTotpItemsSource: Flow<List<SecureItem>> = combine(
+    // Both the authenticator UI and the keyboard/detail panes consume the
+    // merged TOTP list. Keep one shared upstream subscription so a page entry
+    // does not start multiple Room queries and password-key parsing passes.
+    private val allTotpItemsSharingStarted = SharingStarted.WhileSubscribed(5000)
+    private val allTotpItemsSource: SharedFlow<List<SecureItem>> = combine(
         repository.getItemsByType(ItemType.TOTP),
         passwordRepository.getAllPasswordEntries()
     ) { storedTotps, allPasswords ->
@@ -363,10 +369,15 @@ class TotpViewModel(
             allPasswords = allPasswords
         )
     }.flowOn(Dispatchers.Default)
+        .shareIn(
+            scope = viewModelScope,
+            started = allTotpItemsSharingStarted,
+            replay = 1,
+        )
 
     val allTotpItems: StateFlow<List<SecureItem>> = allTotpItemsSource.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
+        started = allTotpItemsSharingStarted,
         initialValue = emptyList()
     )
     
@@ -374,7 +385,7 @@ class TotpViewModel(
     val totpItems: StateFlow<List<SecureItem>> = combine(
         _searchQuery,
         _categoryFilter,
-        allTotpItemsSource,
+        allTotpItems,
         selectedBitwardenVaultFolderIds
     ) { query, filter, allTotps, selectedVaultFolderIds ->
         // 首先应用分类过滤

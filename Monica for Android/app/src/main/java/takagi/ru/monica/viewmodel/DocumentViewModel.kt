@@ -118,7 +118,9 @@ class DocumentViewModel(
     }
 
     init {
-        viewModelScope.launch {
+        // Legacy binding repair scans the shared secure-item table. Keep it
+        // off the main dispatcher so it cannot delay the first document frame.
+        viewModelScope.launch(Dispatchers.Default) {
             repairLegacyDetachedKeePassItems()
         }
     }

@@ -54,6 +54,23 @@ class DockAndListFirstFramePerformanceGuardTest {
     }
 
     @Test
+    fun cardWalletDefersBackgroundRefreshUntilTheFirstListIsReady() {
+        val screenSource = projectFile(
+            "app/src/main/java/takagi/ru/monica/ui/screens/CardWalletScreen.kt"
+        ).readText().replace("\r\n", "\n")
+
+        assertTrue(
+            "KeePass compatibility refresh must wait for parsed card data so it cannot compete with the first frame.",
+            screenSource.contains("LaunchedEffect(walletItemsReady)") &&
+                screenSource.contains("if (!walletItemsReady) return@LaunchedEffect")
+        )
+        assertTrue(
+            "Bitwarden auto-sync must not start until the card-wallet first frame is ready.",
+            screenSource.contains("enabled = hasRestoredCategoryFilter && walletItemsReady")
+        )
+    }
+
+    @Test
     fun notesUseOneBackgroundDecodedStreamAndNeverRenderEmptyBeforeItIsReady() {
         val viewModelSource = projectFile(
             "app/src/main/java/takagi/ru/monica/viewmodel/NoteViewModel.kt"

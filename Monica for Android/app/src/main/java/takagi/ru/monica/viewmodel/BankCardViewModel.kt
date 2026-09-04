@@ -119,7 +119,9 @@ class BankCardViewModel(
     }
 
     init {
-        viewModelScope.launch {
+        // Legacy binding repair scans the shared secure-item table. Keep it
+        // off the main dispatcher so it cannot delay the first card frame.
+        viewModelScope.launch(Dispatchers.Default) {
             repairLegacyDetachedKeePassItems()
         }
     }

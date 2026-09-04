@@ -344,7 +344,11 @@ fun CardWalletScreen(
             context.getSystemService(android.content.Context.VIBRATOR_SERVICE) as? android.os.Vibrator
         }
     }
-    LaunchedEffect(Unit) {
+    // Keep compatibility scans off the critical first-render path. The parsed
+    // streams are already collected above; wait until all three have emitted
+    // before scheduling the background refresh.
+    LaunchedEffect(walletItemsReady) {
+        if (!walletItemsReady) return@LaunchedEffect
         delay(1_200L)
         SyncTaskRunner.request(
             request = SyncRequest(
@@ -392,7 +396,7 @@ fun CardWalletScreen(
         viewModel = bitwardenViewModel,
         selectedVaultId = selectedBitwardenVaultId,
         isAllView = selectedCategoryFilter is UnifiedCategoryFilterSelection.All,
-        enabled = hasRestoredCategoryFilter
+        enabled = hasRestoredCategoryFilter && walletItemsReady
     )
     DisposableEffect(Unit) {
         onDispose {
