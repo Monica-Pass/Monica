@@ -21,6 +21,7 @@ import takagi.ru.monica.security.SessionManager
 import takagi.ru.monica.sync.AndroidSyncNetworkGate
 import takagi.ru.monica.sync.SyncTaskRunner
 import takagi.ru.monica.utils.AppLauncherIconManager
+import takagi.ru.monica.utils.ChangeTriggeredBackupScheduler
 import takagi.ru.monica.utils.SettingsManager
 import takagi.ru.monica.webdav.WebDavBackoffState
 import takagi.ru.monica.webdav.WebDavCertificateTrustStore
@@ -74,11 +75,26 @@ class MonicaApplication : Application() {
             MainThreadStallMonitor.start()
             scheduleKeePassRemoteUploadRecovery()
             syncLauncherEntryPointsWithSettings()
+            startChangeTriggeredBackupObserver()
         }
 
         startupScope.launch(Dispatchers.IO) {
             delay(HOUSEKEEPING_DELAY_MS)
             runAttachmentHousekeeping()
+        }
+    }
+
+    /**
+     * 注册「改动后自动同步」的表失效监听。
+     *
+     * 放在启动安静期而不是 [onCreate]：注册会触碰数据库实例，且首帧不依赖它。
+     * 观察者常驻，开关状态在回调里读取，用户改设置后无需重启。
+     */
+    private fun startChangeTriggeredBackupObserver() {
+        runCatching {
+            ChangeTriggeredBackupScheduler(this).start()
+        }.onFailure { error ->
+            Log.w(TAG, "Failed to start change-triggered backup observer", error)
         }
     }
 

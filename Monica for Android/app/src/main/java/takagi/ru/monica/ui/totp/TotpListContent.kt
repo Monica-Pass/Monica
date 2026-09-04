@@ -52,8 +52,6 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -133,6 +131,7 @@ import takagi.ru.monica.viewmodel.TotpViewModel
 import takagi.ru.monica.viewmodel.CategoryFilter
 import takagi.ru.monica.data.Category
 import takagi.ru.monica.data.AuthenticatorLayoutMode
+import takagi.ru.monica.data.AppSettings
 import takagi.ru.monica.viewmodel.BankCardViewModel
 import takagi.ru.monica.viewmodel.DocumentViewModel
 import takagi.ru.monica.viewmodel.GeneratorViewModel
@@ -167,6 +166,7 @@ import takagi.ru.monica.ui.components.QuickActionItem
 import takagi.ru.monica.ui.components.QuickAddCallback
 import takagi.ru.monica.ui.components.SyncStatusIcon
 import takagi.ru.monica.ui.components.M3IdentityVerifyDialog
+import takagi.ru.monica.ui.components.MonicaTileGrid
 import takagi.ru.monica.ui.components.UnifiedCategoryFilterChipMenu
 import takagi.ru.monica.ui.components.UnifiedCategoryFilterChipMenuDropdown
 import takagi.ru.monica.ui.components.UnifiedCategoryFilterChipMenuOffset
@@ -227,6 +227,8 @@ import kotlin.math.sin
 fun TotpListContent(
     viewModel: takagi.ru.monica.viewmodel.TotpViewModel,
     passwordViewModel: PasswordViewModel,
+    appSettings: AppSettings,
+    onAuthenticatorLayoutModeChange: (AuthenticatorLayoutMode) -> Unit,
     onTotpClick: (Long) -> Unit,
     onDeleteTotp: (takagi.ru.monica.data.SecureItem) -> Unit,
     onQuickScanTotp: () -> Unit,
@@ -284,7 +286,7 @@ fun TotpListContent(
     val focusManager = LocalFocusManager.current
     var isSearchExpanded by rememberSaveable { mutableStateOf(false) }
     var showTopActionsMenu by remember { mutableStateOf(false) }
-    
+
     // 分类选择状态
     var isCategorySheetVisible by rememberSaveable { mutableStateOf(false) }
     var categoryPillBoundsInWindow by remember { mutableStateOf<androidx.compose.ui.geometry.Rect?>(null) }
@@ -408,8 +410,6 @@ fun TotpListContent(
     var passwordInput by remember { mutableStateOf("") }
     var passwordError by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
-    val settingsManager = remember { takagi.ru.monica.utils.SettingsManager(context) }
-    val appSettings by settingsManager.settingsFlow.collectAsState(initial = takagi.ru.monica.data.AppSettings())
     val activity = context as? FragmentActivity
     val biometricHelper = remember { BiometricHelper(context) }
     val canUseBiometric = activity != null && appSettings.biometricEnabled && biometricHelper.isBiometricAvailable()
@@ -863,15 +863,13 @@ fun TotpListContent(
                                 },
                                 onClick = {
                                     showTopActionsMenu = false
-                                    scope.launch {
-                                        settingsManager.updateAuthenticatorLayoutMode(
-                                            if (isTileLayout) {
-                                                AuthenticatorLayoutMode.STANDARD
-                                            } else {
-                                                AuthenticatorLayoutMode.TILE
-                                            }
-                                        )
-                                    }
+                                    onAuthenticatorLayoutModeChange(
+                                        if (isTileLayout) {
+                                            AuthenticatorLayoutMode.STANDARD
+                                        } else {
+                                            AuthenticatorLayoutMode.TILE
+                                        }
+                                    )
                                 }
                             )
                             if (showStandaloneSettingsEntry) {
@@ -1079,16 +1077,12 @@ fun TotpListContent(
                     }
                 }
 
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
+                MonicaTileGrid(
                     state = lazyGridState,
                     modifier = Modifier
                         .fillMaxSize()
                         .offset { androidx.compose.ui.unit.IntOffset(0, contentPullOffset) }
-                        .nestedScroll(pullAction.nestedScrollConnection),
-                    contentPadding = PaddingValues(start = 12.dp, top = 12.dp, end = 12.dp, bottom = 96.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        .nestedScroll(pullAction.nestedScrollConnection)
                 ) {
                     items(
                         items = localTotpItems,
@@ -1164,7 +1158,7 @@ fun TotpListContent(
                     }
                 }
             }
-            
+
             // 当拖动结束时保存新顺序
             LaunchedEffect(reorderableLazyListState.isAnyItemDragging) {
                 if (!reorderableLazyListState.isAnyItemDragging && isSelectionMode) {
@@ -1177,7 +1171,7 @@ fun TotpListContent(
                     }
                 }
             }
-            
+
             LazyColumn(
                 state = lazyListState,
                 modifier = Modifier
@@ -1200,7 +1194,7 @@ fun TotpListContent(
                             if (isDragging) 8.dp else 0.dp,
                             label = "drag_elevation"
                         )
-                        
+
                         // 在多选模式下使用拖动手柄
                         val dragModifier = if (isSelectionMode) {
                             Modifier.longPressDraggableHandle(
@@ -1214,7 +1208,7 @@ fun TotpListContent(
                         } else {
                             Modifier
                         }
-                        
+
                         // Keep right-swipe selection available in selection mode; only disable delete swipe there.
                         takagi.ru.monica.ui.gestures.SwipeActions(
                             onSwipeLeft = {
@@ -1291,7 +1285,7 @@ fun TotpListContent(
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                 }
-                
+
                 item {
                     Spacer(modifier = Modifier.height(80.dp))
                 }

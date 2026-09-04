@@ -1,41 +1,39 @@
 package takagi.ru.monica.ui
 
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateIntOffsetAsState
-import androidx.compose.animation.core.spring
-import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.foundation.layout.requiredWidth
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DragHandle
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
+import sh.calvin.reorderable.ReorderableItem
+import sh.calvin.reorderable.rememberReorderableLazyGridState
 import takagi.ru.monica.data.PasswordListQuickFilterItem
 import takagi.ru.monica.data.PasswordPageContentType
-import kotlin.math.abs
-import kotlin.math.roundToInt
 
 internal data class PasswordQuickFilterChipState(
     val favorite: Boolean,
@@ -77,318 +75,140 @@ internal data class PasswordQuickFilterEditGridParams(
     val onOrderCommitted: (List<PasswordListQuickFilterItem>) -> Unit
 )
 
-private data class PasswordQuickFilterGridMetrics(
-    val availableWidthPx: Float,
-    val itemHeightPx: Float,
-    val gridSpacingPx: Float
-)
-
-private fun <T> reorderListByInsertion(list: List<T>, item: T, insertionIndex: Int): List<T> {
-    if (item !in list) return list
-    return list.toMutableList().apply {
-        remove(item)
-        add(insertionIndex.coerceIn(0, size), item)
+internal fun mergeVisibleQuickFilterOrder(
+    fullOrder: List<PasswordListQuickFilterItem>,
+    reorderedVisibleItems: List<PasswordListQuickFilterItem>
+): List<PasswordListQuickFilterItem> {
+    if (reorderedVisibleItems.isEmpty()) return fullOrder
+    val visibleSet = reorderedVisibleItems.toSet()
+    val reordered = reorderedVisibleItems.iterator()
+    return fullOrder.map { item ->
+        if (item in visibleSet && reordered.hasNext()) reordered.next() else item
     }
-}
-
-private fun PasswordQuickFilterEditGridParams.itemSize(
-    item: PasswordListQuickFilterItem,
-    metrics: PasswordQuickFilterGridMetrics
-): IntSize {
-    // 首次测量前用一个小的占位尺寸，让 chip 按内容自然撑开测量真实宽度，
-    // 避免被 requiredSize 锁死在两列宽度。
-    return measuredSizes[item] ?: IntSize(
-        width = 0,
-        height = metrics.itemHeightPx.roundToInt()
-    )
-}
-
-private fun PasswordQuickFilterEditGridParams.computeLayout(
-    order: List<PasswordListQuickFilterItem>,
-    metrics: PasswordQuickFilterGridMetrics
-): Pair<Map<PasswordListQuickFilterItem, Offset>, Float> {
-    val offsets = linkedMapOf<PasswordListQuickFilterItem, Offset>()
-    var x = 0f
-    var y = 0f
-    var rowHeight = 0f
-
-    order.forEach { item ->
-        val size = itemSize(item, metrics)
-        val itemWidth = size.width.toFloat()
-        val itemHeight = maxOf(size.height.toFloat(), metrics.itemHeightPx)
-        if (x > 0f && x + itemWidth > metrics.availableWidthPx) {
-            x = 0f
-            y += rowHeight + metrics.gridSpacingPx
-            rowHeight = 0f
-        }
-        offsets[item] = Offset(x, y)
-        x += itemWidth + metrics.gridSpacingPx
-        rowHeight = maxOf(rowHeight, itemHeight)
-    }
-
-    val totalHeight = if (offsets.isEmpty()) metrics.itemHeightPx else y + rowHeight
-    return offsets to totalHeight
-}
-
-private fun PasswordQuickFilterEditGridParams.insertionIndexFor(
-    point: Offset,
-    order: List<PasswordListQuickFilterItem>,
-    offsets: Map<PasswordListQuickFilterItem, Offset>,
-    metrics: PasswordQuickFilterGridMetrics,
-    currentTargetIndex: Int,
-    ignoredItem: PasswordListQuickFilterItem? = null
-): Int {
-    val candidates = order.filter { it != ignoredItem }
-    if (candidates.isEmpty()) return 0
-
-    val fallbackIndex = currentTargetIndex.takeIf { it in 0..candidates.size }
-        ?: order.indexOf(ignoredItem).takeIf { it >= 0 }
-        ?: candidates.size
-
-    candidates.forEachIndexed { index, item ->
-        val topLeft = offsets[item] ?: return@forEachIndexed
-        val size = itemSize(item, metrics)
-        val centerX = topLeft.x + size.width / 2f
-        val centerY = topLeft.y + size.height / 2f
-        val rowThreshold = size.height * 0.45f
-
-        if (point.y < centerY - rowThreshold) return index
-        if (abs(point.y - centerY) <= rowThreshold && point.x < centerX) return index
-    }
-
-    return candidates.size.coerceAtLeast(fallbackIndex)
 }
 
 @Composable
-private fun PasswordQuickFilterGridChip(
+private fun PasswordQuickFilterEditItem(
     item: PasswordListQuickFilterItem,
     params: PasswordQuickFilterEditGridParams,
-    modifier: Modifier = Modifier,
-    onMeasured: ((IntSize) -> Unit)? = null
+    modifier: Modifier = Modifier
 ) {
-    val trackedModifier = if (onMeasured == null) {
-        modifier
-    } else {
-        modifier.onGloballyPositioned { coordinates -> onMeasured(coordinates.size) }
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(52.dp)
+            .padding(horizontal = 2.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        PasswordQuickFilterChipItem(
+            item = item,
+            categoryEditMode = true,
+            quickFilterFavorite = params.chipState.favorite,
+            onQuickFilterFavoriteChange = params.chipCallbacks.onFavoriteChange,
+            quickFilter2fa = params.chipState.twoFa,
+            onQuickFilter2faChange = params.chipCallbacks.onTwoFaChange,
+            quickFilterNotes = params.chipState.notes,
+            onQuickFilterNotesChange = params.chipCallbacks.onNotesChange,
+            quickFilterPasskey = params.chipState.passkey,
+            onQuickFilterPasskeyChange = params.chipCallbacks.onPasskeyChange,
+            quickFilterBoundNote = params.chipState.boundNote,
+            onQuickFilterBoundNoteChange = params.chipCallbacks.onBoundNoteChange,
+            quickFilterAttachments = params.chipState.attachments,
+            onQuickFilterAttachmentsChange = params.chipCallbacks.onAttachmentsChange,
+            quickFilterUncategorized = params.chipState.uncategorized,
+            onQuickFilterUncategorizedChange = params.chipCallbacks.onUncategorizedChange,
+            quickFilterLocalOnly = params.chipState.localOnly,
+            onQuickFilterLocalOnlyChange = params.chipCallbacks.onLocalOnlyChange,
+            quickFilterManualStackOnly = params.chipState.manualStackOnly,
+            onQuickFilterManualStackOnlyChange = params.chipCallbacks.onManualStackOnlyChange,
+            quickFilterNeverStack = params.chipState.neverStack,
+            onQuickFilterNeverStackChange = params.chipCallbacks.onNeverStackChange,
+            quickFilterUnstacked = params.chipState.unstacked,
+            onQuickFilterUnstackedChange = params.chipCallbacks.onUnstackedChange,
+            aggregateSelectedTypes = params.chipState.aggregateSelectedTypes,
+            aggregateVisibleTypes = params.chipState.aggregateVisibleTypes,
+            onToggleAggregateType = params.chipCallbacks.onToggleAggregateType,
+            modifier = Modifier.weight(1f)
+        )
+        Spacer(modifier = Modifier.width(4.dp))
+        Icon(
+            imageVector = Icons.Default.DragHandle,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.size(22.dp)
+        )
+        Spacer(modifier = Modifier.width(4.dp))
     }
-    PasswordQuickFilterChipItem(
-        item = item,
-        categoryEditMode = true,
-        quickFilterFavorite = params.chipState.favorite,
-        onQuickFilterFavoriteChange = params.chipCallbacks.onFavoriteChange,
-        quickFilter2fa = params.chipState.twoFa,
-        onQuickFilter2faChange = params.chipCallbacks.onTwoFaChange,
-        quickFilterNotes = params.chipState.notes,
-        onQuickFilterNotesChange = params.chipCallbacks.onNotesChange,
-        quickFilterPasskey = params.chipState.passkey,
-        onQuickFilterPasskeyChange = params.chipCallbacks.onPasskeyChange,
-        quickFilterBoundNote = params.chipState.boundNote,
-        onQuickFilterBoundNoteChange = params.chipCallbacks.onBoundNoteChange,
-        quickFilterAttachments = params.chipState.attachments,
-        onQuickFilterAttachmentsChange = params.chipCallbacks.onAttachmentsChange,
-        quickFilterUncategorized = params.chipState.uncategorized,
-        onQuickFilterUncategorizedChange = params.chipCallbacks.onUncategorizedChange,
-        quickFilterLocalOnly = params.chipState.localOnly,
-        onQuickFilterLocalOnlyChange = params.chipCallbacks.onLocalOnlyChange,
-        quickFilterManualStackOnly = params.chipState.manualStackOnly,
-        onQuickFilterManualStackOnlyChange = params.chipCallbacks.onManualStackOnlyChange,
-        quickFilterNeverStack = params.chipState.neverStack,
-        onQuickFilterNeverStackChange = params.chipCallbacks.onNeverStackChange,
-        quickFilterUnstacked = params.chipState.unstacked,
-        onQuickFilterUnstackedChange = params.chipCallbacks.onUnstackedChange,
-        aggregateSelectedTypes = params.chipState.aggregateSelectedTypes,
-        aggregateVisibleTypes = params.chipState.aggregateVisibleTypes,
-        onToggleAggregateType = params.chipCallbacks.onToggleAggregateType,
-        modifier = trackedModifier
-    )
 }
 
 @Composable
 internal fun PasswordQuickFilterEditGrid(params: PasswordQuickFilterEditGridParams) {
-    val density = LocalDensity.current
-    val metrics = with(density) {
-        PasswordQuickFilterGridMetrics(
-            availableWidthPx = params.availableWidth.toPx(),
-            itemHeightPx = 48.dp.toPx(),
-            gridSpacingPx = 8.dp.toPx()
-        )
-    }
-    var draggingItem by remember { mutableStateOf<PasswordListQuickFilterItem?>(null) }
-    var dragTargetIndex by remember { mutableIntStateOf(-1) }
-    var dragPointerPosition by remember { mutableStateOf(Offset.Zero) }
-    var dragTouchOffset by remember { mutableStateOf(Offset.Zero) }
-    var pendingCommittedOrder by remember { mutableStateOf<List<PasswordListQuickFilterItem>?>(null) }
-    var dragSnapshotOrder by remember { mutableStateOf<List<PasswordListQuickFilterItem>>(emptyList()) }
-    var dragSnapshotOffsets by remember { mutableStateOf<Map<PasswordListQuickFilterItem, Offset>>(emptyMap()) }
-
-    val displayOrder = pendingCommittedOrder ?: params.items
-    val previewSourceOrder = if (draggingItem != null && dragSnapshotOrder.isNotEmpty()) dragSnapshotOrder else displayOrder
-    val previewOrder = remember(previewSourceOrder, draggingItem, dragTargetIndex) {
-        val dragged = draggingItem
-        if (dragged != null && dragTargetIndex >= 0) {
-            reorderListByInsertion(previewSourceOrder, dragged, dragTargetIndex)
-        } else {
-            previewSourceOrder
+    val visibleItems = remember(params.items, params.chipState.aggregateVisibleTypes) {
+        params.items.filter { item ->
+            shouldShowQuickFilterItem(item, params.chipState.aggregateVisibleTypes)
         }
     }
-    val activeOrder = if (draggingItem != null) previewOrder else displayOrder
-    val layoutInfo = remember(activeOrder, params.measuredSizes, params.availableWidth) {
-        params.computeLayout(activeOrder, metrics)
-    }
-    val targetOffsets = layoutInfo.first
-    val gridHeight = with(density) { layoutInfo.second.toDp() }
-
-    fun resetDragState(clearSnapshot: Boolean = true) {
-        draggingItem = null
-        dragTargetIndex = -1
-        dragPointerPosition = Offset.Zero
-        dragTouchOffset = Offset.Zero
-        if (clearSnapshot) {
-            dragSnapshotOrder = emptyList()
-            dragSnapshotOffsets = emptyMap()
+    var localOrder by remember { mutableStateOf(visibleItems) }
+    val gridState = rememberLazyGridState()
+    val reorderableState = rememberReorderableLazyGridState(gridState) { from, to ->
+        localOrder = localOrder.toMutableList().apply {
+            add(to.index, removeAt(from.index))
         }
     }
+    var wasDragging by remember { mutableStateOf(false) }
 
-    LaunchedEffect(params.items, pendingCommittedOrder) {
-        if (pendingCommittedOrder != null && params.items == pendingCommittedOrder) {
-            pendingCommittedOrder = null
-        }
+    LaunchedEffect(visibleItems) {
+        if (!reorderableState.isAnyItemDragging) localOrder = visibleItems
     }
-
-    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterStart) {
-        Box(modifier = Modifier.requiredWidth(params.availableWidth).height(gridHeight)) {
-            params.items.forEach { item ->
-                val targetPosition = targetOffsets[item] ?: dragSnapshotOffsets[item] ?: Offset.Zero
-                val chipSize = params.itemSize(item, metrics)
-                val itemAlpha = if (draggingItem == item) 0f else 1f
-                val animatedOffset by animateIntOffsetAsState(
-                    targetValue = IntOffset(targetPosition.x.roundToInt(), targetPosition.y.roundToInt()),
-                    animationSpec = spring(
-                        stiffness = Spring.StiffnessMediumLow,
-                        dampingRatio = Spring.DampingRatioNoBouncy
-                    ),
-                    label = "password_menu_quick_filter_position"
-                )
-
-                Box(
-                    modifier = Modifier
-                        .offset { animatedOffset }
-                        .wrapContentSize(align = Alignment.CenterStart, unbounded = true)
-                        .alpha(itemAlpha),
-                    contentAlignment = Alignment.CenterStart
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .pointerInput(item) {
-                                // key 只用 item，不包含 displayOrder，
-                                // 避免拖拽过程中 displayOrder 变化导致手势检测器被重建而产生抽搐。
-                                // 拖拽开始时通过 dragSnapshotOrder 快照当前顺序，后续操作基于快照进行。
-                                detectDragGesturesAfterLongPress(
-                                    onDragStart = { offset ->
-                                        val snapshotOrder = displayOrder
-                                        val startIndex = snapshotOrder.indexOf(item)
-                                        if (startIndex == -1) return@detectDragGesturesAfterLongPress
-                                        val snapshotOffsets = params.computeLayout(snapshotOrder, metrics).first
-                                        val startTopLeft = snapshotOffsets[item] ?: Offset.Zero
-                                        draggingItem = item
-                                        dragTargetIndex = startIndex
-                                        dragPointerPosition = startTopLeft + offset
-                                        dragTouchOffset = offset
-                                        dragSnapshotOrder = snapshotOrder
-                                        dragSnapshotOffsets = snapshotOffsets
-                                    },
-                                    onDragCancel = { resetDragState() },
-                                    onDragEnd = {
-                                        val dragged = draggingItem
-                                        val insertionIndex = dragTargetIndex
-                                        val sourceOrder = if (dragSnapshotOrder.isNotEmpty()) dragSnapshotOrder else displayOrder
-                                        if (dragged == null || insertionIndex < 0) {
-                                            resetDragState()
-                                            return@detectDragGesturesAfterLongPress
-                                        }
-                                        val reordered = reorderListByInsertion(sourceOrder, dragged, insertionIndex)
-                                        pendingCommittedOrder = reordered
-                                        resetDragState()
-                                        if (reordered != params.items) {
-                                            params.onOrderCommitted(reordered)
-                                        }
-                                    },
-                                    onDrag = { change, dragAmount ->
-                                        change.consume()
-                                        if (draggingItem != item) return@detectDragGesturesAfterLongPress
-                                        dragPointerPosition += Offset(dragAmount.x, dragAmount.y)
-                                        val snapshotOrder = if (dragSnapshotOrder.isNotEmpty()) dragSnapshotOrder else displayOrder
-                                        // 用不含被拖 item 的当前布局来计算插入位置，
-                                        // 这样位置判断与实际预览布局一致，避免奇数 item 时出现空白占位。
-                                        val candidateOrder = snapshotOrder.filter { it != item }
-                                        val candidateOffsets = params.computeLayout(candidateOrder, metrics).first
-                                        dragTargetIndex = params.insertionIndexFor(
-                                            point = dragPointerPosition,
-                                            order = snapshotOrder,
-                                            offsets = candidateOffsets,
-                                            metrics = metrics,
-                                            currentTargetIndex = dragTargetIndex,
-                                            ignoredItem = item
-                                        )
-                                    }
-                                )
-                            },
-                        contentAlignment = Alignment.CenterStart
-                    ) {
-                        PasswordQuickFilterGridChip(
-                            item = item,
-                            params = params,
-                            onMeasured = { size ->
-                                if (params.measuredSizes[item] != size) {
-                                    params.measuredSizes[item] = size
-                                }
-                            }
-                        )
-                    }
-                }
+    LaunchedEffect(reorderableState.isAnyItemDragging) {
+        if (reorderableState.isAnyItemDragging) {
+            wasDragging = true
+        } else if (wasDragging) {
+            wasDragging = false
+            val mergedOrder = mergeVisibleQuickFilterOrder(params.items, localOrder)
+            if (mergedOrder != params.items) {
+                params.onOrderCommitted(mergedOrder)
             }
+        }
+    }
 
-            draggingItem?.let { item ->
-                val placeholderOffset = targetOffsets[item] ?: dragSnapshotOffsets[item] ?: Offset.Zero
-                val placeholderSize = params.itemSize(item, metrics)
+    val itemSpacing = 8.dp
+    val rowCount = (localOrder.size + 1) / 2
+    val contentHeight = (52.dp * rowCount) +
+        (itemSpacing * (rowCount - 1).coerceAtLeast(0))
+
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        state = gridState,
+        modifier = Modifier
+            .width(params.availableWidth)
+            .height(contentHeight),
+        verticalArrangement = Arrangement.spacedBy(itemSpacing),
+        horizontalArrangement = Arrangement.spacedBy(itemSpacing),
+        userScrollEnabled = false
+    ) {
+        items(
+            items = localOrder,
+            key = { it.name }
+        ) { item ->
+            ReorderableItem(
+                reorderableState,
+                key = item.name
+            ) { isDragging ->
+                val elevation by animateDpAsState(
+                    targetValue = if (isDragging) 8.dp else 0.dp,
+                    label = "quick_filter_drag_elevation"
+                )
                 Box(
                     modifier = Modifier
-                        .offset {
-                            IntOffset(
-                                placeholderOffset.x.roundToInt(),
-                                placeholderOffset.y.roundToInt()
-                            )
-                        }
-                        .requiredSize(
-                            width = with(density) { placeholderSize.width.toDp() },
-                            height = with(density) { placeholderSize.height.toDp() }
-                        )
-                        .alpha(0.22f)
-                        .zIndex(1f),
-                    contentAlignment = Alignment.CenterStart
+                        .fillMaxWidth()
+                        .graphicsLayer { shadowElevation = elevation.toPx() }
+                        .longPressDraggableHandle()
                 ) {
-                    PasswordQuickFilterGridChip(item = item, params = params)
-                }
-
-                val overlayOffset = dragPointerPosition - dragTouchOffset
-                val overlaySize = params.itemSize(item, metrics)
-                Box(
-                    modifier = Modifier
-                        .offset {
-                            IntOffset(
-                                overlayOffset.x.roundToInt(),
-                                overlayOffset.y.roundToInt()
-                            )
-                        }
-                        .requiredSize(
-                            width = with(density) { overlaySize.width.toDp() },
-                            height = with(density) { overlaySize.height.toDp() }
-                        )
-                        .zIndex(2f),
-                    contentAlignment = Alignment.CenterStart
-                ) {
-                    PasswordQuickFilterGridChip(item = item, params = params)
+                    PasswordQuickFilterEditItem(
+                        item = item,
+                        params = params
+                    )
                 }
             }
         }

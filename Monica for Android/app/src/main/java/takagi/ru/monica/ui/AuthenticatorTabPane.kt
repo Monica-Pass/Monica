@@ -9,6 +9,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
+import takagi.ru.monica.data.AppSettings
+import takagi.ru.monica.data.AuthenticatorLayoutMode
 import takagi.ru.monica.ui.common.layout.DetailPane
 import takagi.ru.monica.ui.common.layout.ListPane
 import takagi.ru.monica.ui.screens.AddEditTotpScreen
@@ -20,6 +22,8 @@ internal fun AuthenticatorTabPane(
     wideListPaneWidth: Dp,
     totpViewModel: takagi.ru.monica.viewmodel.TotpViewModel,
     passwordViewModel: PasswordViewModel,
+    appSettings: AppSettings,
+    onAuthenticatorLayoutModeChange: (AuthenticatorLayoutMode) -> Unit,
     localKeePassViewModel: takagi.ru.monica.viewmodel.LocalKeePassViewModel,
     onTotpOpen: (Long) -> Unit,
     onNavigateToQuickTotpScan: () -> Unit,
@@ -42,6 +46,8 @@ internal fun AuthenticatorTabPane(
         TotpListContent(
             viewModel = totpViewModel,
             passwordViewModel = passwordViewModel,
+            appSettings = appSettings,
+            onAuthenticatorLayoutModeChange = onAuthenticatorLayoutModeChange,
             onTotpClick = onTotpOpen,
             onDeleteTotp = { totp ->
                 totpViewModel.deleteTotpItem(totp)

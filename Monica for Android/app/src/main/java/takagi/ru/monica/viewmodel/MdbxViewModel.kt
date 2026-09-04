@@ -4018,7 +4018,11 @@ class MdbxViewModel(
             createdAt = existing?.createdAt ?: Date(),
             updatedAt = existing?.updatedAt ?: Date(),
             isFavorite = existing?.isFavorite ?: false,
-            sortOrder = existing?.sortOrder ?: 0,
+            sortOrder = if (payload.has("sort_order")) {
+                payload.optInt("sort_order", existing?.sortOrder ?: 0)
+            } else {
+                existing?.sortOrder ?: 0
+            },
             isGroupCover = existing?.isGroupCover ?: false
         )
         val localPasswordId = if (existing != null) {
@@ -4146,7 +4150,11 @@ class MdbxViewModel(
             createdAt = existing?.createdAt ?: Date(),
             updatedAt = existing?.updatedAt ?: Date(),
             isFavorite = existing?.isFavorite ?: false,
-            sortOrder = existing?.sortOrder ?: 0
+            sortOrder = if (payload.has("sort_order")) {
+                payload.optInt("sort_order", existing?.sortOrder ?: 0)
+            } else {
+                existing?.sortOrder ?: 0
+            }
         )
         if (existing != null) {
             if (!existing.matchesMdbxImport(item)) {

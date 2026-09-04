@@ -16,7 +16,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.DisableSelection
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -313,17 +312,9 @@ fun TotpCodeCard(
     val immersiveErrorColor = Color.White
 
     if (compactTile) {
-        Card(
+        MonicaItemCard(
             modifier = cardInteractionModifier.heightIn(min = 142.dp),
-            shape = RoundedCornerShape(8.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = if (isSelected) {
-                    MaterialTheme.colorScheme.primaryContainer
-                } else {
-                    MaterialTheme.colorScheme.surfaceContainer
-                }
-            )
+            isSelected = isSelected
         ) {
             Column(
                 modifier = Modifier
@@ -511,21 +502,10 @@ fun TotpCodeCard(
         return
     }
 
-    Card(
+    MonicaItemCard(
         modifier = cardInteractionModifier,
-        shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 2.dp
-        ),
-        colors = if (hasImmersiveBackground) {
-            CardDefaults.cardColors(containerColor = Color.Transparent)
-        } else if (isSelected) {
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer
-            )
-        } else {
-            CardDefaults.cardColors()
-        }
+        isSelected = isSelected,
+        transparentContainer = hasImmersiveBackground
     ) {
         Box(modifier = Modifier.fillMaxWidth()) {
             if (backgroundContent != null) {

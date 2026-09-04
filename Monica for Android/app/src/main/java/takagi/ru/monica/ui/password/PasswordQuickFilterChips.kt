@@ -51,6 +51,8 @@ internal fun shouldShowQuickFilterItem(
     item: PasswordListQuickFilterItem,
     aggregateVisibleContentTypes: List<PasswordPageContentType>
 ): Boolean {
+    // Legacy order placeholder; TWO_FA is the actual visible authenticator filter.
+    if (item == PasswordListQuickFilterItem.AUTHENTICATOR) return false
     if (item == PasswordListQuickFilterItem.TWO_FA ||
         item == PasswordListQuickFilterItem.PASSKEY ||
         item == PasswordListQuickFilterItem.NOTE ||

@@ -48,6 +48,7 @@ import takagi.ru.monica.autofill_ng.core.AutofillDiagnostics
 import takagi.ru.monica.ui.components.AutofillStatusCard
 import takagi.ru.monica.ui.components.AppInfo
 import takagi.ru.monica.ui.components.loadInstalledApps
+import takagi.ru.monica.ui.components.AppIcon
 import takagi.ru.monica.utils.SettingsManager
 import java.io.File
 
@@ -1001,7 +1002,12 @@ fun BlacklistManagementDialog(
                         modifier = Modifier.fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
-                        items(filteredApps) { app ->
+                        // Keep rows tied to packages rather than their current
+                        // position so filtering cannot reuse a previous icon.
+                        items(
+                            items = filteredApps,
+                            key = { it.packageName }
+                        ) { app ->
                             val isInBlacklist = blacklistPackages.contains(app.packageName)
 
                             Surface(
@@ -1028,20 +1034,7 @@ fun BlacklistManagementDialog(
                                         horizontalArrangement = Arrangement.spacedBy(12.dp),
                                         modifier = Modifier.weight(1f)
                                     ) {
-                                        if (app.icon != null) {
-                                            Image(
-                                                painter = rememberDrawablePainter(drawable = app.icon),
-                                                contentDescription = null,
-                                                modifier = Modifier.size(32.dp)
-                                            )
-                                        } else {
-                                            Icon(
-                                                imageVector = Icons.Outlined.Apps,
-                                                contentDescription = null,
-                                                modifier = Modifier.size(32.dp),
-                                                tint = MaterialTheme.colorScheme.onSurfaceVariant
-                                            )
-                                        }
+                                        AppIcon(app = app, modifier = Modifier.size(32.dp))
 
                                         Column {
                                             Text(

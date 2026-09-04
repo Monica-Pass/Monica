@@ -1675,6 +1675,18 @@
     <!-- WebDAV Auto Backup -->
     <string name="webdav_auto_backup">自动备份</string>
     <string name="webdav_auto_backup_description">每天首次打开或每12小时自动备份</string>
+    <string name="webdav_sync_settings">同步设置</string>
+    <string name="webdav_change_triggered_title">改动后自动同步</string>
+    <string name="webdav_change_triggered_description">停止编辑后就上传，不必等 12 小时的周期</string>
+    <string name="webdav_change_triggered_quiet">静默时长</string>
+    <string name="webdav_change_triggered_quiet_value">%d 分钟</string>
+    <string name="webdav_change_triggered_quiet_hint">最后一次改动后等待这么久再上传</string>
+    <string name="webdav_change_triggered_min_interval">最小上传间隔</string>
+    <string name="webdav_change_triggered_min_interval_value">%d 分钟</string>
+    <string name="webdav_change_triggered_min_interval_off">不限制</string>
+    <string name="webdav_change_triggered_min_interval_hint">每次备份都会重新上传完整压缩包，间隔越小流量越大。</string>
+    <string name="webdav_change_triggered_requires_auto_backup">请先开启自动备份</string>
+    <string name="webdav_sync_settings_saved">同步设置已保存</string>
     <string name="webdav_auto_backup_enabled">已启用自动备份</string>
     <string name="webdav_auto_backup_disabled">已禁用自动备份</string>
     <string name="webdav_last_backup">上次备份</string>

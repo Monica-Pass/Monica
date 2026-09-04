@@ -2056,6 +2056,7 @@ class MdbxVaultStore(
                 runCatching { securityManager.decryptData(entry.password) }.getOrDefault(entry.password)
             )
             .put("notes", entry.notes)
+            .put("sort_order", entry.sortOrder)
             .put("category_id", entry.categoryId)
             .put("mdbx_folder_id", entry.mdbxFolderId)
             .put("bound_note_room_id", entry.boundNoteId)
@@ -2111,6 +2112,7 @@ class MdbxVaultStore(
             .put("kind", item.itemType.name.lowercase())
             .put("room_id", item.id)
             .put("notes", item.notes)
+            .put("sort_order", item.sortOrder)
             .put(
                 "item_data",
                 portableSensitiveValueForMdbx(

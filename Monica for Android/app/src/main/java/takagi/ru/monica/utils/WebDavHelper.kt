@@ -96,6 +96,7 @@ private data class PasswordBackupEntry(
     val website: String = "",
     val notes: String = "",
     val isFavorite: Boolean = false,
+    val sortOrder: Int = 0,
     val categoryId: Long? = null,
     val categoryName: String? = null,  // 
     val appPackageName: String = "",
@@ -138,6 +139,7 @@ private data class NoteBackupEntry(
     val notes: String = "",
     val itemData: String = "",
     val isFavorite: Boolean = false,
+    val sortOrder: Int = 0,
     val imagePaths: String = "",
     val keepassDatabaseId: Long? = null,
     val keepassGroupPath: String? = null,
@@ -156,6 +158,7 @@ private data class CardWalletBackupEntry(
     val itemData: String = "",
     val notes: String = "",
     val isFavorite: Boolean = false,
+    val sortOrder: Int = 0,
     val imagePaths: String = "",
     val keepassDatabaseId: Long? = null,
     val keepassGroupPath: String? = null,
@@ -199,6 +202,7 @@ private data class TotpBackupEntry(
     val itemData: String = "",
     val notes: String = "",
     val isFavorite: Boolean = false,
+    val sortOrder: Int = 0,
     val imagePaths: String = "",
     val keepassDatabaseId: Long? = null,
     val keepassGroupPath: String? = null,
@@ -427,6 +431,7 @@ private data class PageAdjustmentSettingsBackupEntry(
     val validatorUnifiedProgressBar: String = "ENABLED",
     val validatorSmoothProgress: Boolean = true,
     val validatorVibrationEnabled: Boolean = true,
+    val hapticFeedbackEnabled: Boolean = true,
     val copyNextCodeWhenExpiring: Boolean = false,
     val securityAnalysisAutoEnabled: Boolean = false,
     val passwordDetailSecurityAnalysisEnabled: Boolean = true,
@@ -628,6 +633,22 @@ class WebDavHelper(
         private const val SECURE_KEY_ENCRYPTION_PASSWORD = "webdav_secure_encryption_password"
         private const val KEY_AUTO_BACKUP_ENABLED = "auto_backup_enabled"
         private const val KEY_LAST_BACKUP_TIME = "last_backup_time"
+        private const val KEY_CHANGE_TRIGGERED_ENABLED = "change_triggered_backup_enabled"
+        private const val KEY_CHANGE_QUIET_MINUTES = "change_triggered_quiet_minutes"
+        private const val KEY_CHANGE_MIN_INTERVAL_MINUTES = "change_triggered_min_interval_minutes"
+
+        /** 静默时长默认值：连续录入多条时合并为一次上传。 */
+        const val DEFAULT_QUIET_MINUTES = 2
+
+        /**
+         * 两次改动触发的上传之间的最小间隔。
+         *
+         * 每次备份都是全量 ZIP 重传，没有增量；持续编辑时若不设下限会反复整包上传。
+         */
+        const val DEFAULT_MIN_INTERVAL_MINUTES = 15
+
+        val QUIET_MINUTES_RANGE = 1..30
+        val MIN_INTERVAL_MINUTES_RANGE = 0..240
         private const val PASSWORD_META_MARKER = "[MonicaMeta]"
         private const val PERMANENT_SUFFIX = "_permanent"        
         // Backup preferences keys
@@ -729,6 +750,7 @@ class WebDavHelper(
             validatorUnifiedProgressBar = validatorUnifiedProgressBar,
             validatorSmoothProgress = validatorSmoothProgress,
             validatorVibrationEnabled = validatorVibrationEnabled,
+            hapticFeedbackEnabled = hapticFeedbackEnabled,
             copyNextCodeWhenExpiring = copyNextCodeWhenExpiring,
             securityAnalysisAutoEnabled = securityAnalysisAutoEnabled,
             passwordDetailSecurityAnalysisEnabled = passwordDetailSecurityAnalysisEnabled,
@@ -1013,6 +1035,7 @@ class WebDavHelper(
             website = backup.website,
             notes = backup.notes,
             isFavorite = backup.isFavorite,
+            sortOrder = backup.sortOrder,
             appPackageName = backup.appPackageName,
             appName = backup.appName,
             categoryId = null,
@@ -1048,6 +1071,7 @@ class WebDavHelper(
         itemData: String,
         notes: String,
         isFavorite: Boolean,
+        sortOrder: Int,
         imagePaths: String,
         createdAt: Long,
         updatedAt: Long
@@ -1059,6 +1083,7 @@ class WebDavHelper(
             itemData = itemData,
             notes = notes,
             isFavorite = isFavorite,
+            sortOrder = sortOrder,
             imagePaths = imagePaths,
             createdAt = createdAt,
             updatedAt = updatedAt,
@@ -1148,6 +1173,18 @@ class WebDavHelper(
     data class WebDavConfig(
         val serverUrl: String,
         val username: String
+    )
+
+    /**
+     * 「改动后自动同步」配置。
+     *
+     * @param quietMinutes 最后一次改动之后需要保持无改动的分钟数，之后才上传。
+     * @param minIntervalMinutes 两次改动触发的上传之间的最小间隔；0 表示不限制。
+     */
+    data class ChangeTriggeredBackupConfig(
+        val enabled: Boolean = false,
+        val quietMinutes: Int = DEFAULT_QUIET_MINUTES,
+        val minIntervalMinutes: Int = DEFAULT_MIN_INTERVAL_MINUTES
     )
     
     fun getCurrentConfig(): WebDavConfig? {
@@ -1325,7 +1362,59 @@ class WebDavHelper(
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         return prefs.getLong(KEY_LAST_BACKUP_TIME, 0)
     }
-    
+
+    /**
+     * 距离允许下一次改动触发上传还需等待多少分钟；0 表示现在就可以上传。
+     *
+     * 与 [shouldAutoBackup] 的 12 小时闸门相互独立：这里只防止持续编辑时把整包
+     * 反复推上服务器，而不是把改动触发压到周期备份的节奏上。
+     */
+    fun minutesUntilChangeTriggeredBackupAllowed(): Int {
+        val minIntervalMinutes = getChangeTriggeredBackupConfig().minIntervalMinutes
+        if (minIntervalMinutes <= 0) return 0
+
+        val lastBackupTime = getLastBackupTime()
+        if (lastBackupTime <= 0L) return 0
+
+        val elapsedMinutes = (System.currentTimeMillis() - lastBackupTime) / 60_000L
+        // 设备时钟回拨会让 elapsed 变成负数；此时放行而不是把同步永久卡住。
+        if (elapsedMinutes < 0) return 0
+
+        val remaining = minIntervalMinutes - elapsedMinutes
+        return if (remaining > 0) remaining.toInt() else 0
+    }
+
+    /**
+     * 读取「改动后自动同步」配置。
+     *
+     * 默认关闭：开启后备份频率取决于用户编辑习惯，而每次都是全量上传，
+     * 应由用户明确选择而不是替他决定。
+     */
+    fun getChangeTriggeredBackupConfig(): ChangeTriggeredBackupConfig {
+        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        return ChangeTriggeredBackupConfig(
+            enabled = prefs.getBoolean(KEY_CHANGE_TRIGGERED_ENABLED, false),
+            quietMinutes = prefs.getInt(KEY_CHANGE_QUIET_MINUTES, DEFAULT_QUIET_MINUTES)
+                .coerceIn(QUIET_MINUTES_RANGE),
+            minIntervalMinutes = prefs.getInt(
+                KEY_CHANGE_MIN_INTERVAL_MINUTES,
+                DEFAULT_MIN_INTERVAL_MINUTES
+            ).coerceIn(MIN_INTERVAL_MINUTES_RANGE)
+        )
+    }
+
+    fun setChangeTriggeredBackupConfig(config: ChangeTriggeredBackupConfig) {
+        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        prefs.edit()
+            .putBoolean(KEY_CHANGE_TRIGGERED_ENABLED, config.enabled)
+            .putInt(KEY_CHANGE_QUIET_MINUTES, config.quietMinutes.coerceIn(QUIET_MINUTES_RANGE))
+            .putInt(
+                KEY_CHANGE_MIN_INTERVAL_MINUTES,
+                config.minIntervalMinutes.coerceIn(MIN_INTERVAL_MINUTES_RANGE)
+            )
+            .apply()
+    }
+
     /**
      * 
      */
@@ -1762,6 +1851,7 @@ class WebDavHelper(
                                 website = password.website,
                                 notes = password.notes,
                                 isFavorite = password.isFavorite,
+                                sortOrder = password.sortOrder,
                                 categoryId = password.categoryId,
                                 categoryName = categoryName,
                                 appPackageName = password.appPackageName,
@@ -1881,6 +1971,7 @@ class WebDavHelper(
                                 itemData = normalizeRestoredTotpItemData(item.itemData, item.title),
                                 notes = item.notes,
                                 isFavorite = item.isFavorite,
+                                sortOrder = item.sortOrder,
                                 imagePaths = item.imagePaths,
                                 keepassDatabaseId = null,
                                 keepassGroupPath = null,
@@ -1922,6 +2013,7 @@ class WebDavHelper(
                                 itemData = item.itemData,
                                 notes = item.notes,
                                 isFavorite = item.isFavorite,
+                                sortOrder = item.sortOrder,
                                 imagePaths = item.imagePaths,
                                 keepassDatabaseId = null,
                                 keepassGroupPath = null,
@@ -1984,6 +2076,7 @@ class WebDavHelper(
                                 notes = item.notes,
                                 itemData = item.itemData,
                                 isFavorite = item.isFavorite,
+                                sortOrder = item.sortOrder,
                                 imagePaths = item.imagePaths,
                                 keepassDatabaseId = null,
                                 keepassGroupPath = null,
@@ -3867,6 +3960,8 @@ class WebDavHelper(
                                                     pageAdjustmentBackup.validatorSmoothProgress,
                                                 validatorVibrationEnabled =
                                                     pageAdjustmentBackup.validatorVibrationEnabled,
+                                                hapticFeedbackEnabled =
+                                                    pageAdjustmentBackup.hapticFeedbackEnabled,
                                                 copyNextCodeWhenExpiring =
                                                     pageAdjustmentBackup.copyNextCodeWhenExpiring,
                                                 securityAnalysisAutoEnabled =
@@ -4802,6 +4897,7 @@ class WebDavHelper(
                     itemData = stringField("itemData"),
                     notes = stringField("notes"),
                     isFavorite = booleanField("isFavorite"),
+                    sortOrder = longField("sortOrder").toInt(),
                     imagePaths = stringField("imagePaths"),
                     createdAt = longField("createdAt", System.currentTimeMillis()),
                     updatedAt = longField("updatedAt", System.currentTimeMillis()),
@@ -4843,6 +4939,7 @@ class WebDavHelper(
                     itemData = stringField("itemData"),
                     notes = stringField("notes"),
                     isFavorite = booleanField("isFavorite"),
+                    sortOrder = longField("sortOrder").toInt(),
                     imagePaths = stringField("imagePaths"),
                     createdAt = longField("createdAt", System.currentTimeMillis()),
                     updatedAt = longField("updatedAt", System.currentTimeMillis()),
@@ -4876,6 +4973,7 @@ class WebDavHelper(
                     itemData = normalizeRestoredTotpItemData(stringField("itemData"), stringField("title")),
                     notes = stringField("notes"),
                     isFavorite = booleanField("isFavorite"),
+                    sortOrder = longField("sortOrder").toInt(),
                     imagePaths = stringField("imagePaths"),
                     createdAt = longField("createdAt", System.currentTimeMillis()),
                     updatedAt = longField("updatedAt", System.currentTimeMillis()),

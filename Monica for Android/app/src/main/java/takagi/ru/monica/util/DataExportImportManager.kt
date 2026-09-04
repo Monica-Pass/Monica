@@ -53,7 +53,8 @@ class DataExportImportManager(private val context: Context) {
         val importedCustomFields: List<ImportedCustomField> = emptyList(),
         val importedAuthenticatorKey: String? = null,
         /** true 表示来自 Monica 自身导出的 CSV，导入时应跳过重复检测直接恢复 */
-        val isFromAppExport: Boolean = false
+        val isFromAppExport: Boolean = false,
+        val sortOrder: Int = 0
     )
 
     data class ImportedCustomField(

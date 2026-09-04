@@ -1,7 +1,9 @@
 package takagi.ru.monica.ui.screens
 
 import android.app.Activity
+import android.content.Context
 import android.net.Uri
+import android.provider.OpenableColumns
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,7 +24,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import takagi.ru.monica.R
 import takagi.ru.monica.data.PasswordDatabase
 import takagi.ru.monica.ui.components.PasswordEntryPickerBottomSheet
@@ -31,6 +35,57 @@ import takagi.ru.monica.util.FileOperationHelper
 import takagi.ru.monica.utils.KeePassOperationException
 import takagi.ru.monica.viewmodel.DataExportImportViewModel
 import takagi.ru.monica.ui.components.OutlinedTextField
+
+/**
+ * Resolve the user-facing name returned by Android's document picker.
+ * `lastPathSegment` is often an opaque `document:<id>` for content URIs.
+ */
+internal fun resolveImportFileDisplayName(
+    context: Context,
+    uri: Uri,
+    fallback: String
+): String {
+    val providerName = runCatching {
+        context.contentResolver.query(
+            uri,
+            arrayOf(OpenableColumns.DISPLAY_NAME),
+            null,
+            null,
+            null
+        )?.use { cursor ->
+            val nameColumn = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+            if (nameColumn >= 0 && cursor.moveToFirst()) cursor.getString(nameColumn) else null
+        }
+    }.getOrNull()
+        ?.trim()
+        ?.takeIf { it.isNotEmpty() }
+
+    if (providerName != null) return providerName
+
+    return fallbackImportFileDisplayName(
+        uriPath = uri.path?.let { runCatching { Uri.decode(it) }.getOrDefault(it) },
+        lastPathSegment = uri.lastPathSegment?.let { runCatching { Uri.decode(it) }.getOrDefault(it) },
+        fallback = fallback
+    )
+}
+
+internal fun fallbackImportFileDisplayName(
+    uriPath: String?,
+    lastPathSegment: String?,
+    fallback: String
+): String {
+    return sequenceOf(
+        uriPath?.substringAfterLast('/'),
+        lastPathSegment?.substringAfterLast('/')
+    ).mapNotNull { candidate ->
+        candidate?.trim()?.takeIf {
+            it.isNotEmpty() &&
+                !it.contains(':') &&
+                it != "." &&
+                it != ".."
+        }
+    }.firstOrNull() ?: fallback
+}
 
 /**
  * 数据导入界面 - M3 Expressive 设计
@@ -92,7 +147,7 @@ fun ImportDataScreen(
     ) { selectedUri: Uri? ->
         selectedUri?.let {
             kdbxKeyFileUri = it
-            kdbxKeyFileName = it.lastPathSegment?.substringAfterLast("/") ?: "keyfile"
+            kdbxKeyFileName = resolveImportFileDisplayName(context, it, "keyfile")
         }
     }
 
@@ -150,12 +205,13 @@ fun ImportDataScreen(
                             }
                             
                             selectedFileUri = safeUri
-                            // 尝试获取文件名
-                            selectedFileName = try {
-                                safeUri.lastPathSegment?.substringAfterLast('/')
-                                    ?: context.getString(R.string.import_data_file_selected)
-                            } catch (e: Exception) {
-                                context.getString(R.string.import_data_file_selected)
+                            // DocumentsProvider 的 lastPathSegment 经常是 document:<id>，不能作为文件名。
+                            selectedFileName = withContext(Dispatchers.IO) {
+                                resolveImportFileDisplayName(
+                                    context = context,
+                                    uri = safeUri,
+                                    fallback = context.getString(R.string.import_data_file_selected)
+                                )
                             }
                         } catch (e: Exception) {
                             android.util.Log.e("ImportDataScreen", "文件选择异常", e)

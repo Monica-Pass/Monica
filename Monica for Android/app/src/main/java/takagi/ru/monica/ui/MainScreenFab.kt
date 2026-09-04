@@ -182,14 +182,8 @@ internal fun BoxScope.MainScreenFabOverlay(
             .align(Alignment.TopStart)
             .zIndex(5f)
     }
-    val fabContainerColor = when (currentTab) {
-        BottomNavItem.CardWallet -> MaterialTheme.colorScheme.primary
-        else -> MaterialTheme.colorScheme.primaryContainer
-    }
-    val fabIconTint = when (currentTab) {
-        BottomNavItem.CardWallet -> MaterialTheme.colorScheme.onPrimary
-        else -> MaterialTheme.colorScheme.onPrimaryContainer
-    }
+    val fabContainerColor = MaterialTheme.colorScheme.primaryContainer
+    val fabIconTint = MaterialTheme.colorScheme.onPrimaryContainer
     val navBarInsetBottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
     val fabBottomOffset = when {
         !isCompactWidth -> 24.dp

@@ -44,25 +44,34 @@ class AutoBackupWorker(
         android.util.Log.d(TAG, "Starting auto backup work...")
 
         val isManualTrigger = inputData.getBoolean(KEY_MANUAL_TRIGGER, false)
+        val isChangeTriggered = inputData.getBoolean(KEY_CHANGE_TRIGGERED, false)
         val taskId = SyncDiagnostics.nextTaskId("backup-webdav")
         val target = SyncTarget.Backup(SyncBackupProvider.WEBDAV)
         val targetLabel = target.stableKey.value
-        val trigger = if (isManualTrigger) SyncTrigger.MANUAL else SyncTrigger.BACKUP_SCHEDULE
-        val triggerLabel = if (isManualTrigger) "WEBDAV_MANUAL_WORKER" else "WEBDAV_AUTO_WORKER"
-        android.util.Log.d(TAG, "Manual trigger: $isManualTrigger")
+        val trigger = when {
+            isManualTrigger -> SyncTrigger.MANUAL
+            isChangeTriggered -> SyncTrigger.LOCAL_MUTATION
+            else -> SyncTrigger.BACKUP_SCHEDULE
+        }
+        val triggerLabel = when {
+            isManualTrigger -> "WEBDAV_MANUAL_WORKER"
+            isChangeTriggered -> "WEBDAV_CHANGE_WORKER"
+            else -> "WEBDAV_AUTO_WORKER"
+        }
+        android.util.Log.d(TAG, "Manual trigger: $isManualTrigger, change triggered: $isChangeTriggered")
 
         val request = SyncRequest(
             requestId = taskId,
             target = target,
             trigger = trigger,
             createdAtMillis = System.currentTimeMillis(),
-            priority = if (isManualTrigger) SyncPriority.MANUAL else SyncPriority.PERIODIC,
+            priority = SyncPriority.forTrigger(trigger),
             mode = if (isManualTrigger) SyncMode.FOREGROUND else SyncMode.BACKGROUND,
             networkPolicy = SyncNetworkPolicy.REQUIRED
         )
 
         return when (val result = SyncTaskRunner.requestAndAwait(request) {
-            runBackup(isManualTrigger, taskId, targetLabel, triggerLabel)
+            runBackup(isManualTrigger, isChangeTriggered, taskId, targetLabel, triggerLabel)
         }) {
             is SyncTaskAwaitResult.Completed -> result.value
             is SyncTaskAwaitResult.Merged -> {
@@ -107,6 +116,7 @@ class AutoBackupWorker(
 
     private suspend fun runBackup(
         isManualTrigger: Boolean,
+        isChangeTriggered: Boolean,
         taskId: String,
         target: String,
         trigger: String
@@ -129,7 +139,27 @@ class AutoBackupWorker(
                 return androidx.work.ListenableWorker.Result.success()
             }
 
-            if (!isManualTrigger && !webDavHelper.shouldAutoBackup()) {
+            // 改动触发有自己的节流（静默期 + 最小上传间隔），不受周期备份的 12 小时闸门限制，
+            // 否则「改动后同步」会被上一次周期备份挡掉，失去意义。
+            if (isChangeTriggered) {
+                val waitMinutes = webDavHelper.minutesUntilChangeTriggeredBackupAllowed()
+                if (waitMinutes > 0) {
+                    // Retries are expected while the minimum interval is
+                    // active. Keep the first attempt visible for diagnosis,
+                    // but avoid emitting identical Info events on every
+                    // backoff attempt.
+                    if (runAttemptCount == 0) {
+                        android.util.Log.d(TAG, "Change-triggered backup throttled, " + waitMinutes + "min remaining")
+                        SyncDiagnostics.skipped(taskId, target, trigger, "min_interval_not_elapsed", startedAt)
+                    }
+                    // Do not acknowledge the work while the interval is
+                    // still active. Result.success() would permanently drop
+                    // the mutation because no later event is guaranteed to
+                    // arrive. The request has a linear backoff and will be
+                    // retried until the interval expires.
+                    return androidx.work.ListenableWorker.Result.retry()
+                }
+            } else if (!isManualTrigger && !webDavHelper.shouldAutoBackup()) {
                 android.util.Log.d(TAG, "Backup not needed yet (< 12 hours since last backup)")
                 SyncDiagnostics.skipped(taskId, target, trigger, "not_due", startedAt)
                 return androidx.work.ListenableWorker.Result.success()
@@ -280,5 +310,6 @@ class AutoBackupWorker(
         private const val TAG = "AutoBackupWorker"
         const val WORK_NAME = "auto_webdav_backup"
         const val KEY_MANUAL_TRIGGER = "manual_trigger"
+        const val KEY_CHANGE_TRIGGERED = "change_triggered"
     }
 }

@@ -394,7 +394,7 @@ private fun AttachExistingOneDriveDatabaseDialog(
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     visualTransformation = if (showDatabasePassword) VisualTransformation.None else PasswordVisualTransformation(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                    keyboardOptions = keepassCredentialKeyboardOptions(),
                     trailingIcon = {
                         IconButton(onClick = { showDatabasePassword = !showDatabasePassword }) {
                             Icon(
@@ -597,7 +597,7 @@ private fun CreateOneDriveDatabaseDialog(
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                    keyboardOptions = keepassCredentialKeyboardOptions(),
                     trailingIcon = {
                         IconButton(onClick = { showPassword = !showPassword }) {
                             Icon(
@@ -614,7 +614,7 @@ private fun CreateOneDriveDatabaseDialog(
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                    keyboardOptions = keepassCredentialKeyboardOptions()
                 )
                 Surface(
                     shape = RoundedCornerShape(12.dp),

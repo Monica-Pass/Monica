@@ -675,9 +675,9 @@ fun NoteListScreen(
                                 text = {
                                     Text(
                                         if (isGridLayout) {
-                                            stringResource(R.string.switch_to_list)
+                                            stringResource(R.string.authenticator_layout_standard)
                                         } else {
-                                            stringResource(R.string.switch_to_grid)
+                                            stringResource(R.string.authenticator_layout_tile)
                                         }
                                     )
                                 },

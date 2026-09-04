@@ -35,7 +35,29 @@ data class RestoreApplyStats(
 }
 
 object BackupRestoreApplier {
+    /**
+     * 恢复期间抑制「改动后自动同步」：恢复会写入大量行，若因此触发上传，
+     * 刚恢复的数据会被整包传回远端，覆盖掉那个可能更完整的备份。
+     */
     suspend fun applyRestoreResult(
+        context: Context,
+        restoreResult: RestoreResult,
+        passwordRepository: PasswordRepository,
+        secureItemRepository: SecureItemRepository,
+        localOnlyDedup: Boolean,
+        logTag: String
+    ): RestoreApplyStats = ChangeTriggeredBackupScheduler.withoutTriggering {
+        applyRestoreResultInternal(
+            context = context,
+            restoreResult = restoreResult,
+            passwordRepository = passwordRepository,
+            secureItemRepository = secureItemRepository,
+            localOnlyDedup = localOnlyDedup,
+            logTag = logTag
+        )
+    }
+
+    private suspend fun applyRestoreResultInternal(
         context: Context,
         restoreResult: RestoreResult,
         passwordRepository: PasswordRepository,
@@ -388,6 +410,7 @@ object BackupRestoreApplier {
                         ),
                         notes = exportItem.notes,
                         isFavorite = exportItem.isFavorite,
+                        sortOrder = exportItem.sortOrder,
                         imagePaths = exportItem.imagePaths,
                         createdAt = java.util.Date(exportItem.createdAt),
                         updatedAt = java.util.Date(exportItem.updatedAt),

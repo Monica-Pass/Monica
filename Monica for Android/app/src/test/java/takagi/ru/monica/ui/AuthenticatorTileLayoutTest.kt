@@ -19,20 +19,53 @@ class AuthenticatorTileLayoutTest {
     }
 
     @Test
-    fun tileBranchUsesTwoColumnsWithoutSwipeActions() {
+    fun tileBranchUsesTheSharedTwoColumnGridWithoutSwipeActions() {
         val source = projectFile(
             "app/src/main/java/takagi/ru/monica/ui/totp/TotpListContent.kt"
+        ).readText().replace("\r\n", "\n")
+        val gridSource = projectFile(
+            "app/src/main/java/takagi/ru/monica/ui/components/MonicaTileGrid.kt"
         ).readText().replace("\r\n", "\n")
         val tileBranch = source
             .substringAfter("if (appSettings.authenticatorLayoutMode == AuthenticatorLayoutMode.TILE)")
             .substringBefore("// Standard authenticator layout")
 
-        assertTrue(tileBranch.contains("LazyVerticalGrid("))
-        assertTrue(tileBranch.contains("GridCells.Fixed(2)"))
+        assertTrue(tileBranch.contains("MonicaTileGrid("))
+        assertTrue(gridSource.contains("LazyVerticalGrid("))
+        assertTrue(gridSource.contains("GridCells.Fixed(2)"))
+        assertTrue(gridSource.contains("Arrangement.spacedBy(8.dp)"))
         assertTrue(tileBranch.contains("rememberReorderableLazyGridState("))
         assertTrue(tileBranch.contains("enabled = isSelectionMode"))
         assertTrue(tileBranch.contains("onLongClick ="))
         assertFalse("Tile cards must not expose horizontal swipe actions.", tileBranch.contains("SwipeActions("))
+    }
+
+    @Test
+    fun listUsesParentSettingsWithoutAStandardLayoutBootstrapFrame() {
+        val source = projectFile(
+            "app/src/main/java/takagi/ru/monica/ui/totp/TotpListContent.kt"
+        ).readText().replace("\r\n", "\n")
+
+        assertTrue(source.contains("appSettings: AppSettings"))
+        assertTrue(source.contains("onAuthenticatorLayoutModeChange: (AuthenticatorLayoutMode) -> Unit"))
+        assertFalse(
+            "A fresh settings subscription emits AppSettings.STANDARD before DataStore restores TILE.",
+            source.contains("settingsFlow.collectAsState(initial = takagi.ru.monica.data.AppSettings())")
+        )
+    }
+
+    @Test
+    fun standardAuthenticatorAndSteamUseTheSharedCardSurface() {
+        val cardSource = projectFile(
+            "app/src/main/java/takagi/ru/monica/ui/components/TotpCodeCard.kt"
+        ).readText().replace("\r\n", "\n")
+        val steamSource = projectFile(
+            "app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt"
+        ).readText()
+
+        assertEquals(2, Regex("MonicaItemCard\\(").findAll(cardSource).count())
+        assertTrue(cardSource.contains("transparentContainer = hasImmersiveBackground"))
+        assertTrue(steamSource.contains("TotpCodeCard("))
     }
 
     @Test

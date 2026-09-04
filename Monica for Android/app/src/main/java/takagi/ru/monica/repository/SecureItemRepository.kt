@@ -347,11 +347,46 @@ class SecureItemRepository(
     }
     
     suspend fun updateSortOrder(id: Long, sortOrder: Int) {
-        secureItemDao.updateSortOrder(id, sortOrder)
+        updateSortOrders(listOf(id to sortOrder))
     }
     
     suspend fun updateSortOrders(items: List<Pair<Long, Int>>) {
-        secureItemDao.updateSortOrders(items)
+        if (items.isEmpty()) return
+        val orderById = items.toMap()
+        val previousItems = secureItemDao.getItemsByIds(orderById.keys.toList())
+        val reorderedItems = previousItems.mapNotNull { item ->
+            orderById[item.id]?.let { sortOrder -> item.copy(sortOrder = sortOrder) }
+        }
+        commitMirrorThenRoom(
+            mirrorCommit = {
+                mirrorSortOrderItems(reorderedItems)
+            },
+            roomCommit = { secureItemDao.updateSortOrders(items) },
+            rollbackMirror = {
+                mirrorSortOrderItems(previousItems)
+            }
+        )
+    }
+
+    /**
+     * Sorting should remain usable even when Room still contains an item whose
+     * old MDBX database was removed. A stale replica must not turn a harmless
+     * UI reorder into an uncaught coroutine exception; valid databases still
+     * receive their updates independently.
+     */
+    private suspend fun mirrorSortOrderItems(items: List<SecureItem>) {
+        val repository = mdbxRepository ?: return
+        items
+            .filter { it.mdbxDatabaseId != null }
+            .groupBy { it.mdbxDatabaseId }
+            .values
+            .forEach { group ->
+                try {
+                    repository.upsertSecureItems(group)
+                } catch (error: MdbxVaultNotFoundException) {
+                    Log.w(TAG, "Skipping sort mirror for removed MDBX database ${error.databaseId}")
+                }
+            }
     }
     
     /**

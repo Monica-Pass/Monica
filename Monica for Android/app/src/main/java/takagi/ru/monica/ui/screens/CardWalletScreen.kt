@@ -62,6 +62,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -105,6 +106,7 @@ import takagi.ru.monica.ui.cardwallet.WalletListItemType
 import takagi.ru.monica.ui.cardwallet.bitwardenVaultIdForWalletSync
 import takagi.ru.monica.ui.cardwallet.isBitwardenWalletScope
 import takagi.ru.monica.ui.cardwallet.mergeVisibleWalletOrder
+import takagi.ru.monica.ui.cardwallet.orderItemsByIds
 import takagi.ru.monica.ui.cardwallet.toBillingAddressWalletListItem
 import takagi.ru.monica.ui.cardwallet.toBankCardWalletListItem
 import takagi.ru.monica.ui.cardwallet.toDocumentWalletListItem
@@ -134,6 +136,7 @@ import takagi.ru.monica.ui.components.UnifiedMoveAction
 import takagi.ru.monica.ui.components.UnifiedMoveCategoryTarget
 import takagi.ru.monica.ui.components.UnifiedMoveToCategoryBottomSheet
 import takagi.ru.monica.ui.components.toUnifiedMoveInitialSource
+import takagi.ru.monica.ui.gestures.SwipeActions
 import takagi.ru.monica.ui.password.PasswordTopActionsDropdownMenu
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.sync.SyncDiagnostics
@@ -163,6 +166,12 @@ enum class CardWalletTab {
     DOCUMENTS,
     BILLING_ADDRESSES
 }
+
+private data class CardWalletListFilterKey(
+    val tab: CardWalletTab,
+    val query: String,
+    val categoryFilter: UnifiedCategoryFilterSelection
+)
 
 private fun cardWalletTypeQuickFilters(
     currentTab: CardWalletTab,
@@ -1330,13 +1339,26 @@ fun CardWalletScreen(
                     }
 
                     else -> {
-                        var localFilteredItems by remember(filteredItems) { mutableStateOf(filteredItems) }
-                        var walletWasDragging by remember { mutableStateOf(false) }
-                        LaunchedEffect(filteredItems) {
-                            if (!walletWasDragging) {
-                                localFilteredItems = filteredItems
-                            }
+                        val walletFilterKey = CardWalletListFilterKey(
+                            tab = currentTab,
+                            query = searchQuery.trim(),
+                            categoryFilter = selectedCategoryFilter
+                        )
+                        var localFilteredItems by remember { mutableStateOf(filteredItems) }
+                        var appliedWalletFilterKey by remember {
+                            mutableStateOf<CardWalletListFilterKey?>(null)
                         }
+                        var walletIsDragging by remember { mutableStateOf(false) }
+                        var walletDragBaseOrderIds by remember { mutableStateOf<List<Long>?>(null) }
+                        var pendingWalletOrderIds by remember { mutableStateOf<List<Long>?>(null) }
+                        // Lists are immutable snapshots. Use identity tokens as effect keys so
+                        // scrolling does not repeatedly compare every wallet item by value.
+                        val filteredItemsToken = System.identityHashCode(filteredItems)
+                        val allWalletItemsToken = System.identityHashCode(allWalletItems)
+                        val pendingWalletOrderToken = pendingWalletOrderIds?.let {
+                            System.identityHashCode(it)
+                        } ?: 0
+
                         val reorderableLazyListState = rememberReorderableLazyListState(listState) { from, to ->
                             if (isSelectionMode) {
                                 localFilteredItems = localFilteredItems.toMutableList().apply {
@@ -1344,26 +1366,80 @@ fun CardWalletScreen(
                                 }
                             }
                         }
+
+                        LaunchedEffect(
+                            filteredItemsToken,
+                            allWalletItemsToken,
+                            walletFilterKey,
+                            walletIsDragging,
+                            pendingWalletOrderToken
+                        ) {
+                            if (appliedWalletFilterKey != walletFilterKey) {
+                                localFilteredItems = filteredItems
+                                appliedWalletFilterKey = walletFilterKey
+                                pendingWalletOrderIds = null
+                                walletDragBaseOrderIds = null
+                                return@LaunchedEffect
+                            }
+                            if (walletIsDragging) return@LaunchedEffect
+
+                            val preferredOrderIds = pendingWalletOrderIds
+                                ?: localFilteredItems.map(WalletListItem::id)
+                            val reconciledItems = orderItemsByIds(
+                                items = filteredItems,
+                                orderedIds = preferredOrderIds,
+                                idOf = WalletListItem::id
+                            )
+                            if (reconciledItems != localFilteredItems) {
+                                localFilteredItems = reconciledItems
+                            }
+
+                            val pendingOrderIds = pendingWalletOrderIds ?: return@LaunchedEffect
+                            val persistedOrderIds = allWalletItems.map(WalletListItem::id)
+                            val persistedSortOrders = allWalletItems.associate { walletItem ->
+                                walletItem.id to walletItem.item.sortOrder
+                            }
+                            val writeBackFinished = persistedOrderIds == pendingOrderIds ||
+                                pendingOrderIds.withIndex().all { (index, id) ->
+                                    persistedSortOrders[id] == index
+                                }
+                            if (writeBackFinished) {
+                                pendingWalletOrderIds = null
+                            }
+                        }
+
                         LaunchedEffect(reorderableLazyListState.isAnyItemDragging) {
                             if (reorderableLazyListState.isAnyItemDragging) {
-                                walletWasDragging = true
-                            } else if (walletWasDragging && isSelectionMode) {
-                                val mergedIds = mergeVisibleWalletOrder(
-                                    allItemIds = allWalletItems.map(WalletListItem::id),
-                                    reorderedVisibleItemIds = localFilteredItems.map(WalletListItem::id)
-                                )
-                                val currentItemsById = allWalletItems.associateBy(WalletListItem::id)
-                                val newOrders = mergedIds.mapIndexedNotNull { index, id ->
-                                    val walletItem = currentItemsById[id] ?: return@mapIndexedNotNull null
-                                    if (walletItem.item.sortOrder == index) null else id to index
+                                if (!walletIsDragging) {
+                                    walletDragBaseOrderIds = allWalletItems.map(WalletListItem::id)
+                                    walletIsDragging = true
                                 }
-                                if (newOrders.isNotEmpty()) {
-                                    // 三种类型共用 SecureItemRepository，一次写入即可覆盖全部，
-                                    // 拆成每类型一次会让同一张表触发多次 Flow 失效，拖动结果被中间态回拉。
-                                    bankCardViewModel.updateSortOrders(newOrders)
+                            } else if (walletIsDragging) {
+                                if (isSelectionMode) {
+                                    val baseOrderIds = walletDragBaseOrderIds
+                                        ?: allWalletItems.map(WalletListItem::id)
+                                    val baseOrderIdSet = baseOrderIds.toSet()
+                                    val stableBaseOrderIds = baseOrderIds + allWalletItems
+                                        .map(WalletListItem::id)
+                                        .filterNot { id -> id in baseOrderIdSet }
+                                    val mergedIds = mergeVisibleWalletOrder(
+                                        allItemIds = stableBaseOrderIds,
+                                        reorderedVisibleItemIds = localFilteredItems.map(WalletListItem::id)
+                                    )
+                                    val currentItemsById = allWalletItems.associateBy(WalletListItem::id)
+                                    val newOrders = mergedIds.mapIndexedNotNull { index, id ->
+                                        val walletItem = currentItemsById[id] ?: return@mapIndexedNotNull null
+                                        if (walletItem.item.sortOrder == index) null else id to index
+                                    }
+                                    if (newOrders.isNotEmpty()) {
+                                        // 三种类型共用 SecureItemRepository；一次写入可避免
+                                        // 多次 Flow 失效把刚完成的本地拖动顺序拉回旧状态。
+                                        pendingWalletOrderIds = mergedIds
+                                        bankCardViewModel.updateSortOrders(newOrders)
+                                    }
                                 }
-                                delay(300)
-                                walletWasDragging = false
+                                walletDragBaseOrderIds = null
+                                walletIsDragging = false
                             }
                         }
 
@@ -1381,10 +1457,18 @@ fun CardWalletScreen(
                                 ReorderableItem(
                                     reorderableLazyListState,
                                     key = walletItem.id,
-                                    enabled = isSelectionMode,
-                                    modifier = Modifier.animateItem()
+                                    enabled = isSelectionMode
                                 ) { isDragging ->
                                     val isSelected = selectedIds.contains(walletItem.id)
+                                    val toggleSelection = {
+                                        val nextSelectedIds = if (isSelected) {
+                                            selectedIds - item.id
+                                        } else {
+                                            selectedIds + item.id
+                                        }
+                                        selectedIds = nextSelectedIds
+                                        isSelectionMode = nextSelectedIds.isNotEmpty()
+                                    }
                                     val elevation by animateDpAsState(
                                         if (isDragging) 8.dp else 0.dp,
                                         label = "wallet_drag_elevation"
@@ -1394,95 +1478,98 @@ fun CardWalletScreen(
                                     } else {
                                         Modifier
                                     }
+                                    val cardModifier = Modifier
+                                        .padding(bottom = 8.dp)
+                                        .graphicsLayer {
+                                            shadowElevation = elevation.toPx()
+                                        }
+                                        .then(dragModifier)
 
-                                    when (walletItem.type) {
-                                        WalletListItemType.BANK_CARD -> BankCardCard(
-                                            item = item,
-                                            onClick = {
-                                                if (isSelectionMode) {
-                                                    selectedIds = if (isSelected) selectedIds - item.id else selectedIds + item.id
-                                                    if (selectedIds.isEmpty()) isSelectionMode = false
-                                                } else {
-                                                    onCardClick(item.id)
-                                                }
-                                            },
-                                            onDelete = { itemToDelete = item },
-                                            onToggleFavorite = { id, _ -> bankCardViewModel.toggleFavorite(id) },
-                                            isSelectionMode = isSelectionMode,
-                                            isSelected = isSelected,
-                                            onLongClick = {
-                                                if (!isSelectionMode) {
-                                                    isSelectionMode = true
-                                                    selectedIds = setOf(item.id)
-                                                } else {
-                                                    selectedIds = if (isSelected) selectedIds - item.id else selectedIds + item.id
-                                                    if (selectedIds.isEmpty()) isSelectionMode = false
-                                                }
-                                            },
-                                            modifier = Modifier
-                                                .padding(bottom = 8.dp)
-                                                .then(dragModifier),
-                                            cardData = walletItem.bankCardData
-                                        )
+                                    SwipeActions(
+                                        onSwipeLeft = { itemToDelete = item },
+                                        onSwipeRight = toggleSelection,
+                                        isSwiped = isSelected,
+                                        enabled = !isDragging,
+                                        allowSwipeLeft = !isSelectionMode,
+                                        allowSwipeRight = true,
+                                        modifier = Modifier.fillMaxWidth()
+                                    ) {
+                                        when (walletItem.type) {
+                                            WalletListItemType.BANK_CARD -> BankCardCard(
+                                                item = item,
+                                                onClick = {
+                                                    if (isSelectionMode) {
+                                                        toggleSelection()
+                                                    } else {
+                                                        onCardClick(item.id)
+                                                    }
+                                                },
+                                                onDelete = { itemToDelete = item },
+                                                onToggleFavorite = { id, _ -> bankCardViewModel.toggleFavorite(id) },
+                                                isSelectionMode = isSelectionMode,
+                                                isSelected = isSelected,
+                                                onLongClick = {
+                                                    if (!isSelectionMode) {
+                                                        isSelectionMode = true
+                                                        selectedIds = setOf(item.id)
+                                                    } else {
+                                                        toggleSelection()
+                                                    }
+                                                },
+                                                modifier = cardModifier,
+                                                cardData = walletItem.bankCardData
+                                            )
 
-                                        WalletListItemType.DOCUMENT -> DocumentCard(
-                                            item = item,
-                                            onClick = {
-                                                if (isSelectionMode) {
-                                                    selectedIds = if (isSelected) selectedIds - item.id else selectedIds + item.id
-                                                    if (selectedIds.isEmpty()) isSelectionMode = false
-                                                } else {
-                                                    onDocumentClick(item.id)
-                                                }
-                                            },
-                                            onDelete = { itemToDelete = item },
-                                            onToggleFavorite = { id, _ -> documentViewModel.toggleFavorite(id) },
-                                            isSelectionMode = isSelectionMode,
-                                            isSelected = isSelected,
-                                            onLongClick = {
-                                                if (!isSelectionMode) {
-                                                    isSelectionMode = true
-                                                    selectedIds = setOf(item.id)
-                                                } else {
-                                                    selectedIds = if (isSelected) selectedIds - item.id else selectedIds + item.id
-                                                    if (selectedIds.isEmpty()) isSelectionMode = false
-                                                }
-                                            },
-                                            modifier = Modifier
-                                                .padding(bottom = 8.dp)
-                                                .then(dragModifier),
-                                            documentData = walletItem.documentData
-                                        )
+                                            WalletListItemType.DOCUMENT -> DocumentCard(
+                                                item = item,
+                                                onClick = {
+                                                    if (isSelectionMode) {
+                                                        toggleSelection()
+                                                    } else {
+                                                        onDocumentClick(item.id)
+                                                    }
+                                                },
+                                                onDelete = { itemToDelete = item },
+                                                onToggleFavorite = { id, _ -> documentViewModel.toggleFavorite(id) },
+                                                isSelectionMode = isSelectionMode,
+                                                isSelected = isSelected,
+                                                onLongClick = {
+                                                    if (!isSelectionMode) {
+                                                        isSelectionMode = true
+                                                        selectedIds = setOf(item.id)
+                                                    } else {
+                                                        toggleSelection()
+                                                    }
+                                                },
+                                                modifier = cardModifier,
+                                                documentData = walletItem.documentData
+                                            )
 
-                                        WalletListItemType.BILLING_ADDRESS -> BillingAddressCard(
-                                            item = item,
-                                            onClick = {
-                                                if (isSelectionMode) {
-                                                    selectedIds = if (isSelected) selectedIds - item.id else selectedIds + item.id
-                                                    if (selectedIds.isEmpty()) isSelectionMode = false
-                                                } else {
-                                                    onBillingAddressClick(item.id)
-                                                }
-                                            },
-                                            onDelete = { itemToDelete = item },
-                                            onToggleFavorite = { id, _ -> billingAddressViewModel.toggleFavorite(id) },
-                                            isSelectionMode = isSelectionMode,
-                                            isSelected = isSelected,
-                                            onLongClick = {
-                                                if (!isSelectionMode) {
-                                                    isSelectionMode = true
-                                                    selectedIds = setOf(item.id)
-                                                } else {
-                                                    selectedIds = if (isSelected) selectedIds - item.id else selectedIds + item.id
-                                                    if (selectedIds.isEmpty()) isSelectionMode = false
-                                                }
-                                            },
-                                            modifier = Modifier
-                                                .padding(bottom = 8.dp)
-                                                .then(dragModifier),
-                                            addressData = walletItem.billingAddressData
-                                        )
-
+                                            WalletListItemType.BILLING_ADDRESS -> BillingAddressCard(
+                                                item = item,
+                                                onClick = {
+                                                    if (isSelectionMode) {
+                                                        toggleSelection()
+                                                    } else {
+                                                        onBillingAddressClick(item.id)
+                                                    }
+                                                },
+                                                onDelete = { itemToDelete = item },
+                                                onToggleFavorite = { id, _ -> billingAddressViewModel.toggleFavorite(id) },
+                                                isSelectionMode = isSelectionMode,
+                                                isSelected = isSelected,
+                                                onLongClick = {
+                                                    if (!isSelectionMode) {
+                                                        isSelectionMode = true
+                                                        selectedIds = setOf(item.id)
+                                                    } else {
+                                                        toggleSelection()
+                                                    }
+                                                },
+                                                modifier = cardModifier,
+                                                addressData = walletItem.billingAddressData
+                                            )
+                                        }
                                     }
                                 }
                             }

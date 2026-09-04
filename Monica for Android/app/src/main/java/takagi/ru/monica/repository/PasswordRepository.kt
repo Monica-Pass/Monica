@@ -1,5 +1,6 @@
 package takagi.ru.monica.repository
 
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import takagi.ru.monica.data.Category
@@ -37,6 +38,9 @@ class PasswordRepository(
     private val bitwardenSyncRawEntryRecordDao: BitwardenSyncRawEntryRecordDao? = null,
     private val mdbxRepository: MdbxRepository? = null
 ) {
+    companion object {
+        private const val TAG = "PasswordRepository"
+    }
 
     private fun Flow<List<PasswordEntry>>.withoutExternalSteamMaFileEntries(): Flow<List<PasswordEntry>> =
         map { entries -> entries.withoutExternalSteamMaFileEntries() }
@@ -521,7 +525,36 @@ class PasswordRepository(
     }
     
     suspend fun updateSortOrders(items: List<Pair<Long, Int>>) {
-        passwordEntryDao.updateSortOrders(items)
+        if (items.isEmpty()) return
+        val orderById = items.toMap()
+        val previousEntries = passwordEntryDao.getPasswordsByIds(orderById.keys.toList())
+        val reorderedEntries = previousEntries.mapNotNull { entry ->
+            orderById[entry.id]?.let { sortOrder -> entry.copy(sortOrder = sortOrder) }
+        }
+        commitMirrorThenRoom(
+            mirrorCommit = {
+                mirrorSortOrderEntries(reorderedEntries)
+            },
+            roomCommit = { passwordEntryDao.updateSortOrders(items) },
+            rollbackMirror = {
+                mirrorSortOrderEntries(previousEntries)
+            }
+        )
+    }
+
+    private suspend fun mirrorSortOrderEntries(entries: List<PasswordEntry>) {
+        val repository = mdbxRepository ?: return
+        entries
+            .filter { it.mdbxDatabaseId != null }
+            .groupBy { it.mdbxDatabaseId }
+            .values
+            .forEach { group ->
+                try {
+                    repository.upsertPasswords(group)
+                } catch (error: MdbxVaultNotFoundException) {
+                    Log.w(TAG, "Skipping sort mirror for removed MDBX database ${error.databaseId}")
+                }
+            }
     }
     
     suspend fun getPasswordEntriesCount(): Int {

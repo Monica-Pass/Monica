@@ -590,7 +590,7 @@ private fun AttachExistingWebDavDatabaseDialog(
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     visualTransformation = if (showDatabasePassword) VisualTransformation.None else PasswordVisualTransformation(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                    keyboardOptions = keepassCredentialKeyboardOptions(),
                     trailingIcon = {
                         IconButton(onClick = { showDatabasePassword = !showDatabasePassword }) {
                             Icon(
@@ -793,7 +793,7 @@ private fun CreateWebDavDatabaseDialog(
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                    keyboardOptions = keepassCredentialKeyboardOptions(),
                     trailingIcon = {
                         IconButton(onClick = { showPassword = !showPassword }) {
                             Icon(
@@ -810,7 +810,7 @@ private fun CreateWebDavDatabaseDialog(
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                    keyboardOptions = keepassCredentialKeyboardOptions(),
                     isError = confirmPassword.isNotBlank() && confirmPassword != password
                 )
                 Surface(

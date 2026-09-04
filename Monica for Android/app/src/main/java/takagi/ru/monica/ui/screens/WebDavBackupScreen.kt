@@ -57,6 +57,7 @@ import takagi.ru.monica.sync.SyncTaskRunner
 import takagi.ru.monica.sync.SyncTrigger
 import takagi.ru.monica.ui.components.PasswordEntryPickerBottomSheet
 import takagi.ru.monica.util.DataExportImportManager
+import takagi.ru.monica.utils.ChangeTriggeredBackupScheduler
 import java.text.SimpleDateFormat
 import java.util.Locale
 import kotlinx.coroutines.flow.first
@@ -197,6 +198,12 @@ fun WebDavBackupScreen(
     // 自动备份状态
     var autoBackupEnabled by remember { mutableStateOf(false) }
     var lastBackupTime by remember { mutableStateOf(0L) }
+
+    // 同步设置弹窗（改动后自动同步）
+    var showSyncSettings by remember { mutableStateOf(false) }
+    var changeTriggeredConfig by remember {
+        mutableStateOf(WebDavHelper.ChangeTriggeredBackupConfig())
+    }
     
     // 加密设置状态
     var encryptionEnabled by remember { mutableStateOf(false) }
@@ -240,6 +247,7 @@ fun WebDavBackupScreen(
         // 加载自动备份状态
         autoBackupEnabled = webDavHelper.isAutoBackupEnabled()
         lastBackupTime = webDavHelper.getLastBackupTime()
+        changeTriggeredConfig = webDavHelper.getChangeTriggeredBackupConfig()
         
         // 加载加密配置
         val encryptionConfig = webDavHelper.getEncryptionConfig()
@@ -290,6 +298,14 @@ fun WebDavBackupScreen(
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.back))
+                    }
+                },
+                actions = {
+                    IconButton(onClick = { showSyncSettings = true }) {
+                        Icon(
+                            Icons.Default.Settings,
+                            contentDescription = stringResource(R.string.webdav_sync_settings)
+                        )
                     }
                 }
             )
@@ -647,7 +663,11 @@ fun WebDavBackupScreen(
                                 onCheckedChange = { enabled ->
                                     autoBackupEnabled = enabled
                                     webDavHelper.configureAutoBackup(enabled)
-                                    
+                                    if (!enabled) {
+                                        // 否则关掉总开关后，已入队的改动触发任务仍会上传一次。
+                                        ChangeTriggeredBackupScheduler.cancel(context)
+                                    }
+
                                     Toast.makeText(
                                         context,
                                         if (enabled) {
@@ -1115,6 +1135,159 @@ fun WebDavBackupScreen(
             }
         )
     }
+
+    if (showSyncSettings) {
+        SyncSettingsDialog(
+            config = changeTriggeredConfig,
+            autoBackupEnabled = autoBackupEnabled,
+            onDismiss = { showSyncSettings = false },
+            onConfirm = { updated ->
+                changeTriggeredConfig = updated
+                webDavHelper.setChangeTriggeredBackupConfig(updated)
+                if (!updated.enabled) {
+                    ChangeTriggeredBackupScheduler.cancel(context)
+                }
+                showSyncSettings = false
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.webdav_sync_settings_saved),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        )
+    }
+}
+
+/**
+ * 「改动后自动同步」设置。
+ *
+ * 编辑副本而不是直接写 SharedPreferences：用户取消时不应留下半套配置。
+ */
+@Composable
+private fun SyncSettingsDialog(
+    config: WebDavHelper.ChangeTriggeredBackupConfig,
+    autoBackupEnabled: Boolean,
+    onDismiss: () -> Unit,
+    onConfirm: (WebDavHelper.ChangeTriggeredBackupConfig) -> Unit
+) {
+    var draft by remember(config) { mutableStateOf(config) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.webdav_sync_settings)) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = stringResource(R.string.webdav_change_triggered_title),
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        Text(
+                            text = stringResource(R.string.webdav_change_triggered_description),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    Switch(
+                        checked = draft.enabled,
+                        enabled = autoBackupEnabled,
+                        onCheckedChange = { draft = draft.copy(enabled = it) }
+                    )
+                }
+
+                if (!autoBackupEnabled) {
+                    Text(
+                        text = stringResource(R.string.webdav_change_triggered_requires_auto_backup),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+
+                if (draft.enabled && autoBackupEnabled) {
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = stringResource(R.string.webdav_change_triggered_quiet),
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        Text(
+                            text = stringResource(
+                                R.string.webdav_change_triggered_quiet_value,
+                                draft.quietMinutes
+                            ),
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                    Slider(
+                        value = draft.quietMinutes.toFloat(),
+                        onValueChange = { draft = draft.copy(quietMinutes = it.toInt()) },
+                        valueRange = WebDavHelper.QUIET_MINUTES_RANGE.first.toFloat()..
+                            WebDavHelper.QUIET_MINUTES_RANGE.last.toFloat()
+                    )
+                    Text(
+                        text = stringResource(R.string.webdav_change_triggered_quiet_hint),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = stringResource(R.string.webdav_change_triggered_min_interval),
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        Text(
+                            text = if (draft.minIntervalMinutes == 0) {
+                                stringResource(R.string.webdav_change_triggered_min_interval_off)
+                            } else {
+                                stringResource(
+                                    R.string.webdav_change_triggered_min_interval_value,
+                                    draft.minIntervalMinutes
+                                )
+                            },
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                    Slider(
+                        value = draft.minIntervalMinutes.toFloat(),
+                        onValueChange = { draft = draft.copy(minIntervalMinutes = it.toInt()) },
+                        valueRange = WebDavHelper.MIN_INTERVAL_MINUTES_RANGE.first.toFloat()..
+                            WebDavHelper.MIN_INTERVAL_MINUTES_RANGE.last.toFloat()
+                    )
+                    Text(
+                        text = stringResource(R.string.webdav_change_triggered_min_interval_hint),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = { onConfirm(draft) }) {
+                Text(stringResource(R.string.save))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.cancel))
+            }
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

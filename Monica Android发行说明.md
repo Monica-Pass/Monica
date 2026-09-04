@@ -3,37 +3,59 @@
 ## 中文
 ### 简要
 * Monica 键盘的验证器与卡包页面现在会在数据加载期间显示统一加载态,不再短暂误显示为空。
-* 回退了上一版本声称修复卡包拖动排序的改动,因其未能解决排序问题,反而引入拖动过程中的抽搐。
+* 修复卡包混合列表拖动排序时的抽搐、回弹和排序不稳定问题。
+* 卡包的卡片和右下角新建按钮现在与其他页面使用同一套视觉组件,颜色、圆角和交互反馈更加统一。
+* 卡包页面支持与验证器一致的左右滑动操作,可左滑删除、右滑选择。
+* 合并 `@JiangKaslana` 贡献的 [#117](https://github.com/Monica-Pass/Monica/pull/117)、[#120](https://github.com/Monica-Pass/Monica/pull/120) 与 [#122](https://github.com/Monica-Pass/Monica/pull/122),提升大量密码加载、搜索、应用启动和系统认证速度,并由 [#123](https://github.com/Monica-Pass/Monica/pull/123) 将验证后的 MDBX3 Runtime 正式用于 APK。
 * 修复导入页面文件名显示为内部 `document:<id>` 的问题,现在优先显示文件原名。
 * 卡包的全部、银行卡、证件和账单地址筛选从右上角溢出菜单移入分类菜单的快捷筛选区。
 * 验证器页右上角菜单新增布局切换,可直接在标准列表和磁贴视图之间切换。
+* 修复从其他 Dock 页面进入验证器时先短暂显示标准列表、再切换到磁贴布局的问题。
+* 笔记、验证器和 Steam 令牌卡片统一使用磁贴样式的圆角、配色与选中反馈;笔记布局菜单统一为“标准/磁贴”。
 * 新增触觉反馈总开关,可一次关闭下拉手势、长按等交互的震动。
 * 修复密码库列表快速滑动时右侧滚动条抽搐的问题。
+* 优化密码页面“绑定应用”弹窗,大量应用时更快显示并按需加载图标。
 
 ### 详细
 * Monica 键盘在切换、解锁恢复或重新打开验证器和卡包页面时,会优先显示与密码页一致的加载状态,真实加载完成后才显示空列表。
-* 1.0.308 版本试图修复卡包拖动排序,但该实现未能解决手动排序被更新时间覆盖的问题,同时在拖动过程中引入列表抽搐。本版本将相关改动全部回退至 1.0.307 的行为,以恢复流畅的拖动体验;排序问题将在后续版本重新设计后修复。
+* 卡包现在沿用验证器标准列表的单一拖动位移路径,移除缩放、重复布局动画和重复阴影动画,避免同一帧内多套动画同时移动卡片。拖动时保留本地顺序快照,数据库写回期间按条目 ID 合并更新,不会因 Flow 中间状态把列表拉回旧顺序;银行卡、证件和账单地址的混合列表也会一次性保存完整顺序。
+* 银行卡、证件、账单地址与验证器磁贴现在复用同一个条目卡片容器,统一使用相同的背景层级、圆角、阴影和选中态;卡包仍保持原有单列布局和信息结构。右下角新建按钮继续复用全局 `SwipeableAddFab`,并移除卡包独有的实心配色分支,使其外观和行为与密码、验证器、笔记等页面一致。
+* 卡包的银行卡、证件和账单地址现在共用验证器同款 `SwipeActions`:左滑进入原有删除确认及身份验证流程,右滑进入多选或切换当前条目的选中状态。多选期间禁用删除方向,拖动排序期间暂停左右滑动,避免误删及横向滑动与纵向排序争抢手势。
+* `@JiangKaslana` 在 [#117](https://github.com/Monica-Pass/Monica/pull/117)、[#120](https://github.com/Monica-Pass/Monica/pull/120) 和 [#122](https://github.com/Monica-Pass/Monica/pull/122) 中贡献的性能改进按最终架构合并说明:密码列表不再为首屏提前全量解密密码,搜索和去重先处理非敏感元数据并按需解析;批量搜索元数据使用版本化 UTF-8 数据通过 Rust/JNI 处理,Native 不可用或校验失败时自动回退 Kotlin;Bitwarden 的 PBKDF2-SHA256 与 Argon2id 优先使用经过测试向量验证的 Rust 实现,同时保留 JVM 回退。启动阶段延迟非首屏必需的诊断、历史、附件和同步维护任务,系统生物识别及设备凭据入口复用并预热认证组件。ARM 架构的 Native Library 清理瘦身后,未压缩 `.so` 体积降低约三成;后续 [#123](https://github.com/Monica-Pass/Monica/pull/123) 将来自 Monica-Pass/Mdbx 固定源码版本、通过 535 个 ABI 符号与 237 项校验的 MDBX3 `3.0.0-alpha.1` Runtime 作为正式 APK 的底层 `libmdbx_ffi.so`。上层继续使用 `RUST_MDBX2` 兼容标识和 MDBX-2 可写格式,因此现有数据库无需迁移。这些调整不改变 Android Keystore 安全边界或密码明文的 FFI 边界。
 * Android 文档选择器现在通过 `OpenableColumns.DISPLAY_NAME` 读取用户可见的原始文件名,并在无法查询时从 URI 路径安全回退;查询放在 IO 调度器,避免导入页面卡顿。KDBX 密钥文件选择也使用同一套解析逻辑。
 * 卡包的类型筛选此前只在右上角溢出菜单里,与收藏、未分类等快捷筛选分处两个入口。现在这四个类型作为快捷筛选磁贴显示在分类菜单顶部,点击后即时生效并关闭菜单;使用底部弹窗分类样式时仍保留原有的溢出菜单入口。
 * 验证器的布局样式此前只能在设置的页面调整里修改。现在验证器页右上角菜单直接提供切换项,菜单文字与图标会显示将要切换到的目标样式;切换结果沿用原有设置项的存储,重启和备份恢复后保持一致。
+* 验证器列表不再在每次进入页面时创建独立的设置订阅并以默认标准布局绘制首帧,而是直接复用主界面持续持有的设置快照和布局更新入口。已选择磁贴布局时会从第一帧直接显示磁贴,且 Dock 切换不会因此重新加载验证器数据。
+* 笔记网格由独立瀑布流改为与验证器磁贴共用的 `MonicaTileGrid`,统一为两列、8dp 项目间距和相同页面边距。`MonicaItemCard` 现在同时承载笔记标准列表与磁贴、验证器标准列表与磁贴、卡包以及 Steam 令牌卡片,统一使用 `surfaceContainer` 背景、8dp 圆角、1dp 阴影和相同选中态。Steam 小资料沉浸背景继续使用共享外壳的透明模式,不会被统一背景遮挡;笔记的标题、Markdown 摘要、图片、标签、同步状态及长按操作也保持不变。笔记右上角布局切换文案由“切换到列表/网格”统一为“标准/磁贴”。
 * 此前各页面的震动逻辑分散在各自实现里,只有验证器倒计时有独立开关,其余交互无法关闭。现在下拉手势、长按和滑动操作的震动统一走同一套触觉反馈实现,并由「触觉反馈」总开关控制;验证器震动作为它的子项,总开关关闭时一并停用并置灰。设置页和扩展页都提供该开关,且不需要 Plus。
 * 密码库的行高并不一致,带验证码进度条的条目明显更高。滚动条此前用滑动平均估算行间距,估值几乎完全跟随最近一屏,快速滑动时屏上高矮条目的组合不断变化,滚动位置的换算随之来回摆动,滑块出现抽搐。现在按条目位置累积实测间距、未测量区间用实测均值补足,同一帧布局重复计算结果一致,滑块在快速滑动时保持平稳。
 
 ## English
 ### Summary
 * The Monica Keyboard now shows a consistent loading state for authenticator and card-wallet panels instead of briefly presenting an incorrect empty state.
-* Reverted the card-wallet drag-reorder changes from the previous release, which failed to fix the sorting issue and introduced stuttering during drag.
+* Fixed stuttering, snapping back, and unstable ordering while dragging items in the mixed card-wallet list.
+* Card-wallet cards and the add FAB now share the same visual components as other screens for consistent colors, corners, and interaction feedback.
+* The card wallet now supports the same swipe actions as the authenticator: swipe left to delete and right to select.
+* Merged performance work contributed by `@JiangKaslana` in [#117](https://github.com/Monica-Pass/Monica/pull/117), [#120](https://github.com/Monica-Pass/Monica/pull/120), and [#122](https://github.com/Monica-Pass/Monica/pull/122), improving large-vault loading, search, startup, and system authentication, with [#123](https://github.com/Monica-Pass/Monica/pull/123) promoting the verified MDBX3 runtime into production APKs.
 * Fixed imported files showing an internal `document:<id>` value instead of the original filename.
 * Card-wallet All, Bank Cards, Documents, and Billing Addresses filters moved from the overflow menu into the folder menu's quick filters.
 * The authenticator overflow menu can now switch between the standard list and the tile layout directly.
+* Fixed the authenticator briefly showing the standard list before switching to the saved tile layout when opened from another Dock screen.
+* Notes, Authenticator, and Steam token cards now share the tile-style corners, colors, and selected state; the Notes layout menu uses “Standard/Tiles”.
 * Added a master haptic feedback toggle that turns off vibration for pull gestures, long presses, and other interactions at once.
 * Fixed the vault list scrollbar handle twitching during fast scrolling.
 
 ### Details
 * When the Monica Keyboard switches to, restores after unlock, or reopens an authenticator or card-wallet panel, it shows the same loading state as the password panel until the real result is available.
-* The card-wallet drag-reorder implementation in 1.0.308 failed to resolve the underlying issue where manual order was overridden by update time, and introduced list stuttering during drag. This release fully reverts those changes to restore the smooth drag experience from 1.0.307; the sorting issue will be addressed with a redesigned approach in a future release.
+* The card wallet now follows the authenticator's standard list drag path, removing overlapping scale, placement, and shadow animations that could move a card twice in one frame. A local order snapshot is retained during a drag, and database emissions are reconciled by item ID while the write-back is pending, so intermediate Flow updates cannot restore the old order. Bank cards, documents, and billing addresses in the mixed list are persisted in one complete order update.
+* Bank cards, documents, billing addresses, and authenticator tiles now use one shared item-card container for the same surface level, corner radius, elevation, and selected state. The card wallet keeps its existing single-column layout and information structure. Its add button continues to use the global `SwipeableAddFab`, with the card-wallet-only solid color override removed so it matches Passwords, Authenticator, Notes, and other screens.
+* Bank cards, documents, and billing addresses now share the authenticator's `SwipeActions`: a left swipe enters the existing delete confirmation and identity-verification flow, while a right swipe starts multi-selection or toggles the current item. Delete swipes are disabled during selection, and all swipes pause during drag reordering to prevent accidental deletion and gesture conflicts.
+* The contributions from `@JiangKaslana` in [#117](https://github.com/Monica-Pass/Monica/pull/117), [#120](https://github.com/Monica-Pass/Monica/pull/120), and [#122](https://github.com/Monica-Pass/Monica/pull/122) are described here as one final performance architecture: the vault list no longer decrypts every password before first render, while search and duplicate detection process non-sensitive metadata first and decrypt only when required. Versioned UTF-8 metadata batches are handled through Rust/JNI with automatic Kotlin fallback when native code is unavailable or validation fails. Bitwarden PBKDF2-SHA256 and Argon2id prefer the test-vector-verified Rust implementation while retaining the JVM fallback. Diagnostics, history, attachment, and sync maintenance work that is not required for the first screen is initialized later; system biometric and device-credential paths reuse prewarmed authentication components. Native cleanup reduced the uncompressed ARM `.so` size by roughly one third. Follow-up [#123](https://github.com/Monica-Pass/Monica/pull/123) promotes the MDBX3 `3.0.0-alpha.1` runtime built from a pinned Monica-Pass/Mdbx source revision and verified against 535 ABI symbols and 237 checksums as the production APK's `libmdbx_ffi.so`. The upper layer retains the `RUST_MDBX2` compatibility identifier and writable MDBX-2 format, so existing databases require no migration. These changes do not alter the Android Keystore boundary or the rule that password plaintext does not cross the search FFI boundary.
 * Android imports now query `OpenableColumns.DISPLAY_NAME` for the user-visible filename, safely fall back to a decoded URI path when providers omit it, and perform the query on the IO dispatcher. KDBX key-file selection uses the same resolver.
 * Card-wallet type filters previously lived only in the overflow menu, separate from quick filters such as Favorites and Uncategorized. All four types now appear as quick-filter chips at the top of the folder menu, applying immediately and dismissing the menu. The bottom-sheet folder style keeps its original overflow entry.
 * The authenticator layout style was previously reachable only through Settings, under page adjustments. The authenticator overflow menu now offers the switch directly, with its label and icon showing the style you are switching to. The choice reuses the existing setting, so it survives restarts and backup restores.
+* The authenticator list no longer creates a fresh settings subscription that paints its first frame with the default standard layout on every entry. It now consumes the settings snapshot and layout update path continuously owned by the main screen, so a saved tile layout is shown from the first frame without reloading authenticator data during Dock navigation.
+* The Notes grid replaces its separate staggered layout with the same `MonicaTileGrid` used by authenticator tiles, sharing two columns, 8dp item spacing, and page insets. `MonicaItemCard` now also wraps the standard and tile variants of Notes and Authenticator, card-wallet entries, and Steam token cards, providing the same `surfaceContainer` background, 8dp corners, 1dp elevation, and selected state. Steam mini-profile immersive backgrounds retain a transparent shared container, so the unified surface does not cover them. Note titles, Markdown previews, images, tags, sync status, and long-press actions remain intact. The Notes overflow menu now labels its layout choices “Standard” and “Tiles” instead of “switch to list/grid”.
 * Vibration logic was previously scattered across individual screens, and only the authenticator countdown had its own toggle, leaving other interactions impossible to silence. Pull gestures, long presses, and swipe actions now share a single haptic feedback implementation governed by a master "Haptic Feedback" switch. Authenticator vibration becomes a sub-item that is disabled and greyed out when the master switch is off. The toggle appears in both Settings and Extensions, and does not require Plus.
 * Vault rows vary in height, since entries with a verification-code progress bar are noticeably taller. The scrollbar previously estimated row spacing with a running average that tracked whichever rows were on screen, so a fast scroll made the estimate swing as the mix of tall and short rows changed, and the scroll-position calculation twitched with it. Spacing is now accumulated per row position, with the measured average filling in rows not yet seen, so repeated calculations over one frame's layout agree and the handle stays steady during fast scrolling.
+* The password page's linked-app picker now caches lightweight package metadata for five minutes and resolves icons only for visible rows. Large app inventories no longer decode every icon before the dialog can render, while the picker and autofill blacklist screens still show real app icons as rows appear.

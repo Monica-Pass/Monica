@@ -69,11 +69,10 @@ fun BankCardCard(
         )
     }
     
-    // 获取对应容器的文字颜色
-    val contentColor = when (resolvedCardData.cardType) {
-        CardType.CREDIT -> MaterialTheme.colorScheme.onPrimaryContainer
-        CardType.DEBIT -> MaterialTheme.colorScheme.onSecondaryContainer
-        CardType.PREPAID -> MaterialTheme.colorScheme.onTertiaryContainer
+    val contentColor = if (isSelected) {
+        MaterialTheme.colorScheme.onPrimaryContainer
+    } else {
+        MaterialTheme.colorScheme.onSurface
     }
     
     val cardInteractionModifier = if (isSelectionMode) {
@@ -89,25 +88,9 @@ fun BankCardCard(
             )
     }
 
-    Card(
+    MonicaItemCard(
         modifier = cardInteractionModifier,
-        shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 2.dp
-        ),
-        colors = if (isSelected) {
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer
-            )
-        } else {
-            CardDefaults.cardColors(
-                containerColor = when (resolvedCardData.cardType) {
-                    CardType.CREDIT -> MaterialTheme.colorScheme.primaryContainer
-                    CardType.DEBIT -> MaterialTheme.colorScheme.secondaryContainer
-                    CardType.PREPAID -> MaterialTheme.colorScheme.tertiaryContainer
-                }
-            )
-        }
+        isSelected = isSelected
     ) {
         Column(
             modifier = Modifier

@@ -20,8 +20,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Shield
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
@@ -47,6 +45,7 @@ import takagi.ru.monica.notes.domain.DecodedNoteContent
 import takagi.ru.monica.notes.domain.NoteContentCodec
 import takagi.ru.monica.notes.ui.model.NoteListItemUiModel
 import takagi.ru.monica.ui.components.MarkdownPreviewText
+import takagi.ru.monica.ui.components.MonicaItemCard
 import takagi.ru.monica.ui.components.SyncStatusIcon
 import takagi.ru.monica.util.ImageManager
 import kotlinx.coroutines.Dispatchers
@@ -100,12 +99,6 @@ fun ExpressiveNoteCard(
 
     val hasImageAttachment = note.hasImageAttachment
 
-    val containerColor = if (isSelected) {
-        MaterialTheme.colorScheme.primaryContainer
-    } else {
-        MaterialTheme.colorScheme.surfaceContainerHigh
-    }
-
     val contentColor = if (isSelected) {
         MaterialTheme.colorScheme.onPrimaryContainer
     } else {
@@ -118,22 +111,17 @@ fun ExpressiveNoteCard(
         MaterialTheme.colorScheme.onSurfaceVariant
     }
 
-    Card(
+    MonicaItemCard(
+        isSelected = isSelected,
         modifier = Modifier
             .fillMaxWidth()
             .combinedClickable(
                 onClick = onClick,
                 onLongClick = onLongClick
-            ),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = containerColor),
-        elevation = CardDefaults.cardElevation(defaultElevation = if (isSelected) 4.dp else 1.dp),
-        border = if (isSelected) {
-            androidx.compose.foundation.BorderStroke(2.dp, MaterialTheme.colorScheme.primary)
-        } else null
+            )
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(if (isGridMode) 12.dp else 16.dp)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,

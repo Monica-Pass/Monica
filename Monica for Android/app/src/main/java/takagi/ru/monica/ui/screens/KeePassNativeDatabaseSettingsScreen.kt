@@ -808,7 +808,7 @@ private fun KeePassMasterCredentialDialog(
                             }
                         },
                         modifier = Modifier.fillMaxWidth(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                        keyboardOptions = keepassCredentialKeyboardOptions()
                     )
                 }
                 item {
@@ -819,7 +819,7 @@ private fun KeePassMasterCredentialDialog(
                         visualTransformation = PasswordVisualTransformation(),
                         isError = confirmPassword.isNotEmpty() && confirmPassword != password,
                         modifier = Modifier.fillMaxWidth(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                        keyboardOptions = keepassCredentialKeyboardOptions()
                     )
                 }
                 item { Text(stringResource(R.string.keepass_database_key_file_mode), fontWeight = FontWeight.SemiBold) }

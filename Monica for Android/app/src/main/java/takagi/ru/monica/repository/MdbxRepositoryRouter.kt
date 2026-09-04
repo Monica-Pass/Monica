@@ -7,6 +7,9 @@ import takagi.ru.monica.data.PasskeyEntry
 import takagi.ru.monica.data.PasswordEntry
 import takagi.ru.monica.data.SecureItem
 
+internal class MdbxVaultNotFoundException(val databaseId: Long) :
+    IllegalStateException("MDBX vault not found: $databaseId")
+
 class MdbxRepositoryRouter(
     private val databaseDao: LocalMdbxDatabaseDao,
     private val legacyRepository: MdbxRepository,
@@ -254,7 +257,7 @@ class MdbxRepositoryRouter(
 
     private suspend fun repositoryFor(databaseId: Long): MdbxRepository {
         val database = databaseDao.getDatabaseById(databaseId)
-            ?: throw IllegalStateException("MDBX vault not found: $databaseId")
+            ?: throw MdbxVaultNotFoundException(databaseId)
         return when (database.engineTypeEnum) {
             MdbxEngineType.KOTLIN_MDBX1 -> legacyRepository
             MdbxEngineType.RUST_MDBX2 -> rustRepository

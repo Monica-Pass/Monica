@@ -94,6 +94,7 @@ import takagi.ru.monica.data.bitwarden.BitwardenVault
 import takagi.ru.monica.data.AppSettings
 import takagi.ru.monica.ui.components.AppInfo
 import takagi.ru.monica.ui.components.loadInstalledApps
+import takagi.ru.monica.ui.components.AppIcon
 import takagi.ru.monica.utils.SettingsManager
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -1022,7 +1023,12 @@ private fun V2BlacklistManagementDialog(
                         modifier = Modifier.fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
-                        items(filteredApps) { app ->
+                        // Keep rows tied to packages rather than their current
+                        // position so filtering cannot reuse a previous icon.
+                        items(
+                            items = filteredApps,
+                            key = { it.packageName }
+                        ) { app ->
                             val checked = blacklistPackages.contains(app.packageName)
                             Card(
                                 modifier = Modifier
@@ -1042,23 +1048,7 @@ private fun V2BlacklistManagementDialog(
                                         .padding(horizontal = 12.dp, vertical = 8.dp),
                                     verticalAlignment = Alignment.CenterVertically,
                                 ) {
-                                    if (app.icon != null) {
-                                        val bitmap = remember(app.icon) {
-                                            app.icon!!.toBitmap(48, 48)
-                                        }
-                                        Image(
-                                            bitmap = bitmap.asImageBitmap(),
-                                            contentDescription = null,
-                                            modifier = Modifier.size(36.dp),
-                                        )
-                                    } else {
-                                        Icon(
-                                            imageVector = Icons.Outlined.Apps,
-                                            contentDescription = null,
-                                            modifier = Modifier.size(36.dp),
-                                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        )
-                                    }
+                                    AppIcon(app = app, modifier = Modifier.size(36.dp))
 
                                     Spacer(modifier = Modifier.width(12.dp))
 

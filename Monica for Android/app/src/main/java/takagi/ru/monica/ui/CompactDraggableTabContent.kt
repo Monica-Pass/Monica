@@ -296,6 +296,8 @@ internal fun CompactDraggableTabContent(
                 TotpListContent(
                     viewModel = totpViewModel,
                     passwordViewModel = passwordViewModel,
+                    appSettings = appSettings,
+                    onAuthenticatorLayoutModeChange = settingsViewModel::updateAuthenticatorLayoutMode,
                     onTotpClick = onTotpOpen,
                     onDeleteTotp = { totp ->
                         totpViewModel.deleteTotpItem(totp)

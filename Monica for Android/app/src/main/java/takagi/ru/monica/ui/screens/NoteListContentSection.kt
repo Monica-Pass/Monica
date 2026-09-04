@@ -22,9 +22,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Note
 import androidx.compose.material3.MaterialTheme
@@ -57,10 +55,11 @@ import takagi.ru.monica.bitwarden.repository.BitwardenRepository
 import takagi.ru.monica.bitwarden.sync.syncForUserVisibleRequest
 import takagi.ru.monica.notes.ui.model.NoteListItemUiModel
 import takagi.ru.monica.ui.components.PullActionVisualState
+import takagi.ru.monica.ui.components.MonicaTileGrid
 import takagi.ru.monica.ui.common.pull.calculateDampedPullOffset
 import takagi.ru.monica.ui.common.state.InitialListRenderState
 import takagi.ru.monica.ui.common.state.rememberSaveableLazyListState
-import takagi.ru.monica.ui.common.state.rememberSaveableLazyStaggeredGridState
+import takagi.ru.monica.ui.common.state.rememberSaveableLazyGridState
 import takagi.ru.monica.ui.common.state.resolveInitialListRenderState
 import takagi.ru.monica.ui.haptic.rememberHapticFeedback
 
@@ -82,7 +81,7 @@ fun NoteListContent(
     val density = LocalDensity.current
     val scope = rememberCoroutineScope()
     val listState = rememberSaveableLazyListState()
-    val gridState = rememberSaveableLazyStaggeredGridState()
+    val gridState = rememberSaveableLazyGridState()
     var currentOffset by remember { mutableFloatStateOf(0f) }
     val searchTriggerDistance = remember(density, isBitwardenDatabaseView) {
         with(density) { (if (isBitwardenDatabaseView) 40.dp else 72.dp).toPx() }
@@ -411,11 +410,7 @@ fun NoteListContent(
             }
             InitialListRenderState.Content -> {
                 if (isGridLayout) {
-                    LazyVerticalStaggeredGrid(
-                        columns = StaggeredGridCells.Fixed(2),
-                        contentPadding = PaddingValues(16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
-                        verticalItemSpacing = 12.dp,
+                    MonicaTileGrid(
                         modifier = Modifier
                             .fillMaxSize()
                             .offset { IntOffset(0, contentPullOffset) }

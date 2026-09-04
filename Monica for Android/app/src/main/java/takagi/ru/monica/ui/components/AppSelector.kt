@@ -28,7 +28,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import takagi.ru.monica.R
 import takagi.ru.monica.ui.components.OutlinedTextField
@@ -41,6 +40,11 @@ data class AppInfo(
     val appName: String,
     val icon: Drawable?
 )
+
+private const val INSTALLED_APPS_CACHE_TTL_MS = 5 * 60 * 1000L
+private val installedAppsCacheLock = Any()
+private var installedAppsCache: List<AppInfo>? = null
+private var installedAppsCacheTimestamp = 0L
 
 /**
  * 应用选择器组件
@@ -159,8 +163,6 @@ fun AppSelectorDialog(
     onAppSelected: (packageName: String, appName: String) -> Unit
 ) {
     val context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
-    
     var searchQuery by remember { mutableStateOf("") }
     var installedApps by remember { mutableStateOf<List<AppInfo>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
@@ -168,10 +170,8 @@ fun AppSelectorDialog(
     
     // 加载已安装的应用列表
     LaunchedEffect(Unit) {
-        coroutineScope.launch {
-            installedApps = loadInstalledApps(context)
-            isLoading = false
-        }
+        installedApps = loadInstalledApps(context)
+        isLoading = false
     }
     
     // 手动输入对话框
@@ -334,7 +334,13 @@ fun AppSelectorDialog(
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
-                        items(filteredApps) { app ->
+                        // Use the package name as the item identity. Without a stable
+                        // key, changing the search query reuses a row by position and
+                        // can leave the previous app's icon in the newly displayed row.
+                        items(
+                            items = filteredApps,
+                            key = { it.packageName }
+                        ) { app ->
                             AppListItem(
                                 app = app,
                                 onClick = {
@@ -363,15 +369,9 @@ fun AppListItem(
     onClick: () -> Unit
 ) {
     val context = LocalContext.current
-    val icon by produceState<Drawable?>(initialValue = app.icon, app.packageName) {
-        if (value != null) return@produceState
-        value = withContext(Dispatchers.IO) {
-            runCatching {
-                context.packageManager.getApplicationIcon(app.packageName)
-            }.getOrNull()
-        }
-    }
-
+    // `produceState` retains its state when a lazy-list slot is reused. Reset the
+    // value whenever the app identity or the loaded icon changes and never keep
+    // an old non-null value just because it came from the previous row.
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -386,21 +386,7 @@ fun AppListItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             // 应用图标
-            icon?.let { drawable ->
-                val bitmap = remember(drawable) {
-                    drawable.toBitmap(48, 48)
-                }
-                Image(
-                    bitmap = bitmap.asImageBitmap(),
-                    contentDescription = null,
-                    modifier = Modifier.size(40.dp)
-                )
-            } ?: Icon(
-                imageVector = Icons.Default.Apps,
-                contentDescription = null,
-                modifier = Modifier.size(40.dp),
-                tint = MaterialTheme.colorScheme.primary
-            )
+            AppIcon(app = app, modifier = Modifier.size(40.dp))
             
             Spacer(modifier = Modifier.width(12.dp))
             
@@ -564,7 +550,14 @@ private fun ManualInputDialog(
  * - 性能优化：限制最大数量，防止内存溢出
  * - 内存优化：仅加载可见的应用图标
  */
- suspend fun loadInstalledApps(context: Context): List<AppInfo> = withContext(Dispatchers.IO) {
+suspend fun loadInstalledApps(context: Context): List<AppInfo> = withContext(Dispatchers.IO) {
+    val now = System.currentTimeMillis()
+    synchronized(installedAppsCacheLock) {
+        installedAppsCache?.takeIf {
+            now - installedAppsCacheTimestamp < INSTALLED_APPS_CACHE_TTL_MS
+        }?.let { return@withContext it }
+    }
+
     val packageManager = context.packageManager
     val appList = mutableListOf<AppInfo>()
     val maxApps = 1000 // 去重后的上限
@@ -607,10 +600,10 @@ private fun ManualInputDialog(
 
                 val appName = activityInfo.loadLabel(packageManager).toString()
 
-                // Keep the application icon with the lightweight app model. The
-                // blacklist picker uses this same loader and should not fall back
-                // to a generic grid icon for every package.
-                appList.add(AppInfo(packageName, appName, icon = activityInfo.loadIcon(packageManager)))
+                // Icons are resolved lazily by AppListItem for visible rows. Loading
+                // every Drawable here makes the dialog wait on hundreds of Binder
+                // calls and retains a large amount of memory.
+                appList.add(AppInfo(packageName, appName, icon = null))
                 
             } catch (e: Exception) {
                 android.util.Log.w("AppSelector", "跳过无效应用: ${e.message}")
@@ -623,6 +616,13 @@ private fun ManualInputDialog(
         
         val totalTime = System.currentTimeMillis() - startTime
         android.util.Log.d("AppSelector", "应用列表加载完成：${appList.size} 个应用，总耗时 ${totalTime}ms")
+
+        val result = appList.toList()
+        synchronized(installedAppsCacheLock) {
+            installedAppsCache = result
+            installedAppsCacheTimestamp = System.currentTimeMillis()
+        }
+        return@withContext result
         
     } catch (e: OutOfMemoryError) {
         android.util.Log.e("AppSelector", "内存不足！", e)
@@ -634,7 +634,35 @@ private fun ManualInputDialog(
         throw e
     }
     
-    return@withContext appList
+    return@withContext appList.toList()
+}
+
+@Composable
+fun AppIcon(
+    app: AppInfo,
+    modifier: Modifier = Modifier,
+) {
+    val context = LocalContext.current
+    val icon by produceState<Drawable?>(
+        initialValue = app.icon,
+        key1 = app.packageName,
+        key2 = app.icon,
+    ) {
+        if (value == null) {
+            value = withContext(Dispatchers.IO) {
+                runCatching { context.packageManager.getApplicationIcon(app.packageName) }.getOrNull()
+            }
+        }
+    }
+    icon?.let { drawable ->
+        val bitmap = remember(app.packageName, drawable) { drawable.toBitmap(48, 48) }
+        Image(bitmap = bitmap.asImageBitmap(), contentDescription = null, modifier = modifier)
+    } ?: Icon(
+        imageVector = Icons.Default.Apps,
+        contentDescription = null,
+        modifier = modifier,
+        tint = MaterialTheme.colorScheme.primary,
+    )
 }
 
 /**

@@ -1701,6 +1701,18 @@
     <!-- WebDAV Auto Backup -->
     <string name="webdav_auto_backup">Auto Backup</string>
     <string name="webdav_auto_backup_description">Backup on first daily launch or every 12 hours</string>
+    <string name="webdav_sync_settings">Sync settings</string>
+    <string name="webdav_change_triggered_title">Sync after changes</string>
+    <string name="webdav_change_triggered_description">Upload once editing stops, instead of waiting for the 12-hour schedule</string>
+    <string name="webdav_change_triggered_quiet">Quiet period</string>
+    <string name="webdav_change_triggered_quiet_value">%d min</string>
+    <string name="webdav_change_triggered_quiet_hint">Wait this long after the last change before uploading</string>
+    <string name="webdav_change_triggered_min_interval">Minimum upload interval</string>
+    <string name="webdav_change_triggered_min_interval_value">%d min</string>
+    <string name="webdav_change_triggered_min_interval_off">No limit</string>
+    <string name="webdav_change_triggered_min_interval_hint">Each backup re-uploads the full archive. A lower limit means more traffic.</string>
+    <string name="webdav_change_triggered_requires_auto_backup">Turn on Auto Backup first</string>
+    <string name="webdav_sync_settings_saved">Sync settings saved</string>
     <string name="webdav_auto_backup_enabled">Auto backup enabled</string>
     <string name="webdav_auto_backup_disabled">Auto backup disabled</string>
     <string name="webdav_last_backup">Last backup</string>

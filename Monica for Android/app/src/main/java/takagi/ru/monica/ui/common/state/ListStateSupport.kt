@@ -2,6 +2,8 @@ package takagi.ru.monica.ui.common.state
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.runtime.Composable
@@ -45,6 +47,20 @@ internal fun rememberSaveableLazyListState(
             firstVisibleItemIndex = initialFirstVisibleItemIndex,
             firstVisibleItemScrollOffset = initialFirstVisibleItemScrollOffset
         )
+    }
+}
+
+@Composable
+internal fun rememberSaveableLazyGridState(
+    initialFirstVisibleItemIndex: Int = 0,
+    initialFirstVisibleItemScrollOffset: Int = 0,
+): LazyGridState {
+    val initialState = rememberLazyGridState(
+        initialFirstVisibleItemIndex = initialFirstVisibleItemIndex,
+        initialFirstVisibleItemScrollOffset = initialFirstVisibleItemScrollOffset,
+    )
+    return rememberSaveable(saver = LazyGridState.Saver) {
+        initialState
     }
 }
 
