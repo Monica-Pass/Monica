@@ -138,6 +138,18 @@ class NoteViewModel(
         _isGridLayout.value = isGrid
     }
 
+    /** Persist the order produced by the note tile drag interaction. */
+    fun updateSortOrders(items: List<Pair<Long, Int>>) {
+        if (items.isEmpty()) return
+        viewModelScope.launch(Dispatchers.IO) {
+            runCatching {
+                repository.updateSortOrders(items)
+            }.onFailure { error ->
+                Log.e(TAG, "Failed to persist note tile order", error)
+            }
+        }
+    }
+
     fun setDraftStorageTarget(target: NoteDraftStorageTarget) {
         _draftStorageTarget.value = target
     }

@@ -166,6 +166,7 @@ import takagi.ru.monica.ui.components.QuickActionItem
 import takagi.ru.monica.ui.components.QuickAddCallback
 import takagi.ru.monica.ui.components.SyncStatusIcon
 import takagi.ru.monica.ui.components.M3IdentityVerifyDialog
+import takagi.ru.monica.ui.components.MonicaItemCardShape
 import takagi.ru.monica.ui.components.MonicaTileGrid
 import takagi.ru.monica.ui.components.UnifiedCategoryFilterChipMenu
 import takagi.ru.monica.ui.components.UnifiedCategoryFilterChipMenuDropdown
@@ -1234,7 +1235,8 @@ fun TotpListContent(
                             isSwiped = itemToDelete?.id == item.id,
                             enabled = !isDragging,
                             allowSwipeLeft = !isSelectionMode,
-                            allowSwipeRight = true
+                            allowSwipeRight = true,
+                            cardShape = MonicaItemCardShape
                         ) {
                             // 包装卡片以支持拖动
                             Box(

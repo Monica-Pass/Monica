@@ -396,6 +396,11 @@ fun NoteListScreen(
             item.toNoteListItemUiModel(parsedNoteById.getValue(item.id).content)
         }
     }
+    val allNoteUiItems = remember(notes, parsedNoteById) {
+        notes.map { item ->
+            item.toNoteListItemUiModel(parsedNoteById.getValue(item.id).content)
+        }
+    }
 
     // 删除实际执行
     fun performDelete() {
@@ -944,6 +949,7 @@ fun NoteListScreen(
 
         NoteListContent(
             notes = filteredNoteUiItems,
+            allNotes = allNoteUiItems,
             isInitialLoading = !parsedNotesState.isReady,
             isGridLayout = isGridLayout,
             isSearchExpanded = isSearchExpanded,
@@ -951,6 +957,7 @@ fun NoteListScreen(
             isBitwardenDatabaseView = isBitwardenDatabaseView,
             bitwardenRepository = bitwardenRepository,
             selectedNoteIds = selectedNoteIds,
+            onUpdateSortOrders = viewModel::updateSortOrders,
             onNoteClick = { noteId ->
                 if (isSelectionMode) {
                     selectedNoteIds = if (selectedNoteIds.contains(noteId)) {

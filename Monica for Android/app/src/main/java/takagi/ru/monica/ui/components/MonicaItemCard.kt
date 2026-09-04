@@ -10,6 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
+/**
+ * Corner treatment shared by every item card and its gesture container.
+ * Keeping one shape prevents the outer swipe surface from exposing a second,
+ * larger radius around the actual card.
+ */
+val MonicaItemCardShape = RoundedCornerShape(8.dp)
+
 /** Shared surface for compact vault items across list and tile layouts. */
 @Composable
 fun MonicaItemCard(
@@ -20,7 +27,7 @@ fun MonicaItemCard(
 ) {
     Card(
         modifier = modifier,
-        shape = RoundedCornerShape(8.dp),
+        shape = MonicaItemCardShape,
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
         colors = CardDefaults.cardColors(
             containerColor = when {

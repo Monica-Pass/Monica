@@ -119,6 +119,7 @@ import takagi.ru.monica.ui.components.EmptyState
 import takagi.ru.monica.ui.components.ExpressiveTopBar
 import takagi.ru.monica.ui.components.LoadingIndicator
 import takagi.ru.monica.ui.components.M3IdentityVerifyDialog
+import takagi.ru.monica.ui.components.MonicaItemCardShape
 import takagi.ru.monica.ui.PasswordListCategoryChipMenuBottomActions
 import takagi.ru.monica.ui.category.CategoryManagementTrailingContent
 import takagi.ru.monica.ui.category.CategoryManagementCreateDialog
@@ -1496,6 +1497,7 @@ fun CardWalletScreen(
                                         enabled = !isDragging,
                                         allowSwipeLeft = !isSelectionMode,
                                         allowSwipeRight = true,
+                                        cardShape = MonicaItemCardShape,
                                         modifier = Modifier.fillMaxWidth()
                                     ) {
                                         when (walletItem.type) {

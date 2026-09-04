@@ -175,6 +175,7 @@ import takagi.ru.monica.ui.common.pull.PullToSearchStateHandle
 import takagi.ru.monica.ui.common.pull.rememberPullToSearchState
 import takagi.ru.monica.ui.components.ExpressiveTopBar
 import takagi.ru.monica.ui.components.M3IdentityVerifyDialog
+import takagi.ru.monica.ui.components.MonicaItemCardShape
 import takagi.ru.monica.ui.components.MonicaModalBottomSheet
 import takagi.ru.monica.ui.components.MonicaExpressiveFilterChip
 import takagi.ru.monica.ui.components.PasswordEntryPickerBottomSheet
@@ -2480,6 +2481,7 @@ private fun SteamCodeContent(
                             isSwiped = account.id in selectedIds,
                             enabled = !isDragging,
                             allowSwipeLeft = false,
+                            cardShape = MonicaItemCardShape,
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Box(

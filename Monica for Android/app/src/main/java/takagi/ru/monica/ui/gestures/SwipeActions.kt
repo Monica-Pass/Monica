@@ -18,6 +18,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.res.stringResource
@@ -57,6 +58,7 @@ fun SwipeActions(
     modifier: Modifier = Modifier,
     allowSwipeLeft: Boolean = true,
     allowSwipeRight: Boolean = true,
+    cardShape: Shape = RoundedCornerShape(16.dp),
     content: @Composable () -> Unit
 ) {
     // 使用非动画状态记录实时拖动偏移，避免高频创建协程
@@ -97,8 +99,9 @@ fun SwipeActions(
     var cardWidth by remember { mutableFloatStateOf(0f) }
     val maxSwipeDistance = 300f
     
-    // 统一圆角形状
-    val componentShape = remember { RoundedCornerShape(16.dp) }
+    // The caller can supply the foreground card's exact shape so the swipe
+    // background and clipping never expose a second corner treatment.
+    val componentShape = cardShape
     
     // 弹性物理模型
     val springSpec = spring<Float>(

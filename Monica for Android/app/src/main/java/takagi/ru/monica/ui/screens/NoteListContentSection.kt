@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Note
 import androidx.compose.material3.MaterialTheme
@@ -55,7 +54,6 @@ import takagi.ru.monica.bitwarden.repository.BitwardenRepository
 import takagi.ru.monica.bitwarden.sync.syncForUserVisibleRequest
 import takagi.ru.monica.notes.ui.model.NoteListItemUiModel
 import takagi.ru.monica.ui.components.PullActionVisualState
-import takagi.ru.monica.ui.components.MonicaTileGrid
 import takagi.ru.monica.ui.common.pull.calculateDampedPullOffset
 import takagi.ru.monica.ui.common.state.InitialListRenderState
 import takagi.ru.monica.ui.common.state.rememberSaveableLazyListState
@@ -73,6 +71,8 @@ fun NoteListContent(
     isBitwardenDatabaseView: Boolean,
     bitwardenRepository: BitwardenRepository,
     selectedNoteIds: Set<Long>,
+    allNotes: List<NoteListItemUiModel> = notes,
+    onUpdateSortOrders: (List<Pair<Long, Int>>) -> Unit = {},
     onNoteClick: (Long) -> Unit,
     onNoteLongClick: (Long) -> Unit,
     modifier: Modifier = Modifier
@@ -410,7 +410,14 @@ fun NoteListContent(
             }
             InitialListRenderState.Content -> {
                 if (isGridLayout) {
-                    MonicaTileGrid(
+                    NoteTileGridContent(
+                        notes = notes,
+                        allNotes = allNotes,
+                        selectedNoteIds = selectedNoteIds,
+                        state = gridState,
+                        onNoteClick = onNoteClick,
+                        onNoteLongClick = onNoteLongClick,
+                        onUpdateSortOrders = onUpdateSortOrders,
                         modifier = Modifier
                             .fillMaxSize()
                             .offset { IntOffset(0, contentPullOffset) }
@@ -421,19 +428,8 @@ fun NoteListContent(
                                     val isAtTop = gridState.firstVisibleItemIndex == 0 && gridState.firstVisibleItemScrollOffset == 0
                                     canTriggerPullToSearch = isAtTop
                                 }
-                            },
-                        state = gridState
-                    ) {
-                        items(notes, key = { it.id }) { note ->
-                            ExpressiveNoteCard(
-                                note = note,
-                                isSelected = selectedNoteIds.contains(note.id),
-                                isGridMode = true,
-                                onClick = { onNoteClick(note.id) },
-                                onLongClick = { onNoteLongClick(note.id) }
-                            )
-                        }
-                    }
+                            }
+                    )
                 } else {
                     LazyColumn(
                         contentPadding = PaddingValues(16.dp),

@@ -20,6 +20,7 @@ class CardWalletSwipeActionsGuardTest {
         assertTrue(swipeActionsCall.contains("enabled = !isDragging"))
         assertTrue(swipeActionsCall.contains("allowSwipeLeft = !isSelectionMode"))
         assertTrue(swipeActionsCall.contains("allowSwipeRight = true"))
+        assertTrue(swipeActionsCall.contains("cardShape = MonicaItemCardShape"))
     }
 
     @Test
@@ -31,6 +32,20 @@ class CardWalletSwipeActionsGuardTest {
         assertTrue(source.contains("itemToDelete?.let { item ->\n        AlertDialog("))
         assertTrue(source.contains("requestDeleteVerification(setOf(item.id))"))
         assertTrue(source.contains("performDelete(verifyDeleteIds)"))
+    }
+
+    @Test
+    fun swipeContainerUsesTheSameEightDpShapeAsVaultCards() {
+        val cardSource = projectFile(
+            "app/src/main/java/takagi/ru/monica/ui/components/MonicaItemCard.kt"
+        ).readText().replace("\r\n", "\n")
+        val swipeSource = projectFile(
+            "app/src/main/java/takagi/ru/monica/ui/gestures/SwipeActions.kt"
+        ).readText().replace("\r\n", "\n")
+
+        assertTrue(cardSource.contains("val MonicaItemCardShape = RoundedCornerShape(8.dp)"))
+        assertTrue(swipeSource.contains("cardShape: Shape = RoundedCornerShape(16.dp)"))
+        assertTrue(swipeSource.contains("val componentShape = cardShape"))
     }
 
     private fun projectFile(path: String): File {
