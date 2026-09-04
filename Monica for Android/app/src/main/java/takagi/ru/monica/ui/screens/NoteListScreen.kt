@@ -346,7 +346,10 @@ fun NoteListScreen(
         viewModel = bitwardenViewModel,
         selectedVaultId = selectedBitwardenVaultId,
         isAllView = selectedCategoryFilter is NoteCategoryFilter.All,
-        enabled = hasRestoredCategoryFilter
+        // Notes must not start an all-vault Bitwarden sync while viewing local,
+        // KeePass, or MDBX notes. Only an explicitly selected Bitwarden vault
+        // has a valid sync target here.
+        enabled = hasRestoredCategoryFilter && selectedBitwardenVaultId != null
     )
     val isTopBarSyncing = selectedBitwardenVaultId?.let { vaultId ->
         bitwardenSyncStatusByVault[vaultId].isUserVisibleSyncInProgress()
