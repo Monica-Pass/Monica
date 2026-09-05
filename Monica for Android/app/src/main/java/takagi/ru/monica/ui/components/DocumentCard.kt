@@ -22,6 +22,7 @@ import takagi.ru.monica.data.model.DocumentType
 import takagi.ru.monica.data.model.displayFullName
 import takagi.ru.monica.bitwarden.sync.SyncStatus
 import takagi.ru.monica.ui.cardwallet.DocumentTypeIcon
+import takagi.ru.monica.ui.cardwallet.documentCardFacePreviewData
 
 /**
  * 证件卡片组件
@@ -63,6 +64,24 @@ fun DocumentCard(
                 onClick = onClick,
                 onLongClick = onLongClick
             )
+    }
+
+    resolvedDocumentData.cardFace?.let { face ->
+        CustomCardFaceCard(
+            item = item,
+            previewData = documentCardFacePreviewData(item.title, resolvedDocumentData),
+            imageAttachmentName = face.imageAttachmentName,
+            displayMode = face.displayMode,
+            modifier = cardInteractionModifier,
+            isSelectionMode = isSelectionMode,
+            isSelected = isSelected,
+            onClick = onClick,
+            onDelete = onDelete,
+            onToggleFavorite = onToggleFavorite,
+            onMoveUp = onMoveUp,
+            onMoveDown = onMoveDown
+        )
+        return
     }
 
     MonicaItemCard(

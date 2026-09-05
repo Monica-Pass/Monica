@@ -23,6 +23,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
+import takagi.ru.monica.ui.cardwallet.CardFaceDetailHeader
+import takagi.ru.monica.ui.cardwallet.documentCardFacePreviewData
+import takagi.ru.monica.ui.cardwallet.CardFaceCustomizer
+import takagi.ru.monica.ui.cardwallet.rememberCardFaceBitmap
+import takagi.ru.monica.attachments.model.AttachmentError
+import takagi.ru.monica.bitwarden.BitwardenVaultPremiumStore
 import takagi.ru.monica.attachments.AttachmentContainer
 import takagi.ru.monica.attachments.facade.AttachmentFacade
 import takagi.ru.monica.attachments.model.AttachmentOwner
@@ -72,6 +78,8 @@ fun DocumentDetailScreen(
     var showFrontImageDialog by remember { mutableStateOf(false) }
     var showBackImageDialog by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
+    var showCardFaceCustomizer by remember { mutableStateOf(false) }
+    var isSavingCardFace by remember { mutableStateOf(false) }
     
     // Load document details
     LaunchedEffect(documentId) {
@@ -148,6 +156,12 @@ fun DocumentDetailScreen(
             null
         }
     }
+    val cardFaceBitmap = rememberCardFaceBitmap(
+        documentItem, documentData?.cardFace?.imageAttachmentName, maxDimension = 1200
+    )
+    val cardFaceImageAllowed = attachmentBitwardenVault?.let {
+        BitwardenVaultPremiumStore.isPremium(context, it.id)
+    } ?: true
     Scaffold(
         topBar = {
             TopAppBar(
@@ -200,6 +214,13 @@ fun DocumentDetailScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 // Header Card using M3E color roles based on type
+                CardFaceDetailHeader(
+                    previewData = documentCardFacePreviewData(documentItem?.title.orEmpty(), data),
+                    config = data.cardFace,
+                    bitmap = cardFaceBitmap,
+                    enabled = !isSavingCardFace,
+                    onClick = { showCardFaceCustomizer = true }
+                )
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
@@ -448,7 +469,9 @@ fun DocumentDetailScreen(
                         owner = AttachmentOwner.secureItem(item.id),
                         bitwardenContext = attachmentBitwardenContext,
                         keepassContext = attachmentKeePassContext,
-                        excludedFileNames = KeePassSecureItemPhotoAttachments.managedFileNames(ItemType.DOCUMENT)
+                        hideManagedCardFaces = true,
+                        excludedFileNames = KeePassSecureItemPhotoAttachments.managedFileNames(ItemType.DOCUMENT) +
+                            listOfNotNull(data.cardFace?.imageAttachmentName)
                     )
                 }
 
@@ -457,6 +480,54 @@ fun DocumentDetailScreen(
         }
     }
     
+    if (showCardFaceCustomizer && documentItem != null && documentData != null) {
+        val item = requireNotNull(documentItem)
+        val data = requireNotNull(documentData)
+        CardFaceCustomizer(
+            title = item.title,
+            previewData = documentCardFacePreviewData(item.title, data),
+            initialConfig = data.cardFace,
+            initialBitmap = cardFaceBitmap,
+            isSaving = isSavingCardFace,
+            imageSelectionAllowed = cardFaceImageAllowed,
+            imageSelectionWarning = if (cardFaceImageAllowed) null
+                else stringResource(R.string.card_face_bitwarden_premium_required),
+            onDismiss = { showCardFaceCustomizer = false },
+            onApply = { edit ->
+                if (!isSavingCardFace) {
+                    isSavingCardFace = true
+                    val updatedData = data.copy(cardFace = edit.config)
+                    viewModel.saveDocumentAcrossTargets(
+                        id = item.id,
+                        title = item.title,
+                        documentData = updatedData,
+                        notes = item.notes,
+                        isFavorite = item.isFavorite,
+                        imagePaths = item.imagePaths,
+                        targets = listOf(item.toStorageTarget()),
+                        cardFaceImageBytes = edit.imageBytes,
+                        onComplete = { result ->
+                            if (result.isSuccess) {
+                                scope.launch {
+                                    documentItem = viewModel.getDocumentById(item.id)
+                                    documentData = updatedData
+                                    isSavingCardFace = false
+                                    showCardFaceCustomizer = false
+                                }
+                            } else {
+                                isSavingCardFace = false
+                                val message = if (result.exceptionOrNull() is AttachmentError.PremiumRequired)
+                                    R.string.card_face_bitwarden_premium_required else R.string.card_face_save_failed
+                                android.widget.Toast.makeText(context, message, android.widget.Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    )
+                }
+                edit.imageBytes?.fill(0)
+            }
+        )
+    }
+
     // Dialogs
     // Dialogs
     if (showFrontImageDialog) {

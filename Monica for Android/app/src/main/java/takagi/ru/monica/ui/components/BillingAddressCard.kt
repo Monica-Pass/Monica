@@ -44,6 +44,7 @@ import takagi.ru.monica.data.model.BillingAddressData
 import takagi.ru.monica.data.model.CardWalletDataCodec
 import takagi.ru.monica.data.model.formatForDisplay
 import takagi.ru.monica.data.model.toBillingAddress
+import takagi.ru.monica.ui.cardwallet.billingAddressCardFacePreviewData
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -77,6 +78,22 @@ fun BillingAddressCard(
                 onClick = onClick,
                 onLongClick = onLongClick
             )
+    }
+
+    resolvedData.cardFace?.let { face ->
+        CustomCardFaceCard(
+            item = item,
+            previewData = billingAddressCardFacePreviewData(item.title, resolvedData),
+            imageAttachmentName = face.imageAttachmentName,
+            displayMode = face.displayMode,
+            modifier = interactionModifier,
+            isSelectionMode = isSelectionMode,
+            isSelected = isSelected,
+            onClick = onClick,
+            onDelete = onDelete,
+            onToggleFavorite = onToggleFavorite
+        )
+        return
     }
 
     MonicaItemCard(

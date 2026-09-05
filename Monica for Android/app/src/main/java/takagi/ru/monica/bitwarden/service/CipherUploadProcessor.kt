@@ -6,6 +6,11 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import takagi.ru.monica.bitwarden.api.*
+import takagi.ru.monica.attachments.AttachmentContainer
+import takagi.ru.monica.attachments.facade.AttachmentFacade
+import takagi.ru.monica.attachments.model.AttachmentOwner
+import takagi.ru.monica.attachments.model.AttachmentSource
+import takagi.ru.monica.bitwarden.BitwardenVaultPremiumStore
 import takagi.ru.monica.bitwarden.crypto.BitwardenCrypto
 import takagi.ru.monica.bitwarden.crypto.BitwardenCrypto.SymmetricCryptoKey
 import takagi.ru.monica.bitwarden.mapper.*
@@ -14,6 +19,7 @@ import takagi.ru.monica.data.*
 import takagi.ru.monica.data.bitwarden.BitwardenVault
 import takagi.ru.monica.data.model.BankCardData
 import takagi.ru.monica.data.model.CardWalletDataCodec
+import takagi.ru.monica.data.model.CardFaceAttachment
 import takagi.ru.monica.data.model.DocumentData
 import takagi.ru.monica.data.model.DocumentType
 import takagi.ru.monica.data.model.NoteData
@@ -45,6 +51,7 @@ class CipherUploadProcessor(
 ) {
     companion object {
         private const val TAG = "CipherUploadProcessor"
+        private const val CARD_FACE_FIELD_NAME = "Monica Card Face"
         private const val KEYSTORE_PROVIDER = "AndroidKeyStore"
         private val CIPHER_STRING_PATTERN =
             Regex("^[0-9]+\\.[A-Za-z0-9+/_=-]+\\|[A-Za-z0-9+/_=-]+(?:\\|[A-Za-z0-9+/_=-]+)?$")
@@ -86,7 +93,19 @@ class CipherUploadProcessor(
             "account number",
             "branch code",
             "currency",
-            "customer service phone"
+            "customer service phone",
+            "monica card face",
+            "monica_card_face"
+        )
+        private val DOCUMENT_RESERVED_FIELD_NAMES = setOf(
+            "monica_document_type",
+            "monica_issue_date",
+            "monica_expiry_date",
+            "monica_issued_by",
+            "monica_nationality",
+            "monica_additional_info",
+            "monica card face",
+            "monica_card_face"
         )
     }
     
@@ -172,15 +191,25 @@ class CipherUploadProcessor(
                 success = true
             )
             
-            // 更新本地条目
+            val cardFaceAttachmentResult = syncManagedCardFaceAttachment(
+                vault = vault,
+                item = item,
+                cipher = createdCipher,
+                accessToken = accessToken,
+                vaultKey = symmetricKey
+            )
             val updatedItem = item.copy(
                 bitwardenCipherId = createdCipher.id,
                 bitwardenRevisionDate = createdCipher.revisionDate,
-                bitwardenLocalModified = false,
-                syncStatus = "SYNCED",
+                bitwardenLocalModified = cardFaceAttachmentResult.isFailure,
+                syncStatus = if (cardFaceAttachmentResult.isSuccess) "SYNCED" else "FAILED",
                 updatedAt = Date()
             )
             secureItemDao.update(updatedItem)
+
+            if (cardFaceAttachmentResult.isFailure) {
+                return UploadItemResult.Error("Card face attachment upload failed")
+            }
             
             android.util.Log.d(TAG, "Uploaded SecureItem ${item.id} as cipher ${createdCipher.id}")
             UploadItemResult.Success(createdCipher.id)
@@ -273,13 +302,24 @@ class CipherUploadProcessor(
                 success = true
             )
 
+            val cardFaceAttachmentResult = syncManagedCardFaceAttachment(
+                vault = vault,
+                item = item,
+                cipher = updatedCipher,
+                accessToken = accessToken,
+                vaultKey = symmetricKey
+            )
             val updatedItem = item.copy(
                 bitwardenRevisionDate = updatedCipher.revisionDate,
-                bitwardenLocalModified = false,
-                syncStatus = "SYNCED",
+                bitwardenLocalModified = cardFaceAttachmentResult.isFailure,
+                syncStatus = if (cardFaceAttachmentResult.isSuccess) "SYNCED" else "FAILED",
                 updatedAt = Date()
             )
             secureItemDao.update(updatedItem)
+
+            if (cardFaceAttachmentResult.isFailure) {
+                return UploadItemResult.Error("Card face attachment upload failed")
+            }
 
             logBitwardenSecureItemEditHistory(
                 vaultId = vault.id,
@@ -321,6 +361,71 @@ class CipherUploadProcessor(
             )
             android.util.Log.e(TAG, "Update SecureItem failed: ${e.message}", e)
             UploadItemResult.Error(e.message ?: "Unknown error")
+        }
+    }
+
+    private suspend fun syncManagedCardFaceAttachment(
+        vault: BitwardenVault,
+        item: SecureItem,
+        cipher: CipherApiResponse,
+        accessToken: String,
+        vaultKey: SymmetricCryptoKey
+    ): Result<Unit> {
+        if (item.itemType != ItemType.BANK_CARD && item.itemType != ItemType.DOCUMENT) {
+            return Result.success(Unit)
+        }
+        val fileName = when (item.itemType) {
+            ItemType.BANK_CARD -> parseBankCardData(item).cardFace?.imageAttachmentName
+            ItemType.DOCUMENT -> parseDocumentData(item).cardFace?.imageAttachmentName
+            else -> null
+        }
+            ?.takeIf(CardFaceAttachment::isManagedFileName)
+        val facade = AttachmentContainer.facade(context.applicationContext)
+        val owner = AttachmentOwner.secureItem(item.id)
+        val managedAttachments = facade.list(owner).filter { attachment ->
+            CardFaceAttachment.isManagedFileName(attachment.fileName)
+        }
+        if (managedAttachments.isEmpty()) return Result.success(Unit)
+        val hasPendingLocalImage = fileName != null && managedAttachments.any { attachment ->
+            attachment.sourceEnum == AttachmentSource.LOCAL && attachment.fileName == fileName
+        }
+        if (hasPendingLocalImage && !BitwardenVaultPremiumStore.isPremium(context, vault.id)) {
+            return Result.failure(IllegalStateException("Bitwarden attachment entitlement unavailable"))
+        }
+
+        return runCatching {
+            BitwardenCipherKeyResolver.withCipherKey(
+                cipher = cipher,
+                vaultKey = vaultKey,
+                logTag = TAG
+            ) { effectiveKey ->
+                val targetContext = AttachmentFacade.BitwardenContext(
+                    vaultApi = apiManager.getVaultApi(vault),
+                    httpClient = apiManager.getOkHttpClient(vault),
+                    accessToken = accessToken,
+                    cipherId = cipher.id,
+                    wrappingKey = effectiveKey,
+                    isOnline = true
+                )
+                if (hasPendingLocalImage) {
+                    facade.promoteLocalAttachmentsToBitwarden(
+                        owner = owner,
+                        targetContext = targetContext,
+                        fileNames = setOf(requireNotNull(fileName))
+                    )
+                }
+                facade.list(owner)
+                    .filter { attachment ->
+                        CardFaceAttachment.isManagedFileName(attachment.fileName) &&
+                            (fileName == null || attachment.fileName != fileName)
+                    }
+                    .forEach { stale ->
+                        facade.deleteAttachment(
+                            attachmentId = stale.id,
+                            bitwardenContext = targetContext
+                        )
+                    }
+            }
         }
     }
     
@@ -1401,11 +1506,15 @@ class CipherUploadProcessor(
             add("monica_issued_by" to docData.issuedBy)
             add("monica_nationality" to docData.nationality)
             add("monica_additional_info" to docData.additionalInfo)
+            docData.cardFace?.let { config ->
+                add(CARD_FACE_FIELD_NAME to CardWalletDataCodec.encodeCardFaceConfig(config))
+            }
         }
         return buildEncryptedFields(
             symmetricKey = symmetricKey,
             reservedFields = reserved,
             customFields = docData.customFields
+                .filterNot { field -> field.label.trim().lowercase() in DOCUMENT_RESERVED_FIELD_NAMES }
         )
     }
 
@@ -1431,6 +1540,9 @@ class CipherUploadProcessor(
             add("Branch Code" to cardData.branchCode)
             add("Currency" to cardData.currency)
             add("Customer Service Phone" to cardData.customerServicePhone)
+            cardData.cardFace?.let { config ->
+                add(CARD_FACE_FIELD_NAME to CardWalletDataCodec.encodeCardFaceConfig(config))
+            }
         }
         return buildEncryptedFields(
             symmetricKey = symmetricKey,

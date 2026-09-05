@@ -1,5 +1,11 @@
 package takagi.ru.monica.viewmodel
 
+import android.content.Context
+import takagi.ru.monica.attachments.AttachmentContainer
+import takagi.ru.monica.attachments.CardFaceAttachmentManager
+import takagi.ru.monica.attachments.model.AttachmentOwner
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -32,8 +38,12 @@ data class ParsedBillingAddressItem(
 
 class BillingAddressViewModel(
     private val repository: SecureItemRepository,
-    private val securityManager: SecurityManager? = null
+    private val securityManager: SecurityManager? = null,
+    context: Context? = null
 ) : ViewModel() {
+
+    private val attachmentFacade = context?.applicationContext?.let(AttachmentContainer::facade)
+    private val cardFaceAttachmentManager = CardFaceAttachmentManager(repository, attachmentFacade, null)
 
     private val safeLogTitle = "账单地址"
 
@@ -112,30 +122,42 @@ class BillingAddressViewModel(
         categoryId: Long? = null,
         mdbxDatabaseId: Long? = null,
         mdbxFolderId: String? = null,
-        replicaGroupId: String? = null
-    ) {
-        viewModelScope.launch {
-            val item = SecureItem(
-                id = 0,
-                itemType = ItemType.BILLING_ADDRESS,
-                title = title,
-                itemData = encodeAddressDataForLocalStorage(addressData),
-                notes = notes,
-                isFavorite = isFavorite,
-                categoryId = categoryId,
-                mdbxDatabaseId = mdbxDatabaseId,
-                mdbxFolderId = if (mdbxDatabaseId != null) mdbxFolderId else null,
-                replicaGroupId = replicaGroupId,
-                imagePaths = imagePaths,
-                createdAt = Date(),
-                updatedAt = Date()
-            )
-            val newId = repository.insertItem(item)
-            OperationLogger.logCreate(
-                itemType = OperationLogItemType.BILLING_ADDRESS,
-                itemId = newId,
-                itemTitle = safeLogTitle
-            )
+        replicaGroupId: String? = null,
+        cardFaceImageBytes: ByteArray? = null,
+        onCreated: suspend (Long) -> Unit = {}
+    ): Deferred<Long> {
+        val ownedImageBytes = cardFaceImageBytes?.copyOf()
+        return viewModelScope.async {
+            try {
+                val item = SecureItem(
+                    id = 0,
+                    itemType = ItemType.BILLING_ADDRESS,
+                    title = title,
+                    itemData = encodeAddressDataForLocalStorage(addressData),
+                    notes = notes,
+                    isFavorite = isFavorite,
+                    categoryId = categoryId,
+                    mdbxDatabaseId = mdbxDatabaseId,
+                    mdbxFolderId = if (mdbxDatabaseId != null) mdbxFolderId else null,
+                    replicaGroupId = replicaGroupId,
+                    imagePaths = imagePaths,
+                    createdAt = Date(),
+                    updatedAt = Date()
+                )
+                val newId = repository.insertItem(item)
+                onCreated(newId)
+                if (addressData.cardFace != null) {
+                    cardFaceAttachmentManager.update(newId, addressData.cardFace, ownedImageBytes, null).getOrThrow()
+                }
+                OperationLogger.logCreate(
+                    itemType = OperationLogItemType.BILLING_ADDRESS,
+                    itemId = newId,
+                    itemTitle = safeLogTitle
+                )
+                newId
+            } finally {
+                ownedImageBytes?.fill(0)
+            }
         }
     }
 
@@ -149,109 +171,134 @@ class BillingAddressViewModel(
         categoryId: Long? = null,
         mdbxDatabaseId: Long? = null,
         mdbxFolderId: String? = null,
-        replicaGroupId: String? = null
-    ) {
-        viewModelScope.launch {
-            val existingItem = repository.getItemById(id) ?: return@launch
-            val oldData = parseAddressData(existingItem.itemData)
-            val changes = buildList {
-                if (existingItem.title != title) {
-                    add(FieldChange("标题", existingItem.title, title))
+        replicaGroupId: String? = null,
+        cardFaceImageBytes: ByteArray? = null
+    ): Deferred<Long> {
+        var ownedImageBytes = cardFaceImageBytes?.copyOf()
+        return viewModelScope.async {
+            try {
+                val existingItem = repository.getItemById(id) ?: error("Billing address no longer exists")
+                val oldData = parseAddressData(existingItem.itemData)
+                val backendChanged = existingItem.mdbxDatabaseId != mdbxDatabaseId
+                if (ownedImageBytes == null && addressData.cardFace != null && backendChanged) {
+                    ownedImageBytes = cardFaceAttachmentManager.readImage(id, addressData.cardFace.imageAttachmentName)
                 }
-                if (existingItem.notes != notes) {
-                    add(FieldChange("备注", existingItem.notes, notes))
-                }
-                if (oldData?.fullName != addressData.fullName) {
-                    add(FieldChange("姓名", oldData?.fullName.orEmpty(), addressData.fullName))
-                }
-                if (oldData?.company != addressData.company) {
-                    add(FieldChange("公司", oldData?.company.orEmpty(), addressData.company))
-                }
-                if (oldData?.streetAddress != addressData.streetAddress) {
-                    add(FieldChange("街道地址", oldData?.streetAddress.orEmpty(), addressData.streetAddress))
-                }
-                if (oldData?.apartment != addressData.apartment) {
-                    add(FieldChange("公寓/单元", oldData?.apartment.orEmpty(), addressData.apartment))
-                }
-                if (oldData?.city != addressData.city) {
-                    add(FieldChange("城市", oldData?.city.orEmpty(), addressData.city))
-                }
-                if (oldData?.stateProvince != addressData.stateProvince) {
-                    add(FieldChange("省/州", oldData?.stateProvince.orEmpty(), addressData.stateProvince))
-                }
-                if (oldData?.postalCode != addressData.postalCode) {
-                    add(FieldChange("邮编", oldData?.postalCode.orEmpty(), addressData.postalCode))
-                }
-                if (oldData?.country != addressData.country) {
-                    add(FieldChange("国家", oldData?.country.orEmpty(), addressData.country))
-                }
-                if (oldData?.email != addressData.email) {
-                    add(FieldChange("邮箱", oldData?.email.orEmpty(), addressData.email))
-                }
-                if (oldData?.phone != addressData.phone) {
-                    add(FieldChange("电话", oldData?.phone.orEmpty(), addressData.phone))
-                }
-                if (oldData?.isDefault != addressData.isDefault) {
-                    add(
-                        FieldChange(
-                            "默认状态",
-                            oldData?.isDefault?.toString().orEmpty(),
-                            addressData.isDefault.toString()
+                val changes = buildList {
+                    if (oldData?.cardFace != addressData.cardFace) {
+                        add(FieldChange("自定义卡面", oldData?.cardFace.toString(), addressData.cardFace.toString()))
+                    }
+                    if (existingItem.title != title) {
+                        add(FieldChange("标题", existingItem.title, title))
+                    }
+                    if (existingItem.notes != notes) {
+                        add(FieldChange("备注", existingItem.notes, notes))
+                    }
+                    if (oldData?.fullName != addressData.fullName) {
+                        add(FieldChange("姓名", oldData?.fullName.orEmpty(), addressData.fullName))
+                    }
+                    if (oldData?.company != addressData.company) {
+                        add(FieldChange("公司", oldData?.company.orEmpty(), addressData.company))
+                    }
+                    if (oldData?.streetAddress != addressData.streetAddress) {
+                        add(FieldChange("街道地址", oldData?.streetAddress.orEmpty(), addressData.streetAddress))
+                    }
+                    if (oldData?.apartment != addressData.apartment) {
+                        add(FieldChange("公寓/单元", oldData?.apartment.orEmpty(), addressData.apartment))
+                    }
+                    if (oldData?.city != addressData.city) {
+                        add(FieldChange("城市", oldData?.city.orEmpty(), addressData.city))
+                    }
+                    if (oldData?.stateProvince != addressData.stateProvince) {
+                        add(FieldChange("省/州", oldData?.stateProvince.orEmpty(), addressData.stateProvince))
+                    }
+                    if (oldData?.postalCode != addressData.postalCode) {
+                        add(FieldChange("邮编", oldData?.postalCode.orEmpty(), addressData.postalCode))
+                    }
+                    if (oldData?.country != addressData.country) {
+                        add(FieldChange("国家", oldData?.country.orEmpty(), addressData.country))
+                    }
+                    if (oldData?.email != addressData.email) {
+                        add(FieldChange("邮箱", oldData?.email.orEmpty(), addressData.email))
+                    }
+                    if (oldData?.phone != addressData.phone) {
+                        add(FieldChange("电话", oldData?.phone.orEmpty(), addressData.phone))
+                    }
+                    if (oldData?.isDefault != addressData.isDefault) {
+                        add(
+                            FieldChange(
+                                "默认状态",
+                                oldData?.isDefault?.toString().orEmpty(),
+                                addressData.isDefault.toString()
+                            )
                         )
-                    )
-                }
-                if (oldData?.customFields != addressData.customFields) {
-                    add(
-                        FieldChange(
-                            "自定义字段",
-                            oldData?.customFields?.toString().orEmpty(),
-                            addressData.customFields.toString()
+                    }
+                    if (oldData?.customFields != addressData.customFields) {
+                        add(
+                            FieldChange(
+                                "自定义字段",
+                                oldData?.customFields?.toString().orEmpty(),
+                                addressData.customFields.toString()
+                            )
                         )
-                    )
+                    }
                 }
+
+                val updatedItem = existingItem.copy(
+                    title = title,
+                    itemData = encodeAddressDataForLocalStorage(addressData),
+                    notes = notes,
+                    isFavorite = isFavorite,
+                    categoryId = categoryId,
+                    keepassDatabaseId = null,
+                    keepassGroupPath = null,
+                    keepassEntryUuid = null,
+                    keepassGroupUuid = null,
+                    bitwardenVaultId = null,
+                    bitwardenCipherId = null,
+                    bitwardenFolderId = null,
+                    bitwardenRevisionDate = null,
+                    bitwardenLocalModified = false,
+                    syncStatus = "NONE",
+                    mdbxDatabaseId = mdbxDatabaseId,
+                    mdbxFolderId = if (mdbxDatabaseId != null) mdbxFolderId else null,
+                    replicaGroupId = replicaGroupId ?: existingItem.replicaGroupId,
+                    updatedAt = Date(),
+                    imagePaths = imagePaths
+                )
+                repository.updateItem(updatedItem)
+                try {
+                    if (addressData.cardFace != null || oldData?.cardFace != null) {
+                        cardFaceAttachmentManager.update(
+                            id, addressData.cardFace, ownedImageBytes, oldData?.cardFace?.imageAttachmentName,
+                        ownerBackendChanged = backendChanged
+                        ).getOrThrow()
+                    }
+                } catch (error: Exception) {
+                    repository.updateItem(existingItem)
+                    throw error
+                }
+
+                OperationLogger.logUpdate(
+                    itemType = OperationLogItemType.BILLING_ADDRESS,
+                    itemId = id,
+                    itemTitle = safeLogTitle,
+                    changes = changes.ifEmpty {
+                        listOf(FieldChange("更新", "编辑前", "已保存"))
+                    },
+                    snapshotChanges = if (changes.isEmpty()) {
+                        emptyList()
+                    } else {
+                        changes + FieldChange(
+                            takagi.ru.monica.data.TIMELINE_SNAPSHOT_FIELD_ITEM_DATA,
+                            existingItem.itemData,
+                            updatedItem.itemData
+                        )
+                    }
+                )
+                id
+            } finally {
+                ownedImageBytes?.fill(0)
             }
-
-            val updatedItem = existingItem.copy(
-                title = title,
-                itemData = encodeAddressDataForLocalStorage(addressData),
-                notes = notes,
-                isFavorite = isFavorite,
-                categoryId = categoryId,
-                keepassDatabaseId = null,
-                keepassGroupPath = null,
-                keepassEntryUuid = null,
-                keepassGroupUuid = null,
-                bitwardenVaultId = null,
-                bitwardenCipherId = null,
-                bitwardenFolderId = null,
-                bitwardenRevisionDate = null,
-                bitwardenLocalModified = false,
-                syncStatus = "NONE",
-                mdbxDatabaseId = mdbxDatabaseId,
-                mdbxFolderId = if (mdbxDatabaseId != null) mdbxFolderId else null,
-                replicaGroupId = replicaGroupId ?: existingItem.replicaGroupId,
-                updatedAt = Date(),
-                imagePaths = imagePaths
-            )
-            repository.updateItem(updatedItem)
-
-            OperationLogger.logUpdate(
-                itemType = OperationLogItemType.BILLING_ADDRESS,
-                itemId = id,
-                itemTitle = safeLogTitle,
-                changes = changes.ifEmpty {
-                    listOf(FieldChange("更新", "编辑前", "已保存"))
-                },
-                snapshotChanges = if (changes.isEmpty()) {
-                    emptyList()
-                } else {
-                    changes + FieldChange(
-                        takagi.ru.monica.data.TIMELINE_SNAPSHOT_FIELD_ITEM_DATA,
-                        existingItem.itemData,
-                        updatedItem.itemData
-                    )
-                }
-            )
         }
     }
 
@@ -304,7 +351,7 @@ class BillingAddressViewModel(
             createdAt = Date(),
             updatedAt = Date()
         )
-        return repository.insertItem(localCopy)
+        return cloneAddressAttachments(item.id, repository.insertItem(localCopy))
     }
 
     suspend fun copyAddressToStorage(
@@ -329,7 +376,24 @@ class BillingAddressViewModel(
             createdAt = Date(),
             updatedAt = Date()
         )
-        return repository.insertItem(copy)
+        return cloneAddressAttachments(item.id, repository.insertItem(copy))
+    }
+
+    private suspend fun cloneAddressAttachments(sourceId: Long, targetId: Long): Long? {
+        return try {
+            val source = requireNotNull(repository.getItemById(sourceId))
+            if (parseAddressData(source.itemData)?.cardFace != null) requireNotNull(attachmentFacade)
+            attachmentFacade?.cloneAttachmentsToNewOwner(
+                sourceOwner = AttachmentOwner.secureItem(sourceId),
+                targetOwner = AttachmentOwner.secureItem(targetId)
+            )
+            targetId
+        } catch (error: kotlinx.coroutines.CancellationException) {
+            throw error
+        } catch (_: Exception) {
+            repository.deleteItemById(targetId)
+            null
+        }
     }
 
     suspend fun moveAddressToStorage(
@@ -338,28 +402,23 @@ class BillingAddressViewModel(
         mdbxDatabaseId: Long? = null,
         mdbxFolderId: String? = null
     ): Boolean {
-        val existingItem = repository.getItemById(id) ?: return false
-        if (existingItem.itemType != ItemType.BILLING_ADDRESS) return false
-        val addressData = parseAddressData(existingItem.itemData) ?: return false
-        val updatedItem = existingItem.copy(
-            itemData = encodeAddressDataForLocalStorage(addressData),
-            categoryId = if (mdbxDatabaseId == null) categoryId else null,
-            keepassDatabaseId = null,
-            keepassGroupPath = null,
-            keepassEntryUuid = null,
-            keepassGroupUuid = null,
-            bitwardenVaultId = null,
-            bitwardenCipherId = null,
-            bitwardenFolderId = null,
-            bitwardenRevisionDate = null,
-            bitwardenLocalModified = false,
-            syncStatus = "NONE",
-            mdbxDatabaseId = mdbxDatabaseId,
-            mdbxFolderId = if (mdbxDatabaseId != null) mdbxFolderId else null,
-            updatedAt = Date()
-        )
-        repository.updateItem(updatedItem)
-        return true
+        val item = repository.getItemById(id) ?: return false
+        if (item.itemType != ItemType.BILLING_ADDRESS) return false
+        val data = parseAddressData(item.itemData) ?: return false
+        return try {
+            updateAddress(
+                id = id, title = item.title, addressData = data,
+                notes = item.notes, isFavorite = item.isFavorite, imagePaths = item.imagePaths,
+                categoryId = if (mdbxDatabaseId == null) categoryId else null,
+                mdbxDatabaseId = mdbxDatabaseId, mdbxFolderId = mdbxFolderId,
+                replicaGroupId = item.replicaGroupId
+            ).await()
+            true
+        } catch (error: kotlinx.coroutines.CancellationException) {
+            throw error
+        } catch (_: Exception) {
+            false
+        }
     }
 
     fun parseAddressData(jsonData: String): BillingAddressData? {

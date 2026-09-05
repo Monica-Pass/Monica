@@ -584,7 +584,8 @@ fun MonicaApp(
     val billingAddressViewModel: BillingAddressViewModel = viewModel {
         BillingAddressViewModel(
             secureItemRepository,
-            securityManager
+            securityManager,
+            navController.context.applicationContext
         )
     }
     val passwordHistoryManager = remember { PasswordHistoryManager(navController.context) }

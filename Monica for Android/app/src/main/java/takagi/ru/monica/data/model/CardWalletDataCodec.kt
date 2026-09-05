@@ -3,6 +3,7 @@ package takagi.ru.monica.data.model
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -22,6 +23,7 @@ object CardWalletDataCodec {
     ): BankCardData? {
         val resolvedRaw = resolveStoredData(raw, decryptIfNeeded)
         return runCatching { json.decodeFromString<BankCardData>(resolvedRaw) }
+            .map { data -> data.copy(cardFace = data.cardFace?.validatedOrNull()) }
             .getOrElse {
                 parseLegacyBankCardData(resolvedRaw)
             }
@@ -33,6 +35,7 @@ object CardWalletDataCodec {
     ): DocumentData? {
         val resolvedRaw = resolveStoredData(raw, decryptIfNeeded)
         return runCatching { json.decodeFromString<DocumentData>(resolvedRaw) }
+            .map { data -> data.copy(cardFace = data.cardFace?.validatedOrNull()) }
             .getOrElse {
                 parseLegacyDocumentData(resolvedRaw)
             }
@@ -44,6 +47,7 @@ object CardWalletDataCodec {
     ): BillingAddressData? {
         val resolvedRaw = resolveStoredData(raw, decryptIfNeeded)
         return runCatching { json.decodeFromString<BillingAddressData>(resolvedRaw) }
+            .map { data -> data.copy(cardFace = data.cardFace?.validatedOrNull()) }
             .getOrElse {
                 parseLegacyBillingAddressData(resolvedRaw)
             }
@@ -83,12 +87,28 @@ object CardWalletDataCodec {
         return parseLegacyPaymentAccountData(resolvedRaw)
     }
 
-    fun encodeBankCardData(data: BankCardData): String = json.encodeToString(BankCardData.serializer(), data)
+    fun encodeBankCardData(data: BankCardData): String = json.encodeToString(
+        BankCardData.serializer(),
+        data.copy(cardFace = data.cardFace?.validatedOrNull())
+    )
 
-    fun encodeDocumentData(data: DocumentData): String = json.encodeToString(DocumentData.serializer(), data)
+    fun parseCardFaceConfig(raw: String): CardFaceConfig? = runCatching {
+        json.decodeFromString<CardFaceConfig>(raw).validatedOrNull()
+    }.getOrNull()
+
+    fun encodeCardFaceConfig(config: CardFaceConfig): String =
+        json.encodeToString(CardFaceConfig.serializer(), requireNotNull(config.validatedOrNull()))
+
+    fun encodeDocumentData(data: DocumentData): String = json.encodeToString(
+        DocumentData.serializer(),
+        data.copy(cardFace = data.cardFace?.validatedOrNull())
+    )
 
     fun encodeBillingAddressData(data: BillingAddressData): String =
-        json.encodeToString(BillingAddressData.serializer(), data)
+        json.encodeToString(
+            BillingAddressData.serializer(),
+            data.copy(cardFace = data.cardFace?.validatedOrNull())
+        )
 
     fun encodePaymentAccountData(data: PaymentAccountData): String =
         json.encodeToString(PaymentAccountData.serializer(), data)
@@ -164,7 +184,8 @@ object CardWalletDataCodec {
             brand = obj.string("brand"),
             validFromMonth = obj.string("validFromMonth", "fromMonth"),
             validFromYear = obj.string("validFromYear", "fromYear"),
-            customFields = parseEmbeddedCustomFields(obj)
+            customFields = parseEmbeddedCustomFields(obj),
+            cardFace = parseEmbeddedCardFace(obj)
         )
     }
 
@@ -210,7 +231,8 @@ object CardWalletDataCodec {
             username = legacy?.username ?: obj.string("username"),
             passportNumber = legacy?.passportNumber ?: obj.string("passportNumber"),
             licenseNumber = legacy?.licenseNumber ?: obj.string("licenseNumber", "driverLicense"),
-            customFields = parseEmbeddedCustomFields(obj)
+            customFields = parseEmbeddedCustomFields(obj),
+            cardFace = parseEmbeddedCardFace(obj)
         )
     }
 
@@ -238,7 +260,8 @@ object CardWalletDataCodec {
             postalCode = obj.string("postalCode", "zip", "zipCode"),
             country = obj.string("country"),
             phone = obj.string("phone", "phoneNumber"),
-            email = obj.string("email")
+            email = obj.string("email"),
+            cardFace = parseEmbeddedCardFace(obj)
         ).takeUnless { it.isEmpty() }
     }
 
@@ -285,6 +308,16 @@ object CardWalletDataCodec {
         }.getOrElse {
             emptyList()
         }
+    }
+
+    private fun parseEmbeddedCardFace(obj: JsonObject): CardFaceConfig? {
+        val element = obj["cardFace"] ?: obj["card_face"] ?: return null
+        return runCatching {
+            when (element) {
+                is JsonPrimitive -> parseCardFaceConfig(element.content)
+                else -> json.decodeFromJsonElement<CardFaceConfig>(element).validatedOrNull()
+            }
+        }.getOrNull()
     }
 
     private fun parseDocumentType(raw: String?): DocumentType {

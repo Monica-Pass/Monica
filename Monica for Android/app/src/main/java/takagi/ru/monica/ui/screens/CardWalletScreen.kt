@@ -766,21 +766,16 @@ fun CardWalletScreen(
                             failedCount++
                             return@forEach
                         }
-                        bankCardViewModel.addCard(
-                            title = item.title,
-                            cardData = cardData,
-                            notes = item.notes,
-                            isFavorite = item.isFavorite,
-                            imagePaths = item.imagePaths,
-                            categoryId = targetCategoryId,
-                            keepassDatabaseId = targetKeepassDatabaseId,
-                            keepassGroupPath = targetKeepassGroupPath,
-                            bitwardenVaultId = targetBitwardenVaultId,
-                            bitwardenFolderId = targetBitwardenFolderId,
-                            mdbxDatabaseId = targetMdbxDatabaseId,
-                            mdbxFolderId = targetMdbxFolderId
+                        val copiedId = bankCardViewModel.copyCardToStorage(
+                            item = item,
+                            target = when {
+                                targetBitwardenVaultId != null -> takagi.ru.monica.data.model.StorageTarget.Bitwarden(targetBitwardenVaultId, targetBitwardenFolderId)
+                                targetKeepassDatabaseId != null -> takagi.ru.monica.data.model.StorageTarget.KeePass(targetKeepassDatabaseId, targetKeepassGroupPath)
+                                targetMdbxDatabaseId != null -> takagi.ru.monica.data.model.StorageTarget.Mdbx(targetMdbxDatabaseId, targetMdbxFolderId)
+                                else -> takagi.ru.monica.data.model.StorageTarget.MonicaLocal(targetCategoryId)
+                            }
                         )
-                        successCount++
+                        if (copiedId != null) successCount++ else failedCount++
                     }
                     effectiveAction == UnifiedMoveAction.COPY && item.itemType == ItemType.DOCUMENT && isMonicaLocalTarget -> {
                         if (documentViewModel.copyDocumentToMonicaLocal(item, targetCategoryId) != null) successCount++ else failedCount++
@@ -790,21 +785,16 @@ fun CardWalletScreen(
                             failedCount++
                             return@forEach
                         }
-                        documentViewModel.addDocument(
-                            title = item.title,
-                            documentData = documentData,
-                            notes = item.notes,
-                            isFavorite = item.isFavorite,
-                            imagePaths = item.imagePaths,
-                            categoryId = targetCategoryId,
-                            keepassDatabaseId = targetKeepassDatabaseId,
-                            keepassGroupPath = targetKeepassGroupPath,
-                            bitwardenVaultId = targetBitwardenVaultId,
-                            bitwardenFolderId = targetBitwardenFolderId,
-                            mdbxDatabaseId = targetMdbxDatabaseId,
-                            mdbxFolderId = targetMdbxFolderId
+                        val copiedId = documentViewModel.copyDocumentToStorage(
+                            item = item,
+                            target = when {
+                                targetBitwardenVaultId != null -> takagi.ru.monica.data.model.StorageTarget.Bitwarden(targetBitwardenVaultId, targetBitwardenFolderId)
+                                targetKeepassDatabaseId != null -> takagi.ru.monica.data.model.StorageTarget.KeePass(targetKeepassDatabaseId, targetKeepassGroupPath)
+                                targetMdbxDatabaseId != null -> takagi.ru.monica.data.model.StorageTarget.Mdbx(targetMdbxDatabaseId, targetMdbxFolderId)
+                                else -> takagi.ru.monica.data.model.StorageTarget.MonicaLocal(targetCategoryId)
+                            }
                         )
-                        successCount++
+                        if (copiedId != null) successCount++ else failedCount++
                     }
                     effectiveAction == UnifiedMoveAction.COPY && item.itemType == ItemType.BILLING_ADDRESS && isMonicaLocalTarget -> {
                         if (billingAddressViewModel.copyAddressToMonicaLocal(item, targetCategoryId) != null) successCount++ else failedCount++

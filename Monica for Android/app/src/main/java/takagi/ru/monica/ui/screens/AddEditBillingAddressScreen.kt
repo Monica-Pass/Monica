@@ -60,6 +60,9 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import takagi.ru.monica.R
+import takagi.ru.monica.ui.cardwallet.CardFaceEditSection
+import takagi.ru.monica.ui.cardwallet.billingAddressCardFacePreviewData
+import takagi.ru.monica.ui.cardwallet.rememberCardFaceEditorState
 import takagi.ru.monica.data.CustomFieldDraft
 import takagi.ru.monica.data.PasswordDatabase
 import takagi.ru.monica.data.model.BillingAddressData
@@ -111,6 +114,9 @@ fun AddEditBillingAddressScreen(
     var notes by rememberSaveable { mutableStateOf("") }
     var isFavorite by rememberSaveable { mutableStateOf(false) }
     var isSaving by remember { mutableStateOf(false) }
+    var workingAddressId by remember(addressId) { mutableStateOf(addressId) }
+    var isDefault by rememberSaveable { mutableStateOf(false) }
+    val cardFaceEditor = rememberCardFaceEditorState(addressId)
     var hasAppliedInitialStorage by rememberSaveable { mutableStateOf(false) }
     var hasLoadedExistingFields by rememberSaveable(addressId) { mutableStateOf(false) }
     var currentReplicaGroupId by rememberSaveable { mutableStateOf<String?>(null) }
@@ -168,6 +174,8 @@ fun AddEditBillingAddressScreen(
                 val parsedData = withContext(Dispatchers.Default) {
                     viewModel.parseAddressData(item.itemData)
                 } ?: BillingAddressData()
+                cardFaceEditor.load(item, parsedData.cardFace)
+                isDefault = parsedData.isDefault
                 title = item.title
                 notes = item.notes
                 isFavorite = item.isFavorite
@@ -215,7 +223,9 @@ fun AddEditBillingAddressScreen(
         country = country.trim(),
         phone = phone.trim(),
         email = email.trim(),
-        customFields = CardWalletDataCodec.draftsToCustomFields(customFields)
+        customFields = CardWalletDataCodec.draftsToCustomFields(customFields),
+        isDefault = isDefault,
+        cardFace = cardFaceEditor.config
     )
     val effectiveTitle = title.trim().ifBlank {
         fullName.trim().ifBlank {
@@ -235,63 +245,39 @@ fun AddEditBillingAddressScreen(
             isSaving = true
             val target = selectedStorageTargets.firstOrNull() ?: StorageTarget.MonicaLocal(null)
             scope.launch {
-                runCatching {
-                    when (target) {
-                        is StorageTarget.MonicaLocal -> {
-                            if (addressId == null) {
-                                viewModel.addAddress(
-                                    title = effectiveTitle,
-                                    addressData = addressData,
-                                    notes = notes,
-                                    isFavorite = isFavorite,
-                                    categoryId = target.categoryId,
-                                    replicaGroupId = currentReplicaGroupId
-                                )
-                            } else {
-                                viewModel.updateAddress(
-                                    id = addressId,
-                                    title = effectiveTitle,
-                                    addressData = addressData,
-                                    notes = notes,
-                                    isFavorite = isFavorite,
-                                    categoryId = target.categoryId,
-                                    replicaGroupId = currentReplicaGroupId
-                                )
-                            }
-                        }
-                        is StorageTarget.Mdbx -> {
-                            if (addressId == null) {
-                                viewModel.addAddress(
-                                    title = effectiveTitle,
-                                    addressData = addressData,
-                                    notes = notes,
-                                    isFavorite = isFavorite,
-                                    mdbxDatabaseId = target.databaseId,
-                                    mdbxFolderId = target.folderId,
-                                    replicaGroupId = currentReplicaGroupId
-                                )
-                            } else {
-                                viewModel.updateAddress(
-                                    id = addressId,
-                                    title = effectiveTitle,
-                                    addressData = addressData,
-                                    notes = notes,
-                                    isFavorite = isFavorite,
-                                    mdbxDatabaseId = target.databaseId,
-                                    mdbxFolderId = target.folderId,
-                                    replicaGroupId = currentReplicaGroupId
-                                )
-                            }
-                        }
-                        else -> Unit
+                try {
+                    val localCategory = (target as? StorageTarget.MonicaLocal)?.categoryId
+                    val mdbxTarget = target as? StorageTarget.Mdbx
+                    val currentId = workingAddressId
+                    if (currentId == null) {
+                        viewModel.addAddress(
+                            title = effectiveTitle, addressData = addressData,
+                            notes = notes, isFavorite = isFavorite,
+                            imagePaths = cardFaceEditor.item?.imagePaths.orEmpty(),
+                            categoryId = localCategory, mdbxDatabaseId = mdbxTarget?.databaseId,
+                            mdbxFolderId = mdbxTarget?.folderId, replicaGroupId = currentReplicaGroupId,
+                            cardFaceImageBytes = cardFaceEditor.imageBytes,
+                            onCreated = { workingAddressId = it }
+                        ).await()
+                    } else {
+                        viewModel.updateAddress(
+                            id = currentId, title = effectiveTitle, addressData = addressData,
+                            notes = notes, isFavorite = isFavorite,
+                            imagePaths = cardFaceEditor.item?.imagePaths.orEmpty(),
+                            categoryId = localCategory, mdbxDatabaseId = mdbxTarget?.databaseId,
+                            mdbxFolderId = mdbxTarget?.folderId, replicaGroupId = currentReplicaGroupId,
+                            cardFaceImageBytes = cardFaceEditor.imageBytes
+                        ).await()
                     }
-                }.onFailure {
-                    Toast.makeText(context, it.message ?: context.getString(R.string.save_failed), Toast.LENGTH_SHORT).show()
+                    cardFaceEditor.clearPendingBytes()
+                    onNavigateBack()
+                } catch (error: kotlinx.coroutines.CancellationException) {
+                    throw error
+                } catch (_: Exception) {
+                    Toast.makeText(context, R.string.card_face_save_failed, Toast.LENGTH_LONG).show()
+                } finally {
                     isSaving = false
-                    return@launch
                 }
-                isSaving = false
-                onNavigateBack()
             }
         }
     }
@@ -327,6 +313,11 @@ fun AddEditBillingAddressScreen(
                 isEditing = addressId != null,
                 onAddTargetClick = { showStorageTargetSheet = true },
                 onRemoveTarget = {}
+            )
+            CardFaceEditSection(
+                state = cardFaceEditor,
+                previewData = billingAddressCardFacePreviewData(effectiveTitle, addressData),
+                enabled = !isSaving
             )
 
             InfoCard(title = stringResource(R.string.billing_address)) {

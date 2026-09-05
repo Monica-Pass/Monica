@@ -19,7 +19,10 @@ class SecureItemAttachmentUiGuardTest {
             assertTrue("$path must render the reusable attachment editor", source.contains("AttachmentsEditSection("))
             assertTrue("$path must bind attachments to a SecureItem owner", source.contains("AttachmentOwner.secureItem"))
             assertTrue("$path must retain drafts until a new item id exists", source.contains("pendingAttachmentDrafts"))
-            assertTrue("$path must flush drafts after primary creation", source.contains("onPrimaryCreated"))
+            assertTrue(
+                "$path must flush drafts after the primary item is persisted",
+                source.contains("onPrimaryCreated") || source.contains("onPrimarySaved")
+            )
         }
     }
 

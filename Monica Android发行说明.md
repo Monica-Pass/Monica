@@ -2,6 +2,7 @@
 
 ## 中文
 ### 简要
+* 银行卡、证件和账单地址均支持自定义卡面：添加/编辑页入口位于数据库选择下方，详情页顶部预览可点击定制；支持标准银行卡比例、三种信息模式和银行卡卡组织图标开关。修复正常 JPG 图片被误报不可用的问题。
 * Monica 键盘的验证器与卡包页面现在会在数据加载期间显示统一加载态,不再短暂误显示为空。
 * 修复卡包混合列表拖动排序时的抽搐、回弹和排序不稳定问题。
 * 卡包的卡片和右下角新建按钮现在与其他页面使用同一套视觉组件,颜色、圆角和交互反馈更加统一。
@@ -19,6 +20,8 @@
 * 修复笔记页面在本地、KeePass、MDBX 或全部视图下误触发 Bitwarden 同步的问题。
 
 ### 详细
+* 银行卡、证件和账单地址共用卡面定制页：顶部为 ISO/IEC 7810 ID-1 `85.60:53.98` 比例预览，下方依次为图片操作、信息显示方式和银行卡卡组织图标开关。添加/编辑页的紧凑入口放在数据库选择卡片下方，详情页可点击顶部预览进入。“显示全部”展示对应条目的主要信息，“仅显示卡号/证件号码/地址”放在卡面中间偏下，“隐藏全部”只保留图片；银行卡号码与证件号码沿用脱敏展示。
+* 图片选择器按实际读取字节执行 25 MB 上限，兼容大小未知、非可定位及只能打开一次的文档流，并在裁切前处理照片方向；图片居中裁切为最大 1280 像素宽的 JPEG。图片通过现有附件系统加密保存，配置只记录稳定附件名、信息模式和图标开关。银行卡与证件支持本地、MDBX、KeePass 和账号允许的 Bitwarden 附件链路；账单地址沿用其现有本地/MDBX 存储能力，WebDAV 全量备份包含这些本地附件。保存和跨数据库复制会等待附件处理完成，账单地址在本地与 MDBX 之间迁移时会一并保留卡面图片；复制后的卡面可独立替换或移除。Bitwarden 不支持附件的账号会收到明确提示。列表按需在后台采样解码，使用 12 MB 内存缓存和最多两个并发任务；未设置卡面的条目保持原列表样式。
 * Monica 键盘在切换、解锁恢复或重新打开验证器和卡包页面时,会优先显示与密码页一致的加载状态,真实加载完成后才显示空列表。
 * 卡包现在沿用验证器标准列表的单一拖动位移路径,移除缩放、重复布局动画和重复阴影动画,避免同一帧内多套动画同时移动卡片。拖动时保留本地顺序快照,数据库写回期间按条目 ID 合并更新,不会因 Flow 中间状态把列表拉回旧顺序;银行卡、证件和账单地址的混合列表也会一次性保存完整顺序。
 * 银行卡、证件、账单地址与验证器磁贴现在复用同一个条目卡片容器,统一使用相同的背景层级、圆角、阴影和选中态;卡包仍保持原有单列布局和信息结构。右下角新建按钮继续复用全局 `SwipeableAddFab`,并移除卡包独有的实心配色分支,使其外观和行为与密码、验证器、笔记等页面一致。
@@ -36,6 +39,7 @@
 
 ## English
 ### Summary
+* Bank cards, documents, and billing addresses now support custom artwork. The Edit entry sits below database selection, and the top detail preview opens the customizer. Standard card proportions, three information modes, and a separate bank-brand icon toggle are supported. Fixed valid JPG images being rejected during import.
 * The Monica Keyboard now shows a consistent loading state for authenticator and card-wallet panels instead of briefly presenting an incorrect empty state.
 * Fixed stuttering, snapping back, and unstable ordering while dragging items in the mixed card-wallet list.
 * Card-wallet cards and the add FAB now share the same visual components as other screens for consistent colors, corners, and interaction feedback.
@@ -52,6 +56,8 @@
 * Fixed the Notes page triggering Bitwarden synchronization outside an explicitly selected Bitwarden vault.
 
 ### Details
+* Bank cards, documents, and billing addresses share a customizer with an ISO/IEC 7810 ID-1 `85.60:53.98` preview, followed by image actions, information modes, and the bank-brand icon switch. A compact Edit entry appears below database selection; tapping the top detail preview opens the same customizer. “Show all” presents the item's main details, “number/address only” places the identifier near the lower middle, and “hide all” leaves only the image. Bank-card and document numbers retain masked previews.
+* Image import enforces the 25 MB limit using the bytes actually read, supports unknown-size and nonseekable document streams that can only be opened once, and applies photo orientation before cropping. Images are center-cropped to JPEG at up to 1280 pixels wide and stored as encrypted attachments; metadata contains only a stable filename, display mode, and icon preference. Bank cards and documents use local, MDBX, KeePass, or entitled Bitwarden attachment storage. Billing addresses retain their existing local/MDBX support, and WebDAV full backups include these local attachments. Saves and database copies wait for attachment processing. Billing-address moves between local storage and MDBX preserve the artwork, and copied artwork can be replaced or removed independently. Bitwarden accounts without attachment support receive an explicit warning. Lists use background sampled decoding, a 12 MB memory cache, and at most two concurrent jobs; items without artwork keep their existing layout.
 * When the Monica Keyboard switches to, restores after unlock, or reopens an authenticator or card-wallet panel, it shows the same loading state as the password panel until the real result is available.
 * The card wallet now follows the authenticator's standard list drag path, removing overlapping scale, placement, and shadow animations that could move a card twice in one frame. A local order snapshot is retained during a drag, and database emissions are reconciled by item ID while the write-back is pending, so intermediate Flow updates cannot restore the old order. Bank cards, documents, and billing addresses in the mixed list are persisted in one complete order update.
 * Bank cards, documents, billing addresses, and authenticator tiles now use one shared item-card container for the same surface level, corner radius, elevation, and selected state. The card wallet keeps its existing single-column layout and information structure. Its add button continues to use the global `SwipeableAddFab`, with the card-wallet-only solid color override removed so it matches Passwords, Authenticator, Notes, and other screens.

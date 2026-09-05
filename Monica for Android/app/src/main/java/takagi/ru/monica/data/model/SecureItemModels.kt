@@ -1,6 +1,8 @@
 package takagi.ru.monica.data.model
 
 import kotlinx.serialization.Serializable
+import java.util.Locale
+import java.util.UUID
 
 /**
  * OTP类型枚举
@@ -73,8 +75,52 @@ data class BankCardData(
     val branchCode: String = "",
     val currency: String = "",
     val customerServicePhone: String = "",
-    val customFields: List<SecureCustomField> = emptyList()
+    val customFields: List<SecureCustomField> = emptyList(),
+    /** Monica-managed visual card face. Null keeps the legacy card layout unchanged. */
+    val cardFace: CardFaceConfig? = null
 )
+
+@Serializable
+enum class CardFaceDisplayMode {
+    ALL,
+    CARD_NUMBER_ONLY,
+    HIDDEN
+}
+
+/**
+ * Portable card-face metadata. The image bytes live in the secure attachment system; only the
+ * deterministic attachment name is stored here so the reference survives backup/import and
+ * remote backends assigning different local attachment ids.
+ */
+@Serializable
+data class CardFaceConfig(
+    val imageAttachmentName: String,
+    val displayMode: CardFaceDisplayMode = CardFaceDisplayMode.ALL,
+    val showBrandIcon: Boolean = true
+)
+
+object CardFaceAttachment {
+    const val MIME_TYPE = "image/jpeg"
+    private const val PREFIX = "monica_card_face_"
+    private const val SUFFIX = ".jpg"
+    private val managedName = Regex("^${PREFIX}[a-z0-9]{16,64}\\${SUFFIX}$")
+
+    fun newFileName(): String = fileNameFor(UUID.randomUUID().toString())
+
+    fun fileNameFor(assetId: String): String {
+        val normalized = assetId
+            .lowercase(Locale.ROOT)
+            .filter(Char::isLetterOrDigit)
+            .take(64)
+        require(normalized.length >= 16) { "Card-face asset id must contain at least 16 characters" }
+        return "$PREFIX$normalized$SUFFIX"
+    }
+
+    fun isManagedFileName(fileName: String): Boolean = managedName.matches(fileName)
+}
+
+fun CardFaceConfig.validatedOrNull(): CardFaceConfig? =
+    takeIf { CardFaceAttachment.isManagedFileName(imageAttachmentName) }
 
 /**
  * 账单地址详细信息
@@ -134,7 +180,9 @@ data class BillingAddressData(
     val phone: String = "",
     val email: String = "",
     val isDefault: Boolean = false,
-    val customFields: List<SecureCustomField> = emptyList()
+    val customFields: List<SecureCustomField> = emptyList(),
+    /** Optional visual card face. The image itself is stored as an encrypted attachment. */
+    val cardFace: CardFaceConfig? = null
 )
 
 fun BillingAddressData.isEmpty(): Boolean {
@@ -148,7 +196,8 @@ fun BillingAddressData.isEmpty(): Boolean {
         country.isBlank() &&
         phone.isBlank() &&
         email.isBlank() &&
-        customFields.none { it.isValid() }
+        customFields.none { it.isValid() } &&
+        cardFace == null
 }
 
 fun BillingAddressData.toBillingAddress(): BillingAddress =
@@ -279,7 +328,9 @@ data class DocumentData(
     val username: String = "",
     val passportNumber: String = "",
     val licenseNumber: String = "",
-    val customFields: List<SecureCustomField> = emptyList()
+    val customFields: List<SecureCustomField> = emptyList(),
+    /** Optional visual card face. The image itself is stored as an encrypted attachment. */
+    val cardFace: CardFaceConfig? = null
 )
 
 enum class DocumentType {

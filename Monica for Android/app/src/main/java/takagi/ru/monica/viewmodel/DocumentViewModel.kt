@@ -5,6 +5,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -14,6 +17,7 @@ import takagi.ru.monica.keepass.KeePassSecureItemDeleteExecutor
 import takagi.ru.monica.keepass.KeePassSecureItemUpdateExecutor
 import takagi.ru.monica.keepass.KeePassSecureItemPhotoAttachments
 import takagi.ru.monica.attachments.AttachmentContainer
+import takagi.ru.monica.attachments.CardFaceAttachmentManager
 import takagi.ru.monica.attachments.facade.AttachmentFacade
 import takagi.ru.monica.attachments.model.AttachmentOwner
 import takagi.ru.monica.bitwarden.SecureItemBitwardenTransitionResolver
@@ -34,6 +38,7 @@ import takagi.ru.monica.repository.SecureItemRepository
 import takagi.ru.monica.data.model.DocumentData
 import takagi.ru.monica.data.model.CardWalletDataCodec
 import takagi.ru.monica.data.model.StorageTarget
+import takagi.ru.monica.data.model.storageScopeKey
 import takagi.ru.monica.data.model.toStorageTarget
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.sync.SyncDiagnostics
@@ -69,6 +74,11 @@ class DocumentViewModel(
     )
 
     private val bitwardenRepository = context?.let { BitwardenRepository.getInstance(it.applicationContext) }
+    private val cardFaceAttachmentManager = CardFaceAttachmentManager(
+        repository = repository,
+        attachmentFacade = attachmentFacade,
+        bitwardenRepository = bitwardenRepository
+    )
 
     private fun requestBitwardenMutationSync(vaultId: Long?) {
         vaultId?.let { bitwardenRepository?.requestLocalMutationSync(it) }
@@ -124,7 +134,19 @@ class DocumentViewModel(
             repairLegacyDetachedKeePassItems()
         }
     }
-    
+
+    suspend fun updateCardFaceAttachment(
+        documentId: Long,
+        config: takagi.ru.monica.data.model.CardFaceConfig?,
+        imageBytes: ByteArray?,
+        previousAttachmentName: String?
+    ): Result<Unit> = cardFaceAttachmentManager.update(
+        secureItemId = documentId,
+        config = config,
+        imageBytes = imageBytes,
+        previousAttachmentName = previousAttachmentName
+    )
+
     private val documentListSharingStarted = SharingStarted.WhileSubscribed(5000)
     private val allDocumentsSource: SharedFlow<List<SecureItem>> =
         repository.getItemsByType(ItemType.DOCUMENT)
@@ -186,7 +208,7 @@ class DocumentViewModel(
             started = documentListSharingStarted,
             initialValue = emptyList()
         )
-    
+
     // 根据ID获取证件
     suspend fun getDocumentById(id: Long): SecureItem? {
         val item = repository.getItemById(id) ?: return null
@@ -355,7 +377,7 @@ class DocumentViewModel(
         return copy(itemData = "", updatedAt = imported.updatedAt) == imported.copy(itemData = "") &&
             decryptStoredSensitiveValue(itemData) == decryptStoredSensitiveValue(imported.itemData)
     }
-    
+
     // 添加证件
     fun addDocument(
         title: String,
@@ -372,52 +394,51 @@ class DocumentViewModel(
         bitwardenFolderId: String? = null,
         replicaGroupId: String? = null,
         onCreated: suspend (Long) -> Unit = {}
-    ) {
-        viewModelScope.launch {
-            val keepassIdentity = resolveKeePassMutationIdentity(
-                existingItem = null,
-                targetDatabaseId = keepassDatabaseId,
-                requestedGroupPath = keepassGroupPath
-            )
-            val item = SecureItem(
-                id = 0,
-                itemType = ItemType.DOCUMENT,
-                title = title,
-                itemData = encodeDocumentDataForLocalStorage(documentData),
-                notes = notes,
-                isFavorite = isFavorite,
-                categoryId = categoryId,
-                keepassDatabaseId = keepassDatabaseId,
-                keepassGroupPath = keepassIdentity.groupPath,
-                keepassEntryUuid = keepassIdentity.entryUuid,
-                keepassGroupUuid = keepassIdentity.groupUuid,
-                mdbxDatabaseId = mdbxDatabaseId,
-                mdbxFolderId = if (mdbxDatabaseId != null) mdbxFolderId else null,
-                bitwardenVaultId = bitwardenVaultId,
-                bitwardenFolderId = bitwardenFolderId,
-                syncStatus = if (bitwardenVaultId != null) "PENDING" else "NONE",
-                replicaGroupId = replicaGroupId,
-                createdAt = Date(),
-                updatedAt = Date(),
-                imagePaths = imagePaths
-            )
-            val newId = keepassSecureItemCreateExecutor.create(
-                item = item,
-                insertItem = repository::insertItem,
-                rollbackItem = repository::deleteItemById
-            ) ?: return@launch
-            requestBitwardenMutationSync(bitwardenVaultId)
-            
-            // 记录创建操作
-            OperationLogger.logCreate(
-                itemType = OperationLogItemType.DOCUMENT,
-                itemId = newId,
-                itemTitle = title
-            )
-            onCreated(newId)
-        }
+    ): Deferred<Long> = viewModelScope.async {
+        val keepassIdentity = resolveKeePassMutationIdentity(
+            existingItem = null,
+            targetDatabaseId = keepassDatabaseId,
+            requestedGroupPath = keepassGroupPath
+        )
+        val item = SecureItem(
+            id = 0,
+            itemType = ItemType.DOCUMENT,
+            title = title,
+            itemData = encodeDocumentDataForLocalStorage(documentData),
+            notes = notes,
+            isFavorite = isFavorite,
+            categoryId = categoryId,
+            keepassDatabaseId = keepassDatabaseId,
+            keepassGroupPath = keepassIdentity.groupPath,
+            keepassEntryUuid = keepassIdentity.entryUuid,
+            keepassGroupUuid = keepassIdentity.groupUuid,
+            mdbxDatabaseId = mdbxDatabaseId,
+            mdbxFolderId = if (mdbxDatabaseId != null) mdbxFolderId else null,
+            bitwardenVaultId = bitwardenVaultId,
+            bitwardenFolderId = bitwardenFolderId,
+            syncStatus = if (bitwardenVaultId != null) "PENDING" else "NONE",
+            replicaGroupId = replicaGroupId,
+            createdAt = Date(),
+            updatedAt = Date(),
+            imagePaths = imagePaths
+        )
+        val newId = keepassSecureItemCreateExecutor.create(
+            item = item,
+            insertItem = repository::insertItem,
+            rollbackItem = repository::deleteItemById
+        ) ?: throw IllegalStateException("Secure item could not be saved")
+
+        // 记录创建操作
+        OperationLogger.logCreate(
+            itemType = OperationLogItemType.DOCUMENT,
+            itemId = newId,
+            itemTitle = title
+        )
+        onCreated(newId)
+        requestBitwardenMutationSync(bitwardenVaultId)
+        newId
     }
-    
+
     // 更新证件
     fun updateDocument(
         id: Long,
@@ -433,140 +454,154 @@ class DocumentViewModel(
         mdbxFolderId: String? = null,
         bitwardenVaultId: Long? = null,
         bitwardenFolderId: String? = null,
-        replicaGroupId: String? = null
-    ) {
-        viewModelScope.launch {
-            repository.getItemById(id)?.let { existingItem ->
-                val keepassIdentity = resolveKeePassMutationIdentity(
-                    existingItem = existingItem,
-                    targetDatabaseId = keepassDatabaseId,
-                    requestedGroupPath = keepassGroupPath
-                )
-                val oldDocData = parseDocumentData(existingItem.itemData) ?: emptyDocumentData()
-                val changes = mutableListOf<FieldChange>()
-                fun addChange(fieldName: String, oldValue: Any?, newValue: Any?) {
-                    val oldText = oldValue?.toString().orEmpty()
-                    val newText = newValue?.toString().orEmpty()
-                    if (oldText != newText) {
-                        changes.add(FieldChange(fieldName, oldText, newText))
-                    }
+        replicaGroupId: String? = null,
+        onUpdated: suspend (Long) -> Unit = {}
+    ): Deferred<Long> = viewModelScope.async {
+        repository.getItemById(id)?.let { existingItem ->
+            val keepassIdentity = resolveKeePassMutationIdentity(
+                existingItem = existingItem,
+                targetDatabaseId = keepassDatabaseId,
+                requestedGroupPath = keepassGroupPath
+            )
+            val oldDocData = parseDocumentData(existingItem.itemData) ?: emptyDocumentData()
+            val changes = mutableListOf<FieldChange>()
+            fun addChange(fieldName: String, oldValue: Any?, newValue: Any?) {
+                val oldText = oldValue?.toString().orEmpty()
+                val newText = newValue?.toString().orEmpty()
+                if (oldText != newText) {
+                    changes.add(FieldChange(fieldName, oldText, newText))
                 }
-
-                addChange("标题", existingItem.title, title)
-                addChange("备注", existingItem.notes, notes)
-                addChange("证件类型", oldDocData.documentType, documentData.documentType)
-                addChange("证件号", oldDocData.documentNumber, documentData.documentNumber)
-                addChange("姓名", oldDocData.fullName, documentData.fullName)
-                addChange("签发日期", oldDocData.issuedDate, documentData.issuedDate)
-                addChange("有效期", oldDocData.expiryDate, documentData.expiryDate)
-                addChange("签发机关", oldDocData.issuedBy, documentData.issuedBy)
-                addChange("国籍", oldDocData.nationality, documentData.nationality)
-                addChange("附加信息", oldDocData.additionalInfo, documentData.additionalInfo)
-                addChange("称谓", oldDocData.title, documentData.title)
-                addChange("名", oldDocData.firstName, documentData.firstName)
-                addChange("中间名", oldDocData.middleName, documentData.middleName)
-                addChange("姓", oldDocData.lastName, documentData.lastName)
-                addChange("地址 1", oldDocData.address1, documentData.address1)
-                addChange("地址 2", oldDocData.address2, documentData.address2)
-                addChange("地址 3", oldDocData.address3, documentData.address3)
-                addChange("城市", oldDocData.city, documentData.city)
-                addChange("省/州", oldDocData.stateProvince, documentData.stateProvince)
-                addChange("邮编", oldDocData.postalCode, documentData.postalCode)
-                addChange("国家", oldDocData.country, documentData.country)
-                addChange("公司", oldDocData.company, documentData.company)
-                addChange("邮箱", oldDocData.email, documentData.email)
-                addChange("电话", oldDocData.phone, documentData.phone)
-                addChange("社保号", oldDocData.ssn, documentData.ssn)
-                addChange("用户名", oldDocData.username, documentData.username)
-                addChange("护照号", oldDocData.passportNumber, documentData.passportNumber)
-                addChange("驾照号", oldDocData.licenseNumber, documentData.licenseNumber)
-                addChange("自定义字段", oldDocData.customFields, documentData.customFields)
-                
-                val updatedItem = existingItem.copy(
-                    title = title,
-                    itemData = encodeDocumentDataForLocalStorage(documentData),
-                    notes = notes,
-                    isFavorite = isFavorite,
-                    categoryId = categoryId,
-                    keepassDatabaseId = keepassDatabaseId,
-                    keepassGroupPath = keepassIdentity.groupPath,
-                    keepassEntryUuid = keepassIdentity.entryUuid,
-                    keepassGroupUuid = keepassIdentity.groupUuid,
-                    mdbxDatabaseId = mdbxDatabaseId,
-                    mdbxFolderId = if (mdbxDatabaseId != null) mdbxFolderId else null,
-                    bitwardenVaultId = bitwardenVaultId,
-                    bitwardenFolderId = bitwardenFolderId,
-                    replicaGroupId = replicaGroupId ?: existingItem.replicaGroupId,
-                    updatedAt = Date(),
-                    imagePaths = imagePaths
-                )
-                val transition = SecureItemBitwardenTransitionResolver.resolve(
-                    tag = "DocumentViewModel",
-                    existingItem = existingItem,
-                    targetVaultId = bitwardenVaultId,
-                    targetFolderId = bitwardenFolderId,
-                    forcePendingWhenKeepingCipher = bitwardenVaultId != null &&
-                        existingItem.bitwardenVaultId == bitwardenVaultId &&
-                        existingItem.bitwardenCipherId != null,
-                    abortOnQueueFailure = true
-                ) { vaultId, cipherId, entryId ->
-                    bitwardenRepository?.queueCipherDelete(
-                        vaultId = vaultId,
-                        cipherId = cipherId,
-                        entryId = entryId,
-                        itemType = BitwardenPendingOperation.ITEM_TYPE_DOCUMENT
-                    )
-                } ?: return@launch
-                val finalUpdatedItem = updatedItem.copy(
-                    bitwardenLocalModified = transition.localModified,
-                    bitwardenCipherId = transition.cipherId,
-                    bitwardenRevisionDate = transition.revisionDate,
-                    syncStatus = transition.syncStatus
-                )
-                val keepassSync = keepassSecureItemUpdateExecutor.syncUpdatedItem(
-                    existingItem = existingItem,
-                    updatedItem = finalUpdatedItem,
-                    persistUpdate = { persistedItem ->
-                        repository.updateItem(persistedItem)
-                    }
-                )
-                if (keepassSync.isFailure) {
-                    Log.e(
-                        "DocumentViewModel",
-                        "KeePass document update failed before local update: ${keepassSync.exceptionOrNull()?.message}"
-                    )
-                    return@launch
-                }
-                requestBitwardenMutationSync(bitwardenVaultId)
-                
-                // 记录更新操作 - 始终记录，即使没有检测到字段变更
-                OperationLogger.logUpdate(
-                    itemType = OperationLogItemType.DOCUMENT,
-                    itemId = id,
-                    itemTitle = title,
-                    changes = if (changes.isEmpty()) {
-                        listOf(
-                            FieldChange(
-                                "更新",
-                                "编辑于",
-                                java.text.SimpleDateFormat("HH:mm").format(java.util.Date())
-                            )
-                        )
-                    } else {
-                        changes
-                    },
-                    snapshotChanges = if (changes.isEmpty()) {
-                        emptyList()
-                    } else {
-                        changes + FieldChange(
-                            takagi.ru.monica.data.TIMELINE_SNAPSHOT_FIELD_ITEM_DATA,
-                            existingItem.itemData,
-                            finalUpdatedItem.itemData
-                        )
-                    }
-                )
             }
-        }
+
+            addChange("标题", existingItem.title, title)
+            addChange("备注", existingItem.notes, notes)
+            addChange("证件类型", oldDocData.documentType, documentData.documentType)
+            addChange("证件号", oldDocData.documentNumber, documentData.documentNumber)
+            addChange("姓名", oldDocData.fullName, documentData.fullName)
+            addChange("签发日期", oldDocData.issuedDate, documentData.issuedDate)
+            addChange("有效期", oldDocData.expiryDate, documentData.expiryDate)
+            addChange("签发机关", oldDocData.issuedBy, documentData.issuedBy)
+            addChange("国籍", oldDocData.nationality, documentData.nationality)
+            addChange("附加信息", oldDocData.additionalInfo, documentData.additionalInfo)
+            addChange("称谓", oldDocData.title, documentData.title)
+            addChange("名", oldDocData.firstName, documentData.firstName)
+            addChange("中间名", oldDocData.middleName, documentData.middleName)
+            addChange("姓", oldDocData.lastName, documentData.lastName)
+            addChange("地址 1", oldDocData.address1, documentData.address1)
+            addChange("地址 2", oldDocData.address2, documentData.address2)
+            addChange("地址 3", oldDocData.address3, documentData.address3)
+            addChange("城市", oldDocData.city, documentData.city)
+            addChange("省/州", oldDocData.stateProvince, documentData.stateProvince)
+            addChange("邮编", oldDocData.postalCode, documentData.postalCode)
+            addChange("国家", oldDocData.country, documentData.country)
+            addChange("公司", oldDocData.company, documentData.company)
+            addChange("邮箱", oldDocData.email, documentData.email)
+            addChange("电话", oldDocData.phone, documentData.phone)
+            addChange("社保号", oldDocData.ssn, documentData.ssn)
+            addChange("用户名", oldDocData.username, documentData.username)
+            addChange("护照号", oldDocData.passportNumber, documentData.passportNumber)
+            addChange("驾照号", oldDocData.licenseNumber, documentData.licenseNumber)
+            addChange("自定义字段", oldDocData.customFields, documentData.customFields)
+
+            val updatedItem = existingItem.copy(
+                title = title,
+                itemData = encodeDocumentDataForLocalStorage(documentData),
+                notes = notes,
+                isFavorite = isFavorite,
+                categoryId = categoryId,
+                keepassDatabaseId = keepassDatabaseId,
+                keepassGroupPath = keepassIdentity.groupPath,
+                keepassEntryUuid = keepassIdentity.entryUuid,
+                keepassGroupUuid = keepassIdentity.groupUuid,
+                mdbxDatabaseId = mdbxDatabaseId,
+                mdbxFolderId = if (mdbxDatabaseId != null) mdbxFolderId else null,
+                bitwardenVaultId = bitwardenVaultId,
+                bitwardenFolderId = bitwardenFolderId,
+                replicaGroupId = replicaGroupId ?: existingItem.replicaGroupId,
+                updatedAt = Date(),
+                imagePaths = imagePaths
+            )
+            var pendingSourceDelete: (suspend () -> Result<Unit>)? = null
+            val transition = SecureItemBitwardenTransitionResolver.resolve(
+                tag = "DocumentViewModel",
+                existingItem = existingItem,
+                targetVaultId = bitwardenVaultId,
+                targetFolderId = bitwardenFolderId,
+                forcePendingWhenKeepingCipher = bitwardenVaultId != null &&
+                    existingItem.bitwardenVaultId == bitwardenVaultId &&
+                    existingItem.bitwardenCipherId != null,
+                abortOnQueueFailure = true
+            ) { vaultId, cipherId, entryId ->
+                val vaultRepository = bitwardenRepository
+                if (vaultRepository == null) null else {
+                    pendingSourceDelete = {
+                        vaultRepository.queueCipherDelete(
+                            vaultId = vaultId,
+                            cipherId = cipherId,
+                            entryId = entryId,
+                            itemType = BitwardenPendingOperation.ITEM_TYPE_DOCUMENT
+                        )
+                    }
+                    Result.success(Unit)
+                }
+            } ?: throw IllegalStateException("Secure item could not be saved")
+            val finalUpdatedItem = updatedItem.copy(
+                bitwardenLocalModified = transition.localModified,
+                bitwardenCipherId = transition.cipherId,
+                bitwardenRevisionDate = transition.revisionDate,
+                syncStatus = transition.syncStatus
+            )
+            val keepassSync = keepassSecureItemUpdateExecutor.syncUpdatedItem(
+                existingItem = existingItem,
+                updatedItem = finalUpdatedItem,
+                persistUpdate = { persistedItem ->
+                    repository.updateItem(persistedItem)
+                    try {
+                        onUpdated(id)
+                        pendingSourceDelete?.invoke()?.getOrThrow()
+                    } catch (error: Exception) {
+                        repository.updateItem(existingItem)
+                        throw error
+                    }
+                }
+            )
+            if (keepassSync.isFailure) {
+                Log.e(
+                    "DocumentViewModel",
+                    "KeePass document update failed before local update: ${keepassSync.exceptionOrNull()?.message}"
+                )
+                throw IllegalStateException("Secure item could not be saved")
+            }
+
+            // 记录更新操作 - 始终记录，即使没有检测到字段变更
+            OperationLogger.logUpdate(
+                itemType = OperationLogItemType.DOCUMENT,
+                itemId = id,
+                itemTitle = title,
+                changes = if (changes.isEmpty()) {
+                    listOf(
+                        FieldChange(
+                            "更新",
+                            "编辑于",
+                            java.text.SimpleDateFormat("HH:mm").format(java.util.Date())
+                        )
+                    )
+                } else {
+                    changes
+                },
+                snapshotChanges = if (changes.isEmpty()) {
+                    emptyList()
+                } else {
+                    changes + FieldChange(
+                        takagi.ru.monica.data.TIMELINE_SNAPSHOT_FIELD_ITEM_DATA,
+                        existingItem.itemData,
+                        finalUpdatedItem.itemData
+                    )
+                }
+            )
+            requestBitwardenMutationSync(bitwardenVaultId)
+            id
+        } ?: throw IllegalStateException("Secure item no longer exists")
     }
 
     suspend fun moveDocumentToStorage(
@@ -596,62 +631,100 @@ class DocumentViewModel(
         ) {
             return false
         }
-        val keepassIdentity = resolveKeePassMutationIdentity(
-            existingItem = existingItem,
-            targetDatabaseId = keepassDatabaseId,
-            requestedGroupPath = keepassGroupPath
-        )
-        val updatedItem = existingItem.copy(
-            categoryId = categoryId,
-            keepassDatabaseId = keepassDatabaseId,
-            keepassGroupPath = keepassIdentity.groupPath,
-            keepassEntryUuid = keepassIdentity.entryUuid,
-            keepassGroupUuid = keepassIdentity.groupUuid,
-            bitwardenVaultId = bitwardenVaultId,
-            bitwardenFolderId = bitwardenFolderId,
-            mdbxDatabaseId = mdbxDatabaseId,
-            mdbxFolderId = targetMdbxFolderId,
-            updatedAt = Date()
-        )
-        val transition = SecureItemBitwardenTransitionResolver.resolve(
-            tag = "DocumentViewModel",
-            existingItem = existingItem,
-            targetVaultId = bitwardenVaultId,
-            targetFolderId = bitwardenFolderId,
-            forcePendingWhenKeepingCipher = bitwardenVaultId != null &&
-                existingItem.bitwardenVaultId == bitwardenVaultId &&
-                existingItem.bitwardenCipherId != null,
-            abortOnQueueFailure = true
-        ) { vaultId, cipherId, entryId ->
-            bitwardenRepository?.queueCipherDelete(
-                vaultId = vaultId,
-                cipherId = cipherId,
-                entryId = entryId,
-                itemType = BitwardenPendingOperation.ITEM_TYPE_DOCUMENT
-            )
-        } ?: return false
-        val finalUpdatedItem = updatedItem.copy(
-            bitwardenLocalModified = transition.localModified,
-            bitwardenCipherId = transition.cipherId,
-            bitwardenRevisionDate = transition.revisionDate,
-            syncStatus = transition.syncStatus
-        )
-        val keepassSync = keepassSecureItemUpdateExecutor.syncUpdatedItem(
-            existingItem = existingItem,
-            updatedItem = finalUpdatedItem,
-            persistUpdate = { persistedItem ->
-                repository.updateItem(persistedItem)
+        val face = parseDocumentData(existingItem.itemData)?.cardFace
+        val backendChanged = target.storageScopeKey() != existingItem.toStorageTarget().storageScopeKey()
+        var movingImageBytes: ByteArray? = null
+        return try {
+            if (backendChanged && face != null) {
+                cardFaceAttachmentManager.requireUploadAllowed(bitwardenVaultId)
+                movingImageBytes = cardFaceAttachmentManager.readImage(id, face.imageAttachmentName)
             }
-        )
-        if (keepassSync.isFailure) {
-            Log.e(
-                "DocumentViewModel",
-                "KeePass document move failed before local update: ${keepassSync.exceptionOrNull()?.message}"
+            val keepassIdentity = resolveKeePassMutationIdentity(
+                existingItem = existingItem,
+                targetDatabaseId = keepassDatabaseId,
+                requestedGroupPath = keepassGroupPath
             )
-            return false
+            val updatedItem = existingItem.copy(
+                categoryId = categoryId,
+                keepassDatabaseId = keepassDatabaseId,
+                keepassGroupPath = keepassIdentity.groupPath,
+                keepassEntryUuid = keepassIdentity.entryUuid,
+                keepassGroupUuid = keepassIdentity.groupUuid,
+                bitwardenVaultId = bitwardenVaultId,
+                bitwardenFolderId = bitwardenFolderId,
+                mdbxDatabaseId = mdbxDatabaseId,
+                mdbxFolderId = targetMdbxFolderId,
+                updatedAt = Date()
+            )
+            var pendingSourceDelete: (suspend () -> Result<Unit>)? = null
+            val transition = SecureItemBitwardenTransitionResolver.resolve(
+                tag = "DocumentViewModel",
+                existingItem = existingItem,
+                targetVaultId = bitwardenVaultId,
+                targetFolderId = bitwardenFolderId,
+                forcePendingWhenKeepingCipher = bitwardenVaultId != null &&
+                    existingItem.bitwardenVaultId == bitwardenVaultId &&
+                    existingItem.bitwardenCipherId != null,
+                abortOnQueueFailure = true
+            ) { vaultId, cipherId, entryId ->
+                val vaultRepository = bitwardenRepository
+                if (vaultRepository == null) null else {
+                    pendingSourceDelete = {
+                        vaultRepository.queueCipherDelete(
+                            vaultId = vaultId,
+                            cipherId = cipherId,
+                            entryId = entryId,
+                            itemType = BitwardenPendingOperation.ITEM_TYPE_DOCUMENT
+                        )
+                    }
+                    Result.success(Unit)
+                }
+            } ?: return false
+            val finalUpdatedItem = updatedItem.copy(
+                bitwardenLocalModified = transition.localModified,
+                bitwardenCipherId = transition.cipherId,
+                bitwardenRevisionDate = transition.revisionDate,
+                syncStatus = transition.syncStatus
+            )
+            val keepassSync = keepassSecureItemUpdateExecutor.syncUpdatedItem(
+                existingItem = existingItem,
+                updatedItem = finalUpdatedItem,
+                persistUpdate = { persistedItem ->
+                    repository.updateItem(persistedItem)
+                    try {
+                        if (backendChanged && face != null) {
+                            cardFaceAttachmentManager.update(
+                                secureItemId = id,
+                                config = face,
+                                imageBytes = movingImageBytes,
+                                previousAttachmentName = face.imageAttachmentName,
+                                ownerBackendChanged = true
+                            ).getOrThrow()
+                        }
+                        pendingSourceDelete?.invoke()?.getOrThrow()
+                    } catch (error: Exception) {
+                        repository.updateItem(existingItem)
+                        throw error
+                    }
+                }
+            )
+            if (keepassSync.isFailure) {
+                Log.e(
+                    "DocumentViewModel",
+                    "KeePass document move failed before local update: ${keepassSync.exceptionOrNull()?.message}"
+                )
+                return false
+            }
+            requestBitwardenMutationSync(bitwardenVaultId)
+            true
+        } catch (error: CancellationException) {
+            throw error
+        } catch (error: Exception) {
+            Log.e("DocumentViewModel", "Card face transfer failed", error)
+            false
+        } finally {
+            movingImageBytes?.fill(0)
         }
-        requestBitwardenMutationSync(bitwardenVaultId)
-        return true
     }
 
     fun saveDocumentAcrossTargets(
@@ -662,240 +735,151 @@ class DocumentViewModel(
         isFavorite: Boolean = false,
         imagePaths: String = "",
         targets: List<StorageTarget>,
-        onPrimaryCreated: suspend (Long) -> Unit = {}
+        cardFaceImageBytes: ByteArray? = null,
+        onPrimaryCreated: suspend (Long) -> Unit = {},
+        onPrimarySaved: suspend (Long) -> Unit = {},
+        onComplete: (Result<Long>) -> Unit = {}
     ) {
+        // Own the bytes until every selected target has finished saving.
+        var ownedImageBytes = cardFaceImageBytes?.copyOf()
         viewModelScope.launch {
-            val distinctTargets = targets.distinctBy(StorageTarget::stableKey)
-            if (distinctTargets.isEmpty()) return@launch
+            val result = try {
+                val distinctTargets = targets.distinctBy(StorageTarget::stableKey)
+                require(distinctTargets.isNotEmpty()) { "No storage target selected" }
+                val existingItem = id?.let { repository.getItemById(it) }
+                    ?.takeIf { it.itemType == ItemType.DOCUMENT }
+                val targetKeys = distinctTargets.map(StorageTarget::stableKey).toSet()
+                val currentTarget = existingItem?.toStorageTarget()?.takeIf { it.stableKey in targetKeys }
+                    ?: distinctTargets.first()
+                val replicaGroupId = existingItem?.replicaGroupId?.takeIf(String::isNotBlank)
+                    ?: UUID.randomUUID().toString()
+                val existingReplicas = if (existingItem != null) {
+                    repository.getAllItems().first().filter {
+                        it.itemType == ItemType.DOCUMENT && it.replicaGroupId == replicaGroupId &&
+                            it.id != existingItem.id && !it.isDeleted
+                    }.associateBy { it.toStorageTarget().stableKey }
+                } else emptyMap()
 
-            val existingItem = id?.let { repository.getItemById(it) }?.takeIf { it.itemType == ItemType.DOCUMENT }
-            val selectedTargetKeys = distinctTargets.map(StorageTarget::stableKey).toSet()
-            val currentTarget = existingItem
-                ?.toStorageTarget()
-                ?.takeIf { it.stableKey in selectedTargetKeys }
-                ?: distinctTargets.first()
-            val replicaGroupId = existingItem?.replicaGroupId?.takeIf { it.isNotBlank() } ?: UUID.randomUUID().toString()
-            val existingReplicasByKey = if (existingItem != null) {
-                repository.getAllItems().first()
-                    .asSequence()
-                    .filter {
-                        it.itemType == ItemType.DOCUMENT &&
-                            it.replicaGroupId == replicaGroupId &&
-                            it.id != existingItem.id &&
-                            !it.isDeleted
+                // Read the original image before a move changes the owner/backend identity.
+                val face = documentData.cardFace
+                if (face != null) {
+                    distinctTargets.filterIsInstance<StorageTarget.Bitwarden>().forEach { target ->
+                        val existingTarget = if (existingItem?.toStorageTarget()?.stableKey == target.stableKey)
+                            existingItem else existingReplicas[target.stableKey]
+                        if (ownedImageBytes != null || existingTarget == null ||
+                            parseDocumentData(existingTarget.itemData)?.cardFace?.imageAttachmentName != face.imageAttachmentName
+                        ) {
+                            cardFaceAttachmentManager.requireUploadAllowed(target.vaultId)
+                        }
                     }
-                    .associateBy { it.toStorageTarget().stableKey }
-            } else {
-                emptyMap()
+                }
+                if (ownedImageBytes == null && face != null && existingItem != null &&
+                    currentTarget.storageScopeKey() != existingItem.toStorageTarget().storageScopeKey()
+                ) {
+                    ownedImageBytes = cardFaceAttachmentManager.readImage(existingItem.id, face.imageAttachmentName)
+                }
+                var primaryId = 0L
+                val orderedTargets = listOf(currentTarget) + distinctTargets.filter { it.stableKey != currentTarget.stableKey }
+                for ((index, target) in orderedTargets.withIndex()) {
+                    val previous = if (index == 0) existingItem else existingReplicas[target.stableKey]
+                    val afterSave: suspend (Long) -> Unit = { savedId ->
+                        if (index == 0 && previous == null) onPrimaryCreated(savedId)
+                        val previousFace = previous?.let { parseDocumentData(it.itemData)?.cardFace }
+                        if (face != null || previousFace != null) {
+                            cardFaceAttachmentManager.update(
+                                secureItemId = savedId,
+                                config = face,
+                                imageBytes = ownedImageBytes,
+                                previousAttachmentName = previousFace?.imageAttachmentName,
+                                sourceItemId = existingItem?.id,
+                                ownerBackendChanged = previous != null &&
+                                    previous.toStorageTarget().storageScopeKey() != target.storageScopeKey()
+                            ).getOrThrow()
+                        }
+                    }
+                    val savedId = if (previous == null) {
+                        addDocument(
+                            title = title, documentData = documentData, notes = notes,
+                            isFavorite = isFavorite, imagePaths = imagePaths,
+                            categoryId = (target as? StorageTarget.MonicaLocal)?.categoryId,
+                            keepassDatabaseId = (target as? StorageTarget.KeePass)?.databaseId,
+                            keepassGroupPath = (target as? StorageTarget.KeePass)?.groupPath,
+                            mdbxDatabaseId = (target as? StorageTarget.Mdbx)?.databaseId,
+                            mdbxFolderId = (target as? StorageTarget.Mdbx)?.folderId,
+                            bitwardenVaultId = (target as? StorageTarget.Bitwarden)?.vaultId,
+                            bitwardenFolderId = (target as? StorageTarget.Bitwarden)?.folderId,
+                            replicaGroupId = replicaGroupId, onCreated = afterSave
+                        ).await()
+                    } else {
+                        updateDocument(
+                            id = previous.id, title = title, documentData = documentData, notes = notes,
+                            isFavorite = isFavorite, imagePaths = imagePaths,
+                            categoryId = (target as? StorageTarget.MonicaLocal)?.categoryId,
+                            keepassDatabaseId = (target as? StorageTarget.KeePass)?.databaseId,
+                            keepassGroupPath = (target as? StorageTarget.KeePass)?.groupPath,
+                            mdbxDatabaseId = (target as? StorageTarget.Mdbx)?.databaseId,
+                            mdbxFolderId = (target as? StorageTarget.Mdbx)?.folderId,
+                            bitwardenVaultId = (target as? StorageTarget.Bitwarden)?.vaultId,
+                            bitwardenFolderId = (target as? StorageTarget.Bitwarden)?.folderId,
+                            replicaGroupId = replicaGroupId, onUpdated = afterSave
+                        ).await()
+                    }
+                    if (index == 0) primaryId = savedId
+                }
+                onPrimarySaved(primaryId)
+                Result.success(primaryId)
+            } catch (error: CancellationException) {
+                throw error
+            } catch (error: Exception) {
+                Result.failure(error)
+            } finally {
+                ownedImageBytes?.fill(0)
             }
+            onComplete(result)
+        }
+    }
 
-            when (currentTarget) {
-                is StorageTarget.MonicaLocal -> {
-                    if (existingItem == null) {
-                        addDocument(
-                            title = title,
-                            documentData = documentData,
-                            notes = notes,
-                            isFavorite = isFavorite,
-                            imagePaths = imagePaths,
-                            categoryId = currentTarget.categoryId,
-                            replicaGroupId = replicaGroupId,
-                            onCreated = onPrimaryCreated
-                        )
-                    } else {
-                        updateDocument(
-                            id = existingItem.id,
-                            title = title,
-                            documentData = documentData,
-                            notes = notes,
-                            isFavorite = isFavorite,
-                            imagePaths = imagePaths,
-                            categoryId = currentTarget.categoryId,
-                            replicaGroupId = replicaGroupId
-                        )
+    suspend fun copyDocumentToStorage(item: SecureItem, target: StorageTarget): Long? {
+        if (target is StorageTarget.MonicaLocal) return copyDocumentToMonicaLocal(item, target.categoryId)
+        if (item.itemType != ItemType.DOCUMENT || item.hasOwnershipConflict()) return null
+        val data = parseDocumentData(item.itemData) ?: return null
+        var copiedBytes: ByteArray? = null
+        var createdId: Long? = null
+        return try {
+            data.cardFace?.let { face ->
+                cardFaceAttachmentManager.requireUploadAllowed((target as? StorageTarget.Bitwarden)?.vaultId)
+                copiedBytes = cardFaceAttachmentManager.readImage(item.id, face.imageAttachmentName)
+            }
+            addDocument(
+                title = item.title, documentData = data, notes = item.notes,
+                isFavorite = item.isFavorite, imagePaths = item.imagePaths,
+                keepassDatabaseId = (target as? StorageTarget.KeePass)?.databaseId,
+                keepassGroupPath = (target as? StorageTarget.KeePass)?.groupPath,
+                mdbxDatabaseId = (target as? StorageTarget.Mdbx)?.databaseId,
+                mdbxFolderId = (target as? StorageTarget.Mdbx)?.folderId,
+                bitwardenVaultId = (target as? StorageTarget.Bitwarden)?.vaultId,
+                bitwardenFolderId = (target as? StorageTarget.Bitwarden)?.folderId,
+                onCreated = { newId ->
+                    createdId = newId
+                    data.cardFace?.let { face ->
+                        cardFaceAttachmentManager.update(newId, face, copiedBytes, null).getOrThrow()
                     }
                 }
-                is StorageTarget.KeePass -> {
-                    if (existingItem == null) {
-                        addDocument(
-                            title = title,
-                            documentData = documentData,
-                            notes = notes,
-                            isFavorite = isFavorite,
-                            imagePaths = imagePaths,
-                            keepassDatabaseId = currentTarget.databaseId,
-                            keepassGroupPath = currentTarget.groupPath,
-                            replicaGroupId = replicaGroupId,
-                            onCreated = onPrimaryCreated
-                        )
-                    } else {
-                        updateDocument(
-                            id = existingItem.id,
-                            title = title,
-                            documentData = documentData,
-                            notes = notes,
-                            isFavorite = isFavorite,
-                            imagePaths = imagePaths,
-                            keepassDatabaseId = currentTarget.databaseId,
-                            keepassGroupPath = currentTarget.groupPath,
-                            replicaGroupId = replicaGroupId
-                        )
-                    }
-                }
-                is StorageTarget.Mdbx -> {
-                    if (existingItem == null) {
-                        addDocument(
-                            title = title,
-                            documentData = documentData,
-                            notes = notes,
-                            isFavorite = isFavorite,
-                            imagePaths = imagePaths,
-                            mdbxDatabaseId = currentTarget.databaseId,
-                            mdbxFolderId = currentTarget.folderId,
-                            replicaGroupId = replicaGroupId,
-                            onCreated = onPrimaryCreated
-                        )
-                    } else {
-                        updateDocument(
-                            id = existingItem.id,
-                            title = title,
-                            documentData = documentData,
-                            notes = notes,
-                            isFavorite = isFavorite,
-                            imagePaths = imagePaths,
-                            mdbxDatabaseId = currentTarget.databaseId,
-                            mdbxFolderId = currentTarget.folderId,
-                            replicaGroupId = replicaGroupId
-                        )
-                    }
-                }
-                is StorageTarget.Bitwarden -> {
-                    if (existingItem == null) {
-                        addDocument(
-                            title = title,
-                            documentData = documentData,
-                            notes = notes,
-                            isFavorite = isFavorite,
-                            imagePaths = imagePaths,
-                            bitwardenVaultId = currentTarget.vaultId,
-                            bitwardenFolderId = currentTarget.folderId,
-                            replicaGroupId = replicaGroupId,
-                            onCreated = onPrimaryCreated
-                        )
-                    } else {
-                        updateDocument(
-                            id = existingItem.id,
-                            title = title,
-                            documentData = documentData,
-                            notes = notes,
-                            isFavorite = isFavorite,
-                            imagePaths = imagePaths,
-                            bitwardenVaultId = currentTarget.vaultId,
-                            bitwardenFolderId = currentTarget.folderId,
-                            replicaGroupId = replicaGroupId
-                        )
+            ).await()
+        } catch (error: CancellationException) {
+            throw error
+        } catch (error: Exception) {
+            createdId?.let { newId ->
+                repository.getItemById(newId)?.let { created ->
+                    if (keepassSecureItemDeleteExecutor.delete(created, useRecycleBin = false)) {
+                        repository.deleteItemById(newId)
                     }
                 }
             }
-
-            distinctTargets
-                .filter { it.stableKey != currentTarget.stableKey }
-                .forEach { target ->
-                    val existingReplica = existingReplicasByKey[target.stableKey]
-                    when (target) {
-                        is StorageTarget.MonicaLocal -> if (existingReplica == null) addDocument(
-                            title = title,
-                            documentData = documentData,
-                            notes = notes,
-                            isFavorite = isFavorite,
-                            imagePaths = imagePaths,
-                            categoryId = target.categoryId,
-                            replicaGroupId = replicaGroupId
-                        ) else updateDocument(
-                            id = existingReplica.id,
-                            title = title,
-                            documentData = documentData,
-                            notes = notes,
-                            isFavorite = isFavorite,
-                            imagePaths = imagePaths,
-                            categoryId = target.categoryId,
-                            replicaGroupId = replicaGroupId
-                        )
-                        is StorageTarget.KeePass -> if (existingReplica == null) addDocument(
-                            title = title,
-                            documentData = documentData,
-                            notes = notes,
-                            isFavorite = isFavorite,
-                            imagePaths = imagePaths,
-                            keepassDatabaseId = target.databaseId,
-                            keepassGroupPath = target.groupPath,
-                            replicaGroupId = replicaGroupId
-                        ) else updateDocument(
-                            id = existingReplica.id,
-                            title = title,
-                            documentData = documentData,
-                            notes = notes,
-                            isFavorite = isFavorite,
-                            imagePaths = imagePaths,
-                            keepassDatabaseId = target.databaseId,
-                            keepassGroupPath = target.groupPath,
-                            replicaGroupId = replicaGroupId
-                        )
-                        is StorageTarget.Mdbx -> if (existingReplica == null) addDocument(
-                            title = title,
-                            documentData = documentData,
-                            notes = notes,
-                            isFavorite = isFavorite,
-                            imagePaths = imagePaths,
-                            mdbxDatabaseId = target.databaseId,
-                            mdbxFolderId = target.folderId,
-                            replicaGroupId = replicaGroupId
-                        ) else updateDocument(
-                            id = existingReplica.id,
-                            title = title,
-                            documentData = documentData,
-                            notes = notes,
-                            isFavorite = isFavorite,
-                            imagePaths = imagePaths,
-                            mdbxDatabaseId = target.databaseId,
-                            mdbxFolderId = target.folderId,
-                            replicaGroupId = replicaGroupId
-                        )
-                        is StorageTarget.Bitwarden -> if (existingReplica == null) addDocument(
-                            title = title,
-                            documentData = documentData,
-                            notes = notes,
-                            isFavorite = isFavorite,
-                            imagePaths = imagePaths,
-                            bitwardenVaultId = target.vaultId,
-                            bitwardenFolderId = target.folderId,
-                            replicaGroupId = replicaGroupId
-                        ) else updateDocument(
-                            id = existingReplica.id,
-                            title = title,
-                            documentData = documentData,
-                            notes = notes,
-                            isFavorite = isFavorite,
-                            imagePaths = imagePaths,
-                            bitwardenVaultId = target.vaultId,
-                            bitwardenFolderId = target.folderId,
-                            replicaGroupId = replicaGroupId
-                        )
-                    }
-                }
-
-            if (existingItem != null && distinctTargets.size == 1 &&
-                currentTarget.stableKey != existingItem.toStorageTarget().stableKey) {
-                repository.getAllItems().first()
-                .filter {
-                    it.itemType == ItemType.DOCUMENT &&
-                        it.replicaGroupId == replicaGroupId &&
-                        it.id != existingItem?.id &&
-                        !it.isDeleted &&
-                        it.toStorageTarget().stableKey !in selectedTargetKeys
-                }
-                .forEach { repository.deleteItemById(it.id) }
-            }
+            Log.e("DocumentViewModel", "Card face copy failed", error)
+            null
+        } finally {
+            copiedBytes?.fill(0)
         }
     }
 
@@ -931,7 +915,9 @@ class DocumentViewModel(
         val vaultId = item.bitwardenVaultId ?: return null
         val vault = bitwardenRepository?.getAllVaultsFlow()?.first()?.firstOrNull { it.id == vaultId }
             ?: return null
-        return bitwardenRepository?.getAttachmentBitwardenContext(vault, item.bitwardenCipherId)
+        return item.bitwardenCipherId?.takeIf(String::isNotBlank)?.let { cipherId ->
+            bitwardenRepository?.fetchAttachmentCipherSnapshot(vault, cipherId)?.context
+        } ?: bitwardenRepository?.getAttachmentBitwardenContext(vault, item.bitwardenCipherId)
     }
 
     private fun attachmentKeepassContextFor(item: SecureItem): AttachmentFacade.KeePassContext? {
@@ -1044,7 +1030,7 @@ class DocumentViewModel(
             groupUuid = if (groupUnchanged) existingItem?.keepassGroupUuid else null
         )
     }
-    
+
     // 删除证件
     // @param softDelete 是否软删除（移入回收站），默认为 true
     fun deleteDocument(id: Long, softDelete: Boolean = true) {
@@ -1125,7 +1111,7 @@ class DocumentViewModel(
             }
         }
     }
-    
+
     // 切换收藏状态
     fun toggleFavorite(id: Long) {
         viewModelScope.launch {
@@ -1137,19 +1123,19 @@ class DocumentViewModel(
             }
         }
     }
-    
+
     // 更新排序顺序
     fun updateSortOrders(items: List<Pair<Long, Int>>) {
         viewModelScope.launch {
             repository.updateSortOrders(items)
         }
     }
-    
+
     // 搜索证件
     fun searchDocuments(query: String): Flow<List<SecureItem>> {
         return repository.searchItems(query)
     }
-    
+
     // 解析证件数据
     fun parseDocumentData(jsonData: String): DocumentData? {
         return CardWalletDataCodec.parseDocumentData(

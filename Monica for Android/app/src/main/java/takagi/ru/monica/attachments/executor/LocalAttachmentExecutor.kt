@@ -83,6 +83,47 @@ class LocalAttachmentExecutor(
         )
     }
 
+    /** Writes an already-normalized small payload without creating a plaintext temporary file. */
+    suspend fun writeFromBytes(
+        owner: AttachmentOwner,
+        fileName: String,
+        mimeType: String,
+        bytes: ByteArray
+    ): Attachment = withContext(Dispatchers.IO) {
+        if (bytes.isEmpty()) throw AttachmentError.IoError
+        val safeFileName = fileName
+            .substringAfterLast('/')
+            .substringAfterLast('\\')
+            .trim()
+            .takeIf(String::isNotEmpty)
+            ?: DEFAULT_FILE_NAME
+        val blob = bytes.inputStream().use { storage.writeEncrypted(it) }
+        val now = System.currentTimeMillis()
+        val wrapped = try {
+            keyVault.wrap(blob.cek)
+        } catch (error: Throwable) {
+            runCatching { storage.delete(blob.relativePath) }
+            throw AttachmentError.CryptoError
+        } finally {
+            blob.cek.fill(0)
+        }
+        Attachment(
+            id = 0,
+            parentPasswordId = owner.passwordId,
+            parentSecureItemId = owner.secureItemId,
+            source = AttachmentSource.LOCAL.name,
+            fileName = safeFileName,
+            mimeType = mimeType.ifBlank { guessMimeType(safeFileName) },
+            sizeBytes = blob.sizeBytes,
+            sha256Hex = blob.sha256Hex,
+            wrappedCek = wrapped,
+            localPath = blob.relativePath,
+            downloadState = AttachmentDownloadState.DOWNLOADED.name,
+            createdAt = now,
+            updatedAt = now
+        )
+    }
+
     /** 打开一个已 DOWNLOADED 的附件用于读取明文字节。 */
     suspend fun openDecrypted(attachment: Attachment): InputStream = withContext(Dispatchers.IO) {
         val path = attachment.localPath ?: throw AttachmentError.IoError

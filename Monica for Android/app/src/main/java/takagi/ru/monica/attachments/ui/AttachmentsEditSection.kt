@@ -46,6 +46,7 @@ import takagi.ru.monica.attachments.model.Attachment
 import takagi.ru.monica.attachments.model.AttachmentError
 import takagi.ru.monica.attachments.model.AttachmentOwner
 import takagi.ru.monica.attachments.model.AttachmentSource
+import takagi.ru.monica.data.model.CardFaceAttachment
 
 /**
  * 草稿模式下的附件记录：尚未真正入库的本地 Uri 引用。
@@ -78,7 +79,8 @@ fun AttachmentsEditSection(
     bitwardenPremium: Boolean = true,
     keepassContext: AttachmentFacade.KeePassContext? = null,
     pendingDrafts: SnapshotStateList<AttachmentPendingDraft>? = null,
-    excludedFileNames: Set<String> = emptySet()
+    excludedFileNames: Set<String> = emptySet(),
+    hideManagedCardFaces: Boolean = false
 ) = AttachmentsEditSection(
     owner = passwordId.takeIf { it > 0L }?.let { AttachmentOwner.password(it) },
     isPlusActivated = isPlusActivated,
@@ -88,7 +90,8 @@ fun AttachmentsEditSection(
     bitwardenPremium = bitwardenPremium,
     keepassContext = keepassContext,
     pendingDrafts = pendingDrafts,
-    excludedFileNames = excludedFileNames
+    excludedFileNames = excludedFileNames,
+    hideManagedCardFaces = hideManagedCardFaces
 )
 
 @Composable
@@ -101,7 +104,8 @@ fun AttachmentsEditSection(
     bitwardenPremium: Boolean = true,
     keepassContext: AttachmentFacade.KeePassContext? = null,
     pendingDrafts: SnapshotStateList<AttachmentPendingDraft>? = null,
-    excludedFileNames: Set<String> = emptySet()
+    excludedFileNames: Set<String> = emptySet(),
+    hideManagedCardFaces: Boolean = false
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -210,7 +214,10 @@ fun AttachmentsEditSection(
         )
     }
 
-    val visiblePersistedAttachments = persistedAttachments.filterNot { it.fileName in excludedFileNames }
+    val visiblePersistedAttachments = persistedAttachments.filterNot {
+        it.fileName in excludedFileNames ||
+            (hideManagedCardFaces && CardFaceAttachment.isManagedFileName(it.fileName))
+    }
     val draftItems = pendingDrafts ?: emptyList()
     val visibleCount = visiblePersistedAttachments.size + draftItems.size
 

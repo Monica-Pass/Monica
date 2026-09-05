@@ -47,6 +47,7 @@ class CipherSyncProcessor(
 ) {
     companion object {
         private const val TAG = "CipherSyncProcessor"
+        private const val CARD_FACE_FIELD_NAME = "Monica Card Face"
         const val SKIP_REMOTE_UNCHANGED = "Remote unchanged"
         private val LEGACY_MONICA_FIELD_NAMES = setOf(
             "monicalocalid",
@@ -86,7 +87,19 @@ class CipherSyncProcessor(
             "account number",
             "branch code",
             "currency",
-            "customer service phone"
+            "customer service phone",
+            "monica card face",
+            "monica_card_face"
+        )
+        private val DOCUMENT_RESERVED_FIELD_NAMES = setOf(
+            "monica_document_type",
+            "monica_issue_date",
+            "monica_expiry_date",
+            "monica_issued_by",
+            "monica_nationality",
+            "monica_additional_info",
+            "monica card face",
+            "monica_card_face"
         )
     }
 
@@ -1096,7 +1109,10 @@ class CipherSyncProcessor(
             branchCode = fieldMap.valueByNames("Branch Code", "monica_branch_code"),
             currency = fieldMap.valueByNames("Currency", "monica_currency"),
             customerServicePhone = fieldMap.valueByNames("Customer Service Phone", "monica_customer_service_phone"),
-            customFields = decryptedFields.toCardCustomFields()
+            customFields = decryptedFields.toCardCustomFields(),
+            cardFace = CardWalletDataCodec.parseCardFaceConfig(
+                fieldMap.valueByNames(CARD_FACE_FIELD_NAME, "monica_card_face")
+            )
         )
         val itemData = encodeSecureItemDataForLocalStorage(
             CardWalletDataCodec.encodeBankCardData(cardData)
@@ -1233,7 +1249,10 @@ class CipherSyncProcessor(
             username = decryptString(identity.username, symmetricKey) ?: "",
             passportNumber = passportNumber,
             licenseNumber = licenseNumber,
-            customFields = decryptedFields.toDocumentCustomFields()
+            customFields = decryptedFields.toDocumentCustomFields(),
+            cardFace = CardWalletDataCodec.parseCardFaceConfig(
+                customFieldMap.valueByNames(CARD_FACE_FIELD_NAME, "monica_card_face")
+            )
         )
         val itemData = encodeSecureItemDataForLocalStorage(
             CardWalletDataCodec.encodeDocumentData(docData)
@@ -1912,15 +1931,7 @@ class CipherSyncProcessor(
     }
 
     private fun List<DecryptedCustomField>.toDocumentCustomFields(): List<SecureCustomField> {
-        val reserved = setOf(
-            "monica_document_type",
-            "monica_issue_date",
-            "monica_expiry_date",
-            "monica_issued_by",
-            "monica_nationality",
-            "monica_additional_info"
-        )
-        return filterNot { it.name in reserved }
+        return filterNot { normalizeFieldName(it.name) in DOCUMENT_RESERVED_FIELD_NAMES }
             .map { it.toSecureCustomField() }
     }
 

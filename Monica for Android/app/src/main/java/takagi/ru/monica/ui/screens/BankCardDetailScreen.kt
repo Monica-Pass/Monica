@@ -32,10 +32,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import takagi.ru.monica.R
+import takagi.ru.monica.ui.cardwallet.CardFaceDetailHeader
+import takagi.ru.monica.ui.cardwallet.bankCardFacePreviewData
 import takagi.ru.monica.attachments.AttachmentContainer
 import takagi.ru.monica.attachments.facade.AttachmentFacade
+import takagi.ru.monica.attachments.model.AttachmentError
 import takagi.ru.monica.attachments.model.AttachmentOwner
 import takagi.ru.monica.attachments.ui.AttachmentsDetailSection
+import takagi.ru.monica.bitwarden.BitwardenVaultPremiumStore
 import takagi.ru.monica.data.ItemType
 import takagi.ru.monica.data.PasswordDatabase
 import takagi.ru.monica.data.SecureItem
@@ -48,6 +52,9 @@ import takagi.ru.monica.keepass.KeePassSecureItemPhotoAttachments
 import takagi.ru.monica.ui.components.ActionStrip
 import takagi.ru.monica.ui.components.ActionStripItem
 import takagi.ru.monica.ui.components.BankCardCard
+import takagi.ru.monica.ui.cardwallet.CardFaceCustomizer
+import takagi.ru.monica.ui.cardwallet.CardFaceEditResult
+import takagi.ru.monica.ui.cardwallet.rememberCardFaceBitmap
 import takagi.ru.monica.ui.icons.MonicaIcons
 import takagi.ru.monica.util.ImageManager
 import takagi.ru.monica.viewmodel.BankCardViewModel
@@ -73,6 +80,8 @@ fun BankCardDetailScreen(
     var cardData by remember { mutableStateOf<BankCardData?>(null) }
     var showDeleteDialog by remember { mutableStateOf(false) }
     var cvvVisible by remember { mutableStateOf(false) }
+    var showCardFaceCustomizer by remember { mutableStateOf(false) }
+    var isSavingCardFace by remember { mutableStateOf(false) }
     
     // 图片相关状态
     var frontImageBitmap by remember { mutableStateOf<Bitmap?>(null) }
@@ -159,6 +168,14 @@ fun BankCardDetailScreen(
             null
         }
     }
+    val cardFaceBitmap = rememberCardFaceBitmap(
+        item = cardItem,
+        imageAttachmentName = cardData?.cardFace?.imageAttachmentName,
+        maxDimension = 1200
+    )
+    val cardFaceImageAllowed = attachmentBitwardenVault?.let { vault ->
+        BitwardenVaultPremiumStore.isPremium(context, vault.id)
+    } ?: true
     Scaffold(
         topBar = {
             TopAppBar(
@@ -213,13 +230,16 @@ fun BankCardDetailScreen(
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                // Visual Card Representation
-                BankCardCard(
-                    item = item,
-                    onClick = { /* No-op in detail view */ },
-                    cardData = cardData
-                )
-                
+                cardData?.let { data ->
+                    CardFaceDetailHeader(
+                        previewData = bankCardFacePreviewData(item.title, data),
+                        config = data.cardFace,
+                        bitmap = cardFaceBitmap,
+                        enabled = !isSavingCardFace,
+                        onClick = { showCardFaceCustomizer = true }
+                    )
+                }
+
                 cardData?.let { data ->
                     // Card Details Card
                     Card(
@@ -508,14 +528,64 @@ fun BankCardDetailScreen(
                     owner = AttachmentOwner.secureItem(item.id),
                     bitwardenContext = attachmentBitwardenContext,
                     keepassContext = attachmentKeePassContext,
-                    excludedFileNames = KeePassSecureItemPhotoAttachments.managedFileNames(ItemType.BANK_CARD)
+                    hideManagedCardFaces = true,
+                    excludedFileNames = KeePassSecureItemPhotoAttachments.managedFileNames(ItemType.BANK_CARD) +
+                        listOfNotNull(cardData?.cardFace?.imageAttachmentName)
                 )
 
                 Spacer(modifier = Modifier.height(80.dp))
             }
         }
     }
-    
+
+    if (showCardFaceCustomizer && cardItem != null && cardData != null) {
+        val item = requireNotNull(cardItem)
+        val data = requireNotNull(cardData)
+        CardFaceCustomizer(
+            title = item.title,
+            previewData = bankCardFacePreviewData(item.title, data),
+            initialConfig = data.cardFace,
+            initialBitmap = cardFaceBitmap,
+            isSaving = isSavingCardFace,
+            imageSelectionAllowed = cardFaceImageAllowed,
+            imageSelectionWarning = if (cardFaceImageAllowed) null
+                else stringResource(R.string.card_face_bitwarden_premium_required),
+            onDismiss = { showCardFaceCustomizer = false },
+            onApply = { edit ->
+                if (!isSavingCardFace) {
+                    isSavingCardFace = true
+                    val updatedData = data.copy(cardFace = edit.config)
+                    viewModel.saveCardAcrossTargets(
+                        id = item.id,
+                        title = item.title,
+                        cardData = updatedData,
+                        notes = item.notes,
+                        isFavorite = item.isFavorite,
+                        imagePaths = item.imagePaths,
+                        targets = listOf(item.toStorageTarget()),
+                        cardFaceImageBytes = edit.imageBytes,
+                        onComplete = { result ->
+                            if (result.isSuccess) {
+                                scope.launch {
+                                    cardItem = viewModel.getCardById(item.id)
+                                    cardData = updatedData
+                                    isSavingCardFace = false
+                                    showCardFaceCustomizer = false
+                                }
+                            } else {
+                                isSavingCardFace = false
+                                val message = if (result.exceptionOrNull() is AttachmentError.PremiumRequired)
+                                    R.string.card_face_bitwarden_premium_required else R.string.card_face_save_failed
+                                android.widget.Toast.makeText(context, message, android.widget.Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    )
+                }
+                edit.imageBytes?.fill(0)
+            }
+        )
+    }
+
     // 全屏图片查看对话框（支持双指缩放）
     fullScreenImage?.let { bitmap ->
         var scale by remember { mutableFloatStateOf(1f) }

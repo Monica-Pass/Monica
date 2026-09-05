@@ -309,7 +309,12 @@ class AttachmentFacade(
             }
 
             val attachment = when (request.source) {
-                AttachmentSource.LOCAL -> throw AttachmentError.IoError
+                AttachmentSource.LOCAL -> localExecutor.writeFromBytes(
+                    owner = request.owner,
+                    fileName = request.fileName,
+                    mimeType = request.mimeType,
+                    bytes = request.bytes
+                )
                 AttachmentSource.BITWARDEN -> {
                     if (!request.bitwardenPremium) throw AttachmentError.PremiumRequired
                     val bw = request.bitwardenContext ?: throw AttachmentError.IoError
@@ -344,12 +349,14 @@ class AttachmentFacade(
                 }
             }
 
+            var insertedId: Long? = null
             try {
-                val insertedId = repository.insert(attachment)
-                attachment.copy(id = insertedId).also { saved ->
+                val savedId = repository.insert(attachment)
+                insertedId = savedId
+                attachment.copy(id = savedId).also { saved ->
                     AttachmentLogger.logOk(
                         event = AttachmentLogger.Event.UPLOAD,
-                        attachmentId = insertedId,
+                        attachmentId = savedId,
                         source = saved.sourceEnum,
                         extras = mapOf(
                             "ownerKind" to request.owner.kind.name,
@@ -357,8 +364,10 @@ class AttachmentFacade(
                             "inline" to true
                         )
                     )
+                    mirrorAttachmentToMdbx(saved)
                 }
             } catch (error: Throwable) {
+                insertedId?.let { repository.deleteById(it) }
                 when (attachment.sourceEnum) {
                     AttachmentSource.LOCAL -> Unit
                     AttachmentSource.BITWARDEN -> {
@@ -389,6 +398,80 @@ class AttachmentFacade(
                 throw error
             }
         }
+
+    /**
+     * Promotes selected encrypted local attachments to an existing Bitwarden cipher while keeping
+     * their stable owner and file names. Remote uploads finish before any Room row is replaced, so
+     * a partial network failure leaves every original local attachment usable.
+     */
+    suspend fun promoteLocalAttachmentsToBitwarden(
+        owner: AttachmentOwner,
+        targetContext: BitwardenContext,
+        fileNames: Set<String>
+    ): Int = withContext(Dispatchers.IO) {
+        if (fileNames.isEmpty()) return@withContext 0
+        if (!targetContext.isOnline) throw AttachmentError.Offline
+        val sources = repository
+            .listByOwnerAndSource(owner, AttachmentSource.LOCAL)
+            .filter { it.fileName in fileNames }
+        if (sources.isEmpty()) return@withContext 0
+
+        val uploaded = mutableListOf<Pair<Attachment, Attachment>>()
+        try {
+            sources.forEach { source ->
+                val remote = localExecutor.openDecrypted(source).use { plainStream ->
+                    bitwardenExecutor.upload(
+                        owner = owner,
+                        fileName = source.fileName,
+                        mimeType = source.mimeType,
+                        source = plainStream,
+                        sizeBytes = source.sizeBytes,
+                        ctx = BitwardenAttachmentExecutor.UploadContext(
+                            vaultApi = targetContext.vaultApi,
+                            httpClient = targetContext.httpClient,
+                            accessToken = targetContext.accessToken,
+                            cipherId = targetContext.cipherId,
+                            wrappingKey = targetContext.wrappingKey
+                        )
+                    )
+                }
+                uploaded += source to remote
+            }
+        } catch (error: Throwable) {
+            rollbackBitwardenAttachmentUploads(uploaded.map { it.second }, targetContext)
+            throw error
+        }
+
+        val replaced = mutableListOf<Pair<Attachment, Attachment>>()
+        try {
+            uploaded.forEach { (source, remote) ->
+                val replacement = remote.copy(
+                    id = source.id,
+                    parentPasswordId = owner.passwordId,
+                    parentSecureItemId = owner.secureItemId,
+                    createdAt = source.createdAt,
+                    updatedAt = System.currentTimeMillis(),
+                    isDeleted = false,
+                    deletedAt = null
+                )
+                check(repository.update(replacement) == 1) {
+                    "Bitwarden attachment metadata update failed"
+                }
+                replaced += source to replacement
+            }
+        } catch (error: Throwable) {
+            replaced.asReversed().forEach { (source, _) -> runCatching { repository.update(source) } }
+            rollbackBitwardenAttachmentUploads(uploaded.map { it.second }, targetContext)
+            throw error
+        }
+
+        replaced.forEach { (source, replacement) ->
+            source.localPath
+                ?.takeIf { it != replacement.localPath }
+                ?.let { oldPath -> storage.delete(oldPath) }
+        }
+        replaced.size
+    }
 
     // ---------------------------------------------------------------- 读/导出
 
@@ -543,6 +626,14 @@ class AttachmentFacade(
     }
 
     // ---------------------------------------------------------------- 删除 / 重试
+
+    /** Drop a superseded local record without deleting the binary in its former backend. */
+    suspend fun forgetLocalAttachment(attachmentId: Long) = withContext(Dispatchers.IO) {
+        val existing = repository.getById(attachmentId) ?: return@withContext
+        mirrorAttachmentDeleteToMdbx(existing)
+        repository.deleteById(attachmentId)
+        existing.localPath?.let { storage.delete(it) }
+    }
 
     suspend fun deleteAttachment(
         attachmentId: Long,

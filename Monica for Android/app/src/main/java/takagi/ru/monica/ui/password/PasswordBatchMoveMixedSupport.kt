@@ -506,21 +506,16 @@ internal suspend fun executeMixedPasswordBatchMove(
                 reportProgress()
                 return@forEach
             }
-            bankCardViewModel.addCard(
-                title = item.title,
-                cardData = cardData,
-                notes = item.notes,
-                isFavorite = item.isFavorite,
-                imagePaths = item.imagePaths,
-                categoryId = targetCategoryId,
-                keepassDatabaseId = targetKeepassDatabaseId,
-                keepassGroupPath = targetKeepassGroupPath,
-                mdbxDatabaseId = targetMdbxDatabaseId,
-                mdbxFolderId = targetMdbxFolderId,
-                bitwardenVaultId = targetBitwardenVaultId,
-                bitwardenFolderId = targetBitwardenFolderId
+            val copiedId = bankCardViewModel.copyCardToStorage(
+                item = item,
+                target = when {
+                    targetBitwardenVaultId != null -> takagi.ru.monica.data.model.StorageTarget.Bitwarden(targetBitwardenVaultId, targetBitwardenFolderId)
+                    targetKeepassDatabaseId != null -> takagi.ru.monica.data.model.StorageTarget.KeePass(targetKeepassDatabaseId, targetKeepassGroupPath)
+                    targetMdbxDatabaseId != null -> takagi.ru.monica.data.model.StorageTarget.Mdbx(targetMdbxDatabaseId, targetMdbxFolderId)
+                    else -> takagi.ru.monica.data.model.StorageTarget.MonicaLocal(targetCategoryId)
+                }
             )
-            successCount++
+            if (copiedId != null) successCount++ else failedCount++
             reportProgress()
         }
 
@@ -547,21 +542,16 @@ internal suspend fun executeMixedPasswordBatchMove(
                 reportProgress()
                 return@forEach
             }
-            documentViewModel.addDocument(
-                title = item.title,
-                documentData = documentData,
-                notes = item.notes,
-                isFavorite = item.isFavorite,
-                imagePaths = item.imagePaths,
-                categoryId = targetCategoryId,
-                keepassDatabaseId = targetKeepassDatabaseId,
-                keepassGroupPath = targetKeepassGroupPath,
-                mdbxDatabaseId = targetMdbxDatabaseId,
-                mdbxFolderId = targetMdbxFolderId,
-                bitwardenVaultId = targetBitwardenVaultId,
-                bitwardenFolderId = targetBitwardenFolderId
+            val copiedId = documentViewModel.copyDocumentToStorage(
+                item = item,
+                target = when {
+                    targetBitwardenVaultId != null -> takagi.ru.monica.data.model.StorageTarget.Bitwarden(targetBitwardenVaultId, targetBitwardenFolderId)
+                    targetKeepassDatabaseId != null -> takagi.ru.monica.data.model.StorageTarget.KeePass(targetKeepassDatabaseId, targetKeepassGroupPath)
+                    targetMdbxDatabaseId != null -> takagi.ru.monica.data.model.StorageTarget.Mdbx(targetMdbxDatabaseId, targetMdbxFolderId)
+                    else -> takagi.ru.monica.data.model.StorageTarget.MonicaLocal(targetCategoryId)
+                }
             )
-            successCount++
+            if (copiedId != null) successCount++ else failedCount++
             reportProgress()
         }
 

@@ -2509,6 +2509,7 @@ private fun AutofillPickerContent(
                         return BillingAddressViewModel(
                             repository = secureItemRepository,
                             securityManager = securityManager,
+                            context = context.applicationContext,
                         ) as T
                     }
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

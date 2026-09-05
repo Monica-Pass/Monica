@@ -1,6 +1,7 @@
 package takagi.ru.monica.ui.screens
 
 import android.widget.Toast
+import android.graphics.Bitmap
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -11,6 +12,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -43,6 +45,7 @@ import takagi.ru.monica.R
 import takagi.ru.monica.attachments.AttachmentContainer
 import takagi.ru.monica.attachments.facade.AttachmentFacade
 import takagi.ru.monica.attachments.model.AttachmentOwner
+import takagi.ru.monica.attachments.model.AttachmentError
 import takagi.ru.monica.attachments.model.AttachmentSource
 import takagi.ru.monica.attachments.ui.AttachmentPendingDraft
 import takagi.ru.monica.attachments.ui.AttachmentsEditSection
@@ -60,6 +63,7 @@ import takagi.ru.monica.data.model.BillingAddress
 import takagi.ru.monica.data.model.CardBrandDetector
 import takagi.ru.monica.data.model.CardWalletDataCodec
 import takagi.ru.monica.data.model.CardType
+import takagi.ru.monica.data.model.CardFaceConfig
 import takagi.ru.monica.data.model.StorageTarget
 import takagi.ru.monica.data.model.normalizedStorageTargets
 import takagi.ru.monica.data.model.formatForDisplay
@@ -81,6 +85,13 @@ import takagi.ru.monica.ui.components.MonicaExpressiveFilterChip
 import takagi.ru.monica.ui.components.buildMultiStorageTarget
 import takagi.ru.monica.ui.components.rememberCommonNameSuggestionState
 import takagi.ru.monica.ui.cardwallet.CardBrandIcon
+import takagi.ru.monica.ui.cardwallet.BankCardFaceArtwork
+import takagi.ru.monica.ui.cardwallet.CardFaceEditorEntry
+import takagi.ru.monica.ui.cardwallet.bankCardFacePreviewData
+import takagi.ru.monica.ui.cardwallet.CardFaceCustomizer
+import takagi.ru.monica.ui.cardwallet.CardFaceEditResult
+import takagi.ru.monica.ui.cardwallet.CardFaceImageProcessor
+import takagi.ru.monica.ui.cardwallet.rememberCardFaceBitmap
 import takagi.ru.monica.ui.cardwallet.resolveCardWalletInitialStorageTarget
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.utils.RememberedStorageTarget
@@ -161,12 +172,18 @@ fun AddEditBankCardScreen(
     var billingAddress by remember { mutableStateOf(BillingAddress()) }
     var showBillingAddressDialog by remember { mutableStateOf(false) }
     var customFields by remember { mutableStateOf<List<CustomFieldDraft>>(emptyList()) }
+    var cardFaceConfig by remember { mutableStateOf<CardFaceConfig?>(null) }
+    var originalCardFaceConfig by remember { mutableStateOf<CardFaceConfig?>(null) }
+    var pendingCardFaceBytes by remember { mutableStateOf<ByteArray?>(null) }
+    var pendingCardFacePreview by remember { mutableStateOf<Bitmap?>(null) }
+    var showCardFaceCustomizer by remember { mutableStateOf(false) }
     val pendingAttachmentDrafts = remember { mutableStateListOf<AttachmentPendingDraft>() }
     var existingCardItem by remember(cardId) { mutableStateOf<SecureItem?>(null) }
     var shouldLoadCommonNameAnalysis by rememberSaveable { mutableStateOf(false) }
     
     // 防止重复点击保存按钮
     var isSaving by remember { mutableStateOf(false) }
+    var workingCardId by remember(cardId) { mutableStateOf(cardId) }
     
     // 图片路径管理
     var frontImageFileName by rememberSaveable { mutableStateOf<String?>(null) }
@@ -404,6 +421,8 @@ fun AddEditBankCardScreen(
                     currency = data.currency
                     customerServicePhone = data.customerServicePhone
                     customFields = CardWalletDataCodec.customFieldsToDrafts(data.customFields)
+                    cardFaceConfig = data.cardFace
+                    originalCardFaceConfig = data.cardFace
                     if (data.billingAddress.isNotBlank()) {
                         billingAddress = CardWalletDataCodec.parseBillingAddress(data.billingAddress)
                         hasBillingAddress = !billingAddress.isEmpty()
@@ -447,6 +466,11 @@ fun AddEditBankCardScreen(
             hasBillingAddress = false
             billingAddress = BillingAddress()
             customFields = emptyList()
+            cardFaceConfig = null
+            originalCardFaceConfig = null
+            pendingCardFaceBytes?.fill(0)
+            pendingCardFaceBytes = null
+            pendingCardFacePreview = null
             frontImageFileName = null
             backImageFileName = null
         }
@@ -497,6 +521,51 @@ fun AddEditBankCardScreen(
     }
 
     val isExistingCardReady = cardId == null || hasLoadedExistingCardFields
+    val displayedCardFaceBitmap = rememberCardFaceBitmap(
+        item = existingCardItem,
+        imageAttachmentName = cardFaceConfig?.imageAttachmentName,
+        overrideBitmap = pendingCardFacePreview,
+        maxDimension = 1200
+    )
+    val unsupportedBitwardenCardFaceTarget = selectedStorageTargets
+        .filterIsInstance<StorageTarget.Bitwarden>()
+        .firstOrNull { target ->
+            bitwardenVaults.firstOrNull { it.id == target.vaultId }?.let { vault ->
+                !BitwardenVaultPremiumStore.isPremium(context, vault.id)
+            } ?: true
+        }
+
+    fun currentCardData(): BankCardData {
+        val billingAddressJson = if (hasBillingAddress) {
+            CardWalletDataCodec.encodeBillingAddress(billingAddress)
+        } else {
+            ""
+        }
+        return BankCardData(
+            cardNumber = cardNumber,
+            cardholderName = cardholderName,
+            expiryMonth = expiryMonth,
+            expiryYear = expiryYear,
+            cvv = cvv,
+            bankName = bankName,
+            cardType = cardType,
+            billingAddress = billingAddressJson,
+            brand = brand,
+            nickname = nickname,
+            validFromMonth = validFromMonth,
+            validFromYear = validFromYear,
+            pin = pin,
+            iban = iban,
+            swiftBic = swiftBic,
+            routingNumber = routingNumber,
+            accountNumber = accountNumber,
+            branchCode = branchCode,
+            currency = currency,
+            customerServicePhone = customerServicePhone,
+            customFields = CardWalletDataCodec.draftsToCustomFields(customFields),
+            cardFace = cardFaceConfig
+        )
+    }
     val canSave = isExistingCardReady && cardNumber.isNotBlank() && !isSaving
     val save: () -> Unit = saveAction@{
         if (!isExistingCardReady || isSaving || cardNumber.isBlank()) return@saveAction
@@ -530,30 +599,17 @@ fun AddEditBankCardScreen(
             .map { it.vaultId }
             .distinct()
 
-        val billingAddressJson = if (hasBillingAddress) CardWalletDataCodec.encodeBillingAddress(billingAddress) else ""
-        val cardData = BankCardData(
-            cardNumber = cardNumber,
-            cardholderName = cardholderName,
-            expiryMonth = expiryMonth,
-            expiryYear = expiryYear,
-            cvv = cvv,
-            bankName = bankName,
-            cardType = cardType,
-            billingAddress = billingAddressJson,
-            brand = brand,
-            nickname = nickname,
-            validFromMonth = validFromMonth,
-            validFromYear = validFromYear,
-            pin = pin,
-            iban = iban,
-            swiftBic = swiftBic,
-            routingNumber = routingNumber,
-            accountNumber = accountNumber,
-            branchCode = branchCode,
-            currency = currency,
-            customerServicePhone = customerServicePhone,
-            customFields = CardWalletDataCodec.draftsToCustomFields(customFields)
-        )
+        if (pendingCardFaceBytes != null && unsupportedBitwardenCardFaceTarget != null) {
+            isSaving = false
+            Toast.makeText(
+                context,
+                context.getString(R.string.card_face_bitwarden_premium_required),
+                Toast.LENGTH_LONG
+            ).show()
+            return@saveAction
+        }
+
+        val cardData = currentCardData()
 
         val imagePathsList = listOf(
             frontImageFileName ?: "",
@@ -561,16 +617,18 @@ fun AddEditBankCardScreen(
         )
         val imagePathsJson = Json.encodeToString(imagePathsList)
 
-        val shouldFlushAttachmentDrafts = cardId == null && pendingAttachmentDrafts.isNotEmpty()
+        val shouldFlushAttachmentDrafts = pendingAttachmentDrafts.isNotEmpty()
         viewModel.saveCardAcrossTargets(
-            id = cardId,
+            id = workingCardId,
             title = title.ifBlank { context.getString(R.string.bank_card_default_title) },
             cardData = cardData,
             notes = notes,
             isFavorite = isFavorite,
             imagePaths = imagePathsJson,
             targets = effectiveTargets,
-            onPrimaryCreated = if (shouldFlushAttachmentDrafts) {
+            cardFaceImageBytes = pendingCardFaceBytes,
+            onPrimaryCreated = { workingCardId = it },
+            onPrimarySaved = if (shouldFlushAttachmentDrafts) {
                 { newId ->
                     val savedItem = viewModel.getCardById(newId)
                     val savedKeePassContext = savedItem?.let { item ->
@@ -588,26 +646,40 @@ fun AddEditBankCardScreen(
                     val savedBitwardenContext = savedVault?.let { vault ->
                         viewModel.getAttachmentBitwardenContext(vault, savedItem.bitwardenCipherId)
                     }
-                    flushPendingDraftsTo(
-                        context = context,
-                        owner = AttachmentOwner.secureItem(newId),
-                        pendingDrafts = pendingAttachmentDrafts,
-                        isPlusActivated = appSettings.isPlusActivated,
-                        attachmentSource = when {
-                            savedBitwardenContext != null -> AttachmentSource.BITWARDEN
-                            savedKeePassContext != null -> AttachmentSource.KEEPASS
-                            else -> AttachmentSource.LOCAL
-                        },
-                        bitwardenContext = savedBitwardenContext,
-                        bitwardenPremium = savedVault?.let {
-                            BitwardenVaultPremiumStore.isPremium(context, it.id)
-                        } ?: true,
-                        keepassContext = savedKeePassContext
-                    )
-                    onNavigateBack()
+                    if (shouldFlushAttachmentDrafts) {
+                        flushPendingDraftsTo(
+                            context = context,
+                            owner = AttachmentOwner.secureItem(newId),
+                            pendingDrafts = pendingAttachmentDrafts,
+                            isPlusActivated = appSettings.isPlusActivated,
+                            attachmentSource = when {
+                                savedBitwardenContext != null -> AttachmentSource.BITWARDEN
+                                savedKeePassContext != null -> AttachmentSource.KEEPASS
+                                else -> AttachmentSource.LOCAL
+                            },
+                            bitwardenContext = savedBitwardenContext,
+                            bitwardenPremium = savedVault?.let {
+                                BitwardenVaultPremiumStore.isPremium(context, it.id)
+                            } ?: true,
+                            keepassContext = savedKeePassContext
+                        )
+                    }
+
                 }
             } else {
                 {}
+            },
+            onComplete = { result ->
+                isSaving = false
+                if (result.isSuccess) {
+                    pendingCardFaceBytes?.fill(0)
+                    pendingCardFaceBytes = null
+                    onNavigateBack()
+                } else {
+                    val message = if (result.exceptionOrNull() is AttachmentError.PremiumRequired)
+                        R.string.card_face_bitwarden_premium_required else R.string.card_face_save_failed
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                }
             }
         )
         coroutineScope.launch {
@@ -624,10 +696,7 @@ fun AddEditBankCardScreen(
                 )
             )
         }
-        syncVaultIds.forEach(bitwardenRepository::requestLocalMutationSync)
-        if (!shouldFlushAttachmentDrafts) {
-            onNavigateBack()
-        }
+
     }
     val toggleFavoriteAction: () -> Unit = {
         val updated = !isFavorite
@@ -668,6 +737,17 @@ fun AddEditBankCardScreen(
                     isEditing = cardId != null,
                     onAddTargetClick = { showStorageTargetSheet = true },
                     onRemoveTarget = ::removeSelectedStorageTarget
+                )
+
+                CardFaceEditorEntry(
+                    config = cardFaceConfig,
+                    bitmap = displayedCardFaceBitmap,
+                    previewData = bankCardFacePreviewData(
+                        title.ifBlank { stringResource(R.string.bank_card_default_title) },
+                        currentCardData()
+                    ),
+                    onClick = { showCardFaceCustomizer = true },
+                    enabled = !isSaving
                 )
 
                 // Basic Information
@@ -1206,7 +1286,12 @@ fun AddEditBankCardScreen(
                 } ?: true,
                 keepassContext = attachmentKeePassContext,
                 pendingDrafts = if (cardId == null) pendingAttachmentDrafts else null,
-                excludedFileNames = KeePassSecureItemPhotoAttachments.managedFileNames(ItemType.BANK_CARD)
+                hideManagedCardFaces = true,
+                excludedFileNames = KeePassSecureItemPhotoAttachments.managedFileNames(ItemType.BANK_CARD) +
+                    listOfNotNull(
+                        cardFaceConfig?.imageAttachmentName,
+                        originalCardFaceConfig?.imageAttachmentName
+                    )
             )
 
             // Notes Card
@@ -1323,6 +1408,28 @@ fun AddEditBankCardScreen(
         }
     } else {
         screenContent(PaddingValues(0.dp))
+    }
+
+    if (showCardFaceCustomizer) {
+        CardFaceCustomizer(
+            title = title.ifBlank { stringResource(R.string.bank_card_default_title) },
+            cardData = currentCardData(),
+            initialConfig = cardFaceConfig,
+            initialBitmap = displayedCardFaceBitmap,
+            initialImageBytes = pendingCardFaceBytes,
+            imageSelectionAllowed = unsupportedBitwardenCardFaceTarget == null,
+            imageSelectionWarning = unsupportedBitwardenCardFaceTarget?.let {
+                stringResource(R.string.card_face_bitwarden_premium_required)
+            },
+            onDismiss = { showCardFaceCustomizer = false },
+            onApply = { result: CardFaceEditResult ->
+                pendingCardFaceBytes?.fill(0)
+                pendingCardFaceBytes = result.imageBytes
+                pendingCardFacePreview = result.previewBitmap
+                cardFaceConfig = result.config
+                showCardFaceCustomizer = false
+            }
+        )
     }
 
     if (showCommonNamePicker) {

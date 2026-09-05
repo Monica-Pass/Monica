@@ -6,5 +6,9 @@
             android:authorities="takagi.ru.monica.test.stale-size"
             android:exported="true"
             android:grantUriPermissions="true" />
+        <provider
+            android:name="takagi.ru.monica.ui.cardwallet.CardFaceTestImageProvider"
+            android:authorities="takagi.ru.monica.test.cardface.images"
+            android:exported="true" />
     </application>
 </manifest>

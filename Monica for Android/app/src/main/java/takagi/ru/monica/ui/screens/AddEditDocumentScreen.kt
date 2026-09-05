@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,6 +29,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import takagi.ru.monica.R
+import takagi.ru.monica.attachments.model.AttachmentError
+import takagi.ru.monica.ui.cardwallet.CardFaceEditSection
+import takagi.ru.monica.ui.cardwallet.documentCardFacePreviewData
+import takagi.ru.monica.ui.cardwallet.rememberCardFaceEditorState
 import takagi.ru.monica.attachments.AttachmentContainer
 import takagi.ru.monica.attachments.facade.AttachmentFacade
 import takagi.ru.monica.attachments.model.AttachmentOwner
@@ -151,6 +156,8 @@ fun AddEditDocumentScreen(
     
     // 防止重复点击保存按钮
     var isSaving by remember { mutableStateOf(false) }
+    var workingDocumentId by remember(documentId) { mutableStateOf(documentId) }
+    val cardFaceEditor = rememberCardFaceEditorState(documentId)
     var showDocumentNumber by remember { mutableStateOf(false) }
     
     // 图片路径管理
@@ -344,6 +351,7 @@ fun AddEditDocumentScreen(
                 val parsedDocumentData = withContext(Dispatchers.Default) {
                     viewModel.parseDocumentData(item.itemData)
                 }
+                cardFaceEditor.load(item, parsedDocumentData?.cardFace)
                 title = item.title
                 notes = item.notes
                 isFavorite = item.isFavorite
@@ -474,10 +482,17 @@ fun AddEditDocumentScreen(
         existingReplicaTargetKeys = selectedTargets.map(StorageTarget::stableKey).toSet()
     }
 
+    val unsupportedCardFaceTarget = selectedStorageTargets
+        .filterIsInstance<StorageTarget.Bitwarden>()
+        .firstOrNull { !BitwardenVaultPremiumStore.isPremium(context, it.vaultId) }
     val isExistingDocumentReady = documentId == null || hasLoadedExistingDocumentFields
     val canSave = isExistingDocumentReady && documentNumber.isNotBlank() && !isSaving
     val save: () -> Unit = saveAction@{
         if (!isExistingDocumentReady || isSaving || documentNumber.isBlank()) return@saveAction
+        if (cardFaceEditor.imageBytes != null && unsupportedCardFaceTarget != null) {
+            Toast.makeText(context, R.string.card_face_bitwarden_premium_required, Toast.LENGTH_LONG).show()
+            return@saveAction
+        }
         isSaving = true // 防止重复点击
         val availableMdbxDatabaseIds = mdbxDatabases.map { it.id }.toSet()
         val effectiveTargets = selectedStorageTargets
@@ -539,7 +554,8 @@ fun AddEditDocumentScreen(
             username = username,
             passportNumber = passportNumber,
             licenseNumber = licenseNumber,
-            customFields = CardWalletDataCodec.draftsToCustomFields(customFields)
+            customFields = CardWalletDataCodec.draftsToCustomFields(customFields),
+            cardFace = cardFaceEditor.config
         )
 
         val imagePathsList = listOf(
@@ -548,9 +564,9 @@ fun AddEditDocumentScreen(
         )
         val imagePathsJson = Json.encodeToString(imagePathsList)
 
-        val shouldFlushAttachmentDrafts = documentId == null && pendingAttachmentDrafts.isNotEmpty()
+        val shouldFlushAttachmentDrafts = pendingAttachmentDrafts.isNotEmpty()
         viewModel.saveDocumentAcrossTargets(
-            id = documentId,
+            id = workingDocumentId,
             title = title.ifBlank {
                 when (documentType) {
                     DocumentType.ID_CARD -> context.getString(R.string.id_card)
@@ -565,7 +581,9 @@ fun AddEditDocumentScreen(
             isFavorite = isFavorite,
             imagePaths = imagePathsJson,
             targets = effectiveTargets,
-            onPrimaryCreated = if (shouldFlushAttachmentDrafts) {
+            cardFaceImageBytes = cardFaceEditor.imageBytes,
+            onPrimaryCreated = { workingDocumentId = it },
+            onPrimarySaved = if (shouldFlushAttachmentDrafts) {
                 { newId ->
                     val savedItem = viewModel.getDocumentById(newId)
                     val savedKeePassContext = savedItem?.let { item ->
@@ -599,10 +617,20 @@ fun AddEditDocumentScreen(
                         } ?: true,
                         keepassContext = savedKeePassContext
                     )
-                    onNavigateBack()
                 }
             } else {
                 {}
+            },
+            onComplete = { result ->
+                isSaving = false
+                if (result.isSuccess) {
+                    cardFaceEditor.clearPendingBytes()
+                    onNavigateBack()
+                } else {
+                    val message = if (result.exceptionOrNull() is AttachmentError.PremiumRequired)
+                        R.string.card_face_bitwarden_premium_required else R.string.card_face_save_failed
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                }
             }
         )
         coroutineScope.launch {
@@ -619,10 +647,7 @@ fun AddEditDocumentScreen(
                 )
             )
         }
-        syncVaultIds.forEach(bitwardenRepository::requestLocalMutationSync)
-        if (!shouldFlushAttachmentDrafts) {
-            onNavigateBack()
-        }
+
     }
     val toggleFavoriteAction: () -> Unit = {
         val updated = !isFavorite
@@ -663,6 +688,24 @@ fun AddEditDocumentScreen(
                     isEditing = documentId != null,
                     onAddTargetClick = { showStorageTargetSheet = true },
                     onRemoveTarget = ::removeSelectedStorageTarget
+                )
+                CardFaceEditSection(
+                    state = cardFaceEditor,
+                    previewData = documentCardFacePreviewData(
+                        title,
+                        DocumentData(
+                            documentType = documentType,
+                            documentNumber = documentNumber,
+                            fullName = listOf(firstName, middleName, lastName).filter(String::isNotBlank)
+                                .joinToString(" ").ifBlank { fullName },
+                            issuedBy = issuedBy,
+                            expiryDate = expiryDate
+                        )
+                    ),
+                    enabled = !isSaving,
+                    imageSelectionAllowed = unsupportedCardFaceTarget == null,
+                    imageSelectionWarning = if (unsupportedCardFaceTarget != null)
+                        stringResource(R.string.card_face_bitwarden_premium_required) else null
                 )
 
                 // Basic Info
@@ -963,7 +1006,9 @@ fun AddEditDocumentScreen(
                 } ?: true,
                 keepassContext = attachmentKeePassContext,
                 pendingDrafts = if (documentId == null) pendingAttachmentDrafts else null,
-                excludedFileNames = KeePassSecureItemPhotoAttachments.managedFileNames(ItemType.DOCUMENT)
+                hideManagedCardFaces = true,
+                excludedFileNames = KeePassSecureItemPhotoAttachments.managedFileNames(ItemType.DOCUMENT) +
+                    listOfNotNull(cardFaceEditor.config?.imageAttachmentName, cardFaceEditor.originalConfig?.imageAttachmentName)
             )
 
             // Notes InfoCard

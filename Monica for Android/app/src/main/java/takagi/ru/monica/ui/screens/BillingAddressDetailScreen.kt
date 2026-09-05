@@ -46,6 +46,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
+import takagi.ru.monica.ui.cardwallet.CardFaceCustomizer
+import takagi.ru.monica.ui.cardwallet.CardFaceDetailHeader
+import takagi.ru.monica.ui.cardwallet.billingAddressCardFacePreviewData
+import takagi.ru.monica.ui.cardwallet.rememberCardFaceBitmap
 import takagi.ru.monica.data.CustomField
 import takagi.ru.monica.data.SecureItem
 import takagi.ru.monica.data.model.BillingAddressData
@@ -69,10 +75,14 @@ fun BillingAddressDetailScreen(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     val allAddresses by viewModel.allBillingAddresses.collectAsState(initial = emptyList())
     var addressItem by remember { mutableStateOf<SecureItem?>(null) }
     var addressData by remember { mutableStateOf<BillingAddressData?>(null) }
     var showDeleteDialog by remember { mutableStateOf(false) }
+    var showCardFaceCustomizer by remember { mutableStateOf(false) }
+    var isSavingCardFace by remember { mutableStateOf(false) }
+    val cardFaceBitmap = rememberCardFaceBitmap(addressItem, addressData?.cardFace?.imageAttachmentName, maxDimension = 1200)
 
     LaunchedEffect(addressId) {
         viewModel.getAddressById(addressId)?.let { item ->
@@ -147,30 +157,13 @@ fun BillingAddressDetailScreen(
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer
-                    )
-                ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Home,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onSecondaryContainer
-                        )
-                        Text(
-                            text = data.formatForDisplay().ifBlank { addressItem?.title.orEmpty() },
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.onSecondaryContainer,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }
-                }
+                CardFaceDetailHeader(
+                    previewData = billingAddressCardFacePreviewData(addressItem?.title.orEmpty(), data),
+                    config = data.cardFace,
+                    bitmap = cardFaceBitmap,
+                    enabled = !isSavingCardFace,
+                    onClick = { showCardFaceCustomizer = true }
+                )
 
                 DetailCard(title = stringResource(R.string.billing_address)) {
                     if (data.fullName.isNotBlank()) {
@@ -229,6 +222,48 @@ fun BillingAddressDetailScreen(
                 Spacer(modifier = Modifier.height(80.dp))
             }
         }
+    }
+
+    if (showCardFaceCustomizer && addressItem != null && addressData != null) {
+        val item = requireNotNull(addressItem)
+        val data = requireNotNull(addressData)
+        CardFaceCustomizer(
+            title = item.title,
+            previewData = billingAddressCardFacePreviewData(item.title, data),
+            initialConfig = data.cardFace,
+            initialBitmap = cardFaceBitmap,
+            isSaving = isSavingCardFace,
+            onDismiss = { showCardFaceCustomizer = false },
+            onApply = { edit ->
+                if (isSavingCardFace) {
+                    edit.imageBytes?.fill(0)
+                } else {
+                    isSavingCardFace = true
+                    scope.launch {
+                        try {
+                            val updated = data.copy(cardFace = edit.config)
+                            viewModel.updateAddress(
+                                id = item.id, title = item.title, addressData = updated,
+                                notes = item.notes, isFavorite = item.isFavorite, imagePaths = item.imagePaths,
+                                categoryId = item.categoryId, mdbxDatabaseId = item.mdbxDatabaseId,
+                                mdbxFolderId = item.mdbxFolderId, replicaGroupId = item.replicaGroupId,
+                                cardFaceImageBytes = edit.imageBytes
+                            ).await()
+                            addressItem = viewModel.getAddressById(item.id)
+                            addressData = updated
+                            showCardFaceCustomizer = false
+                        } catch (error: kotlinx.coroutines.CancellationException) {
+                            throw error
+                        } catch (_: Exception) {
+                            android.widget.Toast.makeText(context, R.string.card_face_save_failed, android.widget.Toast.LENGTH_LONG).show()
+                        } finally {
+                            edit.imageBytes?.fill(0)
+                            isSavingCardFace = false
+                        }
+                    }
+                }
+            }
+        )
     }
 
     if (showDeleteDialog) {

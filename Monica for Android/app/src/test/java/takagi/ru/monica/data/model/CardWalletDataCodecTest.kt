@@ -3,9 +3,81 @@ package takagi.ru.monica.data.model
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class CardWalletDataCodecTest {
+
+    @Test
+    fun bankCardFaceConfigRoundTrips() {
+        val data = BankCardData(
+            cardNumber = "4242424242424242",
+            cardholderName = "Monica User",
+            expiryMonth = "12",
+            expiryYear = "30",
+            cardFace = CardFaceConfig(
+                imageAttachmentName = CardFaceAttachment.fileNameFor("0123456789abcdef"),
+                displayMode = CardFaceDisplayMode.CARD_NUMBER_ONLY,
+                showBrandIcon = false
+            )
+        )
+
+        val encoded = CardWalletDataCodec.encodeBankCardData(data)
+        val decoded = CardWalletDataCodec.parseBankCardData(encoded)
+
+        assertEquals(data, decoded)
+        assertTrue(encoded.contains("cardFace"))
+    }
+
+    @Test
+    fun brandIconPreferenceSurvivesSyncMetadataAndOlderCardFacesKeepTheirDefault() {
+        val face = CardFaceConfig(
+            imageAttachmentName = CardFaceAttachment.fileNameFor("0123456789abcdef"),
+            displayMode = CardFaceDisplayMode.CARD_NUMBER_ONLY,
+            showBrandIcon = false
+        )
+        assertEquals(face, CardWalletDataCodec.parseCardFaceConfig(CardWalletDataCodec.encodeCardFaceConfig(face)))
+        val legacy = """{"imageAttachmentName":"monica_card_face_0123456789abcdef.jpg","displayMode":"ALL"}"""
+        assertTrue(requireNotNull(CardWalletDataCodec.parseCardFaceConfig(legacy)).showBrandIcon)
+    }
+
+    @Test
+    fun legacyBankCardWithoutCardFaceKeepsOriginalLayout() {
+        val legacy = """
+            {
+              "cardNumber": "4242424242424242",
+              "cardholderName": "Monica User",
+              "expiryMonth": "12",
+              "expiryYear": "30"
+            }
+        """.trimIndent()
+
+        val decoded = CardWalletDataCodec.parseBankCardData(legacy)
+
+        assertNotNull(decoded)
+        assertNull(decoded?.cardFace)
+    }
+
+    @Test
+    fun untrustedCardFaceAttachmentNameIsDiscarded() {
+        val raw = """
+            {
+              "cardNumber": "4242424242424242",
+              "cardholderName": "Monica User",
+              "expiryMonth": "12",
+              "expiryYear": "30",
+              "cardFace": {
+                "imageAttachmentName": "../../secret.jpg",
+                "displayMode": "HIDDEN"
+              }
+            }
+        """.trimIndent()
+
+        val decoded = CardWalletDataCodec.parseBankCardData(raw)
+
+        assertNull(decoded?.cardFace)
+    }
 
     @Test
     fun billingAddressDataRoundTrips() {
@@ -27,6 +99,43 @@ class CardWalletDataCodecTest {
         val decoded = CardWalletDataCodec.parseBillingAddressData(encoded)
 
         assertEquals(data, decoded)
+    }
+
+    @Test
+    fun documentAndBillingCardFacesRoundTripAndValidateAttachmentName() {
+        val face = CardFaceConfig(
+            imageAttachmentName = CardFaceAttachment.fileNameFor("fedcba9876543210"),
+            displayMode = CardFaceDisplayMode.HIDDEN,
+            showBrandIcon = false
+        )
+        val document = DocumentData(
+            documentType = DocumentType.PASSPORT,
+            documentNumber = "P1234567",
+            fullName = "Monica User",
+            cardFace = face
+        )
+        val billing = BillingAddressData(
+            fullName = "Monica User",
+            streetAddress = "1 Test Street",
+            cardFace = face
+        )
+
+        assertEquals(document, CardWalletDataCodec.parseDocumentData(CardWalletDataCodec.encodeDocumentData(document)))
+        assertEquals(billing, CardWalletDataCodec.parseBillingAddressData(CardWalletDataCodec.encodeBillingAddressData(billing)))
+
+        val untrustedDocument = """{
+            "documentType":"PASSPORT",
+            "documentNumber":"P1234567",
+            "fullName":"Monica User",
+            "cardFace":{"imageAttachmentName":"../../secret.jpg"}
+        }"""
+        val untrustedBilling = """{
+            "fullName":"Monica User",
+            "streetAddress":"1 Test Street",
+            "cardFace":{"imageAttachmentName":"file:///secret.jpg"}
+        }"""
+        assertEquals(null, CardWalletDataCodec.parseDocumentData(untrustedDocument)?.cardFace)
+        assertEquals(null, CardWalletDataCodec.parseBillingAddressData(untrustedBilling)?.cardFace)
     }
 
     @Test
