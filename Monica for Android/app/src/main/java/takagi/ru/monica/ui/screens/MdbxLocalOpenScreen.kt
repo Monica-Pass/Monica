@@ -29,6 +29,7 @@ fun MdbxLocalOpenScreen(
     viewModel: MdbxViewModel,
     onNavigateBack: () -> Unit
 ) {
+    val strings = rememberScreenStrings()
     val scope = rememberCoroutineScope()
     val operationState by viewModel.operationState.collectAsState()
 
@@ -68,7 +69,7 @@ fun MdbxLocalOpenScreen(
                 keyFileError = null
                 viewModel.readSelectedKeyFile(uri)
                     .onSuccess { keyFile = it }
-                    .onFailure { keyFileError = it.message ?: "无法读取 MDBX 密钥文件" }
+                    .onFailure { keyFileError = it.message ?: strings.get(R.string.mdbx_ui_key_file_read_error) }
             }
         }
     }
@@ -81,7 +82,7 @@ fun MdbxLocalOpenScreen(
                 keyFileError = null
                 viewModel.writeGeneratedKeyFile(uri)
                     .onSuccess { keyFile = it }
-                    .onFailure { keyFileError = it.message ?: "无法生成 MDBX 密钥文件" }
+                    .onFailure { keyFileError = it.message ?: strings.get(R.string.mdbx_ui_key_file_generate_error) }
             }
         }
     }
@@ -103,7 +104,7 @@ fun MdbxLocalOpenScreen(
                 title = { Text(stringResource(R.string.mdbx_open_vault_button)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back))
                     }
                 }
             )
@@ -128,7 +129,7 @@ fun MdbxLocalOpenScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Text(
-                        "选择文件",
+                        strings.get(R.string.import_data_select_file),
                         style = MaterialTheme.typography.titleMedium
                     )
                     OutlinedButton(

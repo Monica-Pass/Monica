@@ -33,6 +33,7 @@ fun MdbxWebDavCreateScreen(
     viewModel: MdbxViewModel,
     onNavigateBack: () -> Unit
 ) {
+    val strings = rememberScreenStrings()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val operationState by viewModel.operationState.collectAsState()
@@ -81,7 +82,7 @@ fun MdbxWebDavCreateScreen(
                 keyFileError = null
                 viewModel.readSelectedKeyFile(uri)
                     .onSuccess { keyFile = it }
-                    .onFailure { keyFileError = it.message ?: "无法读取 MDBX 密钥文件" }
+                    .onFailure { keyFileError = it.message ?: strings.get(R.string.mdbx_ui_key_file_read_error) }
             }
         }
     }
@@ -94,7 +95,7 @@ fun MdbxWebDavCreateScreen(
                 keyFileError = null
                 viewModel.writeGeneratedKeyFile(uri)
                     .onSuccess { keyFile = it }
-                    .onFailure { keyFileError = it.message ?: "无法生成 MDBX 密钥文件" }
+                    .onFailure { keyFileError = it.message ?: strings.get(R.string.mdbx_ui_key_file_generate_error) }
             }
         }
     }
@@ -139,7 +140,7 @@ fun MdbxWebDavCreateScreen(
                 title = { Text(stringResource(R.string.mdbx_create_vault_title)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back))
                     }
                 }
             )
@@ -164,7 +165,7 @@ fun MdbxWebDavCreateScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Text(
-                        "WebDAV 连接",
+                        strings.get(R.string.mdbx_ui_webdav_connection),
                         style = MaterialTheme.typography.titleMedium
                     )
                     MdbxWebDavConnectionSection(
@@ -305,7 +306,7 @@ fun MdbxWebDavCreateScreen(
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(stringResource(R.string.mdbx_creating_vault))
                 } else {
-                    Text("创建远程保险库")
+                    Text(strings.get(R.string.mdbx_ui_remote_create_vault))
                 }
             }
 

@@ -1,5 +1,7 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.R
+import takagi.ru.monica.utils.StringResolver
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -85,6 +87,7 @@ internal fun MdbxHealthDetailPage(
     onStartAutomaticRepair: (() -> Unit)? = null,
     repairInProgress: Boolean = false
 ) {
+    val strings = rememberScreenStrings()
     var showPassedChecks by rememberSaveable(database.id) {
         androidx.compose.runtime.mutableStateOf(false)
     }
@@ -97,8 +100,8 @@ internal fun MdbxHealthDetailPage(
             item {
                 MdbxDetailHeroCard(
                     icon = Icons.Default.Security,
-                    title = "正在检查数据库",
-                    subtitle = "${database.name} 的完整性与结构状态正在读取",
+                    title = strings.get(R.string.mdbx_ui_health_checking_title),
+                    subtitle = strings.get(R.string.mdbx_ui_health_checking_description, database.name),
                     warning = false
                 )
             }
@@ -110,12 +113,12 @@ internal fun MdbxHealthDetailPage(
                 ) {
                     Icon(Icons.Default.Sync, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("重新检查")
+                    Text(strings.get(R.string.mdbx_ui_recheck))
                 }
             }
         } else {
-            val checks = diagnostics.healthCheckPresentations()
-            val guidance = diagnostics.healthGuidance()
+            val checks = diagnostics.healthCheckPresentations(strings)
+            val guidance = diagnostics.healthGuidance(strings)
             val issueCount = diagnostics.healthIssueCount
             val noticeCount = diagnostics.healthNoticeCount
             val passedCheckCount = checks.count { !it.hasIssue }
@@ -132,14 +135,14 @@ internal fun MdbxHealthDetailPage(
                         else -> Icons.Default.CheckCircle
                     },
                     title = when {
-                        issueCount > 0 -> "$issueCount 个问题需要处理"
-                        noticeCount > 0 -> "$noticeCount 项状态需要关注"
-                        else -> "数据库健康正常"
+                        issueCount > 0 -> strings.get(R.string.mdbx_ui_health_action_count, issueCount)
+                        noticeCount > 0 -> strings.get(R.string.mdbx_ui_health_notice_count, noticeCount)
+                        else -> strings.get(R.string.mdbx_ui_health_ok_title)
                     },
                     subtitle = when {
-                        issueCount > 0 -> "下方提供了 ${database.name} 各类异常的影响和推荐处理步骤"
-                        noticeCount > 0 -> "核心数据校验通过，完成下方提示后可再次检查"
-                        else -> "${database.name} 的文件、完整性和引用关系均通过检查"
+                        issueCount > 0 -> strings.get(R.string.mdbx_ui_health_issues_description, database.name)
+                        noticeCount > 0 -> strings.get(R.string.mdbx_ui_health_notices_description)
+                        else -> strings.get(R.string.mdbx_ui_health_ok_description, database.name)
                     },
                     warning = issueCount > 0
                 )
@@ -160,7 +163,7 @@ internal fun MdbxHealthDetailPage(
                             Icon(Icons.Default.Security, contentDescription = null, modifier = Modifier.size(19.dp))
                         }
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text(if (repairInProgress) "正在准备安全处理" else "一键处理可修复异常")
+                        Text(if (repairInProgress) strings.get(R.string.mdbx_ui_health_preparing_repair) else strings.get(R.string.mdbx_ui_health_repair_action))
                     }
                 }
             }
@@ -175,7 +178,7 @@ internal fun MdbxHealthDetailPage(
                     ) {
                         Icon(Icons.Default.Sync, contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text("重新检查")
+                        Text(strings.get(R.string.mdbx_ui_recheck))
                     }
                     FilledTonalButton(
                         onClick = onOpenMaintenance,
@@ -183,15 +186,15 @@ internal fun MdbxHealthDetailPage(
                     ) {
                         Icon(Icons.Default.ReportProblem, contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text("诊断维护")
+                        Text(strings.get(R.string.mdbx_ui_maintenance))
                     }
                 }
             }
             if (guidance.isNotEmpty()) {
                 item {
                     MdbxDetailSectionLabel(
-                        "建议处理",
-                        "按异常类型列出影响和推荐步骤，底层诊断原文默认收起"
+                        strings.get(R.string.mdbx_ui_health_recommended_actions),
+                        strings.get(R.string.mdbx_ui_health_guidance_description)
                     )
                 }
                 guidance.forEach { item ->
@@ -209,11 +212,11 @@ internal fun MdbxHealthDetailPage(
             }
             item {
                 MdbxDetailSectionLabel(
-                    "基础检查",
+                    strings.get(R.string.mdbx_ui_health_basic_checks),
                     if (issueCount > 0 && !showPassedChecks) {
-                        "优先显示异常项目，$passedCheckCount 项正常检查已收起"
+                        strings.get(R.string.mdbx_ui_health_hidden_checks, passedCheckCount)
                     } else {
-                        "处理完成后可在这里核对各项数据库状态"
+                        strings.get(R.string.mdbx_ui_health_verify_after_repair)
                     }
                 )
             }
@@ -234,19 +237,19 @@ internal fun MdbxHealthDetailPage(
                             modifier = Modifier.size(18.dp)
                         )
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text(if (showPassedChecks) "收起正常检查" else "显示 $passedCheckCount 项正常检查")
+                        Text(if (showPassedChecks) strings.get(R.string.mdbx_ui_health_collapse_passed) else strings.get(R.string.mdbx_ui_health_expand_passed, passedCheckCount))
                     }
                 }
             }
             item {
                 MdbxDetailInformationCard(
-                    title = "数据库信息",
+                    title = strings.get(R.string.mdbx_ui_database_information),
                     rows = listOf(
-                        MdbxDetailInformationRow("同步状态", diagnostics.lastSyncStatus),
-                        MdbxDetailInformationRow("格式版本", diagnostics.formatVersion ?: "未提供"),
-                        MdbxDetailInformationRow("文件体积", formatBytes(diagnostics.fileSizeBytes)),
-                        MdbxDetailInformationRow("当前客户端", diagnostics.currentDeviceId ?: "未提供"),
-                        MdbxDetailInformationRow("文件位置", diagnostics.filePath ?: "未提供")
+                        MdbxDetailInformationRow(strings.get(R.string.keepass_remote_sync_status), diagnostics.lastSyncStatus),
+                        MdbxDetailInformationRow(strings.get(R.string.mdbx_ui_format_version), diagnostics.formatVersion ?: strings.get(R.string.mdbx_ui_not_provided)),
+                        MdbxDetailInformationRow(strings.get(R.string.mdbx_ui_file_size), formatBytes(diagnostics.fileSizeBytes)),
+                        MdbxDetailInformationRow(strings.get(R.string.mdbx_ui_current_client), diagnostics.currentDeviceId ?: strings.get(R.string.mdbx_ui_not_provided)),
+                        MdbxDetailInformationRow(strings.get(R.string.mdbx_ui_file_location), diagnostics.filePath ?: strings.get(R.string.mdbx_ui_not_provided))
                     )
                 )
             }
@@ -260,6 +263,7 @@ internal fun MdbxAttachmentDetailPage(
     diagnostics: MdbxVaultDiagnostics?,
     onRefreshDiagnostics: () -> Unit
 ) {
+    val strings = rememberScreenStrings()
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 32.dp),
@@ -269,8 +273,8 @@ internal fun MdbxAttachmentDetailPage(
             item {
                 MdbxDetailHeroCard(
                     icon = Icons.Default.Storage,
-                    title = "正在读取附件状态",
-                    subtitle = "${database.name} 的附件索引与存储信息正在统计",
+                    title = strings.get(R.string.mdbx_ui_attachments_loading),
+                    subtitle = strings.get(R.string.mdbx_ui_attachments_loading_description, database.name),
                     warning = false
                 )
             }
@@ -281,14 +285,14 @@ internal fun MdbxAttachmentDetailPage(
                 MdbxDetailHeroCard(
                     icon = if (mismatchCount > 0) Icons.Default.Warning else Icons.Default.Storage,
                     title = when {
-                        mismatchCount > 0 -> "$mismatchCount 个附件分片异常"
-                        diagnostics.attachmentCount == 0 -> "当前没有附件"
-                        else -> "附件存储正常"
+                        mismatchCount > 0 -> strings.get(R.string.mdbx_ui_attachment_chunk_issue_count, mismatchCount)
+                        diagnostics.attachmentCount == 0 -> strings.get(R.string.mdbx_ui_attachments_none)
+                        else -> strings.get(R.string.mdbx_ui_attachments_healthy)
                     },
                     subtitle = when {
-                        mismatchCount > 0 -> "附件内容与分片索引存在差异，建议进入诊断维护后重新检查"
-                        diagnostics.attachmentCount == 0 -> "${database.name} 尚未保存任何附件内容"
-                        else -> "${database.name} 共保存 ${diagnostics.attachmentCount} 个附件"
+                        mismatchCount > 0 -> strings.get(R.string.mdbx_ui_attachments_issue_description)
+                        diagnostics.attachmentCount == 0 -> strings.get(R.string.mdbx_ui_attachments_empty_description, database.name)
+                        else -> strings.get(R.string.mdbx_ui_attachments_total, database.name, diagnostics.attachmentCount)
                     },
                     warning = mismatchCount > 0
                 )
@@ -300,10 +304,10 @@ internal fun MdbxAttachmentDetailPage(
                 ) {
                     Icon(Icons.Default.Sync, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("重新检查附件")
+                    Text(strings.get(R.string.mdbx_ui_attachments_recheck))
                 }
             }
-            item { MdbxDetailSectionLabel("存储概览", "区分数据库记录、外部引用和实际占用空间") }
+            item { MdbxDetailSectionLabel(strings.get(R.string.mdbx_ui_storage_overview), strings.get(R.string.mdbx_ui_storage_overview_description)) }
             item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -312,13 +316,13 @@ internal fun MdbxAttachmentDetailPage(
                     MdbxDetailMetricCard(
                         modifier = Modifier.weight(1f),
                         icon = Icons.Default.Storage,
-                        label = "附件文件",
+                        label = strings.get(R.string.mdbx_ui_attachment_files),
                         value = diagnostics.attachmentCount.toString()
                     )
                     MdbxDetailMetricCard(
                         modifier = Modifier.weight(1f),
                         icon = Icons.Default.Folder,
-                        label = "外部引用",
+                        label = strings.get(R.string.mdbx_ui_external_references),
                         value = diagnostics.externalAttachmentCount.toString()
                     )
                 }
@@ -331,13 +335,13 @@ internal fun MdbxAttachmentDetailPage(
                     MdbxDetailMetricCard(
                         modifier = Modifier.weight(1f),
                         icon = Icons.Default.Info,
-                        label = "原始体积",
+                        label = strings.get(R.string.mdbx_ui_original_size),
                         value = formatBytes(diagnostics.originalAttachmentBytes)
                     )
                     MdbxDetailMetricCard(
                         modifier = Modifier.weight(1f),
                         icon = Icons.Default.Storage,
-                        label = "实际占用",
+                        label = strings.get(R.string.mdbx_ui_storage_used),
                         value = formatBytes(diagnostics.storedAttachmentBytes)
                     )
                 }
@@ -350,23 +354,23 @@ internal fun MdbxAttachmentDetailPage(
             }
             item {
                 MdbxDetailInformationCard(
-                    title = "存储说明",
+                    title = strings.get(R.string.mdbx_ui_storage_details),
                     rows = listOf(
                         MdbxDetailInformationRow(
-                            "数据库附件",
-                            "附件元数据和受保护内容由当前 MDBX 数据库管理"
+                            strings.get(R.string.mdbx_ui_database_attachments),
+                            strings.get(R.string.mdbx_ui_database_attachments_description)
                         ),
                         MdbxDetailInformationRow(
-                            "外部引用",
+                            strings.get(R.string.mdbx_ui_external_references),
                             if (diagnostics.externalAttachmentCount > 0) {
-                                "${diagnostics.externalAttachmentCount} 个附件通过外部内容引用保存"
+                                strings.get(R.string.mdbx_ui_external_attachment_count, diagnostics.externalAttachmentCount)
                             } else {
-                                "没有使用外部内容引用"
+                                strings.get(R.string.mdbx_ui_external_references_none)
                             }
                         ),
                         MdbxDetailInformationRow(
-                            "分片状态",
-                            if (mismatchCount > 0) "$mismatchCount 个分片需要检查" else "索引与附件内容一致"
+                            strings.get(R.string.mdbx_ui_chunk_status),
+                            if (mismatchCount > 0) strings.get(R.string.mdbx_ui_chunks_need_check, mismatchCount) else strings.get(R.string.mdbx_ui_attachment_index_consistent)
                         )
                     )
                 )
@@ -375,76 +379,76 @@ internal fun MdbxAttachmentDetailPage(
     }
 }
 
-private fun MdbxVaultDiagnostics.healthCheckPresentations(): List<MdbxHealthCheckPresentation> {
+private fun MdbxVaultDiagnostics.healthCheckPresentations(strings: StringResolver): List<MdbxHealthCheckPresentation> {
     val checks = listOf(
         MdbxHealthCheckPresentation(
-            title = if (isReadable) "数据库文件可读取" else "数据库文件无法读取",
+            title = if (isReadable) strings.get(R.string.mdbx_ui_file_readable) else strings.get(R.string.mdbx_ui_file_unreadable),
             description = if (isReadable) {
-                "Monica 可以打开并读取当前数据库文件"
+                strings.get(R.string.mdbx_ui_file_readable_description)
             } else {
-                unavailableReason ?: "当前本地副本不可用，请检查文件位置与访问权限"
+                unavailableReason ?: strings.get(R.string.mdbx_ui_file_unavailable_description)
             },
-            value = if (isReadable) "正常" else "需要处理",
+            value = if (isReadable) strings.get(R.string.mdbx_health_ok_short) else strings.get(R.string.security_score_needs_attention),
             icon = if (isReadable) Icons.Default.CheckCircle else Icons.Default.CloudOff,
             hasIssue = !isReadable
         ),
         MdbxHealthCheckPresentation(
-            title = if (integrityOk) "完整性检查通过" else "完整性检查未通过",
+            title = if (integrityOk) strings.get(R.string.mdbx_ui_integrity_passed) else strings.get(R.string.mdbx_ui_integrity_failed),
             description = when {
                 integrityOk && healthNoticeCount > 0 -> {
-                    "核心数据校验通过，另有 $healthNoticeCount 项状态提示"
+                    strings.get(R.string.mdbx_ui_integrity_notices, healthNoticeCount)
                 }
-                integrityOk -> "数据库结构与校验信息一致"
+                integrityOk -> strings.get(R.string.mdbx_ui_integrity_consistent)
                 healthIssues.count { it.severity.requiresAction } > 0 -> {
-                    "检测到 ${healthIssues.count { it.severity.requiresAction }} 项完整性异常，请按上方建议处理"
+                    strings.get(R.string.mdbx_ui_integrity_issues, healthIssues.count { it.severity.requiresAction })
                 }
-                else -> "数据库返回了完整性异常，请查看上方处理建议"
+                else -> strings.get(R.string.mdbx_ui_integrity_issues_description)
             },
-            value = if (integrityOk) "正常" else "需要处理",
+            value = if (integrityOk) strings.get(R.string.mdbx_health_ok_short) else strings.get(R.string.security_score_needs_attention),
             icon = Icons.Default.Security,
             hasIssue = !integrityOk
         ),
         MdbxHealthCheckPresentation(
-            title = "提交父引用",
+            title = strings.get(R.string.mdbx_ui_parent_commit_references),
             description = if (danglingParentCount > 0) {
-                "发现 $danglingParentCount 个提交引用了不存在的父提交，可能影响历史关系"
+                strings.get(R.string.mdbx_ui_parent_commit_missing, danglingParentCount)
             } else {
-                "所有提交都能找到对应的父提交"
+                strings.get(R.string.mdbx_ui_parent_commit_valid)
             },
-            value = if (danglingParentCount > 0) "$danglingParentCount 个异常" else "正常",
+            value = if (danglingParentCount > 0) strings.get(R.string.mdbx_ui_issue_count, danglingParentCount) else strings.get(R.string.mdbx_health_ok_short),
             icon = Icons.Default.History,
             hasIssue = danglingParentCount > 0
         ),
         MdbxHealthCheckPresentation(
-            title = "分支头引用",
+            title = strings.get(R.string.mdbx_ui_branch_head_references),
             description = if (danglingBranchHeadCount > 0) {
-                "发现 $danglingBranchHeadCount 个分支指向不存在的提交"
+                strings.get(R.string.mdbx_ui_branch_head_missing, danglingBranchHeadCount)
             } else {
-                "所有分支都指向有效提交"
+                strings.get(R.string.mdbx_ui_branch_head_valid)
             },
-            value = if (danglingBranchHeadCount > 0) "$danglingBranchHeadCount 个异常" else "正常",
+            value = if (danglingBranchHeadCount > 0) strings.get(R.string.mdbx_ui_issue_count, danglingBranchHeadCount) else strings.get(R.string.mdbx_health_ok_short),
             icon = Icons.AutoMirrored.Filled.CallMerge,
             hasIssue = danglingBranchHeadCount > 0
         ),
         MdbxHealthCheckPresentation(
-            title = "设备同步位置",
+            title = strings.get(R.string.mdbx_ui_device_sync_positions),
             description = if (danglingDeviceHeadCount > 0) {
-                "发现 $danglingDeviceHeadCount 个设备的提交位置缺失、落后或归属异常"
+                strings.get(R.string.mdbx_ui_device_head_invalid, danglingDeviceHeadCount)
             } else {
-                "所有设备状态都指向有效提交"
+                strings.get(R.string.mdbx_ui_device_head_valid)
             },
-            value = if (danglingDeviceHeadCount > 0) "$danglingDeviceHeadCount 个异常" else "正常",
+            value = if (danglingDeviceHeadCount > 0) strings.get(R.string.mdbx_ui_issue_count, danglingDeviceHeadCount) else strings.get(R.string.mdbx_health_ok_short),
             icon = Icons.Default.Storage,
             hasIssue = danglingDeviceHeadCount > 0
         ),
         MdbxHealthCheckPresentation(
-            title = "附件分片",
+            title = strings.get(R.string.mdbx_ui_attachment_chunks),
             description = if (attachmentChunkMismatchCount > 0) {
-                "发现 $attachmentChunkMismatchCount 个附件的分片索引与内容不一致"
+                strings.get(R.string.mdbx_ui_attachment_chunks_mismatch, attachmentChunkMismatchCount)
             } else {
-                "附件分片索引与内容一致"
+                strings.get(R.string.mdbx_ui_attachment_chunks_valid)
             },
-            value = if (attachmentChunkMismatchCount > 0) "$attachmentChunkMismatchCount 个异常" else "正常",
+            value = if (attachmentChunkMismatchCount > 0) strings.get(R.string.mdbx_ui_issue_count, attachmentChunkMismatchCount) else strings.get(R.string.mdbx_health_ok_short),
             icon = Icons.Default.Storage,
             hasIssue = attachmentChunkMismatchCount > 0
         )
@@ -580,6 +584,7 @@ private fun MdbxHealthGuidanceCard(
     onOpenCommitHistory: () -> Unit,
     onOpenAttachments: () -> Unit
 ) {
+    val strings = rememberScreenStrings()
     var detailsExpanded by rememberSaveable(guidance.id) { androidx.compose.runtime.mutableStateOf(false) }
     val requiresAction = guidance.severity.requiresAction
     val accentColor = when (guidance.severity) {
@@ -642,10 +647,10 @@ private fun MdbxHealthGuidanceCard(
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             when (guidance.severity) {
-                                MdbxHealthSeverity.CRITICAL -> "严重"
-                                MdbxHealthSeverity.ERROR -> "需要处理"
-                                MdbxHealthSeverity.WARNING -> "需要关注"
-                                MdbxHealthSeverity.INFO -> "提示"
+                                MdbxHealthSeverity.CRITICAL -> strings.get(R.string.mdbx_ui_severity_critical)
+                                MdbxHealthSeverity.ERROR -> strings.get(R.string.security_score_needs_attention)
+                                MdbxHealthSeverity.WARNING -> strings.get(R.string.mdbx_ui_severity_warning)
+                                MdbxHealthSeverity.INFO -> strings.get(R.string.mdbx_ui_severity_info)
                             },
                             style = MaterialTheme.typography.labelMedium,
                             color = accentColor,
@@ -670,7 +675,7 @@ private fun MdbxHealthGuidanceCard(
                     verticalArrangement = Arrangement.spacedBy(3.dp)
                 ) {
                     Text(
-                        "可能影响",
+                        strings.get(R.string.mdbx_ui_potential_impact),
                         style = MaterialTheme.typography.labelMedium,
                         color = accentColor,
                         fontWeight = FontWeight.SemiBold
@@ -685,7 +690,7 @@ private fun MdbxHealthGuidanceCard(
 
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
-                    "建议处理",
+                    strings.get(R.string.mdbx_ui_health_recommended_actions),
                     style = MaterialTheme.typography.labelLarge,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -721,7 +726,7 @@ private fun MdbxHealthGuidanceCard(
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     HorizontalDivider()
                     Text(
-                        "技术详情",
+                        strings.get(R.string.mdbx_ui_technical_details),
                         style = MaterialTheme.typography.labelLarge,
                         fontWeight = FontWeight.SemiBold
                     )
@@ -735,7 +740,7 @@ private fun MdbxHealthGuidanceCard(
                     }
                     if (guidance.technicalDetails.size > 6) {
                         Text(
-                            "另有 ${guidance.technicalDetails.size - 6} 项同类诊断",
+                            strings.get(R.string.mdbx_ui_more_diagnostics, guidance.technicalDetails.size - 6),
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -753,7 +758,7 @@ private fun MdbxHealthGuidanceCard(
                     modifier = Modifier.weight(1f).heightIn(min = 48.dp)
                 ) {
                     Text(
-                        if (detailsExpanded) "收起详情" else "技术详情",
+                        if (detailsExpanded) strings.get(R.string.mdbx_ui_collapse_details) else strings.get(R.string.mdbx_ui_technical_details),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -782,11 +787,11 @@ private fun MdbxHealthGuidanceCard(
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
                         when (guidance.action) {
-                            MdbxHealthGuidanceAction.RECHECK -> "重新检查"
-                            MdbxHealthGuidanceAction.MAINTENANCE -> "诊断维护"
-                            MdbxHealthGuidanceAction.SNAPSHOTS -> "查看快照"
-                            MdbxHealthGuidanceAction.COMMIT_HISTORY -> "查看历史"
-                            MdbxHealthGuidanceAction.ATTACHMENTS -> "查看附件"
+                            MdbxHealthGuidanceAction.RECHECK -> strings.get(R.string.mdbx_ui_recheck)
+                            MdbxHealthGuidanceAction.MAINTENANCE -> strings.get(R.string.mdbx_ui_maintenance)
+                            MdbxHealthGuidanceAction.SNAPSHOTS -> strings.get(R.string.mdbx_ui_view_snapshots)
+                            MdbxHealthGuidanceAction.COMMIT_HISTORY -> strings.get(R.string.mdbx_ui_view_history)
+                            MdbxHealthGuidanceAction.ATTACHMENTS -> strings.get(R.string.mdbx_ui_view_attachments)
                         },
                         fontWeight = if (requiresAction) FontWeight.SemiBold else FontWeight.Medium,
                         maxLines = 1,
@@ -806,18 +811,19 @@ internal fun MdbxHealthRepairDialog(
     onKeepContent: () -> Unit,
     onDeleteObject: (MdbxHealthRepairItem) -> Unit
 ) {
+    val strings = rememberScreenStrings()
     when (state) {
         MdbxViewModel.MdbxHealthRepairState.Hidden -> Unit
         is MdbxViewModel.MdbxHealthRepairState.Planning -> {
             MdbxHealthRepairProgressDialog(
-                title = "正在分析可修复项",
-                message = "正在为 ${state.databaseName} 生成事务化处理计划，不会在分析阶段写入数据库。"
+                title = strings.get(R.string.mdbx_ui_repair_analyzing),
+                message = strings.get(R.string.mdbx_ui_repair_analyzing_description, state.databaseName)
             )
         }
         is MdbxViewModel.MdbxHealthRepairState.Applying -> {
             MdbxHealthRepairProgressDialog(
-                title = "正在安全处理",
-                message = "将处理 ${state.itemCount} 项异常。MDBX2 会先创建恢复快照，再在单个事务中完成写入和复查。"
+                title = strings.get(R.string.mdbx_ui_repair_processing),
+                message = strings.get(R.string.mdbx_ui_repair_processing_description, state.itemCount)
             )
         }
         is MdbxViewModel.MdbxHealthRepairState.Reviewing -> {
@@ -825,7 +831,7 @@ internal fun MdbxHealthRepairDialog(
             AlertDialog(
                 onDismissRequest = onCancel,
                 icon = { Icon(Icons.Default.ReportProblem, contentDescription = null) },
-                title = { Text("选择冲突处理方式") },
+                title = { Text(strings.get(R.string.mdbx_ui_repair_choose_resolution)) },
                 text = {
                     Column(
                         modifier = Modifier
@@ -835,8 +841,12 @@ internal fun MdbxHealthRepairDialog(
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         Text(
-                            "冲突 ${state.currentIndex + 1}/${state.plan.conflictItems.size} · " +
-                                "另有 ${state.plan.automaticItems.size} 项会自动安全处理",
+                            strings.get(
+                                R.string.mdbx_ui_repair_conflict_position,
+                                state.currentIndex + 1,
+                                state.plan.conflictItems.size,
+                                state.plan.automaticItems.size
+                            ),
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -850,12 +860,12 @@ internal fun MdbxHealthRepairDialog(
                                 verticalArrangement = Arrangement.spacedBy(5.dp)
                             ) {
                                 Text(
-                                    "${item.displayObjectType()} · ${item.objectId.take(8)}",
+                                    "${item.displayObjectType(strings)} · ${item.objectId.take(8)}",
                                     style = MaterialTheme.typography.titleSmall,
                                     fontWeight = FontWeight.SemiBold
                                 )
                                 Text(
-                                    item.conflictExplanation(),
+                                    item.conflictExplanation(strings),
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -865,7 +875,7 @@ internal fun MdbxHealthRepairDialog(
                             onClick = onKeepContent,
                             modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp)
                         ) {
-                            Text("保留当前内容并清除异常删除标记")
+                            Text(strings.get(R.string.mdbx_ui_repair_keep_content))
                         }
                         Button(
                             onClick = { onDeleteObject(item) },
@@ -875,10 +885,10 @@ internal fun MdbxHealthRepairDialog(
                                 contentColor = MaterialTheme.colorScheme.onError
                             )
                         ) {
-                            Text("删除冲突项（需要验证身份）")
+                            Text(strings.get(R.string.mdbx_ui_repair_delete_content))
                         }
                         Text(
-                            "取消会终止整次处理，数据库不会产生任何写入。",
+                            strings.get(R.string.mdbx_ui_repair_cancel_description),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -886,7 +896,7 @@ internal fun MdbxHealthRepairDialog(
                 },
                 confirmButton = {},
                 dismissButton = {
-                    TextButton(onClick = onCancel) { Text("取消整个处理") }
+                    TextButton(onClick = onCancel) { Text(strings.get(R.string.mdbx_ui_repair_cancel_all)) }
                 }
             )
         }
@@ -894,7 +904,7 @@ internal fun MdbxHealthRepairDialog(
             AlertDialog(
                 onDismissRequest = onCancel,
                 icon = { Icon(Icons.Default.Warning, contentDescription = null) },
-                title = { Text("无法安全自动处理") },
+                title = { Text(strings.get(R.string.mdbx_ui_repair_blocked)) },
                 text = {
                     Column(
                         modifier = Modifier
@@ -903,7 +913,7 @@ internal fun MdbxHealthRepairDialog(
                             .verticalScroll(rememberScrollState()),
                         verticalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
-                        Text("检测到需要人工判断或外部恢复的严重异常，Monica 没有对这些内容进行写入。")
+                        Text(strings.get(R.string.mdbx_ui_repair_blocked_description))
                         state.blockers.forEach { blocker ->
                             Surface(
                                 modifier = Modifier.fillMaxWidth(),
@@ -922,17 +932,17 @@ internal fun MdbxHealthRepairDialog(
                         }
                     }
                 },
-                confirmButton = { TextButton(onClick = onCancel) { Text("知道了") } }
+                confirmButton = { TextButton(onClick = onCancel) { Text(strings.get(R.string.mdbx_ui_acknowledge)) } }
             )
         }
         is MdbxViewModel.MdbxHealthRepairState.Failed -> {
             AlertDialog(
                 onDismissRequest = onCancel,
                 icon = { Icon(Icons.Default.Warning, contentDescription = null) },
-                title = { Text("处理未完成") },
+                title = { Text(strings.get(R.string.mdbx_ui_repair_incomplete)) },
                 text = { Text(state.message) },
-                confirmButton = { TextButton(onClick = onRetry) { Text("重新生成计划") } },
-                dismissButton = { TextButton(onClick = onCancel) { Text("关闭") } }
+                confirmButton = { TextButton(onClick = onRetry) { Text(strings.get(R.string.mdbx_ui_repair_replan)) } },
+                dismissButton = { TextButton(onClick = onCancel) { Text(strings.get(R.string.close)) } }
             )
         }
     }
@@ -952,20 +962,20 @@ private fun MdbxHealthRepairProgressDialog(
     )
 }
 
-private fun MdbxHealthRepairItem.displayObjectType(): String = when (objectType.lowercase()) {
-    "entry" -> "密码或安全条目"
-    "project" -> "分类文件夹"
-    "attachment" -> "附件"
-    else -> "数据库对象"
+private fun MdbxHealthRepairItem.displayObjectType(strings: StringResolver): String = when (objectType.lowercase()) {
+    "entry" -> strings.get(R.string.mdbx_ui_object_secure_entry)
+    "project" -> strings.get(R.string.category_selection_menu_folders)
+    "attachment" -> strings.get(R.string.attachments)
+    else -> strings.get(R.string.mdbx_ui_object_database)
 }
 
-private fun MdbxHealthRepairItem.conflictExplanation(): String = when (kind) {
+private fun MdbxHealthRepairItem.conflictExplanation(strings: StringResolver): String = when (kind) {
     MdbxHealthRepairItemKind.ACTIVE_OBJECT_TOMBSTONE_CONFLICT ->
-        "当前内容仍然存在，但数据库同时保留了删除标记。保留会清除异常删除标记；删除会移除当前内容并留下一个规范删除记录。"
+        strings.get(R.string.mdbx_ui_repair_stale_tombstone)
     MdbxHealthRepairItemKind.MISSING_TOMBSTONE ->
-        "对象已经删除但缺少同步删除标记，该项目通常可以自动补全。"
+        strings.get(R.string.mdbx_ui_repair_missing_tombstone)
     MdbxHealthRepairItemKind.DUPLICATE_TOMBSTONES ->
-        "同一对象存在多个删除标记，该项目通常可以自动归一为一个。"
+        strings.get(R.string.mdbx_ui_repair_duplicate_tombstone)
 }
 
 @Composable
@@ -1005,6 +1015,7 @@ private fun MdbxAttachmentIntegrityCard(
     mismatchCount: Int,
     attachmentCount: Int
 ) {
+    val strings = rememberScreenStrings()
     val warning = mismatchCount > 0
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -1029,17 +1040,17 @@ private fun MdbxAttachmentIntegrityCard(
             )
             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 Text(
-                    if (warning) "附件完整性需要处理" else "附件完整性正常",
+                    if (warning) strings.get(R.string.mdbx_ui_attachment_integrity_action) else strings.get(R.string.mdbx_ui_attachment_integrity_ok),
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.SemiBold
                 )
                 Text(
                     if (warning) {
-                        "$mismatchCount 个分片异常，受影响内容需要通过诊断工具进一步核对"
+                        strings.get(R.string.mdbx_ui_attachment_integrity_issues, mismatchCount)
                     } else if (attachmentCount == 0) {
-                        "数据库当前没有附件，无需执行分片检查"
+                        strings.get(R.string.mdbx_ui_attachment_integrity_empty)
                     } else {
-                        "$attachmentCount 个附件的分片索引与内容一致"
+                        strings.get(R.string.mdbx_ui_attachment_integrity_valid, attachmentCount)
                     },
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant

@@ -1,5 +1,7 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.R
+import takagi.ru.monica.utils.StringResolver
 import java.util.Locale
 import takagi.ru.monica.repository.MdbxCommitChangeSummary
 import takagi.ru.monica.repository.MdbxDeltaSummary
@@ -26,13 +28,13 @@ internal data class MdbxCommitActionCounts(
     val total: Int
         get() = created + updated + moved + copied + deleted + restored
 
-    fun summary(): String = buildList {
-        if (created > 0) add("新增 $created")
-        if (updated > 0) add("修改 $updated")
-        if (moved > 0) add("移动 $moved")
-        if (copied > 0) add("复制 $copied")
-        if (deleted > 0) add("删除 $deleted")
-        if (restored > 0) add("恢复 $restored")
+    fun summary(strings: StringResolver): String = buildList {
+        if (created > 0) add(strings.get(R.string.mdbx_ui_history_added_count, created))
+        if (updated > 0) add(strings.get(R.string.mdbx_ui_history_updated_count, updated))
+        if (moved > 0) add(strings.get(R.string.mdbx_ui_history_moved_count, moved))
+        if (copied > 0) add(strings.get(R.string.mdbx_ui_history_copied_count, copied))
+        if (deleted > 0) add(strings.get(R.string.mdbx_ui_history_deleted_count, deleted))
+        if (restored > 0) add(strings.get(R.string.mdbx_ui_history_restored_count, restored))
     }.joinToString(" · ")
 }
 
@@ -47,7 +49,7 @@ internal data class MdbxCommitPresentation(
     val canRevert: Boolean
 )
 
-internal fun MdbxDeltaSummary.toHistoryPresentation(): MdbxCommitPresentation {
+internal fun MdbxDeltaSummary.toHistoryPresentation(strings: StringResolver): MdbxCommitPresentation {
     val distinctChanges = changes.distinctBy { it.objectType to it.objectId }
     val actionCounts = distinctChanges.toActionCounts()
     val objectCount = distinctChanges.size.takeIf { it > 0 } ?: changedObjectCountFallback()
@@ -62,14 +64,14 @@ internal fun MdbxDeltaSummary.toHistoryPresentation(): MdbxCommitPresentation {
         actionCounts.created > 0 && actionCounts.created == actionCounts.total -> MdbxHistoryAction.CREATED
         else -> MdbxHistoryAction.UPDATED
     }
-    val title = operationTitle(primaryAction, objectCount, distinctChanges)
-    val systemDescription = if (systemCommit) systemCommitDescription() else null
+    val title = operationTitle(strings, primaryAction, objectCount, distinctChanges)
+    val systemDescription = if (systemCommit) systemCommitDescription(strings) else null
     val supportingText = when {
         systemDescription != null -> systemDescription
-        actionCounts.summary().isNotBlank() -> actionCounts.summary()
+        actionCounts.summary(strings).isNotBlank() -> actionCounts.summary(strings)
         message?.isNotBlank() == true -> message.orEmpty()
         changedFieldSummary.isNotBlank() -> changedFieldSummary
-        else -> "数据库内容已更新"
+        else -> strings.get(R.string.mdbx_ui_history_content_updated)
     }
     val canRevert = !systemCommit &&
         distinctChanges.isNotEmpty() &&
@@ -98,30 +100,30 @@ internal fun MdbxCommitChangeSummary.historyAction(): MdbxHistoryAction =
         else -> MdbxHistoryAction.UPDATED
     }
 
-internal fun mdbxHistoryObjectTypeLabel(objectType: String, contentType: String? = null): String {
+internal fun mdbxHistoryObjectTypeLabel(strings: StringResolver, objectType: String, contentType: String? = null): String {
     val normalizedContentType = contentType?.trim()?.lowercase(Locale.ROOT)
     return when (normalizedContentType) {
-        "login", "password" -> "密码"
-        "note" -> "笔记"
-        "totp" -> "验证器"
-        "card" -> "卡片"
-        "document-ref", "document" -> "证件"
-        "billing-address" -> "地址"
-        "payment-account" -> "支付账户"
-        "passkey" -> "通行密钥"
-        "steam-mafile" -> "Steam 账号"
+        "login", "password" -> strings.get(R.string.password)
+        "note" -> strings.get(R.string.note_detail_title)
+        "totp" -> strings.get(R.string.item_type_authenticator)
+        "card" -> strings.get(R.string.timeline_item_card)
+        "document-ref", "document" -> strings.get(R.string.item_type_document)
+        "billing-address" -> strings.get(R.string.mdbx_ui_object_address)
+        "payment-account" -> strings.get(R.string.mdbx_ui_object_payment_account)
+        "passkey" -> strings.get(R.string.passkey)
+        "steam-mafile" -> strings.get(R.string.import_type_steam_login_username_label)
         else -> when (objectType.trim().lowercase(Locale.ROOT)) {
-            "entry" -> "条目"
-            "project", "folder" -> "文件夹"
-            "attachment" -> "附件"
-            "passkey" -> "通行密钥"
-            "object-relation" -> "关联"
-            "object-label", "object-label-assignment" -> "标签"
-            "vault-meta" -> "数据库设置"
-            "key-epoch" -> "数据库密钥"
-            "snapshot" -> "快照"
-            "branch" -> "同步分支"
-            else -> "对象"
+            "entry" -> strings.get(R.string.mdbx_ui_object_entry)
+            "project", "folder" -> strings.get(R.string.folder_generic)
+            "attachment" -> strings.get(R.string.attachments)
+            "passkey" -> strings.get(R.string.passkey)
+            "object-relation" -> strings.get(R.string.folder_link)
+            "object-label", "object-label-assignment" -> strings.get(R.string.keepass_native_tags)
+            "vault-meta" -> strings.get(R.string.keepass_database_settings_title)
+            "key-epoch" -> strings.get(R.string.mdbx_ui_object_vault_key)
+            "snapshot" -> strings.get(R.string.mdbx_ui_object_snapshot)
+            "branch" -> strings.get(R.string.mdbx_ui_object_sync_branch)
+            else -> strings.get(R.string.mdbx_ui_object_generic)
         }
     }
 }
@@ -149,60 +151,63 @@ private fun List<MdbxCommitChangeSummary>.toActionCounts(): MdbxCommitActionCoun
 }
 
 private fun MdbxDeltaSummary.operationTitle(
+    strings: StringResolver,
     primaryAction: MdbxHistoryAction,
     objectCount: Int,
     changes: List<MdbxCommitChangeSummary>
 ): String {
     val operation = operationKind?.trim()?.lowercase(Locale.ROOT)
     return when (operation) {
-        "monica-initialize" -> "初始化数据库"
-        "monica-create-folder" -> "新建文件夹"
-        "monica-rename-folder" -> "重命名文件夹"
-        "monica-move-folder" -> "移动文件夹"
-        "monica-delete-folder" -> "删除文件夹"
-        "monica-restore-folder" -> "恢复文件夹"
-        "monica-migration-folders" -> "导入文件夹"
-        "monica-project-tags" -> "更新文件夹标签"
-        "monica-delete-entries" -> actionTitle(MdbxHistoryAction.DELETED, objectCount, changes)
-        "revert-commit" -> "恢复历史版本"
+        "monica-initialize" -> strings.get(R.string.mdbx_ui_history_initialize)
+        "monica-create-folder" -> strings.get(R.string.keepass_native_create_group)
+        "monica-rename-folder" -> strings.get(R.string.keepass_native_rename_group)
+        "monica-move-folder" -> strings.get(R.string.move_folder_title)
+        "monica-delete-folder" -> strings.get(R.string.folder_delete)
+        "monica-restore-folder" -> strings.get(R.string.mdbx_ui_history_restore_folder)
+        "monica-migration-folders" -> strings.get(R.string.mdbx_ui_history_import_folders)
+        "monica-project-tags" -> strings.get(R.string.mdbx_ui_history_update_folder_tags)
+        "monica-delete-entries" -> actionTitle(strings, MdbxHistoryAction.DELETED, objectCount, changes)
+        "revert-commit" -> strings.get(R.string.mdbx_ui_history_restore_version)
         else -> when {
             operation?.contains("attachment-create") == true -> actionTitle(
+                strings,
                 MdbxHistoryAction.CREATED,
                 objectCount,
                 changes,
-                forcedType = "附件"
+                forcedType = strings.get(R.string.attachments)
             )
-            operation?.contains("attachment-replace") == true -> "更新附件内容"
-            operation?.contains("snapshot") == true -> "更新数据库快照"
-            operation?.contains("key") == true && operation.contains("rotat") -> "轮换数据库密钥"
-            else -> actionTitle(primaryAction, objectCount, changes)
+            operation?.contains("attachment-replace") == true -> strings.get(R.string.mdbx_ui_history_update_attachment)
+            operation?.contains("snapshot") == true -> strings.get(R.string.mdbx_ui_history_update_snapshots)
+            operation?.contains("key") == true && operation.contains("rotat") -> strings.get(R.string.mdbx_ui_history_rotate_key)
+            else -> actionTitle(strings, primaryAction, objectCount, changes)
         }
     }
 }
 
 private fun actionTitle(
+    strings: StringResolver,
     action: MdbxHistoryAction,
     objectCount: Int,
     changes: List<MdbxCommitChangeSummary>,
     forcedType: String? = null
 ): String {
-    val objectLabel = forcedType ?: changes.singleObjectTypeLabel()
-    val quantity = if (objectCount > 0) "$objectCount 个$objectLabel" else objectLabel
+    val objectLabel = forcedType ?: changes.singleObjectTypeLabel(strings)
+    val quantity = if (objectCount > 0) strings.get(R.string.mdbx_ui_history_object_quantity, objectCount, objectLabel) else objectLabel
     return when (action) {
-        MdbxHistoryAction.CREATED -> "添加了$quantity"
-        MdbxHistoryAction.UPDATED -> "更新了$quantity"
-        MdbxHistoryAction.MOVED -> "移动了$quantity"
-        MdbxHistoryAction.COPIED -> "复制了$quantity"
-        MdbxHistoryAction.DELETED -> "删除了$quantity"
-        MdbxHistoryAction.RESTORED -> "恢复了$quantity"
-        MdbxHistoryAction.MERGED -> "合并了数据库变更"
-        MdbxHistoryAction.SYSTEM -> "数据库系统事件"
+        MdbxHistoryAction.CREATED -> strings.get(R.string.mdbx_ui_history_action_created, quantity)
+        MdbxHistoryAction.UPDATED -> strings.get(R.string.mdbx_ui_history_action_updated, quantity)
+        MdbxHistoryAction.MOVED -> strings.get(R.string.mdbx_ui_history_action_moved, quantity)
+        MdbxHistoryAction.COPIED -> strings.get(R.string.mdbx_ui_history_action_copied, quantity)
+        MdbxHistoryAction.DELETED -> strings.get(R.string.mdbx_ui_history_action_deleted, quantity)
+        MdbxHistoryAction.RESTORED -> strings.get(R.string.mdbx_ui_history_action_restored, quantity)
+        MdbxHistoryAction.MERGED -> strings.get(R.string.mdbx_ui_history_action_merged)
+        MdbxHistoryAction.SYSTEM -> strings.get(R.string.mdbx_ui_history_system_event)
     }
 }
 
-private fun List<MdbxCommitChangeSummary>.singleObjectTypeLabel(): String {
-    val labels = map { mdbxHistoryObjectTypeLabel(it.objectType) }.distinct()
-    return labels.singleOrNull() ?: "项目"
+private fun List<MdbxCommitChangeSummary>.singleObjectTypeLabel(strings: StringResolver): String {
+    val labels = map { mdbxHistoryObjectTypeLabel(strings, it.objectType) }.distinct()
+    return labels.singleOrNull() ?: strings.get(R.string.timeline_item_default)
 }
 
 private fun MdbxDeltaSummary.isSystemHistoryCommit(): Boolean {
@@ -218,21 +223,21 @@ private fun MdbxDeltaSummary.isSystemHistoryCommit(): Boolean {
         kind in SYSTEM_COMMIT_KINDS
 }
 
-private fun MdbxDeltaSummary.systemCommitDescription(): String = when {
+private fun MdbxDeltaSummary.systemCommitDescription(strings: StringResolver): String = when {
     operationKind.equals("monica-initialize", ignoreCase = true) ->
-        "建立数据库根目录和初始结构"
+        strings.get(R.string.mdbx_ui_history_initialize_description)
     commitKind.equals("key-rotation", ignoreCase = true) ||
         changeScope.equals("key-epoch", ignoreCase = true) ->
-        "更新数据库加密密钥或解锁材料"
+        strings.get(R.string.mdbx_ui_history_key_description)
     commitKind.equals("snapshot", ignoreCase = true) ||
         changeScope.equals("snapshot", ignoreCase = true) ->
-        "记录或整理数据库快照"
+        strings.get(R.string.mdbx_ui_history_snapshot_description)
     changeScope.equals("branch", ignoreCase = true) ->
-        "更新数据库同步分支状态"
+        strings.get(R.string.mdbx_ui_history_branch_description)
     changeScope.equals("vault-meta", ignoreCase = true) ->
-        "更新数据库设置或安全元数据"
+        strings.get(R.string.mdbx_ui_history_metadata_description)
     else -> message?.takeIf { it.isNotBlank() }
-        ?: "此提交记录的是数据库级事件，不包含普通条目变更"
+        ?: strings.get(R.string.mdbx_ui_history_system_description)
 }
 
 private fun MdbxDeltaSummary.changedObjectCountFallback(): Int {

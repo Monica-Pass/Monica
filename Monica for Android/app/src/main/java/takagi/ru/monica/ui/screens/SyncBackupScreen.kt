@@ -179,8 +179,8 @@ fun SyncBackupScreen(
             SyncBackupSection(title = "MDBX") {
                 SyncBackupItem(
                     icon = Icons.Default.Storage,
-                    title = "MDBX 数据库管理",
-                    description = "管理本地、WebDAV 和 OneDrive MDBX 数据库，兼容旧测试版库",
+                    title = stringResource(R.string.mdbx_ui_manager_entry_title),
+                    description = stringResource(R.string.mdbx_ui_manager_entry_description),
                     onClick = onNavigateToMdbx
                 )
             }

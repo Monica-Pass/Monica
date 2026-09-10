@@ -76,9 +76,9 @@ class MdbxHealthRepairIntegrationGuardTest {
         assertTrue(manager.contains("verifyMasterPassword(healthRepairMasterPassword)"))
         assertTrue(manager.contains("onSuccess = completeDeleteChoice"))
         assertTrue(manager.contains("chooseHealthRepairConflict(MdbxHealthRepairChoice.DELETE_OBJECT)"))
-        assertTrue(detail.contains("保留当前内容并清除异常删除标记"))
-        assertTrue(detail.contains("删除冲突项（需要验证身份）"))
-        assertTrue(detail.contains("取消会终止整次处理，数据库不会产生任何写入"))
+        assertTrue(detail.contains("R.string.mdbx_ui_repair_keep_content"))
+        assertTrue(detail.contains("R.string.mdbx_ui_repair_delete_content"))
+        assertTrue(detail.contains("R.string.mdbx_ui_repair_cancel_description"))
     }
 
     private fun conflictItem(repairId: String, objectType: String, objectId: String) =

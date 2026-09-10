@@ -34,6 +34,7 @@ fun MdbxLocalCreateScreen(
     viewModel: MdbxViewModel,
     onNavigateBack: () -> Unit
 ) {
+    val strings = rememberScreenStrings()
     val scope = rememberCoroutineScope()
     val operationState by viewModel.operationState.collectAsState()
 
@@ -77,7 +78,7 @@ fun MdbxLocalCreateScreen(
                 keyFileError = null
                 viewModel.readSelectedKeyFile(uri)
                     .onSuccess { keyFile = it }
-                    .onFailure { keyFileError = it.message ?: "无法读取 MDBX 密钥文件" }
+                    .onFailure { keyFileError = it.message ?: strings.get(R.string.mdbx_ui_key_file_read_error) }
             }
         }
     }
@@ -90,7 +91,7 @@ fun MdbxLocalCreateScreen(
                 keyFileError = null
                 viewModel.writeGeneratedKeyFile(uri)
                     .onSuccess { keyFile = it }
-                    .onFailure { keyFileError = it.message ?: "无法生成 MDBX 密钥文件" }
+                    .onFailure { keyFileError = it.message ?: strings.get(R.string.mdbx_ui_key_file_generate_error) }
             }
         }
     }
@@ -118,7 +119,7 @@ fun MdbxLocalCreateScreen(
                 title = { Text(stringResource(R.string.mdbx_create_vault_title)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back))
                     }
                 }
             )
@@ -155,11 +156,11 @@ fun MdbxLocalCreateScreen(
                         verticalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
                         ListItem(
-                            headlineContent = { Text("存储位置", style = MaterialTheme.typography.titleMedium) },
+                            headlineContent = { Text(strings.get(R.string.storage_location), style = MaterialTheme.typography.titleMedium) },
                             colors = ListItemDefaults.colors(containerColor = androidx.compose.ui.graphics.Color.Transparent)
                         )
                         ListItem(
-                            headlineContent = { Text("保存到指定本地文件夹") },
+                            headlineContent = { Text(strings.get(R.string.mdbx_ui_save_local_folder)) },
                             supportingContent = {
                                 Text(
                                     customDirectoryUri?.lastPathSegment

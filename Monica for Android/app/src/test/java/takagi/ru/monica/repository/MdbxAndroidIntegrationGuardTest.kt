@@ -716,7 +716,7 @@ class MdbxAndroidIntegrationGuardTest {
         val enStrings = projectFile("app/src/main/res/values/strings.xml").readText()
 
         assertTrue(managerSource.contains("MdbxManagerPage.Hub -> \"MDBX\""))
-        assertTrue(syncBackupSource.contains("MDBX 数据库管理"))
+        assertTrue(syncBackupSource.contains("R.string.mdbx_ui_manager_entry_title"))
         assertTrue(zhStrings.contains("MDBX 格式"))
         assertTrue(enStrings.contains("MDBX Format"))
         assertFalse(managerSource.contains("MDBX 1.0"))
@@ -966,7 +966,7 @@ class MdbxAndroidIntegrationGuardTest {
                 engineOptionsSource.contains("selectedTigaMode: MdbxTigaMode? = null") &&
                 vaultComponentsSource.contains("embedded: Boolean = false") &&
                 vaultComponentsSource.contains("if (embedded)") &&
-                vaultComponentsSource.contains("收起解锁方式")
+                vaultComponentsSource.contains("R.string.mdbx_ui_collapse_unlock_methods")
         )
         assertTrue(
             "Remote open APIs must derive a stable display name from the selected source file.",

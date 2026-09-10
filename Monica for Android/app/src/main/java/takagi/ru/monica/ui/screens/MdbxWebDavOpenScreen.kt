@@ -47,6 +47,7 @@ fun MdbxWebDavOpenScreen(
     viewModel: MdbxViewModel,
     onNavigateBack: () -> Unit
 ) {
+    val strings = rememberScreenStrings()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val operationState by viewModel.operationState.collectAsState()
@@ -97,7 +98,7 @@ fun MdbxWebDavOpenScreen(
                 keyFileError = null
                 viewModel.readSelectedKeyFile(uri)
                     .onSuccess { keyFile = it }
-                    .onFailure { keyFileError = it.message ?: "无法读取 MDBX 密钥文件" }
+                    .onFailure { keyFileError = it.message ?: strings.get(R.string.mdbx_ui_key_file_read_error) }
             }
         }
     }
@@ -110,7 +111,7 @@ fun MdbxWebDavOpenScreen(
                 keyFileError = null
                 viewModel.writeGeneratedKeyFile(uri)
                     .onSuccess { keyFile = it }
-                    .onFailure { keyFileError = it.message ?: "无法生成 MDBX 密钥文件" }
+                    .onFailure { keyFileError = it.message ?: strings.get(R.string.mdbx_ui_key_file_generate_error) }
             }
         }
     }
@@ -174,7 +175,7 @@ fun MdbxWebDavOpenScreen(
                 title = { Text(stringResource(R.string.mdbx_connect_to_remote_vault)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back))
                     }
                 }
             )
@@ -199,7 +200,7 @@ fun MdbxWebDavOpenScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Text(
-                        "WebDAV 连接",
+                        strings.get(R.string.mdbx_ui_webdav_connection),
                         style = MaterialTheme.typography.titleMedium
                     )
                     MdbxWebDavConnectionSection(

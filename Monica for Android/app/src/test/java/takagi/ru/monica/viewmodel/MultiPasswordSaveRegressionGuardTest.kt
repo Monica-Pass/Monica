@@ -556,7 +556,7 @@ class MultiPasswordSaveRegressionGuardTest {
             managerSource.contains("onShowDiff") &&
                 managerSource.contains("onRevert") &&
                 managerSource.contains("CommitObjectChangeCard(diff)") &&
-                managerSource.contains("Text(\"撤销这次更改\")")
+                managerSource.contains("Text(strings.get(R.string.mdbx_ui_history_revert_action))")
         )
     }
 
@@ -1259,8 +1259,8 @@ class MultiPasswordSaveRegressionGuardTest {
         assertTrue(
             "Snapshot UI must let the user choose increment versus full snapshot.",
             managerSource.contains("fullSnapshot") &&
-                managerSource.contains("增量快照") &&
-                managerSource.contains("完整快照")
+                managerSource.contains("R.string.mdbx_ui_snapshot_incremental") &&
+                managerSource.contains("R.string.mdbx_ui_snapshot_full")
         )
     }
 
@@ -1322,9 +1322,9 @@ class MultiPasswordSaveRegressionGuardTest {
         assertTrue(
             "MDBX manager should open to a hub and then branch into local, WebDAV, and OneDrive management pages.",
             managerSource.contains("MdbxManagerHubPage(") &&
-                managerSource.contains("本地 MDBX 管理") &&
-                managerSource.contains("WebDAV MDBX 管理") &&
-                managerSource.contains("OneDrive MDBX 管理") &&
+                managerSource.contains("R.string.mdbx_ui_manager_local_title") &&
+                managerSource.contains("R.string.mdbx_ui_manager_webdav_title") &&
+                managerSource.contains("R.string.mdbx_ui_manager_onedrive_title") &&
                 managerSource.contains("MdbxManagerSource.LOCAL") &&
                 managerSource.contains("MdbxManagerSource.WEBDAV") &&
                 managerSource.contains("MdbxManagerSource.ONEDRIVE")
@@ -1358,12 +1358,12 @@ class MultiPasswordSaveRegressionGuardTest {
         )
         assertTrue(
             "MDBX detail page must expose a diagnostics and maintenance page for format upgrade troubleshooting.",
-            managerSource.contains("诊断 / 维护") &&
+            managerSource.contains("R.string.mdbx_ui_manager_maintenance_title") &&
                 managerSource.contains("onShowMaintenance") &&
                 managerSource.contains("onRefreshDiagnostics") &&
                 managerSource.contains("onFlushPendingUpload") &&
-                managerSource.contains("MdbxDiagnosticSection(title = \"关键指标\")") &&
-                managerSource.contains("MdbxDiagnosticSection(title = \"高级细节\")")
+                managerSource.contains("MdbxDiagnosticSection(title = strings.get(R.string.mdbx_ui_key_metrics))") &&
+                managerSource.contains("MdbxDiagnosticSection(title = strings.get(R.string.mdbx_ui_advanced_details))")
         )
     }
 
@@ -1428,20 +1428,20 @@ class MultiPasswordSaveRegressionGuardTest {
                 managerSource.contains("onImportBundle") &&
                 managerSource.contains("onFlushPendingUpload") &&
                 managerSource.contains("onRunBenchmark") &&
-                managerSource.contains("Chunk 校验") &&
-                managerSource.contains("external-hash-ref") &&
+                managerSource.contains("R.string.mdbx_ui_chunk_verification") &&
+                managerSource.contains("R.string.mdbx_ui_attachment_storage_format") &&
                 managerSource.contains("benchmark")
         )
         assertTrue(
             "Android manager must expose later MDBX diagnostics in a standalone maintenance page.",
             managerSource.contains("MdbxMaintenancePage(") &&
-                managerSource.contains("MdbxDiagnosticSection(title = \"关键指标\")") &&
-                managerSource.contains("MdbxDiagnosticSection(title = \"高级细节\")") &&
-                managerSource.contains("悬空 parent") &&
-                managerSource.contains("悬空 head") &&
-                managerSource.contains("附件分片异常") &&
-                managerSource.contains("external-hash-ref") &&
-                managerSource.contains("上传待处理写入")
+                managerSource.contains("MdbxDiagnosticSection(title = strings.get(R.string.mdbx_ui_key_metrics))") &&
+                managerSource.contains("MdbxDiagnosticSection(title = strings.get(R.string.mdbx_ui_advanced_details))") &&
+                managerSource.contains("R.string.mdbx_ui_dangling_parents") &&
+                managerSource.contains("R.string.mdbx_ui_dangling_heads") &&
+                managerSource.contains("R.string.mdbx_ui_attachment_chunk_issues") &&
+                managerSource.contains("R.string.mdbx_ui_attachment_storage_format") &&
+                managerSource.contains("R.string.mdbx_ui_upload_pending")
         )
         assertTrue(
             "Exported sync bundles should be copyable from the Android UI.",
@@ -1975,16 +1975,16 @@ class MultiPasswordSaveRegressionGuardTest {
         assertTrue(
             "Diagnostics should prioritize a concise maintenance flow and keep low-level details secondary.",
             managerSource.contains("private fun MaintenanceActionPanel(") &&
-                managerSource.contains("MdbxDiagnosticSection(title = \"关键指标\")") &&
-                managerSource.contains("MdbxDiagnosticSection(title = \"高级细节\")") &&
+                managerSource.contains("MdbxDiagnosticSection(title = strings.get(R.string.mdbx_ui_key_metrics))") &&
+                managerSource.contains("MdbxDiagnosticSection(title = strings.get(R.string.mdbx_ui_advanced_details))") &&
                 !managerSource.contains("schema、commit 图、设备 head、快照、附件 chunk")
         )
         assertTrue(
             "History should use one semantic operation card per commit instead of a diagnostic dashboard.",
             managerSource.contains("private fun DeltaRow(") &&
-                managerSource.contains("val presentation = remember(delta) { delta.toHistoryPresentation() }") &&
+                managerSource.contains("val presentation = remember(delta, strings) { delta.toHistoryPresentation(strings) }") &&
                 managerSource.contains("presentation.primaryAction.historyIcon()") &&
-                managerSource.contains("HistoryStatusPill(\"系统\")") &&
+                managerSource.contains("HistoryStatusPill(strings.get(R.string.mdbx_ui_system))") &&
                 !managerSource.contains("private fun DeltaSummaryHeader(") &&
                 !managerSource.substringAfter("private fun DeltaRow(")
                     .substringBefore("private fun shortId(")
@@ -2027,7 +2027,7 @@ class MultiPasswordSaveRegressionGuardTest {
                 managerSource.contains("backgroundColor = MaterialTheme.colorScheme.primaryContainer.copy") &&
                 managerSource.substringAfter("private fun FieldChangeGroupBlock(")
                     .substringBefore("private fun FieldChangeRow(")
-                    .contains("\"字段变更\"") &&
+                    .contains("strings.get(R.string.mdbx_ui_field_changes)") &&
                 managerSource.contains("\"${'$'}{change.fieldLabel}:\"") &&
                 managerSource.contains("value.ifBlank { \"null\" }") &&
                 managerSource.contains("group.displayPath()") &&
@@ -2035,7 +2035,7 @@ class MultiPasswordSaveRegressionGuardTest {
                 !managerSource.contains("versionLabel =") &&
                 !managerSource.contains("\"删除状态\"") &&
                 !managerSource.contains("deletedLabel(") &&
-                !managerSource.contains("\"${'$'}{group.changes.size} 项\"") &&
+                !managerSource.contains("strings.get(R.string.mdbx_ui_item_count, group.changes.size)") &&
                 !managerSource.contains("FontFamily.Monospace") &&
                 !managerSource.contains("private fun UnifiedDiffCard(") &&
                 !managerSource.contains("DiffLineKind")
@@ -2056,7 +2056,7 @@ class MultiPasswordSaveRegressionGuardTest {
             "Snapshot rows should let the user inspect the snapshot base commit diff before reverting.",
             managerSource.contains("onShowDiff: () -> Unit") &&
                 managerSource.contains("onShowDiff = { onShowDiff(snapshot.baseCommitId) }") &&
-                managerSource.contains("Text(\"变更\")")
+                managerSource.contains("Text(strings.get(R.string.mdbx_ui_changes))")
         )
         val snapshotStructurePreviewBody = managerSource
             .substringAfter("private fun SnapshotStructurePreviewPage(")
@@ -2074,12 +2074,12 @@ class MultiPasswordSaveRegressionGuardTest {
                 managerSource.contains("private fun StructureTreeRow(") &&
                 managerSource.contains("onShowSnapshotStructure: (String) -> Unit") &&
                 managerSource.contains("onOpenStructure = { onShowSnapshotStructure(snapshot.snapshotId) }") &&
-                managerSource.contains("Text(\"结构\")") &&
+                managerSource.contains("Text(strings.get(R.string.mdbx_ui_structure))") &&
                 managerSource.contains("ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE") &&
                 managerSource.contains("ActivityInfo.SCREEN_ORIENTATION_PORTRAIT") &&
                 managerSource.contains("requestedOrientation") &&
-                managerSource.contains("title = \"现版本\"") &&
-                managerSource.contains("title = \"快照版本\"") &&
+                managerSource.contains("title = strings.get(R.string.mdbx_ui_current_version)") &&
+                managerSource.contains("title = strings.get(R.string.mdbx_ui_snapshot_version)") &&
                 managerSource.contains("var snapshotCompareMode by rememberSaveable(snapshotPage?.databaseId, snapshotPage?.snapshotId)") &&
                 managerSource.contains("val snapshotTopBarName = snapshotPage?.let") &&
                 managerSource.contains("val snapshotTopBarMeta = snapshotPage?.let") &&
@@ -2115,18 +2115,18 @@ class MultiPasswordSaveRegressionGuardTest {
         )
         assertTrue(
             "Diff data must use readable paths and redact sensitive payload values.",
-            managerSource.contains("private fun MdbxCommitDiff.toFieldChanges()") &&
+            managerSource.contains("private fun MdbxCommitDiff.toFieldChanges(strings: StringResolver)") &&
                 managerSource.contains("private fun CommitObjectChangeCard(") &&
                 managerSource.contains("private enum class ObjectChangeKind") &&
-                managerSource.contains("ObjectChangeKind.DELETED -> \"删除了${'$'}objectLabel\"") &&
-                managerSource.contains("private fun MdbxCommitDiff.displayObjectTitle()") &&
-                managerSource.contains("private fun MdbxConflictSummary.toFieldChanges()") &&
+                managerSource.contains("ObjectChangeKind.DELETED -> strings.get(R.string.mdbx_ui_history_action_deleted, objectLabel)") &&
+                managerSource.contains("private fun MdbxCommitDiff.displayObjectTitle(strings: StringResolver)") &&
+                managerSource.contains("private fun MdbxConflictSummary.toFieldChanges(strings: StringResolver)") &&
                 managerSource.contains("displayTitle?.takeIf") &&
                 managerSource.contains("storagePath?.takeIf") &&
-                managerSource.contains("\"标题\"") &&
-                managerSource.contains("fieldLabel = \"内容\"") &&
+                managerSource.contains("strings.get(R.string.title)") &&
+                managerSource.contains("fieldLabel = strings.get(R.string.content)") &&
                 managerSource.contains("sensitive = true") &&
-                managerSource.contains("内容已更新，敏感值已隐藏") &&
+                managerSource.contains("R.string.mdbx_ui_sensitive_changes_hidden") &&
                 storeSource.contains("val displayTitle: String?") &&
                 storeSource.contains("val storagePath: String?") &&
                 storeSource.contains("private fun readDiffDisplayInfo(") &&
@@ -2143,17 +2143,17 @@ class MultiPasswordSaveRegressionGuardTest {
                 managerSource.contains("val deltaState = deltaDialogState as? MdbxViewModel.MdbxDeltaDialogState.Visible") &&
                 managerSource.contains("deltaState?.selectedDiffCommitId != null") &&
                 managerSource.contains("viewModel.closeCommitDiff()") &&
-                managerSource.contains("is MdbxManagerPage.CommitHistory -> \"提交历史\"") &&
+                managerSource.contains("is MdbxManagerPage.CommitHistory -> strings.get(R.string.mdbx_ui_manager_history_title)") &&
                 managerSource.contains("BackHandler(onBack = goBack)") &&
                 managerSource.contains("private fun MdbxSnapshotPage(") &&
                 managerSource.contains("private fun MdbxCommitHistoryPage(") &&
-                managerSource.contains("MdbxNavigationActionRow(Icons.Default.Restore, \"快照\", onShowSnapshots)") &&
-                managerSource.contains("MdbxNavigationActionRow(Icons.Default.History, \"提交历史\", onShowCommitHistory)") &&
-                managerSource.contains("selectedDelta?.toHistoryPresentation()") &&
+                managerSource.contains("MdbxNavigationActionRow(Icons.Default.Restore, strings.get(R.string.mdbx_ui_object_snapshot), onShowSnapshots)") &&
+                managerSource.contains("MdbxNavigationActionRow(Icons.Default.History, strings.get(R.string.mdbx_ui_manager_history_title), onShowCommitHistory)") &&
+                managerSource.contains("selectedDelta?.toHistoryPresentation(strings)") &&
                 managerSource.contains("private fun CommitTechnicalInfoCard(") &&
                 managerSource.contains("private fun CommitDetailHeader(") &&
-                managerSource.contains("撤销这次更改？") &&
-                historyPresentationSource.contains("fun MdbxDeltaSummary.toHistoryPresentation()") &&
+                managerSource.contains("R.string.mdbx_ui_history_revert_title") &&
+                historyPresentationSource.contains("fun MdbxDeltaSummary.toHistoryPresentation(strings: StringResolver)") &&
                 storeSource.contains("val changedObjectPreview: String") &&
                 storeSource.contains("val changedFieldSummary: String") &&
                 storeSource.contains("val operationKind: String? = null") &&
@@ -3021,14 +3021,14 @@ class MultiPasswordSaveRegressionGuardTest {
         assertTrue(
             "The automatic snapshot button should clear automatic snapshots on demand instead of retaining the default 20 and looking like it did nothing.",
             mdbxViewModelSource.contains("vaultStore.pruneAutomaticSnapshots(databaseId, keepCount = 0)") &&
-                mdbxViewModelSource.contains("\"已清理 ${'$'}deletedCount 个自动快照\"") &&
-                managerSource.contains("Text(\"清理自动\")")
+                mdbxViewModelSource.contains("strings.get(R.string.mdbx_ui_snapshot_pruned_count, deletedCount)") &&
+                managerSource.contains("Text(strings.get(R.string.mdbx_ui_snapshot_clear_automatic))")
         )
         assertTrue(
             "Snapshot UI should use user-facing increment/full wording and not expose the unexplained Delta label.",
-            managerSource.contains("\"完整快照\"") &&
-                managerSource.contains("\"增量快照\"") &&
-                managerSource.contains("SnapshotInfoPill(if (snapshot.isFull) \"完整\" else \"增量\")") &&
+            managerSource.contains("strings.get(R.string.mdbx_ui_snapshot_full)") &&
+                managerSource.contains("strings.get(R.string.mdbx_ui_snapshot_incremental)") &&
+                managerSource.contains("SnapshotInfoPill(if (snapshot.isFull) strings.get(R.string.mdbx_ui_full) else strings.get(R.string.mdbx_status_delta))") &&
                 managerSource.contains("mdbx_snapshot_create_when_changed") &&
                 !managerSource.contains("Delta 快照") &&
                 !managerSource.contains("\"Delta\"")
@@ -3037,8 +3037,8 @@ class MultiPasswordSaveRegressionGuardTest {
             "Snapshot rollback must require a second confirmation because it mutates the current MDBX database.",
             managerSource.contains("var pendingRevertSnapshot by remember { mutableStateOf<MdbxSnapshotSummary?>(null) }") &&
                 managerSource.contains("AlertDialog(") &&
-                managerSource.contains("title = { Text(\"回滚到此快照？\") }") &&
-                managerSource.contains("Text(\"确认回滚\")") &&
+                managerSource.contains("title = { Text(strings.get(R.string.mdbx_ui_snapshot_restore_title)) }") &&
+                managerSource.contains("Text(strings.get(R.string.mdbx_ui_snapshot_restore_confirm))") &&
                 managerSource.contains("onRevertSnapshot(snapshot.snapshotId)") &&
                 managerSource.contains("onRevert = { pendingRevertSnapshot = snapshot }") &&
                 !managerSource.contains("onRevert = { onRevertSnapshot(snapshot.snapshotId) }")
@@ -3046,9 +3046,9 @@ class MultiPasswordSaveRegressionGuardTest {
         assertTrue(
             "Deleted commit details must show an object-level delete action instead of the low-level field diff `删除: 存在 -> 已删除`.",
             managerSource.contains("private fun CommitObjectChangeCard(") &&
-                managerSource.contains("ObjectChangeKind.DELETED -> \"删除了${'$'}objectLabel\"") &&
+                managerSource.contains("ObjectChangeKind.DELETED -> strings.get(R.string.mdbx_ui_history_action_deleted, objectLabel)") &&
                 managerSource.contains("if (objectChangeKind() != ObjectChangeKind.MODIFIED) return emptyList()") &&
-                !managerSource.contains("fieldLabel = if (currentDeleted) \"删除\" else \"恢复\"") &&
+                !managerSource.contains("fieldLabel = if (currentDeleted) strings.get(R.string.delete) else strings.get(R.string.restore)") &&
                 !managerSource.contains("before = if (previousDeleted == true) \"已删除\" else \"存在\"")
         )
         assertTrue(

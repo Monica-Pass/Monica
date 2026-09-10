@@ -45,6 +45,7 @@ fun MdbxEngineTypeSection(
     selectedTigaMode: MdbxTigaMode? = null,
     onTigaModeChange: ((MdbxTigaMode) -> Unit)? = null
 ) {
+    val strings = rememberScreenStrings()
     var expanded by remember { mutableStateOf(false) }
     val engineLabel = if (selectedEngine == MdbxEngineType.KOTLIN_MDBX1) "MDBX 1" else "MDBX 2"
     val summary = listOfNotNull(engineLabel, selectedTigaMode?.label).joinToString(" · ")
@@ -60,7 +61,7 @@ fun MdbxEngineTypeSection(
         ) {
             ListItem(
                 headlineContent = {
-                    Text("数据库选项", fontWeight = FontWeight.SemiBold)
+                    Text(strings.get(R.string.mdbx_ui_database_options), fontWeight = FontWeight.SemiBold)
                 },
                 supportingContent = { Text(summary) },
                 leadingContent = {
@@ -69,7 +70,7 @@ fun MdbxEngineTypeSection(
                 trailingContent = {
                     Icon(
                         if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
-                        contentDescription = if (expanded) "收起数据库选项" else "展开数据库选项"
+                        contentDescription = if (expanded) strings.get(R.string.mdbx_ui_collapse_database_options) else strings.get(R.string.mdbx_ui_expand_database_options)
                     )
                 },
                 colors = ListItemDefaults.colors(containerColor = Color.Transparent),
@@ -84,7 +85,7 @@ fun MdbxEngineTypeSection(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     HorizontalDivider()
-                    Text("数据库引擎", style = MaterialTheme.typography.labelLarge)
+                    Text(strings.get(R.string.mdbx_ui_database_engine), style = MaterialTheme.typography.labelLarge)
                     SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
                         val engines = MdbxEngineType.entries
                         engines.forEachIndexed { index, engine ->
@@ -100,10 +101,10 @@ fun MdbxEngineTypeSection(
                     Text(
                         text = when {
                             selectedEngine == MdbxEngineType.RUST_MDBX2 && remote ->
-                                "MDBX 2 使用增量同步；远端 .mdbx 仅作为加密 bootstrap"
+                                strings.get(R.string.mdbx_ui_engine_remote_description)
                             selectedEngine == MdbxEngineType.RUST_MDBX2 ->
-                                "MDBX 2 使用 Rust 引擎与本地加密存储"
-                            else -> "MDBX 1 保持现有兼容格式与整文件同步"
+                                strings.get(R.string.mdbx_ui_engine_local_description)
+                            else -> strings.get(R.string.mdbx_ui_engine_legacy_description)
                         },
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant

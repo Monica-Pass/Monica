@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="page_adjustment_preview_games">Игры</string>
+    <string name="page_adjustment_preview_folder">Папка 1</string>
+    <string name="page_adjustment_preview_subfolder">Подпапка</string>
+</resources>

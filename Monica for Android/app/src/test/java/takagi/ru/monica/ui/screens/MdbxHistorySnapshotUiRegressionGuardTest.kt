@@ -45,7 +45,7 @@ class MdbxHistorySnapshotUiRegressionGuardTest {
         assertTrue(snapshotPage.contains("pendingDeleteSnapshot?.let"))
         assertTrue(snapshotPage.contains("showPruneAutomaticConfirmation"))
         assertTrue(snapshotRow.contains("DropdownMenu("))
-        assertTrue(snapshotRow.contains("更多快照操作"))
+        assertTrue(snapshotRow.contains("R.string.mdbx_ui_snapshot_more_actions"))
         assertTrue(snapshotRow.contains("surfaceContainerLow"))
     }
 
@@ -72,7 +72,7 @@ class MdbxHistorySnapshotUiRegressionGuardTest {
         val source = managerSource()
         val deltaRow = source
             .substringAfter("private fun DeltaRow(")
-            .substringBefore("private fun MdbxSnapshotSummary.displayName()")
+            .substringBefore("private fun MdbxSnapshotSummary.displayName(")
 
         assertTrue(deltaRow.contains("presentation.title"))
         assertTrue(deltaRow.contains("presentation.supportingText"))

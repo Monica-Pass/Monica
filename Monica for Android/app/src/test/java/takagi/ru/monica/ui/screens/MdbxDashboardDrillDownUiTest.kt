@@ -39,15 +39,15 @@ class MdbxDashboardDrillDownUiTest {
         assertTrue(detailSource.contains("danglingDeviceHeadCount"))
         assertTrue(detailSource.contains("attachmentChunkMismatchCount"))
         assertTrue(detailSource.contains("onRefreshDiagnostics"))
-        assertTrue(detailSource.contains("diagnostics.healthGuidance()"))
-        assertTrue(detailSource.contains("可能影响"))
-        assertTrue(detailSource.contains("建议处理"))
-        assertTrue(detailSource.contains("技术详情"))
+        assertTrue(detailSource.contains("diagnostics.healthGuidance(strings)"))
+        assertTrue(detailSource.contains("R.string.mdbx_ui_potential_impact"))
+        assertTrue(detailSource.contains("R.string.mdbx_ui_health_recommended_actions"))
+        assertTrue(detailSource.contains("R.string.mdbx_ui_technical_details"))
         assertTrue(detailSource.contains("onOpenSnapshots"))
         assertTrue(detailSource.contains("onOpenCommitHistory"))
         assertTrue(detailSource.contains("onOpenAttachments"))
         assertTrue(detailSource.contains("showPassedChecks"))
-        assertTrue(detailSource.contains("项正常检查已收起"))
+        assertTrue(detailSource.contains("R.string.mdbx_ui_health_hidden_checks"))
     }
 
     @Test

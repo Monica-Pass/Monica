@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="page_adjustment_preview_games">游戏</string>
+    <string name="page_adjustment_preview_folder">目录1</string>
+    <string name="page_adjustment_preview_subfolder">子目录</string>
+</resources>

@@ -21,6 +21,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import takagi.ru.monica.R
+import takagi.ru.monica.utils.StringResolver
+import takagi.ru.monica.utils.LocaleHelper
+import takagi.ru.monica.utils.StartupLanguageCache
 import takagi.ru.monica.attachments.data.AttachmentDao
 import takagi.ru.monica.attachments.model.Attachment
 import takagi.ru.monica.attachments.model.AttachmentDownloadState
@@ -161,6 +164,11 @@ class MdbxViewModel(
 ) : AndroidViewModel(application) {
 
     private val context: Context get() = getApplication()
+    private val strings = StringResolver { id, arguments ->
+        val localizedContext = LocaleHelper.setLocale(context, StartupLanguageCache.read(context))
+        if (arguments.isEmpty()) localizedContext.getString(id)
+        else localizedContext.getString(id, *arguments)
+    }
     private val roomDatabase by lazy { PasswordDatabase.getDatabase(context.applicationContext) }
     private val attachmentStorage by lazy { AttachmentStorage(context.applicationContext) }
     private val legacyVaultStore = MdbxVaultStore(
@@ -2034,7 +2042,7 @@ class MdbxViewModel(
 
     fun requestHealthRepair(database: LocalMdbxDatabase) {
         if (database.engineTypeEnum != MdbxEngineType.RUST_MDBX2) {
-            _operationState.value = OperationState.Error("一键处理仅适用于 MDBX2 数据库")
+            _operationState.value = OperationState.Error(strings.get(R.string.mdbx_ui_repair_mdbx2_only))
             return
         }
         if (_healthRepairState.value is MdbxHealthRepairState.Applying) return
@@ -2058,14 +2066,14 @@ class MdbxViewModel(
                     }
                     plan.repairableItemCount == 0 -> {
                         _healthRepairState.value = MdbxHealthRepairState.Hidden
-                        _operationState.value = OperationState.Success("当前没有可自动处理的健康异常")
+                        _operationState.value = OperationState.Success(strings.get(R.string.mdbx_ui_repair_no_issues))
                         refreshSingleVaultState(database.id)
                     }
                     !plan.canApply -> {
                         _healthRepairState.value = MdbxHealthRepairState.Failed(
                             databaseId = database.id,
                             databaseName = database.name,
-                            message = "当前异常无法生成安全处理计划，请重新检查数据库状态"
+                            message = strings.get(R.string.mdbx_ui_repair_plan_unavailable)
                         )
                     }
                     plan.conflictItems.isEmpty() -> {
@@ -2088,7 +2096,7 @@ class MdbxViewModel(
                 _healthRepairState.value = MdbxHealthRepairState.Failed(
                     databaseId = database.id,
                     databaseName = database.name,
-                    message = error.toHealthRepairUserMessage()
+                    message = error.toHealthRepairUserMessage(strings)
                 )
             }
         }
@@ -2145,7 +2153,7 @@ class MdbxViewModel(
                 MdbxHealthRepairDecision(
                     repairId = item.repairId,
                     choice = decisions[item.repairId]
-                        ?: error("缺少 ${item.objectType} ${item.objectId} 的处理选择")
+                        ?: error(strings.get(R.string.mdbx_ui_repair_missing_choice, item.objectType, item.objectId))
                 )
             }
             val result = withContext(Dispatchers.IO) {
@@ -2168,12 +2176,12 @@ class MdbxViewModel(
             }
             refreshSingleVaultState(databaseId)
             _healthRepairState.value = MdbxHealthRepairState.Hidden
-            _operationState.value = OperationState.Success(result.healthRepairResultMessage())
+            _operationState.value = OperationState.Success(result.healthRepairResultMessage(strings))
         } catch (error: Throwable) {
             _healthRepairState.value = MdbxHealthRepairState.Failed(
                 databaseId = databaseId,
                 databaseName = databaseName,
-                message = error.toHealthRepairUserMessage()
+                message = error.toHealthRepairUserMessage(strings)
             )
         }
     }
@@ -2701,7 +2709,7 @@ class MdbxViewModel(
                         selectedDiffCommitId = commitId,
                         diffItems = emptyList(),
                         isDiffLoading = false,
-                        diffError = error.toCommitDiffUserMessage()
+                        diffError = error.toCommitDiffUserMessage(strings)
                     )
                 }
             )
@@ -3033,7 +3041,7 @@ class MdbxViewModel(
                 }
                 refreshDeltaDialogAfterSnapshotMutation(databaseId, current)
                 _operationState.value = OperationState.Success(
-                    "已清理 $deletedCount 个自动快照"
+                    strings.get(R.string.mdbx_ui_snapshot_pruned_count, deletedCount)
                 )
             } catch (e: Exception) {
                 _deltaDialogState.value = current?.copy(isSnapshotLoading = false)
@@ -4712,7 +4720,7 @@ class MdbxViewModel(
     }
 }
 
-private fun Throwable.toCommitDiffUserMessage(): String {
+private fun Throwable.toCommitDiffUserMessage(strings: StringResolver): String {
     val diagnostic = generateSequence(this) { it.cause }
         .mapNotNull(Throwable::message)
         .joinToString(" ")
@@ -4720,13 +4728,13 @@ private fun Throwable.toCommitDiffUserMessage(): String {
         diagnostic.contains("commit diff objects", ignoreCase = true) ||
         diagnostic.contains("resource limit", ignoreCase = true)
     ) {
-        "这次提交包含的对象过多，当前版本无法一次展开全部详情。提交记录本身仍然有效。"
+        strings.get(R.string.mdbx_ui_history_diff_limit)
     } else {
-        "无法读取提交详情：${message ?: "未知错误"}"
+        strings.get(R.string.mdbx_ui_history_diff_error, message ?: strings.get(R.string.import_data_unknown_error))
     }
 }
 
-private fun Throwable.toHealthRepairUserMessage(): String {
+private fun Throwable.toHealthRepairUserMessage(strings: StringResolver): String {
     val diagnostic = generateSequence(this) { it.cause }
         .mapNotNull(Throwable::message)
         .joinToString(" ")
@@ -4735,22 +4743,22 @@ private fun Throwable.toHealthRepairUserMessage(): String {
             (diagnostic.contains("changed", ignoreCase = true) ||
                 diagnostic.contains("token", ignoreCase = true) ||
                 diagnostic.contains("stale", ignoreCase = true)) ->
-            "数据库状态已经变化，请重新检查后再次处理"
+            strings.get(R.string.mdbx_ui_repair_plan_changed)
         diagnostic.contains("block", ignoreCase = true) ->
-            "存在无法安全自动处理的完整性异常，请先按诊断建议处理"
-        else -> "无法完成数据库处理：${message ?: "未知错误"}"
+            strings.get(R.string.mdbx_ui_repair_integrity_blocked)
+        else -> strings.get(R.string.mdbx_ui_repair_error, message ?: strings.get(R.string.import_data_unknown_error))
     }
 }
 
-private fun MdbxHealthRepairApplyResult.healthRepairResultMessage(): String = when (status) {
+private fun MdbxHealthRepairApplyResult.healthRepairResultMessage(strings: StringResolver): String = when (status) {
     MdbxHealthRepairStatus.APPLIED -> when {
-        healthy -> "已安全处理 $repairedCount 项异常，并创建处理前快照"
+        healthy -> strings.get(R.string.mdbx_ui_repair_success, repairedCount)
         remainingIssues.isNotEmpty() ->
-            "已处理 $repairedCount 项异常，仍有 ${remainingIssues.size} 项需要继续检查"
-        else -> "已处理 $repairedCount 项异常"
+            strings.get(R.string.mdbx_ui_repair_partial_success, repairedCount, remainingIssues.size)
+        else -> strings.get(R.string.mdbx_ui_repair_count, repairedCount)
     }
-    MdbxHealthRepairStatus.CANCELLED -> "已取消数据库处理，未写入任何修改"
-    MdbxHealthRepairStatus.NO_CHANGES -> "数据库状态没有需要写入的变化"
+    MdbxHealthRepairStatus.CANCELLED -> strings.get(R.string.mdbx_ui_repair_cancelled)
+    MdbxHealthRepairStatus.NO_CHANGES -> strings.get(R.string.mdbx_ui_repair_no_changes)
 }
 
 data class MdbxKeyFileSelection(

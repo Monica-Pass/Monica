@@ -69,6 +69,7 @@ internal fun MdbxPasswordFieldSection(
     onConfirmPasswordChange: (String) -> Unit,
     passwordRequired: Boolean
 ) {
+    val strings = rememberScreenStrings()
     var showMasterPassword by remember { mutableStateOf(false) }
     var showConfirmPassword by remember { mutableStateOf(false) }
 
@@ -119,7 +120,7 @@ internal fun MdbxPasswordFieldSection(
         supportingText = if (confirmPassword.isNotEmpty() && normalizedMasterPassword != normalizedConfirmPassword) {
             { Text(stringResource(R.string.mdbx_password_mismatch)) }
         } else {
-            { Text("支持中文主密码；MDBX 会按 Unicode NFC 处理。") }
+            { Text(strings.get(R.string.mdbx_ui_unicode_password_hint)) }
         },
         singleLine = true,
         enabled = passwordRequired,
@@ -134,26 +135,27 @@ internal fun MdbxUnlockMethodSection(
     includeDeviceKey: Boolean = false,
     embedded: Boolean = false
 ) {
+    val strings = rememberScreenStrings()
     var expanded by remember { mutableStateOf(false) }
     val methods = buildList {
-        add(Triple(MdbxUnlockMethod.MASTER_PASSWORD, Icons.Default.Key, "只用主密码解锁"))
-        add(Triple(MdbxUnlockMethod.KEY_FILE, Icons.Default.VpnKey, "只用 MDBX key file 解锁"))
+        add(Triple(MdbxUnlockMethod.MASTER_PASSWORD, Icons.Default.Key, strings.get(R.string.mdbx_ui_unlock_password_description)))
+        add(Triple(MdbxUnlockMethod.KEY_FILE, Icons.Default.VpnKey, strings.get(R.string.mdbx_ui_unlock_keyfile_description)))
         add(
             Triple(
                 MdbxUnlockMethod.MASTER_PASSWORD_AND_KEY_FILE,
                 Icons.Default.Shield,
-                "两者同时正确才可解锁"
+                strings.get(R.string.mdbx_ui_unlock_both_description)
             )
         )
         if (includeDeviceKey) {
-            add(Triple(MdbxUnlockMethod.DEVICE_KEY, Icons.Default.Smartphone, "仅在当前设备的安全存储中解锁"))
+            add(Triple(MdbxUnlockMethod.DEVICE_KEY, Icons.Default.Smartphone, strings.get(R.string.mdbx_ui_unlock_device_description)))
         }
     }
     val titles = mapOf(
-        MdbxUnlockMethod.MASTER_PASSWORD to "主密码",
-        MdbxUnlockMethod.KEY_FILE to "密钥文件",
-        MdbxUnlockMethod.MASTER_PASSWORD_AND_KEY_FILE to "主密码 + 密钥文件",
-        MdbxUnlockMethod.DEVICE_KEY to "设备密钥"
+        MdbxUnlockMethod.MASTER_PASSWORD to strings.get(R.string.master_password),
+        MdbxUnlockMethod.KEY_FILE to strings.get(R.string.local_keepass_key_file),
+        MdbxUnlockMethod.MASTER_PASSWORD_AND_KEY_FILE to strings.get(R.string.mdbx_ui_unlock_password_and_keyfile),
+        MdbxUnlockMethod.DEVICE_KEY to strings.get(R.string.mdbx_ui_unlock_device_key)
     )
     val selected = methods.firstOrNull { it.first == unlockMethod } ?: methods.first()
 
@@ -162,7 +164,7 @@ internal fun MdbxUnlockMethodSection(
             modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
         ) {
             ListItem(
-                headlineContent = { Text("解锁方式", fontWeight = FontWeight.SemiBold) },
+                headlineContent = { Text(strings.get(R.string.mdbx_ui_unlock_method), fontWeight = FontWeight.SemiBold) },
                 supportingContent = {
                     Text("${titles[selected.first]} · ${selected.third}")
                 },
@@ -172,7 +174,7 @@ internal fun MdbxUnlockMethodSection(
                 trailingContent = {
                     Icon(
                         if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
-                        contentDescription = if (expanded) "收起解锁方式" else "展开解锁方式"
+                        contentDescription = if (expanded) strings.get(R.string.mdbx_ui_collapse_unlock_methods) else strings.get(R.string.mdbx_ui_expand_unlock_methods)
                     )
                 },
                 colors = ListItemDefaults.colors(containerColor = Color.Transparent),
@@ -240,6 +242,7 @@ internal fun MdbxKeyFileSection(
     onGenerateKeyFile: () -> Unit,
     embedded: Boolean = false
 ) {
+    val strings = rememberScreenStrings()
     if (!keyFileRequired) return
 
     val content: @Composable ColumnScope.() -> Unit = {
@@ -250,7 +253,7 @@ internal fun MdbxKeyFileSection(
             ListItem(
                 headlineContent = {
                     Text(
-                        keyFile?.name ?: "MDBX 密钥文件",
+                        keyFile?.name ?: strings.get(R.string.mdbx_ui_mdbx_keyfile),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -269,7 +272,7 @@ internal fun MdbxKeyFileSection(
                             }
                         )
                     } else {
-                        Text("选择已有密钥文件，或生成新的 .key 文件")
+                        Text(strings.get(R.string.mdbx_ui_keyfile_description))
                     }
                 },
                 leadingContent = {
@@ -291,13 +294,13 @@ internal fun MdbxKeyFileSection(
                     onClick = onPickKeyFile,
                     modifier = Modifier.weight(1f)
                 ) {
-                    Text("选择")
+                    Text(strings.get(R.string.select))
                 }
                 Button(
                     onClick = onGenerateKeyFile,
                     modifier = Modifier.weight(1f)
                 ) {
-                    Text("生成")
+                    Text(strings.get(R.string.generator_generate))
                 }
             }
             keyFileError?.let { error ->

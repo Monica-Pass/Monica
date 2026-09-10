@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="page_adjustment_preview_games">Games</string>
+    <string name="page_adjustment_preview_folder">Folder 1</string>
+    <string name="page_adjustment_preview_subfolder">Subfolder</string>
+</resources>

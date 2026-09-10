@@ -51,6 +51,7 @@ fun MdbxOneDriveCreateScreen(
     viewModel: MdbxViewModel,
     onNavigateBack: () -> Unit
 ) {
+    val strings = rememberScreenStrings()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val activity = remember(context) { context.findActivity() }
@@ -91,7 +92,7 @@ fun MdbxOneDriveCreateScreen(
                 keyFileError = null
                 viewModel.readSelectedKeyFile(uri)
                     .onSuccess { keyFile = it }
-                    .onFailure { keyFileError = it.message ?: "无法读取 MDBX 密钥文件" }
+                    .onFailure { keyFileError = it.message ?: strings.get(R.string.mdbx_ui_key_file_read_error) }
             }
         }
     }
@@ -104,7 +105,7 @@ fun MdbxOneDriveCreateScreen(
                 keyFileError = null
                 viewModel.writeGeneratedKeyFile(uri)
                     .onSuccess { keyFile = it }
-                    .onFailure { keyFileError = it.message ?: "无法生成 MDBX 密钥文件" }
+                    .onFailure { keyFileError = it.message ?: strings.get(R.string.mdbx_ui_key_file_generate_error) }
             }
         }
     }
@@ -123,7 +124,7 @@ fun MdbxOneDriveCreateScreen(
                     entries = listing.entries
                 },
                 onFailure = { error ->
-                    authError = error.toOneDriveUserMessage("OneDrive 目录加载失败")
+                    authError = error.toOneDriveUserMessage(strings.get(R.string.mdbx_ui_onedrive_folder_error))
                 }
             )
             isLoadingEntries = false
@@ -164,7 +165,7 @@ fun MdbxOneDriveCreateScreen(
                     loadDirectory("")
                 }
                 .onFailure { error ->
-                    authError = error.toOneDriveUserMessage("OneDrive 登录失败")
+                    authError = error.toOneDriveUserMessage(strings.get(R.string.keepass_onedrive_sign_in_failed))
                 }
             isConnecting = false
         }
@@ -176,7 +177,7 @@ fun MdbxOneDriveCreateScreen(
                 title = { Text(stringResource(R.string.mdbx_create_vault_title)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back))
                     }
                 }
             )
@@ -331,7 +332,7 @@ fun MdbxOneDriveCreateScreen(
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(stringResource(R.string.mdbx_creating_vault))
                 } else {
-                    Text("创建 OneDrive 保险库")
+                    Text(strings.get(R.string.mdbx_ui_onedrive_create_vault))
                 }
             }
 

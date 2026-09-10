@@ -4,11 +4,13 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import takagi.ru.monica.localization.xmlTestStrings
 import takagi.ru.monica.repository.MdbxHealthIssueDiagnostic
 import takagi.ru.monica.repository.MdbxHealthSeverity
 import takagi.ru.monica.repository.MdbxVaultDiagnostics
 
 class MdbxHealthGuidanceTest {
+    private val strings = xmlTestStrings("zh")
 
     @Test
     fun duplicateTombstonesBecomeFriendlyRecoveryGuidance() {
@@ -24,7 +26,7 @@ class MdbxHealthGuidanceTest {
             )
         )
 
-        val guidance = diagnostics.healthGuidance().single()
+        val guidance = diagnostics.healthGuidance(strings).single()
 
         assertEquals("删除记录重复", guidance.title)
         assertEquals(MdbxHealthGuidanceAction.SNAPSHOTS, guidance.action)
@@ -47,7 +49,7 @@ class MdbxHealthGuidanceTest {
             )
         )
 
-        val guidance = diagnostics.healthGuidance().single()
+        val guidance = diagnostics.healthGuidance(strings).single()
 
         assertEquals(0, diagnostics.healthIssueCount)
         assertEquals(1, diagnostics.healthNoticeCount)
@@ -91,7 +93,7 @@ class MdbxHealthGuidanceTest {
             )
         )
 
-        val guidance = diagnostics.healthGuidance().single()
+        val guidance = diagnostics.healthGuidance(strings).single()
 
         assertEquals("附件分片不完整（2 项）", guidance.title)
         assertEquals(2, guidance.technicalDetails.size)
@@ -111,7 +113,7 @@ class MdbxHealthGuidanceTest {
             )
         )
 
-        val guidance = diagnostics.healthGuidance().single()
+        val guidance = diagnostics.healthGuidance(strings).single()
 
         assertEquals("发现未识别的数据库异常", guidance.title)
         assertEquals(MdbxHealthGuidanceAction.MAINTENANCE, guidance.action)
@@ -143,9 +145,36 @@ class MdbxHealthGuidanceTest {
                 healthIssues = listOf(
                     issue(MdbxHealthSeverity.ERROR, category, description)
                 )
-            ).healthGuidance().single()
+            ).healthGuidance(strings).single()
 
             assertFalse("$category should have dedicated guidance", guidance.title.contains("未识别"))
+        }
+    }
+
+    @Test
+    fun changingLanguageKeepsDiagnosticClassificationAndTechnicalEvidence() {
+        val diagnosticText = "vault header authentication requires an unlocked keyring for verification"
+        val diagnostics = diagnostics(
+            integrityOk = true,
+            healthIssues = listOf(issue(
+                MdbxHealthSeverity.WARNING,
+                "vault-header-integrity",
+                diagnosticText
+            ))
+        )
+        val titles = mapOf(
+            "en" to "Security verification is pending",
+            "ru" to "Проверка безопасности ещё не завершена",
+            "zh" to "等待完成安全校验"
+        )
+
+        titles.forEach { (language, title) ->
+            val guidance = diagnostics.healthGuidance(xmlTestStrings(language)).single()
+            assertEquals(title, guidance.title)
+            assertEquals(MdbxHealthSeverity.WARNING, guidance.severity)
+            assertEquals(MdbxHealthGuidanceAction.RECHECK, guidance.action)
+            assertEquals(listOf(diagnosticText), guidance.technicalDetails)
+            assertEquals(0, diagnostics.healthIssueCount)
         }
     }
 
