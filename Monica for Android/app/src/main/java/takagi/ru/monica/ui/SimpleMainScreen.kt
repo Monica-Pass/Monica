@@ -1321,7 +1321,7 @@ fun SimpleMainScreen(
         }
     }
     val keepassDatabases by localKeePassViewModel.allDatabases.collectAsState()
-    val mdbxDatabases by mdbxViewModel.allDatabases.collectAsState()
+    val mdbxDatabases by mdbxViewModel.availableDatabases.collectAsState()
     val bitwardenVaults by bitwardenViewModel.vaults.collectAsState()
     val selectedMdbxDatabaseId = remember(currentFilter) {
         when (val filter = currentFilter) {

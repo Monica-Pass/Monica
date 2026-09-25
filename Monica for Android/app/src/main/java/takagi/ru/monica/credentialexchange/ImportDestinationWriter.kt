@@ -392,7 +392,7 @@ class ImportDestinationWriter(
                     add(ImportDestinationOption(ImportDestination(ImportDestinationKind.KEEPASS, record.id), record.name,
                         if (writable) "KeePass · KDBX" else context.getString(R.string.exchange_destination_readonly), writable || forExport))
                 }
-                db.localMdbxDatabaseDao().getAllDatabasesSnapshot().forEach { record ->
+                db.localMdbxDatabaseDao().getAvailableDatabasesSnapshot().forEach { record ->
                     add(ImportDestinationOption(ImportDestination(ImportDestinationKind.MDBX, record.id), record.name, "MDBX"))
                 }
                 db.bitwardenVaultDao().getAllVaults().forEach { vault ->

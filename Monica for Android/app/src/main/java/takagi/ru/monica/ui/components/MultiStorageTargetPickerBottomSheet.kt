@@ -57,6 +57,7 @@ import takagi.ru.monica.data.Category
 import takagi.ru.monica.data.KeePassOperationBlockReason
 import takagi.ru.monica.data.LocalKeePassDatabase
 import takagi.ru.monica.data.LocalMdbxDatabase
+import takagi.ru.monica.data.isUsable
 import takagi.ru.monica.data.isMonicaLocalCategory
 import takagi.ru.monica.data.writeOperationAvailability
 import takagi.ru.monica.data.bitwarden.BitwardenFolder
@@ -152,7 +153,7 @@ fun MultiStorageTargetPickerBottomSheet(
         buildList {
             if (showMonicaLocal) add(StoragePickerSource.MonicaLocal)
             keepassDatabases.forEach { add(StoragePickerSource.KeePassDatabase(it)) }
-            mdbxDatabases.forEach { add(StoragePickerSource.MdbxDatabase(it)) }
+            mdbxDatabases.filter { it.isUsable }.forEach { add(StoragePickerSource.MdbxDatabase(it)) }
             bitwardenVaults.forEach { add(StoragePickerSource.BitwardenVaultSource(it)) }
         }
     }
@@ -182,7 +183,7 @@ fun MultiStorageTargetPickerBottomSheet(
         keepassGroupsByDatabase[database.id] = groups
     }
     val mdbxFoldersByDatabase = mutableMapOf<Long, List<MdbxStoredFolderEntry>>()
-    mdbxDatabases.forEach { database ->
+    mdbxDatabases.filter { it.isUsable }.forEach { database ->
         val folders by getMdbxFolders(database.id).collectAsState(initial = emptyList())
         mdbxFoldersByDatabase[database.id] = folders
     }

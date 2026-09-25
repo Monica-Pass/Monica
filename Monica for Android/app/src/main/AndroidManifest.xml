@@ -50,6 +50,19 @@
 
     <!-- Android 11+ 包可见性声明 - 用于应用列表功能 -->
     <queries>
+        <!-- Custom icons from user-installed launcher icon packs. -->
+        <intent>
+            <action android:name="org.adw.launcher.THEMES" />
+        </intent>
+        <intent>
+            <action android:name="org.adw.launcher.icons.ACTION_PICK_ICON" />
+        </intent>
+        <intent>
+            <action android:name="com.novalauncher.THEME" />
+        </intent>
+        <intent>
+            <action android:name="com.gau.go.launcherex.theme" />
+        </intent>
         <package android:name="moe.shizuku.privileged.api" />
         <intent>
             <action android:name="androidx.identitycredentials.action.IMPORT_CREDENTIALS" />
@@ -236,7 +249,7 @@
         <!-- Credential Provider Service (Passkey, Android 14+) -->
         <service
             android:name=".passkey.MonicaCredentialProviderService"
-            android:label="@string/app_name"
+            android:label="@string/app_label"
             android:icon="@mipmap/ic_launcher_modern"
             android:enabled="true"
             android:exported="true"

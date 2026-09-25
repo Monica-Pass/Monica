@@ -29,8 +29,11 @@
     <string name="share">Compartir</string>
     <string name="field_action_more">Más campo acciones</string>
     <string name="field_action_show_large">Mostrar en texto grande</string>
-    <string name="field_action_show_barcode">Mostrar como código QR</string>
+    <string name="field_action_show_barcode">Mostrar como código QR / de barras</string>
     <string name="field_action_barcode_failed">No se pudo crear el código QR para este valor.</string>
+    <string name="field_barcode_format_qr">Código QR</string>
+    <string name="field_barcode_format_linear">Código de barras</string>
+    <string name="field_barcode_linear_failed">Este valor no se puede codificar como código de barras Code 128. Usa texto ASCII de hasta 80 caracteres.</string>
     <string name="no_results">No se encontraron resultados</string>
     <string name="note_placeholder">Escribe algo...</string>
     <string name="new_note">Nueva nota</string>
@@ -1360,6 +1363,10 @@
     <string name="custom_icon_dialog_title">Establecer icono personalizado</string>
     <string name="custom_icon_pick_simple">Elegir de la biblioteca de iconos</string>
     <string name="custom_icon_upload_image">Subir imagen</string>
+    <string name="custom_icon_use_emoji">Usar emoji</string>
+    <string name="custom_icon_emoji_hint">Escribe un emoji</string>
+    <string name="custom_icon_emoji_support">Se guarda un emoji con esta entrada; no hace falta ningún paquete de iconos adicional.</string>
+    <string name="custom_icon_emoji_invalid">Introduce exactamente un emoji.</string>
     <string name="custom_icon_clear">Usar ícono de sitio web</string>
     <string name="custom_icon_search_hint">Buscar íconos</string>
     <string name="custom_icon_search_empty">No se encontraron íconos coincidentes</string>
@@ -4667,4 +4674,12 @@
     <string name="wallet_stack_open_card">Abrir detalles de tarjeta</string>
     <string name="language_french">Français</string>
     <string name="qs_lang_french">Français</string>
+    <string name="custom_icon_pick_installed">Iconos instalados</string>
+    <string name="custom_icon_installed_apps">Aplicaciones</string>
+    <string name="custom_icon_installed_packs">Paquetes de iconos</string>
+    <string name="custom_icon_installed_empty_packs">No se encontraron paquetes de iconos compatibles. Instala uno y vuelve a abrir este selector.</string>
+    <string name="custom_icon_installed_empty_icons">Este paquete no contiene iconos compatibles.</string>
+    <string name="custom_icon_installed_load_failed">No se pudieron cargar los iconos. Inténtalo de nuevo.</string>
+    <string name="custom_icon_installed_save_failed">No se pudo usar este icono. Inténtalo de nuevo o elige otro.</string>
+    <string name="field_barcode_linear_too_wide">Este código de barras necesita más ancho de pantalla. Gira el dispositivo o usa un código QR.</string>
 </resources>

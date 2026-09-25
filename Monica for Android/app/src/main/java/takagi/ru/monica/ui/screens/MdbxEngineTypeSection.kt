@@ -38,6 +38,7 @@ fun MdbxEngineTypeSection(
     selectedEngine: MdbxEngineType,
     onEngineChange: (MdbxEngineType) -> Unit,
     remote: Boolean,
+    allowLegacyImport: Boolean = false,
     selectedTigaMode: MdbxTigaMode? = null,
     onTigaModeChange: ((MdbxTigaMode) -> Unit)? = null
 ) {
@@ -79,25 +80,33 @@ fun MdbxEngineTypeSection(
                 ) {
                     HorizontalDivider()
                     Text(strings.get(R.string.mdbx_ui_database_engine), style = MaterialTheme.typography.labelLarge)
-                    SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
-                        val engines = MdbxEngineType.entries
-                        engines.forEachIndexed { index, engine ->
-                            SegmentedButton(
-                                selected = selectedEngine == engine,
-                                onClick = { onEngineChange(engine) },
-                                shape = SegmentedButtonDefaults.itemShape(index, engines.size)
-                            ) {
-                                Text(if (engine == MdbxEngineType.KOTLIN_MDBX1) "MDBX 1" else "MDBX 2")
+                    if (allowLegacyImport) {
+                        SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+                            val engines = listOf(MdbxEngineType.RUST_MDBX2, MdbxEngineType.KOTLIN_MDBX1)
+                            engines.forEachIndexed { index, engine ->
+                                SegmentedButton(
+                                    selected = selectedEngine == engine,
+                                    onClick = { onEngineChange(engine) },
+                                    shape = SegmentedButtonDefaults.itemShape(index, engines.size)
+                                ) {
+                                    Text(if (engine == MdbxEngineType.KOTLIN_MDBX1)
+                                        strings.get(R.string.mdbx_legacy_import_option) else "MDBX 2")
+                                }
                             }
                         }
+                    } else {
+                        Text("MDBX 2", style = MaterialTheme.typography.titleMedium)
                     }
                     Text(
                         text = when {
+                            !allowLegacyImport -> strings.get(R.string.mdbx_legacy_creation_disabled)
+                            selectedEngine == MdbxEngineType.KOTLIN_MDBX1 ->
+                                strings.get(R.string.mdbx_legacy_unavailable_description)
                             selectedEngine == MdbxEngineType.RUST_MDBX2 && remote ->
                                 strings.get(R.string.mdbx_ui_engine_remote_description)
                             selectedEngine == MdbxEngineType.RUST_MDBX2 ->
                                 strings.get(R.string.mdbx_ui_engine_local_description)
-                            else -> strings.get(R.string.mdbx_ui_engine_legacy_description)
+                            else -> strings.get(R.string.mdbx_ui_engine_local_description)
                         },
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant

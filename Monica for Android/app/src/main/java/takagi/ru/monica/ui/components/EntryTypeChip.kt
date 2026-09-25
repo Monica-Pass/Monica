@@ -48,7 +48,7 @@ import takagi.ru.monica.R
  * Material 3 Expressive 风格：去掉 AssistChip 的描边，换成小圆角的 tonal pill，
  * 点击弹出 DropdownMenu 选类型。禁用时只做透明度淡出，保持形状一致。
  */
-enum class EntryTypeChipOption { PASSWORD, WIFI, SSH_KEY, BARCODE, API_TOKEN, GPG_KEY }
+enum class EntryTypeChipOption { PASSWORD, API_KEY, WIFI, SSH_KEY, BARCODE, API_TOKEN, GPG_KEY }
 
 @Composable
 fun EntryTypeChip(
@@ -58,6 +58,7 @@ fun EntryTypeChip(
     enabled: Boolean = true,
     showApiToken: Boolean = true,
     showGpg: Boolean = false,
+    showApiKey: Boolean = false,
     drawContainer: Boolean = true,
     contentColorOverride: Color? = null
 ) {
@@ -138,7 +139,11 @@ fun EntryTypeChip(
         shadowElevation = 0.dp,
         tonalElevation = 0.dp
     ) {
-        EntryTypeChipOption.entries.filter { (showApiToken || it != EntryTypeChipOption.API_TOKEN) && (showGpg || it != EntryTypeChipOption.GPG_KEY) }.forEach { option ->
+        EntryTypeChipOption.entries.filter {
+            (showApiToken || it != EntryTypeChipOption.API_TOKEN) &&
+                (showGpg || it != EntryTypeChipOption.GPG_KEY) &&
+                (showApiKey || it != EntryTypeChipOption.API_KEY)
+        }.forEach { option ->
             val label = stringResource(option.labelRes())
             val isCurrent = option == current
             DropdownMenuItem(
@@ -183,6 +188,7 @@ fun EntryTypeChip(
 }
 
 private fun EntryTypeChipOption.labelRes() = when (this) {
+    EntryTypeChipOption.API_KEY -> R.string.api_key_title
     EntryTypeChipOption.GPG_KEY -> R.string.gpg_title
     EntryTypeChipOption.API_TOKEN -> R.string.entry_type_api_token
     EntryTypeChipOption.PASSWORD -> R.string.entry_type_password
@@ -192,6 +198,7 @@ private fun EntryTypeChipOption.labelRes() = when (this) {
 }
 
 private fun EntryTypeChipOption.icon(): ImageVector = when (this) {
+    EntryTypeChipOption.API_KEY -> Icons.Default.Key
     EntryTypeChipOption.GPG_KEY -> Icons.Default.Key
     EntryTypeChipOption.API_TOKEN -> Icons.Default.Key
     EntryTypeChipOption.PASSWORD -> Icons.Default.Password

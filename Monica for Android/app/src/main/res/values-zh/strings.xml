@@ -29,8 +29,11 @@
     <string name="share">分享</string>
     <string name="field_action_more">更多字段操作</string>
     <string name="field_action_show_large">以大号字体显示</string>
-    <string name="field_action_show_barcode">显示为二维码</string>
+    <string name="field_action_show_barcode">显示为二维码/条码</string>
     <string name="field_action_barcode_failed">无法为该内容生成二维码。</string>
+    <string name="field_barcode_format_qr">二维码</string>
+    <string name="field_barcode_format_linear">条码</string>
+    <string name="field_barcode_linear_failed">该内容无法生成 Code 128 条码，请使用不超过 80 个字符的 ASCII 文本。</string>
     <string name="no_results">未找到结果</string>
     <string name="note_placeholder">记点什么...</string>
     <string name="new_note">新建笔记</string>
@@ -1347,6 +1350,10 @@
     <string name="custom_icon_dialog_title">设置自定义图标</string>
     <string name="custom_icon_pick_simple">从图标库选择</string>
     <string name="custom_icon_upload_image">上传图片</string>
+    <string name="custom_icon_use_emoji">使用 Emoji</string>
+    <string name="custom_icon_emoji_hint">输入一个 Emoji</string>
+    <string name="custom_icon_emoji_support">随条目保存一个 Emoji，无需额外图标包。</string>
+    <string name="custom_icon_emoji_invalid">请只输入一个 Emoji。</string>
     <string name="custom_icon_clear">使用网站图标</string>
     <string name="custom_icon_search_hint">搜索图标</string>
     <string name="custom_icon_search_empty">没有匹配的图标</string>
@@ -4650,4 +4657,12 @@
     <string name="keepass_native_move_folders">移动 %1$d 个文件夹</string>
     <string name="language_french">Français</string>
     <string name="qs_lang_french">Français</string>
+    <string name="custom_icon_pick_installed">已安装图标</string>
+    <string name="custom_icon_installed_apps">应用图标</string>
+    <string name="custom_icon_installed_packs">图标包</string>
+    <string name="custom_icon_installed_empty_packs">未找到兼容的图标包。安装图标包后，请重新打开此选择器。</string>
+    <string name="custom_icon_installed_empty_icons">此图标包没有可用的图标。</string>
+    <string name="custom_icon_installed_load_failed">无法加载图标，请重试。</string>
+    <string name="custom_icon_installed_save_failed">无法使用此图标，请重试或选择其他图标。</string>
+    <string name="field_barcode_linear_too_wide">屏幕宽度不足以清晰显示此条码，请横屏查看或使用二维码。</string>
 </resources>

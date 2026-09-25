@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_key_title">API Key</string>
+    <string name="api_key_add">Add API Key</string>
+    <string name="api_key_edit">Edit API Key</string>
+    <string name="api_key_provider">Provider name *</string>
+    <string name="api_key_provider_hint">e.g. Claude, a custom AI provider</string>
+    <string name="api_key_website">Official website (optional)</string>
+    <string name="api_key_website_label">Official website</string>
+    <string name="api_key_secret_required">API Key *</string>
+    <string name="api_key_url">API request URL (optional)</string>
+    <string name="api_key_url_label">API request URL</string>
+    <string name="api_key_required">Required</string>
+    <string name="api_key_invalid_url">Enter an http:// or https:// URL with a host and no embedded credentials.</string>
+    <string name="api_key_show">Show key</string>
+    <string name="api_key_hide">Hide key</string>
+    <string name="api_key_open_website">Open website</string>
+    <string name="api_key_load_error">Could not read this API Key. Reopen its database and try again.</string>
+    <string name="api_key_save_error">Could not save to all selected locations. Check their availability and try again.</string>
+    <string name="api_key_locked">Your vault is locked. Unlock it to continue.</string>
+</resources>

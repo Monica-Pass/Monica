@@ -10,6 +10,7 @@ import java.util.Date
 import java.util.UUID
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 import org.junit.After
@@ -28,6 +29,7 @@ import takagi.ru.monica.attachments.model.AttachmentSource
 import takagi.ru.monica.data.ItemType
 import takagi.ru.monica.data.LocalMdbxDatabase
 import takagi.ru.monica.data.LocalMdbxDatabaseDao
+import takagi.ru.monica.data.isUsable
 import takagi.ru.monica.data.MdbxSourceType
 import takagi.ru.monica.data.MdbxSyncStatus
 import takagi.ru.monica.data.MdbxTigaMode
@@ -510,6 +512,10 @@ class MdbxVaultStoreInstrumentedCompatibilityTest {
 
         override fun getAllDatabases(): Flow<List<LocalMdbxDatabase>> = flow
         override suspend fun getAllDatabasesSnapshot(): List<LocalMdbxDatabase> = databases.values.toList()
+        override fun getAvailableDatabases(): Flow<List<LocalMdbxDatabase>> =
+            flow.map { rows -> rows.filter { it.isUsable } }
+        override suspend fun getAvailableDatabasesSnapshot(): List<LocalMdbxDatabase> =
+            databases.values.filter { it.isUsable }
         override suspend fun getDatabaseById(id: Long): LocalMdbxDatabase? = databases[id]
         override suspend fun getDefaultDatabase(): LocalMdbxDatabase? = databases.values.firstOrNull { it.isDefault }
         override fun getDatabasesByLocation(location: String): Flow<List<LocalMdbxDatabase>> =

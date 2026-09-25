@@ -10,12 +10,11 @@ class KeePassEntryFieldPatch private constructor(
     private val removeFieldNames: Set<String>
 ) {
     fun applyTo(entry: Entry): Entry {
-        val removeFieldKeys = removeFieldNames.mapTo(mutableSetOf()) { KeePassFieldRegistry.normalize(it) }
         val updatedFields = linkedMapOf<String, EntryValue>()
 
         entry.fields.forEach { (name, value) ->
             val shouldRemove =
-                KeePassFieldRegistry.normalize(name) in removeFieldKeys ||
+                name in removeFieldNames ||
                     shouldRemoveManagedField(name)
             if (!shouldRemove) {
                 updatedFields[name] = value
@@ -58,35 +57,27 @@ class KeePassEntryFieldPatch private constructor(
 
     private fun buildBaseFields(entry: Entry): List<KeePassFieldBaseValue> {
         val touchedNames = linkedSetOf<String>()
-        val explicitRemoveKeys = removeFieldNames.mapTo(mutableSetOf()) { KeePassFieldRegistry.normalize(it) }
         replacementFields.keys.forEach { touchedNames += it }
         removeFieldNames.forEach { touchedNames += it }
         entry.fields.forEach { (name, _) ->
-            if (removeManagedField(name) || KeePassFieldRegistry.normalize(name) in explicitRemoveKeys) {
+            if (shouldRemoveManagedField(name) || name in removeFieldNames) {
                 touchedNames += name
             }
         }
 
-        val existingByNormalized = linkedMapOf<String, Pair<String, EntryValue>>()
-        entry.fields.forEach { (name, value) ->
-            existingByNormalized[KeePassFieldRegistry.normalize(name)] = name to value
-        }
         return touchedNames
-            .mapNotNull { name -> name.trim().takeIf(String::isNotBlank) }
-            .distinctBy { KeePassFieldRegistry.normalize(it) }
             .map { name ->
-                val existing = existingByNormalized[KeePassFieldRegistry.normalize(name)]
+                val existing = entry.fields[name]
                 if (existing == null) {
                     KeePassFieldBaseValue(
                         name = name,
                         present = false
                     )
                 } else {
-                    val (existingName, value) = existing
                     KeePassFieldBaseValue(
-                        name = existingName,
-                        value = runCatching { value.content }.getOrDefault(""),
-                        protected = value is EntryValue.Encrypted,
+                        name = name,
+                        value = existing.content,
+                        protected = existing is EntryValue.Encrypted,
                         present = true
                     )
                 }
@@ -103,7 +94,7 @@ class KeePassEntryFieldPatch private constructor(
                 replacementFields = replacementFields.toMap(),
                 removeManagedField = removeManagedField,
                 removeFieldNames = removeFieldNames
-                    .mapNotNull { it.trim().takeIf(String::isNotBlank) }
+                    .filter(String::isNotBlank)
                     .toSet()
             )
         }

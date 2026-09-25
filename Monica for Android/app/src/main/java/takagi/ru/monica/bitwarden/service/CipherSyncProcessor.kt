@@ -374,6 +374,7 @@ class CipherSyncProcessor(
         val remotePasskeyBindings = customFields["monica_passkey_bindings"].orEmpty()
         val remoteSshKeyData = buildSshKeyDataFromCustomFields(customFields)
         val remoteLoginType = when {
+            takagi.ru.monica.data.model.ApiKeyEntryFields.isApiKey(customFields) -> takagi.ru.monica.data.model.ApiKeyEntryFields.TYPE
             takagi.ru.monica.data.model.GpgEntryFields.isGpg(customFields) -> "GPG_KEY"
                     isSteamMaFileEntry -> LOGIN_TYPE_STEAM_MAFILE
             remoteSshKeyData.isNotBlank() -> LOGIN_TYPE_SSH_KEY
@@ -432,7 +433,8 @@ class CipherSyncProcessor(
                 passwordEntryDao.update(
                     existing.copy(
                         title = name,
-                        website = parsedUris.website.ifBlank { existing.website },
+                        website = if (existing.isApiKeyEntry() || remoteLoginType == takagi.ru.monica.data.model.ApiKeyEntryFields.TYPE)
+                            parsedUris.website else parsedUris.website.ifBlank { existing.website },
                         username = username,
                         password = encryptedPassword,
                         notes = notes,
@@ -494,7 +496,8 @@ class CipherSyncProcessor(
             
             val updated = existing.copy(
                 title = name,
-                website = parsedUris.website.ifBlank { existing.website },
+                website = if (existing.isApiKeyEntry() || remoteLoginType == takagi.ru.monica.data.model.ApiKeyEntryFields.TYPE)
+                    parsedUris.website else parsedUris.website.ifBlank { existing.website },
                 username = username,
                 password = encryptedPassword,
                 notes = notes,
@@ -1811,6 +1814,7 @@ class CipherSyncProcessor(
         existing: PasswordEntry,
         remoteLoginType: String
     ): String = when {
+        remoteLoginType == takagi.ru.monica.data.model.ApiKeyEntryFields.TYPE -> remoteLoginType
         remoteLoginType.equals(LOGIN_TYPE_STEAM_MAFILE, ignoreCase = true) ->
             LOGIN_TYPE_STEAM_MAFILE
         remoteLoginType.equals(LOGIN_TYPE_SSH_KEY, ignoreCase = true) ->

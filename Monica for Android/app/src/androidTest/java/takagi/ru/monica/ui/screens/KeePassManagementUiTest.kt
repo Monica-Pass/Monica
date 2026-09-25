@@ -56,6 +56,7 @@ import takagi.ru.monica.keepass.*
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.ui.theme.MonicaTheme
 import takagi.ru.monica.utils.KeePassUriPermissionState
+import takagi.ru.monica.utils.KeePassKdbxService
 import takagi.ru.monica.viewmodel.LocalKeePassViewModel
 
 /** Real production components and local KDBX fixtures; cloud tests stop before sign-in or connection. */
@@ -402,6 +403,130 @@ class KeePassManagementUiTest {
             Espresso.pressBack()
         }
     }
+
+    @Test fun nativeManagerSavesPropertiesAndAdvancesHotpThroughRealStorage() {
+        Fixture().use { fixture ->
+            val database = fixture.createDatabase()
+            val created = runBlocking {
+                val browser = fixture.model.openNativeBrowser(database.id).getOrThrow()
+                fixture.model.createNativeEntry(database.id, browser.rootGroup.identity.groupUuid,
+                    listOf(KeePassFieldChange("Title", "Device login"), KeePassFieldChange("UserName", "alice"),
+                        KeePassFieldChange("Password", "Synthetic123!", true),
+                        KeePassFieldChange("HmacOtp-Secret-Base32", "GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ", true),
+                        KeePassFieldChange("HmacOtp-Counter", "1")), browser.sourceRevision.sha256).getOrThrow()
+            }
+            show(shell = false) {
+                KeePassNativeManagerScreen(database, fixture.model, {}, {})
+            }
+            compose.waitUntil(20_000) { compose.onAllNodesWithText("Device login").fetchSemanticsNodes().isNotEmpty() }
+            compose.onNodeWithText("Device login").performClick()
+            compose.onNodeWithTag("native_hotp_next").performScrollTo().performClick()
+            compose.waitUntil(20_000) {
+                compose.onAllNodesWithText(context.createConfigurationContext(Configuration(context.resources.configuration).apply {
+                    setLocale(testLocale.value)
+                }).getString(R.string.counter_value, 2)).fetchSemanticsNodes().isNotEmpty()
+            }
+            compose.onNodeWithContentDescription(label(R.string.edit)).performClick()
+            compose.onNode(hasText("Device login") and hasSetTextAction()).performScrollTo().performTextReplacement("Edited device login")
+            compose.onNodeWithTag("native_entry_editor").performScrollToNode(hasTestTag("native_entry_tags"))
+            compose.onNodeWithTag("native_entry_tags").performScrollTo().performTextReplacement("work\ncomma,inside")
+            compose.onNodeWithTag("native_entry_expires").performScrollTo().performClick()
+            compose.onNodeWithTag("native_entry_expiry_time").performScrollTo().performClick()
+            androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.withId(android.R.id.button1))
+                .perform(androidx.test.espresso.action.ViewActions.click())
+            androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.withId(android.R.id.button1))
+                .perform(androidx.test.espresso.action.ViewActions.click())
+            compose.onNodeWithTag("native_entry_properties").performScrollTo().assertIsDisplayed()
+            capture("native-entry-editor-properties", system = true)
+            compose.onNodeWithContentDescription(label(R.string.save)).performClick()
+            compose.waitUntil(20_000) { compose.onAllNodesWithTag("native_hotp_next").fetchSemanticsNodes().isNotEmpty() }
+            compose.onNodeWithTag("native_entry_properties_summary").performScrollTo().assertIsDisplayed()
+            compose.onNodeWithText("work, comma, inside").assertIsDisplayed()
+            capture("native-entry-properties", system = true)
+            val saved = runBlocking { fixture.model.openNativeBrowser(database.id).getOrThrow().entry(created.identity)!! }
+            assertEquals("Edited device login", saved.title)
+            assertEquals(KeePassNativeEntryKind.PASSWORD, saved.kind)
+            assertNull(saved.field(KeePassTemplateEngine.TEMPLATE_MARKER_FIELD))
+            assertEquals(listOf("work", "comma", "inside"), saved.tags)
+            assertEquals(true, saved.times?.expires)
+            assertEquals("2", saved.field("HmacOtp-Counter")?.rawValue)
+            assertEquals("alice", saved.field("UserName")?.rawValue)
+            assertEquals("Synthetic123!", saved.field("Password")?.rawValue)
+            val visiblePasswords = runBlocking {
+                KeePassKdbxService(context, fixture.dao, SecurityManager(context)).readPasswordEntries(database.id).getOrThrow()
+            }
+            assertEquals("Edited device login", visiblePasswords.single().title)
+        }
+    }
+
+    @Test fun hotpBusyFailureAndReadOnlyKeepThePersistedCounterVisible() {
+        Fixture().use { fixture ->
+            val database = fixture.createDatabase()
+            val entry = runBlocking {
+                val browser = fixture.model.openNativeBrowser(database.id).getOrThrow()
+                fixture.model.createNativeEntry(database.id, browser.rootGroup.identity.groupUuid,
+                    listOf(KeePassFieldChange("Title", "Offline HOTP"),
+                        KeePassFieldChange("HmacOtp-Secret-Base32", "GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ", true),
+                        KeePassFieldChange("HmacOtp-Counter", "2")), browser.sourceRevision.sha256).getOrThrow()
+            }
+            val writable = mutableStateOf(true)
+            var pending: ((String?) -> Unit)? = null
+            show(shell = false) { TestNativeDetail(entry, writable.value) { _, result -> pending = result } }
+            compose.onNodeWithTag("native_hotp_next").performScrollTo().performClick().assertIsNotEnabled()
+            compose.runOnIdle { pending!!.invoke("Synthetic write failure") }
+            compose.onNodeWithText("Synthetic write failure").performScrollTo().assertIsDisplayed()
+            compose.onNodeWithTag("native_hotp_next").assertIsEnabled()
+            capture("native-hotp-failure", system = true)
+            compose.runOnIdle { writable.value = false }
+            compose.onNodeWithTag("native_hotp_next").assertIsNotEnabled()
+            compose.onNodeWithContentDescription(label(R.string.edit)).assertIsNotEnabled()
+            val saved = runBlocking { fixture.model.openNativeBrowser(database.id).getOrThrow().entry(entry.identity)!! }
+            assertEquals("2", saved.field("HmacOtp-Counter")?.rawValue)
+        }
+    }
+
+    @Test fun nativeDetailRefreshesResolvedFieldsForTheSameUuidAtLargeFont() {
+        fontScale.floatValue = 1.8f
+        frameWidth.value = 320.dp
+        Fixture().use { fixture ->
+            val database = fixture.createDatabase()
+            val created = runBlocking {
+                val browser = fixture.model.openNativeBrowser(database.id).getOrThrow()
+                fixture.model.createNativeEntry(database.id, browser.rootGroup.identity.groupUuid,
+                    listOf(KeePassFieldChange("Title", "Reference entry"), KeePassFieldChange("UserName", "{S:Account}"),
+                        KeePassFieldChange("Account", "first-account")), browser.sourceRevision.sha256).getOrThrow()
+            }
+            val entry = mutableStateOf(created)
+            show(shell = false) { TestNativeDetail(entry.value, false) }
+            compose.onAllNodesWithText("first-account").onFirst().performScrollTo().assertIsDisplayed()
+            val updated = runBlocking {
+                val browser = fixture.model.openNativeBrowser(database.id).getOrThrow()
+                fixture.model.replaceNativeEntryFields(database.id, created.identity.entryUuid,
+                    listOf(KeePassFieldChange("Title", "Reference entry"), KeePassFieldChange("UserName", "{S:Account}"),
+                        KeePassFieldChange("Account", "updated-account")), browser.sourceRevision.sha256).getOrThrow()
+            }
+            compose.runOnIdle { entry.value = updated }
+            compose.onAllNodesWithText("updated-account").onFirst().performScrollTo().assertIsDisplayed()
+            compose.onAllNodesWithText("first-account").assertCountEquals(0)
+            compose.onNodeWithText("{S:Account}").assertDoesNotExist()
+            capture("native-entry-large-font", system = true)
+        }
+    }
+
+    @Composable private fun TestNativeDetail(
+        entry: KeePassNativeEntryRecord,
+        writable: Boolean,
+        advance: ((takagi.ru.monica.data.model.TotpData, (String?) -> Unit) -> Unit)? = null,
+    ) = NativeEntryDetailScreen(
+        entry = entry, modificationEnabled = writable, onBack = {}, onEdit = {},
+        onAddAttachment = { _, result -> result(null) },
+        onRenameAttachment = { _, _, result -> result(null) },
+        onExportAttachment = { _, _, result -> result(null) },
+        onDeleteAttachment = { _, result -> result(null) },
+        onRestoreHistory = { _, result -> result(null) },
+        onDeleteHistory = { _, result -> result(null) },
+        onAdvanceHotp = advance,
+    )
 
     @After fun restoreActivityResources() {
         originalActivityConfiguration?.let { original ->

@@ -129,6 +129,61 @@ class KeePassEntryPresentationPatchTest {
         assertEquals(1, entry.history.size)
     }
 
+    @Test
+    fun tagsExpiryAndFieldsSaveTogetherWithOneOriginalHistorySnapshot() {
+        val uuid = UUID.randomUUID()
+        val database = fixtureDatabase(uuid)
+        val original = findEntry(database, uuid)!!
+        val expiry = Instant.parse("2030-06-15T12:30:00Z")
+        val patch = propertyPatch(original, expiry)
+        val updated = KeePassChangeSetApplier().apply(database, patch).updatedDatabase
+        val entry = findEntry(updated, uuid)!!
+        assertEquals(listOf("work", "comma,inside"), entry.tags)
+        assertEquals(true, entry.times?.expires)
+        assertEquals(expiry, entry.times?.expiryTime)
+        assertEquals("Updated", entry.fields["Title"]?.content)
+        assertEquals(1, entry.history.size)
+        assertEquals(original.fields, entry.history.single().fields)
+        assertEquals(original.tags, entry.history.single().tags)
+        val cleared = KeePassChangeSetApplier().apply(updated, patch.copy(
+            operation = KeePassChangeOperation.ENTRY_PRESENTATION_PATCH,
+            entryPresentationPatch = KeePassEntryPresentationPatch(
+                tags = emptyList(), expires = false,
+                basePropertiesSignature = KeePassEntryFingerprint.buildProperties(entry),
+            ),
+        )).updatedDatabase.content.group.entries.single()
+        assertTrue(cleared.tags.isEmpty())
+        assertEquals(false, cleared.times?.expires)
+        assertEquals(expiry, cleared.times?.expiryTime)
+    }
+
+    @Test
+    fun remotePropertyChangeRejectsTheWholeEditBeforeUpdatingFields() {
+        val uuid = UUID.randomUUID()
+        val originalDatabase = fixtureDatabase(uuid)
+        val original = findEntry(originalDatabase, uuid)!!
+        val remote = originalDatabase.modifyParentGroup {
+            updateEntry(this, uuid) { it.copy(tags = listOf("remote")) }
+        }
+        val result = runCatching { KeePassChangeSetApplier().apply(remote,
+            propertyPatch(original, Instant.parse("2030-06-15T12:30:00Z"))) }
+        assertTrue(result.exceptionOrNull() is KeePassChangeConflictException)
+        assertEquals("Icon test", findEntry(remote, uuid)!!.fields["Title"]?.content)
+    }
+
+    private fun propertyPatch(original: Entry, expiry: Instant) = KeePassChangeSet(
+        databaseId = 42, target = KeePassChangeTarget.UNKNOWN_ENTRY,
+        operation = KeePassChangeOperation.ENTRY_EDIT_PATCH, entryUuid = original.uuid.toString(),
+        baseFingerprint = KeePassEntryFingerprint.build(original),
+        fieldPatch = KeePassFieldChangePatch(KeePassManagedFieldScope.EXPLICIT_ONLY,
+            listOf(KeePassFieldChange("Title", "Updated")),
+            baseFields = listOf(KeePassFieldBaseValue("Title", original.fields["Title"]?.content))),
+        entryPresentationPatch = KeePassEntryPresentationPatch(
+            tags = listOf("work", "comma,inside"), expires = true, expiryTimeEpochMillis = expiry.toEpochMilli(),
+            basePropertiesSignature = KeePassEntryFingerprint.buildProperties(original),
+        ),
+    )
+
     private fun fixtureDatabase(entryUuid: UUID): KeePassDatabase {
         return KeePassDatabase.Ver4x.create(
             rootName = "Root",

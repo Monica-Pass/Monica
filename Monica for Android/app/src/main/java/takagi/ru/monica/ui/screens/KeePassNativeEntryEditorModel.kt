@@ -1,8 +1,10 @@
 package takagi.ru.monica.ui.screens
 
 import java.util.Locale
+import java.net.URLDecoder
 import takagi.ru.monica.data.CustomFieldDraft
 import takagi.ru.monica.data.model.TotpData
+import takagi.ru.monica.data.model.OtpType
 import takagi.ru.monica.keepass.KeePassFieldChange
 import takagi.ru.monica.keepass.KeePassTotpCodec
 
@@ -47,7 +49,7 @@ internal data class NativeEntryEditorDraft(
         .sortedBy { it.order }
         .map { field ->
             KeePassFieldChange(
-                name = field.name.trim(),
+                name = field.name,
                 value = field.value,
                 protected = field.protected,
             )
@@ -55,7 +57,6 @@ internal data class NativeEntryEditorDraft(
 }
 
 internal enum class NativeEntryDraftError {
-    TITLE_REQUIRED,
     FIELD_NAME_REQUIRED,
     DUPLICATE_FIELD_NAME,
 }
@@ -73,11 +74,23 @@ internal fun newNativeEntryEditorDraft(): NativeEntryEditorDraft = NativeEntryEd
 internal fun buildNativeEntryEditorDraft(
     fields: List<KeePassFieldChange>,
 ): NativeEntryEditorDraft {
+    val preferredNames = NativeEntryStandardSlot.entries.associateWith { slot ->
+        val canonical = when (slot) {
+            NativeEntryStandardSlot.TITLE -> "Title"
+            NativeEntryStandardSlot.USERNAME -> "UserName"
+            NativeEntryStandardSlot.PASSWORD -> "Password"
+            NativeEntryStandardSlot.URL -> "URL"
+            NativeEntryStandardSlot.NOTES -> "Notes"
+        }
+        fields.firstOrNull { it.name == canonical }?.name
+            ?: fields.firstOrNull { nativeEntryStandardSlot(it.name) == slot }?.name
+    }
     val usedSlots = mutableSetOf<NativeEntryStandardSlot>()
+    val hasEditableTotp = editableNativeTotpData(fields) != null
     return NativeEntryEditorDraft(
-        fields = fields.filterNot { field -> isNativeTotpFieldName(field.name) }.mapIndexed { index, field ->
+        fields = fields.filterNot { field -> hasEditableTotp && isNativeTotpFieldName(field.name) }.mapIndexed { index, field ->
             val slot = nativeEntryStandardSlot(field.name)
-                ?.takeIf { usedSlots.add(it) }
+                ?.takeIf { preferredNames[it] == field.name && usedSlots.add(it) }
             NativeEntryEditorField(
                 id = index.toLong() + 1L,
                 name = field.name,
@@ -91,8 +104,12 @@ internal fun buildNativeEntryEditorDraft(
 }
 
 internal fun isNativeTotpFieldName(name: String): Boolean {
-    return name.trim().lowercase(Locale.ROOT) in NATIVE_TOTP_FIELD_NAMES
+    return KeePassTotpCodec.isOtpField(name)
 }
+
+// Unsupported or malformed OTP formats remain editable as raw fields instead of disappearing.
+internal fun editableNativeTotpData(fields: List<KeePassFieldChange>): TotpData? =
+    parseNativeTotpFields(fields)?.takeIf { it.otpType == OtpType.TOTP || it.otpType == OtpType.HOTP }
 
 internal fun mergeNativeTotpFields(
     fields: List<KeePassFieldChange>,
@@ -101,14 +118,60 @@ internal fun mergeNativeTotpFields(
 ): List<KeePassFieldChange> {
     val retained = fields.filterNot { field -> isNativeTotpFieldName(field.name) }
     if (data == null) return retained
-    return retained + KeePassTotpCodec.toKeePassFields(data, title).map { (name, value) ->
+    val encoded = KeePassTotpCodec.toKeePassFields(data, title)
+    require(encoded.isNotEmpty()) { "Invalid or unsupported OTP parameters" }
+    return retained + encoded.map { (name, value) ->
         KeePassFieldChange(
             name = name,
             value = value,
-            protected = name.equals(KeePassTotpCodec.FIELD_OTP, ignoreCase = true) ||
-                name.equals(KeePassTotpCodec.FIELD_TOTP_SEED, ignoreCase = true),
+            protected = KeePassTotpCodec.isSecretField(name),
         )
     }
+}
+
+/** Advancing HOTP never rewrites the secret, its encoding, or unrelated URI parameters. */
+internal fun advanceNativeHotpFields(fields: List<KeePassFieldChange>, data: TotpData): List<KeePassFieldChange> {
+    require(data.otpType == OtpType.HOTP && data.counter in 0 until Long.MAX_VALUE) { "HOTP counter exhausted" }
+    val counter = (data.counter + 1).toString()
+    fun withCounterQuery(raw: String): String {
+        val fragment = raw.indexOf('#').takeIf { it >= 0 } ?: raw.length
+        val body = raw.substring(0, fragment)
+        val queryIndex = body.indexOf('?')
+        val prefix = if (queryIndex >= 0) body.substring(0, queryIndex + 1) else ""
+        val query = if (queryIndex >= 0) body.substring(queryIndex + 1) else body
+        var found = false
+        val changed = query.split('&').map { part ->
+            val key = part.substringBefore('=')
+            if (runCatching { URLDecoder.decode(key, "UTF-8") }.getOrNull().equals("counter", true)) {
+                found = true
+                "$key=$counter"
+            } else part
+        }.toMutableList()
+        if (!found) changed += "counter=$counter"
+        return prefix + changed.joinToString("&") + raw.substring(fragment)
+    }
+    val updated = fields.map { field ->
+        when {
+            field.name.equals("HmacOtp-Counter", true) || field.name.equals("HOTP Counter", true) ||
+                field.name.equals("HOTPCounter", true) -> field.copy(value = counter)
+            field.name.equals("otp", true) -> when {
+                field.value.contains("{REF:", true) || field.value.contains("{S:", true) ->
+                    throw IllegalArgumentException("Edit the HOTP counter in the referenced source entry")
+                field.value.trim().startsWith("otpauth://hotp/", true) || field.value.contains("key=", true) ->
+                    field.copy(value = withCounterQuery(field.value))
+                else -> field
+            }
+            else -> field
+        }
+    }.toMutableList()
+    if (fields.any { it.name.startsWith("HmacOtp-Secret", true) } &&
+        updated.none { it.name.equals("HmacOtp-Counter", true) }) {
+        updated += KeePassFieldChange("HmacOtp-Counter", counter)
+    }
+    if (updated.none { it.name.equals("HOTP Counter", true) || it.name.equals("HOTPCounter", true) }) {
+        updated += KeePassFieldChange("HOTP Counter", counter)
+    }
+    return updated
 }
 
 internal fun parseNativeTotpFields(
@@ -118,20 +181,11 @@ internal fun parseNativeTotpFields(
         names.any { name -> field.name.equals(name, ignoreCase = true) }
     }?.value.orEmpty()
 
-    return KeePassTotpCodec.parse(
-        KeePassTotpCodec.Fields(
-            otp = value("otp"),
-            seed = value("TOTP Seed", "TOTPSeed"),
-            settings = value("TOTP Settings", "TOTPSettings"),
-            period = value("TOTP Period", "TOTPPeriod"),
-            digits = value("TOTP Digits", "TOTPDigits"),
-            algorithm = value("TOTP Algorithm", "TOTPAlgorithm"),
-            counter = value("HOTP Counter", "HOTPCounter"),
-            type = value("OTP Type", "OTPType", "TOTP Type", "TOTPType"),
-            issuer = value("Title", "Name"),
-            accountName = value("UserName", "Login", "User"),
-            link = value("URL", "URI", "Website"),
-        ),
+    return KeePassTotpCodec.parseFields(
+        getField = { value(it) },
+        issuer = value("Title", "Name"),
+        accountName = value("UserName", "Login", "User"),
+        link = value("URL", "URI", "Website"),
     )
 }
 
@@ -182,13 +236,11 @@ internal fun ensureNativeEntryEditorStandardFields(
 internal fun validateNativeEntryEditorDraft(
     draft: NativeEntryEditorDraft,
 ): NativeEntryDraftError? {
-    val title = draft.standard(NativeEntryStandardSlot.TITLE)?.value.orEmpty()
-    if (title.isBlank()) return NativeEntryDraftError.TITLE_REQUIRED
     if (draft.fields.any { it.name.trim().isBlank() }) {
         return NativeEntryDraftError.FIELD_NAME_REQUIRED
     }
-    val normalizedNames = draft.fields.map { it.name.trim().lowercase(Locale.ROOT) }
-    if (normalizedNames.size != normalizedNames.distinct().size) {
+    val names = draft.fields.map { it.name }
+    if (names.size != names.distinct().size) {
         return NativeEntryDraftError.DUPLICATE_FIELD_NAME
     }
     return null
@@ -205,22 +257,5 @@ internal fun nativeEntryStandardSlot(name: String): NativeEntryStandardSlot? {
     }
 }
 
-private val NATIVE_TOTP_FIELD_NAMES = setOf(
-    KeePassTotpCodec.FIELD_OTP,
-    KeePassTotpCodec.FIELD_TOTP_SEED,
-    KeePassTotpCodec.FIELD_TOTP_SETTINGS,
-    KeePassTotpCodec.FIELD_TOTP_PERIOD,
-    KeePassTotpCodec.FIELD_TOTP_DIGITS,
-    KeePassTotpCodec.FIELD_TOTP_ALGORITHM,
-    KeePassTotpCodec.FIELD_OTP_TYPE,
-    KeePassTotpCodec.FIELD_HOTP_COUNTER,
-    "TOTPSeed",
-    "TOTPSettings",
-    "TOTPPeriod",
-    "TOTPDigits",
-    "TOTPAlgorithm",
-    "OTPType",
-    "TOTP Type",
-    "TOTPType",
-    "HOTPCounter",
-).mapTo(linkedSetOf()) { it.lowercase(Locale.ROOT) }
+internal fun parseNativeEntryTags(value: String): List<String> = value
+    .split('\n', '\r', ',', ';').map(String::trim).filter(String::isNotEmpty).distinct()

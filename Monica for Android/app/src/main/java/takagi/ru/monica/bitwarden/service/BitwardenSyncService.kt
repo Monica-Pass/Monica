@@ -625,6 +625,7 @@ class BitwardenSyncService(
                 passkeyBindings = customFields["monica_passkey_bindings"].orEmpty(),
                 sshKeyData = sshKeyData,
                 loginType = when {
+                    takagi.ru.monica.data.model.ApiKeyEntryFields.isApiKey(customFields) -> takagi.ru.monica.data.model.ApiKeyEntryFields.TYPE
                     takagi.ru.monica.data.model.GpgEntryFields.isGpg(customFields) -> "GPG_KEY"
                     isSteamMaFileEntry -> LOGIN_TYPE_STEAM_MAFILE
                     sshKeyData.isNotBlank() -> LOGIN_TYPE_SSH_KEY
@@ -700,7 +701,8 @@ class BitwardenSyncService(
             
             return entry.copy(
                 title = name,
-                website = parsedUris.website.ifBlank { entry.website },
+                website = if (entry.isApiKeyEntry() || takagi.ru.monica.data.model.ApiKeyEntryFields.isApiKey(customFields))
+                    parsedUris.website else parsedUris.website.ifBlank { entry.website },
                 username = username,
                 password = encryptedPassword,
                 notes = notes,
@@ -717,6 +719,7 @@ class BitwardenSyncService(
                 passkeyBindings = remotePasskeyBindings.ifBlank { entry.passkeyBindings },
                 sshKeyData = remoteSshKeyData.ifBlank { entry.sshKeyData },
                 loginType = when {
+                    takagi.ru.monica.data.model.ApiKeyEntryFields.isApiKey(customFields) -> takagi.ru.monica.data.model.ApiKeyEntryFields.TYPE
                     takagi.ru.monica.data.model.GpgEntryFields.isGpg(customFields) -> "GPG_KEY"
                     isSteamMaFileEntry -> LOGIN_TYPE_STEAM_MAFILE
                     remoteSshKeyData.isNotBlank() -> LOGIN_TYPE_SSH_KEY

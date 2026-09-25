@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import takagi.ru.monica.ui.icons.EmojiIconText
 import takagi.ru.monica.R
 import takagi.ru.monica.data.PasswordCardDisplayField
 import takagi.ru.monica.data.PasswordEntry
@@ -124,7 +125,11 @@ fun MultiPasswordEntryCard(
                         )
                     } else null
 
-                    if (simpleIcon != null) {
+                    val emojiIcon = firstEntry.customIconValue.takeIf { firstEntry.customIconType == takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_EMOJI }
+                    if (emojiIcon != null) {
+                        EmojiIconText(emoji = emojiIcon, size = 26.dp)
+                        Spacer(modifier = Modifier.width(12.dp))
+                    } else if (simpleIcon != null) {
                         Image(
                             bitmap = simpleIcon,
                             contentDescription = null,

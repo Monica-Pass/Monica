@@ -26,14 +26,14 @@ class MonicaImeSearchTest {
     }
 
     @Test
-    fun searchIncludesApplicationAndDatabaseSourceLabels() {
+    fun searchIncludesApplicationBindingsButLeavesDatabaseNamesToTheSourceSelector() {
         val entry = sampleEntry(
             packageName = "com.example.mobile",
             sourceLabel = "Work KeePass"
         )
 
         assertTrue(imePasswordEntryMatchesQuery(entry, "example.mobile"))
-        assertTrue(imePasswordEntryMatchesQuery(entry, "work keepass"))
+        assertFalse(imePasswordEntryMatchesQuery(entry, "work keepass"))
     }
 
     @Test

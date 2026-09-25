@@ -4,13 +4,14 @@ import android.net.Uri
 import takagi.ru.monica.keepass.KeePassFieldChange
 import takagi.ru.monica.keepass.KeePassNativeEntryPresentationUpdate
 import takagi.ru.monica.keepass.KeePassNativeEntryRecord
+import takagi.ru.monica.keepass.KeePassNativeBrowserSnapshot
+import takagi.ru.monica.data.model.TotpData
 import takagi.ru.monica.keepass.KeePassNativeGroupIdentity
 import takagi.ru.monica.keepass.KeePassTemplateEngine
 import takagi.ru.monica.viewmodel.LocalKeePassViewModel
 
 internal data class KeePassNativeEntrySaveOutcome(
     val savedEntry: KeePassNativeEntryRecord? = null,
-    val createdEntry: KeePassNativeEntryRecord? = null,
     val failure: Throwable? = null,
 )
 
@@ -25,131 +26,36 @@ internal suspend fun saveKeePassNativeManagerEntry(
     pendingAttachments: List<Uri>,
     revisionToken: String,
 ): KeePassNativeEntrySaveOutcome {
-    val persistedFields = fields.withTemplateMarkerIfNeeded(templateMode)
-    return if (editingEntry != null) {
-        saveExistingKeePassNativeEntry(
-            viewModel = viewModel,
-            databaseId = databaseId,
-            editingEntry = editingEntry,
-            fields = persistedFields,
-            presentation = presentation,
-            pendingAttachments = pendingAttachments,
-            revisionToken = revisionToken,
-        )
-    } else {
-        createKeePassNativeEntry(
-            viewModel = viewModel,
-            databaseId = databaseId,
-            creatingParent = creatingParent,
-            fields = persistedFields,
-            presentation = presentation,
-            pendingAttachments = pendingAttachments,
-            revisionToken = revisionToken,
-        )
+    if (editingEntry == null && creatingParent == null) {
+        return KeePassNativeEntrySaveOutcome(failure = IllegalStateException("KeePass parent group is unavailable"))
     }
-}
-
-private suspend fun saveExistingKeePassNativeEntry(
-    viewModel: LocalKeePassViewModel,
-    databaseId: Long,
-    editingEntry: KeePassNativeEntryRecord,
-    fields: List<KeePassFieldChange>,
-    presentation: KeePassNativeEntryPresentationUpdate?,
-    pendingAttachments: List<Uri>,
-    revisionToken: String,
-): KeePassNativeEntrySaveOutcome {
-    val fieldResult = if (presentation == null) {
-        viewModel.replaceNativeEntryFields(
-            databaseId = databaseId,
-            entryUuid = editingEntry.identity.entryUuid,
-            fields = fields,
-            expectedRevisionToken = revisionToken,
-        )
-    } else {
-        viewModel.replaceNativeEntryFieldsAndPresentation(
-            databaseId = databaseId,
-            entryUuid = editingEntry.identity.entryUuid,
-            fields = fields,
-            presentation = presentation,
-            expectedRevisionToken = revisionToken,
-        )
-    }
-    val fieldFailure = fieldResult.exceptionOrNull()
-    if (fieldFailure != null) return KeePassNativeEntrySaveOutcome(failure = fieldFailure)
-    val savedFields = fieldResult.getOrThrow()
-    if (pendingAttachments.isEmpty()) {
-        return KeePassNativeEntrySaveOutcome(savedEntry = savedFields)
-    }
-
-    val browserResult = viewModel.openNativeBrowser(databaseId)
-    val browserFailure = browserResult.exceptionOrNull()
-    if (browserFailure != null) return KeePassNativeEntrySaveOutcome(failure = browserFailure)
-    val attachmentResult = viewModel.addNativeAttachments(
+    return viewModel.saveNativeEntryDraft(
         databaseId = databaseId,
-        entryUuid = editingEntry.identity.entryUuid,
+        entryUuid = editingEntry?.identity?.entryUuid,
+        parentGroupUuid = creatingParent?.groupUuid,
+        fields = fields.withTemplateMarkerIfNeeded(templateMode),
+        presentation = presentation,
         sourceUris = pendingAttachments,
-        expectedRevisionToken = browserResult.getOrThrow().sourceRevision.sha256,
-    )
-    return attachmentResult.fold(
+        expectedRevisionToken = revisionToken,
+    ).fold(
         onSuccess = { saved -> KeePassNativeEntrySaveOutcome(savedEntry = saved) },
         onFailure = { failure -> KeePassNativeEntrySaveOutcome(failure = failure) },
     )
 }
 
-private suspend fun createKeePassNativeEntry(
+internal suspend fun advanceKeePassNativeManagerHotp(
     viewModel: LocalKeePassViewModel,
-    databaseId: Long,
-    creatingParent: KeePassNativeGroupIdentity?,
-    fields: List<KeePassFieldChange>,
-    presentation: KeePassNativeEntryPresentationUpdate?,
-    pendingAttachments: List<Uri>,
+    entry: KeePassNativeEntryRecord,
+    data: TotpData,
     revisionToken: String,
-): KeePassNativeEntrySaveOutcome {
-    val parent = creatingParent ?: return KeePassNativeEntrySaveOutcome(
-        failure = IllegalStateException("KeePass parent group is unavailable"),
+): Result<KeePassNativeBrowserSnapshot> = runCatching {
+    val fields = advanceNativeHotpFields(
+        entry.fields.map { KeePassFieldChange(it.name, it.rawValue, it.isProtected) }, data,
     )
-    val createResult = if (pendingAttachments.isEmpty()) {
-        viewModel.createNativeEntry(
-            databaseId = databaseId,
-            parentGroupUuid = parent.groupUuid,
-            fields = fields,
-            expectedRevisionToken = revisionToken,
-        )
-    } else {
-        viewModel.createNativeEntryWithAttachments(
-            databaseId = databaseId,
-            parentGroupUuid = parent.groupUuid,
-            fields = fields,
-            sourceUris = pendingAttachments,
-            expectedRevisionToken = revisionToken,
-        )
-    }
-    val createFailure = createResult.exceptionOrNull()
-    if (createFailure != null) return KeePassNativeEntrySaveOutcome(failure = createFailure)
-    val created = createResult.getOrThrow()
-    if (presentation == null) {
-        return KeePassNativeEntrySaveOutcome(savedEntry = created, createdEntry = created)
-    }
-
-    val browserResult = viewModel.openNativeBrowser(databaseId)
-    val browserFailure = browserResult.exceptionOrNull()
-    if (browserFailure != null) {
-        return KeePassNativeEntrySaveOutcome(createdEntry = created, failure = browserFailure)
-    }
-    val presentationResult = viewModel.replaceNativeEntryPresentation(
-        databaseId = databaseId,
-        entryUuid = created.identity.entryUuid,
-        update = presentation,
-        expectedRevisionToken = browserResult.getOrThrow().sourceRevision.sha256,
-    )
-    return presentationResult.fold(
-        onSuccess = { saved ->
-            KeePassNativeEntrySaveOutcome(savedEntry = saved, createdEntry = created)
-        },
-        onFailure = { failure ->
-            KeePassNativeEntrySaveOutcome(createdEntry = created, failure = failure)
-        },
-    )
+    viewModel.replaceNativeEntryFields(
+        entry.identity.databaseId, entry.identity.entryUuid, fields, revisionToken,
+    ).getOrThrow()
+    viewModel.openNativeBrowser(entry.identity.databaseId).getOrThrow()
 }
 
 private fun List<KeePassFieldChange>.withTemplateMarkerIfNeeded(

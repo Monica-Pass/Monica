@@ -8,7 +8,7 @@ import org.junit.Test
 class MdbxAndroidIntegrationGuardTest {
 
     @Test
-    fun newVaultCreationDefaultsToMdbx2WhileLegacyOpenPathsStayCompatible() {
+    fun newAndRemoteVaultsDefaultToMdbx2WhileLegacyMetadataStaysRecognizable() {
         val localCreateSource = projectFile(
             "app/src/main/java/takagi/ru/monica/ui/screens/MdbxLocalCreateScreen.kt"
         ).readText()
@@ -60,11 +60,11 @@ class MdbxAndroidIntegrationGuardTest {
                 createOneDriveBlock.contains("engineType: MdbxEngineType = MdbxEngineType.RUST_MDBX2")
         )
         assertTrue(
-            "Existing remote-open entry points must keep MDBX1 as the compatibility default.",
-            webDavOpenSource.contains("mutableStateOf(MdbxEngineType.KOTLIN_MDBX1)") &&
-                oneDriveOpenSource.contains("mutableStateOf(MdbxEngineType.KOTLIN_MDBX1)") &&
-                connectWebDavBlock.contains("engineType: MdbxEngineType = MdbxEngineType.KOTLIN_MDBX1") &&
-                connectOneDriveBlock.contains("engineType: MdbxEngineType = MdbxEngineType.KOTLIN_MDBX1")
+            "Remote-open entry points must select the supported native engine by default.",
+            webDavOpenSource.contains("mutableStateOf(MdbxEngineType.RUST_MDBX2)") &&
+                oneDriveOpenSource.contains("mutableStateOf(MdbxEngineType.RUST_MDBX2)") &&
+                connectWebDavBlock.contains("engineType: MdbxEngineType = MdbxEngineType.RUST_MDBX2") &&
+                connectOneDriveBlock.contains("engineType: MdbxEngineType = MdbxEngineType.RUST_MDBX2")
         )
         assertTrue(
             "Missing or unknown legacy metadata must continue to resolve to MDBX1.",
@@ -264,17 +264,16 @@ class MdbxAndroidIntegrationGuardTest {
     }
 
     @Test
-    fun oldVaultOpenPathsPrepareFlushAndImportThroughTheVaultFacade() {
+    fun legacyOpenPathsValidateCopiesThenOfferMigration() {
         val source = projectFile(
             "app/src/main/java/takagi/ru/monica/viewmodel/MdbxViewModel.kt"
         ).readText()
 
         assertTrue(
-            "Local, WebDAV, and OneDrive old-vault open paths should all validate credentials, prepare MDBX 1.0 metadata, flush the working copy, and import entries.",
+            "Local, WebDAV, and OneDrive legacy opens must validate the saved copy and offer migration.",
             source.countOccurrences("legacyVaultStore.validateVaultCredentialFile(") >= 3 &&
                 source.countOccurrences("legacyVaultStore.prepareVaultForOfficialMdbx1(") >= 3 &&
-                source.countOccurrences("vaultStore.flushWorkingCopy(databaseId)") >= 3 &&
-                source.countOccurrences("importEntriesFromVault(databaseId)") >= 3
+                source.countOccurrences("prepareMdbx2Migration(databaseId)") >= 3
         )
     }
 
@@ -519,9 +518,9 @@ class MdbxAndroidIntegrationGuardTest {
 
         assertTrue(
             "MDBX database chips should use the same storage icon everywhere, not KeePass key or old test-feature flask icons.",
-            passwordMdbxBlock.contains("leadingIcon = Icons.Default.Storage") &&
+            passwordMdbxBlock.contains("database.name, Icons.Default.Storage") &&
                 !passwordMdbxBlock.contains("Icons.Default.Science") &&
-                chipMenuMdbxBlock.contains("leadingIcon = Icons.Default.Storage") &&
+                chipMenuMdbxBlock.contains("database.name, Icons.Default.Storage") &&
                 bottomSheetMdbxBlock.contains("icon = Icons.Default.Storage") &&
                 moveSheetSource.contains("override val icon: ImageVector = Icons.Default.Storage") &&
                 storagePickerSource.contains("override val icon: ImageVector = Icons.Default.Storage")
@@ -923,7 +922,7 @@ class MdbxAndroidIntegrationGuardTest {
     }
 
     @Test
-    fun oneDriveContextIsUnifiedAndExistingVaultNamesComeFromSourceFiles() {
+    fun oneDriveDatabaseContextIsUnifiedAndExistingVaultNamesComeFromSourceFiles() {
         val sharedPanelSource = projectFile(
             "app/src/main/java/takagi/ru/monica/ui/screens/OneDriveLocationPanel.kt"
         ).readText()
@@ -934,7 +933,6 @@ class MdbxAndroidIntegrationGuardTest {
             "app/src/main/java/takagi/ru/monica/ui/screens/MdbxVaultComponents.kt"
         ).readText()
         val oneDriveScreens = listOf(
-            "app/src/main/java/takagi/ru/monica/ui/screens/OneDriveBackupScreen.kt",
             "app/src/main/java/takagi/ru/monica/ui/screens/LocalKeePassOneDriveBrowser.kt",
             "app/src/main/java/takagi/ru/monica/ui/screens/MdbxOneDriveCreateScreen.kt",
             "app/src/main/java/takagi/ru/monica/ui/screens/MdbxOneDriveOpenScreen.kt"
@@ -955,7 +953,7 @@ class MdbxAndroidIntegrationGuardTest {
             .substringBefore(") {")
 
         assertTrue(
-            "Every OneDrive backup/database entry must reuse the same account and location hierarchy.",
+            "Every OneDrive database entry must reuse the same account and location hierarchy.",
             oneDriveScreens.all { it.contains("OneDriveLocationPanel(") } &&
                 sharedPanelSource.contains("private fun OneDriveAccountRow(") &&
                 sharedPanelSource.contains("private fun OneDriveEntryList(") &&

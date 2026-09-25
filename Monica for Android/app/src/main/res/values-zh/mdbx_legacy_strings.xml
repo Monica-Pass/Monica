@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_legacy_unavailable_title">MDBX1 已停止支持</string>
+    <string name="mdbx_legacy_unavailable_badge">MDBX1 · 不可用</string>
+    <string name="mdbx_legacy_unavailable_description">此数据库已不可用。请升级为 MDBX2 后继续使用，升级会保留原文件。</string>
+    <string name="mdbx_legacy_creation_disabled">新建数据库仅支持 MDBX2。MDBX1 文件仅可打开以升级。</string>
+    <string name="mdbx_legacy_local_copy_required">无法读取 MDBX1 的本机副本。请重新打开原 MDBX1 文件后升级，原数据库未修改。</string>
+    <string name="mdbx_legacy_remote_copy_warning">升级会将本机保存的副本转换为新的本地 MDBX2 数据库，尚未下载的远端更改不在升级范围内。原远端文件和本机副本均会保留，新数据库需要单独配置同步。</string>
+    <string name="mdbx_legacy_import_option">MDBX1（升级）</string>
+    <string name="mdbx_legacy_upgrade_action">升级为 MDBX2</string>
+</resources>

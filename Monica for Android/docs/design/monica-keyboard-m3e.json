@@ -1,0 +1,2383 @@
+{
+  "title": "Monica · 键盘与 PIN",
+  "brief": "参考 Gboard 的等宽字母键、居中的第二排、对称 Shift / 删除以及胶囊 Enter，保留密码库入口，提供可关闭的数字键随机与预览隐藏。",
+  "frame": "phone",
+  "platform": "android",
+  "paletteKey": "teal",
+  "theme": {
+    "dark": true,
+    "bothModes": true,
+    "shape": "rounded",
+    "font": "roboto",
+    "motion": "expressive"
+  },
+  "frames": [
+    {
+      "id": "letters",
+      "name": "字母键盘",
+      "x": 0,
+      "y": 0,
+      "note": "所有字母键等宽等高，第二排居中缩进；Shift 与删除对称。按键高 48dp、横向间距 4dp、行距 8dp；左右 8dp；Enter 与模式键为胶囊。大屏居中且最大宽度 600dp。"
+    },
+    {
+      "id": "pin",
+      "name": "随机数字键盘",
+      "x": 492,
+      "y": 0,
+      "note": "随机示例。每次打开数字键盘仅洗牌一次，输入过程中稳定。可独立隐藏数字预览。数字、删除和 Enter 等高，不再把 Enter 拉成三排。"
+    },
+    {
+      "id": "settings",
+      "name": "自动填充设置",
+      "x": 984,
+      "y": 0,
+      "note": "自动填充设置中的 Monica 键盘区。两个选项默认关闭，保存后立即应用；隐藏预览控制 Monica 数字按键的弹泡和高亮，不影响宿主输入框。"
+    },
+    {
+      "id": "search",
+      "name": "密码搜索",
+      "x": 1476,
+      "y": 0,
+      "note": "搜索匹配条目标题、用户名、网站及应用信息；来源只由独立筛选器选择，Bitwarden 不再命中整个来源。"
+    }
+  ],
+  "groups": [
+    {
+      "id": "letters-bar",
+      "x": 0,
+      "y": 0,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letters-bar-item",
+          "kind": "topAppBar",
+          "label": "示例登录",
+          "icon": "arrow_back",
+          "variant": "filled"
+        }
+      ]
+    },
+    {
+      "id": "letters-title",
+      "x": 24,
+      "y": 144,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letters-title-item",
+          "kind": "text",
+          "label": "输入账号",
+          "icon": null,
+          "variant": "filled",
+          "size": 28
+        }
+      ]
+    },
+    {
+      "id": "letters-field",
+      "x": 16,
+      "y": 218,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letters-field-item",
+          "kind": "textField",
+          "label": "用户名",
+          "icon": null,
+          "variant": "outlined",
+          "supporting": ""
+        }
+      ]
+    },
+    {
+      "id": "letters-surface",
+      "x": 0,
+      "y": 590,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letters-surface-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 412,
+          "size2": 302,
+          "fill": "surface",
+          "radiusTop": 0,
+          "radiusBottom": 0
+        }
+      ]
+    },
+    {
+      "id": "letters-tool-0",
+      "x": 8,
+      "y": 598,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letters-tool-0-item",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "keyboard",
+          "variant": "tonal",
+          "action": {
+            "to": "letters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "letters-tool-1",
+      "x": 65,
+      "y": 598,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letters-tool-1-item",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "key",
+          "variant": "text",
+          "action": {
+            "to": "search"
+          }
+        }
+      ]
+    },
+    {
+      "id": "letters-tool-2",
+      "x": 122,
+      "y": 598,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letters-tool-2-item",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "verified_user",
+          "variant": "text",
+          "action": {
+            "to": "search"
+          }
+        }
+      ]
+    },
+    {
+      "id": "letters-tool-3",
+      "x": 179,
+      "y": 598,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letters-tool-3-item",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "badge",
+          "variant": "text",
+          "action": {
+            "to": "search"
+          }
+        }
+      ]
+    },
+    {
+      "id": "letters-tool-4",
+      "x": 236,
+      "y": 598,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letters-tool-4-item",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "auto_awesome",
+          "variant": "text",
+          "action": {
+            "to": "letters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "letters-tool-5",
+      "x": 293,
+      "y": 598,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letters-tool-5-item",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "more_horiz",
+          "variant": "text",
+          "action": {
+            "to": "settings"
+          }
+        }
+      ]
+    },
+    {
+      "id": "letters-tool-6",
+      "x": 350,
+      "y": 598,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letters-tool-6-item",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "keyboard_arrow_down",
+          "variant": "text",
+          "action": {
+            "to": "letters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pin-bar",
+      "x": 492,
+      "y": 0,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-bar-item",
+          "kind": "topAppBar",
+          "label": "示例登录",
+          "icon": "arrow_back",
+          "variant": "filled"
+        }
+      ]
+    },
+    {
+      "id": "pin-title",
+      "x": 516,
+      "y": 144,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-title-item",
+          "kind": "text",
+          "label": "输入 PIN",
+          "icon": null,
+          "variant": "filled",
+          "size": 28
+        }
+      ]
+    },
+    {
+      "id": "pin-field",
+      "x": 508,
+      "y": 218,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-field-item",
+          "kind": "textField",
+          "label": "PIN",
+          "icon": null,
+          "variant": "outlined",
+          "supporting": "••••"
+        }
+      ]
+    },
+    {
+      "id": "pin-surface",
+      "x": 492,
+      "y": 590,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-surface-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 412,
+          "size2": 302,
+          "fill": "surface",
+          "radiusTop": 0,
+          "radiusBottom": 0
+        }
+      ]
+    },
+    {
+      "id": "pin-tool-0",
+      "x": 500,
+      "y": 598,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-tool-0-item",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "keyboard",
+          "variant": "tonal",
+          "action": {
+            "to": "letters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pin-tool-1",
+      "x": 557,
+      "y": 598,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-tool-1-item",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "key",
+          "variant": "text",
+          "action": {
+            "to": "search"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pin-tool-2",
+      "x": 614,
+      "y": 598,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-tool-2-item",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "verified_user",
+          "variant": "text",
+          "action": {
+            "to": "search"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pin-tool-3",
+      "x": 671,
+      "y": 598,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-tool-3-item",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "badge",
+          "variant": "text",
+          "action": {
+            "to": "search"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pin-tool-4",
+      "x": 728,
+      "y": 598,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-tool-4-item",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "auto_awesome",
+          "variant": "text",
+          "action": {
+            "to": "letters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pin-tool-5",
+      "x": 785,
+      "y": 598,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-tool-5-item",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "more_horiz",
+          "variant": "text",
+          "action": {
+            "to": "settings"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pin-tool-6",
+      "x": 842,
+      "y": 598,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-tool-6-item",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "keyboard_arrow_down",
+          "variant": "text",
+          "action": {
+            "to": "letters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "letter-q",
+      "x": 8.0,
+      "y": 656,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-q-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-q-label",
+      "x": 20.5,
+      "y": 667,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-q-label-item",
+          "kind": "text",
+          "label": "q",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-w",
+      "x": 48.0,
+      "y": 656,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-w-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-w-label",
+      "x": 60.5,
+      "y": 667,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-w-label-item",
+          "kind": "text",
+          "label": "w",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-e",
+      "x": 88.0,
+      "y": 656,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-e-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-e-label",
+      "x": 100.5,
+      "y": 667,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-e-label-item",
+          "kind": "text",
+          "label": "e",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-r",
+      "x": 128.0,
+      "y": 656,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-r-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-r-label",
+      "x": 140.5,
+      "y": 667,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-r-label-item",
+          "kind": "text",
+          "label": "r",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-t",
+      "x": 168.0,
+      "y": 656,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-t-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-t-label",
+      "x": 180.5,
+      "y": 667,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-t-label-item",
+          "kind": "text",
+          "label": "t",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-y",
+      "x": 208.0,
+      "y": 656,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-y-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-y-label",
+      "x": 220.5,
+      "y": 667,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-y-label-item",
+          "kind": "text",
+          "label": "y",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-u",
+      "x": 248.0,
+      "y": 656,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-u-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-u-label",
+      "x": 260.5,
+      "y": 667,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-u-label-item",
+          "kind": "text",
+          "label": "u",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-i",
+      "x": 288.0,
+      "y": 656,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-i-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-i-label",
+      "x": 300.5,
+      "y": 667,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-i-label-item",
+          "kind": "text",
+          "label": "i",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-o",
+      "x": 328.0,
+      "y": 656,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-o-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-o-label",
+      "x": 340.5,
+      "y": 667,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-o-label-item",
+          "kind": "text",
+          "label": "o",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-p",
+      "x": 368.0,
+      "y": 656,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-p-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-p-label",
+      "x": 380.5,
+      "y": 667,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-p-label-item",
+          "kind": "text",
+          "label": "p",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-a",
+      "x": 28.0,
+      "y": 712,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-a-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-a-label",
+      "x": 40.5,
+      "y": 723,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-a-label-item",
+          "kind": "text",
+          "label": "a",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-s",
+      "x": 68.0,
+      "y": 712,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-s-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-s-label",
+      "x": 80.5,
+      "y": 723,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-s-label-item",
+          "kind": "text",
+          "label": "s",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-d",
+      "x": 108.0,
+      "y": 712,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-d-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-d-label",
+      "x": 120.5,
+      "y": 723,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-d-label-item",
+          "kind": "text",
+          "label": "d",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-f",
+      "x": 148.0,
+      "y": 712,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-f-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-f-label",
+      "x": 160.5,
+      "y": 723,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-f-label-item",
+          "kind": "text",
+          "label": "f",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-g",
+      "x": 188.0,
+      "y": 712,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-g-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-g-label",
+      "x": 200.5,
+      "y": 723,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-g-label-item",
+          "kind": "text",
+          "label": "g",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-h",
+      "x": 228.0,
+      "y": 712,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-h-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-h-label",
+      "x": 240.5,
+      "y": 723,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-h-label-item",
+          "kind": "text",
+          "label": "h",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-j",
+      "x": 268.0,
+      "y": 712,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-j-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-j-label",
+      "x": 280.5,
+      "y": 723,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-j-label-item",
+          "kind": "text",
+          "label": "j",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-k",
+      "x": 308.0,
+      "y": 712,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-k-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-k-label",
+      "x": 320.5,
+      "y": 723,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-k-label-item",
+          "kind": "text",
+          "label": "k",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-l",
+      "x": 348.0,
+      "y": 712,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-l-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-l-label",
+      "x": 360.5,
+      "y": 723,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-l-label-item",
+          "kind": "text",
+          "label": "l",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "shift",
+      "x": 8,
+      "y": 768,
+      "axis": "x",
+      "items": [
+        {
+          "id": "shift-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 56.0,
+          "size2": 48,
+          "fill": "secondaryContainer",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "shift-label",
+      "x": 30.5,
+      "y": 779,
+      "axis": "x",
+      "items": [
+        {
+          "id": "shift-label-item",
+          "kind": "text",
+          "label": "⇧",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "delete",
+      "x": 348.0,
+      "y": 768,
+      "axis": "x",
+      "items": [
+        {
+          "id": "delete-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 56.0,
+          "size2": 48,
+          "fill": "secondaryContainer",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "delete-label",
+      "x": 370.5,
+      "y": 779,
+      "axis": "x",
+      "items": [
+        {
+          "id": "delete-label-item",
+          "kind": "text",
+          "label": "⌫",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-z",
+      "x": 68.0,
+      "y": 768,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-z-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-z-label",
+      "x": 80.5,
+      "y": 779,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-z-label-item",
+          "kind": "text",
+          "label": "z",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-x",
+      "x": 108.0,
+      "y": 768,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-x-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-x-label",
+      "x": 120.5,
+      "y": 779,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-x-label-item",
+          "kind": "text",
+          "label": "x",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-c",
+      "x": 148.0,
+      "y": 768,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-c-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-c-label",
+      "x": 160.5,
+      "y": 779,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-c-label-item",
+          "kind": "text",
+          "label": "c",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-v",
+      "x": 188.0,
+      "y": 768,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-v-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-v-label",
+      "x": 200.5,
+      "y": 779,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-v-label-item",
+          "kind": "text",
+          "label": "v",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-b",
+      "x": 228.0,
+      "y": 768,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-b-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-b-label",
+      "x": 240.5,
+      "y": 779,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-b-label-item",
+          "kind": "text",
+          "label": "b",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-n",
+      "x": 268.0,
+      "y": 768,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-n-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-n-label",
+      "x": 280.5,
+      "y": 779,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-n-label-item",
+          "kind": "text",
+          "label": "n",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "letter-m",
+      "x": 308.0,
+      "y": 768,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-m-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "letter-m-label",
+      "x": 320.5,
+      "y": 779,
+      "axis": "x",
+      "items": [
+        {
+          "id": "letter-m-label-item",
+          "kind": "text",
+          "label": "m",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "bottom-0",
+      "x": 8,
+      "y": 824,
+      "axis": "x",
+      "items": [
+        {
+          "id": "bottom-0-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 56.0,
+          "size2": 48,
+          "fill": "secondaryContainer",
+          "radiusTop": 24,
+          "radiusBottom": 24
+        }
+      ]
+    },
+    {
+      "id": "bottom-0-label",
+      "x": 14.0,
+      "y": 835,
+      "axis": "x",
+      "items": [
+        {
+          "id": "bottom-0-label-item",
+          "kind": "text",
+          "label": "?123",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "bottom-1",
+      "x": 68.0,
+      "y": 824,
+      "axis": "x",
+      "items": [
+        {
+          "id": "bottom-1-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "bottom-1-label",
+      "x": 80.5,
+      "y": 835,
+      "axis": "x",
+      "items": [
+        {
+          "id": "bottom-1-label-item",
+          "kind": "text",
+          "label": "⌨",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "bottom-2",
+      "x": 108.0,
+      "y": 824,
+      "axis": "x",
+      "items": [
+        {
+          "id": "bottom-2-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 196.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "bottom-2-label",
+      "x": 195.0,
+      "y": 835,
+      "axis": "x",
+      "items": [
+        {
+          "id": "bottom-2-label-item",
+          "kind": "text",
+          "label": "空格",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "bottom-3",
+      "x": 308.0,
+      "y": 824,
+      "axis": "x",
+      "items": [
+        {
+          "id": "bottom-3-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 36.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "bottom-3-label",
+      "x": 320.5,
+      "y": 835,
+      "axis": "x",
+      "items": [
+        {
+          "id": "bottom-3-label-item",
+          "kind": "text",
+          "label": ".",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "bottom-4",
+      "x": 348.0,
+      "y": 824,
+      "axis": "x",
+      "items": [
+        {
+          "id": "bottom-4-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 56.0,
+          "size2": 48,
+          "fill": "secondaryContainer",
+          "radiusTop": 24,
+          "radiusBottom": 24
+        }
+      ]
+    },
+    {
+      "id": "bottom-4-label",
+      "x": 370.5,
+      "y": 835,
+      "axis": "x",
+      "items": [
+        {
+          "id": "bottom-4-label-item",
+          "kind": "text",
+          "label": "↵",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "pin-0-0",
+      "x": 500.0,
+      "y": 656,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-0-0-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 96.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "pin-0-0-label",
+      "x": 542.5,
+      "y": 667,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-0-0-label-item",
+          "kind": "text",
+          "label": "8",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "pin-0-1",
+      "x": 600.0,
+      "y": 656,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-0-1-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 96.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "pin-0-1-label",
+      "x": 642.5,
+      "y": 667,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-0-1-label-item",
+          "kind": "text",
+          "label": "2",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "pin-0-2",
+      "x": 700.0,
+      "y": 656,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-0-2-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 96.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "pin-0-2-label",
+      "x": 742.5,
+      "y": 667,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-0-2-label-item",
+          "kind": "text",
+          "label": "5",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "pin-0-3",
+      "x": 800.0,
+      "y": 656,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-0-3-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 96.0,
+          "size2": 48,
+          "fill": "secondaryContainer",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "pin-0-3-label",
+      "x": 842.5,
+      "y": 667,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-0-3-label-item",
+          "kind": "text",
+          "label": "⌫",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "pin-1-0",
+      "x": 500.0,
+      "y": 712,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-1-0-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 96.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "pin-1-0-label",
+      "x": 542.5,
+      "y": 723,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-1-0-label-item",
+          "kind": "text",
+          "label": "1",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "pin-1-1",
+      "x": 600.0,
+      "y": 712,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-1-1-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 96.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "pin-1-1-label",
+      "x": 642.5,
+      "y": 723,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-1-1-label-item",
+          "kind": "text",
+          "label": "0",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "pin-1-2",
+      "x": 700.0,
+      "y": 712,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-1-2-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 96.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "pin-1-2-label",
+      "x": 742.5,
+      "y": 723,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-1-2-label-item",
+          "kind": "text",
+          "label": "7",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "pin-1-3",
+      "x": 800.0,
+      "y": 712,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-1-3-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 96.0,
+          "size2": 48,
+          "fill": "secondaryContainer",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "pin-1-3-label",
+      "x": 842.5,
+      "y": 723,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-1-3-label-item",
+          "kind": "text",
+          "label": "−",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "pin-2-0",
+      "x": 500.0,
+      "y": 768,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-2-0-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 96.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "pin-2-0-label",
+      "x": 542.5,
+      "y": 779,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-2-0-label-item",
+          "kind": "text",
+          "label": "4",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "pin-2-1",
+      "x": 600.0,
+      "y": 768,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-2-1-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 96.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "pin-2-1-label",
+      "x": 642.5,
+      "y": 779,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-2-1-label-item",
+          "kind": "text",
+          "label": "9",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "pin-2-2",
+      "x": 700.0,
+      "y": 768,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-2-2-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 96.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "pin-2-2-label",
+      "x": 742.5,
+      "y": 779,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-2-2-label-item",
+          "kind": "text",
+          "label": "3",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "pin-2-3",
+      "x": 800.0,
+      "y": 768,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-2-3-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 96.0,
+          "size2": 48,
+          "fill": "secondaryContainer",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "pin-2-3-label",
+      "x": 842.5,
+      "y": 779,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-2-3-label-item",
+          "kind": "text",
+          "label": "⌨",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "pin-3-0",
+      "x": 500.0,
+      "y": 824,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-3-0-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 96.0,
+          "size2": 48,
+          "fill": "secondaryContainer",
+          "radiusTop": 24,
+          "radiusBottom": 24
+        }
+      ]
+    },
+    {
+      "id": "pin-3-0-label",
+      "x": 531.5,
+      "y": 835,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-3-0-label-item",
+          "kind": "text",
+          "label": "#+=",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "pin-3-1",
+      "x": 600.0,
+      "y": 824,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-3-1-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 96.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "pin-3-1-label",
+      "x": 642.5,
+      "y": 835,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-3-1-label-item",
+          "kind": "text",
+          "label": "6",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "pin-3-2",
+      "x": 700.0,
+      "y": 824,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-3-2-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 96.0,
+          "size2": 48,
+          "fill": "surfaceContainerHighest",
+          "radiusTop": 8,
+          "radiusBottom": 8
+        }
+      ]
+    },
+    {
+      "id": "pin-3-2-label",
+      "x": 742.5,
+      "y": 835,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-3-2-label-item",
+          "kind": "text",
+          "label": ".",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "pin-3-3",
+      "x": 800.0,
+      "y": 824,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-3-3-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 96.0,
+          "size2": 48,
+          "fill": "secondaryContainer",
+          "radiusTop": 24,
+          "radiusBottom": 24
+        }
+      ]
+    },
+    {
+      "id": "pin-3-3-label",
+      "x": 842.5,
+      "y": 835,
+      "axis": "x",
+      "items": [
+        {
+          "id": "pin-3-3-label-item",
+          "kind": "text",
+          "label": "↵",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "settings-bar",
+      "x": 984,
+      "y": 0,
+      "axis": "x",
+      "items": [
+        {
+          "id": "settings-bar-item",
+          "kind": "topAppBar",
+          "label": "自动填充设置",
+          "icon": "arrow_back",
+          "variant": "filled",
+          "action": {
+            "to": "letters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "settings-title",
+      "x": 1000,
+      "y": 112,
+      "axis": "x",
+      "items": [
+        {
+          "id": "settings-title-item",
+          "kind": "text",
+          "label": "Monica 键盘",
+          "icon": null,
+          "variant": "filled",
+          "size": 22
+        }
+      ]
+    },
+    {
+      "id": "settings-system",
+      "x": 1000,
+      "y": 164,
+      "axis": "x",
+      "items": [
+        {
+          "id": "settings-system-item",
+          "kind": "listItem",
+          "label": "管理输入法",
+          "icon": "keyboard",
+          "variant": "filled",
+          "supporting": "启用或切换 Monica 键盘"
+        }
+      ]
+    },
+    {
+      "id": "settings-scramble",
+      "x": 1000,
+      "y": 252,
+      "axis": "x",
+      "items": [
+        {
+          "id": "settings-scramble-item",
+          "kind": "listItem",
+          "label": "随机排列数字键",
+          "icon": "shuffle",
+          "variant": "filled",
+          "supporting": "每次打开数字键盘时打乱，输入时保持不变",
+          "switch": true,
+          "checked": false
+        }
+      ]
+    },
+    {
+      "id": "settings-preview",
+      "x": 1000,
+      "y": 340,
+      "axis": "x",
+      "items": [
+        {
+          "id": "settings-preview-item",
+          "kind": "listItem",
+          "label": "隐藏数字按键预览",
+          "icon": "visibility_off",
+          "variant": "filled",
+          "supporting": "不显示数字弹泡和按键高亮",
+          "switch": true,
+          "checked": false
+        }
+      ]
+    },
+    {
+      "id": "settings-try",
+      "x": 1000,
+      "y": 456,
+      "axis": "x",
+      "items": [
+        {
+          "id": "settings-try-item",
+          "kind": "button",
+          "label": "查看随机数字键盘",
+          "icon": null,
+          "variant": "filled",
+          "size": 380,
+          "action": {
+            "to": "pin"
+          }
+        }
+      ]
+    },
+    {
+      "id": "search-bar",
+      "x": 1476,
+      "y": 0,
+      "axis": "x",
+      "items": [
+        {
+          "id": "search-bar-item",
+          "kind": "topAppBar",
+          "label": "密码搜索",
+          "icon": "arrow_back",
+          "variant": "filled",
+          "action": {
+            "to": "letters"
+          }
+        }
+      ]
+    },
+    {
+      "id": "search-scope",
+      "x": 1492,
+      "y": 144,
+      "axis": "x",
+      "items": [
+        {
+          "id": "search-scope-item",
+          "kind": "chip",
+          "label": "Bitwarden · 个人",
+          "icon": "database",
+          "variant": "filled",
+          "checked": true
+        }
+      ]
+    },
+    {
+      "id": "search-query",
+      "x": 1492,
+      "y": 200,
+      "axis": "x",
+      "items": [
+        {
+          "id": "search-query-item",
+          "kind": "searchBar",
+          "label": "Bitwarden",
+          "icon": "search",
+          "variant": "filled"
+        }
+      ]
+    },
+    {
+      "id": "search-count",
+      "x": 1492,
+      "y": 280,
+      "axis": "x",
+      "items": [
+        {
+          "id": "search-count-item",
+          "kind": "text",
+          "label": "1 个结果",
+          "icon": null,
+          "variant": "filled",
+          "size": 16
+        }
+      ]
+    },
+    {
+      "id": "search-result",
+      "x": 1492,
+      "y": 324,
+      "axis": "x",
+      "items": [
+        {
+          "id": "search-result-item",
+          "kind": "listItem",
+          "label": "Bitwarden 账号",
+          "icon": "key",
+          "variant": "filled",
+          "supporting": "alice@example.com · vault.bitwarden.com",
+          "icon2": "expand_more"
+        }
+      ]
+    }
+  ]
+}

@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import takagi.ru.monica.ui.icons.EmojiIconText
 import takagi.ru.monica.R
 import takagi.ru.monica.data.PasswordCardDisplayField
 import takagi.ru.monica.data.UnmatchedIconHandlingStrategy
@@ -119,7 +120,8 @@ fun PasswordEntryCard(
                         val uploadedIcon = if (entry.customIconType == takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_UPLOADED) {
                             takagi.ru.monica.ui.icons.rememberUploadedPasswordIcon(entry.customIconValue)
                         } else null
-                        val hasResolvedCustomIcon = simpleIcon != null || uploadedIcon != null
+                        val emojiIcon = entry.customIconValue.takeIf { entry.customIconType == takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_EMOJI }
+                        val hasResolvedCustomIcon = simpleIcon != null || uploadedIcon != null || emojiIcon != null
                         val primaryAppPackageName = if (hasResolvedCustomIcon) {
                             ""
                         } else {
@@ -148,7 +150,10 @@ fun PasswordEntryCard(
                             )
                         } else null
 
-                        if (simpleIcon != null) {
+                        if (emojiIcon != null) {
+                            EmojiIconText(emoji = emojiIcon, size = 28.dp)
+                            Spacer(modifier = Modifier.width(16.dp))
+                        } else if (simpleIcon != null) {
                             Image(
                                 bitmap = simpleIcon,
                                 contentDescription = null,
@@ -300,6 +305,10 @@ fun PasswordEntryCard(
                         }
                     }
 
+                    if (entry.isApiKeyEntry()) {
+                        Text(stringResource(R.string.api_key_title), style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.primary)
+                    }
                     val authenticatorState = if (showAuthenticator) {
                         rememberPasswordAuthenticatorDisplayState(
                             authenticatorKey = entry.authenticatorKey,

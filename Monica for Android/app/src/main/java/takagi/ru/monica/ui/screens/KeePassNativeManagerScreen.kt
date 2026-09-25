@@ -289,9 +289,6 @@ internal fun KeePassNativeManagerScreen(
     val currentGroup = currentGroupIdentity?.let { snapshot?.group(it) }
     val selectedEntry = selectedEntryIdentity?.let { snapshot?.entry(it) }
     val editingEntry = editingEntryIdentity?.let { snapshot?.entry(it) }
-    val entryCreatedFollowupFailedMessage = stringResource(
-        R.string.keepass_native_entry_created_followup_failed,
-    )
 
     BackHandler {
         when {
@@ -350,11 +347,12 @@ internal fun KeePassNativeManagerScreen(
 
             NativeManagerPage.EDITOR -> {
                 val editing = editingEntry
+                val templateMode = editing?.kind == KeePassNativeEntryKind.TEMPLATE ||
+                    (creatingEntryParent != null && creatingEntryParent == snapshot?.templateGroupIdentity)
                   NativeEntryEditorScreen(
                       entry = editing,
                       parentGroup = creatingEntryParent,
-                      templateMode = editing?.kind == KeePassNativeEntryKind.TEMPLATE ||
-                          creatingEntryParent == snapshot?.templateGroupIdentity,
+                      templateMode = templateMode,
                       customIcons = snapshot?.customIcons.orEmpty(),
                       customIconReferences = snapshot?.customIconReferences.orEmpty(),
                       revisionToken = snapshot?.sourceRevision?.sha256.orEmpty(),
@@ -407,8 +405,7 @@ internal fun KeePassNativeManagerScreen(
                                 databaseId = database.id,
                                 editingEntry = editing,
                                 creatingParent = creatingEntryParent,
-                                templateMode = editing?.kind == KeePassNativeEntryKind.TEMPLATE ||
-                                    creatingEntryParent == snapshot?.templateGroupIdentity,
+                                templateMode = templateMode,
                                 fields = fields,
                                 presentation = presentation,
                                 pendingAttachments = pendingAttachments,
@@ -423,18 +420,7 @@ internal fun KeePassNativeManagerScreen(
                             } else {
                                 val failure = outcome.failure
                                     ?: IllegalStateException("KeePass entry save returned no result")
-                                val created = outcome.createdEntry
-                                if (created != null) {
-                                    creatingEntryParent = null
-                                    editingEntryIdentity = created.identity
-                                    reload()
-                                    onResult(
-                                        entryCreatedFollowupFailedMessage + ": " +
-                                            (failure.message ?: failure.javaClass.simpleName)
-                                    )
-                                } else {
-                                    onResult(failure.message ?: failure.javaClass.simpleName)
-                                }
+                                onResult(failure.message ?: failure.javaClass.simpleName)
                             }
                         }
                     }
@@ -447,6 +433,17 @@ internal fun KeePassNativeManagerScreen(
                     modificationEnabled = snapshot != null && !viewModel.isKeePassDatabaseReadOnly(database.id),
                     onBack = { selectedEntryIdentity = null },
                     onEdit = { editingEntryIdentity = entry.identity },
+                    onAdvanceHotp = { data, onResult ->
+                        scope.launch {
+                            advanceKeePassNativeManagerHotp(
+                                viewModel, entry, data, snapshot?.sourceRevision?.sha256.orEmpty(),
+                            ).onSuccess { updated ->
+                                browser = updated
+                                selectedEntryIdentity = entry.identity
+                                onResult(null)
+                            }.onFailure { failure -> onResult(failure.message ?: failure.javaClass.simpleName) }
+                        }
+                    },
                     onAddAttachment = { sourceUri, onResult ->
                         scope.launch {
                             viewModel.addNativeAttachment(

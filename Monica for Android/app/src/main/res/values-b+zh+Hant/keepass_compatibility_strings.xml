@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keepass_entry_otp_secret_invalid">請輸入有效的 Base32 驗證碼金鑰。</string>
+    <string name="keepass_entry_properties">項目屬性</string>
+    <string name="keepass_entry_tags_hint">用換行、逗號或分號分隔標籤</string>
+    <string name="keepass_entry_expires">有效期限</string>
+    <string name="keepass_entry_never_expires">永不過期</string>
+    <string name="keepass_entry_expires_at">到期時間：%1$s</string>
+    <string name="keepass_entry_expired_at">已過期：%1$s</string>
+    <string name="keepass_hotp_saving">正在儲存計數器…</string>
+    <string name="keepass_hotp_counter_exhausted">計數器已達到最大值。</string>
+</resources>

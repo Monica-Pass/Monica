@@ -62,7 +62,7 @@ fun AddEditApiTokenScreen(
         } },
     )
     val state by model.state.collectAsStateWithLifecycle()
-    val allDatabases by mdbxViewModel.allDatabases.collectAsStateWithLifecycle()
+    val allDatabases by mdbxViewModel.availableDatabases.collectAsStateWithLifecycle()
     val databasesLoaded by mdbxViewModel.allDatabasesLoaded.collectAsStateWithLifecycle()
     val databases = remember(allDatabases) { allDatabases.filter { it.engineTypeEnum == MdbxEngineType.RUST_MDBX2 } }
     val editing = entryId != null
@@ -114,6 +114,7 @@ fun AddEditApiTokenScreen(
             } },
             actions = {
                 EntryTypeChip(current = EntryTypeChipOption.API_TOKEN,
+                    showApiKey = true,
                     enabled = !editing && !state.saving,
                     onSelect = { if (it != EntryTypeChipOption.API_TOKEN) leave(it) })
                 Spacer(Modifier.width(4.dp))

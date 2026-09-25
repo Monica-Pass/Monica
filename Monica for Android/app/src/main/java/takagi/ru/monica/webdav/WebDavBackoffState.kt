@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap
  * 按主机追踪 WebDAV 调用的 backoff 状态，作为应用层面的速率限制器。
  *
  * 行为摘要：
- * - `recordRateLimit` 在每次 429 / 503+Retry-After 响应后调用；
+ * - `recordRateLimit` 在每次 429 / 503 响应后调用；
  *   若传入 `retryAfterMillis>0` 则严格遵守服务器指示，否则采用指数退避
  *   `min(60s, 1s * 2^(n-1))`，其中 n 为 60 秒窗口内累计触发次数。
  * - 60 秒窗口内累计 ≥3 次 429 会把主机临时禁用 5 分钟。
@@ -53,7 +53,7 @@ object WebDavBackoffState {
         appContext = context.applicationContext
     }
 
-    /** 记录一次 429 / 503+Retry-After 事件，更新阻塞截止时间。 */
+    /** 记录一次 429 / 503 事件，更新阻塞截止时间。 */
     fun recordRateLimit(
         host: String,
         retryAfterMillis: Long? = null,

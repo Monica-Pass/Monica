@@ -413,6 +413,18 @@ class LocalKeePassViewModel(
         expectedRevisionToken,
     )
 
+    internal suspend fun saveNativeEntryDraft(
+        databaseId: Long,
+        entryUuid: UUID?,
+        parentGroupUuid: UUID?,
+        fields: List<KeePassFieldChange>,
+        presentation: KeePassNativeEntryPresentationUpdate?,
+        sourceUris: List<Uri>,
+        expectedRevisionToken: String,
+    ): Result<KeePassNativeEntryRecord> = workspaceRepository.saveNativeEntryDraft(
+        databaseId, entryUuid, parentGroupUuid, fields, presentation, sourceUris, expectedRevisionToken,
+    )
+
     internal suspend fun replaceNativeEntryPresentation(
         databaseId: Long,
         entryUuid: UUID,

@@ -2400,6 +2400,10 @@
     <string name="custom_icon_dialog_title">カスタムアイコンを設定する</string>
     <string name="custom_icon_pick_simple">アイコンライブラリから選択</string>
     <string name="custom_icon_upload_image">画像をアップロードする</string>
+    <string name="custom_icon_use_emoji">絵文字を使う</string>
+    <string name="custom_icon_emoji_hint">絵文字を 1 つ入力</string>
+    <string name="custom_icon_emoji_support">絵文字 1 つをこの項目に保存します。追加のアイコンパックは不要です。</string>
+    <string name="custom_icon_emoji_invalid">絵文字を 1 つだけ入力してください。</string>
     <string name="custom_icon_clear">ウェブサイトのアイコンを使用する</string>
     <string name="custom_icon_search_hint">検索アイコン</string>
     <string name="custom_icon_search_empty">一致するアイコンが見つかりません</string>
@@ -3560,8 +3564,11 @@
     <string name="category_folder_transfer_running">別のフォルダー転送を実行中です。</string>
     <string name="field_action_more">その他のフィールド操作</string>
     <string name="field_action_show_large">大きな文字で表示</string>
-    <string name="field_action_show_barcode">QR コードで表示</string>
+    <string name="field_action_show_barcode">QR コード / バーコードで表示</string>
     <string name="field_action_barcode_failed">この値の QR コードを作成できませんでした。</string>
+    <string name="field_barcode_format_qr">QR コード</string>
+    <string name="field_barcode_format_linear">バーコード</string>
+    <string name="field_barcode_linear_failed">この値は Code 128 バーコードにできません。80 文字以内の ASCII 文字を使用してください。</string>
     <string name="ime_search_results_count">%1$d 件の結果</string>
     <string name="ime_sort_alphabetical">A～Z 順に並べ替え</string>
     <string name="ime_sort_relevance">スマート順を使用</string>
@@ -4546,4 +4553,12 @@
     <string name="wallet_stack_open_card">カードの詳細を開く</string>
     <string name="language_french">Français</string>
     <string name="qs_lang_french">Français</string>
+    <string name="custom_icon_pick_installed">インストール済みのアイコン</string>
+    <string name="custom_icon_installed_apps">アプリアイコン</string>
+    <string name="custom_icon_installed_packs">アイコンパック</string>
+    <string name="custom_icon_installed_empty_packs">対応するアイコンパックがありません。アイコンパックをインストールしてから、もう一度開いてください。</string>
+    <string name="custom_icon_installed_empty_icons">このアイコンパックには対応するアイコンがありません。</string>
+    <string name="custom_icon_installed_load_failed">アイコンを読み込めませんでした。再試行してください。</string>
+    <string name="custom_icon_installed_save_failed">このアイコンを使用できませんでした。再試行するか、別のアイコンを選んでください。</string>
+    <string name="field_barcode_linear_too_wide">このバーコードの表示には画面の幅が足りません。端末を横向きにするか、QR コードを使用してください。</string>
 </resources>

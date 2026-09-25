@@ -99,6 +99,7 @@ data class MdbxSyncStateSnapshot(
     val vaultId: String? = null,
     val generationId: String? = null,
     val exportCheckpoint: MdbxSyncCheckpointState? = null,
+    val exportResume: MdbxSyncResumeState? = null,
     val bootstrapCheckpoint: MdbxSyncCheckpointState? = null,
     val pendingSegment: MdbxPendingSegmentState? = null,
     val remoteStreams: List<MdbxRemoteStreamState> = emptyList(),

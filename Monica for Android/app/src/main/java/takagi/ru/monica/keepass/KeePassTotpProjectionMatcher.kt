@@ -11,30 +11,39 @@ object KeePassTotpProjectionMatcher {
         existingByUuid: SecureItem?,
         existingBySource: SecureItem?,
         incomingIdentityKey: String?,
-        identityKeyOf: (SecureItem) -> String?
+        identityKeyOf: (SecureItem) -> String?,
+        claimedProjectionIds: Set<Long> = emptySet(),
     ): SecureItem? {
+        fun belongsToIncomingEntry(candidate: SecureItem): Boolean =
+            candidate.id !in claimedProjectionIds &&
+                candidate.itemType == ItemType.TOTP && candidate.keepassDatabaseId == databaseId &&
+                (candidate.keepassEntryUuid.isNullOrBlank() ||
+                    candidate.keepassEntryUuid.equals(incoming.keepassEntryUuid, ignoreCase = true))
+
         existingByUuid
-            ?.takeIf { it.itemType == ItemType.TOTP }
+            ?.takeIf(::belongsToIncomingEntry)
             ?.let { return it }
 
         existingBySource
-            ?.takeIf { it.itemType == ItemType.TOTP }
+            ?.takeIf(::belongsToIncomingEntry)
             ?.let { return it }
 
         incomingIdentityKey?.let { identityKey ->
             existingTotp.firstOrNull { candidate ->
-                candidate.itemType == ItemType.TOTP &&
+                candidate.id !in claimedProjectionIds && candidate.itemType == ItemType.TOTP &&
                     candidate.keepassDatabaseId == databaseId &&
                     candidate.keepassEntryUuid.isNullOrBlank() &&
                     identityKeyOf(candidate) == identityKey
             }?.let { return it }
         }
 
-        return existingTotp.firstOrNull {
-            it.itemType == ItemType.TOTP &&
+        return existingTotp.singleOrNull {
+            it.id !in claimedProjectionIds && it.itemType == ItemType.TOTP &&
                 it.keepassDatabaseId == databaseId &&
+                it.keepassEntryUuid.isNullOrBlank() &&
                 it.keepassGroupPath == incoming.keepassGroupPath &&
-                it.title == incoming.title
+                it.title == incoming.title &&
+                (incomingIdentityKey == null || identityKeyOf(it) == null || identityKeyOf(it) == incomingIdentityKey)
         }
     }
 }

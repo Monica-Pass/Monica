@@ -1,0 +1,604 @@
+{
+  "title": "Monica · MDBX1 停用与升级",
+  "brief": "保留旧库记录和文件；新建仅支持 MDBX2。旧库从不可用磁贴进入独立升级流程，完成数据校验后得到新的本地 MDBX2。",
+  "frame": "phone",
+  "platform": "android",
+  "paletteKey": "purple",
+  "theme": {
+    "dark": false,
+    "bothModes": true,
+    "contrast": "standard",
+    "shape": "rounded",
+    "font": "system",
+    "motion": "expressive"
+  },
+  "frames": [
+    {
+      "id": "manager",
+      "name": "数据库管理",
+      "x": 0,
+      "y": 0,
+      "note": "沿用 MDBX 管理页的验证器磁贴与左右 12dp 留白。新建和打开始终可达。旧版磁贴仍可点击以查看说明和升级，但不再激活、同步或作为写入位置。"
+    },
+    {
+      "id": "legacy",
+      "name": "MDBX1 不可用",
+      "x": 492,
+      "y": 0,
+      "note": "复用设置页动作组：外侧大圆角、相邻小圆角。升级入口直接可见。保留旧库注册信息和原文件，停止普通读写、默认目标和自动同步。"
+    },
+    {
+      "id": "upgrade",
+      "name": "升级预检",
+      "x": 984,
+      "y": 0,
+      "note": "复用现有迁移预检与进度。创建独立本地 MDBX2，校验条目、文件夹和附件后完成；失败清理目标，保留来源。远端旧库明确说明升级本机副本，未下载的更改不包含。大字体与横屏可滚动，操作可达。"
+    }
+  ],
+  "groups": [
+    {
+      "id": "manager-bar",
+      "x": 0,
+      "y": 0,
+      "axis": "x",
+      "items": [
+        {
+          "id": "manager-bar-item",
+          "kind": "topAppBar",
+          "label": "本地数据库",
+          "icon": "arrow_back",
+          "variant": "filled"
+        }
+      ]
+    },
+    {
+      "id": "manager-open",
+      "x": 12,
+      "y": 108,
+      "axis": "x",
+      "items": [
+        {
+          "id": "manager-open-item",
+          "kind": "button",
+          "label": "打开数据库",
+          "icon": "folder_open",
+          "variant": "tonal"
+        }
+      ]
+    },
+    {
+      "id": "manager-new",
+      "x": 208,
+      "y": 108,
+      "axis": "x",
+      "items": [
+        {
+          "id": "manager-new-item",
+          "kind": "button",
+          "label": "新建 MDBX2",
+          "icon": "add",
+          "variant": "filled"
+        }
+      ]
+    },
+    {
+      "id": "tile-0",
+      "x": 12,
+      "y": 190,
+      "axis": "x",
+      "items": [
+        {
+          "id": "tile-0-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 188,
+          "size2": 180,
+          "fill": "surfaceContainerLow",
+          "radiusTop": 24,
+          "radiusBottom": 24,
+          "action": null
+        }
+      ]
+    },
+    {
+      "id": "tile-0-icon",
+      "x": 26,
+      "y": 206,
+      "axis": "x",
+      "items": [
+        {
+          "id": "tile-0-icon-item",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "database",
+          "variant": "text",
+          "action": null
+        }
+      ]
+    },
+    {
+      "id": "tile-0-text-0",
+      "x": 26,
+      "y": 278,
+      "axis": "x",
+      "items": [
+        {
+          "id": "tile-0-text-0-item",
+          "kind": "text",
+          "label": "个人数据库",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "tile-0-text-1",
+      "x": 26,
+      "y": 306,
+      "axis": "x",
+      "items": [
+        {
+          "id": "tile-0-text-1-item",
+          "kind": "text",
+          "label": "MDBX2 · 本地可用",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "tile-1",
+      "x": 212,
+      "y": 190,
+      "axis": "x",
+      "items": [
+        {
+          "id": "tile-1-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 188,
+          "size2": 180,
+          "fill": "surfaceContainerLow",
+          "radiusTop": 24,
+          "radiusBottom": 24,
+          "action": {
+            "to": "legacy",
+            "transition": "slide"
+          }
+        }
+      ]
+    },
+    {
+      "id": "tile-1-icon",
+      "x": 226,
+      "y": 206,
+      "axis": "x",
+      "items": [
+        {
+          "id": "tile-1-icon-item",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "warning",
+          "variant": "text",
+          "action": {
+            "to": "legacy",
+            "transition": "slide"
+          }
+        }
+      ]
+    },
+    {
+      "id": "tile-1-text-0",
+      "x": 226,
+      "y": 278,
+      "axis": "x",
+      "items": [
+        {
+          "id": "tile-1-text-0-item",
+          "kind": "text",
+          "label": "旧版数据库",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "tile-1-text-1",
+      "x": 226,
+      "y": 306,
+      "axis": "x",
+      "items": [
+        {
+          "id": "tile-1-text-1-item",
+          "kind": "text",
+          "label": "MDBX1 · 不可用",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "manager-note",
+      "x": 12,
+      "y": 402,
+      "axis": "x",
+      "items": [
+        {
+          "id": "manager-note-item",
+          "kind": "text",
+          "label": "旧版数据库可升级为 MDBX2",
+          "icon": null,
+          "variant": "filled",
+          "size": 17
+        }
+      ]
+    },
+    {
+      "id": "legacy-bar",
+      "x": 492,
+      "y": 0,
+      "axis": "x",
+      "items": [
+        {
+          "id": "legacy-bar-item",
+          "kind": "topAppBar",
+          "label": "旧版数据库",
+          "icon": "arrow_back",
+          "variant": "filled",
+          "actions": {
+            "icon": {
+              "to": "manager",
+              "transition": "slide"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "legacy-card",
+      "x": 504,
+      "y": 108,
+      "axis": "x",
+      "items": [
+        {
+          "id": "legacy-card-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 388,
+          "size2": 244,
+          "fill": "surfaceContainerLow",
+          "radiusTop": 24,
+          "radiusBottom": 24
+        }
+      ]
+    },
+    {
+      "id": "legacy-warning",
+      "x": 520,
+      "y": 120,
+      "axis": "x",
+      "items": [
+        {
+          "id": "legacy-warning-item",
+          "kind": "iconButton",
+          "label": "",
+          "icon": "warning",
+          "variant": "text"
+        }
+      ]
+    },
+    {
+      "id": "legacy-title-0",
+      "x": 520,
+      "y": 184,
+      "axis": "x",
+      "items": [
+        {
+          "id": "legacy-title-0-item",
+          "kind": "text",
+          "label": "MDBX1 已停止支持",
+          "icon": null,
+          "variant": "filled",
+          "size": 24
+        }
+      ]
+    },
+    {
+      "id": "legacy-explanation-0",
+      "x": 520,
+      "y": 228,
+      "axis": "x",
+      "items": [
+        {
+          "id": "legacy-explanation-0-item",
+          "kind": "text",
+          "label": "此数据库已不可用。",
+          "icon": null,
+          "variant": "filled",
+          "size": 16
+        }
+      ]
+    },
+    {
+      "id": "legacy-explanation-1",
+      "x": 520,
+      "y": 256,
+      "axis": "x",
+      "items": [
+        {
+          "id": "legacy-explanation-1-item",
+          "kind": "text",
+          "label": "升级为 MDBX2 后继续使用；",
+          "icon": null,
+          "variant": "filled",
+          "size": 16
+        }
+      ]
+    },
+    {
+      "id": "legacy-explanation-2",
+      "x": 520,
+      "y": 284,
+      "axis": "x",
+      "items": [
+        {
+          "id": "legacy-explanation-2-item",
+          "kind": "text",
+          "label": "升级会保留原文件。",
+          "icon": null,
+          "variant": "filled",
+          "size": 16
+        }
+      ]
+    },
+    {
+      "id": "legacy-upgrade",
+      "x": 504,
+      "y": 376,
+      "axis": "x",
+      "items": [
+        {
+          "id": "legacy-upgrade-item",
+          "kind": "listItem",
+          "label": "升级为 MDBX2",
+          "icon": "upgrade",
+          "variant": "filled",
+          "icon2": "chevron_right",
+          "supporting": "创建并校验独立的新数据库",
+          "size": 388,
+          "action": {
+            "to": "upgrade",
+            "transition": "slideUp"
+          }
+        }
+      ]
+    },
+    {
+      "id": "legacy-location",
+      "x": 504,
+      "y": 472,
+      "axis": "x",
+      "items": [
+        {
+          "id": "legacy-location-item",
+          "kind": "listItem",
+          "label": "原文件位置",
+          "icon": "folder",
+          "variant": "filled",
+          "supporting": "保留现有数据库文件",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "legacy-delete",
+      "x": 504,
+      "y": 574,
+      "axis": "x",
+      "items": [
+        {
+          "id": "legacy-delete-item",
+          "kind": "listItem",
+          "label": "删除数据库",
+          "icon": "delete",
+          "variant": "filled",
+          "supporting": "沿用现有删除确认流程",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "upgrade-bar",
+      "x": 984,
+      "y": 0,
+      "axis": "x",
+      "items": [
+        {
+          "id": "upgrade-bar-item",
+          "kind": "topAppBar",
+          "label": "升级为 MDBX2",
+          "icon": "close",
+          "variant": "filled",
+          "actions": {
+            "icon": {
+              "to": "legacy",
+              "transition": "slideDown"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "upgrade-description-0",
+      "x": 996,
+      "y": 108,
+      "axis": "x",
+      "items": [
+        {
+          "id": "upgrade-description-0-item",
+          "kind": "text",
+          "label": "生成新的本地 MDBX2 数据库。",
+          "icon": null,
+          "variant": "filled",
+          "size": 16
+        }
+      ]
+    },
+    {
+      "id": "upgrade-description-1",
+      "x": 996,
+      "y": 136,
+      "axis": "x",
+      "items": [
+        {
+          "id": "upgrade-description-1-item",
+          "kind": "text",
+          "label": "原数据库保持不变，完成后校验数据。",
+          "icon": null,
+          "variant": "filled",
+          "size": 16
+        }
+      ]
+    },
+    {
+      "id": "upgrade-count",
+      "x": 996,
+      "y": 188,
+      "axis": "x",
+      "items": [
+        {
+          "id": "upgrade-count-item",
+          "kind": "listItem",
+          "label": "数据预检",
+          "icon": "fact_check",
+          "variant": "filled",
+          "supporting": "条目、文件夹和附件通过校验后再完成",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "upgrade-name",
+      "x": 996,
+      "y": 284,
+      "axis": "x",
+      "items": [
+        {
+          "id": "upgrade-name-item",
+          "kind": "textField",
+          "label": "新数据库名称",
+          "icon": null,
+          "variant": "outlined",
+          "supporting": "旧版数据库 MDBX2"
+        }
+      ]
+    },
+    {
+      "id": "upgrade-password",
+      "x": 996,
+      "y": 388,
+      "axis": "x",
+      "items": [
+        {
+          "id": "upgrade-password-item",
+          "kind": "textField",
+          "label": "新数据库主密码",
+          "icon": "lock",
+          "variant": "outlined"
+        }
+      ]
+    },
+    {
+      "id": "upgrade-remote-0",
+      "x": 996,
+      "y": 496,
+      "axis": "x",
+      "items": [
+        {
+          "id": "upgrade-remote-0-item",
+          "kind": "text",
+          "label": "远端旧库：升级本机保存的副本。",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "upgrade-remote-1",
+      "x": 996,
+      "y": 524,
+      "axis": "x",
+      "items": [
+        {
+          "id": "upgrade-remote-1-item",
+          "kind": "text",
+          "label": "尚未下载的远端更改不在升级范围内。",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "upgrade-remote-2",
+      "x": 996,
+      "y": 552,
+      "axis": "x",
+      "items": [
+        {
+          "id": "upgrade-remote-2-item",
+          "kind": "text",
+          "label": "新数据库需要单独配置同步。",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "upgrade-start",
+      "x": 996,
+      "y": 626,
+      "axis": "x",
+      "items": [
+        {
+          "id": "upgrade-start-item",
+          "kind": "button",
+          "label": "开始升级",
+          "icon": "upgrade",
+          "variant": "filled"
+        }
+      ]
+    },
+    {
+      "id": "upgrade-cancel",
+      "x": 1220,
+      "y": 626,
+      "axis": "x",
+      "items": [
+        {
+          "id": "upgrade-cancel-item",
+          "kind": "button",
+          "label": "取消",
+          "icon": null,
+          "variant": "text",
+          "action": {
+            "to": "legacy",
+            "transition": "slideDown"
+          }
+        }
+      ]
+    }
+  ]
+}

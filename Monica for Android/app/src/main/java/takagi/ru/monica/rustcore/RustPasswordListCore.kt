@@ -11,6 +11,33 @@ import takagi.ru.monica.data.PasswordEntry
  * batch, callers get null and must keep the Kotlin/Room fallback path.
  */
 object RustPasswordListCore {
+    /** Search metadata only; the keyboard keeps credentials outside the native batch. */
+    data class SearchRow(val title: String, val username: String, val website: String,
+        val appName: String, val packageName: String)
+
+    class PreparedSearch internal constructor(internal val bytes: ByteArray, internal val count: Int)
+
+    fun prepareSearch(rows: List<SearchRow>): PreparedSearch {
+        val output = ByteArrayOutputStream(8 + rows.size.coerceAtMost(2048) * 96)
+        writeIntLe(output, METADATA_BATCH_MAGIC)
+        writeIntLe(output, rows.size)
+        for (row in rows) {
+            writeUtf8(output, row.title)
+            writeUtf8(output, row.username)
+            writeUtf8(output, row.website)
+            writeUtf8(output, row.appName)
+            writeUtf8(output, row.packageName)
+        }
+        return PreparedSearch(output.toByteArray(), rows.size)
+    }
+
+    fun filterIndices(prepared: PreparedSearch, query: String): IntArray? {
+        if (query.isBlank()) return IntArray(prepared.count) { it }
+        if (!ensureLoaded()) return null
+        val indices = runCatching { nativeFilterIndices(prepared.bytes, query) }.getOrNull() ?: return null
+        return indices.takeIf { values -> values.all { it in 0 until prepared.count } }
+    }
+
     private const val METADATA_BATCH_MAGIC = 0x3146504D // "MPF1" as little-endian u32.
 
     @Volatile

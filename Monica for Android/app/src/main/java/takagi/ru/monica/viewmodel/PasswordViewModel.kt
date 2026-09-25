@@ -1895,10 +1895,11 @@ class PasswordViewModel internal constructor(
 
         val resolvedSnapshots = snapshots ?: keepassBridge
             ?.readLegacySecureItems(databaseId, setOf(ItemType.TOTP))
-            ?.getOrNull()
+            ?.getOrThrow()
             ?: return
 
         val existingTotp = secureRepo.getItemsByType(ItemType.TOTP).first()
+        val claimedProjectionIds = mutableSetOf<Long>()
         resolvedSnapshots.forEach { snapshot ->
             val incoming = snapshot.item
             val existingByUuid = incoming.keepassEntryUuid
@@ -1915,10 +1916,11 @@ class PasswordViewModel internal constructor(
                 existingTotp = existingTotp,
                 existingByUuid = existingByUuid,
                 existingBySource = existingBySource,
-                incomingIdentityKey = incomingIdentityKey
-            ) { candidate ->
-                parseStoredTotpData(candidate)?.let(::buildTotpCopyIdentityKey)
-            }
+                incomingIdentityKey = incomingIdentityKey,
+                identityKeyOf = { candidate -> parseStoredTotpData(candidate)?.let(::buildTotpCopyIdentityKey) },
+                claimedProjectionIds = claimedProjectionIds,
+            )
+            existing?.let { claimedProjectionIds += it.id }
 
                 if (existing == null) {
                     secureRepo.insertItem(incoming)
@@ -5310,6 +5312,10 @@ class PasswordViewModel internal constructor(
             )
             // 字段已经写入 Room 后再请求同步，避免后台任务读取到旧字段列表。
             bitwardenRepository?.requestLocalMutationSync(bitwardenVaultId)
+        } else if (entry?.mdbxDatabaseId != null) {
+            // The first native write precedes the Room custom-field replacement.
+            // Commit the final field set before reporting save success, including removals.
+            repository.updatePasswordEntry(entry.copy(updatedAt = updatedAt))
         } else {
             // 更新密码条目的 updatedAt 以确保 WebDAV 同步能检测到自定义字段的变化
             repository.updatePasswordUpdatedAt(entryId, updatedAt)

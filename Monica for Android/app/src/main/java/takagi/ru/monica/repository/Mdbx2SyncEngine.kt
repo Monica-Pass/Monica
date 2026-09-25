@@ -5,6 +5,7 @@ import java.util.Locale
 import takagi.ru.monica.data.MdbxSyncCheckpointState
 import takagi.ru.monica.data.MdbxSyncResumeState
 import uniffi.mdbx_ffi.MdbxExternalBlobState
+import uniffi.mdbx_ffi.MdbxFfiException
 import uniffi.mdbx_ffi.MdbxIncrementalSyncCheckpoint
 import uniffi.mdbx_ffi.MdbxIncrementalSyncResume
 import uniffi.mdbx_ffi.MdbxVault
@@ -192,11 +193,32 @@ private class NativeMdbx2SyncEngine(
         expectedResume: MdbxSyncResumeState?
     ): Mdbx2SegmentApplyResult = mutate { vault ->
         val before = vault.incrementalSyncCheckpoint().toState()
-        val result = vault.applyIncrementalSyncSegment(
-            source = source.absolutePath,
-            expectedBase = expectedBase.toFfi(),
-            expectedResume = expectedResume?.toFfi()
-        )
+        val result = try {
+            vault.applyIncrementalSyncSegment(
+                source = source.absolutePath,
+                expectedBase = expectedBase.toFfi(),
+                expectedResume = expectedResume?.toFfi()
+            )
+        } catch (error: MdbxFfiException.Storage) {
+            // This FFI version throws after atomically rolling back a segment
+            // with missing parents. Defer only this exact dependency error;
+            // authentication, corruption and other storage errors stay fatal.
+            val missing = MISSING_PARENTS_DETAIL.matchEntire(error.detail)
+                ?.groupValues?.get(1)?.toUIntOrNull()
+                ?.takeIf { it > 0u } ?: throw error
+            val after = vault.incrementalSyncCheckpoint().toState()
+            if (after != before) throw error
+            return@mutate Mdbx2SegmentApplyResult(
+                result = expectedBase,
+                nextResume = expectedResume,
+                appliedCommits = 0u,
+                skippedCommits = 0u,
+                conflictCount = 0u,
+                missingParentCount = missing,
+                localCheckpointBefore = before,
+                localCheckpointAfter = after
+            )
+        }
         Mdbx2SegmentApplyResult(
             result = result.result.toState(),
             nextResume = result.nextResume?.toState(),
@@ -233,6 +255,12 @@ private class NativeMdbx2SyncEngine(
 
     override suspend fun <T> withBlobTransfer(block: suspend (Mdbx2BlobTransferSession) -> T): T =
         mutate { vault -> block(NativeMdbx2BlobTransferSession(vault)) }
+
+    companion object {
+        private val MISSING_PARENTS_DETAIL = Regex(
+            "validation error: incremental segment is missing ([1-9][0-9]*) commit parent\\(s\\)"
+        )
+    }
 }
 
 private class NativeMdbx2BlobTransferSession(

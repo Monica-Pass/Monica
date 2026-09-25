@@ -152,7 +152,7 @@ fun PasskeyListScreen(
     val passwordMap = remember(passwords) { passwords.associateBy { it.id } }
     val categories by database.categoryDao().getAllCategories().collectAsState(initial = emptyList())
     val keepassDatabases by database.localKeePassDatabaseDao().getAllDatabases().collectAsState(initial = emptyList())
-    val mdbxDatabases by database.localMdbxDatabaseDao().getAllDatabases().collectAsState(initial = emptyList())
+    val mdbxDatabases by database.localMdbxDatabaseDao().getAvailableDatabases().collectAsState(initial = emptyList())
     val bitwardenRepository = remember { BitwardenRepository.getInstance(context) }
     val bitwardenVaults by database.bitwardenVaultDao().getAllVaultsFlow().collectAsState(initial = emptyList())
     val securityManager = takagi.ru.monica.ui.rememberUiSecurityManager()
@@ -1699,6 +1699,9 @@ private fun PasskeyListItem(
         null
     }
     val boundCustomIconType = boundPassword?.customIconType ?: takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_NONE
+    val boundEmoji = boundPassword?.customIconValue?.takeIf {
+        iconCardsEnabled && boundCustomIconType == takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_EMOJI
+    }
     val boundSimpleIcon = if (iconCardsEnabled && boundCustomIconType == takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_SIMPLE) {
         takagi.ru.monica.ui.icons.rememberSimpleIconBitmap(
             slug = boundPassword?.customIconValue,
@@ -1780,6 +1783,13 @@ private fun PasskeyListItem(
                     // Passkey 图标（无背景直出）
                     var iconSlotVisible = true
                     when {
+                        boundEmoji != null -> {
+                            takagi.ru.monica.ui.icons.EmojiIconText(
+                                emoji = boundEmoji,
+                                size = 28.dp,
+                                modifier = Modifier.size(40.dp),
+                            )
+                        }
                         iconCardsEnabled && boundSimpleIcon != null -> {
                             Image(
                                 bitmap = boundSimpleIcon,

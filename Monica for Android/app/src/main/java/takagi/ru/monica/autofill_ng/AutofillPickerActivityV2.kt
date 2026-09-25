@@ -2064,7 +2064,7 @@ private fun AutofillPickerContent(
                     } else {
                         emptyList()
                     },
-                    allPasswords = repository.getAllPasswordEntries().first().filterNot { it.isGpgKeyEntry() },
+                    allPasswords = repository.getAllPasswordEntries().first().filterNot { it.isKeyCredential() },
                     allBankCards = secureItemRepository.getActiveItemsByType(ItemType.BANK_CARD).first(),
                     allDocuments = secureItemRepository.getActiveItemsByType(ItemType.DOCUMENT).first(),
                     allBillingAddresses = secureItemRepository.getActiveItemsByType(ItemType.BILLING_ADDRESS).first()

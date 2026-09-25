@@ -558,7 +558,7 @@ private fun TimelineContent(
     val database = remember(context) { PasswordDatabase.getDatabase(context.applicationContext) }
     val bitwardenVaults by database.bitwardenVaultDao().getAllVaultsFlow().collectAsState(initial = emptyList())
     val keepassDatabases by database.localKeePassDatabaseDao().getAllDatabases().collectAsState(initial = emptyList())
-    val mdbxDatabases by database.localMdbxDatabaseDao().getAllDatabases().collectAsState(initial = emptyList())
+    val mdbxDatabases by database.localMdbxDatabaseDao().getAvailableDatabases().collectAsState(initial = emptyList())
     val activePasswordEntries by database.passwordEntryDao().getAllPasswordEntries().collectAsState(initial = emptyList())
     val deletedPasswordEntries by database.passwordEntryDao().getDeletedEntries().collectAsState(initial = emptyList())
     val activeSecureItems by database.secureItemDao().getAllItems().collectAsState(initial = emptyList())
@@ -2294,7 +2294,7 @@ private fun TrashContent(
     val database = remember(context) { PasswordDatabase.getDatabase(context.applicationContext) }
     val bitwardenVaults by database.bitwardenVaultDao().getAllVaultsFlow().collectAsState(initial = emptyList())
     val keepassDatabases by database.localKeePassDatabaseDao().getAllDatabases().collectAsState(initial = emptyList())
-    val mdbxDatabases by database.localMdbxDatabaseDao().getAllDatabases().collectAsState(initial = emptyList())
+    val mdbxDatabases by database.localMdbxDatabaseDao().getAvailableDatabases().collectAsState(initial = emptyList())
 
     val trashCategories by viewModel.trashCategories.collectAsState()
     val trashSettings by viewModel.trashSettings.collectAsState()

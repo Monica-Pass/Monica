@@ -146,7 +146,7 @@ class AutofillSaveActivity : ComponentActivity() {
                 }
                 
                 // 检查是否已存在相同的密码
-                val existingPasswords = passwordRepository.getAllPasswordEntries().first().filterNot { it.isGpgKeyEntry() }
+                val existingPasswords = passwordRepository.getAllPasswordEntries().first().filterNot { it.isKeyCredential() }
                 val encryptedPassword = securityManager.encryptData(password)
                 val existing = existingPasswords.firstOrNull { entry ->
                     // 优先匹配包名
@@ -240,7 +240,7 @@ class AutofillSaveActivity : ComponentActivity() {
 
     private suspend fun resolveInitialTarget(): AutofillSaveInitialTarget {
         val settingsSnapshot = settingsManager.settingsFlow.first()
-        val mdbxDatabases = database.localMdbxDatabaseDao().getAllDatabasesSnapshot()
+        val mdbxDatabases = database.localMdbxDatabaseDao().getAvailableDatabasesSnapshot()
         return resolveAutofillSaveInitialTarget(settingsSnapshot, mdbxDatabases).also { target ->
             MdbxDiagLogger.append(
                 "[MDBX][autofill-save-open] source=legacy target=${target.diagnosticLabel()} mdbxDatabases=${target.mdbxDatabasesFallback.size}"

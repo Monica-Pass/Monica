@@ -190,7 +190,7 @@ fun AddEditTotpScreen(
     val bitwardenRepository = remember { BitwardenRepository.getInstance(context) }
     val bitwardenVaults by bitwardenRepository.getAllVaultsFlow().collectAsState(initial = emptyList())
     val database = remember { PasswordDatabase.getDatabase(context) }
-    val mdbxDatabases by database.localMdbxDatabaseDao().getAllDatabases().collectAsState(initial = emptyList())
+    val mdbxDatabases by database.localMdbxDatabaseDao().getAvailableDatabases().collectAsState(initial = emptyList())
     val allTotpItems by (totpViewModel?.totpItems ?: kotlinx.coroutines.flow.flowOf(emptyList())).collectAsState(initial = emptyList())
 
     fun syncLegacyStorageState(targets: List<StorageTarget>) {
@@ -1234,6 +1234,7 @@ fun AddEditTotpScreen(
 
     if (showCustomIconDialog) {
         CustomIconActionDialog(
+            showEmojiAction = false,
             showClearAction = customIconType != PASSWORD_ICON_TYPE_NONE,
             onPickFromLibrary = {
                 customIconSearchQuery = ""

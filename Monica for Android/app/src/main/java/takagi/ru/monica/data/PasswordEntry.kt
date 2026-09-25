@@ -160,6 +160,11 @@ data class PasswordEntry(
     fun isWifiEntry(): Boolean = loginType.equals("WIFI", ignoreCase = true)
 
     fun isGpgKeyEntry(): Boolean = loginType.equals("GPG_KEY", ignoreCase = true)
+
+    fun isApiKeyEntry(): Boolean = loginType.equals(takagi.ru.monica.data.model.ApiKeyEntryFields.TYPE, ignoreCase = true)
+
+    /** Stored keys must never be offered as website or app login passwords. */
+    fun isKeyCredential(): Boolean = isGpgKeyEntry() || isApiKeyEntry()
     
     /**
      * 获取SSO提供商枚举

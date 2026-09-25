@@ -1,0 +1,502 @@
+{
+  "title": "Monica · AI API Key",
+  "brief": "从密码页新增 API Key，保存 AI 服务供应商、官网、密钥、API 请求地址与备注，支持现有密码存储位置。",
+  "frame": "phone",
+  "platform": "android",
+  "paletteKey": "purple",
+  "theme": {
+    "dark": false,
+    "bothModes": true,
+    "shape": "rounded",
+    "font": "system",
+    "contrast": "standard",
+    "motion": "expressive"
+  },
+  "frames": [
+    {
+      "id": "types",
+      "name": "选择新建类型",
+      "x": 0,
+      "y": 0,
+      "note": "密码页新建表单的类型菜单加入 API Key，既有类型保持可达。"
+    },
+    {
+      "id": "editor",
+      "name": "新建 API Key",
+      "x": 492,
+      "y": 0,
+      "note": "供应商名称作为条目标题；官网可选；密钥默认隐藏；支持自定义 API 请求地址，适合官方服务和自建、中转服务。"
+    },
+    {
+      "id": "detail",
+      "name": "API Key 详情",
+      "x": 984,
+      "y": 0,
+      "note": "可查看、编辑和复制，密钥使用敏感剪贴板；API Key 不作为网站登录密码提供自动填充。"
+    }
+  ],
+  "groups": [
+    {
+      "id": "types-bar",
+      "x": 0,
+      "y": 0,
+      "axis": "x",
+      "items": [
+        {
+          "id": "types-bar-item",
+          "kind": "topAppBar",
+          "label": "添加密码",
+          "icon": "arrow_back",
+          "variant": "filled"
+        }
+      ]
+    },
+    {
+      "id": "type-chip",
+      "x": 270,
+      "y": 105,
+      "axis": "x",
+      "items": [
+        {
+          "id": "type-chip-item",
+          "kind": "chip",
+          "label": "密码",
+          "icon": "expand_more",
+          "variant": "filled",
+          "checked": true
+        }
+      ]
+    },
+    {
+      "id": "type-0",
+      "x": 16,
+      "y": 162,
+      "axis": "x",
+      "items": [
+        {
+          "id": "type-0-item",
+          "kind": "listItem",
+          "label": "密码",
+          "icon": "password",
+          "variant": "filled",
+          "action": {
+            "to": "types",
+            "transition": "none"
+          }
+        }
+      ]
+    },
+    {
+      "id": "type-1",
+      "x": 16,
+      "y": 238,
+      "axis": "x",
+      "items": [
+        {
+          "id": "type-1-item",
+          "kind": "listItem",
+          "label": "API Key",
+          "icon": "vpn_key",
+          "variant": "filled",
+          "action": {
+            "to": "editor",
+            "transition": "slide"
+          }
+        }
+      ]
+    },
+    {
+      "id": "type-2",
+      "x": 16,
+      "y": 314,
+      "axis": "x",
+      "items": [
+        {
+          "id": "type-2-item",
+          "kind": "listItem",
+          "label": "Wi-Fi",
+          "icon": "wifi",
+          "variant": "filled",
+          "action": {
+            "to": "types",
+            "transition": "none"
+          }
+        }
+      ]
+    },
+    {
+      "id": "type-3",
+      "x": 16,
+      "y": 390,
+      "axis": "x",
+      "items": [
+        {
+          "id": "type-3-item",
+          "kind": "listItem",
+          "label": "SSH 密钥",
+          "icon": "key",
+          "variant": "filled",
+          "action": {
+            "to": "types",
+            "transition": "none"
+          }
+        }
+      ]
+    },
+    {
+      "id": "type-4",
+      "x": 16,
+      "y": 466,
+      "axis": "x",
+      "items": [
+        {
+          "id": "type-4-item",
+          "kind": "listItem",
+          "label": "条码",
+          "icon": "qr_code_2",
+          "variant": "filled",
+          "action": {
+            "to": "types",
+            "transition": "none"
+          }
+        }
+      ]
+    },
+    {
+      "id": "type-5",
+      "x": 16,
+      "y": 542,
+      "axis": "x",
+      "items": [
+        {
+          "id": "type-5-item",
+          "kind": "listItem",
+          "label": "API Token",
+          "icon": "key",
+          "variant": "filled",
+          "action": {
+            "to": "types",
+            "transition": "none"
+          }
+        }
+      ]
+    },
+    {
+      "id": "type-6",
+      "x": 16,
+      "y": 618,
+      "axis": "x",
+      "items": [
+        {
+          "id": "type-6-item",
+          "kind": "listItem",
+          "label": "GPG 密钥",
+          "icon": "key",
+          "variant": "filled",
+          "action": {
+            "to": "types",
+            "transition": "none"
+          }
+        }
+      ]
+    },
+    {
+      "id": "editor-bar",
+      "x": 492,
+      "y": 0,
+      "axis": "x",
+      "items": [
+        {
+          "id": "editor-bar-item",
+          "kind": "topAppBar",
+          "label": "添加 API Key",
+          "icon": "arrow_back",
+          "variant": "filled",
+          "icon2": "favorite_border",
+          "actions": {
+            "icon": {
+              "to": "types"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "editor-type",
+      "x": 762,
+      "y": 96,
+      "axis": "x",
+      "items": [
+        {
+          "id": "editor-type-item",
+          "kind": "chip",
+          "label": "API Key",
+          "icon": "expand_more",
+          "variant": "filled",
+          "checked": true,
+          "action": {
+            "to": "types"
+          }
+        }
+      ]
+    },
+    {
+      "id": "editor-target",
+      "x": 508,
+      "y": 144,
+      "axis": "x",
+      "items": [
+        {
+          "id": "editor-target-item",
+          "kind": "listItem",
+          "label": "保存位置",
+          "icon": "database",
+          "variant": "filled",
+          "supporting": "本地密码库",
+          "icon2": "add",
+          "note": "复用现有多位置选择器：本地、MDBX、KeePass、Bitwarden。"
+        }
+      ]
+    },
+    {
+      "id": "editor-provider",
+      "x": 508,
+      "y": 232,
+      "axis": "x",
+      "items": [
+        {
+          "id": "editor-provider-item",
+          "kind": "textField",
+          "label": "供应商名称 *",
+          "icon": "business",
+          "variant": "outlined",
+          "supporting": "例如：Claude 官方、我的中转站"
+        }
+      ]
+    },
+    {
+      "id": "editor-website",
+      "x": 508,
+      "y": 320,
+      "axis": "x",
+      "items": [
+        {
+          "id": "editor-website-item",
+          "kind": "textField",
+          "label": "官网链接（可选）",
+          "icon": "language",
+          "variant": "outlined",
+          "supporting": "https://example.com"
+        }
+      ]
+    },
+    {
+      "id": "editor-secret",
+      "x": 508,
+      "y": 408,
+      "axis": "x",
+      "items": [
+        {
+          "id": "editor-secret-item",
+          "kind": "textField",
+          "label": "API Key *",
+          "icon": "key",
+          "variant": "outlined",
+          "supporting": "••••••••••••••••",
+          "note": "默认隐藏，眼睛按钮临时显示；不把密钥写入页面状态恢复数据。"
+        }
+      ]
+    },
+    {
+      "id": "editor-endpoint",
+      "x": 508,
+      "y": 496,
+      "axis": "x",
+      "items": [
+        {
+          "id": "editor-endpoint-item",
+          "kind": "textField",
+          "label": "API 请求地址（可选）",
+          "icon": "link",
+          "variant": "outlined",
+          "supporting": "https://api.example.com/v1"
+        }
+      ]
+    },
+    {
+      "id": "editor-notes",
+      "x": 508,
+      "y": 584,
+      "axis": "x",
+      "items": [
+        {
+          "id": "editor-notes-item",
+          "kind": "textField",
+          "label": "备注",
+          "icon": "notes",
+          "variant": "outlined",
+          "supporting": "例如：个人开发、公司专用"
+        }
+      ]
+    },
+    {
+      "id": "editor-save",
+      "x": 832,
+      "y": 780,
+      "axis": "x",
+      "items": [
+        {
+          "id": "editor-save-item",
+          "kind": "fab",
+          "label": "",
+          "icon": "check",
+          "variant": "filled",
+          "action": {
+            "to": "detail"
+          }
+        }
+      ]
+    },
+    {
+      "id": "detail-bar",
+      "x": 984,
+      "y": 0,
+      "axis": "x",
+      "items": [
+        {
+          "id": "detail-bar-item",
+          "kind": "topAppBar",
+          "label": "API Key",
+          "icon": "arrow_back",
+          "variant": "filled",
+          "icon2": "edit",
+          "actions": {
+            "icon": {
+              "to": "types"
+            },
+            "icon2": {
+              "to": "editor"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "detail-title",
+      "x": 1000,
+      "y": 110,
+      "axis": "x",
+      "items": [
+        {
+          "id": "detail-title-item",
+          "kind": "text",
+          "label": "Claude 官方",
+          "icon": null,
+          "variant": "filled",
+          "size": 26,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "detail-field-0",
+      "x": 1000,
+      "y": 178,
+      "axis": "x",
+      "items": [
+        {
+          "id": "detail-field-0-item",
+          "kind": "listItem",
+          "label": "官网链接",
+          "icon": "language",
+          "variant": "filled",
+          "supporting": "https://claude.ai",
+          "icon2": "content_copy"
+        }
+      ]
+    },
+    {
+      "id": "detail-field-1",
+      "x": 1000,
+      "y": 270,
+      "axis": "x",
+      "items": [
+        {
+          "id": "detail-field-1-item",
+          "kind": "listItem",
+          "label": "API Key",
+          "icon": "key",
+          "variant": "filled",
+          "supporting": "••••••••••••••••",
+          "icon2": "content_copy"
+        }
+      ]
+    },
+    {
+      "id": "detail-field-2",
+      "x": 1000,
+      "y": 362,
+      "axis": "x",
+      "items": [
+        {
+          "id": "detail-field-2-item",
+          "kind": "listItem",
+          "label": "API 请求地址",
+          "icon": "link",
+          "variant": "filled",
+          "supporting": "https://api.anthropic.com",
+          "icon2": "content_copy"
+        }
+      ]
+    },
+    {
+      "id": "detail-field-3",
+      "x": 1000,
+      "y": 454,
+      "axis": "x",
+      "items": [
+        {
+          "id": "detail-field-3-item",
+          "kind": "listItem",
+          "label": "备注",
+          "icon": "notes",
+          "variant": "filled",
+          "supporting": "个人开发",
+          "icon2": "content_copy"
+        }
+      ]
+    },
+    {
+      "id": "detail-show",
+      "x": 1000,
+      "y": 574,
+      "axis": "x",
+      "items": [
+        {
+          "id": "detail-show-item",
+          "kind": "button",
+          "label": "显示密钥",
+          "icon": "visibility",
+          "variant": "tonal",
+          "size": 182
+        }
+      ]
+    },
+    {
+      "id": "detail-copy",
+      "x": 1198,
+      "y": 574,
+      "axis": "x",
+      "items": [
+        {
+          "id": "detail-copy-item",
+          "kind": "button",
+          "label": "复制密钥",
+          "icon": "content_copy",
+          "variant": "filled",
+          "size": 182
+        }
+      ]
+    }
+  ]
+}

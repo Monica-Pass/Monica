@@ -10,13 +10,16 @@ import takagi.ru.monica.data.SecureItem
 internal class MdbxVaultNotFoundException(val databaseId: Long) :
     IllegalStateException("MDBX vault not found: $databaseId")
 
+internal class MdbxLegacyUnavailableException(val databaseId: Long) :
+    IllegalStateException("MDBX1 is no longer available. Upgrade this database to MDBX2 in database management.")
+
 class MdbxRepositoryRouter(
     private val databaseDao: LocalMdbxDatabaseDao,
     private val legacyRepository: MdbxRepository,
     private val rustRepository: MdbxRepository
 ) : MdbxRepository {
-    override suspend fun requiresStrictMutationConsistency(databaseId: Long): Boolean =
-        databaseDao.getDatabaseById(databaseId)?.engineTypeEnum == MdbxEngineType.RUST_MDBX2
+    // Stale/retired targets must roll back Room edits when the vault rejects a write.
+    override suspend fun requiresStrictMutationConsistency(databaseId: Long): Boolean = true
 
     override suspend fun readStoredEntries(databaseId: Long): List<MdbxStoredVaultEntry> =
         repositoryFor(databaseId).readStoredEntries(databaseId)
@@ -267,7 +270,7 @@ class MdbxRepositoryRouter(
         val database = databaseDao.getDatabaseById(databaseId)
             ?: throw MdbxVaultNotFoundException(databaseId)
         return when (database.engineTypeEnum) {
-            MdbxEngineType.KOTLIN_MDBX1 -> legacyRepository
+            MdbxEngineType.KOTLIN_MDBX1 -> throw MdbxLegacyUnavailableException(databaseId)
             MdbxEngineType.RUST_MDBX2 -> rustRepository
         }
     }

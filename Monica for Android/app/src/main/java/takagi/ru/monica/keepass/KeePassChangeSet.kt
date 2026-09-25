@@ -199,6 +199,10 @@ data class KeePassEntryPresentationPatch(
     val removeCustomIconUuid: String? = null,
     val basePresentationSignature: String? = null,
     val autoType: KeePassAutoTypePatch? = null,
+    val tags: List<String>? = null,
+    val expires: Boolean? = null,
+    val expiryTimeEpochMillis: Long? = null,
+    val basePropertiesSignature: String? = null,
 ) {
     init {
         customIconUuid?.let { require(isUuid(it)) { "Invalid custom icon UUID" } }

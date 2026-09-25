@@ -332,6 +332,7 @@ fun AddEditWifiScreen(
                             onSelect = { option ->
                                 when (option) {
                                     EntryTypeChipOption.GPG_KEY -> Unit // Hidden here; creation starts in the password editor.
+                                    EntryTypeChipOption.API_KEY -> Unit // Hidden here; creation starts in the password editor.
                                     EntryTypeChipOption.API_TOKEN -> onNavigateToApiToken()
                                     EntryTypeChipOption.PASSWORD -> onNavigateToPassword()
                                     EntryTypeChipOption.SSH_KEY -> onNavigateToSshKey?.invoke()

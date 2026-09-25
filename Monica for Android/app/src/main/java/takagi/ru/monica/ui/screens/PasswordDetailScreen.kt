@@ -205,7 +205,7 @@ fun PasswordDetailScreen(
     val database = remember { PasswordDatabase.getDatabase(context.applicationContext) }
     val categories by viewModel.categories.collectAsState(initial = emptyList())
     val keepassDatabases by database.localKeePassDatabaseDao().getAllDatabases().collectAsState(initial = emptyList())
-    val mdbxDatabases by database.localMdbxDatabaseDao().getAllDatabases().collectAsState(initial = emptyList())
+    val mdbxDatabases by database.localMdbxDatabaseDao().getAvailableDatabases().collectAsState(initial = emptyList())
     val bitwardenVaults by database.bitwardenVaultDao().getAllVaultsFlow().collectAsState(initial = emptyList())
     var isLeavingDetail by remember { mutableStateOf(false) }
     fun requestNavigateBack() {
@@ -655,6 +655,11 @@ fun PasswordDetailScreen(
                     it.title == takagi.ru.monica.data.model.GpgEntryFields.MARKER && it.value == "GPG_KEY"
                 }) {
                 GpgDetailContent(customFields, displayPasswords[entry.id].orEmpty(), Modifier.padding(paddingValues))
+                return@let
+            }
+            if (entry.isApiKeyEntry() || takagi.ru.monica.data.model.ApiKeyEntryFields.isApiKey(
+                    customFields.associate { it.title to it.value })) {
+                ApiKeyDetailContent(entry, displayPasswords[entry.id], customFields, Modifier.padding(paddingValues))
                 return@let
             }
             val storageInfoEntries = remember(
@@ -1642,6 +1647,9 @@ private fun PasswordDetailIcon(
     val uploadedIcon = if (entry.customIconType == takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_UPLOADED) {
         rememberUploadedPasswordIcon(entry.customIconValue)
     } else null
+    val emojiIcon = entry.customIconValue.takeIf {
+        entry.customIconType == takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_EMOJI
+    }
     val primaryAppPackageName = entry.primaryLinkedAppPackageName()
     val appIcon = if (
         primaryAppPackageName.isNotBlank() &&
@@ -1665,6 +1673,13 @@ private fun PasswordDetailIcon(
     } else null
 
     when {
+        emojiIcon != null -> {
+            takagi.ru.monica.ui.icons.EmojiIconText(
+                emoji = emojiIcon,
+                size = 34.dp,
+                modifier = Modifier.size(52.dp)
+            )
+        }
         simpleIcon != null -> {
             Image(
                 bitmap = simpleIcon,

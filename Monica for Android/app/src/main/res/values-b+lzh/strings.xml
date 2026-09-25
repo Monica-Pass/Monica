@@ -22,8 +22,11 @@
     <string name="share">分享</string>
     <string name="field_action_more">栏之余事</string>
     <string name="field_action_show_large">以大字示之</string>
-    <string name="field_action_show_barcode">化为二维码</string>
+    <string name="field_action_show_barcode">化为二维码或条码</string>
     <string name="field_action_barcode_failed">此文未能化为二维码。</string>
+    <string name="field_barcode_format_qr">二维码</string>
+    <string name="field_barcode_format_linear">条码</string>
+    <string name="field_barcode_linear_failed">此文不可成 Code 128 条码，宜用 ASCII 之文，毋逾 80 字。</string>
     <string name="no_results">寻而不得。</string>
     <string name="note_placeholder">书数言……</string>
     <string name="new_note">新简牍</string>
@@ -1240,6 +1243,10 @@
     <string name="custom_icon_dialog_title">设自定图标</string>
     <string name="custom_icon_pick_simple">自图标库择取</string>
     <string name="custom_icon_upload_image">传图</string>
+    <string name="custom_icon_use_emoji">以 Emoji 为图</string>
+    <string name="custom_icon_emoji_hint">录一 Emoji</string>
+    <string name="custom_icon_emoji_support">一 Emoji 随条而存，毋须他图。</string>
+    <string name="custom_icon_emoji_invalid">仅可录一 Emoji。</string>
     <string name="custom_icon_clear">用网站图标</string>
     <string name="custom_icon_search_hint">寻图标</string>
     <string name="custom_icon_search_empty">未得相合之图标</string>
@@ -4342,4 +4349,12 @@
     <string name="wallet_stack_open_card">详览卡片</string>
     <string name="language_french">Français</string>
     <string name="qs_lang_french">Français</string>
+    <string name="custom_icon_pick_installed">既設圖標</string>
+    <string name="custom_icon_installed_apps">應用圖標</string>
+    <string name="custom_icon_installed_packs">圖標集</string>
+    <string name="custom_icon_installed_empty_packs">未見相容圖標集。請設圖標集後重啟此頁。</string>
+    <string name="custom_icon_installed_empty_icons">此集無可用圖標。</string>
+    <string name="custom_icon_installed_load_failed">圖標未能載入，請重試。</string>
+    <string name="custom_icon_installed_save_failed">此圖標未能使用，請重試或另選。</string>
+    <string name="field_barcode_linear_too_wide">屏寬不足，條碼難辨。請橫置其機，或用二維碼。</string>
 </resources>

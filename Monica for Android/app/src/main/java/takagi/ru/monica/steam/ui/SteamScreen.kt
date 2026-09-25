@@ -312,7 +312,7 @@ fun SteamScreen(
         PasswordDatabase.getDatabase(context.applicationContext)
     }
     val mdbxDatabasesState by passwordDatabase.localMdbxDatabaseDao()
-        .getAllDatabases()
+        .getAvailableDatabases()
         .collectAsState(initial = null)
     val mdbxDatabases = mdbxDatabasesState.orEmpty()
     val mdbxDatabasesLoaded = mdbxDatabasesState != null
@@ -2532,6 +2532,9 @@ private fun SteamCodeContent(
                                     onCopyCode = ::copyCode,
                                     sharedTickSeconds = sharedTickSeconds,
                                     appSettings = appSettings,
+                                    cardVerticalPadding = 16.dp,
+                                    codeSectionSpacing = 16.dp,
+                                    progressSectionSpacing = 8.dp,
                                     immersiveBackgroundVisible = miniProfileBackgroundAvailable,
                                     backgroundContent = if (miniProfileBackgroundRequested) {
                                         {
@@ -2651,6 +2654,9 @@ private fun SteamAccountDetailContent(
                     )
                 },
                 appSettings = appSettings,
+                cardVerticalPadding = 16.dp,
+                codeSectionSpacing = 16.dp,
+                progressSectionSpacing = 8.dp,
                 immersiveBackgroundVisible = miniProfileBackgroundAvailable,
                 backgroundContent = if (miniProfileBackgroundRequested) {
                     {

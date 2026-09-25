@@ -124,7 +124,7 @@ class AutofillSaveTransparentActivity : ComponentActivity() {
                 key2 = database
             ) {
                 val settingsSnapshot = settingsManager.settingsFlow.first()
-                val mdbxDatabases = database.localMdbxDatabaseDao().getAllDatabasesSnapshot()
+                val mdbxDatabases = database.localMdbxDatabaseDao().getAvailableDatabasesSnapshot()
                 value = resolveAutofillSaveInitialTarget(settingsSnapshot, mdbxDatabases).also { target ->
                     MdbxDiagLogger.append(
                         "[MDBX][autofill-save-open] source=transparent target=${target.diagnosticLabel()} mdbxDatabases=${target.mdbxDatabasesFallback.size}"

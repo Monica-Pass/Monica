@@ -1,6 +1,9 @@
 package takagi.ru.monica.ui.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +23,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Upload
+import androidx.compose.material.icons.filled.EmojiEmotions
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -33,18 +37,38 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.material3.AlertDialog
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.saveable.rememberSaveable
+import takagi.ru.monica.ui.icons.normalizeEmojiIcon
+import takagi.ru.monica.ui.icons.QUICK_PICK_EMOJI_ICONS
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.draw.clip
 import takagi.ru.monica.R
 import takagi.ru.monica.ui.icons.SimpleIconOption
+import takagi.ru.monica.ui.icons.EmojiIconText
 import takagi.ru.monica.ui.icons.rememberSimpleIconBitmap
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomIconActionDialog(
     showClearAction: Boolean,
+    showEmojiAction: Boolean = true,
     onPickFromLibrary: () -> Unit,
     onUploadImage: () -> Unit,
+    onPickEmoji: () -> Unit = {},
+    onPickInstalledIcon: (() -> Unit)? = null,
     onClearIcon: () -> Unit,
     onDismissRequest: () -> Unit
 ) {
@@ -55,6 +79,7 @@ fun CustomIconActionDialog(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
                 .padding(horizontal = 20.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
@@ -72,6 +97,20 @@ fun CustomIconActionDialog(
                 label = stringResource(R.string.custom_icon_upload_image),
                 onClick = onUploadImage
             )
+            if (onPickInstalledIcon != null) {
+                IconActionItem(
+                    icon = Icons.Default.Palette,
+                    label = stringResource(R.string.custom_icon_pick_installed),
+                    onClick = onPickInstalledIcon,
+                )
+            }
+            if (showEmojiAction) {
+                IconActionItem(
+                    icon = Icons.Default.EmojiEmotions,
+                    label = stringResource(R.string.custom_icon_use_emoji),
+                    onClick = onPickEmoji
+                )
+            }
             if (showClearAction) {
                 IconActionItem(
                     icon = Icons.Default.Delete,
@@ -89,6 +128,79 @@ fun CustomIconActionDialog(
             Spacer(modifier = Modifier.size(12.dp))
         }
     }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun EmojiIconInputDialog(
+    initialEmoji: String? = null,
+    onConfirm: (String) -> Unit,
+    onDismissRequest: () -> Unit
+) {
+    var value by rememberSaveable(initialEmoji) { mutableStateOf(initialEmoji.orEmpty()) }
+    val normalized = normalizeEmojiIcon(value)
+    AlertDialog(
+        onDismissRequest = onDismissRequest,
+        title = { Text(stringResource(R.string.custom_icon_use_emoji)) },
+        text = {
+            Column(
+                modifier = Modifier.verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                OutlinedTextField(
+                    value = value,
+                    onValueChange = { value = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    textStyle = MaterialTheme.typography.headlineMedium,
+                    placeholder = { Text(stringResource(R.string.custom_icon_emoji_hint)) },
+                    supportingText = {
+                        Text(
+                            if (value.isBlank() || normalized != null) {
+                                stringResource(R.string.custom_icon_emoji_support)
+                            } else {
+                                stringResource(R.string.custom_icon_emoji_invalid)
+                            }
+                        )
+                    },
+                    isError = value.isNotBlank() && normalized == null,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                )
+                // 常用 Emoji 快捷选择，避免依赖输入法的 Emoji 面板
+                FlowRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    QUICK_PICK_EMOJI_ICONS.forEach { emoji ->
+                        val selected = normalized == emoji
+                        Box(
+                            modifier = Modifier
+                                .size(48.dp)
+                                .clip(CircleShape)
+                                .then(
+                                    if (selected) {
+                                        Modifier.background(MaterialTheme.colorScheme.secondaryContainer)
+                                    } else {
+                                        Modifier
+                                    }
+                                )
+                                .selectable(selected = selected, role = Role.RadioButton, onClick = { value = emoji }),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            EmojiIconText(emoji = emoji, size = 24.dp)
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(enabled = normalized != null, onClick = { normalized?.let(onConfirm) }) {
+                Text(stringResource(R.string.save))
+            }
+        },
+        dismissButton = { TextButton(onClick = onDismissRequest) { Text(stringResource(R.string.close)) } }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

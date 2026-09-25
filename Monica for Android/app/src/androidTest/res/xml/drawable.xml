@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <category title="Monica fixture" />
+    <item drawable="icon_fixture_star" />
+    <item drawable="missing_fixture_icon" />
+    <item drawable="icon_fixture_star" />
+</resources>

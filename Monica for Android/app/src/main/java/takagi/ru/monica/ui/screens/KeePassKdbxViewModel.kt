@@ -457,6 +457,7 @@ class KeePassKdbxViewModel {
                         val decoded = KeePassDatabase.decode(
                             kdbxBytes.inputStream(),
                             candidate.credentials,
+                            contentParser = KeePassCodecSupport.contentParser,
                             cipherProviders = KeePassCodecSupport.cipherProviders
                         )
                         if (index > 0) {

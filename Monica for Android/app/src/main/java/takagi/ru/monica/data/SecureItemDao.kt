@@ -10,30 +10,30 @@ import kotlinx.coroutines.flow.Flow
 interface SecureItemDao {
     
     // 获取所有项目（排除已删除）
-    @Query("SELECT * FROM secure_items WHERE isDeleted = 0 ORDER BY updatedAt DESC")
+    @Query("SELECT * FROM secure_items WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0) ORDER BY updatedAt DESC")
     fun getAllItems(): Flow<List<SecureItem>>
 
     /** Lightweight invalidation key for cached authenticator and card projections. */
-    @Query("SELECT COUNT(*) || ':' || COALESCE(MAX(updatedAt), '') FROM secure_items WHERE isDeleted = 0")
+    @Query("SELECT COUNT(*) || ':' || COALESCE(MAX(updatedAt), '') FROM secure_items WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0) ")
     fun observeActiveItemRevision(): Flow<String>
     
     // 根据类型获取项目（排除已删除）
-    @Query("SELECT * FROM secure_items WHERE isDeleted = 0 AND itemType = :type ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
+    @Query("SELECT * FROM secure_items WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0 AND itemType = :type) ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
     fun getItemsByType(type: ItemType): Flow<List<SecureItem>>
 
     @Query("UPDATE secure_items SET categoryId = NULL WHERE categoryId = :categoryId")
     suspend fun removeCategoryFromItems(categoryId: Long)
     
     // 搜索项目（排除已删除）
-    @Query("SELECT * FROM secure_items WHERE isDeleted = 0 AND (title LIKE '%' || :query || '%' OR notes LIKE '%' || :query || '%') ORDER BY updatedAt DESC")
+    @Query("SELECT * FROM secure_items WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0 AND (title LIKE '%' || :query || '%' OR notes LIKE '%' || :query || '%')) ORDER BY updatedAt DESC")
     fun searchItems(query: String): Flow<List<SecureItem>>
     
     // 根据类型搜索（排除已删除）
-    @Query("SELECT * FROM secure_items WHERE isDeleted = 0 AND itemType = :type AND (title LIKE '%' || :query || '%' OR notes LIKE '%' || :query || '%') ORDER BY isFavorite DESC, updatedAt DESC")
+    @Query("SELECT * FROM secure_items WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0 AND itemType = :type AND (title LIKE '%' || :query || '%' OR notes LIKE '%' || :query || '%')) ORDER BY isFavorite DESC, updatedAt DESC")
     fun searchItemsByType(type: ItemType, query: String): Flow<List<SecureItem>>
     
     // 获取收藏项目（排除已删除）
-    @Query("SELECT * FROM secure_items WHERE isDeleted = 0 AND isFavorite = 1 ORDER BY updatedAt DESC")
+    @Query("SELECT * FROM secure_items WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0 AND isFavorite = 1) ORDER BY updatedAt DESC")
     fun getFavoriteItems(): Flow<List<SecureItem>>
     
     // 根据ID获取项目
@@ -73,7 +73,7 @@ interface SecureItemDao {
     suspend fun findByKeePassEntryUuid(databaseId: Long, entryUuid: String): SecureItem?
 
     // 监听指定ID的项目变化
-    @Query("SELECT * FROM secure_items WHERE id = :id")
+    @Query("SELECT * FROM secure_items WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (id = :id) ")
     fun observeItemById(id: Long): Flow<SecureItem?>
     
     // 插入项目
@@ -152,13 +152,13 @@ interface SecureItemDao {
     /**
      * 检查是否存在相同的安全项(根据itemType和title匹配)
      */
-    @Query("SELECT * FROM secure_items WHERE itemType = :itemType AND title = :title LIMIT 1")
+    @Query("SELECT * FROM secure_items WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND itemType = :itemType AND title = :title LIMIT 1")
     suspend fun findDuplicateItem(itemType: ItemType, title: String): SecureItem?
     
     /**
      * 获取指定类型的所有未删除项目（同步版本，用于智能重复检测）
      */
-    @Query("SELECT * FROM secure_items WHERE itemType = :itemType AND isDeleted = 0")
+    @Query("SELECT * FROM secure_items WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (itemType = :itemType AND isDeleted = 0) ")
     suspend fun getActiveItemsByTypeSync(itemType: ItemType): List<SecureItem>
 
     @Query("SELECT * FROM secure_items WHERE isDeleted = 0 AND keepass_database_id = :databaseId ORDER BY updatedAt DESC")
@@ -259,25 +259,25 @@ interface SecureItemDao {
     /**
      * 获取所有已删除的项目（回收站）
      */
-    @Query("SELECT * FROM secure_items WHERE isDeleted = 1 ORDER BY deletedAt DESC")
+    @Query("SELECT * FROM secure_items WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 1) ORDER BY deletedAt DESC")
     fun getDeletedItems(): Flow<List<SecureItem>>
     
     /**
      * 获取所有已删除的项目（同步版本，用于备份）
      */
-    @Query("SELECT * FROM secure_items WHERE isDeleted = 1 ORDER BY deletedAt DESC")
+    @Query("SELECT * FROM secure_items WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 1) ORDER BY deletedAt DESC")
     suspend fun getDeletedItemsSync(): List<SecureItem>
     
     /**
      * 获取所有未删除的项目（正常项目）
      */
-    @Query("SELECT * FROM secure_items WHERE isDeleted = 0 ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
+    @Query("SELECT * FROM secure_items WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0) ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
     fun getActiveItems(): Flow<List<SecureItem>>
     
     /**
      * 根据类型获取未删除的项目
      */
-    @Query("SELECT * FROM secure_items WHERE itemType = :type AND isDeleted = 0 ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
+    @Query("SELECT * FROM secure_items WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (itemType = :type AND isDeleted = 0) ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
     fun getActiveItemsByType(type: ItemType): Flow<List<SecureItem>>
     
     /**

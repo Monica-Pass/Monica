@@ -6,7 +6,9 @@ import takagi.ru.monica.ui.components.localizedName
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -98,6 +100,8 @@ import takagi.ru.monica.attachments.facade.AttachmentFacade
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.ui.components.AppSelectorDialog
 import takagi.ru.monica.ui.components.CustomIconActionDialog
+import takagi.ru.monica.ui.components.EmojiIconInputDialog
+import takagi.ru.monica.ui.components.InstalledIconPickerBottomSheet
 import takagi.ru.monica.ui.components.CustomFieldEditorSection
 import takagi.ru.monica.ui.components.CustomFieldEditCard
 import takagi.ru.monica.ui.components.CustomFieldSectionHeader
@@ -120,6 +124,8 @@ import takagi.ru.monica.ui.icons.MonicaIcons
 import takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_NONE
 import takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_SIMPLE
 import takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_UPLOADED
+import takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_EMOJI
+import takagi.ru.monica.ui.icons.EmojiIconText
 import takagi.ru.monica.ui.icons.PasswordCustomIconStore
 import takagi.ru.monica.ui.icons.SimpleIconCatalog
 import takagi.ru.monica.ui.icons.SimpleIconOption
@@ -268,16 +274,41 @@ fun AddEditPasswordScreen(
 ) {
     var returnLoginType by remember(passwordId) { mutableStateOf(initialLoginType) }
     var gpgMode by remember(passwordId) { mutableStateOf(initialLoginType == "GPG_KEY") }
+    var apiKeyMode by remember(passwordId) { mutableStateOf(initialLoginType == takagi.ru.monica.data.model.ApiKeyEntryFields.TYPE) }
+    var keyTarget by remember(passwordId) {
+        mutableStateOf(takagi.ru.monica.ui.components.buildMultiStorageTarget(initialCategoryId,
+            initialKeePassDatabaseId, initialKeePassGroupPath, initialMdbxDatabaseId,
+            initialBitwardenVaultId, initialBitwardenFolderId, initialMdbxFolderId))
+    }
     var entryTypeLoaded by remember(passwordId) { mutableStateOf(passwordId == null || passwordId <= 0) }
     LaunchedEffect(passwordId) {
         if (passwordId != null && passwordId > 0) {
             val fields = viewModel.getCustomFieldsByEntryIdSync(passwordId)
             gpgMode = fields.any { it.title == takagi.ru.monica.data.model.GpgEntryFields.MARKER && it.value == "GPG_KEY" }
+            apiKeyMode = takagi.ru.monica.data.model.ApiKeyEntryFields.isApiKey(fields.associate { it.title to it.value }) ||
+                viewModel.getPasswordEntryById(passwordId)?.isApiKeyEntry() == true
         }
         entryTypeLoaded = true
     }
     if (!entryTypeLoaded) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
+        return
+    }
+    if (apiKeyMode) {
+        ApiKeyScreen(passwords = viewModel, passwordId = passwordId?.takeIf { it > 0 },
+            initialTarget = keyTarget, onBack = onNavigateBack, onSaved = onSaveCompleted,
+            onSelectType = { option ->
+                when (option) {
+                    EntryTypeChipOption.API_KEY -> Unit
+                    EntryTypeChipOption.GPG_KEY -> { apiKeyMode = false; gpgMode = true }
+                    EntryTypeChipOption.PASSWORD -> { returnLoginType = "PASSWORD"; apiKeyMode = false }
+                    EntryTypeChipOption.BARCODE -> { returnLoginType = LOGIN_TYPE_BARCODE; apiKeyMode = false }
+                    EntryTypeChipOption.WIFI -> onSwitchToWifi?.invoke((keyTarget as? StorageTarget.MonicaLocal)?.categoryId)
+                    EntryTypeChipOption.SSH_KEY -> onSwitchToSshKey?.invoke((keyTarget as? StorageTarget.MonicaLocal)?.categoryId)
+                    EntryTypeChipOption.API_TOKEN -> onSwitchToApiToken?.invoke(keyTarget as? StorageTarget.Mdbx)
+                }
+            },
+            getKeePassGroups = localKeePassViewModel?.let { vm -> vm::getGroups } ?: { flowOf(emptyList()) })
         return
     }
     if (gpgMode) {
@@ -288,6 +319,7 @@ fun AddEditPasswordScreen(
             onBack = onNavigateBack, onSaved = onSaveCompleted,
             onSelectType = { option ->
                 when (option) {
+                    EntryTypeChipOption.API_KEY -> { gpgMode = false; apiKeyMode = true }
                     EntryTypeChipOption.GPG_KEY -> Unit
                     EntryTypeChipOption.PASSWORD -> { returnLoginType = "PASSWORD"; gpgMode = false }
                     EntryTypeChipOption.WIFI -> onSwitchToWifi?.invoke(null)
@@ -328,7 +360,8 @@ fun AddEditPasswordScreen(
         onSwitchToWifi = onSwitchToWifi,
         onSwitchToSshKey = onSwitchToSshKey,
         onNavigateBack = onNavigateBack,
-        onSwitchToGpg = { gpgMode = true }
+        onSwitchToGpg = { gpgMode = true },
+        onSwitchToApiKey = { target -> keyTarget = target; apiKeyMode = true }
     )
 }
 
@@ -362,9 +395,11 @@ private fun PasswordEntryEditor(
     onSwitchToWifi: ((Long?) -> Unit)? = null,
     onSwitchToSshKey: ((Long?) -> Unit)? = null,
     onSwitchToGpg: () -> Unit,
+    onSwitchToApiKey: (StorageTarget) -> Unit,
     onNavigateBack: () -> Unit
 ) {
     val context = LocalContext.current
+    val activity = remember(context) { context.findPasswordEditorActivity() }
     val isEditing = passwordId != null && passwordId > 0
     val coroutineScope = rememberCoroutineScope()
     val database = remember { PasswordDatabase.getDatabase(context) }
@@ -550,7 +585,7 @@ private fun PasswordEntryEditor(
     var mdbxDatabaseId by rememberSaveable { mutableStateOf<Long?>(null) }
     var mdbxFolderId by rememberSaveable { mutableStateOf<String?>(null) }
     val mdbxDatabases by (localMdbxViewModel?.allDatabases
-        ?: database.localMdbxDatabaseDao().getAllDatabases()
+        ?: database.localMdbxDatabaseDao().getAvailableDatabases()
     ).collectAsState(initial = mdbxDatabasesFallback)
 
     // Bitwarden Vault 选择
@@ -724,15 +759,18 @@ private fun PasswordEntryEditor(
     }
 
     // 自定义图标状态
-    var customIconType by rememberSaveable { mutableStateOf(PASSWORD_ICON_TYPE_NONE) }
-    var customIconValue by rememberSaveable { mutableStateOf<String?>(null) }
-    var customIconUpdatedAt by rememberSaveable { mutableStateOf(0L) }
-    var originalCustomIconType by remember { mutableStateOf(PASSWORD_ICON_TYPE_NONE) }
-    var originalCustomIconValue by remember { mutableStateOf<String?>(null) }
-    var hasSavedSuccessfully by remember { mutableStateOf(false) }
+    var customIconType by rememberSaveable(passwordId) { mutableStateOf(PASSWORD_ICON_TYPE_NONE) }
+    var customIconValue by rememberSaveable(passwordId) { mutableStateOf<String?>(null) }
+    var customIconUpdatedAt by rememberSaveable(passwordId) { mutableStateOf(0L) }
+    var originalCustomIconType by rememberSaveable(passwordId) { mutableStateOf(PASSWORD_ICON_TYPE_NONE) }
+    var originalCustomIconValue by rememberSaveable(passwordId) { mutableStateOf<String?>(null) }
+    var customIconEditedByUser by rememberSaveable(passwordId) { mutableStateOf(false) }
+    var hasSavedSuccessfully by rememberSaveable(passwordId) { mutableStateOf(false) }
 
     var showCustomIconDialog by remember { mutableStateOf(false) }
     var showSimpleIconPicker by remember { mutableStateOf(false) }
+    var showEmojiIconDialog by rememberSaveable { mutableStateOf(false) }
+    var showInstalledIconPicker by rememberSaveable { mutableStateOf(false) }
     var customIconSearchQuery by rememberSaveable { mutableStateOf("") }
 
     // 折叠面板状态
@@ -749,6 +787,7 @@ private fun PasswordEntryEditor(
     val selectedUploadedIconBitmap = rememberUploadedPasswordIcon(
         value = if (customIconType == PASSWORD_ICON_TYPE_UPLOADED) customIconValue else null
     )
+    val selectedEmojiIcon = customIconValue.takeIf { customIconType == PASSWORD_ICON_TYPE_EMOJI }
     val linkedAppBindings = remember(appPackageName, appName) {
         parseLinkedAppBindings(appPackageName, appName)
     }
@@ -1623,6 +1662,19 @@ private fun PasswordEntryEditor(
     var hasAutoFilled by rememberSaveable { mutableStateOf(false) }
     var initialDraftApplied by rememberSaveable(passwordId) { mutableStateOf(false) }
 
+    fun applyUploadedIcon(fileName: String) {
+        customIconEditedByUser = true
+        if (customIconType == PASSWORD_ICON_TYPE_UPLOADED && customIconValue != fileName) {
+            val previous = normalizedIconFileName(customIconValue)
+            if (!previous.isNullOrBlank() && !isOriginalUploadedIconFile(previous)) {
+                PasswordCustomIconStore.deleteIconFile(context, previous)
+            }
+        }
+        customIconType = PASSWORD_ICON_TYPE_UPLOADED
+        customIconValue = fileName
+        customIconUpdatedAt = System.currentTimeMillis()
+    }
+
     val imagePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri ->
@@ -1630,15 +1682,7 @@ private fun PasswordEntryEditor(
         coroutineScope.launch {
             val imported = PasswordCustomIconStore.importAndCompress(context, uri)
             imported.onSuccess { fileName ->
-                if (customIconType == PASSWORD_ICON_TYPE_UPLOADED && customIconValue != fileName) {
-                    val previous = normalizedIconFileName(customIconValue)
-                    if (!previous.isNullOrBlank() && !isOriginalUploadedIconFile(previous)) {
-                        PasswordCustomIconStore.deleteIconFile(context, previous)
-                    }
-                }
-                customIconType = PASSWORD_ICON_TYPE_UPLOADED
-                customIconValue = fileName
-                customIconUpdatedAt = System.currentTimeMillis()
+                applyUploadedIcon(fileName)
                 Toast.makeText(context, context.getString(R.string.custom_icon_upload_success), Toast.LENGTH_SHORT).show()
             }.onFailure { error ->
                 Toast.makeText(
@@ -1650,9 +1694,10 @@ private fun PasswordEntryEditor(
         }
     }
     
-    DisposableEffect(Unit) {
+    DisposableEffect(activity, passwordId) {
         onDispose {
-            if (!hasSavedSuccessfully) {
+            // A configuration change restores this draft in the replacement activity.
+            if (!hasSavedSuccessfully && activity?.isChangingConfigurations != true) {
                 val currentUploaded = if (customIconType == PASSWORD_ICON_TYPE_UPLOADED) {
                     normalizedIconFileName(customIconValue)
                 } else {
@@ -1850,9 +1895,11 @@ private fun PasswordEntryEditor(
                     barcodePayload = if (entry.isBarcodeEntry()) entry.password else ""
                     ssoProvider = entry.ssoProvider
                     ssoRefEntryId = entry.ssoRefEntryId
-                    customIconType = entry.customIconType
-                    customIconValue = normalizedIconFileName(entry.customIconValue)
-                    customIconUpdatedAt = entry.customIconUpdatedAt
+                    if (!customIconEditedByUser) {
+                        customIconType = entry.customIconType
+                        customIconValue = normalizedIconFileName(entry.customIconValue)
+                        customIconUpdatedAt = entry.customIconUpdatedAt
+                    }
                     originalCustomIconType = entry.customIconType
                     originalCustomIconValue = normalizedIconFileName(entry.customIconValue)
 
@@ -2736,6 +2783,7 @@ private fun PasswordEntryEditor(
                             EntryTypeChip(
                                 showApiToken = !isEditing && onSwitchToApiToken != null,
                                 showGpg = !isEditing,
+                                showApiKey = !isEditing,
                                 current = if (isBarcodeMode) {
                                     EntryTypeChipOption.BARCODE
                                 } else {
@@ -2743,6 +2791,8 @@ private fun PasswordEntryEditor(
                                 },
                                 onSelect = { option ->
                                     when (option) {
+                                        EntryTypeChipOption.API_KEY -> onSwitchToApiKey(
+                                            selectedStorageTargets.firstOrNull() ?: StorageTarget.MonicaLocal(null))
                                         EntryTypeChipOption.GPG_KEY -> onSwitchToGpg()
                                         EntryTypeChipOption.API_TOKEN -> onSwitchToApiToken?.invoke(
                                             selectedStorageTargets.filterIsInstance<StorageTarget.Mdbx>().firstOrNull())
@@ -2922,6 +2972,13 @@ private fun PasswordEntryEditor(
                                     modifier = Modifier.size(48.dp)
                                 ) {
                                     when {
+                                        selectedEmojiIcon != null -> {
+                                            EmojiIconText(
+                                                emoji = selectedEmojiIcon,
+                                                size = 26.dp,
+                                                modifier = Modifier.fillMaxSize(),
+                                            )
+                                        }
                                         selectedSimpleIconBitmap != null -> {
                                             Image(
                                                 bitmap = selectedSimpleIconBitmap,
@@ -4361,17 +4418,41 @@ private fun PasswordEntryEditor(
         onSimpleIconPickerChange = { showSimpleIconPicker = it },
         onCustomIconSearchQueryChange = { customIconSearchQuery = it },
         onUploadImage = { imagePickerLauncher.launch("image/*") },
+        onPickInstalledIcon = {
+            showCustomIconDialog = false
+            showInstalledIconPicker = true
+        },
+        showEmojiIconDialog = showEmojiIconDialog,
+        onEmojiDialogChange = { showEmojiIconDialog = it },
+        onEmojiSelected = { emoji ->
+            customIconEditedByUser = true
+            customIconType = PASSWORD_ICON_TYPE_EMOJI
+            customIconValue = emoji
+            customIconUpdatedAt = System.currentTimeMillis()
+        },
         onIconCleared = {
+            customIconEditedByUser = true
             customIconType = PASSWORD_ICON_TYPE_NONE
             customIconValue = null
             customIconUpdatedAt = System.currentTimeMillis()
         },
         onSimpleIconSelected = { option ->
+            customIconEditedByUser = true
             customIconType = PASSWORD_ICON_TYPE_SIMPLE
             customIconValue = option.slug
             customIconUpdatedAt = System.currentTimeMillis()
         }
     )
+
+    if (showInstalledIconPicker) {
+        InstalledIconPickerBottomSheet(
+            onIconSelected = { fileName ->
+                applyUploadedIcon(fileName)
+                showInstalledIconPicker = false
+            },
+            onDismissRequest = { showInstalledIconPicker = false },
+        )
+    }
 
     if (showCommonAccountSelector) {
         CommonAccountSelectorSheet(
@@ -4451,7 +4532,7 @@ private fun PasswordTotpBindingPickerBottomSheet(
     val context = LocalContext.current
     val passwordDatabase = remember(context) { PasswordDatabase.getDatabase(context) }
     val keepassDatabases by passwordDatabase.localKeePassDatabaseDao().getAllDatabases().collectAsState(initial = emptyList())
-    val mdbxDatabases by passwordDatabase.localMdbxDatabaseDao().getAllDatabases().collectAsState(initial = emptyList())
+    val mdbxDatabases by passwordDatabase.localMdbxDatabaseDao().getAvailableDatabases().collectAsState(initial = emptyList())
     val bitwardenVaults by passwordDatabase.bitwardenVaultDao().getAllVaultsFlow().collectAsState(initial = emptyList())
     var foldersByVault by remember { mutableStateOf<Map<Long, List<BitwardenFolder>>>(emptyMap()) }
     var searchQuery by rememberSaveable { mutableStateOf("") }
@@ -4958,6 +5039,7 @@ private fun InlineGeneratedPasswordSuggestionCard(
 private fun PasswordCustomIconPickers(
     showCustomIconDialog: Boolean,
     showSimpleIconPicker: Boolean,
+    showEmojiIconDialog: Boolean,
     customIconSearchQuery: String,
     customIconType: String,
     customIconValue: String?,
@@ -4966,8 +5048,11 @@ private fun PasswordCustomIconPickers(
     normalizedIconFileName: (String?) -> String?,
     onCustomIconDialogChange: (Boolean) -> Unit,
     onSimpleIconPickerChange: (Boolean) -> Unit,
+    onEmojiDialogChange: (Boolean) -> Unit,
+    onEmojiSelected: (String) -> Unit,
     onCustomIconSearchQueryChange: (String) -> Unit,
     onUploadImage: () -> Unit,
+    onPickInstalledIcon: () -> Unit,
     onIconCleared: () -> Unit,
     onSimpleIconSelected: (SimpleIconOption) -> Unit
 ) {
@@ -4984,6 +5069,11 @@ private fun PasswordCustomIconPickers(
                 onCustomIconDialogChange(false)
                 onUploadImage()
             },
+            onPickEmoji = {
+                onCustomIconDialogChange(false)
+                onEmojiDialogChange(true)
+            },
+            onPickInstalledIcon = onPickInstalledIcon,
             onClearIcon = {
                 val currentUploaded = if (customIconType == PASSWORD_ICON_TYPE_UPLOADED) {
                     normalizedIconFileName(customIconValue)
@@ -4997,6 +5087,25 @@ private fun PasswordCustomIconPickers(
                 onCustomIconDialogChange(false)
             },
             onDismissRequest = { onCustomIconDialogChange(false) }
+        )
+    }
+
+    if (showEmojiIconDialog) {
+        EmojiIconInputDialog(
+            initialEmoji = customIconValue.takeIf { customIconType == PASSWORD_ICON_TYPE_EMOJI },
+            onConfirm = {
+                val currentUploaded = if (customIconType == PASSWORD_ICON_TYPE_UPLOADED) {
+                    normalizedIconFileName(customIconValue)
+                } else {
+                    null
+                }
+                if (!currentUploaded.isNullOrBlank() && !isOriginalUploadedIconFile(currentUploaded)) {
+                    PasswordCustomIconStore.deleteIconFile(context, currentUploaded)
+                }
+                onEmojiSelected(it)
+                onEmojiDialogChange(false)
+            },
+            onDismissRequest = { onEmojiDialogChange(false) }
         )
     }
 
@@ -5303,6 +5412,12 @@ private fun buildPasswordScreenInlinePreviewTotpData(
         fallbackIssuer = issuer,
         fallbackAccountName = accountName
     )
+}
+
+private tailrec fun Context.findPasswordEditorActivity(): Activity? = when (this) {
+    is Activity -> this
+    is ContextWrapper -> baseContext.findPasswordEditorActivity()
+    else -> null
 }
 
 private data class PasswordScreenAuthenticatorDraft(

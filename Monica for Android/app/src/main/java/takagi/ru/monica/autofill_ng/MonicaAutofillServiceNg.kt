@@ -575,7 +575,7 @@ class MonicaAutofillServiceNg : AutofillService() {
         val isPasswordOnlyLogin = AutofillInteractionContextResolver.isPasswordOnlyLogin(fillableTargets)
         var candidatePasswordCount = 0
         val matchedPasswords = if (hasLoginTargets) {
-            val allPasswords = passwordRepository.getAllPasswordEntries().first().filterNot { it.isGpgKeyEntry() }
+            val allPasswords = passwordRepository.getAllPasswordEntries().first().filterNot { it.isKeyCredential() }
             val sourceFilter = autofillPreferences.v2DefaultSourceFilter.first()
             val defaultKeepassDatabaseId = autofillPreferences.v2DefaultKeepassDatabaseId.first()
             val defaultBitwardenVaultId = autofillPreferences.v2DefaultBitwardenVaultId.first()

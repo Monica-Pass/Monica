@@ -1,11 +1,46 @@
 package takagi.ru.monica.keepass
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Test
 import takagi.ru.monica.data.ItemType
 import takagi.ru.monica.data.SecureItem
 
 class KeePassTotpProjectionMatcherTest {
+    @Test
+    fun oneLegacyProjectionCannotBeAssignedToTwoEntriesInTheSameRefresh() {
+        val legacy = totp(10, "Firefox", "Root", null, "same-secret")
+        val first = totp(0, "Firefox", "Root", "first-uuid", "same-secret")
+        val second = first.copy(keepassEntryUuid = "second-uuid")
+        val claimed = mutableSetOf<Long>()
+        val matched = KeePassTotpProjectionMatcher.findExistingProjection(
+            DATABASE_ID, first, listOf(legacy), null, legacy, "same-secret", SecureItem::itemData, claimed,
+        )
+        assertEquals(10L, matched?.id)
+        claimed += requireNotNull(matched).id
+        assertNull(KeePassTotpProjectionMatcher.findExistingProjection(
+            DATABASE_ID, second, listOf(legacy), null, legacy, "same-secret", SecureItem::itemData, claimed,
+        ))
+    }
+
+    @Test
+    fun distinctNativeUuidsWithTheSameTitleAndGroupMustNotOverwriteEachOther() {
+        val existing = totp(10, "Firefox", "Root", "first-uuid", "first-secret")
+        val incoming = totp(0, "Firefox", "Root", "second-uuid", "second-secret")
+        assertNull(KeePassTotpProjectionMatcher.findExistingProjection(
+            DATABASE_ID, incoming, listOf(existing), null, null, "second-secret", SecureItem::itemData
+        ))
+    }
+
+    @Test
+    fun aCopiedMonicaIdMustNotStealTheProjectionOfAnotherDatabase() {
+        val other = totp(10, "Firefox", "Root", "first-uuid", "same-secret").copy(keepassDatabaseId = 99)
+        val incoming = totp(0, "Firefox", "Root", "second-uuid", "same-secret")
+        assertNull(KeePassTotpProjectionMatcher.findExistingProjection(
+            DATABASE_ID, incoming, listOf(other), null, other, "same-secret", SecureItem::itemData
+        ))
+    }
+
     @Test
     fun legacyProjectionWithoutEntryUuidMatchesByTotpIdentityBeforeTitlePathFallback() {
         val incoming = totp(
@@ -81,7 +116,7 @@ class KeePassTotpProjectionMatcherTest {
     }
 
     @Test
-    fun titlePathFallbackIsOnlyUsedWhenIdentityCannotMatch() {
+    fun titlePathFallbackCannotOverwriteAnUnrelatedKnownSecret() {
         val incoming = totp(
             id = 0,
             title = "Account",
@@ -107,7 +142,7 @@ class KeePassTotpProjectionMatcherTest {
             identityKeyOf = SecureItem::itemData
         )
 
-        assertEquals(titlePathFallback.id, matched?.id)
+        assertNull(matched)
     }
 
     private fun totp(

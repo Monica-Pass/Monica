@@ -55,7 +55,7 @@ fun GpgKeyScreen(
     val db = remember { PasswordDatabase.getDatabase(context) }
     val categories by passwords.categories.collectAsState(initial = emptyList())
     val keepass by db.localKeePassDatabaseDao().getAllDatabases().collectAsState(initial = emptyList())
-    val mdbx by db.localMdbxDatabaseDao().getAllDatabases().collectAsState(initial = emptyList())
+    val mdbx by db.localMdbxDatabaseDao().getAvailableDatabases().collectAsState(initial = emptyList())
     val bitwarden by db.bitwardenVaultDao().getAllVaultsFlow().collectAsState(initial = emptyList())
     var entry by remember(passwordId) { mutableStateOf<PasswordEntry?>(null) }
     var extraFields by remember(passwordId) { mutableStateOf(emptyList<CustomFieldDraft>()) }
@@ -142,7 +142,7 @@ fun GpgKeyScreen(
         TopAppBar(title = {},
             navigationIcon = { IconButton(onClick = onBack) { Icon(Icons.Default.ArrowBack, stringResource(R.string.back)) } },
             actions = {
-                EntryTypeChip(current = EntryTypeChipOption.GPG_KEY, showGpg = true,
+                EntryTypeChip(current = EntryTypeChipOption.GPG_KEY, showGpg = true, showApiKey = true,
                     enabled = passwordId == null && onSelectType != null,
                     onSelect = { onSelectType?.invoke(it) })
                 Spacer(Modifier.width(4.dp))

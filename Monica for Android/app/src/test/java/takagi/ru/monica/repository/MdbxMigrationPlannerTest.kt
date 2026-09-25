@@ -93,11 +93,24 @@ class MdbxMigrationPlannerTest {
 
         assertFalse(plan.isEligible)
         assertTrue(plan.hasBlocker(MdbxMigrationBlockerKind.SOURCE_ENGINE_UNSUPPORTED))
-        assertTrue(plan.hasBlocker(MdbxMigrationBlockerKind.SOURCE_LOCATION_UNSUPPORTED))
         assertTrue(plan.hasBlocker(MdbxMigrationBlockerKind.DUPLICATE_ENTRY_ID))
         assertTrue(plan.hasBlocker(MdbxMigrationBlockerKind.ATTACHMENT_TOO_LARGE))
         assertTrue(plan.hasBlocker(MdbxMigrationBlockerKind.ATTACHMENT_KEY_MISSING))
         assertTrue(plan.hasBlocker(MdbxMigrationBlockerKind.ATTACHMENT_PARENT_MISSING))
+    }
+
+    @Test
+    fun remoteMdbx1CopiesCanUpgradeWithAnExplicitScopeWarning() {
+        listOf(MdbxSourceType.REMOTE_WEBDAV, MdbxSourceType.REMOTE_ONEDRIVE).forEach { sourceType ->
+            val plan = MdbxMigrationPlanner.build(
+                source = sourceDatabase(sourceType = sourceType),
+                folders = emptyList(),
+                entries = listOf(entry("password:1", "login", "{}")),
+                attachments = emptyList()
+            )
+            assertTrue(plan.isEligible)
+            assertEquals(1, plan.warningCount(MdbxMigrationWarningKind.REMOTE_LOCAL_COPY_ONLY))
+        }
     }
 
     @Test

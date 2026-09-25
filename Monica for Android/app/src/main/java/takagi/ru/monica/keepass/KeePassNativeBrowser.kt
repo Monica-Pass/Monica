@@ -180,7 +180,8 @@ internal object KeePassNativeBrowserBuilder {
             }
         }
         val resolutionContext = if (allEntries.any(::containsReferenceToken)) {
-            resolutionContextBuilder(allEntries.asIterable())
+            // History shares UUIDs with live entries and must never become a reference target.
+            resolutionContextBuilder(session.entryNodes.map { it.entry })
         } else {
             null
         }

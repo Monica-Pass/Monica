@@ -358,7 +358,7 @@ class PasskeyCreateActivity : FragmentActivity() {
                     .collectAsState(initial = emptyList())
                 val keepassDatabases by database.localKeePassDatabaseDao().getAllDatabases()
                     .collectAsState(initial = emptyList())
-                val mdbxDatabases by database.localMdbxDatabaseDao().getAllDatabases()
+                val mdbxDatabases by database.localMdbxDatabaseDao().getAvailableDatabases()
                     .collectAsState(initial = emptyList())
                 var selectedCategoryId by remember { mutableStateOf<Long?>(pendingCategoryId) }
                 var selectedKeePassDatabaseId by remember { mutableStateOf<Long?>(pendingKeepassDatabaseId) }

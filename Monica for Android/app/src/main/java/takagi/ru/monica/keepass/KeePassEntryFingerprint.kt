@@ -38,6 +38,19 @@ object KeePassEntryFingerprint {
         }
     }
 
+    // Kept separate from presentation signatures persisted by older queued icon patches.
+    fun buildProperties(entry: Entry): String = buildString {
+        append(entry.times?.expires ?: false)
+        append(':')
+        append(entry.times?.expiryTime?.toEpochMilli())
+        entry.tags.forEach { tag ->
+            append(':')
+            append(tag.length)
+            append(':')
+            append(tag)
+        }
+    }
+
     private fun normalizeRemoteConflictTitleForSignature(title: String): String {
         val suffixPattern = Regex("\\s*\\Q$REMOTE_CONFLICT_TITLE_SUFFIX\\E(?:\\s*\\Q$REMOTE_CONFLICT_TITLE_SUFFIX\\E)*\\s*$")
         val baseTitle = title

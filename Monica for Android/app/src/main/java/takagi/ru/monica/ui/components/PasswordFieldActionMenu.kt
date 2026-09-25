@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.rememberScrollState
@@ -42,6 +43,7 @@ import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
@@ -51,19 +53,29 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -71,8 +83,9 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import takagi.ru.monica.R
 import takagi.ru.monica.ui.icons.MonicaIcons
 import takagi.ru.monica.utils.ClipboardUtils
@@ -90,11 +103,24 @@ class PasswordFieldActionMenuState {
     fun open() {
         expanded = true
     }
+
+    companion object {
+        val Saver = listSaver<PasswordFieldActionMenuState, Boolean>(
+            save = { listOf(it.expanded, it.showLargeDisplay, it.showBarcode) },
+            restore = { values ->
+                PasswordFieldActionMenuState().apply {
+                    expanded = values[0]
+                    showLargeDisplay = values[1]
+                    showBarcode = values[2]
+                }
+            },
+        )
+    }
 }
 
 @Composable
 fun rememberPasswordFieldActionMenuState(): PasswordFieldActionMenuState {
-    return remember { PasswordFieldActionMenuState() }
+    return rememberSaveable(saver = PasswordFieldActionMenuState.Saver) { PasswordFieldActionMenuState() }
 }
 
 @Composable
@@ -349,17 +375,41 @@ private fun LargeFieldValueDialog(
     )
 }
 
+private data class FieldBarcodeRender(
+    val bitmap: android.graphics.Bitmap? = null,
+    val loading: Boolean = false,
+    val needsWiderScreen: Boolean = false,
+)
+
+private fun encodeFieldBarcode(value: String, format: FieldBarcodeFormat, availableWidth: Int): FieldBarcodeRender =
+    runCatching {
+        val isQr = format == FieldBarcodeFormat.QR_CODE
+        val matrix = createFieldBarcodeMatrix(value, format, if (isQr) 720 else availableWidth, if (isQr) 720 else 360)
+        if (!isQr && matrix.width > availableWidth) {
+            FieldBarcodeRender(needsWiderScreen = true)
+        } else {
+            FieldBarcodeRender(bitmap = BarcodeEncoder().createBitmap(matrix))
+        }
+    }.getOrElse { FieldBarcodeRender() }
+
 @Composable
 private fun FieldBarcodePage(
     label: String,
     value: String,
     onDismiss: () -> Unit
 ) {
-    val bitmap = remember(value) {
-        runCatching {
-            BarcodeEncoder().encodeBitmap(value, BarcodeFormat.QR_CODE, 720, 720)
-        }.getOrNull()
+    var format by rememberSaveable(value) { mutableStateOf(FieldBarcodeFormat.QR_CODE) }
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val availableWidth = with(LocalDensity.current) { (screenWidth - 40.dp).roundToPx().coerceAtLeast(1) }
+    var contentHeightPx by remember { mutableStateOf(0) }
+    val qrImageSize = with(LocalDensity.current) {
+        (contentHeightPx.toDp() - 48.dp).coerceIn(48.dp, 280.dp)
     }
+    var rendered by remember(value, format, availableWidth) { mutableStateOf(FieldBarcodeRender(loading = true)) }
+    LaunchedEffect(value, format, availableWidth) {
+        rendered = withContext(Dispatchers.Default) { encodeFieldBarcode(value, format, availableWidth) }
+    }
+    val bitmap = rendered.bitmap
 
     Dialog(
         onDismissRequest = onDismiss,
@@ -390,52 +440,93 @@ private fun FieldBarcodePage(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(6.dp))
-
-                Text(
-                    text = label,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Card(
-                    shape = RoundedCornerShape(28.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
-                    modifier = Modifier.fillMaxWidth()
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .onSizeChanged { contentHeightPx = it.height }
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(22.dp),
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(24.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        if (bitmap != null) {
-                            Image(
-                                bitmap = bitmap.asImageBitmap(),
-                                contentDescription = stringResource(R.string.field_action_show_barcode),
-                                modifier = Modifier
-                                    .size(280.dp)
-                                    .background(Color.White, RoundedCornerShape(18.dp))
-                                    .padding(14.dp)
-                            )
-                        } else {
-                            Text(
-                                text = stringResource(R.string.field_action_barcode_failed),
-                                color = MaterialTheme.colorScheme.error,
-                                textAlign = TextAlign.Center
-                            )
+                    Spacer(modifier = Modifier.height(6.dp))
+
+                    Text(
+                        text = label,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+                        FieldBarcodeFormat.entries.forEachIndexed { index, option ->
+                            SegmentedButton(
+                                selected = format == option,
+                                onClick = { format = option },
+                                shape = SegmentedButtonDefaults.itemShape(
+                                    index = index,
+                                    count = FieldBarcodeFormat.entries.size
+                                )
+                            ) {
+                                Text(stringResource(option.labelRes))
+                            }
                         }
                     }
-                }
 
-                TextButton(
-                    onClick = onDismiss,
-                    modifier = Modifier.align(Alignment.End),
-                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
-                ) {
-                    Text(stringResource(R.string.close))
+                    Card(
+                        shape = RoundedCornerShape(28.dp),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(if (format == FieldBarcodeFormat.QR_CODE) 24.dp else 0.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            if (bitmap != null) {
+                                val imageModifier = if (format == FieldBarcodeFormat.QR_CODE) {
+                                    Modifier.size(qrImageSize)
+                                } else {
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .aspectRatio(bitmap.width.toFloat() / bitmap.height)
+                                }
+                                Image(
+                                    bitmap = bitmap.asImageBitmap(),
+                                    contentDescription = stringResource(R.string.field_action_show_barcode),
+                                    filterQuality = FilterQuality.None,
+                                    modifier = imageModifier
+                                        .background(Color.White, RoundedCornerShape(18.dp))
+                                        .padding(if (format == FieldBarcodeFormat.QR_CODE) 14.dp else 0.dp)
+                                )
+                            } else if (rendered.loading) {
+                                CircularProgressIndicator(modifier = Modifier.padding(24.dp))
+                            } else {
+                                Text(
+                                    text = stringResource(
+                                        if (rendered.needsWiderScreen) {
+                                            R.string.field_barcode_linear_too_wide
+                                        } else if (format == FieldBarcodeFormat.CODE_128) {
+                                            R.string.field_barcode_linear_failed
+                                        } else {
+                                            R.string.field_action_barcode_failed
+                                        }
+                                    ),
+                                    color = MaterialTheme.colorScheme.error,
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier.padding(16.dp),
+                                )
+                            }
+                        }
+                    }
+
+                    TextButton(
+                        onClick = onDismiss,
+                        modifier = Modifier.align(Alignment.End),
+                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+                    ) {
+                        Text(stringResource(R.string.close))
+                    }
                 }
             }
         }

@@ -35,6 +35,7 @@ internal fun VaultItemIcon(
     val uploadedIcon = if (customIconType == PASSWORD_ICON_TYPE_UPLOADED) {
         rememberUploadedPasswordIcon(customIconValue)
     } else null
+    val emoji = customIconValue.takeIf { customIconType == PASSWORD_ICON_TYPE_EMOJI }
     val autoMatchedSimpleIcon = rememberAutoMatchedSimpleIcon(
         website = website,
         title = title,
@@ -57,6 +58,11 @@ internal fun VaultItemIcon(
         val brandIcon = simpleIcon ?: uploadedIcon ?: autoMatchedSimpleIcon.bitmap
         val platformIcon = favicon ?: appIcon
         when {
+            emoji != null -> EmojiIconText(
+                emoji = emoji,
+                size = 28.dp,
+                modifier = Modifier.fillMaxSize()
+            )
             brandIcon != null -> Image(
                 bitmap = brandIcon,
                 contentDescription = null,

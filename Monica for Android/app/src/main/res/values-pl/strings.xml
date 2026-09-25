@@ -21,8 +21,11 @@
     <string name="share">Udostępnij</string>
     <string name="field_action_more">Więcej opcji pola</string>
     <string name="field_action_show_large">Powiększ tekst</string>
-    <string name="field_action_show_barcode">Pokaż kod QR</string>
+    <string name="field_action_show_barcode">Pokaż jako QR / kod kreskowy</string>
     <string name="field_action_barcode_failed">Nie udało się utworzyć kodu QR dla tej wartości.</string>
+    <string name="field_barcode_format_qr">Kod QR</string>
+    <string name="field_barcode_format_linear">Kod kreskowy</string>
+    <string name="field_barcode_linear_failed">Tej wartości nie można zakodować jako kodu kreskowego Code 128. Użyj tekstu ASCII do 80 znaków.</string>
     <string name="no_results">Brak wyników</string>
     <string name="note_placeholder">Napisz coś…</string>
     <string name="new_note">Nowa notatka</string>
@@ -1239,6 +1242,10 @@
     <string name="custom_icon_dialog_title">Ustaw własną ikonę</string>
     <string name="custom_icon_pick_simple">Wybierz z biblioteki</string>
     <string name="custom_icon_upload_image">Dodaj obraz</string>
+    <string name="custom_icon_use_emoji">Użyj emoji</string>
+    <string name="custom_icon_emoji_hint">Wpisz jedno emoji</string>
+    <string name="custom_icon_emoji_support">Jedno emoji jest zapisywane z tym wpisem, bez dodatkowego pakietu ikon.</string>
+    <string name="custom_icon_emoji_invalid">Wpisz dokładnie jedno emoji.</string>
     <string name="custom_icon_clear">Użyj ikony strony</string>
     <string name="custom_icon_search_hint">Szukaj ikon</string>
     <string name="custom_icon_search_empty">Brak pasujących ikon</string>
@@ -4343,4 +4350,12 @@
     <string name="wallet_stack_open_card">Otwórz szczegóły karty</string>
     <string name="language_french">Français</string>
     <string name="qs_lang_french">Français</string>
+    <string name="custom_icon_pick_installed">Zainstalowane ikony</string>
+    <string name="custom_icon_installed_apps">Ikony aplikacji</string>
+    <string name="custom_icon_installed_packs">Pakiety ikon</string>
+    <string name="custom_icon_installed_empty_packs">Nie znaleziono zgodnych pakietów ikon. Zainstaluj pakiet i ponownie otwórz ten wybór.</string>
+    <string name="custom_icon_installed_empty_icons">Ten pakiet nie zawiera obsługiwanych ikon.</string>
+    <string name="custom_icon_installed_load_failed">Nie można wczytać ikon. Spróbuj ponownie.</string>
+    <string name="custom_icon_installed_save_failed">Nie można użyć tej ikony. Spróbuj ponownie lub wybierz inną.</string>
+    <string name="field_barcode_linear_too_wide">Ten kod kreskowy wymaga szerszego ekranu. Obróć urządzenie lub użyj kodu QR.</string>
 </resources>

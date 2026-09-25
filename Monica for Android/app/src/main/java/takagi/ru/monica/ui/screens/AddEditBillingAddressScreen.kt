@@ -98,7 +98,7 @@ fun AddEditBillingAddressScreen(
     val scope = rememberCoroutineScope()
     val database = remember { PasswordDatabase.getDatabase(context) }
     val categories by database.categoryDao().getAllCategories().collectAsState(initial = emptyList())
-    val mdbxDatabases by database.localMdbxDatabaseDao().getAllDatabases().collectAsState(initial = emptyList())
+    val mdbxDatabases by database.localMdbxDatabaseDao().getAvailableDatabases().collectAsState(initial = emptyList())
 
     var title by rememberSaveable { mutableStateOf("") }
     var fullName by rememberSaveable { mutableStateOf("") }

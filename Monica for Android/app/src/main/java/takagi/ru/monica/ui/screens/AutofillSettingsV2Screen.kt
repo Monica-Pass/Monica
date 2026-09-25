@@ -37,6 +37,8 @@ import androidx.compose.material.icons.outlined.DoNotDisturb
 import androidx.compose.material.icons.outlined.Input
 import androidx.compose.material.icons.outlined.Key
 import androidx.compose.material.icons.outlined.Keyboard
+import androidx.compose.material.icons.outlined.VisibilityOff
+import androidx.compose.ui.platform.testTag
 import androidx.compose.material.icons.outlined.Language
 import androidx.compose.material.icons.outlined.Link
 import androidx.compose.material.icons.outlined.Lock
@@ -121,6 +123,7 @@ fun AutofillSettingsV2Screen(
 
     val autofillEnabled by preferences.isAutofillEnabled.collectAsState(initial = true)
     val activeFillNotificationEnabled by preferences.isActiveFillNotificationEnabled.collectAsState(initial = false)
+    val imeKeyboardOptions by preferences.imeKeyboardOptions.collectAsState(initial = takagi.ru.monica.ime.ImeKeyboardOptions())
     val appSettings by settingsManager.settingsFlow.collectAsState(initial = AppSettings())
     val autofillAuthRequired = appSettings.autofillAuthRequired
     val strictMode by preferences.isBitwardenStrictModeEnabled.collectAsState(initial = true)
@@ -536,6 +539,21 @@ fun AutofillSettingsV2Screen(
                     onClick = ::openSystemKeyboardSettings,
                 )
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                androidx.compose.foundation.layout.Box(Modifier.testTag("ime_scramble_pin_setting")) { SwitchSettingItem(
+                    icon = Icons.Outlined.Keyboard,
+                    title = stringResource(R.string.ime_scramble_pin_title),
+                    subtitle = stringResource(R.string.ime_scramble_pin_description),
+                    checked = imeKeyboardOptions.scramblePin,
+                    onCheckedChange = { scope.launch { preferences.setImeScramblePin(it) } },
+                ) }
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                androidx.compose.foundation.layout.Box(Modifier.testTag("ime_hide_pin_preview_setting")) { SwitchSettingItem(
+                    icon = Icons.Outlined.VisibilityOff,
+                    title = stringResource(R.string.ime_hide_pin_preview_title),
+                    subtitle = stringResource(R.string.ime_hide_pin_preview_description),
+                    checked = imeKeyboardOptions.hidePinPreview,
+                    onCheckedChange = { scope.launch { preferences.setImeHidePinPreview(it) } },
+                ) }
             }
 
             SectionCard(

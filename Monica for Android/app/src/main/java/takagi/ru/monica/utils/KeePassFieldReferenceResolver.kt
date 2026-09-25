@@ -12,6 +12,7 @@ internal data class KeePassEntryResolutionContext(
 internal object KeePassFieldReferenceResolver {
     private const val MAX_DEPTH = 8
     private val refPattern = Regex("""\{REF:([A-Z])@([A-Z]):([^}]+)\}""", RegexOption.IGNORE_CASE)
+    private val localPattern = Regex("""\{(?:S:([^}]+)|(TITLE|USERNAME|PASSWORD|URL|NOTES|UUID))\}""", RegexOption.IGNORE_CASE)
     private val standardFieldByCode = mapOf(
         'T' to "Title",
         'U' to "UserName",
@@ -75,12 +76,29 @@ internal object KeePassFieldReferenceResolver {
         visited: Set<String>,
         depth: Int
     ): String {
-        if (rawValue.isBlank() || context == null || depth >= MAX_DEPTH || !rawValue.contains("{REF:", ignoreCase = true)) {
+        if (rawValue.isBlank() || depth >= MAX_DEPTH || !rawValue.contains('{')) {
             return rawValue
         }
-
-        return refPattern.replace(rawValue) { match ->
-            val tokenKey = "${currentEntry.uuid}:${match.value.uppercase(Locale.ROOT)}"
+        val withLocalFields = localPattern.replace(rawValue) { match ->
+            val tokenKey = "${currentEntry.uuid}:${match.value}"
+            if (tokenKey in visited) return@replace match.value
+            val customName = match.groupValues[1]
+            val name = customName.ifEmpty {
+                when (match.groupValues[2].uppercase(Locale.ROOT)) {
+                    "TITLE" -> "Title"
+                    "USERNAME" -> "UserName"
+                    "PASSWORD" -> "Password"
+                    "URL" -> "URL"
+                    "NOTES" -> "Notes"
+                    else -> return@replace normalizeUuid(currentEntry.uuid.toString()).uppercase(Locale.ROOT)
+                }
+            }
+            val value = currentEntry.fields[name] ?: return@replace match.value
+            resolveValueInternal(extractContent(value), currentEntry, context, visited + tokenKey, depth + 1)
+        }
+        if (context == null) return withLocalFields
+        return refPattern.replace(withLocalFields) { match ->
+            val tokenKey = "${currentEntry.uuid}:${match.value}"
             if (tokenKey in visited) {
                 return@replace match.value
             }
@@ -126,7 +144,7 @@ internal object KeePassFieldReferenceResolver {
             'I' -> context.entriesByNormalizedUuid[normalizeUuid(searchText)]?.firstOrNull()
             'T', 'U', 'P', 'A', 'N', 'O' -> context.entries.firstOrNull { entry ->
                 resolveSearchValues(entry, searchCode, context, visited, depth).any { candidateValue ->
-                    candidateValue.equals(searchText, ignoreCase = true)
+                    candidateValue.contains(searchText, ignoreCase = true)
                 }
             }
             else -> null
@@ -141,15 +159,8 @@ internal object KeePassFieldReferenceResolver {
         depth: Int
     ): String? {
         return when (targetCode) {
-            'I' -> entry.uuid.toString()
-            'O' -> entry.fields.entries.firstNotNullOfOrNull { (key, value) ->
-                if (key in standardFieldNames || key.startsWith("_etm_")) {
-                    null
-                } else {
-                    resolveValueInternal(extractContent(value), entry, context, visited, depth)
-                        .takeIf { it.isNotBlank() }
-                }
-            }
+            'I' -> normalizeUuid(entry.uuid.toString()).uppercase(Locale.ROOT)
+            'O' -> null // O is a search scope; custom values use {S:Name} in a standard field.
             else -> {
                 val fieldName = standardFieldByCode[targetCode] ?: return null
                 resolveValueInternal(getRawFieldValue(entry, fieldName), entry, context, visited, depth)
@@ -167,7 +178,7 @@ internal object KeePassFieldReferenceResolver {
         return when (code) {
             'I' -> listOf(entry.uuid.toString())
             'O' -> entry.fields.entries.mapNotNull { (key, value) ->
-                if (key in standardFieldNames || key.startsWith("_etm_")) {
+                if (key in standardFieldNames) {
                     null
                 } else {
                     resolveValueInternal(extractContent(value), entry, context, visited, depth)

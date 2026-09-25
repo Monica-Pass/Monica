@@ -64,12 +64,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import takagi.ru.monica.R
+import takagi.ru.monica.data.ItemType
+import takagi.ru.monica.data.AppSettings
+import takagi.ru.monica.data.SecureItem
+import takagi.ru.monica.data.model.OtpType
+import takagi.ru.monica.data.model.TotpData
+import takagi.ru.monica.ui.components.TotpCodeCard
+import takagi.ru.monica.utils.SettingsManager
+import java.time.Instant
 import takagi.ru.monica.keepass.KeePassFieldChange
 import takagi.ru.monica.keepass.KeePassNativeAttachmentRecord
 import takagi.ru.monica.keepass.KeePassNativeEntryRecord
@@ -90,21 +100,32 @@ internal fun NativeEntryDetailScreen(
     onDeleteAttachment: (KeePassNativeAttachmentRecord, (String?) -> Unit) -> Unit,
     onRestoreHistory: (Int, (String?) -> Unit) -> Unit,
     onDeleteHistory: (Int, (String?) -> Unit) -> Unit,
+    onAdvanceHotp: ((TotpData, (String?) -> Unit) -> Unit)? = null,
 ) {
     val context = LocalContext.current
+    val settings by remember(context) { SettingsManager(context).settingsFlow }
+        .collectAsStateWithLifecycle(initialValue = AppSettings())
     val clipboard = LocalClipboardManager.current
-    val draft = remember(entry.identity) {
+    val draft = remember(entry.identity, entry.fields) {
         ensureNativeEntryEditorStandardFields(
             buildNativeEntryEditorDraft(
                 entry.fields
                     .filterNot { field -> field.name.equals(KeePassTemplateEngine.TEMPLATE_MARKER_FIELD, ignoreCase = true) }
                     .map { field ->
-                    KeePassFieldChange(field.name, field.rawValue, field.isProtected)
+                    KeePassFieldChange(field.name, field.displayValue, field.isProtected)
                 },
             ),
         )
     }
-    var revealedIds by remember(entry.identity) { mutableStateOf(emptySet<Long>()) }
+    val otp = remember(entry.identity, entry.fields) {
+        parseNativeTotpFields(entry.fields.map { KeePassFieldChange(it.name, it.displayValue, it.isProtected) })
+    }
+    val otpItem = remember(entry.identity, entry.title) {
+        SecureItem(itemType = ItemType.TOTP, title = entry.title, itemData = "")
+    }
+    var hotpBusy by remember(entry.identity) { mutableStateOf(false) }
+    var hotpError by remember(entry.identity) { mutableStateOf<String?>(null) }
+    var revealedIds by remember(entry.identity, entry.fields) { mutableStateOf(emptySet<Long>()) }
     var copiedLabel by remember(entry.identity) { mutableStateOf<String?>(null) }
     var showMetadata by remember(entry.identity) { mutableStateOf(false) }
     var showHistory by remember(entry.identity) { mutableStateOf(false) }
@@ -163,7 +184,7 @@ internal fun NativeEntryDetailScreen(
                             Icon(Icons.Default.History, contentDescription = stringResource(R.string.history))
                         }
                     }
-                    IconButton(onClick = onEdit, enabled = modificationEnabled) {
+                    IconButton(onClick = onEdit, enabled = modificationEnabled && !hotpBusy) {
                         Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.edit))
                     }
                 },
@@ -172,7 +193,7 @@ internal fun NativeEntryDetailScreen(
     ) { padding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize().padding(padding),
-            contentPadding = PaddingValues(start = 16.dp, top = 10.dp, end = 16.dp, bottom = 32.dp),
+            contentPadding = PaddingValues(start = 12.dp, top = 10.dp, end = 12.dp, bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             item {
@@ -236,6 +257,63 @@ internal fun NativeEntryDetailScreen(
             attachmentError?.let { failure ->
                 item {
                     NativeDetailMessage(text = failure, error = true, onDismiss = { attachmentError = null })
+                }
+            }
+
+            otp?.let { data ->
+                item {
+                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        TotpCodeCard(
+                            item = otpItem,
+                            parsedTotpData = data,
+                            appSettings = settings,
+                            onCopyCode = { copyValue(it, copyLabel) },
+                            modifier = Modifier.testTag("native_entry_otp"),
+                        )
+                        if (data.otpType == OtpType.HOTP) {
+                            OutlinedButton(
+                                modifier = Modifier.fillMaxWidth().testTag("native_hotp_next"),
+                                enabled = modificationEnabled && !hotpBusy && attachmentBusy == null &&
+                                    data.counter < Long.MAX_VALUE && onAdvanceHotp != null,
+                                onClick = {
+                                    hotpBusy = true
+                                    hotpError = null
+                                    onAdvanceHotp?.invoke(data) { failure ->
+                                        hotpBusy = false
+                                        hotpError = failure
+                                    }
+                                },
+                            ) { Text(stringResource(if (hotpBusy) R.string.keepass_hotp_saving else R.string.generate_next)) }
+                            if (data.counter == Long.MAX_VALUE) {
+                                Text(stringResource(R.string.keepass_hotp_counter_exhausted), color = MaterialTheme.colorScheme.error)
+                            }
+                        }
+                        hotpError?.let { failure ->
+                            NativeDetailMessage(failure, error = true, onDismiss = { hotpError = null })
+                        }
+                    }
+                }
+            }
+            if (entry.tags.isNotEmpty() || entry.times?.expires == true) {
+                item {
+                    Surface(
+                        modifier = Modifier.fillMaxWidth().testTag("native_entry_properties_summary"),
+                        shape = RoundedCornerShape(18.dp),
+                        color = MaterialTheme.colorScheme.surfaceContainerLow,
+                    ) {
+                        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            if (entry.tags.isNotEmpty()) {
+                                NativeDetailMetaRow(stringResource(R.string.keepass_native_tags), entry.tags.joinToString(", "))
+                            }
+                            entry.times?.takeIf { it.expires }?.expiryTime?.let { expiry ->
+                                val expired = !expiry.isAfter(Instant.now())
+                                Text(stringResource(
+                                    if (expired) R.string.keepass_entry_expired_at else R.string.keepass_entry_expires_at,
+                                    formatNativeEntryTime(expiry, context.resources.configuration.locales[0]),
+                                ), color = if (expired) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                        }
+                    }
                 }
             }
 
@@ -457,7 +535,8 @@ private fun NativeDetailFieldRow(
     onCopy: () -> Unit,
     onOpen: (() -> Unit)?,
 ) {
-    val protected = field.protected || field.slot == NativeEntryStandardSlot.PASSWORD
+    val protected = field.protected || field.slot == NativeEntryStandardSlot.PASSWORD ||
+        takagi.ru.monica.keepass.KeePassTotpCodec.isSecretField(field.name)
     Surface(color = androidx.compose.ui.graphics.Color.Transparent) {
         ListItem(
             modifier = Modifier.animateMonicaContentSize(),

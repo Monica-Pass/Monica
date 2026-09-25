@@ -15,7 +15,7 @@ import java.util.TimeZone
  * 终止此次调用，避免继续打穿服务器速率限制。
  *
  * 响应后：
- * - 429 或 503 + Retry-After：解析 Retry-After（秒数或 HTTP-date）并
+ * - 429 或 503：解析 Retry-After（秒数或 HTTP-date）并
  *   调用 [WebDavBackoffState.recordRateLimit]。
  * - 2xx：调用 [WebDavBackoffState.recordSuccess]，重置该主机 backoff。
  */
@@ -37,7 +37,7 @@ class RateLimitInterceptor(
 
         val response = chain.proceed(request)
         val code = response.code
-        if (code == 429 || (code == 503 && response.header(HEADER_RETRY_AFTER) != null)) {
+        if (code == 429 || code == 503) {
             val retryAfterMs = parseRetryAfterMillis(
                 headerValue = response.header(HEADER_RETRY_AFTER),
                 now = clock(),

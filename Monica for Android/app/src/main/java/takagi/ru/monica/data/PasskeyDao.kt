@@ -14,13 +14,13 @@ interface PasskeyDao {
     /**
      * 获取所有 Passkey（按最后使用时间降序）
      */
-    @Query("SELECT * FROM passkeys ORDER BY last_used_at DESC")
+    @Query("SELECT * FROM passkeys WHERE $MDBX_AVAILABLE_ENTRY_FILTER ORDER BY last_used_at DESC")
     fun getAllPasskeys(): Flow<List<PasskeyEntry>>
     
     /**
      * 获取所有 Passkey（同步版本）
      */
-    @Query("SELECT * FROM passkeys ORDER BY last_used_at DESC")
+    @Query("SELECT * FROM passkeys WHERE $MDBX_AVAILABLE_ENTRY_FILTER ORDER BY last_used_at DESC")
     suspend fun getAllPasskeysSync(): List<PasskeyEntry>
 
     /**
@@ -29,8 +29,7 @@ interface PasskeyDao {
     @Query(
         """
         SELECT * FROM passkeys
-        WHERE credential_id = :credentialId
-        ORDER BY
+        WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (credential_id = :credentialId) ORDER BY
             CASE WHEN sync_status = 'REFERENCE' THEN 1 ELSE 0 END,
             last_used_at DESC,
             id DESC
@@ -39,14 +38,13 @@ interface PasskeyDao {
     )
     suspend fun getPasskeyById(credentialId: String): PasskeyEntry?
 
-    @Query("SELECT * FROM passkeys WHERE id = :recordId LIMIT 1")
+    @Query("SELECT * FROM passkeys WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (id = :recordId) LIMIT 1")
     suspend fun getPasskeyByRecordId(recordId: Long): PasskeyEntry?
 
     @Query(
         """
         SELECT * FROM passkeys
-        WHERE credential_id = :credentialId
-        ORDER BY last_used_at DESC, id DESC
+        WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (credential_id = :credentialId) ORDER BY last_used_at DESC, id DESC
         """
     )
     suspend fun getPasskeysByCredentialId(credentialId: String): List<PasskeyEntry>
@@ -64,13 +62,13 @@ interface PasskeyDao {
     /**
      * 根据依赖方 ID (域名) 获取 Passkeys
      */
-    @Query("SELECT * FROM passkeys WHERE rp_id = :rpId ORDER BY last_used_at DESC")
+    @Query("SELECT * FROM passkeys WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (rp_id = :rpId) ORDER BY last_used_at DESC")
     fun getPasskeysByRpId(rpId: String): Flow<List<PasskeyEntry>>
     
     /**
      * 根据依赖方 ID (域名) 获取 Passkeys（同步版本）
      */
-    @Query("SELECT * FROM passkeys WHERE rp_id = :rpId ORDER BY last_used_at DESC")
+    @Query("SELECT * FROM passkeys WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (rp_id = :rpId) ORDER BY last_used_at DESC")
     suspend fun getPasskeysByRpIdSync(rpId: String): List<PasskeyEntry>
     
     /**
@@ -78,36 +76,35 @@ interface PasskeyDao {
      */
     @Query("""
         SELECT * FROM passkeys 
-        WHERE rp_id LIKE '%' || :query || '%' 
+        WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (rp_id LIKE '%' || :query || '%'
            OR rp_name LIKE '%' || :query || '%'
            OR user_name LIKE '%' || :query || '%'
-           OR user_display_name LIKE '%' || :query || '%'
-        ORDER BY last_used_at DESC
+           OR user_display_name LIKE '%' || :query || '%') ORDER BY last_used_at DESC
     """)
     fun searchPasskeys(query: String): Flow<List<PasskeyEntry>>
     
     /**
      * 获取可发现的 Passkeys（用于 Credential Provider 展示）
      */
-    @Query("SELECT * FROM passkeys WHERE is_discoverable = 1 ORDER BY last_used_at DESC")
+    @Query("SELECT * FROM passkeys WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (is_discoverable = 1) ORDER BY last_used_at DESC")
     suspend fun getDiscoverablePasskeys(): List<PasskeyEntry>
     
     /**
      * 获取可发现的 Passkeys（同步版本，用于 Service）
      */
-    @Query("SELECT * FROM passkeys WHERE is_discoverable = 1 ORDER BY last_used_at DESC")
+    @Query("SELECT * FROM passkeys WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (is_discoverable = 1) ORDER BY last_used_at DESC")
     suspend fun getDiscoverablePasskeysSync(): List<PasskeyEntry>
     
     /**
      * 获取可发现的 Passkeys 按域名过滤
      */
-    @Query("SELECT * FROM passkeys WHERE is_discoverable = 1 AND rp_id = :rpId ORDER BY last_used_at DESC")
+    @Query("SELECT * FROM passkeys WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (is_discoverable = 1 AND rp_id = :rpId) ORDER BY last_used_at DESC")
     suspend fun getDiscoverablePasskeysByRpId(rpId: String): List<PasskeyEntry>
     
     /**
      * 获取 Passkey 总数
      */
-    @Query("SELECT COUNT(*) FROM passkeys")
+    @Query("SELECT COUNT(*) FROM passkeys WHERE $MDBX_AVAILABLE_ENTRY_FILTER ")
     fun getPasskeyCount(): Flow<Int>
 
     /**
@@ -309,13 +306,13 @@ interface PasskeyDao {
     /**
      * 获取绑定到指定密码的 Passkeys
      */
-    @Query("SELECT * FROM passkeys WHERE bound_password_id = :passwordId ORDER BY last_used_at DESC")
+    @Query("SELECT * FROM passkeys WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (bound_password_id = :passwordId) ORDER BY last_used_at DESC")
     fun getByBoundPasswordId(passwordId: Long): Flow<List<PasskeyEntry>>
 
     /**
      * 获取绑定到指定密码集合的 Passkeys（同步版本）
      */
-    @Query("SELECT * FROM passkeys WHERE bound_password_id IN (:passwordIds)")
+    @Query("SELECT * FROM passkeys WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (bound_password_id IN (:passwordIds)) ")
     suspend fun getByBoundPasswordIds(passwordIds: List<Long>): List<PasskeyEntry>
 
     @Query(

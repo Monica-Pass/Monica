@@ -54,7 +54,7 @@ enum class MdbxCapability {
 
 val MdbxEngineType.capabilities: Set<MdbxCapability>
     get() = when (this) {
-        MdbxEngineType.KOTLIN_MDBX1 -> MdbxCapability.entries.toSet()
+        MdbxEngineType.KOTLIN_MDBX1 -> emptySet()
         MdbxEngineType.RUST_MDBX2 -> setOf(
             MdbxCapability.LOCAL_CRUD,
             MdbxCapability.EMBEDDED_ATTACHMENTS,
@@ -72,6 +72,16 @@ val MdbxEngineType.capabilities: Set<MdbxCapability>
 
 fun LocalMdbxDatabase.supports(capability: MdbxCapability): Boolean =
     capability in engineTypeEnum.capabilities
+
+/** Legacy records remain visible to the manager solely for upgrading or removal. */
+val LocalMdbxDatabase.isUsable: Boolean
+    get() = engineTypeEnum == MdbxEngineType.RUST_MDBX2
+
+// Hide retired projections from normal lists and credential suggestions without
+// deleting their cached contents. Migration reads the original vault separately.
+internal const val MDBX_AVAILABLE_ENTRY_FILTER =
+    "(mdbx_database_id IS NULL OR mdbx_database_id IN " +
+        "(SELECT id FROM local_mdbx_databases WHERE engine_type = 'RUST_MDBX2' COLLATE NOCASE))"
 
 /**
  * Tiga three-mode security model for MDBX vaults.
@@ -236,13 +246,19 @@ interface LocalMdbxDatabaseDao {
     @Query("SELECT * FROM local_mdbx_databases ORDER BY sort_order ASC, created_at DESC")
     fun getAllDatabases(): Flow<List<LocalMdbxDatabase>>
 
+    @Query("SELECT * FROM local_mdbx_databases WHERE engine_type = 'RUST_MDBX2' COLLATE NOCASE ORDER BY sort_order ASC, created_at DESC")
+    fun getAvailableDatabases(): Flow<List<LocalMdbxDatabase>>
+
+    @Query("SELECT * FROM local_mdbx_databases WHERE engine_type = 'RUST_MDBX2' COLLATE NOCASE ORDER BY sort_order ASC, created_at DESC")
+    suspend fun getAvailableDatabasesSnapshot(): List<LocalMdbxDatabase>
+
     @Query("SELECT * FROM local_mdbx_databases ORDER BY sort_order ASC, created_at DESC")
     suspend fun getAllDatabasesSnapshot(): List<LocalMdbxDatabase>
 
     @Query("SELECT * FROM local_mdbx_databases WHERE id = :id")
     suspend fun getDatabaseById(id: Long): LocalMdbxDatabase?
 
-    @Query("SELECT * FROM local_mdbx_databases WHERE is_default = 1 LIMIT 1")
+    @Query("SELECT * FROM local_mdbx_databases WHERE is_default = 1 AND engine_type = 'RUST_MDBX2' COLLATE NOCASE LIMIT 1")
     suspend fun getDefaultDatabase(): LocalMdbxDatabase?
 
     @Query("SELECT * FROM local_mdbx_databases WHERE storage_location = :location ORDER BY sort_order ASC")

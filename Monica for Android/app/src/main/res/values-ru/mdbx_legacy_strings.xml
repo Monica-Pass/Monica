@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_legacy_unavailable_title">MDBX1 больше не поддерживается</string>
+    <string name="mdbx_legacy_unavailable_badge">MDBX1 · Недоступно</string>
+    <string name="mdbx_legacy_unavailable_description">Эта база данных недоступна. Обновите её до MDBX2, чтобы продолжить работу. Исходный файл будет сохранён.</string>
+    <string name="mdbx_legacy_creation_disabled">Новые базы данных используют MDBX2. Файлы MDBX1 можно открывать только для обновления.</string>
+    <string name="mdbx_legacy_local_copy_required">Не удалось прочитать локальную копию MDBX1. Откройте исходный файл MDBX1 заново для обновления. Исходная база данных не изменена.</string>
+    <string name="mdbx_legacy_remote_copy_warning">Обновление создаст новую локальную базу MDBX2 из копии на этом устройстве. Изменения на сервере, которые ещё не загружены, не будут включены. Исходный файл на сервере и локальная копия сохранятся. Синхронизацию новой базы нужно настроить отдельно.</string>
+    <string name="mdbx_legacy_import_option">MDBX1 (обновление)</string>
+    <string name="mdbx_legacy_upgrade_action">Обновить до MDBX2</string>
+</resources>

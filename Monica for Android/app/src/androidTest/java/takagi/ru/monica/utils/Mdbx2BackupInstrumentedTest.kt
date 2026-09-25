@@ -61,9 +61,9 @@ class Mdbx2BackupInstrumentedTest {
 
         val backupFile = result.first
         try {
-            assertTrue(result.second.warnings.any { warning ->
-                warning.contains("MDBX2") && warning.contains("本地条目")
-            })
+            assertTrue(result.second.warnings.contains(
+                AppLocaleStringResolver(context).get(takagi.ru.monica.R.string.backup_mdbx_local_restore, 2)
+            ))
             ZipFile(backupFile).use { zip ->
                 val jsonEntries = zip.entries().asSequence()
                     .filter { !it.isDirectory && it.name.endsWith(".json") }

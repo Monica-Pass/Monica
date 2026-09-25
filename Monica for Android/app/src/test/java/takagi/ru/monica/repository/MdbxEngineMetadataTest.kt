@@ -31,8 +31,8 @@ class MdbxEngineMetadataTest {
     }
 
     @Test
-    fun engineCapabilitiesKeepMdbx1CompleteAndExposeVerifiedMdbx2Features() {
-        assertEquals(MdbxCapability.entries.toSet(), MdbxEngineType.KOTLIN_MDBX1.capabilities)
+    fun engineCapabilitiesRetireMdbx1AndExposeVerifiedMdbx2Features() {
+        assertEquals(emptySet<MdbxCapability>(), MdbxEngineType.KOTLIN_MDBX1.capabilities)
         assertEquals(
             setOf(
                 MdbxCapability.LOCAL_CRUD,

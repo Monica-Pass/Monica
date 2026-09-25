@@ -115,6 +115,17 @@ class AutofillPreferences(private val context: Context) {
     /**
      * 是否启用自动填充服务
      */
+    val imeKeyboardOptions: Flow<takagi.ru.monica.ime.ImeKeyboardOptions> =
+        takagi.ru.monica.ime.ImeKeyboardPreferences.get(context).data
+
+    suspend fun setImeScramblePin(enabled: Boolean) {
+        takagi.ru.monica.ime.ImeKeyboardPreferences.get(context).updateData { it.copy(scramblePin = enabled) }
+    }
+
+    suspend fun setImeHidePinPreview(enabled: Boolean) {
+        takagi.ru.monica.ime.ImeKeyboardPreferences.get(context).updateData { it.copy(hidePinPreview = enabled) }
+    }
+
     val isAutofillEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
         preferences[KEY_AUTOFILL_ENABLED] ?: true  // 默认启用
     }

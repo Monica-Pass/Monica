@@ -21,8 +21,11 @@
     <string name="share">Partager</string>
     <string name="field_action_more">Plus d’actions</string>
     <string name="field_action_show_large">Afficher en grand</string>
-    <string name="field_action_show_barcode">Afficher le code QR</string>
+    <string name="field_action_show_barcode">Afficher en QR / code-barres</string>
     <string name="field_action_barcode_failed">Impossible de créer un code QR pour cette valeur.</string>
+    <string name="field_barcode_format_qr">Code QR</string>
+    <string name="field_barcode_format_linear">Code-barres</string>
+    <string name="field_barcode_linear_failed">Cette valeur ne peut pas être encodée en code-barres Code 128. Utilisez du texte ASCII de 80 caractères maximum.</string>
     <string name="no_results">Aucun résultat</string>
     <string name="note_placeholder">Écrivez quelque chose…</string>
     <string name="new_note">Nouvelle note</string>
@@ -1239,6 +1242,10 @@
     <string name="custom_icon_dialog_title">Icône personnalisée</string>
     <string name="custom_icon_pick_simple">Bibliothèque d’icônes</string>
     <string name="custom_icon_upload_image">Télécharger une image</string>
+    <string name="custom_icon_use_emoji">Utiliser un emoji</string>
+    <string name="custom_icon_emoji_hint">Saisissez un emoji</string>
+    <string name="custom_icon_emoji_support">Un emoji est enregistré avec cette entrée, sans pack d’icônes supplémentaire.</string>
+    <string name="custom_icon_emoji_invalid">Saisissez exactement un emoji.</string>
     <string name="custom_icon_clear">Utiliser l\'icône du site Web</string>
     <string name="custom_icon_search_hint">Rechercher une icône…</string>
     <string name="custom_icon_search_empty">Aucune icône trouvée</string>
@@ -4341,6 +4348,14 @@
     <string name="timeline_trash_delete_unknown_error">Une erreur inattendue est survenue. Veuillez réessayer.</string>
     <string name="bitwarden_trash_vault_missing">Le coffre Bitwarden est introuvable.</string>
     <string name="bitwarden_trash_delete_http_error">Bitwarden a refusé la suppression (HTTP %1$d).</string>
-    <string name="language_nya">喵喵语</string>
-    <string name="qs_lang_nya">喵喵语</string>
+    <string name="language_nya" translatable="false">喵喵语</string>
+    <string name="qs_lang_nya" translatable="false">喵喵语</string>
+    <string name="custom_icon_pick_installed">Icônes installées</string>
+    <string name="custom_icon_installed_apps">Applications</string>
+    <string name="custom_icon_installed_packs">Packs d’icônes</string>
+    <string name="custom_icon_installed_empty_packs">Aucun pack d’icônes compatible trouvé. Installez un pack, puis ouvrez à nouveau ce sélecteur.</string>
+    <string name="custom_icon_installed_empty_icons">Ce pack ne contient aucune icône compatible.</string>
+    <string name="custom_icon_installed_load_failed">Impossible de charger les icônes. Réessayez.</string>
+    <string name="custom_icon_installed_save_failed">Impossible d’utiliser cette icône. Réessayez ou choisissez-en une autre.</string>
+    <string name="field_barcode_linear_too_wide">Ce code-barres nécessite un écran plus large. Tournez votre appareil ou utilisez un code QR.</string>
 </resources>

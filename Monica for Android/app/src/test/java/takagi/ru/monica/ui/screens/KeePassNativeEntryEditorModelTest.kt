@@ -9,6 +9,12 @@ import takagi.ru.monica.keepass.KeePassFieldChange
 import takagi.ru.monica.data.model.TotpData
 
 class KeePassNativeEntryEditorModelTest {
+    @Test
+    fun tagsUseKeePassSeparatorsAndRetainColons() {
+        assertEquals(listOf("work", "home", "project:internal"),
+            parseNativeEntryTags(" work, home;project:internal\r\nwork\n"))
+    }
+
 
     @Test
     fun `new draft starts with password style fields and encrypted password`() {
@@ -87,15 +93,14 @@ class KeePassNativeEntryEditorModelTest {
     }
 
     @Test
-    fun `validation requires title and unique nonblank field names`() {
+    fun `validation permits unnamed entries and requires unique nonblank field names`() {
         val emptyDraft = newNativeEntryEditorDraft()
         val titleId = emptyDraft.standard(NativeEntryStandardSlot.TITLE)!!.id
         val draft = emptyDraft.copy(
             fields = emptyDraft.fields.map { if (it.id == titleId) it.copy(value = "Example") else it },
         )
 
-        assertEquals(
-            NativeEntryDraftError.TITLE_REQUIRED,
+        assertNull(
             validateNativeEntryEditorDraft(
                 draft.copy(fields = draft.fields.map { if (it.id == titleId) it.copy(value = "") else it }),
             ),
@@ -109,10 +114,25 @@ class KeePassNativeEntryEditorModelTest {
         assertEquals(
             NativeEntryDraftError.DUPLICATE_FIELD_NAME,
             validateNativeEntryEditorDraft(
-                draft.copy(fields = draft.fields + newNativeCustomField(draft.fields, name = " title ")),
+                draft.copy(fields = draft.fields + newNativeCustomField(draft.fields, name = "Title")),
             ),
         )
         assertNull(validateNativeEntryEditorDraft(draft))
+    }
+
+    @Test
+    fun `case and whitespace distinct custom names survive an unrelated edit`() {
+        val source = listOf(
+            KeePassFieldChange("title", "custom lowercase"),
+            KeePassFieldChange("Title", "Canonical"),
+            KeePassFieldChange(" Title ", "surrounded"),
+            KeePassFieldChange("Empty", ""),
+        )
+        val draft = buildNativeEntryEditorDraft(source)
+        assertNull(validateNativeEntryEditorDraft(draft))
+        assertEquals("Canonical", draft.standard(NativeEntryStandardSlot.TITLE)?.value)
+        assertEquals(source, draft.toFieldChanges())
+        assertEquals(listOf("title", " Title ", "Empty"), draft.customFields.map { it.name })
     }
 
     @Test
@@ -153,6 +173,39 @@ class KeePassNativeEntryEditorModelTest {
         assertFalse(buildNativeEntryEditorDraft(merged).customFields.any {
             isNativeTotpFieldName(it.name)
         })
+    }
+
+    @Test
+    fun `advancing HOTP preserves raw URI encoding secrets and custom fields`() {
+        val uri = "otpauth://hotp/Example%3Aalice%2Btag?secret=GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ&counter=1&issuer=Example&custom=a%2Bb"
+        val source = listOf(KeePassFieldChange("otp", uri, true),
+            KeePassFieldChange("HmacOtp-Secret-Hex", "3132333435363738393031323334353637383930", true),
+            KeePassFieldChange("HmacOtp-Counter", "1"), KeePassFieldChange("Plugin", "{S:Custom}"))
+        val next = advanceNativeHotpFields(source, parseNativeTotpFields(source)!!)
+        assertEquals(uri.replace("counter=1", "counter=2"), next.first { it.name == "otp" }.value)
+        assertEquals(source[1], next.first { it.name == "HmacOtp-Secret-Hex" })
+        assertEquals(source[3], next.first { it.name == "Plugin" })
+        assertEquals(2L, parseNativeTotpFields(next)!!.counter)
+    }
+
+    @Test
+    fun `advancing native HOTP keeps a referenced secret and rejects overflow`() {
+        val fields = listOf(KeePassFieldChange("HmacOtp-Secret-Base32", "{S:SharedSecret}", true),
+            KeePassFieldChange("HmacOtp-Counter", "0"))
+        val data = TotpData(secret = "JBSWY3DPEHPK3PXP", otpType = takagi.ru.monica.data.model.OtpType.HOTP)
+        val next = advanceNativeHotpFields(fields, data)
+        assertEquals(fields.first(), next.first())
+        assertEquals("1", next.first { it.name == "HmacOtp-Counter" }.value)
+        assertTrue(runCatching { advanceNativeHotpFields(fields, data.copy(counter = Long.MAX_VALUE)) }.isFailure)
+    }
+
+    @Test
+    fun `invalid OTP replacement is rejected instead of removing the existing secret`() {
+        val fields = listOf(KeePassFieldChange("Title", "Keep OTP"),
+            KeePassFieldChange("otp", "otpauth://totp/Keep?secret=JBSWY3DPEHPK3PXP", true))
+        assertTrue(runCatching {
+            mergeNativeTotpFields(fields, TotpData(secret = "invalid-secret!"), "Keep OTP")
+        }.isFailure)
     }
 
     @Test

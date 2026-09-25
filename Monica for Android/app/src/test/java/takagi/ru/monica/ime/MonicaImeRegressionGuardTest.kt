@@ -69,7 +69,7 @@ class MonicaImeRegressionGuardTest {
             "app/src/main/java/takagi/ru/monica/ime/MonicaInputMethodService.kt"
         ).readText()
         val projectionBlock = source
-            .substringAfter("private fun PasswordEntry.toImeEntryOrNull(")
+            .substringAfter("private fun ImePasswordRow.toImeEntryOrNull(")
             .substringBefore("private fun resolveSourceLabel(")
         val smartFillBlock = source
             .substringAfter("private fun handleSmartFillPassword(")
@@ -96,7 +96,7 @@ class MonicaImeRegressionGuardTest {
         ).readText()
 
         assertTrue(source.contains("private var vaultSourceCache: ImeVaultSourceCache? = null"))
-        assertTrue(source.contains("val sources = vaultSourceCache ?: loadImeVaultSources("))
+        assertTrue(source.contains("val sources = cachedSources ?: loadImeVaultSources("))
         assertTrue(source.contains("if (force) invalidateVaultSourceCache()"))
         assertTrue(source.contains("private var totpSourceCache: List<SecureItem>? = null"))
         assertTrue(source.contains("private var cardWalletSourceCache: List<SecureItem>? = null"))
@@ -117,7 +117,7 @@ class MonicaImeRegressionGuardTest {
 
         assertTrue(
             "IME must load MDBX database options instead of treating MDBX rows as Monica-local rows.",
-            serviceSource.contains("database.localMdbxDatabaseDao().getAllDatabasesSnapshot()")
+            serviceSource.contains("database.localMdbxDatabaseDao().getAvailableDatabasesSnapshot()")
         )
         assertTrue(
             "IME local scope checks need the MDBX owner id.",

@@ -165,7 +165,7 @@ class BitwardenLikeAutofillMatcherNg internal constructor(
         val candidateIndices: Iterable<Int> = validIndices?.asIterable() ?: entries.indices
         val candidates = candidateIndices.mapNotNull { index ->
             val entry = entries[index]
-            if (entry.isGpgKeyEntry()) return@mapNotNull null
+            if (entry.isKeyCredential()) return@mapNotNull null
             scoreEntry(
                 entry = entry,
                 prepared = prepared?.metadata?.get(index)?.row,

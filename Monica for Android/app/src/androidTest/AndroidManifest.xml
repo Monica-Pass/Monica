@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <application>
+    <application android:label="Monica Icon Fixture">
+        <activity
+            android:name="takagi.ru.monica.ui.icons.IconPackFixtureActivity"
+            android:exported="true"
+            android:icon="@drawable/icon_fixture_star">
+            <intent-filter>
+                <action android:name="org.adw.launcher.THEMES" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="takagi.ru.monica.autofill_ng.fixture.AutofillFormFixtureActivity"
             android:exported="true"

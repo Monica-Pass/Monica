@@ -29,8 +29,11 @@
     <string name="share">分享喵</string>
     <string name="field_action_more">更多字段操作喵</string>
     <string name="field_action_show_large">以大号字体显示喵</string>
-    <string name="field_action_show_barcode">显示为二维码喵</string>
+    <string name="field_action_show_barcode">显示为二维码/条码喵</string>
     <string name="field_action_barcode_failed">无法为该内容生成二维码喵。</string>
+    <string name="field_barcode_format_qr">二维码</string>
+    <string name="field_barcode_format_linear">条码</string>
+    <string name="field_barcode_linear_failed">这个内容生成不了 Code 128 条码喵，请用不超过 80 个字符的 ASCII 文本喵。</string>
     <string name="no_results">什么都没翻到喵</string>
     <string name="note_placeholder">记点什么喵...</string>
     <string name="new_note">新建笔记喵</string>
@@ -1334,6 +1337,10 @@
     <string name="custom_icon_dialog_title">设置自定义图标喵</string>
     <string name="custom_icon_pick_simple">从图标库选择喵</string>
     <string name="custom_icon_upload_image">上传图片喵</string>
+    <string name="custom_icon_use_emoji">用 Emoji 喵</string>
+    <string name="custom_icon_emoji_hint">输入一个 Emoji 喵</string>
+    <string name="custom_icon_emoji_support">随条目保存一个 Emoji 喵，不用额外图标包喵。</string>
+    <string name="custom_icon_emoji_invalid">只能输入一个 Emoji 喵。</string>
     <string name="custom_icon_clear">使用网站图标喵</string>
     <string name="custom_icon_search_hint">搜索图标喵</string>
     <string name="custom_icon_search_empty">没有匹配的图标喵</string>
@@ -4486,4 +4493,12 @@
     <string name="wallet_stack_next">下一张卡片喵</string>
     <string name="wallet_stack_previous">上一张卡片喵</string>
     <string name="wallet_stack_open_card">查看卡片详情喵</string>
+    <string name="custom_icon_pick_installed">已安装图标喵</string>
+    <string name="custom_icon_installed_apps">应用图标喵</string>
+    <string name="custom_icon_installed_packs">图标包喵</string>
+    <string name="custom_icon_installed_empty_packs">没有找到兼容的图标包喵。安装图标包后，请重新打开选择器喵。</string>
+    <string name="custom_icon_installed_empty_icons">此图标包没有可用的图标喵。</string>
+    <string name="custom_icon_installed_load_failed">图标加载失败，请重试喵。</string>
+    <string name="custom_icon_installed_save_failed">无法使用这个图标，请重试或选其他图标喵。</string>
+    <string name="field_barcode_linear_too_wide">屏幕太窄，条码看不清喵。请横屏查看或用二维码喵。</string>
 </resources>

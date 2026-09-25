@@ -24,7 +24,7 @@ class KeePassCustomFieldExtractionTest {
             )
         )
 
-        assertEquals(2, fields.size)
+        assertEquals(3, fields.size)
         assertEquals("Security question", fields[0].title)
         assertEquals("First pet?", fields[0].value)
         assertFalse(fields[0].isProtected)
@@ -33,6 +33,8 @@ class KeePassCustomFieldExtractionTest {
         assertEquals("123456", fields[1].value)
         assertTrue(fields[1].isProtected)
         assertEquals(1, fields[1].sortOrder)
+        assertEquals("Empty custom", fields[2].title)
+        assertEquals("", fields[2].value)
     }
 
     @Test

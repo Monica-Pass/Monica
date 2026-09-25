@@ -248,7 +248,7 @@ fun TotpListContent(
         )
     }
     val keepassDatabases by ui.database.localKeePassDatabaseDao().getAllDatabases().collectAsState(initial = emptyList())
-    val mdbxDatabases by ui.database.localMdbxDatabaseDao().getAllDatabases().collectAsState(initial = emptyList())
+    val mdbxDatabases by ui.database.localMdbxDatabaseDao().getAvailableDatabases().collectAsState(initial = emptyList())
     val bitwardenVaults by ui.database.bitwardenVaultDao().getAllVaultsFlow().collectAsState(initial = emptyList())
     val getKeePassGroups: (Long) -> kotlinx.coroutines.flow.Flow<List<takagi.ru.monica.utils.KeePassGroupInfo>> = remember(ui) {
         { databaseId ->

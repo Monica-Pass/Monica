@@ -220,6 +220,7 @@ internal class Mdbx2RemoteSyncCoordinator(
         var state = initialState
         var uploadedSegments = 0
         var uploadedBlobs = 0
+        val verifiedBlobs = mutableMapOf<String, ULong>()
         repeat(MAX_SEGMENTS_PER_SYNC) {
             val current = engine.checkpoint()
             val base = state.exportCheckpoint
@@ -244,7 +245,8 @@ internal class Mdbx2RemoteSyncCoordinator(
                 remoteVaultPath = remoteVaultPath,
                 transport = transport,
                 engine = engine,
-                generationId = info.transferId
+                generationId = info.transferId,
+                verifiedThisSync = verifiedBlobs
             )
             if (info.commitCount > 0u || info.deltaCount > 0u) {
                 val remotePath = MdbxRemoteSyncPaths.segmentPath(
@@ -265,8 +267,29 @@ internal class Mdbx2RemoteSyncCoordinator(
             state = state.copy(
                 generationId = info.transferId,
                 exportCheckpoint = info.result,
+                exportResume = info.nextResume,
                 pendingSegment = null
             )
+            if (info.commitCount > 0u || info.deltaCount > 0u) {
+                // A successfully published local segment is already present
+                // locally. Acknowledge its contiguous stream, but still receive
+                // unknown historical streams after reopening a bootstrap.
+                val streamId = "${info.sourceDeviceId}/${info.transferId}"
+                val previous = state.remoteStreams.firstOrNull { it.streamId == streamId }
+                if ((previous == null && info.segmentIndex == 0u) ||
+                    (previous != null && previous.nextSequence == info.segmentIndex.toLong() &&
+                        previous.checkpoint == info.base && previous.blockedReason == null)
+                ) {
+                    state = state.withRemoteStream(MdbxRemoteStreamState(
+                        streamId = streamId,
+                        generationId = info.transferId,
+                        nextSequence = info.segmentIndex.toLong() + 1,
+                        checkpoint = info.result,
+                        resume = info.nextResume,
+                        lastAppliedDigestHex = info.payloadSha256Hex
+                    ))
+                }
+            }
             stateStore.write(databaseId, state)
             pendingFile.delete()
         }
@@ -291,7 +314,8 @@ internal class Mdbx2RemoteSyncCoordinator(
                 info.transferId == pending.transferId &&
                 info.segmentIndex.toLong() == pending.streamSequence &&
                 info.payloadSha256Hex == pending.payloadSha256Hex &&
-                info.base == pending.base && info.result == pending.result
+                info.base == pending.base && info.base == base && info.result == pending.result &&
+                info.nextResume == pending.nextResume
             ) { "MDBX2 pending segment state does not match its authenticated file" }
             return file to info
         }
@@ -302,7 +326,7 @@ internal class Mdbx2RemoteSyncCoordinator(
         val info = engine.exportSegment(
             destination = destination,
             base = base,
-            resume = null,
+            resume = state.exportResume,
             pageSize = SEGMENT_PAGE_SIZE
         )
         return destination to info
@@ -313,7 +337,8 @@ internal class Mdbx2RemoteSyncCoordinator(
         remoteVaultPath: String,
         transport: MdbxRemoteTransport,
         engine: Mdbx2SyncEngine,
-        generationId: String
+        generationId: String,
+        verifiedThisSync: MutableMap<String, ULong>
     ): Int {
         val normalizedRemotePath = MdbxRemoteSyncPaths.normalizePath(remoteVaultPath)
         var sidecar = loadSidecar(databaseId, engine, normalizedRemotePath, generationId)
@@ -327,6 +352,7 @@ internal class Mdbx2RemoteSyncCoordinator(
                 if (reference.availability != Mdbx2BlobAvailability.AVAILABLE) {
                     throw IOException("MDBX2 Blob ${reference.blobId} is unavailable locally")
                 }
+                if (verifiedThisSync[reference.blobId] == totalSize) return@forEach
                 val remotePath = MdbxRemoteSyncPaths.blobPath(remoteVaultPath, reference.blobId)
                 val existing = transport.stat(remotePath)
                 if (existing != null) {
@@ -340,7 +366,10 @@ internal class Mdbx2RemoteSyncCoordinator(
                             blob.totalSize == totalSize.toLong() &&
                             blob.uploaded
                     }
-                    if (cached != null) return@forEach
+                    if (cached != null) {
+                        verifiedThisSync[reference.blobId] = totalSize
+                        return@forEach
+                    }
                     val verification = File.createTempFile("blob-verify-$databaseId-", ".bin", blobDirectory)
                     try {
                         transport.readTo(remotePath, verification)
@@ -353,6 +382,7 @@ internal class Mdbx2RemoteSyncCoordinator(
                             downloaded = false
                         )
                         sidecarStore.write(sidecarFile(databaseId), sidecar)
+                        verifiedThisSync[reference.blobId] = totalSize
                         return@forEach
                     } finally {
                         verification.delete()
@@ -369,6 +399,7 @@ internal class Mdbx2RemoteSyncCoordinator(
                         downloaded = false
                     )
                     sidecarStore.write(sidecarFile(databaseId), sidecar)
+                    verifiedThisSync[reference.blobId] = totalSize
                     uploaded += 1
                 } finally {
                     temporary.delete()
@@ -416,8 +447,9 @@ internal class Mdbx2RemoteSyncCoordinator(
         engine: Mdbx2SyncEngine,
         initialState: MdbxSyncStateSnapshot
     ): ReceiveResult {
-        val descriptors = listRemoteSegments(remoteVaultPath, transport)
-            .filterNot { it.deviceId == engine.deviceId }
+        var remaining = listRemoteSegments(remoteVaultPath, transport)
+            .groupBy { it.streamKey }.toSortedMap()
+            .mapValues { (_, files) -> files.sortedBy(RemoteSegmentDescriptor::sequence) }
         var state = initialState
         var syncedCommitInventory = requireNotNull(initialState.exportCheckpoint).commitInventory
         var downloadedSegments = 0
@@ -426,62 +458,85 @@ internal class Mdbx2RemoteSyncCoordinator(
         var skippedCommits = 0
         var conflicts = 0
 
-        repeat(MAX_RECEIVE_PASSES) {
-            var progressed = false
-            descriptors.groupBy { it.streamKey }.toSortedMap().forEach { (streamKey, streamFiles) ->
-                val ordered = streamFiles.sortedBy(RemoteSegmentDescriptor::sequence)
-                var stream = state.remoteStreams.firstOrNull { it.streamId == streamKey }
-                for (descriptor in ordered) {
-                    val expectedSequence = stream?.nextSequence ?: 0L
-                    if (descriptor.sequence < expectedSequence) {
-                        if (stream != null &&
-                            descriptor.sequence == expectedSequence - 1L &&
-                            stream.lastAppliedDigestHex != null &&
-                            !stream.lastAppliedDigestHex.equals(descriptor.digestHex, ignoreCase = true)
-                        ) {
-                            stream = stream.copy(blockedReason = "conflicting digest for segment ${descriptor.sequence}")
+        var appliedRevision = 0
+        val downloaded = mutableMapOf<String, CachedRemoteSegment>()
+        try {
+            // Retry dependency-blocked streams only after another apply made
+            // progress. Transfers from different devices/generations are not
+            // ordered by ancestry, and a fixed pass count can strand valid data.
+            while (remaining.isNotEmpty()) {
+                var progressed = false
+                val deferred = linkedMapOf<String, List<RemoteSegmentDescriptor>>()
+                for ((streamKey, ordered) in remaining) {
+                    var stream = state.remoteStreams.firstOrNull { it.streamId == streamKey }
+                    for (descriptor in ordered) {
+                        val expectedSequence = stream?.nextSequence ?: 0L
+                        if (descriptor.sequence < expectedSequence) {
+                            if (stream != null &&
+                                descriptor.sequence == expectedSequence - 1L &&
+                                stream.lastAppliedDigestHex != null &&
+                                !stream.lastAppliedDigestHex.equals(descriptor.digestHex, ignoreCase = true)
+                            ) {
+                                stream = stream.copy(blockedReason = "conflicting digest for segment ${descriptor.sequence}")
+                                state = state.withRemoteStream(stream)
+                                stateStore.write(databaseId, state)
+                                break
+                            }
+                            continue
+                        }
+                        if (descriptor.sequence > expectedSequence) {
+                            stream = (stream ?: descriptor.initialStreamState(initialState.bootstrapCheckpoint)).copy(
+                                blockedReason = "missing segment $expectedSequence"
+                            )
                             state = state.withRemoteStream(stream)
                             stateStore.write(databaseId, state)
                             break
                         }
-                        continue
-                    }
-                    if (descriptor.sequence > expectedSequence) {
-                        stream = (stream ?: descriptor.initialStreamState(initialState.bootstrapCheckpoint)).copy(
-                            blockedReason = "missing segment $expectedSequence"
-                        )
-                        state = state.withRemoteStream(stream)
-                        stateStore.write(databaseId, state)
-                        break
-                    }
-                    val temporary = File.createTempFile("segment-receive-$databaseId-", ".mdbxsync", incomingDirectory)
-                    try {
-                        transport.readTo(descriptor.path, temporary)
-                        downloadedSegments += 1
-                        val info = engine.inspectSegment(temporary)
-                        require(info.vaultId == engine.vaultId) { "MDBX2 remote segment belongs to another vault" }
-                        require(info.sourceDeviceId == descriptor.deviceId &&
-                            info.transferId == descriptor.generationId &&
-                            info.segmentIndex.toLong() == descriptor.sequence &&
-                            info.payloadSha256Hex.equals(descriptor.digestHex, ignoreCase = true)
-                        ) { "MDBX2 remote segment path does not match its authenticated metadata" }
-                        val currentStream = stream ?: descriptor.initialStreamState(info.base)
+                        val cached = downloaded[descriptor.path] ?: run {
+                            val temporary = File.createTempFile("segment-receive-$databaseId-", ".mdbxsync", incomingDirectory)
+                            try {
+                                transport.readTo(descriptor.path, temporary)
+                                downloadedSegments += 1
+                                val info = engine.inspectSegment(temporary)
+                                require(info.vaultId == engine.vaultId) { "MDBX2 remote segment belongs to another vault" }
+                                require(info.sourceDeviceId == descriptor.deviceId &&
+                                    info.transferId == descriptor.generationId &&
+                                    info.segmentIndex.toLong() == descriptor.sequence &&
+                                    info.payloadSha256Hex.equals(descriptor.digestHex, ignoreCase = true)
+                                ) { "MDBX2 remote segment path does not match its authenticated metadata" }
+                                CachedRemoteSegment(temporary, info).also { downloaded[descriptor.path] = it }
+                            } catch (error: Throwable) {
+                                temporary.delete()
+                                throw error
+                            }
+                        }
+                        if (cached.attemptedAtRevision == appliedRevision) {
+                            deferred[streamKey] = ordered
+                            break
+                        }
+                        cached.attemptedAtRevision = appliedRevision
+                        val info = cached.info
+                        // A stream previously discovered with a sequence gap has no
+                        // authenticated starting checkpoint until segment zero arrives.
+                        val currentStream = stream?.takeIf { it.nextSequence > 0L }
+                            ?: descriptor.initialStreamState(info.base)
                         val apply = engine.applySegment(
-                            source = temporary,
+                            source = cached.file,
                             expectedBase = currentStream.checkpoint,
                             expectedResume = currentStream.resume
                         )
-                        appliedCommits += apply.appliedCommits.toInt()
-                        skippedCommits += apply.skippedCommits.toInt()
-                        conflicts += apply.conflictCount.toInt()
                         if (apply.missingParentCount > 0u) {
                             stream = currentStream.copy(
                                 blockedReason = "waiting for ${apply.missingParentCount} parent commit(s)"
                             )
                             state = state.withRemoteStream(stream)
                             stateStore.write(databaseId, state)
+                            deferred[streamKey] = ordered
                             break
                         }
+                        appliedCommits += apply.appliedCommits.toInt()
+                        skippedCommits += apply.skippedCommits.toInt()
+                        conflicts += apply.conflictCount.toInt()
                         // Remote commits are already synchronized when only local audit
                         // deltas arrived during the download. A concurrent edit must still
                         // prevent advancing the user-visible synchronized commit head.
@@ -518,12 +573,16 @@ internal class Mdbx2RemoteSyncCoordinator(
                         downloadedBlobs += blobResult.downloadedBlobs
                         stream = nextStream
                         progressed = true
-                    } finally {
-                        temporary.delete()
+                        appliedRevision += 1
+                        downloaded.remove(descriptor.path)
+                        cached.file.delete()
                     }
                 }
+                if (!progressed) break
+                remaining = deferred
             }
-            if (!progressed) return@repeat
+        } finally {
+            downloaded.values.forEach { it.file.delete() }
         }
         return ReceiveResult(
             state = state,
@@ -657,18 +716,14 @@ internal class Mdbx2RemoteSyncCoordinator(
         transport: MdbxRemoteTransport
     ): List<RemoteSegmentDescriptor> {
         val streamsRoot = MdbxRemoteSyncPaths.streamsRoot(remoteVaultPath)
-        if (transport.stat(streamsRoot)?.isDirectory != true) return emptyList()
         return buildList {
             transport.list(streamsRoot).filter(MdbxRemoteObject::isDirectory).forEach { device ->
                 transport.list(device.path).filter(MdbxRemoteObject::isDirectory).forEach { generation ->
-                    transport.list(generation.path)
-                        .filter { it.isDirectory && it.path.substringAfterLast('/') == SEGMENTS_DIRECTORY }
-                        .forEach { segmentsDirectory ->
-                            transport.list(segmentsDirectory.path)
-                                .filterNot(MdbxRemoteObject::isDirectory)
-                                .mapNotNull { remote -> parseSegmentDescriptor(device, generation, remote) }
-                                .forEach(::add)
-                        }
+                    // Both transports return an empty list for a missing directory.
+                    transport.list("${generation.path}/$SEGMENTS_DIRECTORY")
+                        .filterNot(MdbxRemoteObject::isDirectory)
+                        .mapNotNull { remote -> parseSegmentDescriptor(device, generation, remote) }
+                        .forEach(::add)
                 }
             }
         }
@@ -879,13 +934,18 @@ internal class Mdbx2RemoteSyncCoordinator(
         val streamKey: String get() = "$deviceId/$generationId"
     }
 
+    private data class CachedRemoteSegment(
+        val file: File,
+        val info: Mdbx2SegmentInfo,
+        var attemptedAtRevision: Int = -1
+    )
+
     companion object {
         private const val SEGMENT_SUFFIX = ".mdbxsync"
         private const val SEGMENTS_DIRECTORY = "segments"
         private const val DIRECTION_DOWNLOAD = "download"
         private const val INITIAL_GENERATION_ID = "bootstrap"
         private const val MAX_SEGMENTS_PER_SYNC = 10_000
-        private const val MAX_RECEIVE_PASSES = 4
         private const val BLOB_LEASE_TTL_SECONDS = 15 * 60L
         private const val MAX_REMOTE_BLOB_BYTES = 64L * 1024L * 1024L + 128L * 1024L
         private val SEGMENT_PAGE_SIZE = 128u

@@ -3318,10 +3318,12 @@ fun MonicaContent(
                         takagi.ru.monica.ui.components.EntryTypeChipOption.SSH_KEY -> Screen.AddEditSshKey.createRoute()
                         takagi.ru.monica.ui.components.EntryTypeChipOption.BARCODE -> Screen.AddEditPassword.createRoute(initialType = "barcode")
                         takagi.ru.monica.ui.components.EntryTypeChipOption.GPG_KEY -> Screen.AddEditPassword.createRoute(initialType = "GPG_KEY")
+                        takagi.ru.monica.ui.components.EntryTypeChipOption.API_KEY -> Screen.AddEditPassword.createRoute(initialType = "API_KEY")
                         takagi.ru.monica.ui.components.EntryTypeChipOption.API_TOKEN -> null
                     }
                     if (route != null) {
                         if (type == takagi.ru.monica.ui.components.EntryTypeChipOption.PASSWORD ||
+                            type == takagi.ru.monica.ui.components.EntryTypeChipOption.API_KEY ||
                             type == takagi.ru.monica.ui.components.EntryTypeChipOption.BARCODE) {
                             navController.previousBackStackEntry?.savedStateHandle?.setPendingAddStorageDefaults(
                                 PendingAddStorageDefaults(mdbxDatabaseId = selectedDatabaseId,

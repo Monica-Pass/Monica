@@ -395,6 +395,7 @@ class KeePassChangeSetApplier {
         val current = findEntryByUuid(database.content.group, entryUuid)
             ?: throw IllegalArgumentException("KeePass entry not found for edit patch: $entryUuid")
         assertFieldPatchHasNoRemoteConflict(current, changeSet, fieldPatch)
+        assertPropertiesHaveNoRemoteConflict(current, changeSet, presentationPatch)
         val expectedPresentation = presentationPatch.basePresentationSignature
         if (!expectedPresentation.isNullOrBlank() &&
             KeePassEntryFingerprint.buildPresentation(current) != expectedPresentation
@@ -445,7 +446,7 @@ class KeePassChangeSetApplier {
                             else -> fieldsUpdated.customIconUuid
                         },
                         autoType = presentationPatch.autoType?.toAutoTypeData() ?: fieldsUpdated.autoType,
-                    )
+                    ).applyProperties(presentationPatch)
                 }
             }
             if (!updated.updated) {
@@ -495,6 +496,7 @@ class KeePassChangeSetApplier {
         }
         val updated = updateEntryByUuid(database.content.group, entryUuid) { entry ->
             val expectedPresentation = patch.basePresentationSignature
+            assertPropertiesHaveNoRemoteConflict(entry, changeSet, patch)
             if (!expectedPresentation.isNullOrBlank() &&
                 KeePassEntryFingerprint.buildPresentation(entry) != expectedPresentation
             ) {
@@ -527,7 +529,7 @@ class KeePassChangeSetApplier {
                         else -> current.customIconUuid
                     },
                     autoType = patch.autoType?.toAutoTypeData() ?: current.autoType,
-                )
+                ).applyProperties(patch)
             }
         }
         if (!updated.updated) {
@@ -549,6 +551,33 @@ class KeePassChangeSetApplier {
             }
         }
         return result
+    }
+
+    private fun assertPropertiesHaveNoRemoteConflict(
+        entry: Entry,
+        changeSet: KeePassChangeSet,
+        patch: KeePassEntryPresentationPatch,
+    ) {
+        val expected = patch.basePropertiesSignature ?: return
+        if (KeePassEntryFingerprint.buildProperties(entry) != expected) {
+            throw KeePassChangeConflictException(
+                changeId = changeSet.changeId,
+                entryUuid = changeSet.entryUuid,
+                reason = "Remote entry tags or expiration changed before replay",
+            )
+        }
+    }
+
+    private fun Entry.applyProperties(patch: KeePassEntryPresentationPatch): Entry {
+        val updatedTimes = if (patch.expires != null || patch.expiryTimeEpochMillis != null) {
+            requireNotNull(nativeMutation.initializeEntry(this).times).let { currentTimes ->
+                currentTimes.copy(
+                    expires = patch.expires ?: currentTimes.expires,
+                    expiryTime = patch.expiryTimeEpochMillis?.let(Instant::ofEpochMilli) ?: currentTimes.expiryTime,
+                )
+            }
+        } else times
+        return copy(tags = patch.tags ?: tags, times = updatedTimes)
     }
 
     private fun applyCustomIconPoolPatch(
@@ -670,6 +699,15 @@ class KeePassChangeSetApplier {
         fieldPatch: KeePassFieldChangePatch
     ) {
         if (fieldPatch.baseFields.isNotEmpty()) {
+            if (fieldPatch.replaceAllFields && entry.fields.keys !=
+                fieldPatch.baseFields.filter { it.present }.mapTo(linkedSetOf()) { it.name }
+            ) {
+                throw KeePassChangeConflictException(
+                    changeId = changeSet.changeId,
+                    entryUuid = changeSet.entryUuid,
+                    reason = "Remote entry field names changed before replacement",
+                )
+            }
             val changedBaseFields = fieldPatch.baseFields
                 .filterNot { base -> entryMatchesBaseField(entry, base) }
                 .map { it.name }
@@ -694,13 +732,7 @@ class KeePassChangeSetApplier {
     }
 
     private fun entryMatchesBaseField(entry: Entry, base: KeePassFieldBaseValue): Boolean {
-        var existing: EntryValue? = null
-        val normalizedBaseName = KeePassFieldRegistry.normalize(base.name)
-        entry.fields.forEach { (name, value) ->
-            if (KeePassFieldRegistry.normalize(name) == normalizedBaseName) {
-                existing = value
-            }
-        }
+        val existing = entry.fields[base.name]
         if (!base.present) {
             return existing == null
         }

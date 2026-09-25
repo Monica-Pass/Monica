@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items as gridItems
@@ -84,6 +85,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -95,6 +97,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -107,6 +110,7 @@ import takagi.ru.monica.R
 import takagi.ru.monica.data.model.OtpType
 import takagi.ru.monica.data.model.TotpData
 import takagi.ru.monica.keepass.KeePassFieldChange
+import takagi.ru.monica.keepass.KeePassTotpCodec
 import takagi.ru.monica.keepass.KeePassCustomIconEditor
 import takagi.ru.monica.keepass.KeePassAutoTypeDraft
 import takagi.ru.monica.keepass.KeePassAutoTypeDraftError
@@ -152,7 +156,8 @@ internal fun NativeEntryEditorScreen(
     ) -> Unit,
 ) {
     val context = LocalContext.current
-    val initialDraft = remember(entry?.identity, parentGroup, revisionToken) {
+    val entryIdentity = entry?.identity
+    val initialDraft = remember(entryIdentity, parentGroup, revisionToken) {
         val source = entry?.let { current ->
             buildNativeEntryEditorDraft(
                 current.fields
@@ -169,7 +174,7 @@ internal fun NativeEntryEditorScreen(
         ensureNativeEntryEditorStandardFields(source)
     }
     val fields: SnapshotStateList<NativeEntryEditorField> = remember(
-        entry?.identity,
+        entryIdentity,
         parentGroup,
         revisionToken,
     ) {
@@ -177,26 +182,28 @@ internal fun NativeEntryEditorScreen(
     }
     var saving by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf<String?>(null) }
-    var revealedIds by remember(entry?.identity, parentGroup) { mutableStateOf(emptySet<Long>()) }
-    var selectedCustomIconUuid by remember(entry?.identity, parentGroup, revisionToken) {
+    val listState = rememberLazyListState()
+    LaunchedEffect(error) { if (error != null) listState.animateScrollToItem(0) }
+    var revealedIds by remember(entryIdentity, parentGroup) { mutableStateOf(emptySet<Long>()) }
+    var selectedCustomIconUuid by remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateOf(entry?.customIconUuid)
     }
-    var selectedPredefinedIcon by remember(entry?.identity, parentGroup, revisionToken) {
+    var selectedPredefinedIcon by remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateOf(entry?.icon)
     }
-    var predefinedIconChanged by remember(entry?.identity, parentGroup, revisionToken) {
+    var predefinedIconChanged by remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateOf(false)
     }
-    var clearCustomIcon by remember(entry?.identity, parentGroup, revisionToken) {
+    var clearCustomIcon by remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateOf(false)
     }
-    var pendingCustomIcon by remember(entry?.identity, parentGroup, revisionToken) {
+    var pendingCustomIcon by remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateOf<KeePassNativeCustomIconPayload?>(null)
     }
-    var pendingIconBytes by remember(entry?.identity, parentGroup, revisionToken) {
+    var pendingIconBytes by remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateOf<ByteArray?>(null)
     }
-    var pendingIconName by remember(entry?.identity, parentGroup, revisionToken) {
+    var pendingIconName by remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateOf("")
     }
     var showCustomIconPicker by remember { mutableStateOf(false) }
@@ -206,73 +213,71 @@ internal fun NativeEntryEditorScreen(
     var deletingIconUuid by remember { mutableStateOf<UUID?>(null) }
     var renamingIconUuid by remember { mutableStateOf<UUID?>(null) }
     var renamingIconName by remember { mutableStateOf("") }
-    val initialAutoType = remember(entry?.identity, parentGroup, revisionToken) {
+    val initialAutoType = remember(entryIdentity, parentGroup, revisionToken) {
         KeePassAutoTypeEditor.from(entry?.autoType)
     }
-    var autoTypeEnabled by remember(entry?.identity, parentGroup, revisionToken) {
+    var autoTypeEnabled by remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateOf(initialAutoType.enabled)
     }
-    var autoTypeObfuscation by remember(entry?.identity, parentGroup, revisionToken) {
+    var autoTypeObfuscation by remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateOf(initialAutoType.obfuscation)
     }
-    var autoTypeDefaultSequence by remember(entry?.identity, parentGroup, revisionToken) {
+    var autoTypeDefaultSequence by remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateOf(initialAutoType.defaultSequence)
     }
     val autoTypeRules: SnapshotStateList<KeePassAutoTypeRuleDraft> = remember(
-        entry?.identity,
+        entryIdentity,
         parentGroup,
         revisionToken,
     ) {
         mutableStateListOf<KeePassAutoTypeRuleDraft>().also { it.addAll(initialAutoType.rules) }
     }
-    var autoTypeChanged by remember(entry?.identity, parentGroup, revisionToken) {
+    var autoTypeChanged by remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateOf(false)
     }
-    val originalTotpFields = remember(entry?.identity, parentGroup, revisionToken) {
-        entry?.fields.orEmpty()
-            .filter { field -> isNativeTotpFieldName(field.name) }
-            .map { field ->
-                KeePassFieldChange(field.name, field.rawValue, field.isProtected)
-            }
+    val properties = remember(entryIdentity, parentGroup, revisionToken) { NativeEntryPropertiesState(entry) }
+    val originalTotpFields = remember(entryIdentity, parentGroup, revisionToken) {
+        val rawFields = entry?.fields.orEmpty().map { KeePassFieldChange(it.name, it.rawValue, it.isProtected) }
+        if (editableNativeTotpData(rawFields) != null) rawFields.filter { isNativeTotpFieldName(it.name) } else emptyList()
     }
-    val initialTotp = remember(entry?.identity, parentGroup, revisionToken) {
-        parseNativeTotpFields(
+    val initialTotp = remember(entryIdentity, parentGroup, revisionToken) {
+        editableNativeTotpData(
             entry?.fields.orEmpty().map { field ->
                 KeePassFieldChange(field.name, field.rawValue, field.isProtected)
             },
         )
     }
-    var totpEnabled by remember(entry?.identity, parentGroup, revisionToken) {
+    var totpEnabled by remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateOf(initialTotp != null)
     }
-    var totpSecret by remember(entry?.identity, parentGroup, revisionToken) {
+    var totpSecret by remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateOf(initialTotp?.secret.orEmpty())
     }
-    var totpIssuer by remember(entry?.identity, parentGroup, revisionToken) {
+    var totpIssuer by remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateOf(initialTotp?.issuer.orEmpty())
     }
-    var totpAccount by remember(entry?.identity, parentGroup, revisionToken) {
+    var totpAccount by remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateOf(initialTotp?.accountName.orEmpty())
     }
-    var totpPeriod by remember(entry?.identity, parentGroup, revisionToken) {
+    var totpPeriod by remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateOf((initialTotp?.period ?: 30).toString())
     }
-    var totpDigits by remember(entry?.identity, parentGroup, revisionToken) {
+    var totpDigits by remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateOf((initialTotp?.digits ?: 6).toString())
     }
-    var totpAlgorithm by remember(entry?.identity, parentGroup, revisionToken) {
+    var totpAlgorithm by remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateOf(initialTotp?.algorithm ?: "SHA1")
     }
-    var otpType by remember(entry?.identity, parentGroup, revisionToken) {
+    var otpType by remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateOf(initialTotp?.otpType?.takeIf { it == OtpType.HOTP } ?: OtpType.TOTP)
     }
-    var hotpCounter by remember(entry?.identity, parentGroup, revisionToken) {
+    var hotpCounter by remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateOf((initialTotp?.counter ?: 0L).toString())
     }
-    var totpChanged by remember(entry?.identity, parentGroup, revisionToken) {
+    var totpChanged by remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateOf(false)
     }
-    val pendingAttachmentUris: SnapshotStateList<Uri> = remember(entry?.identity, parentGroup, revisionToken) {
+    val pendingAttachmentUris: SnapshotStateList<Uri> = remember(entryIdentity, parentGroup, revisionToken) {
         mutableStateListOf()
     }
 
@@ -303,12 +308,12 @@ internal fun NativeEntryEditorScreen(
         }
     }
 
-    val titleRequiredMessage = stringResource(R.string.keepass_native_title_required)
     val fieldNameRequiredMessage = stringResource(R.string.keepass_native_field_name_required)
     val duplicateFieldNameMessage = stringResource(R.string.keepass_native_field_name_duplicate)
     val autoTypeWindowRequiredMessage = stringResource(R.string.keepass_native_auto_type_window_required)
     val autoTypeWindowDuplicateMessage = stringResource(R.string.keepass_native_auto_type_window_duplicate)
     val totpSecretRequiredMessage = stringResource(R.string.keepass_native_totp_secret_required)
+    val totpSecretInvalidMessage = stringResource(R.string.keepass_entry_otp_secret_invalid)
     val totpParametersInvalidMessage = stringResource(R.string.keepass_native_totp_parameters_invalid)
 
     val attachmentPickerLauncher = rememberLauncherForActivityResult(
@@ -329,19 +334,22 @@ internal fun NativeEntryEditorScreen(
     fun validationMessage(): String? {
         val fieldError = validateNativeEntryEditorDraft(NativeEntryEditorDraft(fields.toList()))
         if (fieldError != null) return when (fieldError) {
-            NativeEntryDraftError.TITLE_REQUIRED -> titleRequiredMessage
             NativeEntryDraftError.FIELD_NAME_REQUIRED -> fieldNameRequiredMessage
             NativeEntryDraftError.DUPLICATE_FIELD_NAME -> duplicateFieldNameMessage
         }
-        if (totpEnabled && totpSecret.isBlank()) return totpSecretRequiredMessage
-        if (totpEnabled && (
+        if (totpChanged && totpEnabled && totpSecret.isBlank()) return totpSecretRequiredMessage
+        if (totpChanged && totpEnabled && !KeePassTotpCodec.isValidSecret(KeePassTotpCodec.normalizeSecret(totpSecret))) {
+            return totpSecretInvalidMessage
+        }
+        if (totpChanged && totpEnabled && (
                 totpPeriod.toIntOrNull()?.takeIf { it > 0 } == null ||
-                    totpDigits.toIntOrNull()?.takeIf { it in 4..10 } == null ||
+                    totpDigits.toIntOrNull()?.takeIf { it in 1..10 } == null ||
                     (otpType == OtpType.HOTP && hotpCounter.toLongOrNull()?.takeIf { it >= 0L } == null)
                 )
         ) {
             return totpParametersInvalidMessage
         }
+        if (!autoTypeChanged) return null
         return when (KeePassAutoTypeEditor.validate(
             KeePassAutoTypeDraft(
                 enabled = autoTypeEnabled,
@@ -388,7 +396,7 @@ internal fun NativeEntryEditorScreen(
                                         selectedCustomIconUuid != entry?.customIconUuid ||
                                         clearCustomIcon ||
                                         pendingCustomIcon != null ||
-                                        autoTypeChanged
+                                        autoTypeChanged || properties.tagsChanged || properties.expiryChanged
                                 ) {
                                     KeePassNativeEntryPresentationUpdate(
                                         predefinedIcon = selectedPredefinedIcon.takeIf { predefinedIconChanged },
@@ -405,6 +413,9 @@ internal fun NativeEntryEditorScreen(
                                                 rules = autoTypeRules.toList(),
                                             ).toPatch()
                                         } else null,
+                                        tags = if (properties.tagsChanged) parseNativeEntryTags(properties.tagsText) else null,
+                                        expires = properties.expires.takeIf { properties.expiryChanged },
+                                        expiryTime = properties.expiryTime.takeIf { properties.expiryChanged },
                                     )
                                 } else {
                                     null
@@ -455,8 +466,9 @@ internal fun NativeEntryEditorScreen(
         },
     ) { padding ->
         LazyColumn(
-            modifier = Modifier.fillMaxSize().padding(padding),
-            contentPadding = PaddingValues(start = 16.dp, top = 10.dp, end = 16.dp, bottom = 32.dp),
+            state = listState,
+            modifier = Modifier.fillMaxSize().padding(padding).testTag("native_entry_editor"),
+            contentPadding = PaddingValues(start = 12.dp, top = 10.dp, end = 12.dp, bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             item { NativeEditorIntroCard(isNew = entry == null) }
@@ -515,6 +527,17 @@ internal fun NativeEntryEditorScreen(
                             updateField(field.id) { it.copy(value = password) }
                         }
                     },
+                )
+            }
+            item {
+                NativeEntryPropertiesEditorCard(
+                    tagsText = properties.tagsText,
+                    expires = properties.expires,
+                    expiryTime = properties.expiryTime,
+                    enabled = savingEnabled && !saving,
+                    onTagsChange = { properties.tagsText = it; properties.tagsChanged = true },
+                    onExpiresChange = { properties.expires = it; properties.expiryChanged = true },
+                    onExpiryTimeChange = { properties.expiryTime = it; properties.expiryChanged = true },
                 )
             }
             item {

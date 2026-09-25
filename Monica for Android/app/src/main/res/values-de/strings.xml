@@ -29,8 +29,11 @@
     <string name="share">Teilen</string>
     <string name="field_action_more">Weitere Feldaktionen</string>
     <string name="field_action_show_large">Groß anzeigen Text</string>
-    <string name="field_action_show_barcode">Als QR-Code anzeigen</string>
+    <string name="field_action_show_barcode">Als QR-Code / Strichcode anzeigen</string>
     <string name="field_action_barcode_failed">Der QR-Code konnte für diesen Wert nicht erstellt werden.</string>
+    <string name="field_barcode_format_qr">QR-Code</string>
+    <string name="field_barcode_format_linear">Strichcode</string>
+    <string name="field_barcode_linear_failed">Dieser Wert kann nicht als Code-128-Strichcode kodiert werden. Verwende ASCII-Text mit bis zu 80 Zeichen.</string>
     <string name="no_results">Keine Ergebnisse gefunden</string>
     <string name="note_placeholder">Etwas schreiben...</string>
     <string name="new_note">Neue Notiz</string>
@@ -1360,6 +1363,10 @@
     <string name="custom_icon_dialog_title">Benutzerdefiniertes Symbol festlegen</string>
     <string name="custom_icon_pick_simple">Aus Symbolbibliothek auswählen</string>
     <string name="custom_icon_upload_image">Hochladen Bild</string>
+    <string name="custom_icon_use_emoji">Emoji verwenden</string>
+    <string name="custom_icon_emoji_hint">Ein Emoji eingeben</string>
+    <string name="custom_icon_emoji_support">Ein Emoji wird mit diesem Eintrag gespeichert, kein zusätzliches Icon-Paket nötig.</string>
+    <string name="custom_icon_emoji_invalid">Gib genau ein Emoji ein.</string>
     <string name="custom_icon_clear">Website-Symbol verwenden</string>
     <string name="custom_icon_search_hint">Symbole suchen</string>
     <string name="custom_icon_search_empty">Keine passenden Symbole gefunden</string>
@@ -4667,4 +4674,12 @@
     <string name="wallet_stack_open_card">Kartendetails öffnen</string>
     <string name="language_french">Français</string>
     <string name="qs_lang_french">Français</string>
+    <string name="custom_icon_pick_installed">Installierte Symbole</string>
+    <string name="custom_icon_installed_apps">App-Symbole</string>
+    <string name="custom_icon_installed_packs">Symbolpakete</string>
+    <string name="custom_icon_installed_empty_packs">Keine kompatiblen Symbolpakete gefunden. Installiere ein Symbolpaket und öffne diese Auswahl erneut.</string>
+    <string name="custom_icon_installed_empty_icons">Dieses Symbolpaket enthält keine unterstützten Symbole.</string>
+    <string name="custom_icon_installed_load_failed">Symbole konnten nicht geladen werden. Bitte versuche es erneut.</string>
+    <string name="custom_icon_installed_save_failed">Dieses Symbol konnte nicht verwendet werden. Versuche es erneut oder wähle ein anderes Symbol.</string>
+    <string name="field_barcode_linear_too_wide">Dieser Barcode benötigt mehr Bildschirmbreite. Drehe dein Gerät oder verwende einen QR-Code.</string>
 </resources>

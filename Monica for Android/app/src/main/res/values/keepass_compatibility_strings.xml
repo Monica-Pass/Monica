@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keepass_entry_otp_secret_invalid">Enter a valid Base32 OTP secret.</string>
+    <string name="keepass_entry_properties">Entry properties</string>
+    <string name="keepass_entry_tags_hint">Separate tags with a new line, comma, or semicolon</string>
+    <string name="keepass_entry_expires">Expiration</string>
+    <string name="keepass_entry_never_expires">Never expires</string>
+    <string name="keepass_entry_expires_at">Expires: %1$s</string>
+    <string name="keepass_entry_expired_at">Expired: %1$s</string>
+    <string name="keepass_hotp_saving">Saving counter…</string>
+    <string name="keepass_hotp_counter_exhausted">The counter has reached its maximum value.</string>
+</resources>

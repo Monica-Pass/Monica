@@ -1,6 +1,7 @@
 package takagi.ru.monica.repository
 
 import android.app.Application
+import android.content.Context
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import java.io.File
@@ -22,6 +23,9 @@ import takagi.ru.monica.attachments.storage.AttachmentKeyVault
 import takagi.ru.monica.attachments.storage.AttachmentStorage
 import takagi.ru.monica.data.ItemType
 import takagi.ru.monica.data.MdbxEngineType
+import takagi.ru.monica.data.LocalMdbxDatabase
+import takagi.ru.monica.data.MdbxSourceType
+import takagi.ru.monica.data.MdbxStorageLocation
 import takagi.ru.monica.data.MdbxTigaMode
 import takagi.ru.monica.data.MdbxUnlockMethod
 import takagi.ru.monica.data.PasskeyEntry
@@ -34,7 +38,12 @@ import takagi.ru.monica.viewmodel.MdbxViewModel
 @RunWith(AndroidJUnit4::class)
 class Mdbx2MigrationInstrumentedTest {
     @Test
-    fun viewModelMigratesLocalMdbx1WithoutChangingSource() = runBlocking {
+    fun viewModelMigratesLocalMdbx1WithoutChangingSource() = migrateFixture(MdbxSourceType.LOCAL_INTERNAL)
+
+    @Test
+    fun viewModelMigratesRemoteCopyWithoutUploadingOrChangingSource() = migrateFixture(MdbxSourceType.REMOTE_WEBDAV)
+
+    private fun migrateFixture(sourceType: MdbxSourceType) = runBlocking {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val application = context.applicationContext as Application
         val room = PasswordDatabase.getDatabase(context)
@@ -61,27 +70,10 @@ class Mdbx2MigrationInstrumentedTest {
         var targetFile: File? = null
         var localAttachmentPath: String? = null
         try {
-            viewModel.clearOperationState()
-            viewModel.createLocalVault(
-                name = sourceName,
-                masterPassword = sourcePassword,
-                unlockMethod = MdbxUnlockMethod.MASTER_PASSWORD,
-                keyFile = null,
-                tigaMode = MdbxTigaMode.SKY,
-                description = "migration source",
-                engineType = MdbxEngineType.KOTLIN_MDBX1
-            )
-            val creation = withTimeout(60_000) {
-                viewModel.operationState.first {
-                    it is MdbxViewModel.OperationState.Success || it is MdbxViewModel.OperationState.Error
-                }
-            }
-            assertTrue(creation.toString(), creation is MdbxViewModel.OperationState.Success)
-            val sourceDatabase = databaseDao.getAllDatabasesSnapshot().single { it.name == sourceName }
+            val repository = legacyStore(context, room, securityManager)
+            val sourceDatabase = createLegacyFixture(repository, room, securityManager, sourceName, sourcePassword)
             sourceDatabaseId = sourceDatabase.id
             sourceFile = File(sourceDatabase.workingCopyPath!!)
-
-            val repository = MdbxRepositoryFactory.create(context, room, securityManager)
             val folder = repository.createFolder(sourceDatabaseId, "Work", null)
             val nestedFolder = repository.createFolder(sourceDatabaseId, "Servers", folder.folderId)
             val passwordId = room.passwordEntryDao().insertPasswordEntry(
@@ -125,7 +117,7 @@ class Mdbx2MigrationInstrumentedTest {
                     mdbxFolderId = folder.folderId
                 )
             )
-            val passkey = room.passkeyDao().getPasskeyById(credentialId)!!
+            val passkey = room.passkeyDao().getByMdbxDatabaseId(sourceDatabaseId).single { it.credentialId == credentialId }
             repository.upsertPasskey(passkey)
 
             repository.upsertSteamMaFileEntry(
@@ -159,6 +151,7 @@ class Mdbx2MigrationInstrumentedTest {
             room.attachmentDao().insert(attachment)
             repository.upsertAttachment(sourceDatabaseId, "password:$passwordId", attachment)
 
+            databaseDao.updateDatabase(sourceDatabase.copy(sourceType = sourceType.name))
             val sourceHashBefore = sha256(sourceFile)
             viewModel.prepareMdbx2Migration(sourceDatabaseId)
             val ready = withTimeout(120_000) {
@@ -170,6 +163,8 @@ class Mdbx2MigrationInstrumentedTest {
             assertTrue(ready.toString(), ready is MdbxViewModel.MdbxMigrationState.Ready)
             ready as MdbxViewModel.MdbxMigrationState.Ready
             assertTrue(ready.preview.isEligible)
+            assertEquals(sourceType == MdbxSourceType.REMOTE_WEBDAV,
+                ready.preview.warnings.any { it.kind == MdbxMigrationWarningKind.REMOTE_LOCAL_COPY_ONLY })
             assertEquals(2, ready.preview.folderCount)
             assertEquals(4, ready.preview.activeEntryCount)
             assertEquals(1, ready.preview.attachmentCount)
@@ -247,6 +242,7 @@ class Mdbx2MigrationInstrumentedTest {
             securityManager
         )
         val sourceName = "MDBX1 failed migration ${UUID.randomUUID()}"
+        val sourcePassword = "legacy-migration-failure-fixture"
         val targetName = "MDBX2 must be cleaned ${UUID.randomUUID()}"
         var sourceDatabaseId = 0L
         var retryTargetDatabaseId = 0L
@@ -255,27 +251,10 @@ class Mdbx2MigrationInstrumentedTest {
         var localAttachmentPath: String? = null
         var attachmentRoomId = 0L
         try {
-            viewModel.clearOperationState()
-            viewModel.createLocalVault(
-                name = sourceName,
-                masterPassword = "failed-migration-source",
-                unlockMethod = MdbxUnlockMethod.MASTER_PASSWORD,
-                keyFile = null,
-                tigaMode = MdbxTigaMode.SKY,
-                description = null,
-                engineType = MdbxEngineType.KOTLIN_MDBX1
-            )
-            val creation = withTimeout(60_000) {
-                viewModel.operationState.first {
-                    it is MdbxViewModel.OperationState.Success || it is MdbxViewModel.OperationState.Error
-                }
-            }
-            assertTrue(creation.toString(), creation is MdbxViewModel.OperationState.Success)
-            val sourceDatabase = databaseDao.getAllDatabasesSnapshot().single { it.name == sourceName }
+            val repository = legacyStore(context, room, securityManager)
+            val sourceDatabase = createLegacyFixture(repository, room, securityManager, sourceName, sourcePassword)
             sourceDatabaseId = sourceDatabase.id
             sourceFile = File(sourceDatabase.workingCopyPath!!)
-
-            val repository = MdbxRepositoryFactory.create(context, room, securityManager)
             val passwordId = room.passwordEntryDao().insertPasswordEntry(
                 PasswordEntry(
                     title = "Failed migration login",
@@ -382,6 +361,23 @@ class Mdbx2MigrationInstrumentedTest {
             retryTargetFile?.let { Mdbx2Repository(context, databaseDao, securityManager).deleteOwnedVaultFile(it) }
             sourceFile?.delete()
         }
+    }
+
+    // Legacy data is a pre-existing fixture. App creation and ordinary routing
+    // must remain disabled; only the migration reader accesses this old store.
+    private fun legacyStore(context: Context, room: PasswordDatabase, security: SecurityManager) =
+        MdbxVaultStore(context, room.localMdbxDatabaseDao(), security, room.mdbxRemoteSourceDao(),
+            room.passwordEntryDao(), room.secureItemDao(), room.customFieldDao())
+
+    private suspend fun createLegacyFixture(
+        store: MdbxVaultStore, room: PasswordDatabase, security: SecurityManager, name: String, password: String
+    ): LocalMdbxDatabase {
+        val file = store.createInitializedVaultFile(name, MdbxTigaMode.SKY.name,
+            MdbxUnlockMethod.MASTER_PASSWORD, MdbxVaultCredential(MdbxUnlockMethod.MASTER_PASSWORD, password))
+        val record = LocalMdbxDatabase(name = name, filePath = file.absolutePath, workingCopyPath = file.absolutePath,
+            storageLocation = MdbxStorageLocation.INTERNAL.name, sourceType = MdbxSourceType.LOCAL_INTERNAL.name,
+            tigaMode = MdbxTigaMode.SKY.name, encryptedPassword = security.encryptData(password))
+        return record.copy(id = room.localMdbxDatabaseDao().insertDatabase(record))
     }
 
     private fun sha256(file: File): ByteArray {

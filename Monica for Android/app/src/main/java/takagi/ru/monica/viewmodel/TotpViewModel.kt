@@ -325,23 +325,28 @@ class TotpViewModel internal constructor(
         allPasswords: List<PasswordEntry>
     ): List<SecureItem> {
         val parsedStored = storedTotps.associate { it.id to parseStoredTotpData(it) }
-        val seenBoundKeys = mutableSetOf<String>()
-        val displayStoredTotps = storedTotps.filter { item ->
-            val data = parsedStored[item.id]
-            val boundId = data?.boundPasswordId
-            boundId == null || seenBoundKeys.add("$boundId|${buildTotpIdentityKey(data)}")
-        }
-        val existingKeys = parsedStored.values.mapNotNull { it?.let(::buildTotpIdentityKey) }.toSet()
+        val existingKeys = storedTotps.flatMap { item ->
+            val data = parsedStored[item.id] ?: return@flatMap emptyList()
+            takagi.ru.monica.keepass.KeePassTotpDisplaySource.storedKeys(item, data).map { source ->
+                source to buildTotpIdentityKey(data)
+            }
+        }.toSet()
+        val displayStoredTotps = takagi.ru.monica.keepass.KeePassTotpDisplaySource.collapseDuplicateBoundStoredTotps(
+            storedTotps,
+            dataForItem = { parsedStored[it.id] },
+            otpIdentity = ::buildTotpIdentityKey,
+        )
         val nextParsed = storedTotps.associate { it.id to (it to parsedStored[it.id]) }.toMutableMap()
         val nextPasswords = HashMap<Long, Pair<PasswordEntry, TotpData?>>()
-        val seenVirtualKeys = mutableSetOf<String>()
+        val seenVirtualKeys = mutableSetOf<Long>()
         val virtualTotps = allPasswords.mapNotNull { password ->
             val cached = passwordTotpSnapshot[password.id]?.takeIf { it.first == password && it.second != null }
                 ?: (password to resolvePasswordAuthenticatorTotp(password))
             nextPasswords[password.id] = cached
             val resolvedTotpData = cached.second ?: return@mapNotNull null
             val identityKey = buildTotpIdentityKey(resolvedTotpData)
-            if (identityKey in existingKeys || !seenVirtualKeys.add(identityKey)) {
+            if (takagi.ru.monica.keepass.KeePassTotpDisplaySource.passwordKeys(password)
+                    .any { (it to identityKey) in existingKeys } || !seenVirtualKeys.add(password.id)) {
                 return@mapNotNull null
             }
 
@@ -358,6 +363,8 @@ class TotpViewModel internal constructor(
                 categoryId = password.categoryId,
                 keepassDatabaseId = password.keepassDatabaseId,
                 keepassGroupPath = password.keepassGroupPath,
+                keepassEntryUuid = password.keepassEntryUuid,
+                keepassGroupUuid = password.keepassGroupUuid,
                 bitwardenVaultId = password.bitwardenVaultId,
                 bitwardenFolderId = password.bitwardenFolderId,
                 mdbxDatabaseId = password.mdbxDatabaseId
@@ -859,13 +866,16 @@ class TotpViewModel internal constructor(
             }
             val snapshots = bridge
                 .readLegacySecureItems(databaseId, setOf(ItemType.TOTP))
-                ?.getOrNull()
+                ?.getOrThrow()
                 ?: run {
                     SyncDiagnostics.skipped(taskId, target, trigger, "bridge_or_read_unavailable", startedAt)
                     return
                 }
 
             val existingTotp = repository.getItemsByType(ItemType.TOTP).first()
+            // This list is a pre-refresh snapshot. An old row without a UUID
+            // must not be assigned to two incoming entries during one refresh.
+            val claimedProjectionIds = mutableSetOf<Long>()
             snapshots.forEach { snapshot ->
                 val incoming = snapshot.item
                 val existingByUuid = incoming.keepassEntryUuid
@@ -882,10 +892,11 @@ class TotpViewModel internal constructor(
                     existingTotp = existingTotp,
                     existingByUuid = existingByUuid,
                     existingBySource = existingBySource,
-                    incomingIdentityKey = incomingIdentityKey
-                ) { candidate ->
-                    parseStoredTotpData(candidate)?.let(::buildTotpIdentityKey)
-                }
+                    incomingIdentityKey = incomingIdentityKey,
+                    identityKeyOf = { candidate -> parseStoredTotpData(candidate)?.let(::buildTotpIdentityKey) },
+                    claimedProjectionIds = claimedProjectionIds,
+                )
+                existing?.let { claimedProjectionIds += it.id }
 
                 if (existing == null) {
                     repository.insertItem(incoming)

@@ -19,7 +19,7 @@ class KeePassNativeEntryEditorGuardTest {
         val coordinator = projectFile(
             "app/src/main/java/takagi/ru/monica/ui/screens/KeePassNativeEntrySaveCoordinator.kt",
         ).readText()
-        assertTrue(coordinator.contains("viewModel.createNativeEntry("))
+        assertTrue(coordinator.contains("viewModel.saveNativeEntryDraft("))
         assertTrue(coordinator.contains("fields = fields"))
         assertFalse(source.contains("if (showCreateEntry)"))
     }

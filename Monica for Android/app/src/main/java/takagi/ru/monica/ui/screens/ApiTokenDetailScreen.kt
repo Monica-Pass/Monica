@@ -50,7 +50,7 @@ fun ApiTokenDetailScreen(
     val model: NativeApiTokenDetailViewModel = viewModel(key = "api-token-detail:$databaseId:$entryId",
         factory = viewModelFactory { initializer { NativeApiTokenDetailViewModel(mdbxViewModel, databaseId, entryId) } })
     val state by model.state.collectAsStateWithLifecycle()
-    val databases by mdbxViewModel.allDatabases.collectAsStateWithLifecycle()
+    val databases by mdbxViewModel.availableDatabases.collectAsStateWithLifecycle()
     val context = LocalContext.current
     var confirmDelete by remember { mutableStateOf(false) }
     var advanced by remember { mutableStateOf(false) }

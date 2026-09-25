@@ -317,6 +317,8 @@ dependencies {
     // KeePass KDBX library for KeePass compatibility
     // 0.10.0 is the newest release compatible with the project's Kotlin 1.9 toolchain.
     implementation 'app.keemobile:kotpass:0.10.0'
+    // Used by the whitespace-preserving KDBX XML adapter (same version as kotpass).
+    implementation 'org.redundent:kotlin-xml-builder:1.9.1'
     
     // WorkManager for auto backup
     implementation libs.androidx.work.runtime.ktx

@@ -251,7 +251,7 @@ class Mdbx2Repository(
             }
             val commands = buildList {
                 // CLI-created vaults need not contain Android's conventional root collection.
-                if (collection == null) add(MdbxWriteCommand.CreateProject(rootId, "Monica"))
+                if (collection == null) add(MdbxWriteCommand.CreateProject(rootId, Mdbx2VaultSessionExecutor.ROOT_PROJECT_TITLE))
                 val moving = original != null && original.summary.collectionId != targetId
                 // Labels belong to one collection; remove old assignments before moving.
                 if (!isFavorite || moving) favoriteAssignments.forEach {
@@ -1489,12 +1489,19 @@ class Mdbx2Repository(
             },
             rootCollectionId = rootProjectId
         )
-        val commandGroups = mutationsWithPhysicalIds.map { (mutation, physicalEntryId) ->
+        val needsAndroidRoot = vault.getCollectionSummary(rootProjectId) == null
+        val commandGroups = mutationsWithPhysicalIds.mapIndexed { index, (mutation, physicalEntryId) ->
             val desiredProjectId = mutation.folderId
                 ?.takeIf { it.isNotBlank() && it in snapshot.activeCollectionIds }
                 ?: rootProjectId
             val current = snapshot.objectsById[physicalEntryId]
             buildList {
+                // CLI vaults need not contain Android's default collection. Create
+                // it atomically with the first write, retaining the vault identity
+                // and every existing collection. A failed write rolls this back too.
+                if (index == 0 && needsAndroidRoot) {
+                    add(MdbxWriteCommand.CreateProject(rootProjectId, Mdbx2VaultSessionExecutor.ROOT_PROJECT_TITLE))
+                }
                 if (current == null) {
                     add(
                         MdbxWriteCommand.CreateEntry(

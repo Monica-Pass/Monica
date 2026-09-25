@@ -993,6 +993,9 @@ private fun SecurityPasswordEntryIcon(entry: PasswordEntry) {
     val uploadedIcon = if (entry.customIconType == takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_UPLOADED) {
         takagi.ru.monica.ui.icons.rememberUploadedPasswordIcon(entry.customIconValue)
     } else null
+    val emojiIcon = entry.customIconValue.takeIf {
+        entry.customIconType == takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_EMOJI
+    }
     val appPackageName = entry.primaryLinkedAppPackageName()
     val appIcon = if (
         appPackageName.isNotBlank() &&
@@ -1021,7 +1024,9 @@ private fun SecurityPasswordEntryIcon(entry: PasswordEntry) {
             .background(MaterialTheme.colorScheme.primaryContainer, RoundedCornerShape(12.dp)),
         contentAlignment = Alignment.Center
     ) {
-        if (bitmap != null) {
+        if (emojiIcon != null) {
+            takagi.ru.monica.ui.icons.EmojiIconText(emoji = emojiIcon, size = 22.dp)
+        } else if (bitmap != null) {
             Image(
                 bitmap = bitmap,
                 contentDescription = null,

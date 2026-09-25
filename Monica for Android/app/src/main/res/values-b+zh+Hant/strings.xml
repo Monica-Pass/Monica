@@ -21,8 +21,11 @@
     <string name="share">分享</string>
     <string name="field_action_more">更多欄位操作</string>
     <string name="field_action_show_large">放大顯示</string>
-    <string name="field_action_show_barcode">顯示為二維碼</string>
+    <string name="field_action_show_barcode">顯示為二維碼/條碼</string>
     <string name="field_action_barcode_failed">無法為該內容產生二維碼。</string>
+    <string name="field_barcode_format_qr">二維碼</string>
+    <string name="field_barcode_format_linear">條碼</string>
+    <string name="field_barcode_linear_failed">該內容無法產生 Code 128 條碼，請使用不超過 80 個字元的 ASCII 文字。</string>
     <string name="no_results">找不到結果</string>
     <string name="note_placeholder">記下想法…</string>
     <string name="new_note">新增筆記</string>
@@ -1230,6 +1233,10 @@
     <string name="custom_icon_dialog_title">設定自訂圖示</string>
     <string name="custom_icon_pick_simple">從圖示庫選擇</string>
     <string name="custom_icon_upload_image">上傳圖片</string>
+    <string name="custom_icon_use_emoji">使用 Emoji</string>
+    <string name="custom_icon_emoji_hint">輸入一個 Emoji</string>
+    <string name="custom_icon_emoji_support">隨條目保存一個 Emoji，無需額外圖示包。</string>
+    <string name="custom_icon_emoji_invalid">請只輸入一個 Emoji。</string>
     <string name="custom_icon_clear">使用網站圖示</string>
     <string name="custom_icon_search_hint">搜尋圖示</string>
     <string name="custom_icon_search_empty">沒有匹配的圖示</string>
@@ -4336,4 +4343,12 @@
     <string name="keepass_native_move_folders">移動 %1$d 個資料夾</string>
     <string name="language_french">Français</string>
     <string name="qs_lang_french">Français</string>
+    <string name="custom_icon_pick_installed">已安裝圖示</string>
+    <string name="custom_icon_installed_apps">應用程式圖示</string>
+    <string name="custom_icon_installed_packs">圖示套件</string>
+    <string name="custom_icon_installed_empty_packs">找不到相容的圖示套件。安裝圖示套件後，請重新開啟此選擇器。</string>
+    <string name="custom_icon_installed_empty_icons">此圖示套件沒有可用的圖示。</string>
+    <string name="custom_icon_installed_load_failed">無法載入圖示，請重試。</string>
+    <string name="custom_icon_installed_save_failed">無法使用此圖示，請重試或選擇其他圖示。</string>
+    <string name="field_barcode_linear_too_wide">螢幕寬度不足以清楚顯示此條碼，請橫向查看或使用 QR 碼。</string>
 </resources>

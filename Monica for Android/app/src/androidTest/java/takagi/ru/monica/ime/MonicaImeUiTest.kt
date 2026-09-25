@@ -193,7 +193,7 @@ class MonicaImeUiTest {
             compose.onNodeWithTag("ime_vault_search").assertHasClickAction().performClick()
             compose.onNodeWithTag("ime_search_toolbar").assertIsDisplayed()
             compose.onNodeWithTag("ime_search_result_count").assertTextEquals(state.activeEntryCount.toString())
-            compose.onNodeWithText("Q").performClick()
+            compose.onNodeWithTag("ime_key_letter_q").performClick()
             compose.runOnIdle {
                 assertEquals("q", state.query)
                 assertEquals("untouched", editor.text.toString())
@@ -230,6 +230,7 @@ class MonicaImeUiTest {
         compose.onNodeWithText(text(R.string.website)).assertIsDisplayed()
         compose.onNodeWithText(text(R.string.username)).assertHasClickAction()
         compose.onNodeWithText(text(R.string.password)).assertHasClickAction()
+        capture("website-expanded")
         assertEquals(
             "Website stays alongside the other fill actions at a regular width",
             compose.onNodeWithText(text(R.string.ime_quick_fill)).fetchSemanticsNode().boundsInRoot.top,

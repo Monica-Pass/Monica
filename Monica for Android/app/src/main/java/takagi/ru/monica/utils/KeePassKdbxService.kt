@@ -165,6 +165,7 @@ import takagi.ru.monica.keepass.KeePassWritePreflightResult
 import takagi.ru.monica.keepass.KeePassPasskeySyncCodec
 import takagi.ru.monica.keepass.KeePassSecureItemPhotoAttachments
 import takagi.ru.monica.keepass.KeePassTotpCodec
+import takagi.ru.monica.keepass.KeePassSecureItemPayload
 import takagi.ru.monica.notes.domain.NoteContentCodec
 import takagi.ru.monica.passkey.PasskeyCredentialIdCodec
 import takagi.ru.monica.passkey.PasskeyPrivateKeyStore
@@ -276,7 +277,8 @@ internal fun encodeKeePassDatabaseArtifactFile(
     destination: File,
 ): KeePassSourceRevision {
     FileOutputStream(destination).use { output ->
-        keePassDatabase.encode(output, cipherProviders = KeePassCodecSupport.cipherProviders)
+        keePassDatabase.encode(output, contentParser = KeePassCodecSupport.contentParser,
+            cipherProviders = KeePassCodecSupport.cipherProviders)
     }
     return KeePassSourceSafety.revisionOf(destination)
 }
@@ -390,19 +392,21 @@ private data class KeePassPasswordEntryAnalysis(
 )
 
 internal fun extractKeePassCustomFieldsForPasswordEntry(
-    fields: List<KeePassRawStringField>
+    fields: List<KeePassRawStringField>,
+    preserveOpaqueMetadata: Boolean = false
 ): List<KeePassCustomFieldData> {
     return fields
         .asSequence()
         .filter { field ->
             val normalizedKey = field.key.trim()
             normalizedKey.isNotBlank() &&
-                field.value.isNotBlank() &&
-                !isReservedKeePassPasswordFieldName(normalizedKey)
+                (!isReservedKeePassPasswordFieldName(normalizedKey) ||
+                    (preserveOpaqueMetadata && (normalizedKey.startsWith("Monica") ||
+                        KeePassFieldRegistry.roleOf(normalizedKey) == takagi.ru.monica.keepass.KeePassFieldRole.KEEPASS_PASSKEY)))
         }
         .mapIndexed { index, field ->
             KeePassCustomFieldData(
-                title = field.key.trim(),
+                title = field.key,
                 value = field.value,
                 isProtected = field.isProtected,
                 sortOrder = index
@@ -454,6 +458,7 @@ class KeePassKdbxService(
         private const val FIELD_MONICA_LOCAL_ID = "MonicaLocalId"
         private const val FIELD_MONICA_CONFLICT_COPY = "MonicaConflictCopy"
         private const val FIELD_MONICA_ITEM_ID = "MonicaSecureItemId"
+        private const val FIELD_MONICA_TOTP_DATA = "MonicaTotpData"
         private const val FIELD_MONICA_ITEM_TYPE = "MonicaItemType"
         private const val FIELD_MONICA_ITEM_DATA = "MonicaItemData"
         private const val FIELD_MONICA_IMAGE_PATHS = "MonicaImagePaths"
@@ -1434,7 +1439,7 @@ class KeePassKdbxService(
                 hasRecycleBinMeta = bundle.hasRecycleBinMeta,
                 resolutionContext = bundle.resolutionContext
             )
-            dao.updateEntryCount(database.id, data.size)
+            dao.updateEntryCount(database.id, bundle.entries.size)
             Result.success(data)
         } catch (e: Exception) {
             Result.failure(normalizeError(e))
@@ -1473,7 +1478,7 @@ class KeePassKdbxService(
                 )?.let(secureItems::add)
             }
             val groups = bundle.groups(includeRecycleBinGroups)
-            dao.updateEntryCount(database.id, passwords.size)
+            dao.updateEntryCount(database.id, bundle.entries.size)
             Result.success(
                 KeePassWorkspaceSnapshot(
                     passwords = passwords,
@@ -1890,6 +1895,16 @@ class KeePassKdbxService(
         entryUuid = entryUuid,
         expectedRevisionToken = expectedRevisionToken,
     ) { current ->
+        buildNativeEntryEditChangeSet(databaseId, entryUuid, current, fields, presentation)
+    }
+
+    private fun buildNativeEntryEditChangeSet(
+        databaseId: Long,
+        entryUuid: UUID,
+        current: Entry,
+        fields: List<KeePassFieldChange>,
+        presentation: KeePassNativeEntryPresentationUpdate,
+    ): KeePassChangeSet {
         val generatedIcon = presentation.customIcon?.let { payload ->
             val (uuid, icon) = KeePassCustomIconEditor.newIcon(
                 bytes = payload.bytes,
@@ -1903,7 +1918,7 @@ class KeePassKdbxService(
             ) to uuid
         }
         val selectedUuid = presentation.customIconUuid ?: generatedIcon?.second
-        KeePassChangeSet(
+        return KeePassChangeSet(
             databaseId = databaseId,
             target = KeePassChangeTarget.UNKNOWN_ENTRY,
             operation = KeePassChangeOperation.ENTRY_EDIT_PATCH,
@@ -1929,8 +1944,109 @@ class KeePassKdbxService(
                 removeCustomIconUuid = presentation.removeCustomIconUuid?.toString(),
                 basePresentationSignature = KeePassEntryFingerprint.buildPresentation(current),
                 autoType = presentation.autoType,
+                tags = presentation.tags,
+                expires = presentation.expires,
+                expiryTimeEpochMillis = presentation.expiryTime?.toEpochMilli(),
+                basePropertiesSignature = if (presentation.tags != null || presentation.expires != null || presentation.expiryTime != null) {
+                    KeePassEntryFingerprint.buildProperties(current)
+                } else null,
             ),
         )
+    }
+
+    /** Stages the entire editor draft before the single file write, including every attachment. */
+    internal suspend fun saveNativeEntryDraft(
+        databaseId: Long,
+        entryUuid: UUID?,
+        parentGroupUuid: UUID?,
+        fields: List<KeePassFieldChange>,
+        presentation: KeePassNativeEntryPresentationUpdate?,
+        sourceUris: List<Uri>,
+        expectedRevisionToken: String,
+    ): Result<KeePassNativeEntryRecord> = withContext(Dispatchers.IO) {
+        try {
+            validateNativeFieldNames(fields)
+            val attachments = readNativeAttachmentPayloads(sourceUris)
+            val savedUuid = entryUuid ?: UUID.randomUUID()
+            mutateDatabase(databaseId) { loaded ->
+                assertNativeRevision(expectedRevisionToken, loaded.nativeSession.value.revisionToken, entryUuid)
+                val original = entryUuid?.let { requireUniqueNativeEntry(loaded.nativeSession.value, it).entry }
+                val parent = if (original == null) {
+                    requireUniqueNativeGroup(loaded.nativeSession.value, requireNotNull(parentGroupUuid))
+                } else null
+                requirePreflightAllowed(KeePassWritePreflight.evaluateRuntime(
+                    currentDatabaseBytes = loaded.sourceRevision.sizeBytes,
+                    incomingPayloadBytes = attachments.sumOf { it.bytes.size.toLong() } +
+                        (presentation?.customIcon?.bytes?.size?.toLong() ?: 0L),
+                ))
+                var staged = if (original == null) {
+                    KeePassNativeManagement.createEntry(
+                        loaded.keePassDatabase, requireNotNull(parentGroupUuid),
+                        fields.map { field -> field.name to if (field.protected) {
+                            EntryValue.Encrypted(EncryptedValue.fromString(field.value))
+                        } else EntryValue.Plain(field.value) }, savedUuid,
+                    )
+                } else loaded.keePassDatabase
+                val current = requireNotNull(findEntryByUuid(staged.content.group, savedUuid))
+                val edit = buildNativeEntryEditChangeSet(
+                    databaseId, savedUuid, current, fields, presentation ?: KeePassNativeEntryPresentationUpdate(),
+                )
+                val applier = KeePassChangeSetApplier()
+                staged = applier.apply(staged, edit).updatedDatabase
+                val changes = mutableListOf(edit)
+                attachments.forEach { payload ->
+                    val binary = BinaryData.Uncompressed(false, payload.bytes).toCompressed()
+                    val change = KeePassChangeSet(
+                        databaseId = databaseId,
+                        target = KeePassChangeTarget.UNKNOWN_ENTRY,
+                        operation = KeePassChangeOperation.ADD_ATTACHMENT,
+                        entryUuid = savedUuid.toString(),
+                        baseFingerprint = KeePassEntryFingerprint.build(requireNotNull(findEntryByUuid(staged.content.group, savedUuid))),
+                        attachmentPatch = KeePassAttachmentChangePatch(
+                            fileName = payload.fileName,
+                            binaryHash = binary.hash.hex(),
+                            contentBase64 = Base64.encodeToString(payload.bytes, Base64.NO_WRAP),
+                        ),
+                    )
+                    staged = applier.apply(staged, change).updatedDatabase
+                    changes += change
+                }
+                val finalEntry = requireNotNull(findEntryByUuid(staged.content.group, savedUuid))
+                val committedEntry = if (original == null) finalEntry.copy(history = emptyList()) else {
+                    nativeMutation.editEntry(original, staged.content.meta, staged.binaries) {
+                        finalEntry.copy(history = original.history, times = finalEntry.times?.copy(
+                            lastModificationTime = original.times?.lastModificationTime,
+                            lastAccessTime = original.times?.lastAccessTime,
+                            usageCount = original.times?.usageCount ?: 0,
+                        ))
+                    }
+                }
+                staged = staged.modifyParentGroup { updateEntryInGroup(this, savedUuid, committedEntry) }
+                val pendingChanges = if (original == null) listOf(requireNotNull(buildCreateEntryChangeSet(
+                    staged, databaseId, KeePassChangeTarget.UNKNOWN_ENTRY, committedEntry,
+                    parent?.legacyPath, parentGroupUuid,
+                ))) else changes
+                MutationPlan(
+                    updatedDatabase = staged,
+                    result = Unit,
+                    beforeRemoteUpload = { database, revision ->
+                        enqueuePendingChangeSetsIfRemote(database, pendingChanges, revision)
+                    },
+                )
+            }
+            Result.success(loadUniqueNativeEntryRecord(databaseId, savedUuid))
+        } catch (error: OutOfMemoryError) {
+            Result.failure(error)
+        } catch (error: Exception) {
+            Result.failure(normalizeError(error))
+        }
+    }
+
+    private fun validateNativeFieldNames(fields: List<KeePassFieldChange>) {
+        require(fields.isNotEmpty()) { "KeePass entry requires at least one field" }
+        val names = fields.map { it.name }
+        require(names.none(String::isBlank)) { "KeePass field name cannot be blank" }
+        require(names.size == names.distinct().size) { "KeePass field names must be unique" }
     }
 
     internal suspend fun replaceNativeEntryPresentation(
@@ -1970,6 +2086,12 @@ class KeePassKdbxService(
                 removeCustomIconUuid = update.removeCustomIconUuid?.toString(),
                 basePresentationSignature = KeePassEntryFingerprint.buildPresentation(current),
                 autoType = update.autoType,
+                tags = update.tags,
+                expires = update.expires,
+                expiryTimeEpochMillis = update.expiryTime?.toEpochMilli(),
+                basePropertiesSignature = if (update.tags != null || update.expires != null || update.expiryTime != null) {
+                    KeePassEntryFingerprint.buildProperties(current)
+                } else null,
             ),
         )
     }
@@ -2316,7 +2438,7 @@ class KeePassKdbxService(
     ): Result<KeePassNativeEntryRecord> = withContext(Dispatchers.IO) {
         try {
             require(fields.isNotEmpty()) { "KeePass entry requires at least one field" }
-            val normalizedNames = fields.map { it.name.trim().lowercase(Locale.ROOT) }
+            val normalizedNames = fields.map { it.name }
             require(normalizedNames.none { it.isBlank() }) { "KeePass field name cannot be blank" }
             require(normalizedNames.size == normalizedNames.distinct().size) {
                 "KeePass field names must be unique"
@@ -2330,7 +2452,7 @@ class KeePassKdbxService(
                         database = loaded.keePassDatabase,
                         targetGroupUuid = parentGroupUuid,
                         fields = fields.map { field ->
-                            field.name.trim() to if (field.protected) {
+                            field.name to if (field.protected) {
                                 EntryValue.Encrypted(EncryptedValue.fromString(field.value))
                             } else {
                                 EntryValue.Plain(field.value)
@@ -2356,7 +2478,7 @@ class KeePassKdbxService(
     ): Result<KeePassNativeEntryRecord> = withContext(Dispatchers.IO) {
         try {
             require(fields.isNotEmpty()) { "KeePass entry requires at least one field" }
-            val normalizedNames = fields.map { it.name.trim().lowercase(Locale.ROOT) }
+            val normalizedNames = fields.map { it.name }
             require(normalizedNames.none { it.isBlank() }) { "KeePass field name cannot be blank" }
             require(normalizedNames.size == normalizedNames.distinct().size) {
                 "KeePass field names must be unique"
@@ -2376,7 +2498,7 @@ class KeePassKdbxService(
                     database = loaded.keePassDatabase,
                     targetGroupUuid = parentGroupUuid,
                     fields = fields.map { field ->
-                        field.name.trim() to if (field.protected) {
+                        field.name to if (field.protected) {
                             EntryValue.Encrypted(EncryptedValue.fromString(field.value))
                         } else {
                             EntryValue.Plain(field.value)
@@ -4074,9 +4196,6 @@ class KeePassKdbxService(
                     )
                 }
             }
-            if (isLikelyRecycleBinPath(preferredGroupPath)) {
-                return@withContext Result.success(KeePassRestoreTarget(groupPath = null, groupUuid = null))
-            }
             Result.success(
                 KeePassRestoreTarget(
                     groupPath = preferredGroupPath,
@@ -4339,12 +4458,16 @@ class KeePassKdbxService(
             replacementFields = replacementFields,
             removeManagedField = { name ->
                 KeePassFieldRegistry.isPasswordEntryOverlayField(name) ||
+                    (entry.isApiKeyEntry() && takagi.ru.monica.data.model.ApiKeyEntryFields.owns(name)) ||
                     (entry.loginType == takagi.ru.monica.data.model.GpgEntryFields.TYPE &&
                         takagi.ru.monica.data.model.GpgEntryFields.owns(name))
             },
             // Explicit removals survive conversion to the persisted change-set patch.
             // GPG custom fields are not part of the generic PASSWORD managed scope.
             removeFieldNames = replacementFields.keys + customFields.map { it.title.trim() } +
+                (if (entry.isApiKeyEntry()) {
+                    existingEntry?.fields?.keys.orEmpty().filter(takagi.ru.monica.data.model.ApiKeyEntryFields::owns)
+                } else emptyList()) +
                 if (entry.loginType == takagi.ru.monica.data.model.GpgEntryFields.TYPE) {
                     existingEntry?.fields?.keys.orEmpty().filter(takagi.ru.monica.data.model.GpgEntryFields::owns)
                 } else emptyList()
@@ -4501,8 +4624,8 @@ class KeePassKdbxService(
             .asSequence()
             .sortedWith(compareBy<KeePassCustomFieldData> { it.sortOrder }.thenBy { it.title })
             .forEach { field ->
-                val key = field.title.trim()
-                if (key.isBlank() || field.value.isBlank() || key.startsWith("_etm_")) return@forEach
+                val key = field.title
+                if (key.isBlank() || key.startsWith("_etm_")) return@forEach
                 if (!usedKeys.add(key.lowercase(Locale.ROOT))) return@forEach
                 val value = if (field.isProtected) {
                     EntryValue.Encrypted(EncryptedValue.fromString(field.value))
@@ -4561,7 +4684,7 @@ class KeePassKdbxService(
         passkey: PasskeyEntry,
         existingEntry: Entry? = null
     ): KeePassEntryFieldPatch {
-        val replacementFields = buildPasskeyFields(passkey, existingEntry)
+        val replacementFields = preserveExistingLoginFields(buildPasskeyFields(passkey, existingEntry), existingEntry)
         return KeePassEntryFieldPatch.fromEntryFields(
             replacementFields = replacementFields,
             removeManagedField = KeePassFieldRegistry::isPasskeyEntryOverlayField,
@@ -4582,11 +4705,26 @@ class KeePassKdbxService(
         existingEntry: Entry,
         item: SecureItem
     ): Entry {
-        return buildSecureItemEntryFieldPatch(item).applyTo(existingEntry)
+        return buildSecureItemEntryFieldPatch(item, existingEntry).applyTo(existingEntry)
     }
 
-    private fun buildSecureItemEntryFieldPatch(item: SecureItem): KeePassEntryFieldPatch {
-        val replacementFields = buildSecureItemFields(item)
+    private fun buildSecureItemEntryFieldPatch(item: SecureItem, existingEntry: Entry? = null): KeePassEntryFieldPatch {
+        if (item.itemType == ItemType.TOTP && existingEntry != null &&
+            !getFieldValue(existingEntry, FIELD_MONICA_ITEM_TYPE).equals("TOTP", ignoreCase = true)) {
+            // A native login can also carry OTP and passkey credentials. Editing its OTP is
+            // a field patch, never a conversion of the entry into a Monica-only secure item.
+            val portable = portableSecureItemDataForKeePass(item)
+            val fields = mutableListOf<Pair<String, EntryValue>>()
+            appendKeePassTotpFields(fields, item, portable)
+            require(fields.isNotEmpty()) { "Authenticator data cannot be represented as KeePass OTP fields" }
+            fields += FIELD_MONICA_TOTP_DATA to EntryValue.Encrypted(EncryptedValue.fromString(portable))
+            return KeePassEntryFieldPatch.fromEntryFields(
+                replacementFields = EntryFields.of(*fields.toTypedArray()),
+                removeManagedField = { false },
+                removeFieldNames = existingEntry.fields.keys.filter(KeePassTotpCodec::isOtpField) + fields.map { it.first }
+            )
+        }
+        val replacementFields = preserveExistingLoginFields(buildSecureItemFields(item), existingEntry)
         val removeManagedField = if (item.itemType == ItemType.TOTP) {
             { name: String ->
                 KeePassFieldRegistry.isSecureItemOverlayField(name) ||
@@ -4598,8 +4736,16 @@ class KeePassKdbxService(
         return KeePassEntryFieldPatch.fromEntryFields(
             replacementFields = replacementFields,
             removeManagedField = removeManagedField,
-            removeFieldNames = replacementFields.keys
+            removeFieldNames = replacementFields.keys + if (item.itemType == ItemType.TOTP)
+                existingEntry?.fields?.keys.orEmpty().filter(KeePassTotpCodec::isOtpField) else emptyList()
         )
+    }
+
+    private fun preserveExistingLoginFields(fields: EntryFields, existing: Entry?): EntryFields {
+        if (existing == null) return fields
+        return EntryFields.of(*fields.filterNot { (name, value) ->
+            name in setOf("UserName", "Password", "URL") && value.content.isEmpty() && existing.fields.containsKey(name)
+        }.map { it.key to it.value }.toTypedArray())
     }
 
     private suspend fun buildSecureItemPhotoUpdates(
@@ -4757,11 +4903,8 @@ class KeePassKdbxService(
         ) ?: return
         val fields = KeePassTotpCodec.toKeePassFields(totpData, item.title)
         fields.forEach { (name, value) ->
-            val entryValue = when (name) {
-                KeePassTotpCodec.FIELD_OTP,
-                KeePassTotpCodec.FIELD_TOTP_SEED -> EntryValue.Encrypted(EncryptedValue.fromString(value))
-                else -> EntryValue.Plain(value)
-            }
+            val entryValue = if (KeePassTotpCodec.isSecretField(name))
+                EntryValue.Encrypted(EncryptedValue.fromString(value)) else EntryValue.Plain(value)
             pairs += name to entryValue
         }
     }
@@ -4911,7 +5054,7 @@ class KeePassKdbxService(
         val resolvedDatabaseId = requireNotNull(databaseId) {
             "Foreground KeePass secure-item update requires a database id"
         }
-        val fieldPatch = buildSecureItemEntryFieldPatch(item)
+        val fieldPatch = buildSecureItemEntryFieldPatch(item, matchedContext.entry)
         val matchedEntry = matchedContext.entry
         val photoPreview = KeePassSecureItemPhotoAttachments.synchronize(
             database = keePassDatabase,
@@ -4926,7 +5069,7 @@ class KeePassKdbxService(
             matchedContext = matchedContext,
             targetGroupPath = item.keepassGroupPath,
             fieldPatch = fieldPatch.toChangePatch(
-                managedScope = KeePassManagedFieldScope.SECURE_ITEM,
+                managedScope = if (item.itemType == ItemType.TOTP) KeePassManagedFieldScope.EXPLICIT_ONLY else KeePassManagedFieldScope.SECURE_ITEM,
                 baseEntry = matchedContext.entry
             ),
             includeMoveChange = true
@@ -5058,10 +5201,11 @@ class KeePassKdbxService(
         databaseId: Long,
         target: KeePassChangeTarget,
         entry: Entry,
-        targetGroupPath: String?
+        targetGroupPath: String?,
+        targetGroupUuidOverride: UUID? = null,
     ): KeePassChangeSet? {
         val resolvedTargetPath = targetGroupPath?.takeIf { it.isNotBlank() }
-        val targetGroupUuid = if (resolvedTargetPath == null) {
+        val targetGroupUuid = targetGroupUuidOverride ?: if (resolvedTargetPath == null) {
             database.content.group.uuid
         } else {
             findGroupUuidByPath(
@@ -5459,11 +5603,7 @@ class KeePassKdbxService(
     }
 
     private fun EntryTraversalContext.isInKeePassRecycleBin(hasRecycleBinMeta: Boolean): Boolean {
-        return if (hasRecycleBinMeta) {
-            isInRecycleBinByMeta
-        } else {
-            isLikelyRecycleBinPath(groupPath)
-        }
+        return isInRecycleBinByMeta
     }
 
     private fun KeePassRestoreTarget.withFallback(
@@ -5484,7 +5624,9 @@ class KeePassKdbxService(
                 )
             }
         }
-        if (!preferredGroupPath.isNullOrBlank() && !isLikelyRecycleBinPath(preferredGroupPath)) {
+        if (!preferredGroupPath.isNullOrBlank() && groupContextIndex.values.none {
+                it.pathKey == preferredGroupPath && it.isInRecycleBinByMeta
+            }) {
             return KeePassRestoreTarget(
                 groupPath = preferredGroupPath,
                 groupUuid = preferredGroupUuid
@@ -5556,9 +5698,7 @@ class KeePassKdbxService(
         resolutionContext: KeePassEntryResolutionContext? = null
     ): Boolean {
         val targetUuid = parseUuid(target.keepassEntryUuid)
-        if (targetUuid != null && entry.uuid == targetUuid) {
-            return true
-        }
+        if (targetUuid != null) return entry.uuid == targetUuid
         val monicaId = getFieldValue(entry, FIELD_MONICA_LOCAL_ID, resolutionContext).toLongOrNull()
         if (monicaId != null && target.id > 0 && monicaId == target.id) {
             return true
@@ -5583,9 +5723,7 @@ class KeePassKdbxService(
         resolutionContext: KeePassEntryResolutionContext? = null
     ): Boolean {
         val targetUuid = parseUuid(target.keepassEntryUuid)
-        if (targetUuid != null && entry.uuid == targetUuid) {
-            return true
-        }
+        if (targetUuid != null) return entry.uuid == targetUuid
         val monicaId = getFieldValue(entry, FIELD_MONICA_ITEM_ID, resolutionContext).toLongOrNull()
         if (monicaId != null && target.id > 0 && monicaId == target.id) {
             return true
@@ -5678,8 +5816,8 @@ class KeePassKdbxService(
         val notes = getStandardNotes(entry, resolutionContext)
         val hasPasskeyFields = isPasskeyEntry(entry, resolutionContext)
 
-        // Monica 安全项（TOTP/笔记/卡片等）会写入 MonicaItemType，不应进入密码列表。
-        if (getFieldValue(entry, FIELD_MONICA_ITEM_TYPE, resolutionContext).isNotBlank()) {
+        // Only hide an entry when its specialized projection can actually be read.
+        if (resolveMonicaSecureItemPayload(entry, resolutionContext) != null) {
             return result(
                 skipReason = KeePassPasswordSkipReason.MONICA_SECURE_ITEM,
                 hasPasskeyFields = hasPasskeyFields,
@@ -5692,6 +5830,7 @@ class KeePassKdbxService(
         }
         if (
             hasPasskeyFields &&
+            entryToPasskey(entry, -1L, groupPath, groupUuid, resolutionContext) != null &&
             username.isBlank() &&
             password.isBlank() &&
             url.isBlank() &&
@@ -5731,17 +5870,7 @@ class KeePassKdbxService(
                     .ifBlank { SshKeyData.FORMAT_OPENSSH }
             )
         )
-        if (title.isEmpty() && username.isEmpty() && password.isEmpty() && url.isEmpty() && notes.isEmpty()) {
-            return result(
-                skipReason = KeePassPasswordSkipReason.EMPTY,
-                hasPasskeyFields = hasPasskeyFields,
-                title = title,
-                username = username,
-                password = password,
-                url = url,
-                notes = notes
-            )
-        }
+        // Empty standard fields are valid: custom strings, binaries and history still belong to this UUID.
         val monicaId = getFieldValue(entry, FIELD_MONICA_LOCAL_ID, resolutionContext).toLongOrNull()
         val inRecycleBin = resolveRecycleBinFlag(
             groupPath = groupPath,
@@ -5825,10 +5954,13 @@ class KeePassKdbxService(
                     value = getFieldValue(entry, key, resolutionContext),
                     isProtected = value is EntryValue.Encrypted
                 )
-            }
+            },
+            preserveOpaqueMetadata = getFieldValue(entry, FIELD_MONICA_ITEM_TYPE, resolutionContext).isNotBlank() || hasPasskeyFields
         )
         val (resolvedLoginType, resolvedWifiJson) = when {
             getFieldValue(entry, "monica_gpg_type", resolutionContext) == "GPG_KEY" -> "GPG_KEY" to ""
+            getFieldValue(entry, takagi.ru.monica.data.model.ApiKeyEntryFields.MARKER, resolutionContext) == takagi.ru.monica.data.model.ApiKeyEntryFields.TYPE ->
+                takagi.ru.monica.data.model.ApiKeyEntryFields.TYPE to ""
             monicaLoginType.equals("WIFI", ignoreCase = true) && monicaWifiJson.isNotBlank() ->
                 "WIFI" to monicaWifiJson
             monicaLoginType.equals("WIFI", ignoreCase = true) -> {
@@ -5965,22 +6097,14 @@ class KeePassKdbxService(
         allowedTypes: Set<ItemType>?,
         resolutionContext: KeePassEntryResolutionContext? = null
     ): KeePassSecureItemData? {
-        if (isPasskeyEntry(entry, resolutionContext)) {
-            return null
-        }
-        val typeRaw = getFieldValue(entry, FIELD_MONICA_ITEM_TYPE, resolutionContext)
-        if (typeRaw.isNotBlank()) {
-            val itemType = runCatching { ItemType.valueOf(typeRaw) }.getOrNull() ?: return null
-            if (allowedTypes != null && itemType !in allowedTypes) return null
+        val payload = resolveMonicaSecureItemPayload(entry, resolutionContext)
+        if (payload != null && (allowedTypes == null || payload.type in allowedTypes)) {
+            val itemType = payload.type
 
-            val itemData = getFieldValue(entry, FIELD_MONICA_ITEM_DATA, resolutionContext)
-                .ifBlank {
-                    buildStructuredSecureItemDataFromEntry(itemType, entry, resolutionContext).orEmpty()
-                }
-            if (itemData.isBlank()) return null
+            val itemData = payload.data
 
-            val title = getFieldValue(entry, "Title", resolutionContext)
-            val notes = getFieldValue(entry, "Notes", resolutionContext)
+            val title = getStandardTitle(entry, resolutionContext)
+            val notes = getStandardNotes(entry, resolutionContext)
             val legacyImagePaths = getFieldValue(entry, FIELD_MONICA_IMAGE_PATHS, resolutionContext)
             val imagePaths = hydrateSecureItemImagePaths(
                 itemType = itemType,
@@ -6024,8 +6148,8 @@ class KeePassKdbxService(
         if (!allowTotp) return null
 
         val parsedTotp = parseStandardTotpFromEntry(entry, resolutionContext) ?: return null
-        val title = getFieldValue(entry, "Title", resolutionContext)
-        val notes = getFieldValue(entry, "Notes", resolutionContext)
+        val title = getStandardTitle(entry, resolutionContext)
+        val notes = getStandardNotes(entry, resolutionContext)
         val now = Date()
         val inRecycleBin = resolveRecycleBinFlag(
             groupPath = groupPath,
@@ -6064,8 +6188,24 @@ class KeePassKdbxService(
     ): String? {
         return when (itemType) {
             ItemType.BANK_CARD -> buildBankCardItemDataFromEntry(entry, resolutionContext)
+            ItemType.NOTE -> Json.encodeToString(takagi.ru.monica.data.model.NoteData.serializer(),
+                takagi.ru.monica.data.model.NoteData(content = getStandardNotes(entry, resolutionContext)))
             else -> null
         }
+    }
+
+    private fun resolveMonicaSecureItemPayload(
+        entry: Entry,
+        resolutionContext: KeePassEntryResolutionContext?
+    ): KeePassSecureItemPayload? {
+        val type = getFieldValue(entry, FIELD_MONICA_ITEM_TYPE, resolutionContext)
+        if (type.isBlank()) return null
+        return KeePassSecureItemPayload.resolve(
+            typeName = type,
+            raw = getFieldValue(entry, FIELD_MONICA_ITEM_DATA, resolutionContext),
+            standardTotp = if (type.trim().equals("TOTP", true)) parseStandardTotpFromEntry(entry, resolutionContext) else null,
+            rebuild = { buildStructuredSecureItemDataFromEntry(it, entry, resolutionContext) }
+        )
     }
 
     private fun buildBankCardItemDataFromEntry(
@@ -6302,10 +6442,6 @@ class KeePassKdbxService(
         )?.let { PasskeyPrivateKeyStore.protectPasskey(context, it) }
     }
 
-    private fun isLikelyRecycleBinPath(groupPath: String?): Boolean {
-        return isLikelyKeePassRecycleBinPath(groupPath)
-    }
-
     private fun resolveRecycleBinUuid(meta: Meta): UUID? {
         if (!meta.recycleBinEnabled) return null
         return meta.recycleBinUuid
@@ -6321,8 +6457,8 @@ class KeePassKdbxService(
         isInRecycleBinByMeta: Boolean,
         hasRecycleBinMeta: Boolean
     ): Boolean {
-        if (hasRecycleBinMeta) return isInRecycleBinByMeta
-        return isLikelyRecycleBinPath(groupPath)
+        // A group name is ordinary user content; only the database's recycle-bin UUID is authoritative.
+        return isInRecycleBinByMeta
     }
 
     /**
@@ -6476,21 +6612,13 @@ class KeePassKdbxService(
         entry: Entry,
         resolutionContext: KeePassEntryResolutionContext? = null
     ): TotpData? {
-        return KeePassTotpCodec.parse(
-            KeePassTotpCodec.Fields(
-                otp = getFieldValueIgnoreCase(entry, resolutionContext, "otp"),
-                seed = getFieldValueIgnoreCase(entry, resolutionContext, "TOTP Seed", "TOTPSeed"),
-                settings = getFieldValueIgnoreCase(entry, resolutionContext, "TOTP Settings", "TOTPSettings"),
-                period = getFieldValueIgnoreCase(entry, resolutionContext, "TOTP Period", "TOTPPeriod"),
-                digits = getFieldValueIgnoreCase(entry, resolutionContext, "TOTP Digits", "TOTPDigits"),
-                algorithm = getFieldValueIgnoreCase(entry, resolutionContext, "TOTP Algorithm", "TOTPAlgorithm"),
-                counter = getFieldValueIgnoreCase(entry, resolutionContext, "HOTP Counter", "HOTPCounter"),
-                type = getFieldValueIgnoreCase(entry, resolutionContext, "OTP Type", "OTPType", "TOTP Type", "TOTPType"),
-                issuer = getFieldValue(entry, "Title", resolutionContext),
-                accountName = getFieldValue(entry, "UserName", resolutionContext),
-                link = getFieldValue(entry, "URL", resolutionContext)
-            )
+        val standard = KeePassTotpCodec.parseFields(
+            getField = { getFieldValueIgnoreCase(entry, resolutionContext, it) },
+            issuer = getStandardTitle(entry, resolutionContext),
+            accountName = getStandardUsername(entry, resolutionContext),
+            link = getStandardUrl(entry, resolutionContext)
         )
+        return KeePassSecureItemPayload.resolveTotp(getFieldValue(entry, FIELD_MONICA_TOTP_DATA, resolutionContext), standard)
     }
 
     private fun buildResolutionContext(
@@ -6563,11 +6691,7 @@ class KeePassKdbxService(
         hasRecycleBinMeta: Boolean,
         groupContextIndex: Map<UUID, GroupTraversalContext>
     ): KeePassRestoreTarget {
-        val inRecycleBin = if (hasRecycleBinMeta) {
-            entryContext.isInRecycleBinByMeta
-        } else {
-            isLikelyRecycleBinPath(entryContext.groupPath)
-        }
+        val inRecycleBin = entryContext.isInRecycleBinByMeta
         if (!inRecycleBin) {
             return KeePassRestoreTarget(
                 groupPath = entryContext.groupPath,
@@ -6579,11 +6703,7 @@ class KeePassKdbxService(
         if (previousParentUuid != null) {
             val previousParentContext = groupContextIndex[previousParentUuid]
             if (previousParentContext != null) {
-                val previousInRecycleBin = if (hasRecycleBinMeta) {
-                    previousParentContext.isInRecycleBinByMeta
-                } else {
-                    isLikelyRecycleBinPath(previousParentContext.pathKey)
-                }
+                val previousInRecycleBin = previousParentContext.isInRecycleBinByMeta
                 if (!previousInRecycleBin) {
                     return KeePassRestoreTarget(
                         groupPath = previousParentContext.pathKey,
@@ -7249,6 +7369,7 @@ class KeePassKdbxService(
                     KeePassDatabase.decode(
                         ByteArrayInputStream(bytes),
                         credentials,
+                        contentParser = KeePassCodecSupport.contentParser,
                         cipherProviders = KeePassCodecSupport.cipherProviders
                     )
                 } catch (t: Throwable) {
@@ -7522,6 +7643,7 @@ class KeePassKdbxService(
                         KeePassDatabase.decode(
                             stream,
                             credentials,
+                            contentParser = KeePassCodecSupport.contentParser,
                             cipherProviders = KeePassCodecSupport.cipherProviders,
                         )
                     }
@@ -8456,7 +8578,8 @@ class KeePassKdbxService(
         return ByteArrayOutputStream(
             KeePassEncodeBufferPolicy.initialCapacity(estimatedSizeBytes)
         ).use { output ->
-            keePassDatabase.encode(output, cipherProviders = KeePassCodecSupport.cipherProviders)
+            keePassDatabase.encode(output, contentParser = KeePassCodecSupport.contentParser,
+                cipherProviders = KeePassCodecSupport.cipherProviders)
             output.toByteArray()
         }
     }

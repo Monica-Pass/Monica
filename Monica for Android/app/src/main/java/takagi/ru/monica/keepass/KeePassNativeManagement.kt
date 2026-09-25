@@ -85,6 +85,9 @@ internal data class KeePassNativeEntryPresentationUpdate(
     val customIcon: KeePassNativeCustomIconPayload? = null,
     val removeCustomIconUuid: UUID? = null,
     val autoType: KeePassAutoTypePatch? = null,
+    val tags: List<String>? = null,
+    val expires: Boolean? = null,
+    val expiryTime: Instant? = null,
 )
 
 internal object KeePassNativeManagement {

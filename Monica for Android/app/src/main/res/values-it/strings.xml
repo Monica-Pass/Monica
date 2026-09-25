@@ -21,8 +21,11 @@
     <string name="share">"Condividi"</string>
     <string name="field_action_more">"Altre azioni sul campo"</string>
     <string name="field_action_show_large">"Mostra in testo grande"</string>
-    <string name="field_action_show_barcode">"Mostra come codice QR"</string>
+    <string name="field_action_show_barcode">Mostra come codice QR / a barre</string>
     <string name="field_action_barcode_failed">"Impossibile creare il codice QR per questo valore."</string>
+    <string name="field_barcode_format_qr">Codice QR</string>
+    <string name="field_barcode_format_linear">Codice a barre</string>
+    <string name="field_barcode_linear_failed">Questo valore non può essere codificato come codice a barre Code 128. Usa testo ASCII di massimo 80 caratteri.</string>
     <string name="no_results">"Nessun risultato trovato"</string>
     <string name="note_placeholder">"Scrivi qualcosa..."</string>
     <string name="new_note">"Nuova nota"</string>
@@ -1239,6 +1242,10 @@
     <string name="custom_icon_dialog_title">"Imposta icona personalizzata"</string>
     <string name="custom_icon_pick_simple">"Scegli dalla libreria delle icone"</string>
     <string name="custom_icon_upload_image">"Carica immagine"</string>
+    <string name="custom_icon_use_emoji">Usa emoji</string>
+    <string name="custom_icon_emoji_hint">Digita un emoji</string>
+    <string name="custom_icon_emoji_support">Un emoji viene salvato con questa voce, senza pacchetti di icone aggiuntivi.</string>
+    <string name="custom_icon_emoji_invalid">Inserisci esattamente un emoji.</string>
     <string name="custom_icon_clear">"Utilizzare l\'icona del sito web"</string>
     <string name="custom_icon_search_hint">"Icone di ricerca"</string>
     <string name="custom_icon_search_empty">"Nessuna icona trovata"</string>
@@ -4342,4 +4349,12 @@
     <string name="wallet_stack_open_card">"Dettagli scheda aperta"</string>
     <string name="language_french">"Français"</string>
     <string name="qs_lang_french">"Français"</string>
+    <string name="custom_icon_pick_installed">Icone installate</string>
+    <string name="custom_icon_installed_apps">Icone delle app</string>
+    <string name="custom_icon_installed_packs">Pacchetti di icone</string>
+    <string name="custom_icon_installed_empty_packs">Nessun pacchetto di icone compatibile trovato. Installa un pacchetto e riapri questo selettore.</string>
+    <string name="custom_icon_installed_empty_icons">Questo pacchetto non contiene icone supportate.</string>
+    <string name="custom_icon_installed_load_failed">Impossibile caricare le icone. Riprova.</string>
+    <string name="custom_icon_installed_save_failed">Impossibile usare questa icona. Riprova o scegline un’altra.</string>
+    <string name="field_barcode_linear_too_wide">Questo codice a barre richiede uno schermo più largo. Ruota il dispositivo o usa un codice QR.</string>
 </resources>

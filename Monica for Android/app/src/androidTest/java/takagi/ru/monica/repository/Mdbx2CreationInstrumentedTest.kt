@@ -1,11 +1,13 @@
 package takagi.ru.monica.repository
 
 import android.app.Application
+import androidx.lifecycle.viewModelScope
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import java.io.File
 import java.util.UUID
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import org.json.JSONObject
@@ -141,7 +143,7 @@ class Mdbx2CreationInstrumentedTest {
     }
 
     @Test
-    fun explicitLegacyEngineKeepsMdbx1Routing() = runBlocking {
+    fun explicitLegacyEngineIsRejectedWithoutCreatingADatabase() = runBlocking {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val application = context.applicationContext as Application
         val room = PasswordDatabase.getDatabase(context)
@@ -159,9 +161,7 @@ class Mdbx2CreationInstrumentedTest {
             customFieldDao = room.customFieldDao(),
             securityManager = securityManager
         )
-        var databaseId = 0L
-        var passwordEntryId = 0L
-        var vaultFile: File? = null
+        val existingIds = databaseDao.getAllDatabasesSnapshot().map { it.id }.toSet()
         try {
             viewModel.createLocalVault(
                 name = name,
@@ -178,54 +178,10 @@ class Mdbx2CreationInstrumentedTest {
                         it is MdbxViewModel.OperationState.Error
                 }
             }
-            assertTrue(operation.toString(), operation is MdbxViewModel.OperationState.Success)
-
-            val database = databaseDao.getAllDatabasesSnapshot().single { it.name == name }
-            databaseId = database.id
-            vaultFile = File(database.workingCopyPath!!)
-            assertEquals(MdbxEngineType.KOTLIN_MDBX1, database.engineTypeEnum)
-            assertTrue(vaultFile.isFile)
-
-            val repository = PasswordRepository(
-                passwordEntryDao = room.passwordEntryDao(),
-                mdbxRepository = MdbxRepositoryFactory.create(context, room, securityManager)
-            )
-            passwordEntryId = repository.insertPasswordEntry(
-                PasswordEntry(
-                    title = "MDBX1 compatibility marker",
-                    website = "https://legacy.example.com",
-                    username = "legacy-user",
-                    password = "legacy-secret",
-                    mdbxDatabaseId = databaseId
-                )
-            )
-            assertEquals(
-                passwordEntryId,
-                repository.searchPasswordEntries("compatibility marker")
-                    .first()
-                    .single { it.mdbxDatabaseId == databaseId }
-                    .id
-            )
-            assertEquals(
-                "MDBX1 compatibility marker",
-                MdbxRepositoryFactory.create(context, room, securityManager)
-                    .readStoredEntries(databaseId)
-                    .single { !it.deleted }
-                    .title
-            )
-
-            repository.deletePasswordEntryById(passwordEntryId)
-            passwordEntryId = 0L
-            assertTrue(
-                MdbxRepositoryFactory.create(context, room, securityManager)
-                    .readStoredEntries(databaseId)
-                    .single()
-                    .deleted
-            )
+            assertTrue(operation.toString(), operation is MdbxViewModel.OperationState.Error)
+            assertEquals(existingIds, databaseDao.getAllDatabasesSnapshot().map { it.id }.toSet())
         } finally {
-            if (passwordEntryId > 0L) room.passwordEntryDao().deletePasswordEntryById(passwordEntryId)
-            if (databaseId > 0L) databaseDao.deleteDatabaseById(databaseId)
-            vaultFile?.delete()
+            viewModel.viewModelScope.cancel()
         }
     }
 }

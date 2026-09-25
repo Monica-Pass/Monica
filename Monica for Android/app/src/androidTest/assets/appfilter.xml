@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item component="ComponentInfo{fixture/Mail}" drawable="icon_fixture_mail" />
+</resources>

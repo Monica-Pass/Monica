@@ -1,0 +1,549 @@
+{
+  "title": "Monica · KeePass 原生条目管理",
+  "brief": "原生详情查看验证码、标签与有效期；编辑保持登录、自定义字段、附件和历史完整。HOTP 下一码先写入数据库，成功后更新显示。",
+  "frame": "phone",
+  "platform": "android",
+  "paletteKey": "purple",
+  "theme": {
+    "dark": false,
+    "bothModes": true,
+    "contrast": "standard",
+    "shape": "rounded",
+    "font": "system",
+    "motion": "expressive"
+  },
+  "frames": [
+    {
+      "id": "detail",
+      "name": "条目详情",
+      "x": 0,
+      "y": 0,
+      "note": "保留现有详情页。验证码卡片位于登录信息与备注之间；复用验证器磁贴，复制可达。标签和有效期始终可见。"
+    },
+    {
+      "id": "editor",
+      "name": "编辑条目",
+      "x": 492,
+      "y": 0,
+      "note": "沿用原生字段和 OTP 编辑。增加标签与有效期分组；与字段、图标一起原子保存，大字体可滚动。"
+    },
+    {
+      "id": "hotp",
+      "name": "HOTP 下一码",
+      "x": 984,
+      "y": 0,
+      "note": "只读时禁用增加计数器。保存失败保留原计数器和验证码，展示可重试错误。未识别格式仍展示原始字段。"
+    }
+  ],
+  "groups": [
+    {
+      "id": "detail-bar",
+      "x": 12,
+      "y": 0,
+      "axis": "x",
+      "items": [
+        {
+          "id": "detail-bar-item",
+          "kind": "topAppBar",
+          "label": "Firefox",
+          "icon": "arrow_back",
+          "variant": "filled",
+          "icon2": "edit"
+        }
+      ]
+    },
+    {
+      "id": "detail-tags",
+      "x": 12,
+      "y": 100,
+      "axis": "x",
+      "items": [
+        {
+          "id": "detail-tags-item",
+          "kind": "text",
+          "label": "工作 · 邮箱",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "detail-expiry",
+      "x": 12,
+      "y": 140,
+      "axis": "x",
+      "items": [
+        {
+          "id": "detail-expiry-item",
+          "kind": "listItem",
+          "label": "有效期：2027年9月25日",
+          "icon": "event",
+          "variant": "filled",
+          "supporting": "剩余 365 天",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "detail-user",
+      "x": 12,
+      "y": 228,
+      "axis": "x",
+      "items": [
+        {
+          "id": "detail-user-item",
+          "kind": "listItem",
+          "label": "用户名",
+          "icon": "person",
+          "variant": "filled",
+          "supporting": "alice@example.com",
+          "icon2": "content_copy",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "detail-password",
+      "x": 12,
+      "y": 314,
+      "axis": "x",
+      "items": [
+        {
+          "id": "detail-password-item",
+          "kind": "listItem",
+          "label": "密码",
+          "icon": "key",
+          "variant": "filled",
+          "supporting": "••••••••••••",
+          "icon2": "visibility",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "detail-otp-background",
+      "x": 12,
+      "y": 408,
+      "axis": "x",
+      "items": [
+        {
+          "id": "detail-otp-background-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 388,
+          "size2": 154,
+          "fill": "secondaryContainer",
+          "radiusTop": 28,
+          "radiusBottom": 28
+        }
+      ]
+    },
+    {
+      "id": "detail-otp-title",
+      "x": 12,
+      "y": 420,
+      "axis": "x",
+      "items": [
+        {
+          "id": "detail-otp-title-item",
+          "kind": "text",
+          "label": "验证码 · Firefox",
+          "icon": null,
+          "variant": "filled",
+          "size": 16
+        }
+      ]
+    },
+    {
+      "id": "detail-otp-code",
+      "x": 12,
+      "y": 464,
+      "axis": "x",
+      "items": [
+        {
+          "id": "detail-otp-code-item",
+          "kind": "text",
+          "label": "287 082",
+          "icon": null,
+          "variant": "filled",
+          "size": 32
+        }
+      ]
+    },
+    {
+      "id": "detail-otp-progress",
+      "x": 12,
+      "y": 520,
+      "axis": "x",
+      "items": [
+        {
+          "id": "detail-otp-progress-item",
+          "kind": "text",
+          "label": "12 秒后更新",
+          "icon": null,
+          "variant": "filled",
+          "size": 14
+        }
+      ]
+    },
+    {
+      "id": "detail-otp-copy",
+      "x": 12,
+      "y": 574,
+      "axis": "x",
+      "items": [
+        {
+          "id": "detail-otp-copy-item",
+          "kind": "button",
+          "label": "复制验证码",
+          "icon": "content_copy",
+          "variant": "tonal"
+        }
+      ]
+    },
+    {
+      "id": "detail-attachments",
+      "x": 12,
+      "y": 658,
+      "axis": "x",
+      "items": [
+        {
+          "id": "detail-attachments-item",
+          "kind": "listItem",
+          "label": "附件",
+          "icon": "attach_file",
+          "variant": "filled",
+          "supporting": "recovery.txt · 3 KB",
+          "icon2": "more_vert",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "detail-history",
+      "x": 12,
+      "y": 748,
+      "axis": "x",
+      "items": [
+        {
+          "id": "detail-history-item",
+          "kind": "listItem",
+          "label": "历史版本",
+          "icon": "history",
+          "variant": "filled",
+          "supporting": "查看、更早版本恢复",
+          "icon2": "chevron_right",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "editor-bar",
+      "x": 504,
+      "y": 0,
+      "axis": "x",
+      "items": [
+        {
+          "id": "editor-bar-item",
+          "kind": "topAppBar",
+          "label": "编辑条目",
+          "icon": "arrow_back",
+          "variant": "filled",
+          "icon2": "check"
+        }
+      ]
+    },
+    {
+      "id": "editor-name",
+      "x": 504,
+      "y": 106,
+      "axis": "x",
+      "items": [
+        {
+          "id": "editor-name-item",
+          "kind": "textField",
+          "label": "标题",
+          "icon": null,
+          "variant": "outlined",
+          "supporting": "Firefox",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "editor-username",
+      "x": 504,
+      "y": 206,
+      "axis": "x",
+      "items": [
+        {
+          "id": "editor-username-item",
+          "kind": "textField",
+          "label": "用户名",
+          "icon": null,
+          "variant": "outlined",
+          "supporting": "alice@example.com",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "editor-tags",
+      "x": 504,
+      "y": 306,
+      "axis": "x",
+      "items": [
+        {
+          "id": "editor-tags-item",
+          "kind": "textField",
+          "label": "标签",
+          "icon": null,
+          "variant": "outlined",
+          "supporting": "工作, 邮箱",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "editor-expiry",
+      "x": 504,
+      "y": 410,
+      "axis": "x",
+      "items": [
+        {
+          "id": "editor-expiry-item",
+          "kind": "listItem",
+          "label": "设置有效期",
+          "icon": "event",
+          "variant": "filled",
+          "supporting": "开启后可选择日期和时间",
+          "icon2": "toggle_on",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "editor-date",
+      "x": 504,
+      "y": 496,
+      "axis": "x",
+      "items": [
+        {
+          "id": "editor-date-item",
+          "kind": "button",
+          "label": "2027年9月25日  18:30",
+          "icon": "calendar_month",
+          "variant": "tonal"
+        }
+      ]
+    },
+    {
+      "id": "editor-otp",
+      "x": 504,
+      "y": 582,
+      "axis": "x",
+      "items": [
+        {
+          "id": "editor-otp-item",
+          "kind": "listItem",
+          "label": "验证码设置",
+          "icon": "shield",
+          "variant": "filled",
+          "supporting": "读取 KeePass / KeePassDX 标准字段",
+          "icon2": "expand_more",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "editor-custom",
+      "x": 504,
+      "y": 674,
+      "axis": "x",
+      "items": [
+        {
+          "id": "editor-custom-item",
+          "kind": "listItem",
+          "label": "自定义字段",
+          "icon": "list",
+          "variant": "filled",
+          "supporting": "保留空值、名称大小写和保护状态",
+          "icon2": "add",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "editor-save",
+      "x": 504,
+      "y": 776,
+      "axis": "x",
+      "items": [
+        {
+          "id": "editor-save-item",
+          "kind": "button",
+          "label": "保存",
+          "icon": "check",
+          "variant": "filled",
+          "action": {
+            "to": "detail",
+            "transition": "slideRight"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hotp-bar",
+      "x": 996,
+      "y": 0,
+      "axis": "x",
+      "items": [
+        {
+          "id": "hotp-bar-item",
+          "kind": "topAppBar",
+          "label": "硬件令牌",
+          "icon": "arrow_back",
+          "variant": "filled",
+          "icon2": "edit"
+        }
+      ]
+    },
+    {
+      "id": "hotp-username",
+      "x": 996,
+      "y": 112,
+      "axis": "x",
+      "items": [
+        {
+          "id": "hotp-username-item",
+          "kind": "listItem",
+          "label": "用户名",
+          "icon": "person",
+          "variant": "filled",
+          "supporting": "alice",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "hotp-bg",
+      "x": 996,
+      "y": 232,
+      "axis": "x",
+      "items": [
+        {
+          "id": "hotp-bg-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 388,
+          "size2": 162,
+          "fill": "secondaryContainer",
+          "radiusTop": 28,
+          "radiusBottom": 28
+        }
+      ]
+    },
+    {
+      "id": "hotp-label",
+      "x": 996,
+      "y": 250,
+      "axis": "x",
+      "items": [
+        {
+          "id": "hotp-label-item",
+          "kind": "text",
+          "label": "HOTP · 计数器 2",
+          "icon": null,
+          "variant": "filled",
+          "size": 16
+        }
+      ]
+    },
+    {
+      "id": "hotp-code",
+      "x": 996,
+      "y": 300,
+      "axis": "x",
+      "items": [
+        {
+          "id": "hotp-code-item",
+          "kind": "text",
+          "label": "359 152",
+          "icon": null,
+          "variant": "filled",
+          "size": 32
+        }
+      ]
+    },
+    {
+      "id": "hotp-copy",
+      "x": 996,
+      "y": 416,
+      "axis": "x",
+      "items": [
+        {
+          "id": "hotp-copy-item",
+          "kind": "button",
+          "label": "复制验证码",
+          "icon": "content_copy",
+          "variant": "tonal"
+        }
+      ]
+    },
+    {
+      "id": "hotp-next",
+      "x": 996,
+      "y": 486,
+      "axis": "x",
+      "items": [
+        {
+          "id": "hotp-next-item",
+          "kind": "button",
+          "label": "下一码",
+          "icon": "navigate_next",
+          "variant": "filled"
+        }
+      ]
+    },
+    {
+      "id": "hotp-error",
+      "x": 996,
+      "y": 588,
+      "axis": "x",
+      "items": [
+        {
+          "id": "hotp-error-item",
+          "kind": "listItem",
+          "label": "未能保存下一码",
+          "icon": "error",
+          "variant": "filled",
+          "supporting": "请重试，当前计数器保持为 2",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "hotp-metadata",
+      "x": 996,
+      "y": 702,
+      "axis": "x",
+      "items": [
+        {
+          "id": "hotp-metadata-item",
+          "kind": "listItem",
+          "label": "原始字段与历史",
+          "icon": "history",
+          "variant": "filled",
+          "supporting": "始终可以查看完整条目",
+          "icon2": "chevron_right",
+          "size": 388
+        }
+      ]
+    }
+  ]
+}

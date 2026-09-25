@@ -6,6 +6,7 @@ import takagi.ru.monica.R
 
 import com.thegrizzlylabs.sardineandroid.DavResource
 import com.thegrizzlylabs.sardineandroid.impl.OkHttpSardine
+import com.thegrizzlylabs.sardineandroid.impl.SardineException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import takagi.ru.monica.webdav.WebDavCredentials
@@ -31,6 +32,8 @@ class WebDavMdbxFileSource internal constructor(
     private val httpClient by lazy { WebDavGateway.buildHttpClient(credentials, normalizedServerUrl) }
     private val sardine: OkHttpSardine by lazy { OkHttpSardine(httpClient) }
     private val conditionalWriter by lazy { WebDavConditionalWriter(httpClient) }
+    // One source lives for one sync transport. Segment/blob uploads share these parents.
+    private val verifiedDirectories = mutableSetOf<String>()
 
     override suspend fun testConnection(): Result<Unit> = withContext(Dispatchers.IO) {
         runCatching {
@@ -161,7 +164,12 @@ class WebDavMdbxFileSource internal constructor(
         val normalizedPath = WebDavKeePassFileSource.normalizeOptionalRemotePath(path)
         if (normalizedPath.isBlank()) return@withContext null
         val targetUrl = WebDavKeePassFileSource.buildRemoteUrl(normalizedServerUrl, normalizedPath)
-        val direct = listOrEmptyWhenNotFound { sardine.list(targetUrl) }
+        val direct = try {
+            sardine.list(targetUrl, 0)
+        } catch (error: IOException) {
+            if (isNotFound(error)) return@withContext null
+            throw error
+        }
         val directMatch = direct.firstOrNull { resource ->
             normalizeResourceUrl(resource.href?.toString())
                 .equals(normalizeResourceUrl(targetUrl), ignoreCase = true)
@@ -267,25 +275,42 @@ class WebDavMdbxFileSource internal constructor(
      * Recursively create intermediate directories on WebDAV server.
      * Skips directories that already exist.
      */
-    private fun ensureDirectoryPathExists(path: String) {
+    private fun ensureDirectoryPathExists(path: String) = synchronized(verifiedDirectories) {
         val segments = path.split("/").filter { it.isNotBlank() }
-        if (segments.isEmpty()) return
-
         var accumulatedPath = ""
         for (segment in segments) {
             accumulatedPath = if (accumulatedPath.isEmpty()) segment else "$accumulatedPath/$segment"
+            if (accumulatedPath in verifiedDirectories) continue
             val dirUrl = WebDavKeePassFileSource.buildRemoteUrl(normalizedServerUrl, accumulatedPath)
             try {
-                sardine.createDirectory(dirUrl)
-            } catch (_: IOException) {
-                // Directory may already exist, try listing to confirm
-                try {
-                    sardine.list(dirUrl, 0)
-                } catch (_: IOException) {
-                    throw IOException(strings.get(R.string.cloud_message_remote_folder_create, accumulatedPath))
+                if (!directoryExists(dirUrl)) {
+                    try {
+                        sardine.createDirectory(dirUrl)
+                    } catch (error: SardineException) {
+                        // Another client may have created it after our 404. Only
+                        // this collision warrants a probe; preserve service/auth errors.
+                        if (error.statusCode != 405 || !directoryExists(dirUrl)) throw error
+                    }
                 }
+                verifiedDirectories.add(accumulatedPath)
+            } catch (error: IOException) {
+                verifiedDirectories.clear()
+                throw error
             }
         }
+    }
+
+    private fun directoryExists(url: String): Boolean {
+        val resources = try {
+            sardine.list(url, 0)
+        } catch (error: IOException) {
+            if (isNotFound(error)) return false
+            throw error
+        }
+        if (resources.isEmpty() || resources.none { it.isDirectory }) {
+            throw IOException("WebDAV directory path does not reference a collection")
+        }
+        return true
     }
 
     private fun normalizeResourceUrl(url: String?): String = url.orEmpty().trimEnd('/')

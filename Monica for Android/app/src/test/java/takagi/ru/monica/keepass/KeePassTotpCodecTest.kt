@@ -6,8 +6,107 @@ import org.junit.Assert.assertNull
 import org.junit.Test
 import takagi.ru.monica.data.model.OtpType
 import takagi.ru.monica.data.model.TotpData
+import takagi.ru.monica.util.TotpGenerator
 
 class KeePassTotpCodecTest {
+    @Test
+    fun `invalid native HOTP counters must never restart from zero`() {
+        for (counter in listOf("-1", "9223372036854775808", "invalid")) {
+            val fields = mapOf("HmacOtp-Secret-Base32" to "JBSWY3DPEHPK3PXP", "HmacOtp-Counter" to counter)
+            assertNull(KeePassTotpCodec.parseFields({ fields[it].orEmpty() }))
+        }
+    }
+
+
+    @Test
+    fun nativeKeePassSecretEncodingsGenerateRfc4226And6238Codes() {
+        val representations = mapOf(
+            "Secret" to "12345678901234567890",
+            "Secret-Hex" to "3132333435363738393031323334353637383930",
+            "Secret-Base32" to "GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ",
+            "Secret-Base64" to "MTIzNDU2Nzg5MDEyMzQ1Njc4OTA="
+        )
+        representations.forEach { (encoding, secret) ->
+            val timeFields = mapOf("TimeOtp-$encoding" to secret, "TimeOtp-Length" to "8")
+            val time = requireNotNull(KeePassTotpCodec.parseFields({ timeFields[it].orEmpty() }))
+            assertEquals("94287082", TotpGenerator.generateTotp(time.secret, 59, time.period, time.digits, time.algorithm))
+            val counterFields = mapOf("HmacOtp-$encoding" to secret, "HmacOtp-Counter" to "2")
+            val counter = requireNotNull(KeePassTotpCodec.parseFields({ counterFields[it].orEmpty() }))
+            assertEquals(OtpType.HOTP, counter.otpType)
+            assertEquals("359152", TotpGenerator.generateHotp(counter.secret, counter.counter, counter.digits, counter.algorithm))
+        }
+    }
+
+    @Test
+    fun nativeKeePassAlgorithmsMatchRfc6238Vectors() {
+        listOf(
+            Triple("HMAC-SHA-256", "12345678901234567890123456789012", "46119246"),
+            Triple("HMAC-SHA-512", "1234567890123456789012345678901234567890123456789012345678901234", "90693936")
+        ).forEach { (algorithm, secret, code) ->
+            val fields = mapOf("TimeOtp-Secret" to secret, "TimeOtp-Length" to "8", "TimeOtp-Algorithm" to algorithm)
+            val data = requireNotNull(KeePassTotpCodec.parseFields({ fields[it].orEmpty() }))
+            assertEquals(code, TotpGenerator.generateTotp(data.secret, 59, data.period, data.digits, data.algorithm))
+        }
+    }
+
+    @Test
+    fun writesConsistentKeePassNativeAndUriRepresentations() {
+        listOf(OtpType.TOTP, OtpType.HOTP, OtpType.STEAM).forEach { type ->
+            val original = TotpData(secret = "JBSWY3DPEHPK3PXP", otpType = type,
+                issuer = "Example", accountName = "alice", digits = if (type == OtpType.STEAM) 5 else 6,
+                counter = if (type == OtpType.HOTP) 42 else 0)
+            val written = KeePassTotpCodec.toKeePassFields(original, "Example")
+            val uri = requireNotNull(KeePassTotpCodec.parseFields({ written[it].orEmpty() }))
+            assertEquals(original, uri)
+            if (type != OtpType.STEAM) {
+                val nativeOnly = written.filterKeys { it.startsWith("TimeOtp-") || it.startsWith("HmacOtp-") }
+                val native = requireNotNull(KeePassTotpCodec.parseFields({ nativeOnly[it].orEmpty() }, "Example", "alice"))
+                assertEquals(original, native)
+            }
+        }
+    }
+
+    @Test
+    fun malformedOrAmbiguousNativeSecretsAreNotTreatedAsValidCodes() {
+        val fields = mapOf("TimeOtp-Secret-Base32" to "JBSWY3DPEHPK3PXP", "TimeOtp-Secret" to "different secret")
+        assertNull(KeePassTotpCodec.parseFields({ fields[it].orEmpty() }))
+        assertNull(KeePassTotpCodec.parse(KeePassTotpCodec.Fields(otp = "key=invalid!&step=30&size=6")))
+    }
+
+    @Test
+    fun parsesTrayTotpPositionalSettingsWithoutConfusingDefaultPeriodWithDigits() {
+        val data = requireNotNull(KeePassTotpCodec.parse(KeePassTotpCodec.Fields(seed = "JBSWY3DPEHPK3PXP", settings = "30;8")))
+        assertEquals(30, data.period)
+        assertEquals(8, data.digits)
+    }
+
+    @Test
+    fun parsesKeeOtpKeyValueFormatInsteadOfTreatingTheWholeQueryAsASecret() {
+        val data = requireNotNull(KeePassTotpCodec.parse(KeePassTotpCodec.Fields(otp = "key=JBSWY3DPEHPK3PXP&step=60&size=8")))
+        assertEquals("JBSWY3DPEHPK3PXP", data.secret)
+        assertEquals(60, data.period)
+        assertEquals(8, data.digits)
+    }
+
+    @Test
+    fun uriComponentsAreDecodedOnceAndLiteralPlusInAccountIsPreserved() {
+        val data = requireNotNull(KeePassTotpCodec.parse(KeePassTotpCodec.Fields(
+            otp = "otpauth://totp/Example:alice+tag%40example.com?secret=JBSWY3DPEHPK3PXP&issuer=R%26D%20%2526"
+        )))
+        assertEquals("alice+tag@example.com", data.accountName)
+        assertEquals("R&D %26", data.issuer)
+    }
+
+    @Test
+    fun steamEncoderAndTrayTotpSteamSettingsProduceSteamTokens() {
+        val uri = requireNotNull(KeePassTotpCodec.parse(KeePassTotpCodec.Fields(
+            otp = "otpauth://totp/Steam:alice?secret=JBSWY3DPEHPK3PXP&encoder=steam"
+        )))
+        val tray = requireNotNull(KeePassTotpCodec.parse(KeePassTotpCodec.Fields(seed = "JBSWY3DPEHPK3PXP", settings = "30;S")))
+        assertEquals(OtpType.STEAM, uri.otpType)
+        assertEquals(OtpType.STEAM, tray.otpType)
+        assertEquals(5, tray.digits)
+    }
 
     @Test
     fun parsesOtpAuthUri() {
@@ -130,7 +229,8 @@ class KeePassTotpCodecTest {
         assertEquals("8", fields.getValue(KeePassTotpCodec.FIELD_TOTP_DIGITS))
         assertEquals("SHA256", fields.getValue(KeePassTotpCodec.FIELD_TOTP_ALGORITHM))
         assertEquals("TOTP", fields.getValue(KeePassTotpCodec.FIELD_OTP_TYPE))
-        assertEquals("period=45;digits=8;algorithm=SHA256", fields.getValue(KeePassTotpCodec.FIELD_TOTP_SETTINGS))
+        assertEquals("45;8", fields.getValue(KeePassTotpCodec.FIELD_TOTP_SETTINGS))
+        assertEquals("HMAC-SHA-256", fields.getValue("TimeOtp-Algorithm"))
         assertEquals(
             "otpauth://totp/GitHub%3Auser%40example.com?secret=JBSWY3DPEHPK3PXP&issuer=GitHub&algorithm=SHA256&digits=8&period=45",
             fields.getValue(KeePassTotpCodec.FIELD_OTP)
@@ -152,7 +252,9 @@ class KeePassTotpCodecTest {
 
         assertEquals("HOTP", fields.getValue(KeePassTotpCodec.FIELD_OTP_TYPE))
         assertEquals("12", fields.getValue(KeePassTotpCodec.FIELD_HOTP_COUNTER))
-        assertEquals("period=30;digits=6;algorithm=SHA1;type=hotp;counter=12", fields.getValue(KeePassTotpCodec.FIELD_TOTP_SETTINGS))
+        assertEquals("12", fields.getValue("HmacOtp-Counter"))
+        assertEquals("JBSWY3DPEHPK3PXP", fields.getValue("HmacOtp-Secret-Base32"))
+        assertNull(fields[KeePassTotpCodec.FIELD_TOTP_SEED])
         assertEquals(
             "otpauth://hotp/Example%3Aalice?secret=JBSWY3DPEHPK3PXP&issuer=Example&counter=12",
             fields.getValue(KeePassTotpCodec.FIELD_OTP)

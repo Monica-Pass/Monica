@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ime_scramble_pin_title">Shuffle number keys</string>
+    <string name="ime_scramble_pin_description">Shuffle when the number pad opens. Keys stay in place while you type.</string>
+    <string name="ime_hide_pin_preview_title">Hide number key previews</string>
+    <string name="ime_hide_pin_preview_description">Hide number popups and pressed-key highlights.</string>
+    <string name="ime_hide_keyboard">Hide keyboard</string>
+    <string name="ime_switch_keyboard">Switch input method</string>
+    <string name="ime_fill_current_otp">Fill current code</string>
+    <string name="ime_otp_unavailable">The current verification code is unavailable.</string>
+</resources>

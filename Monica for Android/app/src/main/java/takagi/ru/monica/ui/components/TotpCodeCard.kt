@@ -95,7 +95,10 @@ fun TotpCodeCard(
     parsedTotpData: TotpData? = null,
     decryptStoredValue: ((String) -> String)? = null,
     backgroundContent: (@Composable BoxScope.() -> Unit)? = null,
-    immersiveBackgroundVisible: Boolean = backgroundContent != null
+    immersiveBackgroundVisible: Boolean = backgroundContent != null,
+    cardVerticalPadding: Dp? = null,
+    codeSectionSpacing: Dp = 8.dp,
+    progressSectionSpacing: Dp = 4.dp
 ) {
     val context = LocalContext.current
     
@@ -608,7 +611,9 @@ fun TotpCodeCard(
                 }
             ) {
             Column(
-                modifier = Modifier.padding(if (uniformAuthenticatorLayout) 12.dp else 10.dp)
+                modifier = Modifier.padding(
+                    cardVerticalPadding ?: if (uniformAuthenticatorLayout) 12.dp else 10.dp
+                )
             ) {
             // 标题和菜单
             Row(
@@ -876,7 +881,7 @@ fun TotpCodeCard(
                 }
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(codeSectionSpacing))
 
             // 验证码显示
             Row(
@@ -989,7 +994,7 @@ fun TotpCodeCard(
                 }
             }
             
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(progressSectionSpacing))
 
             // 进度条/计数器显示
             // 判断是否需要隐藏进度条（启用统一进度条模式且是标准周期30s/60s）

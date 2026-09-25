@@ -7,6 +7,7 @@ import takagi.ru.monica.utils.LocaleHelper
 import takagi.ru.monica.utils.StartupLanguageCache
 import android.app.PendingIntent
 import android.content.Intent
+import android.graphics.drawable.Icon
 import android.os.Build
 import android.os.CancellationSignal
 import android.os.OutcomeReceiver
@@ -224,9 +225,10 @@ class MonicaCredentialProviderService : CredentialProviderService() {
             
             // 创建账户条目
             val createEntry = CreateEntry.Builder(
-                "Monica - $rpName",
+                "${strings.get(R.string.app_label)} - $rpName",
                 pendingIntent
             )
+                .setIcon(Icon.createWithResource(this, R.mipmap.ic_launcher_modern))
                 .setDescription(strings.get(R.string.legacy_ui_passkey_create_for, userName))
                 .build()
             
@@ -325,12 +327,12 @@ class MonicaCredentialProviderService : CredentialProviderService() {
                 
                 val entry = PublicKeyCredentialEntry.Builder(
                     this,
-                passkey.displayTitle(),
+                    passkey.displayTitle(),
                     pendingIntent,
                     option
                 )
                     .setDisplayName(passkey.rpName)
-                    .setIcon(android.graphics.drawable.Icon.createWithResource(this, takagi.ru.monica.R.drawable.ic_passkey))
+                    .setIcon(Icon.createWithResource(this, R.mipmap.ic_launcher_modern))
                     .build()
                 
                 entries.add(entry)

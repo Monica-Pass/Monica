@@ -29,8 +29,11 @@
     <string name="share">Share</string>
     <string name="field_action_more">More field actions</string>
     <string name="field_action_show_large">Show in large text</string>
-    <string name="field_action_show_barcode">Show as QR code</string>
+    <string name="field_action_show_barcode">Show as QR / barcode</string>
     <string name="field_action_barcode_failed">Could not create QR code for this value.</string>
+    <string name="field_barcode_format_qr">QR code</string>
+    <string name="field_barcode_format_linear">Barcode</string>
+    <string name="field_barcode_linear_failed">This value cannot be encoded as a Code 128 barcode. Use ASCII text up to 80 characters.</string>
     <string name="no_results">No results found</string>
     <string name="note_placeholder">Write something...</string>
     <string name="new_note">New Note</string>
@@ -1363,6 +1366,10 @@
     <string name="custom_icon_dialog_title">Set custom icon</string>
     <string name="custom_icon_pick_simple">Choose from icon library</string>
     <string name="custom_icon_upload_image">Upload image</string>
+    <string name="custom_icon_use_emoji">Use emoji</string>
+    <string name="custom_icon_emoji_hint">Type one emoji</string>
+    <string name="custom_icon_emoji_support">One emoji is stored with this entry, no extra icon pack needed.</string>
+    <string name="custom_icon_emoji_invalid">Enter exactly one emoji.</string>
     <string name="custom_icon_clear">Use website icon</string>
     <string name="custom_icon_search_hint">Search icons</string>
     <string name="custom_icon_search_empty">No matching icons found</string>
@@ -4674,4 +4681,12 @@
     <string name="qs_lang_french">Français</string>
     <string name="language_nya" translatable="false">喵喵语</string>
     <string name="qs_lang_nya" translatable="false">喵喵语</string>
+    <string name="custom_icon_pick_installed">Installed icons</string>
+    <string name="custom_icon_installed_apps">App icons</string>
+    <string name="custom_icon_installed_packs">Icon packs</string>
+    <string name="custom_icon_installed_empty_packs">No compatible icon packs found. Install an icon pack, then reopen this picker.</string>
+    <string name="custom_icon_installed_empty_icons">This icon pack has no supported icons.</string>
+    <string name="custom_icon_installed_load_failed">Could not load icons. Please try again.</string>
+    <string name="custom_icon_installed_save_failed">Could not use this icon. Try again or choose another icon.</string>
+    <string name="field_barcode_linear_too_wide">This barcode needs more screen width. Rotate your device or use a QR code.</string>
 </resources>

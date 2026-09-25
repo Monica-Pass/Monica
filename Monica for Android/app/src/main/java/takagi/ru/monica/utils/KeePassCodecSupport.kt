@@ -3,10 +3,14 @@ package takagi.ru.monica.utils
 import app.keemobile.kotpass.cryptography.format.BaseCiphers
 import app.keemobile.kotpass.cryptography.format.CipherProvider
 import app.keemobile.kotpass.cryptography.format.TwofishCipher
+import app.keemobile.kotpass.xml.XmlContentParser
 import takagi.ru.monica.data.KeePassCipherAlgorithm
+import takagi.ru.monica.keepass.KeePassXmlContentParser
 import java.util.UUID
 
 object KeePassCodecSupport {
+    val contentParser: XmlContentParser = KeePassXmlContentParser
+
     val cipherProviders: List<CipherProvider> = buildList {
         addAll(BaseCiphers.entries)
         add(TwofishCipher)

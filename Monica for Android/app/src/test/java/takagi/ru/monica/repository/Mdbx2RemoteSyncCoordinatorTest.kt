@@ -11,6 +11,7 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import takagi.ru.monica.data.MdbxSyncCheckpointState
+import takagi.ru.monica.data.MdbxSyncResumeState
 import takagi.ru.monica.data.MdbxSyncStateDao
 import takagi.ru.monica.data.MdbxSyncStateEntity
 import takagi.ru.monica.data.MdbxSyncStateStore
@@ -33,11 +34,11 @@ class Mdbx2RemoteSyncCoordinatorTest {
             sync.publishBootstrap(1L, remotePath, transport)
             val published = engine.checkpoint()
             val editingTransport = object : MdbxRemoteTransport by transport {
-                override suspend fun stat(path: String): MdbxRemoteObject? {
+                override suspend fun list(path: String?): List<MdbxRemoteObject> {
                     if (path == MdbxRemoteSyncPaths.streamsRoot(remotePath)) {
                         engine.advance("local-during-list")
                     }
-                    return transport.stat(path)
+                    return transport.list(path)
                 }
             }
 
@@ -347,9 +348,208 @@ class Mdbx2RemoteSyncCoordinatorTest {
         }
     }
 
+    @Test
+    fun reversedParentDependenciesResolveBeyondFourPassesWithoutRedownloading() = runBlocking {
+        val root = tempDirectory("mdbx2-reversed-parents")
+        try {
+            val transport = MemoryTransport()
+            val engine = FakeEngine("vault-a", "receiver").apply { requireParents = true }
+            val sync = coordinator(root, engine, FakeStateDao())
+            val remotePath = "vaults/main.mdbx"
+            sync.registerDownloadedBootstrap(1L, remotePath)
+            // Directory names are deliberately the reverse of commit ancestry.
+            for (index in 1..6) {
+                publishFixtureSegment(root, transport, remotePath,
+                    deviceId = "device-${7 - index}", base = "c${index - 1}", result = "c$index")
+            }
+
+            val report = sync.synchronize(1L, remotePath, transport)
+            assertEquals(0, report.blockedStreams)
+            assertEquals(6, report.appliedCommits)
+            assertEquals("c6", engine.checkpoint().commitInventory)
+            assertEquals(6, report.downloadedSegments)
+            assertTrue(transport.segmentReads.values.all { it == 1 })
+            assertEquals(0, sync.synchronize(1L, remotePath, transport).downloadedSegments)
+            assertTrue(File(File(root, engine.deviceId), "incoming").listFiles().orEmpty().isEmpty())
+        } finally {
+            root.deleteRecursively()
+        }
+    }
+
+    @Test
+    fun stalledParentIsDownloadedOnceAndCanResumeAfterParentArrives() = runBlocking {
+        val root = tempDirectory("mdbx2-stalled-parent")
+        try {
+            val transport = MemoryTransport()
+            val engine = FakeEngine("vault-a", "receiver").apply { requireParents = true }
+            val dao = FakeStateDao()
+            val sync = coordinator(root, engine, dao)
+            val remotePath = "vaults/main.mdbx"
+            sync.registerDownloadedBootstrap(1L, remotePath)
+            val baseline = engine.checkpoint()
+            publishFixtureSegment(root, transport, remotePath, "a-child", "c1", "c2")
+
+            val stalled = sync.synchronize(1L, remotePath, transport)
+            assertEquals(1, stalled.blockedStreams)
+            assertEquals(1, stalled.downloadedSegments)
+            assertEquals(0, stalled.appliedCommits)
+            assertEquals(baseline, engine.checkpoint())
+            val state = MdbxSyncStateStore(dao).read(1L)
+            assertEquals(baseline, state.exportCheckpoint)
+            assertEquals(0L, state.remoteStreams.single().nextSequence)
+
+            publishFixtureSegment(root, transport, remotePath, "z-parent", "c0", "c1")
+            val resumed = coordinator(root, engine, dao).synchronize(1L, remotePath, transport)
+            assertEquals(0, resumed.blockedStreams)
+            assertEquals(2, resumed.downloadedSegments)
+            assertEquals("c2", engine.checkpoint().commitInventory)
+        } finally {
+            root.deleteRecursively()
+        }
+    }
+
+    @Test
+    fun reopeningBootstrapOnSameDeviceRecoversItsPreviouslyPublishedSegments() = runBlocking {
+        val root = tempDirectory("mdbx2-reopen-same-device")
+        try {
+            val transport = MemoryTransport()
+            val source = FakeEngine("vault-a", "device-a")
+            val publisher = coordinator(File(root, "publisher"), source, FakeStateDao())
+            val remotePath = "vaults/main.mdbx"
+            publisher.publishBootstrap(1L, remotePath, transport)
+            source.advance("c1")
+            assertEquals(0, publisher.synchronize(1L, remotePath, transport).downloadedSegments)
+
+            val restored = FakeEngine("vault-a", "device-a")
+            val receiver = coordinator(File(root, "restored"), restored, FakeStateDao())
+            receiver.registerDownloadedBootstrap(2L, remotePath)
+            val report = receiver.synchronize(2L, remotePath, transport)
+            assertEquals(1, report.downloadedSegments)
+            assertEquals("c1", restored.checkpoint().commitInventory)
+            assertEquals(0, receiver.synchronize(2L, remotePath, transport).downloadedSegments)
+        } finally {
+            root.deleteRecursively()
+        }
+    }
+
+    @Test
+    fun listingUsesKnownSegmentsDirectoryWithoutRedundantMetadataProbes() = runBlocking {
+        val root = tempDirectory("mdbx2-list-requests")
+        try {
+            val transport = MemoryTransport()
+            val engine = FakeEngine("vault-a", "receiver")
+            val sync = coordinator(root, engine, FakeStateDao())
+            val remotePath = "vaults/main.mdbx"
+            sync.registerDownloadedBootstrap(1L, remotePath)
+            publishFixtureSegment(root, transport, remotePath, "source", "c0", "c1")
+
+            sync.synchronize(1L, remotePath, transport)
+            assertEquals(emptyList<String>(), transport.statPaths)
+            assertEquals(listOf(
+                MdbxRemoteSyncPaths.streamsRoot(remotePath),
+                "${MdbxRemoteSyncPaths.streamsRoot(remotePath)}/source",
+                "${MdbxRemoteSyncPaths.streamsRoot(remotePath)}/source/transfer-source/segments"
+            ), transport.listPaths)
+        } finally {
+            root.deleteRecursively()
+        }
+    }
+
+    @Test
+    fun pagedPublicationKeepsOneGenerationAndVerifiesEachBlobOncePerSync() = runBlocking {
+        val root = tempDirectory("mdbx2-paged-publication")
+        try {
+            val transport = MemoryTransport()
+            val source = FakeEngine("vault-a", "source")
+            val dao = FakeStateDao()
+            val sync = coordinator(root, source, dao)
+            val remotePath = "vaults/main.mdbx"
+            sync.publishBootstrap(1L, remotePath, transport)
+            val blobId = source.addAvailableBlob(byteArrayOf(1, 2, 3, 4))
+            source.queuePages("c1", "c2", "c3")
+
+            val report = sync.synchronize(1L, remotePath, transport)
+            assertEquals(3, report.uploadedSegments)
+            assertEquals(1, report.uploadedBlobs)
+            assertEquals(0, report.downloadedSegments)
+            assertEquals(1, transport.statPaths.count { it == MdbxRemoteSyncPaths.blobPath(remotePath, blobId) })
+            val paths = transport.writeOrder.filter { it.endsWith(".mdbxsync") }
+            assertEquals(1, paths.map { it.substringBeforeLast('/') }.distinct().size)
+            val state = MdbxSyncStateStore(dao).read(1L)
+            assertEquals(null, state.exportResume)
+            assertEquals(3L, state.remoteStreams.single().nextSequence)
+        } finally {
+            root.deleteRecursively()
+        }
+    }
+
+    @Test
+    fun interruptedPagedPublicationResumesSameGenerationAfterRestart() = runBlocking {
+        val root = tempDirectory("mdbx2-paged-restart")
+        try {
+            val transport = MemoryTransport().apply { failOnSegmentWriteNumber = 2 }
+            val source = FakeEngine("vault-a", "source")
+            val dao = FakeStateDao()
+            val sync = coordinator(root, source, dao)
+            val remotePath = "vaults/main.mdbx"
+            sync.publishBootstrap(1L, remotePath, transport)
+            source.queuePages("c1", "c2", "c3")
+            assertTrue(runCatching { sync.synchronize(1L, remotePath, transport) }.isFailure)
+            val interrupted = MdbxSyncStateStore(dao).read(1L)
+            assertEquals(1u, interrupted.exportResume?.nextSegmentIndex)
+            assertEquals(1u, interrupted.pendingSegment?.segmentIndex)
+
+            val report = coordinator(root, source, dao).synchronize(1L, remotePath, transport)
+            assertEquals(2, report.uploadedSegments)
+            val paths = transport.writeOrder.filter { it.endsWith(".mdbxsync") }
+            assertEquals(3, paths.size)
+            assertEquals(1, paths.map { it.substringBeforeLast('/') }.distinct().size)
+            assertEquals("c3", MdbxSyncStateStore(dao).read(1L).exportCheckpoint?.commitInventory)
+        } finally {
+            root.deleteRecursively()
+        }
+    }
+
+    @Test
+    fun arrivingSegmentZeroInitializesPreviouslyGappedStreamFromAuthenticatedBase() = runBlocking {
+        val root = tempDirectory("mdbx2-gap-recovery")
+        try {
+            val transport = MemoryTransport()
+            val engine = FakeEngine("vault-a", "receiver").apply { requireParents = true }
+            val sync = coordinator(root, engine, FakeStateDao())
+            val remotePath = "vaults/main.mdbx"
+            sync.registerDownloadedBootstrap(1L, remotePath)
+            publishFixtureSegment(root, transport, remotePath, "a-child", "c2", "c3", sequence = 1)
+            assertEquals(1, sync.synchronize(1L, remotePath, transport).blockedStreams)
+            publishFixtureSegment(root, transport, remotePath, "a-child", "c1", "c2")
+            publishFixtureSegment(root, transport, remotePath, "z-parent", "c0", "c1")
+
+            val report = sync.synchronize(1L, remotePath, transport)
+            assertEquals(0, report.blockedStreams)
+            assertEquals("c3", engine.checkpoint().commitInventory)
+        } finally {
+            root.deleteRecursively()
+        }
+    }
+
+    private suspend fun publishFixtureSegment(
+        root: File,
+        transport: MemoryTransport,
+        remotePath: String,
+        deviceId: String,
+        base: String,
+        result: String,
+        sequence: Int = 0
+    ) {
+        val file = File(root, "$deviceId-$sequence.mdbxsync")
+        file.writeText(listOf("vault-a", deviceId, "transfer-$deviceId", sequence, base, "d$base", result, "d$result").joinToString("|"))
+        transport.writeFrom(MdbxRemoteSyncPaths.segmentPath(remotePath, deviceId, "transfer-$deviceId", sequence.toUInt(),
+            MdbxRemoteSyncPaths.sha256Hex(file)), file, MdbxRemoteWriteMode.CREATE_ONLY)
+    }
+
     private fun coordinator(
         root: File,
-        engine: FakeEngine,
+        engine: Mdbx2SyncEngine,
         dao: FakeStateDao
     ): Mdbx2RemoteSyncCoordinator = Mdbx2RemoteSyncCoordinator(
         rootDirectory = File(root, engine.deviceId),
@@ -377,15 +577,21 @@ class Mdbx2RemoteSyncCoordinatorTest {
         private val files = linkedMapOf<String, ByteArray>()
         private val directories = linkedSetOf<String>()
         val writeOrder = mutableListOf<String>()
+        val statPaths = mutableListOf<String>()
+        val listPaths = mutableListOf<String>()
+        val segmentReads = mutableMapOf<String, Int>()
         var failNextSegmentWrite: Boolean = false
         var failNextBlobRead: Boolean = false
         var rejectSegmentWrites: Boolean = false
         var blobReadCount: Int = 0
+        var failOnSegmentWriteNumber: Int? = null
+        private var segmentWriteAttempts = 0
 
         override suspend fun testConnection() = Unit
 
         override suspend fun stat(path: String): MdbxRemoteObject? {
             val normalized = MdbxRemoteSyncPaths.normalizePath(path)
+            statPaths += normalized
             files[normalized]?.let { return MdbxRemoteObject(normalized, false, it.size.toLong(), normalized) }
             if (normalized in directories) return MdbxRemoteObject(normalized, true)
             return null
@@ -393,6 +599,7 @@ class Mdbx2RemoteSyncCoordinatorTest {
 
         override suspend fun list(path: String?): List<MdbxRemoteObject> {
             val normalized = path?.let(MdbxRemoteSyncPaths::normalizePath).orEmpty()
+            listPaths += normalized
             val prefix = if (normalized.isBlank()) "" else "$normalized/"
             val children = linkedSetOf<String>()
             files.keys.filter { it.startsWith(prefix) }.forEach { child ->
@@ -422,6 +629,7 @@ class Mdbx2RemoteSyncCoordinatorTest {
 
         override suspend fun readTo(path: String, destination: File) {
             val normalized = MdbxRemoteSyncPaths.normalizePath(path)
+            if (normalized.endsWith(".mdbxsync")) segmentReads[normalized] = (segmentReads[normalized] ?: 0) + 1
             if ("/blobs/" in normalized) blobReadCount += 1
             if (failNextBlobRead && "/blobs/" in normalized) {
                 failNextBlobRead = false
@@ -440,6 +648,12 @@ class Mdbx2RemoteSyncCoordinatorTest {
             expectedVersion: String?
         ): MdbxRemoteObject {
             val normalized = MdbxRemoteSyncPaths.normalizePath(path)
+            if (normalized.endsWith(".mdbxsync")) {
+                segmentWriteAttempts++
+                if (segmentWriteAttempts == failOnSegmentWriteNumber) {
+                    throw IOException("simulated paged publication interruption")
+                }
+            }
             if (rejectSegmentWrites && normalized.endsWith(".mdbxsync")) {
                 throw IOException("immutable collision")
             }
@@ -473,10 +687,21 @@ class Mdbx2RemoteSyncCoordinatorTest {
         private val blobSizes = linkedMapOf<String, ULong>()
         private val blobContents = linkedMapOf<String, ByteArray>()
         private val blobWrites = linkedMapOf<String, ByteArrayOutputStream>()
+        private val knownCommits = mutableSetOf("c0")
+        var requireParents = false
+        private val queuedPages = ArrayDeque<String>()
+        private var paginating = false
+        private var pageGeneration = 0
 
-        fun advance(nextToken: String) { token = nextToken }
+        fun advance(nextToken: String) { token = nextToken; knownCommits += nextToken }
 
         fun recordReadAudit() { auditRevision++ }
+
+        fun queuePages(vararg tokens: String) {
+            paginating = true
+            queuedPages.addAll(tokens)
+            advance(tokens.last())
+        }
 
         fun addAvailableBlob(bytes: ByteArray): String {
             val blobId = sha256Hex(bytes)
@@ -506,12 +731,17 @@ class Mdbx2RemoteSyncCoordinatorTest {
             pageSize: UInt
         ): Mdbx2SegmentInfo {
             check(!destination.exists()) { "Segment destination must be unpublished" }
-            val index = nextIndex++
-            val result = checkpoint()
+            val index = if (paginating) resume?.nextSegmentIndex ?: 0u else nextIndex++
+            val generation = if (paginating) resume?.transferId ?: "pages-$deviceId-${pageGeneration++}" else transferId
+            val result = if (paginating) {
+                val nextToken = queuedPages.removeFirst()
+                MdbxSyncCheckpointState(nextToken, "d$nextToken")
+            } else checkpoint()
             val payload = listOf(
-                vaultId, deviceId, transferId, index,
+                vaultId, deviceId, generation, index,
                 base.commitInventory, base.deltaInventory,
-                result.commitInventory, result.deltaInventory
+                result.commitInventory, result.deltaInventory,
+                !paginating || queuedPages.isEmpty()
             ).joinToString("|")
             destination.writeText(payload)
             return segmentInfo(destination, payload)
@@ -528,8 +758,12 @@ class Mdbx2RemoteSyncCoordinatorTest {
             val before = checkpoint()
             val info = inspectSegment(source)
             require(info.base == expectedBase)
+            if (requireParents && info.base.commitInventory !in knownCommits) {
+                return Mdbx2SegmentApplyResult(expectedBase, expectedResume, 0u, 0u, 0u, 2u, before, before)
+            }
             token = info.result.commitInventory
-            return Mdbx2SegmentApplyResult(info.result, null, 1u, 0u, 0u, 0u, before, checkpoint())
+            knownCommits += token
+            return Mdbx2SegmentApplyResult(info.result, info.nextResume, 1u, 0u, 0u, 0u, before, checkpoint())
         }
 
         override suspend fun listBlobReferences(cursor: String?, pageSize: UInt) =
@@ -599,19 +833,20 @@ class Mdbx2RemoteSyncCoordinatorTest {
 
         private fun segmentInfo(file: File, payload: String): Mdbx2SegmentInfo {
             val parts = payload.split('|')
-            require(parts.size == 8)
+            require(parts.size in 8..9)
             val base = MdbxSyncCheckpointState(parts[4], parts[5])
             val result = MdbxSyncCheckpointState(parts[6], parts[7])
             val digest = MdbxRemoteSyncPaths.sha256Hex(file)
+            val isLast = parts.getOrNull(8)?.toBoolean() ?: true
             return Mdbx2SegmentInfo(
                 vaultId = parts[0],
                 sourceDeviceId = parts[1],
                 transferId = parts[2],
                 segmentIndex = parts[3].toUInt(),
-                isLast = true,
+                isLast = isLast,
                 base = base,
                 result = result,
-                nextResume = null,
+                nextResume = if (isLast) null else MdbxSyncResumeState(parts[2], parts[3].toUInt() + 1u, digest),
                 commitCount = 1u,
                 deltaCount = 1u,
                 payloadSha256Hex = digest,

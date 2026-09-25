@@ -138,7 +138,10 @@ internal data class MonicaImePasswordEntry(
     val totpCode: String = "",
     val keepassDatabaseId: Long? = null,
     val mdbxDatabaseId: Long? = null,
-    val bitwardenVaultId: Long? = null
+    val bitwardenVaultId: Long? = null,
+    val appName: String = "",
+    val hasTotp: Boolean = false,
+    val alphabeticalLetter: String? = null,
 )
 
 internal data class MonicaImeAuthenticatorEntry(
@@ -152,7 +155,8 @@ internal data class MonicaImeAuthenticatorEntry(
     val sourceLabel: String,
     val keepassDatabaseId: Long? = null,
     val mdbxDatabaseId: Long? = null,
-    val bitwardenVaultId: Long? = null
+    val bitwardenVaultId: Long? = null,
+    val alphabeticalLetter: String? = null,
 )
 
 internal data class MonicaImeCardWalletField(
@@ -170,7 +174,8 @@ internal data class MonicaImeCardWalletEntry(
     val fields: List<MonicaImeCardWalletField>,
     val keepassDatabaseId: Long? = null,
     val mdbxDatabaseId: Long? = null,
-    val bitwardenVaultId: Long? = null
+    val bitwardenVaultId: Long? = null,
+    val alphabeticalLetter: String? = null,
 )
 
 internal data class MonicaImeUiState(
@@ -191,7 +196,10 @@ internal data class MonicaImeUiState(
     val isAutofillLoading: Boolean = false,
     val isSearchEditing: Boolean = false,
     val passwordSortMode: MonicaImePasswordSortMode = MonicaImePasswordSortMode.ALPHABETICAL,
-    val pendingClearedInput: String? = null
+    val pendingClearedInput: String? = null,
+    val keyboardOptions: ImeKeyboardOptions = ImeKeyboardOptions(),
+    val pinDigits: List<String> = StandardImePinDigits,
+    val isSensitiveInput: Boolean = false,
 )
 
 internal enum class MonicaKeyboardMode {
@@ -232,23 +240,6 @@ internal data class MonicaImeDatabaseOption(
     val label: String
 )
 
-private data class MonicaKeySpec(
-    val label: String = "",
-    val weight: Float = 1f,
-    val onClickValue: String? = null,
-    val icon: (@Composable (() -> Unit))? = null,
-    val onClick: (() -> Unit)? = null,
-    val active: Boolean = false,
-    val cornerRadius: Int = 12,
-    val style: MonicaKeyStyle = MonicaKeyStyle.STANDARD
-)
-
-private enum class MonicaKeyStyle {
-    STANDARD,
-    ACCENT,
-    PRIMARY
-}
-
 private enum class MonicaToolbarSelection {
     MONICA,
     PASSWORDS,
@@ -288,13 +279,16 @@ internal fun MonicaImeContent(
     onSearchCleared: () -> Unit,
     onPanelSelected: (MonicaImePanel) -> Unit,
     onSwitchInputMethod: () -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    onInsertPasswordTotp: ((MonicaImePasswordEntry) -> Unit)? = null,
 ) {
     val darkTheme = when (settings.themeMode) {
         ThemeMode.SYSTEM -> androidx.compose.foundation.isSystemInDarkTheme()
         ThemeMode.LIGHT -> false
         ThemeMode.DARK -> true
     }
+    val contentAreaHeight = if (androidx.compose.ui.platform.LocalConfiguration.current.orientation ==
+        android.content.res.Configuration.ORIENTATION_LANDSCAPE) 192.dp else MonicaImeContentAreaHeight
     val activePanelRequiresUnlock = when (uiState.activePanel) {
         MonicaImePanel.PASSWORDS,
         MonicaImePanel.AUTHENTICATORS,
@@ -327,6 +321,8 @@ internal fun MonicaImeContent(
             ) {
                 Column(
                     modifier = Modifier
+                        .align(Alignment.TopCenter)
+                        .widthIn(max = 600.dp)
                         .fillMaxWidth()
                         .background(MaterialTheme.colorScheme.surface)
                 ) {
@@ -344,7 +340,7 @@ internal fun MonicaImeContent(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(MonicaImeContentAreaHeight)
+                            .height(contentAreaHeight)
                             .zIndex(30f)
                     ) {
                         if (showPanelContent) {
@@ -359,8 +355,8 @@ internal fun MonicaImeContent(
                                         onInsertUsername = onInsertUsername,
                                         onInsertWebsite = onInsertWebsite,
                                         onInsertTotp = { entry ->
-                                            val code = entry.totpCode
-                                            if (code.isNotBlank()) onKeyPressed(code)
+                                            if (onInsertPasswordTotp != null) onInsertPasswordTotp(entry)
+                                            else if (entry.totpCode.isNotBlank()) onKeyPressed(entry.totpCode)
                                         },
                                         onSmartFillPassword = onSmartFillPassword
                                     )
@@ -409,6 +405,9 @@ internal fun MonicaImeContent(
                                 modifier = Modifier.fillMaxSize(),
                                 mode = uiState.keyboardMode,
                                 isUppercase = uiState.isUppercase,
+                                pinDigits = uiState.pinDigits,
+                                hideKeyFeedback = (!uiState.isSearchEditing && uiState.isSensitiveInput) ||
+                                    (uiState.keyboardMode == MonicaKeyboardMode.NUMBERS && uiState.keyboardOptions.hidePinPreview),
                                 onKeyPressed = onKeyPressed,
                                 onBackspace = onBackspace,
                                 onDeleteAll = onDeleteAll,
@@ -428,7 +427,6 @@ internal fun MonicaImeContent(
     }
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun MonicaImeToolbar(
     modifier: Modifier = Modifier,
@@ -441,104 +439,66 @@ private fun MonicaImeToolbar(
     onDismiss: () -> Unit
 ) {
     if (uiState.isSearchEditing) {
-        ImeSearchToolbar(
-            query = uiState.query,
-            resultCount = uiState.activeEntryCount,
-            onFinish = onSearchEditFinished,
-            onClear = onSearchCleared
-        )
+        ImeSearchToolbar(query = uiState.query, resultCount = uiState.activeEntryCount,
+            onFinish = onSearchEditFinished, onClear = onSearchCleared)
         return
     }
-    val selected = when (uiState.activePanel) {
-        MonicaImePanel.KEYBOARD -> MonicaToolbarSelection.MONICA
-        MonicaImePanel.PASSWORDS -> MonicaToolbarSelection.PASSWORDS
-        MonicaImePanel.AUTHENTICATORS -> MonicaToolbarSelection.AUTHENTICATORS
-        MonicaImePanel.DOCUMENTS -> MonicaToolbarSelection.DOCUMENTS
-        MonicaImePanel.GENERATOR -> MonicaToolbarSelection.GENERATOR
-    }
-    val toolbarItems = listOf(
-        MonicaToolbarSelection.MONICA,
-        MonicaToolbarSelection.PASSWORDS,
-        MonicaToolbarSelection.AUTHENTICATORS,
-        MonicaToolbarSelection.DOCUMENTS,
-        MonicaToolbarSelection.GENERATOR
-    )
-
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Row(
-            modifier = Modifier.weight(1f),
-            horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween)
-        ) {
-            toolbarItems.forEachIndexed { index, item ->
-                ConnectedToolbarButton(
-                    selected = selected == item,
-                    position = when (index) {
-                        0 -> ConnectedToolbarPosition.LEADING
-                        toolbarItems.lastIndex -> ConnectedToolbarPosition.TRAILING
-                        else -> ConnectedToolbarPosition.MIDDLE
-                    },
-                    contentDescription = when (item) {
-                        MonicaToolbarSelection.MONICA -> stringResource(R.string.ime_toolbar_keyboard)
-                        MonicaToolbarSelection.PASSWORDS -> stringResource(R.string.ime_toolbar_autofill)
-                        MonicaToolbarSelection.AUTHENTICATORS -> stringResource(R.string.authenticator)
-                        MonicaToolbarSelection.DOCUMENTS -> stringResource(R.string.nav_card_wallet)
-                        MonicaToolbarSelection.GENERATOR -> stringResource(R.string.generator)
-                    },
-                    imageVector = when (item) {
-                        MonicaToolbarSelection.MONICA -> Icons.Default.Keyboard
-                        MonicaToolbarSelection.PASSWORDS -> Icons.Default.Key
-                        MonicaToolbarSelection.AUTHENTICATORS -> Icons.Default.VerifiedUser
-                        MonicaToolbarSelection.DOCUMENTS -> Icons.Default.Badge
-                        MonicaToolbarSelection.GENERATOR -> Icons.Default.AutoAwesome
-                    },
-                    onClick = {
-                        when (item) {
-                            MonicaToolbarSelection.MONICA -> onPanelSelected(MonicaImePanel.KEYBOARD)
-                            MonicaToolbarSelection.PASSWORDS -> onPanelSelected(MonicaImePanel.PASSWORDS)
-                            MonicaToolbarSelection.AUTHENTICATORS -> onPanelSelected(MonicaImePanel.AUTHENTICATORS)
-                            MonicaToolbarSelection.DOCUMENTS -> onPanelSelected(MonicaImePanel.DOCUMENTS)
-                            MonicaToolbarSelection.GENERATOR -> onPanelSelected(MonicaImePanel.GENERATOR)
-                        }
-                    }
-                )
+    Row(modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically) {
+        listOf(MonicaImePanel.KEYBOARD, MonicaImePanel.PASSWORDS, MonicaImePanel.AUTHENTICATORS,
+            MonicaImePanel.DOCUMENTS, MonicaImePanel.GENERATOR).forEach { panel ->
+            val label = stringResource(when (panel) {
+                MonicaImePanel.KEYBOARD -> R.string.ime_toolbar_keyboard
+                MonicaImePanel.PASSWORDS -> R.string.ime_toolbar_autofill
+                MonicaImePanel.AUTHENTICATORS -> R.string.authenticator
+                MonicaImePanel.DOCUMENTS -> R.string.nav_card_wallet
+                MonicaImePanel.GENERATOR -> R.string.generator
+            })
+            ImeToolbarItem(label, "ime_toolbar_${panel.name.lowercase()}", uiState.activePanel == panel,
+                onClick = { onPanelSelected(panel) }) {
+                Icon(when (panel) {
+                    MonicaImePanel.KEYBOARD -> Icons.Default.Keyboard
+                    MonicaImePanel.PASSWORDS -> Icons.Default.Key
+                    MonicaImePanel.AUTHENTICATORS -> Icons.Default.VerifiedUser
+                    MonicaImePanel.DOCUMENTS -> Icons.Default.Badge
+                    MonicaImePanel.GENERATOR -> Icons.Default.AutoAwesome
+                }, null, Modifier.size(22.dp))
             }
         }
-
-        if (uiState.pendingClearedInput != null) {
-            ToolbarCircleButton(
-                selected = true,
-                onClick = onUndoDeleteAll,
-                contentDescription = stringResource(R.string.ime_clear_all_undo_action)
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.Undo,
-                    contentDescription = null
-                )
-            }
-        } else {
-            ToolbarCircleButton(
-                selected = false,
-                onClick = onOpenAutofillSettings,
-                contentDescription = stringResource(R.string.autofill)
-            ) {
-                Icon(Icons.Default.MoreHoriz, contentDescription = null)
-            }
+        val undo = uiState.pendingClearedInput != null
+        ImeToolbarItem(stringResource(if (undo) R.string.ime_clear_all_undo_action else R.string.autofill),
+            "ime_toolbar_more", undo, if (undo) onUndoDeleteAll else onOpenAutofillSettings) {
+            Icon(if (undo) Icons.AutoMirrored.Filled.Undo else Icons.Default.MoreHoriz, null, Modifier.size(22.dp))
         }
-
-        ToolbarCircleButton(
-            selected = false,
-            onClick = onDismiss,
-            contentDescription = stringResource(R.string.ime_toolbar_keyboard)
-        ) {
-            Icon(Icons.Default.KeyboardArrowDown, contentDescription = null)
+        ImeToolbarItem(stringResource(R.string.ime_hide_keyboard), "ime_toolbar_hide", false, onDismiss) {
+            Icon(Icons.Default.KeyboardArrowDown, null, Modifier.size(22.dp))
         }
     }
+}
+
+@Composable
+private fun RowScope.ImeToolbarItem(label: String, tag: String, selected: Boolean,
+    onClick: () -> Unit, content: @Composable () -> Unit) {
+    Box(Modifier.weight(1f).height(48.dp).testTag(tag)
+        .clickable(role = Role.Button, onClick = onClick).semantics { contentDescription = label },
+        contentAlignment = Alignment.Center) {
+        Surface(Modifier.size(40.dp), shape = CircleShape,
+            color = if (selected) MaterialTheme.colorScheme.secondaryContainer else Color.Transparent,
+            contentColor = if (selected) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurfaceVariant) {
+            Box(contentAlignment = Alignment.Center) { content() }
+        }
+    }
+}
+
+@Composable
+private fun ToolbarCircleButton(selected: Boolean, onClick: () -> Unit,
+    contentDescription: String, content: @Composable () -> Unit) {
+    FilledIconButton(onClick = onClick, modifier = Modifier.size(48.dp)
+        .semantics { this.contentDescription = contentDescription }, shape = CircleShape,
+        colors = androidx.compose.material3.IconButtonDefaults.filledIconButtonColors(
+            containerColor = if (selected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainerHigh,
+            contentColor = if (selected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface,
+        )) { content() }
 }
 
 @Composable
@@ -1093,12 +1053,14 @@ private fun <T> ImeVaultList(
     entries: List<T>,
     key: (T) -> Any,
     title: (T) -> String,
+    alphabeticalLetter: ((T) -> String?)? = null,
     modifier: Modifier = Modifier,
     itemContent: @Composable (T) -> Unit
 ) {
     val lazyListState = rememberLazyListState()
     val letterIndex = remember(entries) {
-        buildImeLetterIndex(itemCount = entries.size) { index -> title(entries[index]) }
+        buildImeLetterIndex(itemCount = entries.size,
+            cachedLetterAt = alphabeticalLetter?.let { letter -> { index -> letter(entries[index]) } }) { index -> title(entries[index]) }
     }
 
     Row(modifier = modifier.fillMaxSize()) {
@@ -1166,6 +1128,7 @@ private fun UnlockedVaultPane(
                 entries = uiState.entries,
                 key = { it.id },
                 title = ::imePasswordAlphabeticalLabel,
+                alphabeticalLetter = { it.alphabeticalLetter },
                 modifier = Modifier.weight(1f)
             ) { entry ->
                 PasswordEntryCard(
@@ -1313,13 +1276,14 @@ private fun VelocityScrollBar(
 internal fun buildImeLetterIndex(
     itemCount: Int,
     itemOffset: Int = 0,
+    cachedLetterAt: ((Int) -> String?)? = null,
     titleAt: (Int) -> String
 ): List<Pair<String, Int>> {
     val result = mutableListOf<Pair<String, Int>>()
     val seenLetters = mutableSetOf<String>()
 
     repeat(itemCount) { index ->
-        val letter = imeIndexLetter(normalizedImeSortKey(titleAt(index)))
+        val letter = cachedLetterAt?.invoke(index) ?: imeIndexLetter(normalizedImeSortKey(titleAt(index)))
 
         if (seenLetters.add(letter)) {
             result += letter to (index + itemOffset)
@@ -1397,6 +1361,7 @@ private fun AuthenticatorPane(
                 entries = uiState.authenticatorEntries,
                 key = { it.id },
                 title = ::imeAuthenticatorAlphabeticalLabel,
+                alphabeticalLetter = { it.alphabeticalLetter },
                 modifier = Modifier.weight(1f)
             ) { entry ->
                 AuthenticatorEntryCard(entry = entry, onInsertCode = { onInsertCode(entry) })
@@ -1443,6 +1408,7 @@ private fun CardWalletPane(
                 entries = uiState.cardWalletEntries,
                 key = { it.id },
                 title = ::imeCardWalletAlphabeticalLabel,
+                alphabeticalLetter = { it.alphabeticalLetter },
                 modifier = Modifier.weight(1f)
             ) { entry ->
                 CardWalletEntryCard(
@@ -1581,6 +1547,7 @@ private fun ImeEntryActions(content: @Composable FlowRowScope.() -> Unit) {
 private fun ImeFillAction(label: String, onClick: () -> Unit, icon: @Composable (() -> Unit)? = null) {
     OutlinedButton(
         onClick = onClick,
+        modifier = Modifier.widthIn(min = 48.dp),
         contentPadding = PaddingValues(horizontal = 8.dp, vertical = 6.dp)
     ) {
         if (icon != null) {
@@ -1695,608 +1662,12 @@ private fun PasswordEntryCard(
                 if (entry.website.isNotBlank()) {
                     ImeFillAction(stringResource(R.string.website), onInsertWebsite)
                 }
-                if (entry.totpCode.isNotBlank()) {
-                    ImeFillAction(entry.totpCode, onInsertTotp) {
+                if (entry.hasTotp || entry.totpCode.isNotBlank()) {
+                    ImeFillAction(stringResource(R.string.ime_fill_current_otp), onInsertTotp) {
                         Icon(Icons.Default.VerifiedUser, contentDescription = null, modifier = Modifier.size(14.dp))
                     }
                 }
             }
         }
     }
-}
-
-@Composable
-private fun MonicaKeyboard(
-    modifier: Modifier = Modifier,
-    mode: MonicaKeyboardMode,
-    isUppercase: Boolean,
-    onKeyPressed: (String) -> Unit,
-    onBackspace: () -> Unit,
-    onDeleteAll: () -> Unit,
-    onEnter: () -> Unit,
-    onSpace: () -> Unit,
-    onShiftToggle: () -> Unit,
-    onKeyboardModeChange: (MonicaKeyboardMode) -> Unit,
-    onSwitchInputMethod: () -> Unit
-) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        if (mode == MonicaKeyboardMode.LETTERS) {
-            MonicaLetterKeyboard(
-                isUppercase = isUppercase,
-                onKeyPressed = onKeyPressed,
-                onBackspace = onBackspace,
-                onDeleteAll = onDeleteAll,
-                onEnter = onEnter,
-                onSpace = onSpace,
-                onShiftToggle = onShiftToggle,
-                onKeyboardModeChange = onKeyboardModeChange,
-                onSwitchInputMethod = onSwitchInputMethod
-            )
-        }
-
-        if (mode == MonicaKeyboardMode.NUMBERS) {
-            MonicaNumberKeyboard(
-                onKeyPressed = onKeyPressed,
-                onBackspace = onBackspace,
-                onDeleteAll = onDeleteAll,
-                onEnter = onEnter,
-                onKeyboardModeChange = onKeyboardModeChange
-            )
-        }
-
-        if (mode == MonicaKeyboardMode.SYMBOLS) {
-            MonicaSymbolKeyboard(
-                onKeyPressed = onKeyPressed,
-                onBackspace = onBackspace,
-                onDeleteAll = onDeleteAll,
-                onEnter = onEnter,
-                onKeyboardModeChange = onKeyboardModeChange
-            )
-        }
-    }
-}
-
-@Composable
-private fun MonicaLetterKeyboard(
-    isUppercase: Boolean,
-    onKeyPressed: (String) -> Unit,
-    onBackspace: () -> Unit,
-    onDeleteAll: () -> Unit,
-    onEnter: () -> Unit,
-    onSpace: () -> Unit,
-    onShiftToggle: () -> Unit,
-    onKeyboardModeChange: (MonicaKeyboardMode) -> Unit,
-    onSwitchInputMethod: () -> Unit
-) {
-    val rows = listOf(
-        "qwertyuiop".toList(),
-        "asdfghjkl".toList(),
-        "zxcvbnm".toList()
-    )
-
-    rows.forEachIndexed { index, chars ->
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally)
-        ) {
-            if (index == 2) {
-                MonicaKeyButton(
-                    label = "",
-                    icon = { Icon(Icons.Default.ArrowUpward, contentDescription = stringResource(R.string.ime_key_shift)) },
-                    weight = 1.35f,
-                    active = isUppercase,
-                    style = MonicaKeyStyle.ACCENT,
-                    cornerRadius = 8.dp,
-                    onClick = onShiftToggle
-                )
-            }
-
-            chars.forEach { char ->
-                val output = if (isUppercase) {
-                    char.uppercaseChar().toString()
-                } else {
-                    char.toString()
-                }
-                MonicaKeyButton(
-                    label = char.uppercaseChar().toString(),
-                    weight = 1f,
-                    cornerRadius = 8.dp,
-                    onClick = { onKeyPressed(output) }
-                )
-            }
-
-            if (index == 2) {
-                MonicaKeyButton(
-                    label = "",
-                    icon = { Icon(Icons.AutoMirrored.Filled.Backspace, contentDescription = stringResource(R.string.ime_key_delete)) },
-                    weight = 1.35f,
-                    style = MonicaKeyStyle.ACCENT,
-                    cornerRadius = 8.dp,
-                    onClick = onBackspace,
-                    onLongPressRepeat = onBackspace,
-                    onSwipeUp = onDeleteAll
-                )
-            }
-        }
-    }
-
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(6.dp)
-    ) {
-        KeyboardModeKey(
-            activeMode = MonicaKeyboardMode.LETTERS,
-            onClick = { onKeyboardModeChange(MonicaKeyboardMode.NUMBERS) }
-        )
-        MonicaKeyButton(
-            label = "",
-            icon = { Icon(Icons.Default.Keyboard, contentDescription = stringResource(R.string.ime_key_mode)) },
-            weight = 1.05f,
-            style = MonicaKeyStyle.ACCENT,
-            cornerRadius = 8.dp,
-            onClick = onSwitchInputMethod
-        )
-        MonicaKeyButton(
-            label = "",
-            icon = { Icon(Icons.Default.SpaceBar, contentDescription = stringResource(R.string.ime_key_space)) },
-            weight = 3.9f,
-            cornerRadius = 8.dp,
-            onClick = onSpace,
-            onLongPressRepeat = onSpace
-        )
-        MonicaKeyButton(
-            label = ".",
-            weight = 0.95f,
-            cornerRadius = 8.dp,
-            onClick = { onKeyPressed(".") }
-        )
-        MonicaKeyButton(
-            label = "",
-            icon = { Icon(Icons.AutoMirrored.Filled.KeyboardReturn, contentDescription = stringResource(R.string.ime_key_enter)) },
-            weight = 1.8f,
-            style = MonicaKeyStyle.PRIMARY,
-            cornerRadius = 8.dp,
-            onClick = onEnter
-        )
-    }
-}
-
-@Composable
-private fun MonicaNumberKeyboard(
-    onKeyPressed: (String) -> Unit,
-    onBackspace: () -> Unit,
-    onDeleteAll: () -> Unit,
-    onEnter: () -> Unit,
-    onKeyboardModeChange: (MonicaKeyboardMode) -> Unit
-) {
-    BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
-        val keySpacing = 6.dp
-        val rightColumnWidth = (maxWidth - keySpacing * 3) / 4f
-        val mainGridWidth = maxWidth - rightColumnWidth - keySpacing
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(keySpacing)
-        ) {
-            Column(
-                modifier = Modifier.width(mainGridWidth),
-                verticalArrangement = Arrangement.spacedBy(keySpacing)
-            ) {
-                listOf(
-                    listOf("1", "2", "3"),
-                    listOf("4", "5", "6"),
-                    listOf("7", "8", "9")
-                ).forEach { keys ->
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(keySpacing)
-                    ) {
-                        keys.forEach { key ->
-                            MonicaKeyButton(
-                                label = key,
-                                weight = 1f,
-                                cornerRadius = 8.dp,
-                                onClick = { onKeyPressed(key) }
-                            )
-                        }
-                    }
-                }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(keySpacing)
-                ) {
-                    KeyboardModeKey(
-                        activeMode = MonicaKeyboardMode.NUMBERS,
-                        weight = 1f,
-                        onClick = { onKeyboardModeChange(nextKeyboardMode(MonicaKeyboardMode.NUMBERS)) }
-                    )
-                    MonicaKeyButton(
-                        label = "0",
-                        weight = 1f,
-                        cornerRadius = 8.dp,
-                        onClick = { onKeyPressed("0") }
-                    )
-                    MonicaKeyButton(
-                        label = ".",
-                        weight = 1f,
-                        cornerRadius = 8.dp,
-                        onClick = { onKeyPressed(".") }
-                    )
-                }
-            }
-
-            Column(
-                modifier = Modifier.width(rightColumnWidth),
-                verticalArrangement = Arrangement.spacedBy(keySpacing)
-            ) {
-                MonicaKeyButtonBase(
-                    modifier = Modifier.fillMaxWidth(),
-                    label = "",
-                    icon = { Icon(Icons.AutoMirrored.Filled.Backspace, contentDescription = stringResource(R.string.ime_key_delete)) },
-                    style = MonicaKeyStyle.ACCENT,
-                    cornerRadius = 8.dp,
-                    onClick = onBackspace,
-                    onLongPressRepeat = onBackspace,
-                    onSwipeUp = onDeleteAll
-                )
-                MonicaKeyButtonBase(
-                    modifier = Modifier.fillMaxWidth(),
-                    label = "",
-                    icon = { Icon(Icons.AutoMirrored.Filled.KeyboardReturn, contentDescription = stringResource(R.string.ime_key_enter)) },
-                    style = MonicaKeyStyle.PRIMARY,
-                    cornerRadius = 8.dp,
-                    height = 162.dp,
-                    onClick = onEnter
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun MonicaSymbolKeyboard(
-    onKeyPressed: (String) -> Unit,
-    onBackspace: () -> Unit,
-    onDeleteAll: () -> Unit,
-    onEnter: () -> Unit,
-    onKeyboardModeChange: (MonicaKeyboardMode) -> Unit
-) {
-    val rows = listOf(
-        "1234567890".map { it.toString() },
-        listOf("@", "#", "$", "%", "&", "*", "-", "+", "=", "/")
-    )
-
-    rows.forEach { keys ->
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(6.dp)
-        ) {
-            keys.forEach { key ->
-                MonicaKeyButton(
-                    label = key,
-                    weight = 1f,
-                    cornerRadius = 8.dp,
-                    onClick = { onKeyPressed(key) }
-                )
-            }
-        }
-    }
-
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(6.dp)
-    ) {
-        listOf("!", "?", "(", ")", "[", "]", "{", "}").forEach { key ->
-            MonicaKeyButton(
-                label = key,
-                weight = 1f,
-                cornerRadius = 8.dp,
-                onClick = { onKeyPressed(key) }
-            )
-        }
-        MonicaKeyButton(
-            label = "",
-            icon = { Icon(Icons.AutoMirrored.Filled.Backspace, contentDescription = stringResource(R.string.ime_key_delete)) },
-            weight = 2f,
-            style = MonicaKeyStyle.ACCENT,
-            cornerRadius = 8.dp,
-            onClick = onBackspace,
-            onLongPressRepeat = onBackspace,
-            onSwipeUp = onDeleteAll
-        )
-    }
-
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(6.dp)
-    ) {
-        KeyboardModeKey(
-            activeMode = MonicaKeyboardMode.SYMBOLS,
-            onClick = { onKeyboardModeChange(nextKeyboardMode(MonicaKeyboardMode.SYMBOLS)) }
-        )
-        MonicaKeyButton(
-            label = ",",
-            weight = 1.05f,
-            cornerRadius = 8.dp,
-            onClick = { onKeyPressed(",") }
-        )
-        MonicaKeyButton(
-            label = "",
-            icon = { Icon(Icons.Default.SpaceBar, contentDescription = stringResource(R.string.ime_key_space)) },
-            weight = 3.9f,
-            cornerRadius = 8.dp,
-            onClick = { onKeyPressed(" ") },
-            onLongPressRepeat = { onKeyPressed(" ") }
-        )
-        MonicaKeyButton(
-            label = ".",
-            weight = 0.95f,
-            cornerRadius = 8.dp,
-            onClick = { onKeyPressed(".") }
-        )
-        MonicaKeyButton(
-            label = "",
-            icon = { Icon(Icons.AutoMirrored.Filled.KeyboardReturn, contentDescription = stringResource(R.string.ime_key_enter)) },
-            weight = 1.8f,
-            style = MonicaKeyStyle.PRIMARY,
-            cornerRadius = 8.dp,
-            onClick = onEnter
-        )
-    }
-}
-
-private fun nextKeyboardMode(currentMode: MonicaKeyboardMode): MonicaKeyboardMode {
-    return when (currentMode) {
-        MonicaKeyboardMode.LETTERS -> MonicaKeyboardMode.NUMBERS
-        MonicaKeyboardMode.NUMBERS -> MonicaKeyboardMode.SYMBOLS
-        MonicaKeyboardMode.SYMBOLS -> MonicaKeyboardMode.LETTERS
-    }
-}
-
-@Composable
-private fun RowScope.KeyboardModeKey(
-    activeMode: MonicaKeyboardMode,
-    weight: Float = 1.55f,
-    onClick: () -> Unit
-) {
-    MonicaKeyButton(
-        label = "",
-        weight = weight,
-        style = MonicaKeyStyle.ACCENT,
-        cornerRadius = 8.dp,
-        onClick = onClick
-    ) {
-        KeyboardModeLabel(activeMode = activeMode)
-    }
-}
-
-@Composable
-private fun KeyboardModeLabel(activeMode: MonicaKeyboardMode) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(1.dp)
-    ) {
-        KeyboardModeLabelPart("A", activeMode == MonicaKeyboardMode.LETTERS)
-        KeyboardModeLabelPart("1", activeMode == MonicaKeyboardMode.NUMBERS)
-        KeyboardModeLabelPart("@", activeMode == MonicaKeyboardMode.SYMBOLS)
-    }
-}
-
-@Composable
-private fun KeyboardModeLabelPart(text: String, selected: Boolean) {
-    Text(
-        text = text,
-        style = MaterialTheme.typography.titleMedium,
-        fontWeight = FontWeight.Bold,
-        color = if (selected) {
-            MaterialTheme.colorScheme.onSecondaryContainer
-        } else {
-            MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.45f)
-        }
-    )
-}
-
-@Composable
-private fun ToolbarCircleButton(
-    selected: Boolean,
-    onClick: () -> Unit,
-    contentDescription: String? = null,
-    enabled: Boolean = true,
-    label: String? = null,
-    content: @Composable (() -> Unit)? = null
-) {
-    val buttonDescription = contentDescription
-    FilledIconButton(
-        onClick = onClick,
-        enabled = enabled,
-        modifier = Modifier.size(48.dp).semantics {
-            if (buttonDescription != null) this.contentDescription = buttonDescription
-        },
-        shape = CircleShape
-    ) {
-        if (content != null) {
-            content()
-        } else {
-            Text(
-                text = label.orEmpty(),
-                style = MaterialTheme.typography.labelLarge,
-                fontWeight = FontWeight.Bold
-            )
-        }
-    }
-}
-
-@Composable
-private fun MonicaKeyButtonBase(
-    modifier: Modifier = Modifier,
-    label: String,
-    onClick: () -> Unit,
-    active: Boolean = false,
-    icon: @Composable (() -> Unit)? = null,
-    cornerRadius: androidx.compose.ui.unit.Dp = 12.dp,
-    style: MonicaKeyStyle = MonicaKeyStyle.STANDARD,
-    height: androidx.compose.ui.unit.Dp = 50.dp,
-    onLongPressRepeat: (() -> Unit)? = null,
-    onSwipeUp: (() -> Unit)? = null,
-    content: @Composable (() -> Unit)? = null
-) {
-    var pressed by remember { mutableStateOf(false) }
-    val coroutineScope = rememberCoroutineScope()
-    val containerColor = when {
-        active -> MaterialTheme.colorScheme.primaryContainer
-        style == MonicaKeyStyle.PRIMARY -> MaterialTheme.colorScheme.primaryContainer
-        style == MonicaKeyStyle.ACCENT -> MaterialTheme.colorScheme.secondaryContainer
-        else -> MaterialTheme.colorScheme.surfaceContainerHighest
-    }
-    val contentColor = when {
-        active -> MaterialTheme.colorScheme.onPrimaryContainer
-        style == MonicaKeyStyle.PRIMARY -> MaterialTheme.colorScheme.onPrimaryContainer
-        style == MonicaKeyStyle.ACCENT -> MaterialTheme.colorScheme.onSecondaryContainer
-        else -> MaterialTheme.colorScheme.onSurface
-    }
-
-    Box(
-        modifier = modifier
-            .height(height)
-            .zIndex(if (pressed) 2f else 0f)
-            .pointerInput(onClick, onLongPressRepeat, onSwipeUp) {
-                awaitEachGesture {
-                    val down = awaitFirstDown(requireUnconsumed = false)
-                    pressed = true
-                    var lastY = down.position.y
-                    var didRepeat = false
-                    val repeatJob = onLongPressRepeat?.let { repeatAction ->
-                        coroutineScope.launch {
-                            delay(360)
-                            while (true) {
-                                didRepeat = true
-                                repeatAction()
-                                delay(58)
-                            }
-                        }
-                    }
-
-                    while (true) {
-                        val event = awaitPointerEvent()
-                        val change = event.changes.firstOrNull { it.id == down.id } ?: continue
-                        lastY = change.position.y
-                        if (!change.pressed) {
-                            break
-                        }
-                    }
-
-                    repeatJob?.cancel()
-                    pressed = false
-                    val swipeUpDistance = down.position.y - lastY
-                    when {
-                        onSwipeUp != null && swipeUpDistance > 32.dp.toPx() -> onSwipeUp()
-                        !didRepeat -> onClick()
-                    }
-                }
-            }
-    ) {
-        if (pressed) {
-            KeyPressPreview(
-                label = label,
-                icon = icon,
-                contentColor = contentColor,
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .offset(y = (-62).dp)
-            )
-        }
-
-        Surface(
-            modifier = Modifier
-                .fillMaxSize()
-                .clip(RoundedCornerShape(cornerRadius)),
-            color = containerColor,
-            shadowElevation = 2.dp,
-            tonalElevation = 2.dp
-        ) {
-            Box(contentAlignment = Alignment.Center) {
-                if (content != null) {
-                    content()
-                } else if (icon != null) {
-                    CompositionLocalProvider(LocalContentColor provides contentColor) {
-                        icon()
-                    }
-                } else {
-                    Text(
-                        text = label,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = contentColor
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun KeyPressPreview(
-    label: String,
-    icon: @Composable (() -> Unit)?,
-    contentColor: Color,
-    modifier: Modifier = Modifier
-) {
-    Surface(
-        modifier = modifier.size(width = 64.dp, height = 70.dp),
-        shape = RoundedCornerShape(10.dp),
-        color = MaterialTheme.colorScheme.surfaceContainerHighest,
-        shadowElevation = 8.dp,
-        tonalElevation = 6.dp
-    ) {
-        Box(contentAlignment = Alignment.Center) {
-            if (icon != null) {
-                CompositionLocalProvider(LocalContentColor provides contentColor) {
-                    icon()
-                }
-            } else {
-                Text(
-                    text = label,
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.SemiBold,
-                    color = contentColor
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun RowScope.MonicaKeyButton(
-    label: String,
-    weight: Float,
-    onClick: () -> Unit,
-    active: Boolean = false,
-    icon: @Composable (() -> Unit)? = null,
-    cornerRadius: androidx.compose.ui.unit.Dp = 12.dp,
-    style: MonicaKeyStyle = MonicaKeyStyle.STANDARD,
-    height: androidx.compose.ui.unit.Dp = 50.dp,
-    onLongPressRepeat: (() -> Unit)? = null,
-    onSwipeUp: (() -> Unit)? = null,
-    content: @Composable (() -> Unit)? = null
-) {
-    MonicaKeyButtonBase(
-        modifier = Modifier
-            .weight(weight),
-        label = label,
-        onClick = onClick,
-        active = active,
-        icon = icon,
-        cornerRadius = cornerRadius,
-        style = style,
-        height = height,
-        onLongPressRepeat = onLongPressRepeat,
-        onSwipeUp = onSwipeUp,
-        content = content
-    )
 }

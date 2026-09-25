@@ -1,0 +1,407 @@
+{
+  "title": "Monica Pass · 系统通行密钥标识",
+  "brief": "系统保存与登录选择器使用 Monica 的彩色应用图标和 Monica Pass 名称，保留网站与账号信息。系统布局仅示意，实际由 Android / 厂商绘制。",
+  "frame": "phone",
+  "platform": "android",
+  "paletteKey": "purple",
+  "theme": {
+    "dark": false,
+    "bothModes": true,
+    "contrast": "standard",
+    "shape": "rounded",
+    "font": "system",
+    "motion": "expressive"
+  },
+  "frames": [
+    {
+      "id": "save",
+      "name": "保存通行密钥",
+      "x": 0,
+      "y": 0,
+      "note": "CreateEntry 显式携带现有彩色自适应应用图标，账号标题使用 Monica Pass 和网站名称。系统组件布局不做自绘替换。"
+    },
+    {
+      "id": "sign-in",
+      "name": "选择通行密钥登录",
+      "x": 492,
+      "y": 0,
+      "note": "PublicKeyCredentialEntry 显式使用同一彩色品牌图标，保留网站和账号；服务名称同步为 Monica Pass。浅色、深色背景均可辨认。"
+    }
+  ],
+  "groups": [
+    {
+      "id": "save-bar",
+      "x": 0,
+      "y": 0,
+      "axis": "x",
+      "items": [
+        {
+          "id": "save-bar-item",
+          "kind": "topAppBar",
+          "label": "Telegram",
+          "icon": "arrow_back",
+          "variant": "filled"
+        }
+      ]
+    },
+    {
+      "id": "save-context",
+      "x": 24,
+      "y": 130,
+      "axis": "x",
+      "items": [
+        {
+          "id": "save-context-item",
+          "kind": "text",
+          "label": "系统通行密钥选择器",
+          "icon": null,
+          "variant": "filled",
+          "size": 21
+        }
+      ]
+    },
+    {
+      "id": "save-sheet",
+      "x": 0,
+      "y": 358,
+      "axis": "x",
+      "items": [
+        {
+          "id": "save-sheet-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "checked": true,
+          "size": 412,
+          "size2": 534,
+          "fill": "surfaceContainerLow",
+          "radiusTop": 28,
+          "radiusBottom": 0
+        }
+      ]
+    },
+    {
+      "id": "save-heading",
+      "x": 24,
+      "y": 418,
+      "axis": "x",
+      "items": [
+        {
+          "id": "save-heading-item",
+          "kind": "text",
+          "label": "保存通行密钥",
+          "icon": null,
+          "variant": "filled",
+          "size": 25,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "save-hint",
+      "x": 24,
+      "y": 466,
+      "axis": "x",
+      "items": [
+        {
+          "id": "save-hint-item",
+          "kind": "text",
+          "label": "选择保存位置",
+          "icon": null,
+          "variant": "filled",
+          "size": 16
+        }
+      ]
+    },
+    {
+      "id": "save-row",
+      "x": 12,
+      "y": 520,
+      "axis": "x",
+      "items": [
+        {
+          "id": "save-row-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 388,
+          "size2": 120,
+          "fill": "surfaceContainerHigh",
+          "radiusTop": 22,
+          "radiusBottom": 22
+        }
+      ]
+    },
+    {
+      "id": "save-brand",
+      "x": 30,
+      "y": 546,
+      "axis": "x",
+      "items": [
+        {
+          "id": "save-brand-item",
+          "kind": "image",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 60,
+          "src": "https://raw.githubusercontent.com/Monica-Pass/Monica/main/Monica%20for%20Android/app/src/main/res/drawable-nodpi/monica_launcher.png",
+          "note": "使用现有 Monica 自适应图标，包括深色背景和彩色锁与钥匙；不使用主题染色的通用钥匙。"
+        }
+      ]
+    },
+    {
+      "id": "save-title",
+      "x": 108,
+      "y": 546,
+      "axis": "x",
+      "items": [
+        {
+          "id": "save-title-item",
+          "kind": "text",
+          "label": "Monica Pass · Telegram",
+          "icon": null,
+          "variant": "filled",
+          "size": 18,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "save-account",
+      "x": 108,
+      "y": 582,
+      "axis": "x",
+      "items": [
+        {
+          "id": "save-account-item",
+          "kind": "text",
+          "label": "为 alice 保存",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "save-other",
+      "x": 12,
+      "y": 658,
+      "axis": "x",
+      "items": [
+        {
+          "id": "save-other-item",
+          "kind": "listItem",
+          "label": "其他保存位置",
+          "icon": "more_horiz",
+          "variant": "filled",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "save-cancel",
+      "x": 24,
+      "y": 770,
+      "axis": "x",
+      "items": [
+        {
+          "id": "save-cancel-item",
+          "kind": "button",
+          "label": "取消",
+          "icon": null,
+          "variant": "text"
+        }
+      ]
+    },
+    {
+      "id": "sign-in-bar",
+      "x": 492,
+      "y": 0,
+      "axis": "x",
+      "items": [
+        {
+          "id": "sign-in-bar-item",
+          "kind": "topAppBar",
+          "label": "Telegram",
+          "icon": "arrow_back",
+          "variant": "filled"
+        }
+      ]
+    },
+    {
+      "id": "sign-in-context",
+      "x": 516,
+      "y": 130,
+      "axis": "x",
+      "items": [
+        {
+          "id": "sign-in-context-item",
+          "kind": "text",
+          "label": "系统通行密钥选择器",
+          "icon": null,
+          "variant": "filled",
+          "size": 21
+        }
+      ]
+    },
+    {
+      "id": "sign-in-sheet",
+      "x": 492,
+      "y": 358,
+      "axis": "x",
+      "items": [
+        {
+          "id": "sign-in-sheet-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "checked": true,
+          "size": 412,
+          "size2": 534,
+          "fill": "surfaceContainerLow",
+          "radiusTop": 28,
+          "radiusBottom": 0
+        }
+      ]
+    },
+    {
+      "id": "sign-in-heading",
+      "x": 516,
+      "y": 418,
+      "axis": "x",
+      "items": [
+        {
+          "id": "sign-in-heading-item",
+          "kind": "text",
+          "label": "登录 Telegram",
+          "icon": null,
+          "variant": "filled",
+          "size": 25,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "sign-in-hint",
+      "x": 516,
+      "y": 466,
+      "axis": "x",
+      "items": [
+        {
+          "id": "sign-in-hint-item",
+          "kind": "text",
+          "label": "选择要使用的通行密钥",
+          "icon": null,
+          "variant": "filled",
+          "size": 16
+        }
+      ]
+    },
+    {
+      "id": "sign-in-row",
+      "x": 504,
+      "y": 520,
+      "axis": "x",
+      "items": [
+        {
+          "id": "sign-in-row-item",
+          "kind": "box",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 388,
+          "size2": 120,
+          "fill": "surfaceContainerHigh",
+          "radiusTop": 22,
+          "radiusBottom": 22
+        }
+      ]
+    },
+    {
+      "id": "sign-in-brand",
+      "x": 522,
+      "y": 546,
+      "axis": "x",
+      "items": [
+        {
+          "id": "sign-in-brand-item",
+          "kind": "image",
+          "label": "",
+          "icon": null,
+          "variant": "filled",
+          "size": 60,
+          "src": "https://raw.githubusercontent.com/Monica-Pass/Monica/main/Monica%20for%20Android/app/src/main/res/drawable-nodpi/monica_launcher.png",
+          "note": "使用现有 Monica 自适应图标，包括深色背景和彩色锁与钥匙；不使用主题染色的通用钥匙。"
+        }
+      ]
+    },
+    {
+      "id": "sign-in-title",
+      "x": 600,
+      "y": 546,
+      "axis": "x",
+      "items": [
+        {
+          "id": "sign-in-title-item",
+          "kind": "text",
+          "label": "Telegram Messenger",
+          "icon": null,
+          "variant": "filled",
+          "size": 18,
+          "bold": true
+        }
+      ]
+    },
+    {
+      "id": "sign-in-account",
+      "x": 600,
+      "y": 582,
+      "axis": "x",
+      "items": [
+        {
+          "id": "sign-in-account-item",
+          "kind": "text",
+          "label": "alice · Monica Pass",
+          "icon": null,
+          "variant": "filled",
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "sign-in-other",
+      "x": 504,
+      "y": 658,
+      "axis": "x",
+      "items": [
+        {
+          "id": "sign-in-other-item",
+          "kind": "listItem",
+          "label": "使用其他通行密钥",
+          "icon": "more_horiz",
+          "variant": "filled",
+          "size": 388
+        }
+      ]
+    },
+    {
+      "id": "sign-in-cancel",
+      "x": 516,
+      "y": 770,
+      "axis": "x",
+      "items": [
+        {
+          "id": "sign-in-cancel-item",
+          "kind": "button",
+          "label": "取消",
+          "icon": null,
+          "variant": "text"
+        }
+      ]
+    }
+  ]
+}

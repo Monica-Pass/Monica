@@ -50,6 +50,8 @@ import takagi.ru.monica.data.primaryLinkedAppPackageName
 import takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_NONE
 import takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_SIMPLE
 import takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_UPLOADED
+import takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_EMOJI
+import takagi.ru.monica.ui.icons.EmojiIconText
 import takagi.ru.monica.ui.icons.rememberAutoMatchedSimpleIcon
 import takagi.ru.monica.ui.icons.rememberSimpleIconBitmap
 import takagi.ru.monica.ui.icons.rememberUploadedPasswordIcon
@@ -499,6 +501,9 @@ private fun PasswordQuickAccessLeadingIcon(
     val uploadedIcon = if (iconCardsEnabled && entry.customIconType == PASSWORD_ICON_TYPE_UPLOADED) {
         rememberUploadedPasswordIcon(entry.customIconValue)
     } else null
+    val emojiIcon = entry.customIconValue.takeIf {
+        iconCardsEnabled && entry.customIconType == PASSWORD_ICON_TYPE_EMOJI
+    }
     val primaryAppPackageName = entry.primaryLinkedAppPackageName()
     val appIcon = if (
         iconCardsEnabled &&
@@ -532,7 +537,9 @@ private fun PasswordQuickAccessLeadingIcon(
                 ?: autoMatchedSimpleIcon.bitmap
                 ?: favicon
                 ?: appIcon
-            if (image != null) {
+            if (emojiIcon != null) {
+                EmojiIconText(emoji = emojiIcon, size = 24.dp)
+            } else if (image != null) {
                 Image(
                     bitmap = image,
                     contentDescription = null,

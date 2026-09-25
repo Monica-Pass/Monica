@@ -2402,6 +2402,10 @@
     <string name="custom_icon_dialog_title">Đặt biểu tượng tùy chỉnh</string>
     <string name="custom_icon_pick_simple">Chọn từ thư viện biểu tượng</string>
     <string name="custom_icon_upload_image">Tải hình ảnh lên</string>
+    <string name="custom_icon_use_emoji">Dùng emoji</string>
+    <string name="custom_icon_emoji_hint">Nhập một emoji</string>
+    <string name="custom_icon_emoji_support">Một emoji được lưu cùng mục này, không cần gói biểu tượng bổ sung.</string>
+    <string name="custom_icon_emoji_invalid">Chỉ nhập đúng một emoji.</string>
     <string name="custom_icon_clear">Sử dụng biểu tượng trang web</string>
     <string name="custom_icon_search_hint">Biểu tượng tìm kiếm</string>
     <string name="custom_icon_search_empty">Không tìm thấy biểu tượng phù hợp</string>
@@ -3609,8 +3613,11 @@
     <string name="qs_lang_french">Français</string>
     <string name="field_action_more">Thao tác trường khác</string>
     <string name="field_action_show_large">Hiển thị chữ lớn</string>
-    <string name="field_action_show_barcode">Hiển thị dạng mã QR</string>
+    <string name="field_action_show_barcode">Hiển thị dạng mã QR / mã vạch</string>
     <string name="field_action_barcode_failed">Không thể tạo mã QR cho giá trị này.</string>
+    <string name="field_barcode_format_qr">Mã QR</string>
+    <string name="field_barcode_format_linear">Mã vạch</string>
+    <string name="field_barcode_linear_failed">Không thể mã hóa giá trị này thành mã vạch Code 128. Hãy dùng văn bản ASCII tối đa 80 ký tự.</string>
     <string name="ime_search_results_count">%1$d kết quả</string>
     <string name="ime_sort_alphabetical">Sắp xếp A đến Z</string>
     <string name="ime_sort_relevance">Sắp xếp thông minh</string>
@@ -4559,4 +4566,12 @@
     <string name="card_face_image_unreadable">Không thể đọc ảnh này. Hãy lưu vào thiết bị rồi chọn lại.</string>
     <string name="card_face_image_too_large">Ảnh này vượt quá 25 MB. Hãy chọn ảnh nhỏ hơn.</string>
     <string name="card_face_image_unsupported">Chọn ảnh JPEG, PNG hoặc WebP.</string>
+    <string name="custom_icon_pick_installed">Biểu tượng đã cài</string>
+    <string name="custom_icon_installed_apps">Biểu tượng ứng dụng</string>
+    <string name="custom_icon_installed_packs">Gói biểu tượng</string>
+    <string name="custom_icon_installed_empty_packs">Không tìm thấy gói biểu tượng tương thích. Hãy cài một gói rồi mở lại trình chọn này.</string>
+    <string name="custom_icon_installed_empty_icons">Gói này không có biểu tượng được hỗ trợ.</string>
+    <string name="custom_icon_installed_load_failed">Không thể tải biểu tượng. Vui lòng thử lại.</string>
+    <string name="custom_icon_installed_save_failed">Không thể dùng biểu tượng này. Hãy thử lại hoặc chọn biểu tượng khác.</string>
+    <string name="field_barcode_linear_too_wide">Mã vạch này cần màn hình rộng hơn. Hãy xoay thiết bị hoặc dùng mã QR.</string>
 </resources>

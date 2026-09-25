@@ -961,6 +961,10 @@
     <string name="custom_icon_dialog_title">Установить свою иконку</string>
     <string name="custom_icon_pick_simple">Выбрать из библиотеки</string>
     <string name="custom_icon_upload_image">Загрузить изображение</string>
+    <string name="custom_icon_use_emoji">Использовать эмодзи</string>
+    <string name="custom_icon_emoji_hint">Введите один эмодзи</string>
+    <string name="custom_icon_emoji_support">Один эмодзи сохраняется вместе с записью, дополнительный набор значков не нужен.</string>
+    <string name="custom_icon_emoji_invalid">Введите ровно один эмодзи.</string>
     <string name="custom_icon_clear">Использовать иконку сайта</string>
     <string name="custom_icon_search_hint">Поиск иконок</string>
     <string name="custom_icon_search_empty">Подходящих иконок не найдено</string>
@@ -3823,8 +3827,11 @@
     <string name="entry_type_wifi">Wi-Fi</string>
     <string name="export">Экспорт</string>
     <string name="field_action_barcode_failed">Не удалось создать QR-код для этого значения.</string>
+    <string name="field_barcode_format_qr">QR-код</string>
+    <string name="field_barcode_format_linear">Штрихкод</string>
+    <string name="field_barcode_linear_failed">Это значение нельзя закодировать в штрихкод Code 128. Используйте ASCII-текст до 80 символов.</string>
     <string name="field_action_more">Ещё действия с полем</string>
-    <string name="field_action_show_barcode">Показать как QR-код</string>
+    <string name="field_action_show_barcode">Показать как QR / штрихкод</string>
     <string name="field_action_show_large">Показать крупным текстом</string>
     <string name="generator_ssh_key">SSH-ключ</string>
     <string name="group_mode_folder">Группировать по папке</string>
@@ -4653,4 +4660,12 @@
     <string name="wallet_stack_open_card">Открыть сведения о карте</string>
     <string name="language_french">Français</string>
     <string name="qs_lang_french">Français</string>
+    <string name="custom_icon_pick_installed">Установленные значки</string>
+    <string name="custom_icon_installed_apps">Значки приложений</string>
+    <string name="custom_icon_installed_packs">Наборы значков</string>
+    <string name="custom_icon_installed_empty_packs">Совместимые наборы значков не найдены. Установите набор и снова откройте этот список.</string>
+    <string name="custom_icon_installed_empty_icons">В этом наборе нет поддерживаемых значков.</string>
+    <string name="custom_icon_installed_load_failed">Не удалось загрузить значки. Повторите попытку.</string>
+    <string name="custom_icon_installed_save_failed">Не удалось использовать этот значок. Повторите попытку или выберите другой.</string>
+    <string name="field_barcode_linear_too_wide">Для этого штрихкода нужен более широкий экран. Поверните устройство или используйте QR-код.</string>
 </resources>

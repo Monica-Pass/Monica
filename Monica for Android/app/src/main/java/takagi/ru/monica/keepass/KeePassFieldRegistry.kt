@@ -103,6 +103,7 @@ object KeePassFieldRegistry {
     )
 
     private val monicaSecureItemFields = setOf(
+        "MonicaTotpData",
         "MonicaSecureItemId",
         "MonicaConflictCopy",
         "MonicaItemType",
@@ -133,19 +134,7 @@ object KeePassFieldRegistry {
         "MonicaConflictCopy"
     )
 
-    private val keepPassTotpFields = setOf(
-        "otp",
-        "TOTP Seed",
-        "TOTPSeed",
-        "TOTP Settings",
-        "TOTPSettings",
-        "TOTP Period",
-        "TOTP Digits",
-        "TOTP Algorithm",
-        "OTP Type",
-        "TOTP Type",
-        "HOTP Counter"
-    )
+    private val keepPassTotpFields = KeePassTotpCodec.fieldNames
 
     private val keepPassPasskeyFields = setOf(
         KeePassDxPasskeyCodec.FIELD_PASSKEY,

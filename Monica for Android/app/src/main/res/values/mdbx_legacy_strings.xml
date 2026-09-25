@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_legacy_unavailable_title">MDBX1 is no longer supported</string>
+    <string name="mdbx_legacy_unavailable_badge">MDBX1 · Unavailable</string>
+    <string name="mdbx_legacy_unavailable_description">This database is unavailable. Upgrade to MDBX2 to keep using it. The upgrade preserves the original file.</string>
+    <string name="mdbx_legacy_creation_disabled">New databases use MDBX2. MDBX1 files can only be opened for upgrading.</string>
+    <string name="mdbx_legacy_local_copy_required">The local MDBX1 copy cannot be read. Reopen the original MDBX1 file to upgrade it. The original database has not been changed.</string>
+    <string name="mdbx_legacy_remote_copy_warning">The upgrade converts the copy saved on this device into a new local MDBX2 database. Remote changes that have not been downloaded are not included. The original remote file and local copy are preserved. Configure synchronization separately for the new database.</string>
+    <string name="mdbx_legacy_import_option">MDBX1 (upgrade)</string>
+    <string name="mdbx_legacy_upgrade_action">Upgrade to MDBX2</string>
+</resources>

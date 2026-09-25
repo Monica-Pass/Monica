@@ -30,6 +30,7 @@ import kotlin.random.Random
 const val PASSWORD_ICON_TYPE_NONE = "NONE"
 const val PASSWORD_ICON_TYPE_SIMPLE = "SIMPLE_ICON"
 const val PASSWORD_ICON_TYPE_UPLOADED = "UPLOADED"
+const val PASSWORD_ICON_TYPE_EMOJI = "EMOJI"
 private const val STRATUM_ICON_ASSET_ROOT = "stratum_icons"
 private const val STRATUM_ICON_ASSET_MAIN_DIR = "$STRATUM_ICON_ASSET_ROOT/icons"
 private const val STRATUM_ICON_ASSET_EXTRA_DIR = "$STRATUM_ICON_ASSET_ROOT/extraicons"
@@ -325,20 +326,36 @@ object PasswordCustomIconStore {
         runCatching {
             val decoded = decodeBitmapCompat(context, uri)
                 ?: throw IllegalStateException("Unsupported image format")
+            try {
+                writeBitmap(context, decoded)
+            } finally {
+                decoded.recycle()
+            }
+        }
+    }
 
-            val finalBitmap = resizeIfNeeded(decoded, MAX_DIMENSION)
-            if (finalBitmap !== decoded) decoded.recycle()
+    /** The caller retains ownership of [bitmap]. */
+    suspend fun importBitmap(context: Context, bitmap: Bitmap): Result<String> = withContext(Dispatchers.IO) {
+        runCatching { writeBitmap(context, bitmap) }
+    }
 
-            val fileName = "icon_${System.currentTimeMillis()}_${Random.nextInt(1000, 9999)}.png"
-            val target = File(getIconDir(context), fileName)
+    private fun writeBitmap(context: Context, bitmap: Bitmap): String {
+        val finalBitmap = resizeIfNeeded(bitmap, MAX_DIMENSION)
+        val fileName = "icon_${java.util.UUID.randomUUID()}.png"
+        val target = File(getIconDir(context), fileName)
+        try {
             FileOutputStream(target).use { out ->
                 if (!finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out)) {
                     throw IllegalStateException("Failed to compress image")
                 }
                 out.flush()
             }
-            finalBitmap.recycle()
-            fileName
+            return fileName
+        } catch (error: Exception) {
+            target.delete()
+            throw error
+        } finally {
+            if (finalBitmap !== bitmap) finalBitmap.recycle()
         }
     }
 
