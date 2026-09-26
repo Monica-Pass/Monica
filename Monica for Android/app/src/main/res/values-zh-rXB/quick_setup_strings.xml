@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qs_step_presets_title">从一套方案开始</string>
+    <string name="qs_step_presets_subtitle">先选布局，后面还可以分别调整 Dock 和页面细节。</string>
+    <string name="qs_dock_subtitle">选择 Dock 中的页面，再调整排列顺序。</string>
+    <string name="qs_step_customize_title">页面微调</string>
+    <string name="qs_step_customize_subtitle">只展开你想调整的部分，随时也可在设置中修改。</string>
+    <string name="qs_step_protect_title">安全与自动填充</string>
+    <string name="qs_step_protect_subtitle">先保护密码库，再让登录更方便。</string>
+    <string name="qs_ready_title">准备就绪</string>
+    <string name="qs_ready_subtitle">这是你的布局，随时可以在设置中修改。</string>
+    <string name="qs_save_failed">设置未能保存，请重试。</string>
+    <string name="qs_use_preset">使用预设</string>
+    <string name="qs_enter_monica">进入 Monica</string>
+    <string name="qs_current_layout">当前布局</string>
+    <string name="qs_data_optional">可以现在接入数据库或导入数据，也可以稍后在设置中完成。</string>
+    <string name="qs_preset_bitwarden_preview">Bitwarden · 预览</string>
+    <string name="qs_preset_bitwarden_preview_desc">从密码库概览进入，Dock 搭配 Send 和生成器。</string>
+    <string name="qs_preset_bitwarden_list">Bitwarden · 列表</string>
+    <string name="qs_preset_bitwarden_list_desc">直接进入密码库列表，Dock 搭配 Send 和生成器。</string>
+    <string name="qs_preset_authenticator">验证器专用</string>
+    <string name="qs_preset_authenticator_desc">保留验证器与 Steam，专注动态验证码。</string>
+    <string name="qs_preset_paged">分页管理</string>
+    <string name="qs_preset_paged_desc">密码、验证器、卡包与笔记各用一页。</string>
+    <string name="qs_preset_everyday">日常常用</string>
+    <string name="qs_preset_everyday_desc">密码、验证器与生成器，常用功能随手打开。</string>
+    <string name="qs_preset_minimal">极简密码</string>
+    <string name="qs_preset_minimal_desc">只保留密码与生成器，减少 Dock 入口。</string>
+    <string name="qs_keep_layout">保留当前布局</string>
+    <string name="qs_keep_layout_desc">沿用已有配置，下一步按需调整。</string>
+    <string name="qs_presets_hint">所有方案均保留设置入口，适用于各种数据库；数据库可在接入数据步骤中连接。</string>
+    <string name="qs_move_up">上移</string>
+    <string name="qs_move_down">下移</string>
+    <string name="qs_settings_kept">始终保留</string>
+    <string name="qs_vault_overview">从概览进入密码库</string>
+    <string name="qs_import_from_apps">从其他应用导入</string>
+    <string name="qs_import_from_apps_desc">搬来密码和通行密钥，再继续设置嗷呜。</string>
+</resources>

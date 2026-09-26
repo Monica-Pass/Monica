@@ -8,6 +8,7 @@ import takagi.ru.monica.MainActivity
 import takagi.ru.monica.R
 import takagi.ru.monica.data.AppLauncherIcon
 import takagi.ru.monica.data.AppLauncherLabel
+import takagi.ru.monica.data.Language
 import java.lang.reflect.Method
 import java.util.concurrent.ConcurrentHashMap
 
@@ -20,6 +21,7 @@ object AppLauncherIconManager {
     private const val VISIBLE_CLASSIC_PASS_ALIAS = "takagi.ru.monica.ClassicVisibleLauncherAlias"
     private const val VISIBLE_MODERN_MONICA_ALIAS = "takagi.ru.monica.ModernVisibleLauncherAliasMonica"
     private const val VISIBLE_CLASSIC_MONICA_ALIAS = "takagi.ru.monica.ClassicVisibleLauncherAliasMonica"
+    private const val VISIBLE_SNOW_LEOPARD_ALIAS = "takagi.ru.monica.SnowLeopardVisibleLauncherAlias"
 
     private data class BiometricPromptBrandingMethods(
         val logoRes: Method?,
@@ -104,18 +106,34 @@ object AppLauncherIconManager {
         label: AppLauncherLabel
     ) {
         val packageManager = context.packageManager
-        val states = mapOf(
-            ComponentName(context, VISIBLE_MODERN_PASS_ALIAS) to componentStateFor(
-                label == AppLauncherLabel.MONICA_PASS
-            ),
-            ComponentName(context, VISIBLE_CLASSIC_PASS_ALIAS) to
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-            ComponentName(context, VISIBLE_MODERN_MONICA_ALIAS) to componentStateFor(
-                label == AppLauncherLabel.MONICA
-            ),
-            ComponentName(context, VISIBLE_CLASSIC_MONICA_ALIAS) to
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+        // The snow leopard language swaps the launcher icon for an easter egg. Exactly
+        // one visible alias stays enabled; the alias that is about to take over is
+        // enabled before the others are disabled so the launcher never shows an
+        // empty spot for this package.
+        val snowLeopardMode = StartupLanguageCache.read(context) == Language.SNOW_LEOPARD
+        val enabledAlias = when {
+            snowLeopardMode -> VISIBLE_SNOW_LEOPARD_ALIAS
+            label == AppLauncherLabel.MONICA_PASS -> VISIBLE_MODERN_PASS_ALIAS
+            else -> VISIBLE_MODERN_MONICA_ALIAS
+        }
+        // The alias taking over is written first; every other visible alias is
+        // disabled exactly once and never overwrites the enabled entry above.
+        val states = linkedMapOf(
+            ComponentName(context, enabledAlias) to
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED
         )
+        listOf(
+            VISIBLE_SNOW_LEOPARD_ALIAS,
+            VISIBLE_MODERN_PASS_ALIAS,
+            VISIBLE_MODERN_MONICA_ALIAS
+        ).filter { alias -> alias != enabledAlias }.forEach { alias ->
+            states[ComponentName(context, alias)] =
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+        }
+        states[ComponentName(context, VISIBLE_CLASSIC_PASS_ALIAS)] =
+            PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+        states[ComponentName(context, VISIBLE_CLASSIC_MONICA_ALIAS)] =
+            PackageManager.COMPONENT_ENABLED_STATE_DISABLED
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             packageManager.setComponentEnabledSettings(

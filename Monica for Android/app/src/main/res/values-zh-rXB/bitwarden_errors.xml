@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_error_certificate_expired">证书已过期嗷呜。请检查设备日期与时间，并联系服务器管理员更新证书嗷呜。</string>
+    <string name="bitwarden_error_certificate_not_yet_valid">证书尚未生效嗷呜。请检查设备日期与时间，以及证书的有效期嗷呜。</string>
+    <string name="bitwarden_error_certificate_hostname">服务器证书与填写的域名不匹配嗷呜。请检查自托管地址，并确认反向代理返回的是该域名的证书嗷呜。</string>
+    <string name="bitwarden_error_certificate_untrusted">无法验证服务器证书嗷呜。请检查服务器是否提供完整证书链、设备是否信任对应的 CA，以及代理是否替换了 HTTPS 证书嗷呜。自签名服务器请在证书设置中配置对应的 CA嗷呜。</string>
+    <string name="bitwarden_error_tls_handshake">无法建立安全的 TLS 连接嗷呜。请检查服务器或反向代理的 TLS 配置、协议版本，以及启用 mTLS 时的客户端证书嗷呜。</string>
+    <string name="bitwarden_error_dns">无法解析服务器域名嗷呜。请检查自托管地址、DNS、VPN 或代理设置嗷呜。</string>
+    <string name="bitwarden_error_timeout">连接服务器超时嗷呜。请确认服务器在线，并检查端口、网络、VPN 或代理设置嗷呜。</string>
+    <string name="bitwarden_error_connection">无法连接到服务器嗷呜。请检查地址与端口，确认服务已启动，并检查防火墙与代理设置嗷呜。</string>
+    <string name="bitwarden_error_proxy">代理服务器拒绝连接或需要身份验证嗷呜。请检查代理地址、端口和账号设置嗷呜。</string>
+    <string name="bitwarden_error_cleartext">服务器地址使用 HTTP，当前安全策略不允许明文连接嗷呜。请使用 HTTPS 地址，并检查反向代理的 HTTPS 配置嗷呜。</string>
+    <string name="bitwarden_error_network_io">与服务器通信时发生网络错误嗷呜。请检查网络、VPN 或代理设置后重试嗷呜。</string>
+</resources>

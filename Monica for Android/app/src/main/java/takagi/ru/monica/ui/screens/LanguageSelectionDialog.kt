@@ -66,6 +66,7 @@ internal val chineseLanguageVariants = listOf(
     Language.CHINESE,
     Language.TRADITIONAL_CHINESE,
     Language.NYA,
+    Language.SNOW_LEOPARD,
     Language.CLASSICAL_CHINESE,
 )
 
@@ -348,5 +349,6 @@ internal fun getLanguageDisplayName(language: Language, context: Context): Strin
         Language.POLISH -> R.string.language_polish
         Language.ITALIAN -> R.string.language_italian
         Language.NYA -> R.string.language_nya
+        Language.SNOW_LEOPARD -> R.string.language_snow_leopard
     }
 )

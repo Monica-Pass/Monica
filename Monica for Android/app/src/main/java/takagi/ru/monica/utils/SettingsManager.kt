@@ -769,6 +769,18 @@ class SettingsManager(private val context: Context) {
             preferences[LANGUAGE_KEY] = language.name
         }
         StartupLanguageCache.write(context, language)
+        refreshLauncherEntryForLanguage()
+    }
+
+    /**
+     * 芝士雪豹语会连带替换桌面图标。语言变更后按最新语言与现有图标/名称偏好
+     * 重新应用可见启动入口；切换失败不影响语言本身生效。
+     */
+    private suspend fun refreshLauncherEntryForLanguage() {
+        runCatching {
+            val settings = settingsFlow.first()
+            AppLauncherIconManager.apply(context, settings.appLauncherIcon, settings.appLauncherLabel)
+        }
     }
 
     suspend fun updateBitwardenUploadAll(enabled: Boolean) {

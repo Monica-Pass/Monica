@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wallet_selection_stack_title">卡叠 · %1$s嗷呜</string>
+    <string name="wallet_selection_unstacked">散着放的卡片嗷呜</string>
+    <string name="wallet_selection_group_count">已选 %1$d / %2$d 张嗷呜</string>
+    <string name="wallet_selection_visible_group_count">当前显示：已选 %1$d / %2$d 张嗷呜</string>
+</resources>
