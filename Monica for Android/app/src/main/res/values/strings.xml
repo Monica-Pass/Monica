@@ -4674,4 +4674,6 @@
     <string name="qs_lang_french">Français</string>
     <string name="language_nya" translatable="false">喵喵语</string>
     <string name="qs_lang_nya" translatable="false">喵喵语</string>
+    <string name="language_snow_leopard" translatable="false">芝士雪豹语</string>
+    <string name="qs_lang_snow_leopard" translatable="false">芝士雪豹语</string>
 </resources>

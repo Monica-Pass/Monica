@@ -1,0 +1,4 @@
+<resources>
+    <string name="generator_create_username">以此名新建条目</string>
+    <string name="generator_create_password">以此密新建条目</string>
+</resources>

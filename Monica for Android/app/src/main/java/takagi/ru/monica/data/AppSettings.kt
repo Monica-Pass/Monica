@@ -42,6 +42,7 @@ enum class Language {
     FRENCH,
     POLISH,
     NYA,
+    SNOW_LEOPARD,
     TRADITIONAL_CHINESE,
     ITALIAN
 }

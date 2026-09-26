@@ -68,7 +68,7 @@ class ItalianLocaleInstrumentedTest {
 
     @Test fun languageNameIsPlayfulOnlyInChineseContexts() {
         Language.entries.filter { it != Language.SYSTEM }.forEach { language ->
-            val chinese = language in setOf(Language.CHINESE, Language.TRADITIONAL_CHINESE, Language.CLASSICAL_CHINESE, Language.NYA)
+            val chinese = language in setOf(Language.CHINESE, Language.TRADITIONAL_CHINESE, Language.CLASSICAL_CHINESE, Language.NYA, Language.SNOW_LEOPARD)
             assertEquals(language.name, if (chinese) "超级马里奥语" else "Italiano",
                 LocaleHelper.setLocale(context, language).getString(R.string.language_italian))
         }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vault_overview_picker_search_cards">搜卡片、银行或尾号嗷呜</string>
+    <string name="vault_overview_picker_search_items">搜标题或账号嗷呜</string>
+    <string name="vault_overview_picker_selected">已选 %1$d 项嗷呜</string>
+    <string name="vault_overview_picker_results">结果：%1$d嗷呜</string>
+    <string name="vault_overview_picker_no_account">还没填账号嗷呜</string>
+    <string name="vault_overview_picker_empty_hint">换个关键词或数据库再试试嗷呜</string>
+    <string name="vault_overview_picker_limit">最多固定 %1$d 项嗷呜</string>
+</resources>
