@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_legacy_creation_disabled">I nuovi database usano MDBX2. I file MDBX1 si possono aprire solo per aggiornarli.</string>
+    <string name="mdbx_legacy_import_option">MDBX1 (aggiornamento)</string>
+    <string name="mdbx_legacy_local_copy_required">Impossibile leggere la copia locale MDBX1. Riapri il file MDBX1 originale per aggiornarlo. Il database originale non è stato modificato.</string>
+    <string name="mdbx_legacy_remote_copy_warning">L’aggiornamento converte la copia salvata su questo dispositivo in un nuovo database MDBX2 locale. Le modifiche remote non ancora scaricate non sono incluse. Il file remoto originale e la copia locale vengono conservati. Configura separatamente la sincronizzazione del nuovo database.</string>
+    <string name="mdbx_legacy_unavailable_badge">MDBX1 · Non disponibile</string>
+    <string name="mdbx_legacy_unavailable_description">Questo database non è disponibile. Aggiornalo a MDBX2 per continuare a usarlo. L’aggiornamento conserva il file originale.</string>
+    <string name="mdbx_legacy_unavailable_title">MDBX1 non è più supportato</string>
+    <string name="mdbx_legacy_upgrade_action">Aggiorna a MDBX2</string>
+</resources>

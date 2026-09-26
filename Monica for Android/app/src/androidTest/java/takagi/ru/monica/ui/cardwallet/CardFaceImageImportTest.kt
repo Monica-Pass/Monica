@@ -16,7 +16,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class CardFaceImageImportTest {
     private val context get() = InstrumentationRegistry.getInstrumentation().targetContext
-    private fun source(kind: String) = Uri.parse("content://takagi.ru.monica.test.cardface.images/$kind/${UUID.randomUUID()}")
+    private fun source(kind: String) = Uri.parse("content://${InstrumentationRegistry.getInstrumentation().context.packageName}.cardface.images/$kind/${UUID.randomUUID()}")
 
     @Test
     fun importsRealMegabyteJpegFromUnknownSizeStreamThatCannotBeReopened() = runBlocking {

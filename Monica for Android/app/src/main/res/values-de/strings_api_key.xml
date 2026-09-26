@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_key_add">API-Schlüssel hinzufügen</string>
+    <string name="api_key_edit">API-Schlüssel bearbeiten</string>
+    <string name="api_key_hide">Schlüssel ausblenden</string>
+    <string name="api_key_invalid_url">Gib eine http://- oder https://-URL mit Hostnamen und ohne eingebettete Zugangsdaten ein.</string>
+    <string name="api_key_load_error">Dieser API-Schlüssel konnte nicht gelesen werden. Öffne die Datenbank erneut und versuche es noch einmal.</string>
+    <string name="api_key_locked">Dein Tresor ist gesperrt. Entsperre ihn, um fortzufahren.</string>
+    <string name="api_key_open_website">Website öffnen</string>
+    <string name="api_key_provider">Anbietername *</string>
+    <string name="api_key_provider_hint">Z. B. Claude oder ein eigener KI-Anbieter</string>
+    <string name="api_key_required">Erforderlich</string>
+    <string name="api_key_save_error">Nicht an allen ausgewählten Orten gespeichert. Prüfe deren Verfügbarkeit und versuche es erneut.</string>
+    <string name="api_key_secret_required">API-Schlüssel *</string>
+    <string name="api_key_show">Schlüssel anzeigen</string>
+    <string name="api_key_title">API-Schlüssel</string>
+    <string name="api_key_url">API-Anfrage-URL (optional)</string>
+    <string name="api_key_url_label">API-Anfrage-URL</string>
+    <string name="api_key_website">Offizielle Website (optional)</string>
+    <string name="api_key_website_label">Offizielle Website</string>
+</resources>

@@ -12,7 +12,16 @@ data class ImportedPasswordSnapshot(
     val notes: String = "",
     val email: String = "",
     val phone: String = "",
-    val authenticatorKey: String = ""
+    val authenticatorKey: String = "",
+    val addressLine: String = "",
+    val city: String = "",
+    val state: String = "",
+    val zipCode: String = "",
+    val country: String = "",
+    val creditCardNumber: String = "",
+    val creditCardHolder: String = "",
+    val creditCardExpiry: String = "",
+    val creditCardCVV: String = "",
 )
 
 object PasswordImportDuplicateResolver {
@@ -45,7 +54,7 @@ object PasswordImportDuplicateResolver {
         }
     }
 
-    private fun matches(
+    internal fun matches(
         candidate: PasswordEntry,
         snapshot: ImportedPasswordSnapshot,
         securityManager: SecurityManager
@@ -53,22 +62,17 @@ object PasswordImportDuplicateResolver {
         if (!normalizedEquals(candidate.title, snapshot.title)) return false
         if (!normalizedEquals(candidate.username, snapshot.username)) return false
         if (!normalizedEquals(candidate.website, snapshot.website)) return false
-        if (!normalizedEquals(candidate.notes, snapshot.notes)) return false
+        if (candidate.notes != snapshot.notes) return false
         if (!normalizedEquals(candidate.email, snapshot.email)) return false
         if (!normalizedEquals(candidate.phone, snapshot.phone)) return false
+        if (candidate.addressLine != snapshot.addressLine || candidate.city != snapshot.city ||
+            candidate.state != snapshot.state || candidate.zipCode != snapshot.zipCode ||
+            candidate.country != snapshot.country || candidate.creditCardHolder != snapshot.creditCardHolder ||
+            candidate.creditCardExpiry != snapshot.creditCardExpiry) return false
+        if (!secretEquals(candidate.creditCardNumber, snapshot.creditCardNumber, securityManager)) return false
+        if (!secretEquals(candidate.creditCardCVV, snapshot.creditCardCVV, securityManager)) return false
         if (!secretEquals(candidate.authenticatorKey, snapshot.authenticatorKey, securityManager)) return false
-
-        if (candidate.password == snapshot.password) {
-            return true
-        }
-
-        val decryptedCandidatePassword = runCatching { securityManager.decryptData(candidate.password) }.getOrNull()
-        if (decryptedCandidatePassword == snapshot.password) {
-            return true
-        }
-
-        val decryptedImportedPassword = runCatching { securityManager.decryptData(snapshot.password) }.getOrNull()
-        return decryptedImportedPassword != null && decryptedImportedPassword == decryptedCandidatePassword
+        return secretEquals(candidate.password, snapshot.password, securityManager)
     }
 
     private fun normalizedEquals(left: String?, right: String?): Boolean {

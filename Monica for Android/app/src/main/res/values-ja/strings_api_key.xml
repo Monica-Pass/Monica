@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_key_add">API キーを追加</string>
+    <string name="api_key_edit">API キーを編集</string>
+    <string name="api_key_hide">キーを非表示</string>
+    <string name="api_key_invalid_url">ホスト名を含み、認証情報を埋め込まない http:// または https:// の URL を入力してください。</string>
+    <string name="api_key_load_error">この API キーを読み取れませんでした。データベースを開き直して再試行してください。</string>
+    <string name="api_key_locked">保管庫はロックされています。続行するにはロックを解除してください。</string>
+    <string name="api_key_open_website">ウェブサイトを開く</string>
+    <string name="api_key_provider">プロバイダー名 *</string>
+    <string name="api_key_provider_hint">例：Claude、カスタム AI プロバイダー</string>
+    <string name="api_key_required">必須</string>
+    <string name="api_key_save_error">選択したすべての保存先に保存できませんでした。保存先が利用可能か確認して再試行してください。</string>
+    <string name="api_key_secret_required">API キー *</string>
+    <string name="api_key_show">キーを表示</string>
+    <string name="api_key_title">API キー</string>
+    <string name="api_key_url">API リクエスト URL（任意）</string>
+    <string name="api_key_url_label">API リクエスト URL</string>
+    <string name="api_key_website">公式サイト（任意）</string>
+    <string name="api_key_website_label">公式サイト</string>
+</resources>

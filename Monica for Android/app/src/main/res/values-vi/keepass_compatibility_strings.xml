@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keepass_entry_expired_at">Đã hết hạn: %1$s</string>
+    <string name="keepass_entry_expires">Thời hạn</string>
+    <string name="keepass_entry_expires_at">Hết hạn: %1$s</string>
+    <string name="keepass_entry_never_expires">Không bao giờ hết hạn</string>
+    <string name="keepass_entry_otp_secret_invalid">Nhập khóa bí mật OTP Base32 hợp lệ.</string>
+    <string name="keepass_entry_properties">Thuộc tính mục</string>
+    <string name="keepass_entry_tags_hint">Phân tách thẻ bằng dòng mới, dấu phẩy hoặc dấu chấm phẩy</string>
+    <string name="keepass_hotp_counter_exhausted">Bộ đếm đã đạt giá trị tối đa.</string>
+    <string name="keepass_hotp_saving">Đang lưu bộ đếm…</string>
+</resources>

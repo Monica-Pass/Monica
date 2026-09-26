@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keepass_entry_expired_at">만료됨: %1$s</string>
+    <string name="keepass_entry_expires">유효 기간</string>
+    <string name="keepass_entry_expires_at">만료: %1$s</string>
+    <string name="keepass_entry_never_expires">만료 없음</string>
+    <string name="keepass_entry_otp_secret_invalid">유효한 Base32 OTP 비밀 키를 입력하세요.</string>
+    <string name="keepass_entry_properties">항목 속성</string>
+    <string name="keepass_entry_tags_hint">태그는 줄 바꿈, 쉼표 또는 세미콜론으로 구분하세요</string>
+    <string name="keepass_hotp_counter_exhausted">카운터가 최댓값에 도달했습니다.</string>
+    <string name="keepass_hotp_saving">카운터 저장 중…</string>
+</resources>

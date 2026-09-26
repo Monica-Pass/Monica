@@ -4357,4 +4357,5 @@
     <string name="custom_icon_installed_load_failed">Impossibile caricare le icone. Riprova.</string>
     <string name="custom_icon_installed_save_failed">Impossibile usare questa icona. Riprova o scegline un’altra.</string>
     <string name="field_barcode_linear_too_wide">Questo codice a barre richiede uno schermo più largo. Ruota il dispositivo o usa un codice QR.</string>
+    <string name="qr_image_read_failed">Impossibile leggere l’immagine. Scegli un’altra immagine e riprova.</string>
 </resources>

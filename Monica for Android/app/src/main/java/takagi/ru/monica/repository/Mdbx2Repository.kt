@@ -1696,6 +1696,9 @@ class Mdbx2Repository(
             .put("custom_fields", passwordCustomFieldsPayload(entry.id))
             .put("bitwarden_mode", entry.bitwardenVaultId != null)
             .put("keepass_mode", entry.keepassDatabaseId != null)
+        MdbxPasswordContentFields.writeTo(payload, entry) { value ->
+            decryptSensitiveValue(value, "payment", entry.id)
+        }
         return EntryMutation(
             databaseId = databaseId,
             folderId = entry.mdbxFolderId,

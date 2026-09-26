@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_key_add">Añadir clave API</string>
+    <string name="api_key_edit">Editar clave API</string>
+    <string name="api_key_hide">Ocultar clave</string>
+    <string name="api_key_invalid_url">Introduce una URL http:// o https:// con un nombre de host y sin credenciales incrustadas.</string>
+    <string name="api_key_load_error">No se pudo leer esta clave API. Vuelve a abrir su base de datos e inténtalo de nuevo.</string>
+    <string name="api_key_locked">Tu bóveda está bloqueada. Desbloquéala para continuar.</string>
+    <string name="api_key_open_website">Abrir sitio web</string>
+    <string name="api_key_provider">Nombre del proveedor *</string>
+    <string name="api_key_provider_hint">P. ej., Claude o un proveedor de IA personalizado</string>
+    <string name="api_key_required">Obligatorio</string>
+    <string name="api_key_save_error">No se pudo guardar en todas las ubicaciones seleccionadas. Comprueba su disponibilidad e inténtalo de nuevo.</string>
+    <string name="api_key_secret_required">Clave API *</string>
+    <string name="api_key_show">Mostrar clave</string>
+    <string name="api_key_title">Clave API</string>
+    <string name="api_key_url">URL de solicitud API (opcional)</string>
+    <string name="api_key_url_label">URL de solicitud API</string>
+    <string name="api_key_website">Sitio web oficial (opcional)</string>
+    <string name="api_key_website_label">Sitio web oficial</string>
+</resources>

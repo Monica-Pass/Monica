@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_legacy_creation_disabled">Cơ sở dữ liệu mới dùng MDBX2. Chỉ có thể mở tệp MDBX1 để nâng cấp.</string>
+    <string name="mdbx_legacy_import_option">MDBX1 (nâng cấp)</string>
+    <string name="mdbx_legacy_local_copy_required">Không thể đọc bản sao MDBX1 trên thiết bị. Hãy mở lại tệp MDBX1 gốc để nâng cấp. Cơ sở dữ liệu gốc chưa bị thay đổi.</string>
+    <string name="mdbx_legacy_remote_copy_warning">Quá trình nâng cấp chuyển bản sao đã lưu trên thiết bị thành cơ sở dữ liệu MDBX2 cục bộ mới. Các thay đổi từ xa chưa tải xuống không được đưa vào. Tệp gốc từ xa và bản sao cục bộ được giữ lại. Hãy thiết lập đồng bộ riêng cho cơ sở dữ liệu mới.</string>
+    <string name="mdbx_legacy_unavailable_badge">MDBX1 · Không khả dụng</string>
+    <string name="mdbx_legacy_unavailable_description">Cơ sở dữ liệu này không khả dụng. Hãy nâng cấp lên MDBX2 để tiếp tục sử dụng. Tệp gốc được giữ lại khi nâng cấp.</string>
+    <string name="mdbx_legacy_unavailable_title">MDBX1 không còn được hỗ trợ</string>
+    <string name="mdbx_legacy_upgrade_action">Nâng cấp lên MDBX2</string>
+</resources>

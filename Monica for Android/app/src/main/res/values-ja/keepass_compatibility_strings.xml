@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keepass_entry_expired_at">期限切れ：%1$s</string>
+    <string name="keepass_entry_expires">有効期限</string>
+    <string name="keepass_entry_expires_at">有効期限：%1$s</string>
+    <string name="keepass_entry_never_expires">無期限</string>
+    <string name="keepass_entry_otp_secret_invalid">有効な Base32 形式の OTP シークレットを入力してください。</string>
+    <string name="keepass_entry_properties">エントリのプロパティ</string>
+    <string name="keepass_entry_tags_hint">タグは改行、カンマ、セミコロンで区切ってください</string>
+    <string name="keepass_hotp_counter_exhausted">カウンターが最大値に達しました。</string>
+    <string name="keepass_hotp_saving">カウンターを保存中…</string>
+</resources>

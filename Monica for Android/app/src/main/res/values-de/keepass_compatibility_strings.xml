@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keepass_entry_expired_at">Abgelaufen: %1$s</string>
+    <string name="keepass_entry_expires">Ablaufdatum</string>
+    <string name="keepass_entry_expires_at">Läuft ab: %1$s</string>
+    <string name="keepass_entry_never_expires">Läuft nie ab</string>
+    <string name="keepass_entry_otp_secret_invalid">Gib einen gültigen OTP-Geheimschlüssel im Base32-Format ein.</string>
+    <string name="keepass_entry_properties">Eintragseigenschaften</string>
+    <string name="keepass_entry_tags_hint">Tags durch Zeilenumbrüche, Kommas oder Semikolons trennen</string>
+    <string name="keepass_hotp_counter_exhausted">Der Zähler hat seinen Höchstwert erreicht.</string>
+    <string name="keepass_hotp_saving">Zähler wird gespeichert…</string>
+</resources>

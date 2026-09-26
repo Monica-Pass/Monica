@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ime_fill_current_otp">Inserisci codice attuale</string>
+    <string name="ime_hide_keyboard">Nascondi tastiera</string>
+    <string name="ime_hide_pin_preview_description">Nascondi le anteprime dei numeri e l’evidenziazione dei tasti premuti.</string>
+    <string name="ime_hide_pin_preview_title">Nascondi anteprime dei tasti numerici</string>
+    <string name="ime_otp_unavailable">Il codice di verifica attuale non è disponibile.</string>
+    <string name="ime_scramble_pin_description">Mescola all’apertura del tastierino numerico. I tasti restano fermi durante la digitazione.</string>
+    <string name="ime_scramble_pin_title">Mescola i tasti numerici</string>
+    <string name="ime_switch_keyboard">Cambia metodo di inserimento</string>
+</resources>

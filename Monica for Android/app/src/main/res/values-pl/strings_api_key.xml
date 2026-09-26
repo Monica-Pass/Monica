@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_key_add">Dodaj klucz API</string>
+    <string name="api_key_edit">Edytuj klucz API</string>
+    <string name="api_key_hide">Ukryj klucz</string>
+    <string name="api_key_invalid_url">Wpisz adres URL http:// lub https:// z nazwą hosta i bez osadzonych danych logowania.</string>
+    <string name="api_key_load_error">Nie udało się odczytać tego klucza API. Otwórz ponownie jego bazę danych i spróbuj jeszcze raz.</string>
+    <string name="api_key_locked">Sejf jest zablokowany. Odblokuj go, aby kontynuować.</string>
+    <string name="api_key_open_website">Otwórz witrynę</string>
+    <string name="api_key_provider">Nazwa dostawcy *</string>
+    <string name="api_key_provider_hint">Np. Claude lub własny dostawca AI</string>
+    <string name="api_key_required">Wymagane</string>
+    <string name="api_key_save_error">Nie udało się zapisać we wszystkich wybranych miejscach. Sprawdź ich dostępność i spróbuj ponownie.</string>
+    <string name="api_key_secret_required">Klucz API *</string>
+    <string name="api_key_show">Pokaż klucz</string>
+    <string name="api_key_title">Klucz API</string>
+    <string name="api_key_url">URL żądania API (opcjonalnie)</string>
+    <string name="api_key_url_label">URL żądania API</string>
+    <string name="api_key_website">Oficjalna witryna (opcjonalnie)</string>
+    <string name="api_key_website_label">Oficjalna witryna</string>
+</resources>

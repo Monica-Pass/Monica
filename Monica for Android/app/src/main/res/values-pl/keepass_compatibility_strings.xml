@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keepass_entry_expired_at">Wygasło: %1$s</string>
+    <string name="keepass_entry_expires">Ważność</string>
+    <string name="keepass_entry_expires_at">Wygasa: %1$s</string>
+    <string name="keepass_entry_never_expires">Nigdy nie wygasa</string>
+    <string name="keepass_entry_otp_secret_invalid">Wpisz poprawny sekret OTP w formacie Base32.</string>
+    <string name="keepass_entry_properties">Właściwości wpisu</string>
+    <string name="keepass_entry_tags_hint">Oddzielaj etykiety nową linią, przecinkiem lub średnikiem</string>
+    <string name="keepass_hotp_counter_exhausted">Licznik osiągnął maksymalną wartość.</string>
+    <string name="keepass_hotp_saving">Zapisywanie licznika…</string>
+</resources>

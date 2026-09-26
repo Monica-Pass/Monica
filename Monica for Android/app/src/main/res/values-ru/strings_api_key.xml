@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_key_add">Добавить ключ API</string>
+    <string name="api_key_edit">Изменить ключ API</string>
+    <string name="api_key_hide">Скрыть ключ</string>
+    <string name="api_key_invalid_url">Введите URL с http:// или https://, именем хоста и без встроенных учётных данных.</string>
+    <string name="api_key_load_error">Не удалось прочитать этот ключ API. Откройте базу данных заново и повторите попытку.</string>
+    <string name="api_key_locked">Хранилище заблокировано. Разблокируйте его для продолжения.</string>
+    <string name="api_key_open_website">Открыть сайт</string>
+    <string name="api_key_provider">Название провайдера *</string>
+    <string name="api_key_provider_hint">Например, Claude или другой провайдер ИИ</string>
+    <string name="api_key_required">Обязательно</string>
+    <string name="api_key_save_error">Не удалось сохранить во все выбранные места. Проверьте их доступность и повторите попытку.</string>
+    <string name="api_key_secret_required">Ключ API *</string>
+    <string name="api_key_show">Показать ключ</string>
+    <string name="api_key_title">Ключ API</string>
+    <string name="api_key_url">URL запроса API (необязательно)</string>
+    <string name="api_key_url_label">URL запроса API</string>
+    <string name="api_key_website">Официальный сайт (необязательно)</string>
+    <string name="api_key_website_label">Официальный сайт</string>
+</resources>

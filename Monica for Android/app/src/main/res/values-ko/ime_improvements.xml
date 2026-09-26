@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ime_fill_current_otp">현재 코드 입력</string>
+    <string name="ime_hide_keyboard">키보드 숨기기</string>
+    <string name="ime_hide_pin_preview_description">숫자 팝업과 누른 키의 강조 표시를 숨깁니다.</string>
+    <string name="ime_hide_pin_preview_title">숫자 키 미리보기 숨기기</string>
+    <string name="ime_otp_unavailable">현재 인증 코드를 사용할 수 없습니다.</string>
+    <string name="ime_scramble_pin_description">숫자 키패드를 열 때 순서를 섞습니다. 입력 중에는 키 위치가 바뀌지 않습니다.</string>
+    <string name="ime_scramble_pin_title">숫자 키 순서 섞기</string>
+    <string name="ime_switch_keyboard">입력 방식 전환</string>
+</resources>

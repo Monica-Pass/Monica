@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ime_fill_current_otp">Вставить текущий код</string>
+    <string name="ime_hide_keyboard">Скрыть клавиатуру</string>
+    <string name="ime_hide_pin_preview_description">Скрывать всплывающие цифры и подсветку нажатых клавиш.</string>
+    <string name="ime_hide_pin_preview_title">Скрывать предпросмотр цифровых клавиш</string>
+    <string name="ime_otp_unavailable">Текущий код подтверждения недоступен.</string>
+    <string name="ime_scramble_pin_description">Перемешивать при открытии цифровой клавиатуры. Во время ввода клавиши остаются на своих местах.</string>
+    <string name="ime_scramble_pin_title">Перемешивать цифровые клавиши</string>
+    <string name="ime_switch_keyboard">Сменить способ ввода</string>
+</resources>

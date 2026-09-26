@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_legacy_creation_disabled">新規データベースには MDBX2 を使用します。MDBX1 ファイルはアップグレードのためにのみ開けます。</string>
+    <string name="mdbx_legacy_import_option">MDBX1（アップグレード）</string>
+    <string name="mdbx_legacy_local_copy_required">端末内の MDBX1 コピーを読み取れません。元の MDBX1 ファイルを開き直してアップグレードしてください。元のデータベースは変更されていません。</string>
+    <string name="mdbx_legacy_remote_copy_warning">この端末に保存されたコピーを新しいローカル MDBX2 データベースに変換します。未ダウンロードのリモート変更は含まれません。リモートの元ファイルとローカルコピーは保持されます。新しいデータベースの同期は別途設定してください。</string>
+    <string name="mdbx_legacy_unavailable_badge">MDBX1 · 利用不可</string>
+    <string name="mdbx_legacy_unavailable_description">このデータベースは利用できません。引き続き使用するには MDBX2 にアップグレードしてください。元のファイルは保持されます。</string>
+    <string name="mdbx_legacy_unavailable_title">MDBX1 のサポートは終了しました</string>
+    <string name="mdbx_legacy_upgrade_action">MDBX2 にアップグレード</string>
+</resources>

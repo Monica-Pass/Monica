@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_key_add">Aggiungi chiave API</string>
+    <string name="api_key_edit">Modifica chiave API</string>
+    <string name="api_key_hide">Nascondi chiave</string>
+    <string name="api_key_invalid_url">Inserisci un URL http:// o https:// con un nome host e senza credenziali incorporate.</string>
+    <string name="api_key_load_error">Impossibile leggere questa chiave API. Riapri il database e riprova.</string>
+    <string name="api_key_locked">La cassaforte è bloccata. Sbloccala per continuare.</string>
+    <string name="api_key_open_website">Apri sito web</string>
+    <string name="api_key_provider">Nome del fornitore *</string>
+    <string name="api_key_provider_hint">Ad es. Claude o un fornitore IA personalizzato</string>
+    <string name="api_key_required">Obbligatorio</string>
+    <string name="api_key_save_error">Impossibile salvare in tutte le posizioni selezionate. Verifica che siano disponibili e riprova.</string>
+    <string name="api_key_secret_required">Chiave API *</string>
+    <string name="api_key_show">Mostra chiave</string>
+    <string name="api_key_title">Chiave API</string>
+    <string name="api_key_url">URL della richiesta API (facoltativo)</string>
+    <string name="api_key_url_label">URL della richiesta API</string>
+    <string name="api_key_website">Sito ufficiale (facoltativo)</string>
+    <string name="api_key_website_label">Sito ufficiale</string>
+</resources>

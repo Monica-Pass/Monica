@@ -31,7 +31,9 @@ internal object KeePassFieldReferenceResolver {
     }
 
     fun getRawFieldValue(entry: Entry, key: String): String {
-        return extractContent(entry.fields[key])
+        return extractContent(entry.fields[key] ?: entry.fields.entries.firstOrNull {
+            key in standardFieldNames && it.key.equals(key, ignoreCase = true)
+        }?.value)
     }
 
     fun getFieldValue(
@@ -67,6 +69,16 @@ internal object KeePassFieldReferenceResolver {
         context: KeePassEntryResolutionContext? = null
     ): String {
         return resolveValueInternal(rawValue, currentEntry, context, emptySet(), 0)
+    }
+
+    /** A present Password is authoritative, including empty strings and literal labels. */
+    fun getPasswordFieldValue(entry: Entry, context: KeePassEntryResolutionContext? = null): String {
+        val standardKey = if (entry.fields.containsKey("Password")) "Password" else
+            entry.fields.keys.firstOrNull { it.equals("Password", ignoreCase = true) }
+        if (standardKey != null) return getFieldValue(entry, standardKey, context)
+        // Older writers used aliases. Other protected strings may be card PINs or recovery
+        // codes and must never silently become the login password.
+        return getFieldValueIgnoreCase(entry, context, "Pass", "pwd", "密码", "口令")
     }
 
     private fun resolveValueInternal(

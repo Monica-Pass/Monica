@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ime_fill_current_otp">現在のコードを入力</string>
+    <string name="ime_hide_keyboard">キーボードを隠す</string>
+    <string name="ime_hide_pin_preview_description">数字のポップアップと押したキーの強調表示を隠します。</string>
+    <string name="ime_hide_pin_preview_title">数字キーのプレビューを隠す</string>
+    <string name="ime_otp_unavailable">現在の確認コードは利用できません。</string>
+    <string name="ime_scramble_pin_description">数字パッドを開くたびに並べ替えます。入力中はキーの位置を維持します。</string>
+    <string name="ime_scramble_pin_title">数字キーをランダムに配置</string>
+    <string name="ime_switch_keyboard">入力方法を切り替え</string>
+</resources>

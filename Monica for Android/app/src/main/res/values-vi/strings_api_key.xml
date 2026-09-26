@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_key_add">Thêm khóa API</string>
+    <string name="api_key_edit">Sửa khóa API</string>
+    <string name="api_key_hide">Ẩn khóa</string>
+    <string name="api_key_invalid_url">Nhập URL http:// hoặc https:// có tên máy chủ và không chứa thông tin đăng nhập.</string>
+    <string name="api_key_load_error">Không thể đọc khóa API này. Hãy mở lại cơ sở dữ liệu rồi thử lại.</string>
+    <string name="api_key_locked">Kho của bạn đã bị khóa. Hãy mở khóa để tiếp tục.</string>
+    <string name="api_key_open_website">Mở trang web</string>
+    <string name="api_key_provider">Tên nhà cung cấp *</string>
+    <string name="api_key_provider_hint">Ví dụ: Claude, nhà cung cấp AI tùy chỉnh</string>
+    <string name="api_key_required">Bắt buộc</string>
+    <string name="api_key_save_error">Không thể lưu vào tất cả vị trí đã chọn. Hãy kiểm tra khả năng truy cập rồi thử lại.</string>
+    <string name="api_key_secret_required">Khóa API *</string>
+    <string name="api_key_show">Hiện khóa</string>
+    <string name="api_key_title">Khóa API</string>
+    <string name="api_key_url">URL yêu cầu API (tùy chọn)</string>
+    <string name="api_key_url_label">URL yêu cầu API</string>
+    <string name="api_key_website">Trang web chính thức (tùy chọn)</string>
+    <string name="api_key_website_label">Trang web chính thức</string>
+</resources>

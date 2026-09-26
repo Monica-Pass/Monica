@@ -179,7 +179,7 @@ class Mdbx2ExternalPublicationInstrumentedTest {
                     mergeCalls += 1
                     if (mergeCalls == 1) {
                         context.contentResolver.openOutputStream(
-                            StaleSizeContentProvider.URI,
+                            StaleSizeContentProvider.uriFor(InstrumentationRegistry.getInstrumentation().context, false),
                             "rwt"
                         )?.use { output -> output.write(copyBBytes) }
                             ?: error("Unable to mutate test external document")
@@ -193,7 +193,7 @@ class Mdbx2ExternalPublicationInstrumentedTest {
                 assertTrue(error.message.orEmpty().contains("stop after detecting"))
             }
             val publishedBytes = context.contentResolver.openInputStream(
-                StaleSizeContentProvider.URI
+                StaleSizeContentProvider.uriFor(InstrumentationRegistry.getInstrumentation().context, false)
             )?.use { it.readBytes() } ?: error("Published test document cannot be read")
             assertTrue(publishedBytes.contentEquals(copyBBytes))
             assertEquals(2, mergeCalls)
@@ -287,15 +287,15 @@ class Mdbx2ExternalPublicationInstrumentedTest {
             password = "stale-size-publication-test"
         )
         try {
-            resolver.delete(StaleSizeContentProvider.URI, null, null)
+            resolver.delete(StaleSizeContentProvider.uriFor(InstrumentationRegistry.getInstrumentation().context, false), null, null)
             invokePublishMainFile(
                 storage = Mdbx2ExternalStorage(context),
-                targetUri = StaleSizeContentProvider.URI,
+                targetUri = StaleSizeContentProvider.uriFor(InstrumentationRegistry.getInstrumentation().context, false),
                 workingCopy = workingCopy
             )
 
             val reportedSize = resolver.query(
-                StaleSizeContentProvider.URI,
+                StaleSizeContentProvider.uriFor(InstrumentationRegistry.getInstrumentation().context, false),
                 arrayOf(OpenableColumns.SIZE),
                 null,
                 null,
@@ -304,7 +304,7 @@ class Mdbx2ExternalPublicationInstrumentedTest {
                 check(cursor.moveToFirst())
                 cursor.getLong(0)
             }
-            val actualSize = resolver.openInputStream(StaleSizeContentProvider.URI)?.use { input ->
+            val actualSize = resolver.openInputStream(StaleSizeContentProvider.uriFor(InstrumentationRegistry.getInstrumentation().context, false))?.use { input ->
                 var total = 0L
                 val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
                 while (true) {
@@ -318,7 +318,7 @@ class Mdbx2ExternalPublicationInstrumentedTest {
             assertEquals(StaleSizeContentProvider.STALE_REPORTED_SIZE, reportedSize)
             assertTrue(actualSize > StaleSizeContentProvider.STALE_REPORTED_SIZE)
         } finally {
-            resolver.delete(StaleSizeContentProvider.URI, null, null)
+            resolver.delete(StaleSizeContentProvider.uriFor(InstrumentationRegistry.getInstrumentation().context, false), null, null)
             repository.deleteOwnedVaultFile(workingCopy)
         }
     }
@@ -338,11 +338,11 @@ class Mdbx2ExternalPublicationInstrumentedTest {
             password = "corrupted-publication-test"
         )
         try {
-            resolver.delete(StaleSizeContentProvider.CORRUPTED_READ_URI, null, null)
+            resolver.delete(StaleSizeContentProvider.uriFor(InstrumentationRegistry.getInstrumentation().context, true), null, null)
             try {
                 invokePublishMainFile(
                     storage = Mdbx2ExternalStorage(context),
-                    targetUri = StaleSizeContentProvider.CORRUPTED_READ_URI,
+                    targetUri = StaleSizeContentProvider.uriFor(InstrumentationRegistry.getInstrumentation().context, true),
                     workingCopy = workingCopy
                 )
                 fail("Publication must reject bytes that differ from the portable backup")
@@ -354,7 +354,7 @@ class Mdbx2ExternalPublicationInstrumentedTest {
                 )
             }
         } finally {
-            resolver.delete(StaleSizeContentProvider.CORRUPTED_READ_URI, null, null)
+            resolver.delete(StaleSizeContentProvider.uriFor(InstrumentationRegistry.getInstrumentation().context, true), null, null)
             repository.deleteOwnedVaultFile(workingCopy)
         }
     }
@@ -414,17 +414,17 @@ class Mdbx2ExternalPublicationInstrumentedTest {
             }
             createPortableBackup(baseFile.absolutePath, copyA.absolutePath)
             createPortableBackup(baseFile.absolutePath, copyB.absolutePath)
-            resolver.delete(StaleSizeContentProvider.URI, null, null)
+            resolver.delete(StaleSizeContentProvider.uriFor(InstrumentationRegistry.getInstrumentation().context, false), null, null)
             invokePublishMainFile(
                 storage = Mdbx2ExternalStorage(context),
-                targetUri = StaleSizeContentProvider.URI,
+                targetUri = StaleSizeContentProvider.uriFor(InstrumentationRegistry.getInstrumentation().context, false),
                 workingCopy = baseFile
             )
 
             val databaseAId = databaseDao.insertDatabase(
                 localDatabase(
                     name = "External divergence A",
-                    filePath = StaleSizeContentProvider.URI.toString(),
+                    filePath = StaleSizeContentProvider.uriFor(InstrumentationRegistry.getInstrumentation().context, false).toString(),
                     workingCopyPath = copyA.absolutePath,
                     sourceType = MdbxSourceType.LOCAL_EXTERNAL,
                     storageLocation = MdbxStorageLocation.EXTERNAL,
@@ -434,7 +434,7 @@ class Mdbx2ExternalPublicationInstrumentedTest {
             val databaseBId = databaseDao.insertDatabase(
                 localDatabase(
                     name = "External divergence B",
-                    filePath = StaleSizeContentProvider.URI.toString(),
+                    filePath = StaleSizeContentProvider.uriFor(InstrumentationRegistry.getInstrumentation().context, false).toString(),
                     workingCopyPath = copyB.absolutePath,
                     sourceType = MdbxSourceType.LOCAL_EXTERNAL,
                     storageLocation = MdbxStorageLocation.EXTERNAL,
@@ -459,7 +459,7 @@ class Mdbx2ExternalPublicationInstrumentedTest {
             listOf(baseFile, copyA, copyB).forEach { file ->
                 runCatching { baseRepository.deleteOwnedVaultFile(file) }
             }
-            resolver.delete(StaleSizeContentProvider.URI, null, null)
+            resolver.delete(StaleSizeContentProvider.uriFor(InstrumentationRegistry.getInstrumentation().context, false), null, null)
             throw error
         }
     }
@@ -539,7 +539,7 @@ class Mdbx2ExternalPublicationInstrumentedTest {
                 "${UUID.randomUUID()}.mdbx"
             )
             Mdbx2ExternalStorage(context).copyDocumentToOwnedFile(
-                sourceUri = StaleSizeContentProvider.URI,
+                sourceUri = StaleSizeContentProvider.uriFor(InstrumentationRegistry.getInstrumentation().context, false),
                 targetFile = importedFile
             )
             files += importedFile
@@ -563,7 +563,7 @@ class Mdbx2ExternalPublicationInstrumentedTest {
                 runCatching { repositoryA.deleteOwnedVaultFile(file) }
             }
             InstrumentationRegistry.getInstrumentation().targetContext.contentResolver.delete(
-                StaleSizeContentProvider.URI,
+                StaleSizeContentProvider.uriFor(InstrumentationRegistry.getInstrumentation().context, false),
                 null,
                 null
             )

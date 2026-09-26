@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ime_fill_current_otp">Điền mã hiện tại</string>
+    <string name="ime_hide_keyboard">Ẩn bàn phím</string>
+    <string name="ime_hide_pin_preview_description">Ẩn cửa sổ xem trước số và hiệu ứng sáng của phím được nhấn.</string>
+    <string name="ime_hide_pin_preview_title">Ẩn xem trước phím số</string>
+    <string name="ime_otp_unavailable">Mã xác minh hiện tại không khả dụng.</string>
+    <string name="ime_scramble_pin_description">Xáo trộn khi mở bàn phím số. Các phím giữ nguyên vị trí khi bạn nhập.</string>
+    <string name="ime_scramble_pin_title">Xáo trộn phím số</string>
+    <string name="ime_switch_keyboard">Đổi phương thức nhập</string>
+</resources>

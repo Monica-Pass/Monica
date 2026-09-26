@@ -104,6 +104,7 @@ class ImportDestinationWriter(
                         mdbxFolderId = data.optString("mdbx_folder_id").takeUnless { it.isBlank() || it == "null" },
                         authenticatorKey = data.optString("authenticator_key").takeIf { it.isNotEmpty() }
                             ?.let(security::encryptData).orEmpty())
+                        .let { MdbxPasswordContentFields.readInto(data, it) }
                     val fields = data.optJSONArray("custom_fields")
                     projection to (0 until (fields?.length() ?: 0)).map { index ->
                         val field = fields!!.getJSONObject(index)
@@ -143,10 +144,7 @@ class ImportDestinationWriter(
             }, deletedOnly = isDeleted)?.let { return it }
         if (isDeleted) return null
         nativeMdbxPasswords.firstOrNull { (entry, fields) ->
-            entry.title == snapshot.title && entry.username == snapshot.username && entry.website == snapshot.website &&
-                security.decryptData(entry.password) == security.decryptDataIfMonicaCiphertext(snapshot.password) &&
-                entry.notes == snapshot.notes && entry.email == snapshot.email && entry.phone == snapshot.phone &&
-                security.decryptDataIfMonicaCiphertext(entry.authenticatorKey) == security.decryptDataIfMonicaCiphertext(snapshot.authenticatorKey) &&
+            PasswordImportDuplicateResolver.matches(entry, snapshot, security) &&
                 fields.sortedBy { it.sortOrder }.map { Triple(it.title, it.value, it.isProtected) } == expectedFields
         }?.let { (entry, fields) ->
             // Rebuild only the local index. Mirroring this incomplete projection would rewrite the file.
@@ -157,21 +155,26 @@ class ImportDestinationWriter(
         // Native KDBX entries may not have a Room projection yet. Reuse their UUID instead of
         // duplicating an already existing credential in the actual file.
         val native = nativePasswords.firstOrNull { entry ->
-            entry.title == snapshot.title && entry.username == snapshot.username && entry.url == snapshot.website &&
-                entry.password == security.decryptDataIfMonicaCiphertext(snapshot.password) && entry.notes == snapshot.notes &&
-                entry.email == snapshot.email && entry.phone == snapshot.phone && snapshot.authenticatorKey.isBlank() &&
+            PasswordImportDuplicateResolver.matches(entry.toPasswordProjection(), snapshot, security) &&
                 entry.customFields.sortedBy { it.sortOrder }.map { Triple(it.title, it.value, it.isProtected) } == expectedFields
         } ?: return null
-        val projection = PasswordEntry(title = native.title, username = native.username,
-            website = native.url, password = security.encryptData(native.password), notes = native.notes,
-            appPackageName = native.appPackageName, appName = native.appName, email = native.email, phone = native.phone,
-            keepassDatabaseId = destination.keepassId, keepassEntryUuid = native.entryUuid,
-            keepassGroupPath = native.groupPath, keepassGroupUuid = native.groupUuid, loginType = native.loginType)
+        val projection = native.toPasswordProjection().copy(password = security.encryptData(native.password))
         val id = passwords.insertPasswordEntry(projection)
         native.customFields.forEach { field -> database.customFieldDao().insert(CustomField(
             entryId = id, title = field.title, value = field.value, isProtected = field.isProtected, sortOrder = field.sortOrder)) }
         return projection.copy(id = id)
     }
+
+    private fun KeePassEntryData.toPasswordProjection() = PasswordEntry(
+        title = title, username = username, website = url, password = password, notes = notes,
+        appPackageName = appPackageName, appName = appName, email = email, phone = phone,
+        addressLine = addressLine, city = city, state = state, zipCode = zipCode, country = country,
+        creditCardNumber = creditCardNumber, creditCardHolder = creditCardHolder,
+        creditCardExpiry = creditCardExpiry, creditCardCVV = creditCardCVV,
+        keepassDatabaseId = destination.keepassId, keepassEntryUuid = entryUuid,
+        keepassGroupPath = groupPath, keepassGroupUuid = groupUuid, loginType = loginType,
+        ssoProvider = ssoProvider, ssoRefEntryId = ssoRefEntryId, wifiMetadata = wifiMetadata, sshKeyData = sshKeyData,
+    )
 
     suspend fun findPasskey(entry: PasskeyEntry): PasskeyEntry? = (database.passkeyDao()
         .getPasskeysByRpIdSync(entry.rpId) + nativePasskeys).firstOrNull {

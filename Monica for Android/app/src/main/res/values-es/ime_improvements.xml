@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ime_fill_current_otp">Rellenar código actual</string>
+    <string name="ime_hide_keyboard">Ocultar teclado</string>
+    <string name="ime_hide_pin_preview_description">Ocultar las vistas previas de números y el resaltado de las teclas pulsadas.</string>
+    <string name="ime_hide_pin_preview_title">Ocultar vista previa de teclas numéricas</string>
+    <string name="ime_otp_unavailable">El código de verificación actual no está disponible.</string>
+    <string name="ime_scramble_pin_description">Mezclar al abrir el teclado numérico. Las teclas mantienen su posición mientras escribes.</string>
+    <string name="ime_scramble_pin_title">Mezclar teclas numéricas</string>
+    <string name="ime_switch_keyboard">Cambiar método de entrada</string>
+</resources>

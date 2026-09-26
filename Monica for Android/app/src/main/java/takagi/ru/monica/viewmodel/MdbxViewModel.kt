@@ -3966,7 +3966,7 @@ class MdbxViewModel(
                 existing?.sortOrder ?: 0
             },
             isGroupCover = existing?.isGroupCover ?: false
-        )
+        ).let { takagi.ru.monica.repository.MdbxPasswordContentFields.readInto(payload, it, existing) }
         val localPasswordId = if (existing != null) {
             if (!existing.matchesMdbxImport(entry, plainPassword)) {
                 passwordEntryDao.updatePasswordEntry(entry)

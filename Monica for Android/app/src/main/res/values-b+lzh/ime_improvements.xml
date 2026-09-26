@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ime_fill_current_otp">填入现时验证码</string>
+    <string name="ime_hide_keyboard">隐键盘</string>
+    <string name="ime_hide_pin_preview_description">隐数字浮签及按键亮色。</string>
+    <string name="ime_hide_pin_preview_title">隐数字键预览</string>
+    <string name="ime_otp_unavailable">现时验证码不可用。</string>
+    <string name="ime_scramble_pin_description">数字盘启时乱其序，输入之际位次不变。</string>
+    <string name="ime_scramble_pin_title">乱数字键序</string>
+    <string name="ime_switch_keyboard">易输入法</string>
+</resources>

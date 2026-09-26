@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keepass_entry_expired_at">Caducó: %1$s</string>
+    <string name="keepass_entry_expires">Caducidad</string>
+    <string name="keepass_entry_expires_at">Caduca: %1$s</string>
+    <string name="keepass_entry_never_expires">Nunca caduca</string>
+    <string name="keepass_entry_otp_secret_invalid">Introduce un secreto OTP válido en formato Base32.</string>
+    <string name="keepass_entry_properties">Propiedades de la entrada</string>
+    <string name="keepass_entry_tags_hint">Separa las etiquetas con saltos de línea, comas o punto y coma</string>
+    <string name="keepass_hotp_counter_exhausted">El contador ha alcanzado su valor máximo.</string>
+    <string name="keepass_hotp_saving">Guardando contador…</string>
+</resources>

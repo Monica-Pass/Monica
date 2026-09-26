@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keepass_entry_expired_at">已过期：%1$s</string>
+    <string name="keepass_entry_expires">效期</string>
+    <string name="keepass_entry_expires_at">到期：%1$s</string>
+    <string name="keepass_entry_never_expires">永不过期</string>
+    <string name="keepass_entry_otp_secret_invalid">请输入有效之 Base32 OTP 密钥。</string>
+    <string name="keepass_entry_properties">条目属性</string>
+    <string name="keepass_entry_tags_hint">以换行、逗号或分号隔诸标签</string>
+    <string name="keepass_hotp_counter_exhausted">计数已至上限。</string>
+    <string name="keepass_hotp_saving">正存计数…</string>
+</resources>

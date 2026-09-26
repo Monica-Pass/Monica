@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_key_add">API 키 추가</string>
+    <string name="api_key_edit">API 키 편집</string>
+    <string name="api_key_hide">키 숨기기</string>
+    <string name="api_key_invalid_url">호스트 이름이 있고 인증 정보가 포함되지 않은 http:// 또는 https:// URL을 입력하세요.</string>
+    <string name="api_key_load_error">이 API 키를 읽을 수 없습니다. 데이터베이스를 다시 연 후 재시도하세요.</string>
+    <string name="api_key_locked">보관함이 잠겨 있습니다. 계속하려면 잠금을 해제하세요.</string>
+    <string name="api_key_open_website">웹사이트 열기</string>
+    <string name="api_key_provider">제공업체 이름 *</string>
+    <string name="api_key_provider_hint">예: Claude, 사용자 지정 AI 제공업체</string>
+    <string name="api_key_required">필수</string>
+    <string name="api_key_save_error">선택한 모든 위치에 저장할 수 없습니다. 각 위치를 사용할 수 있는지 확인하고 다시 시도하세요.</string>
+    <string name="api_key_secret_required">API 키 *</string>
+    <string name="api_key_show">키 표시</string>
+    <string name="api_key_title">API 키</string>
+    <string name="api_key_url">API 요청 URL (선택 사항)</string>
+    <string name="api_key_url_label">API 요청 URL</string>
+    <string name="api_key_website">공식 웹사이트 (선택 사항)</string>
+    <string name="api_key_website_label">공식 웹사이트</string>
+</resources>

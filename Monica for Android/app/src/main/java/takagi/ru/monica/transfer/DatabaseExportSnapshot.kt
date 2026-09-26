@@ -176,7 +176,7 @@ internal class DatabaseExportSnapshotLoader(context: Context) {
                         loginType = data.optString("login_type", "PASSWORD"), categoryId = data.category(),
                         sortOrder = data.optInt("sort_order"),
                         mdbxDatabaseId = source.databaseId, replicaGroupId = entry.entryId, isDeleted = entry.deleted,
-                    )
+                    ).let { MdbxPasswordContentFields.readInto(data, it, previous) }
                 }
                 val itemTypes = mapOf("note" to ItemType.NOTE, "totp" to ItemType.TOTP, "card" to ItemType.BANK_CARD,
                     "document-ref" to ItemType.DOCUMENT, "billing-address" to ItemType.BILLING_ADDRESS,

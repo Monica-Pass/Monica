@@ -15,7 +15,7 @@
 - 完整 `assembleRelease` 通过（18 分 51 秒），启用 R8 与资源裁剪。仅临时 init 脚本使用 debug 签名以便本地安装，未改变生产签名配置。构建有 Kotlin 元数据兼容警告，无失败。
 - 同一公共 AVD 临时用户 11 上实际安装 Release：新建 ho / 空邮箱 / RSA 3072 / 365 天 / 有口令，成功生成并收藏保存；强制停止后解锁重新打开，指纹一致。
 - Release 生成器：Generator fixture / 空邮箱 / RSA 3072 / 365 天 / 无口令，成功生成，保存到密码库并重新打开，指纹一致。
-- 未单独构建 F-Droid 二进制，相关规则、脚本、说明已镜像。
+- 后续于 2026-09-26 完成 F-Droid 通用 R8 Release 构建及 API 36 实测：带口令 RSA 3072 生成、保存、进程重开指纹一致。见 [F-Droid 验证](testing/fdroid-1.0.314-verification.md)。
 
 ## 证据
 

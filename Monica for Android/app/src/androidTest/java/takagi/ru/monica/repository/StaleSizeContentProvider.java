@@ -2,6 +2,7 @@ package takagi.ru.monica.repository;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
@@ -17,12 +18,10 @@ import java.util.Objects;
 public final class StaleSizeContentProvider extends ContentProvider {
     public static final String FILE_NAME = "stale-size-target.mdbx";
     public static final long STALE_REPORTED_SIZE = 1L;
-    public static final Uri URI = Uri.parse(
-        "content://takagi.ru.monica.test.stale-size/" + FILE_NAME
-    );
-    public static final Uri CORRUPTED_READ_URI = Uri.parse(
-        "content://takagi.ru.monica.test.stale-size/corrupted/" + FILE_NAME
-    );
+    public static Uri uriFor(Context testContext, boolean corrupted) {
+        return Uri.parse("content://" + testContext.getPackageName() + ".stale-size/"
+            + (corrupted ? "corrupted/" : "") + FILE_NAME);
+    }
 
     @Override
     public boolean onCreate() {
@@ -80,7 +79,7 @@ public final class StaleSizeContentProvider extends ContentProvider {
         if (parent != null) {
             parent.mkdirs();
         }
-        if (!mode.contains("w") && CORRUPTED_READ_URI.equals(uri)) {
+        if (!mode.contains("w") && uriFor(Objects.requireNonNull(getContext()), true).equals(uri)) {
             return corruptedReadDescriptor(file);
         }
         return ParcelFileDescriptor.open(file, ParcelFileDescriptor.parseMode(mode));

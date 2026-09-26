@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_key_add">添 API 密钥</string>
+    <string name="api_key_edit">修 API 密钥</string>
+    <string name="api_key_hide">隐密钥</string>
+    <string name="api_key_invalid_url">请输入含主机名之 http:// 或 https:// URL，勿夹用户名及口令。</string>
+    <string name="api_key_load_error">此 API 密钥未能读取，请重开其库而后重试。</string>
+    <string name="api_key_locked">库已锁，请先解锁。</string>
+    <string name="api_key_open_website">启网站</string>
+    <string name="api_key_provider">服务商名 *</string>
+    <string name="api_key_provider_hint">如 Claude、自定 AI 服务商</string>
+    <string name="api_key_required">必填</string>
+    <string name="api_key_save_error">未能尽存于所选诸处，请察其可用与否而后重试。</string>
+    <string name="api_key_secret_required">API 密钥 *</string>
+    <string name="api_key_show">示密钥</string>
+    <string name="api_key_title">API 密钥</string>
+    <string name="api_key_url">API 请求 URL（可略）</string>
+    <string name="api_key_url_label">API 请求 URL</string>
+    <string name="api_key_website">官方网站（可略）</string>
+    <string name="api_key_website_label">官方网站</string>
+</resources>

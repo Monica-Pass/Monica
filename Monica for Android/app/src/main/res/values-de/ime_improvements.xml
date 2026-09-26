@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ime_fill_current_otp">Aktuellen Code einfügen</string>
+    <string name="ime_hide_keyboard">Tastatur ausblenden</string>
+    <string name="ime_hide_pin_preview_description">Ziffernvorschau und Hervorhebung gedrückter Tasten ausblenden.</string>
+    <string name="ime_hide_pin_preview_title">Vorschau der Zifferntasten ausblenden</string>
+    <string name="ime_otp_unavailable">Der aktuelle Bestätigungscode ist nicht verfügbar.</string>
+    <string name="ime_scramble_pin_description">Beim Öffnen des Ziffernblocks mischen. Während der Eingabe bleiben die Tasten an ihrem Platz.</string>
+    <string name="ime_scramble_pin_title">Zifferntasten mischen</string>
+    <string name="ime_switch_keyboard">Eingabemethode wechseln</string>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="keepass_entry_expired_at">Срок истёк: %1$s</string>
+    <string name="keepass_entry_expires">Срок действия</string>
+    <string name="keepass_entry_expires_at">Истекает: %1$s</string>
+    <string name="keepass_entry_never_expires">Бессрочно</string>
+    <string name="keepass_entry_otp_secret_invalid">Введите корректный секрет OTP в формате Base32.</string>
+    <string name="keepass_entry_properties">Свойства записи</string>
+    <string name="keepass_entry_tags_hint">Разделяйте метки новой строкой, запятой или точкой с запятой</string>
+    <string name="keepass_hotp_counter_exhausted">Счётчик достиг максимального значения.</string>
+    <string name="keepass_hotp_saving">Сохранение счётчика…</string>
+</resources>

@@ -9,6 +9,29 @@ import org.junit.Test
 import takagi.ru.monica.utils.KeePassFieldReferenceResolver as Resolver
 
 class KeePassFieldReferenceResolverTest {
+    @Test fun presentPasswordAlwaysWinsOverAliasesAndOtherProtectedFields() {
+        for (key in listOf("Password", "password", "PASSWORD")) {
+            for (password in listOf("", " \t ", "password", "PIN", "密码")) {
+                val source = entry(key to password, "Pass" to "alias", "PIN" to "1234").copy(
+                    fields = EntryFields.of(key to EntryValue.Plain(password), "Pass" to EntryValue.Plain("alias"),
+                        "Recovery hint" to EntryValue.Encrypted(app.keemobile.kotpass.cryptography.EncryptedValue.fromString("hint"))))
+                assertEquals("$key must retain its exact stored value", password, Resolver.getPasswordFieldValue(source))
+            }
+        }
+        assertEquals("", Resolver.getPasswordFieldValue(entry("Password" to "", "password" to "shadow")))
+    }
+
+    @Test fun absentPasswordsUseOnlyExplicitLegacyAliasesAndPreserveReferences() {
+        assertEquals("old secret", Resolver.getPasswordFieldValue(entry("pWd" to "old secret")))
+        val source = entry("Title" to "Source", "Password" to "{S:Secret}", "Secret" to "value")
+        val consumer = entry("password" to "{REF:P@T:Source}", "Pass" to "unrelated")
+        assertEquals("value", Resolver.getPasswordFieldValue(consumer, Resolver.buildContext(listOf(source, consumer))))
+        val protectedOnly = Entry(UUID.randomUUID(), fields = EntryFields.of(
+            "Recovery code" to EntryValue.Encrypted(app.keemobile.kotpass.cryptography.EncryptedValue.fromString("code")),
+            "Card PIN" to EntryValue.Plain("1234")))
+        assertEquals("", Resolver.getPasswordFieldValue(protectedOnly))
+    }
+
     @Test fun localPlaceholdersResolveWithoutAWholeDatabaseAndKeepExactCustomNames() {
         val entry = entry("Title" to "Mail", "UserName" to "alice", "Email" to "upper", "email" to "lower")
         assertEquals("Mail/alice/upper/lower", Resolver.resolveValue("{TITLE}/{USERNAME}/{S:Email}/{S:email}", entry))

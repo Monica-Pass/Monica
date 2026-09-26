@@ -19,4 +19,4 @@
 
 [修改前后对比](../design/passkey-provider-branding-native-comparison.png)与[完整截图、可编辑 M3E 草图](../design/passkey-provider-branding-m3e.md)。草图在代码修改前创建并检查。原始截图、界面 XML、临时调用程序和构建日志保存在主仓库 `.codex-tasks/20260926-passkey-provider-branding/raw/`。
 
-本次改动限于图标与名称，没有新增权限、改动凭据数据格式或认证逻辑；未重新执行此前数据库和密码学测试。验证覆盖上述 API 35 系统界面，未持有反馈用户的厂商设备。F-Droid 同步源码、发行说明及设计/验证记录，构建和功能验证按用户要求暂缓。
+本次改动限于图标与名称，没有新增权限、改动凭据数据格式或认证逻辑；未重新执行此前数据库和密码学测试。验证覆盖上述 API 35 系统界面，未持有反馈用户的厂商设备。F-Droid 后续构建和实测已于 2026-09-26 完成：实际 R8 Release 在 API 36 16KB 系统创建、登录并独立验签通过，浅色保存/登录和深色登录图标已检查。[F-Droid 完整验证与旧 API 35 镜像限制](fdroid-1.0.314-verification.md)。

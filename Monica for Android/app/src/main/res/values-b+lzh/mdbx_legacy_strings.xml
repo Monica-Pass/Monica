@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_legacy_creation_disabled">新库用 MDBX2。MDBX1 仅可为升级而开。</string>
+    <string name="mdbx_legacy_import_option">MDBX1（升级）</string>
+    <string name="mdbx_legacy_local_copy_required">本机 MDBX1 副本不可读，请重开原 MDBX1 文件以升级。原库未改。</string>
+    <string name="mdbx_legacy_remote_copy_warning">升级将本机所存副本转为新建之本地 MDBX2 库，未下载之远端更改不在其内。远端原件与本机副本皆保留，新库须另设同步。</string>
+    <string name="mdbx_legacy_unavailable_badge">MDBX1 · 不可用</string>
+    <string name="mdbx_legacy_unavailable_description">此库不可用，升级至 MDBX2 方可续用。升级保留原文件。</string>
+    <string name="mdbx_legacy_unavailable_title">不再支持 MDBX1</string>
+    <string name="mdbx_legacy_upgrade_action">升级至 MDBX2</string>
+</resources>

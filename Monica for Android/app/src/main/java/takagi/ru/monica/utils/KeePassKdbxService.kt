@@ -6461,54 +6461,10 @@ class KeePassKdbxService(
         return isInRecycleBinByMeta
     }
 
-    /**
-     * 标准 Password 字段为空时，尝试从常见自定义受保护字段中提取密码。
-     */
     private fun resolveEntryPassword(
         entry: Entry,
         resolutionContext: KeePassEntryResolutionContext? = null
-    ): String {
-        fun isLikelyLabelValue(value: String, key: String? = null): Boolean {
-            val normalized = value.trim().lowercase(Locale.ROOT)
-            if (normalized.isBlank()) return true
-            val labelTokens = setOf("password", "pass", "pwd", "pin", "密码", "口令")
-            if (normalized in labelTokens) return true
-            if (key != null && normalized == key.trim().lowercase(Locale.ROOT)) return true
-            return false
-        }
-
-        val standardPassword = getStandardPassword(entry, resolutionContext)
-        if (standardPassword.isNotBlank() && !isLikelyLabelValue(standardPassword, "Password")) {
-            return standardPassword
-        }
-        var fallback = standardPassword.takeIf { it.isNotBlank() }
-
-        val prioritizedKeys = listOf(
-            "密码", "口令", "PIN", "Pin", "pin", "pwd", "PWD", "pass", "Pass", "password", "Password"
-        )
-        prioritizedKeys.forEach { key ->
-            val value = getFieldValueIgnoreCase(entry, resolutionContext, key)
-            if (value.isBlank()) return@forEach
-            if (!isLikelyLabelValue(value, key)) return value
-            if (fallback.isNullOrBlank()) fallback = value
-        }
-
-        entry.fields.forEach { (key, value) ->
-            if (!KeePassFieldRegistry.isPasswordSecretFallbackCandidateField(key)) return@forEach
-            if (value is EntryValue.Encrypted) {
-                val content = KeePassFieldReferenceResolver.resolveValue(
-                    rawValue = runCatching { value.content }.getOrDefault(""),
-                    currentEntry = entry,
-                    context = resolutionContext
-                )
-                if (content.isBlank()) return@forEach
-                if (!isLikelyLabelValue(content, key)) return content
-                if (fallback.isNullOrBlank()) fallback = content
-            }
-        }
-
-        return fallback ?: ""
-    }
+    ): String = getStandardPassword(entry, resolutionContext)
 
     private fun getStandardTitle(
         entry: Entry,
@@ -6523,7 +6479,7 @@ class KeePassKdbxService(
     private fun getStandardPassword(
         entry: Entry,
         resolutionContext: KeePassEntryResolutionContext? = null
-    ): String = getFieldValueIgnoreCase(entry, resolutionContext, "Password", "Pass", "pass", "pwd", "PWD", "密码", "口令")
+    ): String = KeePassFieldReferenceResolver.getPasswordFieldValue(entry, resolutionContext)
 
     private fun getStandardUrl(
         entry: Entry,

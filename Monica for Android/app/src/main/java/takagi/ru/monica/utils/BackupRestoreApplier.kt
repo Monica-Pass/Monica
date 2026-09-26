@@ -138,7 +138,11 @@ object BackupRestoreApplier {
                         notes = password.notes,
                         email = password.email,
                         phone = password.phone,
-                        authenticatorKey = password.authenticatorKey
+                        authenticatorKey = password.authenticatorKey,
+                        addressLine = password.addressLine, city = password.city, state = password.state,
+                        zipCode = password.zipCode, country = password.country,
+                        creditCardNumber = password.creditCardNumber, creditCardHolder = password.creditCardHolder,
+                        creditCardExpiry = password.creditCardExpiry, creditCardCVV = password.creditCardCVV,
                     )
                 val importedFields = content.customFieldsMap[password.id].orEmpty()
                 val existingEntry = if (destinationWriter != null) destinationWriter.findPassword(snapshot, importedFields, isDeleted = password.isDeleted)

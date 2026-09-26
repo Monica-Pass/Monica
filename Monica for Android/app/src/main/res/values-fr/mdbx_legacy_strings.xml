@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mdbx_legacy_creation_disabled">Les nouvelles bases utilisent MDBX2. Les fichiers MDBX1 ne peuvent être ouverts que pour une mise à niveau.</string>
+    <string name="mdbx_legacy_import_option">MDBX1 (mise à niveau)</string>
+    <string name="mdbx_legacy_local_copy_required">La copie locale MDBX1 est illisible. Rouvrez le fichier MDBX1 d’origine pour le mettre à niveau. La base d’origine n’a pas été modifiée.</string>
+    <string name="mdbx_legacy_remote_copy_warning">La mise à niveau convertit la copie enregistrée sur cet appareil en une nouvelle base MDBX2 locale. Les modifications distantes non téléchargées ne sont pas incluses. Le fichier distant d’origine et la copie locale sont conservés. Configurez séparément la synchronisation de la nouvelle base.</string>
+    <string name="mdbx_legacy_unavailable_badge">MDBX1 · Indisponible</string>
+    <string name="mdbx_legacy_unavailable_description">Cette base est indisponible. Mettez-la à niveau vers MDBX2 pour continuer à l’utiliser. Le fichier d’origine sera conservé.</string>
+    <string name="mdbx_legacy_unavailable_title">MDBX1 n’est plus pris en charge</string>
+    <string name="mdbx_legacy_upgrade_action">Mettre à niveau vers MDBX2</string>
+</resources>

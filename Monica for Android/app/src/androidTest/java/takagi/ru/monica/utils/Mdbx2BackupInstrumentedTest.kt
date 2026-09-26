@@ -21,9 +21,13 @@ class Mdbx2BackupInstrumentedTest {
     fun localBackupIncludesMdbx2ContentAsPortableLocalFallback() = runBlocking {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val helper = WebDavHelper(context)
+        val security = takagi.ru.monica.security.SecurityManager(context)
         val result = helper.createBackupZip(
             passwords = listOf(
-                password(id = 91L, title = "MDBX2 password", mdbxDatabaseId = 7L),
+                password(id = 91L, title = "MDBX2 password", mdbxDatabaseId = 7L).copy(
+                    notes = "one\n  two  \n", addressLine = "12 Example Street", city = "City", state = "State",
+                    zipCode = "10000", country = "US", creditCardNumber = security.encryptData("4242424242424242"),
+                    creditCardHolder = "ALICE", creditCardExpiry = "09/30", creditCardCVV = security.encryptData("123")),
                 password(
                     id = 92L,
                     title = "Bitwarden password",
@@ -80,6 +84,18 @@ class Mdbx2BackupInstrumentedTest {
                 assertEquals(1, result.second.successItems.passwords)
                 assertEquals(1, result.second.successItems.notes)
             }
+            val restored = helper.restoreFromBackupFile(backupFile, restoreMonicaConfig = false,
+                importDataOnly = true).getOrThrow().content.passwords.single()
+            assertEquals("one\n  two  \n", restored.notes)
+            assertEquals("12 Example Street", restored.addressLine)
+            assertEquals("City", restored.city)
+            assertEquals("State", restored.state)
+            assertEquals("10000", restored.zipCode)
+            assertEquals("US", restored.country)
+            assertEquals("4242424242424242", restored.creditCardNumber)
+            assertEquals("ALICE", restored.creditCardHolder)
+            assertEquals("09/30", restored.creditCardExpiry)
+            assertEquals("123", restored.creditCardCVV)
         } finally {
             backupFile.delete()
         }

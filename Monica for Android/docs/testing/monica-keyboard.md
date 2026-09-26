@@ -32,4 +32,4 @@ The uncached path improved by **78.4%** in this fixture. Final loader samples we
 
 Main task evidence is retained in `.codex-tasks/20260926-ime-improvements/raw/` at the main repository root: `build-final-verification.log`, `main-jvm-final.json`, `device-keyboard-final.log`, `performance-final.json` and `native-final/`. This is focused validation, not an assertion that every repository test was run.
 
-Source, tests, the DataStore catalog version, release notes and design/test records are synchronized to F-Droid. Its build and functional validation remain deferred at the user's request.
+Source, tests, the DataStore catalog version, release notes and design/test records are synchronized to F-Droid. The previously deferred F-Droid build and functional validation completed on 2026-09-26; see the [F-Droid follow-up report](fdroid-1.0.314-verification.md) for exact counts, the separate emulator benchmark and limits.

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ime_fill_current_otp">Wstaw bieżący kod</string>
+    <string name="ime_hide_keyboard">Ukryj klawiaturę</string>
+    <string name="ime_hide_pin_preview_description">Ukryj podgląd cyfr i podświetlenie naciskanych klawiszy.</string>
+    <string name="ime_hide_pin_preview_title">Ukryj podgląd klawiszy numerycznych</string>
+    <string name="ime_otp_unavailable">Bieżący kod weryfikacyjny jest niedostępny.</string>
+    <string name="ime_scramble_pin_description">Losuj przy otwieraniu klawiatury numerycznej. Podczas wpisywania klawisze pozostają na swoich miejscach.</string>
+    <string name="ime_scramble_pin_title">Losuj kolejność klawiszy numerycznych</string>
+    <string name="ime_switch_keyboard">Zmień metodę wprowadzania</string>
+</resources>

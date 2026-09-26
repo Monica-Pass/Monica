@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ime_fill_current_otp">Insérer le code actuel</string>
+    <string name="ime_hide_keyboard">Masquer le clavier</string>
+    <string name="ime_hide_pin_preview_description">Masquer les aperçus des chiffres et la surbrillance des touches pressées.</string>
+    <string name="ime_hide_pin_preview_title">Masquer l’aperçu des touches numériques</string>
+    <string name="ime_otp_unavailable">Le code de vérification actuel est indisponible.</string>
+    <string name="ime_scramble_pin_description">Mélanger à l’ouverture du pavé numérique. Les touches restent en place pendant la saisie.</string>
+    <string name="ime_scramble_pin_title">Mélanger les touches numériques</string>
+    <string name="ime_switch_keyboard">Changer de méthode de saisie</string>
+</resources>

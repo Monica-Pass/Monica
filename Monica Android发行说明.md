@@ -36,15 +36,16 @@
 - **MDBX2 增量同步**：修复分片乱序时缺少父提交导致同步中断的问题；依赖到齐后继续合并，同一轮同步复用已下载分片。恢复初始副本时可取回本机先前上传的历史；分页上传保留续传状态，减少重复目录与附件检查。
 - **WebDAV 同步**：复用已确认的远程目录，减少路径探测和目录列表请求；服务器返回不含 Retry-After 的 503 时也执行退避，避免连续请求加重拥堵。
 - **兼容数据库写入**：CLI 等客户端创建的 MDBX2 缺少 Android 默认根集合时，在首次写入的同一事务中补齐，保留已有集合与内容。
+- **原生内容与备份**：MDBX 保存、同步和重建缓存保留现有联系人、地址与银行卡字段；备份和恢复保留相同内容。重复导入比较卡号、地址与完整笔记，避免误合并内容不同的条目；清空字段也会同步保存。
 - **大量密码读取**：列表读取使用一致快照，避免同步、删除与跨 CursorWindow 读取并发时出现数据不一致；停用的 MDBX1 缓存不再影响自动填充保存和导入去重。
-- **语言与支持**：新增完整意大利语，中文界面中显示为“超级马里奥语”；Monica Plus 支付页和支持作者页新增 Liberapay 欧元（EUR）支持入口。
+- **语言与支持**：新增完整意大利语，中文界面中显示为“超级马里奥语”；Monica Plus 支付页和支持作者页新增 Liberapay 欧元（EUR）支持入口。 补齐 10 种语言中 API Key、键盘、KeePass 管理和 MDBX1 升级的新文案。
 - **验证器与卡片间距**：列表卡片边缘间距统一为 8dp。磁贴保留 313 的紧凑外观和等高外框，无账号不留空行；当前验证码完整显示，空间紧张时缩小或隐藏下一组码，正常列表保留 Next。收紧密码分组及组内留白，保留收藏、封面按钮原有尺寸（#139）。
 - **新建体验**：密码、银行卡、证件和笔记页面复用安全组件并精简重复过渡，减少打开时的停顿。生成器打开的编辑页使用独立窗口，保存按钮始终可达。
 - **二维码编辑**：二维码表单不再显示“密码登录／第三方登录”，避免误切换为密码条目；扫描、内容输入、保存和顶部类型菜单保持原流程。
 - **返回与显示**：修复 MDBX 详情返回列表时短暂显示空数据库的情况，以及卡包堆叠详情返回收起后位置偏移的问题。
 - **SSH 数据完整性**：保留 MDBX / Rust MDBX2 导入、编辑和完整导出中的密钥材料、扩展字段及私钥换行，完善 SSH / GPG 跨端格式约定。
 - **KeePass 数据可见性**：兼容 KeePass 原生 TimeOtp/HmacOtp 的文本、Hex、Base32、Base64 密钥，以及 KeeOtp、Tray TOTP 和 Steam 字段；保留未知或不完整类型、仅有自定义字段及空值的条目。修复普通登录编辑后被误标为模板而漏显的问题；数据库计数统计原生条目，普通 Trash 同名文件夹不再误判为回收站。
-- **KeePass 写入完整性**：按数据库和条目 UUID 区分验证码与同名登录；编辑验证码保留账号密码及第三方字段。修复 XML 解析裁掉字段名和值的空白、分段文本被截断的问题，保留原始大小写、空值和保护状态；完整替换遇到远端新增字段时提示冲突。
+- **KeePass 写入完整性**：按数据库和条目 UUID 区分验证码与同名登录；编辑验证码保留账号密码及第三方字段。修复 XML 解析裁掉字段名和值的空白、分段文本被截断的问题，保留原始大小写、空值和保护状态；完整替换遇到远端新增字段时提示冲突。 标准 Password 字段即使为空、只有空格或字面值为 password 也原样读取，不再误用银行卡 PIN 或其他受保护字段替代。
 - **KeePass 原生管理**：详情支持实时验证码及保存后递增的 HOTP，编辑页增加标签与有效期；字段、图标、属性和待添加附件一次保存，避免附件或图标错误造成部分保存。详情及时刷新编辑和历史还原结果，显示解析后的字段引用，保存时保留原始引用。
 - **KeePass 文件夹**：修复通行密钥引起的编码文件夹名重复显示，同一路径统一名称与计数。
 - **密码库预览**：密码条目就绪后先显示概览，其他类型在后台解析并补全统计与推荐；大规模概览使用 Rust 批量聚合，小规模沿用 Kotlin，减少 JNI 开销。
@@ -87,15 +88,16 @@
 - **MDBX2 incremental sync:** Resolve out-of-order segment dependencies instead of aborting on missing parent commits, and reuse downloaded segments within the same synchronization. Recover previously published same-device history after reopening a bootstrap. Retain paged upload resumes and reduce repeated directory and attachment checks.
 - **WebDAV sync:** Reuse confirmed remote directories and reduce path probes and listings. Apply backoff to 503 responses even without Retry-After to avoid repeated requests during service overload.
 - **Compatible vault writes:** Initialize a missing Android root collection in the same transaction as the first write to a valid CLI-created MDBX2 vault, preserving existing collections and content.
+- **Native content and backups:** Retain existing contact, address and card fields across MDBX saves, synchronization, cache rebuilds, backups and restores. Compare card details, addresses and exact notes during duplicate imports so distinct entries survive; explicit field clears also persist.
 - **Large password reads:** Use consistent snapshots across CursorWindow refills during concurrent synchronization or deletion. Retired MDBX1 caches no longer interfere with autofill saves or import duplicate detection.
-- **Language and support:** Add complete Italian localization, playfully named “Super Mario language” in the Chinese interface, and a Liberapay option in euros (EUR) on the Monica Plus payment and Support Author pages.
+- **Language and support:** Add complete Italian localization, playfully named “Super Mario language” in the Chinese interface, and a Liberapay option in euros (EUR) on the Monica Plus payment and Support Author pages. Complete the new API Key, keyboard, KeePass management and MDBX1 upgrade messages in ten languages.
 - **Authenticator and card spacing:** Use an actual 8dp gap between list cards. Tiles retain the compact 313 appearance and equal outer heights without empty account rows. Current codes remain complete; crowded tiles shrink or hide the next-code preview, while regular lists retain Next. Reduce grouped-password padding while preserving favorite and cover button sizes (#139).
 - **Entry creation:** Reuse security components and remove duplicate transitions when opening password, bank-card, document and note editors. Editors opened from the generator use separate windows so Save remains accessible.
 - **QR editing:** Remove password/third-party login controls from the QR form to prevent accidental conversion into a password entry. Scanning, content editing, saving and the top type menu retain their existing flow.
 - **Navigation and display:** Prevent a false empty-database state when leaving MDBX details, and keep card stacks in their original position after returning from details and collapsing them.
 - **SSH data preservation:** Retain key material, extension fields and private-key line endings across MDBX / Rust MDBX2 imports, edits and full exports, with documented SSH / GPG interchange formats.
 - **KeePass data visibility:** Read native TimeOtp/HmacOtp UTF-8, Hex, Base32 and Base64 secrets, plus KeeOtp, Tray TOTP and Steam fields. Keep entries with unknown or incomplete type metadata, custom-only fields and empty values accessible. Prevent ordinary logins from becoming hidden templates after editing. Count native entries and recognize recycle bins by metadata rather than ordinary Trash folder names.
-- **KeePass write preservation:** Distinguish authenticators and same-name logins by database and entry UUID. Preserve login credentials and third-party fields when editing OTP. Fix XML whitespace trimming and fragmented text truncation; retain exact field names, empty values and protection, and reject full replacements that would erase remotely added fields.
+- **KeePass write preservation:** Distinguish authenticators and same-name logins by database and entry UUID. Preserve login credentials and third-party fields when editing OTP. Fix XML whitespace trimming and fragmented text truncation; retain exact field names, empty values and protection, and reject full replacements that would erase remotely added fields. Respect an existing Password field, including empty, whitespace-only and literal password values, instead of substituting a card PIN or another protected field.
 - **KeePass native management:** Show live OTP and persist HOTP counter advances; edit entry tags and expiration. Save fields, icons, properties and pending attachments together. Refresh details after edits and history restoration, display resolved references, and preserve their raw expressions when saving.
 - **KeePass folders:** Correct duplicate encoded folder names introduced by passkeys, using consistent names and counts for the same path.
 - **Vault overview:** Display password entries as soon as they are ready, then fill in other types, counts and recommendations in the background. Use Rust batch aggregation for large overviews and Kotlin for smaller ones to avoid JNI overhead.

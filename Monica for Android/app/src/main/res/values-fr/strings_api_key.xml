@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_key_add">Ajouter une clé API</string>
+    <string name="api_key_edit">Modifier la clé API</string>
+    <string name="api_key_hide">Masquer la clé</string>
+    <string name="api_key_invalid_url">Saisissez une URL http:// ou https:// avec un nom d’hôte et sans identifiants intégrés.</string>
+    <string name="api_key_load_error">Impossible de lire cette clé API. Rouvrez sa base de données et réessayez.</string>
+    <string name="api_key_locked">Votre coffre est verrouillé. Déverrouillez-le pour continuer.</string>
+    <string name="api_key_open_website">Ouvrir le site web</string>
+    <string name="api_key_provider">Nom du fournisseur *</string>
+    <string name="api_key_provider_hint">Par ex. Claude ou un fournisseur d’IA personnalisé</string>
+    <string name="api_key_required">Obligatoire</string>
+    <string name="api_key_save_error">Impossible d’enregistrer dans tous les emplacements sélectionnés. Vérifiez leur disponibilité et réessayez.</string>
+    <string name="api_key_secret_required">Clé API *</string>
+    <string name="api_key_show">Afficher la clé</string>
+    <string name="api_key_title">Clé API</string>
+    <string name="api_key_url">URL de requête API (facultatif)</string>
+    <string name="api_key_url_label">URL de requête API</string>
+    <string name="api_key_website">Site officiel (facultatif)</string>
+    <string name="api_key_website_label">Site officiel</string>
+</resources>
