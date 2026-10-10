@@ -31,8 +31,6 @@ const ATOMGIT_OWNER = process.env.ATOMGIT_OWNER || 'Monica-Pass';
 const ATOMGIT_REPO = process.env.ATOMGIT_REPO || 'Monica';
 
 const RELEASE_TAG = argValue('--tag') || process.env.RELEASE_TAG || '';
-const SYNC_ALL = process.argv.includes('--all') || truthy(process.env.SYNC_ALL_RELEASES);
-const RELEASE_LIMIT = Math.max(0, Number(argValue('--limit') || process.env.RELEASE_LIMIT || 0) || 0);
 const DRY_RUN = process.argv.includes('--dry-run') || truthy(process.env.DRY_RUN);
 
 const hasAtomgitToken = Boolean(ATOMGIT_TOKEN);
@@ -109,20 +107,6 @@ async function getGithubRelease(tag) {
     `${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/releases/tags/${encodeURIComponent(tag)}`,
     { headers: githubHeaders(), allow404: true },
   );
-}
-
-async function listGithubReleases() {
-  const releases = [];
-  for (let page = 1; ; page += 1) {
-    const data = await requestJson(
-      'GitHub',
-      `${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/releases?per_page=100&page=${page}`,
-      { headers: githubHeaders() },
-    );
-    releases.push(...data.filter((release) => !release.draft));
-    if (data.length < 100) break;
-  }
-  return releases;
 }
 
 function atomgitHeaders(extra = {}) {
@@ -268,50 +252,28 @@ async function syncRelease(release) {
   }
 }
 
-async function resolveTargets() {
-  if (RELEASE_TAG) {
-    const release = await getGithubRelease(RELEASE_TAG);
-    if (!release) fail(`GitHub 上找不到 Release：${RELEASE_TAG}`);
-    return [release];
-  }
-  const all = await listGithubReleases();
-  if (!all.length) fail('GitHub 上没有已发布的 Release');
-  if (SYNC_ALL) {
-    const selected = RELEASE_LIMIT > 0 ? all.slice(0, RELEASE_LIMIT) : all;
-    log(`[plan] 回填模式：共 ${all.length} 个已发布 Release，本次处理最新 ${selected.length} 个`);
-    return selected;
-  }
-  return [all[0]];
+async function getTargetRelease() {
+  if (!RELEASE_TAG) fail('未提供 Release tag（手动触发时必填 release_tag）');
+  const release = await getGithubRelease(RELEASE_TAG);
+  if (!release) fail(`GitHub 上找不到 Release：${RELEASE_TAG}`);
+  return release;
 }
 
 async function main() {
   if (!GITHUB_TOKEN) fail('缺少 GITHUB_TOKEN');
   if (!hasAtomgitToken && !DRY_RUN) fail('缺少 AtomGit 令牌（仓库 Secret：GITCODERELEASE）');
 
-  let mode = '最新 Release';
-  if (RELEASE_TAG) mode = `单个 tag：${RELEASE_TAG}`;
-  else if (SYNC_ALL) mode = RELEASE_LIMIT > 0 ? `回填最新 ${RELEASE_LIMIT} 个` : '回填全部';
+  const release = await getTargetRelease();
+  log(`[plan] tag：${release.tag_name}${DRY_RUN ? '（dry-run）' : ''}`);
 
-  const targets = await resolveTargets();
-  log(`[plan] 模式：${mode}${DRY_RUN ? '（dry-run）' : ''}；待处理 ${targets.length} 个：${targets.map((r) => r.tag_name).join(', ')}`);
-
-  const failures = [];
-  for (const release of targets) {
-    try {
-      await syncRelease(release);
-    } catch (error) {
-      const message = redact(error?.message || error);
-      failures.push({ tag: release.tag_name, message });
-      console.error(`[fail] ${release.tag_name}: ${message}`);
-    }
-    if (targets.length > 1) await sleep(1500);
-  }
-
-  log(`完成：成功 ${targets.length - failures.length}，失败 ${failures.length}${DRY_RUN ? '（dry-run，未写入 AtomGit）' : ''}`);
-  if (failures.length) {
-    for (const item of failures) console.error(`  ✗ ${item.tag}: ${item.message}`);
+  try {
+    await syncRelease(release);
+  } catch (error) {
+    console.error(`[fail] ${release.tag_name}: ${redact(error?.message || error)}`);
     process.exitCode = 1;
+    return;
   }
+  log(`完成：${release.tag_name} 同步成功${DRY_RUN ? '（dry-run，未写入 AtomGit）' : ''}`);
 }
 
 main().catch((error) => {

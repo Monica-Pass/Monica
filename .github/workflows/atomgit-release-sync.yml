@@ -6,33 +6,19 @@ on:
   release:
     types: [published]
 
-  # 手动触发：回填历史 Release，或重跑某个出错的版本。
+  # 手动触发（支持直接输入版本号，与 Telegram 推送一致）。
   workflow_dispatch:
     inputs:
-      tag:
-        description: '要同步的 Release tag（例如 V1.0.318）；留空则同步最新 Release'
-        required: false
+      release_tag:
+        description: 'GitHub Release tag，例如 V1.0.318'
+        required: true
         type: string
-      all:
-        description: '回填全部历史 Release（可配合 limit 分批执行）'
-        required: false
-        type: boolean
-        default: false
-      limit:
-        description: '当 all=true 时，只同步最新的 N 个 Release；留空 = 全部'
-        required: false
-        type: string
-      dry_run:
-        description: '仅预演：打印计划，不写入 AtomGit'
-        required: false
-        type: boolean
-        default: false
 
 permissions:
   contents: read
 
 concurrency:
-  group: atomgit-release-sync
+  group: atomgit-release-sync-${{ inputs.release_tag || github.event.release.tag_name }}
   cancel-in-progress: false
 
 jobs:
@@ -75,8 +61,5 @@ jobs:
           ATOMGIT_API_BASE: ${{ vars.ATOMGIT_API_BASE || 'https://api.atomgit.com' }}
           ATOMGIT_OWNER: ${{ vars.ATOMGIT_REPO_OWNER || 'Monica-Pass' }}
           ATOMGIT_REPO: ${{ vars.ATOMGIT_REPO_NAME || 'Monica' }}
-          RELEASE_TAG: ${{ inputs.tag || github.event.release.tag_name }}
-          SYNC_ALL_RELEASES: ${{ inputs.all }}
-          RELEASE_LIMIT: ${{ inputs.limit }}
-          DRY_RUN: ${{ inputs.dry_run }}
+          RELEASE_TAG: ${{ inputs.release_tag || github.event.release.tag_name }}
         run: node .github/scripts/sync-atomgit-release.js

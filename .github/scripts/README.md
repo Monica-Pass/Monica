@@ -43,18 +43,14 @@ Remove-Item Env:AFDIAN_TOKEN
 工作流 `Sync Releases to AtomGit`：
 
 - 发布新 Release 时自动同步（`release: published`，含草稿转正式发布）。
-- Actions 页面手动 `Run workflow`：
-  - `tag`：只同步指定 Release（例如 `V1.0.318`）；留空则同步最新 Release；
-  - `all`：回填历史 Release，可用 `limit` 限制为最新 N 个；
-  - `dry_run`：只打印计划，不写入 AtomGit。
+- Actions 页面手动 `Run workflow`，必填 `release_tag`（例如 `V1.0.318`）：同步指定版本；历史 Release 与出错重跑都按 tag 逐个触发，与 Telegram 推送的手动方式一致。
 
-回填体量（2026-10-10 实测）：86 个 Release、132 个附件、共 3.82 GiB。建议先 `dry_run`，再用 `limit=5` 分批执行；单次工作流最长运行 355 分钟。
+历史体量（2026-10-10 实测）：86 个已发布 Release、132 个附件、共 3.82 GiB，按需逐个回填。
 
 ### 本地验证命令
 
 ```bash
 GITHUB_TOKEN="$(gh auth token)" DRY_RUN=1 node .github/scripts/sync-atomgit-release.js --tag V1.0.318
-GITHUB_TOKEN="$(gh auth token)" DRY_RUN=1 node .github/scripts/sync-atomgit-release.js --all --limit 3
 ```
 
-本地不带 AtomGit 令牌时，dry-run 会跳过 AtomGit 查询并在输出里注明。
+本地要真实写入时去掉 `DRY_RUN=1` 并提供 `ATOMGIT_TOKEN`；不带 AtomGit 令牌的 dry-run 会跳过 AtomGit 查询并在输出里注明。
