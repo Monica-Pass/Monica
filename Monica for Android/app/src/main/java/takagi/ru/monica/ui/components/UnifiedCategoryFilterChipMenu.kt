@@ -204,6 +204,7 @@ fun UnifiedCategoryFilterChipMenu(
     trailingContent: (@Composable ColumnScope.() -> Unit)? = null,
     showQuickFilters: Boolean = true,
     quickFilterTitle: String? = null,
+    showAllDatabases: Boolean = true,
 ) {
     if (!visible) return
 
@@ -333,6 +334,7 @@ fun UnifiedCategoryFilterChipMenu(
             keepassDatabases = keepassDatabases,
             mdbxDatabases = mdbxDatabases,
             bitwardenVaults = bitwardenVaults,
+            showAllDatabases = showAllDatabases,
         )
 
         if (showQuickFilters) {
@@ -462,12 +464,13 @@ private fun DatabaseChipMenuSection(
     bitwardenVaults: List<BitwardenVault>,
     initiallyExpanded: Boolean = false,
     collapsible: Boolean = true,
+    showAllDatabases: Boolean = true,
 ) {
         val allLabel = stringResource(R.string.category_all)
         val localLabel = stringResource(R.string.category_selection_menu_local_database)
-        val items = remember(keepassDatabases, mdbxDatabases, bitwardenVaults, allLabel, localLabel) {
+        val items = remember(keepassDatabases, mdbxDatabases, bitwardenVaults, allLabel, localLabel, showAllDatabases) {
             buildList<DatabaseFilterChipItem<UnifiedCategoryFilterSelection>> {
-                add(DatabaseFilterChipItem("all", allLabel, Icons.Default.List, UnifiedCategoryFilterSelection.All))
+                if (showAllDatabases) add(DatabaseFilterChipItem("all", allLabel, Icons.Default.List, UnifiedCategoryFilterSelection.All))
                 add(DatabaseFilterChipItem("local", localLabel, Icons.Default.Smartphone, UnifiedCategoryFilterSelection.Local))
                 keepassDatabases.forEach { database ->
                     add(DatabaseFilterChipItem(
@@ -649,6 +652,15 @@ private fun buildFolderChips(
             }
             val currentFolderId = (selected as? UnifiedCategoryFilterSelection.MdbxFolderFilter)?.folderId
             val chips = mutableListOf<FolderChipItem>()
+            if (currentFolderId != null) {
+                val parentId = mdbxFolders.firstOrNull { it.folderId == currentFolderId }?.parentFolderId
+                chips += FolderChipItem(
+                    label = backLabel,
+                    selection = parentId?.let { UnifiedCategoryFilterSelection.MdbxFolderFilter(databaseId, it) }
+                        ?: UnifiedCategoryFilterSelection.MdbxDatabaseFilter(databaseId),
+                    isBack = true
+                )
+            }
             chips += mdbxFolders
                 .filter { it.folderId.isNotBlank() }
                 .filter { it.isDirectMdbxChildOf(currentFolderId) }

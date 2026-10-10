@@ -83,3 +83,19 @@ internal fun saveSteamStorageSource(context: Context, source: SteamStorageSource
         }
         .apply()
 }
+
+private fun steamFolderPreferenceKey(source: SteamStorageSource): String = when (source) {
+    SteamStorageSource.Local -> "folder_local"
+    is SteamStorageSource.Mdbx -> "folder_mdbx_${source.databaseId}"
+    is SteamStorageSource.KeePass -> "folder_keepass_${source.databaseId}"
+    is SteamStorageSource.Bitwarden -> "folder_bitwarden_${source.vaultId}"
+}
+
+internal fun readSteamFolderId(context: Context, source: SteamStorageSource): String? =
+    context.applicationContext.getSharedPreferences(STEAM_QR_PREFS_NAME, Context.MODE_PRIVATE)
+        .getString(steamFolderPreferenceKey(source), null)
+
+internal fun saveSteamFolderId(context: Context, source: SteamStorageSource, folderId: String?) {
+    context.applicationContext.getSharedPreferences(STEAM_QR_PREFS_NAME, Context.MODE_PRIVATE)
+        .edit().putString(steamFolderPreferenceKey(source), folderId).apply()
+}

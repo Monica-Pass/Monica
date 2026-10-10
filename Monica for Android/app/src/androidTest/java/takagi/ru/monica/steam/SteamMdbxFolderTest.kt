@@ -40,7 +40,10 @@ class SteamMdbxFolderTest {
             val rows = repository.listSteamMaFileEntries(id)
             assertEquals(child.folderId, rows.single { it.entryId == original.entryId }.collectionId)
             assertEquals(parent.folderId, rows.single { it.entryId == "steam_mafile:copy" }.collectionId)
-            assertEquals(2, store.loadAccounts(id).size)
+            val loaded = store.loadAccounts(id)
+            assertEquals(2, loaded.size)
+            assertEquals(child.folderId, loaded.single { it.entryId == original.entryId }.account.storageFolderId)
+            assertEquals(parent.folderId, loaded.single { it.entryId == "steam_mafile:copy" }.account.storageFolderId)
             store.deleteAccount(id, original.entryId)
             assertEquals("steam_mafile:copy", repository.listSteamMaFileEntries(id).single().entryId)
         } finally { db.close(); file.delete() }

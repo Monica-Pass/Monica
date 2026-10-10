@@ -68,7 +68,10 @@ class SteamMdbxAccountStore(
             maFileJson = maFileJson
         )
         return SteamMdbxAccountRecord(
-            account = account.copy(id = runtimeAccountId(databaseId, resolvedEntryId)),
+            account = account.copy(
+                id = runtimeAccountId(databaseId, resolvedEntryId),
+                storageFolderId = if (relocate) folderId else account.storageFolderId
+            ),
             entryId = resolvedEntryId
         )
     }
@@ -104,7 +107,7 @@ class SteamMdbxAccountStore(
                 id = runtimeAccountId(databaseId, entry.entryId),
                 selected = sortOrder == 0,
                 sortOrder = sortOrder
-            ),
+            ).copy(storageFolderId = entry.collectionId),
             entryId = entry.entryId
         )
     }

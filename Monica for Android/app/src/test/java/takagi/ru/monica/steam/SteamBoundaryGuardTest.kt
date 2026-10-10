@@ -132,9 +132,9 @@ class SteamBoundaryGuardTest {
         assertTrue(daoSource.contains("ORDER BY sortOrder ASC, id ASC"))
         assertTrue(daoSource.contains("updateSortOrders(items: List<Pair<Long, Int>>)"))
 
-        assertTrue(databaseSource.contains("version = 3"))
+        assertTrue(databaseSource.contains("version = 4"))
         assertTrue(databaseSource.contains(".addMigrations(migration1To2(context.applicationContext))"))
-        assertTrue(databaseSource.contains(".addMigrations(migration2To3())"))
+        assertTrue(databaseSource.contains(".addMigrations(migration2To3(), migration3To4())"))
         assertTrue(databaseSource.contains("encryptExistingSteamRows"))
         assertTrue(databaseSource.contains("ALTER TABLE steam_accounts ADD COLUMN sortOrder INTEGER NOT NULL DEFAULT 0"))
         assertTrue(databaseSource.contains("SELECT id FROM steam_accounts ORDER BY selected DESC, updatedAt DESC"))
@@ -357,18 +357,16 @@ class SteamBoundaryGuardTest {
         assertTrue(steamViewModelSource.contains("reloadMdbxAccounts(source"))
         assertTrue(steamViewModelSource.contains("fun transferAccounts("))
         assertTrue(steamViewModelSource.contains("fun updateDisplayName(accountId: Long, displayName: String)"))
-        assertTrue(steamViewModelSource.contains("writeAccountsToStorageSource(accounts, targetSource)"))
+        // Ordering and failure semantics are exercised by SteamFolderTransferTest.
+        assertTrue(steamViewModelSource.contains("executeSteamTransfer("))
+        assertTrue(steamViewModelSource.contains("writeAccountsToStorageSource(accounts, target, relocate)"))
         assertTrue(steamViewModelSource.contains("deleteAccountsFromStorageSource(source, accounts.map { it.id })"))
-        assertTrue(
-            steamViewModelSource.indexOf("writeAccountsToStorageSource(accounts, targetSource)") <
-                steamViewModelSource.indexOf("deleteAccountsFromStorageSource(source, accounts.map { it.id })")
-        )
-        assertTrue(steamViewModelSource.contains("repository.upsertFromMaFile(account.toCompleteMaFilePayload())"))
+        assertTrue(steamViewModelSource.contains("repository.insertCopy(account, target.categoryId)"))
         assertTrue(steamViewModelSource.contains("SteamMaFileBackupCodec.encode(this)"))
-        assertTrue(steamViewModelSource.contains("existingBySteamId[account.steamId]?.entryId"))
+        assertFalse(steamViewModelSource.contains("existingBySteamId[account.steamId]?.entryId"))
         assertTrue(steamViewModelSource.contains("store.upsertAccount("))
         assertTrue(steamScreenSource.contains("SteamStorageSourceMenu("))
-        assertTrue(steamScreenSource.contains("SteamMaFileTransferSheet("))
+        assertTrue(steamScreenSource.contains("UnifiedMoveToCategoryBottomSheet("))
         assertTrue(steamScreenSource.contains("SteamMaFileTransferAction.MOVE"))
         assertTrue(steamScreenSource.contains("SteamMaFileTransferAction.COPY"))
         assertTrue(steamScreenSource.contains("SteamRemarkEditDialog("))
@@ -380,7 +378,7 @@ class SteamBoundaryGuardTest {
         assertTrue(steamScreenSource.contains("is SteamStorageSource.Mdbx ->"))
         assertTrue(steamScreenSource.contains("is SteamStorageSource.KeePass ->"))
         assertTrue(steamScreenSource.contains("is SteamStorageSource.Bitwarden ->"))
-        assertFalse(steamScreenSource.contains("UnifiedCategoryFilterChipMenu("))
+        assertTrue(steamScreenSource.contains("UnifiedCategoryFilterChipMenu("))
     }
 
     @Test

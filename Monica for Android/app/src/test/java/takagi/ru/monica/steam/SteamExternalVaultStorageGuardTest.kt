@@ -100,10 +100,10 @@ class SteamExternalVaultStorageGuardTest {
             "app/src/main/java/takagi/ru/monica/steam/ui/SteamViewModel.kt"
         ).readSourceText()
 
-        assertTrue(screen.contains("SteamStorageSource.KeePass(db.id)"))
+        assertTrue(screen.contains("UnifiedCategoryFilterChipMenu("))
         assertTrue(screen.contains("UnifiedMoveToCategoryBottomSheet("))
         assertTrue(screen.contains("target = SteamStorageTarget.from(target)"))
-        assertTrue(screen.contains("SteamStorageSource.Bitwarden(vault.id)"))
+        assertTrue(screen.contains("viewModel.selectFolderFilter(filter)"))
         assertTrue(viewModel.contains("reloadKeePassAccounts("))
         assertTrue(viewModel.contains("reloadBitwardenAccounts("))
         assertTrue(viewModel.contains("loadAccounts(source.vaultId, refreshRemote = true)"))

@@ -109,25 +109,32 @@ class UnifiedFilterMenusTest {
             compose.runOnIdle { assertEquals(UnifiedCategoryFilterSelection.MdbxDatabaseFilter(77), selection) }
         }
     }
-    @Test fun overviewAndSteamKeepDatabaseOnlyMenusExpanded() {
+    @Test fun overviewKeepsExpandedDatabaseMenuWhileSteamUsesSharedSections() {
         var steam by mutableStateOf(false)
         var selection by mutableStateOf<UnifiedCategoryFilterSelection>(UnifiedCategoryFilterSelection.Local)
-        var source by mutableStateOf<SteamStorageSource>(SteamStorageSource.Local)
+        var source by mutableStateOf<UnifiedCategoryFilterSelection>(UnifiedCategoryFilterSelection.Local)
         compose.setContent { MaterialTheme { Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopEnd) { Box(Modifier.size(48.dp)) {
-            if (steam) SteamStorageSourceMenu(true, {}, source, mdbx, keepass, emptyList(), { source = it })
+            if (steam) SteamStorageSourceMenu(true, {}, source, emptyList(), mdbx, keepass, emptyList(),
+                { flowOf(emptyList()) }, { flowOf(emptyList()) }, { flowOf(emptyList()) }, { source = it })
             else UnifiedCategoryFilterChipMenuDropdown(true, {}) {
                 UnifiedDatabaseFilterChipMenu(selection, { selection = it }, keepass, mdbx, emptyList())
             }
         } } } }
         for (isSteam in listOf(false, true)) {
             compose.runOnIdle { steam = isSteam }
-            compose.onNodeWithTag("database_expand_toggle").assertDoesNotExist()
-            compose.onNodeWithTag("database_row").assertDoesNotExist()
-            compose.onNodeWithTag("database_static_header").assertIsDisplayed()
+            if (isSteam) {
+                compose.onNodeWithTag("database_row").assertIsDisplayed()
+                compose.onNodeWithTag("database_expand_toggle").performClick()
+                compose.onNodeWithTag("database_filter_all").assertDoesNotExist()
+            } else {
+                compose.onNodeWithTag("database_expand_toggle").assertDoesNotExist()
+                compose.onNodeWithTag("database_row").assertDoesNotExist()
+                compose.onNodeWithTag("database_static_header").assertIsDisplayed()
+            }
             compose.onNodeWithTag("database_expanded").assertExists()
             compose.onNodeWithTag("database_filter_keepass:16").performScrollTo().performClick()
             compose.runOnIdle {
-                if (isSteam) assertEquals(SteamStorageSource.KeePass(16), source)
+                if (isSteam) assertEquals(UnifiedCategoryFilterSelection.KeePassDatabaseFilter(16), source)
                 else assertEquals(UnifiedCategoryFilterSelection.KeePassDatabaseFilter(16), selection)
             }
             snapshot(if (isSteam) "unified-steam" else "unified-overview")
@@ -137,7 +144,7 @@ class UnifiedFilterMenusTest {
     @Test fun steamMenuUsesTrailingTopBarAnchorAtEveryInterfaceScale() {
         var scale by mutableFloatStateOf(1f)
         var expanded by mutableStateOf(false)
-        var source by mutableStateOf<SteamStorageSource>(SteamStorageSource.Local)
+        var source by mutableStateOf<UnifiedCategoryFilterSelection>(UnifiedCategoryFilterSelection.Local)
         compose.setContent {
             val base = LocalDensity.current
             CompositionLocalProvider(LocalDensity provides Density(base.density * scale, base.fontScale)) {
@@ -150,8 +157,9 @@ class UnifiedFilterMenusTest {
                                 pendingConfirmationCount = 2, onOpenSearch = {},
                                 onOpenStorageSourceMenu = { expanded = true },
                                 storageSourceMenu = {
-                                    SteamStorageSourceMenu(expanded, { expanded = false }, source,
-                                        mdbx, keepass, emptyList(), { source = it; expanded = false })
+                                    SteamStorageSourceMenu(expanded, { expanded = false }, source, emptyList(),
+                                        mdbx, keepass, emptyList(), { flowOf(emptyList()) },
+                                        { flowOf(emptyList()) }, { flowOf(emptyList()) }, { source = it; expanded = false })
                                 },
                                 onOpenTopActionsMenu = {}, topActionsMenu = {},
                             )
@@ -170,8 +178,8 @@ class UnifiedFilterMenusTest {
                 .fetchSemanticsNode())
             // Use screen coordinates: popup and activity are in separate windows.
             // The old folder anchor left a visible gap on the right at every scale.
-            compose.onNodeWithTag("database_expand_toggle").assertDoesNotExist()
-            compose.onNodeWithTag("database_static_header").assertIsDisplayed()
+            compose.onNodeWithTag("database_expand_toggle").assertExists()
+            compose.onNodeWithTag("database_row").assertIsDisplayed()
             val image = InstrumentationRegistry.getInstrumentation().uiAutomation.takeScreenshot()
             val path = File(context.filesDir, "filter-panel-316/steam-topbar-$factor.png")
             path.parentFile!!.mkdirs()
@@ -180,10 +188,12 @@ class UnifiedFilterMenusTest {
             assertEquals("Right edge at scale $factor", window.right, frame.right, 2f)
             assertTrue("Menu must stay below the action pill", frame.top >= trailingAction.bottom)
             // The source selection still closes the popup; reopening preserves the choice.
+            compose.onNodeWithTag("database_expand_toggle").performClick()
             compose.onNodeWithTag("database_filter_keepass:16").performScrollTo().performClick()
-            compose.runOnIdle { assertEquals(SteamStorageSource.KeePass(16), source); assertFalse(expanded) }
+            compose.runOnIdle { assertEquals(UnifiedCategoryFilterSelection.KeePassDatabaseFilter(16), source); assertFalse(expanded) }
             compose.onNodeWithTag("filter_menu_frame").assertDoesNotExist()
             compose.onNodeWithContentDescription(context.getString(R.string.database_source_label)).performClick()
+            compose.onNodeWithTag("database_expand_toggle").performClick()
             compose.onNodeWithTag("database_filter_keepass:16").performScrollTo().assertIsSelected()
             androidx.test.espresso.Espresso.pressBack()
             compose.runOnIdle { assertFalse(expanded) }

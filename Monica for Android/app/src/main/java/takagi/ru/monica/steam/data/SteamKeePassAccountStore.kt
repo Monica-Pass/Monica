@@ -192,6 +192,7 @@ class SteamKeePassAccountStore(
         return SteamKeePassAccountRecord(
             account = account.copy(
                 id = runtimeAccountId(databaseId, resolvedUuid),
+                storageFolderId = groupPath,
                 updatedAt = System.currentTimeMillis()
             ),
             entryUuid = resolvedUuid,
@@ -260,7 +261,7 @@ class SteamKeePassAccountStore(
                 return SteamKeePassAccountRecord(
                     account = parsed.copy(displayName = displayName).toSteamAccount(
                         id = runtimeAccountId(databaseId, entryUuid)
-                    ),
+                    ).copy(storageFolderId = entry.groupPath),
                     entryUuid = entryUuid,
                     groupPath = entry.groupPath
                 )

@@ -52,7 +52,8 @@ data class SteamAccount(
     val sortOrder: Int,
     val createdAt: Long,
     val updatedAt: Long,
-    val categoryId: Long? = null
+    val categoryId: Long? = null,
+    val storageFolderId: String? = null
 ) {
     val hasRealSteamId: Boolean
         get() = steamId.matches(Regex("""7656119\d{10}"""))

@@ -310,6 +310,13 @@ fun SteamScreen(
     val passwordDatabase = remember(context) {
         PasswordDatabase.getDatabase(context.applicationContext)
     }
+    val categories by remember(passwordDatabase) { passwordDatabase.categoryDao().getAllCategories() }
+        .collectAsState(initial = emptyList())
+    val getFilterMdbxFolders = remember(viewModel) { { id: Long -> viewModel.getTransferMdbxFolders(id) } }
+    val getFilterKeePassGroups = remember(viewModel) { { id: Long -> viewModel.getTransferKeePassGroups(id) } }
+    val getFilterBitwardenFolders = remember(passwordDatabase) {
+        { id: Long -> passwordDatabase.bitwardenFolderDao().getFoldersByVaultFlow(id) }
+    }
     val mdbxDatabasesState by passwordDatabase.localMdbxDatabaseDao()
         .getAvailableDatabases()
         .collectAsState(initial = null)
@@ -370,8 +377,12 @@ fun SteamScreen(
     } else {
         0
     }
-    val filteredSteamAccounts = remember(uiState.accounts, steamSearchQuery) {
-        filterSteamAccounts(uiState.accounts, steamSearchQuery)
+    val selectedFolderFilter = SteamFolderFilter(uiState.storageSource, uiState.folderId)
+    val folderAccounts = remember(uiState.accounts, selectedFolderFilter) {
+        filterSteamAccountsByFolder(uiState.accounts, selectedFolderFilter)
+    }
+    val filteredSteamAccounts = remember(folderAccounts, steamSearchQuery) {
+        filterSteamAccounts(folderAccounts, steamSearchQuery)
     }
     val filteredSteamConfirmations = remember(uiState.confirmations, steamSearchQuery) {
         filterSteamConfirmations(uiState.confirmations, steamSearchQuery)
@@ -543,8 +554,8 @@ fun SteamScreen(
         }
     }
 
-    LaunchedEffect(uiState.accounts) {
-        val existingIds = uiState.accounts.map { it.id }.toSet()
+    LaunchedEffect(folderAccounts) {
+        val existingIds = folderAccounts.map { it.id }.toSet()
         val prunedSelection = selectedTokenAccountIds.filter { it in existingIds }
         if (prunedSelection != selectedTokenAccountIds) {
             selectedTokenAccountIds = prunedSelection
@@ -1292,18 +1303,22 @@ fun SteamScreen(
                 SteamStorageSourceMenu(
                     expanded = showStorageSourceMenu,
                     onDismissRequest = { showStorageSourceMenu = false },
-                        selectedSource = uiState.storageSource,
-                        mdbxDatabases = mdbxDatabases,
-                        keepassDatabases = keepassDatabases,
-                        bitwardenVaults = bitwardenVaults,
-                    onSelectSource = { source ->
-                        showStorageSourceMenu = false
+                    selected = selectedFolderFilter.toMenuSelection(),
+                    categories = categories,
+                    mdbxDatabases = mdbxDatabases,
+                    keepassDatabases = keepassDatabases,
+                    bitwardenVaults = bitwardenVaults,
+                    getMdbxFolders = getFilterMdbxFolders,
+                    getKeePassGroups = getFilterKeePassGroups,
+                    getBitwardenFolders = getFilterBitwardenFolders,
+                    onSelect = { selection ->
+                        val filter = steamFolderFilter(selection) ?: return@SteamStorageSourceMenu
                         clearSteamSearch()
                         selectedTokenAccountIds = emptyList()
                         detailAccountId = null
                         scannedQrPayload = null
                         viewModel.clearSelectedConfirmations()
-                        viewModel.selectStorageSource(source)
+                        viewModel.selectFolderFilter(filter)
                     }
                 )
             },
@@ -2020,36 +2035,41 @@ private fun SteamTopActionsMenu(
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun SteamStorageSourceMenu(
     expanded: Boolean,
     onDismissRequest: () -> Unit,
-    selectedSource: SteamStorageSource,
+    selected: takagi.ru.monica.ui.components.UnifiedCategoryFilterSelection,
+    categories: List<takagi.ru.monica.data.Category>,
     mdbxDatabases: List<LocalMdbxDatabase>,
     keepassDatabases: List<LocalKeePassDatabase>,
     bitwardenVaults: List<BitwardenVault>,
-    onSelectSource: (SteamStorageSource) -> Unit
+    getMdbxFolders: (Long) -> kotlinx.coroutines.flow.Flow<List<takagi.ru.monica.repository.MdbxStoredFolderEntry>>,
+    getKeePassGroups: (Long) -> kotlinx.coroutines.flow.Flow<List<takagi.ru.monica.utils.KeePassGroupInfo>>,
+    getBitwardenFolders: (Long) -> kotlinx.coroutines.flow.Flow<List<takagi.ru.monica.data.bitwarden.BitwardenFolder>>,
+    onSelect: (takagi.ru.monica.ui.components.UnifiedCategoryFilterSelection) -> Unit
 ) {
     UnifiedCategoryFilterChipMenuDropdown(
         expanded = expanded,
         onDismissRequest = onDismissRequest,
         offset = UnifiedCategoryFilterChipMenuOffset
     ) {
-        Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(horizontal = 12.dp)) {
-            val items = buildList<takagi.ru.monica.ui.components.DatabaseFilterChipItem<SteamStorageSource>> {
-                add(takagi.ru.monica.ui.components.DatabaseFilterChipItem("local",
-                    stringResource(R.string.category_selection_menu_local_database), Icons.Default.Smartphone, SteamStorageSource.Local))
-                mdbxDatabases.forEach { db -> add(takagi.ru.monica.ui.components.DatabaseFilterChipItem("mdbx:${db.id}",
-                    db.name.ifBlank { "MDBX" }, Icons.Default.Storage, SteamStorageSource.Mdbx(db.id), Color(0xFF22C55E))) }
-                keepassDatabases.forEach { db -> add(takagi.ru.monica.ui.components.DatabaseFilterChipItem("keepass:${db.id}",
-                    db.name.ifBlank { "KeePass" }, Icons.Default.Key, SteamStorageSource.KeePass(db.id))) }
-                bitwardenVaults.forEach { vault -> add(takagi.ru.monica.ui.components.DatabaseFilterChipItem("bitwarden:${vault.id}",
-                    vault.displayName?.takeIf { it.isNotBlank() } ?: vault.email, Icons.Default.VerifiedUser, SteamStorageSource.Bitwarden(vault.id))) }
-            }
-            takagi.ru.monica.ui.components.FilterMenuDatabaseSection(items,
-                isSelected = { it == selectedSource }, onSelect = onSelectSource, collapsible = false)
-        }
+        takagi.ru.monica.ui.components.UnifiedCategoryFilterChipMenu(
+            visible = true,
+            onDismiss = onDismissRequest,
+            selected = selected,
+            onSelect = onSelect,
+            categories = categories,
+            mdbxDatabases = mdbxDatabases,
+            keepassDatabases = keepassDatabases,
+            bitwardenVaults = bitwardenVaults,
+            getMdbxFolders = getMdbxFolders,
+            getKeePassGroups = getKeePassGroups,
+            getBitwardenFolders = getBitwardenFolders,
+            showQuickFilters = false,
+            // Steam account actions operate on one active database.
+            showAllDatabases = false
+        )
     }
 }
 

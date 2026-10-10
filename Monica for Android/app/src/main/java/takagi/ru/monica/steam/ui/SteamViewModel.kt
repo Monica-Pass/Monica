@@ -139,6 +139,7 @@ private data class SteamSellOutcome(
 
 data class SteamUiState(
     val storageSource: SteamStorageSource = SteamStorageSource.Local,
+    val folderId: String? = null,
     val accounts: List<SteamAccount> = emptyList(),
     val selectedAccountId: Long? = null,
     val currentCode: String = "",
@@ -195,8 +196,11 @@ class SteamViewModel(
     private val inventoryService: SteamInventoryService = SteamInventoryService(),
     private val marketService: SteamMarketService = SteamMarketService()
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(SteamUiState())
+    private val _uiState = MutableStateFlow(SteamUiState(
+        folderId = readSteamFolderId(appContext, SteamStorageSource.Local)
+    ))
     val uiState: StateFlow<SteamUiState> = _uiState.asStateFlow()
+    private var sourceLoadJob: Job? = null
     private var transferInProgress = false
     private var pendingLoginPollJob: Job? = null
     private val mdbxAccountStore = mdbxRepository?.let { SteamMdbxAccountStore(it, parser) }
@@ -247,6 +251,13 @@ class SteamViewModel(
         }
     }
 
+    internal fun selectFolderFilter(filter: SteamFolderFilter) {
+        if (transferInProgress) return
+        selectStorageSource(filter.source)
+        saveSteamFolderId(appContext, filter.source, filter.folderId)
+        _uiState.value = _uiState.value.copy(folderId = filter.folderId)
+    }
+
     fun selectStorageSource(
         source: SteamStorageSource,
         persist: Boolean = true,
@@ -254,9 +265,12 @@ class SteamViewModel(
     ) {
         if (transferInProgress) return
         if (!forceRefresh && source == _uiState.value.storageSource) return
+        sourceLoadJob?.cancel()
         if (persist) saveSteamStorageSource(appContext, source)
+        _uiState.value = _uiState.value.copy(folderId = readSteamFolderId(appContext, source))
         when (source) {
             SteamStorageSource.Local -> {
+                setLoading(false)
                 mdbxAccountRecords = emptyList()
                 keepassAccountRecords = emptyList()
                 bitwardenAccountRecords = emptyList()
@@ -268,7 +282,7 @@ class SteamViewModel(
                 )
             }
             is SteamStorageSource.Mdbx -> {
-                viewModelScope.launch {
+                sourceLoadJob = viewModelScope.launch {
                     keepassAccountRecords = emptyList()
                     bitwardenAccountRecords = emptyList()
                     val store = mdbxAccountStore
@@ -298,6 +312,7 @@ class SteamViewModel(
                             clearAccountScopedState = true
                         )
                     }.onFailure { error ->
+                        if (error is kotlinx.coroutines.CancellationException) throw error
                         mdbxAccountRecords = emptyList()
                         _uiState.value = _uiState.value.copy(accounts = emptyList())
                         setMessage(error.message ?: appContext.getString(R.string.steam_cannot_load_mdbx_accounts))
@@ -306,7 +321,7 @@ class SteamViewModel(
                 }
             }
             is SteamStorageSource.KeePass -> {
-                viewModelScope.launch {
+                sourceLoadJob = viewModelScope.launch {
                     mdbxAccountRecords = emptyList()
                     bitwardenAccountRecords = emptyList()
                     _uiState.value = _uiState.value.copy(
@@ -333,6 +348,7 @@ class SteamViewModel(
                             clearAccountScopedState = true
                         )
                     }.onFailure { error ->
+                        if (error is kotlinx.coroutines.CancellationException) throw error
                         keepassAccountRecords = emptyList()
                         _uiState.value = _uiState.value.copy(accounts = emptyList())
                         setMessage(error.message ?: appContext.getString(R.string.steam_cannot_load_keepass_accounts))
@@ -341,7 +357,7 @@ class SteamViewModel(
                 }
             }
             is SteamStorageSource.Bitwarden -> {
-                viewModelScope.launch {
+                sourceLoadJob = viewModelScope.launch {
                     mdbxAccountRecords = emptyList()
                     keepassAccountRecords = emptyList()
                     _uiState.value = _uiState.value.copy(
@@ -370,6 +386,7 @@ class SteamViewModel(
                             clearAccountScopedState = true
                         )
                     }.onFailure { error ->
+                        if (error is kotlinx.coroutines.CancellationException) throw error
                         bitwardenAccountRecords = emptyList()
                         _uiState.value = _uiState.value.copy(accounts = emptyList())
                         setMessage(error.message ?: appContext.getString(R.string.steam_cannot_load_bitwarden_accounts))

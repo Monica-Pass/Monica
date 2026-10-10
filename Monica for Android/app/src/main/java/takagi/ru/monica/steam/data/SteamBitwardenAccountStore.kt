@@ -101,7 +101,9 @@ class SteamBitwardenAccountStore(
             .mapNotNull { entry ->
                 when (val result = loadEntry(vault, entry)) {
                     EntryLoadResult.NotSteamEntry -> null
-                    is EntryLoadResult.Loaded -> result.record
+                    is EntryLoadResult.Loaded -> result.record.copy(
+                        account = result.record.account.copy(storageFolderId = entry.bitwardenFolderId)
+                    )
                     is EntryLoadResult.Failed -> {
                         failedSteamEntries++
                         SteamDiagLogger.append(
@@ -475,6 +477,7 @@ class SteamBitwardenAccountStore(
         val record = SteamBitwardenAccountRecord(
             account = account.copy(
                 id = runtimeAccountId(vaultId, syncedEntry.id),
+                storageFolderId = syncedEntry.bitwardenFolderId,
                 updatedAt = System.currentTimeMillis()
             ),
             passwordEntryId = syncedEntry.id,
