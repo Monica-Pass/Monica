@@ -134,22 +134,30 @@ async function getAtomgitRelease(tag) {
   });
 }
 
-async function* streamWithProgress(body, total, label) {
-  let sent = 0;
-  let nextMark = total ? total * 0.25 : 0;
+async function* countingStream(body, progress) {
   for await (const chunk of body) {
-    sent += chunk.length;
-    if (total && sent >= nextMark && sent < total) {
-      log(`    ${label}: ${Math.min(99, Math.round((sent / total) * 100))}%`);
-      nextMark += total * 0.25;
+    progress.bytes += chunk.length;
+    if (!progress.firstChunkAt) {
+      progress.firstChunkAt = Date.now();
+      log(`    首个数据块已到达（GitHub 下载侧正常）`);
     }
     yield chunk;
   }
 }
 
+// 进度必须由独立定时器打印：上传卡住时生成器会被背压暂停，
+// 靠生成器自身输出会让日志静默，看不出是慢还是死。
+function progressLine(progress, asset) {
+  const elapsed = (Date.now() - progress.startedAt) / 1000;
+  const rate = elapsed > 1 ? progress.bytes / 1024 / elapsed : 0;
+  const percent = asset.size ? Math.min(99, Math.round((progress.bytes / asset.size) * 100)) : 0;
+  return `    ${asset.name}: ${formatBytes(progress.bytes)}/${formatBytes(asset.size)}（${percent}%）${rate.toFixed(0)} KiB/s`;
+}
+
 // 对象存储的签名上传地址必须原样使用：只带接口返回的 headers，
 // 不转发 AtomGit 令牌，也不跟随重定向（node:https 默认不跟随）。
-function putStream(uploadUrl, headers, stream, size) {
+function putStream(uploadUrl, headers, stream, size, options = {}) {
+  const { idleTimeoutMs = 180000, label = '' } = options;
   return new Promise((resolve, reject) => {
     const target = new URL(uploadUrl);
     const request = https.request(
@@ -168,7 +176,14 @@ function putStream(uploadUrl, headers, stream, size) {
         response.on('end', () => resolve({ status: response.statusCode, body }));
       },
     );
-    request.on('error', reject);
+    request.on('error', (error) => {
+      stream.destroy();
+      reject(error);
+    });
+    // 连接空闲超过阈值就中断，避免卡死的上传把整个 job 挂到超时。
+    request.setTimeout(idleTimeoutMs, () => {
+      request.destroy(new Error(`上传连接空闲 ${Math.round(idleTimeoutMs / 1000)}s 已中断${label ? `（${label}）` : ''}`));
+    });
     stream.pipe(request);
   });
 }
@@ -192,14 +207,24 @@ async function uploadAsset(tag, asset) {
   if (!source.body) fail(`GitHub 附件响应没有内容（${asset.name}）`);
 
   log(`[upload] ${tag}: ${asset.name}（${formatBytes(asset.size)}）`);
-  const response = await putStream(
-    uploadUrl,
-    upload.headers || {},
-    Readable.from(streamWithProgress(source.body, asset.size, asset.name)),
-    asset.size,
-  );
+  const progress = { bytes: 0, startedAt: Date.now() };
+  const ticker = setInterval(() => log(progressLine(progress, asset)), 30000);
+  let response;
+  try {
+    response = await putStream(
+      uploadUrl,
+      upload.headers || {},
+      Readable.from(countingStream(source.body, progress)),
+      asset.size,
+      { label: asset.name },
+    );
+  } finally {
+    clearInterval(ticker);
+  }
   if (response.status >= 200 && response.status < 300) {
-    log(`[done] ${tag}: 已上传 ${asset.name}`);
+    const elapsed = (Date.now() - progress.startedAt) / 1000;
+    const rate = elapsed > 0 ? progress.bytes / 1024 / elapsed : 0;
+    log(`[done] ${tag}: 已上传 ${asset.name}（${elapsed.toFixed(0)}s，平均 ${rate.toFixed(0)} KiB/s）`);
     return;
   }
   fail(`AtomGit 附件上传失败：HTTP ${response.status} ${redact(response.body).slice(0, 300)}（${asset.name}）`);
@@ -309,4 +334,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { putStream };
+module.exports = { putStream, countingStream, progressLine };
