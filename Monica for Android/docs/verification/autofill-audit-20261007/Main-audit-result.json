@@ -1,0 +1,10 @@
+{
+  "oldUser": "10",
+  "testHash": "CE47A99F4864528BFD93AE697D5842D198C97067A466068684594127DC01C8F8",
+  "skipInstall": false,
+  "appHash": "4B771C3F9CC1D228A0408CE07A794FC24137005C216D1BA63A2E511CE353A24A",
+  "completed": false,
+  "edition": "Main",
+  "classes": "takagi.ru.monica.autofill_ng.AutofillSettingsAuditProbe,takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#auditNativeClearAndRefill,takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#auditWebClearAndRefill,takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#auditSaveDisabledStillOffersSystemPrompt",
+  "oldProxy": ":0"
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_copy_result_title">复制结果</string>
+    <string name="passkey_copy_result_summary">已复制 %1$d 项；跳过或失败 %2$d 项</string>
+    <string name="passkey_copy_success_count">已复制 %1$d 个 Passkey</string>
+    <string name="passkey_transfer_key_unavailable">此设备上没有可用的私钥。</string>
+    <string name="passkey_transfer_restricted">此 Passkey 无法转移到所选位置。</string>
+    <string name="passkey_transfer_same_database_copy">此数据库要求凭据 ID 唯一，请选择其他数据库复制此 Passkey。</string>
+    <string name="passkey_copy_blocked_title">部分 Passkey 无法复制</string>
+    <string name="passkey_move_blocked_title">部分 Passkey 无法移动</string>
+    <string name="passkey_transfer_preflight_summary">%1$d 个 Passkey 无法处理，%2$d 个可以继续。目前尚未修改任何条目。</string>
+    <string name="passkey_cancel_copy">取消复制</string>
+    <string name="passkey_cancel_move">取消移动</string>
+    <string name="passkey_transfer_skip">跳过 %1$d 项并继续</string>
+</resources>

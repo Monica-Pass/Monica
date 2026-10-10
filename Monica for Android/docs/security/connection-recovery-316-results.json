@@ -1,0 +1,44 @@
+{
+  "main": {
+    "connections-main.log": {
+      "passed": 4,
+      "sha256": "34c7e730fe7e5cc2028039975b344120a05509fb1423225a0fea6c6f86257430"
+    },
+    "connections-regression-main-recovery.log": {
+      "passed": 29,
+      "sha256": "0e56040ddcc6c10a5c6b214be66c1a51f1b4f32e0446c656a5ba037026fdd4c2"
+    },
+    "connections-regression-main-payload.log": {
+      "passed": 1,
+      "sha256": "db25cbb61a37f91c565d08a163facb56dd3231b7c2402befcab0c285a0faa7fe"
+    },
+    "connections-regression-main-cloud.log": {
+      "passed": 2,
+      "sha256": "a005acf299ce70aceee557b9f2ec1490d846831dde368cb4d1c15f590f805282"
+    },
+    "KeePassCredentialSupportTest": {
+      "passed": 5
+    }
+  },
+  "fdroid": {
+    "connections-fdroid.log": {
+      "passed": 4,
+      "sha256": "1144091fcf101ae3957c62e2af7a3f7da6510d78f1a4645d47c57cea223e9329"
+    },
+    "connections-regression-fdroid-recovery.log": {
+      "passed": 29,
+      "sha256": "c75a6a0d56d0bf918d4a5aa713467a01ddcf958b936f9de4148f44ac07b6d401"
+    },
+    "connections-regression-fdroid-payload.log": {
+      "passed": 1,
+      "sha256": "d843dc00d5bbd52047e69498d3a64dd6e8bdbdf4af43f46d2b7f6cf97f8ed7f4"
+    },
+    "connections-regression-fdroid-cloud.log": {
+      "passed": 1,
+      "sha256": "2cb922f76c5529889dbb81adb73fd99fd99939ed741630680b790e0908a156ac"
+    },
+    "KeePassCredentialSupportTest": {
+      "passed": 5
+    }
+  }
+}

@@ -129,6 +129,34 @@ class PasskeyRepository(
     /**
      * 保存 Passkey（插入或更新）
      */
+    /** Insert a separate record; copies must never replace an existing credential or delete the source. */
+    suspend fun copyPasskey(passkey: PasskeyEntry): Long {
+        require(passkey.id == 0L)
+        passkey.mdbxDatabaseId?.let { databaseId ->
+            val store = requireNotNull(mdbxRepository) { "MDBX repository is unavailable" }
+            store.requireRoomMirrorAllowed(databaseId)
+            val normalized = PasskeyCredentialIdCodec.normalize(passkey.credentialId) ?: passkey.credentialId
+            check(store.readStoredEntries(databaseId).none { entry ->
+                !entry.deleted && entry.entryType.equals("passkey", ignoreCase = true) &&
+                    (entry.entryId == "passkey:${passkey.credentialId}" || runCatching {
+                        val id = org.json.JSONObject(entry.payloadJson).optString("credential_id")
+                        (PasskeyCredentialIdCodec.normalize(id) ?: id) == normalized
+                    }.getOrDefault(false))
+            }) { "Target already contains this Passkey" }
+        }
+        val protected = protectPrivateKeyForRoom(passkey)
+        return try {
+            commitMirrorThenRoom(
+                mirrorCommit = { mdbxRepository?.upsertPasskey(passkey) },
+                roomCommit = { passkeyDao.insertCopy(protected) },
+                rollbackMirror = { mdbxRepository?.deletePasskey(passkey) }
+            )
+        } catch (error: Throwable) {
+            cleanupPrivateKeyIfUnreferenced(protected.privateKeyAlias)
+            throw error
+        }
+    }
+
     suspend fun savePasskey(passkey: PasskeyEntry) {
         passkey.mdbxDatabaseId?.let { mdbxRepository?.requireRoomMirrorAllowed(it) }
         val protected = protectPrivateKeyForRoom(passkey)
@@ -187,7 +215,11 @@ class PasskeyRepository(
                         mdbxRepository?.deletePasskey(existing)
                     }
                 },
-                roomCommit = { passkeyDao.update(protected) },
+                roomCommit = {
+                    takagi.ru.monica.passkey.PasskeyCipherFolderIntent.recordMove(context, existing, protected) {
+                        passkeyDao.update(protected)
+                    }
+                },
                 rollbackMirror = {
                     if (normalized.mdbxDatabaseId != null) {
                         mdbxRepository?.deletePasskey(normalized)
@@ -386,6 +418,7 @@ class PasskeyRepository(
             roomCommit = { passkeyDao.delete(passkey) },
             rollbackMirror = { mdbxRepository?.upsertPasskey(passkey) }
         )
+        context?.let { takagi.ru.monica.passkey.PasskeyCipherFolderIntent.discard(it, passkey) }
         cleanupPrivateKeyIfUnreferenced(passkey.privateKeyAlias)
         logAudit("PASSKEY_DELETED", "${passkey.credentialId}|rpId=${passkey.rpId}")
     }
@@ -407,6 +440,7 @@ class PasskeyRepository(
             
             if (keyStore.containsAlias(keyAlias)) {
                 keyStore.deleteEntry(keyAlias)
+                takagi.ru.monica.passkey.PasskeyPortabilityCache.shared.invalidate(keyAlias)
                 Log.d(TAG, "Deleted private key from Keystore")
             } else {
                 Log.w(TAG, "Key alias not found in Keystore")
@@ -570,6 +604,8 @@ fun mergeKeePassImportedPasskeys(
                 boundPasswordId = existing.boundPasswordId,
                 categoryId = existing.categoryId,
                 isBackedUp = existing.isBackedUp || imported.isBackedUp,
+                backupEligible = takagi.ru.monica.passkey.PasskeyBackupFlags.mergeEligibility(existing.backupEligible, imported.backupEligible),
+                backupState = imported.backupState ?: existing.backupState,
                 keepassDatabaseId = databaseId,
                 passkeyMode = PasskeyEntry.MODE_KEEPASS_COMPAT
             )

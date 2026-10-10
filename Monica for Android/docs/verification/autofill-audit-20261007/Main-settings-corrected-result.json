@@ -1,0 +1,10 @@
+{
+  "edition": "Main",
+  "oldUser": "10",
+  "testHash": "09373C62C2CBDFB851569303379F051AC3A3780DEF71B159384BAA5F6EFECBFB",
+  "skipInstall": false,
+  "oldProxy": ":0",
+  "appHash": "4B771C3F9CC1D228A0408CE07A794FC24137005C216D1BA63A2E511CE353A24A",
+  "classes": "takagi.ru.monica.autofill_ng.AutofillSettingsAuditProbe",
+  "completed": false
+}

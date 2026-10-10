@@ -20,6 +20,7 @@ import takagi.ru.monica.keepass.KeePassPasskeyDeleteExecutor
 import takagi.ru.monica.keepass.KeePassPasskeyUpdateExecutor
 import takagi.ru.monica.repository.KeePassCompatibilityBridge
 import takagi.ru.monica.repository.KeePassWorkspaceRepository
+import takagi.ru.monica.passkey.PasskeyPageSyncPolicy
 import takagi.ru.monica.repository.PasskeyRepository
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.sync.SyncDiagnostics
@@ -32,6 +33,8 @@ import takagi.ru.monica.sync.SyncTaskRunner
 import takagi.ru.monica.sync.SyncTrigger
 import takagi.ru.monica.utils.FieldChange
 import takagi.ru.monica.utils.OperationLogger
+import takagi.ru.monica.utils.SavedCategoryFilterState
+import takagi.ru.monica.utils.SettingsManager
 
 /**
  * Passkey ViewModel
@@ -63,6 +66,13 @@ class PasskeyViewModel internal constructor(
     
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
+
+    private val settingsManager = context?.applicationContext?.let(::SettingsManager)
+    private val _categoryFilter = MutableStateFlow(SavedCategoryFilterState())
+    val categoryFilter: StateFlow<SavedCategoryFilterState> = _categoryFilter.asStateFlow()
+    private val _isCategoryFilterReady = MutableStateFlow(settingsManager == null)
+    val isCategoryFilterReady: StateFlow<Boolean> = _isCategoryFilterReady.asStateFlow()
+    private var hasSelectedCategoryFilter = false
     
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
@@ -71,8 +81,20 @@ class PasskeyViewModel internal constructor(
     val errorMessage: StateFlow<String?> = _errorMessage.asStateFlow()
 
     init {
+        settingsManager?.let { manager ->
+            viewModelScope.launch {
+                runCatching {
+                    manager.categoryFilterStateFlow(SettingsManager.CategoryFilterScope.PASSKEY).first()
+                }.onSuccess { saved ->
+                    // A slow initial read must not replace a newer user selection.
+                    if (!hasSelectedCategoryFilter) _categoryFilter.value = saved
+                    _isCategoryFilterReady.value = true
+                }
+            }
+        }
         viewModelScope.launch {
             repairLegacyDetachedKeePassPasskeys()
+            isCategoryFilterReady.first { it }
             refreshKeePassPasskeys(trigger = "PASSKEY_INIT")
         }
     }
@@ -164,6 +186,17 @@ class PasskeyViewModel internal constructor(
     fun updateSearchQuery(query: String) {
         _searchQuery.value = query
     }
+
+    fun setCategoryFilter(filter: SavedCategoryFilterState) {
+        hasSelectedCategoryFilter = true
+        _categoryFilter.value = filter
+        _isCategoryFilterReady.value = true
+        val manager = settingsManager ?: return
+        // Keep the selection and its pending write alive when the list leaves composition.
+        viewModelScope.launch {
+            manager.updateCategoryFilterState(SettingsManager.CategoryFilterScope.PASSKEY, filter)
+        }
+    }
     
     /**
      * 清除错误消息
@@ -228,6 +261,22 @@ class PasskeyViewModel internal constructor(
     /**
      * 更新 Passkey
      */
+    suspend fun copyPasskey(passkey: PasskeyEntry): Result<PasskeyEntry> {
+        val copy = passkey.copy(id = 0, boundPasswordId = null, bitwardenCipherId = null,
+            syncStatus = if (passkey.bitwardenVaultId == null) "NONE" else "PENDING")
+        return try {
+            // Treat the destination as new, so the KeePass executor performs conflict checks
+            // and cannot enter its source-deletion branch.
+            keepassPasskeyUpdateExecutor.update(
+                existing = copy.copy(keepassDatabaseId = null), updated = copy,
+                persistUpdate = { repository.copyPasskey(it) }
+            ).onSuccess { logPasskeyCreate(it) }
+        } catch (error: Exception) {
+            if (error is kotlinx.coroutines.CancellationException) throw error
+            Result.failure(error)
+        }
+    }
+
     suspend fun updatePasskey(passkey: PasskeyEntry): Result<PasskeyEntry> {
         val existing = if (passkey.hasPersistentId()) {
             repository.getPasskeyByRecordId(passkey.id)
@@ -352,11 +401,29 @@ class PasskeyViewModel internal constructor(
     }
 
     suspend fun refreshKeePassPasskeys(trigger: String = "PASSKEY_REFRESH") {
+        val bridge = keepassBridge ?: return
+        val dao = localKeePassDatabaseDao ?: return
+        if (!isCategoryFilterReady.value) return
+        val filter = categoryFilter.value
+        val databaseIds = PasskeyPageSyncPolicy.keePassDatabaseIds(
+            filter, withContext(Dispatchers.IO) { dao.getAllDatabasesSync().map { it.id } }
+        )
+        for (databaseId in databaseIds) {
+            // Do not enqueue an empty task for an inaccessible or already indexed database.
+            val decision = bridge.legacyProjectionRefreshDecision(
+                databaseId, takagi.ru.monica.keepass.KeePassProjectionKind.PASSKEY
+            ).getOrNull() ?: continue
+            if (!decision.needsRefresh || categoryFilter.value != filter) continue
+            requestKeePassPasskeyRefresh(databaseId, trigger)
+        }
+    }
+
+    private suspend fun requestKeePassPasskeyRefresh(databaseId: Long, trigger: String) {
         SyncTaskRunner.request(
             request = SyncRequest(
                 requestId = SyncDiagnostics.nextTaskId("kp-passkey-refresh"),
                 target = SyncTarget.KeePassCompatibilityIndex(
-                    databaseId = null,
+                    databaseId = databaseId,
                     itemTypes = setOf(SyncItemKind.PASSKEY)
                 ),
                 trigger = when (trigger) {
@@ -370,13 +437,13 @@ class PasskeyViewModel internal constructor(
                 throttleMs = 30_000L
             )
         ) {
-            refreshKeePassPasskeysNow(trigger)
+            refreshKeePassPasskeysNow(databaseId, trigger)
         }
     }
 
-    private suspend fun refreshKeePassPasskeysNow(trigger: String) {
+    private suspend fun refreshKeePassPasskeysNow(databaseId: Long, trigger: String) {
         val taskId = SyncDiagnostics.nextTaskId("kp-passkey")
-        val target = "keepass_compat:passkey:all"
+        val target = "keepass_compat:passkey:$databaseId"
         SyncDiagnostics.queued(taskId, target, trigger)
         val bridge = keepassBridge ?: run {
             SyncDiagnostics.skipped(taskId, target, trigger, "bridge_unavailable")
@@ -392,7 +459,7 @@ class PasskeyViewModel internal constructor(
             var importedCount = 0
             var failedDatabaseCount = 0
             withContext(Dispatchers.IO) {
-                dao.getAllDatabasesSync().forEach { database ->
+                listOfNotNull(dao.getDatabaseById(databaseId)).forEach { database ->
                     databaseCount++
                     val decision = bridge.legacyProjectionRefreshDecision(
                         database.id,

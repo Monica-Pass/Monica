@@ -536,7 +536,7 @@ class PasskeyAuthActivity : FragmentActivity() {
             )
 
             // 创建 authenticator data
-            val authenticatorData = createAuthenticatorData(rpId, newSignCount.toInt())
+            val authenticatorData = createAuthenticatorData(rpId, newSignCount.toInt(), passkey)
             
             val origin = PasskeyOriginResolver.resolveOrigin(
                 context = this,
@@ -712,19 +712,11 @@ class PasskeyAuthActivity : FragmentActivity() {
         }.getOrNull()
     }
     
-    private fun createAuthenticatorData(rpId: String, signCount: Int): ByteArray {
+    private fun createAuthenticatorData(rpId: String, signCount: Int, passkey: PasskeyEntry): ByteArray {
         val rpIdHash = MessageDigest.getInstance("SHA-256").digest(rpId.toByteArray())
         
-        // 参照 KeePassDX AuthenticatorData.buildAuthenticatorData
-        // Flags: UP (0x01) | UV (0x04) | BE (0x08) | BS (0x10) = 0x1D
-        // UP = User Present
-        // UV = User Verified  
-        // BE = Backup Eligibility
-        // BS = Backup State
-        var flags = 0x01 // UP
-        flags = flags or 0x04 // UV
-        flags = flags or 0x08 // BE - Backup Eligibility
-        flags = flags or 0x10 // BS - Backup State
+        // This helper is reached only after user presence and verification.
+        val flags = PasskeyBackupFlags.authenticatorFlags(passkey.backupEligible, passkey.backupState)
         
         val signCountBytes = ByteArray(4)
         signCountBytes[0] = ((signCount shr 24) and 0xFF).toByte()

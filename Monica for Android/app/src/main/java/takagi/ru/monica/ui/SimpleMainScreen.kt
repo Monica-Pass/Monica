@@ -1716,17 +1716,23 @@ fun SimpleMainScreen(
         }
     )
     
+    val passkeyFilter by passkeyViewModel.categoryFilter.collectAsState()
+    val passkeyFilterReady by passkeyViewModel.isCategoryFilterReady.collectAsState()
+    val passkeyBitwardenVaultId = takagi.ru.monica.passkey.PasskeyPageSyncPolicy.bitwardenStatusVaultId(
+        passkeyFilter, passkeyFilterReady, activeBitwardenVault?.id
+    )
     val isBitwardenPageContext = when (currentTab) {
         BottomNavItem.VaultV2,
         BottomNavItem.Passwords -> isBitwardenPasswordFilter(currentFilter)
         BottomNavItem.Authenticator -> isBitwardenTotpFilter(totpFilter)
         BottomNavItem.CardWallet -> cardWalletBitwardenVaultId != null
         BottomNavItem.Notes -> noteBitwardenVaultId != null
-        BottomNavItem.Passkey,
+        BottomNavItem.Passkey -> passkeyBitwardenVaultId != null
         BottomNavItem.Send -> activeBitwardenVault != null
         else -> false
     }
     val bitwardenStatusVaultId = when (currentTab) {
+        BottomNavItem.Passkey -> passkeyBitwardenVaultId
         BottomNavItem.CardWallet -> cardWalletBitwardenVaultId
         BottomNavItem.Notes -> noteBitwardenVaultId
         else -> activeBitwardenVault?.id

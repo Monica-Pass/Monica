@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-06",
+  "device": "Monica_Issue136_API_32",
+  "api": 32,
+  "testsPassed": 36,
+  "runs": [
+    {
+      "edition": "main",
+      "userRestored": true,
+      "completed": true,
+      "abi": "x86_64",
+      "serial": "emulator-5554",
+      "finishedAt": "2026-10-06T15:24:38.5274770+08:00",
+      "classes": "takagi.ru.monica.ui.screens.MdbxTigaSliderTest,takagi.ru.monica.ui.screens.MdbxLayoutReachabilityTest#allSixProductionFormsKeepSubmissionVisibleWithLargeText,takagi.ru.monica.ui.screens.MdbxLayoutReachabilityTest#remoteGlitterIsUnavailableWhileSkyMultiPowerRemainSelectable,takagi.ru.monica.ui.screens.MdbxLayoutReachabilityTest#glitterCreateUsesPasswordKeyAndAllowsExternalDirectoryWithoutExtraAuthorization",
+      "startedAt": "2026-10-06T15:23:55.1670437+08:00",
+      "testCount": 16,
+      "screenTimeoutRestored": true,
+      "artifacts": [
+        {
+          "sha256": "29DF65167CEDF728AE03542038A0CE0A2844C8CDB3C7E9DAFC5634068F3F62C2",
+          "package": "takagi.ru.monica"
+        },
+        {
+          "sha256": "810E02C5DA74D2CCDF00E802A2C341E4CAD3C7B544082C84B1D46EF13018844C",
+          "package": "takagi.ru.monica.test"
+        }
+      ],
+      "jvmSuite": {
+        "name": "takagi.ru.monica.ui.screens.MdbxTigaModeAvailabilityTest",
+        "tests": "2",
+        "skipped": "0",
+        "failures": "0",
+        "errors": "0",
+        "timestamp": "2026-10-06T07:23:22",
+        "hostname": "JOYIN",
+        "time": "0.032"
+      },
+      "sourceSha256": {
+        "app\\src\\main\\java\\takagi\\ru\\monica\\ui\\screens\\MdbxTigaModeSelector.kt": "0aa9a79845c771db54f135000f0cad250c28100d44e399297ba3ab25bacee20e",
+        "app\\src\\androidTest\\java\\takagi\\ru\\monica\\ui\\screens\\MdbxTigaSliderTest.kt": "35c010328802f578de39416e648410b080ac16162cb3fcf0f6031d40f8a52703"
+      },
+      "build": "SUCCESSFUL"
+    },
+    {
+      "classes": "takagi.ru.monica.ui.screens.MdbxTigaSliderTest,takagi.ru.monica.ui.screens.MdbxLayoutReachabilityTest#allSixProductionFormsKeepSubmissionVisibleWithLargeText,takagi.ru.monica.ui.screens.MdbxLayoutReachabilityTest#remoteGlitterIsUnavailableWhileSkyMultiPowerRemainSelectable,takagi.ru.monica.ui.screens.MdbxLayoutReachabilityTest#glitterCreateUsesPasswordKeyAndAllowsExternalDirectoryWithoutExtraAuthorization",
+      "edition": "fdroid",
+      "screenTimeoutRestored": true,
+      "testCount": 16,
+      "serial": "emulator-5554",
+      "completed": true,
+      "abi": "x86_64",
+      "finishedAt": "2026-10-06T15:27:50.3875338+08:00",
+      "userRestored": true,
+      "artifacts": [
+        {
+          "sha256": "C32311289C8673BBD7E3B8A3FC61B241FBD754BA5AC21B8A92C841F61164297C",
+          "package": "takagi.ru.monica.fdroid"
+        },
+        {
+          "sha256": "D2EA862F316331EAAA016EC121F0DF648381B6957F85E49D919858938D11F286",
+          "package": "takagi.ru.monica.fdroid.test"
+        }
+      ],
+      "startedAt": "2026-10-06T15:27:15.8494489+08:00",
+      "jvmSuite": {
+        "name": "takagi.ru.monica.ui.screens.MdbxTigaModeAvailabilityTest",
+        "tests": "2",
+        "skipped": "0",
+        "failures": "0",
+        "errors": "0",
+        "timestamp": "2026-10-06T07:26:47",
+        "hostname": "JOYIN",
+        "time": "0.031"
+      },
+      "sourceSha256": {
+        "app\\src\\main\\java\\takagi\\ru\\monica\\ui\\screens\\MdbxTigaModeSelector.kt": "0aa9a79845c771db54f135000f0cad250c28100d44e399297ba3ab25bacee20e",
+        "app\\src\\androidTest\\java\\takagi\\ru\\monica\\ui\\screens\\MdbxTigaSliderTest.kt": "35c010328802f578de39416e648410b080ac16162cb3fcf0f6031d40f8a52703"
+      },
+      "build": "SUCCESSFUL"
+    }
+  ]
+}

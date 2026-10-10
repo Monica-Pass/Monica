@@ -160,6 +160,11 @@ import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.steam.core.SteamTotp
 import takagi.ru.monica.steam.data.SteamAccount
 import takagi.ru.monica.steam.data.SteamMaFileTransferAction
+import takagi.ru.monica.steam.data.SteamStorageTarget
+import takagi.ru.monica.ui.components.UnifiedMoveToCategoryBottomSheet
+import takagi.ru.monica.ui.components.UnifiedMoveInitialSource
+import takagi.ru.monica.ui.components.UnifiedMoveAction
+import takagi.ru.monica.data.isMonicaLocalCategory
 import takagi.ru.monica.steam.data.SteamStorageSource
 import takagi.ru.monica.steam.market.SteamInventoryItemStack
 import takagi.ru.monica.steam.market.SteamBatchSellEntry
@@ -276,12 +281,6 @@ private sealed interface SteamProtectedMarketAction {
         val listings: List<SteamMarketListing>
     ) : SteamProtectedMarketAction
 }
-
-private data class SteamTransferTarget(
-    val source: SteamStorageSource,
-    val label: String,
-    val icon: ImageVector
-)
 
 private enum class SteamAuthenticatorRemovalMode {
     REMOTE,
@@ -947,18 +946,30 @@ fun SteamScreen(
     }
 
     transferRequest?.let { request ->
-        SteamMaFileTransferSheet(
-            selectedCount = request.accounts.size,
-            currentSource = uiState.storageSource,
+        val categories by remember(passwordDatabase) { passwordDatabase.categoryDao().getAllCategories() }
+            .collectAsState(initial = emptyList())
+        UnifiedMoveToCategoryBottomSheet(
+            visible = true,
+            categories = categories.filter { it.isMonicaLocalCategory() },
+            initialSource = when (val source = uiState.storageSource) {
+                SteamStorageSource.Local -> UnifiedMoveInitialSource.MonicaLocal
+                is SteamStorageSource.Mdbx -> UnifiedMoveInitialSource.MdbxDatabase(source.databaseId)
+                is SteamStorageSource.KeePass -> UnifiedMoveInitialSource.KeePassDatabase(source.databaseId)
+                is SteamStorageSource.Bitwarden -> UnifiedMoveInitialSource.BitwardenVault(source.vaultId)
+            },
+            allowCopy = true,
+            getMdbxFolders = viewModel::getTransferMdbxFolders,
+            getKeePassGroups = viewModel::getTransferKeePassGroups,
+            getBitwardenFolders = { passwordDatabase.bitwardenFolderDao().getFoldersByVaultFlow(it) },
             mdbxDatabases = mdbxDatabases,
             keepassDatabases = keepassDatabases,
             bitwardenVaults = bitwardenVaults,
-            onDismissRequest = { transferRequest = null },
-            onTransfer = { targetSource, action ->
+            onDismiss = { transferRequest = null },
+            onTargetSelected = { target, action ->
                 viewModel.transferAccounts(
                     accountIds = request.accounts.map { it.id },
-                    targetSource = targetSource,
-                    action = action
+                    target = SteamStorageTarget.from(target),
+                    action = if (action == UnifiedMoveAction.COPY) SteamMaFileTransferAction.COPY else SteamMaFileTransferAction.MOVE
                 )
                 selectedTokenAccountIds = emptyList()
                 transferRequest = null
@@ -2038,275 +2049,6 @@ internal fun SteamStorageSourceMenu(
             }
             takagi.ru.monica.ui.components.FilterMenuDatabaseSection(items,
                 isSelected = { it == selectedSource }, onSelect = onSelectSource, collapsible = false)
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
-@Composable
-private fun SteamMaFileTransferSheet(
-    selectedCount: Int,
-    currentSource: SteamStorageSource,
-    mdbxDatabases: List<LocalMdbxDatabase>,
-    keepassDatabases: List<LocalKeePassDatabase>,
-    bitwardenVaults: List<BitwardenVault>,
-    onDismissRequest: () -> Unit,
-    onTransfer: (SteamStorageSource, SteamMaFileTransferAction) -> Unit
-) {
-    val localLabel = stringResource(R.string.category_selection_menu_local_database)
-    val targets = remember(
-        currentSource,
-        mdbxDatabases,
-        keepassDatabases,
-        bitwardenVaults,
-        localLabel
-    ) {
-        buildList {
-            if (currentSource !is SteamStorageSource.Local) {
-                add(
-                    SteamTransferTarget(
-                        source = SteamStorageSource.Local,
-                        label = localLabel,
-                        icon = Icons.Default.Smartphone
-                    )
-                )
-            }
-            mdbxDatabases
-                .filterNot { database ->
-                    currentSource is SteamStorageSource.Mdbx &&
-                        currentSource.databaseId == database.id
-                }
-                .forEach { database ->
-                    add(
-                        SteamTransferTarget(
-                            source = SteamStorageSource.Mdbx(database.id),
-                            label = database.name.ifBlank { "MDBX" },
-                            icon = Icons.Default.Storage
-                        )
-                    )
-                }
-            keepassDatabases
-                .filterNot { database ->
-                    currentSource is SteamStorageSource.KeePass &&
-                        currentSource.databaseId == database.id
-                }
-                .forEach { database ->
-                    add(
-                        SteamTransferTarget(
-                            source = SteamStorageSource.KeePass(database.id),
-                            label = database.name.ifBlank { "KeePass" },
-                            icon = Icons.Default.Key
-                        )
-                    )
-                }
-            bitwardenVaults
-                .filterNot { vault ->
-                    currentSource is SteamStorageSource.Bitwarden &&
-                        currentSource.vaultId == vault.id
-                }
-                .forEach { vault ->
-                    add(
-                        SteamTransferTarget(
-                            source = SteamStorageSource.Bitwarden(vault.id),
-                            label = vault.displayName?.takeIf { it.isNotBlank() } ?: vault.email,
-                            icon = Icons.Default.VerifiedUser
-                        )
-                    )
-                }
-        }
-    }
-    var selectedAction by remember { mutableStateOf(SteamMaFileTransferAction.MOVE) }
-    var selectedTarget by remember(
-        currentSource,
-        mdbxDatabases.map { it.id },
-        keepassDatabases.map { it.id },
-        bitwardenVaults.map { it.id }
-    ) { mutableStateOf<SteamStorageSource?>(targets.firstOrNull()?.source) }
-
-    LaunchedEffect(targets) {
-        if (selectedTarget == null || targets.none { it.source == selectedTarget }) {
-            selectedTarget = targets.firstOrNull()?.source
-        }
-    }
-
-    MonicaModalBottomSheet(
-        onDismissRequest = onDismissRequest,
-        containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp)
-                .padding(bottom = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            Row(
-                modifier = Modifier.padding(horizontal = 4.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Folder,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary
-                )
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = stringResource(R.string.steam_transfer_mafile_title),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                    Text(
-                        text = stringResource(R.string.steam_transfer_mafile_count, selectedCount),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            }
-
-            Text(
-                text = stringResource(R.string.steam_transfer_mafile_desc),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(horizontal = 4.dp)
-            )
-
-            FlowRow(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                MonicaExpressiveFilterChip(
-                    selected = selectedAction == SteamMaFileTransferAction.MOVE,
-                    onClick = { selectedAction = SteamMaFileTransferAction.MOVE },
-                    label = stringResource(R.string.move),
-                    leadingIcon = Icons.Default.Folder
-                )
-                MonicaExpressiveFilterChip(
-                    selected = selectedAction == SteamMaFileTransferAction.COPY,
-                    onClick = { selectedAction = SteamMaFileTransferAction.COPY },
-                    label = stringResource(R.string.copy),
-                    leadingIcon = Icons.Default.ContentCopy
-                )
-            }
-
-            Text(
-                text = stringResource(R.string.category_selection_menu_databases),
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(horizontal = 4.dp)
-            )
-
-            if (targets.isEmpty()) {
-                Text(
-                    text = stringResource(R.string.steam_transfer_mafile_no_target),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = 4.dp)
-                )
-            } else {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .heightIn(max = 320.dp)
-                        .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    targets.forEach { target ->
-                        SteamTransferTargetRow(
-                            target = target,
-                            selected = target.source == selectedTarget,
-                            onClick = { selectedTarget = target.source }
-                        )
-                    }
-                }
-            }
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                TextButton(onClick = onDismissRequest) {
-                    Text(stringResource(R.string.cancel))
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-                Button(
-                    enabled = selectedTarget != null,
-                    onClick = {
-                        selectedTarget?.let { target ->
-                            onTransfer(target, selectedAction)
-                        }
-                    }
-                ) {
-                    Text(
-                        stringResource(
-                            if (selectedAction == SteamMaFileTransferAction.COPY) {
-                                R.string.copy
-                            } else {
-                                R.string.move
-                            }
-                        )
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun SteamTransferTargetRow(
-    target: SteamTransferTarget,
-    selected: Boolean,
-    onClick: () -> Unit
-) {
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(58.dp)
-            .clickable(onClick = onClick),
-        shape = RoundedCornerShape(18.dp),
-        color = if (selected) {
-            MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.72f)
-        } else {
-            MaterialTheme.colorScheme.surfaceContainer
-        },
-        contentColor = if (selected) {
-            MaterialTheme.colorScheme.onPrimaryContainer
-        } else {
-            MaterialTheme.colorScheme.onSurface
-        }
-    ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 14.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            Icon(
-                imageVector = target.icon,
-                contentDescription = null,
-                tint = if (selected) {
-                    MaterialTheme.colorScheme.primary
-                } else {
-                    MaterialTheme.colorScheme.onSurfaceVariant
-                }
-            )
-            Text(
-                text = target.label,
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.SemiBold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.weight(1f)
-            )
-            if (selected) {
-                Icon(
-                    imageVector = Icons.Default.Check,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(22.dp)
-                )
-            }
         }
     }
 }

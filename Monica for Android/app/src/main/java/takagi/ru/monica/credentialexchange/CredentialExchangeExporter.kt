@@ -81,7 +81,9 @@ class CredentialExchangeExporter(private val context: Context) {
                     rpName = data.optString("rp_name", stored.title), userId = data.getString("user_id"),
                     userName = data.optString("user_name"), userDisplayName = data.optString("user_display_name"),
                     publicKeyAlgorithm = data.getInt("public_key_algorithm"), publicKey = data.optString("public_key"),
-                    privateKeyAlias = data.getString("private_key_alias"), signCount = data.getLong("sign_count"))
+                    privateKeyAlias = data.getString("private_key_alias"), signCount = data.getLong("sign_count"),
+                        backupEligible = takagi.ru.monica.passkey.PasskeyBackupFlags.readBoolean(data, "backup_eligible"),
+                        backupState = takagi.ru.monica.passkey.PasskeyBackupFlags.readBoolean(data, "backup_state"))
             }
         } else {
             destination.bitwardenId?.let { id ->
@@ -144,7 +146,7 @@ class CredentialExchangeExporter(private val context: Context) {
         }
         if ("passkey" in requestedTypes) passkeys.forEach { entry ->
             // CXF 3.3.12: counters cannot be reset by an exporter or carried in an invented field.
-            if (entry.signCount != 0L) { skipped++; return@forEach }
+            if (entry.signCount != 0L || entry.backupEligible == false) { skipped++; return@forEach }
             val raw = PasskeyPrivateKeyStore.resolve(context, entry.privateKeyAlias)
             val pkcs8 = PasskeyPrivateKeySupport.normalizeForBitwardenUpload(raw)
                 ?.let { runCatching { Base64.getDecoder().decode(it) }.getOrNull() }

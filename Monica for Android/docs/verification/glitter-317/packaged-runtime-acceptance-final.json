@@ -1,0 +1,80 @@
+[
+  {
+    "edition": "Monica for Android",
+    "application_id": "takagi.ru.monica",
+    "abi": "armeabi-v7a",
+    "version_code": 12,
+    "version_name": "1.0.317-26100612-04",
+    "apk_file": "Monica-Android-armeabi-v7a-1.0.317-26100612-04.APK",
+    "apk_sha256": "a39c83ae556870578a13ac64a0c7dfaaa9e6835d5b886b07e395a9bcc778405f",
+    "runtime_sha256": "2890c016e06f6d1bee41b1f78c57f95cd8571df249e099b36ff458a9412e88e7",
+    "input_runtime_sha256": "2890c016e06f6d1bee41b1f78c57f95cd8571df249e099b36ff458a9412e88e7",
+    "build_id": "6f70732e4f32b5688245ddd20522c225a79dc7a7",
+    "status": "matching-source-built-runtime"
+  },
+  {
+    "edition": "Monica for Android",
+    "application_id": "takagi.ru.monica",
+    "abi": "x86_64",
+    "version_code": 12,
+    "version_name": "1.0.317-26100612-04",
+    "apk_file": "Monica-Android-x86_64-1.0.317-26100612-04.APK",
+    "apk_sha256": "ef655485b800e6a89317a7f511b2c01eb58b55ef1766bd36a2fe2fffd9444026",
+    "runtime_sha256": "8fe718706af0c0a753c48bd57cdf731b65e56cbc6feba2d4f1daa33a0be17e00",
+    "input_runtime_sha256": "8fe718706af0c0a753c48bd57cdf731b65e56cbc6feba2d4f1daa33a0be17e00",
+    "build_id": "dfa8f41355803eb6984b9b1b5f3c40f54d30aff9",
+    "status": "matching-source-built-runtime"
+  },
+  {
+    "edition": "Monica for Android",
+    "application_id": "takagi.ru.monica",
+    "abi": "arm64-v8a",
+    "version_code": 12,
+    "version_name": "1.0.317-26100612-04",
+    "apk_file": "Monica-Android-arm64-v8a-1.0.317-26100612-04.APK",
+    "apk_sha256": "2353ae90ce7c163a104cd94a583c2b18ca19ee85db8741580461eab94a3f439e",
+    "runtime_sha256": "f0402112d6268918fa65222927aa6a26045a2a04a356302de581ba2d98651b10",
+    "input_runtime_sha256": "f0402112d6268918fa65222927aa6a26045a2a04a356302de581ba2d98651b10",
+    "build_id": "dfc6dca358258f999bb7892d1f28c6188a73205e",
+    "status": "matching-source-built-runtime"
+  },
+  {
+    "edition": "fdroid",
+    "application_id": "takagi.ru.monica.fdroid",
+    "abi": "armeabi-v7a",
+    "version_code": 24,
+    "version_name": "1.0.317",
+    "apk_file": "Monica-Android-armeabi-v7a-1.0.317.apk",
+    "apk_sha256": "d24ee0cbfbea2408ad962837dbb594e9a7e5e2511ad9c1d8ed774eec6b5707ca",
+    "runtime_sha256": "818c5844afc664784da66c20d0bb46fec0b13bfbd7d8e0db0d4d8202fc024116",
+    "input_runtime_sha256": "818c5844afc664784da66c20d0bb46fec0b13bfbd7d8e0db0d4d8202fc024116",
+    "build_id": "6f70732e4f32b5688245ddd20522c225a79dc7a7",
+    "status": "matching-source-built-runtime"
+  },
+  {
+    "edition": "fdroid",
+    "application_id": "takagi.ru.monica.fdroid",
+    "abi": "x86_64",
+    "version_code": 24,
+    "version_name": "1.0.317",
+    "apk_file": "Monica-Android-x86_64-1.0.317.apk",
+    "apk_sha256": "edcbdb692b56d7377de6007f192dbefef83b4115097c740d68d1149ba2d1b086",
+    "runtime_sha256": "5e988dfc808a62c008e2e5a1582c6767b507c05b7bd1b947344ac0913792e69f",
+    "input_runtime_sha256": "5e988dfc808a62c008e2e5a1582c6767b507c05b7bd1b947344ac0913792e69f",
+    "build_id": "dfa8f41355803eb6984b9b1b5f3c40f54d30aff9",
+    "status": "matching-source-built-runtime"
+  },
+  {
+    "edition": "fdroid",
+    "application_id": "takagi.ru.monica.fdroid",
+    "abi": "arm64-v8a",
+    "version_code": 24,
+    "version_name": "1.0.317",
+    "apk_file": "Monica-Android-arm64-v8a-1.0.317.apk",
+    "apk_sha256": "b5ba2a0b153e54469177d8bb586dc590e531d27020ced0a47b931bb7db042b57",
+    "runtime_sha256": "9331e1044513881f87603fedeed4b515b46aae5d17ac1a7b671c2f6cfce9aebc",
+    "input_runtime_sha256": "9331e1044513881f87603fedeed4b515b46aae5d17ac1a7b671c2f6cfce9aebc",
+    "build_id": "dfc6dca358258f999bb7892d1f28c6188a73205e",
+    "status": "matching-source-built-runtime"
+  }
+]

@@ -144,6 +144,7 @@ object SessionManager {
     }
 
     fun markUnlocked() {
+        takagi.ru.monica.passkey.PasskeyPortabilityCache.shared.clear()
         _isUnlocked.value = true
         unlockElapsedTimestamp = SystemClock.elapsedRealtime()
         unlockWallTimestamp = System.currentTimeMillis()
@@ -156,6 +157,7 @@ object SessionManager {
     }
 
     fun markLocked(clearSecondarySession: Boolean = true) {
+        takagi.ru.monica.passkey.PasskeyPortabilityCache.shared.clear()
         _isUnlocked.value = false
         unlockElapsedTimestamp = 0L
         unlockWallTimestamp = 0L

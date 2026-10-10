@@ -1,0 +1,158 @@
+[
+  {
+    "preference": "blacklistPackages",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\utils\\WebDavHelper.kt:925: val autofillBlacklistPackages = autofillPreferences.blacklistPackages.first()",
+      "takagi\\ru\\monica\\utils\\WebDavHelper.kt:1071: \"Backup connection config (server: $serverUrl, blockedFields=${blockedFieldSignatures.size}, saveBlockedTargets=${saveBlockedTargets.size}, blacklistPackages=${autofillBlacklistPackages.size}, bitwardenVaults=${bitwardenVaultBackups.size})\","
+    ]
+  },
+  {
+    "preference": "blockedFieldSignatureRecords",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\utils\\WebDavHelper.kt:911: val blockedFieldSignatures = autofillPreferences.blockedFieldSignatureRecords.first()",
+      "takagi\\ru\\monica\\ui\\screens\\AutofillBlockedFieldsScreen.kt:73: val records by preferences.blockedFieldSignatureRecords.collectAsState(initial = emptyList())"
+    ]
+  },
+  {
+    "preference": "domainMatchStrategy",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\autofill_ng\\MonicaAutofillServiceNg.kt:602: val uriStrategy = autofillPreferences.domainMatchStrategy.first()"
+    ]
+  },
+  {
+    "preference": "imeKeyboardOptions",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\ime\\MonicaInputMethodService.kt:183: autofillPreferences.imeKeyboardOptions.distinctUntilChanged().collect { options ->"
+    ]
+  },
+  {
+    "preference": "isActiveFillNotificationEnabled",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\service\\MonicaAccessibilityService.kt:213: autofillPreferences.isActiveFillNotificationEnabled.collectLatest { enabled ->",
+      "takagi\\ru\\monica\\ui\\screens\\AutofillProtectionScreen.kt:106: val proactiveFill by preferences.isActiveFillNotificationEnabled.collectAsStateWithLifecycle(initialValue = false)"
+    ]
+  },
+  {
+    "preference": "isAutoCopyOtpEnabled",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\autofill_ng\\AutofillOtpActions.kt:38: (!preferences.isOtpNotificationEnabled.first() && !preferences.isAutoCopyOtpEnabled.first())",
+      "takagi\\ru\\monica\\autofill_ng\\AutofillOtpActions.kt:56: val copy = preferences.isAutoCopyOtpEnabled.first()"
+    ]
+  },
+  {
+    "preference": "isAutoSaveAppInfoEnabled",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\autofill_ng\\AutofillSaveTransparentActivity.kt:118: val autoSaveAppInfoEnabled by autofillPreferences.isAutoSaveAppInfoEnabled.collectAsState(initial = true)"
+    ]
+  },
+  {
+    "preference": "isAutoSaveWebsiteInfoEnabled",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\autofill_ng\\AutofillSaveTransparentActivity.kt:119: val autoSaveWebsiteInfoEnabled by autofillPreferences.isAutoSaveWebsiteInfoEnabled.collectAsState(initial = true)"
+    ]
+  },
+  {
+    "preference": "isAutoUpdateDuplicatePasswordsEnabled",
+    "productionConsumers": []
+  },
+  {
+    "preference": "isAutofillEnabled",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\autofill_ng\\MonicaAutofillServiceNg.kt:266: if (!autofillPreferences.isAutofillEnabled.first()) {",
+      "takagi\\ru\\monica\\autofill_ng\\core\\AutofillServiceChecker.kt:222: AutofillPreferences(context).isAutofillEnabled.first()"
+    ]
+  },
+  {
+    "preference": "isBitwardenStrictModeEnabled",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\autofill_ng\\MonicaAutofillServiceNg.kt:600: val strictOnly = autofillPreferences.isBitwardenStrictModeEnabled.first()"
+    ]
+  },
+  {
+    "preference": "isBitwardenSubdomainMatchEnabled",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\autofill_ng\\MonicaAutofillServiceNg.kt:601: val allowSubdomainToggle = autofillPreferences.isBitwardenSubdomainMatchEnabled.first()"
+    ]
+  },
+  {
+    "preference": "isBlacklistEnabled",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\utils\\WebDavHelper.kt:924: val autofillBlacklistEnabled = autofillPreferences.isBlacklistEnabled.first()"
+    ]
+  },
+  {
+    "preference": "isInlineSuggestionsEnabled",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\autofill_ng\\MonicaAutofillServiceNg.kt:685: val inlineSuggestionsEnabled = autofillPreferences.isInlineSuggestionsEnabled.first()"
+    ]
+  },
+  {
+    "preference": "isOtpNotificationEnabled",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\autofill_ng\\AutofillOtpActions.kt:38: (!preferences.isOtpNotificationEnabled.first() && !preferences.isAutoCopyOtpEnabled.first())",
+      "takagi\\ru\\monica\\autofill_ng\\AutofillOtpActions.kt:55: val notify = preferences.isOtpNotificationEnabled.first()"
+    ]
+  },
+  {
+    "preference": "isPasswordSuggestionEnabled",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\autofill_ng\\MonicaAutofillServiceNg.kt:686: val passwordSuggestionEnabled = autofillPreferences.isPasswordSuggestionEnabled.first()"
+    ]
+  },
+  {
+    "preference": "isRequestSaveDataEnabled",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\autofill_ng\\MonicaAutofillServiceNg.kt:1222: if (!autofillPreferences.isRequestSaveDataEnabled.first()) {"
+    ]
+  },
+  {
+    "preference": "isShowSaveNotificationEnabled",
+    "productionConsumers": []
+  },
+  {
+    "preference": "isSmartTitleGenerationEnabled",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\autofill_ng\\AutofillSaveTransparentActivity.kt:120: val smartTitleGenerationEnabled by autofillPreferences.isSmartTitleGenerationEnabled.collectAsState(initial = true)"
+    ]
+  },
+  {
+    "preference": "isV2RespectAutofillOffEnabled",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\autofill_ng\\MonicaAutofillServiceNg.kt:287: val respectAutofillOff = autofillPreferences.isV2RespectAutofillOffEnabled.first()"
+    ]
+  },
+  {
+    "preference": "otpNotificationDuration",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\autofill_ng\\AutofillOtpActions.kt:69: val duration = preferences.otpNotificationDuration.first()"
+    ]
+  },
+  {
+    "preference": "saveBlockedTargetRecords",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\utils\\WebDavHelper.kt:921: val saveBlockedTargets = autofillPreferences.saveBlockedTargetRecords.first()",
+      "takagi\\ru\\monica\\ui\\screens\\AutofillSaveBlockedTargetsScreen.kt:57: val records by preferences.saveBlockedTargetRecords.collectAsState(initial = emptyList())"
+    ]
+  },
+  {
+    "preference": "v2DefaultBitwardenVaultId",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\autofill_ng\\AutofillPickerActivityV2.kt:1861: selectedVaultId = autofillPreferences.v2DefaultBitwardenVaultId.first()",
+      "takagi\\ru\\monica\\autofill_ng\\MonicaAutofillServiceNg.kt:592: val defaultBitwardenVaultId = autofillPreferences.v2DefaultBitwardenVaultId.first()"
+    ]
+  },
+  {
+    "preference": "v2DefaultKeepassDatabaseId",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\autofill_ng\\AutofillPickerActivityV2.kt:1860: selectedKeePassDatabaseId = autofillPreferences.v2DefaultKeepassDatabaseId.first()",
+      "takagi\\ru\\monica\\autofill_ng\\MonicaAutofillServiceNg.kt:591: val defaultKeepassDatabaseId = autofillPreferences.v2DefaultKeepassDatabaseId.first()"
+    ]
+  },
+  {
+    "preference": "v2DefaultSourceFilter",
+    "productionConsumers": [
+      "takagi\\ru\\monica\\autofill_ng\\AutofillPickerActivityV2.kt:1858: val savedSource = autofillPreferences.v2DefaultSourceFilter.first()",
+      "takagi\\ru\\monica\\autofill_ng\\MonicaAutofillServiceNg.kt:590: val sourceFilter = autofillPreferences.v2DefaultSourceFilter.first()"
+    ]
+  }
+]

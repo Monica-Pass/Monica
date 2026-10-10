@@ -23,6 +23,12 @@ class SteamKeePassAccountStore(
     private val service: KeePassKdbxService,
     private val parser: SteamMaFileParser = SteamMaFileParser()
 ) {
+    suspend fun moveToGroup(databaseId: Long, entryUuid: String, groupPath: String?) {
+        service.moveNativeEntry(databaseId, entryUuid, databaseId, groupPath).getOrThrow()
+    }
+
+    suspend fun listGroups(databaseId: Long) = service.listGroups(databaseId).getOrThrow()
+
     suspend fun loadAccounts(databaseId: Long): List<SteamKeePassAccountRecord> {
         val entries = service.readPasswordEntries(databaseId).getOrThrow()
         return entries

@@ -31,6 +31,12 @@ interface SteamAccountDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(account: SteamAccountEntity): Long
 
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    suspend fun insertCopy(account: SteamAccountEntity): Long
+
+    @Query("UPDATE steam_accounts SET categoryId = :categoryId WHERE id = :id")
+    suspend fun moveToCategory(id: Long, categoryId: Long?)
+
     @Update
     suspend fun update(account: SteamAccountEntity)
 

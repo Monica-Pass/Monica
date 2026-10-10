@@ -1,0 +1,147 @@
+10-07 11:38:50.257  8929  8929 I MonicaAutofill: [AF] onFillRequest received {requestId=1, sdk=32, device=Google/sdk_gphone64_x86_64, flags=0, fillContextCount=1, cancelled=false}
+10-07 11:38:50.446  8929  8929 I MonicaAutofill: [AF] onFillRequest callback success {requestId=1, hasResponse=true, cancelled=false, elapsedMs=198}
+10-07 11:38:54.318  8929  8948 I AutofillAudit: clear-refill web=false automatic=true
+10-07 11:38:57.808  8929  8929 I MonicaAutofill: [AF] onFillRequest received {requestId=2, sdk=32, device=Google/sdk_gphone64_x86_64, flags=0, fillContextCount=1, cancelled=false}
+10-07 11:38:57.897  8929  8929 I MonicaAutofill: [AF] onFillRequest callback success {requestId=2, hasResponse=true, cancelled=false, elapsedMs=88}
+10-07 11:39:00.569  8929  8948 I AutofillAudit: clear-refill web=true automatic=false
+10-07 11:39:12.734  8929  8929 I MonicaAutofill: [AF] onFillRequest received {requestId=3, sdk=32, device=Google/sdk_gphone64_x86_64, flags=0, fillContextCount=1, cancelled=false}
+10-07 11:39:12.830  8929  8929 I MonicaAutofill: [AF] onFillRequest callback success {requestId=3, hasResponse=true, cancelled=false, elapsedMs=96}
+10-07 11:41:14.026 10385 10385 I MonicaAutofill: [AF] onFillRequest received {requestId=1, sdk=32, device=Google/sdk_gphone64_x86_64, flags=0, fillContextCount=1, cancelled=false}
+10-07 11:41:14.210 10385 10385 I MonicaAutofill: [AF] onFillRequest callback success {requestId=1, hasResponse=true, cancelled=false, elapsedMs=186}
+10-07 11:41:15.184 10385 10403 I AutofillAudit: snapshot=native-first-fill
+10-07 11:41:15.498   580  2123 D ViewState: Ignoring UI for 1073741825@247403070 on AUTOFILLED|AUTOFILLED_ONCE|FILLABLE
+10-07 11:41:18.057 10385 10403 I AutofillAudit: snapshot=native-cleared-auto-true
+10-07 11:41:18.150 10385 10403 I AutofillAudit: clear-refill web=false automatic=true
+10-07 11:41:18.350 10385 10403 I AutofillAudit: snapshot=native-refilled
+10-07 11:41:20.992 10385 10385 I MonicaAutofill: [AF] onFillRequest received {requestId=2, sdk=32, device=Google/sdk_gphone64_x86_64, flags=0, fillContextCount=1, cancelled=false}
+10-07 11:41:21.107 10385 10385 I MonicaAutofill: [AF] onFillRequest callback success {requestId=2, hasResponse=true, cancelled=false, elapsedMs=118}
+10-07 11:41:22.073 10385 10403 I AutofillAudit: snapshot=web-first-fill
+10-07 11:41:22.366   580   884 D ViewState: Ignoring UI for 1073741825:65537@1124702429 on AUTOFILLED|AUTOFILLED_ONCE|FILLABLE
+10-07 11:41:22.517   580   742 D ViewState: Ignoring UI for 1073741825:65536@1124702429 on AUTOFILLED|AUTOFILLED_ONCE|FILLABLE|STARTED_SESSION
+10-07 11:41:23.739 10385 10403 I AutofillAudit: snapshot=web-cleared-auto-false
+10-07 11:41:23.829 10385 10403 I AutofillAudit: clear-refill web=true automatic=false
+10-07 11:41:24.603 10385 10385 I MonicaAutofill: [AF] onFillRequest received {requestId=3, sdk=32, device=Google/sdk_gphone64_x86_64, flags=0, fillContextCount=1, cancelled=false}
+10-07 11:41:24.751 10385 10385 I MonicaAutofill: [AF] onFillRequest callback success {requestId=3, hasResponse=true, cancelled=false, elapsedMs=149}
+10-07 11:41:25.720 10385 10403 I AutofillAudit: snapshot=web-refilled
+10-07 11:41:27.750 10385 10385 I MonicaAutofill: [AF] onFillRequest received {requestId=4, sdk=32, device=Google/sdk_gphone64_x86_64, flags=0, fillContextCount=1, cancelled=false}
+10-07 11:41:27.839 10385 10385 I MonicaAutofill: [AF] onFillRequest callback success {requestId=4, hasResponse=true, cancelled=false, elapsedMs=89}
+10-07 11:41:30.845 10385 10403 I AutofillAudit: snapshot=save-disabled-after-commit
+10-07 11:41:30.999 10385 10403 I AutofillAudit: save-disabled system-prompt=true
+10-07 11:43:02.033 11244 11264 I AutofillAudit: UI toggle OK: ime_scramble_pin_title
+10-07 11:43:02.381 11244 11264 I AutofillAudit: UI toggle OK: ime_hide_pin_preview_title
+10-07 11:43:02.831 11244 11264 I AutofillAudit: UI toggle OK: autofill_v2_enable_service
+10-07 11:43:03.198 11244 11264 I AutofillAudit: UI toggle OK: autofill_active_fill_notification_title
+10-07 11:43:03.582 11244 11264 I AutofillAudit: UI toggle OK: autofill_v2_strict_match
+10-07 11:43:03.968 11244 11264 I AutofillAudit: UI toggle OK: autofill_v2_subdomain_match
+10-07 11:43:04.369 11244 11264 I AutofillAudit: UI toggle OK: autofill_v2_respect_off
+10-07 11:43:04.775 11244 11264 I AutofillAudit: UI toggle OK: autofill_inline_suggestions
+10-07 11:43:05.234 11244 11264 I AutofillAudit: UI toggle OK: password_suggestion_title
+10-07 11:43:05.625 11244 11264 I AutofillAudit: UI toggle OK: autofill_save_enable
+10-07 11:43:05.971 11244 11264 I AutofillAudit: UI toggle OK: autofill_save_update_duplicate
+10-07 11:43:06.366 11244 11264 I AutofillAudit: UI toggle OK: autofill_save_show_notification
+10-07 11:43:06.781 11244 11264 I AutofillAudit: UI toggle OK: autofill_save_smart_title
+10-07 11:43:07.151 11244 11264 I AutofillAudit: UI toggle OK: autofill_save_app_info
+10-07 11:43:07.516 11244 11264 I AutofillAudit: UI toggle OK: autofill_save_website_info
+10-07 11:44:17.065 11794 11794 I MonicaAutofill: [AF] onFillRequest received {requestId=1, sdk=32, device=Google/sdk_gphone64_x86_64, flags=0, fillContextCount=1, cancelled=false}
+10-07 11:44:17.317 11794 11794 I MonicaAutofill: [AF] onFillRequest callback success {requestId=1, hasResponse=true, cancelled=false, elapsedMs=253}
+10-07 11:44:21.317 11794 11794 I MonicaAutofill: [AF] onFillRequest received {requestId=2, sdk=32, device=Google/sdk_gphone64_x86_64, flags=0, fillContextCount=1, cancelled=false}
+10-07 11:44:21.426 11794 11794 I MonicaAutofill: [AF] onFillRequest callback success {requestId=2, hasResponse=true, cancelled=false, elapsedMs=110}
+10-07 11:44:22.282 11794 11813 I AutofillAudit: snapshot=web-keyboard-first-fill
+10-07 11:44:22.801   580  1626 D ViewState: Ignoring UI for 1073741825:65537@1356986678 on AUTOFILLED|AUTOFILLED_ONCE|FILLABLE
+10-07 11:44:25.698 11794 11813 I AutofillAudit: snapshot=web-keyboard-cleared-auto-true
+10-07 11:44:25.796 11794 11813 I AutofillAudit: clear-refill web=true keyboard=true automatic=true
+10-07 11:44:25.998 11794 11813 I AutofillAudit: snapshot=web-keyboard-refilled
+10-07 11:44:27.972 11794 11794 I MonicaAutofill: [AF] onFillRequest received {requestId=3, sdk=32, device=Google/sdk_gphone64_x86_64, flags=0, fillContextCount=1, cancelled=false}
+10-07 11:44:28.067 11794 11794 I MonicaAutofill: [AF] onFillRequest callback success {requestId=3, hasResponse=true, cancelled=false, elapsedMs=96}
+10-07 11:44:33.040 11794 11794 I MonicaAutofill: [AF] onFillRequest received {requestId=4, sdk=32, device=Google/sdk_gphone64_x86_64, flags=0, fillContextCount=1, cancelled=false}
+10-07 11:44:33.200 11794 11794 I MonicaAutofill: [AF] onFillRequest callback success {requestId=4, hasResponse=true, cancelled=false, elapsedMs=160}
+10-07 11:44:35.335   580  2108 D ViewState: Ignoring UI for 1073741824@1277881134 on AUTOFILLED|AUTOFILLED_ONCE|FILLABLE|STARTED_SESSION
+10-07 11:44:38.509 11794 11794 I MonicaAutofill: [AF] onFillRequest received {requestId=5, sdk=32, device=Google/sdk_gphone64_x86_64, flags=0, fillContextCount=1, cancelled=false}
+10-07 11:44:38.697 11794 11794 I MonicaAutofill: [AF] onFillRequest callback success {requestId=5, hasResponse=true, cancelled=false, elapsedMs=187}
+10-07 11:44:41.234 11794 11794 I MonicaAutofill: [AF] onFillRequest received {requestId=6, sdk=32, device=Google/sdk_gphone64_x86_64, flags=0, fillContextCount=1, cancelled=false}
+10-07 11:44:41.565 11794 11794 I MonicaAutofill: [AF] onFillRequest callback success {requestId=6, hasResponse=false, cancelled=false, elapsedMs=329}
+10-07 11:44:45.411 11794 11794 I MonicaAutofill: [AF] onFillRequest received {requestId=7, sdk=32, device=Google/sdk_gphone64_x86_64, flags=4, fillContextCount=1, cancelled=false}
+10-07 11:44:45.608 11794 11794 I MonicaAutofill: [AF] onFillRequest callback success {requestId=7, hasResponse=true, cancelled=false, elapsedMs=199}
+10-07 11:44:47.292 11794 11794 I MonicaAutofill: [AF] onFillRequest received {requestId=8, sdk=32, device=Google/sdk_gphone64_x86_64, flags=0, fillContextCount=1, cancelled=false}
+10-07 11:44:47.383 11794 11794 I MonicaAutofill: [AF] onFillRequest callback success {requestId=8, hasResponse=false, cancelled=false, elapsedMs=91}
+10-07 11:48:49.972 13341 13361 I AutofillAudit: Confirmed: default KeePass id reset before Room list loads
+10-07 11:48:51.815 13341 13361 I AutofillAudit: UI toggle OK: ime_scramble_pin_title
+10-07 11:48:52.232 13341 13361 I AutofillAudit: UI toggle OK: ime_hide_pin_preview_title
+10-07 11:48:52.615 13341 13361 I AutofillAudit: UI toggle OK: autofill_v2_enable_service
+10-07 11:48:52.966 13341 13361 I AutofillAudit: UI toggle OK: autofill_active_fill_notification_title
+10-07 11:48:53.381 13341 13361 I AutofillAudit: UI toggle OK: autofill_v2_strict_match
+10-07 11:48:53.732 13341 13361 I AutofillAudit: UI toggle OK: autofill_v2_subdomain_match
+10-07 11:48:54.148 13341 13361 I AutofillAudit: UI toggle OK: autofill_v2_respect_off
+10-07 11:48:54.465 13341 13361 I AutofillAudit: UI toggle OK: autofill_inline_suggestions
+10-07 11:48:54.799 13341 13361 I AutofillAudit: UI toggle OK: password_suggestion_title
+10-07 11:48:55.151 13341 13361 I AutofillAudit: UI toggle OK: autofill_save_enable
+10-07 11:48:55.500 13341 13361 I AutofillAudit: UI toggle OK: autofill_save_update_duplicate
+10-07 11:48:55.869 13341 13361 I AutofillAudit: UI toggle OK: autofill_save_show_notification
+10-07 11:48:56.183 13341 13361 I AutofillAudit: UI toggle OK: autofill_save_smart_title
+10-07 11:48:56.531 13341 13361 I AutofillAudit: UI toggle OK: autofill_save_app_info
+10-07 11:48:56.916 13341 13361 I AutofillAudit: UI toggle OK: autofill_save_website_info
+10-07 11:49:52.210 13925 13944 I AutofillAudit: Confirmed: default KeePass id reset before Room list loads
+10-07 11:49:55.711 13925 13925 I MonicaAutofill: [AF] onFillRequest received {requestId=1, sdk=32, device=Google/sdk_gphone64_x86_64, flags=0, fillContextCount=1, cancelled=false}
+10-07 11:49:55.911 13925 13925 I MonicaAutofill: [AF] onFillRequest callback success {requestId=1, hasResponse=true, cancelled=false, elapsedMs=202}
+10-07 11:49:56.873 13925 13944 I AutofillAudit: snapshot=native-first-fill
+10-07 11:49:57.231   580   593 D ViewState: Ignoring UI for 1073741825@708606441 on AUTOFILLED|AUTOFILLED_ONCE|FILLABLE
+10-07 11:49:59.973 13925 13944 I AutofillAudit: snapshot=native-cleared-auto-true
+10-07 11:50:00.093 13925 13944 I AutofillAudit: clear-refill web=false keyboard=false automatic=true
+10-07 11:50:00.336 13925 13944 I AutofillAudit: snapshot=native-refilled
+10-07 11:50:04.225 13925 13925 I MonicaAutofill: [AF] onFillRequest received {requestId=2, sdk=32, device=Google/sdk_gphone64_x86_64, flags=0, fillContextCount=1, cancelled=false}
+10-07 11:50:04.371 13925 13925 I MonicaAutofill: [AF] onFillRequest callback success {requestId=2, hasResponse=true, cancelled=false, elapsedMs=147}
+10-07 11:50:05.314 13925 13944 I AutofillAudit: snapshot=web-keyboard-first-fill
+10-07 11:50:05.986   580   742 D ViewState: Ignoring UI for 1073741825:65537@1557259673 on AUTOFILLED|AUTOFILLED_ONCE|FILLABLE
+10-07 11:50:08.946 13925 13944 I AutofillAudit: snapshot=web-keyboard-cleared-auto-true
+10-07 11:50:09.048 13925 13944 I AutofillAudit: clear-refill web=true keyboard=true automatic=true
+10-07 11:50:09.288 13925 13944 I AutofillAudit: snapshot=web-keyboard-refilled
+10-07 11:50:11.607 13925 13925 I MonicaAutofill: [AF] onFillRequest received {requestId=3, sdk=32, device=Google/sdk_gphone64_x86_64, flags=0, fillContextCount=1, cancelled=false}
+10-07 11:50:11.721 13925 13925 I MonicaAutofill: [AF] onFillRequest callback success {requestId=3, hasResponse=true, cancelled=false, elapsedMs=114}
+10-07 11:50:12.633 13925 13944 I AutofillAudit: snapshot=web-first-fill
+10-07 11:50:13.067   580   916 D ViewState: Ignoring UI for 1073741825:65537@1784983323 on AUTOFILLED|AUTOFILLED_ONCE|FILLABLE
+10-07 11:50:13.235   580  2113 D ViewState: Ignoring UI for 1073741825:65536@1784983323 on AUTOFILLED|AUTOFILLED_ONCE|FILLABLE|STARTED_SESSION
+10-07 11:50:14.455 13925 13944 I AutofillAudit: snapshot=web-cleared-auto-false
+10-07 11:50:14.543 13925 13944 I AutofillAudit: clear-refill web=true keyboard=false automatic=false
+10-07 11:50:15.339 13925 13925 I MonicaAutofill: [AF] onFillRequest received {requestId=4, sdk=32, device=Google/sdk_gphone64_x86_64, flags=0, fillContextCount=1, cancelled=false}
+10-07 11:50:15.435 13925 13925 I MonicaAutofill: [AF] onFillRequest callback success {requestId=4, hasResponse=true, cancelled=false, elapsedMs=96}
+10-07 11:50:16.352 13925 13944 I AutofillAudit: snapshot=web-refilled
+10-07 11:50:18.606 13925 13925 I MonicaAutofill: [AF] onFillRequest received {requestId=5, sdk=32, device=Google/sdk_gphone64_x86_64, flags=0, fillContextCount=1, cancelled=false}
+10-07 11:50:18.707 13925 13925 I MonicaAutofill: [AF] onFillRequest callback success {requestId=5, hasResponse=true, cancelled=false, elapsedMs=102}
+10-07 11:50:21.761 13925 13944 I AutofillAudit: snapshot=save-disabled-after-commit
+10-07 11:50:21.915 13925 13944 I AutofillAudit: save-disabled system-prompt=true
+10-07 11:51:06.117 14993 15051 I AutofillAudit: UI toggle OK: ime_scramble_pin_title
+10-07 11:51:06.549 14993 15051 I AutofillAudit: UI toggle OK: ime_hide_pin_preview_title
+10-07 11:51:06.947 14993 15051 I AutofillAudit: UI toggle OK: autofill_v2_enable_service
+10-07 11:51:07.331 14993 15051 I AutofillAudit: UI toggle OK: autofill_active_fill_notification_title
+10-07 11:51:07.733 14993 15051 I AutofillAudit: UI toggle OK: autofill_v2_strict_match
+10-07 11:51:08.049 14993 15051 I AutofillAudit: UI toggle OK: autofill_v2_subdomain_match
+10-07 11:51:08.449 14993 15051 I AutofillAudit: UI toggle OK: autofill_v2_respect_off
+10-07 11:51:08.863 14993 15051 I AutofillAudit: UI toggle OK: autofill_inline_suggestions
+10-07 11:51:09.230 14993 15051 I AutofillAudit: UI toggle OK: password_suggestion_title
+10-07 11:51:09.563 14993 15051 I AutofillAudit: UI toggle OK: autofill_save_enable
+10-07 11:51:09.913 14993 15051 I AutofillAudit: UI toggle OK: autofill_save_update_duplicate
+10-07 11:51:10.247 14993 15051 I AutofillAudit: UI toggle OK: autofill_save_show_notification
+10-07 11:51:10.595 14993 15051 I AutofillAudit: UI toggle OK: autofill_save_smart_title
+10-07 11:51:10.982 14993 15051 I AutofillAudit: UI toggle OK: autofill_save_app_info
+10-07 11:51:11.364 14993 15051 I AutofillAudit: UI toggle OK: autofill_save_website_info
+10-07 11:51:12.513 14993 15051 I AutofillAudit: UI toggle OK: autofill_show_otp_notification
+10-07 11:51:12.797 14993 15051 I AutofillAudit: UI toggle OK: autofill_auto_copy_otp
+10-07 11:51:13.127 14993 15051 I AutofillAudit: UI toggle OK: autofill_v2_blacklist
+10-07 11:51:58.349 15723 15742 I AutofillAudit: UI toggle OK: ime_scramble_pin_title
+10-07 11:51:58.789 15723 15742 I AutofillAudit: UI toggle OK: ime_hide_pin_preview_title
+10-07 11:51:59.183 15723 15742 I AutofillAudit: UI toggle OK: autofill_v2_enable_service
+10-07 11:51:59.564 15723 15742 I AutofillAudit: UI toggle OK: autofill_active_fill_notification_title
+10-07 11:51:59.932 15723 15742 I AutofillAudit: UI toggle OK: autofill_v2_strict_match
+10-07 11:52:00.300 15723 15742 I AutofillAudit: UI toggle OK: autofill_v2_subdomain_match
+10-07 11:52:00.681 15723 15742 I AutofillAudit: UI toggle OK: autofill_v2_respect_off
+10-07 11:52:01.155 15723 15742 I AutofillAudit: UI toggle OK: autofill_inline_suggestions
+10-07 11:52:01.497 15723 15742 I AutofillAudit: UI toggle OK: password_suggestion_title
+10-07 11:52:01.829 15723 15742 I AutofillAudit: UI toggle OK: autofill_save_enable
+10-07 11:52:02.200 15723 15742 I AutofillAudit: UI toggle OK: autofill_save_update_duplicate
+10-07 11:52:02.584 15723 15742 I AutofillAudit: UI toggle OK: autofill_save_show_notification
+10-07 11:52:02.980 15723 15742 I AutofillAudit: UI toggle OK: autofill_save_smart_title
+10-07 11:52:03.296 15723 15742 I AutofillAudit: UI toggle OK: autofill_save_app_info
+10-07 11:52:03.630 15723 15742 I AutofillAudit: UI toggle OK: autofill_save_website_info
+10-07 11:52:04.744 15723 15742 I AutofillAudit: UI toggle OK: autofill_show_otp_notification
+10-07 11:52:05.031 15723 15742 I AutofillAudit: UI toggle OK: autofill_auto_copy_otp
+10-07 11:52:05.330 15723 15742 I AutofillAudit: UI toggle OK: autofill_v2_blacklist

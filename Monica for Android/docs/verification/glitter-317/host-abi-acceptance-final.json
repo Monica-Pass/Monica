@@ -1,0 +1,8 @@
+{
+  "library": "C:\\Users\\joyins\\Desktop\\Monica-all\\mdbx\\target\\release\\mdbx_ffi.dll",
+  "profile": "mdbx2-uniffi-bindings-v1",
+  "status": "compatible",
+  "uniffi_contract_version": 30,
+  "verified_checksums": 242,
+  "verified_symbols": 545
+}

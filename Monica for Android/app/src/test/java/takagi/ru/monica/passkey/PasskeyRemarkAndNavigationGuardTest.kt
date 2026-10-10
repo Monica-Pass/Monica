@@ -94,7 +94,10 @@ class PasskeyRemarkAndNavigationGuardTest {
         assertTrue(fab.contains("val shouldShowPasskeyFab ="))
         assertTrue(fab.contains("onClick = onNavigateToPasskey"))
         assertTrue(passkeyList.contains("onNavigateToAuthenticator: (() -> Unit)? = null"))
-        assertTrue(passkeyList.contains("imageVector = Icons.Default.Security"))
+        val authenticatorAction = passkeyList.substringAfter("onNavigateToAuthenticator?.let")
+            .substringBefore("if (showStandaloneSettingsEntry)")
+        assertTrue(authenticatorAction.contains("Icons.Default.Security"))
+        assertTrue(authenticatorAction.contains("navigateToAuthenticator()"))
         assertTrue(settings.contains("filterNot { it == BottomNavContentTab.PASSKEY }"))
     }
 

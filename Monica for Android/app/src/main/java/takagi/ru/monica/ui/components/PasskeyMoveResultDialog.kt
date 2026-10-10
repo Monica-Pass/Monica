@@ -17,7 +17,7 @@ import takagi.ru.monica.passkey.PasskeyMoveReport
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun PasskeyMoveResultDialog(report: PasskeyMoveReport, onDismiss: () -> Unit) {
+internal fun PasskeyMoveResultDialog(report: PasskeyMoveReport, action: UnifiedMoveAction = UnifiedMoveAction.MOVE, onDismiss: () -> Unit) {
     BasicAlertDialog(onDismissRequest = onDismiss) {
         Surface(shape = RoundedCornerShape(28.dp), color = MaterialTheme.colorScheme.surfaceContainerHigh) {
             Column(
@@ -25,8 +25,8 @@ internal fun PasskeyMoveResultDialog(report: PasskeyMoveReport, onDismiss: () ->
                     .testTag("passkey_move_result").padding(20.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                Text(stringResource(R.string.passkey_move_result_title), style = MaterialTheme.typography.titleLarge)
-                Text(stringResource(R.string.passkey_move_result_summary, report.movedCount, report.issues.size),
+                Text(stringResource(if (action == UnifiedMoveAction.COPY) R.string.passkey_copy_result_title else R.string.passkey_move_result_title), style = MaterialTheme.typography.titleLarge)
+                Text(stringResource(if (action == UnifiedMoveAction.COPY) R.string.passkey_copy_result_summary else R.string.passkey_move_result_summary, report.movedCount, report.issues.size),
                     style = MaterialTheme.typography.bodyMedium)
                 LazyColumn(Modifier.weight(1f, fill = false).testTag("passkey_move_issues"),
                     verticalArrangement = Arrangement.spacedBy(2.dp)) {
@@ -57,7 +57,10 @@ internal fun PasskeyMoveResultDialog(report: PasskeyMoveReport, onDismiss: () ->
     }
 }
 
-private fun PasskeyMoveIssueReason.messageRes(): Int = when (this) {
+internal fun PasskeyMoveIssueReason.messageRes(): Int = when (this) {
+    PasskeyMoveIssueReason.KEY_UNAVAILABLE -> R.string.passkey_transfer_key_unavailable
+    PasskeyMoveIssueReason.TRANSFER_RESTRICTED -> R.string.passkey_transfer_restricted
+    PasskeyMoveIssueReason.SAME_DATABASE_COPY -> R.string.passkey_transfer_same_database_copy
     PasskeyMoveIssueReason.BOUND_PASSWORD -> R.string.passkey_move_bound_reason
     PasskeyMoveIssueReason.REFERENCE_ONLY -> R.string.passkey_move_reference_reason
     PasskeyMoveIssueReason.BITWARDEN_UNSUPPORTED -> R.string.passkey_move_bitwarden_reason

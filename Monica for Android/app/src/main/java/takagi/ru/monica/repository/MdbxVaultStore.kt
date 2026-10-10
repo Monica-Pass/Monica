@@ -2012,15 +2012,24 @@ class MdbxVaultStore(
     }
 
     override suspend fun upsertSteamMaFileEntry(
-        databaseId: Long,
-        entryId: String?,
-        title: String,
-        maFileJson: String
+        databaseId: Long, entryId: String?, title: String, maFileJson: String
+    ): String {
+        val resolvedId = entryId?.takeIf { it.isNotBlank() } ?: steamMaFileObjectId(maFileJson)
+        val existing = listSteamMaFileEntries(databaseId).firstOrNull { it.entryId == resolvedId }
+        val folderId = existing?.let {
+            JSONObject(it.payloadJson).optString("mdbx_folder_id").takeIf { value -> value.isNotBlank() && value != "null" }
+        }
+        return upsertSteamMaFileEntryInFolder(databaseId, resolvedId, title, maFileJson, folderId)
+    }
+
+    override suspend fun upsertSteamMaFileEntryInFolder(
+        databaseId: Long, entryId: String?, title: String, maFileJson: String, folderId: String?
     ): String {
         val resolvedEntryId = entryId?.takeIf { it.isNotBlank() }
             ?: steamMaFileObjectId(maFileJson)
         val payload = JSONObject()
             .put("kind", "steam_mafile")
+            .put("mdbx_folder_id", folderId)
             .put("steamid", steamIdFromSteamMaFileJson(maFileJson).orEmpty())
             .put("account_name", accountNameFromSteamMaFileJson(maFileJson).orEmpty())
             .put("mafile_json", maFileJson)
@@ -2181,6 +2190,8 @@ class MdbxVaultStore(
             .put("transports", passkey.transports)
             .put("aaguid", passkey.aaguid)
             .put("sign_count", passkey.signCount)
+            .put("backup_eligible", passkey.backupEligible)
+            .put("backup_state", passkey.backupState)
             .put("notes", passkey.notes)
             .put("passkey_mode", passkey.passkeyMode)
             .put("mdbx_folder_id", passkey.mdbxFolderId)

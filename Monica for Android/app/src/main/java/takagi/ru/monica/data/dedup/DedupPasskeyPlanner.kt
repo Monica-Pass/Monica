@@ -41,6 +41,7 @@ internal class DedupPasskeyPlanner(private val security: SecurityManager) {
                 canonicalBase64(entry.publicKey), entry.publicKeyAlgorithm.toString(), key.fingerprint,
                 entry.isDiscoverable.toString(), entry.isUserVerificationRequired.toString(),
                 entry.isBackedUp.toString(), entry.signCount.toString(), entry.notes,
+                entry.backupEligible.toString(), entry.backupState.toString(),
             ))
         }
         val targetByCredential = targetEntries.groupBy(::credentialId)

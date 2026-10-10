@@ -4,52 +4,34 @@
 
 ## 中文
 
+- Passkey 和 Steam 支持选择数据库内的文件夹进行移动或复制，也可在当前数据库中整理归属；修复 Passkey 目标选择器未加载 MDBX 文件夹的问题。
+- Passkey 复制保留源记录；操作前检查绑定、引用、私钥及目标限制，遇到无法处理的条目可取消或跳过后继续，并显示逐项结果。要求凭据 ID 唯一的 KeePass／MDBX 不支持同库复制，可改选其他数据库。
+- Steam 复制生成独立条目，同库移动保留原记录；新增本地分类归属并迁移旧数据，修复 MDBX 后续编辑或刷新会话时回到根目录的问题。跨库移动在目标写入成功后才清理源记录。
+
+- 修复通行密钥本地数据库页面反复出现同步状态：按当前数据库和文件夹范围触发刷新，跳过无目标、无法读取或已更新的 KeePass 索引；本地页面不再显示其他 Bitwarden／Vaultwarden 账户的同步进度。
+- 缓存通行密钥的“密钥不可用”“跨端受限”等标记，返回列表或打开详情时立即复用检查结果；密钥删除、恢复、兼容性参数或解锁会话变化后重新检查，减少重复加载与标记闪烁。
+
+- 修复通行密钥列表进入详情后返回会重置为“全部”的问题：保留所选数据库及文件夹，重新打开后恢复上次选择，避免页面重建时用默认值覆盖筛选设置。
+
+- 修复旧 Passkey 在刷新或合并时可能改变已使用的备份资格标志：保留既有凭据的注册属性，冲突时保留原数据；新导入仍遵循来源标志。
+- 修复修改 Bitwarden／Vaultwarden Passkey 时可能覆盖同一登录项中的其他密钥、密码、网址和自定义字段；更新前读取完整条目，使用版本校验并回读确认，失败或冲突时保留本地数据；保留用户主动移动文件夹和移回根目录的操作。
+- 通行密钥列表在格式旁标记“仅本地”“跨端受限”或“密钥不可用”，详情解释限制原因；支持小屏及大字体换行。
+
 - 修复仅绑定 Bitwarden／Vaultwarden 时密码库首页和搜索可能看不到已同步条目：未保存数据库范围时默认显示“全部”，旧版省略范围的设置同步采用该默认值；明确保存的本地库或具体数据库选择继续保留，锁定库仍不参与展示与搜索。
-
-- 扩展常用信息输入建议：银行卡持卡人、证件及账单姓名共享已保存姓名，姓、名和中间名分别匹配；账单和证件地址支持街道、门牌、省市、邮编及国家建议，兼容独立卡包、密码内嵌内容及旧字段。保留签发机关建议，点击仅填写当前字段，不自动拆分姓名或修改其他资料。
-
-- 修复 KDBX 密码批量删除缓慢及条目重新出现：密码页与密码库页统一按数据库一次保存，成功后整体更新列表；原生索引在后台以事务提交，拒绝过期快照。保存失败保留列表数据，不再逐条重试；外部文件完整写入后若校验失败，保留当前文件与恢复副本，避免覆盖另一会话的写入。
-
-- 改善安全存储启动容错：未分类的读取异常在后台最多尝试三次，减少短暂失败直接进入保护页的情况；持续失败、密钥缺失及认证错误仍保留原数据并阻止正常启动。诊断补充失败阶段、尝试次数及异常类型，不包含密码、密钥或异常原文。
-
-- 卡包的银行卡和证件编辑统一使用 M3E 内容卡片：新增内容以紧凑卡片展示，支持长按拖动及菜单排序，顺序随条目保存；扩展字段、自定义字段和账单地址改用相连的填充式编辑，缩小间距并适配键盘与大字体。隐藏字段使用密码键盘。
-
-- 自动填充新增“保持解锁两分钟”设置，默认关闭；开启后同一应用及网站可复用验证，支持账号与密码分步填写及手动选择，连续填充不延长有效期。关闭此项、锁屏、手动锁定、移除 Monica 最近任务或进程重启均撤销临时授权。修复主应用清理后台后仍可恢复旧解锁会话的问题，自动填充操作不再延长主应用解锁时间；普通切换应用仍遵循自动锁定设置。
-
-- 新增常用信息输入建议：银行名称、分行代码、客服电话、凭据分组标签、网站网址及证件签发机关可匹配已保存的同类值，点击即可填入；支持项目内嵌银行卡和证件，最多显示三项，锁定或不可访问的数据源不参与建议。
-
-- 修复从其他应用接收 Passkey 时对空扩展和未启用支付扩展的过度拒绝，保留原始凭据及私钥；按验证码、无效数据、私钥及不支持的扩展显示跳过原因，诊断日志仅记录分类计数。含 PRF、Blob 或启用支付扩展的 Passkey 仍明确提示暂不支持，不丢弃扩展强行导入。
-
-- 修复导入条目中应用关联元数据被显示为普通自定义字段的问题；保留签名约束及再次导出能力，编辑或移除普通字段分组不会删除这些关联信息。
-
-- 优化去重合并到 Monica 本地：无附件的密码与无附件、无照片的安全条目按小批次事务写入，减少完整列表反复查询；进度在提交后更新，失败批次回滚并逐条定位，取消时停止后续处理。保留附件、MDBX 与 Passkey 的原有写入和回滚流程，减少重复分析读取及无附件条目的空查询。
-
-- 优化设置中的清空数据：按批次删除，减少逐条写库与列表刷新；显示当前阶段和实际已清空数量，完成或失败时保留结果提示，防止重复确认，并在页面重建后继续显示进度。保留原有类型选择及删除范围。
-
-- Monica CLI 同样暂不接入 Glitter：不创建、打开、编辑、导出或同步该档位，仅保留只读格式识别；即使提供正确密码和密钥也不会放行，原有数据库不变。
 
 ## English
 
+- Passkey and Steam entries can now be moved or copied into folders, including organization within the current database. Fixed MDBX folders not loading in the Passkey destination picker.
+- Passkey copies preserve the source. A preflight check identifies bound entries, references, unavailable keys and destination restrictions, with options to cancel or skip blocked entries and continue, followed by per-entry results. KeePass/MDBX databases requiring unique credential IDs cannot hold a second copy in the same database; choose another database instead.
+- Steam copies create independent entries, while moves within a database retain the original record. Added local category assignments with migration of existing data, and fixed MDBX edits or session refreshes moving entries back to root. Cross-database moves clean up sources only after destination writes succeed.
+
+- Fixed repeated sync activity on local Passkey pages. Refreshes follow the selected database and folder, skipping KeePass indexing with no target, inaccessible databases or an unchanged index. Local pages no longer display another Bitwarden/Vaultwarden account's sync progress.
+- Cached Passkey compatibility labels, including Key unavailable and Transfer limited, so returning to the list or opening details reuses known results immediately. Key deletion or restoration, compatibility changes and lock-session changes trigger a new check, reducing repeated loading and badge flicker.
+
+- Fixed the Passkey list resetting to All after returning from details. The selected database and folder now remain active and are restored on reopening, without page recreation overwriting saved filters with defaults.
+
+- Fixed refresh and merge of legacy Passkeys changing previously used backup eligibility: preserve existing credential properties and retain local data on conflicts; new imports retain source flags.
+- Fixed Bitwarden/Vaultwarden Passkey updates overwriting other credentials, passwords, URLs and custom fields in the same login. Updates now read the full item, check its revision and verify the saved content; failures and conflicts retain local data, while explicit folder moves and moves back to root remain supported.
+- Added Local only, Transfer limited and Key unavailable labels beside Passkey formats, with explanations in details and wrapping for narrow screens and large text.
+
 - Fixed synced entries being absent from the vault overview and search for Bitwarden/Vaultwarden users: use All when no database scope is saved, including older settings that omitted the scope. Explicitly saved local or individual database scopes are preserved, and locked vaults remain excluded from display and search.
-
-- Extend saved-value suggestions to cardholder, identity and billing names, with separate first/middle/last-name matching. Suggest street, unit, city, region, postal code and country across wallet items, embedded content and legacy fields. Keep issuing-authority suggestions; selection fills only the active field without splitting names or changing other details.
-
-- Fix slow KDBX password bulk deletion and reappearing entries. Both password and vault pages save each database once and update the list after success. Apply native indexes in background transactions and reject stale snapshots. Preserve list data on save failure without per-entry retries; if verification fails after a complete external write, retain the current file and recovery copy instead of overwriting another session's changes.
-
-- Improve secure-storage startup handling: retry unclassified read failures up to three times in the background before showing the recovery screen. Persistent failures, missing keys and authentication errors still preserve stored data and block normal startup. Diagnostics now include the failure phase, attempt count and exception types without passwords, keys or exception messages.
-
-- Unify bank-card and identity-document editing with compact M3E content cards. Reorder added sections by long press or menu and save their order with the entry. Use connected filled editors for supplemental fields, custom fields and billing addresses, with tighter spacing and keyboard/large-text support. Hidden fields use password keyboards.
-
-- Add an optional “Keep unlocked for two minutes” autofill setting, off by default. When enabled, verification is reused within the same app and website across separate username/password steps and the manual picker, without extending the window. Turning it off, screen-off, explicit locking, removing Monica from Recents or restarting the process revokes access. Fix old main-app sessions being restored after task removal; autofill interaction no longer extends the main-app unlock timer. Normal background switching still follows the auto-lock setting.
-
-- Suggest saved values while typing bank names, branch codes, customer service phone numbers, credential group labels, website URLs and issuing authorities. Tap to fill from up to three matches, including embedded cards and identity documents; locked or inaccessible sources are excluded.
-
-- Accept transferred passkeys with absent extension data or disabled payment extensions without replacing their original credentials or private keys. Show categorized skip reasons and log only aggregate counts. Passkeys requiring PRF, blob, or enabled payment extensions remain explicitly unsupported; their extension state is never silently discarded.
-
-- Keep imported application-scope metadata out of ordinary custom-field displays while preserving signature constraints and re-export support. Editing or removing a user-field section retains this metadata.
-
-- Speed up deduplication into Monica Local with small transactions for passwords without attachments and secure items without attachments or photos, reducing repeated full-list queries. Update progress after commit, roll back failed batches and retry entries individually, and stop subsequent work on cancellation. Preserve existing attachment, MDBX, and Passkey write and rollback paths while reducing redundant analysis reads and empty attachment queries.
-
-- Speed up Clear data in Settings with batched deletion and fewer database writes and list refreshes. Show the current stage and committed entry count, retain completion or failure feedback, prevent duplicate confirmation, and preserve progress across activity recreation. Existing type selections and deletion boundaries remain unchanged.
-
-- Monica CLI also defers Glitter integration: no creation, opening, editing, export or sync, even with the correct password and key. Read-only format detection remains available, and existing databases stay unchanged.

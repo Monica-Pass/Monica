@@ -1,0 +1,11 @@
+{
+  "classes": "takagi.ru.monica.autofill_ng.AutofillSettingsAuditProbe#everySwitchWritesAndRestoresTheCorrespondingPreference",
+  "testHash": "111AD7431B7DC4E2F0FCD8F268F17735438B967C7B36610F5BAE5F9EB38BD449",
+  "oldUser": "10",
+  "completed": true,
+  "edition": "Main",
+  "oldProxy": ":0",
+  "tests": 1,
+  "appHash": "4B771C3F9CC1D228A0408CE07A794FC24137005C216D1BA63A2E511CE353A24A",
+  "skipInstall": false
+}

@@ -160,7 +160,14 @@ data class PasskeyEntry(
     // BW_COMPAT      -> Bitwarden 兼容模式（可参与 Bitwarden/Keyguard 同步）
     // KEEPASS_COMPAT -> KeePassDX/KeePassXC KPEX_PASSKEY_* 兼容格式（可与 Monica 写入/回读的 KDBX 互通）
     @ColumnInfo(name = "passkey_mode", defaultValue = "'LEGACY'")
-    val passkeyMode: String = MODE_LEGACY
+    val passkeyMode: String = MODE_LEGACY,
+
+    // WebAuthn creation/signing metadata, independent of the local isBackedUp sync marker.
+    // NULL keeps the historical Android BE=true/BS=true behavior for existing credentials.
+    @ColumnInfo(name = "backup_eligible", defaultValue = "NULL")
+    val backupEligible: Boolean? = null,
+    @ColumnInfo(name = "backup_state", defaultValue = "NULL")
+    val backupState: Boolean? = null
 ) {
     /**
      * 获取传输方式列表

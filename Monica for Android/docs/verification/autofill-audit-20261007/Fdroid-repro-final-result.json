@@ -1,0 +1,11 @@
+{
+  "classes": "takagi.ru.monica.autofill_ng.AutofillSettingsAuditProbe#delayedDatabaseListClearsAStillExistingDefaultSelection,takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#auditNativeClearAndRefill,takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#auditWebClearAndRefill,takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#auditWebKeyboardClearAndRefill,takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#auditSaveDisabledStillOffersSystemPrompt",
+  "oldProxy": ":0",
+  "skipInstall": false,
+  "completed": true,
+  "edition": "Fdroid",
+  "testHash": "8541465D8CD38C70CCE93CFEFF04BED9986B066E937170E162622B5D191615DD",
+  "appHash": "AACD49A15AAD1EC1440822FBC1AF9F41E198E45830D692F087E897A9B6DCAB3E",
+  "tests": 5,
+  "oldUser": "10"
+}

@@ -17,6 +17,8 @@ import takagi.ru.monica.passkey.PasskeyPrivateKeySupport
 class PasskeyMapper : BitwardenMapper<PasskeyEntry> {
 
     override fun toCreateRequest(item: PasskeyEntry, folderId: String?): CipherCreateRequest {
+        // Native Bitwarden credentials have implicit BE=true; changing BE breaks registered identities.
+        require(item.backupEligible != false) { "Bitwarden cannot preserve backup-ineligible credentials" }
         val bitwardenCredentialId = PasskeyCredentialIdCodec
             .toBitwardenCredentialId(item.credentialId)
             ?.takeIf { it.isNotBlank() }

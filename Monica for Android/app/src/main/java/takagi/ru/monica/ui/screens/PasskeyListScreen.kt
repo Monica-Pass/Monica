@@ -108,6 +108,13 @@ import takagi.ru.monica.ui.icons.shouldShowFallbackSlot
 import takagi.ru.monica.ui.password.PasskeyScanTopActionsMenuItem
 import takagi.ru.monica.ui.password.PasswordTopActionsDropdownMenu
 import takagi.ru.monica.bitwarden.sync.SyncStatus
+import takagi.ru.monica.passkey.PasskeyTransferPolicy
+import takagi.ru.monica.passkey.PasskeyTransferPlan
+import takagi.ru.monica.passkey.PasskeyTransferBlockedException
+import takagi.ru.monica.passkey.PasskeyPortability
+import takagi.ru.monica.ui.components.PasskeyTransferPreflightDialog
+import takagi.ru.monica.passkey.PasskeyMoveIssue
+import takagi.ru.monica.passkey.PasskeyMoveIssueReason
 import takagi.ru.monica.passkey.PasskeyMoveReport
 import takagi.ru.monica.passkey.PasskeyMoveReporter
 import takagi.ru.monica.passkey.PasskeyBitwardenMoveBlockedException
@@ -189,10 +196,6 @@ fun PasskeyListScreen(
         }
     }
     val categoryMap = remember(categories) { categories.associateBy { it.id } }
-    LaunchedEffect(keepassDatabases.map { it.id }) {
-        delay(1_200L)
-        viewModel.refreshKeePassPasskeys(trigger = "PASSKEY_PAGE_ENTER")
-    }
 
     val bindingPasskeys = remember(passwords, searchQuery) {
         val rawList = passwords.flatMap { password ->
@@ -274,8 +277,22 @@ fun PasskeyListScreen(
     var selectedPasskeys by remember { mutableStateOf(setOf<String>()) }
     var moveReport by remember { mutableStateOf<PasskeyMoveReport?>(null) }
     var moveInProgress by remember { mutableStateOf(false) }
+    var transferAction by remember { mutableStateOf(UnifiedMoveAction.MOVE) }
+    var pendingTransfer by remember { mutableStateOf<PendingPasskeyTransfer?>(null) }
     var pendingDeletePasskey by remember { mutableStateOf<PasskeyEntry?>(null) }
-    var selectedCategoryFilter by remember { mutableStateOf<UnifiedCategoryFilterSelection>(UnifiedCategoryFilterSelection.All) }
+    val savedCategoryFilterState by viewModel.categoryFilter.collectAsState()
+    val hasRestoredCategoryFilter by viewModel.isCategoryFilterReady.collectAsState()
+    LaunchedEffect(hasRestoredCategoryFilter, savedCategoryFilterState, keepassDatabases.map { it.id }) {
+        if (hasRestoredCategoryFilter && takagi.ru.monica.passkey.PasskeyPageSyncPolicy.keePassDatabaseIds(
+                savedCategoryFilterState, keepassDatabases.map { it.id }
+            ).isNotEmpty()) {
+            delay(1_200L)
+            viewModel.refreshKeePassPasskeys(trigger = "PASSKEY_PAGE_ENTER")
+        }
+    }
+    val selectedCategoryFilter = remember(savedCategoryFilterState) {
+        decodePasskeyCategoryFilter(savedCategoryFilterState)
+    }
     var showCategoryFilterDialog by remember { mutableStateOf(false) }
     val categoryMgmt = rememberCategoryManagementState()
     var showTopActionsMenu by remember { mutableStateOf(false) }
@@ -286,10 +303,6 @@ fun PasskeyListScreen(
     var deletePasswordError by remember { mutableStateOf(false) }
     val haptic = rememberHapticFeedback()
     val settingsManager = remember { SettingsManager(context) }
-    val savedCategoryFilterState by settingsManager
-        .categoryFilterStateFlow(SettingsManager.CategoryFilterScope.PASSKEY)
-        .collectAsState(initial = SavedCategoryFilterState())
-    var hasRestoredCategoryFilter by remember { mutableStateOf(false) }
     val appSettings by settingsManager.settingsFlow.collectAsState(
         initial = AppSettings(biometricEnabled = false)
     )
@@ -386,18 +399,6 @@ fun PasskeyListScreen(
             }
         }
     }
-    LaunchedEffect(savedCategoryFilterState, hasRestoredCategoryFilter) {
-        if (hasRestoredCategoryFilter) return@LaunchedEffect
-        selectedCategoryFilter = decodePasskeyCategoryFilter(savedCategoryFilterState)
-        hasRestoredCategoryFilter = true
-    }
-    LaunchedEffect(selectedCategoryFilter, hasRestoredCategoryFilter) {
-        if (!hasRestoredCategoryFilter) return@LaunchedEffect
-        settingsManager.updateCategoryFilterState(
-            scope = SettingsManager.CategoryFilterScope.PASSKEY,
-            state = encodePasskeyCategoryFilter(selectedCategoryFilter)
-        )
-    }
     val visiblePasskeys = remember(categoryFilteredPasskeys, pendingDeletePasskey) {
         val deletingId = pendingDeletePasskey?.managementKey()
         val baseList = if (deletingId == null) {
@@ -440,7 +441,9 @@ fun PasskeyListScreen(
         viewModel = bitwardenViewModel,
         selectedVaultId = selectedBitwardenVaultId,
         isAllView = selectedCategoryFilter is UnifiedCategoryFilterSelection.All,
-        enabled = hasRestoredCategoryFilter
+        enabled = hasRestoredCategoryFilter && bitwardenVaults.any { vault ->
+            !vault.isLocked && (selectedCategoryFilter is UnifiedCategoryFilterSelection.All || vault.id == selectedBitwardenVaultId)
+        }
     )
     val isTopBarSyncing = selectedBitwardenVaultId?.let { vaultId ->
         bitwardenSyncStatusByVault[vaultId].isUserVisibleSyncInProgress()
@@ -490,7 +493,7 @@ fun PasskeyListScreen(
 
         if (targetVaultId != null) {
             val canMoveToBitwarden = withContext(Dispatchers.IO) {
-                isPasskeyMigratableToBitwarden(context, passkey)
+                PasskeyPortability.inspect(context, passkey) == PasskeyPortability.PORTABLE
             }
             if (!canMoveToBitwarden) {
                 return Result.failure(PasskeyBitwardenMoveBlockedException())
@@ -628,7 +631,34 @@ fun PasskeyListScreen(
         ).map { Unit }
     }
 
-    suspend fun persistStorageTarget(passkey: PasskeyEntry, target: UnifiedMoveCategoryTarget): Result<Unit> {
+    suspend fun planTransfer(entries: List<PasskeyEntry>, target: UnifiedMoveCategoryTarget, action: UnifiedMoveAction): PasskeyTransferPlan {
+        val plan = PasskeyTransferPolicy.plan(entries, target, action) { PasskeyPortability.inspect(context, it) }
+        val eligible = mutableListOf<PasskeyEntry>()
+        val issues = plan.issues.toMutableList()
+        val targetVault = when (target) {
+            is UnifiedMoveCategoryTarget.BitwardenVaultTarget -> target.vaultId
+            is UnifiedMoveCategoryTarget.BitwardenFolderTarget -> target.vaultId
+            else -> null
+        }
+        for (entry in plan.eligible) {
+            val vault = entry.bitwardenVaultId
+            val cipher = entry.bitwardenCipherId
+            val sharedCipher = action == UnifiedMoveAction.MOVE && vault != null && !cipher.isNullOrBlank() &&
+                targetVault != vault && (
+                    database.passkeyDao().getAllByBitwardenCipherIdInVault(vault, cipher).size > 1 ||
+                    database.passwordEntryDao().getByBitwardenCipherIdInVault(vault, cipher) != null
+                )
+            if (sharedCipher) issues += PasskeyMoveIssue(entry.userName, entry.rpName, PasskeyMoveIssueReason.TRANSFER_RESTRICTED)
+            else eligible += entry
+        }
+        return PasskeyTransferPlan(eligible, issues)
+    }
+
+    suspend fun persistStorageTarget(passkey: PasskeyEntry, target: UnifiedMoveCategoryTarget, action: UnifiedMoveAction): Result<Unit> {
+        val recheck = withContext(Dispatchers.IO) {
+            planTransfer(listOf(passkey), target, action)
+        }
+        recheck.issues.firstOrNull()?.let { return Result.failure(PasskeyTransferBlockedException(it.reason)) }
         val updateResult = applyStorageTarget(passkey, target)
         if (updateResult.isFailure) {
             return Result.failure(
@@ -637,13 +667,15 @@ fun PasskeyListScreen(
             )
         }
         val moved = updateResult.getOrThrow()
-        val persisted = viewModel.updatePasskey(moved)
+        val persisted = if (action == UnifiedMoveAction.COPY) viewModel.copyPasskey(moved) else viewModel.updatePasskey(moved)
         if (persisted.isFailure) {
             return Result.failure(
                 persisted.exceptionOrNull()
                     ?: IllegalStateException("Passkey update failed")
             )
         }
+
+        if (action == UnifiedMoveAction.COPY) return Result.success(Unit)
 
         val queueDelete = try {
             queueSourceBitwardenDeleteAfterPasskeyMove(passkey, target)
@@ -657,6 +689,44 @@ fun PasskeyListScreen(
         }
 
         return Result.success(Unit)
+    }
+
+    fun executeTransfer(entries: List<PasskeyEntry>, target: UnifiedMoveCategoryTarget, action: UnifiedMoveAction,
+        skipped: List<PasskeyMoveIssue> = emptyList()) {
+        moveInProgress = true
+        transferAction = action
+        scope.launch {
+            try {
+                val executed = PasskeyMoveReporter.execute(entries) { persistStorageTarget(it, target, action) }
+                val report = executed.copy(issues = skipped + executed.issues)
+                passkeyToMoveCategory = null
+                showBatchMoveCategoryDialog = false
+                selectionMode = false
+                selectedPasskeys = emptySet()
+                if (report.issues.isNotEmpty()) moveReport = report
+                else Toast.makeText(context, context.getString(
+                    if (action == UnifiedMoveAction.COPY) R.string.passkey_copy_success_count else R.string.passkey_move_success_count,
+                    report.movedCount), Toast.LENGTH_SHORT).show()
+            } finally { moveInProgress = false }
+        }
+    }
+
+    fun requestTransfer(entries: List<PasskeyEntry>, target: UnifiedMoveCategoryTarget, action: UnifiedMoveAction) {
+        if (moveInProgress || pendingTransfer != null) return
+        moveInProgress = true
+        scope.launch {
+            var executing = false
+            try {
+                val plan = withContext(Dispatchers.IO) {
+                    planTransfer(entries, target, action)
+                }
+                if (plan.issues.isNotEmpty()) pendingTransfer = PendingPasskeyTransfer(plan, target, action)
+                else {
+                    executing = true
+                    executeTransfer(plan.eligible, target, action)
+                }
+            } finally { if (!executing) moveInProgress = false }
+        }
     }
 
     suspend fun deletePasskeyWithBinding(passkey: PasskeyEntry): Boolean {
@@ -823,7 +893,7 @@ fun PasskeyListScreen(
                                     visible = true,
                                     onDismiss = { showCategoryFilterDialog = false },
                                     selected = selectedCategoryFilter,
-                                    onSelect = { selection -> selectedCategoryFilter = selection },
+                                    onSelect = { selection -> viewModel.setCategoryFilter(encodePasskeyCategoryFilter(selection)) },
                                     categories = categories,
                                     keepassDatabases = keepassDatabases,
                                     mdbxDatabases = mdbxDatabases,
@@ -1303,44 +1373,11 @@ fun PasskeyListScreen(
         getMdbxFolders = { databaseId ->
             passwordViewModel?.getMdbxFolders(databaseId) ?: flowOf(emptyList())
         },
+        refreshMdbxFolders = { passwordViewModel?.refreshMdbxFolders(it) },
         allowCopy = true,
         allowMove = true,
         onTargetSelected = { target, action ->
-            val passkey = passkeyToMoveCategory ?: return@UnifiedMoveToCategoryBottomSheet
-            if (moveInProgress) return@UnifiedMoveToCategoryBottomSheet
-            moveInProgress = true
-            scope.launch {
-                try {
-                    if (action == UnifiedMoveAction.COPY) {
-                        Toast.makeText(
-                            context,
-                            context.getString(R.string.passkey_copy_uses_move_hint),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    val report = PasskeyMoveReporter.execute(listOf(passkey)) { persistStorageTarget(it, target) }
-                    if (report.issues.isNotEmpty()) {
-                        passkeyToMoveCategory = null
-                        moveReport = report
-                        return@launch
-                    }
-
-                    val targetLabel = when (target) {
-                        UnifiedMoveCategoryTarget.Uncategorized -> context.getString(R.string.category_none)
-                        is UnifiedMoveCategoryTarget.MonicaCategory -> categoryMap[target.categoryId]?.name ?: context.getString(R.string.category_none)
-                        is UnifiedMoveCategoryTarget.BitwardenVaultTarget -> context.getString(R.string.filter_bitwarden)
-                        is UnifiedMoveCategoryTarget.BitwardenFolderTarget -> context.getString(R.string.filter_bitwarden)
-                        is UnifiedMoveCategoryTarget.KeePassDatabaseTarget -> keepassDatabases.find { it.id == target.databaseId }?.name ?: context.getString(R.string.filter_keepass)
-                        is UnifiedMoveCategoryTarget.KeePassGroupTarget -> decodeKeePassPathForDisplay(target.groupPath)
-                        is UnifiedMoveCategoryTarget.MdbxDatabaseTarget -> "MDBX"
-                        is UnifiedMoveCategoryTarget.MdbxFolderTarget -> "MDBX"
-                    }
-                    Toast.makeText(context, context.getString(R.string.passkey_category_updated, targetLabel), Toast.LENGTH_SHORT).show()
-                    passkeyToMoveCategory = null
-                } finally {
-                    moveInProgress = false
-                }
-            }
+            passkeyToMoveCategory?.let { requestTransfer(listOf(it), target, action) }
         }
     )
 
@@ -1357,36 +1394,25 @@ fun PasskeyListScreen(
         getMdbxFolders = { databaseId ->
             passwordViewModel?.getMdbxFolders(databaseId) ?: flowOf(emptyList())
         },
+        refreshMdbxFolders = { passwordViewModel?.refreshMdbxFolders(it) },
         allowCopy = true,
         allowMove = true,
         onTargetSelected = { target, action ->
-            if (moveInProgress) return@UnifiedMoveToCategoryBottomSheet
-            val selectedItems = combinedPasskeys.filter { selectedPasskeys.contains(it.managementKey()) }
-            moveInProgress = true
-            scope.launch {
-                try {
-                    if (action == UnifiedMoveAction.COPY) {
-                        Toast.makeText(context, context.getString(R.string.passkey_copy_uses_move_hint), Toast.LENGTH_SHORT).show()
-                    }
-                    val report = PasskeyMoveReporter.execute(selectedItems) { persistStorageTarget(it, target) }
-                    showBatchMoveCategoryDialog = false
-                    selectionMode = false
-                    selectedPasskeys = emptySet()
-                    if (report.issues.isNotEmpty()) {
-                        moveReport = report
-                    } else {
-                        Toast.makeText(context, context.getString(R.string.passkey_move_success_count, report.movedCount),
-                            Toast.LENGTH_SHORT).show()
-                    }
-                } finally {
-                    moveInProgress = false
-                }
-            }
+            requestTransfer(combinedPasskeys.filter { it.managementKey() in selectedPasskeys }, target, action)
         }
     )
 
+    pendingTransfer?.let { pending ->
+        PasskeyTransferPreflightDialog(pending.plan, pending.action,
+            onCancel = { pendingTransfer = null },
+            onSkip = {
+                pendingTransfer = null
+                executeTransfer(pending.plan.eligible, pending.target, pending.action, pending.plan.issues)
+            })
+    }
+
     moveReport?.let { report ->
-        PasskeyMoveResultDialog(report = report, onDismiss = { moveReport = null })
+        PasskeyMoveResultDialog(report = report, onDismiss = { moveReport = null }, action = transferAction)
     }
 
     CategoryManagementCreateDialog(
@@ -1403,6 +1429,10 @@ fun PasskeyListScreen(
         scope = scope
     )
 }
+
+private class PendingPasskeyTransfer(
+    val plan: PasskeyTransferPlan, val target: UnifiedMoveCategoryTarget, val action: UnifiedMoveAction
+)
 
 private fun encodePasskeyCategoryFilter(filter: UnifiedCategoryFilterSelection): SavedCategoryFilterState = when (filter) {
     UnifiedCategoryFilterSelection.All -> SavedCategoryFilterState(type = "all")
@@ -1633,6 +1663,7 @@ private fun PasskeyListItem(
 ) {
     val context = LocalContext.current
     var expanded by remember { mutableStateOf(false) }
+    val portability = takagi.ru.monica.ui.components.rememberPasskeyPortability(passkey)
     val syncStatus = remember(passkey.syncStatus) { SyncStatus.fromDbValue(passkey.syncStatus) }
     var canMoveToBitwarden by remember(
         passkey.credentialId,
@@ -1860,9 +1891,9 @@ private fun PasskeyListItem(
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
-                        if (passkey.isKeePassCompatible()) {
+                        if (passkey.isKeePassCompatible() || (portability != null && portability != takagi.ru.monica.passkey.PasskeyPortability.PORTABLE)) {
                             Spacer(modifier = Modifier.height(6.dp))
-                            PasskeyFormatBadge(text = stringResource(R.string.passkey_format_keepass))
+                            takagi.ru.monica.ui.components.PasskeyPortabilityBadges(passkey, portability)
                         }
                     }
                 }

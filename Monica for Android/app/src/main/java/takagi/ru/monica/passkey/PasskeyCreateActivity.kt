@@ -805,6 +805,8 @@ class PasskeyCreateActivity : FragmentActivity() {
                 useCount = 0,
                 isDiscoverable = discoverable,
                 signCount = 0L,
+                backupEligible = true,
+                backupState = true,
                 boundPasswordId = pendingBoundPasswordId,
                 categoryId = initialCategoryId,
                 keepassDatabaseId = initialKeepassDatabaseId,

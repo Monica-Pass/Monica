@@ -120,6 +120,8 @@ class ImportDestinationWriter(
                         userName = data.optString("user_name"), userDisplayName = data.optString("user_display_name"),
                         publicKeyAlgorithm = data.optInt("public_key_algorithm", -7), publicKey = data.optString("public_key"),
                         privateKeyAlias = data.getString("private_key_alias"), signCount = data.optLong("sign_count"),
+                        backupEligible = takagi.ru.monica.passkey.PasskeyBackupFlags.readBoolean(data, "backup_eligible"),
+                        backupState = takagi.ru.monica.passkey.PasskeyBackupFlags.readBoolean(data, "backup_state"),
                         mdbxDatabaseId = destination.databaseId)
                 }
                 Unit
@@ -189,7 +191,7 @@ class ImportDestinationWriter(
 
     fun canImportPasskey(entry: PasskeyEntry): Boolean =
         PasskeyPrivateKeyStore.hasUsablePrivateKey(context, entry.privateKeyAlias) &&
-            (destination.bitwardenId == null || entry.publicKeyAlgorithm == PasskeyEntry.ALGORITHM_ES256)
+            (destination.bitwardenId == null || (entry.publicKeyAlgorithm == PasskeyEntry.ALGORITHM_ES256 && entry.backupEligible != false))
 
     suspend fun insertPassword(entry: PasswordEntry, importedFields: List<CustomFieldBackupEntry> = emptyList()): Long =
         passwordWriter.insertPasswordEntry(destination.password(entry).copy(

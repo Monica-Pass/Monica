@@ -13,7 +13,7 @@ import takagi.ru.monica.security.SecurityManager
 
 @Database(
     entities = [SteamAccountEntity::class],
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 abstract class SteamDatabase : RoomDatabase() {
@@ -31,10 +31,18 @@ abstract class SteamDatabase : RoomDatabase() {
                     "steam_database"
                 )
                     .addMigrations(migration1To2(context.applicationContext))
-                    .addMigrations(migration2To3())
+                    .addMigrations(migration2To3(), migration3To4())
                     .build()
                 INSTANCE = instance
                 instance
+            }
+        }
+
+        internal fun migration3To4(): Migration = object : Migration(3, 4) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE steam_accounts ADD COLUMN categoryId INTEGER DEFAULT NULL")
+                db.execSQL("DROP INDEX IF EXISTS index_steam_accounts_steam_id")
+                db.execSQL("CREATE INDEX index_steam_accounts_steam_id ON steam_accounts(steam_id)")
             }
         }
 

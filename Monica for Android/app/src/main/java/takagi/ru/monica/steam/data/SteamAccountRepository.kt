@@ -47,7 +47,8 @@ class SteamAccountRepository(
             selected = shouldSelect,
             sortOrder = existing?.sortOrder ?: dao.nextSortOrder(),
             createdAt = existing?.createdAt ?: now,
-            updatedAt = now
+            updatedAt = now,
+            categoryId = existing?.categoryId
         )
 
         val id = if (existing == null) {
@@ -73,9 +74,6 @@ class SteamAccountRepository(
 
     suspend fun replaceAccount(account: SteamAccount): Long {
         val existing = dao.getById(account.id) ?: return 0L
-        val duplicate = findExistingBySteamId(account.steamId)
-            ?.takeIf { it.id != account.id }
-        require(duplicate == null) { "Steam account already exists" }
         dao.update(
             SteamAccountEntity(
                 id = existing.id,
@@ -94,11 +92,27 @@ class SteamAccountRepository(
                 selected = existing.selected,
                 sortOrder = existing.sortOrder,
                 createdAt = existing.createdAt,
+                categoryId = existing.categoryId,
                 updatedAt = System.currentTimeMillis()
             )
         )
         return existing.id
     }
+
+    suspend fun moveToCategory(id: Long, categoryId: Long?) = dao.moveToCategory(id, categoryId)
+
+    suspend fun insertCopy(account: SteamAccount, categoryId: Long?): Long = dao.insertCopy(
+        SteamAccountEntity(
+            steamId = encrypt(account.steamId), accountName = encrypt(account.accountName),
+            displayName = encrypt(account.displayName), deviceId = encrypt(account.deviceId),
+            sharedSecret = encrypt(account.sharedSecret), identitySecret = account.identitySecret?.let(::encrypt),
+            revocationCode = account.revocationCode?.let(::encrypt), tokenGid = account.tokenGid?.let(::encrypt),
+            accessToken = account.accessToken?.let(::encrypt), refreshToken = account.refreshToken?.let(::encrypt),
+            steamLoginSecure = account.steamLoginSecure?.let(::encrypt),
+            rawSteamGuardJson = encrypt(account.rawSteamGuardJson), categoryId = categoryId,
+            sortOrder = dao.nextSortOrder(), selected = false
+        )
+    )
 
     suspend fun delete(id: Long) {
         val wasSelected = dao.getById(id)?.selected == true
@@ -165,7 +179,8 @@ class SteamAccountRepository(
             selected = entity.selected,
             sortOrder = entity.sortOrder,
             createdAt = entity.createdAt,
-            updatedAt = entity.updatedAt
+            updatedAt = entity.updatedAt,
+            categoryId = entity.categoryId
         )
     }
 }

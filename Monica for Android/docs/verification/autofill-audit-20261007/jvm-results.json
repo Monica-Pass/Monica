@@ -1,0 +1,30 @@
+[
+  {
+    "name": "takagi.ru.monica.autofill_ng.AutofillDetectionPolicyTest",
+    "tests": "8",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest",
+    "tests": "10",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.autofill_ng.service.AutofillOtpNotificationSessionTest",
+    "tests": "3",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.ime.ImeKeyboardBehaviorTest",
+    "tests": "3",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  }
+]

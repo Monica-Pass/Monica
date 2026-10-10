@@ -1,0 +1,153 @@
+{
+  "device": "Monica_Issue136_API_32",
+  "api": 32,
+  "abi": "x86_64",
+  "buildVariant": "debug",
+  "uniqueTestExecutionsAcrossEditions": 126,
+  "editions": {
+    "main": {
+      "instrumentation": {
+        "finishedAt": "2026-10-06T14:53:50.7131600+08:00",
+        "artifacts": [
+          {
+            "sha256": "B9E83A47725567CF196CCC5A575A027CE99A11914D87CCA6F12B3351CD7B3FCF",
+            "package": "takagi.ru.monica"
+          },
+          {
+            "sha256": "6270DFC8A4929B4000E50A45643100A70E49AACA93611D991BAD865F9C5BE6C4",
+            "package": "takagi.ru.monica.test"
+          }
+        ],
+        "screenTimeoutRestored": true,
+        "classes": "takagi.ru.monica.ui.screens.MdbxGlitterPasswordCreationTest,takagi.ru.monica.repository.MdbxGlitterSessionInstrumentedTest,takagi.ru.monica.repository.MdbxNativeCredentialInstrumentedTest,takagi.ru.monica.repository.Mdbx2ExternalPublicationInstrumentedTest,takagi.ru.monica.ui.screens.MdbxNativeEditorUiTest,takagi.ru.monica.ui.screens.MdbxGlitterTextProtectionUiTest,takagi.ru.monica.ui.screens.MdbxLayoutReachabilityTest#glitterNativeManagerFollowsOrdinaryAppSessionWithoutExtraUnlock,takagi.ru.monica.ui.screens.MdbxLayoutReachabilityTest#overlappingGlitterScreensKeepScreenshotProtectionUntilBothClose,takagi.ru.monica.ui.screens.MdbxLayoutReachabilityTest#ordinaryScreenshotSettingAndDisposalCannotOverrideGlitterProtection,takagi.ru.monica.ui.screens.MdbxLayoutReachabilityTest#staleModeMetadataCannotDisableTheGlitterEnvelopeGate",
+        "completed": true,
+        "testCount": 45,
+        "serial": "emulator-5554",
+        "abi": "x86_64",
+        "edition": "main",
+        "startedAt": "2026-10-06T14:46:19.7699058+08:00",
+        "userRestored": true
+      },
+      "unitTests": [
+        {
+          "name": "takagi.ru.monica.repository.Mdbx2ReadSessionCacheTest",
+          "tests": "11",
+          "skipped": "0",
+          "failures": "0",
+          "errors": "0",
+          "timestamp": "2026-10-06T06:38:22"
+        },
+        {
+          "name": "takagi.ru.monica.repository.MdbxAppReplicaPolicyTest",
+          "tests": "3",
+          "skipped": "0",
+          "failures": "0",
+          "errors": "0",
+          "timestamp": "2026-10-06T06:38:22"
+        },
+        {
+          "name": "takagi.ru.monica.security.MdbxGlitterSecurityTest",
+          "tests": "4",
+          "skipped": "0",
+          "failures": "0",
+          "errors": "0",
+          "timestamp": "2026-10-06T06:38:22"
+        }
+      ]
+    },
+    "fdroid": {
+      "instrumentation": {
+        "finishedAt": "2026-10-06T14:46:19.4332882+08:00",
+        "artifacts": [
+          {
+            "sha256": "81F120750A94C9E818A22D935B67D09DB22F9AB244F4CD56399A437E62447C67",
+            "package": "takagi.ru.monica.fdroid"
+          },
+          {
+            "sha256": "AFF10B5FAE2381DB104732EC64ACF70FBBFE51409B738A1EB9DE862A26491A73",
+            "package": "takagi.ru.monica.fdroid.test"
+          }
+        ],
+        "screenTimeoutRestored": true,
+        "classes": "takagi.ru.monica.ui.screens.MdbxGlitterPasswordCreationTest,takagi.ru.monica.repository.MdbxGlitterSessionInstrumentedTest,takagi.ru.monica.repository.MdbxNativeCredentialInstrumentedTest,takagi.ru.monica.repository.Mdbx2ExternalPublicationInstrumentedTest,takagi.ru.monica.ui.screens.MdbxNativeEditorUiTest,takagi.ru.monica.ui.screens.MdbxGlitterTextProtectionUiTest,takagi.ru.monica.ui.screens.MdbxLayoutReachabilityTest#glitterNativeManagerFollowsOrdinaryAppSessionWithoutExtraUnlock,takagi.ru.monica.ui.screens.MdbxLayoutReachabilityTest#overlappingGlitterScreensKeepScreenshotProtectionUntilBothClose,takagi.ru.monica.ui.screens.MdbxLayoutReachabilityTest#ordinaryScreenshotSettingAndDisposalCannotOverrideGlitterProtection,takagi.ru.monica.ui.screens.MdbxLayoutReachabilityTest#staleModeMetadataCannotDisableTheGlitterEnvelopeGate",
+        "completed": true,
+        "testCount": 45,
+        "serial": "emulator-5554",
+        "abi": "x86_64",
+        "edition": "fdroid",
+        "startedAt": "2026-10-06T14:38:57.9782070+08:00",
+        "userRestored": true
+      },
+      "unitTests": [
+        {
+          "name": "takagi.ru.monica.repository.Mdbx2ReadSessionCacheTest",
+          "tests": "11",
+          "skipped": "0",
+          "failures": "0",
+          "errors": "0",
+          "timestamp": "2026-10-06T06:35:47"
+        },
+        {
+          "name": "takagi.ru.monica.repository.MdbxAppReplicaPolicyTest",
+          "tests": "3",
+          "skipped": "0",
+          "failures": "0",
+          "errors": "0",
+          "timestamp": "2026-10-06T06:35:47"
+        },
+        {
+          "name": "takagi.ru.monica.security.MdbxGlitterSecurityTest",
+          "tests": "4",
+          "skipped": "0",
+          "failures": "0",
+          "errors": "0",
+          "timestamp": "2026-10-06T06:35:47"
+        }
+      ]
+    }
+  },
+  "sourceManifest": {
+    "Monica-main/Monica for Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditPasswordScreen.kt": "1b98b2031d6920431d50c3d62b5f52d87140310df6fd01a52fe7d76c52c776a6",
+    "Monica-main/Monica for Android/app/src/main/java/takagi/ru/monica/ui/screens/MdbxNativeManagerScreen.kt": "bb90bb4b800604253e4b67c7e15b8033f1e56e675b571953f298195ff9ac8eb4",
+    "Monica-main/Monica for Android/app/src/main/java/takagi/ru/monica/ui/screens/MdbxNativeObjectEditor.kt": "0a0eafb68cdd12645f0bdf8b37fc77450ca1f73afea6d5bef802be7455a37d57",
+    "Monica-main/Monica for Android/app/src/main/java/takagi/ru/monica/ui/PasswordTabPane.kt": "e1c24d404eaa2abc5bf664a24b66963ba8f05b37c65cd00e8a8a8e159ceb72c6",
+    "Monica-main/Monica for Android/app/src/main/java/takagi/ru/monica/repository/MdbxNativeBrowser.kt": "b10ccfb768b0be59d6e3630eab107d1082da4391db351dd2318c7e32bb86d697",
+    "Monica-main/Monica for Android/app/src/main/java/takagi/ru/monica/repository/Mdbx2Repository.kt": "e901df2a9462c8bcadd82a85584ac7fb2a413c898b8afae048d221e873927811",
+    "Monica-main/Monica for Android/app/src/main/java/takagi/ru/monica/viewmodel/MdbxViewModel.kt": "435d9ab6a8f7445cced46fe27a611c1b202a9fb0f3daced36d4cf24e98394bd0",
+    "Monica-main/fdroid/app/src/main/java/takagi/ru/monica/ui/screens/AddEditPasswordScreen.kt": "1b98b2031d6920431d50c3d62b5f52d87140310df6fd01a52fe7d76c52c776a6",
+    "Monica-main/fdroid/app/src/main/java/takagi/ru/monica/ui/screens/MdbxNativeManagerScreen.kt": "bb90bb4b800604253e4b67c7e15b8033f1e56e675b571953f298195ff9ac8eb4",
+    "Monica-main/fdroid/app/src/main/java/takagi/ru/monica/ui/screens/MdbxNativeObjectEditor.kt": "0a0eafb68cdd12645f0bdf8b37fc77450ca1f73afea6d5bef802be7455a37d57",
+    "Monica-main/fdroid/app/src/main/java/takagi/ru/monica/ui/PasswordTabPane.kt": "e1c24d404eaa2abc5bf664a24b66963ba8f05b37c65cd00e8a8a8e159ceb72c6",
+    "Monica-main/fdroid/app/src/main/java/takagi/ru/monica/repository/MdbxNativeBrowser.kt": "b10ccfb768b0be59d6e3630eab107d1082da4391db351dd2318c7e32bb86d697",
+    "Monica-main/fdroid/app/src/main/java/takagi/ru/monica/repository/Mdbx2Repository.kt": "e901df2a9462c8bcadd82a85584ac7fb2a413c898b8afae048d221e873927811",
+    "Monica-main/fdroid/app/src/main/java/takagi/ru/monica/viewmodel/MdbxViewModel.kt": "a8947bf86b8a7002afe4071945fb830b26af89f46fdcce1056fe89d179cea617",
+    "Monica-main/Monica for Android/app/src/main/java/takagi/ru/monica/ui/screens/MdbxManagerScreen.kt": "bec8b8b4af6fa9b056b9389c72bf83b3423ca6d3d075de9ff13902de9bc56ade",
+    "Monica-main/Monica for Android/app/src/androidTest/java/takagi/ru/monica/ui/screens/MdbxNativeBrowserUiTest.kt": "930ad3c26c2cd2f5999c52e536262188bf8f2672f8d9f9d16212aa6bc3faa818",
+    "Monica-main/Monica for Android/app/src/main/res/values/mdbx_glitter_strings.xml": "0410dd867600c76d24fec8f3e7c1bcf24fbe8193b6baed1c181d3c63de35a8be",
+    "Monica-main/Monica for Android/app/src/main/res/values-zh/mdbx_glitter_strings.xml": "9324acc6dc61634a2d21f4afd50aa90805bda9afbbc56d43f59315b9406f98a3",
+    "Monica-main/Monica for Android/app/src/main/res/values-b+zh+Hant/mdbx_glitter_strings.xml": "f7501ff957786ce32837316be80d21bfa0a974c36108d27c8a2fe449c921ba94",
+    "Monica-main/fdroid/app/src/main/java/takagi/ru/monica/ui/screens/MdbxManagerScreen.kt": "17687f50715c7119d36b28f2e9645adfff94c9a6502402f9d1335db5ec77f975",
+    "Monica-main/fdroid/app/src/androidTest/java/takagi/ru/monica/ui/screens/MdbxNativeBrowserUiTest.kt": "930ad3c26c2cd2f5999c52e536262188bf8f2672f8d9f9d16212aa6bc3faa818",
+    "Monica-main/fdroid/app/src/main/res/values/mdbx_glitter_strings.xml": "0410dd867600c76d24fec8f3e7c1bcf24fbe8193b6baed1c181d3c63de35a8be",
+    "Monica-main/fdroid/app/src/main/res/values-zh/mdbx_glitter_strings.xml": "9324acc6dc61634a2d21f4afd50aa90805bda9afbbc56d43f59315b9406f98a3",
+    "Monica-main/fdroid/app/src/main/res/values-b+zh+Hant/mdbx_glitter_strings.xml": "f7501ff957786ce32837316be80d21bfa0a974c36108d27c8a2fe449c921ba94",
+    "Monica-main/Monica for Android/app/src/main/java/takagi/ru/monica/repository/Mdbx2ReadSessionCache.kt": "48cffa6230be22e27487d81bc5d3e8d262a76f1e07cf1c93544f98118ffa8d11",
+    "Monica-main/Monica for Android/app/src/main/java/takagi/ru/monica/repository/Mdbx2NativeReadSessions.kt": "0f3884491c3d39f62ff86eead79115b7c4122bcfbecf031a9c6b6ffc8681377e",
+    "Monica-main/Monica for Android/app/src/main/java/takagi/ru/monica/repository/Mdbx2VaultSessionExecutor.kt": "6b5146169beec0510815d8df21f05b74460fd37c11e96db216dede425a055b23",
+    "Monica-main/Monica for Android/app/src/test/java/takagi/ru/monica/repository/Mdbx2ReadSessionCacheTest.kt": "c25cdffe9e1dfc43a9eea9448d08de47b575bc51c2ecd09e21748b6f3d2cafec",
+    "Monica-main/fdroid/app/src/main/java/takagi/ru/monica/repository/Mdbx2ReadSessionCache.kt": "48cffa6230be22e27487d81bc5d3e8d262a76f1e07cf1c93544f98118ffa8d11",
+    "Monica-main/fdroid/app/src/main/java/takagi/ru/monica/repository/Mdbx2NativeReadSessions.kt": "0f3884491c3d39f62ff86eead79115b7c4122bcfbecf031a9c6b6ffc8681377e",
+    "Monica-main/fdroid/app/src/main/java/takagi/ru/monica/repository/Mdbx2VaultSessionExecutor.kt": "6b5146169beec0510815d8df21f05b74460fd37c11e96db216dede425a055b23",
+    "Monica-main/fdroid/app/src/test/java/takagi/ru/monica/repository/Mdbx2ReadSessionCacheTest.kt": "c25cdffe9e1dfc43a9eea9448d08de47b575bc51c2ecd09e21748b6f3d2cafec",
+    "Monica-main/Monica for Android/app/src/main/java/takagi/ru/monica/ui/SimpleMainScreen.kt": "6a82210d8fd586d3967ac1e6d9e701a0bfa236ac455d00e6be9a0553f27709b7",
+    "Monica-main/fdroid/app/src/main/java/takagi/ru/monica/ui/SimpleMainScreen.kt": "6a82210d8fd586d3967ac1e6d9e701a0bfa236ac455d00e6be9a0553f27709b7",
+    "Monica-main/Monica for Android/app/src/androidTest/java/takagi/ru/monica/ui/screens/MdbxGlitterTextProtectionUiTest.kt": "a080e06b15931a8c90e9614821b3bf7635def3d0ac24966e11a6c47299eee313",
+    "Monica-main/Monica for Android/app/src/androidTest/java/takagi/ru/monica/ui/screens/MdbxNativeEditorUiTest.kt": "d2d33f946f07860520fbb970047f556f705f936ed49e6bf53c5b215f45c7f3f3",
+    "Monica-main/fdroid/app/src/androidTest/java/takagi/ru/monica/ui/screens/MdbxGlitterTextProtectionUiTest.kt": "a080e06b15931a8c90e9614821b3bf7635def3d0ac24966e11a6c47299eee313",
+    "Monica-main/fdroid/app/src/androidTest/java/takagi/ru/monica/ui/screens/MdbxNativeEditorUiTest.kt": "d2d33f946f07860520fbb970047f556f705f936ed49e6bf53c5b215f45c7f3f3",
+    "Monica-main/Monica for Android/app/src/main/java/takagi/ru/monica/ui/screens/MdbxPasswordCreationRoute.kt": "4143bf579f69a705ff1b23d170a94649f688b9de6733eccec20bc51a065fe0fe",
+    "Monica-main/Monica for Android/app/src/androidTest/java/takagi/ru/monica/ui/screens/MdbxGlitterPasswordCreationTest.kt": "352f7bc49e5e089936fc8ded654ae38cfd9e10ffa5cb0027e7a27298e62d0824",
+    "Monica-main/fdroid/app/src/main/java/takagi/ru/monica/ui/screens/MdbxPasswordCreationRoute.kt": "4143bf579f69a705ff1b23d170a94649f688b9de6733eccec20bc51a065fe0fe",
+    "Monica-main/fdroid/app/src/androidTest/java/takagi/ru/monica/ui/screens/MdbxGlitterPasswordCreationTest.kt": "352f7bc49e5e089936fc8ded654ae38cfd9e10ffa5cb0027e7a27298e62d0824"
+  }
+}

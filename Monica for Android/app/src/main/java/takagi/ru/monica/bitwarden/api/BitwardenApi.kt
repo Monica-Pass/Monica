@@ -146,6 +146,20 @@ interface BitwardenVaultApi {
         @Header("Authorization") authorization: String,
         @Path("id") cipherId: String
     ): Response<CipherApiResponse>
+
+    // Preserve unknown encrypted fields when updating a credential within an existing login.
+    @GET("ciphers/{id}")
+    suspend fun getCipherDocument(
+        @Header("Authorization") authorization: String,
+        @Path("id") cipherId: String
+    ): Response<kotlinx.serialization.json.JsonObject>
+
+    @PUT("ciphers/{id}")
+    suspend fun updateCipherDocument(
+        @Header("Authorization") authorization: String,
+        @Path("id") cipherId: String,
+        @Body cipher: kotlinx.serialization.json.JsonObject
+    ): Response<kotlinx.serialization.json.JsonObject>
     
     /**
      * 创建 Cipher

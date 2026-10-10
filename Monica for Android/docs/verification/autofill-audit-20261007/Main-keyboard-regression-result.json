@@ -1,0 +1,11 @@
+{
+  "testHash": "99777C492911FA67B3E6714F4C31E9C5F7C906D97BF314950417E03DF8EDB1A6",
+  "oldProxy": ":0",
+  "classes": "takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#auditWebKeyboardClearAndRefill,takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#systemAutofillInlineSelectionReturnsTheChosenCredential,takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#systemDropdownPublishesOtpOnlyAfterSelectingTheCredential,takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#disabledOtpNotificationKeepsSystemDropdownFillWithoutNotification,takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#issue153RetentionDisabledRequiresVerificationForNextStep,takagi.ru.monica.autofill_ng.AutofillBlockedRequestInstrumentedTest",
+  "tests": 9,
+  "oldUser": "10",
+  "edition": "Main",
+  "skipInstall": false,
+  "appHash": "4B771C3F9CC1D228A0408CE07A794FC24137005C216D1BA63A2E511CE353A24A",
+  "completed": true
+}

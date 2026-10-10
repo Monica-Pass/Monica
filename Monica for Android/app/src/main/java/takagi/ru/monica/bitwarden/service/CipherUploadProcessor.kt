@@ -2,6 +2,11 @@ package takagi.ru.monica.bitwarden.service
 
 import android.util.Base64
 import android.content.Context
+import androidx.room.withTransaction
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import java.io.IOException
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -51,6 +56,7 @@ class CipherUploadProcessor(
 ) {
     companion object {
         private const val TAG = "CipherUploadProcessor"
+        private val passkeyUpdateMutex = Mutex()
         private const val CARD_FACE_FIELD_NAME = "Monica Card Face"
         private const val KEYSTORE_PROVIDER = "AndroidKeyStore"
         private val CIPHER_STRING_PATTERN =
@@ -544,99 +550,63 @@ class CipherUploadProcessor(
         cipherId: String,
         accessToken: String,
         symmetricKey: SymmetricCryptoKey
-    ): UploadItemResult {
-        return try {
-            suspend fun fail(message: String): UploadItemResult {
-                passkeyDao.markFailedByRecordId(passkey.id)
-                return UploadItemResult.Error(message)
+    ): UploadItemResult = passkeyUpdateMutex.withLock {
+        suspend fun fail(message: String): UploadItemResult {
+            database.withTransaction {
+                if (passkeyDao.getPasskeyByRecordId(passkey.id) == passkey) {
+                    passkeyDao.markFailedByRecordId(passkey.id)
+                }
             }
-
-            if (!canSyncPasskeyToBitwarden(passkey)) {
-                return fail("Legacy passkey cannot be synced to Bitwarden")
+            return UploadItemResult.Error(message)
+        }
+        try {
+            require(passkey.bitwardenVaultId == vault.id && passkey.bitwardenCipherId == cipherId) {
+                "Passkey ownership changed"
             }
-
-            val normalizedPasskey = normalizePasskeyForUpload(passkey)
-            val mapper = PasskeyMapper()
-            val createRequest = mapper.toCreateRequest(normalizedPasskey, normalizedPasskey.bitwardenFolderId)
-            if (createRequest.login?.fido2Credentials.isNullOrEmpty()) {
-                return fail(
-                    "Passkey key material is missing or invalid; cannot sync as FIDO2 credential"
-                )
-            }
-
-            val encryptedCreate = encryptCipherRequest(createRequest, symmetricKey)
-            val updateRequest = encryptedCreate.toUpdateRequest()
-            val requestPayload = runCatching { json.encodeToString(updateRequest) }.getOrNull()
-
-            val vaultApi = apiManager.getVaultApi(vault)
-            val response = vaultApi.updateCipher(
-                authorization = "Bearer $accessToken",
-                cipherId = cipherId,
-                cipher = updateRequest
+            if (!canSyncPasskeyToBitwarden(passkey)) return@withLock fail("Passkey cannot be synced to Bitwarden")
+            val api = BitwardenApiFactory.createVaultApi(
+                baseUrl = vault.apiUrl,
+                okHttpClient = apiManager.getOkHttpClient(vault).newBuilder()
+                    .retryOnConnectionFailure(false).followRedirects(false).followSslRedirects(false).build()
             )
-
-            if (!response.isSuccessful) {
-                captureRawExchange(
-                    vaultId = vault.id,
-                    operation = "upload_passkey_update",
-                    method = "PUT",
-                    endpoint = "/ciphers/$cipherId",
-                    requestBody = requestPayload,
-                    responseCode = response.code(),
-                    responseBody = runCatching { response.errorBody()?.string() }.getOrNull(),
-                    success = false,
-                    error = "update cipher failed: ${response.code()}"
-                )
-                return fail("Update cipher failed: ${response.code()}")
+            suspend fun fetch(): kotlinx.serialization.json.JsonObject {
+                val response = api.getCipherDocument("Bearer $accessToken", cipherId)
+                check(response.isSuccessful) { "Read passkey source failed: ${response.code()}" }
+                return response.body() ?: error("Empty passkey source")
             }
-
-            val updatedCipher = response.body()
-            if (updatedCipher == null) {
-                captureRawExchange(
-                    vaultId = vault.id,
-                    operation = "upload_passkey_update",
-                    method = "PUT",
-                    endpoint = "/ciphers/$cipherId",
-                    requestBody = requestPayload,
-                    responseCode = response.code(),
-                    responseBody = null,
-                    success = false,
-                    error = "update cipher returned empty body"
-                )
-                return fail("Empty response")
+            val original = fetch()
+            val folderChange = takagi.ru.monica.passkey.PasskeyCipherFolderIntent.pending(context, passkey)
+            val request = PasskeyCipherUpdate.build(original, normalizePasskeyForUpload(passkey), cipherId, symmetricKey, folderChange)
+            if (passkeyDao.getPasskeyByRecordId(passkey.id) != passkey) {
+                return@withLock UploadItemResult.Error("Passkey changed during upload; retry with the latest version")
             }
-
-            captureRawExchange(
-                vaultId = vault.id,
-                operation = "upload_passkey_update",
-                method = "PUT",
-                endpoint = "/ciphers/$cipherId",
-                requestBody = requestPayload,
-                responseCode = response.code(),
-                responseBody = runCatching { json.encodeToString(updatedCipher) }.getOrNull(),
-                success = true
-            )
-            if (updatedCipher.login?.fido2Credentials.isNullOrEmpty()) {
-                return fail("Server updated cipher without FIDO2 credential")
+            // lastKnownRevisionDate rejects concurrent remote updates; never retry a stale PUT.
+            try {
+                val response = api.updateCipherDocument("Bearer $accessToken", cipherId, request)
+                if (!response.isSuccessful) return@withLock fail("Update passkey conflict or failure: ${response.code()}")
+            } catch (_: IOException) {
+                // A lost response may follow a committed update. Read back once before deciding;
+                // do not resend a replacement document or create another credential.
             }
-
-            passkeyDao.markSyncedByRecordId(passkey.id, updatedCipher.id)
-            UploadItemResult.Success(updatedCipher.id)
-        } catch (e: Exception) {
-            runCatching { passkeyDao.markFailedByRecordId(passkey.id) }
-            captureRawExchange(
-                vaultId = vault.id,
-                operation = "upload_passkey_update",
-                method = "PUT",
-                endpoint = "/ciphers/$cipherId",
-                requestBody = null,
-                responseCode = null,
-                responseBody = null,
-                success = false,
-                error = e.message ?: "unknown"
-            )
-            android.util.Log.e(TAG, "Update Passkey failed: ${e.message}", e)
-            UploadItemResult.Error(e.message ?: "Unknown error")
+            val actual = fetch()
+            if (!PasskeyCipherUpdate.confirms(request, actual)) {
+                return@withLock fail("Passkey update could not be verified; local data retained")
+            }
+            val unchanged = database.withTransaction {
+                if (passkeyDao.getPasskeyByRecordId(passkey.id) == passkey) {
+                    takagi.ru.monica.passkey.PasskeyCipherFolderIntent.complete(context, passkey, folderChange)
+                    passkeyDao.markSyncedByRecordId(passkey.id, cipherId)
+                    true
+                } else false
+            }
+            if (unchanged) UploadItemResult.Success(cipherId)
+            else UploadItemResult.Error("Newer local passkey edits are still pending")
+        } catch (error: CancellationException) {
+            throw error
+        } catch (error: Exception) {
+            // No decrypted payloads, credentials or key material in diagnostics.
+            android.util.Log.w(TAG, "Passkey update preserved local data: ${error.javaClass.simpleName}")
+            fail("Passkey update failed; local data retained (${error.javaClass.simpleName})")
         }
     }
 

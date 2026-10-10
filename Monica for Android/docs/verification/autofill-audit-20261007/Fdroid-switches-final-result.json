@@ -1,0 +1,11 @@
+{
+  "completed": true,
+  "testHash": "799377EE1CEFFDF50391AF8C5BC1C6094AC091C8509058BCCA8EB6AF80683E01",
+  "classes": "takagi.ru.monica.autofill_ng.AutofillSettingsAuditProbe#everySwitchWritesAndRestoresTheCorrespondingPreference",
+  "oldProxy": ":0",
+  "tests": 1,
+  "skipInstall": false,
+  "appHash": "AACD49A15AAD1EC1440822FBC1AF9F41E198E45830D692F087E897A9B6DCAB3E",
+  "edition": "Fdroid",
+  "oldUser": "10"
+}

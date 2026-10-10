@@ -8,7 +8,7 @@ import kotlin.coroutines.coroutineContext
 
 internal enum class PasskeyMoveIssueReason {
     BOUND_PASSWORD, REFERENCE_ONLY, BITWARDEN_UNSUPPORTED, KEEPASS_CONFLICT,
-    UPDATE_FAILED, SOURCE_CLEANUP_FAILED,
+    UPDATE_FAILED, SOURCE_CLEANUP_FAILED, KEY_UNAVAILABLE, TRANSFER_RESTRICTED, SAME_DATABASE_COPY,
 }
 
 /** Keep only display metadata, never private key material or raw exception messages. */
@@ -19,6 +19,8 @@ internal data class PasskeyMoveIssue(
 )
 
 internal data class PasskeyMoveReport(val movedCount: Int, val issues: List<PasskeyMoveIssue>)
+
+internal class PasskeyTransferBlockedException(val reason: PasskeyMoveIssueReason) : IllegalStateException("Passkey transfer unavailable")
 
 internal class PasskeyBitwardenMoveBlockedException : IllegalStateException("Unsupported Bitwarden passkey")
 
@@ -50,6 +52,7 @@ internal object PasskeyMoveReporter {
                 if (error is CancellationException) throw error
                 when {
                     result.isSuccess -> { moved++; null }
+                    error is PasskeyTransferBlockedException -> error.reason
                     error is PasskeyBitwardenMoveBlockedException -> PasskeyMoveIssueReason.BITWARDEN_UNSUPPORTED
                     error is KeePassPasskeyCredentialConflictException -> PasskeyMoveIssueReason.KEEPASS_CONFLICT
                     error is PasskeyMoveSourceCleanupException -> PasskeyMoveIssueReason.SOURCE_CLEANUP_FAILED

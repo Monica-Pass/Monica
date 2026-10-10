@@ -35,7 +35,9 @@ object PasskeyPrivateKeyStore {
             ?: return normalized
         val storageKey = storageKeyFor(credentialId, rpId, userId, pkcs8Base64)
         SecurityManager(context.applicationContext).putProtectedString(storageKey, pkcs8Base64)
-        return REF_PREFIX + storageKey
+        val reference = REF_PREFIX + storageKey
+        PasskeyPortabilityCache.shared.invalidate(reference)
+        return reference
     }
 
     fun protectPasskey(context: Context, passkey: PasskeyEntry): PasskeyEntry {
@@ -98,6 +100,7 @@ object PasskeyPrivateKeyStore {
         val value = keyReferenceOrMaterial?.trim().orEmpty()
         if (!isProtectedReference(value)) return
         SecurityManager(context.applicationContext).removeProtectedString(value.removePrefix(REF_PREFIX))
+        PasskeyPortabilityCache.shared.invalidate(value)
     }
 
     private fun storageKeyFor(

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cross_device">跨设备使用</string>
+    <string name="passkey_portability_checking">正在检查…</string>
+    <string name="passkey_portability_exportable">密钥可导出</string>
+    <string name="passkey_portability_local_only">仅本地</string>
+    <string name="passkey_portability_key_unavailable">密钥不可用</string>
+    <string name="passkey_portability_invalid">标志冲突</string>
+    <string name="passkey_portability_unknown">尚未确认</string>
+    <string name="passkey_portability_restricted">跨端受限</string>
+    <string name="passkey_portability_exportable_hint">可通过支持的加密格式导出密钥。目标客户端须保留凭据 ID、私钥和注册属性；是否能在网站登录仍取决于目标客户端。</string>
+    <string name="passkey_portability_local_hint">私钥绑定此设备，无法导出。仅复制数据库文件不能让此密钥在其他设备登录。</string>
+    <string name="passkey_portability_missing_hint">此设备上未找到可用私钥，仅有这条记录无法在本机或其他设备登录。</string>
+    <string name="passkey_portability_backup_hint">此凭据标记为不可备份。目标须保留这一注册属性；当前不允许转换到 Bitwarden 或通过凭据交换导出。</string>
+    <string name="passkey_portability_counter_hint">此凭据有非零签名计数历史。Monica 使用零计数，跨设备使用可能被检查历史计数的网站拒绝。</string>
+    <string name="passkey_portability_algorithm_hint">目标客户端须支持相同的密钥算法。当前 Bitwarden 转移仅支持 ES256。</string>
+    <string name="passkey_portability_invalid_hint">备份属性互相冲突，不能通过修改注册属性强行签名。请保留源凭据以便恢复。</string>
+    <string name="passkey_portability_unknown_hint">暂时无法检查密钥能力，请解锁来源数据库后重试。</string>
+</resources>

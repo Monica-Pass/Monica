@@ -138,6 +138,10 @@ class MdbxRepositoryRouter(
         maFileJson
     )
 
+    override suspend fun upsertSteamMaFileEntryInFolder(
+        databaseId: Long, entryId: String?, title: String, maFileJson: String, folderId: String?
+    ): String = repositoryFor(databaseId).upsertSteamMaFileEntryInFolder(databaseId, entryId, title, maFileJson, folderId)
+
     override suspend fun deleteSteamMaFileEntry(databaseId: Long, entryId: String) =
         repositoryFor(databaseId).deleteSteamMaFileEntry(databaseId, entryId)
 

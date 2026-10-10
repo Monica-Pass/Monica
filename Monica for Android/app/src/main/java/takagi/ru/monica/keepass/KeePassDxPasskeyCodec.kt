@@ -74,6 +74,8 @@ object KeePassDxPasskeyCodec {
             aaguid = "",
             signCount = 0L,
             isBackedUp = parseBooleanCompat(getField(FIELD_FLAG_BS)) == true,
+            backupEligible = parseBooleanCompat(getField(FIELD_FLAG_BE)),
+            backupState = parseBooleanCompat(getField(FIELD_FLAG_BS)),
             notes = notes,
             keepassDatabaseId = databaseId,
             keepassGroupPath = groupPath,
@@ -94,14 +96,9 @@ object KeePassDxPasskeyCodec {
             ?: passkey.credentialId
         val privateKeyPem = exportPrivateKeyPem(passkey.privateKeyAlias)
             ?: existingFieldValue(FIELD_PRIVATE_KEY)
-        val backupState = if (passkey.isBackedUp) {
-            "true"
-        } else {
-            existingFieldValue(FIELD_FLAG_BS).ifBlank { "false" }
-        }
-        val backupEligibility = existingFieldValue(FIELD_FLAG_BE).ifBlank {
-            if (passkey.isBackedUp) "true" else "false"
-        }
+        val flags = takagi.ru.monica.passkey.PasskeyBackupFlags.authenticatorFlags(passkey.backupEligible, passkey.backupState)
+        val backupEligibility = ((flags and 0x08) != 0).toString()
+        val backupState = ((flags and 0x10) != 0).toString()
 
         return listOf(
             FIELD_PASSKEY to EntryValue.Plain(""),

@@ -53,6 +53,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.Flow
@@ -334,27 +335,27 @@ fun UnifiedMoveToCategoryBottomSheet(
     LaunchedEffect(activeMdbxDatabaseId) {
         activeMdbxDatabaseId?.let(refreshMdbxFolders)
     }
-    val bitwardenFolders by (
+    val bitwardenFolders by remember(activeSource.key, showBitwardenFolderTargets) {
         if (activeSource is MovePickerSource.BitwardenVaultSource && showBitwardenFolderTargets) {
             getBitwardenFolders(activeSource.vault.id)
         } else {
             flowOf(emptyList())
         }
-    ).collectAsState(initial = emptyList())
-    val keepassGroups by (
+    }.collectAsState(initial = emptyList())
+    val keepassGroups by remember(activeSource.key, showBitwardenFolderTargets) {
         if (activeSource is MovePickerSource.KeePassDatabase) {
             getKeePassGroups(activeSource.database.id)
         } else {
             flowOf(emptyList())
         }
-    ).collectAsState(initial = emptyList())
-    val mdbxFolders by (
+    }.collectAsState(initial = emptyList())
+    val mdbxFolders by remember(activeSource.key, showBitwardenFolderTargets) {
         if (activeSource is MovePickerSource.MdbxDatabase) {
             getMdbxFolders(activeSource.database.id)
         } else {
             flowOf(emptyList())
         }
-    ).collectAsState(initial = emptyList())
+    }.collectAsState(initial = emptyList())
     val keepassGroupNodes = remember(keepassGroups) { buildKeePassGroupNodes(keepassGroups) }
     val mdbxFolderNodes = remember(mdbxFolders) { buildMdbxFolderNodes(mdbxFolders) }
 
@@ -551,6 +552,7 @@ fun UnifiedMoveToCategoryBottomSheet(
                         )
                     }
                     FilterChip(
+                        modifier = Modifier.testTag("transfer_action_copy"),
                         selected = selectedAction.value == UnifiedMoveAction.COPY,
                         onClick = { selectedAction.value = UnifiedMoveAction.COPY },
                         label = { Text(text = stringResource(R.string.copy)) }
@@ -648,7 +650,7 @@ fun UnifiedMoveToCategoryBottomSheet(
                     FilledTonalButton(
                         onClick = ::confirmSelectedTarget,
                         enabled = selectedTarget.value != null,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.testTag("transfer_confirm").fillMaxWidth()
                     ) {
                         Icon(Icons.Default.Check, contentDescription = null)
                         Spacer(modifier = Modifier.width(8.dp))

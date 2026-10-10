@@ -50,6 +50,8 @@ object KeePassPasskeySyncCodec {
         val transports: String,
         val aaguid: String,
         val signCount: Long,
+        val backupEligible: Boolean? = null,
+        val backupState: Boolean? = null,
         val notes: String = "",
         val passkeyMode: String = PasskeyEntry.MODE_KEEPASS_COMPAT
     ) {
@@ -78,6 +80,8 @@ object KeePassPasskeySyncCodec {
                 aaguid = aaguid,
                 signCount = signCount,
                 isBackedUp = false,
+                backupEligible = backupEligible,
+                backupState = backupState,
                 notes = notes,
                 keepassDatabaseId = databaseId,
                 keepassGroupPath = groupPath,
@@ -111,6 +115,8 @@ object KeePassPasskeySyncCodec {
                     transports = passkey.transports,
                     aaguid = passkey.aaguid,
                     signCount = passkey.signCount,
+                    backupEligible = passkey.backupEligible,
+                    backupState = passkey.backupState,
                     notes = passkey.notes,
                     passkeyMode = PasskeyEntry.MODE_KEEPASS_COMPAT
                 )

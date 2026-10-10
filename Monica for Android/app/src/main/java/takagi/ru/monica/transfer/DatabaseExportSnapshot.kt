@@ -207,6 +207,10 @@ internal class DatabaseExportSnapshotLoader(context: Context) {
                         privateKeyAlias = "", publicKey = "")).copy(privateKeyAlias = data.getString("private_key_alias"),
                         publicKeyAlgorithm = data.optInt("public_key_algorithm", -7), publicKey = data.optString("public_key"),
                         signCount = data.optLong("sign_count"), notes = data.optString("notes"),
+                        backupEligible = takagi.ru.monica.passkey.PasskeyBackupFlags.mergeEligibility(previous?.backupEligible,
+                            takagi.ru.monica.passkey.PasskeyBackupFlags.readBoolean(data, "backup_eligible"),
+                            hasExistingCredential = previous != null),
+                        backupState = takagi.ru.monica.passkey.PasskeyBackupFlags.readBoolean(data, "backup_state") ?: previous?.backupState,
                         transports = data.optString("transports", "internal"), aaguid = data.optString("aaguid"),
                         passkeyMode = data.optString("passkey_mode", PasskeyEntry.MODE_BW_COMPAT),
                         mdbxDatabaseId = source.databaseId, categoryId = data.category())

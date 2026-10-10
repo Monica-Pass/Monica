@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_copy_result_title">Copy results</string>
+    <string name="passkey_copy_result_summary">Copied %1$d; skipped or failed: %2$d</string>
+    <string name="passkey_copy_success_count">Copied %1$d Passkeys</string>
+    <string name="passkey_transfer_key_unavailable">The private key is unavailable on this device.</string>
+    <string name="passkey_transfer_restricted">This Passkey cannot be transferred to this destination.</string>
+    <string name="passkey_transfer_same_database_copy">This database requires a unique credential ID. Choose another database to copy this Passkey.</string>
+    <string name="passkey_copy_blocked_title">Some Passkeys cannot be copied</string>
+    <string name="passkey_move_blocked_title">Some Passkeys cannot be moved</string>
+    <string name="passkey_transfer_preflight_summary">%1$d Passkeys cannot be processed; %2$d can continue. Nothing has been changed yet.</string>
+    <string name="passkey_cancel_copy">Cancel copy</string>
+    <string name="passkey_cancel_move">Cancel move</string>
+    <string name="passkey_transfer_skip">Skip %1$d and continue</string>
+</resources>

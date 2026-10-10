@@ -107,6 +107,10 @@ interface MdbxRepository {
         title: String,
         maFileJson: String
     ): String
+    suspend fun upsertSteamMaFileEntryInFolder(
+        databaseId: Long, entryId: String?, title: String, maFileJson: String, folderId: String?
+    ): String = throw UnsupportedOperationException("Steam folder writes are unavailable")
+
     suspend fun deleteSteamMaFileEntry(databaseId: Long, entryId: String)
 
     suspend fun getVaultDiagnostics(databaseId: Long): MdbxVaultDiagnostics

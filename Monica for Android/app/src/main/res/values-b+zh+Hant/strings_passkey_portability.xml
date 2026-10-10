@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cross_device">跨裝置使用</string>
+    <string name="passkey_portability_checking">正在檢查…</string>
+    <string name="passkey_portability_exportable">金鑰可匯出</string>
+    <string name="passkey_portability_local_only">僅本機</string>
+    <string name="passkey_portability_key_unavailable">金鑰無法使用</string>
+    <string name="passkey_portability_invalid">標記衝突</string>
+    <string name="passkey_portability_unknown">尚未確認</string>
+    <string name="passkey_portability_restricted">跨端受限</string>
+    <string name="passkey_portability_exportable_hint">可透過支援的加密格式匯出金鑰。目標用戶端須保留憑證 ID、私鑰與註冊屬性；能否在網站登入仍取決於目標用戶端。</string>
+    <string name="passkey_portability_local_hint">私鑰綁定此裝置，無法匯出。僅複製資料庫檔案無法讓此金鑰在其他裝置登入。</string>
+    <string name="passkey_portability_missing_hint">此裝置上未找到可用私鑰，僅有此紀錄無法在本機或其他裝置登入。</string>
+    <string name="passkey_portability_backup_hint">此憑證標記為不可備份。目標須保留此註冊屬性；目前不允許轉換至 Bitwarden 或透過憑證交換匯出。</string>
+    <string name="passkey_portability_counter_hint">此憑證有非零簽章計數歷史。Monica 使用零計數，跨裝置使用可能被檢查歷史計數的網站拒絕。</string>
+    <string name="passkey_portability_algorithm_hint">目標用戶端須支援相同的金鑰演算法。目前 Bitwarden 轉移僅支援 ES256。</string>
+    <string name="passkey_portability_invalid_hint">備份屬性互相衝突，不能藉由修改註冊屬性強行簽章。請保留來源憑證以便復原。</string>
+    <string name="passkey_portability_unknown_hint">暫時無法檢查金鑰能力，請解鎖來源資料庫後重試。</string>
+</resources>

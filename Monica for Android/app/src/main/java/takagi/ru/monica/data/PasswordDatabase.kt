@@ -46,7 +46,7 @@ import takagi.ru.monica.keepass.KeePassPendingChangeDao
         // KeePass entry-level pending changes
         KeePassPendingChange::class
     ],
-    version = 79,
+    version = 80,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -2334,6 +2334,14 @@ abstract class PasswordDatabase : RoomDatabase() {
             }
         }
 
+        internal val MIGRATION_79_80 = object : androidx.room.migration.Migration(79, 80) {
+            override fun migrate(database: androidx.sqlite.db.SupportSQLiteDatabase) {
+                // Do not derive signing flags from is_backed_up or rewrite keys/counters.
+                addColumnIfMissing(database, "passkeys", "backup_eligible", "INTEGER DEFAULT NULL")
+                addColumnIfMissing(database, "passkeys", "backup_state", "INTEGER DEFAULT NULL")
+            }
+        }
+
         private fun addColumnIfMissing(
             database: androidx.sqlite.db.SupportSQLiteDatabase,
             tableName: String,
@@ -2441,7 +2449,8 @@ abstract class PasswordDatabase : RoomDatabase() {
                         MIGRATION_75_76,   // MDBX2 external SAF tree metadata
                         MIGRATION_76_77,   // Attachments for PasswordEntry and SecureItem
                         MIGRATION_77_78,   // Monica-owned KeePass key-file copies
-                        MIGRATION_78_79    // Explicit multi-password project identity
+                        MIGRATION_78_79,   // Explicit multi-password project identity
+                        MIGRATION_79_80    // Preserve explicit WebAuthn backup flags
                     )
                     // 启用多进程失效通知：IME 跑在 :ime 独立进程，主进程需要
                     // 感知 IME 进程对数据库的修改（例如最近填充时间戳等）。

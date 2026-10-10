@@ -135,6 +135,7 @@ internal fun PasskeyDetailPane(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
+    val portability = takagi.ru.monica.ui.components.rememberPasskeyPortability(passkey)
     val createdTime = remember(passkey.createdAt) {
         DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(Date(passkey.createdAt))
     }
@@ -207,6 +208,7 @@ internal fun PasskeyDetailPane(
                     label = stringResource(R.string.passkey_detail_storage),
                     value = passkey.passkeyMode.toReadableModeLabel()
                 )
+                takagi.ru.monica.ui.components.PasskeyPortabilityDetails(portability)
             }
         }
 

@@ -131,6 +131,9 @@ interface PasskeyDao {
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(passkey: PasskeyEntry)
+
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    suspend fun insertCopy(passkey: PasskeyEntry): Long
     
     /**
      * 批量插入 Passkeys

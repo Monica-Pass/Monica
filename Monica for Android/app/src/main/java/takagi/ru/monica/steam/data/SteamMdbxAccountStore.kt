@@ -50,14 +50,18 @@ class SteamMdbxAccountStore(
     suspend fun upsertAccount(
         databaseId: Long,
         entryId: String?,
-        account: SteamAccount
+        account: SteamAccount,
+        folderId: String? = null,
+        relocate: Boolean = false
     ): SteamMdbxAccountRecord {
         val maFileJson = SteamMaFileBackupCodec.encode(account)
         val title = account.displayName
             .ifBlank { account.accountName }
             .ifBlank { account.steamId }
             .ifBlank { "Steam" }
-        val resolvedEntryId = repository.upsertSteamMaFileEntry(
+        val resolvedEntryId = if (relocate) repository.upsertSteamMaFileEntryInFolder(
+            databaseId, entryId, title, maFileJson, folderId
+        ) else repository.upsertSteamMaFileEntry(
             databaseId = databaseId,
             entryId = entryId,
             title = title,

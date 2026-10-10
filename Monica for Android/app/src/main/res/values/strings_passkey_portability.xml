@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="passkey_cross_device">Cross-device use</string>
+    <string name="passkey_portability_checking">Checking…</string>
+    <string name="passkey_portability_exportable">Key can be exported</string>
+    <string name="passkey_portability_local_only">Local only</string>
+    <string name="passkey_portability_key_unavailable">Key unavailable</string>
+    <string name="passkey_portability_invalid">Conflicting metadata</string>
+    <string name="passkey_portability_unknown">Not verified</string>
+    <string name="passkey_portability_restricted">Transfer limited</string>
+    <string name="passkey_portability_exportable_hint">The key can be exported in a supported encrypted format. The destination must preserve its ID, key and registration properties; website compatibility still depends on the destination client.</string>
+    <string name="passkey_portability_local_hint">The private key is bound to this device and cannot be exported. Copying the database alone will not enable sign-in on another device.</string>
+    <string name="passkey_portability_missing_hint">No usable private key was found on this device. This record alone cannot sign in here or on another device.</string>
+    <string name="passkey_portability_backup_hint">This credential was marked as not backup eligible. Only a destination that preserves that property can use it; conversion to Bitwarden or credential exchange is blocked.</string>
+    <string name="passkey_portability_counter_hint">This credential has a nonzero signature counter history. Monica uses zero counters; cross-device use may be rejected by a website that checks prior counters.</string>
+    <string name="passkey_portability_algorithm_hint">The destination must support the same key algorithm. Current Bitwarden transfer supports ES256 only.</string>
+    <string name="passkey_portability_invalid_hint">The backup properties conflict. Signing must not silently change registered properties; keep the source credential for recovery.</string>
+    <string name="passkey_portability_unknown_hint">Key capability could not be checked. Unlock the source database and try again.</string>
+</resources>
