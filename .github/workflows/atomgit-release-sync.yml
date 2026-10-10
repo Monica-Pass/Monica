@@ -1,0 +1,82 @@
+name: Sync Releases to AtomGit
+
+on:
+  # 与 telegram-release.yml 一致：published 已覆盖直接发布与草稿转正式发布，
+  # 不同时监听 released，避免同一次发布触发两次。
+  release:
+    types: [published]
+
+  # 手动触发：回填历史 Release，或重跑某个出错的版本。
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: '要同步的 Release tag（例如 V1.0.318）；留空则同步最新 Release'
+        required: false
+        type: string
+      all:
+        description: '回填全部历史 Release（可配合 limit 分批执行）'
+        required: false
+        type: boolean
+        default: false
+      limit:
+        description: '当 all=true 时，只同步最新的 N 个 Release；留空 = 全部'
+        required: false
+        type: string
+      dry_run:
+        description: '仅预演：打印计划，不写入 AtomGit'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: atomgit-release-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: Sync release metadata and assets
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      # 脚本固定取自默认分支：回填旧 tag 时旧提交里还没有这个脚本。
+      - name: Checkout default branch
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      # 可选加速：文章实测的 AtomGit 解析地址。默认关闭，
+      # 需要在 Settings → Variables 里设置 ATOMGIT_HOSTS_HACK=true 才启用。
+      - name: Point AtomGit hosts to fast resolver (optional)
+        if: ${{ vars.ATOMGIT_HOSTS_HACK == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "159.138.147.37 api.atomgit.com" | sudo tee -a /etc/hosts
+          echo "159.138.147.37 file.atomgit.com" | sudo tee -a /etc/hosts
+          echo "159.138.147.37 file.gitcode.com" | sudo tee -a /etc/hosts
+          getent hosts api.atomgit.com || true
+
+      - name: Sync to AtomGit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_OWNER: ${{ github.repository_owner }}
+          GITHUB_REPO: ${{ github.event.repository.name }}
+          ATOMGIT_TOKEN: ${{ secrets.GITCODERELEASE }}
+          ATOMGIT_API_BASE: ${{ vars.ATOMGIT_API_BASE || 'https://api.atomgit.com' }}
+          ATOMGIT_OWNER: ${{ vars.ATOMGIT_REPO_OWNER || 'Monica-Pass' }}
+          ATOMGIT_REPO: ${{ vars.ATOMGIT_REPO_NAME || 'Monica' }}
+          RELEASE_TAG: ${{ inputs.tag || github.event.release.tag_name }}
+          SYNC_ALL_RELEASES: ${{ inputs.all }}
+          RELEASE_LIMIT: ${{ inputs.limit }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: node .github/scripts/sync-atomgit-release.js
