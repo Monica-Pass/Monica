@@ -8,6 +8,7 @@
 
 const { Readable } = require('node:stream');
 const { setTimeout: sleep } = require('node:timers/promises');
+const https = require('node:https');
 
 const GITHUB_API = 'https://api.github.com';
 const USER_AGENT = 'monica-atomgit-release-sync';
@@ -146,14 +147,42 @@ async function* streamWithProgress(body, total, label) {
   }
 }
 
+// 对象存储的签名上传地址必须原样使用：只带接口返回的 headers，
+// 不转发 AtomGit 令牌，也不跟随重定向（node:https 默认不跟随）。
+function putStream(uploadUrl, headers, stream, size) {
+  return new Promise((resolve, reject) => {
+    const target = new URL(uploadUrl);
+    const request = https.request(
+      {
+        method: 'PUT',
+        hostname: target.hostname,
+        port: target.port || 443,
+        path: `${target.pathname}${target.search}`,
+        headers: { ...headers, 'Content-Length': String(size) },
+      },
+      (response) => {
+        let body = '';
+        response.on('data', (chunk) => {
+          body += chunk;
+        });
+        response.on('end', () => resolve({ status: response.statusCode, body }));
+      },
+    );
+    request.on('error', reject);
+    stream.pipe(request);
+  });
+}
+
 async function uploadAsset(tag, asset) {
-  const uploaded = await requestJson(
+  const upload = await requestJson(
     'AtomGit',
     atomgitUrl(`/releases/${encodeURIComponent(tag)}/upload_url`, { file_name: asset.name }),
     { headers: atomgitHeaders() },
   );
-  const uploadUrl = uploaded?.upload_url;
-  if (!uploadUrl) fail(`AtomGit 未返回上传地址（${tag} / ${asset.name}）`);
+  const uploadUrl = upload?.url;
+  if (!uploadUrl || !uploadUrl.startsWith('https://')) {
+    fail(`AtomGit 未返回上传地址（${tag} / ${asset.name}）：${redact(JSON.stringify(upload)).slice(0, 300)}`);
+  }
 
   const source = await fetch(asset.url, {
     headers: githubHeaders({ Accept: 'application/octet-stream' }),
@@ -163,25 +192,17 @@ async function uploadAsset(tag, asset) {
   if (!source.body) fail(`GitHub 附件响应没有内容（${asset.name}）`);
 
   log(`[upload] ${tag}: ${asset.name}（${formatBytes(asset.size)}）`);
-  const response = await fetch(uploadUrl, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': asset.content_type || 'application/octet-stream',
-      'Content-Length': String(asset.size),
-      'User-Agent': USER_AGENT,
-    },
-    body: Readable.from(streamWithProgress(source.body, asset.size, asset.name)),
-    duplex: 'half',
-  });
-  const text = await response.text();
-  if (response.status === 409) {
-    log(`[skip] ${tag}: 附件 ${asset.name} 已存在（服务端 409）`);
+  const response = await putStream(
+    uploadUrl,
+    upload.headers || {},
+    Readable.from(streamWithProgress(source.body, asset.size, asset.name)),
+    asset.size,
+  );
+  if (response.status >= 200 && response.status < 300) {
+    log(`[done] ${tag}: 已上传 ${asset.name}`);
     return;
   }
-  if (!response.ok) {
-    fail(`AtomGit 附件上传失败：HTTP ${response.status} ${redact(text).slice(0, 300)}（${asset.name}）`);
-  }
-  log(`[done] ${tag}: 已上传 ${asset.name}`);
+  fail(`AtomGit 附件上传失败：HTTP ${response.status} ${redact(response.body).slice(0, 300)}（${asset.name}）`);
 }
 
 async function syncRelease(release) {
@@ -189,7 +210,7 @@ async function syncRelease(release) {
   const meta = {
     name: release.name || tag,
     body: release.body || '',
-    prerelease: Boolean(release.prerelease),
+    release_status: release.prerelease ? 'pre' : 'latest',
   };
 
   let existing;
@@ -202,7 +223,7 @@ async function syncRelease(release) {
   if (existing) {
     const sameMeta = (existing.name || '') === meta.name
       && (existing.body || '') === meta.body
-      && Boolean(existing.prerelease) === meta.prerelease;
+      && (existing.release_status || 'latest') === meta.release_status;
     if (sameMeta) {
       log(`[skip] ${tag}: 发行说明已是最新`);
     } else if (DRY_RUN) {
@@ -211,20 +232,25 @@ async function syncRelease(release) {
       await requestJson('AtomGit', atomgitUrl(`/releases/${encodeURIComponent(tag)}`), {
         method: 'PATCH',
         headers: atomgitHeaders({ 'Content-Type': 'application/json' }),
-        body: JSON.stringify({ tag_name: tag, ...meta }),
+        body: JSON.stringify(meta),
       });
       log(`[update] ${tag}: 已更新发行说明`);
     }
+  } else if (DRY_RUN) {
+    log(`[dry-run] ${tag}: 将新建 Release「${meta.name}」`);
   } else {
-    if (DRY_RUN) {
-      log(`[dry-run] ${tag}: 将新建 Release「${meta.name}」`);
-    } else {
+    try {
       await requestJson('AtomGit', atomgitUrl('/releases'), {
         method: 'POST',
         headers: atomgitHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({ tag_name: tag, target_commitish: release.target_commitish || 'main', ...meta }),
       });
       log(`[create] ${tag}: 已新建 Release`);
+    } catch (error) {
+      // 查询接口可能滞后：创建冲突说明 Release 已存在，转去读现有附件。
+      if (!/HTTP 409|already exist/i.test(String(error?.message))) throw error;
+      log(`[warn] ${tag}: 创建返回冲突，改为读取现有 Release`);
+      existing = await getAtomgitRelease(tag);
     }
   }
 
@@ -276,7 +302,11 @@ async function main() {
   log(`完成：${release.tag_name} 同步成功${DRY_RUN ? '（dry-run，未写入 AtomGit）' : ''}`);
 }
 
-main().catch((error) => {
-  console.error(`[error] ${redact(error?.message || error)}`);
-  process.exitCode = 1;
-});
+if (require.main === module) {
+  main().catch((error) => {
+    console.error(`[error] ${redact(error?.message || error)}`);
+    process.exitCode = 1;
+  });
+}
+
+module.exports = { putStream };
