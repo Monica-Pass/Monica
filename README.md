@@ -172,6 +172,7 @@ MDBX 是 Monica 正在推进的本地优先加密 vault 格式。它不是简单
 
 Monica 的设计、兼容性适配与部分功能方向，受到了以下优秀开源项目和软件的启发与帮助：
 
+- [AtomGit](https://atomgit.com/Monica-Pass/Monica) - 在国内托管 Monica，帮助中国大陆用户更快访问项目。
 - [Keyguard](https://github.com/AChep/keyguard-app) - Android 端密码管理器的交互设计与体验参考。
 - [PixelPlayer](https://github.com/PixelPlayerHQ/PixelPlayer) - Android 端密码库滚动条样式参考。
 - [Bitwarden](https://bitwarden.com/) - 开源密码管理生态、Vault 模型与同步能力的重要参考。
