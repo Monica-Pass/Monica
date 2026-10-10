@@ -286,10 +286,6 @@ async function syncRelease(release) {
   );
 
   const assets = release.assets || [];
-  if (!assets.length) {
-    log(`[info] ${tag}: 没有附件`);
-    return;
-  }
   for (const asset of assets) {
     if (existingAssets.has(asset.name)) {
       log(`[skip] ${tag}: 附件 ${asset.name} 已存在（${formatBytes(asset.size)}）`);
@@ -310,12 +306,35 @@ async function getTargetRelease() {
   return release;
 }
 
+// Release 事件可能先于附件上传到达（与 telegram-release.yml 同一套兜底）：
+// 最多等 5 分钟，并要求附件数量在两次轮询之间稳定，避免只同步到一半的包。
+// 本仓库 86 个 Release 全部至少带 1 个附件，所以等不到就是异常，直接失败，
+// 宁可不建也不在 AtomGit 留一个只有源码包的空发行版。
+const ASSET_WAIT_ATTEMPTS = 30;
+const ASSET_WAIT_INTERVAL_MS = 10000;
+
+async function waitForAssets(tag) {
+  let previous = -1;
+  for (let attempt = 1; attempt <= ASSET_WAIT_ATTEMPTS; attempt++) {
+    const release = await getGithubRelease(tag);
+    if (!release) fail(`GitHub 上找不到 Release：${tag}`);
+    const count = (release.assets || []).length;
+    if (count > 0 && count === previous) return release;
+    previous = count;
+    if (attempt === ASSET_WAIT_ATTEMPTS) break;
+    log(`[wait] ${tag}: 附件还没到齐（当前 ${count} 个，第 ${attempt}/${ASSET_WAIT_ATTEMPTS} 次），10 秒后重试…`);
+    await sleep(ASSET_WAIT_INTERVAL_MS);
+  }
+  fail(`${tag}: 等待 5 分钟后 GitHub Release 仍没有附件，已放弃同步`);
+}
+
 async function main() {
   if (!GITHUB_TOKEN) fail('缺少 GITHUB_TOKEN');
   if (!hasAtomgitToken && !DRY_RUN) fail('缺少 AtomGit 令牌（仓库 Secret：GITCODERELEASE）');
 
-  const release = await getTargetRelease();
+  let release = await getTargetRelease();
   log(`[plan] tag：${release.tag_name}${DRY_RUN ? '（dry-run）' : ''}`);
+  release = await waitForAssets(release.tag_name);
 
   try {
     await syncRelease(release);
