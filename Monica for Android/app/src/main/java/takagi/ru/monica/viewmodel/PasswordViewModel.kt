@@ -501,6 +501,7 @@ class PasswordViewModel internal constructor(
 
     private val categoriesSource = repository.getAllCategories()
         .distinctUntilChanged()
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000), replay = 1)
     val categoriesReady: StateFlow<Boolean> = categoriesSource
         .map { true }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
@@ -844,6 +845,9 @@ class PasswordViewModel internal constructor(
     // Lightweight stream for list metadata/lookup use-cases.
     // Keep password blank to avoid redundant decrypt work and avoid exposing ciphertext to UI consumers.
     private val allPasswordsForUiSource: Flow<List<PasswordEntry>> = rawAllPasswordsSource
+        // Equal Room snapshots need no new metadata copies. Keep this downstream
+        // of the raw source so search/custom-field refresh notifications are retained.
+        .distinctUntilChanged()
         .map { entries ->
             entries.map { entry ->
                 if (entry.password.isEmpty()) entry else entry.copy(password = "")
@@ -907,6 +911,7 @@ class PasswordViewModel internal constructor(
 
     // Lightweight archive stream for Vault V2. Password contents stay out of list state.
     private val archivedPasswordsForUiSource: Flow<List<PasswordEntry>> = rawArchivedPasswordsSource
+        .distinctUntilChanged()
         .map { entries ->
             entries.map { entry ->
                 if (entry.password.isEmpty()) entry else entry.copy(password = "")

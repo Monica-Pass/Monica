@@ -380,7 +380,6 @@ fun PasswordListContent(
         retainedState = aggregateRetainedStateViewModel.retainedState,
     )
     val fastScrollRequestKey by viewModel.fastScrollRequestKey.collectAsState()
-    val fastScrollProgress by viewModel.fastScrollProgress.collectAsState()
     val quickStatusTransferState by PasswordBatchTransferProgressTracker.progress.collectAsState()
     val quickStatusDeleteState by PasswordBatchDeleteProgressTracker.progress.collectAsState()
     var showQuickStatusTransferDialog by remember { mutableStateOf(false) }
@@ -1639,7 +1638,9 @@ fun PasswordListContent(
         currentListItemKeys = passwordPageListItemKeys,
         scrollToTopRequestKey = scrollToTopRequestKey,
         fastScrollRequestKey = fastScrollRequestKey,
-        fastScrollProgress = fastScrollProgress,
+        // A request recomposes this call via fastScrollRequestKey. Ordinary list
+        // scrolling must not subscribe the whole page to progress feedback.
+        fastScrollProgress = viewModel.fastScrollProgress.value,
         allowScrollPositionPersistence =
             isPasswordPageListModelReady &&
                 hasVisibleListItems &&

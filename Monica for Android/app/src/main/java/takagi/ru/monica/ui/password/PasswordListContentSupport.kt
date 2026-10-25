@@ -831,7 +831,6 @@ internal fun rememberPasswordListLazyListState(
     val backToTopVisibilityCallback by rememberUpdatedState(onBackToTopVisibilityChange)
     val latestAllowScrollPositionPersistence by rememberUpdatedState(allowScrollPositionPersistence)
     val latestListItemKeySet by rememberUpdatedState(currentListItemKeySet)
-    var shouldShowBackToTop by remember { mutableStateOf(false) }
     var lastHandledScrollToTopRequestKey by rememberSaveable {
         mutableStateOf(scrollToTopRequestKey)
     }
@@ -841,38 +840,28 @@ internal fun rememberPasswordListLazyListState(
     var hasAppliedDeferredScrollRestore by remember {
         mutableStateOf(false)
     }
-    val backToTopEstimatedScrollPx by remember(listState) {
-        derivedStateOf {
+    // Observe scroll pixels in an effect, outside the containing page's composition.
+    // Keep hysteresis local to the collector and publish only visibility changes.
+    LaunchedEffect(listState) {
+        var shouldShowBackToTop = false
+        snapshotFlow {
             val layoutInfo = listState.layoutInfo
             val viewportHeight = (layoutInfo.viewportEndOffset - layoutInfo.viewportStartOffset)
                 .coerceAtLeast(1)
             val firstVisibleItemSize =
                 layoutInfo.visibleItemsInfo.firstOrNull()?.size?.coerceAtLeast(1)
                     ?: viewportHeight
-            (listState.firstVisibleItemIndex * firstVisibleItemSize) +
+            val estimatedScrollPx = (listState.firstVisibleItemIndex * firstVisibleItemSize) +
                 listState.firstVisibleItemScrollOffset
+            if (shouldShowBackToTop) {
+                listState.firstVisibleItemIndex > 0 || estimatedScrollPx >= (viewportHeight * 1.6f).toInt()
+            } else {
+                estimatedScrollPx >= viewportHeight * 2
+            }
+        }.collect { visible ->
+            shouldShowBackToTop = visible
+            backToTopVisibilityCallback(visible)
         }
-    }
-    val backToTopViewportHeight by remember(listState) {
-        derivedStateOf {
-            val layoutInfo = listState.layoutInfo
-            (layoutInfo.viewportEndOffset - layoutInfo.viewportStartOffset).coerceAtLeast(1)
-        }
-    }
-
-    LaunchedEffect(backToTopEstimatedScrollPx, backToTopViewportHeight) {
-        val viewportHeight = backToTopViewportHeight
-        val showThreshold = viewportHeight * 2
-        val hideThreshold = (viewportHeight * 1.6f).toInt()
-        shouldShowBackToTop = if (shouldShowBackToTop) {
-            listState.firstVisibleItemIndex > 0 || backToTopEstimatedScrollPx >= hideThreshold
-        } else {
-            backToTopEstimatedScrollPx >= showThreshold
-        }
-    }
-
-    LaunchedEffect(shouldShowBackToTop) {
-        backToTopVisibilityCallback(shouldShowBackToTop)
     }
 
     DisposableEffect(listState, viewModel) {
@@ -952,12 +941,16 @@ internal fun rememberPasswordListLazyListState(
         }
     }
 
+    // layoutInfo changes on every scroll frame; restoration only needs count changes.
+    val totalListItemsCount by remember(listState) {
+        derivedStateOf { listState.layoutInfo.totalItemsCount }
+    }
     LaunchedEffect(
         allowScrollPositionPersistence,
         currentListItemKeys,
         savedScrollIndex,
         savedScrollOffset,
-        listState.layoutInfo.totalItemsCount
+        totalListItemsCount
     ) {
         if (hasAppliedDeferredScrollRestore) return@LaunchedEffect
         if (!allowScrollPositionPersistence) return@LaunchedEffect
