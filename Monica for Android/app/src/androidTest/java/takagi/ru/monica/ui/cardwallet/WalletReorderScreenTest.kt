@@ -37,6 +37,7 @@ class WalletReorderScreenTest {
     private lateinit var database: PasswordDatabase
     private val store = ViewModelStore()
     private var stackId: String? = null
+    private var additionalStackId: String? = null
     private var visible by mutableStateOf(true)
     private var selecting = false
     private var selectedColor = 0
@@ -61,12 +62,13 @@ class WalletReorderScreenTest {
         compose.waitForIdle()
         runBlocking {
             stackId?.let { WalletStackRepository.get(context).dissolve(it) }
+            additionalStackId?.let { WalletStackRepository.get(context).dissolve(it) }
             settings.updateCategoryFilterState(scope, previousFilter)
         }
         database.close()
     }
 
-    private fun showScreen() {
+    private fun showScreen(selectFirstCard: Boolean = true) {
         val repository=SecureItemRepository(database.secureItemDao())
         val strings=AppLocaleStringResolver(context)
         val security=SecurityManager(context)
@@ -89,6 +91,10 @@ class WalletReorderScreenTest {
                 )
             }
         }
+        if (!selectFirstCard) {
+            compose.waitUntil(20_000) { compose.onAllNodesWithTag("wallet_stack_$additionalStackId").fetchSemanticsNodes().isNotEmpty() }
+            return
+        }
         compose.waitUntil(20_000) { compose.onAllNodesWithTag("wallet_card_910001").fetchSemanticsNodes().isNotEmpty() }
         compose.onNodeWithTag("wallet_card_910001").performTouchInput { longClick() }
         compose.waitUntil(10_000) { selecting }
@@ -99,6 +105,88 @@ class WalletReorderScreenTest {
     private fun capture(name: String) {
         val bitmap=compose.onRoot().captureToImage().asAndroidBitmap()
         File(context.filesDir, "wallet-reorder-$name.png").outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG,100,it) }
+    }
+
+    @Test fun collapsedStacksReorderWithoutChangingSelectionMembershipOrCoverAndSurviveReopening() {
+        val repository = WalletStackRepository.get(context)
+        additionalStackId = runBlocking { repository.create(listOf(910001L, 910002L)) }
+        val firstId = additionalStackId!!
+        val secondId = stackId!!
+        runBlocking { repository.setCover(firstId, 910002L) }
+        val savedStacks = runBlocking { repository.stacks.first() }
+        fun toggleStack(id: String) {
+            // Headers may be outside the composition after anchoring to a member card.
+            compose.onNode(hasScrollToIndexAction()).performScrollToNode(hasTestTag("wallet_selection_header_$id"))
+            compose.onNodeWithTag("wallet_selection_expand_$id").performClick()
+        }
+        showScreen(selectFirstCard = false)
+        compose.onNodeWithTag("wallet_stack_$firstId").performTouchInput { longClick() }
+        compose.waitUntil(10_000) { selecting }
+        compose.waitUntil(10_000) { compose.onAllNodesWithTag("wallet_card_910002").fetchSemanticsNodes().isNotEmpty() }
+        val firstHeader = compose.onNodeWithTag("wallet_selection_header_$firstId")
+        val secondHeader = compose.onNodeWithTag("wallet_selection_header_$secondId")
+        toggleStack(firstId)
+        compose.onNodeWithTag("wallet_card_910001").assertDoesNotExist()
+        compose.onNodeWithTag("wallet_card_910002").assertDoesNotExist()
+        firstHeader.assert(SemanticsMatcher.expectValue(
+            androidx.compose.ui.semantics.SemanticsProperties.ToggleableState, androidx.compose.ui.state.ToggleableState.On))
+        toggleStack(secondId)
+        compose.onNodeWithTag("wallet_card_910003").assertDoesNotExist()
+        capture("stacks-collapsed")
+
+        fun drag(from: SemanticsNodeInteraction, to: SemanticsNodeInteraction) {
+            from.performScrollTo()
+            to.performScrollTo()
+            compose.waitForIdle()
+            val distance = to.fetchSemanticsNode().boundsInRoot.center.y - from.fetchSemanticsNode().boundsInRoot.center.y
+            from.performTouchInput {
+                // The title area avoids the checkbox and trailing buttons.
+                down(Offset(center.x * 0.8f, center.y)); advanceEventTime(700)
+                moveBy(Offset(0f, distance * 0.6f), 180)
+            }
+            compose.waitForIdle()
+            from.performTouchInput { moveBy(Offset(0f, distance * 0.5f), 180); up() }
+            compose.waitForIdle()
+        }
+        fun awaitOrder(ids: List<Long>) {
+            compose.waitUntil(10_000) {
+                runBlocking { database.secureItemDao().getItemsByType(ItemType.BANK_CARD).first() }
+                    .sortedBy { it.sortOrder }.map { it.id } == ids
+            }
+        }
+        drag(firstHeader, secondHeader)
+        awaitOrder(listOf(910003L, 910004L, 910001L, 910002L))
+        assertTrue(secondHeader.fetchSemanticsNode().boundsInRoot.top < firstHeader.fetchSemanticsNode().boundsInRoot.top)
+        capture("stacks-reordered")
+        firstHeader.assert(SemanticsMatcher.expectValue(
+            androidx.compose.ui.semantics.SemanticsProperties.ToggleableState, androidx.compose.ui.state.ToggleableState.On))
+        assertEquals(savedStacks, runBlocking { repository.stacks.first() })
+
+        // Expanding and collapsing a partial selection must retain the exact check state.
+        toggleStack(firstId)
+        compose.onNodeWithTag("wallet_card_910001").performScrollTo().performClick()
+        toggleStack(firstId)
+        firstHeader.assert(SemanticsMatcher.expectValue(
+            androidx.compose.ui.semantics.SemanticsProperties.ToggleableState, androidx.compose.ui.state.ToggleableState.Indeterminate))
+        toggleStack(firstId)
+        firstHeader.assert(SemanticsMatcher.expectValue(
+            androidx.compose.ui.semantics.SemanticsProperties.ToggleableState, androidx.compose.ui.state.ToggleableState.Indeterminate))
+        capture("stacks-partial-expanded")
+
+        compose.runOnIdle { visible = false }
+        compose.waitForIdle()
+        compose.runOnIdle { visible = true }
+        compose.waitUntil(10_000) { compose.onAllNodesWithTag("wallet_stack_$secondId").fetchSemanticsNodes().isNotEmpty() }
+        assertTrue(compose.onNodeWithTag("wallet_stack_$secondId").fetchSemanticsNode().boundsInRoot.top <
+            compose.onNodeWithTag("wallet_stack_$firstId").fetchSemanticsNode().boundsInRoot.top)
+        // The reverse move exercises persistence again from a freshly opened screen.
+        compose.onNodeWithTag("wallet_stack_$secondId").performTouchInput { longClick() }
+        compose.waitUntil(10_000) { compose.onAllNodesWithTag("wallet_card_910003").fetchSemanticsNodes().isNotEmpty() }
+        toggleStack(secondId)
+        toggleStack(firstId)
+        drag(firstHeader, secondHeader)
+        awaitOrder(listOf(910001L, 910002L, 910003L, 910004L))
+        assertEquals(savedStacks, runBlocking { repository.stacks.first() })
     }
 
     @Test fun independentCardsReorderInTheActualWalletAndSurviveReopening() {

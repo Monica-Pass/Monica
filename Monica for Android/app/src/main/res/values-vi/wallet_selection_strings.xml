@@ -4,4 +4,6 @@
     <string name="wallet_selection_unstacked">Thẻ riêng lẻ</string>
     <string name="wallet_selection_group_count">Đã chọn %1$d/%2$d</string>
     <string name="wallet_selection_visible_group_count">Đã chọn %1$d/%2$d thẻ hiển thị</string>
+    <string name="wallet_selection_collapse_stack">Thu gọn chồng thẻ</string>
+    <string name="wallet_selection_expand_stack">Mở rộng chồng thẻ</string>
 </resources>

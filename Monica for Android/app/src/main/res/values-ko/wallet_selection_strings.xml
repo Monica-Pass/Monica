@@ -4,4 +4,6 @@
     <string name="wallet_selection_unstacked">개별 카드</string>
     <string name="wallet_selection_group_count">%2$d개 중 %1$d개 선택됨</string>
     <string name="wallet_selection_visible_group_count">표시된 카드 %2$d개 중 %1$d개 선택됨</string>
+    <string name="wallet_selection_collapse_stack">스택 접기</string>
+    <string name="wallet_selection_expand_stack">스택 펼치기</string>
 </resources>

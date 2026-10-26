@@ -4,4 +4,6 @@
     <string name="wallet_selection_unstacked">獨立卡片</string>
     <string name="wallet_selection_group_count">已選 %1$d / %2$d 張</string>
     <string name="wallet_selection_visible_group_count">目前顯示：已選 %1$d / %2$d 張</string>
+    <string name="wallet_selection_collapse_stack">收起卡疊</string>
+    <string name="wallet_selection_expand_stack">展開卡疊</string>
 </resources>

@@ -4,4 +4,6 @@
     <string name="wallet_selection_unstacked">Individual cards</string>
     <string name="wallet_selection_group_count">%1$d of %2$d selected</string>
     <string name="wallet_selection_visible_group_count">%1$d of %2$d visible cards selected</string>
+    <string name="wallet_selection_collapse_stack">Collapse stack</string>
+    <string name="wallet_selection_expand_stack">Expand stack</string>
 </resources>

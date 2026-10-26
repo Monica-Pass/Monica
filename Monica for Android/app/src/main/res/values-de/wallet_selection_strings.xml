@@ -4,4 +4,6 @@
     <string name="wallet_selection_unstacked">Einzelne Karten</string>
     <string name="wallet_selection_group_count">%1$d von %2$d ausgewählt</string>
     <string name="wallet_selection_visible_group_count">%1$d von %2$d sichtbaren Karten ausgewählt</string>
+    <string name="wallet_selection_collapse_stack">Stapel einklappen</string>
+    <string name="wallet_selection_expand_stack">Stapel ausklappen</string>
 </resources>

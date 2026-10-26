@@ -4,4 +4,6 @@
     <string name="wallet_selection_unstacked">Отдельные карточки</string>
     <string name="wallet_selection_group_count">Выбрано %1$d из %2$d</string>
     <string name="wallet_selection_visible_group_count">Выбрано %1$d из %2$d видимых карточек</string>
+    <string name="wallet_selection_collapse_stack">Свернуть стопку</string>
+    <string name="wallet_selection_expand_stack">Развернуть стопку</string>
 </resources>

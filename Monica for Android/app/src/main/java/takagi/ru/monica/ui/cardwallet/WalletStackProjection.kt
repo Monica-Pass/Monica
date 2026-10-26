@@ -49,7 +49,8 @@ internal sealed interface WalletStackListEntry {
 
     data class SelectionHeader(
         val stack: WalletStack?,
-        val cards: List<WalletListItem>
+        val cards: List<WalletListItem>,
+        val collapsed: Boolean = false
     ) : WalletStackListEntry {
         // Keep the stack's identity when its presentation changes to a section header.
         override val key: String = stack?.let { "stack:${it.id}" } ?: "selection:unstacked"

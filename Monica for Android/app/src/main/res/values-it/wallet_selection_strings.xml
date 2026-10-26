@@ -4,4 +4,6 @@
     <string name="wallet_selection_unstacked">"Carte individuali"</string>
     <string name="wallet_selection_group_count">"%1$d di %2$d selezionato"</string>
     <string name="wallet_selection_visible_group_count">"%1$d di %2$d carte visibili selezionate"</string>
+    <string name="wallet_selection_collapse_stack">Comprimi pila</string>
+    <string name="wallet_selection_expand_stack">Espandi pila</string>
 </resources>

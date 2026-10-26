@@ -4,4 +4,6 @@
     <string name="wallet_selection_unstacked">Osobne karty</string>
     <string name="wallet_selection_group_count">Wybrane: %1$d z %2$d</string>
     <string name="wallet_selection_visible_group_count">Wybrane widoczne karty: %1$d z %2$d</string>
+    <string name="wallet_selection_collapse_stack">Zwiń stos</string>
+    <string name="wallet_selection_expand_stack">Rozwiń stos</string>
 </resources>

@@ -107,7 +107,9 @@ import takagi.ru.monica.ui.cardwallet.rememberWalletSelectionScrollAnchor
 import takagi.ru.monica.ui.cardwallet.rememberWalletStackEntries
 import takagi.ru.monica.ui.cardwallet.rememberWalletStackPreview
 import takagi.ru.monica.ui.cardwallet.orderWalletIndependentEntries
-import takagi.ru.monica.ui.cardwallet.reorderWalletSingleCards
+import takagi.ru.monica.ui.cardwallet.prepareWalletSelectionEntries
+import takagi.ru.monica.ui.cardwallet.reorderWalletSelectionCards
+import takagi.ru.monica.ui.components.rememberDirectReorderScroller
 import takagi.ru.monica.ui.cardwallet.toggleWalletSelectionGroup
 import takagi.ru.monica.data.isKeePassOwned
 import takagi.ru.monica.data.isLocalOnlyItem
@@ -323,6 +325,10 @@ fun CardWalletScreen(
     var hasRestoredCategoryFilter by rememberSaveable { mutableStateOf(false) }
     var selectedIds by remember { mutableStateOf(setOf<Long>()) }
     var isSelectionMode by remember { mutableStateOf(false) }
+    var collapsedSelectionStackIds by remember { mutableStateOf(emptySet<String>()) }
+    LaunchedEffect(isSelectionMode) {
+        if (!isSelectionMode) collapsedSelectionStackIds = emptySet()
+    }
     val walletStackRepository = remember { WalletStackRepository.get(context) }
     val walletStacks by produceState<List<WalletStack>?>(null) {
         walletStackRepository.stacks.collect { value = it }
@@ -1177,8 +1183,10 @@ fun CardWalletScreen(
                             selectionMode = isSelectionMode
                         )
                         // Membership is prepared off-thread, but drag order must update in this frame.
-                        val displayItems = remember(stackProjection.entries, localFilteredItems) {
-                            orderWalletIndependentEntries(stackProjection.entries, localFilteredItems)
+                        val displayItems = remember(stackProjection.entries, localFilteredItems, collapsedSelectionStackIds) {
+                            if (stackProjection.selectionMode) {
+                                prepareWalletSelectionEntries(stackProjection.entries, localFilteredItems, collapsedSelectionStackIds)
+                            } else orderWalletIndependentEntries(stackProjection.entries, localFilteredItems)
                         }
                         val captureSelectionScrollAnchor = rememberWalletSelectionScrollAnchor(
                             listState, stackProjection, isSelectionMode
@@ -1191,9 +1199,11 @@ fun CardWalletScreen(
                             System.identityHashCode(it)
                         } ?: 0
 
-                        val reorderableLazyListState = rememberReorderableLazyListState(listState) { from, to ->
+                        val reorderableLazyListState = rememberReorderableLazyListState(
+                            listState, scroller = rememberDirectReorderScroller(listState)
+                        ) { from, to ->
                             if (isSelectionMode) {
-                                localFilteredItems = reorderWalletSingleCards(
+                                localFilteredItems = reorderWalletSelectionCards(
                                     localFilteredItems,
                                     displayItems.firstOrNull { it.key == from.key },
                                     displayItems.firstOrNull { it.key == to.key }
@@ -1304,15 +1314,37 @@ fun CardWalletScreen(
                                             coverId = stackCoverOverrides[stack.id] ?: stack.coverId
                                         ))
                                     } else displayItem
-                                    WalletSelectionSectionHeader(
-                                        entry = header,
-                                        selectedIds = selectedIds,
-                                        onToggleSelection = {
-                                            selectedIds = toggleWalletSelectionGroup(selectedIds, header)
-                                            isSelectionMode = true
-                                        },
-                                        onManageStack = { managedStackId = stack?.id }
-                                    )
+                                    ReorderableItem(
+                                        reorderableLazyListState,
+                                        key = header.key,
+                                        enabled = stack != null && header.collapsed
+                                    ) { isDragging ->
+                                        val elevation by animateDpAsState(
+                                            if (isDragging) 8.dp else 0.dp, label = "wallet_stack_drag_elevation"
+                                        )
+                                        WalletSelectionSectionHeader(
+                                            entry = header,
+                                            selectedIds = selectedIds,
+                                            onToggleSelection = {
+                                                selectedIds = toggleWalletSelectionGroup(selectedIds, header)
+                                                isSelectionMode = true
+                                            },
+                                            onManageStack = { managedStackId = stack?.id },
+                                            onToggleExpanded = if (stack == null) null else {
+                                                {
+                                                    val row = listState.layoutInfo.visibleItemsInfo.firstOrNull { it.key == header.key }
+                                                    if (row != null) listState.requestScrollToItem(row.index, -row.offset)
+                                                    collapsedSelectionStackIds = if (header.collapsed) {
+                                                        collapsedSelectionStackIds - stack.id
+                                                    } else collapsedSelectionStackIds + stack.id
+                                                }
+                                            },
+                                            modifier = Modifier
+                                                .padding(bottom = if (header.collapsed) 12.dp else 0.dp)
+                                                .graphicsLayer { shadowElevation = elevation.toPx(); shape = RoundedCornerShape(24.dp) }
+                                                .then(if (stack != null && header.collapsed) Modifier.longPressDraggableHandle() else Modifier)
+                                        )
+                                    }
                                     return@items
                                 }
                                 if (displayItem is WalletStackListEntry.Stack) {

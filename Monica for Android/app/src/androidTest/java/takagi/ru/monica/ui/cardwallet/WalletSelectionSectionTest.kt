@@ -91,7 +91,8 @@ class WalletSelectionSectionTest {
                                         entry = entry,
                                         selectedIds = selected.value,
                                         onToggleSelection = { selected.value = toggleWalletSelectionGroup(selected.value, entry) },
-                                        onManageStack = { managementRequests.incrementAndGet() }
+                                        onManageStack = { managementRequests.incrementAndGet() },
+                                        onToggleExpanded = {}
                                     )
                                     is WalletStackListEntry.Single -> WalletSelectionCardFrame(entry) {
                                         BankCardCard(
@@ -170,8 +171,10 @@ class WalletSelectionSectionTest {
         val checkbox = compose.onNodeWithTag("wallet_selection_checkbox_travel", useUnmergedTree = true)
             .fetchSemanticsNode().boundsInRoot
         val manage = compose.onNodeWithTag("wallet_selection_manage_travel").fetchSemanticsNode().boundsInRoot
+        val collapse = compose.onNodeWithTag("wallet_selection_expand_travel").fetchSemanticsNode().boundsInRoot
         assertTrue("Checkbox overlaps the group title", checkbox.right < title.left)
-        assertTrue("Management button overlaps the group title", title.right < manage.left)
+        assertTrue("Collapse button overlaps the group title", title.right < collapse.left)
+        assertTrue("Management button overlaps the collapse button", collapse.right <= manage.left)
         capture("grouped-selection-large-font")
         compose.onNodeWithTag("wallet_selection_header_travel").performClick()
         assertGroupState(ToggleableState.On)

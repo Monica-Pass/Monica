@@ -15,6 +15,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -33,6 +36,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -45,7 +49,8 @@ internal fun WalletSelectionSectionHeader(
     selectedIds: Set<Long>,
     onToggleSelection: () -> Unit,
     onManageStack: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onToggleExpanded: (() -> Unit)? = null
 ) {
     val selectedCount = entry.cards.count { it.id in selectedIds }
     val selectionState = when (selectedCount) {
@@ -60,15 +65,19 @@ internal fun WalletSelectionSectionHeader(
         if (coverTitle != null) stringResource(R.string.wallet_selection_stack_title, coverTitle)
         else stringResource(R.string.wallet_stack_default_name)
     }
-    val shape = if (entry.stack != null) {
+    val shape = if (entry.stack != null && !entry.collapsed) {
         RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)
-    } else RoundedCornerShape(16.dp)
+    } else RoundedCornerShape(24.dp)
     val selectionInteraction = remember { MutableInteractionSource() }
+    val expansionDescription = stringResource(
+        if (entry.collapsed) R.string.wallet_selection_expand_stack else R.string.wallet_selection_collapse_stack
+    )
 
     Row(
         modifier = modifier
             .fillMaxWidth()
             .testTag("wallet_selection_header_${entry.stack?.id ?: "unstacked"}")
+            .then(if (entry.stack != null) Modifier.semantics { stateDescription = expansionDescription } else Modifier)
             .clip(shape)
             .background(if (entry.stack != null) MaterialTheme.colorScheme.surfaceContainerHigh else Color.Transparent)
             .triStateToggleable(
@@ -114,6 +123,17 @@ internal fun WalletSelectionSectionHeader(
             )
         }
         if (entry.stack != null) {
+            if (onToggleExpanded != null) {
+                FilledTonalIconButton(
+                    onClick = onToggleExpanded,
+                    modifier = Modifier.testTag("wallet_selection_expand_${entry.stack.id}")
+                ) {
+                    Icon(
+                        if (entry.collapsed) Icons.Default.KeyboardArrowDown else Icons.Default.KeyboardArrowUp,
+                        expansionDescription
+                    )
+                }
+            }
             IconButton(
                 onClick = onManageStack,
                 modifier = Modifier.testTag("wallet_selection_manage_${entry.stack.id}")

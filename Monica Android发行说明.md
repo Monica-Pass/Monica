@@ -10,6 +10,8 @@
 
 - 修复 HOTP“生成下一个”按钮撑高磁贴的问题。所有验证码磁贴保留原有紧凑尺寸，生成按钮复用次码位置，减少内边距并适配文字大小；放大字号仍完整显示验证码和按钮，生成与复制互不误触。
 
+- 卡包多选列表中的卡叠新增独立展开／收起按钮；收起后可长按拖动整组调整卡叠顺序，重新进入页面仍保留排序。展开与收起保留逐张选择和选择计数，排序不改变卡叠成员顺序或封面。
+
 - 优化密码列表加载与滚动：减少滚动期间的页面重组，复用分类数据订阅，并避免相同数据快照重复生成脱敏列表；保留原有回顶、快速定位、返回位置、搜索、分组和数据处理规则。
 
 - 新增独立 Root 授权，可替代 Shizuku 使用增强无障碍恢复和设置默认密码管理器；Root 通道无需安装或运行 Shizuku。
@@ -23,6 +25,8 @@
 - Fixed HOTP moving to the front of the list after Generate Next. Authenticator ordering retains favorites and manual ranks, with a stable default order across counter updates. Counter values and modification timestamps still update normally for synchronization.
 
 - Fixed the HOTP Generate Next button increasing tile height. All authenticator tiles retain their compact size, with the action using the next-code footer, reduced padding and text that fits the available space. Codes and labels remain complete at larger font sizes, with separate generation and copy actions.
+
+- Added separate expand/collapse controls to card stacks in wallet multiselect. Long-press a collapsed stack to reorder stacks, with the order retained when reopening the wallet. Expansion preserves individual selections and counts; dragging keeps stack membership, internal card order and covers intact.
 
 - Optimized password-list loading and scrolling by reducing page recompositions during scrolling, sharing category subscriptions, and avoiding repeated metadata copies for unchanged snapshots. Existing back-to-top, fast-scroll, position restoration, search, grouping, and data-handling behavior are preserved.
 

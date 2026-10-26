@@ -5,4 +5,6 @@
     <string name="wallet_selection_unstacked">独立之卡</string>
     <string name="wallet_selection_group_count">已择 %1$d / %2$d 张</string>
     <string name="wallet_selection_visible_group_count">今所示：已择 %1$d / %2$d 张</string>
+    <string name="wallet_selection_collapse_stack">收疊</string>
+    <string name="wallet_selection_expand_stack">展疊</string>
 </resources>
