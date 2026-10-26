@@ -368,6 +368,11 @@ fun TotpCodeCard(
             fontWeight = FontWeight.SemiBold,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+        val actionLabel = stringResource(R.string.generate_next)
+        val actionStyle = MaterialTheme.typography.labelLarge.copy(
+            color = LocalContentColor.current,
+            lineHeight = androidx.compose.ui.unit.TextUnit.Unspecified
+        )
         val tileMetrics = remember(textMeasurer, density, titleStyle, subtitleStyle,
             codeStyle, nextStyle, infoSlotCount) {
             // Measure real paragraphs: font metrics and accessibility scaling can exceed
@@ -380,9 +385,9 @@ fun TotpCodeCard(
                     if (infoSlotCount > 0) lineHeight(subtitleStyle) else 0)
                     .coerceAtLeast(32.dp.roundToPx())
                 val gap = 8.dp.roundToPx()
-                // TOTP and Steam share an outer size even when Steam uses smaller code text.
                 val withoutPreview = 12.dp.roundToPx() * 2 + header + gap +
                     lineHeight(codeStyle.copy(fontSize = 28.sp))
+                // HOTP uses the next-code footer instead of increasing the tile height.
                 val height = withoutPreview.coerceAtLeast(142.dp.roundToPx())
                 val preview = listOf(nextStyle.fontSize, 11.sp, 8.sp).distinct()
                     .filter { it <= nextStyle.fontSize }
@@ -395,16 +400,15 @@ fun TotpCodeCard(
             }
         }
         MonicaItemCard(
-            modifier = if (counterTile) cardInteractionModifier.heightIn(min = 142.dp)
-                else cardInteractionModifier.height(tileMetrics.first),
+            modifier = cardInteractionModifier.height(tileMetrics.first),
             isSelected = isSelected
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .then(if (counterTile) Modifier else Modifier.fillMaxHeight())
+                    .fillMaxHeight()
                     .padding(12.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(if (counterTile) 4.dp else 8.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -580,10 +584,24 @@ fun TotpCodeCard(
                 if (totpData.otpType == OtpType.HOTP) {
                     TextButton(
                         onClick = { onGenerateNext?.invoke(item.id) },
-                        enabled = onGenerateNext != null,
+                        enabled = onGenerateNext != null && !isSelectionMode,
+                        modifier = Modifier.fillMaxWidth().weight(1f),
                         contentPadding = PaddingValues(0.dp)
                     ) {
-                        Text(stringResource(R.string.generate_next))
+                        BasicText(
+                            text = actionLabel,
+                            modifier = Modifier.fillMaxWidth(),
+                            style = actionStyle.copy(
+                                color = LocalContentColor.current,
+                                textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                            ),
+                            autoSize = TextAutoSize.StepBased(
+                                minFontSize = 8.sp,
+                                maxFontSize = actionStyle.fontSize
+                            ),
+                            softWrap = false,
+                            maxLines = 1
+                        )
                     }
                 } else if (tileMetrics.second != null) {
                     val previewStyle = requireNotNull(tileMetrics.second)

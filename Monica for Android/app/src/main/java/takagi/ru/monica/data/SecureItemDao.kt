@@ -3,6 +3,13 @@ package takagi.ru.monica.data
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
+// HOTP usage changes updatedAt. Authenticator positions follow saved ranks and
+// stable creation/ID keys; other item types retain modification-time ordering.
+private const val SECURE_ITEM_TYPED_DISPLAY_ORDER =
+    "isFavorite DESC, sortOrder ASC, " +
+    "CASE WHEN itemType = 'TOTP' THEN createdAt ELSE updatedAt END DESC, " +
+    "CASE WHEN itemType = 'TOTP' THEN id ELSE 0 END ASC"
+
 /**
  * Data Access Object for secure items (TOTP, Bank Cards, Documents)
  */
@@ -20,7 +27,7 @@ interface SecureItemDao {
     fun observeActiveItemRevision(): Flow<String>
     
     // 根据类型获取项目（排除已删除）
-    @Query("SELECT * FROM secure_items WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0 AND itemType = :type) ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
+    @Query("SELECT * FROM secure_items WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0 AND itemType = :type) ORDER BY $SECURE_ITEM_TYPED_DISPLAY_ORDER")
     fun getItemsByType(type: ItemType): Flow<List<SecureItem>>
 
     @Query("UPDATE secure_items SET categoryId = NULL WHERE categoryId = :categoryId")
@@ -282,7 +289,7 @@ interface SecureItemDao {
     /**
      * 根据类型获取未删除的项目
      */
-    @Query("SELECT * FROM secure_items WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (itemType = :type AND isDeleted = 0) ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
+    @Query("SELECT * FROM secure_items WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (itemType = :type AND isDeleted = 0) ORDER BY $SECURE_ITEM_TYPED_DISPLAY_ORDER")
     fun getActiveItemsByType(type: ItemType): Flow<List<SecureItem>>
     
     /**
