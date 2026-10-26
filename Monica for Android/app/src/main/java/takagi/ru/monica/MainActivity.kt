@@ -1070,6 +1070,12 @@ fun MonicaContent(
             // The visible page owns Bitwarden auto-sync, including its startup delay.
             // Authentication alone does not identify a database to sync.
             withContext(Dispatchers.IO) {
+                // Visible note text depends on this small repair, so it does not wait for the startup delay.
+                runCatching {
+                    takagi.ru.monica.notes.domain.NoteCiphertextRepair.run(database.secureItemDao(), securityManager)
+                }.onFailure { error ->
+                    Log.w("SensitiveMigration", "Note ciphertext repair failed: ${error.javaClass.simpleName}")
+                }
                 runCatching {
                     delay(15_000)
                     sensitiveFieldMigrationManager.runUnlockedSmallBatch()

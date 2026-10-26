@@ -77,6 +77,29 @@ interface SecureItemDao {
     @Query(
         """
         SELECT * FROM secure_items
+        WHERE itemType = 'NOTE'
+          AND (instr(itemData, 'MDK|') > 0 OR instr(itemData, 'C2|') > 0 OR instr(itemData, 'V2|') > 0)
+        """
+    )
+    suspend fun getNotesContainingCiphertext(): List<SecureItem>
+
+    @Query(
+        """
+        UPDATE secure_items SET itemData = :itemData, notes = :notes
+        WHERE id = :id AND itemData = :expectedItemData AND notes = :expectedNotes
+        """
+    )
+    suspend fun compareAndSetNoteData(
+        id: Long,
+        expectedItemData: String,
+        expectedNotes: String,
+        itemData: String,
+        notes: String
+    ): Int
+
+    @Query(
+        """
+        SELECT * FROM secure_items
         WHERE keepass_database_id = :databaseId
           AND keepass_entry_uuid = :entryUuid
         LIMIT 1

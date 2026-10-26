@@ -4797,8 +4797,9 @@ class WebDavHelper(
                             entry.copy(password = security.encryptData(entry.password),
                                 authenticatorKey = if (entry.authenticatorKey.isEmpty()) "" else security.encryptData(entry.authenticatorKey))
                         } else passwords,
+                        // Notes stay plain item data; the restore applier encrypts only the types that need it.
                         secureItems = if (isDatabaseExport) normalizedSecureItems.map { item ->
-                            if (item.itemType == "TOTP") item else item.copy(
+                            if (item.itemType == "TOTP" || item.itemType == "NOTE") item else item.copy(
                                 itemData = takagi.ru.monica.security.SecurityManager(context).encryptData(item.itemData))
                         } else normalizedSecureItems,
                         passkeys = passkeys,

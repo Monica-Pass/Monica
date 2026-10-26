@@ -514,8 +514,10 @@ internal class DevicePasswordSyncProvider(context: Context, private val security
             val type = if(!hasContent) previous!!.itemType else when(data.getString("entry_type")) { "card" -> ItemType.BANK_CARD; "document-ref", "identity" -> ItemType.DOCUMENT; "billing-address" -> ItemType.BILLING_ADDRESS; "payment-account" -> ItemType.PAYMENT_ACCOUNT; "totp", "steam-mafile" -> ItemType.TOTP; "note" -> ItemType.NOTE; else -> throw LanSyncException("unsupported_vault_content") }
             val folder = data.optString("folder")
             val categoryId = metadata.localFolder(data) ?: if(folder.isEmpty()) null else categories.getDeviceSyncCategories().firstOrNull { it.name == folder && it.isMonicaLocalCategory() }?.id ?: categories.insert(Category(name=folder))
+            // Notes keep plain item data, as the note editor writes it; note readers never decrypt it.
+            fun storedItemData(entry: JSONObject) = DeviceVaultShape.localItemData(entry).let { if(type == ItemType.NOTE) it else security.encryptDataLegacyCompat(it) }
             val item = if(!hasContent) previous!!.copy(isDeleted = true, deletedAt = java.util.Date(), updatedAt = java.util.Date()) else SecureItem(id = previous?.id ?: 0,
-                itemType = type, title = data.getString("title"), notes = p.optString("notes"), itemData = security.encryptDataLegacyCompat(DeviceVaultShape.localItemData(data)),
+                itemType = type, title = data.getString("title"), notes = p.optString("notes"), itemData = storedItemData(data),
                 imagePaths = p.optString("image_paths"), categoryId = categoryId, isFavorite = p.optBoolean("is_favorite"), sortOrder = p.optInt("sort_order"),
                 createdAt = java.util.Date(p.optLong("created_at", previous?.createdAt?.time ?: System.currentTimeMillis())), replicaGroupId = globalId,
                 isDeleted = deleted, deletedAt = if(deleted) previous?.deletedAt ?: java.util.Date() else null)
@@ -523,7 +525,7 @@ internal class DevicePasswordSyncProvider(context: Context, private val security
             if(hasContent) {
                 val restored = restoreLocalAssets(data, null, savedId)
                 if(restored != data.toString()) secureItems.updateItem(item.copy(id = savedId, imagePaths = JSONObject(restored).getJSONObject("payload").optString("image_paths"),
-                    itemData = security.encryptDataLegacyCompat(DeviceVaultShape.localItemData(JSONObject(restored)))))
+                    itemData = storedItemData(JSONObject(restored))))
             }
             val saved = secureItems.getItemById(savedId) ?: error("device_sync_write_failed")
             metadata.save("secure:$savedId", data)

@@ -600,6 +600,25 @@ class DeviceVaultProviderTest {
         } finally { first.pause(); second.pause() }
     } }
 
+    @Test fun received_notes_keep_plain_item_data_while_wallet_items_stay_sealed() = runBlocking { withTimeout(60000) {
+        SessionManager.markUnlocked(); SecurityShadow.sealLegacyCompat = true
+        val (a, first) = vault(); val (b, second) = vault()
+        try {
+            val context = RuntimeEnvironment.getApplication()
+            a.secureItemDao().insertItem(SecureItem(itemType=ItemType.NOTE,title="Plain note",itemData="{\"content\":\"synthetic note\",\"tags\":[],\"isMarkdown\":false}"))
+            a.secureItemDao().insertItem(SecureItem(itemType=ItemType.BANK_CARD,title="Sealed card",
+                itemData=SecurityManager(context).encryptDataLegacyCompat("{\"cardNumber\":\"4111111111111111\"}")))
+            val outgoing = first.prepare(File(context.filesDir,"plain-notes-${UUID.randomUUID()}"))
+            assertTrue(second.apply(outgoing.directory,JSONObject().put("pairing",JSONObject().put("content_key",outgoing.contentKey))) > 0)
+            val items = b.secureItemDao().getDeviceSyncLocalItems()
+            // Note readers decode itemData directly, so a sealed note would show its ciphertext.
+            assertEquals("synthetic note",JSONObject(items.single { it.itemType==ItemType.NOTE }.itemData).getString("content"))
+            val card = items.single { it.itemType==ItemType.BANK_CARD }.itemData
+            assertTrue(card.startsWith("fixture|"))
+            assertEquals("4111111111111111",JSONObject(SecurityManager(context).decryptData(card)).getString("cardNumber"))
+        } finally { SecurityShadow.sealLegacyCompat = false; first.pause(); second.pause() }
+    } }
+
     @Implements(value=SecurePreferencesStore::class,isInAndroidSdk=false)
     class SecureStoreShadow {
         companion object {
@@ -611,9 +630,14 @@ class DeviceVaultProviderTest {
     }
     @Implements(value=SecurityManager::class,isInAndroidSdk=false)
     class SecurityShadow {
-        companion object { private val protected = mutableMapOf<String,String>(); @JvmStatic @Resetter fun reset() { protected.clear() } }
+        companion object {
+            private val protected = mutableMapOf<String,String>()
+            // Opt-in model of a master-password vault, where the compatibility path also seals.
+            var sealLegacyCompat = false
+            @JvmStatic @Resetter fun reset() { protected.clear(); sealLegacyCompat = false }
+        }
         @Implementation fun encryptData(value: String): String = seal(value)
-        @Implementation fun encryptDataLegacyCompat(value: String): String = value
+        @Implementation fun encryptDataLegacyCompat(value: String): String = if(sealLegacyCompat) seal(value) else value
         @Implementation fun decryptData(value: String): String = if(value.startsWith("fixture|")) open(value) else value
         @Implementation fun decryptDataIfMonicaCiphertext(value: String): String = decryptData(value)
         @Implementation fun putProtectedString(key: String,value: String?) { if(value==null) protected.remove(key) else protected[key]=seal(value) }

@@ -2,6 +2,8 @@
 
 ## 中文
 
+- 修复部分笔记内容显示为 `MDK|…` 乱码的问题。附近设备同步接收的笔记，以及从数据库导出包恢复的笔记，曾以加密形式写入本地，笔记列表与详情直接显示了密文。现在接收和恢复的笔记保持笔记原有的存储格式；解锁后会自动将已受影响的笔记恢复为原文，包括已在编辑器中再次保存过的笔记，不改变修改时间和同步归属。
+
 - 修复 HOTP 点击“生成下一个”后跳到列表最前面的问题。验证码顺序保留收藏优先级和手动排序，默认顺序不再随计数器更新而变化；计数器与同步修改时间仍正常更新。
 
 - 修复 HOTP“生成下一个”按钮撑高磁贴的问题。所有验证码磁贴保留原有紧凑尺寸，生成按钮复用次码位置，减少内边距并适配文字大小；放大字号仍完整显示验证码和按钮，生成与复制互不误触。
@@ -13,6 +15,8 @@
 - 无障碍恢复仍需手动启用后台保护和增强恢复，仅重连已开启的 Monica 服务；默认密码管理器保留配置备份、写入校验和恢复功能，仍需 Android 14 或更新版本。
 
 ## English
+
+- Fixed some notes showing garbled `MDK|…` text. Notes received through nearby device sync, or restored from a database export archive, were stored locally in encrypted form, so the note list and details displayed the ciphertext. Received and restored notes now keep the regular note storage format, and affected notes, including ones saved again from the editor, are restored to their original text after unlocking without changing modification times or sync ownership.
 
 - Fixed HOTP moving to the front of the list after Generate Next. Authenticator ordering retains favorites and manual ranks, with a stable default order across counter updates. Counter values and modification timestamps still update normally for synchronization.
 
