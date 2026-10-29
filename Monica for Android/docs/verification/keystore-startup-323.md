@@ -1,5 +1,7 @@
 # Keystore startup and data preservation — 1.0.323
 
+> Current status (2026-10-30): production hardening and final covering-update tests are recorded in the last section. Earlier "production unchanged" and indefinite-wait conclusions below are historical findings from 2026-10-29.
+
 Date: 2026-10-29. Normal development build, unreleased.
 
 The initial two reports were reviewed: an application crash after changing keybox and including Monica in a module's scope, and a startup hang that reportedly cleared after a Google online check. Neither initial report includes an application version, Android version, module configuration or crash trace. The user has already confirmed that these details are unavailable. The latest instruction is to investigate as far as practical, report unresolved cases explicitly, and prioritize existing users' data. Later screenshots are assessed separately below.
@@ -53,3 +55,46 @@ The original [AlwaysStrong v1.0.5 release](https://gitlab.com/Evokerr/AlwaysStro
 Third-party AlwaysStrong/OhMyKeymint forks were encountered during discovery, but their seed-reset or other recovery behavior is not attributed to this original Inject release. External installation, reset and cleanup instructions were not executed. No module was installed or switched, and no module files or application data were changed.
 
 Current Monica startup already wraps authentication failures from opening the encrypted keyset/preferences, returns `Blocked`, keeps the session locked and preserves the encrypted store. The existing synthetic authenticated-keyset regression and the earlier 20-test startup/recovery suite cover this boundary. They do not establish that every later business-data decryption path is covered or reproduce a modified Android 16 phone. No new production security change or additional device run was made for the screenshots alone. The fifth report remains **unconfirmed and not claimed as fixed**; the practical missing evidence is its actual failure stack or reproducible module environment, already reported unavailable. Existing encryption and data-preserving recovery remain in place.
+
+## 2026-10-30 production startup hardening and covering-update verification
+
+At the user's request, the existing unreleased Android work was committed **before** changing production security code: normal checkpoint `2ac92c96f8`, canonical F-Droid checkpoint `5d3a9971`. This distribution's checkpoint is `2ac92c96f8`. The earlier statements above that production code was unchanged describe the 2026-10-29 investigation only; this follow-up implements and tests the program boundaries described below.
+
+### Fixed boundaries
+
+1. A dedicated daemon executor retains **one actual startup-operation slot**. The caller waits at most **15 seconds**, including retry serialization, rather than awaiting completion of an uninterruptible provider call. Cancellation promptly releases the UI wait. A timed-out native/Binder operation continues occupying the slot until it really exits; repeated retries return `SECURE_OPERATION_IN_PROGRESS` instead of queueing work or creating threads. Timeout returns `SECURE_OPERATION_TIMEOUT`. Existing bounded retries for ambiguous reads and no-overwrite preflight checks remain.
+2. Only the caller that accepts a successful result can publish maintenance readiness. Timeout/cancellation locks the session and clears runtime unlock state. A late worker result cannot enable maintenance, and a failed attempt prevents background maintenance from automatically reopening storage in that process; an explicit startup retry is required. A guarded context/preferences/editor prevents subsequent preference operations after an abandoned call eventually returns, including fluent editor chains.
+3. Recovery availability is checked inside the same bounded worker. `MainActivity` uses that result instead of synchronously reacquiring the recovery lock after a timeout. A real-activity test holds the actual application recovery lock: the blocked screen and retry action remain reachable after the deadline while the lock is still held.
+4. C2/V2 data reads and MDK-wrapper reads use **existing** AndroidKeyStore data keys. Missing keys raise an existing-key failure instead of calling a get-or-generate path. Failed wrapper reads retain the original `mdk_keystore_blob` and password-recovery material. Wrapper-unavailable state requests the existing password reentry flow; wrapper repair uses the original password-authenticated MDK. Ordinary `UserNotAuthenticatedException` expiry retains its existing authentication behavior rather than being marked as a damaged wrapper.
+
+No encryption format, KDF, database migration format or recovery transaction strategy was changed. No automatic ciphertext clearing, lost-key replacement, plaintext fallback or automatic password recovery was added. Diagnostic additions report exception types and reason codes, not passwords, keys, codes or arbitrary provider messages.
+
+The guard does not terminate a native operation already entered or roll back its effects; its purpose is to prevent subsequent preference operations and publication after abandonment. A process kill/native crash remains outside application exception handling. The deadline does not prove the affected module will return or that its keys still decrypt the original data.
+
+### Verification and limits
+
+The initial deadline regression failed on the prior implementation. Three of the four new key-read tests also failed on the checkpoint behavior, exposing compatibility-key regeneration and wrapper removal. The V2 missing-key assertion was tightened to distinguish an existing-key failure from the shared emulator's lack of a secure lock-screen environment.
+
+Both final main and test APKs built successfully; **Normal final build: 2m 40s**. Final device tests reused the existing public API-32 `Monica_Issue136_API_32` AVD (`emulator-5582`):
+
+| Suite | Tests |
+| --- | ---: |
+| Secure startup, deadlines, cancellation, late results, retry slots and maintenance gates | 20 |
+| Real AndroidKeyStore data-key reads and wrapper preservation | 4 |
+| Existing recovery-screen actions | 2 |
+| Real MainActivity with a held recovery lock | 1 |
+| Password, OTP, attachment, Passkey and transactional local recovery | 14 |
+| KeePass, MDBX, WebDAV, Bitwarden and offline/pending connection recovery | 4 |
+| **Final total** | **45 passed** |
+
+Final Normal device result: **`OK (45 tests)`, `Time: 305.081`**. The normal distribution passed 45 in 305.081 seconds; F-Droid passed 45 in 254.949 seconds. Shared production security and test files were checked across both distributions; MainActivity was patched independently to retain distribution differences.
+
+Each distribution also seeded isolated synthetic C2/MDK records, protected Passkey preferences, a SQLite file, encrypted attachment content and a password-recovery envelope using the checkpoint implementation. The corrected main APK was installed with `adb install -r` without clearing application data, then the verification method passed once per distribution. It confirmed unchanged encrypted preference values/database/attachment/recovery bytes before password reentry, successful unlocking and decryption with the original synthetic password, and unchanged database and attachment bytes afterward. Password reentry may refresh the convenience wrapper through the existing authenticated path.
+
+The actual APK replacement was **pre-fix 1.0.323 to corrected 1.0.323**, not an installed historical 1.0.322 APK. The version-change test separately supplies synthetic 1.0.322 guard state and verifies that the existing update guard locks the session without modifying vault data. This is not a claim of exhaustive historical upgrade coverage.
+
+Before installing each final APK and after its complete 45-test run, four fixture-file SHA-256 hashes matched: encrypted preference XML, SQLite vault, encrypted attachment and recovery JSON. These final checks use the already password-unlocked fixture state from the earlier covering-install verification. Cleanup subsequently removes only the explicitly owned `startup-update-fixture-323-` preference stores, its two data-key aliases and its checked cache directory. It does not remove default application aliases, clear application data or reset existing settings.
+
+Raw evidence stays in the outer workspace `.codex-tmp/`: `startup-hardening-normal-final-build.log`, `startup-hardening-normal-final-device.log`, `startup-update-normal-seed.log`, `startup-hardening-normal-device.log`, and `startup-normal-final-before-hashes.txt` / `startup-normal-final-after-hashes.txt`. Fixtures and test identities are synthetic; no personal database, password or module installation was used.
+
+These changes repair demonstrated program boundaries while preserving existing data. **The reporters' actual modified-phone crashes remain unconfirmed.** Permanently lost system keys cannot be recreated by a code update; restoring supported data still needs the original password and the recovery material already present. No module was installed, switched or reset. Versions remain unreleased 1.0.323 (normal code 12, F-Droid code 30). At the user's subsequent request to finish the interrupted Android work, the verified fixes, regression tests and documentation are finalized in local Git commits titled `fix(android): bound secure startup and preserve existing key material`. No push, release, tag or APK delivery was performed.

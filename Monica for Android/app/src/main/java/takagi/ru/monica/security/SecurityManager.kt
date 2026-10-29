@@ -58,6 +58,8 @@ class SecurityManager(private val context: Context) {
     private var hasLoggedMdkAuthExpiredWarning = false
     @Volatile
     private var hasLoggedMdkFallbackEncryption = false
+    @Volatile
+    private var mdkWrapperUnavailable = false
 
     private val mdkAuthCooldownMillis = 30_000L
 
@@ -456,8 +458,8 @@ class SecurityManager(private val context: Context) {
         val hasPasswordBlob = sharedPreferences.contains(MDK_PASSWORD_BLOB_KEY)
         if (!hasPasswordBlob) return false
         val hasKeystoreBlob = sharedPreferences.contains(MDK_KEYSTORE_BLOB_KEY)
-        val keystoreAliasMissing = hasKeystoreBlob && !hasSecureKeyAlias()
-        val requires = !hasKeystoreBlob || keystoreAliasMissing
+        val keystoreAliasMissing = hasKeystoreBlob && !hasRequiredAliasForStoredWrapper()
+        val requires = mdkWrapperUnavailable || !hasKeystoreBlob || keystoreAliasMissing
         if (requires) {
             android.util.Log.w(
                 logTag,
@@ -833,6 +835,20 @@ class SecurityManager(private val context: Context) {
         }
     }
 
+    /** Decrypting existing data is never permission to generate a replacement key. */
+    private fun getExistingDataKey(compat: Boolean): SecretKey {
+        fun read(alias: String): SecretKey {
+            val keyStore = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
+            return (keyStore.getEntry(alias, null) as? KeyStore.SecretKeyEntry)?.secretKey
+                ?: throw UnrecoverableKeyException("Existing data key unavailable")
+        }
+        if (!compat) return read(KEY_ALIAS_DATA)
+        cachedCompatDataKey?.let { return it }
+        return synchronized(compatDataKeyLock) {
+            cachedCompatDataKey ?: read(KEY_ALIAS_DATA_COMPAT).also { cachedCompatDataKey = it }
+        }
+    }
+
     private fun hasSecureKeyAlias(alias: String = KEY_ALIAS_DATA): Boolean {
         return runCatching {
             val keyStore = KeyStore.getInstance("AndroidKeyStore")
@@ -1035,6 +1051,7 @@ class SecurityManager(private val context: Context) {
         processCachedMdk = actualMdk
         // Failure to restore biometric convenience must not replace the password-recoverable MDK.
         persistCompatKeystoreWrappedMdk(actualMdk)
+        mdkWrapperUnavailable = false
         mdkAuthUnavailableUntilMillis = 0L
         hasLoggedMdkAuthExpiredWarning = false
         hasLoggedMdkFallbackEncryption = false
@@ -1072,8 +1089,8 @@ class SecurityManager(private val context: Context) {
         return try {
             val wrapped = parseWrappedMdkBlob(keystoreBlob)
             val ksKey = when (wrapped.mode) {
-                WrapperMode.AUTH -> getOrGenerateSecureKey()
-                WrapperMode.COMPAT -> getOrGenerateCompatSecureKey()
+                WrapperMode.AUTH -> getExistingDataKey(compat = false)
+                WrapperMode.COMPAT -> getExistingDataKey(compat = true)
             }
             val combined = android.util.Base64.decode(wrapped.payload, android.util.Base64.NO_WRAP)
             val iv = combined.copyOfRange(0, 12)
@@ -1083,7 +1100,7 @@ class SecurityManager(private val context: Context) {
             cipher.init(Cipher.DECRYPT_MODE, ksKey, spec)
             cipher.doFinal(enc)
         } catch (e: Exception) {
-            android.util.Log.w("SecurityManager", "Get MDK by keystore failed: ${e.message}")
+            android.util.Log.w("SecurityManager", "Get MDK by keystore failed: ${e.javaClass.simpleName}; wrapper retained")
             ByteArray(0)
         }
     }
@@ -1106,12 +1123,8 @@ class SecurityManager(private val context: Context) {
         val rawBlob = sharedPreferences.getString(MDK_KEYSTORE_BLOB_KEY, null) ?: return null
         val wrapped = parseWrappedMdkBlob(rawBlob)
         val usesCompatWrapper = wrapped.mode == WrapperMode.COMPAT
-        if (!usesCompatWrapper && !hasSecureKeyAlias(KEY_ALIAS_DATA)) {
-            clearKeystoreWrappedMdk("secure key alias missing while reading wrapper; likely app clone or restored app data")
-            return null
-        }
         return try {
-            val ksKey = if (usesCompatWrapper) getOrGenerateCompatSecureKey() else getOrGenerateSecureKey()
+            val ksKey = getExistingDataKey(compat = usesCompatWrapper)
             val combined = android.util.Base64.decode(wrapped.payload, android.util.Base64.NO_WRAP)
             val iv = combined.copyOfRange(0, 12)
             val enc = combined.copyOfRange(12, combined.size)
@@ -1119,7 +1132,9 @@ class SecurityManager(private val context: Context) {
             val spec = GCMParameterSpec(128, iv)
             cipher.init(Cipher.DECRYPT_MODE, ksKey, spec)
             val mdk = cipher.doFinal(enc)
+            check(mdk.size == 32) { "Existing vault key unavailable" }
             processCachedMdk = mdk
+            mdkWrapperUnavailable = false
             mdkAuthUnavailableUntilMillis = 0L
             hasLoggedMdkAuthExpiredWarning = false
             hasLoggedMdkFallbackEncryption = false
@@ -1131,6 +1146,7 @@ class SecurityManager(private val context: Context) {
             // KeyPermanentlyInvalidatedException: 生物识别已更改，密钥永久失效
             // UserNotAuthenticatedException: 用户认证已过期，需要重新认证
             if (e is android.security.keystore.KeyPermanentlyInvalidatedException) {
+                mdkWrapperUnavailable = true
                 throw e  // 密钥永久失效，必须抛出让用户重新设置
             }
             if (e is UserNotAuthenticatedException) {
@@ -1142,7 +1158,11 @@ class SecurityManager(private val context: Context) {
                 mdkAuthUnavailableUntilMillis = System.currentTimeMillis() + mdkAuthCooldownMillis
                 return null  // 认证过期，返回 null 让调用方降级处理
             }
-            clearKeystoreWrappedMdk("keystore wrapper unreadable: ${e.javaClass.simpleName}")
+            // Keep the original wrapper and password-recovery material. Rebuilding is allowed
+            // only after authenticating the original MDK, never as a side effect of a read.
+            mdkWrapperUnavailable = true
+            mdkAuthUnavailableUntilMillis = System.currentTimeMillis() + mdkAuthCooldownMillis
+            android.util.Log.w(logTag, "MDK wrapper unavailable: ${e.javaClass.simpleName}; wrapper retained")
             null
         }
     }
@@ -1317,7 +1337,7 @@ class SecurityManager(private val context: Context) {
         val encrypted = combined.copyOfRange(12, combined.size)
 
         val cipher = Cipher.getInstance("AES/GCM/NoPadding")
-        val secretKey = getOrGenerateSecureKey()
+        val secretKey = getExistingDataKey(compat = false)
         
         val gcmSpec = GCMParameterSpec(128, iv)
         cipher.init(Cipher.DECRYPT_MODE, secretKey, gcmSpec)
@@ -1335,7 +1355,7 @@ class SecurityManager(private val context: Context) {
         val encrypted = combined.copyOfRange(12, combined.size)
 
         val cipher = Cipher.getInstance("AES/GCM/NoPadding")
-        val secretKey = getOrGenerateCompatSecureKey()
+        val secretKey = getExistingDataKey(compat = true)
         val gcmSpec = GCMParameterSpec(128, iv)
         cipher.init(Cipher.DECRYPT_MODE, secretKey, gcmSpec)
 

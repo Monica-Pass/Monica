@@ -6,11 +6,11 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import java.security.KeyStore
 import java.io.File
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.ensureActive
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.sync.Mutex
@@ -119,50 +119,139 @@ internal object SecurePreferencesStore {
 
 internal sealed interface SecureStartupResult {
     data class Ready(val manager: SecurityManager) : SecureStartupResult
-    data class Blocked(val failure: SecureStorageUnavailableException, val attempts: Int = 1) : SecureStartupResult
+    data class Blocked(
+        val failure: SecureStorageUnavailableException,
+        val attempts: Int = 1,
+        val recoveryAvailable: Boolean = false
+    ) : SecureStartupResult
 }
 
 internal object SecureStorageStartup {
     // Only post-launch maintenance uses this process gate. A failed open must not start it.
     private val readiness = MutableStateFlow(false)
     private val retryMutex = Mutex()
+    private val workLock = Any()
+    private val executor = java.util.concurrent.Executors.newSingleThreadExecutor { task ->
+        Thread(task, "monica-secure-startup").apply { isDaemon = true }
+    }
+    private var running: StartupWork? = null
+    @Volatile private var attempted = false
     val readyForMaintenance: Boolean get() = readiness.value
+    internal val operationInProgress: Boolean get() = synchronized(workLock) { running != null }
 
-    /** Retry ambiguous read failures only. Every attempt repeats the no-overwrite preflight. */
-    suspend fun prepareWithRetry(context: Context): SecureStartupResult = retryMutex.withLock {
-        withContext(Dispatchers.IO) {
-            ensureActive()
-            var attempt = 1
-            var result = prepare(context)
-            while (result is SecureStartupResult.Blocked) {
-                SecurityDiagLogger.append("W/SecureStorageStartup ${diagnostic(result.failure, attempt)}")
-                // Authentication errors, missing keys/keysets and recovery conflicts need user action.
-                // UNREADABLE is ambiguous: retrying it does not establish that it is transient.
-                if (result.failure.reason != "UNREADABLE_SECURE_STORAGE" || attempt == 3) {
-                    return@withContext result.copy(attempts = attempt)
+    private class StartupWork(context: Context) {
+        val guard = StartupStorageGuard(context)
+        val result = CompletableDeferred<SecureStartupResult>() // No parent: native calls cannot be cancelled.
+        var finished = false // Protected by workLock.
+        var released = false // Caller has accepted or abandoned its result.
+    }
+
+    /** Bound the wait, not the native call. Keep its single slot occupied until it really exits. */
+    suspend fun prepareWithRetry(context: Context, timeoutMillis: Long = 15_000): SecureStartupResult {
+        require(timeoutMillis > 0)
+        var work: StartupWork? = null
+        var accepted = false
+        try {
+            val result = withTimeoutOrNull(timeoutMillis) {
+                retryMutex.withLock {
+                    ensureActive()
+                    val started = synchronized(workLock) {
+                        if (running != null) return@withLock blocked("SECURE_OPERATION_IN_PROGRESS")
+                        attempted = true
+                        readiness.value = false
+                        StartupWork(context.applicationContext).also { running = it; work = it }
+                    }
+                    executor.execute {
+                        try {
+                            started.result.complete(checkWithRetry(started.guard))
+                        } catch (cancelled: CancellationException) {
+                            started.result.completeExceptionally(cancelled)
+                        } catch (error: Exception) {
+                            started.result.complete(SecureStartupResult.Blocked(SecureStorageUnavailableException(
+                                SecurePreferencesStore.MONICA, "UNREADABLE_SECURE_STORAGE", error, SecureStoragePhase.STARTUP_CHECK)))
+                        } finally {
+                            synchronized(workLock) {
+                                started.finished = true
+                                if (started.released && running === started) running = null
+                            }
+                        }
+                    }
+                    val checked = started.result.await()
+                    ensureActive()
+                    checked
                 }
-                delay(if (attempt == 1) 200L else 600L)
-                ensureActive()
-                attempt++
-                result = prepare(context)
+            } ?: return blocked("SECURE_OPERATION_TIMEOUT")
+            currentCoroutineContext().ensureActive()
+            // Publish only after the timeout scope has accepted the result. A timeout racing a
+            // completed worker must not return Blocked with maintenance already enabled.
+            if (work != null) synchronized(workLock) {
+                readiness.value = result is SecureStartupResult.Ready
+                accepted = true
             }
-            if (attempt > 1) SecurityDiagLogger.append("I/SecureStorageStartup readable_after_attempts=$attempt")
-            result
+            if (result is SecureStartupResult.Blocked && work != null) SessionManager.markLocked()
+            return result
+        } finally {
+            synchronized(workLock) {
+                work?.let {
+                    it.released = true
+                    if (!accepted) {
+                        it.guard.abandon()
+                        readiness.value = false
+                        SessionManager.markLocked()
+                    }
+                    if (it.finished && running === it) running = null
+                }
+            }
         }
+    }
+
+    private fun blocked(reason: String) = SecureStartupResult.Blocked(SecureStorageUnavailableException(
+        SecurePreferencesStore.MONICA, reason, phase = SecureStoragePhase.STARTUP_CHECK))
+
+    private fun checkWithRetry(guard: StartupStorageGuard): SecureStartupResult {
+        var attempt = 1
+        var result = checkStorage(guard.context)
+        while (result is SecureStartupResult.Blocked) {
+            guard.checkActive()
+            SecurityDiagLogger.append("W/SecureStorageStartup ${diagnostic(result.failure, attempt)}")
+            // Authentication errors and missing key material require explicit user action.
+            if (result.failure.reason != "UNREADABLE_SECURE_STORAGE" || attempt == 3) {
+                val recoveryAvailable = LocalVaultRecovery(guard.context).available()
+                guard.checkActive()
+                return result.copy(attempts = attempt, recoveryAvailable = recoveryAvailable)
+            }
+            Thread.sleep(if (attempt == 1) 200L else 600L)
+            guard.checkActive()
+            attempt++
+            result = checkStorage(guard.context)
+        }
+        guard.checkActive()
+        if (attempt > 1) SecurityDiagLogger.append("I/SecureStorageStartup readable_after_attempts=$attempt")
+        return result
     }
 
     suspend fun awaitReadyForMaintenance(context: Context) {
         // Application may be started by a background worker without MainActivity.
         // Healthy storage must still permit its normal maintenance in that case.
-        if (!readyForMaintenance) prepareWithRetry(context)
+        // After a blocked/cancelled attempt, only an explicit startup retry may reopen the gate.
+        if (!readyForMaintenance && !attempted) prepareWithRetry(context)
         readiness.first { it }
     }
 
     @Synchronized
     fun prepare(context: Context): SecureStartupResult {
+        // Synchronous boundary retained for isolated device tests. Production uses the bounded worker.
+        attempted = true
         readiness.value = false
-        SecurityDiagLogger.initialize(context.applicationContext)
+        val result = checkStorage(context)
+        readiness.value = result is SecureStartupResult.Ready
+        if (result is SecureStartupResult.Blocked) SessionManager.markLocked()
+        return result
+    }
+
+    private fun checkStorage(context: Context): SecureStartupResult {
         return try {
+            SecurityDiagLogger.initialize(context.applicationContext)
             // Do not create the shared legacy alias over an existing Bitwarden store.
             // An unreadable Bitwarden settings store must not block a healthy local vault.
             if (LocalVaultRecovery(context).activeStore() == null &&
@@ -170,7 +259,6 @@ internal object SecureStorageStartup {
                 SecurePreferencesStore.preflight(context, SecurePreferencesStore.BITWARDEN)
             }
             val manager = SecurityManager(context)
-            readiness.value = true
             SecureStartupResult.Ready(manager)
         } catch (cancelled: CancellationException) {
             throw cancelled
@@ -178,8 +266,6 @@ internal object SecureStorageStartup {
             // The preliminary raw-store read can fail before SecurityManager is constructed.
             val failure = error as? SecureStorageUnavailableException ?: SecureStorageUnavailableException(
                 SecurePreferencesStore.MONICA, "UNREADABLE_SECURE_STORAGE", error, SecureStoragePhase.STARTUP_CHECK)
-            SecurityManager.clearRuntimeUnlockCache()
-            SessionManager.markLocked()
             SecureStartupResult.Blocked(failure)
         }
     }

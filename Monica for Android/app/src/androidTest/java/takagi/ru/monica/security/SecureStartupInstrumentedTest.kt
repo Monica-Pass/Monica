@@ -13,6 +13,58 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.cancelAndJoin
 
 class SecureStartupInstrumentedTest {
+    @Test fun providerDeadlineReturnsBlockedBeforeTheReadReturns() = kotlinx.coroutines.runBlocking {
+        Fixture().use { f ->
+            f.create()
+            val before = f.raw.all.toMap()
+            val entered = kotlinx.coroutines.CompletableDeferred<Unit>()
+            val release = java.util.concurrent.CountDownLatch(1)
+            val blocking = object : ContextWrapper(f.context) {
+                override fun getApplicationContext(): Context = this
+                override fun getSharedPreferences(name: String, mode: Int): SharedPreferences {
+                    val delegate = super.getSharedPreferences(name, mode)
+                    return if (name != SecurePreferencesStore.MONICA) delegate else object : SharedPreferences by delegate {
+                        override fun getAll(): MutableMap<String, *> {
+                            if (!entered.isCompleted) {
+                                entered.complete(Unit)
+                                check(release.await(10, java.util.concurrent.TimeUnit.SECONDS))
+                            }
+                            return delegate.all
+                        }
+                    }
+                }
+            }
+            SessionManager.markLocked()
+            val result = kotlinx.coroutines.CompletableDeferred<SecureStartupResult>()
+            val job = launch(kotlinx.coroutines.Dispatchers.Main) {
+                result.complete(SecureStorageStartup.prepareWithRetry(blocking, timeoutMillis = 150))
+            }
+            try {
+                kotlinx.coroutines.withTimeout(5_000) { entered.await() }
+                val completed = kotlinx.coroutines.withTimeoutOrNull(1000) { result.await() }
+                assertTrue("A stalled provider must reach the data-preserving blocked result within its deadline", completed is SecureStartupResult.Blocked)
+                assertEquals("SECURE_OPERATION_TIMEOUT", (completed as SecureStartupResult.Blocked).failure.reason)
+                assertFalse(completed.recoveryAvailable)
+                assertFalse(SecureStorageStartup.readyForMaintenance)
+                assertFalse(SessionManager.isUnlocked.value)
+                assertEquals(before, f.raw.all)
+                repeat(20) {
+                    val retry = SecureStorageStartup.prepareWithRetry(f.context, timeoutMillis = 300) as SecureStartupResult.Blocked
+                    assertEquals("SECURE_OPERATION_IN_PROGRESS", retry.failure.reason)
+                    assertFalse(retry.recoveryAvailable)
+                }
+            } finally {
+                release.countDown()
+                job.cancelAndJoin()
+                awaitProviderExit()
+            }
+            assertFalse("A late provider success must not enable maintenance", SecureStorageStartup.readyForMaintenance)
+            assertFalse(SessionManager.isUnlocked.value)
+            assertEquals(before, f.raw.all)
+            assertTrue(SecureStorageStartup.prepareWithRetry(f.context) is SecureStartupResult.Ready)
+        }
+    }
+
     /** Inject a provider read failure at the real startup boundary, using fixture storage only. */
     private class ReadFaultContext(
         base: Context,
@@ -116,6 +168,7 @@ class SecureStartupInstrumentedTest {
             } finally {
                 releaseRead.countDown()
                 job.cancelAndJoin()
+                awaitProviderExit()
             }
             assertEquals(1, fault.failures)
             assertFalse(SecureStorageStartup.readyForMaintenance)
@@ -147,7 +200,7 @@ class SecureStartupInstrumentedTest {
         }
     }
 
-    @Test fun nonReturningProviderKeepsStartupPendingAndCannotBeCancelledByCoroutineTimeout() = kotlinx.coroutines.runBlocking {
+    @Test fun cancellingStartupReleasesUiWaitButRetainsTheSingleProviderSlot() = kotlinx.coroutines.runBlocking {
         Fixture().use { f ->
             f.create()
             val before = f.raw.all.toMap()
@@ -175,18 +228,26 @@ class SecureStartupInstrumentedTest {
                 assertFalse(SessionManager.isUnlocked.value)
                 assertEquals(before, f.raw.all)
                 job.cancel()
-                assertNull("Cancellation cannot finish a worker inside an uninterruptible call",
-                    kotlinx.coroutines.withTimeoutOrNull(150) { job.join(); true })
-                assertFalse(job.isCompleted)
+                assertTrue("The UI coroutine must finish without waiting for a native call",
+                    kotlinx.coroutines.withTimeout(1000) { job.join(); true })
+                assertTrue(job.isCompleted)
+                assertTrue(SecureStorageStartup.operationInProgress)
+                val retry = SecureStorageStartup.prepareWithRetry(f.context) as SecureStartupResult.Blocked
+                assertEquals("SECURE_OPERATION_IN_PROGRESS", retry.failure.reason)
                 assertTrue(startupPending.get())
             } finally {
                 releaseRead.countDown()
                 job.cancelAndJoin()
+                awaitProviderExit()
             }
             assertEquals(1, fault.failures)
             assertFalse(SecureStorageStartup.readyForMaintenance)
             assertEquals(before, f.raw.all)
         }
+    }
+
+    private suspend fun awaitProviderExit() = kotlinx.coroutines.withTimeout(5_000) {
+        while (SecureStorageStartup.operationInProgress) kotlinx.coroutines.delay(10)
     }
 
     @Test fun preliminaryStoreReadFailureAlsoFailsClosedInsteadOfEscapingStartup() {
@@ -365,8 +426,29 @@ class SecureStartupInstrumentedTest {
             assertTrue(SecureStorageStartup.prepare(f.context) is SecureStartupResult.Blocked)
         }
         Fixture().use { fresh ->
+            // Simulate a new process with no attempted startup. The old failed fixture is
+            // deliberately not retried by maintenance in the same process after hardening.
+            assertFalse(SecureStorageStartup.operationInProgress)
+            SecureStorageStartup::class.java.getDeclaredField("attempted").apply {
+                isAccessible = true
+                setBoolean(null, false)
+            }
             kotlinx.coroutines.withTimeout(10_000) { SecureStorageStartup.awaitReadyForMaintenance(fresh.context) }
             assertTrue(SecureStorageStartup.readyForMaintenance)
+        }
+    }
+
+    @Test fun maintenanceDoesNotRetryBlockedStorageWithoutExplicitStartup() = kotlinx.coroutines.runBlocking {
+        Fixture().use { f ->
+            f.create()
+            val before = f.raw.all.toMap()
+            val fault = ReadFaultContext(f.context, failuresLeft = 100, failOnRead = 2)
+            assertTrue(SecureStorageStartup.prepareWithRetry(fault) is SecureStartupResult.Blocked)
+            assertEquals(3, fault.failures)
+            assertNull(kotlinx.coroutines.withTimeoutOrNull(250) { SecureStorageStartup.awaitReadyForMaintenance(fault); true })
+            assertEquals(3, fault.failures)
+            assertFalse(SecureStorageStartup.readyForMaintenance)
+            assertEquals(before, f.raw.all)
         }
     }
 

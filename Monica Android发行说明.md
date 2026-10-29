@@ -4,6 +4,7 @@
 
 ## 中文
 
+- 安全存储启动增加 15 秒等待上限，异常或超时后保持锁定并提供重试；未退出的底层调用不会重复启动，迟到结果不会放行后台维护。读取失败保留密文、旧密钥包装与恢复材料，不自动重建丢失密钥；系统密钥永久丢失时仍需原密码及已有恢复材料。
 - Passkey 管理页新增“物理密钥”FAB，支持 USB/NFC FIDO2 密钥信息、PIN 设置与更改、只读查看可发现凭据；Android 14 及以上可通过系统注册或登录请求在密钥中创建和使用通行密钥。标准 FIDO2 无法导入现有私钥，硬件 PIN 和凭据不保存到 Monica；本次通过合成协议与模拟器验证，尚未实体密钥实测。
 - 支持在 Monica 密码列表、密码库、详情和编辑预览中显示已解锁 KDBX 的条目自定义图标，并显示原库分组图标；编辑保存保留图标 UUID、图片和历史。锁库时隐藏原库图标，缺失或损坏的图片回退到现有图标。
 - 导出数据时，来源数据库名称右侧显示当前记录数（不含回收站）；空库显示 0 条，未解锁或暂时无法读取时显示相应状态。
@@ -16,6 +17,7 @@
 
 ## English
 
+- Secure-storage startup now limits waiting to 15 seconds and stays locked on errors or timeouts, with retry available. Outstanding provider calls are not duplicated, and late results cannot enable maintenance. Read failures preserve ciphertext, existing key wrappers and recovery material without generating replacement keys; permanently lost system keys still require the original password and existing recovery material.
 - Added a hardware-key FAB to Passkey management for USB/NFC FIDO2 device information, PIN setup/change and read-only discoverable-credential browsing. Android 14+ system registration and sign-in requests can create and use credentials on the key. Standard FIDO2 cannot import existing private keys; hardware PINs and credentials are not stored in Monica. Verified with synthetic protocol peers and emulators; physical-key testing is pending.
 - Monica password and vault lists, password details and editor previews now display custom entry icons from unlocked KDBX files, including group icons in vault lists. Saving preserves icon UUIDs, image data and history; locking hides original-vault images, and missing or damaged images fall back to existing icons.
 - Export source database names now show their current record count, excluding trash. Empty databases show zero; locked or unreadable sources display their status.
