@@ -39,6 +39,10 @@ class PasswordRepository(
     private val bitwardenSyncRawEntryRecordDao: BitwardenSyncRawEntryRecordDao? = null,
     private val mdbxRepository: MdbxRepository? = null
 ) {
+    internal var monicaKeePassStore: takagi.ru.monica.keepass.KeePassMonicaPasswordStore? = null
+    private fun requireRoomIds(ids: List<Long>) {
+        require(ids.none(takagi.ru.monica.keepass.KeePassMonicaPasswordStore::isUiId)) { "Original KeePass ownership changes require verified copies" }
+    }
     companion object {
         private const val TAG = "PasswordRepository"
     }
@@ -51,7 +55,11 @@ class PasswordRepository(
     
     fun getAllPasswordEntries(): Flow<List<PasswordEntry>> {
         // Keep semantic behavior the same but avoid the legacy generated callable index path.
-        return passwordEntryDao.getActiveEntries().withoutExternalSteamMaFileEntries()
+        val room = passwordEntryDao.getActiveEntries().withoutExternalSteamMaFileEntries()
+        val native = monicaKeePassStore ?: return room
+        return kotlinx.coroutines.flow.combine(room, native.activeRows) { entries, nativeRows ->
+            entries.filterNot { it.keepassDatabaseId in nativeRows.keys } + nativeRows.values.flatten().filterNot { it.isArchived || it.isDeleted }
+        }
     }
 
     fun getActiveAuthenticatorEntries(): Flow<List<PasswordEntry>> =
@@ -75,6 +83,7 @@ class PasswordRepository(
     }
 
     fun getPasswordEntriesByKeePassDatabase(databaseId: Long): Flow<List<PasswordEntry>> {
+        monicaKeePassStore?.let { return it.rows(databaseId).map { rows -> rows.filterNot { row -> row.isArchived || row.isDeleted } } }
         return passwordEntryDao.getPasswordEntriesByKeePassDatabase(databaseId)
             .withoutExternalSteamMaFileEntries()
     }
@@ -84,6 +93,12 @@ class PasswordRepository(
         groupPath: String,
         groupUuid: String? = null
     ): Flow<List<PasswordEntry>> {
+        monicaKeePassStore?.let { native ->
+            return native.rows(databaseId).map { rows -> rows.filter { row ->
+                !row.isArchived && !row.isDeleted && native.matchesScope(row,
+                    takagi.ru.monica.keepass.KeePassPasswordNativeScope(databaseId, groupPath, groupUuid))
+            } }
+        }
         return passwordEntryDao.getPasswordEntriesByKeePassGroup(databaseId, groupPath, groupUuid)
             .withoutExternalSteamMaFileEntries()
     }
@@ -163,10 +178,14 @@ class PasswordRepository(
     }
 
     suspend fun updateCategoryForPasswords(ids: List<Long>, categoryId: Long?) {
+        requireRoomIds(ids)
         passwordEntryDao.updateCategoryForPasswords(ids, categoryId)
     }
 
     suspend fun updateBoundNoteId(id: Long, noteId: Long?) {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(id)) {
+            updatePasswordEntry(requireNotNull(getPasswordEntryById(id)).copy(boundNoteId = noteId)); return
+        }
         passwordEntryDao.updateBoundNoteId(id, noteId)
     }
 
@@ -187,10 +206,12 @@ class PasswordRepository(
     }
     
     suspend fun updateKeePassDatabaseForPasswords(ids: List<Long>, databaseId: Long?) {
+        requireRoomIds(ids)
         passwordEntryDao.updateKeePassDatabaseForPasswords(ids, databaseId)
     }
 
     suspend fun updateMdbxDatabaseForPasswords(ids: List<Long>, databaseId: Long?, folderId: String? = null) {
+        requireRoomIds(ids)
         databaseId?.let { mdbxRepository?.requireRoomMirrorAllowed(it) }
         passwordEntryDao.getPasswordsByIds(ids).forEach(MdbxUnknownEntry::requireEditable)
         if (ids.isEmpty()) return
@@ -239,6 +260,7 @@ class PasswordRepository(
     }
 
     suspend fun updateKeePassGroupForPasswords(ids: List<Long>, databaseId: Long, groupPath: String) {
+        requireRoomIds(ids)
         passwordEntryDao.updateKeePassGroupForPasswords(ids, databaseId, groupPath)
     }
 
@@ -252,6 +274,7 @@ class PasswordRepository(
     }
     
     suspend fun getPasswordEntryById(id: Long): PasswordEntry? {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(id)) return monicaKeePassStore?.get(id)
         return passwordEntryDao.getPasswordEntryById(id)
     }
 
@@ -260,15 +283,17 @@ class PasswordRepository(
     }
     
     suspend fun getPasswordsByIds(ids: List<Long>): List<PasswordEntry> {
-        return passwordEntryDao.getPasswordsByIds(ids)
+        val nativeIds = ids.filter { takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(it) }
+        return passwordEntryDao.getPasswordsByIds(ids - nativeIds.toSet()) + nativeIds.mapNotNull { monicaKeePassStore?.get(it) }
     }
 
     suspend fun getActivePasswordsByIds(ids: List<Long>): List<PasswordEntry> {
-        return passwordEntryDao.getActivePasswordsByIds(ids)
+        return getPasswordsByIds(ids).filterNot { it.isDeleted || it.isArchived }
             .withoutExternalSteamMaFileEntries()
     }
     
     suspend fun insertPasswordEntry(entry: PasswordEntry): Long {
+        require(!takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(entry.id)) { "KeePass UI identity cannot be persisted in Room" }
         entry.mdbxDatabaseId?.let { mdbxRepository?.requireRoomMirrorAllowed(it) }
         MdbxUnknownEntry.requireEditable(entry)
         val normalizedEntry = BitwardenMutationStateHelper.normalizePasswordInsert(entry)
@@ -299,6 +324,7 @@ class PasswordRepository(
     }
 
     suspend fun insertPasswordEntries(entries: List<PasswordEntry>): List<Long> {
+        requireRoomIds(entries.map { it.id })
         entries.mapNotNull { it.mdbxDatabaseId }.distinct().forEach { mdbxRepository?.requireRoomMirrorAllowed(it) }
         entries.forEach(MdbxUnknownEntry::requireEditable)
         if (entries.isEmpty()) return emptyList()
@@ -338,6 +364,10 @@ class PasswordRepository(
     }
     
     suspend fun updatePasswordEntry(entry: PasswordEntry) {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(entry.id)) {
+            requireNotNull(monicaKeePassStore).save(requireNotNull(entry.keepassDatabaseId), listOf(entry), emptyMap())
+            return
+        }
         entry.mdbxDatabaseId?.let { mdbxRepository?.requireRoomMirrorAllowed(it) }
         MdbxUnknownEntry.requireEditable(entry)
         passwordEntryDao.getPasswordEntryById(entry.id)?.let(MdbxUnknownEntry::requireEditable)
@@ -375,6 +405,17 @@ class PasswordRepository(
     }
 
     suspend fun updatePasswordEntries(entries: List<PasswordEntry>) {
+        val nativeEntries = entries.filter { takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(it.id) }
+        if (nativeEntries.isNotEmpty()) {
+            check(nativeEntries.all { monicaKeePassStore?.databaseId(it.id) == it.keepassDatabaseId && it.mdbxDatabaseId == null && it.bitwardenVaultId == null }) {
+                "Original KeePass ownership changes require verified copies"
+            }
+            nativeEntries.groupBy { requireNotNull(it.keepassDatabaseId) }.forEach { (databaseId, rows) ->
+                requireNotNull(monicaKeePassStore).save(databaseId, rows, emptyMap())
+            }
+            updatePasswordEntries(entries - nativeEntries.toSet())
+            return
+        }
         entries.mapNotNull { it.mdbxDatabaseId }.distinct().forEach { mdbxRepository?.requireRoomMirrorAllowed(it) }
         entries.forEach(MdbxUnknownEntry::requireEditable)
         passwordEntryDao.getPasswordsByIds(entries.map { it.id }).forEach(MdbxUnknownEntry::requireEditable)
@@ -434,6 +475,12 @@ class PasswordRepository(
     }
 
     suspend fun deletePasswordEntries(entries: List<PasswordEntry>) {
+        val native = entries.filter { takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(it.id) }
+        if (native.isNotEmpty()) {
+            requireNotNull(monicaKeePassStore).delete(native, false)
+            deletePasswordEntries(entries - native.toSet())
+            return
+        }
         entries.forEach(MdbxUnknownEntry::requireEditable)
         passwordEntryDao.getPasswordsByIds(entries.map { it.id }).forEach(MdbxUnknownEntry::requireEditable)
         if (entries.isEmpty()) return
@@ -537,7 +584,7 @@ class PasswordRepository(
     }
     
     suspend fun toggleFavorite(id: Long, isFavorite: Boolean) {
-        val existingEntry = passwordEntryDao.getPasswordEntryById(id) ?: return
+        val existingEntry = getPasswordEntryById(id) ?: return
         updatePasswordEntry(
             existingEntry.copy(
                 isFavorite = isFavorite,
@@ -547,15 +594,29 @@ class PasswordRepository(
     }
     
     suspend fun updateGroupCoverStatus(id: Long, isGroupCover: Boolean) {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(id)) {
+            updatePasswordEntry(requireNotNull(getPasswordEntryById(id)).copy(isGroupCover = isGroupCover))
+            return
+        }
         passwordEntryDao.updateGroupCoverStatus(id, isGroupCover)
     }
     
     suspend fun setGroupCover(id: Long, website: String) {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(id)) {
+            updatePasswordEntry(requireNotNull(getPasswordEntryById(id)).copy(isGroupCover = true, website = website))
+            return
+        }
         passwordEntryDao.setGroupCover(id, website)
     }
     
     suspend fun updateSortOrders(items: List<Pair<Long, Int>>) {
         if (items.isEmpty()) return
+        val nativeItems = items.filter { takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(it.first) }
+        if (nativeItems.isNotEmpty()) {
+            updatePasswordEntries(nativeItems.map { (id, order) -> requireNotNull(getPasswordEntryById(id)).copy(sortOrder = order) })
+            updateSortOrders(items - nativeItems.toSet())
+            return
+        }
         val orderById = items.toMap()
         val previousEntries = passwordEntryDao.getPasswordsByIds(orderById.keys.toList())
         val reorderedEntries = previousEntries.mapNotNull { entry ->

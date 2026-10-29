@@ -11,6 +11,7 @@ class KeePassPasskeyDeleteExecutor(
         passkey: PasskeyEntry,
         deleteLocal: suspend (PasskeyEntry) -> Unit
     ): Result<Unit> {
+        if (KeePassMonicaPasswordStore.isUiId(passkey.id)) return runCatching { deleteLocal(passkey) }
         val databaseId = passkey.keepassDatabaseId
         if (databaseId != null && passkey.passkeyMode == PasskeyEntry.MODE_KEEPASS_COMPAT) {
             val keepassBridge = bridge ?: return Result.failure(

@@ -14,6 +14,11 @@ class KeePassPasskeyUpdateExecutor(
         updated: PasskeyEntry,
         persistUpdate: suspend (PasskeyEntry) -> Unit
     ): Result<PasskeyEntry> {
+        if (KeePassMonicaPasswordStore.isUiId(updated.id)) return runCatching {
+            check(existing.keepassDatabaseId == updated.keepassDatabaseId) { "Use a copy to change original-vault ownership" }
+            persistUpdate(updated)
+            updated
+        }
         val keepassBridge = bridge
         if (keepassBridge == null) {
             persistUpdate(updated)

@@ -227,7 +227,8 @@ data class KeePassEntryData(
     /** Complete OTP payload read from the native entry, before local encryption. */
     val authenticatorKey: String = "",
     val createdAtMillis: Long? = null,
-    val updatedAtMillis: Long? = null
+    val updatedAtMillis: Long? = null,
+    val monicaPresentation: Map<String, String> = emptyMap(),
 )
 
 data class KeePassCustomFieldData(
@@ -268,7 +269,8 @@ data class KeePassWorkspaceSnapshot(
     val passwords: List<KeePassEntryData>,
     val secureItems: List<KeePassSecureItemData>,
     val groups: List<KeePassGroupInfo>,
-    val sessionRevision: String? = null
+    val sessionRevision: String? = null,
+    val passkeys: List<Pair<UUID, PasskeyEntry>> = emptyList(),
 )
 
 /**
@@ -449,6 +451,42 @@ class KeePassKdbxService(
     }
 
     companion object {
+        internal val nativeLockVersions = kotlinx.coroutines.flow.MutableStateFlow<Map<Long, Long>>(emptyMap())
+        internal val nativeIconVersions = kotlinx.coroutines.flow.MutableStateFlow<Map<Long, Long>>(emptyMap())
+
+        // Called under loadedDatabaseCache's monitor for every replacement/removal.
+        private fun notifyNativeIconsChanged(databaseId: Long) {
+            val versions = nativeIconVersions.value
+            nativeIconVersions.value = versions + (databaseId to ((versions[databaseId] ?: 0L) + 1L))
+        }
+
+        /** Read only an already-unlocked session. Never load a file or run its KDF for an icon. */
+        internal fun cachedNativeCustomIcon(
+            databaseId: Long,
+            entryUuid: String? = null,
+            groupUuid: String? = null,
+            groupPath: String? = null,
+        ): app.keemobile.kotpass.models.CustomIcon? {
+            val loaded = synchronized(loadedDatabaseCache) { loadedDatabaseCache[databaseId]?.loaded }
+                ?: return null
+            val pool = loaded.keePassDatabase.content.meta.customIcons
+            if (pool.isEmpty()) return null
+            val session = loaded.nativeSession.value
+            val iconUuid = if (entryUuid != null) {
+                val uuid = runCatching { UUID.fromString(entryUuid) }.getOrNull() ?: return null
+                session.entriesByIdentity[KeePassNativeEntryIdentity(databaseId, uuid)]?.singleOrNull()?.entry?.customIconUuid
+            } else if (groupUuid != null) {
+                val uuid = runCatching { UUID.fromString(groupUuid) }.getOrNull() ?: return null
+                session.groupsByIdentity[KeePassNativeGroupIdentity(databaseId, uuid)]?.singleOrNull()?.group?.customIconUuid
+            } else {
+                groupPath?.let { session.groupsByLegacyPath[it]?.singleOrNull()?.group?.customIconUuid }
+            }
+            val icon = iconUuid?.let(pool::get)
+            // A lock or save may have replaced the session while its lazy UUID map was built.
+            return synchronized(loadedDatabaseCache) {
+                icon.takeIf { loadedDatabaseCache[databaseId]?.loaded === loaded }
+            }
+        }
         private const val TAG = "KeePassKdbxService"
         // Keep unknown-source cache short, but keep known internal files effectively "always warm".
         private const val UNKNOWN_SOURCE_CACHE_TTL_MS = 60_000L
@@ -592,6 +630,7 @@ class KeePassKdbxService(
         fun invalidateProcessCache(databaseId: Long) {
             synchronized(loadedDatabaseCache) {
                 loadedDatabaseCache.remove(databaseId)
+                notifyNativeIconsChanged(databaseId)
                 if (activeDatabaseId == databaseId) {
                     activeDatabaseId = null
                 }
@@ -633,6 +672,7 @@ class KeePassKdbxService(
                 if (entry.key == activeId) continue
                 val evictedDatabaseId = entry.key
                 iterator.remove()
+                notifyNativeIconsChanged(evictedDatabaseId)
                 nativeSessionCache.invalidate(evictedDatabaseId)
                 nativeProjectionBundleCache.invalidate(evictedDatabaseId)
                 projectionIndexGate.invalidate(evictedDatabaseId)
@@ -1481,7 +1521,8 @@ class KeePassKdbxService(
     suspend fun loadWorkspace(
         databaseId: Long,
         includeRecycleBinGroups: Boolean = false,
-        allowedSecureItemTypes: Set<ItemType>? = null
+        allowedSecureItemTypes: Set<ItemType>? = null,
+        includePasskeys: Boolean = false,
     ): Result<KeePassWorkspaceSnapshot> = withContext(Dispatchers.IO) {
         try {
             val loaded = loadDatabase(databaseId)
@@ -1516,6 +1557,10 @@ class KeePassKdbxService(
                     passwords = passwords,
                     secureItems = secureItems,
                     groups = groups,
+                    passkeys = if (!includePasskeys) emptyList() else bundle.entries.filterNot { it.isInRecycleBinByMeta }.mapNotNull { entry ->
+                        entryToPasskey(entry.entry, databaseId, entry.groupPath, entry.groupUuid, bundle.resolutionContext)
+                            ?.let { entry.entry.uuid to it }
+                    },
                     sessionRevision = bundle.revisionToken
                 )
             )
@@ -1863,10 +1908,25 @@ class KeePassKdbxService(
         }
     }
 
-    internal suspend fun openNativeBrowser(databaseId: Long): Result<KeePassNativeBrowserSnapshot> =
+    internal suspend fun openNativeBrowser(
+        databaseId: Long,
+        includePasswordMembership: Boolean = false,
+    ): Result<KeePassNativeBrowserSnapshot> =
         withContext(Dispatchers.IO) {
             try {
-                Result.success(loadDatabase(databaseId).nativeBrowser.value)
+                val loaded = loadDatabase(databaseId)
+                val browser = loaded.nativeBrowser.value
+                if (!includePasswordMembership) Result.success(browser) else {
+                    val bundle = loaded.projectionBundle.value
+                    val uuids = buildPasswordEntryData(
+                        databaseId = loaded.database.id,
+                        databaseName = loaded.database.name,
+                        entries = bundle.entries,
+                        hasRecycleBinMeta = bundle.hasRecycleBinMeta,
+                        resolutionContext = bundle.resolutionContext,
+                    ).filterNot { it.isInRecycleBin }.mapTo(hashSetOf()) { UUID.fromString(it.entryUuid) }
+                    Result.success(browser.copy(passwordEntryUuids = uuids))
+                }
             } catch (e: Exception) {
                 Result.failure(normalizeError(e))
             }
@@ -2072,6 +2132,174 @@ class KeePassKdbxService(
         } catch (error: Exception) {
             Result.failure(normalizeError(error))
         }
+    }
+
+    /** Use the ordinary Monica form while retaining fields outside its editable projection. */
+    internal fun buildMonicaPasswordFields(
+        original: KeePassNativeEntryRecord?,
+        row: PasswordEntry,
+        previousCustomFieldNames: Set<String>,
+        customFields: List<KeePassCustomFieldData>,
+        ssoRefUuid: String? = null,
+        boundNoteUuid: String? = null,
+    ): List<KeePassFieldChange> {
+        val keptCustomNames = customFields.mapTo(hashSetOf()) { it.title }
+        val base = original?.nativeEntry?.let { entry ->
+            entry.copy(fields = EntryFields.of(*entry.fields.entries.filterNot {
+                it.key in previousCustomFieldNames && it.key !in keptCustomNames
+            }.map { it.key to it.value }.toTypedArray()))
+        }
+        val safeRow = row.copy(id = 0L)
+        val updated = if (base == null) buildEntry(safeRow, row.password, customFields)
+            else buildUpdatedEntry(base, safeRow, row.password, customFields)
+        val values = updated.fields.toMutableMap()
+        // A transient presentation ID must never replace the original file's compatibility ID.
+        original?.nativeEntry?.fields?.get(FIELD_MONICA_LOCAL_ID)?.let { values[FIELD_MONICA_LOCAL_ID] = it }
+        if (original == null) values.remove(FIELD_MONICA_LOCAL_ID)
+        values["MonicaIsFavorite"] = EntryValue.Plain(row.isFavorite.toString())
+        values["MonicaIsArchived"] = EntryValue.Plain(row.isArchived.toString())
+        values["MonicaSortOrder"] = EntryValue.Plain(row.sortOrder.toString())
+        values["MonicaIsGroupCover"] = EntryValue.Plain(row.isGroupCover.toString())
+        values["MonicaCategoryId"] = EntryValue.Plain(row.categoryId?.toString().orEmpty())
+        values["MonicaSsoRefEntryUuid"] = EntryValue.Plain(ssoRefUuid?.toString().orEmpty())
+        values["MonicaBoundNoteUuid"] = EntryValue.Plain(boundNoteUuid?.toString().orEmpty())
+        listOf("MonicaBoundNoteId" to row.boundNoteId?.toString(), "MonicaPasskeyBindings" to row.passkeyBindings).forEach { (name, value) ->
+            values[name] = EntryValue.Plain(value.orEmpty())
+        }
+        listOf("MonicaPasswordGroupId" to row.passwordGroupId, "MonicaReplicaGroupId" to row.replicaGroupId,
+            "MonicaCustomIconType" to row.customIconType, "MonicaCustomIconValue" to row.customIconValue).forEach { (name, value) ->
+            values[name] = EntryValue.Plain(value.orEmpty())
+        }
+        return values.map { (name, value) ->
+            val previous = original?.field(name)
+            // Preserve REF syntax and the native protection bit when the displayed value is unchanged.
+            val retained = previous?.takeIf { it.displayValue == value.content }
+            KeePassFieldChange(name, retained?.rawValue ?: value.content,
+                retained?.isProtected ?: (value is EntryValue.Encrypted))
+        }
+    }
+
+    /** Commit an ordinary Monica editor's credentials together through the original UUID model. */
+    internal suspend fun saveMonicaPasswordDrafts(
+        databaseId: Long,
+        drafts: List<takagi.ru.monica.keepass.KeePassMonicaPasswordDraft>,
+        removedUuids: Set<UUID>,
+        expectedRevisionToken: String,
+    ): Result<Unit> = withContext(Dispatchers.IO) {
+        try {
+            require(drafts.isNotEmpty())
+            require(drafts.map { it.uuid }.distinct().size == drafts.size)
+            require(drafts.none { it.uuid in removedUuids }) { "An edited credential cannot also be removed" }
+            drafts.forEach { validateNativeFieldNames(it.fields) }
+            mutateDatabase(databaseId) { loaded ->
+                assertNativeRevision(expectedRevisionToken, loaded.nativeSession.value.revisionToken)
+                removedUuids.forEach { requireUniqueNativeEntry(loaded.nativeSession.value, it) }
+                var staged = loaded.keePassDatabase
+                val applier = KeePassChangeSetApplier()
+                val pending = mutableListOf<KeePassChangeSet>()
+                drafts.forEach { draft ->
+                    requireUniqueNativeGroup(loaded.nativeSession.value, draft.parentGroupUuid)
+                    val original = if (draft.existing) requireUniqueNativeEntry(loaded.nativeSession.value, draft.uuid).entry else null
+                    if (original == null) {
+                        check(findEntryByUuid(staged.content.group, draft.uuid) == null)
+                        staged = KeePassNativeManagement.createEntry(staged, draft.parentGroupUuid,
+                            draft.fields.map { field -> field.name to if (field.protected) {
+                                EntryValue.Encrypted(EncryptedValue.fromString(field.value))
+                            } else EntryValue.Plain(field.value) }, draft.uuid)
+                    }
+                    val current = requireNotNull(findEntryByUuid(staged.content.group, draft.uuid))
+                    val edit = buildNativeEntryEditChangeSet(databaseId, draft.uuid, current, draft.fields,
+                        KeePassNativeEntryPresentationUpdate())
+                    staged = applier.apply(staged, edit).updatedDatabase
+                    val finalEntry = requireNotNull(findEntryByUuid(staged.content.group, draft.uuid))
+                    val committed = if (original == null) finalEntry.copy(history = emptyList()) else {
+                        nativeMutation.editEntry(original, staged.content.meta, staged.binaries) {
+                            finalEntry.copy(history = original.history, times = finalEntry.times?.copy(
+                                lastModificationTime = original.times?.lastModificationTime,
+                                lastAccessTime = original.times?.lastAccessTime,
+                                usageCount = original.times?.usageCount ?: 0,
+                            ))
+                        }
+                    }
+                    staged = staged.modifyParentGroup { updateEntryInGroup(this, draft.uuid, committed) }
+                    staged = KeePassNativeManagement.moveEntries(staged, setOf(draft.uuid), draft.parentGroupUuid)
+                    if (original == null) {
+                        pending += requireNotNull(buildCreateEntryChangeSet(staged, databaseId,
+                            KeePassChangeTarget.PASSWORD, committed, null, draft.parentGroupUuid))
+                    } else {
+                        pending += edit
+                        if (requireUniqueNativeEntry(loaded.nativeSession.value, draft.uuid).parentGroup.groupUuid != draft.parentGroupUuid) {
+                            pending += KeePassChangeSet(databaseId = databaseId, target = KeePassChangeTarget.PASSWORD,
+                                operation = KeePassChangeOperation.MOVE_ENTRY, entryUuid = draft.uuid.toString(),
+                                baseFingerprint = KeePassEntryFingerprint.build(committed),
+                                structurePatch = KeePassStructureChangePatch(targetGroupUuid = draft.parentGroupUuid.toString()))
+                        }
+                    }
+                }
+                if (removedUuids.isNotEmpty()) {
+                    val deleted = applyEntryStructureChanges(loaded.copy(keePassDatabase = staged), removedUuids.toList(),
+                        KeePassChangeTarget.PASSWORD, KeePassChangeOperation.MOVE_TO_RECYCLE_BIN) { entry, uuid, _ -> entry.uuid == uuid }
+                    check(deleted.changedCount == removedUuids.size) { "KeePass removed credential is missing or ambiguous" }
+                    staged = deleted.database
+                    pending += deleted.changeSets
+                }
+                MutationPlan(updatedDatabase = staged, result = Unit,
+                    beforeRemoteUpload = { database, revision -> enqueuePendingChangeSetsIfRemote(database, pending, revision) })
+            }
+            Result.success(Unit)
+        } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled
+        } catch (error: Exception) { Result.failure(normalizeError(error)) }
+    }
+
+    internal suspend fun saveMonicaSecureItem(
+        databaseId: Long, entryUuid: UUID, existing: Boolean, item: SecureItem, expectedRevisionToken: String,
+    ): Result<Unit> = withContext(Dispatchers.IO) {
+        try {
+            val photos = buildSecureItemPhotoUpdates(item)
+            mutateDatabase(databaseId) { loaded ->
+                assertNativeRevision(expectedRevisionToken, loaded.nativeSession.value.revisionToken)
+                val original = if (existing) requireUniqueNativeEntry(loaded.nativeSession.value, entryUuid).entry else null
+                val safeItem = item.copy(id = original?.fields?.get(FIELD_MONICA_ITEM_ID)?.content?.toLongOrNull() ?: 0L,
+                    keepassEntryUuid = entryUuid.toString())
+                val result = if (original != null) {
+                    updateSecureItemInternal(loaded.keePassDatabase, databaseId, safeItem, photos).also {
+                        check(it.changed) { "KeePass secure item no longer matches its UUID" }
+                    }
+                } else {
+                    val created = buildSecureItemEntry(safeItem).copy(uuid = entryUuid)
+                    val staged = loaded.keePassDatabase.modifyParentGroup {
+                        addEntryToGroupPath(this, safeItem.keepassGroupPath, created)
+                    }
+                    val photoSync = KeePassSecureItemPhotoAttachments.synchronize(staged, entryUuid, item.itemType, photos)
+                    KeePassEntryUpdateResult(photoSync.database, true,
+                        listOfNotNull(buildCreateEntryChangeSet(staged, databaseId, KeePassChangeTarget.SECURE_ITEM,
+                            created, safeItem.keepassGroupPath)) + buildSecureItemPhotoChangeSets(databaseId, entryUuid,
+                            buildConflictEntrySignature(created), photoSync.changes))
+                }
+                MutationPlan(updatedDatabase = result.database, result = Unit,
+                    beforeRemoteUpload = { database, revision -> enqueuePendingChangeSetsIfRemote(database, result.changeSets, revision) })
+            }
+            Result.success(Unit)
+        } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled
+        } catch (error: Exception) { Result.failure(normalizeError(error)) }
+    }
+
+    internal suspend fun saveMonicaPasskey(databaseId: Long, uuid: UUID, passkey: PasskeyEntry, revision: String): Result<Unit> = withContext(Dispatchers.IO) {
+        try {
+            mutateDatabase(databaseId) { loaded ->
+                assertNativeRevision(revision, loaded.nativeSession.value.revisionToken)
+                requireUniqueNativeEntry(loaded.nativeSession.value, uuid)
+                val matches = loaded.projectionBundle.value.entries.filter { matchesPasskeyEntry(it.entry, passkey,
+                    loaded.projectionBundle.value.resolutionContext) }
+                check(matches.singleOrNull()?.entry?.uuid == uuid) { "KeePass passkey identity is missing or ambiguous" }
+                val updated = updatePasskeyInternal(loaded.keePassDatabase, databaseId, passkey.copy(id = 0L))
+                check(updated.changed) { "KeePass passkey no longer matches its identity" }
+                MutationPlan(updatedDatabase = updated.database, result = Unit,
+                    beforeRemoteUpload = { database, token -> enqueuePendingChangeSetsIfRemote(database, updated.changeSets, token) })
+            }
+            Result.success(Unit)
+        } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled
+        } catch (error: Exception) { Result.failure(normalizeError(error)) }
     }
 
     private fun validateNativeFieldNames(fields: List<KeePassFieldChange>) {
@@ -2738,13 +2966,14 @@ class KeePassKdbxService(
             mutateDatabase(databaseId) { loaded ->
                 assertNativeRevision(expectedRevisionToken, loaded.nativeSession.value.revisionToken)
                 entryUuids.forEach { uuid -> requireUniqueNativeEntry(loaded.nativeSession.value, uuid) }
+                val deleted = applyEntryStructureChanges(loaded, entryUuids.toList(), KeePassChangeTarget.UNKNOWN_ENTRY,
+                    if (mode == KeePassNativeDeleteMode.RECYCLE_BIN) KeePassChangeOperation.MOVE_TO_RECYCLE_BIN else KeePassChangeOperation.PERMANENT_DELETE
+                ) { entry, uuid, _ -> entry.uuid == uuid }
+                check(deleted.changedCount == entryUuids.size) { "KeePass delete selection is stale" }
                 MutationPlan(
-                    updatedDatabase = KeePassNativeManagement.deleteEntries(
-                        loaded.keePassDatabase,
-                        entryUuids,
-                        mode
-                    ),
-                    result = Unit
+                    updatedDatabase = deleted.database,
+                    result = Unit,
+                    beforeRemoteUpload = { database, token -> enqueuePendingChangeSetsIfRemote(database, deleted.changeSets, token) }
                 )
             }
             Result.success(Unit)
@@ -3802,6 +4031,10 @@ class KeePassKdbxService(
 
     internal fun lockDatabase(databaseId: Long) {
         invalidateProcessCache(databaseId)
+        synchronized(nativeLockVersions) {
+            val current = nativeLockVersions.value
+            nativeLockVersions.value = current + (databaseId to ((current[databaseId] ?: 0L) + 1L))
+        }
     }
 
     private fun findEntryByUuid(group: Group, uuid: UUID): Entry? {
@@ -6134,6 +6367,8 @@ class KeePassKdbxService(
             wifiMetadata = resolvedWifiJson,
             customFields = customFields,
             hasPasskeyFields = hasPasskeyFields,
+            monicaPresentation = takagi.ru.monica.keepass.KeePassMonicaPasswordStore.UI_FIELDS
+                .filter { entry.fields.containsKey(it) }.associateWith { getFieldValue(entry, it, resolutionContext) },
             authenticatorKey = parseStandardTotpFromEntry(entry, resolutionContext)
                 ?.let { TotpDataResolver.toBitwardenPayload(title, it) }.orEmpty()
         )
@@ -8657,6 +8892,7 @@ class KeePassKdbxService(
                 loaded = loaded,
                 cachedAtMs = System.currentTimeMillis()
             )
+            notifyNativeIconsChanged(loaded.database.id)
             trimLoadedDatabaseCacheLocked()
         }
     }
@@ -8664,6 +8900,7 @@ class KeePassKdbxService(
     private fun invalidateLoadedDatabaseCache(databaseId: Long) {
         synchronized(loadedDatabaseCache) {
             loadedDatabaseCache.remove(databaseId)
+            notifyNativeIconsChanged(databaseId)
         }
         nativeSessionCache.invalidate(databaseId)
         nativeProjectionBundleCache.invalidate(databaseId)

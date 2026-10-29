@@ -1,6 +1,8 @@
 package takagi.ru.monica.attachments.repository
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.*
+import takagi.ru.monica.keepass.KeePassMonicaPasswordStore
 import takagi.ru.monica.attachments.data.AttachmentDao
 import takagi.ru.monica.attachments.model.Attachment
 import takagi.ru.monica.attachments.model.AttachmentDownloadState
@@ -17,6 +19,15 @@ class AttachmentRepository(
     private val dao: AttachmentDao,
     private val clock: () -> Long = { System.currentTimeMillis() }
 ) {
+    private val originalStore = MutableStateFlow<KeePassMonicaPasswordStore?>(null)
+    private val cachedOriginal = MutableStateFlow<Map<Long, Attachment>>(emptyMap())
+    internal fun bindOriginalKeePassStore(store: KeePassMonicaPasswordStore) { originalStore.value = store }
+    private val originalRows: Flow<Map<AttachmentOwner, List<Attachment>>> = originalStore.flatMapLatest { store ->
+        store?.attachmentRows ?: flowOf(emptyMap())
+    }.combine(cachedOriginal) { rows, cache -> rows.mapValues { (_, assets) -> assets.map { cache[it.id] ?: it } } }
+    private fun Attachment.owner() = parentPasswordId?.let(AttachmentOwner::password)
+        ?: AttachmentOwner.secureItem(requireNotNull(parentSecureItemId))
+    private fun native(owner: AttachmentOwner) = KeePassMonicaPasswordStore.isUiId(owner.id)
 
     // ---------------------------------------------------------------- 读
 
@@ -26,7 +37,7 @@ class AttachmentRepository(
     fun observeBySecureItem(secureItemId: Long): Flow<List<Attachment>> =
         observe(AttachmentOwner.secureItem(secureItemId))
 
-    fun observe(owner: AttachmentOwner): Flow<List<Attachment>> = when (owner.kind) {
+    fun observe(owner: AttachmentOwner): Flow<List<Attachment>> = if (native(owner)) originalRows.map { it[owner].orEmpty() } else when (owner.kind) {
         AttachmentOwner.Kind.PASSWORD -> dao.observeActiveByParent(owner.id)
         AttachmentOwner.Kind.SECURE_ITEM -> dao.observeActiveBySecureItem(owner.id)
     }
@@ -42,14 +53,15 @@ class AttachmentRepository(
     suspend fun list(
         owner: AttachmentOwner,
         includeDeleted: Boolean = false
-    ): List<Attachment> = when (owner.kind) {
+    ): List<Attachment> = if (native(owner)) originalRows.first()[owner].orEmpty() else when (owner.kind) {
         AttachmentOwner.Kind.PASSWORD ->
             if (includeDeleted) dao.getAllByParent(owner.id) else dao.getActiveByParent(owner.id)
         AttachmentOwner.Kind.SECURE_ITEM ->
             if (includeDeleted) dao.getAllBySecureItem(owner.id) else dao.getActiveBySecureItem(owner.id)
     }
 
-    suspend fun getById(id: Long): Attachment? = dao.getById(id)
+    suspend fun getById(id: Long): Attachment? = if (KeePassMonicaPasswordStore.isUiId(id))
+        originalRows.first().values.flatten().singleOrNull { it.id == id } else dao.getById(id)
 
     suspend fun getByBitwardenAttachmentId(attachmentId: String): Attachment? =
         dao.findByBitwardenAttachmentId(attachmentId)
@@ -60,14 +72,14 @@ class AttachmentRepository(
     suspend fun listByOwnerAndSource(
         owner: AttachmentOwner,
         source: AttachmentSource
-    ): List<Attachment> = when (owner.kind) {
+    ): List<Attachment> = if (native(owner)) list(owner).filter { it.sourceEnum == source } else when (owner.kind) {
         AttachmentOwner.Kind.PASSWORD -> dao.getByParentAndSource(owner.id, source.name)
         AttachmentOwner.Kind.SECURE_ITEM -> dao.getBySecureItemAndSource(owner.id, source.name)
     }
 
     suspend fun countActive(passwordId: Long): Int = countActive(AttachmentOwner.password(passwordId))
 
-    suspend fun countActive(owner: AttachmentOwner): Int = when (owner.kind) {
+    suspend fun countActive(owner: AttachmentOwner): Int = if (native(owner)) list(owner).size else when (owner.kind) {
         AttachmentOwner.Kind.PASSWORD -> dao.countActiveByParent(owner.id)
         AttachmentOwner.Kind.SECURE_ITEM -> dao.countActiveBySecureItem(owner.id)
     }
@@ -75,17 +87,19 @@ class AttachmentRepository(
     /** 返回 [passwordIds] 中存在未软删附件的 id 集合。 */
     suspend fun idsWithActiveAttachments(passwordIds: List<Long>): Set<Long> {
         if (passwordIds.isEmpty()) return emptySet()
-        return dao.parentsWithActiveAttachments(passwordIds).toSet()
+        return dao.parentsWithActiveAttachments(passwordIds.filterNot(KeePassMonicaPasswordStore::isUiId)).toSet() +
+            originalRows.first().filter { it.key.kind == AttachmentOwner.Kind.PASSWORD && it.key.id in passwordIds && it.value.isNotEmpty() }.keys.map { it.id }
     }
 
     suspend fun secureItemIdsWithActiveAttachments(secureItemIds: List<Long>): Set<Long> {
         if (secureItemIds.isEmpty()) return emptySet()
-        return dao.secureItemsWithActiveAttachments(secureItemIds).toSet()
+        return dao.secureItemsWithActiveAttachments(secureItemIds.filterNot(KeePassMonicaPasswordStore::isUiId)).toSet() +
+            originalRows.first().filter { it.key.kind == AttachmentOwner.Kind.SECURE_ITEM && it.key.id in secureItemIds && it.value.isNotEmpty() }.keys.map { it.id }
     }
 
     /** 返回当前数据库里所有仍被引用的本地密文文件相对路径。 */
     suspend fun allReferencedLocalPaths(): Set<String> =
-        dao.selectAllLocalPaths().filterNotNull().toSet()
+        dao.selectAllLocalPaths().filterNotNull().toSet() + cachedOriginal.value.values.mapNotNull { it.localPath }
 
     /** 列出所有"本地已下载 + 未软删除"的附件（用于备份 / 迁移）。 */
     suspend fun listAllActiveLocalAttachments(): List<Attachment> =
@@ -104,6 +118,7 @@ class AttachmentRepository(
         owner: AttachmentOwner,
         fromSource: AttachmentSource
     ): Int {
+        check(!native(owner)) { "Original KeePass attachment ownership must be copied before moving" }
         if (fromSource == AttachmentSource.LOCAL) return 0
         return when (owner.kind) {
             AttachmentOwner.Kind.PASSWORD -> dao.rewriteSourceToLocal(
@@ -121,28 +136,49 @@ class AttachmentRepository(
 
     // ---------------------------------------------------------------- 写
 
-    suspend fun insert(attachment: Attachment): Long = dao.insert(
+    suspend fun insert(attachment: Attachment): Long {
+        if (native(attachment.owner())) {
+            val id = requireNotNull(originalStore.value).attachmentId(attachment.owner(), requireNotNull(attachment.keepassBinaryRef))
+            cachedOriginal.update { it + (id to attachment.copy(id = id)) }
+            return id
+        }
+        return dao.insert(
         attachment.copy(
             createdAt = if (attachment.createdAt == 0L) clock() else attachment.createdAt,
             updatedAt = if (attachment.updatedAt == 0L) clock() else attachment.updatedAt
         )
     )
+    }
 
-    suspend fun update(attachment: Attachment): Int =
-        dao.update(attachment.copy(updatedAt = clock()))
+    suspend fun update(attachment: Attachment): Int {
+        if (KeePassMonicaPasswordStore.isUiId(attachment.id)) {
+            check(getById(attachment.id) != null) { "Original KeePass attachment is unavailable" }
+            cachedOriginal.update { it + (attachment.id to attachment.copy(updatedAt = clock())) }
+            return 1
+        }
+        return dao.update(attachment.copy(updatedAt = clock()))
+    }
 
-    suspend fun markDownloadState(id: Long, state: AttachmentDownloadState) =
+    suspend fun markDownloadState(id: Long, state: AttachmentDownloadState) {
+        if (KeePassMonicaPasswordStore.isUiId(id)) { getById(id)?.let { update(it.copy(downloadState = state.name)) }; return }
         dao.updateDownloadState(id, state.name, clock())
+    }
 
     // ---------------------------------------------------------------- 删
 
     /** 永久删除单条附件的元数据，不处理底层密文文件的清理。 */
-    suspend fun deleteById(id: Long): Int = dao.deleteById(id)
+    suspend fun deleteById(id: Long): Int {
+        if (KeePassMonicaPasswordStore.isUiId(id)) { cachedOriginal.update { it - id }; return 1 }
+        return dao.deleteById(id)
+    }
 
     /** 永久清空某个密码的所有附件元数据，用于密码永久删除级联。 */
-    suspend fun purgeByPassword(passwordId: Long): Int = dao.purgeByParent(passwordId)
+    suspend fun purgeByPassword(passwordId: Long): Int = purge(AttachmentOwner.password(passwordId))
 
-    suspend fun purge(owner: AttachmentOwner): Int = when (owner.kind) {
+    suspend fun purge(owner: AttachmentOwner): Int = if (native(owner)) {
+        val ids = cachedOriginal.value.values.filter { it.owner() == owner }.map { it.id }.toSet()
+        cachedOriginal.update { it - ids }; ids.size
+    } else when (owner.kind) {
         AttachmentOwner.Kind.PASSWORD -> dao.purgeByParent(owner.id)
         AttachmentOwner.Kind.SECURE_ITEM -> dao.purgeBySecureItem(owner.id)
     }
@@ -153,6 +189,7 @@ class AttachmentRepository(
     }
 
     suspend fun softDelete(owner: AttachmentOwner): Int {
+        if (native(owner)) return 0 // The KDBX recycle bin owns this lifecycle.
         val now = clock()
         return when (owner.kind) {
             AttachmentOwner.Kind.PASSWORD ->
@@ -166,7 +203,7 @@ class AttachmentRepository(
     suspend fun restoreByPassword(passwordId: Long): Int =
         restore(AttachmentOwner.password(passwordId))
 
-    suspend fun restore(owner: AttachmentOwner): Int = when (owner.kind) {
+    suspend fun restore(owner: AttachmentOwner): Int = if (native(owner)) 0 else when (owner.kind) {
         AttachmentOwner.Kind.PASSWORD -> dao.restoreByParent(owner.id, updatedAt = clock())
         AttachmentOwner.Kind.SECURE_ITEM -> dao.restoreBySecureItem(owner.id, updatedAt = clock())
     }

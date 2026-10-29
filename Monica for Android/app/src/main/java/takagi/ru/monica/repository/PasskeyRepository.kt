@@ -3,6 +3,11 @@ package takagi.ru.monica.repository
 import android.content.Context
 import android.util.Log
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import takagi.ru.monica.data.PasskeyDao
 import takagi.ru.monica.data.PasskeyEntry
 import takagi.ru.monica.passkey.PasskeyCredentialIdCodec
@@ -21,6 +26,10 @@ class PasskeyRepository(
     private val mdbxRepository: MdbxRepository? = null,
     private val context: Context? = null
 ) {
+    private val monicaKeePassStore = MutableStateFlow<takagi.ru.monica.keepass.KeePassMonicaPasswordStore?>(null)
+    internal fun bindMonicaKeePassStore(store: takagi.ru.monica.keepass.KeePassMonicaPasswordStore) { monicaKeePassStore.value = store }
+    fun usesOriginalKeePass(databaseId: Long): Boolean = monicaKeePassStore.value?.isActive(databaseId) == true
+    suspend fun refreshOriginalKeePass(databaseId: Long) { requireNotNull(monicaKeePassStore.value).refresh(databaseId) }
     
     companion object {
         private const val TAG = "PasskeyRepository"
@@ -32,12 +41,16 @@ class PasskeyRepository(
     /**
      * 获取所有 Passkey（响应式）
      */
-    fun getAllPasskeys(): Flow<List<PasskeyEntry>> = passkeyDao.getAllPasskeys()
+    fun getAllPasskeys(): Flow<List<PasskeyEntry>> = monicaKeePassStore.flatMapLatest { store ->
+        if (store == null) passkeyDao.getAllPasskeys() else combine(passkeyDao.getAllPasskeys(), store.activePasskeys) { indexed, native ->
+            indexed.filterNot { it.keepassDatabaseId in native.keys } + native.values.flatten()
+        }
+    }
     
     /**
      * 获取所有 Passkey（同步）
      */
-    suspend fun getAllPasskeysSync(): List<PasskeyEntry> = passkeyDao.getAllPasskeysSync()
+    suspend fun getAllPasskeysSync(): List<PasskeyEntry> = getAllPasskeys().first()
     
     /**
      * 根据凭据 ID 获取 Passkey
@@ -46,7 +59,8 @@ class PasskeyRepository(
         passkeyDao.getPasskeyById(credentialId)
 
     suspend fun getPasskeyByRecordId(recordId: Long): PasskeyEntry? =
-        passkeyDao.getPasskeyByRecordId(recordId)
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(recordId)) monicaKeePassStore.value?.getPasskey(recordId, true)
+        else passkeyDao.getPasskeyByRecordId(recordId)
 
     suspend fun normalizeLegacyDetachedKeePassPasskey(
         passkey: PasskeyEntry,
@@ -97,7 +111,7 @@ class PasskeyRepository(
     /**
      * 获取 Passkey 总数
      */
-    fun getPasskeyCount(): Flow<Int> = passkeyDao.getPasskeyCount()
+    fun getPasskeyCount(): Flow<Int> = getAllPasskeys().map { it.size }
     
     /**
      * 获取未备份的 Passkeys
@@ -158,6 +172,10 @@ class PasskeyRepository(
     }
 
     suspend fun savePasskey(passkey: PasskeyEntry) {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(passkey.id)) {
+            requireNotNull(monicaKeePassStore.value).savePasskey(passkey)
+            return
+        }
         passkey.mdbxDatabaseId?.let { mdbxRepository?.requireRoomMirrorAllowed(it) }
         val protected = protectPrivateKeyForRoom(passkey)
         try {
@@ -194,6 +212,10 @@ class PasskeyRepository(
      * 更新 Passkey
      */
     suspend fun updatePasskey(passkey: PasskeyEntry) {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(passkey.id)) {
+            requireNotNull(monicaKeePassStore.value).savePasskey(passkey)
+            return
+        }
         passkey.mdbxDatabaseId?.let { mdbxRepository?.requireRoomMirrorAllowed(it) }
         val existing = resolveExistingPasskey(passkey)
         val normalized = if (existing == null) {
@@ -370,6 +392,10 @@ class PasskeyRepository(
     }
     
     suspend fun deletePasskeyByRecordId(recordId: Long) {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(recordId)) {
+            monicaKeePassStore.value?.getPasskey(recordId)?.let { requireNotNull(monicaKeePassStore.value).deletePasskey(it) }
+            return
+        }
         val passkey = passkeyDao.getPasskeyByRecordId(recordId)
         if (passkey != null) {
             deletePasskeyLocalOnly(passkey)
@@ -413,6 +439,10 @@ class PasskeyRepository(
     }
 
     suspend fun deletePasskeyLocalOnly(passkey: PasskeyEntry) {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(passkey.id)) {
+            requireNotNull(monicaKeePassStore.value).deletePasskey(passkey)
+            return
+        }
         commitMirrorThenRoom(
             mirrorCommit = { mdbxRepository?.deletePasskey(passkey) },
             roomCommit = { passkeyDao.delete(passkey) },

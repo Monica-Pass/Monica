@@ -5,9 +5,13 @@ import takagi.ru.monica.data.SecureItem
 import takagi.ru.monica.repository.KeePassCompatibilityBridge
 
 class KeePassSecureItemDeleteExecutor(
-    private val bridge: KeePassCompatibilityBridge?
+    private val bridge: KeePassCompatibilityBridge?,
+    private val repository: takagi.ru.monica.repository.SecureItemRepository? = null,
 ) {
     suspend fun delete(item: SecureItem, useRecycleBin: Boolean): Boolean {
+        if (KeePassMonicaPasswordStore.isUiId(item.id)) return runCatching {
+            requireNotNull(repository).deleteOriginalKeePassItem(item, useRecycleBin)
+        }.isSuccess
         val databaseId = item.keepassDatabaseId ?: return true
         val keepassBridge = bridge ?: return true
 

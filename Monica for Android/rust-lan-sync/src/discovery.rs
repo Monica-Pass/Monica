@@ -12,7 +12,7 @@ const PROBE: &[u8] = b"monica-lan-discover/1";
 #[derive(Default)]
 struct Registry {
     next: u64,
-    offers: HashMap<u64, (Offer, bool)>,
+    offers: HashMap<u64, (Offer, bool, network::Bindings)>,
     running: bool,
 }
 static REGISTRY: OnceLock<Mutex<Registry>> = OnceLock::new();
@@ -56,7 +56,11 @@ fn response_socket() -> Result<UdpSocket> {
     Ok(socket.into())
 }
 
-pub(super) fn register(offer: Offer, follow_interfaces: bool) -> Registration {
+pub(super) fn register(
+    offer: Offer,
+    follow_interfaces: bool,
+    bindings: network::Bindings,
+) -> Registration {
     let Ok(mut state) = registry().lock() else {
         return Registration(None);
     };
@@ -70,7 +74,9 @@ pub(super) fn register(offer: Offer, follow_interfaces: bool) -> Registration {
     };
     state.next += 1;
     let id = state.next;
-    state.offers.insert(id, (offer, follow_interfaces));
+    state
+        .offers
+        .insert(id, (offer, follow_interfaces, bindings));
     if let Some(socket) = socket {
         state.running = true;
         std::thread::spawn(move || respond(socket));
@@ -109,7 +115,7 @@ fn respond(socket: UdpSocket) {
                 }
             }
             if let Ok(mut state) = registry().lock() {
-                for (offer, follow_interfaces) in state.offers.values_mut() {
+                for (offer, follow_interfaces, _) in state.offers.values_mut() {
                     if *follow_interfaces {
                         offer.addresses = current.clone();
                     }
@@ -135,9 +141,17 @@ fn respond(socket: UdpSocket) {
                 let Ok(state) = registry().lock() else { return };
                 // A unicast datagram reaches one UDP socket. Reply with every active offer,
                 // rather than letting several per-peer sockets compete for it.
-                for (offer, _) in state.offers.values() {
+                for (offer, _, bindings) in state.offers.values() {
                     if let Ok(message) = serde_json::to_vec(offer) {
-                        let _ = socket.send_to(&message, peer);
+                        let handle = match peer.ip() {
+                            IpAddr::V4(ip) => network::handle(bindings, ip),
+                            _ => 0,
+                        };
+                        if handle == 0 {
+                            let _ = socket.send_to(&message, peer);
+                        } else if let Ok(reply) = probe_socket(handle) {
+                            let _ = reply.send_to(&message, &peer.into());
+                        }
                     }
                 }
             }
@@ -150,7 +164,7 @@ fn respond(socket: UdpSocket) {
     }
 }
 
-fn probe_socket() -> Result<Socket> {
+fn probe_socket(network_handle: u64) -> Result<Socket> {
     let socket = Socket::new(Domain::IPV4, Type::DGRAM, Some(Protocol::UDP))
         .map_err(|_| "discovery_unavailable")?;
     socket
@@ -162,26 +176,72 @@ fn probe_socket() -> Result<Socket> {
     socket
         .set_multicast_ttl_v4(1)
         .map_err(|_| "discovery_unavailable")?;
+    socket
+        .set_broadcast(true)
+        .map_err(|_| "discovery_unavailable")?;
+    network::bind(&socket, network_handle)?;
     Ok(socket)
+}
+
+fn broadcast_addresses() -> Vec<Ipv4Addr> {
+    let mut addresses: Vec<_> = if_addrs::get_if_addrs()
+        .unwrap_or_default()
+        .into_iter()
+        .filter_map(|interface| match interface.addr {
+            if_addrs::IfAddr::V4(address)
+                if address.ip.is_private() || address.ip.is_link_local() =>
+            {
+                address
+                    .broadcast
+                    .filter(|ip| ip.is_private() || ip.is_link_local())
+            }
+            _ => None,
+        })
+        .collect();
+    addresses.sort();
+    addresses.dedup();
+    addresses.truncate(MAX_INVITATION_ADDRESSES);
+    addresses
 }
 
 pub(super) fn discover(
     duration: Duration,
-    targets: Vec<Ipv4Addr>,
+    mut targets: Vec<Ipv4Addr>,
     multicast: bool,
+    broadcast: bool,
+    bindings: network::Bindings,
 ) -> Result<Vec<Offer>> {
+    // Hotspots may filter multicast. Probe only actual interface broadcasts,
+    // never a guessed subnet or the global 255.255.255.255 broadcast address.
+    if broadcast {
+        targets.extend(broadcast_addresses());
+    }
+    targets.sort();
+    targets.dedup();
+    targets.truncate(64);
     let mut sockets: Vec<UdpSocket> = Vec::new();
     if !targets.is_empty() {
-        let socket = probe_socket()?;
+        let mut networks: HashMap<u64, Vec<Ipv4Addr>> = HashMap::new();
         for address in targets {
-            let _ = socket.send_to(PROBE, &SocketAddr::from((address, PORT)).into());
+            networks
+                .entry(network::handle(&bindings, address))
+                .or_default()
+                .push(address);
         }
-        sockets.push(socket.into());
+        for (handle, targets) in networks {
+            let socket = probe_socket(handle)?;
+            for address in targets {
+                let _ = socket.send_to(PROBE, &SocketAddr::from((address, PORT)).into());
+            }
+            sockets.push(socket.into());
+        }
     }
     if multicast {
         // Each outgoing socket stays attached to its interface, including while replies arrive.
         for address in addresses() {
-            let Ok(socket) = probe_socket() else { continue };
+            let Ok(socket) = probe_socket(network::handle(&bindings, address)) else {
+                continue;
+            };
             if socket.set_multicast_if_v4(&address).is_err() {
                 continue;
             }
@@ -193,7 +253,7 @@ pub(super) fn discover(
             }
         }
         if sockets.is_empty() {
-            let socket = probe_socket()?;
+            let socket = probe_socket(0)?;
             let _ = socket.send_to(PROBE, &SocketAddr::from((GROUP, PORT)).into());
             sockets.push(socket.into());
         }

@@ -38,7 +38,8 @@ internal class LanSyncSession(context: Context, private val vaults: MdbxViewMode
         scope.launch {
             mutableState.value = mutableState.value.copy(discovering = true, error = null)
             try {
-                val result = withContext(Dispatchers.IO) { RustLanSync.request(JSONObject().put("operation", "discover")) }
+                val result = withContext(Dispatchers.IO) { RustLanSync.request(DeviceSyncLocalNetwork.withNetworks(application, JSONObject().put("operation", "discover")
+                    .put("targets", org.json.JSONArray(DeviceSyncLocalNetwork.targets(application))))) }
                 val devices = result.getJSONArray("devices")
                 mutableState.value = mutableState.value.copy(devices = (0 until devices.length()).map { index ->
                     val device = devices.getJSONObject(index)
@@ -75,7 +76,7 @@ internal class LanSyncSession(context: Context, private val vaults: MdbxViewMode
                 if (databaseId != null) request.put("outgoing_directory", outgoing.absolutePath)
                 if (invitation != null) request.put("invitation", invitation)
                 val started = withContext(Dispatchers.IO) {
-                    RustLanSync.request(request).also { handle = it.getLong("handle") }
+                    RustLanSync.request(DeviceSyncLocalNetwork.withNetworks(application, request)).also { handle = it.getLong("handle") }
                 }
                 val links = started.optJSONArray("invitations")
                 mutableState.value = mutableState.value.copy(

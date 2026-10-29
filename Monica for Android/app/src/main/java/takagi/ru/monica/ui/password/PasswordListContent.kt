@@ -344,6 +344,21 @@ fun PasswordListContent(
     onOpenStandaloneSettings: () -> Unit = {},
     aggregateConfig: PasswordListAggregateConfig? = null
 ) {
+    val nativeFilter by viewModel.categoryFilter.collectAsState()
+    val nativeScope = takagi.ru.monica.keepass.KeePassPasswordNativeScope.from(nativeFilter)
+    if (nativeScope != null) {
+        DisposableEffect(nativeScope.databaseId) {
+            val nativeRead = viewModel.holdNativeKeePassRead(nativeScope.databaseId)
+            val lockVersion = localKeePassViewModel.nativeLockVersions.value[nativeScope.databaseId] ?: 0L
+            onDispose {
+                nativeRead.close()
+                // The overview index is refreshed outside the native edit/return path.
+                if ((localKeePassViewModel.nativeLockVersions.value[nativeScope.databaseId] ?: 0L) == lockVersion) {
+                    viewModel.refreshKeePassOverviewAfterNativeRead(nativeScope.databaseId)
+                }
+            }
+        }
+    }
     val coroutineScope = rememberCoroutineScope()
     val passwordEntries by viewModel.passwordEntries.collectAsState()
     val passwordEntriesReady by viewModel.passwordEntriesReady.collectAsState()

@@ -669,6 +669,7 @@ fun SimpleMainScreen(
     val scope = rememberCoroutineScope()
     val bitwardenRepository = remember { takagi.ru.monica.bitwarden.repository.BitwardenRepository.getInstance(context) }
     val appSettings by settingsViewModel.settings.collectAsState()
+    val settingsLoaded by settingsViewModel.settingsLoaded.collectAsState()
     val passwordPageVisibleContentTypes = remember(
         appSettings.passwordPageAggregateEnabled,
         appSettings.passwordPageVisibleContentTypes
@@ -3098,8 +3099,14 @@ fun SimpleMainScreen(
     } // End Outer Box
     }
 
-    WalletStackOverlayHost {
-        RenderMainSurface()
+    takagi.ru.monica.ui.components.StartupSearchProvider(
+        enabled = appSettings.autoFocusSearchOnStartup,
+        settingsLoaded = settingsLoaded,
+        tabKey = currentTab.key,
+    ) {
+        WalletStackOverlayHost {
+            RenderMainSurface()
+        }
     }
 
     if (pendingPasskeyDelete != null) {

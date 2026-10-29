@@ -328,6 +328,7 @@ fun AddEditPasswordScreen(
     val database = remember(context) { PasswordDatabase.getDatabase(context) }
     val security = takagi.ru.monica.ui.rememberUiSecurityManager()
     val repository = remember(database, security) { takagi.ru.monica.repository.SecureItemRepository(database.secureItemDao(), decryptSensitiveValue = security::decryptDataIfMonicaCiphertext) }
+    viewModel.monicaKeePassStore?.let(repository::bindMonicaKeePassStore)
     val banks = bankCardViewModel ?: androidx.lifecycle.viewmodel.compose.viewModel(key = "shared-template-banks") {
         BankCardViewModel(repository, context, database.localKeePassDatabaseDao(), security, strings = takagi.ru.monica.utils.AppLocaleStringResolver(context))
     }
@@ -357,6 +358,24 @@ fun AddEditPasswordScreen(
     }
     if ((passwordId == null || passwordId <= 0) && MdbxPasswordCreationRoute(
             creationTargets, localMdbxViewModel, onNavigateBack)) return
+    val nativeCreationTarget = if (passwordId == null) creationTargets.singleOrNull() as? StorageTarget.KeePass else null
+    val nativeDatabaseId = passwordId?.let { viewModel.nativeKeePassDatabaseId(kotlin.math.abs(it)) } ?: nativeCreationTarget?.databaseId
+    val nativeLockVersions by takagi.ru.monica.utils.KeePassKdbxService.nativeLockVersions.collectAsState()
+    val originalNativeLockVersion = remember(passwordId, nativeDatabaseId) { nativeLockVersions[nativeDatabaseId] ?: 0L }
+    LaunchedEffect(nativeDatabaseId, nativeLockVersions[nativeDatabaseId]) {
+        if (nativeDatabaseId != null && (nativeLockVersions[nativeDatabaseId] ?: 0L) != originalNativeLockVersion) {
+            sessionRevoked = true
+            onNavigateBack()
+        }
+    }
+    DisposableEffect(passwordId, nativeCreationTarget?.databaseId) {
+        val nativeRead = if (nativeCreationTarget != null) viewModel.holdNativeKeePassRead(nativeCreationTarget.databaseId)
+            else passwordId?.let { viewModel.holdNativeKeePassEntryRead(it) }
+        onDispose {
+            nativeRead?.close()
+            nativeCreationTarget?.let { viewModel.refreshKeePassOverviewAfterNativeRead(it.databaseId) }
+        }
+    }
     key(passwordId, selectedTemplate) {
     PasswordEntryEditor(
         viewModel = viewModel,
@@ -847,6 +866,9 @@ private fun PasswordEntryEditor(
         value = if (customIconType == PASSWORD_ICON_TYPE_UPLOADED) customIconValue else null
     )
     val selectedEmojiIcon = customIconValue.takeIf { customIconType == PASSWORD_ICON_TYPE_EMOJI }
+    val keePassIcon = takagi.ru.monica.ui.icons.rememberKeePassCustomIcon(
+        keepassDatabaseId, editingKeePassEntryUuid,
+        enabled = settings.iconCardsEnabled && customIconType == PASSWORD_ICON_TYPE_NONE)
     val linkedAppBindings = remember(appPackageName, appName) {
         parseLinkedAppBindings(appPackageName, appName)
     }
@@ -857,11 +879,12 @@ private fun PasswordEntryEditor(
         title = title,
         appPackageName = primaryAppPackageName,
         tintColor = MaterialTheme.colorScheme.primary,
-        enabled = settings.iconCardsEnabled && customIconType == PASSWORD_ICON_TYPE_NONE
+        enabled = settings.iconCardsEnabled && customIconType == PASSWORD_ICON_TYPE_NONE && keePassIcon == null
     )
     val fallbackWebsiteFavicon = rememberFavicon(
         url = website,
         enabled = settings.iconCardsEnabled &&
+            keePassIcon == null &&
             customIconType == PASSWORD_ICON_TYPE_NONE &&
             autoMatchedSimpleIcon.resolved &&
             autoMatchedSimpleIcon.slug == null
@@ -2213,7 +2236,7 @@ private fun PasswordEntryEditor(
             coroutineScope.launch {
                 val actualId = if (passwordId < 0) -passwordId else passwordId
                 withContext(Dispatchers.IO) {
-                    viewModel.getRawPasswordEntryById(actualId)
+                    viewModel.getRawPasswordEntryById(actualId, forEdit = true)
                 }?.let { rawEntry ->
                     hasOwnershipConflict = viewModel.hasOwnershipConflict(rawEntry)
                     val secretState = withContext(Dispatchers.Default) {
@@ -3659,6 +3682,9 @@ private fun PasswordEntryEditor(
                                                     .size(24.dp)
                                                     .clip(CircleShape)
                                             )
+                                        }
+                                        keePassIcon != null -> {
+                                            takagi.ru.monica.ui.icons.KeePassCustomIconImage(keePassIcon, Modifier.size(24.dp))
                                         }
                                         autoMatchedSimpleIcon.bitmap != null -> {
                                             Image(

@@ -910,6 +910,20 @@ fun AddEditDocumentScreen(
 
                 // Template fields are a single connected M3E group.
                 if (passTemplate != null) {
+                    if (passTemplate == takagi.ru.monica.data.model.WalletPassTemplate.TRAVEL) {
+                        takagi.ru.monica.ui.components.BoardingPassScanButton { pass ->
+                            if (title.isBlank()) title = "${pass.origin} → ${pass.destination}"
+                            issuedBy = pass.carrier
+                            documentNumber = pass.bookingReference
+                            fullName = pass.passenger
+                            walletFields = HashMap(walletFields + listOf(
+                                "serviceNumber" to pass.serviceNumber, "origin" to pass.origin,
+                                "destination" to pass.destination, "departure" to pass.departure,
+                                "seat" to pass.seat, "travelClass" to pass.compartment
+                            ).filter { it.second.isNotBlank() })
+                            Toast.makeText(context, context.getString(R.string.wallet_pass_boarding_pass_filled), Toast.LENGTH_SHORT).show()
+                        }
+                    }
                     WalletPassFields(passTemplate, documentNumber, { documentNumber = it }, fullName, { fullName = it },
                         issuedBy, { issuedBy = it }, expiryDate, { expiryDate = it }, walletFields,
                         { key, value -> walletFields = HashMap(walletFields + (key to value)) })

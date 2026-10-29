@@ -281,8 +281,13 @@ private fun OverviewPickerRow(row: OverviewPickerEntry, sourceName: String?, che
                             .semantics { contentDescription = row.cardBrand.displayName })
                     password != null -> VaultItemIcon(password.website, password.title, password.appPackageName,
                         password.customIconType, password.customIconValue, Icons.Default.Lock,
-                        modifier = Modifier.testTag("overview_pin_icon_${row.item.key}"))
-                    else -> Icon(row.item.type.icon(), null, tint = colors.primary, modifier = Modifier.size(26.dp))
+                        modifier = Modifier.testTag("overview_pin_icon_${row.item.key}"),
+                        keepassDatabaseId = password.keepassDatabaseId, keepassEntryUuid = password.keepassEntryUuid)
+                    else -> {
+                        val nativeIcon = takagi.ru.monica.ui.icons.rememberKeePassCustomIcon(row.item.keepassDatabaseId(), row.item.keepassEntryUuid())
+                        if (nativeIcon != null) takagi.ru.monica.ui.icons.KeePassCustomIconImage(nativeIcon, Modifier.size(36.dp))
+                        else Icon(row.item.type.icon(), null, tint = colors.primary, modifier = Modifier.size(26.dp))
+                    }
                 }
             }
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {

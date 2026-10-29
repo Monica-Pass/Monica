@@ -108,8 +108,8 @@ class DocumentViewModel internal constructor(
         null
     }
     private val keepassSecureItemCreateExecutor = KeePassSecureItemCreateExecutor(keepassBridge)
-    private val keepassSecureItemDeleteExecutor = KeePassSecureItemDeleteExecutor(keepassBridge)
-    private val keepassSecureItemUpdateExecutor = KeePassSecureItemUpdateExecutor(keepassBridge)
+    private val keepassSecureItemDeleteExecutor = KeePassSecureItemDeleteExecutor(keepassBridge, repository)
+    private val keepassSecureItemUpdateExecutor = KeePassSecureItemUpdateExecutor(keepassBridge, repository)
 
     private fun decryptStoredSensitiveValue(value: String): String {
         return securityManager
@@ -292,6 +292,7 @@ class DocumentViewModel internal constructor(
     }
 
     suspend fun syncKeePassDocumentsNow(databaseId: Long) {
+        if (repository.usesOriginalKeePass(databaseId)) { repository.refreshOriginalKeePass(databaseId); return }
         val taskId = SyncDiagnostics.nextTaskId("kp-doc")
         val target = "keepass_compat:document:$databaseId"
         val trigger = "READ_LEGACY_SECURE_ITEMS"

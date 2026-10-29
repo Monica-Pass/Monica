@@ -85,6 +85,7 @@ fun QrScannerScreen(
     invalidResultMessage: String? = null,
     diagnosticLabel: String? = null,
     onDiagnostic: ((String) -> Unit)? = null,
+    preserveWhitespace: Boolean = false,
     bottomContent: @Composable (launchGallery: () -> Unit) -> Unit = { launchGallery ->
         DefaultQrScannerBottomContent(launchGallery = launchGallery)
     }
@@ -113,6 +114,7 @@ fun QrScannerScreen(
                     invalidResultMessage = invalidResultMessage,
                     diagnosticLabel = diagnosticLabel,
                     onDiagnostic = onDiagnostic,
+                    preserveWhitespace = preserveWhitespace,
                     bottomContent = bottomContent
                 )
             }
@@ -182,11 +184,14 @@ private fun QrCodeScanner(
     invalidResultMessage: String?,
     diagnosticLabel: String?,
     onDiagnostic: ((String) -> Unit)?,
+    preserveWhitespace: Boolean,
     bottomContent: @Composable (launchGallery: () -> Unit) -> Unit
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
-    val galleryDecoder = remember(allowedFormats) { ZxingBarcodeDecoder(allowedFormats) }
+    val galleryDecoder = remember(allowedFormats, preserveWhitespace) {
+        ZxingBarcodeDecoder(allowedFormats, preserveWhitespace)
+    }
     val scope = rememberCoroutineScope()
     val scanConsumed = remember { AtomicBoolean(false) }
     val diagnostics = remember(diagnosticLabel, onDiagnostic) {
@@ -215,7 +220,8 @@ private fun QrCodeScanner(
     var invalidCandidateSeen by remember { mutableStateOf(false) }
 
     val acceptResult: (String?) -> Boolean = acceptResult@{ raw ->
-        val value = raw?.trim()?.takeIf { it.isNotBlank() } ?: return@acceptResult false
+        val value = raw?.let { if (preserveWhitespace) it else it.trim() }
+            ?.takeIf { it.isNotBlank() } ?: return@acceptResult false
         if (!currentValidator.value(value) || !scanConsumed.compareAndSet(false, true)) {
             return@acceptResult false
         }
@@ -235,6 +241,7 @@ private fun QrCodeScanner(
         lifecycleOwner,
         previewView,
         allowedFormats,
+        preserveWhitespace,
         scanGeneration,
         diagnostics
     ) {
@@ -243,6 +250,7 @@ private fun QrCodeScanner(
             lifecycleOwner = lifecycleOwner,
             previewView = previewView,
             allowedFormats = allowedFormats,
+            preserveWhitespace = preserveWhitespace,
             generation = scanGeneration,
             diagnostics = diagnostics,
             onCandidates = { candidates, _, _ ->

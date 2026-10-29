@@ -13,6 +13,7 @@ class KeePassSecureItemCreateExecutor(
         rollbackItem: suspend (Long) -> Unit
     ): Long? {
         val id = insertItem(item)
+        if (KeePassMonicaPasswordStore.isUiId(id)) return id
         val databaseId = item.keepassDatabaseId ?: return id
         val keepassBridge = bridge ?: return id
 

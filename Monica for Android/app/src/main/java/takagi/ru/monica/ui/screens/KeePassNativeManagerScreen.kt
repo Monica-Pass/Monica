@@ -118,6 +118,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -177,6 +178,7 @@ import takagi.ru.monica.keepass.KeePassNativeSortOptions
 import takagi.ru.monica.keepass.KeePassNativeSearch
 import takagi.ru.monica.keepass.KeePassNativeSearchField
 import takagi.ru.monica.keepass.KeePassNativeSearchOptions
+import takagi.ru.monica.keepass.KeePassPasswordNativeScope
 import takagi.ru.monica.keepass.KeePassTemplateEngine
 import takagi.ru.monica.viewmodel.LocalKeePassViewModel
 import takagi.ru.monica.ui.components.CustomFieldEditCard
@@ -202,11 +204,22 @@ internal fun KeePassNativeManagerScreen(
     viewModel: LocalKeePassViewModel,
     onNavigateBack: () -> Unit,
     onNavigateSpecialized: (KeePassNativeResolvedRoute) -> Unit,
-    initialEntryUuid: String? = null
+    initialEntryUuid: String? = null,
+    passwordScope: KeePassPasswordNativeScope? = null,
+    initialCreateEntry: Boolean = false,
+    onEntrySaved: (() -> Unit)? = null,
 ) {
     val scope = rememberCoroutineScope()
     val conflictResolutionVersion by viewModel.conflictResolution.resolutionVersion.collectAsStateWithLifecycle()
-    val retainedState = remember(database.id) { viewModel.nativeManagerRetainedState(database.id) }
+    val retainedState = remember(database.id, passwordScope) {
+        if (passwordScope == null) viewModel.nativeManagerRetainedState(database.id)
+        else KeePassNativeManagerRetainedState(database.id)
+    }
+    val lockVersions by viewModel.nativeLockVersions.collectAsStateWithLifecycle()
+    val initialLockVersion = remember(database.id) { lockVersions[database.id] ?: 0L }
+    var sessionRevoked by remember(database.id) { mutableStateOf(false) }
+    val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
+    var foreground by remember { mutableStateOf(lifecycleOwner.lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.STARTED)) }
     var browser by remember(database.id) { mutableStateOf<KeePassNativeBrowserSnapshot?>(null) }
     var loading by remember(database.id) { mutableStateOf(true) }
     var error by remember(database.id) { mutableStateOf<String?>(null) }
@@ -244,18 +257,75 @@ internal fun KeePassNativeManagerScreen(
     var saveTemplateIdentity by remember { mutableStateOf<KeePassNativeEntryIdentity?>(null) }
     var instantiateTemplateIdentity by remember { mutableStateOf<KeePassNativeEntryIdentity?>(null) }
     var deleteTemplateIdentity by remember { mutableStateOf<KeePassNativeEntryIdentity?>(null) }
+    var creationStarted by remember(database.id) { mutableStateOf(false) }
 
-    fun reload(afterLoad: (() -> Unit)? = null) {
+    DisposableEffect(database.id) {
+        onDispose {
+            if (takagi.ru.monica.security.SessionManager.isUnlocked.value &&
+                (viewModel.nativeLockVersions.value[database.id] ?: 0L) == initialLockVersion) {
+                viewModel.requestNativeOverviewRefresh(database.id)
+            }
+        }
+    }
+
+    DisposableEffect(lifecycleOwner, database.id) {
+        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
+            when (event) {
+                androidx.lifecycle.Lifecycle.Event.ON_STOP -> {
+                    foreground = false
+                }
+                androidx.lifecycle.Lifecycle.Event.ON_START -> foreground = true
+                else -> Unit
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
+    LaunchedEffect(database.id) {
+        var wasUnlocked = takagi.ru.monica.security.SessionManager.isUnlocked.value
+        takagi.ru.monica.security.SessionManager.isUnlocked.collect { unlocked ->
+            if (wasUnlocked && !unlocked) {
+                browser = null
+                sessionRevoked = true
+            }
+            wasUnlocked = unlocked
+        }
+    }
+    LaunchedEffect(lockVersions[database.id]) {
+        if ((lockVersions[database.id] ?: 0L) != initialLockVersion) {
+            browser = null
+            sessionRevoked = true
+            onNavigateBack()
+        }
+    }
+
+    fun reload(preserveDraft: Boolean = false, afterLoad: (() -> Unit)? = null) {
         scope.launch {
             loading = true
             error = null
-            viewModel.openNativeBrowser(database.id)
+            viewModel.openNativeBrowser(database.id, includePasswordMembership = passwordScope?.passwordsOnly == true)
                 .onSuccess { updated ->
-                    browser = updated
+                    if (!foreground || sessionRevoked) return@onSuccess
+                    // Keep an unsaved draft attached to its original revision. A save
+                    // will use that token and report a conflict instead of replacing it.
+                    if (preserveDraft && (editingEntryIdentity != null || creatingEntryParent != null) &&
+                        browser != null && browser?.sourceRevision != updated.sourceRevision) {
+                        return@onSuccess
+                    }
                     val current = currentGroupIdentity
                     currentGroupIdentity = current
                         ?.takeIf { identity -> updated.group(identity) != null }
-                        ?: updated.rootGroup.identity
+                        ?: runCatching { passwordScope?.initialGroup(updated) ?: updated.rootGroup.identity }
+                            .getOrElse { failure ->
+                                browser = null
+                                error = failure.message
+                                return@onSuccess
+                            }
+                    browser = updated
+                    if (initialCreateEntry && !creationStarted) {
+                        creatingEntryParent = currentGroupIdentity
+                        creationStarted = true
+                    }
                     selectedEntryIdentity = selectedEntryIdentity
                         ?.takeIf { identity -> updated.entry(identity) != null }
                     editingEntryIdentity = editingEntryIdentity
@@ -268,14 +338,19 @@ internal fun KeePassNativeManagerScreen(
                     }
                     afterLoad?.invoke()
                 }
-                .onFailure { failure -> error = failure.message ?: failure.javaClass.simpleName }
+                .onFailure { failure ->
+                    browser = null
+                    error = failure.message ?: failure.javaClass.simpleName
+                }
             loading = false
         }
     }
 
-    LaunchedEffect(database.id, conflictResolutionVersion) { reload() }
+    LaunchedEffect(database.id, conflictResolutionVersion, foreground) {
+        if (foreground && !sessionRevoked) reload(preserveDraft = true)
+    }
     LaunchedEffect(currentGroupIdentity, searchQuery, searchOptions, searchCurrentFolderOnly) {
-        viewModel.retainNativeManagerState(
+        if (passwordScope == null) viewModel.retainNativeManagerState(
             KeePassNativeManagerRetainedState(
                 databaseId = database.id,
                 currentGroupUuid = currentGroupIdentity?.groupUuid,
@@ -286,6 +361,8 @@ internal fun KeePassNativeManagerScreen(
         )
     }
 
+    if (sessionRevoked) return
+
     val snapshot = browser
     val currentGroup = currentGroupIdentity?.let { snapshot?.group(it) }
     val selectedEntry = selectedEntryIdentity?.let { snapshot?.entry(it) }
@@ -295,7 +372,9 @@ internal fun KeePassNativeManagerScreen(
         when {
             showDatabaseTools -> showDatabaseTools = false
             showDatabaseSettings -> showDatabaseSettings = false
-            creatingEntryParent != null -> creatingEntryParent = null
+            creatingEntryParent != null -> {
+                if (initialCreateEntry) onNavigateBack() else creatingEntryParent = null
+            }
             editingEntryIdentity != null -> editingEntryIdentity = null
             selectedEntryIdentity != null -> selectedEntryIdentity = null
             selectedEntryUuids.isNotEmpty() || selectedGroupUuids.isNotEmpty() -> {
@@ -347,6 +426,10 @@ internal fun KeePassNativeManagerScreen(
             )
 
             NativeManagerPage.EDITOR -> {
+                DisposableEffect(database.id) {
+                    val editGate = takagi.ru.monica.lansync.DeviceSyncEditGate.hold()
+                    onDispose { editGate.close() }
+                }
                 val editing = editingEntry
                 val templateMode = editing?.kind == KeePassNativeEntryKind.TEMPLATE ||
                     (creatingEntryParent != null && creatingEntryParent == snapshot?.templateGroupIdentity)
@@ -357,10 +440,12 @@ internal fun KeePassNativeManagerScreen(
                       customIcons = snapshot?.customIcons.orEmpty(),
                       customIconReferences = snapshot?.customIconReferences.orEmpty(),
                       revisionToken = snapshot?.sourceRevision?.sha256.orEmpty(),
-                    savingEnabled = snapshot != null && !viewModel.isKeePassDatabaseReadOnly(database.id),
+                    savingEnabled = snapshot != null && !loading && foreground && !viewModel.isKeePassDatabaseReadOnly(database.id),
                       onBack = {
-                        creatingEntryParent = null
-                        editingEntryIdentity = null
+                        if (initialCreateEntry) onNavigateBack() else {
+                            creatingEntryParent = null
+                            editingEntryIdentity = null
+                        }
                       },
                       onDeleteCustomIcon = { uuid, onResult ->
                           scope.launch {
@@ -416,7 +501,8 @@ internal fun KeePassNativeManagerScreen(
                             if (saved != null) {
                                 creatingEntryParent = null
                                 editingEntryIdentity = null
-                                reload { selectedEntryIdentity = saved.identity }
+                                if (onEntrySaved != null) onEntrySaved()
+                                else reload { selectedEntryIdentity = saved.identity }
                                 onResult(null)
                             } else {
                                 val failure = outcome.failure
@@ -431,7 +517,7 @@ internal fun KeePassNativeManagerScreen(
             NativeManagerPage.DETAIL -> selectedEntry?.let { entry ->
                 NativeEntryDetailScreen(
                     entry = entry,
-                    modificationEnabled = snapshot != null && !viewModel.isKeePassDatabaseReadOnly(database.id),
+                    modificationEnabled = snapshot != null && !loading && foreground && !viewModel.isKeePassDatabaseReadOnly(database.id),
                     onBack = { selectedEntryIdentity = null },
                     onEdit = { editingEntryIdentity = entry.identity },
                     onAdvanceHotp = { data, onResult ->
@@ -539,6 +625,7 @@ internal fun KeePassNativeManagerScreen(
                 searchOptions = searchOptions,
                 searchCurrentFolderOnly = searchCurrentFolderOnly,
                 sortOptions = sortOptions,
+                passwordScope = passwordScope,
                 selectedEntryUuids = selectedEntryUuids,
                 selectedGroupUuids = selectedGroupUuids,
                 readOnly = viewModel.isKeePassDatabaseReadOnly(database.id),
@@ -585,7 +672,9 @@ internal fun KeePassNativeManagerScreen(
                     }
                 },
                 onOpenEntry = { entry ->
-                    scope.launch {
+                    if (passwordScope != null || entry.kind == KeePassNativeEntryKind.PASSWORD) {
+                        selectedEntryIdentity = entry.identity
+                    } else scope.launch {
                         viewModel.resolveNativeEntryRoute(entry)
                             .onSuccess { route ->
                                 if (route == KeePassNativeResolvedRoute.Generic) {
@@ -1074,7 +1163,8 @@ private fun NativeBrowserPage(
     onInstantiateTemplate: (KeePassNativeEntryRecord) -> Unit,
     onDeleteTemplate: (KeePassNativeEntryRecord) -> Unit,
     onMoveEntries: (Set<UUID>) -> Unit,
-    onDeleteEntries: (Set<UUID>) -> Unit
+    onDeleteEntries: (Set<UUID>) -> Unit,
+    passwordScope: KeePassPasswordNativeScope? = null,
 ) {
     var sortMenuExpanded by remember { mutableStateOf(false) }
     var addMenuExpanded by remember { mutableStateOf(false) }
@@ -1084,7 +1174,7 @@ private fun NativeBrowserPage(
     val keyboardController = LocalSoftwareKeyboardController.current
     val effectiveOptions = searchOptions.copy(
         query = searchQuery,
-        groupScope = if (searchCurrentFolderOnly) currentGroup?.identity else null
+        groupScope = if (searchCurrentFolderOnly || passwordScope != null) currentGroup?.identity else null
     )
     val searchResult = remember(browser, effectiveOptions) {
         browser?.let { KeePassNativeSearch.search(it, effectiveOptions) }
@@ -1092,16 +1182,23 @@ private fun NativeBrowserPage(
     val isSearching = searchQuery.isNotBlank()
     val childGroups = remember(browser, currentGroup) {
         if (browser == null || currentGroup == null) emptyList()
-        else browser.groups.filter { it.parentGroup == currentGroup.identity }
+        else browser.groups.filter {
+            it.parentGroup == currentGroup.identity &&
+                (passwordScope == null || (!it.isInRecycleBin && it.identity != browser.templateGroupIdentity))
+        }
     }
-    val entries = remember(browser, currentGroup) {
+    val entries = remember(browser, currentGroup, passwordScope) {
         if (browser == null || currentGroup == null) emptyList()
+        else if (passwordScope != null) passwordScope.entries(browser, currentGroup.identity)
         else browser.entries.filter { it.parentGroup == currentGroup.identity }
     }
     val sortedChildren = remember(childGroups, entries, sortOptions) {
         KeePassNativeManagement.sortChildren(childGroups, entries, sortOptions)
     }
-    val visibleEntries = if (isSearching) searchResult?.entries.orEmpty() else sortedChildren.entries
+    val visibleEntries = if (isSearching) {
+        val allowed = entries.mapTo(hashSetOf()) { it.identity }
+        searchResult?.entries.orEmpty().filter { passwordScope == null || it.identity in allowed }
+    } else sortedChildren.entries
     val visibleEntryUuids = remember(visibleEntries) {
         visibleEntries.mapTo(linkedSetOf()) { entry -> entry.identity.entryUuid }
     }

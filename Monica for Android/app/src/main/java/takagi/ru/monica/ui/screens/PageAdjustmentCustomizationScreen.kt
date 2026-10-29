@@ -112,6 +112,15 @@ fun PageAdjustmentCustomizationScreen(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
             )
+            SettingsSubpageHeading(stringResource(R.string.startup_behavior_title))
+            SettingsSubpageRow(
+                title = stringResource(R.string.auto_focus_search_on_startup_title),
+                subtitle = stringResource(R.string.auto_focus_search_on_startup_desc),
+                icon = Icons.Default.Search, index = 0, count = 1,
+                checked = settings.autoFocusSearchOnStartup,
+                onCheckedChange = viewModel::updateAutoFocusSearchOnStartup,
+                modifier = Modifier.testTag("auto_focus_search_on_startup_setting")
+            )
             SettingsSubpageHeading(stringResource(R.string.customization_group_library))
             SettingsSubpageRow(
                 title = stringResource(R.string.vault_v2_hierarchical_layout_title),

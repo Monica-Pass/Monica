@@ -26,6 +26,9 @@ class MdbxRepositoryRouter(
     override suspend fun readStoredEntries(databaseId: Long): List<MdbxStoredVaultEntry> =
         repositoryFor(databaseId).readStoredEntries(databaseId)
 
+    override suspend fun countActiveEntries(databaseId: Long): Long =
+        repositoryFor(databaseId).countActiveEntries(databaseId)
+
     override suspend fun readStoredAttachments(databaseId: Long): List<MdbxStoredAttachment> =
         repositoryFor(databaseId).readStoredAttachments(databaseId)
 

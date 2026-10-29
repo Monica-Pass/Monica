@@ -12,6 +12,11 @@ import takagi.ru.monica.data.resolveOwnership
 import takagi.ru.monica.data.model.CardWalletDataCodec
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.decodeFromString
@@ -39,6 +44,21 @@ class SecureItemRepository(
     }
 
     private val json = Json { ignoreUnknownKeys = true }
+    private val monicaKeePassStore = MutableStateFlow<takagi.ru.monica.keepass.KeePassMonicaPasswordStore?>(null)
+    internal fun bindMonicaKeePassStore(store: takagi.ru.monica.keepass.KeePassMonicaPasswordStore) { monicaKeePassStore.value = store }
+    fun usesOriginalKeePass(databaseId: Long): Boolean = monicaKeePassStore.value?.isActive(databaseId) == true
+    suspend fun refreshOriginalKeePass(databaseId: Long) {
+        try { requireNotNull(monicaKeePassStore.value).refresh(databaseId) }
+        catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+        catch (error: Exception) { Log.w(TAG, "Original-vault refresh failed: ${error.javaClass.simpleName}") }
+    }
+    suspend fun deleteOriginalKeePassItem(item: SecureItem, recycle: Boolean) { requireNotNull(monicaKeePassStore.value).deleteSecure(item, recycle) }
+    private fun withOriginalKeePass(room: Flow<List<SecureItem>>, include: (SecureItem) -> Boolean = { true }): Flow<List<SecureItem>> =
+        monicaKeePassStore.flatMapLatest { store ->
+            if (store == null) room else combine(room, store.activeSecureRows) { indexed, native ->
+                indexed.filterNot { it.keepassDatabaseId in native.keys } + native.values.flatten().filter(include)
+            }
+        }
     // MainActivity creates several secure-item ViewModels at once. They all
     // used to scan the complete secure_items table independently during init,
     // competing for the same Room executor and delaying the first visible
@@ -72,7 +92,7 @@ class SecureItemRepository(
 
     
     fun getAllItems(): Flow<List<SecureItem>> {
-        return secureItemDao.getAllItems()
+        return withOriginalKeePass(secureItemDao.getAllItems())
     }
 
     suspend fun getAllLocalItems(): List<SecureItem> {
@@ -88,22 +108,23 @@ class SecureItemRepository(
     suspend fun getDeletedItemsSync(): List<SecureItem> = secureItemDao.getDeletedItemsSync()
     
     fun getItemsByType(type: ItemType): Flow<List<SecureItem>> {
-        return secureItemDao.getItemsByType(type)
+        return withOriginalKeePass(secureItemDao.getItemsByType(type)) { it.itemType == type }
     }
     
     fun searchItems(query: String): Flow<List<SecureItem>> {
-        return secureItemDao.searchItems(query)
+        return withOriginalKeePass(secureItemDao.searchItems(query)) { it.title.contains(query, true) || it.notes.contains(query, true) }
     }
     
     fun searchItemsByType(type: ItemType, query: String): Flow<List<SecureItem>> {
-        return secureItemDao.searchItemsByType(type, query)
+        return withOriginalKeePass(secureItemDao.searchItemsByType(type, query)) { it.itemType == type && (it.title.contains(query, true) || it.notes.contains(query, true)) }
     }
     
     fun getFavoriteItems(): Flow<List<SecureItem>> {
-        return secureItemDao.getFavoriteItems()
+        return withOriginalKeePass(secureItemDao.getFavoriteItems()) { it.isFavorite }
     }
     
     suspend fun getItemById(id: Long): SecureItem? {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(id)) return monicaKeePassStore.value?.getSecure(id, true)
         return secureItemDao.getItemById(id)
     }
 
@@ -200,6 +221,7 @@ class SecureItemRepository(
     }
 
     fun observeItemById(id: Long): Flow<SecureItem?> {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(id)) return monicaKeePassStore.flatMapLatest { it?.secureFlow(id) ?: flowOf(null) }
         return secureItemDao.observeItemById(id)
     }
 
@@ -234,6 +256,11 @@ class SecureItemRepository(
     }
     
     suspend fun insertItem(item: SecureItem): Long {
+        if (item.keepassDatabaseId?.let(::usesOriginalKeePass) == true) {
+            require(item.id == 0L) { "New original-vault items cannot use a Room identity" }
+            return requireNotNull(monicaKeePassStore.value).saveSecure(item).id
+        }
+        require(!takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(item.id)) { "KeePass UI identity cannot be persisted in Room" }
         item.mdbxDatabaseId?.let { mdbxRepository?.requireRoomMirrorAllowed(it) }
         return commitRoomThenMirror(
             roomCommit = {
@@ -258,6 +285,10 @@ class SecureItemRepository(
     }
     
     suspend fun updateItem(item: SecureItem) {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(item.id)) {
+            requireNotNull(monicaKeePassStore.value).saveSecure(item)
+            return
+        }
         item.mdbxDatabaseId?.let { mdbxRepository?.requireRoomMirrorAllowed(it) }
         val existingItem = if (item.id != 0L) secureItemDao.getItemById(item.id) else null
         val normalizedItem = BitwardenMutationStateHelper.normalizeSecureItemUpdate(existingItem, item)
@@ -286,6 +317,12 @@ class SecureItemRepository(
     }
 
     suspend fun updateItems(items: List<SecureItem>) {
+        val native = items.filter { takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(it.id) }
+        if (native.isNotEmpty()) {
+            native.forEach { requireNotNull(monicaKeePassStore.value).saveSecure(it) }
+            updateItems(items - native.toSet())
+            return
+        }
         items.mapNotNull { it.mdbxDatabaseId }.distinct().forEach { mdbxRepository?.requireRoomMirrorAllowed(it) }
         if (items.isEmpty()) return
         require(items.all { it.id > 0L }) { "Batch update requires persisted secure items" }
@@ -321,6 +358,10 @@ class SecureItemRepository(
     }
     
     suspend fun deleteItem(item: SecureItem) {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(item.id)) {
+            deleteOriginalKeePassItem(item, false)
+            return
+        }
         commitMirrorThenRoom(
             mirrorCommit = { mdbxRepository?.deleteSecureItem(item) },
             roomCommit = { secureItemDao.deleteItem(item) },
@@ -330,6 +371,12 @@ class SecureItemRepository(
 
     suspend fun deleteItems(items: List<SecureItem>) {
         if (items.isEmpty()) return
+        val native = items.filter { takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(it.id) }
+        if (native.isNotEmpty()) {
+            native.forEach { deleteOriginalKeePassItem(it, false) }
+            deleteItems(items - native.toSet())
+            return
+        }
         commitMirrorThenRoom(
             mirrorCommit = { mdbxRepository?.deleteSecureItems(items) },
             roomCommit = { secureItemDao.deleteItemsByIds(items.map(SecureItem::id)) },
@@ -338,6 +385,10 @@ class SecureItemRepository(
     }
     
     suspend fun deleteItemById(id: Long) {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(id)) {
+            monicaKeePassStore.value?.getSecure(id)?.let { deleteOriginalKeePassItem(it, false) }
+            return
+        }
         val item = secureItemDao.getItemById(id)
         commitMirrorThenRoom(
             mirrorCommit = { item?.let { mdbxRepository?.deleteSecureItem(it) } },
@@ -347,7 +398,7 @@ class SecureItemRepository(
     }
     
     suspend fun updateFavoriteStatus(id: Long, isFavorite: Boolean) {
-        val existingItem = secureItemDao.getItemById(id) ?: return
+        val existingItem = getItemById(id) ?: return
         updateItem(
             existingItem.copy(
                 isFavorite = isFavorite,
@@ -366,6 +417,12 @@ class SecureItemRepository(
     
     suspend fun updateSortOrders(items: List<Pair<Long, Int>>) {
         if (items.isEmpty()) return
+        val native = items.filter { takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(it.first) }
+        if (native.isNotEmpty()) {
+            native.forEach { (id, order) -> updateItem(requireNotNull(getItemById(id)).copy(sortOrder = order)) }
+            updateSortOrders(items - native.toSet())
+            return
+        }
         val orderById = items.toMap()
         val previousItems = secureItemDao.getItemsByIds(orderById.keys.toList())
         val reorderedItems = previousItems.mapNotNull { item ->
@@ -535,6 +592,10 @@ class SecureItemRepository(
      * 软删除项目（移动到回收站）
      */
     suspend fun softDeleteItem(item: SecureItem): SecureItem {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(item.id)) {
+            deleteOriginalKeePassItem(item, true)
+            return item.copy(isDeleted = true, deletedAt = Date())
+        }
         val deletedItem = item.copy(
             isDeleted = true,
             deletedAt = java.util.Date(),
@@ -600,7 +661,7 @@ class SecureItemRepository(
      * 获取未删除的项目（按类型）
      */
     fun getActiveItemsByType(type: ItemType): kotlinx.coroutines.flow.Flow<List<SecureItem>> {
-        return secureItemDao.getActiveItemsByType(type)
+        return withOriginalKeePass(secureItemDao.getActiveItemsByType(type)) { it.itemType == type && !it.isDeleted }
     }
 
     /**

@@ -27,7 +27,10 @@ import java.nio.ByteBuffer
  * 3. 空闲帧的处理成本——复用亮度缓冲，每三帧执行一次单极性的全分辨率深扫，
  *    正反色交替且不叠加抽稀阶梯，降低 GC 压力与单帧峰值。
  */
-internal class ZxingBarcodeDecoder(private val formats: Collection<BarcodeFormat>) {
+internal class ZxingBarcodeDecoder(
+    private val formats: Collection<BarcodeFormat>,
+    private val preserveWhitespace: Boolean = false,
+) {
 
     private val hints = mapOf(
         DecodeHintType.POSSIBLE_FORMATS to formats.distinct(),
@@ -215,7 +218,8 @@ internal class ZxingBarcodeDecoder(private val formats: Collection<BarcodeFormat
                 reader.reset()
             }
         }
-        return candidates.map(String::trim).filter(String::isNotEmpty).distinct()
+        return candidates.map { if (preserveWhitespace) it else it.trim() }
+            .filter(String::isNotBlank).distinct()
     }
 
     private companion object {

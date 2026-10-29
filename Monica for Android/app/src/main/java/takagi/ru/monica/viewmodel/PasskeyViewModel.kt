@@ -418,7 +418,12 @@ class PasskeyViewModel internal constructor(
         }
     }
 
-    private suspend fun requestKeePassPasskeyRefresh(databaseId: Long, trigger: String) {
+    internal suspend fun refreshKeePassAfterNativeRead(databaseId: Long) {
+        if (!takagi.ru.monica.security.SessionManager.isUnlocked.value) return
+        requestKeePassPasskeyRefresh(databaseId, "PASSKEY_NATIVE_EDIT", bypassThrottle = true)
+    }
+
+    private suspend fun requestKeePassPasskeyRefresh(databaseId: Long, trigger: String, bypassThrottle: Boolean = false) {
         SyncTaskRunner.request(
             request = SyncRequest(
                 requestId = SyncDiagnostics.nextTaskId("kp-passkey-refresh"),
@@ -434,7 +439,7 @@ class PasskeyViewModel internal constructor(
                 createdAtMillis = System.currentTimeMillis(),
                 priority = SyncPriority.PAGE_VISIBLE,
                 mode = SyncMode.SILENT,
-                throttleMs = 30_000L
+                throttleMs = if (bypassThrottle) 0L else 30_000L
             )
         ) {
             refreshKeePassPasskeysNow(databaseId, trigger)
@@ -442,6 +447,7 @@ class PasskeyViewModel internal constructor(
     }
 
     private suspend fun refreshKeePassPasskeysNow(databaseId: Long, trigger: String) {
+        if (repository.usesOriginalKeePass(databaseId)) { repository.refreshOriginalKeePass(databaseId); return }
         val taskId = SyncDiagnostics.nextTaskId("kp-passkey")
         val target = "keepass_compat:passkey:$databaseId"
         SyncDiagnostics.queued(taskId, target, trigger)

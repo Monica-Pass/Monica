@@ -3,6 +3,7 @@
 
 mod assets;
 mod discovery;
+mod network;
 mod peering;
 mod replica;
 mod storage;
@@ -189,9 +190,11 @@ struct Prepared {
     device: Option<peering::DeviceHello>,
     secrets: peering::PairSecrets,
     expected_device: Option<String>,
+    network_bindings: network::Bindings,
 }
 
 fn prepare(value: &Value) -> Result<Prepared> {
+    let network_bindings = network::read(value)?;
     let protocol = value.get("protocol").and_then(Value::as_u64).unwrap_or(1);
     if !matches!(protocol, 1 | 2) {
         return Err("unsupported_protocol");
@@ -295,6 +298,7 @@ fn prepare(value: &Value) -> Result<Prepared> {
         device,
         secrets,
         expected_device,
+        network_bindings,
     })
 }
 
@@ -410,7 +414,11 @@ fn start(value: &Value) -> Result<Value> {
     let job = Job::new("waiting");
     let handle = register(job.clone())?;
     let invitations = invitation_links(prepared.protocol, &local_addresses, port, &code);
-    let discovery = discovery::register(offer, listen_address.is_unspecified());
+    let discovery = discovery::register(
+        offer,
+        listen_address.is_unspecified(),
+        prepared.network_bindings.clone(),
+    );
     let discovery_available = discovery.available();
     std::thread::spawn(move || {
         let incoming = prepared.incoming.clone();
@@ -515,7 +523,13 @@ fn request(value: Value) -> Result<Value> {
                 .get("multicast")
                 .and_then(Value::as_bool)
                 .unwrap_or(true);
-            Ok(json!({"devices":discovery::discover(Duration::from_secs(2), targets, multicast)?}))
+            let broadcast = value
+                .get("broadcast")
+                .and_then(Value::as_bool)
+                .unwrap_or(multicast);
+            Ok(
+                json!({"devices":discovery::discover(Duration::from_secs(2), targets, multicast, broadcast, network::read(&value)?)?}),
+            )
         }
         "progress" => {
             let job = job(value

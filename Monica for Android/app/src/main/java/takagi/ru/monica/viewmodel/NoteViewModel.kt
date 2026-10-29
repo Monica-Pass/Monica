@@ -101,8 +101,8 @@ class NoteViewModel internal constructor(
         null
     }
     private val keepassSecureItemCreateExecutor = KeePassSecureItemCreateExecutor(keepassBridge)
-    private val keepassSecureItemDeleteExecutor = KeePassSecureItemDeleteExecutor(keepassBridge)
-    private val keepassSecureItemUpdateExecutor = KeePassSecureItemUpdateExecutor(keepassBridge)
+    private val keepassSecureItemDeleteExecutor = KeePassSecureItemDeleteExecutor(keepassBridge, repository)
+    private val keepassSecureItemUpdateExecutor = KeePassSecureItemUpdateExecutor(keepassBridge, repository)
     private val imageManager = context?.let { ImageManager(it.applicationContext) }
     private val attachmentFacade = context?.let { AttachmentContainer.facade(it) }
 
@@ -189,6 +189,7 @@ class NoteViewModel internal constructor(
     }
 
     private suspend fun syncKeePassNotesNow(databaseId: Long, taskId: String) {
+        if (repository.usesOriginalKeePass(databaseId)) { repository.refreshOriginalKeePass(databaseId); return }
         val target = "keepass_compat:note:$databaseId"
         val trigger = "NOTE_FILTER_ENTER"
         SyncDiagnostics.queued(taskId, target, trigger)

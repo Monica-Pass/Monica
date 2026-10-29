@@ -122,6 +122,10 @@ class AutofillPreferences(private val context: Context) {
         takagi.ru.monica.ime.ImeKeyboardPreferences.get(context).updateData { it.copy(scramblePin = enabled) }
     }
 
+    suspend fun setImeKeyVibrationEnabled(enabled: Boolean) {
+        takagi.ru.monica.ime.ImeKeyboardPreferences.get(context).updateData { it.copy(keyVibrationEnabled = enabled) }
+    }
+
     suspend fun setImeHidePinPreview(enabled: Boolean) {
         takagi.ru.monica.ime.ImeKeyboardPreferences.get(context).updateData { it.copy(hidePinPreview = enabled) }
     }

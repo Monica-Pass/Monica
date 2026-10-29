@@ -345,7 +345,7 @@ internal suspend fun executeMixedPasswordBatchMove(
             }
         } else if (target is UnifiedMoveCategoryTarget.MdbxDatabaseTarget || target is UnifiedMoveCategoryTarget.MdbxFolderTarget) {
             val copiedEntries = selectedEntries.map { entry ->
-                buildCopiedEntryForTarget(
+                viewModel.buildEncryptedPasswordCopy(
                     entry,
                     passwordBatchTargetForEntry(
                         entry = entry,
@@ -374,7 +374,7 @@ internal suspend fun executeMixedPasswordBatchMove(
         } else {
             selectedEntries.forEach { entry ->
                 val createdId = viewModel.addPasswordEntryWithResultAwait(
-                    buildCopiedEntryForTarget(entry, target)
+                    viewModel.buildEncryptedPasswordCopy(entry, target)
                 )
                 if (createdId != null && createdId > 0) {
                     copiedPasswordIds += createdId
@@ -749,7 +749,7 @@ internal suspend fun executeMixedPasswordBatchMove(
                         val summary = result.getOrThrow()
                         val succeededIds = summary.targetEntryUuidsByPasswordId.keys.toList()
                         if (succeededIds.isNotEmpty()) {
-                            viewModel.unarchivePasswordsAwait(succeededIds)
+                            viewModel.unarchivePasswordsAwait(succeededIds.filterNot(takagi.ru.monica.keepass.KeePassMonicaPasswordStore::isUiId))
                             viewModel.finalizePasswordsWrittenToKeePassAwait(
                                 targetEntryUuidsByPasswordId = summary.targetEntryUuidsByPasswordId,
                                 databaseId = target.databaseId,
@@ -796,7 +796,7 @@ internal suspend fun executeMixedPasswordBatchMove(
                         val summary = result.getOrThrow()
                         val succeededIds = summary.targetEntryUuidsByPasswordId.keys.toList()
                         if (succeededIds.isNotEmpty()) {
-                            viewModel.unarchivePasswordsAwait(succeededIds)
+                            viewModel.unarchivePasswordsAwait(succeededIds.filterNot(takagi.ru.monica.keepass.KeePassMonicaPasswordStore::isUiId))
                             viewModel.finalizePasswordsWrittenToKeePassAwait(
                                 targetEntryUuidsByPasswordId = summary.targetEntryUuidsByPasswordId,
                                 databaseId = target.databaseId,

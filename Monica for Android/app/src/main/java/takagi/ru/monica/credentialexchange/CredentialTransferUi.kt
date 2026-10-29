@@ -17,6 +17,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
 import takagi.ru.monica.ui.components.animateMonicaContentSize
+import takagi.ru.monica.security.SessionManager
+import takagi.ru.monica.utils.KeePassKdbxService
 
 /** Shared import/export controls, based on the editable M3E Canvas transfer design. */
 @Composable
@@ -30,6 +32,7 @@ fun TransferChoiceRow(
     selected: Boolean = false,
     index: Int = 0,
     count: Int = 1,
+    titleDetail: String? = null,
 ) {
     val shape = RoundedCornerShape(
         topStart = if (index == 0) 24.dp else 6.dp,
@@ -46,7 +49,12 @@ fun TransferChoiceRow(
             horizontalArrangement = Arrangement.spacedBy(14.dp)) {
             Icon(icon, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(24.dp))
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                Text(title, style = MaterialTheme.typography.titleMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(title, modifier = Modifier.weight(1f), style = MaterialTheme.typography.titleMedium,
+                        maxLines = 2, overflow = TextOverflow.Ellipsis)
+                    titleDetail?.let { Text(it, style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1) }
+                }
                 if (subtitle.isNotBlank()) Text(subtitle, style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
@@ -70,6 +78,27 @@ fun TransferDestinationField(
         value = ImportDestinationWriter.destinations(context, forExport)
     }
     val current = options?.firstOrNull { it.destination == destination }
+    val unlocked by SessionManager.isUnlocked.collectAsState()
+    val lockVersions by KeePassKdbxService.nativeLockVersions.collectAsState()
+    val counter = remember(context) { DatabaseRecordCounts(context) }
+    val counts by produceState<Map<ImportDestination, DatabaseRecordCount>>(emptyMap(),
+        options, destination, show, forExport, unlocked, lockVersions) {
+        value = emptyMap()
+        if (forExport && unlocked) {
+            val requested = if (show) options.orEmpty().sortedBy { it.destination != destination }
+                .map { it.destination } else listOf(destination)
+            for (source in requested) value = value + (source to counter.load(source))
+        }
+    }
+    @Composable fun countLabel(source: ImportDestination): String? {
+        if (!forExport) return null
+        return when (val state = if (counter.isLocked(source)) DatabaseRecordCount.Locked else counts[source]) {
+            is DatabaseRecordCount.Ready -> stringResource(R.string.export_source_record_count, state.count)
+            DatabaseRecordCount.Locked -> stringResource(R.string.export_source_count_locked)
+            DatabaseRecordCount.Unavailable -> stringResource(R.string.export_source_count_unavailable)
+            null -> stringResource(R.string.export_source_count_loading)
+        }
+    }
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(stringResource(if (forExport) R.string.exchange_source else R.string.exchange_save_to),
             style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -78,6 +107,7 @@ fun TransferDestinationField(
             title = current?.title ?: if (destination == ImportDestination.Local) "Monica" else stringResource(R.string.exchange_destination_unavailable),
             subtitle = current?.subtitle.orEmpty(), icon = Icons.Default.Storage,
             enabled = enabled, onClick = { show = true },
+            titleDetail = countLabel(destination),
         )
     }
     if (show) ModalBottomSheet(onDismissRequest = { show = false }, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)) {
@@ -89,6 +119,7 @@ fun TransferDestinationField(
                 TransferChoiceRow(option.title, option.subtitle, Icons.Default.Storage,
                     enabled = option.available, selected = destination == option.destination,
                     index = index, count = options.orEmpty().size,
+                    titleDetail = countLabel(option.destination),
                     onClick = { onSelect(option.destination); show = false })
             }
         }

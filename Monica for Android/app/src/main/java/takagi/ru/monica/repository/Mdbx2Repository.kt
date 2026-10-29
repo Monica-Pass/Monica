@@ -948,6 +948,11 @@ class Mdbx2Repository(
             MdbxStoredVaultEntry(entryId, record.objectTypeId, record.title, record.payloadJson, false, record.collectionId)
         }
 
+    override suspend fun countActiveEntries(databaseId: Long): Long =
+        sessions.withNativeReadVault(databaseId) { _, vault ->
+            vault.diagnosticsSummary().entryCount.toLong()
+        }
+
     override suspend fun readStoredEntries(databaseId: Long): List<MdbxStoredVaultEntry> =
         sessions.withNativeReadVault(databaseId) { database, vault ->
             requireMdbxAppReplicaAllowed(database)

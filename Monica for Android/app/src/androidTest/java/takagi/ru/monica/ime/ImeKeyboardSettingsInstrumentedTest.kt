@@ -26,11 +26,12 @@ import takagi.ru.monica.ui.theme.MonicaTheme
 class ImeKeyboardSettingsInstrumentedTest {
     @get:Rule val compose = createComposeRule()
 
-    @Test fun bothKeyboardOptionsCanBeEnabledAndDisabledFromAutofillSettings() = runBlocking {
+    @Test fun keyboardOptionsCanBeEnabledAndDisabledFromAutofillSettings() = runBlocking {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val preferences = AutofillPreferences(context)
         val original = preferences.imeKeyboardOptions.first()
         try {
+            preferences.setImeKeyVibrationEnabled(false)
             preferences.setImeScramblePin(false)
             preferences.setImeHidePinPreview(false)
             compose.setContent {
@@ -52,21 +53,25 @@ class ImeKeyboardSettingsInstrumentedTest {
                         if (enabled) ToggleableState.On else ToggleableState.Off
                 }
             }
+            toggle("ime_key_vibration_setting", true)
+            withTimeout(5000) { preferences.imeKeyboardOptions.first { it.keyVibrationEnabled } }
             toggle("ime_scramble_pin_setting", true)
             withTimeout(5000) { preferences.imeKeyboardOptions.first { it.scramblePin } }
             toggle("ime_hide_pin_preview_setting", true)
-            assertEquals(ImeKeyboardOptions(true, true), withTimeout(5000) {
-                preferences.imeKeyboardOptions.first { it.scramblePin && it.hidePinPreview }
+            assertEquals(ImeKeyboardOptions(true, true, true), withTimeout(5000) {
+                preferences.imeKeyboardOptions.first { it.scramblePin && it.hidePinPreview && it.keyVibrationEnabled }
             })
             File(context.filesDir, "autofill-no-dividers.png").outputStream().use {
                 compose.onRoot().captureToImage().asAndroidBitmap().compress(Bitmap.CompressFormat.PNG, 100, it)
             }
+            toggle("ime_key_vibration_setting", false)
             toggle("ime_scramble_pin_setting", false)
             toggle("ime_hide_pin_preview_setting", false)
             assertEquals(ImeKeyboardOptions(), withTimeout(5000) {
-                preferences.imeKeyboardOptions.first { !it.scramblePin && !it.hidePinPreview }
+                preferences.imeKeyboardOptions.first { !it.scramblePin && !it.hidePinPreview && !it.keyVibrationEnabled }
             })
         } finally {
+            preferences.setImeKeyVibrationEnabled(original.keyVibrationEnabled)
             preferences.setImeScramblePin(original.scramblePin)
             preferences.setImeHidePinPreview(original.hidePinPreview)
         }

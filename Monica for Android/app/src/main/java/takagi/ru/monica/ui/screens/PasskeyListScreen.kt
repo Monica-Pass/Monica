@@ -1148,6 +1148,15 @@ fun PasskeyListScreen(
                 }
             }
 
+            if (!selectionMode) {
+                ExtendedFloatingActionButton(
+                    onClick = { context.startActivity(android.content.Intent(context, takagi.ru.monica.passkey.hardware.HardwareSecurityKeyActivity::class.java)) },
+                    icon = { Icon(Icons.Default.Usb, contentDescription = null) },
+                    text = { Text(stringResource(R.string.hardware_key_fab)) },
+                    modifier = Modifier.align(Alignment.BottomEnd).padding(end = 16.dp, bottom = 20.dp)
+                )
+            }
+
             if (selectionMode) {
                 PasskeySelectionActionBar(
                     modifier = Modifier

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_source_record_count">%1$d 条记录</string>
+    <string name="export_source_count_locked">待解锁</string>
+    <string name="export_source_count_loading">统计中…</string>
+    <string name="export_source_count_unavailable">暂不可用</string>
+</resources>

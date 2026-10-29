@@ -34,6 +34,12 @@ import takagi.ru.monica.utils.KeePassKdbxService
  *   路径创建了 service，可通过 [registerKeePassService] 替换默认实例。
  */
 object AttachmentContainer {
+    internal var originalKeePassStore: takagi.ru.monica.keepass.KeePassMonicaPasswordStore? = null
+        private set
+    internal fun bindOriginalKeePassStore(store: takagi.ru.monica.keepass.KeePassMonicaPasswordStore) {
+        originalKeePassStore = store
+        repositoryCache?.bindOriginalKeePassStore(store)
+    }
 
     @Volatile private var appContext: Context? = null
 
@@ -128,6 +134,7 @@ object AttachmentContainer {
             repositoryCache?.let { return it }
             val db = PasswordDatabase.getDatabase(app)
             val repo = AttachmentRepository(db.attachmentDao())
+            originalKeePassStore?.let(repo::bindOriginalKeePassStore)
             repositoryCache = repo
             return repo
         }

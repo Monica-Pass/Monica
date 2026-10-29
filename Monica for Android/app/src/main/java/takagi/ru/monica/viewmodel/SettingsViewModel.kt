@@ -2,6 +2,7 @@ package takagi.ru.monica.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -38,7 +39,11 @@ class SettingsViewModel(
     private val secureItemRepository: SecureItemRepository? = null
 ) : ViewModel() {
     
+    private val _settingsLoaded = kotlinx.coroutines.flow.MutableStateFlow(false)
+    val settingsLoaded: StateFlow<Boolean> = _settingsLoaded
+
     val settings: StateFlow<AppSettings> = settingsManager.settingsFlow
+        .onEach { _settingsLoaded.value = true }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
@@ -425,6 +430,10 @@ class SettingsViewModel(
 
     fun updateVaultListSort(sort: takagi.ru.monica.data.VaultListSort) {
         viewModelScope.launch { settingsManager.updateVaultListSort(sort) }
+    }
+
+    fun updateAutoFocusSearchOnStartup(enabled: Boolean) {
+        viewModelScope.launch { settingsManager.updateAutoFocusSearchOnStartup(enabled) }
     }
 
     fun updateVaultOverviewEnabled(enabled: Boolean) {

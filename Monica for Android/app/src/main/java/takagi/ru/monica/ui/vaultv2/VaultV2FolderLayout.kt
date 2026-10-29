@@ -445,6 +445,12 @@ internal fun VaultV2FolderRow(
 ) {
     val isSource = row.kind != VaultV2FolderRowKind.FOLDER
     val icon = row.kind.icon()
+    val keePassGroup = row.targetFilter as? CategoryFilter.KeePassGroupFilter
+    val keePassIcon = takagi.ru.monica.ui.icons.rememberKeePassCustomIcon(
+        databaseId = keePassGroup?.databaseId,
+        groupUuid = keePassGroup?.groupUuid,
+        groupPath = keePassGroup?.groupPath,
+    )
     val iconContainerColor = if (isSource) {
         MaterialTheme.colorScheme.primaryContainer
     } else {
@@ -489,11 +495,15 @@ internal fun VaultV2FolderRow(
                 contentColor = iconContentColor,
             ) {
                 Box(contentAlignment = Alignment.Center) {
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        modifier = Modifier.size(22.dp),
-                    )
+                    if (keePassIcon != null) {
+                        takagi.ru.monica.ui.icons.KeePassCustomIconImage(keePassIcon, Modifier.size(36.dp))
+                    } else {
+                        Icon(
+                            imageVector = icon,
+                            contentDescription = null,
+                            modifier = Modifier.size(22.dp),
+                        )
+                    }
                 }
             }
             Spacer(modifier = Modifier.width(12.dp))

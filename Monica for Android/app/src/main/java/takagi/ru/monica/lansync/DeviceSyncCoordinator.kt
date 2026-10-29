@@ -48,7 +48,8 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val gate = Mutex()
     private val appVisible = MutableStateFlow(DeviceSyncService.isAppVisible)
-    private var presence: DeviceSyncPresence = AndroidDeviceSyncPresence(app)
+    private var presence: DeviceSyncPresence = ForegroundDeviceSyncPresence(app)
+    private var discoverPeers: (JSONObject) -> JSONObject = RustLanSync::request
     private val security by lazy { SecurityManager(app) }
     private val store by lazy { DeviceSyncPreferenceStore(app, security) }
     private val dataProvider = lazy { DevicePasswordSyncProvider(app, security, store).also { provider -> provider.onProgress = { updateProgress(it) } } }
@@ -83,6 +84,7 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
     private var running: Job? = null
     private var multicast: WifiManager.MulticastLock? = null
     private var multicastAttempted = false
+    private var networkSignature: String? = null
     private var dataProgress: DeviceSyncProgress? = null
     private var lastAttemptAt = 0L
     private var lastDiscoveryAt = 0L
@@ -134,6 +136,7 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
         var remoteAddress = ""
         var applyFailure: Exception? = null
         var rejectionDeadline = 0L
+        var syncRequest = 0L
     }
 
     fun start() {
@@ -483,8 +486,8 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
             if (invitation == null) parameters.put("trusted_key", it.trustedKey)
         }
         lastAttemptAt = System.currentTimeMillis()
-        val started = try { RustLanSync.request(parameters) } catch (failure: Exception) { deleteOwned(directory); throw failure }
-        val transfer = Transfer(started.getLong("handle"), directory, outgoing, enrollment, advertisement)
+        val started = try { RustLanSync.request(DeviceSyncLocalNetwork.withNetworks(app, parameters)) } catch (failure: Exception) { deleteOwned(directory); throw failure }
+        val transfer = Transfer(started.getLong("handle"), directory, outgoing, enrollment, advertisement).apply { syncRequest = settings.syncRequest }
         activeHandles += transfer.handle
         if (!SessionManager.isUnlocked.value || !appVisible.value || !currentCoroutineContext().isActive) {
             withContext(NonCancellable) { stop(transfer) }
@@ -536,9 +539,20 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
             if (!pairing && settings.peers.isEmpty()) { if (!paused) pause(locked = false); return }
             paused = false
             acquireNetwork()
+            val currentNetwork = DeviceSyncLocalNetwork.signature(app)
+            if (networkSignature != null && networkSignature != currentNetwork) {
+                presence.stop()
+                // Pairing owns the displayed QR and listens on all interfaces; keep it alive.
+                transfers.toMap().filterValues { !it.enrollment && it.stage in listOf("waiting", "connecting") }.forEach { (id, transfer) ->
+                    stop(transfer); transfers.remove(id)
+                }
+                retry.clear()
+            }
+            networkSignature = currentNetwork
+            (presence as? ForegroundDeviceSyncPresence)?.updateTargets(settings.peers.map { it.address }.filter(String::isNotEmpty).toSet())
             presence.start(settings.deviceId, settings.peers.map { it.deviceId }.toSet())
             transfers.toMap().forEach { (id, transfer) ->
-                if (!transfer.enrollment && id !in manualPeers && id !in presence.online.value) {
+                if (!transfer.enrollment && id !in manualPeers && id !in presence.online.value && transfer.stage in listOf("waiting", "connecting")) {
                     stop(transfer); transfers.remove(id); statuses[id] = "app_closed"
                     return@forEach
                 }
@@ -608,9 +622,9 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
                 continue
             }
             if (discovery == null) {
-                discovery = RustLanSync.request(JSONObject().put("operation", "discover")
-                    .put("targets", org.json.JSONArray(peers.filter { it.deviceId in manualPeers || it.deviceId in presence.online.value }
-                        .map { it.address }.filter(String::isNotEmpty).distinct().take(64))))
+                discovery = discoverPeers(DeviceSyncLocalNetwork.withNetworks(app, JSONObject().put("operation", "discover")
+                    .put("targets", org.json.JSONArray(DeviceSyncLocalNetwork.targets(app,
+                        presence.addresses + peers.map { it.address }.filter(String::isNotEmpty))))))
                 lastDiscoveryAt = System.currentTimeMillis()
                 val foundDevices = discovery.getJSONArray("devices")
                 discoveredPeers = (0 until foundDevices.length()).map(foundDevices::getJSONObject).count { found ->
@@ -726,7 +740,8 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
                 }
                 if (transfer.remoteAddress.isNotEmpty()) it.address = transfer.remoteAddress
                 statuses[remoteId] = if (contentSynced) "online" else "waiting"; retry.remove(remoteId)
-                if (!transfer.enrollment) { force.remove(remoteId); manualPeers.remove(remoteId) }
+                // Finishing an older transfer must not consume a manual request queued during its receipts.
+                if (!transfer.enrollment && transfer.syncRequest == settings().syncRequest) { force.remove(remoteId); manualPeers.remove(remoteId) }
             }
             store.save(settings())
             error = null
@@ -785,6 +800,7 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
             if (locked) preferences = null
             multicast?.let { if (it.isHeld) it.release() }; multicast = null
             multicastAttempted = false
+            networkSignature = null
             paused = true
         }
     }

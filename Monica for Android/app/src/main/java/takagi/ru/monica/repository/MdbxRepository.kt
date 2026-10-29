@@ -22,6 +22,9 @@ interface MdbxRepository {
     suspend fun requiresStrictMutationConsistency(databaseId: Long): Boolean = false
 
     suspend fun readStoredEntries(databaseId: Long): List<MdbxStoredVaultEntry>
+    /** Count current records without disclosing their contents when the engine supports it. */
+    suspend fun countActiveEntries(databaseId: Long): Long =
+        readStoredEntries(databaseId).count { !it.deleted }.toLong()
     suspend fun readStoredAttachments(databaseId: Long): List<MdbxStoredAttachment>
 
     suspend fun createFolder(

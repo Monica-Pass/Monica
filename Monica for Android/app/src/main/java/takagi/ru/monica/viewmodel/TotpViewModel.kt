@@ -176,8 +176,8 @@ class TotpViewModel internal constructor(
         null
     }
     private val keepassSecureItemCreateExecutor = KeePassSecureItemCreateExecutor(keepassBridge)
-    private val keepassSecureItemDeleteExecutor = KeePassSecureItemDeleteExecutor(keepassBridge)
-    private val keepassSecureItemUpdateExecutor = KeePassSecureItemUpdateExecutor(keepassBridge)
+    private val keepassSecureItemDeleteExecutor = KeePassSecureItemDeleteExecutor(keepassBridge, repository)
+    private val keepassSecureItemUpdateExecutor = KeePassSecureItemUpdateExecutor(keepassBridge, repository)
     private val bitwardenRepository = context?.let { BitwardenRepository.getInstance(it.applicationContext) }
     private val settingsManager = context?.let { SettingsManager(it.applicationContext) }
     private val parsedTotpDataCache = ConcurrentHashMap<String, TotpData>()
@@ -877,6 +877,7 @@ class TotpViewModel internal constructor(
     }
 
     private suspend fun syncKeePassTotpNow(databaseId: Long, taskId: String) {
+        if (repository.usesOriginalKeePass(databaseId)) { repository.refreshOriginalKeePass(databaseId); return }
         val target = "keepass_compat:totp:$databaseId"
         val trigger = "TOTP_FILTER_ENTER"
         SyncDiagnostics.queued(taskId, target, trigger)

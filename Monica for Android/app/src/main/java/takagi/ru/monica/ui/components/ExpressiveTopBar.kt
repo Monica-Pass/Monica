@@ -86,6 +86,12 @@ fun ExpressiveTopBar(
     searchBackEnabled: Boolean = true,
     actions: @Composable RowScope.() -> Unit = {}
 ) {
+    val startupSearchRequest = LocalStartupSearchRequest.current
+    val startupWindowFocused = LocalWindowInfo.current.isWindowFocused
+    val expandStartupSearch by rememberUpdatedState(onSearchExpandedChange)
+    LaunchedEffect(startupSearchRequest, startupWindowFocused) {
+        if (startupWindowFocused && startupSearchRequest?.invoke() == true) expandStartupSearch(true)
+    }
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current

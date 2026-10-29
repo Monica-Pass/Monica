@@ -1,0 +1,8 @@
+
+s_glBindAttribLocation: bind attrib 0 name position
+s_glBindAttribLocation: bind attrib 1 name localCoord
+takagi.ru.monica.passkey.PasskeyScanMenuTest:.
+
+Time: 15.624
+
+OK (1 test)

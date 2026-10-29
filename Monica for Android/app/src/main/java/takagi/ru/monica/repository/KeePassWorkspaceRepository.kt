@@ -78,8 +78,8 @@ class KeePassWorkspaceRepository(
         apply: suspend () -> Unit
     ): Boolean = service.applyCurrentProjection(databaseId, revisionToken, apply)
 
-    internal suspend fun openNativeBrowser(databaseId: Long): Result<KeePassNativeBrowserSnapshot> {
-        return service.openNativeBrowser(databaseId)
+    internal suspend fun openNativeBrowser(databaseId: Long, includePasswordMembership: Boolean = false): Result<KeePassNativeBrowserSnapshot> {
+        return service.openNativeBrowser(databaseId, includePasswordMembership)
     }
 
     internal fun isDatabaseReadOnly(databaseId: Long): Boolean =

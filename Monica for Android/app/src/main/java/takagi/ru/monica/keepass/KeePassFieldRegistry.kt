@@ -17,6 +17,10 @@ object KeePassFieldRegistry {
     private val passwordEntryOverlayFields = setOf(
         "Title", "UserName", "Password", "URL", "Notes",
         "MonicaLocalId",
+        "MonicaIsFavorite", "MonicaIsArchived", "MonicaPasswordGroupId", "MonicaReplicaGroupId",
+        "MonicaCustomIconType", "MonicaCustomIconValue", "MonicaSortOrder", "MonicaIsGroupCover",
+        "MonicaBoundNoteId", "MonicaPasskeyBindings",
+        "MonicaCategoryId", "MonicaSsoRefEntryUuid", "MonicaBoundNoteUuid",
         "MonicaConflictCopy",
         "App Package Name", "App Name",
         "Email", "Phone",
@@ -85,6 +89,10 @@ object KeePassFieldRegistry {
 
     private val monicaPasswordFields = setOf(
         "MonicaLocalId",
+        "MonicaIsFavorite", "MonicaIsArchived", "MonicaPasswordGroupId", "MonicaReplicaGroupId",
+        "MonicaCustomIconType", "MonicaCustomIconValue", "MonicaSortOrder", "MonicaIsGroupCover",
+        "MonicaBoundNoteId", "MonicaPasskeyBindings",
+        "MonicaCategoryId", "MonicaSsoRefEntryUuid", "MonicaBoundNoteUuid",
         "MonicaConflictCopy",
         "App Package Name", "AppPackageName", "MonicaAppPackageName",
         "App Name", "AppName", "MonicaAppName",

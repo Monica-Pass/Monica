@@ -110,6 +110,8 @@ fun PasswordEntryCard(
                         leadingIconOverride()
                         Spacer(modifier = Modifier.width(16.dp))
                     } else {
+                        val keePassIcon = takagi.ru.monica.ui.icons.rememberKeePassCustomIcon(entry.keepassDatabaseId, entry.keepassEntryUuid,
+                            enabled = entry.customIconType == takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_NONE)
                         val simpleIcon = if (entry.customIconType == takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_SIMPLE) {
                             takagi.ru.monica.ui.icons.rememberSimpleIconBitmap(
                                 slug = entry.customIconValue,
@@ -121,7 +123,7 @@ fun PasswordEntryCard(
                             takagi.ru.monica.ui.icons.rememberUploadedPasswordIcon(entry.customIconValue)
                         } else null
                         val emojiIcon = entry.customIconValue.takeIf { entry.customIconType == takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_EMOJI }
-                        val hasResolvedCustomIcon = simpleIcon != null || uploadedIcon != null || emojiIcon != null
+                        val hasResolvedCustomIcon = simpleIcon != null || uploadedIcon != null || emojiIcon != null || keePassIcon != null
                         val primaryAppPackageName = if (hasResolvedCustomIcon) {
                             ""
                         } else {
@@ -168,6 +170,9 @@ fun PasswordEntryCard(
                                 contentScale = ContentScale.Fit,
                                 modifier = Modifier.size(40.dp).padding(2.dp)
                             )
+                            Spacer(modifier = Modifier.width(16.dp))
+                        } else if (keePassIcon != null) {
+                            takagi.ru.monica.ui.icons.KeePassCustomIconImage(keePassIcon, Modifier.size(40.dp).padding(2.dp))
                             Spacer(modifier = Modifier.width(16.dp))
                         } else if (autoMatchedSimpleIcon.bitmap != null) {
                             Image(

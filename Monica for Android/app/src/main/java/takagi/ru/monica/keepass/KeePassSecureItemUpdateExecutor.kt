@@ -5,7 +5,8 @@ import takagi.ru.monica.data.SecureItem
 import takagi.ru.monica.repository.KeePassCompatibilityBridge
 
 class KeePassSecureItemUpdateExecutor(
-    private val bridge: KeePassCompatibilityBridge?
+    private val bridge: KeePassCompatibilityBridge?,
+    private val repository: takagi.ru.monica.repository.SecureItemRepository? = null,
 ) {
     suspend fun syncUpdatedItem(
         existingItem: SecureItem?,
@@ -23,6 +24,12 @@ class KeePassSecureItemUpdateExecutor(
         updatedItem: SecureItem,
         persistUpdate: (suspend (SecureItem) -> Unit)?
     ): Result<Unit> {
+        if (KeePassMonicaPasswordStore.isUiId(updatedItem.id)) {
+            return runCatching {
+                check(existingItem?.keepassDatabaseId == updatedItem.keepassDatabaseId) { "Use a copy to change original-vault ownership" }
+                requireNotNull(repository).updateItem(updatedItem)
+            }
+        }
         val keepassBridge = bridge
         if (keepassBridge == null) {
             persistUpdate?.invoke(updatedItem)

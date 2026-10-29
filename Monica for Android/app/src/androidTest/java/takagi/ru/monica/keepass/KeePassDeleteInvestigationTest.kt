@@ -26,6 +26,7 @@ import takagi.ru.monica.security.SessionManager
 import takagi.ru.monica.utils.AppLocaleStringResolver
 import takagi.ru.monica.utils.KeePassKdbxService
 import takagi.ru.monica.utils.KeePassEntryData
+import takagi.ru.monica.viewmodel.CategoryFilter
 import takagi.ru.monica.viewmodel.PasswordViewModel
 
 /** Diagnostic harness: the real file service and the real password-page batch command. */
@@ -196,11 +197,15 @@ class KeePassDeleteInvestigationTest {
         Log.i(TAG, "projection rows=${entries.size} ms=${SystemClock.elapsedRealtime()-started}")
     }
 
-    internal suspend fun scenario(block: suspend (PasswordViewModel, KeePassKdbxService, Long, PasswordDatabase, Uri) -> Unit) {
+    internal suspend fun scenario(
+        securityOverride: SecurityManager? = null,
+        databaseTransform: (KeePassDatabase) -> KeePassDatabase = { it },
+        block: suspend (PasswordViewModel, KeePassKdbxService, Long, PasswordDatabase, Uri) -> Unit
+    ) {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         val context = instrumentation.targetContext
         val uri = Uri.parse("content://${instrumentation.context.packageName}.kdbx-delete/delete-${UUID.randomUUID()}.kdbx")
-        val security = SecurityManager(context)
+        val security = securityOverride ?: SecurityManager(context)
         val registrationDb = PasswordDatabase.getDatabase(context)
         val local = Room.inMemoryDatabaseBuilder(context, PasswordDatabase::class.java).build()
         val wasUnlocked = SessionManager.isUnlocked.value
@@ -222,13 +227,26 @@ class KeePassDeleteInvestigationTest {
                     ))
                 })
             }
-        context.contentResolver.openOutputStream(uri, "wt")!!.use { database.encode(it) }
+        context.contentResolver.openOutputStream(uri, "wt")!!.use { databaseTransform(database).encode(it) }
         val id = registrationDb.localKeePassDatabaseDao().insertDatabase(LocalKeePassDatabase(
             name="Delete fixture", filePath=uri.toString(), storageLocation=KeePassStorageLocation.EXTERNAL,
             sourceType=KeePassDatabaseSourceType.LOCAL_DOCUMENT_URI,
             encryptedPassword=security.encryptData("Synthetic KDBX deletion test")))
-        val model = PasswordViewModel(PasswordRepository(local.passwordEntryDao()), security, context=context,
-            localKeePassDatabaseDao=registrationDb.localKeePassDatabaseDao(), strings=AppLocaleStringResolver(context))
+        val model = withContext(Dispatchers.Main) {
+            PasswordViewModel(PasswordRepository(local.passwordEntryDao()), security, context=context,
+                localKeePassDatabaseDao=registrationDb.localKeePassDatabaseDao(), strings=AppLocaleStringResolver(context)).also {
+                // The repository is isolated, but context-backed settings belong to the
+                // shared test installation. Do not inherit its last MDBX/KeePass filter,
+                // which would bind an unrelated owner during compatibility mutations.
+                // A neutral, non-All filter also prevents the async restore from winning.
+                // Set only this model's memory state; never overwrite persisted settings.
+                val field = PasswordViewModel::class.java.getDeclaredField("_categoryFilter")
+                field.isAccessible = true
+                @Suppress("UNCHECKED_CAST")
+                val filter = field.get(it) as MutableStateFlow<CategoryFilter>
+                filter.value = CategoryFilter.Local
+            }
+        }
         val service = KeePassKdbxService(context, registrationDb.localKeePassDatabaseDao(), security)
         val scope = CoroutineScope(SupervisorJob()+Dispatchers.Default)
         var emissions = 0

@@ -1,0 +1,29 @@
+# Boarding pass scanning — 1.0.323
+
+Date: 2026-10-29. Development build, unreleased.
+
+The travel-pass editor adds a Scan boarding pass button and reuses the shared CameraX/ZXing scanner, including its image picker. It accepts IATA Resolution 792 BCBP payloads in PDF417, Aztec, QR and Data Matrix. Ordinary QR links are rejected.
+
+Boarding-pass scanning preserves the payload's fixed-width whitespace through both camera and gallery decoding and result delivery. The shared scanner previously trimmed trailing padding before checking the declared conditional-section length, which made some otherwise valid boarding passes unreadable. Other scanner callers retain their existing whitespace normalization by default.
+
+Scanning fills the passenger name, booking reference, airline, flight number, origin/destination airport codes, departure date, seat and cabin. The user can review and edit the draft before saving. Scanning does not save an item automatically; the raw barcode and airline-private data are not retained. Missing gate/time information remains editable. For connecting flights, origin/destination span the itinerary and flight/seat fields are joined. BCBP mandatory dates lack a year, so the parser chooses the date closest to the scan date; users should check the inferred year.
+
+The production source was included in both successful 1.0.323 builds, packaged for arm64-v8a, armeabi-v7a and the x86_64 test ABI. The normal edition remains versionCode 12; F-Droid uses versionCode 30. Both editions have Chinese/English unreleased notes, and F-Droid changelog 30 includes the feature. No release/tag was created and no APK was copied to a delivery directory.
+
+Verification on the reused Monica_Issue136_API_32 AVD:
+
+- Both editions passed four parser unit tests covering mandatory fields, connecting flights with conditional data, the year boundary and invalid payloads.
+- Both editions passed three device tests through the production ZXing decoder: all four supported barcode formats decode to the expected travel fields, fixed-width padding survives both image and camera-frame decoding, and an ordinary URL QR is readable but rejected as a boarding pass.
+- Both editions passed the existing travel editor/draft/detail test at 1.5 font scale.
+
+The normal edition also passed the final seven device regressions after the whitespace change: three boarding decoder tests, the actual scanner dialog → image picker → filled draft → save flow, the large-font travel editor test, and Steam/authenticator camera-scanner navigation after an idle session. The decoder regression demonstrates that default trimming makes a padded payload fail the parser, while preserving whitespace makes both image and camera-frame decoding retain the complete payload. The save test verifies that no item exists before the explicit save, that the expected fields are stored afterwards, that an existing gate field is retained and that the raw barcode is absent. Native scanner and filled-form screenshots were inspected locally.
+
+The final F-Droid source build and test packaging also succeeded after the whitespace change. Its updated APK and test APK were installed over the existing development packages without clearing app data. All five targeted device regressions passed in 22.958 seconds: the three boarding decoder tests, the same actual gallery scan/fill/save flow, and the large-font travel editor test. Its native scanner and filled-form screenshots were also inspected locally. The final device logs end with `OK (7 tests)` for the normal edition and `OK (5 tests)` for F-Droid.
+
+On this host, one test-package rebuild encountered a JVM native allocation failure; a disposable JVM with a higher heap base and fewer Gradle workers succeeded. A later combined rebuild packaged the updated normal APKs successfully, then received an external Gradle stop command while compiling tests; resuming the test-package task succeeded. The final F-Droid build used an isolated Gradle daemon registry while reusing the existing dependency cache and completed successfully in 13 minutes 50 seconds. These were host build interruptions, not failures in the Android app. The debug validation kept the generated BuildConfig clock fields stable by skipping that generation task; it was not a release build. Logs remain under `.codex-tmp/startup-keyboard-323/` locally.
+
+The images use a synthetic published-format fixture, not personal boarding-pass data. These checks do not cover every airline's conditional/private extensions or establish camera recognition quality under real-world lighting. Screenshots remain local and are not referenced as repository image assets.
+
+The verified F-Droid checkout is `.codex-worktrees/monica-fdroid-nearby-steam`. The older `Monica-main/fdroid` checkout predates the wallet-pass templates and has substantial existing changes. Its prerequisite patch does not apply cleanly, so this scanning feature was not overlaid onto that checkout. That older checkout is not a verified scanning build.
+
+The two reported startup failures were also reviewed under the user's latest 2026-10-29 instruction to investigate while prioritizing existing users' data. Source inspection found no Google online integrity check or anti-hook startup check. The normal edition passed 16 existing secure-storage/startup tests, two recovery-screen tests and 18 additional local-vault/connection recovery tests. The latter exercise password/OTP/attachment-key/Passkey preservation, failed and interrupted recovery, password rotation, stale-manager writes, and KeePass/MDBX/remote-credential preservation. There are no user crash logs or matching module-environment reproduction; these results cannot establish a common cause or claim those reports are fixed. Production security behavior was not changed for these reports. See `keystore-startup-323.md` for the scope and remaining limitation.

@@ -5,7 +5,11 @@ import java.security.SecureRandom
 import java.util.Collections
 import java.util.Random
 
-data class ImeKeyboardOptions(val scramblePin: Boolean = false, val hidePinPreview: Boolean = false)
+data class ImeKeyboardOptions(
+    val scramblePin: Boolean = false,
+    val hidePinPreview: Boolean = false,
+    val keyVibrationEnabled: Boolean = false,
+)
 
 internal val StandardImePinDigits = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
 

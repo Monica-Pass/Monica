@@ -369,6 +369,23 @@ class PasswordViewModel internal constructor(
     } else {
         null
     }
+    internal val monicaKeePassStore = if (context != null && localKeePassDatabaseDao != null) {
+        takagi.ru.monica.keepass.KeePassMonicaPasswordStore(
+            KeePassKdbxService(context.applicationContext, localKeePassDatabaseDao, securityManager), securityManager
+        ).also { store ->
+            repository.monicaKeePassStore = store
+            AttachmentContainer.bindOriginalKeePassStore(store)
+            secureItemRepository?.bindMonicaKeePassStore(store)
+            viewModelScope.launch { SessionManager.isUnlocked.collect { if (!it) store.clear() } }
+            viewModelScope.launch {
+                var previous = KeePassKdbxService.nativeLockVersions.value
+                KeePassKdbxService.nativeLockVersions.collect { current ->
+                    current.forEach { (id, version) -> if (version != (previous[id] ?: 0L)) store.clear(id) }
+                    previous = current
+                }
+            }
+        }
+    } else null
     private val keepassPasswordDeleteExecutor = KeePassPasswordDeleteExecutor(keepassBridge)
     private val keepassPasswordCreateExecutor = KeePassPasswordCreateExecutor(keepassBridge)
     private val keepassPasswordUpdateExecutor = KeePassPasswordUpdateExecutor(keepassBridge)
@@ -466,6 +483,7 @@ class PasswordViewModel internal constructor(
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
     
     private val _categoryFilter = MutableStateFlow<CategoryFilter>(CategoryFilter.All)
+    private val nativeKeePassReaders = mutableMapOf<Long, Int>()
     val categoryFilter = _categoryFilter.asStateFlow()
     private val archiveFilterController = PasswordArchiveFilterController()
 
@@ -626,7 +644,19 @@ class PasswordViewModel internal constructor(
             val filter = request.filter
             val localCategoryIdsInScope =
                 (filter as? CategoryFilter.Custom)?.categoryId?.let(::setOf).orEmpty()
-            val baseFlow: Flow<List<PasswordEntry>> = if (query.isNotBlank()) {
+            val nativeScope = takagi.ru.monica.keepass.KeePassPasswordNativeScope.from(filter)
+            val baseFlow: Flow<List<PasswordEntry>> = if (nativeScope != null && monicaKeePassStore != null) {
+                monicaKeePassStore.rows(nativeScope.databaseId).map { rows ->
+                    rows.filter { row ->
+                        !row.isArchived && !row.isDeleted &&
+                            monicaKeePassStore.matchesScope(row, nativeScope) &&
+                            (query.isBlank() || matchesSearchQuery(row, query) || monicaKeePassStore.fields(row.id).any { it.value.contains(query, true) })
+                    }
+                }.catch { error ->
+                    Log.w("PasswordViewModel", "KeePass original-vault read failed: ${error.javaClass.simpleName}")
+                    emit(emptyList())
+                }
+            } else if (query.isNotBlank()) {
                 // Extended search: query + custom fields, then apply current category filter in-memory.
                 val searchFlow = rawAllPasswordsSource.map { allEntries ->
                     val baseResults = RustPasswordListCore.filterEntries(allEntries, query)
@@ -1283,12 +1313,17 @@ class PasswordViewModel internal constructor(
     }
 
     fun inspectSecretState(entry: PasswordEntry): SecretValueState {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(entry.id)) {
+            val current = monicaKeePassStore?.get(entry.id) ?: return SecretValueState.Unreadable(passwordProviderRegistry.sourceOf(entry))
+            return if (current.password.isEmpty()) SecretValueState.Empty else SecretValueState.Available(current.password)
+        }
         return passwordProviderRegistry.inspectSecret(entry)
     }
 
     fun hasOwnershipConflict(entry: PasswordEntry): Boolean = entry.hasOwnershipConflict()
 
-    suspend fun getRawPasswordEntryById(id: Long): PasswordEntry? {
+    suspend fun getRawPasswordEntryById(id: Long, forEdit: Boolean = false): PasswordEntry? {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(id)) return monicaKeePassStore?.get(id, forEdit)
         val entry = repository.getPasswordEntryById(id) ?: return null
         return normalizeLegacyOwnershipMetadata(entry)
     }
@@ -1551,7 +1586,14 @@ class PasswordViewModel internal constructor(
      */
     private fun unwrapPasswordLayersForDisplay(value: String): String {
         var current = value
-        repeat(3) {
+        repeat(3) { layer ->
+            if (layer > 0 && securityManager.looksLikeMonicaCiphertext(current)) {
+                // A successfully decrypted secret may itself start with C2|/V2|/MDK|.
+                // Only attempt a legacy second layer when it has an actual GCM payload.
+                // The stored outer layer must still decrypt successfully; its failure is never hidden.
+                val payload = runCatching { android.util.Base64.decode(current.substringAfter('|'), android.util.Base64.DEFAULT) }.getOrNull()
+                if (payload == null || payload.size < 28) return current
+            }
             val decrypted = synchronized(decryptLock) {
                 securityManager.decryptData(current)
             }
@@ -1572,7 +1614,53 @@ class PasswordViewModel internal constructor(
         return decoded
     }
 
-    private fun syncKeePassDatabase(databaseId: Long, forceRefresh: Boolean = false) {
+    internal fun holdNativeKeePassRead(databaseId: Long): AutoCloseable {
+        monicaKeePassStore?.activate(databaseId, true)
+        viewModelScope.launch(Dispatchers.IO) {
+            runCatching { monicaKeePassStore?.refresh(databaseId) }.onFailure {
+                Log.w("PasswordViewModel", "KeePass original-vault refresh failed: ${it.javaClass.simpleName}")
+            }
+        }
+        synchronized(nativeKeePassReaders) {
+            nativeKeePassReaders[databaseId] = (nativeKeePassReaders[databaseId] ?: 0) + 1
+        }
+        return AutoCloseable {
+            synchronized(nativeKeePassReaders) {
+                val remaining = (nativeKeePassReaders[databaseId] ?: 1) - 1
+                if (remaining > 0) nativeKeePassReaders[databaseId] = remaining
+                else {
+                    nativeKeePassReaders.remove(databaseId)
+                    monicaKeePassStore?.activate(databaseId, false)
+                }
+            }
+        }
+    }
+
+    internal fun holdNativeKeePassEntryRead(entryId: Long): AutoCloseable? =
+        monicaKeePassStore?.get(entryId)?.keepassDatabaseId?.let { databaseId ->
+            val read = holdNativeKeePassRead(databaseId)
+            AutoCloseable { read.close(); refreshKeePassOverviewAfterNativeRead(databaseId) }
+        }
+
+    internal fun nativeKeePassDatabaseId(entryId: Long): Long? = monicaKeePassStore?.databaseId(entryId)
+
+    private fun syncKeePassDatabase(databaseId: Long, forceRefresh: Boolean = false, bypassThrottle: Boolean = false) {
+        if (monicaKeePassStore != null && (synchronized(nativeKeePassReaders) { databaseId in nativeKeePassReaders } ||
+                takagi.ru.monica.keepass.KeePassPasswordNativeScope.from(_categoryFilter.value)?.databaseId == databaseId)) {
+            viewModelScope.launch(Dispatchers.IO) {
+                runCatching {
+                    if (forceRefresh) {
+                        keepassBridge?.syncLegacyRemoteDatabase(databaseId)?.getOrThrow()
+                        KeePassKdbxService.invalidateProcessCache(databaseId)
+                    }
+                    monicaKeePassStore.refresh(databaseId)
+                }.onFailure { error ->
+                    if (error is CancellationException) throw error
+                    Log.w("PasswordViewModel", "KeePass original-vault refresh failed: ${error.javaClass.simpleName}")
+                }
+            }
+            return
+        }
         val requestId = SyncDiagnostics.nextTaskId("kp-password")
         viewModelScope.launch {
             SyncTaskRunner.request(
@@ -1586,7 +1674,7 @@ class PasswordViewModel internal constructor(
                     createdAtMillis = System.currentTimeMillis(),
                     priority = if (forceRefresh) SyncPriority.MANUAL else SyncPriority.PAGE_VISIBLE,
                     mode = if (forceRefresh) SyncMode.FOREGROUND else SyncMode.SILENT,
-                    throttleMs = if (forceRefresh) 0L else 30_000L
+                    throttleMs = if (forceRefresh || bypassThrottle) 0L else 30_000L
                 )
             ) {
                 syncKeePassDatabaseNow(
@@ -1684,6 +1772,13 @@ class PasswordViewModel internal constructor(
         syncKeePassDatabase(databaseId, forceRefresh = forceRefresh)
     }
 
+    internal fun refreshKeePassOverviewAfterNativeRead(databaseId: Long) {
+        if (!takagi.ru.monica.security.SessionManager.isUnlocked.value) return
+        if (appContext == null || localKeePassDatabaseDao == null ||
+            !KeePassKdbxService(appContext, localKeePassDatabaseDao, securityManager).isDatabaseUnlocked(databaseId)) return
+        syncKeePassDatabase(databaseId, bypassThrottle = true)
+    }
+
     internal suspend fun applyKeePassWorkspaceSnapshot(
         databaseId: Long,
         snapshot: takagi.ru.monica.utils.KeePassWorkspaceSnapshot,
@@ -1750,7 +1845,16 @@ class PasswordViewModel internal constructor(
             val sourceDates = takagi.ru.monica.keepass.resolveKeePassEntryDates(item.createdAtMillis, item.updatedAtMillis, existing?.createdAt, existing?.updatedAt)
             val normalizedPassword = normalizeIncomingKeePassPassword(item.password)
             val existingPlainPassword = existing?.let { decryptForDisplay(it.password) }.orEmpty()
-            val encryptedPassword = if (existing != null && normalizedPassword.isBlank()) {
+            // Reuse only ciphertext that already has the protection encryptData would
+            // choose. Legacy/V2 values still migrate; C2 must migrate when a master
+            // password is enabled so password recovery never loses those values.
+            val canReusePassword = existing != null && normalizedPassword.isNotBlank() &&
+                normalizedPassword == existingPlainPassword &&
+                (existing.password.startsWith("MDK|") ||
+                    (existing.password.startsWith("C2|") && !securityManager.isMasterPasswordSet()))
+            val encryptedPassword = if (canReusePassword) {
+                requireNotNull(existing).password
+            } else if (existing != null && normalizedPassword.isBlank()) {
                 if (existingPlainPassword.isNotBlank()) {
                     Log.w(
                         "PasswordViewModel",
@@ -1804,8 +1908,9 @@ class PasswordViewModel internal constructor(
                     createdAt = sourceDates.first,
                     updatedAt = sourceDates.second
                 )
-                if (!existing.matchesKeePassImport(updated, importedPlainPassword)) {
-                    repository.updatePasswordEntry(updated)
+                val presented = updated.withKeePassPresentation(item)
+                if (!existing.matchesKeePassImport(presented, importedPlainPassword, existingPlainPassword)) {
+                    repository.updatePasswordEntry(presented)
                 }
                 saveKeePassCustomFields(existing.id, item)
             } else {
@@ -1844,7 +1949,7 @@ class PasswordViewModel internal constructor(
                     isDeleted = isInRecycleBin,
                     deletedAt = if (isInRecycleBin) Date() else null
                 )
-                val insertedId = repository.insertPasswordEntry(newEntry)
+                val insertedId = repository.insertPasswordEntry(newEntry.withKeePassPresentation(item))
                 saveKeePassCustomFields(insertedId, item)
             }
         }
@@ -1862,13 +1967,31 @@ class PasswordViewModel internal constructor(
 
     }
 
+    private fun PasswordEntry.withKeePassPresentation(source: KeePassEntryData): PasswordEntry {
+        val fields = source.monicaPresentation
+        return copy(
+            isFavorite = fields["MonicaIsFavorite"]?.toBooleanStrictOrNull() ?: isFavorite,
+            isArchived = fields["MonicaIsArchived"]?.toBooleanStrictOrNull() ?: isArchived,
+            sortOrder = fields["MonicaSortOrder"]?.toIntOrNull() ?: sortOrder,
+            categoryId = if ("MonicaCategoryId" in fields) fields["MonicaCategoryId"]?.toLongOrNull() else categoryId,
+            isGroupCover = fields["MonicaIsGroupCover"]?.toBooleanStrictOrNull() ?: isGroupCover,
+            passwordGroupId = if ("MonicaPasswordGroupId" in fields) fields["MonicaPasswordGroupId"]?.takeIf(String::isNotBlank) else passwordGroupId,
+            replicaGroupId = if ("MonicaReplicaGroupId" in fields) fields["MonicaReplicaGroupId"]?.takeIf(String::isNotBlank) else replicaGroupId,
+            customIconType = fields["MonicaCustomIconType"] ?: customIconType,
+            customIconValue = if ("MonicaCustomIconValue" in fields) fields["MonicaCustomIconValue"]?.takeIf(String::isNotBlank) else customIconValue,
+            boundNoteId = if ("MonicaBoundNoteId" in fields) fields["MonicaBoundNoteId"]?.toLongOrNull() else boundNoteId,
+            passkeyBindings = fields["MonicaPasskeyBindings"] ?: passkeyBindings,
+        )
+    }
+
     private fun PasswordEntry.matchesKeePassImport(
         imported: PasswordEntry,
-        importedPlainPassword: String
+        importedPlainPassword: String,
+        existingPlainPassword: String
     ): Boolean {
         return copy(password = "", authenticatorKey = "") ==
             imported.copy(password = "", authenticatorKey = "") &&
-            decryptForDisplay(password) == importedPlainPassword &&
+            existingPlainPassword == importedPlainPassword &&
             decryptStoredSensitiveValue(authenticatorKey) == decryptStoredSensitiveValue(imported.authenticatorKey)
     }
 
@@ -2129,19 +2252,15 @@ class PasswordViewModel internal constructor(
         when (filter) {
             is CategoryFilter.KeePassDatabase -> {
                 KeePassKdbxService.markDatabaseActive(filter.databaseId)
-                syncKeePassDatabase(filter.databaseId)
             }
             is CategoryFilter.KeePassGroupFilter -> {
                 KeePassKdbxService.markDatabaseActive(filter.databaseId)
-                syncKeePassDatabase(filter.databaseId)
             }
             is CategoryFilter.KeePassDatabaseStarred -> {
                 KeePassKdbxService.markDatabaseActive(filter.databaseId)
-                syncKeePassDatabase(filter.databaseId)
             }
             is CategoryFilter.KeePassDatabaseUncategorized -> {
                 KeePassKdbxService.markDatabaseActive(filter.databaseId)
-                syncKeePassDatabase(filter.databaseId)
             }
             else -> KeePassKdbxService.trimInactiveCaches()
         }
@@ -2558,6 +2677,12 @@ class PasswordViewModel internal constructor(
 
     suspend fun movePasswordsToCategoryAwait(ids: List<Long>, categoryId: Long?) {
         if (ids.isEmpty()) return
+        val nativeIds = ids.filter(takagi.ru.monica.keepass.KeePassMonicaPasswordStore::isUiId)
+        if (nativeIds.isNotEmpty()) {
+            moveKeePassPasswordsToMonicaCategoryAwait(nativeIds, categoryId).getOrThrow()
+            movePasswordsToCategoryAwait(ids - nativeIds.toSet(), categoryId)
+            return
+        }
         val entries = repository.getPasswordsByIds(ids)
         repository.updateCategoryForPasswords(ids, categoryId)
         // Moving a password to a Monica category must stay local-only.
@@ -2576,6 +2701,13 @@ class PasswordViewModel internal constructor(
             val entries = repository.getPasswordsByIds(ids)
             val keepassEntries = entries.filter { it.keepassDatabaseId != null }
             if (keepassEntries.isEmpty()) return@runCatching 0
+
+            val nativeEntries = keepassEntries.filter { takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(it.id) }
+            if (nativeEntries.isNotEmpty()) {
+                transferOriginalKeePassPasswords(nativeEntries) { buildMonicaLocalCopy(it, categoryId) }
+                val remaining = keepassEntries - nativeEntries.toSet()
+                return@runCatching nativeEntries.size + moveKeePassPasswordsToMonicaCategoryAwait(remaining.map { it.id }, categoryId).getOrThrow()
+            }
 
             repository.updateCategoryForPasswords(keepassEntries.map { it.id }, categoryId)
             repository.updateKeePassDatabaseForPasswords(keepassEntries.map { it.id }, null)
@@ -2664,7 +2796,18 @@ class PasswordViewModel internal constructor(
     ) {
         if (targetEntryUuidsByPasswordId.isEmpty()) return
         val entries = repository.getPasswordsByIds(targetEntryUuidsByPasswordId.keys.toList())
-        entries.forEach { entry ->
+        val native = entries.filter { takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(it.id) }
+        if (native.isNotEmpty()) {
+            val store = requireNotNull(monicaKeePassStore)
+            (native.mapNotNull { it.keepassDatabaseId } + databaseId).distinct().forEach { store.refresh(it) }
+            val target = store.refresh(databaseId)
+            native.filter { it.isArchived }.forEach { source ->
+                val uuid = targetEntryUuidsByPasswordId.getValue(source.id)
+                val row = target.rows.single { it.keepassEntryUuid == uuid }
+                store.save(databaseId, listOf(row.copy(isArchived = false, archivedAt = null)), emptyMap())
+            }
+        }
+        (entries - native.toSet()).forEach { entry ->
             val targetEntryUuid = targetEntryUuidsByPasswordId[entry.id]
                 ?: return@forEach
 
@@ -2732,6 +2875,13 @@ class PasswordViewModel internal constructor(
         if (folderIdsByPasswordId.isEmpty()) return
         val ids = folderIdsByPasswordId.keys.toList()
         val entries = repository.getPasswordsByIds(ids)
+        val native = entries.filter { takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(it.id) }
+        if (native.isNotEmpty()) {
+            transferOriginalKeePassPasswords(native) { source -> buildMonicaLocalCopy(source, null).copy(
+                mdbxDatabaseId = databaseId, mdbxFolderId = folderIdsByPasswordId[source.id]) }
+            movePasswordsToMdbxFoldersAwait(databaseId, folderIdsByPasswordId - native.map { it.id }.toSet())
+            return
+        }
         val now = Date()
         val targetEntries = entries.map { entry ->
             entry.copy(
@@ -2819,6 +2969,13 @@ class PasswordViewModel internal constructor(
         val entries = repository.getPasswordsByIds(ids)
         entries.forEach { entry ->
             val updatedEntry = buildUpdatedEntry(entry)
+            if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(entry.id)) {
+                val targetId = updatedEntry.keepassDatabaseId
+                if (targetId == null) transferOriginalKeePassPasswords(listOf(entry)) { buildMonicaLocalCopy(it, updatedEntry.categoryId) }
+                else if (targetId == entry.keepassDatabaseId) requireNotNull(monicaKeePassStore).save(targetId, listOf(updatedEntry), emptyMap())
+                else requireNotNull(monicaKeePassStore).moveToDatabase(entry, targetId, updatedEntry.keepassGroupPath)
+                return@forEach
+            }
             val customFields = resolveKeePassCustomFieldsForSync(
                 entryId = entry.id,
                 customFieldsOverride = null
@@ -2881,6 +3038,13 @@ class PasswordViewModel internal constructor(
     suspend fun movePasswordsToBitwardenFolderAwait(ids: List<Long>, vaultId: Long, folderId: String) {
         if (ids.isEmpty()) return
         val entries = repository.getPasswordsByIds(ids)
+        val native = entries.filter { takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(it.id) }
+        if (native.isNotEmpty()) {
+            transferOriginalKeePassPasswords(native) { source -> buildMonicaLocalCopy(source, null).copy(
+                bitwardenVaultId = vaultId, bitwardenFolderId = folderId) }
+            movePasswordsToBitwardenFolderAwait(ids - native.map { it.id }.toSet(), vaultId, folderId)
+            return
+        }
         val now = Date()
         val targetEntries = entries.map { entry ->
             val keepExistingCipher = entry.bitwardenVaultId == vaultId &&
@@ -2915,6 +3079,9 @@ class PasswordViewModel internal constructor(
     ): Boolean {
         val keepassEntries = entries.filter { it.keepassDatabaseId != null }
         if (keepassEntries.isEmpty()) return true
+        check(keepassEntries.none { takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(it.id) }) {
+            "Original KeePass sources require verified destination copies before deletion"
+        }
         val attachmentsReady = runCatching {
             materializeMovedKeePassAttachments(keepassEntries)
         }.onFailure { error ->
@@ -3090,6 +3257,18 @@ class PasswordViewModel internal constructor(
         passwordAlreadyEncrypted: Boolean = false,
         customFieldsOverride: List<CustomFieldDraft>? = null
     ): Long? {
+        if (entry.keepassDatabaseId != null && entry.mdbxDatabaseId == null && entry.bitwardenVaultId == null &&
+            monicaKeePassStore != null && synchronized(nativeKeePassReaders) { entry.keepassDatabaseId in nativeKeePassReaders }) {
+            return runCatching {
+                val plain = if (passwordAlreadyEncrypted) securityManager.decryptData(entry.password) else entry.password
+                requireNotNull(monicaKeePassStore).save(entry.keepassDatabaseId, listOf(entry.copy(id = 0L, password = plain)),
+                    mapOf(0L to customFieldsOverride.orEmpty())).single().id
+            }.getOrElse { error ->
+                if (error is CancellationException) throw error
+                Log.w("PasswordViewModel", "KeePass original-vault create failed: ${error.javaClass.simpleName}")
+                null
+            }
+        }
         val boundEntry = (if (skipCategoryBinding) entry else applyCategoryBinding(entry)).let { candidate ->
             // 只在"纯 KeePass 新建"场景下补 entryUuid；若 candidate 同时绑定了 Bitwarden vault，
             // 说明 keepassDatabaseId 其实是 applyCategoryBinding 根据当前 UI 过滤误塞进去的，
@@ -3169,12 +3348,13 @@ class PasswordViewModel internal constructor(
         entry: PasswordEntry,
         categoryId: Long?
     ): Long? {
+        requireTransferableOriginalReferences(entry)
         val newId = createPasswordEntryInternal(
             entry = buildMonicaLocalCopy(entry, categoryId),
             includeDetailedLog = false,
             skipCategoryBinding = true,
             // 源条目的 password 已经是 Monica SecurityManager 加密过的密文，直接复用
-            passwordAlreadyEncrypted = true
+            passwordAlreadyEncrypted = !takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(entry.id)
         )
         if (newId != null) {
             copyCustomFieldsForEntryCopy(
@@ -3183,6 +3363,50 @@ class PasswordViewModel internal constructor(
             )
         }
         return newId
+    }
+
+    internal fun buildEncryptedPasswordCopy(source: PasswordEntry, target: takagi.ru.monica.ui.components.UnifiedMoveCategoryTarget): PasswordEntry {
+        requireTransferableOriginalReferences(source)
+        val copied = takagi.ru.monica.ui.buildCopiedEntryForTarget(source, target)
+        return if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(source.id))
+            copied.copy(password = securityManager.encryptData(source.password)) else copied
+    }
+
+    private suspend fun transferOriginalKeePassPasswords(entries: List<PasswordEntry>, target: (PasswordEntry) -> PasswordEntry) {
+        entries.forEach(::requireTransferableOriginalReferences)
+        val store = requireNotNull(monicaKeePassStore)
+        check(entries.none { store.hasOriginalHistory(it.id) }) {
+            "Original-vault history cannot be fully preserved in this destination; use a copy to retain the source"
+        }
+        val created = mutableListOf<Long>()
+        try {
+            entries.forEach { source ->
+                check(store.get(source.id) == source) { "KeePass selection changed; reload before moving" }
+                val fields = store.fields(source.id).map(CustomFieldDraft::fromCustomField)
+                val id = createPasswordEntryInternal(target(source).copy(id = 0L), false,
+                    skipCategoryBinding = true, passwordAlreadyEncrypted = false, customFieldsOverride = fields)
+                    ?: error("Destination password could not be saved; source retained")
+                created += id
+                saveCustomFieldsForEntry(id, fields)
+                val saved = requireNotNull(repository.getPasswordEntryById(id))
+                copyProjectCredentialAttachments(source, saved)
+                check(inspectSecretState(saved).plainValueOrEmpty() == source.password) { "Destination password validation failed; source retained" }
+            }
+        } catch (error: Throwable) {
+            withContext(NonCancellable) { created.asReversed().forEach { runCatching { rollbackPasswordTransferTargetAwait(it) } } }
+            throw error
+        }
+        // Once every target is verified, retain them if source removal fails so neither copy is lost.
+        store.delete(entries, recycle = false)
+        created.mapNotNull { repository.getPasswordEntryById(it)?.bitwardenVaultId }.distinct()
+            .forEach { bitwardenRepository?.requestLocalMutationSync(it) }
+    }
+
+    private fun requireTransferableOriginalReferences(entry: PasswordEntry) {
+        if (!takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(entry.id)) return
+        check(listOfNotNull(entry.ssoRefEntryId, entry.boundNoteId).none(takagi.ru.monica.keepass.KeePassMonicaPasswordStore::isUiId)) {
+            "Original-vault links require destination references before this item can be copied or moved"
+        }
     }
 
     suspend fun rollbackPasswordTransferTargetAwait(entryId: Long) {
@@ -3331,6 +3555,17 @@ class PasswordViewModel internal constructor(
         customFieldsOverride: List<CustomFieldDraft>? = null,
         skipCategoryBinding: Boolean = false
     ): Boolean {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(entry.id)) {
+            return runCatching {
+                requireNotNull(monicaKeePassStore).save(requireNotNull(entry.keepassDatabaseId), listOf(entry),
+                    customFieldsOverride?.let { mapOf(entry.id to it) }.orEmpty())
+                true
+            }.getOrElse { error ->
+                if (error is CancellationException) throw error
+                Log.w("PasswordViewModel", "KeePass original-vault save failed: ${error.javaClass.simpleName}")
+                false
+            }
+        }
         // 获取旧数据用于对比
         val oldEntry = repository.getPasswordEntryById(entry.id)
         
@@ -3496,6 +3731,19 @@ class PasswordViewModel internal constructor(
         onProgress: ((processed: Int, total: Int) -> Unit)? = null
     ): Int {
         if (entries.isEmpty()) return 0
+        val native = entries.filter { takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(it.id) }
+        if (native.isNotEmpty()) {
+            return runCatching {
+                requireNotNull(monicaKeePassStore).delete(native, trashSettings?.value?.first ?: true)
+                val count = native.size + deletePasswordEntriesBatch(entries - native.toSet(), onProgress)
+                onProgress?.invoke(count, entries.size)
+                count
+            }.getOrElse { error ->
+                if (error is CancellationException) throw error
+                Log.w("PasswordViewModel", "KeePass original-vault deletion failed: ${error.javaClass.simpleName}")
+                0
+            }
+        }
 
         val trashEnabled = trashSettings?.value?.first ?: true
         var deletedCount = 0
@@ -3703,6 +3951,10 @@ class PasswordViewModel internal constructor(
     
     fun toggleFavorite(id: Long, isFavorite: Boolean) {
         viewModelScope.launch {
+            if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(id)) {
+                getRawPasswordEntryById(id)?.let { updatePasswordEntryInternal(it.copy(isFavorite = isFavorite), skipCategoryBinding = true) }
+                return@launch
+            }
             repository.toggleFavorite(id, isFavorite)
         }
     }
@@ -3754,6 +4006,10 @@ class PasswordViewModel internal constructor(
     }
 
     private suspend fun archiveSingleEntry(entry: PasswordEntry) {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(entry.id)) {
+            check(updatePasswordEntryInternal(entry.copy(isArchived = true, archivedAt = Date()), skipCategoryBinding = true))
+            return
+        }
         if (entry.isArchived || entry.isDeleted) return
 
         val now = Date()
@@ -3785,6 +4041,11 @@ class PasswordViewModel internal constructor(
     }
 
     private suspend fun unarchiveSingleEntry(entry: PasswordEntry) {
+        if (!entry.isArchived || entry.isDeleted) return
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(entry.id)) {
+            check(updatePasswordEntryInternal(entry.copy(isArchived = false, archivedAt = null), skipCategoryBinding = true))
+            return
+        }
         if (!entry.isArchived || entry.isDeleted) return
 
         val now = Date()
@@ -4086,6 +4347,7 @@ class PasswordViewModel internal constructor(
     }
 
     fun getPasswordHistoryFlow(passwordId: Long): Flow<List<PasswordHistoryEntry>> {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(passwordId)) return monicaKeePassStore?.history(passwordId) ?: flowOf(emptyList())
         return repository.getPasswordHistoryByEntryId(passwordId)
             .map { entries ->
                 entries.mapNotNull { entry ->
@@ -4143,12 +4405,26 @@ class PasswordViewModel internal constructor(
 
     fun deletePasswordHistoryEntry(historyId: Long) {
         viewModelScope.launch {
+            if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(historyId)) {
+                runCatching { requireNotNull(monicaKeePassStore).deleteHistory(historyId) }.onFailure {
+                    if (it is CancellationException) throw it
+                    Log.w("PasswordViewModel", "KeePass original-vault history deletion failed: ${it.javaClass.simpleName}")
+                }
+                return@launch
+            }
             repository.deletePasswordHistoryById(historyId)
         }
     }
 
     fun clearPasswordHistory(entryId: Long) {
         viewModelScope.launch {
+            if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(entryId)) {
+                runCatching { requireNotNull(monicaKeePassStore).clearHistory(entryId) }.onFailure {
+                    if (it is CancellationException) throw it
+                    Log.w("PasswordViewModel", "KeePass original-vault history clear failed: ${it.javaClass.simpleName}")
+                }
+                return@launch
+            }
             repository.clearPasswordHistory(entryId)
         }
     }
@@ -5239,6 +5515,33 @@ class PasswordViewModel internal constructor(
         skipCategoryBinding: Boolean,
         embeddedContentSave: takagi.ru.monica.data.model.DeferredEmbeddedContentSave? = null
     ): Long? {
+        val nativeDatabaseId = requestedEntry.keepassDatabaseId
+        val originalsAreNative = originalIds.isNotEmpty() && originalIds.all { takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(it) }
+        val nativeCreation = originalIds.isEmpty() && synchronized(nativeKeePassReaders) { nativeDatabaseId in nativeKeePassReaders }
+        if (nativeDatabaseId != null && monicaKeePassStore != null && (originalsAreNative || nativeCreation)) {
+            return runCatching {
+                val source = originalIds.firstOrNull()?.let { requireNotNull(requireNotNull(monicaKeePassStore).get(it)) }
+                val previous = source?.let { requireNotNull(monicaKeePassStore).fields(it.id).map(CustomFieldDraft::fromCustomField) }.orEmpty()
+                val finalFields = embeddedContentSave?.initialFields(requestedCustomFields, previous) ?: requestedCustomFields
+                val values = passwords.ifEmpty { listOf("") }
+                val groupId = source?.passwordGroupId ?: requestedEntry.passwordGroupId ?: if (values.size > 1) UUID.randomUUID().toString() else null
+                val rows = values.mapIndexed { index, value ->
+                    val original = originalIds.getOrNull(index)?.let { requireNotNull(requireNotNull(monicaKeePassStore).get(it)) }
+                    requestedEntry.copy(id = original?.id ?: 0L, password = value,
+                        keepassEntryUuid = original?.keepassEntryUuid,
+                        keepassGroupUuid = original?.keepassGroupUuid?.takeIf { original.keepassGroupPath == requestedEntry.keepassGroupPath },
+                        passwordGroupId = groupId,
+                        createdAt = original?.createdAt ?: Date())
+                }
+                val saved = requireNotNull(monicaKeePassStore).save(nativeDatabaseId, rows,
+                    mapOf((rows.firstOrNull()?.id ?: 0L) to finalFields), originalIds.drop(values.size))
+                saved.firstOrNull()?.also { embeddedContentSave?.record(it.id, requestedCustomFields, requestedEntry.boundNoteId) }?.id
+            }.getOrElse { error ->
+                if (error is CancellationException) throw error
+                Log.w("PasswordViewModel", "KeePass original-vault form save failed: ${error.javaClass.simpleName}")
+                null
+            }
+        }
         val previousId = originalIds.firstOrNull()
         val previousFields = if (embeddedContentSave?.hasPending(requestedCustomFields) == true && previousId != null)
             getCustomFieldsByEntryIdSync(previousId).map { CustomFieldDraft(id = it.id, title = it.title, value = it.value, isProtected = it.isProtected) }
@@ -5442,6 +5745,7 @@ class PasswordViewModel internal constructor(
      * 获取指定密码条目的自定义字段（Flow）
      */
     fun getCustomFieldsByEntryId(entryId: Long): Flow<List<CustomField>> {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(entryId)) return monicaKeePassStore?.fieldsFlow(entryId) ?: flowOf(emptyList())
         return customFieldRepository?.getFieldsByEntryId(entryId) ?: flowOf(emptyList())
     }
     
@@ -5449,6 +5753,7 @@ class PasswordViewModel internal constructor(
      * 获取指定密码条目的自定义字段（同步版本）
      */
     suspend fun getCustomFieldsByEntryIdSync(entryId: Long): List<CustomField> {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(entryId)) return monicaKeePassStore?.fields(entryId).orEmpty()
         return customFieldRepository?.getFieldsByEntryIdSync(entryId) ?: emptyList()
     }
 
@@ -5515,6 +5820,13 @@ class PasswordViewModel internal constructor(
     }
 
     suspend fun saveCustomFieldsForEntry(entryId: Long, fields: List<CustomFieldDraft>) {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(entryId)) {
+            val entry = requireNotNull(monicaKeePassStore?.get(entryId))
+            if (monicaKeePassStore.fields(entryId).map { Triple(it.title, it.value, it.isProtected) } != fields.map { Triple(it.title, it.value, it.isProtected) }) {
+                monicaKeePassStore.save(requireNotNull(entry.keepassDatabaseId), listOf(entry), mapOf(entryId to fields))
+            }
+            return
+        }
         customFieldRepository?.saveFieldsForEntry(entryId, fields)
 
         val updatedAt = java.util.Date()
@@ -5564,7 +5876,9 @@ class PasswordViewModel internal constructor(
      * 批量获取多个条目的自定义字段（用于列表显示优化）
      */
     suspend fun getCustomFieldsByEntryIds(entryIds: List<Long>): Map<Long, List<CustomField>> {
-        return customFieldRepository?.getFieldsByEntryIds(entryIds) ?: emptyMap()
+        val native = entryIds.filter { takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(it) }
+        return customFieldRepository?.getFieldsByEntryIds(entryIds - native.toSet()).orEmpty() +
+            native.associateWith { monicaKeePassStore?.fields(it).orEmpty() }
     }
 
     /**

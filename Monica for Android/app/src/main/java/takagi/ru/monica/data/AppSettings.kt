@@ -577,6 +577,7 @@ data class AppSettings(
     val authenticatorLayoutMode: AuthenticatorLayoutMode = AuthenticatorLayoutMode.STANDARD,
     val vaultV2LayoutMode: VaultV2LayoutMode = VaultV2LayoutMode.CLASSIC,
     val vaultListSort: VaultListSort = VaultListSort.TITLE_ASC,
+    val autoFocusSearchOnStartup: Boolean = false,
     val vaultOverviewEnabled: Boolean = true,
     val vaultOverviewConfig: VaultOverviewConfig = VaultOverviewConfig(),
     val passwordListQuickFiltersEnabled: Boolean = true, // 密码列表快捷筛选开关（默认开启）

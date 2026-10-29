@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 internal interface DeviceSyncPresence {
     val online: StateFlow<Set<String>>
     val available: Boolean
+    val addresses: Set<String> get() = emptySet()
     fun start(deviceId: String, peers: Set<String>)
     fun stop()
 }

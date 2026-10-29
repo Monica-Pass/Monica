@@ -15,7 +15,7 @@ android {
     // Intentionally frozen: same-signature sideloaded builds must remain mutually replaceable
     // for emergency rollback. Do not increment this value for routine releases.
     def appVersionCode = 12
-    def baseVersionName = previewVersionSuffix ? "1.0.322-${previewVersionSuffix}" : "1.0.322"
+    def baseVersionName = previewVersionSuffix ? "1.0.323-${previewVersionSuffix}" : "1.0.323"
     def normalizeTwoDigits = { raw ->
         def value = raw?.toString()?.trim()?.replaceAll('\\D', '')
         if (!value) {

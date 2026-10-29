@@ -154,6 +154,16 @@ class MonicaCredentialProviderService : CredentialProviderService() {
                         is BeginGetPublicKeyCredentialOption -> {
                             val entries = handleBeginGetPasskeyRequest(option)
                             credentialEntries.addAll(entries)
+                            if (hardwareAvailable()) {
+                                val hardwareIntent = Intent(this@MonicaCredentialProviderService, takagi.ru.monica.passkey.hardware.HardwareSecurityKeyActivity::class.java)
+                                    .setAction(takagi.ru.monica.passkey.hardware.HardwareSecurityKeyActivity.ACTION_GET)
+                                    .setData(android.net.Uri.parse("monica-hardware://get/${option.id}"))
+                                credentialEntries.add(PublicKeyCredentialEntry.Builder(
+                                    this@MonicaCredentialProviderService, strings.get(R.string.hardware_key_title),
+                                    buildPendingIntent(hardwareIntent, option.id.hashCode()), option
+                                ).setDisplayName(strings.get(R.string.hardware_key_get_entry))
+                                    .setIcon(Icon.createWithResource(this@MonicaCredentialProviderService, R.drawable.ic_hardware_key)).build())
+                            }
                         }
                     }
                 }
@@ -234,9 +244,17 @@ class MonicaCredentialProviderService : CredentialProviderService() {
             
             val response = BeginCreateCredentialResponse.Builder()
                 .addCreateEntry(createEntry)
-                .build()
+            if (hardwareAvailable() && json.optJSONObject("authenticatorSelection")?.optString("authenticatorAttachment") != "platform") {
+                val hardwareIntent = Intent(this, takagi.ru.monica.passkey.hardware.HardwareSecurityKeyActivity::class.java)
+                    .setAction(takagi.ru.monica.passkey.hardware.HardwareSecurityKeyActivity.ACTION_CREATE)
+                    .setData(android.net.Uri.parse("monica-hardware://create/${java.util.UUID.randomUUID()}"))
+                response.addCreateEntry(CreateEntry.Builder(strings.get(R.string.hardware_key_title),
+                    buildPendingIntent(hardwareIntent, SystemClock.uptimeMillis().toInt()))
+                    .setIcon(Icon.createWithResource(this, R.drawable.ic_hardware_key))
+                    .setDescription(strings.get(R.string.hardware_key_create_entry)).build())
+            }
             
-            callback.onResult(response)
+            callback.onResult(response.build())
             
         } catch (e: Exception) {
             Log.e(TAG, "Error parsing create request", e)
@@ -324,6 +342,9 @@ class MonicaCredentialProviderService : CredentialProviderService() {
             ),
         )
     }
+
+    private fun hardwareAvailable(): Boolean = packageManager.hasSystemFeature(android.content.pm.PackageManager.FEATURE_USB_HOST) ||
+        packageManager.hasSystemFeature(android.content.pm.PackageManager.FEATURE_NFC)
 
     private suspend fun resolvePasskeys(
         rpId: String,

@@ -37,6 +37,7 @@ import takagi.ru.monica.R
 
 private val LocalKeyHeight = staticCompositionLocalOf { 48.dp }
 private val LocalKeyFeedback = staticCompositionLocalOf { true }
+private val LocalKeyVibration = staticCompositionLocalOf<() -> Unit> { {} }
 private enum class KeyStyle { STANDARD, ACTION, ENTER }
 
 @Composable
@@ -54,13 +55,19 @@ internal fun MonicaKeyboard(
     onShiftToggle: () -> Unit,
     onKeyboardModeChange: (MonicaKeyboardMode) -> Unit,
     onSwitchInputMethod: () -> Unit,
+    keyVibrationEnabled: Boolean = false,
 ) {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val haptic = remember(context, keyVibrationEnabled) {
+        takagi.ru.monica.ui.haptic.HapticFeedbackHelper(context, enabled = keyVibrationEnabled)
+    }
     BoxWithConstraints(modifier.padding(horizontal = 8.dp, vertical = 12.dp).testTag("ime_key_grid")) {
         val density = LocalDensity.current
         val geometry = ImeKeyGeometry(maxWidth.value,
             gap = with(density) { 4.dp.roundToPx().toDp().value }, pixel = 1f / density.density)
         val height = (maxHeight - 24.dp) / 4
-        CompositionLocalProvider(LocalKeyHeight provides height, LocalKeyFeedback provides !hideKeyFeedback) {
+        CompositionLocalProvider(LocalKeyHeight provides height, LocalKeyFeedback provides !hideKeyFeedback,
+            LocalKeyVibration provides haptic::performClick) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 when (mode) {
                     MonicaKeyboardMode.LETTERS -> {
@@ -175,6 +182,7 @@ private fun ImeKey(label: String, id: String, width: Dp, onClick: () -> Unit,
     val height = LocalKeyHeight.current
     val feedback = LocalKeyFeedback.current
     val fontScale = LocalDensity.current.fontScale
+    val vibrateNow by rememberUpdatedState(LocalKeyVibration.current)
     val onClickNow by rememberUpdatedState(onClick)
     val repeatNow by rememberUpdatedState(repeatAction)
     val swipeNow by rememberUpdatedState(swipeUp)
@@ -198,7 +206,7 @@ private fun ImeKey(label: String, id: String, width: Dp, onClick: () -> Unit,
         .semantics(mergeDescendants = true) {
             role = Role.Button
             contentDescription = description
-            onClick { onClickNow(); true }
+            onClick { vibrateNow(); onClickNow(); true }
         }
         .pointerInput(Unit) {
             awaitEachGesture {
@@ -207,6 +215,7 @@ private fun ImeKey(label: String, id: String, width: Dp, onClick: () -> Unit,
                 val repeat = repeatNow
                 val swipe = swipeNow
                 down.consume()
+                vibrateNow()
                 pressed = true
                 var didRepeat = false
                 var released = false

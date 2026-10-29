@@ -37,6 +37,7 @@ import androidx.compose.material.icons.outlined.DoNotDisturb
 import androidx.compose.material.icons.outlined.Input
 import androidx.compose.material.icons.outlined.Key
 import androidx.compose.material.icons.outlined.Keyboard
+import androidx.compose.material.icons.outlined.Vibration
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.ui.platform.testTag
 import androidx.compose.material.icons.outlined.Language
@@ -546,6 +547,13 @@ fun AutofillSettingsV2Screen(
                     subtitle = stringResource(R.string.ime_manage_input_methods_desc),
                     onClick = ::openSystemKeyboardSettings,
                 )
+                androidx.compose.foundation.layout.Box(Modifier.testTag("ime_key_vibration_setting")) { SwitchSettingItem(
+                    icon = Icons.Outlined.Vibration,
+                    title = stringResource(R.string.ime_key_vibration_title),
+                    subtitle = stringResource(R.string.ime_key_vibration_description),
+                    checked = imeKeyboardOptions.keyVibrationEnabled,
+                    onCheckedChange = { scope.launch { preferences.setImeKeyVibrationEnabled(it) } },
+                ) }
                 androidx.compose.foundation.layout.Box(Modifier.testTag("ime_scramble_pin_setting")) { SwitchSettingItem(
                     icon = Icons.Outlined.Keyboard,
                     title = stringResource(R.string.ime_scramble_pin_title),

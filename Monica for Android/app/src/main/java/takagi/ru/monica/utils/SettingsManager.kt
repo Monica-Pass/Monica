@@ -125,6 +125,7 @@ data class PageAdjustmentSettingsSnapshot(
     val authenticatorLayoutMode: String = AuthenticatorLayoutMode.STANDARD.name,
     val vaultV2LayoutMode: String = VaultV2LayoutMode.CLASSIC.name,
     val vaultListSort: String = VaultListSort.TITLE_ASC.name,
+    val autoFocusSearchOnStartup: Boolean = false,
     val vaultOverviewEnabled: Boolean = true,
     val vaultOverviewConfig: String = "{}",
     val validatorProgressBarStyle: String = ProgressBarStyle.LINEAR.name,
@@ -238,6 +239,7 @@ class SettingsManager(private val context: Context) {
         private val AUTHENTICATOR_LAYOUT_MODE_KEY = stringPreferencesKey("authenticator_layout_mode")
         private val VAULT_LIST_SORT_KEY = stringPreferencesKey("vault_list_sort")
         private val VAULT_V2_LAYOUT_MODE_KEY = stringPreferencesKey("vault_v2_layout_mode")
+        private val AUTO_FOCUS_SEARCH_ON_STARTUP_KEY = booleanPreferencesKey("auto_focus_search_on_startup")
         private val VAULT_OVERVIEW_ENABLED_KEY = booleanPreferencesKey("vault_overview_enabled")
         private val VAULT_OVERVIEW_CONFIG_KEY = stringPreferencesKey("vault_overview_config")
         private val PASSWORD_LIST_QUICK_FILTERS_ENABLED_KEY = booleanPreferencesKey("password_list_quick_filters_enabled") // 密码列表快捷筛选开关
@@ -653,6 +655,7 @@ class SettingsManager(private val context: Context) {
                 preferences[VAULT_V2_LAYOUT_MODE_KEY]
             ),
             vaultListSort = VaultListSort.fromStoredValue(preferences[VAULT_LIST_SORT_KEY]),
+            autoFocusSearchOnStartup = preferences[AUTO_FOCUS_SEARCH_ON_STARTUP_KEY] ?: false,
             vaultOverviewEnabled = preferences[VAULT_OVERVIEW_ENABLED_KEY] ?: true,
             vaultOverviewConfig = VaultOverviewConfig.decode(preferences[VAULT_OVERVIEW_CONFIG_KEY]),
             passwordListQuickFiltersEnabled = preferences[PASSWORD_LIST_QUICK_FILTERS_ENABLED_KEY] ?: false,
@@ -1181,6 +1184,10 @@ class SettingsManager(private val context: Context) {
         dataStore.edit { it[VAULT_LIST_SORT_KEY] = sort.name }
     }
 
+    suspend fun updateAutoFocusSearchOnStartup(enabled: Boolean) {
+        dataStore.edit { it[AUTO_FOCUS_SEARCH_ON_STARTUP_KEY] = enabled }
+    }
+
     suspend fun updateVaultOverviewEnabled(enabled: Boolean) {
         dataStore.edit { it[VAULT_OVERVIEW_ENABLED_KEY] = enabled }
     }
@@ -1398,6 +1405,7 @@ class SettingsManager(private val context: Context) {
             authenticatorLayoutMode = settings.authenticatorLayoutMode.name,
             vaultV2LayoutMode = settings.vaultV2LayoutMode.name,
             vaultListSort = settings.vaultListSort.name,
+            autoFocusSearchOnStartup = settings.autoFocusSearchOnStartup,
             vaultOverviewEnabled = settings.vaultOverviewEnabled,
             vaultOverviewConfig = settings.vaultOverviewConfig.encode(),
             validatorProgressBarStyle = settings.validatorProgressBarStyle.name,
@@ -1586,6 +1594,7 @@ class SettingsManager(private val context: Context) {
             preferences[VAULT_LIST_SORT_KEY] = VaultListSort.fromStoredValue(snapshot.vaultListSort).name
             preferences[VAULT_V2_LAYOUT_MODE_KEY] =
                 VaultV2LayoutMode.fromStoredValue(snapshot.vaultV2LayoutMode).name
+            preferences[AUTO_FOCUS_SEARCH_ON_STARTUP_KEY] = snapshot.autoFocusSearchOnStartup
             preferences[VAULT_OVERVIEW_ENABLED_KEY] = snapshot.vaultOverviewEnabled
             preferences[VAULT_OVERVIEW_CONFIG_KEY] = VaultOverviewConfig.decode(snapshot.vaultOverviewConfig).encode()
             preferences[VALIDATOR_PROGRESS_BAR_STYLE_KEY] = parsedValidatorProgressBarStyle.name

@@ -7,7 +7,7 @@ import org.junit.Test
 
 class ImeKeyboardBehaviorTest {
     @Test fun defaultsAndDisabledShuffleKeepTheFamiliarOrder() {
-        assertEquals(ImeKeyboardOptions(false, false), ImeKeyboardOptions())
+        assertEquals(ImeKeyboardOptions(false, false, false), ImeKeyboardOptions())
         repeat(10) { assertEquals(StandardImePinDigits, createImePinDigits(false)) }
     }
 

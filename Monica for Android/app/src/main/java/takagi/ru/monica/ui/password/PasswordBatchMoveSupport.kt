@@ -838,7 +838,7 @@ private fun buildPasswordDecryptSnapshot(
     securityManager: SecurityManager
 ): Map<String, String> {
     return entries.mapNotNull { entry ->
-        runCatching { securityManager.decryptData(entry.password) }
+        runCatching { if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(entry.id)) entry.password else securityManager.decryptData(entry.password) }
             .getOrNull()
             ?.takeIf { it.isNotEmpty() }
             ?.let { plain -> entry.password to plain }
@@ -1187,7 +1187,7 @@ internal fun PasswordBatchMoveSheet(
                                     val entriesToCopy = selectedEntries
                                         .filter { it.id in classification.copyInsteadOfMove }
                                     entriesToCopy.forEach { entry ->
-                                        val copied = buildCopiedEntryForTarget(
+                                        val copied = viewModel.buildEncryptedPasswordCopy(
                                             entry,
                                             passwordBatchTargetForEntry(
                                                 entry = entry,
@@ -1441,7 +1441,7 @@ internal fun PasswordBatchMoveSheet(
                                                 } else {
                                                     fallbackTarget
                                                 }
-                                                buildCopiedEntryForTarget(entry, resolvedTarget)
+                                                viewModel.buildEncryptedPasswordCopy(entry, resolvedTarget)
                                             },
                                             rollbackCopiedEntry = viewModel::rollbackPasswordTransferTargetAwait,
                                             logTimeline = false,
@@ -1636,7 +1636,7 @@ internal fun PasswordBatchMoveSheet(
                                                 val summary = result.getOrThrow()
                                                 val succeededIds = summary.targetEntryUuidsByPasswordId.keys.toList()
                                                 if (succeededIds.isNotEmpty()) {
-                                                    viewModel.unarchivePasswordsAwait(succeededIds)
+                                                    viewModel.unarchivePasswordsAwait(succeededIds.filterNot(takagi.ru.monica.keepass.KeePassMonicaPasswordStore::isUiId))
                                                     viewModel.finalizePasswordsWrittenToKeePassAwait(
                                                         targetEntryUuidsByPasswordId = summary.targetEntryUuidsByPasswordId,
                                                         databaseId = databaseId,

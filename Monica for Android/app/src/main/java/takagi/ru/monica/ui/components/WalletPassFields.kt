@@ -6,6 +6,7 @@ import androidx.compose.material.icons.filled.Badge
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.FlightTakeoff
 import androidx.compose.material.icons.filled.QrCode2
+import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -19,9 +20,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
+import com.google.zxing.BarcodeFormat
 import takagi.ru.monica.R
+import takagi.ru.monica.data.model.BoardingPass
+import takagi.ru.monica.data.model.BoardingPassParser
 import takagi.ru.monica.data.model.DocumentData
 import takagi.ru.monica.data.model.WalletPassTemplate
+import takagi.ru.monica.ui.screens.QrScannerScreen
 
 internal fun WalletPassTemplate.labelRes(): Int = when (this) {
     WalletPassTemplate.MEMBERSHIP -> R.string.wallet_membership_card
@@ -98,3 +105,41 @@ internal fun WalletPassCodeButton(data: DocumentData) {
         onDismiss = { showCode = false }
     )
 }
+
+/** Reads an IATA boarding pass barcode; the raw barcode itself is not stored. */
+@Composable
+internal fun BoardingPassScanButton(onScanned: (BoardingPass) -> Unit) {
+    var scanning by rememberSaveable { mutableStateOf(false) }
+    OutlinedButton(
+        onClick = { scanning = true },
+        modifier = Modifier.fillMaxWidth().testTag("wallet_pass_scan_boarding_pass")
+    ) {
+        Icon(Icons.Default.QrCodeScanner, contentDescription = null)
+        Spacer(Modifier.width(8.dp))
+        Text(stringResource(R.string.wallet_pass_scan_boarding_pass))
+    }
+    if (scanning) Dialog(
+        onDismissRequest = { scanning = false },
+        properties = DialogProperties(usePlatformDefaultWidth = false)
+    ) {
+        QrScannerScreen(
+            onQrCodeScanned = { raw ->
+                if (scanning) {
+                    scanning = false
+                    BoardingPassParser.parse(raw)?.let(onScanned)
+                }
+            },
+            onNavigateBack = { scanning = false },
+            title = stringResource(R.string.wallet_pass_scan_boarding_pass),
+            subtitle = stringResource(R.string.wallet_pass_scan_boarding_pass_hint),
+            allowedFormats = BoardingPassFormats,
+            preserveWhitespace = true,
+            resultValidator = { BoardingPassParser.parse(it) != null },
+            invalidResultMessage = stringResource(R.string.wallet_pass_boarding_pass_invalid),
+        )
+    }
+}
+
+private val BoardingPassFormats = listOf(
+    BarcodeFormat.PDF_417, BarcodeFormat.AZTEC, BarcodeFormat.QR_CODE, BarcodeFormat.DATA_MATRIX
+)

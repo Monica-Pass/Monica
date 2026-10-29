@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import org.json.JSONObject
@@ -46,6 +47,12 @@ class NearbyAutomaticSyncTest {
             // The harness drives tick under the production mutex; no competing ticker.
             set("running", Job())
             gate = get("gate") as Mutex
+            // Simulate approving deletion of synthetic fixture records while tick awaits the UI decision.
+            (get("scope") as CoroutineScope).launch {
+                coordinator.state.collect { state ->
+                    state.deletionReview?.let { coordinator.confirmReceivedDeletions(it, true) }
+                }
+            }
             provider.onProgress = { progress ->
                 DeviceSyncCoordinator::class.java.getDeclaredMethod("updateProgress", DeviceSyncProgress::class.java)
                     .apply { isAccessible = true }.invoke(coordinator, progress)
@@ -86,16 +93,109 @@ class NearbyAutomaticSyncTest {
 
     @Test fun receive_only_listener_syncs_a_fresh_database_and_reconnects_without_resending() = verifyRealPresence(receiverHosts = true)
 
-    private fun verifyRealPresence(receiverHosts: Boolean) = runBlocking {
+    @Test fun hotspot_without_mdns_syncs_when_sender_hosts() = verifyRealPresence(receiverHosts = false, noMdns = true)
+
+    @Test fun hotspot_without_mdns_syncs_when_receiver_hosts() = verifyRealPresence(receiverHosts = true, noMdns = true)
+
+    @Test fun network_change_preserves_an_active_pairing_listener() = runBlocking {
+        SessionManager.markUnlocked()
+        val fixture = Fixture("pairing-network-fixture", "unused-peer", DeviceSyncMode.BIDIRECTIONAL)
+        try {
+            fixture.settings.peers.clear()
+            fixture.toggle(false)
+            fixture.coordinator.pair()
+            withTimeout(15_000) {
+                while (fixture.coordinator.state.value.phase != "waiting") {
+                    assertNull(fixture.coordinator.state.value.error)
+                    delay(20)
+                }
+            }
+            val invitation = fixture.coordinator.state.value.invitations
+            assertTrue(invitation.isNotEmpty())
+            val transfer = (fixture.get("transfers") as Map<*, *>)["pairing"]!!
+            val handle = transfer.javaClass.getDeclaredField("handle").apply { isAccessible = true }.getLong(transfer)
+            fixture.set("networkSignature", "synthetic-previous-network")
+            fixture.tick()
+            assertSame("Network change must retain the listener behind the displayed QR", transfer,
+                (fixture.get("transfers") as Map<*, *>)["pairing"])
+            assertTrue(fixture.coordinator.state.value.pairing)
+            assertEquals(invitation, fixture.coordinator.state.value.invitations)
+            assertEquals("waiting", RustLanSync.request(JSONObject().put("operation", "progress").put("handle", handle)).getString("phase"))
+            fixture.coordinator.cancelPairing()
+            withTimeout(15_000) { while (fixture.coordinator.state.value.pairing) delay(20) }
+            assertTrue(fixture.coordinator.state.value.invitations.isEmpty())
+            assertTrue((fixture.get("transfers") as Map<*, *>).isEmpty())
+        } finally { fixture.close(); SessionManager.markLocked() }
+    }
+
+    @Test fun manual_request_during_previous_receipts_sends_the_new_edit() = runBlocking {
+        SessionManager.markUnlocked()
+        val sender = Fixture("z-queued-sender", "a-queued-receiver", DeviceSyncMode.SEND_ONLY)
+        val receiver = Fixture("a-queued-receiver", "z-queued-sender", DeviceSyncMode.RECEIVE_ONLY)
+        try {
+            val id = sender.db.passwordEntryDao().insertPasswordEntry(takagi.ru.monica.data.PasswordEntry(
+                title = "Queued synthetic edit", website = "example.test", username = "fixture", password = sender.security.encryptData("first")))
+            sender.tick(); receiver.tick()
+            fun handle(fixture: Fixture): Long {
+                val transfer = (fixture.get("transfers") as Map<*, *>).values.single()!!
+                return transfer.javaClass.getDeclaredField("handle").apply { isAccessible = true }.getLong(transfer)
+            }
+            val handles = listOf(handle(sender), handle(receiver))
+            withTimeout(15_000) {
+                while (handles.any { RustLanSync.request(JSONObject().put("operation", "progress").put("handle", it)).getString("phase") != "received" }) delay(10)
+            }
+            // Both old snapshots are awaiting receipts. The next edit and manual request must survive their completion.
+            val entry = sender.db.passwordEntryDao().getPasswordEntryById(id)!!
+            sender.db.passwordEntryDao().updatePasswordEntry(entry.copy(password = sender.security.encryptData("queued")))
+            sender.toggle(false); receiver.toggle(false)
+            sender.manual(); receiver.manual()
+            withTimeout(120_000) {
+                while (receiver.db.passwordEntryDao().getDeviceSyncLocalPasswords().singleOrNull()?.let {
+                    receiver.security.decryptDataIfMonicaCiphertext(it.password)
+                } != "queued" || sender.coordinator.state.value.manualSync || receiver.coordinator.state.value.manualSync) {
+                    sender.tick(); receiver.tick(); delay(25)
+                    assertNull(sender.coordinator.state.value.error); assertNull(receiver.coordinator.state.value.error)
+                }
+            }
+            assertFalse(sender.store.load().enabled); assertFalse(receiver.store.load().enabled)
+            assertEquals(1, receiver.db.passwordEntryDao().getDeviceSyncLocalPasswords().size)
+        } finally { sender.close(); receiver.close(); SessionManager.markLocked() }
+    }
+
+    private fun verifyRealPresence(receiverHosts: Boolean, noMdns: Boolean = false) = runBlocking {
         SessionManager.markUnlocked()
         val id = UUID.randomUUID().toString().replace("-", "")
         val senderId = "${if (receiverHosts) "a" else "z"}$id"
         val receiverId = "${if (receiverHosts) "z" else "a"}$id"
         val sender = Fixture(senderId, receiverId, DeviceSyncMode.SEND_ONLY, realPresence = true)
         val receiver = Fixture(receiverId, senderId, DeviceSyncMode.RECEIVE_ONLY, realPresence = true)
+        if (noMdns) {
+            fun absent() = object : DeviceSyncPresence {
+                override val online = kotlinx.coroutines.flow.MutableStateFlow<Set<String>>(emptySet())
+                override val available = false
+                override fun start(deviceId: String, peers: Set<String>) = Unit
+                override fun stop() = Unit
+            }
+            fun port() = java.net.DatagramSocket(0).use { it.localPort }
+            val senderPort = port()
+            val senderPresence = UdpDeviceSyncPresence({ emptyList() }, java.net.InetSocketAddress("127.0.0.1", senderPort), 1_000)
+            val receiverPresence = UdpDeviceSyncPresence({ listOf(java.net.InetSocketAddress("127.0.0.1", senderPort)) },
+                java.net.InetSocketAddress("127.0.0.1", port()), 1_000)
+            sender.set("presence", ForegroundDeviceSyncPresence(context, absent(), senderPresence))
+            receiver.set("presence", ForegroundDeviceSyncPresence(context, absent(), receiverPresence))
+            // The AP has no gateway/known client IP. Learn the client's new address from its probe.
+            for (fixture in listOf(sender, receiver)) {
+                fixture.settings.peers.single().address = "192.168.199.253"
+                fixture.set("discoverPeers", { request: JSONObject ->
+                    assertTrue("Discovery must include the fresh UDP reply address", request.getJSONArray("targets").toString().contains("127.0.0.1"))
+                    RustLanSync.request(request.put("multicast", false).put("broadcast", false)
+                        .put("targets", org.json.JSONArray(listOf("127.0.0.1"))))
+                })
+            }
+        }
         val connector = if (receiverHosts) sender else receiver
         suspend fun awaitState(message: String, allowConnectionRetry: Boolean = false, condition: () -> Boolean) {
-            val deadline = System.nanoTime() + 90_000_000_000L
+            val deadline = System.nanoTime() + (if (noMdns) 25_000_000_000L else 90_000_000_000L)
             while (!condition() && System.nanoTime() < deadline) {
                 sender.tick(); receiver.tick(); delay(50)
                 for (state in listOf(sender.coordinator.state.value, receiver.coordinator.state.value)) {
@@ -105,7 +205,7 @@ class NearbyAutomaticSyncTest {
                     assertNull("$message: $state", state.error)
                 }
             }
-            assertTrue(message, condition())
+            assertTrue("$message: ${sender.coordinator.state.value} / ${receiver.coordinator.state.value}", condition())
         }
         try {
             val source = sender.db.passwordEntryDao().insertPasswordEntry(takagi.ru.monica.data.PasswordEntry(
@@ -162,6 +262,10 @@ class NearbyAutomaticSyncTest {
         val sender = Fixture("z-automatic-sender", "a-automatic-receiver", DeviceSyncMode.SEND_ONLY)
         val receiver = Fixture("a-automatic-receiver", "z-automatic-sender", DeviceSyncMode.RECEIVE_ONLY)
         val rich = NearbyVaultFixtureData(context)
+        // Synthetic UI activity runs independently while export/import holds the coordinator gate.
+        val activity = launch(Dispatchers.Default) {
+            while (isActive) { SessionManager.refreshSession(); delay(1_000) }
+        }
         try {
             repeat(610) { index -> sender.db.passwordEntryDao().insertPasswordEntry(takagi.ru.monica.data.PasswordEntry(
                 title = "Bulk $index", website = "example.test", username = "fixture", password = sender.security.encryptData("synthetic-$index"))) }
@@ -206,18 +310,24 @@ class NearbyAutomaticSyncTest {
                 }
             }
             suspend fun awaitSuccess(previous: Long = 0L) {
-                val deadline = System.nanoTime() + 600_000_000_000L
-                while (sender.settings.peers.single().lastSyncedAt <= previous || receiver.settings.peers.single().lastSyncedAt <= previous) {
-                    check(System.nanoTime() < deadline) { "Sync timeout: ${sender.coordinator.state.value} / ${receiver.coordinator.state.value}" }
-                    sender.tick(); receiver.tick()
-                    sender.coordinator.state.value.passkeyReview?.let { review ->
-                        passkeyPrompts++
-                        sender.coordinator.confirmPasskeySync(review, true)
-                        // Give the action its turn under the production gate.
-                        withTimeout(30_000) { while (sender.coordinator.state.value.passkeyReview != null) delay(10) }
+                coroutineScope {
+                    // Separate devices keep polling independently while their peer imports a large vault.
+                    val devices = listOf(sender, receiver).map { fixture ->
+                        launch(Dispatchers.Default) { while (isActive) { fixture.tick(); delay(500) } }
                     }
-                    assertNull(sender.coordinator.state.value.error); assertNull(receiver.coordinator.state.value.error)
-                    delay(30)
+                    try {
+                        withTimeout(600_000) {
+                            while (sender.settings.peers.single().lastSyncedAt <= previous || receiver.settings.peers.single().lastSyncedAt <= previous) {
+                                sender.coordinator.state.value.passkeyReview?.let { review ->
+                                    passkeyPrompts++
+                                    sender.coordinator.confirmPasskeySync(review, true)
+                                    withTimeout(30_000) { while (sender.coordinator.state.value.passkeyReview != null) delay(10) }
+                                }
+                                assertNull(sender.coordinator.state.value.error); assertNull(receiver.coordinator.state.value.error)
+                                delay(30)
+                            }
+                        }
+                    } finally { devices.forEach { it.cancelAndJoin() } }
                 }
             }
             awaitSuccess()
@@ -245,6 +355,7 @@ class NearbyAutomaticSyncTest {
             assertEquals(1, passkeyPrompts)
             assertTrue(DeviceSyncPreferenceStore(context, sender.security, sender.preferenceName).passkeyNoticeSuppressed())
         } finally {
+            activity.cancelAndJoin()
             rich.clean(sender.db); rich.clean(receiver.db); sender.close(); receiver.close(); SessionManager.markLocked()
         }
     }

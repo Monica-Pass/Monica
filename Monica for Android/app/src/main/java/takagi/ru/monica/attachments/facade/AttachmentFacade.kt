@@ -415,7 +415,7 @@ class AttachmentFacade(
                         val ref = attachment.keepassBinaryRef
                         if (kp != null && !ref.isNullOrBlank()) {
                             runCatching {
-                                keepassExecutor.remove(kp.databaseId, kp.entryUuid, ref)
+                                keepassExecutor.remove(kp.databaseId, kp.entryUuid, ref, request.owner)
                             }
                         }
                     }
@@ -766,7 +766,9 @@ class AttachmentFacade(
                     keepassExecutor.remove(
                         databaseId = kp.databaseId,
                         entryUuid = kp.entryUuid,
-                        binaryHashHex = ref
+                        binaryHashHex = ref,
+                        owner = existing.parentPasswordId?.let(AttachmentOwner::password)
+                            ?: AttachmentOwner.secureItem(requireNotNull(existing.parentSecureItemId))
                     )
                 }
                 existing.localPath?.let { storage.delete(it) }

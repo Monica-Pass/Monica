@@ -32,11 +32,12 @@ internal class QrCameraScanSession(
     private val generation: Int,
     private val diagnostics: QrScannerDiagnostics?,
     private val onCandidates: (List<String>, barcodeCount: Int, durationMs: Long) -> Boolean,
-    private val onRestartRequested: (QrScanRestartReason) -> Unit
+    private val onRestartRequested: (QrScanRestartReason) -> Unit,
+    preserveWhitespace: Boolean = false,
 ) : AutoCloseable {
     private val appContext = context.applicationContext
     private val controller = LifecycleCameraController(appContext)
-    private val decoder = ZxingBarcodeDecoder(allowedFormats)
+    private val decoder = ZxingBarcodeDecoder(allowedFormats, preserveWhitespace)
     private val allowedFormatCount = allowedFormats.size
     private val analysisExecutor: ExecutorService = Executors.newSingleThreadExecutor()
     private val mainExecutor = ContextCompat.getMainExecutor(appContext)

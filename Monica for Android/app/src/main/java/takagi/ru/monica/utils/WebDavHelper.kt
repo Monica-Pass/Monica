@@ -468,6 +468,7 @@ private data class PageAdjustmentSettingsBackupEntry(
     val authenticatorLayoutMode: String = takagi.ru.monica.data.AuthenticatorLayoutMode.STANDARD.name,
     val vaultV2LayoutMode: String = takagi.ru.monica.data.VaultV2LayoutMode.CLASSIC.name,
     val vaultListSort: String = takagi.ru.monica.data.VaultListSort.TITLE_ASC.name,
+    val autoFocusSearchOnStartup: Boolean = false,
     val vaultOverviewEnabled: Boolean = true,
     val vaultOverviewConfig: String = "{}",
     val validatorProgressBarStyle: String = "LINEAR",
@@ -796,6 +797,7 @@ class WebDavHelper(
             authenticatorLayoutMode = authenticatorLayoutMode,
             vaultV2LayoutMode = vaultV2LayoutMode,
             vaultListSort = vaultListSort,
+            autoFocusSearchOnStartup = autoFocusSearchOnStartup,
             vaultOverviewEnabled = vaultOverviewEnabled,
             vaultOverviewConfig = vaultOverviewConfig,
             validatorProgressBarStyle = validatorProgressBarStyle,
@@ -4174,6 +4176,7 @@ class WebDavHelper(
                                                 vaultListSort = pageAdjustmentBackup.vaultListSort,
                                                 vaultV2LayoutMode =
                                                     pageAdjustmentBackup.vaultV2LayoutMode,
+                                                autoFocusSearchOnStartup = pageAdjustmentBackup.autoFocusSearchOnStartup,
                                                 vaultOverviewEnabled = pageAdjustmentBackup.vaultOverviewEnabled,
                                                 vaultOverviewConfig = pageAdjustmentBackup.vaultOverviewConfig,
                                                 validatorProgressBarStyle =
@@ -5796,11 +5799,9 @@ class WebDavHelper(
     }
 
     private fun webDavPathExists(url: String): Boolean {
-        val client = sardine ?: return false
-        // 单次 PROPFIND（sardine 的 exists() 内部实现）即可；失败时根据错误分类决定返回值：
-        // - 404 -> 明确不存在（返回 false）
-        // - RateLimited / AuthFailed -> 上抛，由上层处理而不是吞掉
-        // - 其他 -> 记录后返回 false（保守处理，避免阻塞业务路径）
+        val client = sardine ?: throw IllegalStateException("WebDAV not configured")
+        // Only a confirmed 404 means the directory is absent. An uncertain read
+        // must stop uploadBackup before it sends MKCOL or PUT.
         try {
             return client.exists(url)
         } catch (e: Exception) {
@@ -5821,9 +5822,9 @@ class WebDavHelper(
                 else -> {
                     android.util.Log.w(
                         "WebDavHelper",
-                        "exists() failed for $url, treating as not-exist: ${e.message}"
+                        "exists() failed for $url with kind=${classified.kind}"
                     )
-                    return false
+                    throw e
                 }
             }
         }

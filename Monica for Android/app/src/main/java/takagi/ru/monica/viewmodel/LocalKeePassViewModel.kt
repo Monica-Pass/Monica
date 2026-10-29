@@ -191,7 +191,14 @@ class LocalKeePassViewModel(
     val activeNativeManagerDatabaseId: StateFlow<Long?> = _activeNativeManagerDatabaseId.asStateFlow()
     private val _nativeManagerOpenRequests = MutableSharedFlow<Long>(extraBufferCapacity = 1)
     val nativeManagerOpenRequests: SharedFlow<Long> = _nativeManagerOpenRequests.asSharedFlow()
+    private val _nativeOverviewRefreshRequests = MutableSharedFlow<Long>(extraBufferCapacity = 8)
+    internal val nativeOverviewRefreshRequests = _nativeOverviewRefreshRequests.asSharedFlow()
+    internal fun requestNativeOverviewRefresh(databaseId: Long) {
+        _nativeOverviewRefreshRequests.tryEmit(databaseId)
+    }
     private val nativeManagerRetainedStates = mutableMapOf<Long, KeePassNativeManagerRetainedState>()
+    private val _nativeLockVersions = MutableStateFlow<Map<Long, Long>>(emptyMap())
+    internal val nativeLockVersions = _nativeLockVersions.asStateFlow()
     
     /** KeePass 分组缓存，按数据库 ID 组织 */
     private val _groupsByDatabase = MutableStateFlow<Map<Long, List<KeePassGroupInfo>>>(emptyMap())
@@ -297,6 +304,7 @@ class LocalKeePassViewModel(
 
     fun lockKeePassDatabase(databaseId: Long) {
         compatibilityBridge.lockDatabase(databaseId)
+        _nativeLockVersions.update { current -> current + (databaseId to ((current[databaseId] ?: 0L) + 1L)) }
         closeNativeManager(databaseId, clearRetainedState = true)
         _groupsByDatabase.update { current -> current - databaseId }
         _verificationStates.update { current -> current - databaseId }
@@ -377,8 +385,8 @@ class LocalKeePassViewModel(
         else KeePassNativeResolvedRoute.Generic
     }
 
-    internal suspend fun openNativeBrowser(databaseId: Long): Result<KeePassNativeBrowserSnapshot> =
-        workspaceRepository.openNativeBrowser(databaseId)
+    internal suspend fun openNativeBrowser(databaseId: Long, includePasswordMembership: Boolean = false): Result<KeePassNativeBrowserSnapshot> =
+        workspaceRepository.openNativeBrowser(databaseId, includePasswordMembership)
 
     internal suspend fun searchNativeEntries(
         databaseId: Long,

@@ -14,6 +14,9 @@
     
     <!-- Network permissions for WebDAV backup -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-feature android:name="android.hardware.usb.host" android:required="false" />
+    <uses-feature android:name="android.hardware.nfc" android:required="false" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
@@ -335,6 +338,12 @@
         </receiver>
         
         <!-- Passkey Create Activity -->
+        <activity
+            android:name=".passkey.hardware.HardwareSecurityKeyActivity"
+            android:theme="@style/Theme.Monica"
+            android:exported="false"
+            android:excludeFromRecents="true" />
+
         <activity
             android:name=".passkey.PasskeyCreateActivity"
             android:theme="@style/Theme.Monica.Passkey"

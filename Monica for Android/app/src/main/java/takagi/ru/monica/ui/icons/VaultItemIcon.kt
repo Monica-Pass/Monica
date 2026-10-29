@@ -28,7 +28,11 @@ internal fun VaultItemIcon(
     customIconValue: String?,
     defaultIcon: ImageVector,
     modifier: Modifier = Modifier,
+    keepassDatabaseId: Long? = null,
+    keepassEntryUuid: String? = null,
 ) {
+    val keePassIcon = rememberKeePassCustomIcon(keepassDatabaseId, keepassEntryUuid,
+        enabled = customIconType == PASSWORD_ICON_TYPE_NONE)
     val simpleIcon = if (customIconType == PASSWORD_ICON_TYPE_SIMPLE) {
         rememberSimpleIconBitmap(customIconValue, MaterialTheme.colorScheme.primary)
     } else null
@@ -41,12 +45,12 @@ internal fun VaultItemIcon(
         title = title,
         appPackageName = appPackageName.ifBlank { null },
         tintColor = MaterialTheme.colorScheme.primary,
-        enabled = customIconType == PASSWORD_ICON_TYPE_NONE,
+        enabled = customIconType == PASSWORD_ICON_TYPE_NONE && keePassIcon == null,
     )
     val favicon = if (website.isNotBlank()) {
         rememberFavicon(
             url = website,
-            enabled = autoMatchedSimpleIcon.resolved && autoMatchedSimpleIcon.slug == null,
+            enabled = keePassIcon == null && autoMatchedSimpleIcon.resolved && autoMatchedSimpleIcon.slug == null,
         )
     } else null
     val appIcon = if (appPackageName.isNotBlank() && !isWebAddress(website)) {
@@ -63,6 +67,7 @@ internal fun VaultItemIcon(
                 size = 28.dp,
                 modifier = Modifier.fillMaxSize()
             )
+            keePassIcon != null -> KeePassCustomIconImage(keePassIcon, Modifier.fillMaxSize().padding(2.dp))
             brandIcon != null -> Image(
                 bitmap = brandIcon,
                 contentDescription = null,

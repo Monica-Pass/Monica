@@ -101,6 +101,68 @@ class WalletPassTemplatesDeviceTest {
     @Test fun rewardsCreateSwitchDraftAndDetail() = create(CardWalletTab.REWARDS_CARDS, "REWARDS", R.string.wallet_pass_points, "points", "0001250.50")
     @Test fun travelCreateSwitchDraftAndDetailAtLargeFont() = create(CardWalletTab.TRAVEL_PASSES, "TRAVEL", R.string.wallet_pass_seat, "seat", "12A", large = true)
 
+    @Test fun scanBoardingPassFromGalleryFillsDraftAndSavesOnlyTheFields() {
+        val raw = "M1DESMARAIS/LUC       EABC123 YULFRAAC 0834 326J001A0025 10C>5180  W0D  "
+        val image = File(f.root, "boarding-pass.png")
+        val bitmap = takagi.ru.monica.ui.scanner.QrScannerFixtures.Frame()
+            .code(raw, format = com.google.zxing.BarcodeFormat.PDF_417).bitmap()
+        try {
+            image.outputStream().use { bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it) }
+        } finally { bitmap.recycle() }
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        instrumentation.uiAutomation.grantRuntimePermission(f.context.packageName, android.Manifest.permission.CAMERA)
+        val registryOwner = object : androidx.activity.result.ActivityResultRegistryOwner {
+            override val activityResultRegistry = object : androidx.activity.result.ActivityResultRegistry() {
+                override fun <I, O> onLaunch(requestCode: Int,
+                    contract: androidx.activity.result.contract.ActivityResultContract<I, O>, input: I,
+                    options: androidx.core.app.ActivityOptionsCompat?) {
+                    check(contract is androidx.activity.result.contract.ActivityResultContracts.GetContent)
+                    dispatchResult(requestCode, android.app.Activity.RESULT_OK,
+                        android.content.Intent().setData(android.net.Uri.fromFile(image)))
+                }
+            }
+        }
+        var closed = false
+        compose.setContent {
+            CompositionLocalProvider(LocalUiSecurityManager provides f.security,
+                androidx.activity.compose.LocalActivityResultRegistryOwner provides registryOwner) {
+                takagi.ru.monica.ui.theme.MonicaTheme {
+                    AddEditDocumentScreen(document, initialWalletTemplate = "TRAVEL",
+                        initialStorageExplicit = true, onNavigateBack = { closed = true })
+                }
+            }
+        }
+        compose.onNodeWithTag("item_editor_title").performTextReplacement(f.prefix)
+        input(R.string.wallet_pass_gate, "Gate42")
+        androidx.test.espresso.Espresso.closeSoftKeyboard()
+        compose.onNodeWithTag("wallet_pass_scan_boarding_pass").performScrollTo().assertIsDisplayed().performClick()
+        compose.onNodeWithText(text(R.string.wallet_pass_scan_boarding_pass_hint)).assertIsDisplayed()
+        capture("boarding-scanner")
+        compose.onNodeWithText(text(R.string.qr_pick_from_gallery)).performClick()
+        compose.waitUntil(15000) {
+            compose.onAllNodes(hasText("DESMARAIS/LUC") and hasSetTextAction()).fetchSemanticsNodes().isNotEmpty()
+        }
+        compose.onNode(hasText("AC834") and hasSetTextAction()).performScrollTo().assertIsDisplayed()
+        assertFalse(runBlocking { f.secureItems.getAllItems().first().any { it.title == f.prefix } })
+        capture("boarding-filled")
+        compose.onNodeWithContentDescription(text(R.string.save)).performClick()
+        compose.waitUntil(30000) { closed }
+        val row = runBlocking { f.secureItems.getAllItems().first().single { it.title == f.prefix } }
+        val data = CardWalletDataCodec.parseDocumentData(row.itemData, f.security::decryptDataIfMonicaCiphertext)!!
+        assertEquals("TRAVEL", data.walletTemplate)
+        assertEquals("ABC123", data.documentNumber)
+        assertEquals("DESMARAIS/LUC", data.fullName)
+        assertEquals("AC", data.issuedBy)
+        assertEquals("YUL", data.walletFields["origin"])
+        assertEquals("FRA", data.walletFields["destination"])
+        assertEquals("AC834", data.walletFields["serviceNumber"])
+        assertEquals(326, java.time.LocalDate.parse(data.walletFields["departure"]).dayOfYear)
+        assertEquals("1A", data.walletFields["seat"])
+        assertEquals("J", data.walletFields["travelClass"])
+        assertEquals("Gate42", data.walletFields["gate"])
+        assertFalse(CardWalletDataCodec.encodeDocumentData(data).contains(raw))
+    }
+
     @Test fun reeditUpdatesInPlaceAndRetainsFutureFields() {
         val original = DocumentData(DocumentType.OTHER, "0001", "Synthetic Person", walletTemplate = "TRAVEL",
             walletFields = mapOf("seat" to "12A", "future" to "keep"))

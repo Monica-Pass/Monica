@@ -1,0 +1,6 @@
+
+takagi.ru.monica.passkey.hardware.HardwareProviderTest:...
+
+Time: 4.232
+
+OK (3 tests)

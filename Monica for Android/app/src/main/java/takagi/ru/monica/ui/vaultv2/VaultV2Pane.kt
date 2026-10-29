@@ -1167,6 +1167,9 @@ internal fun VaultV2Item.categoryId(): Long? {
 	}
 }
 
+internal fun VaultV2Item.keepassEntryUuid(): String? =
+    passwordEntry?.keepassEntryUuid ?: totpItem?.keepassEntryUuid ?: secureItem?.keepassEntryUuid
+
 internal fun VaultV2Item.keepassDatabaseId(): Long? {
 	return when (type) {
 		VaultV2ItemType.PASSWORD -> passwordEntry?.keepassDatabaseId
@@ -1935,6 +1938,20 @@ fun VaultV2Pane(
 		state.storageFilterIdentityKey,
 	) {
 		state.toUnifiedCategoryFilterSelection()
+	}
+	val nativeKeePassScope = storageSelection.toCategoryFilterOrNull()
+		?.let { takagi.ru.monica.keepass.KeePassPasswordNativeScope.from(it) }
+	if (!showOverview && !state.isArchiveView && nativeKeePassScope != null) {
+		DisposableEffect(nativeKeePassScope.databaseId) {
+			val nativeRead = passwordViewModel.holdNativeKeePassRead(nativeKeePassScope.databaseId)
+			val lockVersion = localKeePassViewModel.nativeLockVersions.value[nativeKeePassScope.databaseId] ?: 0L
+			onDispose {
+				nativeRead.close()
+				if ((localKeePassViewModel.nativeLockVersions.value[nativeKeePassScope.databaseId] ?: 0L) == lockVersion) {
+					passwordViewModel.refreshKeePassOverviewAfterNativeRead(nativeKeePassScope.databaseId)
+				}
+			}
+		}
 	}
 	val localCategoryIdsInScope = remember(
 		storageSelection,
@@ -5087,6 +5104,8 @@ internal fun VaultV2ItemCard(
 				customIconType = customIconType,
 				customIconValue = customIconValue,
 				defaultIcon = icon,
+				keepassDatabaseId = item.keepassDatabaseId(),
+				keepassEntryUuid = item.keepassEntryUuid(),
 			)
 			Spacer(modifier = Modifier.width(2.dp))
 

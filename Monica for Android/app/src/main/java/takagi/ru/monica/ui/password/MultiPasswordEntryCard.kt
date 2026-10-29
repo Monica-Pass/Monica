@@ -91,6 +91,8 @@ fun MultiPasswordEntryCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 if (iconCardsEnabled) {
+                    val keePassIcon = takagi.ru.monica.ui.icons.rememberKeePassCustomIcon(firstEntry.keepassDatabaseId, firstEntry.keepassEntryUuid,
+                        enabled = firstEntry.customIconType == takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_NONE)
                     val simpleIcon = if (firstEntry.customIconType == takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_SIMPLE) {
                         takagi.ru.monica.ui.icons.rememberSimpleIconBitmap(
                             slug = firstEntry.customIconValue,
@@ -117,13 +119,13 @@ fun MultiPasswordEntryCard(
                         title = firstEntry.title,
                         appPackageName = primaryAppPackageName,
                         tintColor = MaterialTheme.colorScheme.primary,
-                        enabled = firstEntry.customIconType == takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_NONE
+                        enabled = keePassIcon == null && firstEntry.customIconType == takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_NONE
                     )
 
                     val favicon = if (firstEntry.website.isNotBlank()) {
                         takagi.ru.monica.autofill_ng.ui.rememberFavicon(
                             url = firstEntry.website,
-                            enabled = autoMatchedSimpleIcon.resolved && autoMatchedSimpleIcon.slug == null
+                            enabled = keePassIcon == null && autoMatchedSimpleIcon.resolved && autoMatchedSimpleIcon.slug == null
                         )
                     } else null
 
@@ -146,6 +148,9 @@ fun MultiPasswordEntryCard(
                             contentScale = ContentScale.Fit,
                             modifier = Modifier.size(32.dp).padding(1.dp)
                         )
+                        Spacer(modifier = Modifier.width(12.dp))
+                    } else if (keePassIcon != null) {
+                        takagi.ru.monica.ui.icons.KeePassCustomIconImage(keePassIcon, Modifier.size(32.dp).padding(1.dp))
                         Spacer(modifier = Modifier.width(12.dp))
                     } else if (autoMatchedSimpleIcon.bitmap != null) {
                         Image(

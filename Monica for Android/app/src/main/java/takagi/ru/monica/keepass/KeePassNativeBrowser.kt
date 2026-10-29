@@ -36,6 +36,8 @@ internal data class KeePassNativeBrowserSnapshot(
     val customIconReferences: Map<UUID, Int> = emptyMap(),
     /** The metadata-designated KeePass entry-template group, when valid. */
     val templateGroupIdentity: KeePassNativeGroupIdentity? = null,
+    /** Optional in-memory membership using the same compatibility classification as the overview. */
+    val passwordEntryUuids: Set<UUID>? = null,
 ) {
     fun group(identity: KeePassNativeGroupIdentity): KeePassNativeGroupRecord? =
         groupsByIdentity[identity]?.firstOrNull()

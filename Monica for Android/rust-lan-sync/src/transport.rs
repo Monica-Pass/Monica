@@ -67,7 +67,7 @@ pub(super) fn connect(
             p.phase = "connecting";
             p.connection_attempt += 1;
         });
-        let stream = match TcpStream::connect_timeout(&address, Duration::from_secs(2)) {
+        let stream = match network::connect(&address, &prepared.network_bindings) {
             Ok(stream) => stream,
             Err(_) => continue,
         };

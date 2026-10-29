@@ -1,35 +1,27 @@
-# Monica for Android 1.0.322
+# Monica for Android 1.0.323
 
 > 未发布 / Unreleased
 
 ## 中文
 
-- 修复部分笔记内容显示为 `MDK|…` 乱码的问题。附近设备同步接收的笔记，以及从数据库导出包恢复的笔记，曾以加密形式写入本地，笔记列表与详情直接显示了密文。现在接收和恢复的笔记保持笔记原有的存储格式；解锁后会自动将已受影响的笔记恢复为原文，包括已在编辑器中再次保存过的笔记，不改变修改时间和同步归属。
-
-- 修复 HOTP 点击“生成下一个”后跳到列表最前面的问题。验证码顺序保留收藏优先级和手动排序，默认顺序不再随计数器更新而变化；计数器与同步修改时间仍正常更新。
-
-- 修复 HOTP“生成下一个”按钮撑高磁贴的问题。所有验证码磁贴保留原有紧凑尺寸，生成按钮复用次码位置，减少内边距并适配文字大小；放大字号仍完整显示验证码和按钮，生成与复制互不误触。
-
-- 卡包多选列表中的卡叠新增独立展开／收起按钮；收起后可长按拖动整组调整卡叠顺序，重新进入页面仍保留排序。展开与收起保留逐张选择和选择计数，排序不改变卡叠成员顺序或封面。
-
-- 优化密码列表加载与滚动：减少滚动期间的页面重组，复用分类数据订阅，并避免相同数据快照重复生成脱敏列表；保留原有回顶、快速定位、返回位置、搜索、分组和数据处理规则。
-
-- 新增独立 Root 授权，可替代 Shizuku 使用增强无障碍恢复和设置默认密码管理器；Root 通道无需安装或运行 Shizuku。
-- 授权方式可切换，提供授权状态、重新授权与停用入口，命令失败后仍可停用 Root。只有主动确认后才请求 Root；无 Root、拒绝或超时会提示，不会自动切换授权方式。停用或切换方式后，排队请求和迟到的授权结果不会重新启用 Root。
-- 无障碍恢复仍需手动启用后台保护和增强恢复，仅重连已开启的 Monica 服务；默认密码管理器保留配置备份、写入校验和恢复功能，仍需 Android 14 或更新版本。
+- Passkey 管理页新增“物理密钥”FAB，支持 USB/NFC FIDO2 密钥信息、PIN 设置与更改、只读查看可发现凭据；Android 14 及以上可通过系统注册或登录请求在密钥中创建和使用通行密钥。标准 FIDO2 无法导入现有私钥，硬件 PIN 和凭据不保存到 Monica；本次通过合成协议与模拟器验证，尚未实体密钥实测。
+- 支持在 Monica 密码列表、密码库、详情和编辑预览中显示已解锁 KDBX 的条目自定义图标，并显示原库分组图标；编辑保存保留图标 UUID、图片和历史。锁库时隐藏原库图标，缺失或损坏的图片回退到现有图标。
+- 导出数据时，来源数据库名称右侧显示当前记录数（不含回收站）；空库显示 0 条，未解锁或暂时无法读取时显示相应状态。
+- 附近设备同步适配手机热点：在系统设备发现或组播不可用时补充受限的本地在线通知、热点网关与定向广播发现，并使用实际回复地址重连；保留前台解锁、设备配对与加密验证。
+- 修复 WebDAV 备份目录检查失败后仍尝试创建目录和上传的问题；连接超时、断线或服务器错误会保留原始失败原因并停止上传，只有确认目录不存在时才创建。
+- 选中 KDBX 后，密码页和密码库保留 Monica 的列表、详情与编辑界面，底层直接读取和保存 KDBX 原库，保留分组、附件、自定义字段与历史；“全部数据库”继续使用总览索引。保存返回单库列表不再等待总览索引刷新，并减少未更改密码的重复加密。
+- “页面调整自定义”新增“打开软件自动聚焦搜索框”开关，默认关闭。开启后，解锁进入主页面时自动展开搜索并显示键盘；切换页面或返回列表不会重复触发。
+- Monica 内置键盘新增独立“按键震动”开关，位于自动填充设置，默认关闭。字母、数字、符号及功能键每按一次触发一次短震动，效果与验证器提示一致；保留原有数字键随机排序与隐藏预览设置。
+- 旅行票证新增“扫描登机牌”：识别登机牌上符合 IATA 标准（BCBP）的 PDF417、Aztec、二维码或 Data Matrix 条码，自动填入乘客、订座记录、航班、出发地、目的地、日期、座位和舱位；条码原文不会保存。
 
 ## English
 
-- Fixed some notes showing garbled `MDK|…` text. Notes received through nearby device sync, or restored from a database export archive, were stored locally in encrypted form, so the note list and details displayed the ciphertext. Received and restored notes now keep the regular note storage format, and affected notes, including ones saved again from the editor, are restored to their original text after unlocking without changing modification times or sync ownership.
-
-- Fixed HOTP moving to the front of the list after Generate Next. Authenticator ordering retains favorites and manual ranks, with a stable default order across counter updates. Counter values and modification timestamps still update normally for synchronization.
-
-- Fixed the HOTP Generate Next button increasing tile height. All authenticator tiles retain their compact size, with the action using the next-code footer, reduced padding and text that fits the available space. Codes and labels remain complete at larger font sizes, with separate generation and copy actions.
-
-- Added separate expand/collapse controls to card stacks in wallet multiselect. Long-press a collapsed stack to reorder stacks, with the order retained when reopening the wallet. Expansion preserves individual selections and counts; dragging keeps stack membership, internal card order and covers intact.
-
-- Optimized password-list loading and scrolling by reducing page recompositions during scrolling, sharing category subscriptions, and avoiding repeated metadata copies for unchanged snapshots. Existing back-to-top, fast-scroll, position restoration, search, grouping, and data-handling behavior are preserved.
-
-- Added direct Root authorization as an alternative to Shizuku for enhanced accessibility recovery and setting the default password manager. The Root backend works without Shizuku installed or running.
-- Choose the authorization method, view its status, authorize again, or disable Root, including after a failed command. Root is requested only after explicit confirmation; unavailable access, denial, and timeouts are reported without switching backends automatically. Disabling Root or switching backends invalidates queued requests and late authorization results.
-- Recovery still requires background protection and enhanced recovery to be enabled, and only reconnects an already enabled Monica service. Default manager changes retain configuration backups, verification, and restoration, and still require Android 14 or later.
+- Added a hardware-key FAB to Passkey management for USB/NFC FIDO2 device information, PIN setup/change and read-only discoverable-credential browsing. Android 14+ system registration and sign-in requests can create and use credentials on the key. Standard FIDO2 cannot import existing private keys; hardware PINs and credentials are not stored in Monica. Verified with synthetic protocol peers and emulators; physical-key testing is pending.
+- Monica password and vault lists, password details and editor previews now display custom entry icons from unlocked KDBX files, including group icons in vault lists. Saving preserves icon UUIDs, image data and history; locking hides original-vault images, and missing or damaged images fall back to existing icons.
+- Export source database names now show their current record count, excluding trash. Empty databases show zero; locked or unreadable sources display their status.
+- Nearby-device synchronization supports phone hotspots with bounded local presence, Wi-Fi gateway and directed-broadcast discovery when system discovery or multicast is unavailable. Reconnection uses reply source addresses and retains foreground unlock, pairing and encryption checks.
+- WebDAV backups now stop when directory checks time out, disconnect or return a server error, preserving the original failure. A directory is created only when it is confirmed missing.
+- Selecting a KDBX retains Monica’s password and library lists, detail pages and editing forms while reading and saving the original KDBX directly. Groups, attachments, custom fields and history are preserved. The all-databases overview retains its index; returning to a selected-vault list after saving no longer waits for overview indexing, and unchanged passwords avoid redundant encryption.
+- Added “Focus search on startup” to Page adjustment customization, disabled by default. When enabled, search opens and the keyboard appears on the first main page after unlocking; changing pages or returning to a list does not trigger it again.
+- Added a separate “Keypress vibration” switch for the Monica keyboard in Autofill settings, disabled by default. Letter, number, symbol and action keys produce one short vibration per press, matching authenticator feedback while preserving PIN shuffle and preview settings.
+- Travel passes can now scan a boarding pass. Monica reads IATA BCBP barcodes (PDF417, Aztec, QR or Data Matrix) and fills in the passenger, booking reference, flight, origin, destination, date, seat and cabin; the raw barcode is not stored.

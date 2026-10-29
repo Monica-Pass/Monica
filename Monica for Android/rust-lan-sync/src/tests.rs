@@ -298,6 +298,35 @@ fn unicast_discovery_without_multicast_returns_every_active_pairing_listener() {
     }
 }
 
+#[test]
+fn directed_broadcast_discovery_works_without_multicast_or_remembered_addresses() {
+    let _guard = serial_sessions();
+    let has_local_broadcast =
+        if_addrs::get_if_addrs()
+            .unwrap_or_default()
+            .iter()
+            .any(|interface| {
+                matches!(&interface.addr, if_addrs::IfAddr::V4(address)
+            if address.ip.is_private() && address.broadcast.is_some_and(|ip| ip.is_private()))
+            });
+    if !has_local_broadcast {
+        return;
+    } // Loopback-only hosts cannot exercise interface broadcasts.
+    let root = TestDirectory::new();
+    let out = root.directory("out");
+    std::fs::write(out.join("changes.mdbxsync"), b"synthetic hotspot bundle").unwrap();
+    let host = call(
+        json!({"operation":"start", "protocol":2, "vault_id":"hotspot-test",
+        "outgoing_directory":out, "incoming_directory":root.directory("in"),
+        "device":{"device_id":"hotspot-broadcast", "name":"Fixture"}}),
+    );
+    let found = request(json!({"operation":"discover", "multicast":false, "broadcast":true}));
+    call(json!({"operation":"release", "handle":host["handle"]}));
+    let found = found.unwrap();
+    assert!(found["devices"].as_array().unwrap().iter().any(|device| device["device_id"] == "hotspot-broadcast"),
+        "Directed broadcast must discover the listener when mDNS/multicast and old addresses are unavailable");
+}
+
 fn serial_sessions() -> std::sync::MutexGuard<'static, ()> {
     SESSION_TESTS
         .lock()

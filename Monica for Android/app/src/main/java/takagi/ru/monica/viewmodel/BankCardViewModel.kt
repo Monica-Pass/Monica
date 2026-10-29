@@ -108,8 +108,8 @@ class BankCardViewModel internal constructor(
         null
     }
     private val keepassSecureItemCreateExecutor = KeePassSecureItemCreateExecutor(keepassBridge)
-    private val keepassSecureItemDeleteExecutor = KeePassSecureItemDeleteExecutor(keepassBridge)
-    private val keepassSecureItemUpdateExecutor = KeePassSecureItemUpdateExecutor(keepassBridge)
+    private val keepassSecureItemDeleteExecutor = KeePassSecureItemDeleteExecutor(keepassBridge, repository)
+    private val keepassSecureItemUpdateExecutor = KeePassSecureItemUpdateExecutor(keepassBridge, repository)
 
     private fun decryptStoredSensitiveValue(value: String): String {
         return securityManager
@@ -209,6 +209,7 @@ class BankCardViewModel internal constructor(
     }
 
     suspend fun syncKeePassCardsNow(databaseId: Long) {
+        if (repository.usesOriginalKeePass(databaseId)) { repository.refreshOriginalKeePass(databaseId); return }
         val taskId = SyncDiagnostics.nextTaskId("kp-card")
         val target = "keepass_compat:bank_card:$databaseId"
         val trigger = "READ_LEGACY_SECURE_ITEMS"

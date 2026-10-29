@@ -18,7 +18,10 @@ class SecureStartupInstrumentedTest {
         base: Context,
         private var failuresLeft: Int,
         private val failOnRead: Int,
-        private val onFault: () -> Unit = {}
+        private val onFault: () -> Unit = {},
+        private val failureFactory: () -> Exception = {
+            java.security.ProviderException("synthetic-secret-provider-detail")
+        }
     ) : ContextWrapper(base) {
         @Volatile
         var failures = 0
@@ -34,7 +37,7 @@ class SecureStartupInstrumentedTest {
                         failuresLeft--
                         failures++
                         onFault()
-                        throw java.security.ProviderException("synthetic-secret-provider-detail")
+                        throw failureFactory()
                     }
                     return original.all
                 }
@@ -116,6 +119,73 @@ class SecureStartupInstrumentedTest {
             }
             assertEquals(1, fault.failures)
             assertFalse(SecureStorageStartup.readyForMaintenance)
+        }
+    }
+
+    @Test fun wrappedKeystoreFailuresReachBlockedStartupAndPreserveEncryptedPreferences() = kotlinx.coroutines.runBlocking {
+        val causes = listOf(
+            android.security.keystore.KeyPermanentlyInvalidatedException("synthetic-invalidated-key"),
+            java.security.UnrecoverableKeyException("synthetic-unrecoverable-key"),
+            java.security.KeyStoreException("synthetic-keystore-service-error")
+        )
+        for (cause in causes) Fixture().use { f ->
+            f.create()
+            val before = f.raw.all.toMap()
+            val fault = ReadFaultContext(f.context, failuresLeft = 100, failOnRead = 3,
+                failureFactory = { java.security.ProviderException("synthetic-provider-secret", cause) })
+            SessionManager.markLocked()
+            val result = SecureStorageStartup.prepareWithRetry(fault) as SecureStartupResult.Blocked
+            assertEquals("UNREADABLE_SECURE_STORAGE", result.failure.reason)
+            assertEquals(3, result.attempts)
+            assertFalse(SecureStorageStartup.readyForMaintenance)
+            assertFalse(SessionManager.isUnlocked.value)
+            assertFalse(SecurityManager.hasRuntimeUnlockCache())
+            assertEquals(before, f.raw.all)
+            val diagnostic = SecureStorageStartup.diagnostic(result.failure, result.attempts)
+            assertTrue(diagnostic.contains(cause.javaClass.simpleName))
+            assertFalse(diagnostic.contains("synthetic-"))
+        }
+    }
+
+    @Test fun nonReturningProviderKeepsStartupPendingAndCannotBeCancelledByCoroutineTimeout() = kotlinx.coroutines.runBlocking {
+        Fixture().use { f ->
+            f.create()
+            val before = f.raw.all.toMap()
+            val entered = kotlinx.coroutines.CompletableDeferred<Unit>()
+            val releaseRead = java.util.concurrent.CountDownLatch(1)
+            val startupPending = java.util.concurrent.atomic.AtomicBoolean(true)
+            val fault = ReadFaultContext(f.context, failuresLeft = 100, failOnRead = 2, onFault = {
+                entered.complete(Unit)
+                check(releaseRead.await(10, java.util.concurrent.TimeUnit.SECONDS))
+            })
+            SessionManager.markLocked()
+            // Match MainActivity: it clears the splash condition only after preparation returns.
+            val job = launch(kotlinx.coroutines.Dispatchers.Main) {
+                SecureStorageStartup.prepareWithRetry(fault)
+                startupPending.set(false)
+            }
+            try {
+                kotlinx.coroutines.withTimeout(5_000) { entered.await() }
+                kotlinx.coroutines.withTimeout(5_000) {
+                    kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                        assertTrue("The UI dispatcher still runs while the provider call is blocked", startupPending.get())
+                    }
+                }
+                assertFalse(SecureStorageStartup.readyForMaintenance)
+                assertFalse(SessionManager.isUnlocked.value)
+                assertEquals(before, f.raw.all)
+                job.cancel()
+                assertNull("Cancellation cannot finish a worker inside an uninterruptible call",
+                    kotlinx.coroutines.withTimeoutOrNull(150) { job.join(); true })
+                assertFalse(job.isCompleted)
+                assertTrue(startupPending.get())
+            } finally {
+                releaseRead.countDown()
+                job.cancelAndJoin()
+            }
+            assertEquals(1, fault.failures)
+            assertFalse(SecureStorageStartup.readyForMaintenance)
+            assertEquals(before, f.raw.all)
         }
     }
 

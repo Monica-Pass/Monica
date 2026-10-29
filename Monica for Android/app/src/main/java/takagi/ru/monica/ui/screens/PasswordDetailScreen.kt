@@ -203,6 +203,10 @@ fun PasswordDetailScreen(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
+    DisposableEffect(passwordId) {
+        val nativeRead = viewModel.holdNativeKeePassEntryRead(passwordId)
+        onDispose { nativeRead?.close() }
+    }
     val coroutineScope = rememberCoroutineScope()
     val settingsManager = remember { SettingsManager(context) }
     val settings by settingsManager.settingsFlow.collectAsState(initial = AppSettings())
@@ -212,6 +216,15 @@ fun PasswordDetailScreen(
     val mdbxDatabases by database.localMdbxDatabaseDao().getAvailableDatabases().collectAsState(initial = emptyList())
     val bitwardenVaults by database.bitwardenVaultDao().getAllVaultsFlow().collectAsState(initial = emptyList())
     var isLeavingDetail by remember { mutableStateOf(false) }
+    val nativeDatabaseId = viewModel.nativeKeePassDatabaseId(passwordId)
+    val nativeLockVersions by takagi.ru.monica.utils.KeePassKdbxService.nativeLockVersions.collectAsState()
+    val originalNativeLockVersion = remember(passwordId) { nativeLockVersions[nativeDatabaseId] ?: 0L }
+    LaunchedEffect(nativeDatabaseId, nativeLockVersions[nativeDatabaseId]) {
+        if (nativeDatabaseId != null && (nativeLockVersions[nativeDatabaseId] ?: 0L) != originalNativeLockVersion) {
+            isLeavingDetail = true
+            onNavigateBack()
+        }
+    }
     fun requestNavigateBack() {
         if (isLeavingDetail) return
         isLeavingDetail = true
@@ -1695,10 +1708,12 @@ private fun HeaderSection(
 }
 
 @Composable
-private fun PasswordDetailIcon(
+internal fun PasswordDetailIcon(
     entry: PasswordEntry,
     unmatchedIconHandlingStrategy: UnmatchedIconHandlingStrategy
 ) {
+    val keePassIcon = takagi.ru.monica.ui.icons.rememberKeePassCustomIcon(entry.keepassDatabaseId, entry.keepassEntryUuid,
+        enabled = entry.customIconType == takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_NONE)
     val simpleIcon = if (entry.customIconType == takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_SIMPLE) {
         rememberSimpleIconBitmap(
             slug = entry.customIconValue,
@@ -1724,13 +1739,13 @@ private fun PasswordDetailIcon(
         title = entry.title,
         appPackageName = primaryAppPackageName,
         tintColor = MaterialTheme.colorScheme.primary,
-        enabled = entry.customIconType == takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_NONE
+        enabled = keePassIcon == null && entry.customIconType == takagi.ru.monica.ui.icons.PASSWORD_ICON_TYPE_NONE
     )
     val primaryWebsite = remember(entry.website) { normalizeWebsiteUrl(entry.website) }
     val favicon = if (!primaryWebsite.isNullOrBlank()) {
         rememberFavicon(
             url = primaryWebsite,
-            enabled = autoMatchedSimpleIcon.resolved && autoMatchedSimpleIcon.slug == null
+            enabled = keePassIcon == null && autoMatchedSimpleIcon.resolved && autoMatchedSimpleIcon.slug == null
         )
     } else null
 
@@ -1757,6 +1772,9 @@ private fun PasswordDetailIcon(
                 contentScale = ContentScale.Fit,
                 modifier = Modifier.size(52.dp).padding(2.dp)
             )
+        }
+        keePassIcon != null -> {
+            takagi.ru.monica.ui.icons.KeePassCustomIconImage(keePassIcon, Modifier.size(52.dp).padding(2.dp))
         }
         autoMatchedSimpleIcon.bitmap != null -> {
             Image(

@@ -89,7 +89,12 @@ class KeePassAttachmentExecutor(
         sourceBytes: ByteArray
     ): Attachment = withContext(Dispatchers.IO) {
         val kdbxInfo = try {
-            kdbxService.addAttachmentToEntry(
+            if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(owner.id)) {
+                val record = requireNotNull(takagi.ru.monica.attachments.AttachmentContainer.originalKeePassStore)
+                    .addAttachment(owner, fileName, sourceBytes)
+                val asset = record.attachments.last { it.name == fileName.trim() }
+                KeePassKdbxService.KeePassAttachmentInfo(asset.hash, asset.name, (asset.binary?.rawContent?.size ?: 0).toLong(), asset.binary?.memoryProtection ?: false)
+            } else kdbxService.addAttachmentToEntry(
                 databaseId = databaseId,
                 entryUuid = entryUuid,
                 fileName = fileName,
@@ -198,10 +203,15 @@ class KeePassAttachmentExecutor(
     suspend fun remove(
         databaseId: Long,
         entryUuid: String,
-        binaryHashHex: String
+        binaryHashHex: String,
+        owner: AttachmentOwner? = null
     ): Boolean = withContext(Dispatchers.IO) {
         try {
-            kdbxService.deleteAttachmentFromEntry(
+            if (owner != null && takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(owner.id)) {
+                requireNotNull(takagi.ru.monica.attachments.AttachmentContainer.originalKeePassStore)
+                    .removeAttachment(owner, binaryHashHex)
+                true
+            } else kdbxService.deleteAttachmentFromEntry(
                 databaseId = databaseId,
                 entryUuid = entryUuid,
                 hashHex = binaryHashHex

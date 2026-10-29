@@ -7,6 +7,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import takagi.ru.monica.ui.components.UnifiedCategoryFilterSelection
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
@@ -418,9 +419,13 @@ internal fun OverviewItemRow(
                 customIconType = password.customIconType,
                 customIconValue = password.customIconValue,
                 defaultIcon = Icons.Default.Lock,
+                keepassDatabaseId = password.keepassDatabaseId,
+                keepassEntryUuid = password.keepassEntryUuid,
                 modifier = Modifier.testTag("overview_icon_${item.key}"),
             ) else Box(Modifier.size(40.dp), contentAlignment = Alignment.Center) {
-                Icon(item.type.icon(), null, tint = MaterialTheme.colorScheme.primary)
+                val nativeIcon = takagi.ru.monica.ui.icons.rememberKeePassCustomIcon(item.keepassDatabaseId(), item.keepassEntryUuid())
+                if (nativeIcon != null) takagi.ru.monica.ui.icons.KeePassCustomIconImage(nativeIcon, Modifier.size(36.dp))
+                else Icon(item.type.icon(), null, tint = MaterialTheme.colorScheme.primary)
             }
         },
         trailingContent = if (selectionMode) ({ Checkbox(checked = selected, onCheckedChange = null) }) else null,
@@ -450,10 +455,15 @@ private fun OverviewNavigationRow(title: String, icon: androidx.compose.ui.graph
 
 @Composable
 private fun OverviewFolderRow(folder: VaultOverviewFolder, sources: Map<String, VaultOverviewSource>, scope: String, onClick: (VaultOverviewFolder) -> Unit) {
+    val group = folder.target as? UnifiedCategoryFilterSelection.KeePassGroupFilter
+    val nativeIcon = takagi.ru.monica.ui.icons.rememberKeePassCustomIcon(group?.databaseId, groupUuid = group?.groupUuid, groupPath = group?.groupPath)
     Surface(shape = RoundedCornerShape(16.dp), color = MaterialTheme.colorScheme.surfaceContainerLow) {
         ListItem(headlineContent = { Text(folder.name, maxLines = 2, overflow = TextOverflow.Ellipsis) },
             supportingContent = if (scope == "all") ({ Text(sources[folder.sourceKey]?.name.orEmpty(), style = MaterialTheme.typography.bodySmall) }) else null,
-            leadingContent = { Icon(Icons.Default.Folder, null, tint = MaterialTheme.colorScheme.primary) },
+            leadingContent = {
+                if (nativeIcon != null) takagi.ru.monica.ui.icons.KeePassCustomIconImage(nativeIcon, Modifier.size(36.dp))
+                else Icon(Icons.Default.Folder, null, tint = MaterialTheme.colorScheme.primary)
+            },
             trailingContent = { Text(folder.count.toString(), style = MaterialTheme.typography.labelMedium) },
             modifier = Modifier.clickable(role = Role.Button) { onClick(folder) }.testTag("overview_folder_${folder.key}"),
             colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow))

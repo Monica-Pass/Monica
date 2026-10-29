@@ -15,27 +15,31 @@ internal object ImeKeyboardPreferences {
 
     fun get(context: Context): DataStore<ImeKeyboardOptions> = instance ?: synchronized(this) {
         instance ?: MultiProcessDataStoreFactory.create(
-            serializer = OptionsSerializer,
+            serializer = ImeKeyboardOptionsSerializer,
             corruptionHandler = ReplaceFileCorruptionHandler { ImeKeyboardOptions() },
             produceFile = { context.applicationContext.filesDir.resolve("datastore/ime_keyboard_options.bin") },
         ).also { instance = it }
     }
 
-    private object OptionsSerializer : Serializer<ImeKeyboardOptions> {
-        override val defaultValue = ImeKeyboardOptions()
+}
 
-        override suspend fun readFrom(input: InputStream): ImeKeyboardOptions {
-            val version = input.read()
-            val shuffle = input.read()
-            val hidePreview = input.read()
-            if (version != 1 || shuffle !in 0..1 || hidePreview !in 0..1 || input.read() != -1) {
-                throw CorruptionException("Invalid keyboard options")
-            }
-            return ImeKeyboardOptions(shuffle == 1, hidePreview == 1)
-        }
+internal object ImeKeyboardOptionsSerializer : Serializer<ImeKeyboardOptions> {
+    override val defaultValue = ImeKeyboardOptions()
 
-        override suspend fun writeTo(t: ImeKeyboardOptions, output: OutputStream) {
-            output.write(byteArrayOf(1, if (t.scramblePin) 1 else 0, if (t.hidePinPreview) 1 else 0))
+    override suspend fun readFrom(input: InputStream): ImeKeyboardOptions {
+        val version = input.read()
+        val shuffle = input.read()
+        val hidePreview = input.read()
+        val vibration = if (version == 2) input.read() else 0
+        if (version !in 1..2 || shuffle !in 0..1 || hidePreview !in 0..1 ||
+            vibration !in 0..1 || input.read() != -1) {
+            throw CorruptionException("Invalid keyboard options")
         }
+        return ImeKeyboardOptions(shuffle == 1, hidePreview == 1, vibration == 1)
+    }
+
+    override suspend fun writeTo(t: ImeKeyboardOptions, output: OutputStream) {
+        output.write(byteArrayOf(2, if (t.scramblePin) 1 else 0, if (t.hidePinPreview) 1 else 0,
+            if (t.keyVibrationEnabled) 1 else 0))
     }
 }

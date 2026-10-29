@@ -424,6 +424,7 @@ internal fun MonicaImeContent(
                                 pinDigits = uiState.pinDigits,
                                 hideKeyFeedback = (!uiState.isSearchEditing && uiState.isSensitiveInput) ||
                                     (uiState.keyboardMode == MonicaKeyboardMode.NUMBERS && uiState.keyboardOptions.hidePinPreview),
+                                keyVibrationEnabled = uiState.keyboardOptions.keyVibrationEnabled,
                                 onKeyPressed = onKeyPressed,
                                 onBackspace = onBackspace,
                                 onDeleteAll = onDeleteAll,
