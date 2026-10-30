@@ -46,6 +46,7 @@ internal fun PasswordTopActionsDropdownMenu(
     expanded: Boolean,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
+    showNearbySync: Boolean = true,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     if (!expanded) return
@@ -74,7 +75,7 @@ internal fun PasswordTopActionsDropdownMenu(
                     shape = PasswordTopActionsMenuShape
                 )
         ) {
-            NearbySyncTopActionsMenuItem(onDismissMenu = onDismissRequest)
+            if (showNearbySync) NearbySyncTopActionsMenuItem(onDismissMenu = onDismissRequest)
             content()
         }
     }
@@ -174,7 +175,7 @@ internal fun KeepassRefreshTopActionsMenuItem(
 ) {
     DropdownMenuItem(
         text = {
-            Text("${stringResource(R.string.refresh)} ${stringResource(R.string.filter_keepass)}")
+            Text(stringResource(R.string.kp_file_reload))
         },
         leadingIcon = { Icon(Icons.Default.Sync, contentDescription = null) },
         onClick = onClick

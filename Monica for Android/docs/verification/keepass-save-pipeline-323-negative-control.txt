@@ -1,0 +1,40 @@
+
+takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest:KDBX_SAVE_PIPELINE ms=638 global_reads=2 save_global_reads=2
+
+Error in sameVaultSaveDoesNotSubscribeToGlobalPasswordRows(takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest):
+java.lang.AssertionError: Saving one native entry must not subscribe to all storage contents expected:<0> but was:<2>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest$sameVaultSaveDoesNotSubscribeToGlobalPasswordRows$1$2.invokeSuspend(KeePassSavePipelineInstrumentedTest.kt:97)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest.sameVaultSaveDoesNotSubscribeToGlobalPasswordRows(KeePassSavePipelineInstrumentedTest.kt:61)
+
+
+Time: 3.885
+There was 1 failure:
+1) sameVaultSaveDoesNotSubscribeToGlobalPasswordRows(takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest)
+java.lang.AssertionError: Saving one native entry must not subscribe to all storage contents expected:<0> but was:<2>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest$sameVaultSaveDoesNotSubscribeToGlobalPasswordRows$1$2.invokeSuspend(KeePassSavePipelineInstrumentedTest.kt:97)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest.sameVaultSaveDoesNotSubscribeToGlobalPasswordRows(KeePassSavePipelineInstrumentedTest.kt:61)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1

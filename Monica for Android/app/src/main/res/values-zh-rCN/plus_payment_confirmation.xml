@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="payment_unlock_confirmation">我已诚信付款，确认解锁Monica plus</string>
+    <string name="payment_unlock_confirm_button">确认解锁</string>
+</resources>

@@ -26,6 +26,8 @@ import java.io.File
 
 class WalletPassTemplatesDeviceTest {
     @get:Rule val compose = createComposeRule()
+    private val originalCode = takagi.ru.monica.data.model.BoardingPassBarcode(
+        "M1DESMARAIS/LUC       EABC123 YULFRAAC 0834 326J001A0025 10C>5180  W0D  ", "PDF_417")
     private lateinit var f: TransferFixture
     private lateinit var bank: BankCardViewModel
     private lateinit var document: DocumentViewModel
@@ -101,7 +103,7 @@ class WalletPassTemplatesDeviceTest {
     @Test fun rewardsCreateSwitchDraftAndDetail() = create(CardWalletTab.REWARDS_CARDS, "REWARDS", R.string.wallet_pass_points, "points", "0001250.50")
     @Test fun travelCreateSwitchDraftAndDetailAtLargeFont() = create(CardWalletTab.TRAVEL_PASSES, "TRAVEL", R.string.wallet_pass_seat, "seat", "12A", large = true)
 
-    @Test fun scanBoardingPassFromGalleryFillsDraftAndSavesOnlyTheFields() {
+    @Test fun scanBoardingPassFromGalleryRetainsEncryptedCodeAcrossRecreation() {
         val raw = "M1DESMARAIS/LUC       EABC123 YULFRAAC 0834 326J001A0025 10C>5180  W0D  "
         val image = File(f.root, "boarding-pass.png")
         val bitmap = takagi.ru.monica.ui.scanner.QrScannerFixtures.Frame()
@@ -123,11 +125,16 @@ class WalletPassTemplatesDeviceTest {
             }
         }
         var closed = false
-        compose.setContent {
+        val restoration = androidx.compose.ui.test.junit4.StateRestorationTester(compose)
+        var draftRegistry: androidx.compose.runtime.saveable.SaveableStateRegistry? = null
+        var detailId by mutableStateOf<Long?>(null)
+        restoration.setContent {
+            draftRegistry = androidx.compose.runtime.saveable.LocalSaveableStateRegistry.current
             CompositionLocalProvider(LocalUiSecurityManager provides f.security,
                 androidx.activity.compose.LocalActivityResultRegistryOwner provides registryOwner) {
                 takagi.ru.monica.ui.theme.MonicaTheme {
-                    AddEditDocumentScreen(document, initialWalletTemplate = "TRAVEL",
+                    if (detailId != null) DocumentDetailScreen(document, detailId!!, {}, {})
+                    else AddEditDocumentScreen(document, initialWalletTemplate = "TRAVEL",
                         initialStorageExplicit = true, onNavigateBack = { closed = true })
                 }
             }
@@ -136,7 +143,7 @@ class WalletPassTemplatesDeviceTest {
         input(R.string.wallet_pass_gate, "Gate42")
         androidx.test.espresso.Espresso.closeSoftKeyboard()
         compose.onNodeWithTag("wallet_pass_scan_boarding_pass").performScrollTo().assertIsDisplayed().performClick()
-        compose.onNodeWithText(text(R.string.wallet_pass_scan_boarding_pass_hint)).assertIsDisplayed()
+        compose.onNode(hasText(text(R.string.wallet_pass_scan_boarding_pass_hint)) and hasAnyAncestor(isDialog())).assertIsDisplayed()
         capture("boarding-scanner")
         compose.onNodeWithText(text(R.string.qr_pick_from_gallery)).performClick()
         compose.waitUntil(15000) {
@@ -145,6 +152,10 @@ class WalletPassTemplatesDeviceTest {
         compose.onNode(hasText("AC834") and hasSetTextAction()).performScrollTo().assertIsDisplayed()
         assertFalse(runBlocking { f.secureItems.getAllItems().first().any { it.title == f.prefix } })
         capture("boarding-filled")
+        val savedState = compose.runOnIdle { requireNotNull(draftRegistry).performSave().toString() }
+        assertFalse(savedState.contains(raw))
+        restoration.emulateSavedInstanceStateRestore()
+        compose.onNodeWithTag("boarding_pass_remove_code").performScrollTo().assertIsDisplayed()
         compose.onNodeWithContentDescription(text(R.string.save)).performClick()
         compose.waitUntil(30000) { closed }
         val row = runBlocking { f.secureItems.getAllItems().first().single { it.title == f.prefix } }
@@ -160,12 +171,23 @@ class WalletPassTemplatesDeviceTest {
         assertEquals("1A", data.walletFields["seat"])
         assertEquals("J", data.walletFields["travelClass"])
         assertEquals("Gate42", data.walletFields["gate"])
-        assertFalse(CardWalletDataCodec.encodeDocumentData(data).contains(raw))
+        assertEquals(originalCode, data.boardingPassBarcode)
+        assertFalse(row.itemData.contains(raw))
+        assertTrue(row.itemData.startsWith("C2|") || row.itemData.startsWith("V2|"))
+        compose.runOnIdle { detailId = row.id }
+        compose.waitUntil(15000) { compose.onAllNodesWithTag("boarding_pass_show_code").fetchSemanticsNodes().isNotEmpty() }
+        compose.onNodeWithTag("boarding_pass_show_code").performScrollTo().assertIsDisplayed()
+        capture("boarding-detail")
+        compose.onNodeWithTag("boarding_pass_show_code").performClick()
+        compose.waitUntil(15000) { compose.onAllNodesWithTag("boarding_pass_barcode").fetchSemanticsNodes().isNotEmpty() }
+        capture("boarding-presented")
     }
 
-    @Test fun reeditUpdatesInPlaceAndRetainsFutureFields() {
+    @Test fun reeditUpdatesInPlaceAndRetainsFutureFields() = reedit(false)
+    @Test fun removingCodeIsPersistedOnlyOnSave() = reedit(true)
+    private fun reedit(removeCode: Boolean) {
         val original = DocumentData(DocumentType.OTHER, "0001", "Synthetic Person", walletTemplate = "TRAVEL",
-            walletFields = mapOf("seat" to "12A", "future" to "keep"))
+            walletFields = mapOf("seat" to "12A", "future" to "keep"), boardingPassBarcode = originalCode)
         val id = runBlocking { f.db.secureItemDao().insertItem(SecureItem(itemType = ItemType.DOCUMENT, title = f.prefix,
             itemData = CardWalletDataCodec.encodeDocumentData(original))) }
         var closed = false
@@ -174,13 +196,18 @@ class WalletPassTemplatesDeviceTest {
         } }
         compose.waitUntil(15000) { compose.onAllNodesWithText("12A").fetchSemanticsNodes().isNotEmpty() }
         input(R.string.wallet_pass_seat, "14B")
+        if (removeCode) {
+            compose.onNodeWithTag("boarding_pass_remove_code").performScrollTo().performClick()
+            val unchanged = runBlocking { f.db.secureItemDao().getItemById(id)!! }
+            assertEquals(originalCode, CardWalletDataCodec.parseDocumentData(unchanged.itemData, f.security::decryptDataIfMonicaCiphertext)!!.boardingPassBarcode)
+        }
         androidx.test.espresso.Espresso.closeSoftKeyboard()
         compose.onNodeWithContentDescription(text(R.string.save)).performClick()
         compose.waitUntil(30000) { closed }
         val rows = runBlocking { f.secureItems.getAllItems().first().filter { it.title == f.prefix } }
         assertEquals(listOf(id), rows.map { it.id })
         val data = CardWalletDataCodec.parseDocumentData(rows.single().itemData, f.security::decryptDataIfMonicaCiphertext)!!
-        assertEquals(original.copy(walletFields = original.walletFields + ("seat" to "14B")), data)
+        assertEquals(original.copy(walletFields = original.walletFields + ("seat" to "14B"), boardingPassBarcode = if (removeCode) null else originalCode), data)
     }
 
     @Test fun encryptedBitwardenFreshDownloadRetainsEveryTemplate() = runBlocking {
@@ -188,7 +215,7 @@ class WalletPassTemplatesDeviceTest {
         val vault = f.db.bitwardenVaultDao().getVaultById(target.databaseId)!!
         WalletPassTemplate.entries.forEach { template ->
             val data = DocumentData(DocumentType.OTHER, "00001234", "Synthetic Person", issuedBy = "Synthetic Issuer",
-                walletTemplate = template.name, walletFields = mapOf("seat" to "12A", "points" to "0001250.50", "future" to "keep"))
+                boardingPassBarcode = originalCode, walletTemplate = template.name, walletFields = mapOf("seat" to "12A", "points" to "0001250.50", "future" to "keep"))
             val item = SecureItem(itemType = ItemType.DOCUMENT, title = "${f.prefix}-${template.name}",
                 itemData = CardWalletDataCodec.encodeDocumentData(data), bitwardenVaultId = vault.id)
             val id = f.db.secureItemDao().insertItem(item)
@@ -203,8 +230,34 @@ class WalletPassTemplatesDeviceTest {
             val restored = CardWalletDataCodec.parseDocumentData(restoredRow.itemData, f.security::decryptDataIfMonicaCiphertext)!!
             assertEquals(data.walletTemplate, restored.walletTemplate)
             assertEquals(data.walletFields, restored.walletFields)
+            assertEquals(originalCode, restored.boardingPassBarcode)
+            assertFalse(wire.toString().contains(originalCode.payload))
+            val fields = wire.getJSONArray("fields")
+            assertTrue((0 until fields.length()).any { fields.getJSONObject(it).optInt("type") == 1 })
             assertEquals(data.documentNumber, restored.documentNumber)
             assertTrue(restored.customFields.isEmpty())
+            val crypto = takagi.ru.monica.bitwarden.crypto.BitwardenCrypto
+            val codeField = response.fields!!.single { crypto.decryptToString(it.name!!, f.vaultKey) == "monica_boarding_pass" }
+            assertEquals(1, codeField.type)
+            val sync = CipherSyncProcessor(f.context)
+            fun remote(value: String?, revision: String) = response.copy(
+                fields = response.fields!!.filterNot { it == codeField } +
+                    listOfNotNull(value?.let { codeField.copy(value = crypto.encryptString(it, f.vaultKey)) }),
+                revisionDate = revision)
+            assertFalse(sync.syncCipherFromServer(vault, remote(null, "2026-11-01T00:00:01.000Z"), f.vaultKey) is CipherSyncResult.Error)
+            fun storedCode() = runBlocking { CardWalletDataCodec.parseDocumentData(
+                f.db.secureItemDao().getByBitwardenCipherIdInVault(vault.id, response.id)!!.itemData,
+                f.security::decryptDataIfMonicaCiphertext)!!.boardingPassBarcode }
+            assertEquals(originalCode, storedCode())
+            assertTrue(runCatching { sync.syncCipherFromServer(vault, remote("{bad}", "2026-11-01T00:00:02.000Z"), f.vaultKey) }.isFailure)
+            assertEquals(originalCode, storedCode())
+            val damaged = response.copy(fields = response.fields!!.map { if (it == codeField) it.copy(value = "2.invalid|invalid|invalid") else it },
+                revisionDate = "2026-11-01T00:00:03.000Z")
+            assertTrue(runCatching { sync.syncCipherFromServer(vault, damaged, f.vaultKey) }.isFailure)
+            assertEquals(originalCode, storedCode())
+            assertFalse(sync.syncCipherFromServer(vault, remote("", "2026-11-01T00:00:04.000Z"), f.vaultKey) is CipherSyncResult.Error)
+            assertNull(storedCode())
+
         }
     }
 
@@ -213,7 +266,7 @@ class WalletPassTemplatesDeviceTest {
         val mdbx = f.mdbx()
         val targets = listOf(StorageTarget.MonicaLocal(null), StorageTarget.KeePass(keepass.databaseId, null), StorageTarget.Mdbx(mdbx.databaseId))
         WalletPassTemplate.entries.forEach { template ->
-            val data = DocumentData(DocumentType.OTHER, "0001", "Synthetic", walletTemplate = template.name,
+            val data = DocumentData(DocumentType.OTHER, "0001", "Synthetic", walletTemplate = template.name, boardingPassBarcode = originalCode,
                 walletFields = mapOf("origin" to "上海", "seat" to "12A", "points" to "0010"))
             val completed = CompletableDeferred<Result<Long>>()
             withContext(Dispatchers.Main) {
@@ -229,6 +282,7 @@ class WalletPassTemplatesDeviceTest {
         val reopened = takagi.ru.monica.utils.KeePassKdbxService(f.context, f.db.localKeePassDatabaseDao(), f.security)
             .readSecureItems(keepass.databaseId).getOrThrow()
         assertEquals(3, reopened.size)
+        reopened.forEach { assertEquals(originalCode, CardWalletDataCodec.parseDocumentData(it.item.itemData)!!.boardingPassBarcode) }
         assertEquals(WalletPassTemplate.entries.map { it.name }.toSet(), reopened.map {
             CardWalletDataCodec.parseDocumentData(it.item.itemData)!!.walletTemplate
         }.toSet())
@@ -241,6 +295,7 @@ class WalletPassTemplatesDeviceTest {
             assertTrue(result.toString(), result is MdbxViewModel.OperationState.Success)
             val projected = f.db.secureItemDao().getByMdbxDatabaseIdSync(mdbx.databaseId)
             assertEquals(3, projected.size)
+            projected.forEach { assertEquals(originalCode, CardWalletDataCodec.parseDocumentData(it.itemData, f.security::decryptDataIfMonicaCiphertext)!!.boardingPassBarcode) }
             assertEquals(WalletPassTemplate.entries.map { it.name }.toSet(), projected.map {
                 CardWalletDataCodec.parseDocumentData(it.itemData, f.security::decryptDataIfMonicaCiphertext)!!.walletTemplate
             }.toSet())

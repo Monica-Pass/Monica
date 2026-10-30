@@ -15,6 +15,7 @@ import takagi.ru.monica.security.SessionManager
 import takagi.ru.monica.utils.KeePassKdbxService
 import takagi.ru.monica.utils.KeePassEntryData
 import takagi.ru.monica.utils.KeePassCustomFieldData
+import takagi.ru.monica.utils.KeePassMonicaPasswordProjection
 import java.nio.ByteBuffer
 import java.security.MessageDigest
 import java.util.Date
@@ -30,6 +31,8 @@ internal data class KeePassMonicaPasswordDraft(
     val fields: List<KeePassFieldChange>,
 )
 
+internal enum class KeePassFileState { READY, BUSY, SAVED, EXTERNAL_RELOADED, RELOADED, MERGED, MERGED_CONFLICTS, RELOAD_FAILED, WRITE_FAILED }
+
 /** An in-memory presentation adapter. Its IDs are never Room rows or KDBX ownership fields. */
 internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxService, private val security: SecurityManager? = null) {
     internal data class Snapshot(
@@ -39,10 +42,16 @@ internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxServic
         val secureItems: List<SecureItem>,
         val lockVersion: Long,
         val passkeys: List<PasskeyEntry>,
+        val sourceBrowser: KeePassNativeBrowserSnapshot = browser,
+        val passwordProjection: KeePassMonicaPasswordProjection? = null,
     )
 
     private val mutex = Mutex()
     private val snapshots = MutableStateFlow<Map<Long, Snapshot>>(emptyMap())
+    private val _fileStates = MutableStateFlow<Map<Long, KeePassFileState>>(emptyMap())
+    val fileStates = _fileStates.asStateFlow()
+    private val lastSourceChecks = mutableMapOf<Long, Long>()
+    private fun fileState(id: Long, state: KeePassFileState) { _fileStates.update { it + (id to state) } }
     private val active = MutableStateFlow<Set<Long>>(emptySet())
     private val identities = mutableMapOf<Long, KeePassNativeEntryIdentity>()
     private val drafts = mutableMapOf<Long, Snapshot>()
@@ -113,6 +122,8 @@ internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxServic
         ids.associateWith { id -> if (unlocked) data[id]?.secureItems.orEmpty() else emptyList() }
     }
     fun isActive(databaseId: Long): Boolean = databaseId in active.value
+    fun isDatabaseAvailable(databaseId: Long): Boolean = SessionManager.isUnlocked.value && service.isDatabaseUnlocked(databaseId)
+    fun canWriteDatabase(databaseId: Long): Boolean = isDatabaseAvailable(databaseId) && !service.isDatabaseReadOnly(databaseId)
     val activePasskeys: Flow<Map<Long, List<PasskeyEntry>>> = combine(snapshots, active, SessionManager.isUnlocked) { data, ids, unlocked ->
         ids.associateWith { id -> if (unlocked) data[id]?.passkeys.orEmpty() else emptyList() }
     }
@@ -125,6 +136,7 @@ internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxServic
         synchronized(this) {
             if (databaseId == null) {
                 snapshots.value = emptyMap()
+                _fileStates.value = emptyMap()
                 drafts.clear()
                 secureDrafts.clear()
                 passkeyDrafts.clear()
@@ -133,6 +145,7 @@ internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxServic
                 blocked += passkeyIdentities.values.map { it.databaseId }
             } else {
                 snapshots.update { it - databaseId }
+                _fileStates.update { it - databaseId }
                 drafts.entries.removeAll { it.value.browser.databaseId == databaseId }
                 secureDrafts.entries.removeAll { it.value.browser.databaseId == databaseId }
                 passkeyDrafts.entries.removeAll { it.value.browser.databaseId == databaseId }
@@ -153,11 +166,93 @@ internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxServic
 
     suspend fun refresh(databaseId: Long): Snapshot = mutex.withLock { load(databaseId) }
 
+    /** Only the visible list polls. Draft baselines remain unchanged so stale editors cannot overwrite it. */
+    suspend fun checkForExternalChanges(databaseId: Long): Boolean = mutex.withLock {
+        val before = snapshots.value[databaseId] ?: return@withLock false
+        if (!SessionManager.isUnlocked.value || !service.isDatabaseUnlocked(databaseId) ||
+            before.lockVersion != (KeePassKdbxService.nativeLockVersions.value[databaseId] ?: 0L)) return@withLock false
+        val now = android.os.SystemClock.elapsedRealtime()
+        if (now - (lastSourceChecks[databaseId] ?: 0L) < 1500L) return@withLock false
+        lastSourceChecks[databaseId] = now
+        try {
+            if (service.currentNativeSourceRevision(databaseId) == before.browser.sourceRevision) {
+                if (_fileStates.value[databaseId] == KeePassFileState.RELOAD_FAILED) fileState(databaseId, KeePassFileState.RELOADED)
+                return@withLock false
+            }
+            service.reloadNativeDatabase(databaseId)
+            load(databaseId)
+            fileState(databaseId, KeePassFileState.EXTERNAL_RELOADED)
+            true
+        } catch (error: Exception) {
+            if (error is kotlinx.coroutines.CancellationException) throw error
+            fileState(databaseId, KeePassFileState.RELOAD_FAILED)
+            false
+        }
+    }
+
+    suspend fun reload(databaseId: Long, refreshRemoteSource: (suspend () -> Unit)? = null): Snapshot = mutex.withLock {
+        requireReadable(databaseId)
+        fileState(databaseId, KeePassFileState.BUSY)
+        try {
+            val previousRevision = snapshots.value[databaseId]?.browser?.sourceRevision
+            if (refreshRemoteSource == null) service.reloadNativeDatabase(databaseId) else refreshRemoteSource()
+            load(databaseId).also { fileState(databaseId,
+                if (previousRevision != null && previousRevision != it.browser.sourceRevision) KeePassFileState.EXTERNAL_RELOADED else KeePassFileState.RELOADED) }
+        } catch (error: Exception) {
+            fileState(databaseId, KeePassFileState.RELOAD_FAILED)
+            throw error
+        }
+    }
+
+    suspend fun saveDatabase(databaseId: Long) = mutex.withLock {
+        requireReadable(databaseId)
+        val before = snapshots.value[databaseId] ?: load(databaseId)
+        fileState(databaseId, KeePassFileState.BUSY)
+        try {
+            service.saveNativeDatabase(databaseId, before.browser.sourceRevision.sha256)
+            load(databaseId)
+            fileState(databaseId, KeePassFileState.SAVED)
+        } catch (error: Exception) {
+            fileState(databaseId, KeePassFileState.WRITE_FAILED)
+            throw error
+        }
+    }
+
+    suspend fun mergeDatabase(databaseId: Long, source: android.net.Uri, password: String, keyFile: android.net.Uri?) = mutex.withLock {
+        requireReadable(databaseId)
+        val before = snapshots.value[databaseId] ?: load(databaseId)
+        fileState(databaseId, KeePassFileState.BUSY)
+        try {
+            val conflicts = service.synchronizeNativeDatabaseFrom(databaseId, source, password, keyFile, before.browser.sourceRevision.sha256)
+            load(databaseId)
+            fileState(databaseId, if (conflicts > 0) KeePassFileState.MERGED_CONFLICTS else KeePassFileState.MERGED)
+        } catch (error: Exception) {
+            fileState(databaseId, KeePassFileState.WRITE_FAILED)
+            throw error
+        }
+    }
+
     private suspend fun load(databaseId: Long): Snapshot {
         requireReadable(databaseId)
         val lockVersion = KeePassKdbxService.nativeLockVersions.value[databaseId] ?: 0L
-        val browser = service.openNativeBrowser(databaseId, true).getOrThrow()
-        val workspace = service.loadWorkspace(databaseId, includePasskeys = true).getOrThrow()
+        val previous = snapshots.value[databaseId]?.takeIf { it.lockVersion == lockVersion }
+        // Card/document projections also restore encrypted photo files, which may
+        // be evicted without changing the original KDBX session. Keep rehydrating them.
+        val reusable = previous?.takeIf { snapshot -> snapshot.secureItems.none {
+            it.itemType == ItemType.BANK_CARD || it.itemType == ItemType.DOCUMENT
+        } }
+        val read = service.loadMonicaWorkspace(databaseId, reusable?.sourceBrowser, previous?.passwordProjection).getOrThrow()
+        val workspace = read.workspace
+        if (workspace == null) {
+            synchronized(this) {
+                requireReadable(databaseId)
+                check((KeePassKdbxService.nativeLockVersions.value[databaseId] ?: 0L) == lockVersion) { "KeePass database was locked while reading" }
+                check(previous != null && snapshots.value[databaseId] === previous) { "KeePass snapshot was invalidated while reading" }
+                return previous
+            }
+        }
+        val browser = read.sourceBrowser.copy(passwordEntryUuids = workspace.passwords.asSequence()
+            .filterNot { it.isInRecycleBin }.map { UUID.fromString(it.entryUuid) }.toHashSet())
         check(workspace.sessionRevision == browser.sourceRevision.sha256) { "KeePass database changed while reading" }
         check((KeePassKdbxService.nativeLockVersions.value[databaseId] ?: 0L) == lockVersion) { "KeePass database was locked while reading" }
         requireReadable(databaseId)
@@ -171,7 +266,7 @@ internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxServic
             custom[id] = source.customFields.filterNot { it.title in UI_FIELDS }.mapIndexed { index, field ->
                 CustomField(id = auxiliaryId(identity, "field:${field.title}"), entryId = id, title = field.title,
                     value = field.value, isProtected = field.isProtected, sortOrder = index)
-            }
+            }.let { fields -> previous?.customFields?.get(id)?.takeIf { it == fields } ?: fields }
             source.toRow(id, databaseId).copy(
                 isFavorite = record.field("MonicaIsFavorite")?.displayValue.equals("true", true),
                 passwordGroupId = record.field("MonicaPasswordGroupId")?.displayValue?.takeIf(String::isNotBlank),
@@ -201,6 +296,7 @@ internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxServic
             synchronized(this) { passkeyIdentities[id] = identity }
             row.copy(id = id)
         }
+        val previousRows = previous?.rows?.associateBy { it.id }.orEmpty()
         val presentedRows = rows.map { row ->
             val record = browser.entriesByIdentity[KeePassNativeEntryIdentity(databaseId, UUID.fromString(row.keepassEntryUuid))]!!.single()
             val ssoUuid = record.field("MonicaSsoRefEntryUuid")?.displayValue?.takeIf(String::isNotBlank)
@@ -208,20 +304,29 @@ internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxServic
             val legacySso = row.ssoRefEntryId?.let { legacyId -> workspace.passwords.singleOrNull { it.monicaLocalId == legacyId }?.entryUuid }
             row.copy(ssoRefEntryId = (ssoUuid ?: legacySso)?.let { uuid -> rows.singleOrNull { it.keepassEntryUuid == uuid }?.id } ?: row.ssoRefEntryId,
                 boundNoteId = noteUuid?.let { uuid -> secureRows.singleOrNull { it.itemType == ItemType.NOTE && it.keepassEntryUuid == uuid }?.id } ?: row.boundNoteId)
+                .let { updated -> previousRows[row.id]?.takeIf { it == updated } ?: updated }
         }
-        return Snapshot(browser, presentedRows, custom, secureRows, lockVersion, passkeys).also { snapshot ->
+        return Snapshot(browser, presentedRows, custom, secureRows, lockVersion, passkeys, read.sourceBrowser, read.passwordProjection).also { snapshot ->
             synchronized(this) {
                 requireReadable(databaseId)
                 check((KeePassKdbxService.nativeLockVersions.value[databaseId] ?: 0L) == lockVersion) { "KeePass database was locked while reading" }
                 snapshots.update { it + (databaseId to snapshot) }
+                _fileStates.update { if (databaseId in it) it else it + (databaseId to KeePassFileState.READY) }
             }
         }
     }
 
     fun rows(databaseId: Long): Flow<List<PasswordEntry>> = flow {
-        if (snapshots.value[databaseId] == null) refresh(databaseId)
-        emitAll(combine(snapshots, SessionManager.isUnlocked) { data, unlocked ->
-            if (unlocked && data[databaseId]?.lockVersion == (KeePassKdbxService.nativeLockVersions.value[databaseId] ?: 0L)) data[databaseId]?.rows.orEmpty() else emptyList()
+        if (snapshots.value[databaseId] == null && SessionManager.isUnlocked.value) {
+            try { refresh(databaseId) }
+            catch (error: Exception) {
+                if (error is kotlinx.coroutines.CancellationException) throw error
+                // A startup lock or failed initial read must not end this subscription.
+                // The visible screen's explicit refresh can publish a valid snapshot later.
+            }
+        }
+        emitAll(combine(snapshots, SessionManager.isUnlocked, KeePassKdbxService.nativeLockVersions) { data, unlocked, versions ->
+            if (unlocked && data[databaseId]?.lockVersion == (versions[databaseId] ?: 0L)) data[databaseId]?.rows.orEmpty() else emptyList()
         })
     }
 

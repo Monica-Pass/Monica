@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hardware_key_title">物理安全密钥</string>
+    <string name="hardware_key_title">物理密钥</string>
     <string name="hardware_key_fab">物理密钥</string>
     <string name="hardware_key_back">返回</string>
     <string name="hardware_key_cancel">取消</string>
@@ -32,7 +32,7 @@
     <string name="hardware_key_authenticate">使用此安全密钥</string>
     <string name="hardware_key_create_note">通行密钥将在安全密钥内部生成。确认后，按提示触碰密钥。</string>
     <string name="hardware_key_get_note">使用安全密钥中的通行密钥登录此网站或应用。</string>
-    <string name="hardware_key_instructions">在 Android 14 及以上启用 Monica 通行密钥服务。在网站添加通行密钥，然后在系统弹窗中选择 Monica 的物理安全密钥选项。</string>
+    <string name="hardware_key_instructions">在 Android 14 及以上启用 Monica 通行密钥服务。在网站或应用发起注册，选择 Monica，再在保存位置选择已连接的物理密钥。也可直接使用系统弹窗中的物理密钥选项。</string>
     <string name="hardware_key_no_import">标准 FIDO2 密钥无法导入 Monica 现有的私钥。PIN 和硬件凭据不会保存到 Monica。</string>
     <string name="hardware_key_read_credentials">查看密钥中的凭据</string>
     <string name="hardware_key_count">%1$d 条凭据 · 还可保存 %2$d 条</string>
@@ -54,4 +54,21 @@
     <string name="hardware_key_full">安全密钥的凭据存储空间已满。</string>
     <string name="hardware_key_cancelled">密钥已取消操作，或等待触碰超时。可以重新连接后重试。</string>
     <string name="hardware_key_failed">密钥未能完成操作。请检查 PIN、密钥支持的功能及连接，必要时重新连接。</string>
+    <string name="hardware_key_connected_via">已通过 %1$s 连接</string>
+    <string name="hardware_key_connect_short">连接 USB 或轻触 NFC 密钥</string>
+    <string name="hardware_key_information">密钥信息</string>
+    <string name="hardware_key_pin_section">PIN 与用户验证</string>
+    <string name="hardware_key_pin_ready_hint">需要验证时输入密钥 PIN。</string>
+    <string name="hardware_key_pin_setup_hint">注册或管理凭据需要 PIN 时，请先设置。</string>
+    <string name="hardware_key_credentials_section">密钥中的凭据</string>
+    <string name="hardware_key_registration_section">通行密钥</string>
+    <string name="hardware_key_registration_hint">在网站或应用发起注册，再选择物理密钥。</string>
+    <string name="hardware_key_registration_help">查看注册方式</string>
+    <string name="hardware_key_save_location">保存位置</string>
+    <string name="hardware_key_software_location">Monica 或密码库</string>
+    <string name="hardware_key_software_hint">选择 Monica、KDBX、MDBX 或 Bitwarden</string>
+    <string name="hardware_key_detected_via">已检测到 %1$s 设备</string>
+    <string name="hardware_key_disconnected">物理密钥已断开，请重新连接</string>
+    <string name="hardware_key_hardware_location_hint">%1$s · 私钥保存在物理密钥中</string>
+    <string name="hardware_key_create_on_key">在物理密钥中创建</string>
 </resources>

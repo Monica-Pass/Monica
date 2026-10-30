@@ -4762,14 +4762,9 @@
     <string name="wallet_pass_gate">Gate</string>
     <string name="wallet_pass_seat">Seat</string>
     <string name="wallet_pass_class">Travel class</string>
-    <string name="wallet_pass_show_code">View membership code</string>
     <string name="startup_behavior_title">On startup</string>
     <string name="auto_focus_search_on_startup_title">Focus search on startup</string>
     <string name="auto_focus_search_on_startup_desc">Open search and show the keyboard when entering the main page after unlocking.</string>
     <string name="ime_key_vibration_title">Keypress vibration</string>
     <string name="ime_key_vibration_description">Vibrate once when pressing a key on the Monica keyboard.</string>
-    <string name="wallet_pass_scan_boarding_pass">Scan boarding pass</string>
-    <string name="wallet_pass_scan_boarding_pass_hint">Align the barcode on the boarding pass with the frame</string>
-    <string name="wallet_pass_boarding_pass_invalid">Not an IATA boarding pass barcode</string>
-    <string name="wallet_pass_boarding_pass_filled">Boarding pass details filled in</string>
 </resources>

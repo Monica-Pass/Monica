@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="boarding_code_show">搭乗用コードを表示</string>
+    <string name="boarding_code_add">編集して搭乗券をスキャン</string>
+    <string name="boarding_code_missing">この搭乗券にはコードが保存されていません</string>
+    <string name="boarding_code_saved">元の搭乗用コードを保存済み</string>
+    <string name="wallet_code_hint">QR コード・バーコードを表示</string>
+    <string name="boarding_code_original_hint">スキャンした元の内容です。搭乗券の情報を編集しても、このコードは変わりません。</string>
+    <string name="boarding_code_expand">コードを拡大</string>
+    <string name="boarding_code_collapse">搭乗券の情報を表示</string>
+    <string name="boarding_code_unavailable">ここではコードを表示できません。横向きにするか、元の搭乗券をもう一度スキャンしてください。</string>
+    <string name="boarding_code_rescan">再スキャン</string>
+    <string name="boarding_code_remove">保存したコードを削除</string>
+    <string name="wallet_pass_scan_boarding_pass">搭乗券をスキャン</string>
+    <string name="wallet_pass_scan_boarding_pass_hint">搭乗券のバーコードを枠に合わせてください</string>
+    <string name="wallet_pass_boarding_pass_invalid">IATA 搭乗券のバーコードではありません</string>
+    <string name="wallet_pass_boarding_pass_filled">搭乗券の情報を入力しました。保存するとコードも保持されます</string>
+    <string name="boarding_code_draft_hint">コードの変更を反映するには搭乗券を保存してください</string>
+    <string name="wallet_pass_show_code">会員コードを表示</string>
+</resources>

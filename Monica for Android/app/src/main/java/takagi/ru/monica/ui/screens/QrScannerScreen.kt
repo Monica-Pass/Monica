@@ -49,6 +49,7 @@ import takagi.ru.monica.R
 import takagi.ru.monica.ui.scanner.QrCameraScanSession
 import takagi.ru.monica.ui.scanner.QrScanRestartReason
 import takagi.ru.monica.ui.scanner.QrScannerDiagnostics
+import takagi.ru.monica.ui.scanner.DecodedBarcode
 import takagi.ru.monica.ui.scanner.ZxingBarcodeDecoder
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -86,6 +87,7 @@ fun QrScannerScreen(
     diagnosticLabel: String? = null,
     onDiagnostic: ((String) -> Unit)? = null,
     preserveWhitespace: Boolean = false,
+    onBarcodeScanned: ((String, BarcodeFormat) -> Unit)? = null,
     bottomContent: @Composable (launchGallery: () -> Unit) -> Unit = { launchGallery ->
         DefaultQrScannerBottomContent(launchGallery = launchGallery)
     }
@@ -115,6 +117,7 @@ fun QrScannerScreen(
                     diagnosticLabel = diagnosticLabel,
                     onDiagnostic = onDiagnostic,
                     preserveWhitespace = preserveWhitespace,
+                    onBarcodeScanned = onBarcodeScanned,
                     bottomContent = bottomContent
                 )
             }
@@ -185,6 +188,7 @@ private fun QrCodeScanner(
     diagnosticLabel: String?,
     onDiagnostic: ((String) -> Unit)?,
     preserveWhitespace: Boolean,
+    onBarcodeScanned: ((String, BarcodeFormat) -> Unit)?,
     bottomContent: @Composable (launchGallery: () -> Unit) -> Unit
 ) {
     val context = LocalContext.current
@@ -203,6 +207,7 @@ private fun QrCodeScanner(
     }
     val currentValidator = rememberUpdatedState(resultValidator)
     val currentOnQrCodeScanned = rememberUpdatedState(onQrCodeScanned)
+    val currentOnBarcodeScanned = rememberUpdatedState(onBarcodeScanned)
     val currentInvalidResultMessage = rememberUpdatedState(invalidResultMessage)
     var scanGeneration by remember { mutableIntStateOf(0) }
     var pendingRestartReason by remember { mutableStateOf<QrScanRestartReason?>(null) }
@@ -219,14 +224,15 @@ private fun QrCodeScanner(
     var showOverlay by remember { mutableStateOf(usesScreenTransition) }
     var invalidCandidateSeen by remember { mutableStateOf(false) }
 
-    val acceptResult: (String?) -> Boolean = acceptResult@{ raw ->
-        val value = raw?.let { if (preserveWhitespace) it else it.trim() }
+    val acceptResult: (DecodedBarcode?) -> Boolean = acceptResult@{ raw ->
+        val value = raw?.text?.let { if (preserveWhitespace) it else it.trim() }
             ?.takeIf { it.isNotBlank() } ?: return@acceptResult false
         if (!currentValidator.value(value) || !scanConsumed.compareAndSet(false, true)) {
             return@acceptResult false
         }
         try {
-            currentOnQrCodeScanned.value(value)
+            val detailed = currentOnBarcodeScanned.value
+            if (detailed != null) detailed(value, raw.format) else currentOnQrCodeScanned.value(value)
             diagnostics?.logResultAccepted()
             true
         } catch (error: Exception) {
@@ -253,8 +259,9 @@ private fun QrCodeScanner(
             preserveWhitespace = preserveWhitespace,
             generation = scanGeneration,
             diagnostics = diagnostics,
-            onCandidates = { candidates, _, _ ->
-                val value = candidates.firstOrNull(currentValidator.value)
+            onCandidates = { _, _, _ -> false },
+            onDecodedCandidates = { candidates, _, _ ->
+                val value = candidates.firstOrNull { currentValidator.value(it.text) }
                 if (value == null && candidates.isNotEmpty()) invalidCandidateSeen = true
                 // The camera session dispatches validation and acceptance together
                 // on the main thread, after releasing the frame and checking liveness.
@@ -579,7 +586,7 @@ private suspend fun processImageWithZxing(
     decoder: ZxingBarcodeDecoder,
     diagnostics: QrScannerDiagnostics?,
     resultValidator: (String) -> Boolean,
-    onResult: (String) -> Unit,
+    onResult: (DecodedBarcode) -> Unit,
     onInvalid: () -> Unit,
     onNotFound: () -> Unit
 ) {
@@ -592,7 +599,7 @@ private suspend fun processImageWithZxing(
     }
 
     val candidates = try {
-        withContext(Dispatchers.Default) { decoder.decodeBitmap(bitmap) }
+        withContext(Dispatchers.Default) { decoder.decodeBitmapBarcodes(bitmap) }
     } catch (cancelled: CancellationException) {
         throw cancelled
     } catch (error: Exception) {
@@ -603,7 +610,7 @@ private suspend fun processImageWithZxing(
         bitmap.recycle()
     }
 
-    when (val value = candidates.firstOrNull(resultValidator)) {
+    when (val value = candidates.firstOrNull { resultValidator(it.text) }) {
         null -> {
             if (candidates.isEmpty()) {
                 diagnostics?.logGalleryResult(

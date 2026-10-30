@@ -35,7 +35,9 @@ class BoardingPassDecoderInstrumentedTest {
         for (format in formats) {
             val bitmap = barcode(fixture, format)
             try {
-                val decoded = decoder.decodeBitmap(bitmap)
+                val detailed = decoder.decodeBitmapBarcodes(bitmap)
+                assertTrue(DecodedBarcode(fixture, format) in detailed)
+                val decoded = detailed.map { it.text }
                 assertTrue("Failed to read $format boarding pass", fixture in decoded)
                 val pass = BoardingPassParser.parse(decoded.first(), LocalDate.of(2026, 10, 29))!!
                 assertEquals("YUL", pass.origin)
@@ -50,7 +52,7 @@ class BoardingPassDecoderInstrumentedTest {
     @Test fun fixedWidthPaddingIsPreservedForBothCameraFramesAndImages() {
         val decoder = ZxingBarcodeDecoder(formats, preserveWhitespace = true)
         val frame = QrScannerFixtures.Frame().code(fixture)
-        assertEquals(listOf(fixture), decoder.decodeFrame(frame.proxy()))
+        assertEquals(listOf(DecodedBarcode(fixture, BarcodeFormat.QR_CODE)), decoder.decodeFrameBarcodes(frame.proxy()))
         val bitmap = frame.bitmap()
         try {
             assertEquals(listOf(fixture), decoder.decodeBitmap(bitmap))

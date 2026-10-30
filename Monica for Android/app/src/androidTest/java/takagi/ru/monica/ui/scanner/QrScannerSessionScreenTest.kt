@@ -57,6 +57,7 @@ class QrScannerSessionScreenTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
     private val diagnostics = CopyOnWriteArrayList<String>()
     private val received = CopyOnWriteArrayList<String>()
+    private val receivedFormats = CopyOnWriteArrayList<BarcodeFormat>()
     private val deliveredOnMain = AtomicBoolean(false)
     private val validationOnMain = AtomicBoolean(true)
     private val decodingOnMain = AtomicBoolean(false)
@@ -81,7 +82,7 @@ class QrScannerSessionScreenTest {
         executors.forEach { it.shutdown() }
     }
 
-    private fun showScanner(steam: Boolean = true, failFirstAcceptance: Boolean = false) {
+    private fun showScanner(steam: Boolean = true, failFirstAcceptance: Boolean = false, boarding: Boolean = false) {
         compose.setContent {
             MaterialTheme {
                 navigation = rememberNavController()
@@ -104,7 +105,13 @@ class QrScannerSessionScreenTest {
                             if (Looper.myLooper() != Looper.getMainLooper()) validationOnMain.set(false)
                             !steam || SteamQrChallenge.parse(it) != null
                         }
-                        if (steam) QrScannerScreen(onResult, { navigation.popBackStack() },
+                        if (boarding) QrScannerScreen({ error("Legacy callback must not receive typed results") }, { navigation.popBackStack() },
+                            onBarcodeScanned = { value, format -> receivedFormats += format; onResult(value) },
+                            allowedFormats = listOf(BarcodeFormat.PDF_417, BarcodeFormat.QR_CODE, BarcodeFormat.AZTEC, BarcodeFormat.DATA_MATRIX),
+                            preserveWhitespace = true,
+                            resultValidator = { takagi.ru.monica.data.model.BoardingPassParser.parse(it) != null },
+                            diagnosticLabel = "boarding_test", onDiagnostic = diagnosticSink)
+                        else if (steam) QrScannerScreen(onResult, { navigation.popBackStack() },
                             allowedFormats = listOf(BarcodeFormat.QR_CODE),
                             resultValidator = validator,
                             diagnosticLabel = "steam_test", onDiagnostic = diagnosticSink)
@@ -155,6 +162,15 @@ class QrScannerSessionScreenTest {
         val feed = feedCamera()
         feed.fixture.set(QrScannerFixtures.Frame().code(QrScannerFixtures.STEAM))
         assertReturned(QrScannerFixtures.STEAM)
+    }
+
+    @Test fun boardingCameraDeliversOriginalPayloadAndFormatExactlyOnce() {
+        val raw = "M1DESMARAIS/LUC       EABC123 YULFRAAC 0834 326J001A0025 10C>5180  W0D  "
+        showScanner(boarding = true)
+        val feed = feedCamera()
+        feed.fixture.set(QrScannerFixtures.Frame().code(raw, format = BarcodeFormat.PDF_417))
+        assertReturned(raw)
+        assertEquals(listOf(BarcodeFormat.PDF_417), receivedFormats.toList())
     }
 
     @Test fun steamScannerCanNavigateAfterAnIdleCameraSession() = scanAfterIdle(steam = true)

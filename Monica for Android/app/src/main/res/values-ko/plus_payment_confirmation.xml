@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="payment_unlock_confirmation">결제를 완료했음을 양심에 따라 확인하며, Monica Plus의 잠금 해제를 확인합니다.</string>
+    <string name="payment_unlock_confirm_button">잠금 해제 확인</string>
+</resources>

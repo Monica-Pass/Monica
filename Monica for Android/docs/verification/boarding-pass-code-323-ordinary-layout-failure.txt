@@ -1,0 +1,450 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.BoardingPassCodeTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.components.BoardingPassCodeTest:
+INSTRUMENTATION_STATUS: test=everyOriginalFormatRendersExactPaddingAndPrivateData
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.BoardingPassCodeTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=everyOriginalFormatRendersExactPaddingAndPrivateData
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.BoardingPassCodeTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=missingOriginalOffersEditWithoutGeneratingBookingReferenceCode
+INSTRUMENTATION_STATUS_CODE: 1
+s_glBindAttribLocation: bind attrib 0 name position
+s_glBindAttribLocation: bind attrib 1 name localCoord
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.BoardingPassCodeTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=missingOriginalOffersEditWithoutGeneratingBookingReferenceCode
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.BoardingPassCodeTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=darkLargeFontViewerUsesOriginalLabelsAndExpandsWithoutChangingCode
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.BoardingPassCodeTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stack=androidx.compose.ui.test.junit4.android.ComposeNotIdleException: Idling resource timed out: possibly due to compose being busy.
+IdlingResourceRegistry has the following idling resources registered:
+- [busy] androidx.compose.ui.test.ComposeIdlingResource@44f0738
+All registered idling resources: Compose-Espresso link
+	at androidx.compose.ui.test.EspressoLink_androidKt.rethrowWithMoreInfo(EspressoLink.android.kt:133)
+	at androidx.compose.ui.test.EspressoLink_androidKt.runEspressoOnIdle(EspressoLink.android.kt:106)
+	at androidx.compose.ui.test.EspressoLink.runUntilIdle(EspressoLink.android.kt:82)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment.waitForIdle(ComposeUiTest.android.kt:709)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment.access$waitForIdle(ComposeUiTest.android.kt:474)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidTestOwner.getRoots(ComposeUiTest.android.kt:952)
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:105)
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes$default(TestOwner.kt:98)
+	at androidx.compose.ui.test.SemanticsNodeInteractionCollection.fetchSemanticsNodes(SemanticsNodeInteraction.kt:249)
+	at androidx.compose.ui.test.SemanticsNodeInteractionCollection.fetchSemanticsNodes$default(SemanticsNodeInteraction.kt:245)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.assertRendered$lambda$5(BoardingPassCodeTest.kt:96)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.$r8$lambda$db0msaqjtUdon5Cx9xycT1tutR8(Unknown Source:0)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest$$ExternalSyntheticLambda3.invoke(D8$$SyntheticClass:0)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:879)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:482)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.assertRendered(BoardingPassCodeTest.kt:96)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.darkLargeFontViewerUsesOriginalLabelsAndExpandsWithoutChangingCode(BoardingPassCodeTest.kt:55)
+	... 66 trimmed
+Caused by: androidx.test.espresso.IdlingResourceTimeoutException: Wait for [Compose-Espresso link] to become idle timed out
+	at androidx.test.espresso.IdlingPolicy.handleTimeout(IdlingPolicy.java:63)
+	at androidx.test.espresso.base.UiControllerImpl$5.resourcesHaveTimedOut(UiControllerImpl.java:421)
+	at androidx.test.espresso.base.IdlingResourceRegistry$Dispatcher.handleTimeout(IdlingResourceRegistry.java:536)
+	at androidx.test.espresso.base.IdlingResourceRegistry$Dispatcher.handleMessage(IdlingResourceRegistry.java:469)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at androidx.test.espresso.base.TestLooperManagerCompat.execute(TestLooperManagerCompat.java:121)
+	at androidx.test.espresso.base.Interrogator.loopAndInterrogate(Interrogator.java:128)
+	at androidx.test.espresso.base.UiControllerImpl.loopUntil(UiControllerImpl.java:513)
+	at androidx.test.espresso.base.UiControllerImpl.loopMainThreadUntilIdle(UiControllerImpl.java:434)
+	at androidx.test.espresso.Espresso.lambda$onIdle$2(Espresso.java:340)
+	at androidx.test.espresso.Espresso$$ExternalSyntheticLambda1.call(D8$$SyntheticClass:0)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: stream=
+Error in darkLargeFontViewerUsesOriginalLabelsAndExpandsWithoutChangingCode(takagi.ru.monica.ui.components.BoardingPassCodeTest):
+androidx.compose.ui.test.junit4.android.ComposeNotIdleException: Idling resource timed out: possibly due to compose being busy.
+IdlingResourceRegistry has the following idling resources registered:
+- [busy] androidx.compose.ui.test.ComposeIdlingResource@44f0738
+All registered idling resources: Compose-Espresso link
+	at androidx.compose.ui.test.EspressoLink_androidKt.rethrowWithMoreInfo(EspressoLink.android.kt:133)
+	at androidx.compose.ui.test.EspressoLink_androidKt.runEspressoOnIdle(EspressoLink.android.kt:106)
+	at androidx.compose.ui.test.EspressoLink.runUntilIdle(EspressoLink.android.kt:82)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment.waitForIdle(ComposeUiTest.android.kt:709)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment.access$waitForIdle(ComposeUiTest.android.kt:474)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidTestOwner.getRoots(ComposeUiTest.android.kt:952)
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:105)
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes$default(TestOwner.kt:98)
+	at androidx.compose.ui.test.SemanticsNodeInteractionCollection.fetchSemanticsNodes(SemanticsNodeInteraction.kt:249)
+	at androidx.compose.ui.test.SemanticsNodeInteractionCollection.fetchSemanticsNodes$default(SemanticsNodeInteraction.kt:245)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.assertRendered$lambda$5(BoardingPassCodeTest.kt:96)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.$r8$lambda$db0msaqjtUdon5Cx9xycT1tutR8(Unknown Source:0)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest$$ExternalSyntheticLambda3.invoke(D8$$SyntheticClass:0)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:879)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:482)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.assertRendered(BoardingPassCodeTest.kt:96)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.darkLargeFontViewerUsesOriginalLabelsAndExpandsWithoutChangingCode(BoardingPassCodeTest.kt:55)
+	... 66 trimmed
+Caused by: androidx.test.espresso.IdlingResourceTimeoutException: Wait for [Compose-Espresso link] to become idle timed out
+	at androidx.test.espresso.IdlingPolicy.handleTimeout(IdlingPolicy.java:63)
+	at androidx.test.espresso.base.UiControllerImpl$5.resourcesHaveTimedOut(UiControllerImpl.java:421)
+	at androidx.test.espresso.base.IdlingResourceRegistry$Dispatcher.handleTimeout(IdlingResourceRegistry.java:536)
+	at androidx.test.espresso.base.IdlingResourceRegistry$Dispatcher.handleMessage(IdlingResourceRegistry.java:469)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at androidx.test.espresso.base.TestLooperManagerCompat.execute(TestLooperManagerCompat.java:121)
+	at androidx.test.espresso.base.Interrogator.loopAndInterrogate(Interrogator.java:128)
+	at androidx.test.espresso.base.UiControllerImpl.loopUntil(UiControllerImpl.java:513)
+	at androidx.test.espresso.base.UiControllerImpl.loopMainThreadUntilIdle(UiControllerImpl.java:434)
+	at androidx.test.espresso.Espresso.lambda$onIdle$2(Espresso.java:340)
+	at androidx.test.espresso.Espresso$$ExternalSyntheticLambda1.call(D8$$SyntheticClass:0)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: test=darkLargeFontViewerUsesOriginalLabelsAndExpandsWithoutChangingCode
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.BoardingPassCodeTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sourceDatabaseLockRevokesOpenCode
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.BoardingPassCodeTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stack=androidx.compose.ui.test.junit4.android.ComposeNotIdleException: Idling resource timed out: possibly due to compose being busy.
+IdlingResourceRegistry has the following idling resources registered:
+- [busy] androidx.compose.ui.test.ComposeIdlingResource@e75c33f
+All registered idling resources: Compose-Espresso link
+	at androidx.compose.ui.test.EspressoLink_androidKt.rethrowWithMoreInfo(EspressoLink.android.kt:133)
+	at androidx.compose.ui.test.EspressoLink_androidKt.runEspressoOnIdle(EspressoLink.android.kt:106)
+	at androidx.compose.ui.test.EspressoLink.runUntilIdle(EspressoLink.android.kt:82)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment.waitForIdle(ComposeUiTest.android.kt:709)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment.access$waitForIdle(ComposeUiTest.android.kt:474)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidTestOwner.getRoots(ComposeUiTest.android.kt:952)
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:105)
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes$default(TestOwner.kt:98)
+	at androidx.compose.ui.test.SemanticsNodeInteractionCollection.fetchSemanticsNodes(SemanticsNodeInteraction.kt:249)
+	at androidx.compose.ui.test.SemanticsNodeInteractionCollection.fetchSemanticsNodes$default(SemanticsNodeInteraction.kt:245)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.assertRendered$lambda$5(BoardingPassCodeTest.kt:96)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.$r8$lambda$db0msaqjtUdon5Cx9xycT1tutR8(Unknown Source:0)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest$$ExternalSyntheticLambda3.invoke(D8$$SyntheticClass:0)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:879)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:482)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.assertRendered(BoardingPassCodeTest.kt:96)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.sourceDatabaseLockRevokesOpenCode(BoardingPassCodeTest.kt:90)
+	... 66 trimmed
+Caused by: androidx.test.espresso.IdlingResourceTimeoutException: Wait for [Compose-Espresso link] to become idle timed out
+	at androidx.test.espresso.IdlingPolicy.handleTimeout(IdlingPolicy.java:63)
+	at androidx.test.espresso.base.UiControllerImpl$5.resourcesHaveTimedOut(UiControllerImpl.java:421)
+	at androidx.test.espresso.base.IdlingResourceRegistry$Dispatcher.handleTimeout(IdlingResourceRegistry.java:536)
+	at androidx.test.espresso.base.IdlingResourceRegistry$Dispatcher.handleMessage(IdlingResourceRegistry.java:469)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at androidx.test.espresso.base.TestLooperManagerCompat.execute(TestLooperManagerCompat.java:121)
+	at androidx.test.espresso.base.Interrogator.loopAndInterrogate(Interrogator.java:128)
+	at androidx.test.espresso.base.UiControllerImpl.loopUntil(UiControllerImpl.java:513)
+	at androidx.test.espresso.base.UiControllerImpl.loopMainThreadUntilIdle(UiControllerImpl.java:434)
+	at androidx.test.espresso.Espresso.lambda$onIdle$2(Espresso.java:340)
+	at androidx.test.espresso.Espresso$$ExternalSyntheticLambda1.call(D8$$SyntheticClass:0)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: stream=
+Error in sourceDatabaseLockRevokesOpenCode(takagi.ru.monica.ui.components.BoardingPassCodeTest):
+androidx.compose.ui.test.junit4.android.ComposeNotIdleException: Idling resource timed out: possibly due to compose being busy.
+IdlingResourceRegistry has the following idling resources registered:
+- [busy] androidx.compose.ui.test.ComposeIdlingResource@e75c33f
+All registered idling resources: Compose-Espresso link
+	at androidx.compose.ui.test.EspressoLink_androidKt.rethrowWithMoreInfo(EspressoLink.android.kt:133)
+	at androidx.compose.ui.test.EspressoLink_androidKt.runEspressoOnIdle(EspressoLink.android.kt:106)
+	at androidx.compose.ui.test.EspressoLink.runUntilIdle(EspressoLink.android.kt:82)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment.waitForIdle(ComposeUiTest.android.kt:709)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment.access$waitForIdle(ComposeUiTest.android.kt:474)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidTestOwner.getRoots(ComposeUiTest.android.kt:952)
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:105)
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes$default(TestOwner.kt:98)
+	at androidx.compose.ui.test.SemanticsNodeInteractionCollection.fetchSemanticsNodes(SemanticsNodeInteraction.kt:249)
+	at androidx.compose.ui.test.SemanticsNodeInteractionCollection.fetchSemanticsNodes$default(SemanticsNodeInteraction.kt:245)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.assertRendered$lambda$5(BoardingPassCodeTest.kt:96)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.$r8$lambda$db0msaqjtUdon5Cx9xycT1tutR8(Unknown Source:0)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest$$ExternalSyntheticLambda3.invoke(D8$$SyntheticClass:0)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:879)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:482)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.assertRendered(BoardingPassCodeTest.kt:96)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.sourceDatabaseLockRevokesOpenCode(BoardingPassCodeTest.kt:90)
+	... 66 trimmed
+Caused by: androidx.test.espresso.IdlingResourceTimeoutException: Wait for [Compose-Espresso link] to become idle timed out
+	at androidx.test.espresso.IdlingPolicy.handleTimeout(IdlingPolicy.java:63)
+	at androidx.test.espresso.base.UiControllerImpl$5.resourcesHaveTimedOut(UiControllerImpl.java:421)
+	at androidx.test.espresso.base.IdlingResourceRegistry$Dispatcher.handleTimeout(IdlingResourceRegistry.java:536)
+	at androidx.test.espresso.base.IdlingResourceRegistry$Dispatcher.handleMessage(IdlingResourceRegistry.java:469)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at androidx.test.espresso.base.TestLooperManagerCompat.execute(TestLooperManagerCompat.java:121)
+	at androidx.test.espresso.base.Interrogator.loopAndInterrogate(Interrogator.java:128)
+	at androidx.test.espresso.base.UiControllerImpl.loopUntil(UiControllerImpl.java:513)
+	at androidx.test.espresso.base.UiControllerImpl.loopMainThreadUntilIdle(UiControllerImpl.java:434)
+	at androidx.test.espresso.Espresso.lambda$onIdle$2(Espresso.java:340)
+	at androidx.test.espresso.Espresso$$ExternalSyntheticLambda1.call(D8$$SyntheticClass:0)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: test=sourceDatabaseLockRevokesOpenCode
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.BoardingPassCodeTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=mainLockClosesViewerAndDoesNotReopenAfterUnlock
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.BoardingPassCodeTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stack=androidx.compose.ui.test.junit4.android.ComposeNotIdleException: Idling resource timed out: possibly due to compose being busy.
+IdlingResourceRegistry has the following idling resources registered:
+- [busy] androidx.compose.ui.test.ComposeIdlingResource@f574124
+All registered idling resources: Compose-Espresso link
+	at androidx.compose.ui.test.EspressoLink_androidKt.rethrowWithMoreInfo(EspressoLink.android.kt:133)
+	at androidx.compose.ui.test.EspressoLink_androidKt.runEspressoOnIdle(EspressoLink.android.kt:106)
+	at androidx.compose.ui.test.EspressoLink.runUntilIdle(EspressoLink.android.kt:82)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment.waitForIdle(ComposeUiTest.android.kt:709)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment.access$waitForIdle(ComposeUiTest.android.kt:474)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidTestOwner.getRoots(ComposeUiTest.android.kt:952)
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:105)
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes$default(TestOwner.kt:98)
+	at androidx.compose.ui.test.SemanticsNodeInteractionCollection.fetchSemanticsNodes(SemanticsNodeInteraction.kt:249)
+	at androidx.compose.ui.test.SemanticsNodeInteractionCollection.fetchSemanticsNodes$default(SemanticsNodeInteraction.kt:245)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.assertRendered$lambda$5(BoardingPassCodeTest.kt:96)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.$r8$lambda$db0msaqjtUdon5Cx9xycT1tutR8(Unknown Source:0)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest$$ExternalSyntheticLambda3.invoke(D8$$SyntheticClass:0)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:879)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:482)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.assertRendered(BoardingPassCodeTest.kt:96)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.mainLockClosesViewerAndDoesNotReopenAfterUnlock(BoardingPassCodeTest.kt:78)
+	... 66 trimmed
+Caused by: androidx.test.espresso.IdlingResourceTimeoutException: Wait for [Compose-Espresso link] to become idle timed out
+	at androidx.test.espresso.IdlingPolicy.handleTimeout(IdlingPolicy.java:63)
+	at androidx.test.espresso.base.UiControllerImpl$5.resourcesHaveTimedOut(UiControllerImpl.java:421)
+	at androidx.test.espresso.base.IdlingResourceRegistry$Dispatcher.handleTimeout(IdlingResourceRegistry.java:536)
+	at androidx.test.espresso.base.IdlingResourceRegistry$Dispatcher.handleMessage(IdlingResourceRegistry.java:469)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at androidx.test.espresso.base.TestLooperManagerCompat.execute(TestLooperManagerCompat.java:121)
+	at androidx.test.espresso.base.Interrogator.loopAndInterrogate(Interrogator.java:128)
+	at androidx.test.espresso.base.UiControllerImpl.loopUntil(UiControllerImpl.java:513)
+	at androidx.test.espresso.base.UiControllerImpl.loopMainThreadUntilIdle(UiControllerImpl.java:434)
+	at androidx.test.espresso.Espresso.lambda$onIdle$2(Espresso.java:340)
+	at androidx.test.espresso.Espresso$$ExternalSyntheticLambda1.call(D8$$SyntheticClass:0)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: stream=
+Error in mainLockClosesViewerAndDoesNotReopenAfterUnlock(takagi.ru.monica.ui.components.BoardingPassCodeTest):
+androidx.compose.ui.test.junit4.android.ComposeNotIdleException: Idling resource timed out: possibly due to compose being busy.
+IdlingResourceRegistry has the following idling resources registered:
+- [busy] androidx.compose.ui.test.ComposeIdlingResource@f574124
+All registered idling resources: Compose-Espresso link
+	at androidx.compose.ui.test.EspressoLink_androidKt.rethrowWithMoreInfo(EspressoLink.android.kt:133)
+	at androidx.compose.ui.test.EspressoLink_androidKt.runEspressoOnIdle(EspressoLink.android.kt:106)
+	at androidx.compose.ui.test.EspressoLink.runUntilIdle(EspressoLink.android.kt:82)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment.waitForIdle(ComposeUiTest.android.kt:709)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment.access$waitForIdle(ComposeUiTest.android.kt:474)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidTestOwner.getRoots(ComposeUiTest.android.kt:952)
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:105)
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes$default(TestOwner.kt:98)
+	at androidx.compose.ui.test.SemanticsNodeInteractionCollection.fetchSemanticsNodes(SemanticsNodeInteraction.kt:249)
+	at androidx.compose.ui.test.SemanticsNodeInteractionCollection.fetchSemanticsNodes$default(SemanticsNodeInteraction.kt:245)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.assertRendered$lambda$5(BoardingPassCodeTest.kt:96)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.$r8$lambda$db0msaqjtUdon5Cx9xycT1tutR8(Unknown Source:0)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest$$ExternalSyntheticLambda3.invoke(D8$$SyntheticClass:0)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:879)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:482)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.assertRendered(BoardingPassCodeTest.kt:96)
+	at takagi.ru.monica.ui.components.BoardingPassCodeTest.mainLockClosesViewerAndDoesNotReopenAfterUnlock(BoardingPassCodeTest.kt:78)
+	... 66 trimmed
+Caused by: androidx.test.espresso.IdlingResourceTimeoutException: Wait for [Compose-Espresso link] to become idle timed out
+	at androidx.test.espresso.IdlingPolicy.handleTimeout(IdlingPolicy.java:63)
+	at androidx.test.espresso.base.UiControllerImpl$5.resourcesHaveTimedOut(UiControllerImpl.java:421)
+	at androidx.test.espresso.base.IdlingResourceRegistry$Dispatcher.handleTimeout(IdlingResourceRegistry.java:536)
+	at androidx.test.espresso.base.IdlingResourceRegistry$Dispatcher.handleMessage(IdlingResourceRegistry.java:469)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at androidx.test.espresso.base.TestLooperManagerCompat.execute(TestLooperManagerCompat.java:121)
+	at androidx.test.espresso.base.Interrogator.loopAndInterrogate(Interrogator.java:128)
+	at androidx.test.espresso.base.UiControllerImpl.loopUntil(UiControllerImpl.java:513)
+	at androidx.test.espresso.base.UiControllerImpl.loopMainThreadUntilIdle(UiControllerImpl.java:434)
+	at androidx.test.espresso.Espresso.lambda$onIdle$2(Espresso.java:340)
+	at androidx.test.espresso.Espresso$$ExternalSyntheticLambda1.call(D8$$SyntheticClass:0)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: test=mainLockClosesViewerAndDoesNotReopenAfterUnlock
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.WalletMembershipCodeTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.components.WalletMembershipCodeTest:
+INSTRUMENTATION_STATUS: test=detailOpensQrAndBarcodeWithExactMembershipNumberWithoutSaving
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.WalletMembershipCodeTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=detailOpensQrAndBarcodeWithExactMembershipNumberWithoutSaving
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.WalletMembershipCodeTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=rewardsUnicodeCodeCanReturnToQrAfterUnsupportedBarcodeAtLargeFont
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.WalletMembershipCodeTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=rewardsUnicodeCodeCanReturnToQrAfterUnsupportedBarcodeAtLargeFont
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.WalletMembershipCodeTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=blankNumbersAndOtherDocumentTypesDoNotOfferMembershipCodes
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.WalletMembershipCodeTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=blankNumbersAndOtherDocumentTypesDoNotOfferMembershipCodes
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.BoardingPassDecoderInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.scanner.BoardingPassDecoderInstrumentedTest:
+INSTRUMENTATION_STATUS: test=fixedWidthPaddingIsPreservedForBothCameraFramesAndImages
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.BoardingPassDecoderInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=fixedWidthPaddingIsPreservedForBothCameraFramesAndImages
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.BoardingPassDecoderInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=allSupportedBoardingPassImagesDecodeThroughTheProductionScanner
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.BoardingPassDecoderInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=allSupportedBoardingPassImagesDecodeThroughTheProductionScanner
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.BoardingPassDecoderInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=anOrdinaryQrCodeIsReadableButRejectedAsABoardingPass
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.BoardingPassDecoderInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=anOrdinaryQrCodeIsReadableButRejectedAsABoardingPass
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest:
+INSTRUMENTATION_STATUS: test=encryptedBitwardenFreshDownloadRetainsEveryTemplate
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=encryptedBitwardenFreshDownloadRetainsEveryTemplate
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=localKeepassAndMdbxReplicasRetainPassesAfterReopen
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_RESULT: shortMsg=Process crashed.
+INSTRUMENTATION_CODE: 0

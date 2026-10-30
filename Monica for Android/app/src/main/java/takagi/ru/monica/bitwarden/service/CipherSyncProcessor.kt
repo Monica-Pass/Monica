@@ -102,6 +102,7 @@ class CipherSyncProcessor(
             "monica_full_name",
             "monica_wallet_template",
             "monica_wallet_fields",
+            "monica_boarding_pass",
             "monica_wallet_number",
             "monica_district",
             "monica_home_email",
@@ -1261,6 +1262,9 @@ class CipherSyncProcessor(
         }
         val docData = DocumentData(
             walletTemplate = customFieldMap["monica_wallet_template"] ?: existingDocument?.walletTemplate.orEmpty(),
+            boardingPassBarcode = if (customFieldMap.containsKey("monica_boarding_pass"))
+                takagi.ru.monica.data.model.BoardingPassBarcodeCodec.decode(customFieldMap["monica_boarding_pass"].orEmpty())
+                else existingDocument?.boardingPassBarcode,
             walletFields = customFieldMap["monica_wallet_fields"]?.let(takagi.ru.monica.data.model.WalletPassFieldsCodec::decode) ?: existingDocument?.walletFields.orEmpty(),
             documentType = resolvedDocumentType,
             documentNumber = customFieldMap["monica_wallet_number"] ?: idNumber,
@@ -1845,7 +1849,11 @@ class CipherSyncProcessor(
         return fields.mapNotNull { field ->
             val name = decryptOrPlain(field.name, key).orEmpty().trim()
             if (name.isBlank()) return@mapNotNull null
-            val value = decryptOrPlain(field.value, key).orEmpty()
+            val decodedValue = decryptOrPlain(field.value, key)
+            require(name != "monica_boarding_pass" || field.value.isNullOrEmpty() || decodedValue != null) {
+                "Unreadable boarding pass field"
+            }
+            val value = decodedValue.orEmpty()
             DecryptedCustomField(
                 name = name,
                 value = value,

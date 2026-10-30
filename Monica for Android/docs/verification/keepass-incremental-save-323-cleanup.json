@@ -1,0 +1,50 @@
+[
+  {
+    "action": [
+      "shell",
+      "rm",
+      "-f",
+      "/sdcard/Android/data/takagi.ru.monica/files/kdbx-comparator-original.kdbx",
+      "/sdcard/Android/data/takagi.ru.monica/files/kdbx-save-sampling.trace",
+      "/sdcard/Android/data/takagi.ru.monica/files/keepass-custom-icons-editor.png",
+      "/sdcard/Android/data/takagi.ru.monica.fdroid/files/keepass-custom-icons-editor.png",
+      "/data/local/tmp/kdbx-save-comparator.kdbx",
+      "/sdcard/kdbx-comparator-ui.xml"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "action": [
+      "shell",
+      "run-as",
+      "takagi.ru.monica.test",
+      "rm",
+      "-f",
+      "files/delete-32345600-abcd.kdbx"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "action": [
+      "uninstall",
+      "com.kunzisoft.keepass.libre"
+    ],
+    "exitCode": 0,
+    "stdout": "Success\n",
+    "stderr": ""
+  },
+  {
+    "action": [
+      "shell",
+      "getprop",
+      "sys.boot_completed"
+    ],
+    "exitCode": 0,
+    "stdout": "1\n",
+    "stderr": ""
+  }
+]

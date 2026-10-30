@@ -23,5 +23,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "Monica"
 include ':app'
+include ':kotpass'
 include ':mdbx-engine'
 include ':baselineprofile'

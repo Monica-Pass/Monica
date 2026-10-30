@@ -34,6 +34,7 @@ internal class QrCameraScanSession(
     private val onCandidates: (List<String>, barcodeCount: Int, durationMs: Long) -> Boolean,
     private val onRestartRequested: (QrScanRestartReason) -> Unit,
     preserveWhitespace: Boolean = false,
+    private val onDecodedCandidates: ((List<DecodedBarcode>, Int, Long) -> Boolean)? = null,
 ) : AutoCloseable {
     private val appContext = context.applicationContext
     private val controller = LifecycleCameraController(appContext)
@@ -161,7 +162,7 @@ internal class QrCameraScanSession(
         var succeeded = false
         val candidates = try {
             diagnostics?.logFrameStarted(imageProxy.imageInfo.rotationDegrees)
-            decoder.decodeFrame(imageProxy).also { succeeded = true }
+            decoder.decodeFrameBarcodes(imageProxy).also { succeeded = true }
         } catch (error: Exception) {
             Log.d("qr_scan_perf", "decode error", error)
             diagnostics?.logFrameFailure(error)
@@ -192,7 +193,8 @@ internal class QrCameraScanSession(
                     return@execute
                 }
                 val matched = try {
-                    onCandidates(candidates, candidates.size, durationMs)
+                    onDecodedCandidates?.invoke(candidates, candidates.size, durationMs)
+                        ?: onCandidates(candidates.map { it.text }.distinct(), candidates.size, durationMs)
                 } catch (error: Exception) {
                     diagnostics?.logResultDeliveryFailed(error)
                     false

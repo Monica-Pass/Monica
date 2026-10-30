@@ -1,0 +1,110 @@
+{
+  "ordinary": {
+    "build": {
+      "ended": "2026-10-30T20:52:31.0232717+08:00",
+      "exitCode": 0,
+      "started": "2026-10-30T20:43:40.8598979+08:00"
+    },
+    "buildSeconds": 530.163,
+    "unitTests": [
+      {
+        "name": "takagi.ru.monica.data.model.BoardingPassBarcodeTest",
+        "tests": "3",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.108"
+      },
+      {
+        "name": "takagi.ru.monica.data.model.BoardingPassParserTest",
+        "tests": "4",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.013"
+      },
+      {
+        "name": "takagi.ru.monica.data.model.CardWalletDataCodecTest",
+        "tests": "10",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.127"
+      },
+      {
+        "name": "takagi.ru.monica.data.model.WalletPassTemplateTest",
+        "tests": "6",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.031"
+      },
+      {
+        "name": "takagi.ru.monica.ui.scanner.ZxingBarcodeDecoderTest",
+        "tests": "5",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.133"
+      }
+    ],
+    "deviceTests": 37,
+    "deviceSeconds": 133.816,
+    "landscapeTests": 1,
+    "landscapeSeconds": 7.039
+  },
+  "fdroid": {
+    "build": {
+      "ended": "2026-10-30T21:10:24.1566467+08:00",
+      "exitCode": 0,
+      "started": "2026-10-30T20:55:45.3620690+08:00"
+    },
+    "buildSeconds": 878.795,
+    "unitTests": [
+      {
+        "name": "takagi.ru.monica.data.model.BoardingPassBarcodeTest",
+        "tests": "3",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.117"
+      },
+      {
+        "name": "takagi.ru.monica.data.model.BoardingPassParserTest",
+        "tests": "4",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.015"
+      },
+      {
+        "name": "takagi.ru.monica.data.model.CardWalletDataCodecTest",
+        "tests": "10",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.08"
+      },
+      {
+        "name": "takagi.ru.monica.data.model.WalletPassTemplateTest",
+        "tests": "6",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.037"
+      },
+      {
+        "name": "takagi.ru.monica.ui.scanner.ZxingBarcodeDecoderTest",
+        "tests": "5",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.154"
+      }
+    ],
+    "deviceTests": 37,
+    "deviceSeconds": 166.943,
+    "landscapeTests": 1,
+    "landscapeSeconds": 7.536
+  }
+}

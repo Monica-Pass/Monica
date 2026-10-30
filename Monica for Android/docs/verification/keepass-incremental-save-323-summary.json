@@ -1,0 +1,128 @@
+{
+  "before": {
+    "monica_editor_save_handler_until_return": {
+      "n": 30,
+      "median": 894.0,
+      "p95": 1284,
+      "minimum": 680,
+      "maximum": 2099
+    },
+    "monica_editor_until_target_write_open": {
+      "n": 30,
+      "median": 525.0,
+      "p95": 825,
+      "minimum": 371,
+      "maximum": 1375
+    },
+    "monica_editor_until_target_write_close": {
+      "n": 30,
+      "median": 527.5,
+      "p95": 828,
+      "minimum": 372,
+      "maximum": 1377
+    },
+    "monica_editor_write_open_until_return": {
+      "n": 30,
+      "median": 363.0,
+      "p95": 486,
+      "minimum": 299,
+      "maximum": 724
+    },
+    "monica_editor_test_wait_until_idle": {
+      "n": 30,
+      "median": 905.5,
+      "p95": 1299,
+      "minimum": 695,
+      "maximum": 2119
+    },
+    "after_file_close_until_return": {
+      "n": 30,
+      "median": 359.0,
+      "p95": 483,
+      "minimum": 294,
+      "maximum": 722
+    }
+  },
+  "after": {
+    "monica_editor_save_handler_until_return": {
+      "n": 30,
+      "median": 710.5,
+      "p95": 1485,
+      "minimum": 581,
+      "maximum": 1661
+    },
+    "monica_editor_until_target_write_open": {
+      "n": 30,
+      "median": 478.0,
+      "p95": 1078,
+      "minimum": 382,
+      "maximum": 1246
+    },
+    "monica_editor_until_target_write_close": {
+      "n": 30,
+      "median": 481.0,
+      "p95": 1080,
+      "minimum": 383,
+      "maximum": 1248
+    },
+    "monica_editor_write_open_until_return": {
+      "n": 30,
+      "median": 235.5,
+      "p95": 437,
+      "minimum": 181,
+      "maximum": 479
+    },
+    "monica_editor_test_wait_until_idle": {
+      "n": 30,
+      "median": 726.5,
+      "p95": 1578,
+      "minimum": 595,
+      "maximum": 1676
+    },
+    "after_file_close_until_return": {
+      "n": 30,
+      "median": 232.5,
+      "p95": 432,
+      "minimum": 178,
+      "maximum": 474
+    }
+  },
+  "local": {
+    "local_disk_editor_save_handler_until_return": {
+      "n": 10,
+      "median": 197.0,
+      "p95": 384,
+      "minimum": 102,
+      "maximum": 384
+    }
+  },
+  "keepassdx": {
+    "keepassdx_save_action_until_return": {
+      "n": 10,
+      "median": 841.5,
+      "p95": 984,
+      "minimum": 682,
+      "maximum": 984
+    },
+    "keepassdx_save_action_until_write_open": {
+      "n": 10,
+      "median": 424.0,
+      "p95": 612,
+      "minimum": 388,
+      "maximum": 612
+    },
+    "keepassdx_save_action_until_write_close": {
+      "n": 10,
+      "median": 428.0,
+      "p95": 623,
+      "minimum": 395,
+      "maximum": 623
+    }
+  },
+  "apks_sha256": {
+    "before": "eb6ca0a02876cbbe00972f2c238b7a0f46803da3176dcaccf9016e5f28d2255a",
+    "after": "91669a1b16c7f2a415dbe02fe5f0f2cc7a8dd6661945ee9a86481da22f29f7a6",
+    "test": "8fb712e296d5c8d354d3792d264d61c6ab3e7f12b7a07793d427fe63504a29c0",
+    "keepassdx": "a77b42f52de4adf2e74e88b0948ef2a681a064a3dbab24e5ff0869a091dbe581"
+  }
+}

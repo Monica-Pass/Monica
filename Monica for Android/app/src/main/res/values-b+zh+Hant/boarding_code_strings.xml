@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="boarding_code_show">出示登機碼</string>
+    <string name="boarding_code_add">編輯並掃描登機證</string>
+    <string name="boarding_code_missing">這張票證尚未儲存登機碼</string>
+    <string name="boarding_code_saved">已儲存原始登機碼</string>
+    <string name="wallet_code_hint">QR 碼或條碼 · 輕點出示</string>
+    <string name="boarding_code_original_hint">此碼保留掃描時的內容，修改票證資料不會更改登機碼。</string>
+    <string name="boarding_code_expand">放大登機碼</string>
+    <string name="boarding_code_collapse">顯示票證資料</string>
+    <string name="boarding_code_unavailable">暫時無法顯示此碼，請嘗試橫向顯示或重新掃描原登機證。</string>
+    <string name="boarding_code_rescan">重新掃描</string>
+    <string name="boarding_code_remove">移除已儲存的碼</string>
+    <string name="wallet_pass_scan_boarding_pass">掃描登機證</string>
+    <string name="wallet_pass_scan_boarding_pass_hint">將登機證上的條碼對準掃描框</string>
+    <string name="wallet_pass_boarding_pass_invalid">這不是 IATA 登機證條碼</string>
+    <string name="wallet_pass_boarding_pass_filled">已填入登機證資料，儲存後將保留登機碼</string>
+    <string name="boarding_code_draft_hint">儲存票證後，登機碼的變更才會生效</string>
+    <string name="wallet_pass_show_code">出示會員碼</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_file_save">存資料</string>
+    <string name="kp_file_merge">合資料</string>
+    <string name="kp_file_reload">重載資料</string>
+    <string name="kp_file_ready">已存 · KDBX</string>
+    <string name="kp_file_busy">正理資料庫…</string>
+    <string name="kp_file_saved">資料已存</string>
+    <string name="kp_file_external_reloaded">外部之改已載</string>
+    <string name="kp_file_reloaded">資料已重載</string>
+    <string name="kp_file_merged">資料已合</string>
+    <string name="kp_file_merged_conflicts">已合；同時異本存於條目舊錄</string>
+    <string name="kp_file_reload_failed">重載未成，仍示前次所讀</string>
+    <string name="kp_file_failed">操作未成</string>
+    <string name="kp_file_failure_help">請查檔案權限、來源密碼及外部之改，再試。</string>
+    <string name="kp_file_merge_summary">比同條目，合更新、舊錄及刪除之記。</string>
+    <string name="kp_file_select_source">選 KDBX 檔</string>
+    <string name="kp_file_source_selected">來源已選 · 點此更換</string>
+    <string name="kp_file_source_password">來源庫密碼</string>
+    <string name="kp_file_select_key">金鑰檔（可略）</string>
+    <string name="kp_file_key_selected">金鑰檔已選 · 點此更換</string>
+    <string name="kp_file_merge_notice">先建復原副本。較新者行；修改同時則留今本，別本入舊錄。</string>
+    <string name="kp_file_merge_confirm">合而存之</string>
+</resources>

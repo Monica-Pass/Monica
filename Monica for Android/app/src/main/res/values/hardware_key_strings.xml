@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hardware_key_title">Physical security key</string>
+    <string name="hardware_key_title">Physical key</string>
     <string name="hardware_key_fab">Physical key</string>
     <string name="hardware_key_back">Back</string>
     <string name="hardware_key_cancel">Cancel</string>
@@ -32,7 +32,7 @@
     <string name="hardware_key_authenticate">Use this security key</string>
     <string name="hardware_key_create_note">This passkey will be generated inside your security key. Confirm, then touch the key when requested.</string>
     <string name="hardware_key_get_note">Use the passkey in your security key to sign in to this site or app.</string>
-    <string name="hardware_key_instructions">On Android 14 or later, enable Monica as a passkey provider. Add a passkey on the site, then choose Monica’s physical security key option in the system dialog.</string>
+    <string name="hardware_key_instructions">On Android 14 or later, enable Monica as a passkey provider. Start registration on the site or app, choose Monica, then choose your connected physical key under Save location. You can also use the physical key option in the system dialog.</string>
     <string name="hardware_key_no_import">Existing Monica private keys cannot be imported into a standard FIDO2 key. PINs and hardware credentials are not saved in Monica.</string>
     <string name="hardware_key_read_credentials">View credentials on this key</string>
     <string name="hardware_key_count">%1$d credentials · %2$d remaining slots</string>
@@ -54,4 +54,21 @@
     <string name="hardware_key_full">The security key has no free credential slots.</string>
     <string name="hardware_key_cancelled">The key cancelled the operation or the touch timed out. Reconnect to retry.</string>
     <string name="hardware_key_failed">The key could not complete the operation. Check its PIN, capabilities and connection, then reconnect if needed.</string>
+    <string name="hardware_key_connected_via">Connected via %1$s</string>
+    <string name="hardware_key_connect_short">Connect USB or tap an NFC key</string>
+    <string name="hardware_key_information">Key information</string>
+    <string name="hardware_key_pin_section">PIN and user verification</string>
+    <string name="hardware_key_pin_ready_hint">Enter the PIN when verification is needed.</string>
+    <string name="hardware_key_pin_setup_hint">Set a PIN when the key requires one for registration or credential management.</string>
+    <string name="hardware_key_credentials_section">Credentials on this key</string>
+    <string name="hardware_key_registration_section">Passkeys</string>
+    <string name="hardware_key_registration_hint">Start registration on a site or app, then choose your physical key.</string>
+    <string name="hardware_key_registration_help">How to register</string>
+    <string name="hardware_key_save_location">Save location</string>
+    <string name="hardware_key_software_location">Monica or a vault</string>
+    <string name="hardware_key_software_hint">Choose Monica, KDBX, MDBX or Bitwarden</string>
+    <string name="hardware_key_detected_via">%1$s device detected</string>
+    <string name="hardware_key_disconnected">Physical key disconnected. Reconnect to continue.</string>
+    <string name="hardware_key_hardware_location_hint">%1$s · Private key stays on the physical key</string>
+    <string name="hardware_key_create_on_key">Create on physical key</string>
 </resources>

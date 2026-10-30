@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="payment_unlock_confirmation">Potwierdzam, że płatność została dokonana w dobrej wierze, i chcę odblokować Monica Plus.</string>
+    <string name="payment_unlock_confirm_button">Potwierdź odblokowanie</string>
+</resources>

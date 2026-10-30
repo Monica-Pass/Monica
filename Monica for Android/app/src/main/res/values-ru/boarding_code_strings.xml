@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="boarding_code_show">Показать посадочный код</string>
+    <string name="boarding_code_add">Изменить и сканировать талон</string>
+    <string name="boarding_code_missing">Для этого талона код не сохранён</string>
+    <string name="boarding_code_saved">Исходный посадочный код сохранён</string>
+    <string name="wallet_code_hint">QR-код или штрихкод · Нажмите для показа</string>
+    <string name="boarding_code_original_hint">Это отсканированный оригинал. Изменение данных талона не меняет этот код.</string>
+    <string name="boarding_code_expand">Увеличить код</string>
+    <string name="boarding_code_collapse">Показать данные талона</string>
+    <string name="boarding_code_unavailable">Не удалось показать код. Попробуйте альбомную ориентацию или снова отсканируйте исходный талон.</string>
+    <string name="boarding_code_rescan">Сканировать снова</string>
+    <string name="boarding_code_remove">Удалить сохранённый код</string>
+    <string name="wallet_pass_scan_boarding_pass">Сканировать посадочный талон</string>
+    <string name="wallet_pass_scan_boarding_pass_hint">Совместите штрихкод посадочного талона с рамкой</string>
+    <string name="wallet_pass_boarding_pass_invalid">Это не штрихкод посадочного талона IATA</string>
+    <string name="wallet_pass_boarding_pass_filled">Данные талона заполнены; сохраните, чтобы оставить код</string>
+    <string name="boarding_code_draft_hint">Сохраните талон, чтобы применить изменения кода</string>
+    <string name="wallet_pass_show_code">Показать код участника</string>
+</resources>

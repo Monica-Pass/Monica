@@ -7,14 +7,13 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.FlightTakeoff
 import androidx.compose.material.icons.filled.QrCode2
 import androidx.compose.material.icons.filled.QrCodeScanner
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.DeleteOutline
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.Alignment
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -22,9 +21,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.google.zxing.BarcodeFormat
 import takagi.ru.monica.R
 import takagi.ru.monica.data.model.BoardingPass
+import takagi.ru.monica.data.model.BoardingPassBarcode
 import takagi.ru.monica.data.model.BoardingPassParser
 import takagi.ru.monica.data.model.DocumentData
 import takagi.ru.monica.data.model.WalletPassTemplate
@@ -82,51 +81,85 @@ internal fun WalletPassDetails(template: WalletPassTemplate, data: DocumentData)
     })
 }
 
-/** Display the saved membership number verbatim using the existing field-code viewer. */
+/** A shared M3E action for original boarding codes and saved membership numbers. */
 @Composable
-internal fun WalletPassCodeButton(data: DocumentData) {
+internal fun WalletPassCodeButton(data: DocumentData, onAddCode: () -> Unit = {}, keepassDatabaseId: Long? = null) {
     val template = WalletPassTemplate.fromStored(data.walletTemplate)
-    if (template !in listOf(WalletPassTemplate.MEMBERSHIP, WalletPassTemplate.REWARDS) ||
-        data.documentNumber.isBlank()
-    ) return
-
-    var showCode by rememberSaveable(data.walletTemplate, data.documentNumber) { mutableStateOf(false) }
-    OutlinedButton(
-        onClick = { showCode = true },
-        modifier = Modifier.fillMaxWidth().testTag("wallet_pass_show_code")
-    ) {
-        Icon(Icons.Default.QrCode2, contentDescription = null)
-        Spacer(Modifier.width(8.dp))
-        Text(stringResource(R.string.wallet_pass_show_code))
-    }
-    if (showCode) FieldBarcodePage(
+    val travel = template == WalletPassTemplate.TRAVEL
+    if (template == null || (!travel && data.documentNumber.isBlank())) return
+    val unlocked by takagi.ru.monica.security.SessionManager.isUnlocked.collectAsState()
+    val lockGeneration by takagi.ru.monica.security.SessionManager.lockGeneration.collectAsState()
+    val vaultLocks by takagi.ru.monica.utils.KeePassKdbxService.nativeLockVersions.collectAsState()
+    val initialVaultLock = remember(keepassDatabaseId) { vaultLocks[keepassDatabaseId] ?: 0L }
+    val initialAppLock = remember { lockGeneration }
+    var showCode by remember(data, keepassDatabaseId) { mutableStateOf(false) }
+    if (!unlocked || lockGeneration != initialAppLock || (vaultLocks[keepassDatabaseId] ?: 0L) != initialVaultLock) return
+    val code = data.boardingPassBarcode
+    val missing = travel && code == null
+    WalletCodeAction(
+        title = stringResource(if (missing) R.string.boarding_code_add else if (travel) R.string.boarding_code_show else R.string.wallet_pass_show_code),
+        supporting = stringResource(if (missing) R.string.boarding_code_missing else if (travel) R.string.boarding_code_saved else R.string.wallet_code_hint),
+        icon = if (missing) Icons.Default.QrCodeScanner else Icons.Default.QrCode2,
+        modifier = Modifier.testTag(if (travel) "boarding_pass_show_code" else "wallet_pass_show_code"),
+        onClick = { if (missing) onAddCode() else showCode = true }
+    )
+    if (showCode && travel && code != null) BoardingPassCodePage(code, onDismiss = { showCode = false })
+    else if (showCode && !travel) FieldBarcodePage(
         label = stringResource(R.string.wallet_pass_number),
         value = data.documentNumber,
         onDismiss = { showCode = false }
     )
 }
 
-/** Reads an IATA boarding pass barcode; the raw barcode itself is not stored. */
 @Composable
-internal fun BoardingPassScanButton(onScanned: (BoardingPass) -> Unit) {
+private fun WalletCodeAction(title: String, supporting: String, icon: ImageVector,
+    modifier: Modifier = Modifier, onClick: () -> Unit) {
+    Surface(onClick = onClick, modifier = modifier.fillMaxWidth(), shape = RoundedCornerShape(28.dp),
+        color = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer) {
+        Row(Modifier.padding(16.dp).heightIn(min = 56.dp), verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            Surface(shape = RoundedCornerShape(18.dp), color = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary) {
+                Box(Modifier.size(52.dp), contentAlignment = Alignment.Center) { Icon(icon, null, Modifier.size(28.dp)) }
+            }
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(title, style = MaterialTheme.typography.titleMedium)
+                Text(supporting, style = MaterialTheme.typography.bodySmall)
+            }
+            Icon(Icons.AutoMirrored.Filled.ArrowForward, null, Modifier.size(20.dp))
+        }
+    }
+}
+
+/** The caller retains the complete code in the draft and persists only on Save. */
+@Composable
+internal fun BoardingPassScanButton(hasCode: Boolean = false, onRemove: () -> Unit = {},
+    onScanned: (BoardingPass, BoardingPassBarcode) -> Unit) {
     var scanning by rememberSaveable { mutableStateOf(false) }
-    OutlinedButton(
-        onClick = { scanning = true },
-        modifier = Modifier.fillMaxWidth().testTag("wallet_pass_scan_boarding_pass")
-    ) {
-        Icon(Icons.Default.QrCodeScanner, contentDescription = null)
-        Spacer(Modifier.width(8.dp))
-        Text(stringResource(R.string.wallet_pass_scan_boarding_pass))
+    WalletCodeAction(
+        title = stringResource(if (hasCode) R.string.boarding_code_rescan else R.string.wallet_pass_scan_boarding_pass),
+        supporting = stringResource(if (hasCode) R.string.boarding_code_draft_hint else R.string.wallet_pass_scan_boarding_pass_hint),
+        icon = Icons.Default.QrCodeScanner,
+        modifier = Modifier.testTag("wallet_pass_scan_boarding_pass"),
+        onClick = { scanning = true }
+    )
+    if (hasCode) {
+        TextButton(onClick = onRemove, modifier = Modifier.testTag("boarding_pass_remove_code")) {
+            Icon(Icons.Default.DeleteOutline, null)
+            Spacer(Modifier.width(8.dp))
+            Text(stringResource(R.string.boarding_code_remove))
+        }
     }
     if (scanning) Dialog(
         onDismissRequest = { scanning = false },
         properties = DialogProperties(usePlatformDefaultWidth = false)
     ) {
         QrScannerScreen(
-            onQrCodeScanned = { raw ->
+            onQrCodeScanned = {},
+            onBarcodeScanned = { raw, format ->
                 if (scanning) {
+                    BoardingPassParser.parse(raw)?.let { onScanned(it, BoardingPassBarcode(raw, format.name)) }
                     scanning = false
-                    BoardingPassParser.parse(raw)?.let(onScanned)
                 }
             },
             onNavigateBack = { scanning = false },
@@ -139,7 +172,3 @@ internal fun BoardingPassScanButton(onScanned: (BoardingPass) -> Unit) {
         )
     }
 }
-
-private val BoardingPassFormats = listOf(
-    BarcodeFormat.PDF_417, BarcodeFormat.AZTEC, BarcodeFormat.QR_CODE, BarcodeFormat.DATA_MATRIX
-)

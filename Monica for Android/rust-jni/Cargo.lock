@@ -21,6 +21,7 @@ dependencies = [
  "cfg-if",
  "cipher",
  "cpufeatures",
+ "zeroize",
 ]
 
 [[package]]
@@ -47,6 +48,7 @@ dependencies = [
  "blake2",
  "cpufeatures",
  "password-hash",
+ "zeroize",
 ]
 
 [[package]]
@@ -361,9 +363,11 @@ dependencies = [
 name = "monica-rust-crypto"
 version = "0.1.0"
 dependencies = [
+ "aes",
  "argon2",
  "pbkdf2",
  "sha2",
+ "zeroize",
 ]
 
 [[package]]
@@ -373,6 +377,7 @@ dependencies = [
  "jni",
  "monica-lan-sync",
  "monica-rust-crypto",
+ "zeroize",
 ]
 
 [[package]]

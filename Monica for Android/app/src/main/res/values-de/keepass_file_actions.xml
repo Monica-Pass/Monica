@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_file_save">Daten speichern</string>
+    <string name="kp_file_merge">Daten zusammenführen</string>
+    <string name="kp_file_reload">Daten neu laden</string>
+    <string name="kp_file_ready">Gespeichert · KDBX</string>
+    <string name="kp_file_busy">Datenbank wird verarbeitet…</string>
+    <string name="kp_file_saved">Daten gespeichert</string>
+    <string name="kp_file_external_reloaded">Externe Änderungen geladen</string>
+    <string name="kp_file_reloaded">Daten neu geladen</string>
+    <string name="kp_file_merged">Daten zusammengeführt</string>
+    <string name="kp_file_merged_conflicts">Zusammengeführt; alternative Versionen mit gleichem Zeitstempel stehen im Eintragsverlauf</string>
+    <string name="kp_file_reload_failed">Neuladen fehlgeschlagen; zuvor geladene Daten werden angezeigt</string>
+    <string name="kp_file_failed">Vorgang konnte nicht abgeschlossen werden</string>
+    <string name="kp_file_failure_help">Prüfe Dateizugriff, Quellpasswort und externe Änderungen und versuche es erneut.</string>
+    <string name="kp_file_merge_summary">Gleiche Einträge abgleichen und Änderungen, Verlauf und Löschdatensätze zusammenführen.</string>
+    <string name="kp_file_select_source">KDBX-Datei auswählen</string>
+    <string name="kp_file_source_selected">Quelldatei ausgewählt · ändern</string>
+    <string name="kp_file_source_password">Passwort der Quelldatenbank</string>
+    <string name="kp_file_select_key">Schlüsseldatei (optional)</string>
+    <string name="kp_file_key_selected">Schlüsseldatei ausgewählt · ändern</string>
+    <string name="kp_file_merge_notice">Zuerst wird eine Wiederherstellungskopie erstellt. Neuere Einträge haben Vorrang. Bei gleichen Zeitstempeln bleibt die aktuelle Version erhalten; die andere wird im Verlauf gespeichert.</string>
+    <string name="kp_file_merge_confirm">Zusammenführen und speichern</string>
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="boarding_code_show">Pokaż kod karty pokładowej</string>
+    <string name="boarding_code_add">Edytuj i zeskanuj kartę</string>
+    <string name="boarding_code_missing">Brak zapisanego kodu dla tej karty</string>
+    <string name="boarding_code_saved">Oryginalny kod karty zapisany</string>
+    <string name="wallet_code_hint">Kod QR lub kreskowy · Dotknij, aby pokazać</string>
+    <string name="boarding_code_original_hint">To zeskanowany oryginał. Edycja danych karty nie zmienia tego kodu.</string>
+    <string name="boarding_code_expand">Powiększ kod</string>
+    <string name="boarding_code_collapse">Pokaż dane karty</string>
+    <string name="boarding_code_unavailable">Nie można tutaj wyświetlić kodu. Spróbuj w poziomie lub ponownie zeskanuj oryginalną kartę.</string>
+    <string name="boarding_code_rescan">Skanuj ponownie</string>
+    <string name="boarding_code_remove">Usuń zapisany kod</string>
+    <string name="wallet_pass_scan_boarding_pass">Zeskanuj kartę pokładową</string>
+    <string name="wallet_pass_scan_boarding_pass_hint">Umieść kod z karty pokładowej w ramce</string>
+    <string name="wallet_pass_boarding_pass_invalid">To nie jest kod karty pokładowej IATA</string>
+    <string name="wallet_pass_boarding_pass_filled">Dane karty wypełnione; zapisz, aby zachować kod</string>
+    <string name="boarding_code_draft_hint">Zapisz kartę, aby zachować zmiany kodu</string>
+    <string name="wallet_pass_show_code">Pokaż kod członkowski</string>
+</resources>

@@ -1,0 +1,59 @@
+Tasks: 268 total,   1 running, 267 sleeping,   0 stopped,   0 zombie
+  Mem:  2015248K total,  1404636K used,   610612K free,     3656K buffers
+ Swap:  1511432K total,  1027896K used,   483536K free,   477476K cached
+400%cpu   0%user   0%nice   0%sys 400%idle   0%iow   0%irq   0%sirq   0%host
+  PID USER         PR  NI VIRT  RES  SHR S[%CPU] %MEM     TIME+ ARGS
+25797 shell        20   0  10G 4.4M 3.6M R  0.0   0.2   0:00.01 top -b -n 1 -m 8
+25268 root         20   0    0    0    0 I  0.0   0.0   0:00.15 [kworker/1:1-virtio_vsock]
+23960 root         20   0    0    0    0 I  0.0   0.0   0:00.08 [kworker/0:2-events]
+22643 u0_a127      20   0  14G  45M  34M S  0.0   2.2   0:01.43 com.google.android.apps.photos
+21928 u0_a56       20   0  13G  41M  27M S  0.0   2.0   0:00.43 android.process.acore
+21809 u0_a93       20   0  29G  38M  27M S  0.0   1.9   0:02.28 com.google.android.dialer
+21808 u0_a121      20   0  14G  36M  24M S  0.0   1.8   0:01.61 com.google.android.gm
+21615 u0_a99       20   0  13G  29M  19M S  0.0   1.4   0:01.09 com.android.vending:background
+MemTotal:        2015248 kB
+MemFree:          610848 kB
+MemAvailable:     770796 kB
+Buffers:            3656 kB
+Cached:           477476 kB
+SwapCached:        13912 kB
+Active:           311968 kB
+Inactive:         471572 kB
+Active(anon):     107488 kB
+Inactive(anon):   205492 kB
+Active(file):     204480 kB
+Inactive(file):   266080 kB
+Unevictable:        3268 kB
+Mlocked:            3268 kB
+SwapTotal:       1511432 kB
+SwapFree:         483536 kB
+Dirty:               120 kB
+Writeback:             0 kB
+AnonPages:        297548 kB
+Mapped:           303408 kB
+Shmem:              7992 kB
+KReclaimable:      58308 kB
+Slab:             163568 kB
+SReclaimable:      58308 kB
+SUnreclaim:       105260 kB
+KernelStack:       29440 kB
+PageTables:        64424 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     2519056 kB
+Committed_AS:   35077028 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:       47356 kB
+VmallocChunk:          0 kB
+Percpu:             4592 kB
+AnonHugePages:         0 kB
+ShmemHugePages:        0 kB
+ShmemPmdMapped:        0 kB
+FileHugePages:     10240 kB
+FilePmdMapped:     10240 kB
+CmaTotal:              0 kB
+CmaFree:               0 kB
+DirectMap4k:      227160 kB
+DirectMap2M:     1869824 kB
+DirectMap1G:           0 kB

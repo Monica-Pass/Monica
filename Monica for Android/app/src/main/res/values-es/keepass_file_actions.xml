@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_file_save">Guardar datos</string>
+    <string name="kp_file_merge">Combinar datos</string>
+    <string name="kp_file_reload">Volver a cargar datos</string>
+    <string name="kp_file_ready">Guardado · KDBX</string>
+    <string name="kp_file_busy">Procesando base de datos…</string>
+    <string name="kp_file_saved">Datos guardados</string>
+    <string name="kp_file_external_reloaded">Cambios externos cargados</string>
+    <string name="kp_file_reloaded">Datos recargados</string>
+    <string name="kp_file_merged">Datos combinados</string>
+    <string name="kp_file_merged_conflicts">Combinado; las versiones distintas con la misma fecha están en el historial</string>
+    <string name="kp_file_reload_failed">No se pudo recargar; se muestran los datos cargados anteriormente</string>
+    <string name="kp_file_failed">No se pudo completar la operación</string>
+    <string name="kp_file_failure_help">Comprueba el acceso al archivo, la contraseña de origen y los cambios externos, e inténtalo de nuevo.</string>
+    <string name="kp_file_merge_summary">Identifica las mismas entradas y combina cambios, historial y registros de eliminación.</string>
+    <string name="kp_file_select_source">Seleccionar archivo KDBX</string>
+    <string name="kp_file_source_selected">Origen seleccionado · cambiar archivo</string>
+    <string name="kp_file_source_password">Contraseña de la base de datos de origen</string>
+    <string name="kp_file_select_key">Archivo de clave (opcional)</string>
+    <string name="kp_file_key_selected">Archivo de clave seleccionado · cambiar</string>
+    <string name="kp_file_merge_notice">Primero se crea una copia de recuperación. Se usan las entradas más recientes. Si las fechas coinciden, se conserva la versión actual y la otra se guarda en el historial.</string>
+    <string name="kp_file_merge_confirm">Combinar y guardar</string>
+</resources>

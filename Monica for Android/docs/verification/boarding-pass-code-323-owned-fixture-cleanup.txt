@@ -1,0 +1,11 @@
+local_keepass_databases: 819 | credential-transfer-10da72e4-ada5-48aa-be90-d32ed3ff5ba1-KDBX | credential-transfer-10da72e4-ada5-48aa-be90-d32ed3ff5ba1/4f6f57ad-cb62-4b1a-9b87-1bd07b37cd4f.kdbx
+password_entries.keepassDatabaseId references: 0
+password_entries.mdbx_database_id references: 0
+secure_items.keepass_database_id references: 0
+secure_items.mdbx_database_id references: 0
+categories.mdbx_database_id references: 0
+keepass_group_sync_configs.keepassDatabaseId references: 0
+passkeys.keepass_database_id references: 0
+passkeys.mdbx_database_id references: 0
+Removed exactly one owned KDBX registration; all other table counts unchanged.
+Removed four verified owned files and the empty fixture directory.

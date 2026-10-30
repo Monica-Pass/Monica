@@ -1,0 +1,50 @@
+
+takagi.ru.monica.keepass.KeePassConflictMergeInstrumentedTest:..........
+takagi.ru.monica.keepass.KeePassCustomIconUiTest:.....
+takagi.ru.monica.keepass.KeePassDeleteInvestigationTest:........
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=1690
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=1312
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=378
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=1699
+.
+takagi.ru.monica.keepass.KeePassMonicaSecureItemTest:...
+takagi.ru.monica.keepass.KeePassMonicaUiInstrumentedTest:.............
+takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest:...............
+takagi.ru.monica.keepass.KeePassNativeKdfInstrumentedTest:.....KDBX_SAVE_PERF stage=paired_argon2d_original_0 ms=799
+KDBX_SAVE_PERF stage=paired_argon2d_native_0 ms=201
+KDBX_SAVE_PERF stage=paired_argon2d_native_1 ms=194
+KDBX_SAVE_PERF stage=paired_argon2d_original_1 ms=733
+KDBX_SAVE_PERF stage=paired_argon2d_original_2 ms=796
+KDBX_SAVE_PERF stage=paired_argon2d_native_2 ms=191
+KDBX_SAVE_PERF stage=paired_aes_original_0 ms=641
+KDBX_SAVE_PERF stage=paired_aes_native_0 ms=3
+KDBX_SAVE_PERF stage=paired_aes_native_1 ms=7
+KDBX_SAVE_PERF stage=paired_aes_original_1 ms=661
+KDBX_SAVE_PERF stage=paired_aes_original_2 ms=729
+KDBX_SAVE_PERF stage=paired_aes_native_2 ms=4
+.
+takagi.ru.monica.keepass.KeePassPasswordNativeInstrumentedTest:.....KDBX_NATIVE_PERF save_and_list_ms=353
+.
+takagi.ru.monica.keepass.KeePassSavePerformanceInstrumentedTest:KDBX_SAVE_PERF stage=kotpass_argon2id_0 ms=1439
+KDBX_SAVE_PERF stage=native_argon2id_0 ms=232
+KDBX_SAVE_PERF stage=kotpass_argon2id_1 ms=736
+KDBX_SAVE_PERF stage=native_argon2id_1 ms=196
+KDBX_SAVE_PERF stage=kotpass_argon2id_2 ms=986
+KDBX_SAVE_PERF stage=native_argon2id_2 ms=237
+.KDBX_SAVE_PERF stage=cold_workspace ms=339
+KDBX_SAVE_PERF stage=warm_workspace_average ms=18
+KDBX_SAVE_PERF stage=initial_room_projection ms=1772
+KDBX_SAVE_PERF stage=unchanged_room_projection ms=1493
+KDBX_SAVE_PERF stage=list_edit_until_published ms=376
+KDBX_SAVE_PERF stage=direct_kdbx_save ms=281
+KDBX_SAVE_PERF stage=cold_reopen_after_save ms=356
+.KDBX_SAVE_PERF stage=three_password_group_save ms=1282
+KDBX_SAVE_PERF stage=three_password_group_save commits=3
+..
+takagi.ru.monica.keepass.KeePassVaultDeleteUiTest:.
+takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest:......KDBX_SAVE_PIPELINE ms=373 global_reads=0 save_global_reads=0
+..
+
+Time: 231.563
+
+OK (80 tests)

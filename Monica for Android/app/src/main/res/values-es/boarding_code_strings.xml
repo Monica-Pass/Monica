@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="boarding_code_show">Mostrar código de embarque</string>
+    <string name="boarding_code_add">Editar y escanear tarjeta de embarque</string>
+    <string name="boarding_code_missing">No hay un código guardado para esta tarjeta</string>
+    <string name="boarding_code_saved">Código de embarque original guardado</string>
+    <string name="wallet_code_hint">Código QR o de barras · Toca para mostrar</string>
+    <string name="boarding_code_original_hint">Este es el original escaneado. Editar los datos de la tarjeta no cambia este código.</string>
+    <string name="boarding_code_expand">Ampliar código</string>
+    <string name="boarding_code_collapse">Mostrar datos de la tarjeta</string>
+    <string name="boarding_code_unavailable">No se puede mostrar este código aquí. Prueba en horizontal o vuelve a escanear la tarjeta original.</string>
+    <string name="boarding_code_rescan">Volver a escanear</string>
+    <string name="boarding_code_remove">Eliminar código guardado</string>
+    <string name="wallet_pass_scan_boarding_pass">Escanear tarjeta de embarque</string>
+    <string name="wallet_pass_scan_boarding_pass_hint">Alinea el código de la tarjeta de embarque con el marco</string>
+    <string name="wallet_pass_boarding_pass_invalid">No es un código de tarjeta de embarque IATA</string>
+    <string name="wallet_pass_boarding_pass_filled">Datos de embarque rellenados; guarda para conservar el código</string>
+    <string name="boarding_code_draft_hint">Guarda la tarjeta para aplicar los cambios del código</string>
+    <string name="wallet_pass_show_code">Mostrar código de socio</string>
+</resources>

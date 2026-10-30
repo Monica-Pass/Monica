@@ -1,0 +1,7 @@
+
+takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest:......KDBX_SAVE_PIPELINE ms=424 global_reads=0 save_global_reads=0
+..
+
+Time: 26.374
+
+OK (8 tests)

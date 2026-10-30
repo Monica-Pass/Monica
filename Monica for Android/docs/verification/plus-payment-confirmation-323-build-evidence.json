@@ -1,0 +1,66 @@
+{
+  "ordinary": {
+    "flavor": "ordinary",
+    "build": {
+      "ended": "2026-10-30T17:05:31.2499535+08:00",
+      "exitCode": 0,
+      "started": "2026-10-30T16:50:56.7692889+08:00"
+    },
+    "versionName": "1.0.323-26103012-21",
+    "versionCode": 12,
+    "apkSha256": "c9a4e8d871bbb6ee60d88e4bb05781e87f756389203a26c6b305b6867e57d9ee",
+    "unitTests": [
+      {
+        "class": "PlusLocalActivationGuardTest",
+        "tests": "2",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.411"
+      },
+      {
+        "class": "PlusBlurRemovalTest",
+        "tests": "1",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "2.741"
+      }
+    ],
+    "deviceSeconds": 18.937,
+    "deviceTests": 3,
+    "buildSeconds": 874.5
+  },
+  "fdroid": {
+    "flavor": "fdroid",
+    "build": {
+      "started": "2026-10-30T17:05:42.3706170+08:00",
+      "ended": "2026-10-30T17:19:32.4552421+08:00",
+      "exitCode": 0
+    },
+    "versionName": "1.0.323",
+    "versionCode": 30,
+    "apkSha256": "6f96684972910d31a02f53e6abd4bba3ebbb160791a5ea542b5986e509b6f87f",
+    "unitTests": [
+      {
+        "class": "PlusLocalActivationGuardTest",
+        "tests": "2",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.211"
+      },
+      {
+        "class": "PlusBlurRemovalTest",
+        "tests": "1",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "2.027"
+      }
+    ],
+    "deviceSeconds": 16.756,
+    "deviceTests": 3,
+    "buildSeconds": 830.1
+  }
+}

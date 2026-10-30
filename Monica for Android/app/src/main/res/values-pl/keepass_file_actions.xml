@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_file_save">Zapisz dane</string>
+    <string name="kp_file_merge">Scal dane</string>
+    <string name="kp_file_reload">Wczytaj dane ponownie</string>
+    <string name="kp_file_ready">Zapisano · KDBX</string>
+    <string name="kp_file_busy">Przetwarzanie bazy danych…</string>
+    <string name="kp_file_saved">Dane zapisane</string>
+    <string name="kp_file_external_reloaded">Wczytano zmiany zewnętrzne</string>
+    <string name="kp_file_reloaded">Dane wczytane ponownie</string>
+    <string name="kp_file_merged">Dane scalone</string>
+    <string name="kp_file_merged_conflicts">Scalono; różne wersje o tym samym czasie modyfikacji są w historii wpisu</string>
+    <string name="kp_file_reload_failed">Nie można wczytać ponownie; wyświetlane są wcześniej wczytane dane</string>
+    <string name="kp_file_failed">Nie udało się ukończyć operacji</string>
+    <string name="kp_file_failure_help">Sprawdź dostęp do pliku, hasło źródłowe i zmiany zewnętrzne, a następnie spróbuj ponownie.</string>
+    <string name="kp_file_merge_summary">Dopasuj te same wpisy i scal zmiany, historię oraz rejestr usunięć.</string>
+    <string name="kp_file_select_source">Wybierz plik KDBX</string>
+    <string name="kp_file_source_selected">Wybrano źródło · zmień plik</string>
+    <string name="kp_file_source_password">Hasło źródłowej bazy danych</string>
+    <string name="kp_file_select_key">Plik klucza (opcjonalny)</string>
+    <string name="kp_file_key_selected">Wybrano plik klucza · zmień</string>
+    <string name="kp_file_merge_notice">Najpierw powstanie kopia do odzyskiwania. Nowsze wpisy mają pierwszeństwo. Przy jednakowym czasie modyfikacji bieżąca wersja zostaje, a druga trafia do historii.</string>
+    <string name="kp_file_merge_confirm">Scal i zapisz</string>
+</resources>

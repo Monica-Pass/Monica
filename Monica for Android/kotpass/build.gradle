@@ -1,0 +1,23 @@
+plugins {
+    alias(libs.plugins.kotlin.jvm)
+    id 'java-library'
+}
+
+group = 'app.keemobile'
+version = '0.10.0-monica.1'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+kotlin {
+    jvmToolchain(17)
+    compilerOptions { jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11 }
+}
+
+dependencies {
+    api 'com.squareup.okio:okio:3.9.0'
+    implementation 'org.redundent:kotlin-xml-builder:1.9.1'
+    testImplementation 'junit:junit:4.13.2'
+}

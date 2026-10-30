@@ -200,6 +200,7 @@ class KeePassDeleteInvestigationTest {
     internal suspend fun scenario(
         securityOverride: SecurityManager? = null,
         databaseTransform: (KeePassDatabase) -> KeePassDatabase = { it },
+        passwordDaoFactory: (PasswordEntryDao) -> PasswordEntryDao = { it },
         block: suspend (PasswordViewModel, KeePassKdbxService, Long, PasswordDatabase, Uri) -> Unit
     ) {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
@@ -233,7 +234,7 @@ class KeePassDeleteInvestigationTest {
             sourceType=KeePassDatabaseSourceType.LOCAL_DOCUMENT_URI,
             encryptedPassword=security.encryptData("Synthetic KDBX deletion test")))
         val model = withContext(Dispatchers.Main) {
-            PasswordViewModel(PasswordRepository(local.passwordEntryDao()), security, context=context,
+            PasswordViewModel(PasswordRepository(passwordDaoFactory(local.passwordEntryDao())), security, context=context,
                 localKeePassDatabaseDao=registrationDb.localKeePassDatabaseDao(), strings=AppLocaleStringResolver(context)).also {
                 // The repository is isolated, but context-backed settings belong to the
                 // shared test installation. Do not inherit its last MDBX/KeePass filter,

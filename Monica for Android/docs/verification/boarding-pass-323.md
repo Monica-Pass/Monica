@@ -2,6 +2,8 @@
 
 Date: 2026-10-29. Development build, unreleased.
 
+> Follow-up (2026-10-30): original-code retention/display and the M3E actions are implemented in `boarding-pass-code-323.md`. The “raw barcode is not retained” statements below describe the earlier scan-only implementation.
+
 The travel-pass editor adds a Scan boarding pass button and reuses the shared CameraX/ZXing scanner, including its image picker. It accepts IATA Resolution 792 BCBP payloads in PDF417, Aztec, QR and Data Matrix. Ordinary QR links are rejected.
 
 Boarding-pass scanning preserves the payload's fixed-width whitespace through both camera and gallery decoding and result delivery. The shared scanner previously trimmed trailing padding before checking the declared conditional-section length, which made some otherwise valid boarding passes unreadable. Other scanner callers retain their existing whitespace normalization by default.

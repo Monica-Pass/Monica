@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_file_save">Сохранить данные</string>
+    <string name="kp_file_merge">Объединить данные</string>
+    <string name="kp_file_reload">Перезагрузить данные</string>
+    <string name="kp_file_ready">Сохранено · KDBX</string>
+    <string name="kp_file_busy">Обработка базы данных…</string>
+    <string name="kp_file_saved">Данные сохранены</string>
+    <string name="kp_file_external_reloaded">Внешние изменения загружены</string>
+    <string name="kp_file_reloaded">Данные перезагружены</string>
+    <string name="kp_file_merged">Данные объединены</string>
+    <string name="kp_file_merged_conflicts">Объединено; разные версии с одинаковым временем изменения сохранены в истории записи</string>
+    <string name="kp_file_reload_failed">Не удалось перезагрузить; показаны ранее загруженные данные</string>
+    <string name="kp_file_failed">Не удалось завершить операцию</string>
+    <string name="kp_file_failure_help">Проверьте доступ к файлу, пароль источника и внешние изменения, затем повторите попытку.</string>
+    <string name="kp_file_merge_summary">Сопоставить одинаковые записи и объединить изменения, историю и сведения об удалении.</string>
+    <string name="kp_file_select_source">Выбрать файл KDBX</string>
+    <string name="kp_file_source_selected">Источник выбран · сменить файл</string>
+    <string name="kp_file_source_password">Пароль исходной базы данных</string>
+    <string name="kp_file_select_key">Файл ключа (необязательно)</string>
+    <string name="kp_file_key_selected">Файл ключа выбран · сменить</string>
+    <string name="kp_file_merge_notice">Сначала создаётся копия для восстановления. Приоритет у новых записей. При одинаковом времени изменения сохраняется текущая версия, а другая добавляется в историю.</string>
+    <string name="kp_file_merge_confirm">Объединить и сохранить</string>
+</resources>

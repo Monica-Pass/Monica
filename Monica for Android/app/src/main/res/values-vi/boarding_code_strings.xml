@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="boarding_code_show">Hiển thị mã lên máy bay</string>
+    <string name="boarding_code_add">Chỉnh sửa và quét thẻ lên máy bay</string>
+    <string name="boarding_code_missing">Chưa lưu mã cho thẻ này</string>
+    <string name="boarding_code_saved">Đã lưu mã lên máy bay gốc</string>
+    <string name="wallet_code_hint">Mã QR hoặc mã vạch · Chạm để hiển thị</string>
+    <string name="boarding_code_original_hint">Đây là bản gốc đã quét. Chỉnh sửa thông tin thẻ không làm thay đổi mã này.</string>
+    <string name="boarding_code_expand">Phóng to mã</string>
+    <string name="boarding_code_collapse">Hiển thị thông tin thẻ</string>
+    <string name="boarding_code_unavailable">Không thể hiển thị mã ở đây. Hãy thử xoay ngang hoặc quét lại thẻ gốc.</string>
+    <string name="boarding_code_rescan">Quét lại</string>
+    <string name="boarding_code_remove">Xóa mã đã lưu</string>
+    <string name="wallet_pass_scan_boarding_pass">Quét thẻ lên máy bay</string>
+    <string name="wallet_pass_scan_boarding_pass_hint">Căn mã vạch trên thẻ lên máy bay vào khung</string>
+    <string name="wallet_pass_boarding_pass_invalid">Không phải mã vạch thẻ lên máy bay IATA</string>
+    <string name="wallet_pass_boarding_pass_filled">Đã điền thông tin thẻ; hãy lưu để giữ mã</string>
+    <string name="boarding_code_draft_hint">Lưu thẻ để áp dụng thay đổi mã</string>
+    <string name="wallet_pass_show_code">Hiển thị mã thành viên</string>
+</resources>

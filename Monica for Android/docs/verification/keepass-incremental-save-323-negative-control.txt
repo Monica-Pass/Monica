@@ -1,0 +1,39 @@
+
+takagi.ru.monica.keepass.KeePassSaveProjectionRegressionTest:
+Error in editingOneEntryKeepsUnchangedPresentationObjects(takagi.ru.monica.keepass.KeePassSaveProjectionRegressionTest):
+java.lang.AssertionError: Unchanged entries must keep their presentation after a single-entry save expected same:<PasswordEntry(id=6896253641933934240, title=Synthetic 299, website=, username=user-299, password=secret-299, notes=, createdAt=Fri Oct 30 10:13:04 GMT 2026, updatedAt=Fri Oct 30 10:13:04 GMT 2026, isFavorite=false, sortOrder=0, isGroupCover=false, appPackageName=, appName=, email=, phone=, addressLine=, city=, state=, zipCode=, country=, creditCardNumber=, creditCardHolder=, creditCardExpiry=, creditCardCVV=, categoryId=null, boundNoteId=null, keepassDatabaseId=631, keepassGroupPath=null, keepassEntryUuid=7b2950ac-8d35-4071-8241-9dd10e338cf9, keepassGroupUuid=6b327162-c78c-4769-9bd1-93892eb78b6e, mdbxDatabaseId=null, mdbxFolderId=null, authenticatorKey=, passkeyBindings=, sshKeyData=, loginType=PASSWORD, ssoProvider=, ssoRefEntryId=null, wifiMetadata=, customIconType=NONE, customIconValue=null, customIconUpdatedAt=0, isDeleted=false, deletedAt=null, isArchived=false, archivedAt=null, replicaGroupId=null, passwordGroupId=null, bitwardenVaultId=null, bitwardenCipherId=null, bitwardenFolderId=null, bitwardenRevisionDate=null, bitwardenCipherType=1, bitwardenLocalModified=false)> was not:<PasswordEntry(id=6896253641933934240, title=Synthetic 299, website=, username=user-299, password=secret-299, notes=, createdAt=Fri Oct 30 10:13:04 GMT 2026, updatedAt=Fri Oct 30 10:13:04 GMT 2026, isFavorite=false, sortOrder=0, isGroupCover=false, appPackageName=, appName=, email=, phone=, addressLine=, city=, state=, zipCode=, country=, creditCardNumber=, creditCardHolder=, creditCardExpiry=, creditCardCVV=, categoryId=null, boundNoteId=null, keepassDatabaseId=631, keepassGroupPath=null, keepassEntryUuid=7b2950ac-8d35-4071-8241-9dd10e338cf9, keepassGroupUuid=6b327162-c78c-4769-9bd1-93892eb78b6e, mdbxDatabaseId=null, mdbxFolderId=null, authenticatorKey=, passkeyBindings=, sshKeyData=, loginType=PASSWORD, ssoProvider=, ssoRefEntryId=null, wifiMetadata=, customIconType=NONE, customIconValue=null, customIconUpdatedAt=0, isDeleted=false, deletedAt=null, isArchived=false, archivedAt=null, replicaGroupId=null, passwordGroupId=null, bitwardenVaultId=null, bitwardenCipherId=null, bitwardenFolderId=null, bitwardenRevisionDate=null, bitwardenCipherType=1, bitwardenLocalModified=false)>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotSame(Assert.java:829)
+	at org.junit.Assert.assertSame(Assert.java:772)
+	at takagi.ru.monica.keepass.KeePassSaveProjectionRegressionTest$editingOneEntryKeepsUnchangedPresentationObjects$1$1.invokeSuspend(KeePassSaveProjectionRegressionTest.kt:18)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.keepass.KeePassSaveProjectionRegressionTest.editingOneEntryKeepsUnchangedPresentationObjects(KeePassSaveProjectionRegressionTest.kt:8)
+
+
+Time: 4.838
+There was 1 failure:
+1) editingOneEntryKeepsUnchangedPresentationObjects(takagi.ru.monica.keepass.KeePassSaveProjectionRegressionTest)
+java.lang.AssertionError: Unchanged entries must keep their presentation after a single-entry save expected same:<PasswordEntry(id=6896253641933934240, title=Synthetic 299, website=, username=user-299, password=secret-299, notes=, createdAt=Fri Oct 30 10:13:04 GMT 2026, updatedAt=Fri Oct 30 10:13:04 GMT 2026, isFavorite=false, sortOrder=0, isGroupCover=false, appPackageName=, appName=, email=, phone=, addressLine=, city=, state=, zipCode=, country=, creditCardNumber=, creditCardHolder=, creditCardExpiry=, creditCardCVV=, categoryId=null, boundNoteId=null, keepassDatabaseId=631, keepassGroupPath=null, keepassEntryUuid=7b2950ac-8d35-4071-8241-9dd10e338cf9, keepassGroupUuid=6b327162-c78c-4769-9bd1-93892eb78b6e, mdbxDatabaseId=null, mdbxFolderId=null, authenticatorKey=, passkeyBindings=, sshKeyData=, loginType=PASSWORD, ssoProvider=, ssoRefEntryId=null, wifiMetadata=, customIconType=NONE, customIconValue=null, customIconUpdatedAt=0, isDeleted=false, deletedAt=null, isArchived=false, archivedAt=null, replicaGroupId=null, passwordGroupId=null, bitwardenVaultId=null, bitwardenCipherId=null, bitwardenFolderId=null, bitwardenRevisionDate=null, bitwardenCipherType=1, bitwardenLocalModified=false)> was not:<PasswordEntry(id=6896253641933934240, title=Synthetic 299, website=, username=user-299, password=secret-299, notes=, createdAt=Fri Oct 30 10:13:04 GMT 2026, updatedAt=Fri Oct 30 10:13:04 GMT 2026, isFavorite=false, sortOrder=0, isGroupCover=false, appPackageName=, appName=, email=, phone=, addressLine=, city=, state=, zipCode=, country=, creditCardNumber=, creditCardHolder=, creditCardExpiry=, creditCardCVV=, categoryId=null, boundNoteId=null, keepassDatabaseId=631, keepassGroupPath=null, keepassEntryUuid=7b2950ac-8d35-4071-8241-9dd10e338cf9, keepassGroupUuid=6b327162-c78c-4769-9bd1-93892eb78b6e, mdbxDatabaseId=null, mdbxFolderId=null, authenticatorKey=, passkeyBindings=, sshKeyData=, loginType=PASSWORD, ssoProvider=, ssoRefEntryId=null, wifiMetadata=, customIconType=NONE, customIconValue=null, customIconUpdatedAt=0, isDeleted=false, deletedAt=null, isArchived=false, archivedAt=null, replicaGroupId=null, passwordGroupId=null, bitwardenVaultId=null, bitwardenCipherId=null, bitwardenFolderId=null, bitwardenRevisionDate=null, bitwardenCipherType=1, bitwardenLocalModified=false)>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotSame(Assert.java:829)
+	at org.junit.Assert.assertSame(Assert.java:772)
+	at takagi.ru.monica.keepass.KeePassSaveProjectionRegressionTest$editingOneEntryKeepsUnchangedPresentationObjects$1$1.invokeSuspend(KeePassSaveProjectionRegressionTest.kt:18)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.keepass.KeePassSaveProjectionRegressionTest.editingOneEntryKeepsUnchangedPresentationObjects(KeePassSaveProjectionRegressionTest.kt:8)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1

@@ -1,0 +1,16 @@
+
+takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest:............
+takagi.ru.monica.keepass.KeePassMonicaUiInstrumentedTest:.............
+takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest:...............
+takagi.ru.monica.keepass.KeePassConflictMergeInstrumentedTest:..........
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=2065
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=1424
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=1520
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=641
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=2241
+.
+takagi.ru.monica.keepass.KeePassVaultDeleteUiTest:.
+
+Time: 123.21
+
+OK (52 tests)

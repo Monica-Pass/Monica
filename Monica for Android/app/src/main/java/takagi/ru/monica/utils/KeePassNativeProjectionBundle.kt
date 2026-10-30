@@ -77,8 +77,7 @@ internal object KeePassNativeProjectionBundleBuilder {
             session = session,
             deferredEntries = entries,
             deferredResolutionContext = resolutionContext,
-            hasRecycleBinMeta = session.database.content.meta.recycleBinEnabled &&
-                session.database.content.meta.recycleBinUuid != null,
+            hasRecycleBinMeta = session.database.content.meta.recycleBinUuid?.let { it != java.util.UUID(0, 0) } == true,
             deferredGroupsIncludingRecycleBin = lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
                 allGroups.value.map { (group, _) -> group }
             },

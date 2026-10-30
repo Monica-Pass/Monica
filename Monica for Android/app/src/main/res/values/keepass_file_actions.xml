@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_file_save">Save data</string>
+    <string name="kp_file_merge">Merge data</string>
+    <string name="kp_file_reload">Reload data</string>
+    <string name="kp_file_ready">Saved · KDBX</string>
+    <string name="kp_file_busy">Working on database…</string>
+    <string name="kp_file_saved">Data saved</string>
+    <string name="kp_file_external_reloaded">External changes loaded</string>
+    <string name="kp_file_reloaded">Data reloaded</string>
+    <string name="kp_file_merged">Data merged</string>
+    <string name="kp_file_merged_conflicts">Merged; matching timestamps have alternate versions in entry history</string>
+    <string name="kp_file_reload_failed">Could not reload; showing previously loaded data</string>
+    <string name="kp_file_failed">Operation could not be completed</string>
+    <string name="kp_file_failure_help">Check file access, the source password and external changes, then try again.</string>
+    <string name="kp_file_merge_summary">Match existing entries and merge updates, history and deletion records.</string>
+    <string name="kp_file_select_source">Select KDBX file</string>
+    <string name="kp_file_source_selected">Source selected · change file</string>
+    <string name="kp_file_source_password">Source database password</string>
+    <string name="kp_file_select_key">Key file (optional)</string>
+    <string name="kp_file_key_selected">Key file selected · change</string>
+    <string name="kp_file_merge_notice">A recovery copy is created first. Newer entries take precedence. When timestamps match, the current version is kept and the other version goes into history.</string>
+    <string name="kp_file_merge_confirm">Merge and save</string>
+</resources>

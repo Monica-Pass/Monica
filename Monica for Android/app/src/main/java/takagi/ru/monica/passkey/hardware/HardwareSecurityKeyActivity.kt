@@ -19,9 +19,13 @@ import androidx.credentials.provider.PendingIntentHandler
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.compose.runtime.*
+import androidx.compose.foundation.isSystemInDarkTheme
 import kotlinx.coroutines.*
 import org.json.JSONObject
 import takagi.ru.monica.R
+import takagi.ru.monica.data.AppSettings
+import takagi.ru.monica.utils.SettingsManager
+import takagi.ru.monica.data.ThemeMode
 import takagi.ru.monica.passkey.PasskeyBrowserOrigin
 import takagi.ru.monica.ui.theme.MonicaTheme
 import takagi.ru.monica.utils.LocaleHelper
@@ -37,6 +41,7 @@ class HardwareSecurityKeyActivity : FragmentActivity() {
     private val usb by lazy { getSystemService(UsbManager::class.java) }
     private val nfc by lazy { NfcAdapter.getDefaultAdapter(this) }
     private val providerMode get() = intent.action == ACTION_CREATE || intent.action == ACTION_GET
+    private var initialNfcTag: android.nfc.Tag? = null
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, data: Intent?) {
             if (data?.action == UsbManager.ACTION_USB_DEVICE_DETACHED) {
@@ -61,6 +66,7 @@ class HardwareSecurityKeyActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         state = HardwareKeyUiState(providerMode = providerMode)
+        initialNfcTag = intent.getParcelableExtra(EXTRA_NFC_TAG)
         ContextCompat.registerReceiver(this, receiver, IntentFilter().apply {
             addAction(permissionAction); addAction(UsbManager.ACTION_USB_DEVICE_DETACHED)
         }, ContextCompat.RECEIVER_NOT_EXPORTED)
@@ -69,7 +75,17 @@ class HardwareSecurityKeyActivity : FragmentActivity() {
             else { state = state.copy(error = R.string.hardware_key_android14) }
         }
         setContent {
-            MonicaTheme {
+            val settingsManager = remember { SettingsManager(this@HardwareSecurityKeyActivity) }
+            val settings by settingsManager.settingsFlow.collectAsState(initial = AppSettings())
+            val darkTheme = when (settings.themeMode) {
+                ThemeMode.SYSTEM -> isSystemInDarkTheme()
+                ThemeMode.LIGHT -> false
+                ThemeMode.DARK -> true
+            }
+            MonicaTheme(darkTheme = darkTheme, colorScheme = settings.colorScheme,
+                customPrimaryColor = settings.customPrimaryColor, customSecondaryColor = settings.customSecondaryColor,
+                customTertiaryColor = settings.customTertiaryColor, customNeutralColor = settings.customNeutralColor,
+                customNeutralVariantColor = settings.customNeutralVariantColor) {
                 BackHandler { cancelAndFinish() }
                 HardwareKeyScreen(state, ::cancelAndFinish, ::findUsb, ::disconnect,
                     onPin = { state = state.copy(pin = it.take(128)) },
@@ -108,6 +124,13 @@ class HardwareSecurityKeyActivity : FragmentActivity() {
                     HardwareWebAuthn(json, canonicalRp, origin, hash, create)
                 }
                 state = state.copy(request = request, error = null, busy = false)
+                // Release the loading job before connect/disconnect replaces the active job.
+                job = null
+                // The tag is only a connection hint. Request validation above remains authoritative.
+                val tag = initialNfcTag
+                initialNfcTag = null
+                if (tag != null) connect { NfcTransport.connect(tag) }
+                else if (UsbTransport.candidates(usb).isNotEmpty()) findUsb()
             } catch (e: CancellationException) { throw e }
             catch (_: Exception) { state = state.copy(error = R.string.hardware_key_invalid_request, busy = false) }
         }
@@ -256,6 +279,7 @@ class HardwareSecurityKeyActivity : FragmentActivity() {
     companion object {
         const val ACTION_CREATE = "takagi.ru.monica.hardware.CREATE"
         const val ACTION_GET = "takagi.ru.monica.hardware.GET"
+        internal const val EXTRA_NFC_TAG = "takagi.ru.monica.hardware.NFC_TAG"
         private fun errorString(e: Exception): Int = when ((e as? CTAP.Exception)?.error) {
             CTAP.Error.PIN_INVALID -> R.string.hardware_key_pin_wrong
             CTAP.Error.PIN_BLOCKED, CTAP.Error.PIN_AUTH_BLOCKED -> R.string.hardware_key_pin_blocked

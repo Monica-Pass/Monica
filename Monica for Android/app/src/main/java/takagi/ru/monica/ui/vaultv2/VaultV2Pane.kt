@@ -12,6 +12,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -209,6 +211,9 @@ import takagi.ru.monica.ui.password.BitwardenReunlockTopActionsMenuItem
 import takagi.ru.monica.ui.password.BitwardenSyncTopActionsMenuItem
 import takagi.ru.monica.ui.password.CommonPasswordTopActionsMenuItems
 import takagi.ru.monica.ui.password.KeepassRefreshTopActionsMenuItem
+import takagi.ru.monica.ui.password.rememberKeePassFileActions
+import takagi.ru.monica.ui.password.KeePassFileMenuItems
+import takagi.ru.monica.ui.password.KeePassFileStatus
 import takagi.ru.monica.ui.password.KeepassNativeManagerTopActionsMenuItem
 import takagi.ru.monica.ui.password.MdbxCommitHistoryTopActionsMenuItem
 import takagi.ru.monica.ui.password.MdbxCreateSnapshotTopActionsMenuItem
@@ -2023,6 +2028,9 @@ fun VaultV2Pane(
 			else -> null
 		}
 	}
+    val keePassFileActions = rememberKeePassFileActions(selectedKeePassDatabaseId, passwordViewModel) {
+        selectedKeePassDatabaseId?.let { localKeePassViewModel.refreshGroups(it); passwordViewModel.refreshKeePassOverviewAfterNativeRead(it) }
+    }
 	val selectedMdbxDatabaseId = remember(storageSelection) {
 		when (storageSelection) {
 			is UnifiedCategoryFilterSelection.MdbxDatabaseFilter -> storageSelection.databaseId
@@ -3594,6 +3602,7 @@ fun VaultV2Pane(
 						}
 					PasswordTopActionsDropdownMenu(
 						expanded = isAuthenticated && isTopActionsMenuExpanded,
+                        showNearbySync = selectedKeePassDatabaseId == null,
 						onDismissRequest = { isTopActionsMenuExpanded = false }
 						) {
                             takagi.ru.monica.ui.screens.DatabaseManagerMenuItem(selectedMdbxDatabaseId?.let {
@@ -3605,7 +3614,8 @@ fun VaultV2Pane(
 								showSortSheet = true
 							}
 							selectedKeePassDatabaseId?.let { keepassDatabaseId ->
-								KeepassRefreshTopActionsMenuItem(
+                                if (keePassFileActions != null) KeePassFileMenuItems(keePassFileActions) { isTopActionsMenuExpanded = false }
+                                else KeepassRefreshTopActionsMenuItem(
 									onClick = {
 										isTopActionsMenuExpanded = false
 										passwordViewModel.syncKeePassDatabaseForVisibleVault(
@@ -3778,6 +3788,7 @@ fun VaultV2Pane(
 				)
 			}
 
+            keePassFileActions?.let { KeePassFileStatus(it) }
 			val contentPullOffset = pullAction.currentOffset.toInt()
 			val listInteractionModifier = Modifier
 				.offset { IntOffset(x = 0, y = contentPullOffset) }
@@ -4879,37 +4890,43 @@ private fun VaultV2QuickStatusBar(
 	deleteState: PasswordBatchDeleteGlobalProgressState?,
 	onNavigateFilter: (CategoryFilter) -> Unit,
 ) {
-	if (transferState != null || deleteState != null) {
-		PasswordQuickFolderBreadcrumbBanner(
-			breadcrumbs = breadcrumbs,
-			currentFilter = currentFilter,
-			onNavigate = onNavigateFilter,
-			mdbxSyncState = mdbxSyncState,
-			transferState = transferState,
-			deleteState = deleteState,
-		)
-		return
-	}
-	QuickStatusBar(
-		itemSpacing = 4.dp,
-		indicator = {
-			VaultV2QuickStatusIndicator(currentSectionLabel = currentSectionLabel, dateSort = dateSort)
-		},
-		breadcrumb = {
-			VaultV2BreadcrumbPath(
-				pathLabel = pathLabel,
+	Box(Modifier.fillMaxWidth().animateContentSize(
+		animationSpec = tween(260, easing = FastOutSlowInEasing),
+		alignment = Alignment.TopStart
+	)) {
+		if (transferState != null || deleteState != null) {
+			PasswordQuickFolderBreadcrumbBanner(
 				breadcrumbs = breadcrumbs,
 				currentFilter = currentFilter,
-				onNavigateFilter = onNavigateFilter,
-				modifier = Modifier.weight(1f)
+				onNavigate = onNavigateFilter,
+				mdbxSyncState = mdbxSyncState,
+				transferState = transferState,
+				deleteState = deleteState,
+				animateHeight = false,
 			)
-		},
-		actions = {
-			mdbxSyncState?.let { state ->
-				MdbxPathSyncActions(state = state)
+		} else {
+		QuickStatusBar(
+			itemSpacing = 4.dp,
+			indicator = {
+				VaultV2QuickStatusIndicator(currentSectionLabel = currentSectionLabel, dateSort = dateSort)
+			},
+			breadcrumb = {
+				VaultV2BreadcrumbPath(
+					pathLabel = pathLabel,
+					breadcrumbs = breadcrumbs,
+					currentFilter = currentFilter,
+					onNavigateFilter = onNavigateFilter,
+					modifier = Modifier.weight(1f)
+				)
+			},
+			actions = {
+				mdbxSyncState?.let { state ->
+					MdbxPathSyncActions(state = state)
+				}
 			}
+		)
 		}
-	)
+	}
 }
 
 @Composable

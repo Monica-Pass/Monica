@@ -1,0 +1,114 @@
+{
+  "ordinary": {
+    "build": {
+      "exitCode": 0,
+      "ended": "2026-10-30T17:23:06.0887372+08:00",
+      "started": "2026-10-30T17:22:42.7262994+08:00"
+    },
+    "languages": [
+      "ENGLISH",
+      "CHINESE",
+      "TRADITIONAL_CHINESE",
+      "CLASSICAL_CHINESE",
+      "VIETNAMESE",
+      "JAPANESE",
+      "RUSSIAN",
+      "KOREAN",
+      "GERMAN",
+      "SPANISH",
+      "FRENCH",
+      "POLISH",
+      "ITALIAN"
+    ],
+    "compiledStrings": {
+      "payment_unlock_confirmation": {
+        "": "I have made the payment in good faith. Confirm unlocking Monica Plus.",
+        "zh": "我已诚信付款，确认解锁Monica plus",
+        "b+zh+Hant": "我已誠信付款，確認解鎖Monica plus",
+        "lzh": "已诚信付讫，确认启用 Monica Plus。",
+        "vi": "Tôi đã thanh toán một cách trung thực và xác nhận mở khóa Monica Plus.",
+        "ja": "支払い済みであることを誠実に申告し、Monica Plus のロック解除を確認します。",
+        "ru": "Подтверждаю, что оплата произведена добросовестно, и хочу разблокировать Monica Plus.",
+        "ko": "결제를 완료했음을 양심에 따라 확인하며, Monica Plus의 잠금 해제를 확인합니다.",
+        "de": "Ich versichere, dass ich bezahlt habe, und bestätige die Freischaltung von Monica Plus.",
+        "es": "He realizado el pago de buena fe. Confirmo el desbloqueo de Monica Plus.",
+        "fr": "J’ai effectué le paiement de bonne foi. Je confirme le déverrouillage de Monica Plus.",
+        "pl": "Potwierdzam, że płatność została dokonana w dobrej wierze, i chcę odblokować Monica Plus.",
+        "it": "Ho effettuato il pagamento in buona fede. Confermo lo sblocco di Monica Plus.",
+        "zh-rCN": "我已诚信付款，确认解锁Monica plus"
+      },
+      "payment_unlock_confirm_button": {
+        "": "Confirm unlock",
+        "zh": "确认解锁",
+        "b+zh+Hant": "確認解鎖",
+        "lzh": "确认启用",
+        "vi": "Xác nhận mở khóa",
+        "ja": "ロック解除を確認",
+        "ru": "Подтвердить разблокировку",
+        "ko": "잠금 해제 확인",
+        "de": "Freischaltung bestätigen",
+        "es": "Confirmar desbloqueo",
+        "fr": "Confirmer le déverrouillage",
+        "pl": "Potwierdź odblokowanie",
+        "it": "Conferma sblocco",
+        "zh-rCN": "确认解锁"
+      }
+    }
+  },
+  "fdroid": {
+    "build": {
+      "started": "2026-10-30T17:25:10.5196629+08:00",
+      "exitCode": 0,
+      "ended": "2026-10-30T17:25:32.0586045+08:00"
+    },
+    "languages": [
+      "ENGLISH",
+      "CHINESE",
+      "TRADITIONAL_CHINESE",
+      "CLASSICAL_CHINESE",
+      "VIETNAMESE",
+      "JAPANESE",
+      "RUSSIAN",
+      "KOREAN",
+      "GERMAN",
+      "SPANISH",
+      "FRENCH",
+      "POLISH",
+      "ITALIAN"
+    ],
+    "compiledStrings": {
+      "payment_unlock_confirmation": {
+        "": "I have made the payment in good faith. Confirm unlocking Monica Plus.",
+        "zh": "我已诚信付款，确认解锁Monica plus",
+        "b+zh+Hant": "我已誠信付款，確認解鎖Monica plus",
+        "lzh": "已诚信付讫，确认启用 Monica Plus。",
+        "vi": "Tôi đã thanh toán một cách trung thực và xác nhận mở khóa Monica Plus.",
+        "ja": "支払い済みであることを誠実に申告し、Monica Plus のロック解除を確認します。",
+        "ru": "Подтверждаю, что оплата произведена добросовестно, и хочу разблокировать Monica Plus.",
+        "ko": "결제를 완료했음을 양심에 따라 확인하며, Monica Plus의 잠금 해제를 확인합니다.",
+        "de": "Ich versichere, dass ich bezahlt habe, und bestätige die Freischaltung von Monica Plus.",
+        "es": "He realizado el pago de buena fe. Confirmo el desbloqueo de Monica Plus.",
+        "fr": "J’ai effectué le paiement de bonne foi. Je confirme le déverrouillage de Monica Plus.",
+        "pl": "Potwierdzam, że płatność została dokonana w dobrej wierze, i chcę odblokować Monica Plus.",
+        "it": "Ho effettuato il pagamento in buona fede. Confermo lo sblocco di Monica Plus.",
+        "zh-rCN": "我已诚信付款，确认解锁Monica plus"
+      },
+      "payment_unlock_confirm_button": {
+        "": "Confirm unlock",
+        "zh": "确认解锁",
+        "b+zh+Hant": "確認解鎖",
+        "lzh": "确认启用",
+        "vi": "Xác nhận mở khóa",
+        "ja": "ロック解除を確認",
+        "ru": "Подтвердить разблокировку",
+        "ko": "잠금 해제 확인",
+        "de": "Freischaltung bestätigen",
+        "es": "Confirmar desbloqueo",
+        "fr": "Confirmer le déverrouillage",
+        "pl": "Potwierdź odblokowanie",
+        "it": "Conferma sblocco",
+        "zh-rCN": "确认解锁"
+      }
+    }
+  }
+}

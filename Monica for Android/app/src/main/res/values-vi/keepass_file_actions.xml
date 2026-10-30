@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_file_save">Lưu dữ liệu</string>
+    <string name="kp_file_merge">Hợp nhất dữ liệu</string>
+    <string name="kp_file_reload">Tải lại dữ liệu</string>
+    <string name="kp_file_ready">Đã lưu · KDBX</string>
+    <string name="kp_file_busy">Đang xử lý cơ sở dữ liệu…</string>
+    <string name="kp_file_saved">Đã lưu dữ liệu</string>
+    <string name="kp_file_external_reloaded">Đã tải thay đổi từ bên ngoài</string>
+    <string name="kp_file_reloaded">Đã tải lại dữ liệu</string>
+    <string name="kp_file_merged">Đã hợp nhất dữ liệu</string>
+    <string name="kp_file_merged_conflicts">Đã hợp nhất; các phiên bản khác nhau cùng thời điểm được giữ trong lịch sử mục</string>
+    <string name="kp_file_reload_failed">Không thể tải lại; đang hiển thị dữ liệu đã tải trước đó</string>
+    <string name="kp_file_failed">Không thể hoàn tất thao tác</string>
+    <string name="kp_file_failure_help">Kiểm tra quyền truy cập tệp, mật khẩu nguồn và thay đổi bên ngoài, rồi thử lại.</string>
+    <string name="kp_file_merge_summary">Đối chiếu các mục trùng nhau và hợp nhất cập nhật, lịch sử cùng bản ghi xóa.</string>
+    <string name="kp_file_select_source">Chọn tệp KDBX</string>
+    <string name="kp_file_source_selected">Đã chọn nguồn · đổi tệp</string>
+    <string name="kp_file_source_password">Mật khẩu cơ sở dữ liệu nguồn</string>
+    <string name="kp_file_select_key">Tệp khóa (không bắt buộc)</string>
+    <string name="kp_file_key_selected">Đã chọn tệp khóa · đổi</string>
+    <string name="kp_file_merge_notice">Trước tiên sẽ tạo bản sao khôi phục. Mục mới hơn được ưu tiên. Nếu thời điểm sửa đổi trùng nhau, phiên bản hiện tại được giữ lại và phiên bản còn lại được lưu vào lịch sử.</string>
+    <string name="kp_file_merge_confirm">Hợp nhất và lưu</string>
+</resources>

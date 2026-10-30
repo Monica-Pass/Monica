@@ -608,6 +608,11 @@ interface PasswordEntryDao {
     @Query("SELECT * FROM password_entries WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0 AND isArchived = 0) ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
     fun getActiveEntries(): Flow<List<PasswordEntry>>
 
+    /** Same visibility and ordering as getActiveEntries, restricted to one save's owners. */
+    @Transaction
+    @Query("SELECT * FROM password_entries WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND isDeleted = 0 AND isArchived = 0 AND (id IN (:originalIds) OR replica_group_id = :replicaGroupId) ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
+    suspend fun getActiveSaveCandidates(originalIds: List<Long>, replicaGroupId: String): List<PasswordEntry>
+
     // Do not materialize every password row just to find password-bound OTPs.
     @Transaction
     @Query("SELECT * FROM password_entries WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0 AND isArchived = 0 AND authenticatorKey != '') ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")

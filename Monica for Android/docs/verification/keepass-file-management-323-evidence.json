@@ -1,0 +1,544 @@
+{
+  "ordinary": {
+    "build": {
+      "exitCode": 0,
+      "started": "2026-10-31T00:20:13.9480978+08:00",
+      "ended": "2026-10-31T00:43:35.3323936+08:00"
+    },
+    "deviceRegression": {
+      "tests": 52,
+      "seconds": 123.21
+    },
+    "versionName": "1.0.323-26103112-91",
+    "versionCode": 12,
+    "debugApkSha256": "74004d4e03d1cddfb5b7fd45c46e734953b06e1a2f468f49214ccd3d86088fbf",
+    "compiledLocalizedValues": 294,
+    "resourceConfigurations": 14,
+    "languages": 13,
+    "unitSuites": [
+      {
+        "name": "takagi.ru.monica.data.model.StorageTargetOwnershipTest",
+        "tests": "2",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.012"
+      },
+      {
+        "name": "takagi.ru.monica.keepass.KeePassCrossDatabaseTransferTest",
+        "tests": "7",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.023"
+      },
+      {
+        "name": "takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest",
+        "tests": "15",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.131"
+      },
+      {
+        "name": "takagi.ru.monica.viewmodel.PasswordTotpCrossDatabaseBindingGuardTest",
+        "tests": "4",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.043"
+      }
+    ],
+    "shared": {
+      "app/src/main/java/takagi/ru/monica/keepass/KeePassNativeSession.kt": "58cbb7a4300ffe994bc4ad614fef5fc080f5e55e0d8f301d0861d66786e98435",
+      "app/src/main/java/takagi/ru/monica/utils/KeePassNativeProjectionBundle.kt": "ad4b87f65c277bd52e4db7b96b4b9ef590aea62deb0d0de955483e43e36f45ac",
+      "app/src/main/java/takagi/ru/monica/utils/KeePassKdbxService.kt": "8d88f82e32e584b72d2a8f54ca56fac6d40a10339912ffb33b1c1a99c56d348b",
+      "app/src/main/java/takagi/ru/monica/keepass/KeePassMonicaPasswordStore.kt": "3ee60334c28b9f788c5cb180f88de52940144769b7d537578d9c043158a6132f",
+      "app/src/main/java/takagi/ru/monica/keepass/KeePassDatabaseSynchronizer.kt": "2526f6d4284fe02dfd0fcd00cc28a59426d90581b0ec76afee22ba5bad0f742f",
+      "app/src/main/java/takagi/ru/monica/viewmodel/PasswordViewModel.kt": "60c6a8f60cdb5222e557bcc6158694b81eca3dec38f451eafc0250ae5536438b",
+      "app/src/main/java/takagi/ru/monica/ui/password/KeePassFileActions.kt": "63b116b5d605a5a07b055e0469564b24d5ea33b488024ee2944aeab2631dea99",
+      "app/src/main/java/takagi/ru/monica/ui/password/PasswordTopActionsMenu.kt": "972eebef388f33085cacfafb225c8d7509a9733ab0b5f416d5209e08f52fe0ab",
+      "app/src/main/java/takagi/ru/monica/ui/password/PasswordListTopSection.kt": "59feef90c063a77c7d934058f8026286aae3f3dc4f67701f5afc6ac52ca0713c",
+      "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultV2Pane.kt": "b40e7f170021048ddfd6347f346c06aa778a28643ac19077c5616acc9b8f0abc",
+      "app/src/androidTest/java/takagi/ru/monica/keepass/KeePassExternalReloadRegressionTest.kt": "8579ed0d3c79001d4f7b17ea51240143a86b48a81d8605c19cd5627062eef18b",
+      "app/src/androidTest/java/takagi/ru/monica/keepass/KeePassFileTestDocumentsProvider.java": "6ee296211d7312e6493ae68cabe52f71fefbc752873b2e68aebc569c385bc2fd",
+      "app/src/test/java/takagi/ru/monica/keepass/KeePassDatabaseSynchronizerTest.kt": "d15dc741c8fb3aedfe610f610ecc244b00cbd751405fb34ad712f7ee33f09e7e",
+      "app/src/main/res/values/keepass_file_actions.xml": "a8191b9845a81363362a223d003b485ffe72c46f7fe3fe0f729b36c027eb7472",
+      "app/src/main/res/values-b+lzh/keepass_file_actions.xml": "b5897d2475d102e3204ec6e4dc2306b860d3d9b40646427d8fdd73541438a5c4",
+      "app/src/main/res/values-b+zh+Hant/keepass_file_actions.xml": "b04917fca36d539c88c90a32f1745b6f45a155a22b2a331d66ddd1f71b8aa10e",
+      "app/src/main/res/values-de/keepass_file_actions.xml": "0129cb8a81a410df04146bce0e581297d9f1d5d60b2387dd0ccf28401b4b3016",
+      "app/src/main/res/values-es/keepass_file_actions.xml": "4433ec9019fc1b8753154f9a927c0a4a1a137594911b26fe083ad300c95bd442",
+      "app/src/main/res/values-fr/keepass_file_actions.xml": "79d8751cf1d7a1ae685892b058914953de09fafabe3217ca792658c555b8c7c9",
+      "app/src/main/res/values-it/keepass_file_actions.xml": "30d5d93f7e47d16bb0250884730078806f6e4087e1bfc70100c672751794f28f",
+      "app/src/main/res/values-ja/keepass_file_actions.xml": "fc42fb78edd354f81c84d2106fe83da09a9956a7d490ad479ab48fb8273d3d12",
+      "app/src/main/res/values-ko/keepass_file_actions.xml": "a4b73ce1ef86b55beb6fdcb7af08968339b627373b1cca0e6d7290e80d05064b",
+      "app/src/main/res/values-pl/keepass_file_actions.xml": "bed4e8a840179ddb8ac76a62260c86a214dd5e8a867c6d96cb37b66f095d316c",
+      "app/src/main/res/values-ru/keepass_file_actions.xml": "69d12024794620103e7147582525a36fb8412ef6cea2cac3156b9262341255f8",
+      "app/src/main/res/values-vi/keepass_file_actions.xml": "355c9d22399017268411e679293fa6e5be14e9064e49bdbac97047ca27c3e5b8",
+      "app/src/main/res/values-zh/keepass_file_actions.xml": "e8be63032b299e555e25f1a6d627ab1512640f3953058ba59ac04db96f02a72f",
+      "app/src/main/res/values-zh-rCN/keepass_file_actions.xml": "e8be63032b299e555e25f1a6d627ab1512640f3953058ba59ac04db96f02a72f",
+      "app/src/main/java/takagi/ru/monica/ui/password/PasswordQuickFolderSections.kt": "5130945765f038b62a19a0005e5b491aeaac2a6521dd8faaf6e6482a26f7b9c6"
+    },
+    "testedReleaseApkSha256": "99cb340d4cff586e8eb3bb139e8050a44b30db79d14b0def84227551dae98127",
+    "releaseUiAndPeerWorkflows": {
+      "intermediate_release_ui": true,
+      "monica_process_before_after": "27232",
+      "external_k2a_edit_detected": true,
+      "external_dx_recycle_detected": true,
+      "dx_empty_bin_then_old_merge_entries": 0,
+      "deletion_records": 630,
+      "merge_new_entry": 1,
+      "history": 1,
+      "attachment": 1,
+      "protected_custom_field_preserved": true,
+      "peers_reopened_merged_result": [
+        "KeePassDX 4.5.6 libre",
+        "KeePass2Android 1.15-r6"
+      ],
+      "earlier_release_smoke": {
+        "version": "1.0.323-26103012-91",
+        "debuggable": false,
+        "read_after_restart": true,
+        "bad_source_retains_visible_entry_and_retry": true,
+        "restored_source_clears_error": true,
+        "merge_shows_source_filename": true
+      },
+      "final_ui_release_smoke": {
+        "cold_starts_checked": 4,
+        "cold_start_without_filter_reselection": true,
+        "visible_save_error_dialog": true,
+        "visible_save_error_status_after_dismissal": true,
+        "failed_write_file_hash_unchanged": true,
+        "fixture_permission_restored": true,
+        "reopen_then_save_succeeds": true,
+        "final_menu_actions_correct": true,
+        "version": "1.0.323-26103112-91",
+        "release_without_debuggable_flag": true
+      },
+      "uiDriverNote": "One unlock accessibility action reported a stale-node failure after navigation succeeded; the final probe accepts that report only when the required unlocked list is actually observed."
+    },
+    "coldStartRegressionBeforeFix": {
+      "releaseVersion": "1.0.323-26103012-91",
+      "fileIndependentlyDecodedEntries": 1,
+      "coldStartVisibleEntries": 0,
+      "manualReloadVisibleEntries": 0,
+      "switchDatabaseVisibleEntries": 1,
+      "log": "KeePass original-vault read failed: IllegalStateException",
+      "source": "rows initial refresh preceded application unlock; upstream catch completed the subscription"
+    }
+  },
+  "fdroid": {
+    "build": {
+      "tasks": [
+        "assembleDebug",
+        "assembleDebugAndroidTest"
+      ],
+      "started": "2026-10-31T00:47:50.5713828+08:00",
+      "ended": "2026-10-31T00:58:00.4364051+08:00",
+      "unitTestsFromEarlierBuild": true,
+      "exitCode": 0
+    },
+    "deviceRegression": {
+      "tests": 52,
+      "seconds": 111.119
+    },
+    "versionName": "1.0.323",
+    "versionCode": 30,
+    "debugApkSha256": "933271ecb4acbc1931966a66bd58eeba5ac47b88da141ab5d80de752a8628367",
+    "compiledLocalizedValues": 294,
+    "resourceConfigurations": 14,
+    "languages": 13,
+    "unitSuites": [
+      {
+        "name": "takagi.ru.monica.data.model.StorageTargetOwnershipTest",
+        "tests": "2",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.018"
+      },
+      {
+        "name": "takagi.ru.monica.keepass.KeePassCrossDatabaseTransferTest",
+        "tests": "7",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.039"
+      },
+      {
+        "name": "takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest",
+        "tests": "15",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.216"
+      },
+      {
+        "name": "takagi.ru.monica.viewmodel.PasswordTotpCrossDatabaseBindingGuardTest",
+        "tests": "4",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.057"
+      }
+    ],
+    "shared": {
+      "app/src/main/java/takagi/ru/monica/keepass/KeePassNativeSession.kt": "58cbb7a4300ffe994bc4ad614fef5fc080f5e55e0d8f301d0861d66786e98435",
+      "app/src/main/java/takagi/ru/monica/utils/KeePassNativeProjectionBundle.kt": "ad4b87f65c277bd52e4db7b96b4b9ef590aea62deb0d0de955483e43e36f45ac",
+      "app/src/main/java/takagi/ru/monica/utils/KeePassKdbxService.kt": "8d88f82e32e584b72d2a8f54ca56fac6d40a10339912ffb33b1c1a99c56d348b",
+      "app/src/main/java/takagi/ru/monica/keepass/KeePassMonicaPasswordStore.kt": "3ee60334c28b9f788c5cb180f88de52940144769b7d537578d9c043158a6132f",
+      "app/src/main/java/takagi/ru/monica/keepass/KeePassDatabaseSynchronizer.kt": "2526f6d4284fe02dfd0fcd00cc28a59426d90581b0ec76afee22ba5bad0f742f",
+      "app/src/main/java/takagi/ru/monica/viewmodel/PasswordViewModel.kt": "60c6a8f60cdb5222e557bcc6158694b81eca3dec38f451eafc0250ae5536438b",
+      "app/src/main/java/takagi/ru/monica/ui/password/KeePassFileActions.kt": "63b116b5d605a5a07b055e0469564b24d5ea33b488024ee2944aeab2631dea99",
+      "app/src/main/java/takagi/ru/monica/ui/password/PasswordTopActionsMenu.kt": "972eebef388f33085cacfafb225c8d7509a9733ab0b5f416d5209e08f52fe0ab",
+      "app/src/main/java/takagi/ru/monica/ui/password/PasswordListTopSection.kt": "59feef90c063a77c7d934058f8026286aae3f3dc4f67701f5afc6ac52ca0713c",
+      "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultV2Pane.kt": "b40e7f170021048ddfd6347f346c06aa778a28643ac19077c5616acc9b8f0abc",
+      "app/src/androidTest/java/takagi/ru/monica/keepass/KeePassExternalReloadRegressionTest.kt": "8579ed0d3c79001d4f7b17ea51240143a86b48a81d8605c19cd5627062eef18b",
+      "app/src/androidTest/java/takagi/ru/monica/keepass/KeePassFileTestDocumentsProvider.java": "6ee296211d7312e6493ae68cabe52f71fefbc752873b2e68aebc569c385bc2fd",
+      "app/src/test/java/takagi/ru/monica/keepass/KeePassDatabaseSynchronizerTest.kt": "d15dc741c8fb3aedfe610f610ecc244b00cbd751405fb34ad712f7ee33f09e7e",
+      "app/src/main/res/values/keepass_file_actions.xml": "a8191b9845a81363362a223d003b485ffe72c46f7fe3fe0f729b36c027eb7472",
+      "app/src/main/res/values-b+lzh/keepass_file_actions.xml": "b5897d2475d102e3204ec6e4dc2306b860d3d9b40646427d8fdd73541438a5c4",
+      "app/src/main/res/values-b+zh+Hant/keepass_file_actions.xml": "b04917fca36d539c88c90a32f1745b6f45a155a22b2a331d66ddd1f71b8aa10e",
+      "app/src/main/res/values-de/keepass_file_actions.xml": "0129cb8a81a410df04146bce0e581297d9f1d5d60b2387dd0ccf28401b4b3016",
+      "app/src/main/res/values-es/keepass_file_actions.xml": "4433ec9019fc1b8753154f9a927c0a4a1a137594911b26fe083ad300c95bd442",
+      "app/src/main/res/values-fr/keepass_file_actions.xml": "79d8751cf1d7a1ae685892b058914953de09fafabe3217ca792658c555b8c7c9",
+      "app/src/main/res/values-it/keepass_file_actions.xml": "30d5d93f7e47d16bb0250884730078806f6e4087e1bfc70100c672751794f28f",
+      "app/src/main/res/values-ja/keepass_file_actions.xml": "fc42fb78edd354f81c84d2106fe83da09a9956a7d490ad479ab48fb8273d3d12",
+      "app/src/main/res/values-ko/keepass_file_actions.xml": "a4b73ce1ef86b55beb6fdcb7af08968339b627373b1cca0e6d7290e80d05064b",
+      "app/src/main/res/values-pl/keepass_file_actions.xml": "bed4e8a840179ddb8ac76a62260c86a214dd5e8a867c6d96cb37b66f095d316c",
+      "app/src/main/res/values-ru/keepass_file_actions.xml": "69d12024794620103e7147582525a36fb8412ef6cea2cac3156b9262341255f8",
+      "app/src/main/res/values-vi/keepass_file_actions.xml": "355c9d22399017268411e679293fa6e5be14e9064e49bdbac97047ca27c3e5b8",
+      "app/src/main/res/values-zh/keepass_file_actions.xml": "e8be63032b299e555e25f1a6d627ab1512640f3953058ba59ac04db96f02a72f",
+      "app/src/main/res/values-zh-rCN/keepass_file_actions.xml": "e8be63032b299e555e25f1a6d627ab1512640f3953058ba59ac04db96f02a72f",
+      "app/src/main/java/takagi/ru/monica/ui/password/PasswordQuickFolderSections.kt": "5130945765f038b62a19a0005e5b491aeaac2a6521dd8faaf6e6482a26f7b9c6"
+    },
+    "unitRegressionBuild": {
+      "ended": "2026-10-30T23:50:55.3913353+08:00",
+      "started": "2026-10-30T23:34:16.0404206+08:00",
+      "exitCode": 0
+    }
+  },
+  "heightAnimationFinalVerification": {
+    "builds": {
+      "ordinary": {
+        "exitCode": 0,
+        "started": "2026-10-31T00:59:08.5761034+08:00",
+        "ended": "2026-10-31T01:21:03.1769581+08:00"
+      },
+      "fdroid": {
+        "ended": "2026-10-31T01:29:39.8586767+08:00",
+        "started": "2026-10-31T01:22:10.3047564+08:00",
+        "exitCode": 0
+      }
+    },
+    "recordedFrames": {
+      "baseline": {
+        "label": "baseline",
+        "videoFps": 2.95,
+        "compactBottom": 431,
+        "expandedBottom": 473,
+        "intermediateHeights": [],
+        "statusAndListSamples": [
+          {
+            "frame": 0,
+            "bottom": 431,
+            "listTop": 458
+          },
+          {
+            "frame": 1,
+            "bottom": 478,
+            "listTop": 500
+          },
+          {
+            "frame": 3,
+            "bottom": 431,
+            "listTop": 458
+          }
+        ],
+        "frames": 18
+      },
+      "release": {
+        "label": "release",
+        "videoFps": 3.98,
+        "compactBottom": 431,
+        "expandedBottom": 473,
+        "intermediateHeights": [
+          433,
+          434,
+          435,
+          450,
+          468
+        ],
+        "statusAndListSamples": [
+          {
+            "frame": 0,
+            "bottom": 431,
+            "listTop": 458
+          },
+          {
+            "frame": 2,
+            "bottom": 432,
+            "listTop": 458
+          },
+          {
+            "frame": 4,
+            "bottom": 434,
+            "listTop": 460
+          },
+          {
+            "frame": 5,
+            "bottom": 450,
+            "listTop": 476
+          },
+          {
+            "frame": 6,
+            "bottom": 472,
+            "listTop": 498
+          },
+          {
+            "frame": 7,
+            "bottom": 474,
+            "listTop": 500
+          },
+          {
+            "frame": 9,
+            "bottom": 473,
+            "listTop": 500
+          },
+          {
+            "frame": 12,
+            "bottom": 468,
+            "listTop": 495
+          },
+          {
+            "frame": 13,
+            "bottom": 435,
+            "listTop": 462
+          },
+          {
+            "frame": 14,
+            "bottom": 433,
+            "listTop": 460
+          },
+          {
+            "frame": 15,
+            "bottom": 431,
+            "listTop": 458
+          }
+        ],
+        "frames": 30,
+        "expansionSmooth": true,
+        "contractionSmooth": true,
+        "listTracksStatus": true,
+        "listGapPixelRange": [
+          26,
+          27
+        ]
+      },
+      "release-large": {
+        "label": "release-large",
+        "videoFps": 6.45,
+        "compactBottom": 466,
+        "expandedBottom": 571,
+        "intermediateHeights": [
+          472,
+          481,
+          497,
+          510,
+          550,
+          562,
+          566
+        ],
+        "statusAndListSamples": [
+          {
+            "frame": 0,
+            "bottom": 466,
+            "listTop": 493
+          },
+          {
+            "frame": 3,
+            "bottom": 510,
+            "listTop": 537
+          },
+          {
+            "frame": 4,
+            "bottom": 550,
+            "listTop": 576
+          },
+          {
+            "frame": 5,
+            "bottom": 562,
+            "listTop": 588
+          },
+          {
+            "frame": 6,
+            "bottom": 566,
+            "listTop": 592
+          },
+          {
+            "frame": 7,
+            "bottom": 570,
+            "listTop": 597
+          },
+          {
+            "frame": 8,
+            "bottom": 572,
+            "listTop": 598
+          },
+          {
+            "frame": 10,
+            "bottom": 571,
+            "listTop": 598
+          },
+          {
+            "frame": 12,
+            "bottom": 570,
+            "listTop": 597
+          },
+          {
+            "frame": 13,
+            "bottom": 566,
+            "listTop": 593
+          },
+          {
+            "frame": 14,
+            "bottom": 497,
+            "listTop": 524
+          },
+          {
+            "frame": 15,
+            "bottom": 481,
+            "listTop": 508
+          },
+          {
+            "frame": 16,
+            "bottom": 472,
+            "listTop": 499
+          },
+          {
+            "frame": 17,
+            "bottom": 467,
+            "listTop": 494
+          },
+          {
+            "frame": 18,
+            "bottom": 466,
+            "listTop": 493
+          }
+        ],
+        "frames": 30,
+        "expansionSmooth": true,
+        "contractionSmooth": true,
+        "listTracksStatus": true,
+        "listGapPixelRange": [
+          26,
+          27
+        ]
+      }
+    },
+    "uiWorkflows": {
+      "baseline": {
+        "label": "baseline",
+        "events": [
+          {
+            "action": "corrupt_test_copy",
+            "seconds": 1.1196267998311669
+          },
+          {
+            "action": "error_visible",
+            "seconds": 5.770356899825856
+          },
+          {
+            "action": "restore_test_copy",
+            "seconds": 6.607169199967757
+          },
+          {
+            "action": "restored_visible",
+            "seconds": 9.733736099908128
+          }
+        ],
+        "testCopyRestored": true,
+        "movie": "height-baseline.mp4",
+        "entryRemainsVisible": true
+      },
+      "release": {
+        "label": "release",
+        "events": [
+          {
+            "action": "corrupt_test_copy",
+            "seconds": 1.1485638001468033
+          },
+          {
+            "action": "error_visible",
+            "seconds": 7.978072700090706
+          },
+          {
+            "action": "restore_test_copy",
+            "seconds": 8.759874100098386
+          },
+          {
+            "action": "restored_visible",
+            "seconds": 11.99601750005968
+          }
+        ],
+        "testCopyRestored": true,
+        "movie": "height-release.mp4",
+        "entryRemainsVisible": true
+      },
+      "release-large": {
+        "label": "release-large",
+        "events": [
+          {
+            "action": "corrupt_test_copy",
+            "seconds": 1.0781864000018686
+          },
+          {
+            "action": "error_visible",
+            "seconds": 4.005521500017494
+          },
+          {
+            "action": "restore_test_copy",
+            "seconds": 4.773742699995637
+          },
+          {
+            "action": "restored_visible",
+            "seconds": 6.906807699939236
+          }
+        ],
+        "testCopyRestored": true,
+        "movie": "height-release-large.mp4",
+        "entryRemainsVisible": true
+      }
+    },
+    "releaseApkSha256": "585a13406e0b3706a10e9e6123618322251bd219731ddaf51280049f87064dff",
+    "fontScaleTest": 1.5,
+    "guestFontScaleRestored": true,
+    "finalReleaseFlag": "DEBUGGABLE absent",
+    "debugInstallObservation": {
+      "guardScreenObservedBeforeAnimationProbe": true,
+      "previousReleaseRestoredSuccessfully": true,
+      "causeConfirmed": false,
+      "dataOrKeysCleared": false
+    }
+  },
+  "cleanup": {
+    "originalUserRestored": 0,
+    "taskGuestRemoved": 13,
+    "otherUsersPreserved": [
+      0,
+      10,
+      11,
+      12
+    ],
+    "taskDriverRemoved": true,
+    "forwardRemoved": 18763,
+    "explicitTaskTemporaryFilesRemoved": 11,
+    "publicAvdRetained": true,
+    "mainUserAppDataCleared": false,
+    "hostTemporaryDataLocallyExcludedFromGit": true
+  },
+  "originalFileIntegrity": {
+    "sha256Unchanged": true,
+    "bytes": 13113
+  }
+}

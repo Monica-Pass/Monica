@@ -114,6 +114,7 @@ class CipherUploadProcessor(
             "monica_full_name",
             "monica_wallet_template",
             "monica_wallet_fields",
+            "monica_boarding_pass",
             "monica_wallet_number",
             "monica_district",
             "monica_home_email",
@@ -1512,6 +1513,7 @@ class CipherUploadProcessor(
             add("monica_full_name" to docData.fullName)
             add("monica_wallet_template" to docData.walletTemplate)
             if (docData.walletTemplate.isNotBlank()) add("monica_wallet_number" to docData.documentNumber)
+            add("monica_boarding_pass" to takagi.ru.monica.data.model.BoardingPassBarcodeCodec.encode(docData.boardingPassBarcode))
             add("monica_wallet_fields" to kotlinx.serialization.json.JsonObject(docData.walletFields.mapValues { kotlinx.serialization.json.JsonPrimitive(it.value) }).toString())
             add("monica_district" to docData.district)
             add("monica_home_email" to docData.homeEmail)
@@ -1534,7 +1536,8 @@ class CipherUploadProcessor(
             customFields = docData.customFields
                 .filterNot { field -> field.label.trim().lowercase() in DOCUMENT_RESERVED_FIELD_NAMES },
             // An explicit empty value distinguishes clearing from pre-extension records.
-            includeEmptyReservedFields = setOf("monica_full_name", "monica_wallet_template")
+            includeEmptyReservedFields = setOf("monica_full_name", "monica_wallet_template", "monica_boarding_pass"),
+            hiddenReservedFields = setOf("monica_boarding_pass")
         )
     }
 
@@ -1582,7 +1585,8 @@ class CipherUploadProcessor(
         reservedFields: List<Pair<String, String>>,
         customFields: List<SecureCustomField>,
         excludedCustomFieldNames: Set<String> = emptySet(),
-        includeEmptyReservedFields: Set<String> = emptySet()
+        includeEmptyReservedFields: Set<String> = emptySet(),
+        hiddenReservedFields: Set<String> = emptySet()
     ): List<CipherFieldApiData>? {
         val crypto = BitwardenCrypto
         val result = mutableListOf<CipherFieldApiData>()
@@ -1593,7 +1597,7 @@ class CipherUploadProcessor(
                 result += CipherFieldApiData(
                     name = crypto.encryptString(name, symmetricKey),
                     value = crypto.encryptString(value, symmetricKey),
-                    type = 0
+                    type = if (name in hiddenReservedFields) 1 else 0
                 )
             }
 

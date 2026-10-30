@@ -51,6 +51,34 @@ class HardwareProviderTest {
         assertThrows(IllegalStateException::class.java) { HardwareRequestOrigin.resolve(context, caller, "example.com", ByteArray(32)) }
     }
 
+    @Test fun forwardingPreservesFrameworkCallerAndHashAndRejectsPlatformOnlyOrMissingRequests() {
+        val pkg = context.packageManager.getPackageInfo("com.android.chrome", PackageManager.GET_SIGNING_CERTIFICATES)
+        val caller = android.service.credentials.CallingAppInfo("com.android.chrome", pkg.signingInfo!!, "https://login.example.com")
+        val hash = ByteArray(32) { (it + 4).toByte() }
+        fun source(json: String): Intent {
+            val request = CreatePublicKeyCredentialRequest(json, clientDataHash = hash)
+            return Intent().putExtra("android.service.credentials.extra.CREATE_CREDENTIAL_REQUEST",
+                android.service.credentials.CreateCredentialRequest(caller, request.type, request.credentialData))
+                .putExtra("request_json", "{untrusted}").putExtra("rp_id", "evil.example")
+        }
+        val original = source(json).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY)
+        assertTrue(HardwareRegistrationRequest.allowsHardware(original))
+        val forwarded = HardwareRegistrationRequest.forward(context, original)
+        val provider = PendingIntentHandler.retrieveProviderCreateCredentialRequest(forwarded)!!
+        val request = provider.callingRequest as CreatePublicKeyCredentialRequest
+        assertEquals(json, request.requestJson)
+        assertArrayEquals(hash, request.clientDataHash)
+        assertEquals("com.android.chrome", provider.callingAppInfo.packageName)
+        assertEquals("https://login.example.com", HardwareRequestOrigin.resolve(context, provider.callingAppInfo, "example.com", request.clientDataHash))
+        assertEquals(HardwareSecurityKeyActivity.ACTION_CREATE, forwarded.action)
+        assertEquals(0, forwarded.flags)
+        assertEquals(HardwareSecurityKeyActivity::class.java.name, forwarded.component!!.className)
+        val platform = source(JSONObject(json).put("authenticatorSelection", JSONObject().put("authenticatorAttachment", "platform")).toString())
+        assertFalse(HardwareRegistrationRequest.allowsHardware(platform))
+        assertThrows(IllegalStateException::class.java) { HardwareRegistrationRequest.forward(context, platform) }
+        assertFalse(HardwareRegistrationRequest.allowsHardware(Intent().putExtra("request_json", json)))
+    }
+
     @Test fun frameworkResponsesPreserveHardwareWebauthnJsonAndCancellationType() {
         val createJson = JSONObject().put("id", "AQI").put("rawId", "AQI").put("type", "public-key").put("authenticatorAttachment", "cross-platform")
             .put("response", JSONObject().put("attestationObject", "oA")).toString()

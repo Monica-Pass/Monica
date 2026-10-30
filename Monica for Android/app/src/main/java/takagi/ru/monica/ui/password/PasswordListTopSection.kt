@@ -74,6 +74,9 @@ import takagi.ru.monica.ui.password.BitwardenReunlockTopActionsMenuItem
 import takagi.ru.monica.ui.password.BitwardenSyncTopActionsMenuItem
 import takagi.ru.monica.ui.password.CommonPasswordTopActionsMenuItems
 import takagi.ru.monica.ui.password.KeepassRefreshTopActionsMenuItem
+import takagi.ru.monica.ui.password.rememberKeePassFileActions
+import takagi.ru.monica.ui.password.KeePassFileMenuItems
+import takagi.ru.monica.ui.password.KeePassFileStatus
 import takagi.ru.monica.ui.password.KeepassNativeManagerTopActionsMenuItem
 import takagi.ru.monica.ui.password.MdbxCommitHistoryTopActionsMenuItem
 import takagi.ru.monica.ui.password.MdbxCreateSnapshotTopActionsMenuItem
@@ -182,6 +185,9 @@ internal fun PasswordListTopSection(
         selectedKeePassDatabaseId?.let { databaseId ->
             takagi.ru.monica.ui.screens.DatabaseManagerNavigation.open(takagi.ru.monica.credentialexchange.ImportDestination(takagi.ru.monica.credentialexchange.ImportDestinationKind.KEEPASS, databaseId))
         }
+    }
+    val keePassFileActions = rememberKeePassFileActions(selectedKeePassDatabaseId, viewModel) {
+        selectedKeePassDatabaseId?.let { localKeePassViewModel.refreshGroups(it); viewModel.refreshKeePassOverviewAfterNativeRead(it) }
     }
     Column {
         val title = when (val filter = currentFilter) {
@@ -394,6 +400,7 @@ internal fun PasswordListTopSection(
                     }
                     PasswordTopActionsDropdownMenu(
                         expanded = topActionsMenuExpanded,
+                        showNearbySync = !isKeePassDatabaseView,
                         onDismissRequest = { onTopActionsMenuExpandedChange(false) }
                     ) {
                             if (currentFilter.isMonicaDatabaseFilter() || currentFilter is CategoryFilter.LocalOnly) {
@@ -403,7 +410,8 @@ internal fun PasswordListTopSection(
                                 })
                             }
                             if (isKeePassDatabaseView) {
-                                KeepassRefreshTopActionsMenuItem(
+                                if (keePassFileActions != null) KeePassFileMenuItems(keePassFileActions) { onTopActionsMenuExpandedChange(false) }
+                                else KeepassRefreshTopActionsMenuItem(
                                     onClick = {
                                         onTopActionsMenuExpandedChange(false)
                                         viewModel.refreshKeePassFromSourceForCurrentContext()
@@ -568,6 +576,7 @@ internal fun PasswordListTopSection(
             }
         )
 
+        keePassFileActions?.let { KeePassFileStatus(it) }
         if (showBitwardenUnlockDialog && selectedBitwardenVault != null) {
             UnlockVaultDialog(
                 email = selectedBitwardenVault.email,

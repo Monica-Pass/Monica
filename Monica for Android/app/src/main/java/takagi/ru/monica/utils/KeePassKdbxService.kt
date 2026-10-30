@@ -273,6 +273,22 @@ data class KeePassWorkspaceSnapshot(
     val passkeys: List<Pair<UUID, PasskeyEntry>> = emptyList(),
 )
 
+/** A null workspace means the exact cached browser instance is still current. */
+internal data class KeePassMonicaWorkspaceRead(
+    val sourceBrowser: KeePassNativeBrowserSnapshot,
+    val workspace: KeePassWorkspaceSnapshot?,
+    val passwordProjection: KeePassMonicaPasswordProjection? = null,
+)
+
+/** Per-store, in-memory projection inputs; never retains database credentials. */
+internal data class KeePassMonicaPasswordProjection(
+    val databaseId: Long,
+    val contexts: List<EntryTraversalContext>,
+    val passwords: List<KeePassEntryData>,
+    val hasRecycleBinMeta: Boolean,
+    val hasReferences: Boolean,
+)
+
 /**
  * Kotpass owns and closes the sink created around the supplied stream while encoding.
  * Do not flush or sync [output] after [KeePassDatabase.encode] returns: the underlying
@@ -283,8 +299,7 @@ internal fun encodeKeePassDatabaseArtifactFile(
     destination: File,
 ): KeePassSourceRevision {
     FileOutputStream(destination).use { output ->
-        keePassDatabase.encode(output, contentParser = KeePassCodecSupport.contentParser,
-            cipherProviders = KeePassCodecSupport.cipherProviders)
+        KeePassCodecSupport.encode(keePassDatabase, output)
     }
     return KeePassSourceSafety.revisionOf(destination)
 }
@@ -1526,47 +1541,118 @@ class KeePassKdbxService(
     ): Result<KeePassWorkspaceSnapshot> = withContext(Dispatchers.IO) {
         try {
             val loaded = loadDatabase(databaseId)
-            val database = loaded.database
-            val keePassDatabase = loaded.keePassDatabase
-            val bundle = loaded.projectionBundle.value
-            val passwords = buildPasswordEntryData(
-                databaseId = database.id,
-                databaseName = database.name,
-                entries = bundle.entries,
-                hasRecycleBinMeta = bundle.hasRecycleBinMeta,
-                resolutionContext = bundle.resolutionContext
-            )
-            val secureItems = mutableListOf<KeePassSecureItemData>()
-            bundle.entries.forEach { context ->
-                entryToSecureItemData(
-                    entry = context.entry,
-                    keePassDatabase = keePassDatabase,
-                    databaseId = databaseId,
-                    groupPath = context.groupPath,
-                    groupUuid = context.groupUuid,
-                    isInRecycleBinByMeta = context.isInRecycleBinByMeta,
-                    hasRecycleBinMeta = bundle.hasRecycleBinMeta,
-                    allowedTypes = allowedSecureItemTypes,
-                    resolutionContext = bundle.resolutionContext
-                )?.let(secureItems::add)
-            }
-            val groups = bundle.groups(includeRecycleBinGroups)
-            dao.updateEntryCount(database.id, bundle.entries.size)
-            Result.success(
-                KeePassWorkspaceSnapshot(
-                    passwords = passwords,
-                    secureItems = secureItems,
-                    groups = groups,
-                    passkeys = if (!includePasskeys) emptyList() else bundle.entries.filterNot { it.isInRecycleBinByMeta }.mapNotNull { entry ->
-                        entryToPasskey(entry.entry, databaseId, entry.groupPath, entry.groupUuid, bundle.resolutionContext)
-                            ?.let { entry.entry.uuid to it }
-                    },
-                    sessionRevision = bundle.revisionToken
-                )
-            )
+            Result.success(buildWorkspace(loaded, includeRecycleBinGroups, allowedSecureItemTypes, includePasskeys))
         } catch (e: Exception) {
             Result.failure(normalizeError(e))
         }
+    }
+
+    /** Resolve the registration/source once; both presentations then use that immutable revision. */
+    internal suspend fun loadMonicaWorkspace(
+        databaseId: Long,
+        previousBrowser: KeePassNativeBrowserSnapshot? = null,
+        previousPasswords: KeePassMonicaPasswordProjection? = null,
+    ): Result<KeePassMonicaWorkspaceRead> = withContext(Dispatchers.IO) {
+        try {
+            val loaded = loadDatabase(databaseId)
+            val browser = loaded.nativeBrowser.value
+            if (browser === previousBrowser) {
+                Result.success(KeePassMonicaWorkspaceRead(browser, null))
+            } else {
+                val projection = buildMonicaPasswordProjection(loaded, previousPasswords)
+                Result.success(KeePassMonicaWorkspaceRead(browser,
+                    buildWorkspace(loaded, false, null, true, projection.passwords), projection))
+            }
+        } catch (e: Exception) {
+            Result.failure(normalizeError(e))
+        }
+    }
+
+    private fun buildMonicaPasswordProjection(
+        loaded: LoadedDatabase,
+        previous: KeePassMonicaPasswordProjection?,
+    ): KeePassMonicaPasswordProjection {
+        val bundle = loaded.projectionBundle.value
+        val contexts = bundle.entries
+        val resolutionContext = bundle.resolutionContext
+        // REF targets can be found by UUID or by matching another field. Until a
+        // dependency index exists, either revision containing REF requires a full
+        // projection. Object identity also makes external reloads rebuild safely.
+        val reusable = previous?.takeIf {
+            it.databaseId == loaded.database.id && !it.hasReferences && resolutionContext == null &&
+                it.hasRecycleBinMeta == bundle.hasRecycleBinMeta &&
+                it.contexts.map { source -> source.entry.uuid }.toSet().size == it.contexts.size &&
+                contexts.map { source -> source.entry.uuid }.toSet().size == contexts.size
+        }
+        if (reusable == null) {
+            return KeePassMonicaPasswordProjection(loaded.database.id, contexts,
+                buildPasswordEntryData(loaded.database.id, loaded.database.name, contexts,
+                    bundle.hasRecycleBinMeta, resolutionContext),
+                bundle.hasRecycleBinMeta, resolutionContext != null)
+        }
+        val oldContexts = reusable.contexts.associateBy { it.entry.uuid }
+        val oldPasswords = reusable.passwords.associateBy { it.entryUuid }
+        val reused = contexts.mapNotNull { current ->
+            val old = oldContexts[current.entry.uuid]
+            oldPasswords[current.entry.uuid.toString()]?.takeIf {
+                old != null && old.entry === current.entry && old.groupPath == current.groupPath &&
+                    old.groupUuid == current.groupUuid && old.isInRecycleBinByMeta == current.isInRecycleBinByMeta
+            }?.let { current.entry.uuid to it }
+        }.toMap()
+        val changed = buildPasswordEntryData(
+            databaseId = loaded.database.id,
+            databaseName = loaded.database.name,
+            entries = contexts.filterNot { it.entry.uuid in reused },
+            hasRecycleBinMeta = bundle.hasRecycleBinMeta,
+            resolutionContext = resolutionContext,
+        ).associateBy { it.entryUuid }
+        val passwords = contexts.mapNotNull { reused[it.entry.uuid] ?: changed[it.entry.uuid.toString()] }
+        return KeePassMonicaPasswordProjection(loaded.database.id, contexts, passwords,
+            bundle.hasRecycleBinMeta, resolutionContext != null)
+    }
+
+    private suspend fun buildWorkspace(
+        loaded: LoadedDatabase,
+        includeRecycleBinGroups: Boolean,
+        allowedSecureItemTypes: Set<ItemType>?,
+        includePasskeys: Boolean,
+        projectedPasswords: List<KeePassEntryData>? = null,
+    ): KeePassWorkspaceSnapshot {
+        val database = loaded.database
+        val databaseId = database.id
+        val bundle = loaded.projectionBundle.value
+        val passwords = projectedPasswords ?: buildPasswordEntryData(
+            databaseId = databaseId,
+            databaseName = database.name,
+            entries = bundle.entries,
+            hasRecycleBinMeta = bundle.hasRecycleBinMeta,
+            resolutionContext = bundle.resolutionContext,
+        )
+        val secureItems = mutableListOf<KeePassSecureItemData>()
+        bundle.entries.forEach { context ->
+            entryToSecureItemData(
+                entry = context.entry,
+                keePassDatabase = loaded.keePassDatabase,
+                databaseId = databaseId,
+                groupPath = context.groupPath,
+                groupUuid = context.groupUuid,
+                isInRecycleBinByMeta = context.isInRecycleBinByMeta,
+                hasRecycleBinMeta = bundle.hasRecycleBinMeta,
+                allowedTypes = allowedSecureItemTypes,
+                resolutionContext = bundle.resolutionContext,
+            )?.let(secureItems::add)
+        }
+        dao.updateEntryCount(databaseId, bundle.entries.size)
+        return KeePassWorkspaceSnapshot(
+            passwords = passwords,
+            secureItems = secureItems,
+            groups = bundle.groups(includeRecycleBinGroups),
+            passkeys = if (!includePasskeys) emptyList() else bundle.entries.filterNot { it.isInRecycleBinByMeta }.mapNotNull { entry ->
+                entryToPasskey(entry.entry, databaseId, entry.groupPath, entry.groupUuid, bundle.resolutionContext)
+                    ?.let { entry.entry.uuid to it }
+            },
+            sessionRevision = bundle.revisionToken,
+        )
     }
 
     suspend fun listGroups(
@@ -3333,6 +3419,76 @@ class KeePassKdbxService(
             Result.success(Unit)
         } catch (error: Exception) {
             Result.failure(normalizeError(error))
+        }
+    }
+
+    /** Hash the encrypted source; unchanged files require no KDF or projection work. */
+    internal suspend fun currentNativeSourceRevision(databaseId: Long): KeePassSourceRevision = withContext(Dispatchers.IO) {
+        withDatabaseMutationLocks(listOf(databaseId)) {
+            check(isDatabaseUnlocked(databaseId)) { "KeePass database is locked" }
+            val registration = requireNotNull(dao.getDatabaseById(databaseId))
+            openDatabaseStreamSource(registration).use { it.revision }
+        }
+    }
+
+    internal suspend fun reloadNativeDatabase(databaseId: Long) = withContext(Dispatchers.IO) {
+        withDatabaseMutationLocks(listOf(databaseId)) {
+            val previous = synchronized(loadedDatabaseCache) { loadedDatabaseCache[databaseId] }
+                ?: error("KeePass database is locked")
+            val lockVersion = nativeLockVersions.value[databaseId] ?: 0L
+            val registration = requireNotNull(dao.getDatabaseById(databaseId))
+            openDatabaseStreamSource(registration).use { source ->
+                val (decoded, credentials) = decodeDatabaseWithFallback(
+                    source, buildCredentials(registration), "reload", registration.resolvedActiveFilePath())
+                // A failed decode keeps the last valid session. A concurrent lock/removal must
+                // never be undone by a late reload; compare the actual cached instance as well.
+                synchronized(loadedDatabaseCache) {
+                    check(loadedDatabaseCache[databaseId] === previous &&
+                        takagi.ru.monica.security.SessionManager.isUnlocked.value &&
+                        (nativeLockVersions.value[databaseId] ?: 0L) == lockVersion) { "KeePass session changed during reload" }
+                    val nativeSession = nativeSessionCache.deferred(databaseId, source.revision, decoded)
+                    cacheLoadedDatabase(previous.loaded.copy(
+                        database = registration, credentials = credentials, keePassDatabase = decoded,
+                        nativeSession = nativeSession,
+                        nativeBrowser = lazy(LazyThreadSafetyMode.SYNCHRONIZED) { KeePassNativeBrowserBuilder.build(nativeSession.value) },
+                        projectionBundle = nativeProjectionBundleCache.deferred(nativeSession),
+                        sourceEtag = source.etag, sourceLastModified = source.lastModified,
+                        sourceSignature = currentSourceSignature(registration), sourceRevision = source.revision))
+                }
+            }
+        }
+    }
+
+    internal suspend fun saveNativeDatabase(databaseId: Long, expectedRevision: String): Unit = withContext(Dispatchers.IO) {
+        mutateDatabase(databaseId) { loaded ->
+            assertNativeRevision(expectedRevision, loaded.nativeSession.value.revisionToken)
+            MutationPlan(updatedDatabase = loaded.keePassDatabase, result = Unit)
+        }
+    }
+
+    internal suspend fun synchronizeNativeDatabaseFrom(
+        databaseId: Long, sourceUri: Uri, sourcePassword: String, sourceKeyFileUri: Uri?, expectedRevision: String,
+    ): Int = withContext(Dispatchers.IO) {
+        accessPolicy.requireWritable(databaseId)
+        val sourceCredentials = buildCredentialsFromRaw(sourcePassword, sourceKeyFileUri)
+        openUriStreamSource(sourceUri, "Unable to read the KeePass source database").use { source ->
+            requirePreflightAllowed(KeePassWritePreflight.evaluateRuntime(
+                currentDatabaseBytes = loadDatabase(databaseId).sourceRevision.sizeBytes,
+                incomingPayloadBytes = source.revision.sizeBytes))
+            val (incoming, _) = decodeDatabaseWithFallback(source, sourceCredentials, "synchronize-from", sourceUri.lastPathSegment)
+            withDatabaseMutationLocks(listOf(databaseId)) {
+                val loaded = loadDatabase(databaseId)
+                assertNativeRevision(expectedRevision, loaded.nativeSession.value.revisionToken)
+                val merged = takagi.ru.monica.keepass.KeePassDatabaseSynchronizer.merge(loaded.keePassDatabase, incoming)
+                openDatabaseStreamSource(loaded.database).use { current ->
+                    if (current.revision != loaded.sourceRevision) throw KeePassSourceChangedException("KeePass source changed before merge")
+                    current.openStream().use { recoveryStore.create(databaseId, it) }
+                }
+                writeDatabase(database = loaded.database, credentials = loaded.credentials,
+                    keePassDatabase = merged.database, sourceEtag = loaded.sourceEtag,
+                    sourceLastModified = loaded.sourceLastModified, expectedSourceRevision = loaded.sourceRevision)
+                merged.equalTimeConflicts
+            }
         }
     }
 
@@ -6824,8 +6980,7 @@ class KeePassKdbxService(
     }
 
     private fun resolveRecycleBinUuid(meta: Meta): UUID? {
-        if (!meta.recycleBinEnabled) return null
-        return meta.recycleBinUuid
+        return meta.recycleBinUuid?.takeUnless { it == UUID(0, 0) }
     }
 
     private fun parseUuid(value: String?): UUID? {
@@ -6949,13 +7104,16 @@ class KeePassKdbxService(
         entry: Entry,
         resolutionContext: KeePassEntryResolutionContext? = null
     ): TotpData? {
-        val standard = KeePassTotpCodec.parseFields(
+        val hasStandardFields = entry.fields.keys.any(KeePassTotpCodec::isOtpField)
+        val stored = getFieldValue(entry, FIELD_MONICA_TOTP_DATA, resolutionContext)
+        if (!hasStandardFields && stored.isBlank()) return null
+        val standard = if (!hasStandardFields) null else KeePassTotpCodec.parseFields(
             getField = { getFieldValueIgnoreCase(entry, resolutionContext, it) },
             issuer = getStandardTitle(entry, resolutionContext),
             accountName = getStandardUsername(entry, resolutionContext),
             link = getStandardUrl(entry, resolutionContext)
         )
-        return KeePassSecureItemPayload.resolveTotp(getFieldValue(entry, FIELD_MONICA_TOTP_DATA, resolutionContext), standard)
+        return KeePassSecureItemPayload.resolveTotp(stored, standard)
     }
 
     private fun buildResolutionContext(
@@ -7703,12 +7861,7 @@ class KeePassKdbxService(
             withGlobalDecodeLock {
                 try {
                     KeePassFormatInspector.ensureKdbxSupported(bytes = bytes, sourceName = sourceName, strings = strings)
-                    KeePassDatabase.decode(
-                        ByteArrayInputStream(bytes),
-                        credentials,
-                        contentParser = KeePassCodecSupport.contentParser,
-                        cipherProviders = KeePassCodecSupport.cipherProviders
-                    )
+                    KeePassCodecSupport.decode(ByteArrayInputStream(bytes), credentials)
                 } catch (t: Throwable) {
                     val mapped = normalizeError(t)
                     if (logFailure) {
@@ -7977,12 +8130,7 @@ class KeePassKdbxService(
                 try {
                     KeePassFormatInspector.ensureKdbxSupportedHeader(header, sourceName, strings = strings)
                     input.use { stream ->
-                        KeePassDatabase.decode(
-                            stream,
-                            credentials,
-                            contentParser = KeePassCodecSupport.contentParser,
-                            cipherProviders = KeePassCodecSupport.cipherProviders,
-                        )
+                        KeePassCodecSupport.decode(stream, credentials)
                     }
                 } catch (t: Throwable) {
                     val mapped = normalizeError(t)
@@ -8913,8 +9061,7 @@ class KeePassKdbxService(
         return ByteArrayOutputStream(
             KeePassEncodeBufferPolicy.initialCapacity(estimatedSizeBytes)
         ).use { output ->
-            keePassDatabase.encode(output, contentParser = KeePassCodecSupport.contentParser,
-                cipherProviders = KeePassCodecSupport.cipherProviders)
+            KeePassCodecSupport.encode(keePassDatabase, output)
             output.toByteArray()
         }
     }

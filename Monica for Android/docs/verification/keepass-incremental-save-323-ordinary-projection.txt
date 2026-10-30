@@ -1,0 +1,6 @@
+
+takagi.ru.monica.keepass.KeePassSaveProjectionRegressionTest:..
+
+Time: 6.645
+
+OK (2 tests)

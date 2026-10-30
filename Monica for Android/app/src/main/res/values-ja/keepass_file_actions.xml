@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_file_save">データを保存</string>
+    <string name="kp_file_merge">データを統合</string>
+    <string name="kp_file_reload">データを再読み込み</string>
+    <string name="kp_file_ready">保存済み · KDBX</string>
+    <string name="kp_file_busy">データベースを処理中…</string>
+    <string name="kp_file_saved">データを保存しました</string>
+    <string name="kp_file_external_reloaded">外部での変更を読み込みました</string>
+    <string name="kp_file_reloaded">データを再読み込みしました</string>
+    <string name="kp_file_merged">データを統合しました</string>
+    <string name="kp_file_merged_conflicts">統合済み。同じ更新日時の異なるバージョンは項目の履歴に保存されています</string>
+    <string name="kp_file_reload_failed">再読み込みできません。前回読み込んだデータを表示しています</string>
+    <string name="kp_file_failed">操作を完了できませんでした</string>
+    <string name="kp_file_failure_help">ファイルへのアクセス権、統合元のパスワード、外部での変更を確認して再試行してください。</string>
+    <string name="kp_file_merge_summary">同じ項目を照合し、更新、履歴、削除記録を統合します。</string>
+    <string name="kp_file_select_source">KDBX ファイルを選択</string>
+    <string name="kp_file_source_selected">統合元を選択済み · 変更</string>
+    <string name="kp_file_source_password">統合元データベースのパスワード</string>
+    <string name="kp_file_select_key">キーファイル（任意）</string>
+    <string name="kp_file_key_selected">キーファイルを選択済み · 変更</string>
+    <string name="kp_file_merge_notice">先に復元用コピーを作成します。新しい項目を優先し、更新日時が同じ場合は現在のバージョンを残して、もう一方を履歴に保存します。</string>
+    <string name="kp_file_merge_confirm">統合して保存</string>
+</resources>

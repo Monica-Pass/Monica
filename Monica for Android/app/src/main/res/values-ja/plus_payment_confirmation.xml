@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="payment_unlock_confirmation">支払い済みであることを誠実に申告し、Monica Plus のロック解除を確認します。</string>
+    <string name="payment_unlock_confirm_button">ロック解除を確認</string>
+</resources>

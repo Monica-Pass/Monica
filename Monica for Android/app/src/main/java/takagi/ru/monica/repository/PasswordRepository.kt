@@ -4,6 +4,7 @@ import takagi.ru.monica.data.explicitPasswordGroupId
 import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.first
 import takagi.ru.monica.data.Category
 import takagi.ru.monica.data.CategoryDao
 import takagi.ru.monica.data.PasskeyDao
@@ -64,6 +65,24 @@ class PasswordRepository(
 
     fun getActiveAuthenticatorEntries(): Flow<List<PasswordEntry>> =
         passwordEntryDao.getActiveAuthenticatorEntries().withoutExternalSteamMaFileEntries()
+
+    /** Preserve the combined list's native-owner precedence without reading unrelated Room rows. */
+    suspend fun getActiveSaveCandidates(originalIds: List<Long>, replicaGroupId: String): List<PasswordEntry> {
+        val ids = originalIds.toHashSet()
+        // Retain the existing transactional full read for unusually large forms rather
+        // than split a logical snapshot across SQLite bind-limit-sized transactions.
+        if (ids.size > 900) {
+            return getAllPasswordEntries().first().filter { it.id in ids || it.replicaGroupId == replicaGroupId }
+        }
+        val roomIds = ids.filterNot(takagi.ru.monica.keepass.KeePassMonicaPasswordStore::isUiId)
+        val room = passwordEntryDao.getActiveSaveCandidates(roomIds, replicaGroupId)
+            .withoutExternalSteamMaFileEntries()
+        val nativeRows = monicaKeePassStore?.activeRows?.first().orEmpty()
+        return room.filterNot { it.keepassDatabaseId in nativeRows.keys } +
+            nativeRows.values.asSequence().flatten().filter {
+                !it.isArchived && !it.isDeleted && (it.id in ids || it.replicaGroupId == replicaGroupId)
+            }.toList()
+    }
 
     fun getActivePasswordTitles(): Flow<List<takagi.ru.monica.data.PasswordTitle>> =
         passwordEntryDao.getActivePasswordTitles()

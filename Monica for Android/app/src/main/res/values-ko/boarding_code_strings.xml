@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="boarding_code_show">탑승 코드 표시</string>
+    <string name="boarding_code_add">편집 후 탑승권 스캔</string>
+    <string name="boarding_code_missing">이 탑승권에 저장된 코드가 없습니다</string>
+    <string name="boarding_code_saved">원본 탑승 코드 저장됨</string>
+    <string name="wallet_code_hint">QR 코드 또는 바코드 · 눌러서 표시</string>
+    <string name="boarding_code_original_hint">스캔한 원본입니다. 탑승권 정보를 편집해도 이 코드는 변경되지 않습니다.</string>
+    <string name="boarding_code_expand">코드 확대</string>
+    <string name="boarding_code_collapse">탑승권 정보 표시</string>
+    <string name="boarding_code_unavailable">여기서는 코드를 표시할 수 없습니다. 가로 모드를 사용하거나 원본 탑승권을 다시 스캔하세요.</string>
+    <string name="boarding_code_rescan">다시 스캔</string>
+    <string name="boarding_code_remove">저장된 코드 제거</string>
+    <string name="wallet_pass_scan_boarding_pass">탑승권 스캔</string>
+    <string name="wallet_pass_scan_boarding_pass_hint">탑승권의 바코드를 프레임에 맞추세요</string>
+    <string name="wallet_pass_boarding_pass_invalid">IATA 탑승권 바코드가 아닙니다</string>
+    <string name="wallet_pass_boarding_pass_filled">탑승권 정보를 입력했습니다. 코드를 보관하려면 저장하세요</string>
+    <string name="boarding_code_draft_hint">코드 변경 사항을 반영하려면 탑승권을 저장하세요</string>
+    <string name="wallet_pass_show_code">회원 코드 표시</string>
+</resources>

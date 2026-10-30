@@ -1,0 +1,90 @@
+{
+  "builds": {
+    "ordinary": {
+      "ended": "2026-10-30T15:58:49.5423258+08:00",
+      "started": "2026-10-30T15:42:20.2132850+08:00",
+      "exitCode": 0
+    },
+    "fdroid": {
+      "started": "2026-10-30T16:18:55.5232366+08:00",
+      "ended": "2026-10-30T16:36:39.3484912+08:00",
+      "exitCode": 0
+    }
+  },
+  "device": {
+    "ordinary": {
+      "tests": 80,
+      "ended": "2026-10-30T16:18:55.4468779+08:00",
+      "seconds": 213.107,
+      "started": "2026-10-30T16:15:09.4176467+08:00",
+      "exitCode": 0
+    },
+    "fdroid": {
+      "ended": "2026-10-30T16:41:37.4834584+08:00",
+      "tests": 80,
+      "started": "2026-10-30T16:37:57.3320564+08:00",
+      "exitCode": 0,
+      "seconds": 207.524
+    }
+  },
+  "jvm": {
+    "ordinary": [
+      {
+        "name": "takagi.ru.monica.data.model.StorageTargetOwnershipTest",
+        "tests": "2",
+        "failures": "0",
+        "errors": "0"
+      },
+      {
+        "name": "takagi.ru.monica.keepass.KeePassCrossDatabaseTransferTest",
+        "tests": "7",
+        "failures": "0",
+        "errors": "0"
+      },
+      {
+        "name": "takagi.ru.monica.viewmodel.PasswordTotpCrossDatabaseBindingGuardTest",
+        "tests": "4",
+        "failures": "0",
+        "errors": "0"
+      }
+    ],
+    "fdroid": [
+      {
+        "name": "takagi.ru.monica.data.model.StorageTargetOwnershipTest",
+        "tests": "2",
+        "failures": "0",
+        "errors": "0"
+      },
+      {
+        "name": "takagi.ru.monica.keepass.KeePassCrossDatabaseTransferTest",
+        "tests": "7",
+        "failures": "0",
+        "errors": "0"
+      },
+      {
+        "name": "takagi.ru.monica.viewmodel.PasswordTotpCrossDatabaseBindingGuardTest",
+        "tests": "4",
+        "failures": "0",
+        "errors": "0"
+      }
+    ]
+  },
+  "apks": {
+    "ordinary": {
+      "versionName": "1.0.323-26103012-21",
+      "versionCode": 12,
+      "sha256": {
+        "Monica-Android-x86_64-1.0.323-26103012-21.APK": "393ede079659cffde7851f3f3a26fb21cd30cd935913a9425ab544978a2d876d",
+        "app-debug-androidTest.apk": "cad3c57e0a5e1aea35aae83e95ef6fe8af1d7471ed453a2fd1a9b1da20c3574f"
+      }
+    },
+    "fdroid": {
+      "versionName": "1.0.323",
+      "versionCode": 30,
+      "sha256": {
+        "Monica-Android-x86_64-1.0.323.apk": "cf795cfe1fcbbbdb0d5468f241cfc72fb13f95f655fcfed2a6cbd152c2020a55",
+        "app-debug-androidTest.apk": "7c86c75a42924ffd92092406e619f56c224ce263449c59bbc9df5de36f207df6"
+      }
+    }
+  }
+}

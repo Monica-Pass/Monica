@@ -1,0 +1,70 @@
+
+takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest:.
+Error in externalDeletionMustBeVisibleWhenReenteringTheDatabase(takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest):
+java.lang.AssertionError: The actual reload menu command must refresh external deletions without restarting expected:<0> but was:<300>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest$externalDeletionMustBeVisibleWhenReenteringTheDatabase$1$1.invokeSuspend(KeePassExternalReloadRegressionTest.kt:37)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:99)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest.externalDeletionMustBeVisibleWhenReenteringTheDatabase(KeePassExternalReloadRegressionTest.kt:19)
+
+Error in disablingFutureRecyclingMustNotExposeExistingRecycledDescendants(takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest):
+java.lang.AssertionError: Recycle membership comes from the UUID, independent of the future-deletion setting expected:<1> but was:<300>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest$disablingFutureRecyclingMustNotExposeExistingRecycledDescendants$1$2.invokeSuspend(KeePassExternalReloadRegressionTest.kt:54)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest.disablingFutureRecyclingMustNotExposeExistingRecycledDescendants(KeePassExternalReloadRegressionTest.kt:42)
+
+
+Time: 14.605
+There were 2 failures:
+1) externalDeletionMustBeVisibleWhenReenteringTheDatabase(takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest)
+java.lang.AssertionError: The actual reload menu command must refresh external deletions without restarting expected:<0> but was:<300>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest$externalDeletionMustBeVisibleWhenReenteringTheDatabase$1$1.invokeSuspend(KeePassExternalReloadRegressionTest.kt:37)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:99)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest.externalDeletionMustBeVisibleWhenReenteringTheDatabase(KeePassExternalReloadRegressionTest.kt:19)
+2) disablingFutureRecyclingMustNotExposeExistingRecycledDescendants(takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest)
+java.lang.AssertionError: Recycle membership comes from the UUID, independent of the future-deletion setting expected:<1> but was:<300>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest$disablingFutureRecyclingMustNotExposeExistingRecycledDescendants$1$2.invokeSuspend(KeePassExternalReloadRegressionTest.kt:54)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest.disablingFutureRecyclingMustNotExposeExistingRecycledDescendants(KeePassExternalReloadRegressionTest.kt:42)
+
+FAILURES!!!
+Tests run: 3,  Failures: 2

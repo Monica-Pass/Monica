@@ -2,6 +2,8 @@
 
 Date: 2026-10-29. Development version 1.0.323, unreleased.
 
+Latest follow-up: [incremental password projection and controlled editor comparison](keepass-incremental-save-323.md), including repeated Monica local/KDBX and official KeePassDX measurements. Historical measurements below remain unchanged.
+
 The [report](https://github.com/Monica-Pass/Monica/issues/172#issuecomment-6460993665) says synchronization after editing takes a long time. The developer also identifies waiting after saving/returning to the list as the main symptom. No personal KDBX or live cloud-provider credentials were used for this investigation.
 
 ## Current implementation: Monica UI with original KDBX storage
@@ -12,7 +14,7 @@ The developer clarified that selecting a KDBX must retain Monica's ordinary pass
 
 Original UUIDs, protected fields, unknown custom fields, reference source text, attachments and history are preserved by the existing checked file mutations. Drafts retain their original revision; a list refresh cannot authorize a stale overwrite. Application/session locks remove native rows and revoke drafts. Group UUIDs take precedence over paths, with missing or ambiguous groups rejected. Monica's existing attachment controls receive in-memory original-vault metadata rather than requiring Room password/secure-item parents. Attachment changes made by the current form advance only that form's verified baseline. Moves into local/MDBX/Bitwarden storage create and verify target passwords and copy attachments before attempting source deletion; source-deletion failure retains the targets. Cross-storage copies encrypt native plaintext before inserting local/index rows, including literal secrets beginning with a Monica ciphertext prefix. Original-vault SSO/note links without destination identities cause the cross-storage copy/move to fail before any target write, keeping the source intact. Entries with original-vault history cannot be moved into those stores, because their complete KDBX history is not representable there: the operation rejects before target creation or source deletion. Copying remains available, and raw KDBX-to-KDBX management uses the existing UUID transfer path that preserves the original record.
 
-The codec remains Kotpass 0.10.0. This change does not integrate a Rust/JNI KDBX codec or accelerate the KDF. KDBX remains an encrypted file; encoding and remote upload/read-back verification still cost time. Existing KDF parameters, ownership protection, locks, backup/commit checks and remote conflict protection remain in place. Local synthetic tests do not establish a real-device or cloud-provider speedup ratio.
+The KDBX codec remains Kotpass 0.10.0. The 2026-10-29 UI work below did not accelerate its KDF. The subsequent 2026-10-30 work adds a scoped Rust/JNI Argon2/AES-KDF provider; see [native KDF verification](keepass-native-kdf-323.md). KDBX remains an encrypted file; encoding and remote upload/read-back verification still cost time. Existing KDF parameters, ownership protection, locks, backup/commit checks and remote conflict protection remain in place. Local synthetic tests do not establish a real-device or cloud-provider speedup ratio.
 
 ## Historical baseline measurements
 

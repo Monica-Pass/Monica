@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="boarding_code_show">Afficher le code d’embarquement</string>
+    <string name="boarding_code_add">Modifier et scanner la carte</string>
+    <string name="boarding_code_missing">Aucun code enregistré pour cette carte</string>
+    <string name="boarding_code_saved">Code d’embarquement original enregistré</string>
+    <string name="wallet_code_hint">Code QR ou code-barres · Toucher pour afficher</string>
+    <string name="boarding_code_original_hint">Ceci est l’original scanné. Modifier les informations de la carte ne change pas ce code.</string>
+    <string name="boarding_code_expand">Agrandir le code</string>
+    <string name="boarding_code_collapse">Afficher les informations</string>
+    <string name="boarding_code_unavailable">Impossible d’afficher ce code ici. Essayez en mode paysage ou scannez à nouveau la carte originale.</string>
+    <string name="boarding_code_rescan">Scanner à nouveau</string>
+    <string name="boarding_code_remove">Retirer le code enregistré</string>
+    <string name="wallet_pass_scan_boarding_pass">Scanner la carte d’embarquement</string>
+    <string name="wallet_pass_scan_boarding_pass_hint">Alignez le code de la carte d’embarquement avec le cadre</string>
+    <string name="wallet_pass_boarding_pass_invalid">Ce n’est pas un code de carte d’embarquement IATA</string>
+    <string name="wallet_pass_boarding_pass_filled">Informations remplies ; enregistrez pour conserver le code</string>
+    <string name="boarding_code_draft_hint">Enregistrez la carte pour conserver les modifications du code</string>
+    <string name="wallet_pass_show_code">Afficher le code de membre</string>
+</resources>

@@ -41,6 +41,7 @@ internal data class KeePassSecureItemPayload(val type: ItemType, val data: Strin
         }
 
         fun resolveTotp(raw: String, standard: TotpData?): TotpData? {
+            if (raw.isBlank()) return standard
             val stored = runCatching { json.decodeFromString<TotpData>(raw) }.getOrNull()
                 ?.takeIf { it.secret.isNotBlank() }
             // Other KeePass clients edit standard OTP fields without updating Monica's JSON.

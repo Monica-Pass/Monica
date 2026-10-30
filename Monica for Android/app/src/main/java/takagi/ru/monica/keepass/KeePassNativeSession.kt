@@ -61,9 +61,8 @@ internal object KeePassNativeSessionBuilder {
         val entriesByIdentity = linkedMapOf<KeePassNativeEntryIdentity, MutableList<KeePassNativeEntryNode>>()
         val groupNodes = mutableListOf<KeePassNativeGroupNode>()
         val entryNodes = mutableListOf<KeePassNativeEntryNode>()
-        val recycleBinUuid = database.content.meta
-            .takeIf { it.recycleBinEnabled }
-            ?.recycleBinUuid
+        // The switch controls future deletions; it does not restore existing recycled items.
+        val recycleBinUuid = database.content.meta.recycleBinUuid?.takeUnless { it == UUID(0, 0) }
 
         fun visitGroup(
             group: Group,

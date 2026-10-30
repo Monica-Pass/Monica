@@ -1,0 +1,92 @@
+[
+  {
+    "file": "app\\src\\main\\java\\takagi\\ru\\monica\\utils\\KeePassKdbxService.kt",
+    "method": "writeDatabase",
+    "unchanged": true,
+    "sha256": "b410d001fdd1ddb14aeb7af370b7fa8c8f4b768ec8dea54ef87639e2058d02a2"
+  },
+  {
+    "file": "app\\src\\main\\java\\takagi\\ru\\monica\\utils\\KeePassKdbxService.kt",
+    "method": "writeExternal",
+    "unchanged": true,
+    "sha256": "e456f86297d436b706979e93a0aa9cdd880329669bb95e503a41b04a099dffc5"
+  },
+  {
+    "file": "app\\src\\main\\java\\takagi\\ru\\monica\\utils\\KeePassKdbxService.kt",
+    "method": "moveNativeEntry",
+    "unchanged": true,
+    "sha256": "5af9c084e2035e5c96f22fde4f376a3e69a431e81bfd5e717ec4b98bbad19dab"
+  },
+  {
+    "file": "app\\src\\main\\java\\takagi\\ru\\monica\\utils\\KeePassKdbxService.kt",
+    "method": "saveMonicaPasswordDrafts",
+    "unchanged": true,
+    "sha256": "985d0cd40b74dc3b8ff3b204023bd5c974e5c1461df74ea264449916a109e4f9"
+  },
+  {
+    "file": "app\\src\\main\\java\\takagi\\ru\\monica\\utils\\KeePassKdbxService.kt",
+    "method": "deleteNativeEntries",
+    "unchanged": true,
+    "sha256": "9746e2aaa9d3bd12130ab922d4468e31ece524d61a2db00464b5cb4c5a2cfe0a"
+  },
+  {
+    "file": "app\\src\\main\\java\\takagi\\ru\\monica\\utils\\KeePassKdbxService.kt",
+    "method": "syncRemoteWorkingCopy",
+    "unchanged": true,
+    "sha256": "0bb98c21b3d81796becded864b9aa746a677d94fac8c1e10312bb70b56b25e05"
+  },
+  {
+    "file": "app\\src\\main\\java\\takagi\\ru\\monica\\utils\\KeePassKdbxService.kt",
+    "method": "uploadRemoteWorkingCopyIfCurrentLocked",
+    "unchanged": true,
+    "sha256": "4158d3cae3a7354511945e1256db6211b24118ac259f4de4eedd0d5130fb8cb6"
+  },
+  {
+    "file": "app\\src\\main\\java\\takagi\\ru\\monica\\keepass\\KeePassMonicaPasswordStore.kt",
+    "method": "save",
+    "unchanged": true,
+    "sha256": "090d87f4df59a180f93f918e3dae7168e68b4eb2b57350dd598f2dfe5d38b26c"
+  },
+  {
+    "file": "app\\src\\main\\java\\takagi\\ru\\monica\\keepass\\KeePassMonicaPasswordStore.kt",
+    "method": "moveToDatabase",
+    "unchanged": true,
+    "sha256": "34ad16898c19d92259feed1b693426fa82728440ae89c6450701fd8ca2cc34b8"
+  },
+  {
+    "file": "app\\src\\main\\java\\takagi\\ru\\monica\\keepass\\KeePassMonicaPasswordStore.kt",
+    "method": "delete",
+    "unchanged": true,
+    "sha256": "60395bd5b6082fe7be49fde1403cc9e28846d7decd9219d737f262b0c729f5cd"
+  },
+  {
+    "file": "app\\src\\main\\java\\takagi\\ru\\monica\\viewmodel\\PasswordViewModel.kt",
+    "method": "saveGroupedPasswordsInternal",
+    "unchanged": true,
+    "sha256": "e441829b1bee37a9d38200e930603a45d534f49aeb0690e4e748fa37e1e24549"
+  },
+  {
+    "file": "app\\src\\main\\java\\takagi\\ru\\monica\\viewmodel\\PasswordViewModel.kt",
+    "method": "saveProjectCredentials",
+    "unchanged": true,
+    "sha256": "929b3c6041a16671e08903a96c80aef9ead72c5efde332b6033e7cecfdb1bd9a"
+  },
+  {
+    "file": "app\\src\\main\\java\\takagi\\ru\\monica\\repository\\PasswordRepository.kt",
+    "method": "deletePasswordEntries",
+    "unchanged": true,
+    "sha256": "9a803a2ec5e9bb85ece6322b337324f2c1070661d2f3c2553c4815a6bfaddd07"
+  },
+  {
+    "file": "app\\src\\main\\java\\takagi\\ru\\monica\\repository\\PasswordRepository.kt",
+    "method": "insertPasswordEntry",
+    "unchanged": true,
+    "sha256": "82f1af0927671686f522fcab9eabd743afa3ef9a8ae8fa484e795f5f55566574"
+  },
+  {
+    "file": "app\\src\\main\\java\\takagi\\ru\\monica\\repository\\PasswordRepository.kt",
+    "method": "updatePasswordEntry",
+    "unchanged": true,
+    "sha256": "7fe8805bfa3d33f7ecb549d3b8c88c42a53afc713837e58f074a834b21a65e56"
+  }
+]

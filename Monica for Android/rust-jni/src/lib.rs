@@ -11,8 +11,11 @@ mod wallet_stack;
 use jni::objects::{JByteArray, JClass, JIntArray, JLongArray, JString};
 use jni::sys::{jboolean, jbyteArray, jint, jintArray, jlong, jstring, JNI_FALSE, JNI_TRUE};
 use jni::JNIEnv;
-use monica_rust_crypto::{derive_argon2id, derive_pbkdf2_sha256};
+use monica_rust_crypto::{
+    derive_argon2id, derive_keepass_aes, derive_keepass_argon2, derive_pbkdf2_sha256,
+};
 use search::{filter_metadata_batch, SearchQuery};
+use zeroize::Zeroizing;
 
 const RUST_CORE_VERSION: &str = "monica-rust-jni/0.5.0-kdf";
 
@@ -327,6 +330,65 @@ fn derive_argon2(
 
 fn positive_u32(value: jint) -> Option<u32> {
     (value > 0).then_some(value as u32)
+}
+
+#[no_mangle]
+pub extern "system" fn Java_takagi_ru_monica_rustcore_RustKeePassKdfCore_nativeDerive(
+    env: JNIEnv,
+    _class: JClass,
+    key: JByteArray,
+    salt: JByteArray,
+    iterations: jint,
+    memory_kib: jint,
+    parallelism: jint,
+    variant: jint,
+    version: jint,
+) -> jbyteArray {
+    let derive = || -> Option<jbyteArray> {
+        let key = Zeroizing::new(env.convert_byte_array(&key).ok()?);
+        let salt = Zeroizing::new(env.convert_byte_array(&salt).ok()?);
+        let result = Zeroizing::new(
+            derive_keepass_argon2(
+                &key,
+                &salt,
+                positive_u32(iterations)?,
+                positive_u32(memory_kib)?,
+                positive_u32(parallelism)?,
+                variant as u32,
+                version as u32,
+            )
+            .ok()?,
+        );
+        Some(env.byte_array_from_slice(&result[..]).ok()?.into_raw())
+    };
+    // Match the existing fallible JNI boundary; failed derivation falls back in Kotlin.
+    std::panic::catch_unwind(std::panic::AssertUnwindSafe(derive))
+        .ok()
+        .flatten()
+        .unwrap_or(std::ptr::null_mut())
+}
+
+#[no_mangle]
+pub extern "system" fn Java_takagi_ru_monica_rustcore_RustKeePassKdfCore_nativeDeriveAes(
+    env: JNIEnv,
+    _class: JClass,
+    key: JByteArray,
+    seed: JByteArray,
+    rounds: jlong,
+) -> jbyteArray {
+    let derive = || -> Option<jbyteArray> {
+        if rounds < 0 {
+            return None;
+        }
+        let key = Zeroizing::new(env.convert_byte_array(&key).ok()?);
+        let seed = Zeroizing::new(env.convert_byte_array(&seed).ok()?);
+        let result = Zeroizing::new(derive_keepass_aes(&key, &seed, rounds as u64).ok()?);
+        Some(env.byte_array_from_slice(&result[..]).ok()?.into_raw())
+    };
+    std::panic::catch_unwind(std::panic::AssertUnwindSafe(derive))
+        .ok()
+        .flatten()
+        .unwrap_or(std::ptr::null_mut())
 }
 
 #[cfg(test)]

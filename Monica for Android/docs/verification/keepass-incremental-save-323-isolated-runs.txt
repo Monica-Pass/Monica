@@ -1,0 +1,492 @@
+abba-before-0-0
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=1674
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=1109
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=1114
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=565
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=1776
+.
+
+Time: 13.372
+
+OK (1 test)
+
+
+
+abba-before-0-1
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=1056
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=654
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=657
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=402
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=1065
+.
+
+Time: 11.71
+
+OK (1 test)
+
+
+
+abba-before-0-2
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=1012
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=536
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=539
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=476
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=1023
+.
+
+Time: 12.042
+
+OK (1 test)
+
+
+
+abba-before-0-3
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=974
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=572
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=576
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=402
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=987
+.
+
+Time: 12.795
+
+OK (1 test)
+
+
+
+abba-before-0-4
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=972
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=585
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=587
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=387
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=987
+.
+
+Time: 11.901
+
+OK (1 test)
+
+
+
+abba-after-1-0
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=825
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=611
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=614
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=214
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=843
+.
+
+Time: 12.27
+
+OK (1 test)
+
+
+
+abba-after-1-1
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=855
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=576
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=579
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=279
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=874
+.
+
+Time: 10.16
+
+OK (1 test)
+
+
+
+abba-after-1-2
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=773
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=527
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=530
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=246
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=795
+.
+
+Time: 11.175
+
+OK (1 test)
+
+
+
+abba-after-1-3
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=659
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=422
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=425
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=237
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=663
+.
+
+Time: 9.62
+
+OK (1 test)
+
+
+
+abba-after-1-4
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=776
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=565
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=568
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=211
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=798
+.
+
+Time: 9.848
+
+OK (1 test)
+
+
+
+abba-after-2-0
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=1950
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=1494
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=1497
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=456
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=1973
+.
+
+Time: 19.662
+
+OK (1 test)
+
+
+
+abba-after-2-1
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=1623
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=1161
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=1164
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=462
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=1774
+.
+
+Time: 19.144
+
+OK (1 test)
+
+
+
+abba-after-2-2
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=1441
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=950
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=959
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=491
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=1462
+.
+
+Time: 19.772
+
+OK (1 test)
+
+
+
+abba-after-2-3
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=1453
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=1002
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=1006
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=451
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=1476
+.
+
+Time: 20.011
+
+OK (1 test)
+
+
+
+abba-after-2-4
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=1648
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=1105
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=1111
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=543
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=1696
+.
+
+Time: 23.244
+
+OK (1 test)
+
+
+
+abba-before-3-0
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=1734
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=1207
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=1213
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=527
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=1747
+.
+
+Time: 14.726
+
+OK (1 test)
+
+
+
+abba-before-3-1
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=991
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=550
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=553
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=441
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=999
+.
+
+Time: 10.671
+
+OK (1 test)
+
+
+
+abba-before-3-2
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=946
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=592
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=594
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=354
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=963
+.
+
+Time: 10.625
+
+OK (1 test)
+
+
+
+abba-before-3-3
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=870
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=549
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=551
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=321
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=884
+.
+
+Time: 10.075
+
+OK (1 test)
+
+
+
+abba-before-3-4
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=853
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=516
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=520
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=337
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=864
+.
+
+Time: 10.622
+
+OK (1 test)
+
+
+
+peers-after-0
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=836
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=614
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=617
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=222
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=852
+.
+
+Time: 12.318
+
+OK (1 test)
+
+
+
+peers-local-0
+
+takagi.ru.monica.keepass.PasswordLocalSaveTimingTest:KDBX_SAVE_PERF stage=local_disk_editor_save_handler_until_return ms=150
+.
+
+Time: 7.202
+
+OK (1 test)
+
+
+
+peers-keepassdx-0
+
+takagi.ru.monica.keepass.KeePassDxSaveComparisonTest:KDBX_SAVE_PERF stage=keepassdx_save_action_until_return ms=872
+KDBX_SAVE_PERF stage=keepassdx_save_action_until_write_open ms=559
+KDBX_SAVE_PERF stage=keepassdx_save_action_until_write_close ms=564
+.
+
+Time: 13.646
+
+OK (1 test)
+
+
+
+peers-after-1
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=812
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=609
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=612
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=203
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=877
+.
+
+Time: 10.964
+
+OK (1 test)
+
+
+
+peers-keepassdx-1
+
+takagi.ru.monica.keepass.KeePassDxSaveComparisonTest:KDBX_SAVE_PERF stage=keepassdx_save_action_until_return ms=943
+KDBX_SAVE_PERF stage=keepassdx_save_action_until_write_open ms=520
+KDBX_SAVE_PERF stage=keepassdx_save_action_until_write_close ms=539
+.
+
+Time: 12.355
+
+OK (1 test)
+
+
+
+peers-local-1
+
+takagi.ru.monica.keepass.PasswordLocalSaveTimingTest:KDBX_SAVE_PERF stage=local_disk_editor_save_handler_until_return ms=122
+.
+
+Time: 7.921
+
+OK (1 test)
+
+
+
+peers-keepassdx-2
+
+takagi.ru.monica.keepass.KeePassDxSaveComparisonTest:KDBX_SAVE_PERF stage=keepassdx_save_action_until_return ms=859
+KDBX_SAVE_PERF stage=keepassdx_save_action_until_write_open ms=531
+KDBX_SAVE_PERF stage=keepassdx_save_action_until_write_close ms=541
+.
+
+Time: 12.128
+
+OK (1 test)
+
+
+
+peers-after-2
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=773
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=578
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=580
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=195
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=797
+.
+
+Time: 10.161
+
+OK (1 test)
+
+
+
+peers-local-2
+
+takagi.ru.monica.keepass.PasswordLocalSaveTimingTest:KDBX_SAVE_PERF stage=local_disk_editor_save_handler_until_return ms=110
+.
+
+Time: 6.63
+
+OK (1 test)
+
+
+
+peers-keepassdx-3
+
+takagi.ru.monica.keepass.KeePassDxSaveComparisonTest:KDBX_SAVE_PERF stage=keepassdx_save_action_until_return ms=677
+KDBX_SAVE_PERF stage=keepassdx_save_action_until_write_open ms=388
+KDBX_SAVE_PERF stage=keepassdx_save_action_until_write_close ms=398
+.
+
+Time: 11.604
+
+OK (1 test)
+
+
+
+peers-local-3
+
+takagi.ru.monica.keepass.PasswordLocalSaveTimingTest:KDBX_SAVE_PERF stage=local_disk_editor_save_handler_until_return ms=107
+.
+
+Time: 7.562
+
+OK (1 test)
+
+
+
+peers-after-3
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=591
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=400
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=402
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=191
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=609
+.
+
+Time: 9.455
+
+OK (1 test)
+
+
+
+peers-local-4
+
+takagi.ru.monica.keepass.PasswordLocalSaveTimingTest:KDBX_SAVE_PERF stage=local_disk_editor_save_handler_until_return ms=146
+.
+
+Time: 6.521
+
+OK (1 test)
+
+
+
+peers-keepassdx-4
+
+takagi.ru.monica.keepass.KeePassDxSaveComparisonTest:KDBX_SAVE_PERF stage=keepassdx_save_action_until_return ms=2625
+KDBX_SAVE_PERF stage=keepassdx_save_action_until_write_open ms=1700
+KDBX_SAVE_PERF stage=keepassdx_save_action_until_write_close ms=1719
+.
+
+Time: 27.01
+
+OK (1 test)
+
+
+
+peers-after-4
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=3550
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=2514
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=2524
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=1036
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=3902
+.
+
+Time: 32.413
+
+OK (1 test)

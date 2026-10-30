@@ -1,0 +1,8 @@
+
+s_glBindAttribLocation: bind attrib 0 name position
+s_glBindAttribLocation: bind attrib 1 name localCoord
+takagi.ru.monica.ui.screens.DonationQrPreviewTest:...
+
+Time: 16.756
+
+OK (3 tests)

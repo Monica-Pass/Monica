@@ -63,8 +63,4 @@
     <string name="auto_focus_search_on_startup_desc">解锁后进入主页面时展开搜索并显示键盘。</string>
     <string name="ime_key_vibration_title">按键震动</string>
     <string name="ime_key_vibration_description">使用 Monica 内置键盘时，每按一次按键震动一下。</string>
-    <string name="wallet_pass_scan_boarding_pass">扫描登机牌</string>
-    <string name="wallet_pass_scan_boarding_pass_hint">将登机牌上的条码对准取景框</string>
-    <string name="wallet_pass_boarding_pass_invalid">不是标准的登机牌条码</string>
-    <string name="wallet_pass_boarding_pass_filled">已填入登机牌信息</string>
 </resources>

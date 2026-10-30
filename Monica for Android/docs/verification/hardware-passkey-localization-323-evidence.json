@@ -1,0 +1,90 @@
+{
+  "ordinary": {
+    "build": {
+      "exitCode": 0,
+      "ended": "2026-10-30T17:35:53.6900034+08:00",
+      "started": "2026-10-30T17:35:14.3778597+08:00"
+    },
+    "versionName": "1.0.323-26103012-21",
+    "versionCode": 12,
+    "apkSha256": "eb6ca0a02876cbbe00972f2c238b7a0f46803da3176dcaccf9016e5f28d2255a",
+    "appLanguages": [
+      "ENGLISH",
+      "CHINESE",
+      "TRADITIONAL_CHINESE",
+      "CLASSICAL_CHINESE",
+      "VIETNAMESE",
+      "JAPANESE",
+      "RUSSIAN",
+      "KOREAN",
+      "GERMAN",
+      "SPANISH",
+      "FRENCH",
+      "POLISH",
+      "ITALIAN"
+    ],
+    "stringsPerConfiguration": 71,
+    "configurations": 14,
+    "compiledValuesVerified": 994,
+    "sourceSha256": {
+      "values": "2a168bf674224983dcaad86415eeb13f0bb1ab91bb197fa951dbad196fae885d",
+      "values-zh": "702f49275accb09fda66a350e372084c3ad8b28b8f856b39b4314c841bd91398",
+      "values-b+zh+Hant": "4e374307dffafb3d722871603076ce0b24fcbd65d1fde23a7bd93b4dbac0242b",
+      "values-b+lzh": "0b98f39b34d0b1ee9c9acd454369be34d90342e5b3c90601feabbaa06f492049",
+      "values-vi": "f0070858273170f7d39c9305c03e2cd512afe1ff67bb9e6411a7e225031d7a1d",
+      "values-ja": "20c160e9443c71a621e749235d72e993254ddd3e297fc0b5e2366ab5a8e6800d",
+      "values-ru": "8598c983f387f288994e5c814c0e15416478699bdd25919c2c158929b4ee81cb",
+      "values-ko": "e89e037596e53c4555c3be7617101d2c22041eb843da4e5dd2d911af9ef41150",
+      "values-de": "cac0fee8c423c1f39be4fdc5bc1615d5ff5b28879ed74eba3092222e31ac6758",
+      "values-es": "7666c58a17141654daaca6a37d43cdeaf105bb1573e6a5262ff2d7dd6df59552",
+      "values-fr": "c59ccbd37335b2fbc809f9c07b60086612a0afe93a5386d2d26fe5a46064eae2",
+      "values-pl": "09f6de7af36b51d40f8d19d61a4e0c188da8dc927ad616f66d492ae5905f0d7c",
+      "values-it": "7851a57364f40891cbe1a11c109fcdba46735efc885898106c888504edc8a02a",
+      "values-zh-rCN": "702f49275accb09fda66a350e372084c3ad8b28b8f856b39b4314c841bd91398"
+    }
+  },
+  "fdroid": {
+    "build": {
+      "exitCode": 0,
+      "started": "2026-10-30T17:36:10.7903787+08:00",
+      "ended": "2026-10-30T17:36:53.3336823+08:00"
+    },
+    "versionName": "1.0.323",
+    "versionCode": 30,
+    "apkSha256": "736bdc76998bbb639c53003741b00055f9616b6f9dd28252611f67521f1582f5",
+    "appLanguages": [
+      "ENGLISH",
+      "CHINESE",
+      "TRADITIONAL_CHINESE",
+      "CLASSICAL_CHINESE",
+      "VIETNAMESE",
+      "JAPANESE",
+      "RUSSIAN",
+      "KOREAN",
+      "GERMAN",
+      "SPANISH",
+      "FRENCH",
+      "POLISH",
+      "ITALIAN"
+    ],
+    "stringsPerConfiguration": 71,
+    "configurations": 14,
+    "compiledValuesVerified": 994,
+    "sourceSha256": {
+      "values": "2a168bf674224983dcaad86415eeb13f0bb1ab91bb197fa951dbad196fae885d",
+      "values-zh": "702f49275accb09fda66a350e372084c3ad8b28b8f856b39b4314c841bd91398",
+      "values-b+zh+Hant": "4e374307dffafb3d722871603076ce0b24fcbd65d1fde23a7bd93b4dbac0242b",
+      "values-b+lzh": "0b98f39b34d0b1ee9c9acd454369be34d90342e5b3c90601feabbaa06f492049",
+      "values-vi": "f0070858273170f7d39c9305c03e2cd512afe1ff67bb9e6411a7e225031d7a1d",
+      "values-ja": "20c160e9443c71a621e749235d72e993254ddd3e297fc0b5e2366ab5a8e6800d",
+      "values-ru": "8598c983f387f288994e5c814c0e15416478699bdd25919c2c158929b4ee81cb",
+      "values-ko": "e89e037596e53c4555c3be7617101d2c22041eb843da4e5dd2d911af9ef41150",
+      "values-de": "cac0fee8c423c1f39be4fdc5bc1615d5ff5b28879ed74eba3092222e31ac6758",
+      "values-es": "7666c58a17141654daaca6a37d43cdeaf105bb1573e6a5262ff2d7dd6df59552",
+      "values-fr": "c59ccbd37335b2fbc809f9c07b60086612a0afe93a5386d2d26fe5a46064eae2",
+      "values-pl": "09f6de7af36b51d40f8d19d61a4e0c188da8dc927ad616f66d492ae5905f0d7c",
+      "values-it": "7851a57364f40891cbe1a11c109fcdba46735efc885898106c888504edc8a02a",
+      "values-zh-rCN": "702f49275accb09fda66a350e372084c3ad8b28b8f856b39b4314c841bd91398"
+    }
+  }
+}

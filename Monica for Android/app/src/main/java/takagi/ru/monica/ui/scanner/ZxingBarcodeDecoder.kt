@@ -16,6 +16,8 @@ import com.google.zxing.multi.GenericMultipleBarcodeReader
 import com.google.zxing.multi.qrcode.QRCodeMultiReader
 import java.nio.ByteBuffer
 
+internal data class DecodedBarcode(val text: String, val format: BarcodeFormat)
+
 /**
  * zxing 条码解码器：负责扫码栈里原本由 ML Kit 承担的识别职责，
  * 避免为内置条码模型在每个 ABI 上多打包约 3MB 的原生库。
@@ -54,7 +56,9 @@ internal class ZxingBarcodeDecoder(
      * 只有真正的异常错误才向上抛出。
      * 仅在单帧分析线程上调用，读取器内部状态因此无需加锁。
      */
-    fun decodeFrame(imageProxy: ImageProxy): List<String> {
+    fun decodeFrame(imageProxy: ImageProxy): List<String> = decodeFrameBarcodes(imageProxy).map { it.text }.distinct()
+
+    fun decodeFrameBarcodes(imageProxy: ImageProxy): List<DecodedBarcode> {
         val plane = imageProxy.planes[0]
         val crop = imageProxy.cropRect
         require(crop.left >= 0 && crop.top >= 0 && crop.right <= imageProxy.width && crop.bottom <= imageProxy.height)
@@ -91,7 +95,7 @@ internal class ZxingBarcodeDecoder(
             PlanarYUVLuminanceSource(decimatedLuminance, outWidth, outHeight, 0, 0, outWidth, outHeight, false),
             rotationQuarterTurns
         )
-        return decodeWithFallback(decimatedSource)
+        return decodeBarcodesWithFallback(decimatedSource)
     }
 
     /**
@@ -140,12 +144,15 @@ internal class ZxingBarcodeDecoder(
 
     /** 解析相册位图；zxing 不读 EXIF 方向，依次尝试 4 个旋转角。 */
     @Synchronized
-    fun decodeBitmap(bitmap: Bitmap): List<String> {
+    fun decodeBitmap(bitmap: Bitmap): List<String> = decodeBitmapBarcodes(bitmap).map { it.text }.distinct()
+
+    @Synchronized
+    fun decodeBitmapBarcodes(bitmap: Bitmap): List<DecodedBarcode> {
         val pixels = IntArray(bitmap.width * bitmap.height)
         bitmap.getPixels(pixels, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
         var source: LuminanceSource = RGBLuminanceSource(bitmap.width, bitmap.height, pixels)
         repeat(ROTATION_ATTEMPTS) {
-            val candidates = decodeWithFallback(source)
+            val candidates = decodeBarcodesWithFallback(source)
             if (candidates.isNotEmpty()) return candidates
             source = rotateSourceCounterClockwise(source)
         }
@@ -156,8 +163,11 @@ internal class ZxingBarcodeDecoder(
      * 解码阶梯：Hybrid 二值化（正色 → 反色）→ GlobalHistogram 兜底（正色 → 反色）。
      * 反色扫描覆盖暗底亮码；GlobalHistogram 对小模块和一维码与 Hybrid 互补。
      */
-    internal fun decodeWithFallback(source: LuminanceSource): List<String> {
-        val candidates = linkedSetOf<String>()
+    internal fun decodeWithFallback(source: LuminanceSource): List<String> =
+        decodeBarcodesWithFallback(source).map { it.text }.distinct()
+
+    internal fun decodeBarcodesWithFallback(source: LuminanceSource): List<DecodedBarcode> {
+        val candidates = linkedSetOf<DecodedBarcode>()
         for (polarity in listOf(source, source.invert())) {
             val hybrid = decode(BinaryBitmap(HybridBinarizer(polarity)))
             candidates += hybrid
@@ -169,7 +179,7 @@ internal class ZxingBarcodeDecoder(
     }
 
     /** Full-resolution sweeps only need Hybrid; the decimated path retains GlobalHistogram. */
-    private fun decodeFullResolution(source: LuminanceSource, inverted: Boolean): List<String> =
+    private fun decodeFullResolution(source: LuminanceSource, inverted: Boolean): List<DecodedBarcode> =
         decode(BinaryBitmap(HybridBinarizer(if (inverted) source.invert() else source)))
 
     private fun rotated(source: LuminanceSource, quarterTurns: Int): LuminanceSource {
@@ -198,11 +208,11 @@ internal class ZxingBarcodeDecoder(
         return PlanarYUVLuminanceSource(dst, newWidth, oldWidth, 0, 0, newWidth, oldWidth, false)
     }
 
-    private fun decode(bitmap: BinaryBitmap): List<String> {
-        val candidates = linkedSetOf<String>()
+    private fun decode(bitmap: BinaryBitmap): List<DecodedBarcode> {
+        val candidates = linkedSetOf<DecodedBarcode>()
         if (BarcodeFormat.QR_CODE in formats) {
             try {
-                qrReader.decodeMultiple(bitmap, hints).forEach { candidates += it.text }
+                qrReader.decodeMultiple(bitmap, hints).forEach { candidates += DecodedBarcode(it.text, it.barcodeFormat) }
             } catch (_: ReaderException) {
                 // An empty frame is normal; retain a reusable reader for the next frame.
             } finally {
@@ -211,15 +221,15 @@ internal class ZxingBarcodeDecoder(
         }
         if (otherFormats.isNotEmpty()) {
             try {
-                multipleReader.decodeMultiple(bitmap, otherHints).forEach { candidates += it.text }
+                multipleReader.decodeMultiple(bitmap, otherHints).forEach { candidates += DecodedBarcode(it.text, it.barcodeFormat) }
             } catch (_: ReaderException) {
                 // Other formats are optional candidates, independent of QR detection.
             } finally {
                 reader.reset()
             }
         }
-        return candidates.map { if (preserveWhitespace) it else it.trim() }
-            .filter(String::isNotBlank).distinct()
+        return candidates.map { if (preserveWhitespace) it else it.copy(text = it.text.trim()) }
+            .filter { it.text.isNotBlank() }.distinct()
     }
 
     private companion object {

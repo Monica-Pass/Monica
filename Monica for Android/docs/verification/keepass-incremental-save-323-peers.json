@@ -1,0 +1,162 @@
+[
+  {
+    "kind": "local",
+    "round": 0,
+    "stages_ms": {
+      "local_disk_editor_save_handler_until_return": 245
+    }
+  },
+  {
+    "kind": "keepassdx",
+    "round": 0,
+    "stages_ms": {
+      "keepassdx_save_action_until_return": 981,
+      "keepassdx_save_action_until_write_open": 612,
+      "keepassdx_save_action_until_write_close": 623
+    }
+  },
+  {
+    "kind": "keepassdx",
+    "round": 1,
+    "stages_ms": {
+      "keepassdx_save_action_until_return": 682,
+      "keepassdx_save_action_until_write_open": 389,
+      "keepassdx_save_action_until_write_close": 396
+    }
+  },
+  {
+    "kind": "local",
+    "round": 1,
+    "stages_ms": {
+      "local_disk_editor_save_handler_until_return": 256
+    }
+  },
+  {
+    "kind": "local",
+    "round": 2,
+    "stages_ms": {
+      "local_disk_editor_save_handler_until_return": 384
+    }
+  },
+  {
+    "kind": "keepassdx",
+    "round": 2,
+    "stages_ms": {
+      "keepassdx_save_action_until_return": 792,
+      "keepassdx_save_action_until_write_open": 427,
+      "keepassdx_save_action_until_write_close": 430
+    }
+  },
+  {
+    "kind": "keepassdx",
+    "round": 3,
+    "stages_ms": {
+      "keepassdx_save_action_until_return": 818,
+      "keepassdx_save_action_until_write_open": 421,
+      "keepassdx_save_action_until_write_close": 423
+    }
+  },
+  {
+    "kind": "local",
+    "round": 3,
+    "stages_ms": {
+      "local_disk_editor_save_handler_until_return": 198
+    }
+  },
+  {
+    "kind": "local",
+    "round": 4,
+    "stages_ms": {
+      "local_disk_editor_save_handler_until_return": 168
+    }
+  },
+  {
+    "kind": "keepassdx",
+    "round": 4,
+    "stages_ms": {
+      "keepassdx_save_action_until_return": 855,
+      "keepassdx_save_action_until_write_open": 497,
+      "keepassdx_save_action_until_write_close": 501
+    }
+  },
+  {
+    "kind": "keepassdx",
+    "round": 5,
+    "stages_ms": {
+      "keepassdx_save_action_until_return": 762,
+      "keepassdx_save_action_until_write_open": 398,
+      "keepassdx_save_action_until_write_close": 402
+    }
+  },
+  {
+    "kind": "local",
+    "round": 5,
+    "stages_ms": {
+      "local_disk_editor_save_handler_until_return": 102
+    }
+  },
+  {
+    "kind": "local",
+    "round": 6,
+    "stages_ms": {
+      "local_disk_editor_save_handler_until_return": 122
+    }
+  },
+  {
+    "kind": "keepassdx",
+    "round": 6,
+    "stages_ms": {
+      "keepassdx_save_action_until_return": 903,
+      "keepassdx_save_action_until_write_open": 419,
+      "keepassdx_save_action_until_write_close": 426
+    }
+  },
+  {
+    "kind": "keepassdx",
+    "round": 7,
+    "stages_ms": {
+      "keepassdx_save_action_until_return": 984,
+      "keepassdx_save_action_until_write_open": 388,
+      "keepassdx_save_action_until_write_close": 395
+    }
+  },
+  {
+    "kind": "local",
+    "round": 7,
+    "stages_ms": {
+      "local_disk_editor_save_handler_until_return": 196
+    }
+  },
+  {
+    "kind": "local",
+    "round": 8,
+    "stages_ms": {
+      "local_disk_editor_save_handler_until_return": 153
+    }
+  },
+  {
+    "kind": "keepassdx",
+    "round": 8,
+    "stages_ms": {
+      "keepassdx_save_action_until_return": 968,
+      "keepassdx_save_action_until_write_open": 566,
+      "keepassdx_save_action_until_write_close": 573
+    }
+  },
+  {
+    "kind": "keepassdx",
+    "round": 9,
+    "stages_ms": {
+      "keepassdx_save_action_until_return": 828,
+      "keepassdx_save_action_until_write_open": 452,
+      "keepassdx_save_action_until_write_close": 459
+    }
+  },
+  {
+    "kind": "local",
+    "round": 9,
+    "stages_ms": {
+      "local_disk_editor_save_handler_until_return": 300
+    }
+  }
+]

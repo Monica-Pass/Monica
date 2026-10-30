@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="boarding_code_show">Show boarding code</string>
+    <string name="boarding_code_add">Edit and scan boarding pass</string>
+    <string name="boarding_code_missing">No boarding code saved for this pass</string>
+    <string name="boarding_code_saved">Original boarding code saved</string>
+    <string name="wallet_code_hint">QR code or barcode · Tap to show</string>
+    <string name="boarding_code_original_hint">This is the scanned original. Editing pass details does not change this code.</string>
+    <string name="boarding_code_expand">Enlarge code</string>
+    <string name="boarding_code_collapse">Show pass details</string>
+    <string name="boarding_code_unavailable">This code cannot be displayed here. Try landscape or scan the original boarding pass again.</string>
+    <string name="boarding_code_rescan">Scan again</string>
+    <string name="boarding_code_remove">Remove saved code</string>
+    <string name="wallet_pass_scan_boarding_pass">Scan boarding pass</string>
+    <string name="wallet_pass_scan_boarding_pass_hint">Align the barcode on the boarding pass with the frame</string>
+    <string name="wallet_pass_boarding_pass_invalid">Not an IATA boarding pass barcode</string>
+    <string name="wallet_pass_boarding_pass_filled">Boarding pass details filled in; save to keep the code</string>
+    <string name="boarding_code_draft_hint">Save the pass to keep code changes</string>
+    <string name="wallet_pass_show_code">View membership code</string>
+</resources>

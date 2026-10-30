@@ -66,6 +66,18 @@ class DonationQrPreviewTest {
     @Test fun plusPaymentQrCanBeZoomedAndSaved() {
         compose.setContent { MaterialTheme { PaymentScreen(onNavigateBack = {}, onActivatePlus = {}) } }
         verifyPreviewAndSave(R.string.payment_qr_code_title, R.drawable.support_author_qr)
+        // Optional visual review of the real payment screen, with inert activation callbacks.
+        if (InstrumentationRegistry.getArguments().getString("capturePlusUnlock") == "true") {
+            compose.onNodeWithText(label(R.string.payment_paid_button)).performScrollTo().performClick()
+            compose.waitForIdle()
+            val screenshot = InstrumentationRegistry.getInstrumentation().uiAutomation.takeScreenshot()
+            try {
+                java.io.File(context.filesDir, "plus-unlock-review.png").outputStream().use {
+                    screenshot.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it)
+                }
+            } finally { screenshot.recycle() }
+            compose.onNodeWithText(label(R.string.cancel)).performClick()
+        }
     }
 
     @Test fun plusFreeDonationSavesTheCurrentlySelectedQr() {

@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
@@ -38,6 +39,7 @@ fun PaymentScreen(
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     var isFreeDonation by remember { mutableStateOf(false) }
+    var showUnlockConfirmation by rememberSaveable { mutableStateOf(false) }
     val qrResource = if (isFreeDonation) R.drawable.support_author_qr_free else R.drawable.support_author_qr
     val qrBitmap = rememberDonationQrBitmap(qrResource)
     val saveQrImage = rememberDonationQrSaver()
@@ -47,6 +49,30 @@ fun PaymentScreen(
         ImageDialog(bitmap = bitmap, onDismiss = { previewBitmap = null }, onDownload = { saveQrImage(bitmap) })
     }
     
+    if (showUnlockConfirmation) {
+        AlertDialog(
+            onDismissRequest = { showUnlockConfirmation = false },
+            title = { Text(stringResource(R.string.monica_plus_title)) },
+            text = { Text(stringResource(R.string.payment_unlock_confirmation)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    if (showUnlockConfirmation) {
+                        showUnlockConfirmation = false
+                        onActivatePlus()
+                        onNavigateBack()
+                    }
+                }) {
+                    Text(stringResource(R.string.payment_unlock_confirm_button))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showUnlockConfirmation = false }) {
+                    Text(stringResource(R.string.cancel))
+                }
+            }
+        )
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -223,10 +249,7 @@ fun PaymentScreen(
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Button(
-                        onClick = {
-                            onActivatePlus()
-                            onNavigateBack()
-                        },
+                        onClick = { showUnlockConfirmation = true },
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text(stringResource(R.string.payment_paid_button))

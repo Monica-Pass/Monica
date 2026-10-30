@@ -1,0 +1,9 @@
+
+s_glBindAttribLocation: bind attrib 0 name position
+s_glBindAttribLocation: bind attrib 1 name localCoord
+takagi.ru.monica.passkey.hardware.HardwareKeyUiTest:.......
+takagi.ru.monica.passkey.hardware.HardwareTargetPickerTest:...
+
+Time: 53.295
+
+OK (10 tests)

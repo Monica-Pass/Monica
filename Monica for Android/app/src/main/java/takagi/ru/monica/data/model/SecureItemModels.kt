@@ -365,7 +365,9 @@ data class DocumentData(
     val workPhone: String = "",
     /** Empty on identity documents; strings preserve future template identifiers. */
     val walletTemplate: String = "",
-    val walletFields: Map<String, String> = emptyMap()
+    val walletFields: Map<String, String> = emptyMap(),
+    /** Original scanned content, inside the encrypted document payload; never a searchable field. */
+    val boardingPassBarcode: BoardingPassBarcode? = null
 )
 
 enum class DocumentType {

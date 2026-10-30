@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.background
@@ -27,6 +28,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -63,6 +66,10 @@ import takagi.ru.monica.repository.MdbxRepositoryFactory
 import takagi.ru.monica.repository.MdbxStoredFolderEntry
 import takagi.ru.monica.repository.PasskeyRepository
 import takagi.ru.monica.security.SecurityManager
+import takagi.ru.monica.passkey.hardware.HardwareKeyPresence
+import takagi.ru.monica.passkey.hardware.HardwareKeyPresenceMonitor
+import takagi.ru.monica.passkey.hardware.HardwareRegistrationRequest
+import takagi.ru.monica.passkey.hardware.PasskeyRegistrationTargetPicker
 import takagi.ru.monica.ui.components.MasterPasswordDialog
 import takagi.ru.monica.ui.components.PasswordEntryPickerBottomSheet
 import takagi.ru.monica.ui.components.UnifiedMoveCategoryTarget
@@ -87,6 +94,37 @@ import java.util.UUID
  */
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 class PasskeyCreateActivity : FragmentActivity() {
+    private var hardwarePresence by mutableStateOf(HardwareKeyPresence())
+    private var hardwareBusy by mutableStateOf(false)
+    private var hardwarePresenceMonitor: HardwareKeyPresenceMonitor? = null
+    private val hardwareRegistration = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        hardwareBusy = false
+        // A cancelled hardware operation returns to the chooser; no software key is generated.
+        val cancelled = result.data?.let {
+            PendingIntentHandler.retrieveCreateCredentialException(it) is CreateCredentialCancellationException
+        } == true
+        if (result.resultCode == Activity.RESULT_OK && result.data != null && !cancelled) {
+            setResult(Activity.RESULT_OK, result.data)
+            finish()
+        }
+    }
+
+    private fun registerWithHardware() {
+        if (hardwareBusy || !hardwarePresence.available || !HardwareRegistrationRequest.allowsHardware(intent)) return
+        val tag = if (hardwarePresence.usbCount == 0) hardwarePresenceMonitor?.detectedNfcTag else null
+        hardwareBusy = true
+        try {
+            hardwareRegistration.launch(HardwareRegistrationRequest.forward(this, intent, tag))
+        } catch (_: Exception) {
+            hardwareBusy = false
+            android.widget.Toast.makeText(this, R.string.hardware_key_failed, android.widget.Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBoolean("hardware_registration_busy", hardwareBusy)
+        super.onSaveInstanceState(outState)
+    }
     
     companion object {
         private const val TAG = "PasskeyCreateActivity"
@@ -322,6 +360,9 @@ class PasskeyCreateActivity : FragmentActivity() {
         pendingRpId = rpId
         pendingUserName = userName
         pendingUserDisplayName = userDisplayName
+        val hardwareAllowed = HardwareRegistrationRequest.allowsHardware(intent)
+        hardwareBusy = savedInstanceState?.getBoolean("hardware_registration_busy") == true
+        if (hardwareAllowed) hardwarePresenceMonitor = HardwareKeyPresenceMonitor(this) { hardwarePresence = it }
         
         setContent {
             val settingsManager = remember { SettingsManager(this@PasskeyCreateActivity) }
@@ -472,6 +513,10 @@ class PasskeyCreateActivity : FragmentActivity() {
                     },
                     getKeePassGroups = getKeePassGroups,
                     getMdbxFolders = getMdbxFolders,
+                    hardwareAllowed = hardwareAllowed,
+                    hardwarePresence = hardwarePresence,
+                    hardwareBusy = hardwareBusy,
+                    onCreateHardware = ::registerWithHardware,
                     onCreateDirect = {
                         pendingBoundPasswordId = null
                         pendingCategoryId = selectedCategoryId
@@ -1361,12 +1406,18 @@ private fun PasskeyCreateScreen(
     onCategorySelected: (Long?) -> Unit,
     getKeePassGroups: (Long) -> kotlinx.coroutines.flow.Flow<List<takagi.ru.monica.utils.KeePassGroupInfo>>,
     getMdbxFolders: (Long) -> kotlinx.coroutines.flow.Flow<List<MdbxStoredFolderEntry>>,
+    hardwareAllowed: Boolean,
+    hardwarePresence: HardwareKeyPresence,
+    hardwareBusy: Boolean,
+    onCreateHardware: () -> Unit,
     onCreateDirect: () -> Unit,
     onBindToPassword: () -> Unit,
     onCancel: () -> Unit
 ) {
     var isCreating by remember { mutableStateOf(false) }
     var showStoragePicker by remember { mutableStateOf(false) }
+    var showTargetPicker by remember { mutableStateOf(false) }
+    var hardwareSelected by rememberSaveable { mutableStateOf(false) }
     val context = LocalContext.current
     val database = remember(context) { PasswordDatabase.getDatabase(context) }
     val selectedBitwardenVault = bitwardenVaults.find { it.id == selectedBitwardenVaultId }
@@ -1404,6 +1455,7 @@ private fun PasskeyCreateScreen(
     }
 
     val storageTitle = when {
+        hardwareSelected -> stringResource(R.string.hardware_key_title)
         selectedKeePassDatabaseId != null -> selectedKeePassName ?: stringResource(R.string.filter_keepass)
         selectedBitwardenVaultId != null -> selectedBitwardenName ?: stringResource(R.string.filter_bitwarden)
         selectedMdbxDatabaseId != null -> selectedMdbxDatabase?.name ?: "MDBX"
@@ -1411,6 +1463,8 @@ private fun PasskeyCreateScreen(
         else -> stringResource(R.string.vault_monica_only)
     }
     val storageSubtitle = when {
+        hardwareSelected -> if (hardwarePresence.available) stringResource(R.string.hardware_key_hardware_location_hint, hardwarePresence.transport)
+            else stringResource(R.string.hardware_key_disconnected)
         selectedKeePassDatabaseId != null -> {
             selectedKeePassGroupPath
                 ?.takeIf { it.isNotBlank() }
@@ -1439,16 +1493,19 @@ private fun PasskeyCreateScreen(
                 ) {
                     Button(
                         onClick = {
-                            isCreating = true
-                            onCreateDirect()
+                            if (hardwareSelected) onCreateHardware() else {
+                                isCreating = true
+                                onCreateDirect()
+                            }
                         },
-                        enabled = !isCreating,
+                        enabled = !isCreating && !hardwareBusy && (!hardwareSelected || hardwarePresence.available),
                         modifier = Modifier
                             .fillMaxWidth()
+                            .testTag("passkey-create-confirm")
                             .height(56.dp),
                         shape = RoundedCornerShape(18.dp)
                     ) {
-                        if (isCreating) {
+                        if (isCreating || hardwareBusy) {
                             CircularProgressIndicator(
                                 modifier = Modifier.size(20.dp),
                                 color = MaterialTheme.colorScheme.onPrimary,
@@ -1456,17 +1513,17 @@ private fun PasskeyCreateScreen(
                             )
                         } else {
                             Icon(
-                                imageVector = Icons.Default.Check,
+                                imageVector = if (hardwareSelected) Icons.Default.Usb else Icons.Default.Check,
                                 contentDescription = null
                             )
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(stringResource(R.string.passkey_create_confirm))
+                            Text(stringResource(if (hardwareSelected) R.string.hardware_key_create_on_key else R.string.passkey_create_confirm))
                         }
                     }
 
-                    FilledTonalButton(
+                    if (!hardwareSelected) FilledTonalButton(
                         onClick = onBindToPassword,
-                        enabled = !isCreating,
+                        enabled = !isCreating && !hardwareBusy,
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(56.dp),
@@ -1482,7 +1539,7 @@ private fun PasskeyCreateScreen(
 
                     TextButton(
                         onClick = onCancel,
-                        enabled = !isCreating,
+                        enabled = !isCreating && !hardwareBusy,
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text(stringResource(R.string.cancel))
@@ -1568,8 +1625,8 @@ private fun PasskeyCreateScreen(
             }
 
             ElevatedCard(
-                onClick = { showStoragePicker = true },
-                modifier = Modifier.fillMaxWidth(),
+                onClick = { if (!isCreating && !hardwareBusy) { if (hardwareAllowed) showTargetPicker = true else showStoragePicker = true } },
+                modifier = Modifier.fillMaxWidth().testTag("passkey-save-location"),
                 shape = RoundedCornerShape(24.dp),
                 colors = CardDefaults.elevatedCardColors(
                     containerColor = MaterialTheme.colorScheme.surfaceContainerLow
@@ -1589,7 +1646,7 @@ private fun PasskeyCreateScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Folder,
+                            imageVector = if (hardwareSelected) Icons.Default.Usb else Icons.Default.Folder,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onSecondaryContainer
                         )
@@ -1597,7 +1654,7 @@ private fun PasskeyCreateScreen(
                     Spacer(modifier = Modifier.width(14.dp))
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = stringResource(R.string.move_to_category),
+                            text = stringResource(R.string.hardware_key_save_location),
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -1619,6 +1676,11 @@ private fun PasskeyCreateScreen(
                     )
                 }
             }
+
+            if (showTargetPicker) PasskeyRegistrationTargetPicker(hardwarePresence, hardwareSelected, isCreating || hardwareBusy,
+                onSoftware = { hardwareSelected = false; showTargetPicker = false; showStoragePicker = true },
+                onHardware = { if (hardwarePresence.available) { hardwareSelected = true; showTargetPicker = false } },
+                onDismiss = { showTargetPicker = false })
 
             UnifiedMoveToCategoryBottomSheet(
                 visible = showStoragePicker,

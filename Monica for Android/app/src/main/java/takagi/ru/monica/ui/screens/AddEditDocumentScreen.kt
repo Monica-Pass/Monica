@@ -171,6 +171,12 @@ fun AddEditDocumentScreen(
     var additionalInfo by rememberSaveable { mutableStateOf("") }
     var walletTemplate by rememberSaveable { mutableStateOf(initialWalletTemplate) }
     var walletFields by rememberSaveable { mutableStateOf(hashMapOf<String, String>()) }
+    // Saved-state holds only ciphertext, including when the editor is recreated.
+    var boardingPassCiphertext by rememberSaveable { mutableStateOf("") }
+    val boardingPassBarcode = remember(boardingPassCiphertext, securityManager) {
+        if (boardingPassCiphertext.isEmpty()) null else
+            takagi.ru.monica.data.model.BoardingPassBarcodeCodec.decode(securityManager.decryptData(boardingPassCiphertext))
+    }
     val passTemplate = takagi.ru.monica.data.model.WalletPassTemplate.fromStored(walletTemplate)
     var documentType by rememberSaveable { mutableStateOf(DocumentType.ID_CARD) }
     var notes by rememberSaveable { mutableStateOf("") }
@@ -433,6 +439,9 @@ fun AddEditDocumentScreen(
                     customFields = embeddedEditor?.customFields ?: CardWalletDataCodec.customFieldsToDrafts(data.customFields)
                     walletTemplate = data.walletTemplate
                     walletFields = HashMap(data.walletFields)
+                    boardingPassCiphertext = data.boardingPassBarcode?.let {
+                        securityManager.encryptDataLegacyCompat(takagi.ru.monica.data.model.BoardingPassBarcodeCodec.encode(it))
+                    }.orEmpty()
                     documentType = data.documentType
                 }
 
@@ -479,6 +488,7 @@ fun AddEditDocumentScreen(
             additionalInfo = ""
             walletTemplate = initialWalletTemplate
             walletFields = hashMapOf()
+            boardingPassCiphertext = ""
             documentType = if (initialWalletTemplate.isBlank()) DocumentType.ID_CARD else DocumentType.OTHER
             notes = ""
             isFavorite = false
@@ -543,6 +553,7 @@ fun AddEditDocumentScreen(
         return DocumentData(
             walletTemplate = walletTemplate,
             walletFields = walletFields,
+            boardingPassBarcode = boardingPassBarcode,
             documentNumber = documentNumber,
             fullName = fullName,
             issuedDate = issuedDate,
@@ -911,7 +922,12 @@ fun AddEditDocumentScreen(
                 // Template fields are a single connected M3E group.
                 if (passTemplate != null) {
                     if (passTemplate == takagi.ru.monica.data.model.WalletPassTemplate.TRAVEL) {
-                        takagi.ru.monica.ui.components.BoardingPassScanButton { pass ->
+                        takagi.ru.monica.ui.components.BoardingPassScanButton(
+                            hasCode = boardingPassBarcode != null,
+                            onRemove = { boardingPassCiphertext = "" }
+                        ) { pass, barcode ->
+                            boardingPassCiphertext = securityManager.encryptDataLegacyCompat(
+                                takagi.ru.monica.data.model.BoardingPassBarcodeCodec.encode(barcode))
                             if (title.isBlank()) title = "${pass.origin} → ${pass.destination}"
                             issuedBy = pass.carrier
                             documentNumber = pass.bookingReference

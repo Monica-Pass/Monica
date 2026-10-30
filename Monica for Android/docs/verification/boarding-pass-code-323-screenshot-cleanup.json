@@ -1,0 +1,10 @@
+{
+  "ordinary": {
+    "removedSyntheticScreenshots": 17,
+    "temporaryTransferFixtureDirectories": []
+  },
+  "fdroid": {
+    "removedSyntheticScreenshots": 17,
+    "temporaryTransferFixtureDirectories": []
+  }
+}

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="payment_unlock_confirmation">Ho effettuato il pagamento in buona fede. Confermo lo sblocco di Monica Plus.</string>
+    <string name="payment_unlock_confirm_button">Conferma sblocco</string>
+</resources>

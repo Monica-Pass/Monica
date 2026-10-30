@@ -19,6 +19,9 @@ public final class KdbxDeleteTestProvider extends ContentProvider {
     private final ConcurrentHashMap<String, AtomicInteger> reads = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, AtomicInteger> writes = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, AtomicInteger> commits = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Long> commitStarted = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Long> writeOpened = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Long> writeFinished = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, Boolean> denied = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, java.util.concurrent.CountDownLatch> barriers = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, Boolean> blocked = new ConcurrentHashMap<>();
@@ -44,6 +47,9 @@ public final class KdbxDeleteTestProvider extends ContentProvider {
                 case "reads": values[i] = reads.computeIfAbsent(f.getName(), k -> new AtomicInteger()).get(); break;
                 case "writes": values[i] = writes.computeIfAbsent(f.getName(), k -> new AtomicInteger()).get(); break;
                 case "commits": values[i] = commits.computeIfAbsent(f.getName(), k -> new AtomicInteger()).get(); break;
+                case "commit_started_ms": values[i] = commitStarted.getOrDefault(f.getName(), 0L); break;
+                case "write_opened_ms": values[i] = writeOpened.getOrDefault(f.getName(), 0L); break;
+                case "write_finished_ms": values[i] = writeFinished.getOrDefault(f.getName(), 0L); break;
                 case "blocked": values[i] = blocked.containsKey(f.getName()) ? 1 : 0; break;
             }
         }
@@ -52,6 +58,7 @@ public final class KdbxDeleteTestProvider extends ContentProvider {
     @Override public ParcelFileDescriptor openFile(Uri uri, String mode) throws FileNotFoundException {
         File f = file(uri);
         if (mode.contains("t")) {
+            commitStarted.put(f.getName(), android.os.SystemClock.elapsedRealtime());
             commits.computeIfAbsent(f.getName(), k -> new AtomicInteger()).incrementAndGet();
             if (denied.containsKey(f.getName())) throw new FileNotFoundException("Injected write denial");
             java.util.concurrent.CountDownLatch barrier = barriers.get(f.getName());
@@ -70,6 +77,14 @@ public final class KdbxDeleteTestProvider extends ContentProvider {
             catch (java.io.IOException error) { throw new FileNotFoundException(error.toString()); }
         }
         (mode.contains("w") ? writes : reads).computeIfAbsent(f.getName(), k -> new AtomicInteger()).incrementAndGet();
+        if (mode.contains("w")) {
+            writeOpened.put(f.getName(), android.os.SystemClock.elapsedRealtime());
+            try {
+                return ParcelFileDescriptor.open(f, ParcelFileDescriptor.parseMode(mode),
+                    new android.os.Handler(android.os.Looper.getMainLooper()),
+                    error -> writeFinished.put(f.getName(), android.os.SystemClock.elapsedRealtime()));
+            } catch (java.io.IOException error) { throw new FileNotFoundException("Fixture open failed"); }
+        }
         return ParcelFileDescriptor.open(f, ParcelFileDescriptor.parseMode(mode));
     }
     @Override public Bundle call(String method, String arg, Bundle extras) {

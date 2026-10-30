@@ -241,7 +241,7 @@ fun DocumentDetailScreen(
                     .fillMaxSize()
                     .padding(paddingValues)
                     .verticalScroll(rememberScrollState())
-                    .padding(16.dp),
+                    .padding(horizontal = 12.dp, vertical = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 // Header Card using M3E color roles based on type
@@ -304,11 +304,12 @@ fun DocumentDetailScreen(
                                 context = context
                             )
                         }
-                        WalletPassCodeButton(data)
                     }
                 }
                 
                 takagi.ru.monica.data.model.WalletPassTemplate.fromStored(data.walletTemplate)?.let { template ->
+                    WalletPassCodeButton(data, onAddCode = { onEditDocument(documentId) },
+                        keepassDatabaseId = documentItem?.keepassDatabaseId ?: embeddedAccess?.keepassContext?.databaseId)
                     WalletPassDetails(template, data)
                 }
                 // Details Card

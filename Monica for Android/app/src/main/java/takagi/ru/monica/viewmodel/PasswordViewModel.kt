@@ -1,5 +1,7 @@
 package takagi.ru.monica.viewmodel
 
+import takagi.ru.monica.data.isRemoteSource
+
 import takagi.ru.monica.data.explicitPasswordGroupId
 import takagi.ru.monica.data.model.storageScopeKey
 import takagi.ru.monica.utils.StringResolver
@@ -1650,10 +1652,10 @@ class PasswordViewModel internal constructor(
             viewModelScope.launch(Dispatchers.IO) {
                 runCatching {
                     if (forceRefresh) {
-                        keepassBridge?.syncLegacyRemoteDatabase(databaseId)?.getOrThrow()
-                        KeePassKdbxService.invalidateProcessCache(databaseId)
+                        reloadNativeKeePassFile(databaseId)
+                    } else {
+                        monicaKeePassStore.refresh(databaseId)
                     }
-                    monicaKeePassStore.refresh(databaseId)
                 }.onFailure { error ->
                     if (error is CancellationException) throw error
                     Log.w("PasswordViewModel", "KeePass original-vault refresh failed: ${error.javaClass.simpleName}")
@@ -1770,6 +1772,15 @@ class PasswordViewModel internal constructor(
     fun syncKeePassDatabaseForVisibleVault(databaseId: Long, forceRefresh: Boolean = false) {
         KeePassKdbxService.markDatabaseActive(databaseId)
         syncKeePassDatabase(databaseId, forceRefresh = forceRefresh)
+    }
+
+    internal suspend fun reloadNativeKeePassFile(databaseId: Long) {
+        val store = requireNotNull(monicaKeePassStore)
+        if (localKeePassDatabaseDao?.getDatabaseById(databaseId)?.isRemoteSource() == true) {
+            store.reload(databaseId) { requireNotNull(keepassBridge).syncLegacyRemoteDatabase(databaseId).getOrThrow() }
+        } else {
+            store.reload(databaseId)
+        }
     }
 
     internal fun refreshKeePassOverviewAfterNativeRead(databaseId: Long) {
@@ -5070,7 +5081,7 @@ class PasswordViewModel internal constructor(
                 val selectedTargetKeys = distinctTargets
                     .map(StorageTarget::stableKey)
                     .toSet()
-                val allEntries = repository.getAllPasswordEntries().first()
+                val allEntries = repository.getActiveSaveCandidates(originalIds, replicaGroupId)
                 val originalEntries = originalIds.mapNotNull { id ->
                     allEntries.firstOrNull { it.id == id }
                 }
@@ -5158,8 +5169,7 @@ class PasswordViewModel internal constructor(
                         }
                     }
 
-                val activeReplicas = repository.getAllPasswordEntries()
-                    .first()
+                val activeReplicas = repository.getActiveSaveCandidates(emptyList(), replicaGroupId)
                     .filter {
                         it.replicaGroupId == replicaGroupId &&
                             !it.isDeleted &&

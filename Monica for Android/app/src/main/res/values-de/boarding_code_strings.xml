@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="boarding_code_show">Bordkarte anzeigen</string>
+    <string name="boarding_code_add">Bearbeiten und Bordkarte scannen</string>
+    <string name="boarding_code_missing">Für diese Karte ist kein Code gespeichert</string>
+    <string name="boarding_code_saved">Originalcode der Bordkarte gespeichert</string>
+    <string name="wallet_code_hint">QR- oder Strichcode · Zum Anzeigen tippen</string>
+    <string name="boarding_code_original_hint">Dies ist das gescannte Original. Änderungen an den Kartendetails ändern diesen Code nicht.</string>
+    <string name="boarding_code_expand">Code vergrößern</string>
+    <string name="boarding_code_collapse">Kartendetails anzeigen</string>
+    <string name="boarding_code_unavailable">Dieser Code kann hier nicht angezeigt werden. Versuche das Querformat oder scanne die originale Bordkarte erneut.</string>
+    <string name="boarding_code_rescan">Erneut scannen</string>
+    <string name="boarding_code_remove">Gespeicherten Code entfernen</string>
+    <string name="wallet_pass_scan_boarding_pass">Bordkarte scannen</string>
+    <string name="wallet_pass_scan_boarding_pass_hint">Richte den Code auf der Bordkarte am Rahmen aus</string>
+    <string name="wallet_pass_boarding_pass_invalid">Kein IATA-Bordkartencode</string>
+    <string name="wallet_pass_boarding_pass_filled">Bordkartendetails ausgefüllt; zum Behalten des Codes speichern</string>
+    <string name="boarding_code_draft_hint">Speichere die Karte, um Codeänderungen zu übernehmen</string>
+    <string name="wallet_pass_show_code">Mitgliedscode anzeigen</string>
+</resources>

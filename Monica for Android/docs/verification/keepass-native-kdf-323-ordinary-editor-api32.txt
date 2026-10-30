@@ -1,0 +1,13 @@
+2026-10-30 takeover verification. Package: takagi.ru.monica
+Class: takagi.ru.monica.keepass.KeePassMonicaEditorUiTest
+Shared public API32 AVD; existing data retained; synthetic fixture.
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=4841
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=2642
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=2199
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=4914
+.
+
+Time: 34.449
+
+OK (1 test)

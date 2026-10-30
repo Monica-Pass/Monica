@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.lifecycle.ViewModel
@@ -37,7 +39,6 @@ class KeePassVaultDeleteUiTest {
             val security = SecurityManager(context)
             val registrationDao = PasswordDatabase.getDatabase(context).localKeePassDatabaseDao()
             val registration = checkNotNull(registrationDao.getDatabaseById(id))
-            assertTrue(passwordModel.applyKeePassWorkspaceSnapshot(id, service.loadWorkspace(id).getOrThrow(), true, false))
             val passwords = PasswordRepository(room.passwordEntryDao())
             val items = SecureItemRepository(room.secureItemDao())
             val models = mutableListOf<ViewModel>()
@@ -67,20 +68,27 @@ class KeePassVaultDeleteUiTest {
                             securityManager=security, biometricEnabled=false, modifier=Modifier.fillMaxSize())
                     }
                 }
-                val first = room.passwordEntryDao().getPasswordEntriesByKeePassDatabaseSync(id).first { it.title == "Synthetic 0" }
-                val tag = "vault_item_password:${first.id}"
+                // Selected-vault rows use in-memory UUID adapter IDs, never Room IDs.
+                val nativeRow = SemanticsMatcher("Selected original-vault password row") {
+                    it.config.getOrNull(SemanticsProperties.TestTag)?.startsWith("vault_item_password:") == true
+                }
+                var visibleTag: String? = null
                 compose.waitForIdle()
                 compose.waitUntil(30_000) {
-                    compose.onAllNodesWithTag(tag).fetchSemanticsNodes(atLeastOneRootRequired=false).isNotEmpty()
+                    visibleTag = compose.onAllNodes(nativeRow).fetchSemanticsNodes(atLeastOneRootRequired=false)
+                        .firstOrNull()?.config?.getOrNull(SemanticsProperties.TestTag)
+                    visibleTag != null
                 }
+                val tag = checkNotNull(visibleTag)
                 compose.onNodeWithTag(tag).performTouchInput { longClick() }
                 compose.onNodeWithContentDescription(context.getString(R.string.select_all)).performClick()
                 compose.runOnIdle { assertEquals(300, state.selectionCount) }
                 compose.onNodeWithContentDescription(context.getString(R.string.delete)).performClick()
                 compose.onNode(hasText(context.getString(R.string.delete)) and hasAnyAncestor(isDialog())).performClick()
                 compose.waitUntil(30_000) {
-                    runBlocking { room.passwordEntryDao().getPasswordEntriesByKeePassDatabaseSync(id).isEmpty() }
+                    compose.onAllNodes(nativeRow).fetchSemanticsNodes(atLeastOneRootRequired=false).isEmpty()
                 }
+                assertTrue(room.passwordEntryDao().getPasswordEntriesByKeePassDatabaseSync(id).isEmpty())
                 compose.waitUntil(10_000) { state.selectionCount == 0 }
                 compose.onNodeWithTag(tag).assertDoesNotExist()
                 KeePassKdbxService.invalidateProcessCache(id)

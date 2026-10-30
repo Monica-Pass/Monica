@@ -2,8 +2,8 @@ package takagi.ru.monica.ui
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.infiniteRepeatable
@@ -147,7 +147,8 @@ internal fun PasswordQuickFolderBreadcrumbBanner(
     deleteState: PasswordBatchDeleteGlobalProgressState? = null,
     onDeleteStatusClick: (() -> Unit)? = null,
     bitwardenSyncState: QuickStatusBitwardenSyncState? = null,
-    keePassSyncState: QuickStatusKeePassSyncState? = null
+    keePassSyncState: QuickStatusKeePassSyncState? = null,
+    animateHeight: Boolean = true
 ) {
     val sourceLabel = buildQuickStatusSourceLabel(breadcrumbs = breadcrumbs)
     val statusMode = when {
@@ -164,11 +165,15 @@ internal fun PasswordQuickFolderBreadcrumbBanner(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 4.dp)
-            .animateContentSize(animationSpec = tween(durationMillis = 220)),
+            .then(if (animateHeight) Modifier.animateContentSize(
+                animationSpec = tween(260, easing = FastOutSlowInEasing),
+                alignment = Alignment.TopStart
+            ) else Modifier),
         transitionSpec = {
             fadeIn(animationSpec = tween(durationMillis = 180))
                 .togetherWith(fadeOut(animationSpec = tween(durationMillis = 140)))
-                .using(SizeTransform(clip = false))
+                // The surrounding container owns height, including same-mode text changes.
+                .using(null)
         },
         label = "password-quick-status-bar"
     ) { activeMode ->

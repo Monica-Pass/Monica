@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_file_save">保存数据</string>
+    <string name="kp_file_merge">合并数据</string>
+    <string name="kp_file_reload">重新加载数据</string>
+    <string name="kp_file_ready">已保存 · KDBX</string>
+    <string name="kp_file_busy">正在处理数据库…</string>
+    <string name="kp_file_saved">数据已保存</string>
+    <string name="kp_file_external_reloaded">已载入外部更改</string>
+    <string name="kp_file_reloaded">数据已重新加载</string>
+    <string name="kp_file_merged">数据已合并</string>
+    <string name="kp_file_merged_conflicts">已合并；修改时间相同的不同版本保留在条目历史中</string>
+    <string name="kp_file_reload_failed">无法重新加载，当前显示上次读取的内容</string>
+    <string name="kp_file_failed">操作未完成</string>
+    <string name="kp_file_failure_help">请检查文件访问权限、来源密码及外部更改后重试。</string>
+    <string name="kp_file_merge_summary">匹配相同条目，合并更新、历史和删除记录。</string>
+    <string name="kp_file_select_source">选择 KDBX 文件</string>
+    <string name="kp_file_source_selected">已选择来源文件 · 点击更换</string>
+    <string name="kp_file_source_password">来源数据库密码</string>
+    <string name="kp_file_select_key">密钥文件（可选）</string>
+    <string name="kp_file_key_selected">已选择密钥文件 · 点击更换</string>
+    <string name="kp_file_merge_notice">合并前创建恢复副本。较新的条目生效；修改时间相同时保留当前版本，另一版本存入历史。</string>
+    <string name="kp_file_merge_confirm">合并并保存</string>
+</resources>

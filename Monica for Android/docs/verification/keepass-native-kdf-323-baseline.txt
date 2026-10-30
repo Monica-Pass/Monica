@@ -1,0 +1,19 @@
+
+takagi.ru.monica.keepass.KeePassSavePerformanceInstrumentedTest:KDBX_SAVE_PERF stage=kotpass_argon2id_0 ms=3843
+KDBX_SAVE_PERF stage=native_argon2id_0 ms=1369
+KDBX_SAVE_PERF stage=kotpass_argon2id_1 ms=6519
+KDBX_SAVE_PERF stage=native_argon2id_1 ms=1589
+KDBX_SAVE_PERF stage=kotpass_argon2id_2 ms=2727
+KDBX_SAVE_PERF stage=native_argon2id_2 ms=686
+.KDBX_SAVE_PERF stage=cold_workspace ms=2667
+KDBX_SAVE_PERF stage=warm_workspace_average ms=372
+KDBX_SAVE_PERF stage=initial_room_projection ms=5371
+KDBX_SAVE_PERF stage=unchanged_room_projection ms=5334
+KDBX_SAVE_PERF stage=list_edit_until_published ms=2246
+KDBX_SAVE_PERF stage=direct_kdbx_save ms=2249
+KDBX_SAVE_PERF stage=cold_reopen_after_save ms=2009
+.
+
+Time: 53.658
+
+OK (2 tests)

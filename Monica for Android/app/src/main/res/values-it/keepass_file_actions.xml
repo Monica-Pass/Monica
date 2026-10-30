@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_file_save">Salva dati</string>
+    <string name="kp_file_merge">Unisci dati</string>
+    <string name="kp_file_reload">Ricarica dati</string>
+    <string name="kp_file_ready">Salvato · KDBX</string>
+    <string name="kp_file_busy">Elaborazione del database…</string>
+    <string name="kp_file_saved">Dati salvati</string>
+    <string name="kp_file_external_reloaded">Modifiche esterne caricate</string>
+    <string name="kp_file_reloaded">Dati ricaricati</string>
+    <string name="kp_file_merged">Dati uniti</string>
+    <string name="kp_file_merged_conflicts">Unione completata; le versioni diverse con la stessa data sono nella cronologia</string>
+    <string name="kp_file_reload_failed">Impossibile ricaricare; vengono mostrati i dati caricati in precedenza</string>
+    <string name="kp_file_failed">Impossibile completare l’operazione</string>
+    <string name="kp_file_failure_help">Controlla l’accesso al file, la password di origine e le modifiche esterne, poi riprova.</string>
+    <string name="kp_file_merge_summary">Abbina le stesse voci e unisci aggiornamenti, cronologia e registrazioni di eliminazione.</string>
+    <string name="kp_file_select_source">Seleziona file KDBX</string>
+    <string name="kp_file_source_selected">Origine selezionata · cambia file</string>
+    <string name="kp_file_source_password">Password del database di origine</string>
+    <string name="kp_file_select_key">File chiave (facoltativo)</string>
+    <string name="kp_file_key_selected">File chiave selezionato · cambia</string>
+    <string name="kp_file_merge_notice">Prima viene creata una copia di recupero. Prevalgono le voci più recenti. A parità di data si mantiene la versione attuale e si salva l’altra nella cronologia.</string>
+    <string name="kp_file_merge_confirm">Unisci e salva</string>
+</resources>

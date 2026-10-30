@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_file_save">Enregistrer les données</string>
+    <string name="kp_file_merge">Fusionner les données</string>
+    <string name="kp_file_reload">Recharger les données</string>
+    <string name="kp_file_ready">Enregistré · KDBX</string>
+    <string name="kp_file_busy">Traitement de la base…</string>
+    <string name="kp_file_saved">Données enregistrées</string>
+    <string name="kp_file_external_reloaded">Modifications externes chargées</string>
+    <string name="kp_file_reloaded">Données rechargées</string>
+    <string name="kp_file_merged">Données fusionnées</string>
+    <string name="kp_file_merged_conflicts">Fusion effectuée ; les versions différentes de même date figurent dans l’historique</string>
+    <string name="kp_file_reload_failed">Échec du rechargement ; affichage des données précédemment chargées</string>
+    <string name="kp_file_failed">Impossible de terminer l’opération</string>
+    <string name="kp_file_failure_help">Vérifiez l’accès au fichier, le mot de passe source et les modifications externes, puis réessayez.</string>
+    <string name="kp_file_merge_summary">Associer les mêmes entrées et fusionner modifications, historique et suppressions.</string>
+    <string name="kp_file_select_source">Choisir un fichier KDBX</string>
+    <string name="kp_file_source_selected">Source sélectionnée · changer le fichier</string>
+    <string name="kp_file_source_password">Mot de passe de la base source</string>
+    <string name="kp_file_select_key">Fichier clé (facultatif)</string>
+    <string name="kp_file_key_selected">Fichier clé sélectionné · changer</string>
+    <string name="kp_file_merge_notice">Une copie de récupération est créée au préalable. Les entrées les plus récentes sont prioritaires. À date identique, la version actuelle est conservée et l’autre rejoint l’historique.</string>
+    <string name="kp_file_merge_confirm">Fusionner et enregistrer</string>
+</resources>

@@ -1,0 +1,602 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.BoardingPassCodeTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.components.BoardingPassCodeTest:
+INSTRUMENTATION_STATUS: test=everyOriginalFormatRendersExactPaddingAndPrivateData
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.BoardingPassCodeTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=everyOriginalFormatRendersExactPaddingAndPrivateData
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.BoardingPassCodeTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=missingOriginalOffersEditWithoutGeneratingBookingReferenceCode
+INSTRUMENTATION_STATUS_CODE: 1
+s_glBindAttribLocation: bind attrib 0 name position
+s_glBindAttribLocation: bind attrib 1 name localCoord
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.BoardingPassCodeTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=missingOriginalOffersEditWithoutGeneratingBookingReferenceCode
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.BoardingPassCodeTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=darkLargeFontViewerUsesOriginalLabelsAndExpandsWithoutChangingCode
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.BoardingPassCodeTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=darkLargeFontViewerUsesOriginalLabelsAndExpandsWithoutChangingCode
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.BoardingPassCodeTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sourceDatabaseLockRevokesOpenCode
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.BoardingPassCodeTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=sourceDatabaseLockRevokesOpenCode
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.BoardingPassCodeTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=mainLockClosesViewerAndDoesNotReopenAfterUnlock
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.BoardingPassCodeTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=mainLockClosesViewerAndDoesNotReopenAfterUnlock
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.WalletMembershipCodeTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.components.WalletMembershipCodeTest:
+INSTRUMENTATION_STATUS: test=detailOpensQrAndBarcodeWithExactMembershipNumberWithoutSaving
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.WalletMembershipCodeTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=detailOpensQrAndBarcodeWithExactMembershipNumberWithoutSaving
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.WalletMembershipCodeTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=rewardsUnicodeCodeCanReturnToQrAfterUnsupportedBarcodeAtLargeFont
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.WalletMembershipCodeTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=rewardsUnicodeCodeCanReturnToQrAfterUnsupportedBarcodeAtLargeFont
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.WalletMembershipCodeTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=blankNumbersAndOtherDocumentTypesDoNotOfferMembershipCodes
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.WalletMembershipCodeTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=blankNumbersAndOtherDocumentTypesDoNotOfferMembershipCodes
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.BoardingPassDecoderInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.scanner.BoardingPassDecoderInstrumentedTest:
+INSTRUMENTATION_STATUS: test=fixedWidthPaddingIsPreservedForBothCameraFramesAndImages
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.BoardingPassDecoderInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=fixedWidthPaddingIsPreservedForBothCameraFramesAndImages
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.BoardingPassDecoderInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=allSupportedBoardingPassImagesDecodeThroughTheProductionScanner
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.BoardingPassDecoderInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=allSupportedBoardingPassImagesDecodeThroughTheProductionScanner
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.BoardingPassDecoderInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=anOrdinaryQrCodeIsReadableButRejectedAsABoardingPass
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.BoardingPassDecoderInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=anOrdinaryQrCodeIsReadableButRejectedAsABoardingPass
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest:
+INSTRUMENTATION_STATUS: test=encryptedBitwardenFreshDownloadRetainsEveryTemplate
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stack=kotlinx.serialization.SerializationException: Invalid boarding pass code
+	at takagi.ru.monica.data.model.BoardingPassBarcodeCodec.decode(BoardingPassBarcode.kt:22)
+	at takagi.ru.monica.bitwarden.service.CipherSyncProcessor.syncIdentityCipher(CipherSyncProcessor.kt:1266)
+	at takagi.ru.monica.bitwarden.service.CipherSyncProcessor.access$syncIdentityCipher(CipherSyncProcessor.kt:45)
+	at takagi.ru.monica.bitwarden.service.CipherSyncProcessor$syncIdentityCipher$1.invokeSuspend(Unknown Source:18)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest.encryptedBitwardenFreshDownloadRetainsEveryTemplate(WalletPassTemplatesDeviceTest.kt:204)
+
+INSTRUMENTATION_STATUS: stream=
+Error in encryptedBitwardenFreshDownloadRetainsEveryTemplate(takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest):
+kotlinx.serialization.SerializationException: Invalid boarding pass code
+	at takagi.ru.monica.data.model.BoardingPassBarcodeCodec.decode(BoardingPassBarcode.kt:22)
+	at takagi.ru.monica.bitwarden.service.CipherSyncProcessor.syncIdentityCipher(CipherSyncProcessor.kt:1266)
+	at takagi.ru.monica.bitwarden.service.CipherSyncProcessor.access$syncIdentityCipher(CipherSyncProcessor.kt:45)
+	at takagi.ru.monica.bitwarden.service.CipherSyncProcessor$syncIdentityCipher$1.invokeSuspend(Unknown Source:18)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest.encryptedBitwardenFreshDownloadRetainsEveryTemplate(WalletPassTemplatesDeviceTest.kt:204)
+
+INSTRUMENTATION_STATUS: test=encryptedBitwardenFreshDownloadRetainsEveryTemplate
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=localKeepassAndMdbxReplicasRetainPassesAfterReopen
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=localKeepassAndMdbxReplicasRetainPassesAfterReopen
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=removingCodeIsPersistedOnlyOnSave
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=removingCodeIsPersistedOnlyOnSave
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=rewardsCreateSwitchDraftAndDetail
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=rewardsCreateSwitchDraftAndDetail
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=scanBoardingPassFromGalleryRetainsEncryptedCodeAcrossRecreation
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failed to perform checkIsDisplayed check: Expected at most 1 node but found 2 nodes that satisfy (Text + InputText + EditableText contains 'Align the barcode on the boarding pass with the frame' (ignoreCase: false))
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:35)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:351)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest.scanBoardingPassFromGalleryRetainsEncryptedCodeAcrossRecreation(WalletPassTemplatesDeviceTest.kt:144)
+
+INSTRUMENTATION_STATUS: stream=
+Error in scanBoardingPassFromGalleryRetainsEncryptedCodeAcrossRecreation(takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest):
+java.lang.AssertionError: Failed to perform checkIsDisplayed check: Expected at most 1 node but found 2 nodes that satisfy (Text + InputText + EditableText contains 'Align the barcode on the boarding pass with the frame' (ignoreCase: false))
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:35)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:351)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest.scanBoardingPassFromGalleryRetainsEncryptedCodeAcrossRecreation(WalletPassTemplatesDeviceTest.kt:144)
+
+INSTRUMENTATION_STATUS: test=scanBoardingPassFromGalleryRetainsEncryptedCodeAcrossRecreation
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=travelCreateSwitchDraftAndDetailAtLargeFont
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=travelCreateSwitchDraftAndDetailAtLargeFont
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=membershipCreateSwitchDraftAndDetail
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=membershipCreateSwitchDraftAndDetail
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=reeditUpdatesInPlaceAndRetainsFutureFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=reeditUpdatesInPlaceAndRetainsFutureFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.ZxingBarcodeDecoderTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.scanner.ZxingBarcodeDecoderTest:
+INSTRUMENTATION_STATUS: test=galleryAndCameraBothRecognizeInvertedAuthenticatorCodes
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.ZxingBarcodeDecoderTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=galleryAndCameraBothRecognizeInvertedAuthenticatorCodes
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.ZxingBarcodeDecoderTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=smallQrStillDecodesAtFullResolutionBesideAnUnrelatedLargeCode
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.ZxingBarcodeDecoderTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=smallQrStillDecodesAtFullResolutionBesideAnUnrelatedLargeCode
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.ZxingBarcodeDecoderTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=yPlanePositionPaddingPixelStrideAndCropAreRespected
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.ZxingBarcodeDecoderTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=yPlanePositionPaddingPixelStrideAndCropAreRespected
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.ZxingBarcodeDecoderTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cameraAndGalleryRetainAllSupportedBarcodeFormats
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.ZxingBarcodeDecoderTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cameraAndGalleryRetainAllSupportedBarcodeFormats
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.ZxingBarcodeDecoderTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unreadableFramesDoNotPoisonLaterSteamOrAuthenticatorRecognition
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.ZxingBarcodeDecoderTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unreadableFramesDoNotPoisonLaterSteamOrAuthenticatorRecognition
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.ZxingBarcodeDecoderTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=mixedNormalAndInvertedQrCodesRemainAvailableToTheCallerValidator
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.ZxingBarcodeDecoderTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=mixedNormalAndInvertedQrCodesRemainAvailableToTheCallerValidator
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.PasswordQrBarcodeSheetTest
+INSTRUMENTATION_STATUS: current=26
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.PasswordQrBarcodeSheetTest:
+INSTRUMENTATION_STATUS: test=unsupportedBarcodeKeepsUnicodeContentAndCanReturnToQrInDarkLargeText
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.PasswordQrBarcodeSheetTest
+INSTRUMENTATION_STATUS: current=26
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unsupportedBarcodeKeepsUnicodeContentAndCanReturnToQrInDarkLargeText
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.PasswordQrBarcodeSheetTest
+INSTRUMENTATION_STATUS: current=27
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=savedPasswordCardDirectlyOpensQrAndBarcodeWithoutChangingStoredFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.PasswordQrBarcodeSheetTest
+INSTRUMENTATION_STATUS: current=27
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=savedPasswordCardDirectlyOpensQrAndBarcodeWithoutChangingStoredFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.PasswordQrBarcodeSheetTest
+INSTRUMENTATION_STATUS: current=28
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=reopeningReadsCurrentTemplateValuesAndMissingSecretsShowError
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.PasswordQrBarcodeSheetTest
+INSTRUMENTATION_STATUS: current=28
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=reopeningReadsCurrentTemplateValuesAndMissingSecretsShowError
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.QrScannerSessionScreenTest
+INSTRUMENTATION_STATUS: current=29
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.scanner.QrScannerSessionScreenTest:
+INSTRUMENTATION_STATUS: test=boardingCameraDeliversOriginalPayloadAndFormatExactlyOnce
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.QrScannerSessionScreenTest
+INSTRUMENTATION_STATUS: current=29
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=boardingCameraDeliversOriginalPayloadAndFormatExactlyOnce
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.QrScannerSessionScreenTest
+INSTRUMENTATION_STATUS: current=30
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=backgroundingDoesNotRestartAndResumeStillScans
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.QrScannerSessionScreenTest
+INSTRUMENTATION_STATUS: current=30
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=backgroundingDoesNotRestartAndResumeStillScans
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.QrScannerSessionScreenTest
+INSTRUMENTATION_STATUS: current=31
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedAcceptanceDoesNotPermanentlyConsumeScanning
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.QrScannerSessionScreenTest
+INSTRUMENTATION_STATUS: current=31
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedAcceptanceDoesNotPermanentlyConsumeScanning
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.QrScannerSessionScreenTest
+INSTRUMENTATION_STATUS: current=32
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=steamSelectsItsCodeAmongNormalAndInvertedCandidates
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.QrScannerSessionScreenTest
+INSTRUMENTATION_STATUS: current=32
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=steamSelectsItsCodeAmongNormalAndInvertedCandidates
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.QrScannerSessionScreenTest
+INSTRUMENTATION_STATUS: current=33
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=aStoppedFrameStreamRecoversOnTheAttachedPreview
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.QrScannerSessionScreenTest
+INSTRUMENTATION_STATUS: current=33
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=aStoppedFrameStreamRecoversOnTheAttachedPreview
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.QrScannerSessionScreenTest
+INSTRUMENTATION_STATUS: current=34
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=aQueuedResultCannotNavigateAfterLeavingTheScanner
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.QrScannerSessionScreenTest
+INSTRUMENTATION_STATUS: current=34
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=aQueuedResultCannotNavigateAfterLeavingTheScanner
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.QrScannerSessionScreenTest
+INSTRUMENTATION_STATUS: current=35
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=steamScannerCanNavigateAfterAnIdleCameraSession
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.QrScannerSessionScreenTest
+INSTRUMENTATION_STATUS: current=35
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=steamScannerCanNavigateAfterAnIdleCameraSession
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.QrScannerSessionScreenTest
+INSTRUMENTATION_STATUS: current=36
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=authenticatorScannerCanNavigateAfterAnIdleCameraSession
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.QrScannerSessionScreenTest
+INSTRUMENTATION_STATUS: current=36
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=authenticatorScannerCanNavigateAfterAnIdleCameraSession
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.QrScannerSessionScreenTest
+INSTRUMENTATION_STATUS: current=37
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=aMalformedFrameIsReleasedAndLaterFramesStillDecode
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.scanner.QrScannerSessionScreenTest
+INSTRUMENTATION_STATUS: current=37
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=aMalformedFrameIsReleasedAndLaterFramesStillDecode
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 126.506
+There were 2 failures:
+1) encryptedBitwardenFreshDownloadRetainsEveryTemplate(takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest)
+kotlinx.serialization.SerializationException: Invalid boarding pass code
+	at takagi.ru.monica.data.model.BoardingPassBarcodeCodec.decode(BoardingPassBarcode.kt:22)
+	at takagi.ru.monica.bitwarden.service.CipherSyncProcessor.syncIdentityCipher(CipherSyncProcessor.kt:1266)
+	at takagi.ru.monica.bitwarden.service.CipherSyncProcessor.access$syncIdentityCipher(CipherSyncProcessor.kt:45)
+	at takagi.ru.monica.bitwarden.service.CipherSyncProcessor$syncIdentityCipher$1.invokeSuspend(Unknown Source:18)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest.encryptedBitwardenFreshDownloadRetainsEveryTemplate(WalletPassTemplatesDeviceTest.kt:204)
+2) scanBoardingPassFromGalleryRetainsEncryptedCodeAcrossRecreation(takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest)
+java.lang.AssertionError: Failed to perform checkIsDisplayed check: Expected at most 1 node but found 2 nodes that satisfy (Text + InputText + EditableText contains 'Align the barcode on the boarding pass with the frame' (ignoreCase: false))
+	at androidx.compose.ui.test.AndroidAssertions_androidKt.checkIsDisplayed(AndroidAssertions.android.kt:35)
+	at androidx.compose.ui.test.AssertionsKt.isDisplayed(Assertions.kt:351)
+	at androidx.compose.ui.test.AssertionsKt.assertIsDisplayed(Assertions.kt:33)
+	at takagi.ru.monica.credentialexchange.WalletPassTemplatesDeviceTest.scanBoardingPassFromGalleryRetainsEncryptedCodeAcrossRecreation(WalletPassTemplatesDeviceTest.kt:144)
+
+FAILURES!!!
+Tests run: 37,  Failures: 2
+
+
+INSTRUMENTATION_CODE: -1

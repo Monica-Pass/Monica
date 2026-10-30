@@ -1,0 +1,34 @@
+[
+  {
+    "file": "app/src/main/java/takagi/ru/monica/utils/KeePassKdbxService.kt",
+    "sha256": "cca638e76329978cca32b22935f55c74b57ec86842a6345cd061082b87c2edeb"
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/keepass/KeePassMonicaPasswordStore.kt",
+    "sha256": "510ae3ad71eb8fbdd7b7c15d9b03766ef5e272a0b636277ee7c55301041fba8c"
+  },
+  {
+    "file": "app/src/main/java/takagi/ru/monica/keepass/KeePassSecureItemPayload.kt",
+    "sha256": "91e06bfcef9e4608be855569f6dd8d57dab4144dd117c0f0ea5e8d0c5e61d17c"
+  },
+  {
+    "file": "app/src/androidTest/java/takagi/ru/monica/keepass/KdbxDeleteTestProvider.java",
+    "sha256": "15cd8da3df0abfa9feb8e9a3dc24e097a8546febab2a8debdbad9c402235457b"
+  },
+  {
+    "file": "app/src/androidTest/java/takagi/ru/monica/keepass/KeePassMonicaEditorUiTest.kt",
+    "sha256": "9f6ab4f562349c9daaf24c8bf507d70e2c66207f48bb7c3ee520ad55e2196820"
+  },
+  {
+    "file": "app/src/androidTest/java/takagi/ru/monica/keepass/KeePassSaveProjectionRegressionTest.kt",
+    "sha256": "2b4be9eea3948f86bfe39a89c28775511e7694736f92dfd5208b877e7c4f57ee"
+  },
+  {
+    "file": "app/src/androidTest/java/takagi/ru/monica/keepass/PasswordLocalSaveTimingTest.kt",
+    "sha256": "2942595ed18d53ea4474f2ba35f4e40bc849d6b1fce1bfaf47602316b1422a60"
+  },
+  {
+    "file": "app/src/androidTest/java/takagi/ru/monica/keepass/KeePassDxSaveComparisonTest.kt",
+    "sha256": "1fc8351b50f684d9002d20d89690e7310b735fcdd1c5ecb20383c2b27ba09b61"
+  }
+]
