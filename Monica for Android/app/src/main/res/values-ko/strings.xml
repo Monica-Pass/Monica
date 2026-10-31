@@ -4688,4 +4688,7 @@
     <string name="autofill_save_overlay_continue">저장 계속</string>
     <string name="autofill_save_overlay_permission_action">다른 앱 위에 표시 허용</string>
     <string name="autofill_save_overlay_permission_required">HyperOS 1 저장 호환 모드 설정에서 Monica의 다른 앱 위에 표시를 허용한 후 다시 저장하세요.</string>
+    <string name="local_recovery_confirm_title">이 기기의 보안 저장소를 복구할까요?</string>
+    <string name="local_recovery_confirm_description">마스터 비밀번호를 확인한 후 새 기기 저장소 키를 생성합니다. 원본 파일은 유지됩니다. 생체 인증 잠금 해제는 다시 활성화해야 합니다. 취소하면 데이터가 변경되지 않습니다.</string>
+    <string name="local_recovery_confirm_action">복구 확인</string>
 </resources>

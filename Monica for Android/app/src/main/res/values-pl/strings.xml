@@ -4365,4 +4365,7 @@
     <string name="autofill_save_overlay_continue">Kontynuuj</string>
     <string name="autofill_save_overlay_permission_action">Zezwól na wyświetlanie nad aplikacjami</string>
     <string name="autofill_save_overlay_permission_required">Zezwól Monica na wyświetlanie nad innymi aplikacjami w ustawieniach zgodności zapisu HyperOS 1, a następnie spróbuj ponownie.</string>
+    <string name="local_recovery_confirm_title">Przywrócić bezpieczny magazyn na tym urządzeniu?</string>
+    <string name="local_recovery_confirm_description">Hasło główne zostanie sprawdzone przed utworzeniem nowych kluczy magazynu urządzenia. Oryginalne pliki zostaną zachowane. Odblokowywanie biometryczne trzeba włączyć ponownie. Anulowanie nie zmieni danych.</string>
+    <string name="local_recovery_confirm_action">Potwierdź przywracanie</string>
 </resources>

@@ -318,4 +318,182 @@ class LocalVaultRecoveryInstrumentedTest {
             } finally { helper.close() }
         }
     }
+
+    @Test fun failedConfirmedRecoveryDoesNotRewriteRecoveryEnvelope() {
+        Fixture().use { f ->
+            f.enroll(); f.damageOriginal()
+            val beforeEnvelope = f.envelope.readBytes()
+            val beforeOriginal = f.raw.all.toMap()
+            val denied = object : ContextWrapper(f.context) {
+                override fun getApplicationContext(): Context = this
+                override fun getSharedPreferences(name: String, mode: Int): SharedPreferences {
+                    val prefs = f.context.getSharedPreferences(name, mode)
+                    if (!name.startsWith("monica_recovered_")) return prefs
+                    return object : SharedPreferences by prefs {
+                        override fun edit(): SharedPreferences.Editor {
+                            val editor = prefs.edit()
+                            return object : SharedPreferences.Editor by editor {
+                                private var keysetOnly = true
+                                override fun commit() = keysetOnly && editor.commit()
+                                override fun putString(k: String?, v: String?) = apply {
+                                    if (k?.startsWith("__androidx_security_crypto_") != true) keysetOnly = false
+                                    editor.putString(k, v)
+                                }
+                                override fun putBoolean(k: String?, v: Boolean) = apply { editor.putBoolean(k, v) }
+                                override fun putInt(k: String?, v: Int) = apply { editor.putInt(k, v) }
+                                override fun putLong(k: String?, v: Long) = apply { editor.putLong(k, v) }
+                                override fun remove(k: String?) = apply { editor.remove(k) }
+                            }
+                        }
+                    }
+                }
+            }
+            assertFalse(LocalVaultRecovery(denied).recover(f.password))
+            assertArrayEquals("A failed new-store write must preserve the original envelope", beforeEnvelope, f.envelope.readBytes())
+            assertEquals(beforeOriginal, f.raw.all)
+            assertNull(f.recovery.activeStore())
+        }
+    }
+
+    @Test fun passwordUnlockAfterConvenienceKeyLossDoesNotSilentlyRecreateKey() {
+        Fixture().use { f ->
+            f.enroll()
+            val ciphertext = f.manager.encryptData("synthetic-preserved-vault-secret")
+            val prefs = SecurePreferencesStore.open(f.context, SecurePreferencesStore.MONICA).preferences
+            val beforeWrapper = prefs.getString("mdk_keystore_blob", null)
+            assertNotNull(beforeWrapper)
+            val ks = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
+            ks.deleteEntry("monica_data_key_v2_compat")
+            SecurityManager.clearRuntimeUnlockCache()
+            val restored = f.reopened()
+            assertTrue(restored.unlockVaultWithPassword(f.password))
+            assertFalse("Password unlock is not consent to replace a lost Keystore key", ks.containsAlias("monica_data_key_v2_compat"))
+            assertEquals(beforeWrapper, prefs.getString("mdk_keystore_blob", null))
+            assertEquals("synthetic-preserved-vault-secret", restored.decryptData(ciphertext))
+        }
+    }
+
+
+    @Test fun confirmedRecoveryProviderTimeoutAndCancellationNeverPublishLateOrQueueRetries() = runBlocking {
+        for (cancel in listOf(false, true)) Fixture().use { f ->
+            f.enroll(); f.damageOriginal()
+            val before = f.raw.all.toMap()
+            val envelope = f.envelope.readBytes()
+            val entered = kotlinx.coroutines.CompletableDeferred<Unit>()
+            val release = java.util.concurrent.CountDownLatch(1)
+            val reads = java.util.concurrent.atomic.AtomicInteger()
+            val blocking = object : ContextWrapper(f.context) {
+                override fun getApplicationContext(): Context = this
+                override fun getSharedPreferences(name: String, mode: Int): SharedPreferences {
+                    val prefs = f.context.getSharedPreferences(name, mode)
+                    if (!name.startsWith("monica_recovered_")) return prefs
+                    return object : SharedPreferences by prefs {
+                        override fun getAll(): MutableMap<String, *> {
+                            if (reads.incrementAndGet() == 1) {
+                                entered.complete(Unit)
+                                check(release.await(15, java.util.concurrent.TimeUnit.SECONDS))
+                            }
+                            return prefs.all
+                        }
+                    }
+                }
+            }
+            val outcome = kotlinx.coroutines.CompletableDeferred<Boolean>()
+            val job = launch(kotlinx.coroutines.Dispatchers.Main) {
+                outcome.complete(ConfirmedStorageRecovery.recover(blocking, f.password, timeoutMillis = 3_000))
+            }
+            try {
+                kotlinx.coroutines.withTimeout(10_000) { entered.await() }
+                if (cancel) { job.cancel(); job.join() }
+                else assertFalse(kotlinx.coroutines.withTimeout(4_000) { outcome.await() })
+                assertTrue(ConfirmedStorageRecovery.inProgress)
+                repeat(12) { assertFalse(ConfirmedStorageRecovery.recover(f.context, f.password, timeoutMillis = 100)) }
+                assertEquals(1, reads.get())
+                assertEquals(before, f.raw.all)
+                assertArrayEquals(envelope, f.envelope.readBytes())
+                // activeStore shares the recovery lock, held by the provider worker.
+                // Inspect the selector bytes externally instead of taking that lock.
+                assertFalse(File(f.root, "files/local-vault-recovery/active-store.json").exists())
+            } finally {
+                release.countDown()
+                job.cancel(); job.join()
+                kotlinx.coroutines.withTimeout(5_000) { while (ConfirmedStorageRecovery.inProgress) kotlinx.coroutines.delay(10) }
+            }
+            assertNull(f.recovery.activeStore())
+            assertEquals(before, f.raw.all)
+            assertArrayEquals(envelope, f.envelope.readBytes())
+        }
+    }
+
+    @Test fun confirmedRecoveryWithLostOrReplacedRealStorageKeyPreservesDataAndPreviousStore() = runBlocking {
+        for (replace in listOf(false, true)) Fixture().use { f ->
+            f.enroll()
+            val passwordCipher = f.manager.encryptData("synthetic-real-key-loss-password")
+            val otpCipher = f.manager.encryptData("JBSWY3DPEHPK3PXP")
+            val attachmentKey = ByteArray(32) { (it + 3).toByte() }
+            val wrapped = takagi.ru.monica.attachments.storage.AttachmentKeyVault(f.manager).wrap(attachmentKey)
+            f.manager.putProtectedString("passkey_private_key_v1_confirmed", "synthetic-passkey-private-material")
+            f.damageOriginal()
+            assertTrue(ConfirmedStorageRecovery.recover(f.context, f.password))
+            val first = f.recovery.activeStore()!!
+            val manager = f.reopened()
+            assertTrue(manager.unlockVaultWithPassword(f.password))
+            val previous = f.context.getSharedPreferences(first.first, Context.MODE_PRIVATE).all.toMap()
+            val beforeEnvelope = f.envelope.readBytes()
+            val ks = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
+            if (replace) {
+                val generator = javax.crypto.KeyGenerator.getInstance("AES", "AndroidKeyStore")
+                generator.init(android.security.keystore.KeyGenParameterSpec.Builder(first.second,
+                    android.security.keystore.KeyProperties.PURPOSE_ENCRYPT or android.security.keystore.KeyProperties.PURPOSE_DECRYPT)
+                    .setKeySize(256).setBlockModes("GCM").setEncryptionPaddings("NoPadding").build())
+                generator.generateKey()
+            } else ks.deleteEntry(first.second)
+            SecurityManager.clearRuntimeUnlockCache()
+            val blocked = SecureStorageStartup.prepare(f.context) as SecureStartupResult.Blocked
+            assertTrue(blocked.failure.reason in setOf("MISSING_MASTER_KEY", "AUTHENTICATION_FAILED", "UNREADABLE_SECURE_STORAGE"))
+            assertArrayEquals(beforeEnvelope, f.envelope.readBytes())
+            assertTrue(ConfirmedStorageRecovery.recover(f.context, f.password))
+            val second = f.recovery.activeStore()!!
+            assertNotEquals(first, second)
+            assertEquals(previous, f.context.getSharedPreferences(first.first, Context.MODE_PRIVATE).all)
+            assertArrayEquals(beforeEnvelope, f.envelope.readBytes())
+            if (!replace) assertFalse(ks.containsAlias(first.second))
+            val restored = f.reopened()
+            assertTrue(restored.unlockVaultWithPassword(f.password))
+            assertEquals("synthetic-real-key-loss-password", restored.decryptData(passwordCipher))
+            assertEquals("JBSWY3DPEHPK3PXP", restored.decryptData(otpCipher))
+            assertArrayEquals(attachmentKey, takagi.ru.monica.attachments.storage.AttachmentKeyVault(restored).unwrap(wrapped))
+            assertEquals("synthetic-passkey-private-material", restored.getProtectedString("passkey_private_key_v1_confirmed"))
+            assertFalse(restored.isBiometricEnabled())
+        }
+    }
+
+    @Test fun deniedPublicationPreservesEnvelopeAndSelectorAfterStaging() {
+        Fixture().use { f ->
+            f.enroll(); f.damageOriginal()
+            val original = f.raw.all.toMap()
+            val envelope = f.envelope.readBytes()
+            assertFalse(f.recovery.recover(f.password) { throw kotlinx.coroutines.CancellationException("Synthetic withdrawn confirmation") })
+            assertEquals(original, f.raw.all)
+            assertArrayEquals(envelope, f.envelope.readBytes())
+            assertNull(f.recovery.activeStore())
+        }
+    }
+
+
+    @Test fun missingEnvelopeCannotCreateReplacementStoreOrKeys() {
+        Fixture().use { f ->
+            f.enroll(); f.damageOriginal()
+            assertTrue(f.envelope.delete())
+            val original = f.raw.all.toMap()
+            val ks = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
+            val aliases = java.util.Collections.list(ks.aliases()).sorted()
+            assertFalse(f.recovery.available())
+            assertFalse(f.recovery.recover(f.password))
+            assertEquals(original, f.raw.all)
+            assertEquals(aliases, java.util.Collections.list(ks.aliases()).sorted())
+            assertNull(f.recovery.activeStore())
+        }
+    }
+
 }

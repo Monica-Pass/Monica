@@ -4709,4 +4709,7 @@
     <string name="autofill_save_overlay_continue">继续保存</string>
     <string name="autofill_save_overlay_permission_action">允许显示悬浮窗</string>
     <string name="autofill_save_overlay_permission_required">请在 HyperOS 1 保存兼容模式设置中允许 Monica 显示悬浮窗，然后重新保存。</string>
+    <string name="local_recovery_confirm_title">确认恢复本机安全存储？</string>
+    <string name="local_recovery_confirm_description">将验证主密码并创建新的本机存储密钥。原文件会保留，生物识别解锁需重新开启。取消不会更改数据。</string>
+    <string name="local_recovery_confirm_action">确认恢复</string>
 </resources>

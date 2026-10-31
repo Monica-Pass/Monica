@@ -11,8 +11,15 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import kotlinx.coroutines.launch
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.window.SecureFlagPolicy
 import takagi.ru.monica.R
 import takagi.ru.monica.ui.components.SettingsSubpageTopBar
 
@@ -25,27 +32,74 @@ internal fun SecureStorageRecoveryScreen(
     onRecover: (suspend (String) -> Boolean)? = null
 ) {
     var password by remember { mutableStateOf("") }
+    var confirmationPassword by remember { mutableStateOf<String?>(null) }
     var recovering by remember { mutableStateOf(false) }
     var failed by remember { mutableStateOf(false) }
+    var recoveryJob by remember { mutableStateOf<kotlinx.coroutines.Job?>(null) }
     val scope = rememberCoroutineScope()
-    DisposableEffect(Unit) { onDispose { password = "" } }
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val focusManager = LocalFocusManager.current
+    val keyboard = LocalSoftwareKeyboardController.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_PAUSE || event == Lifecycle.Event.ON_STOP) {
+                password = ""
+                confirmationPassword = null
+                recoveryJob?.cancel()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+            password = ""
+            confirmationPassword = null
+            recoveryJob?.cancel()
+        }
+    }
+    if (confirmationPassword != null && onRecover != null) {
+        AlertDialog(
+            onDismissRequest = { confirmationPassword = null },
+            title = { Text(stringResource(R.string.local_recovery_confirm_title)) },
+            text = { Text(stringResource(R.string.local_recovery_confirm_description)) },
+            confirmButton = {
+                TextButton(onClick = confirm@{
+                    val attempt = confirmationPassword ?: return@confirm
+                    if (recovering) return@confirm
+                    confirmationPassword = null
+                    recovering = true
+                    failed = false
+                    recoveryJob = scope.launch {
+                        try { failed = !onRecover(attempt) }
+                        catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+                        catch (_: Exception) { failed = true }
+                        finally { recovering = false; recoveryJob = null }
+                    }
+                }, modifier = Modifier.testTag("secure_startup_recovery_confirm")) {
+                    Text(stringResource(R.string.local_recovery_confirm_action))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { confirmationPassword = null },
+                    modifier = Modifier.testTag("secure_startup_recovery_cancel")) {
+                    Text(stringResource(R.string.cancel))
+                }
+            },
+            properties = DialogProperties(securePolicy = SecureFlagPolicy.SecureOn)
+        )
+    }
     Scaffold(topBar = { SettingsSubpageTopBar(stringResource(R.string.secure_startup_title), onExit) },
         bottomBar = {
             Column(Modifier.fillMaxWidth().navigationBarsPadding().imePadding().padding(12.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 if (onRecover != null) {
-                    Button(onClick = {
-                        val attempt = password
+                    Button(onClick = request@{
+                        if (recovering || confirmationPassword != null || password.isEmpty()) return@request
+                        confirmationPassword = password
                         password = ""
-                        recovering = true
+                        focusManager.clearFocus()
+                        keyboard?.hide()
                         failed = false
-                        scope.launch {
-                            try { failed = !onRecover(attempt) }
-                            catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
-                            catch (_: Exception) { failed = true }
-                            finally { recovering = false }
-                        }
-                    }, enabled = password.isNotEmpty() && !recovering,
+                    }, enabled = password.isNotEmpty() && !recovering && confirmationPassword == null,
                         modifier = Modifier.fillMaxWidth().testTag("secure_startup_recover")) {
                         if (recovering) {
                             CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)

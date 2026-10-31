@@ -213,11 +213,13 @@ internal class LocalVaultRecovery(private val context: Context) {
     }
 
     /** Preserve originals; switch only after authenticating and reading back a separate new store. */
-    fun recover(password: String): Boolean = synchronized(lock) {
+    fun recover(password: String, publish: (() -> Unit) -> Unit = { it() }): Boolean = synchronized(lock) {
         var recoveryKey: ByteArray? = null
         var passwordKey: ByteArray? = null
         try {
             val doc = readEnvelope()
+            val sourceDocument = doc.toString()
+            val sourceStore = activeStore()
             val generation = doc.getString("generation")
             passwordKey = derive(password, decode(doc.getString("salt")), ROUNDS)
             recoveryKey = unseal(passwordKey, doc.getString("key"), "monica-recovery-key:$generation")
@@ -230,10 +232,23 @@ internal class LocalVaultRecovery(private val context: Context) {
             val opened = SecurePreferencesStore.openRaw(context, "monica_recovered_$id", "monica_recovered_key_$id")
             values.remove("mdk_keystore_blob")
             values["biometric_enabled"] = false
-            persist(opened.preferences, values, doc, recoveryKey)
+            // Stage only in the new store. Rewriting the canonical envelope here would
+            // change the user's recovery material even if this write or readback failed.
+            val editor = opened.preferences.edit()
+            values.forEach { (name, value) -> put(editor, name, value) }
+            editor.putString(KEY, encode(recoveryKey)).putString(GENERATION, generation)
+            check(editor.commit()) { "Recovered preferences could not be committed" }
             val checked = SecurePreferencesStore.openRaw(context, "monica_recovered_$id", "monica_recovered_key_$id")
             check(values.all { (key, value) -> checked.preferences.all[key] == value })
-            write(selector, JSONObject().put("id", id))
+            check(checked.preferences.getString(KEY, null) == encode(recoveryKey))
+            check(checked.preferences.getString(GENERATION, null) == generation)
+            // The production caller withdraws this permission on timeout or cancellation.
+            publish {
+                check(readEnvelope().toString() == sourceDocument && activeStore() == sourceStore) {
+                    "Recovery source changed; try again"
+                }
+                write(selector, JSONObject().put("id", id))
+            }
             SecurityManager.clearRuntimeUnlockCache()
             SessionManager.markLocked()
             true

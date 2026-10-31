@@ -4364,4 +4364,7 @@
     <string name="autofill_save_overlay_continue">續存</string>
     <string name="autofill_save_overlay_permission_action">允顯浮窗</string>
     <string name="autofill_save_overlay_permission_required">請於 HyperOS 1 存儲相容設定中允 Monica 顯浮窗，再行存儲。</string>
+    <string name="local_recovery_confirm_title">確認復本機安全儲存？</string>
+    <string name="local_recovery_confirm_description">先驗主密碼，後建本機儲存新鑰。原檔留存，生物辨識解鎖須再啟用。取消則資料不變。</string>
+    <string name="local_recovery_confirm_action">確認恢復</string>
 </resources>

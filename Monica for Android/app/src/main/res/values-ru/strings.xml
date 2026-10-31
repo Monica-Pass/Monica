@@ -4675,4 +4675,7 @@
     <string name="autofill_save_overlay_continue">Продолжить</string>
     <string name="autofill_save_overlay_permission_action">Разрешить показ поверх приложений</string>
     <string name="autofill_save_overlay_permission_required">Разрешите Monica показ поверх других приложений в настройках совместимости сохранения HyperOS 1 и повторите сохранение.</string>
+    <string name="local_recovery_confirm_title">Восстановить защищённое хранилище на этом устройстве?</string>
+    <string name="local_recovery_confirm_description">Перед созданием новых ключей хранилища устройства будет проверен мастер-пароль. Исходные файлы сохранятся. Биометрическую разблокировку потребуется включить заново. Отмена не изменит данные.</string>
+    <string name="local_recovery_confirm_action">Подтвердить восстановление</string>
 </resources>

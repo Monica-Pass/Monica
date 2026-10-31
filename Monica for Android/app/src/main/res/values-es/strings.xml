@@ -4689,4 +4689,7 @@
     <string name="autofill_save_overlay_continue">Continuar guardando</string>
     <string name="autofill_save_overlay_permission_action">Permitir mostrar sobre otras apps</string>
     <string name="autofill_save_overlay_permission_required">Permite que Monica se muestre sobre otras apps en los ajustes de compatibilidad de guardado de HyperOS 1 y vuelve a guardar.</string>
+    <string name="local_recovery_confirm_title">¿Restaurar el almacenamiento seguro de este dispositivo?</string>
+    <string name="local_recovery_confirm_description">Se verificará tu contraseña maestra antes de crear nuevas claves de almacenamiento del dispositivo. Se conservarán los archivos originales. Deberás activar de nuevo el desbloqueo biométrico. Cancelar no modificará tus datos.</string>
+    <string name="local_recovery_confirm_action">Confirmar restauración</string>
 </resources>

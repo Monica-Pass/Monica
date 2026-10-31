@@ -4365,4 +4365,7 @@
     <string name="autofill_save_overlay_continue">Continua</string>
     <string name="autofill_save_overlay_permission_action">Consenti visualizzazione sopra altre app</string>
     <string name="autofill_save_overlay_permission_required">Consenti a Monica di apparire sopra altre app nelle impostazioni di compatibilità del salvataggio HyperOS 1, quindi riprova.</string>
+    <string name="local_recovery_confirm_title">Ripristinare lo spazio sicuro su questo dispositivo?</string>
+    <string name="local_recovery_confirm_description">La password principale verrà verificata prima di creare nuove chiavi di archiviazione del dispositivo. I file originali verranno conservati. Lo sblocco biometrico dovrà essere riattivato. Annullare non modificherà i dati.</string>
+    <string name="local_recovery_confirm_action">Conferma ripristino</string>
 </resources>

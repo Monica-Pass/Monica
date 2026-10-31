@@ -169,7 +169,7 @@ class SecurityManager(private val context: Context) {
             try {
                 ensureMdkInitializedWithPassword(inputPassword)
             } catch (e: Exception) {
-                android.util.Log.w("SecurityManager", "MDK init failed: ${e.message}")
+                android.util.Log.w("SecurityManager", "MDK init failed: ${e.javaClass.simpleName}")
                 return false
             }
         }
@@ -197,7 +197,7 @@ class SecurityManager(private val context: Context) {
             ensureMdkInitializedWithPassword(inputPassword)
             true
         } catch (e: Exception) {
-            android.util.Log.w("SecurityManager", "Vault password unlock failed: ${e.message}")
+            android.util.Log.w("SecurityManager", "Vault password unlock failed: ${e.javaClass.simpleName}")
             false
         }
     }
@@ -857,19 +857,6 @@ class SecurityManager(private val context: Context) {
         }.getOrDefault(false)
     }
 
-    private fun deleteSecureKeyAlias(alias: String) {
-        runCatching {
-            val keyStore = KeyStore.getInstance("AndroidKeyStore")
-            keyStore.load(null)
-            if (keyStore.containsAlias(alias)) {
-                keyStore.deleteEntry(alias)
-            }
-        }.onFailure { e ->
-            android.util.Log.w(logTag, "deleteSecureKeyAlias failed for $alias: ${e.javaClass.simpleName}")
-            SecurityDiagLogger.append("W/$logTag deleteSecureKeyAlias failed alias=$alias type=${e.javaClass.simpleName}")
-        }
-    }
-
     private fun parseWrappedMdkBlob(rawBlob: String): WrappedMdkBlob {
         return when {
             rawBlob.startsWith(WRAPPER_PREFIX_COMPAT) -> WrappedMdkBlob(
@@ -907,18 +894,13 @@ class SecurityManager(private val context: Context) {
         }
     }
 
-    private fun clearKeystoreWrappedMdk(reason: String) {
-        android.util.Log.w("SecurityManager", "Clearing stale MDK keystore wrapper: $reason")
-        sharedPreferences.edit().remove(MDK_KEYSTORE_BLOB_KEY).apply()
-    }
-
     private fun persistKeystoreWrappedMdk(mdk: ByteArray): Boolean {
         if (mdk.isEmpty()) {
             android.util.Log.w(logTag, "persistKeystoreWrappedMdk: skip empty MDK")
             return false
         }
         return try {
-            val ksKey = getOrGenerateSecureKey()
+            val ksKey = getExistingDataKey(compat = false)
             val cipher = Cipher.getInstance("AES/GCM/NoPadding")
             cipher.init(Cipher.ENCRYPT_MODE, ksKey)
             val iv = cipher.iv
@@ -936,27 +918,24 @@ class SecurityManager(private val context: Context) {
             SecurityDiagLogger.append("W/$logTag persistKeystoreWrappedMdk: user not authenticated")
             persistCompatKeystoreWrappedMdk(mdk)
         } catch (e: android.security.keystore.KeyPermanentlyInvalidatedException) {
-            android.util.Log.w(logTag, "persistKeystoreWrappedMdk: secure key invalidated; rebuilding with compatibility wrapper")
+            android.util.Log.w(logTag, "persistKeystoreWrappedMdk: invalidated key and wrapper retained")
             SecurityDiagLogger.append("W/$logTag persistKeystoreWrappedMdk: secure key invalidated")
-            deleteSecureKeyAlias(KEY_ALIAS_DATA)
-            clearKeystoreWrappedMdk("secure key permanently invalidated while rebuilding wrapper")
-            persistCompatKeystoreWrappedMdk(mdk)
+            false
         } catch (e: UnrecoverableKeyException) {
-            android.util.Log.w(logTag, "persistKeystoreWrappedMdk: secure key unrecoverable; rebuilding with compatibility wrapper")
+            android.util.Log.w(logTag, "persistKeystoreWrappedMdk: unreadable key and wrapper retained")
             SecurityDiagLogger.append("W/$logTag persistKeystoreWrappedMdk: secure key unrecoverable")
-            deleteSecureKeyAlias(KEY_ALIAS_DATA)
-            clearKeystoreWrappedMdk("secure key unrecoverable while rebuilding wrapper")
-            persistCompatKeystoreWrappedMdk(mdk)
+            false
         } catch (e: Exception) {
-            android.util.Log.w(logTag, "persistKeystoreWrappedMdk failed: ${e.javaClass.simpleName}, message=${e.message}")
+            android.util.Log.w(logTag, "persistKeystoreWrappedMdk failed: ${e.javaClass.simpleName}")
             SecurityDiagLogger.append("W/$logTag persistKeystoreWrappedMdk failed: ${e.javaClass.simpleName}")
             false
         }
     }
 
-    private fun persistCompatKeystoreWrappedMdk(mdk: ByteArray): Boolean {
+    private fun persistCompatKeystoreWrappedMdk(mdk: ByteArray, allowInitialKeyCreation: Boolean = false): Boolean {
         return try {
-            val compatKey = getOrGenerateCompatSecureKey()
+            val compatKey = if (allowInitialKeyCreation) getOrGenerateCompatSecureKey()
+                else getExistingDataKey(compat = true)
             val cipher = Cipher.getInstance("AES/GCM/NoPadding")
             cipher.init(Cipher.ENCRYPT_MODE, compatKey)
             val iv = cipher.iv
@@ -970,7 +949,7 @@ class SecurityManager(private val context: Context) {
             SecurityDiagLogger.append("W/$logTag persistCompatKeystoreWrappedMdk: saved compatibility wrapper")
             true
         } catch (e: Exception) {
-            android.util.Log.w(logTag, "persistCompatKeystoreWrappedMdk failed: ${e.javaClass.simpleName}, message=${e.message}")
+            android.util.Log.w(logTag, "persistCompatKeystoreWrappedMdk failed: ${e.javaClass.simpleName}")
             SecurityDiagLogger.append("W/$logTag persistCompatKeystoreWrappedMdk failed: ${e.javaClass.simpleName}")
             false
         }
@@ -1010,6 +989,7 @@ class SecurityManager(private val context: Context) {
 
     private fun ensureMdkInitializedWithPassword(password: String, forceUpdate: Boolean = false) {
         localRecovery.validate(sharedPreferences)
+        val initialEnrollment = !isMasterPasswordSet() && !sharedPreferences.getBoolean(MDK_READY_KEY, false)
         val hasPasswordBlob = sharedPreferences.contains(MDK_PASSWORD_BLOB_KEY)
         val hasKeystoreBlob = sharedPreferences.contains(MDK_KEYSTORE_BLOB_KEY)
         val oldSalt = sharedPreferences.getString(MDK_PASSWORD_SALT_KEY, null)
@@ -1050,7 +1030,9 @@ class SecurityManager(private val context: Context) {
         }
         processCachedMdk = actualMdk
         // Failure to restore biometric convenience must not replace the password-recoverable MDK.
-        persistCompatKeystoreWrappedMdk(actualMdk)
+        // Password authentication unlocks the existing MDK. It is not permission to
+        // replace a missing device key or overwrite an unreadable convenience wrapper.
+        if (!hasKeystoreBlob) persistCompatKeystoreWrappedMdk(actualMdk, allowInitialKeyCreation = initialEnrollment)
         mdkWrapperUnavailable = false
         mdkAuthUnavailableUntilMillis = 0L
         hasLoggedMdkAuthExpiredWarning = false

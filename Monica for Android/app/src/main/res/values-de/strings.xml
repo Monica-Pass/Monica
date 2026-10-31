@@ -4689,4 +4689,7 @@
     <string name="autofill_save_overlay_continue">Weiter zum Speichern</string>
     <string name="autofill_save_overlay_permission_action">Anzeige über anderen Apps erlauben</string>
     <string name="autofill_save_overlay_permission_required">Erlauben Sie Monica in den Einstellungen zum HyperOS-1-Speichermodus die Anzeige über anderen Apps und versuchen Sie es erneut.</string>
+    <string name="local_recovery_confirm_title">Sicheren Speicher auf diesem Gerät wiederherstellen?</string>
+    <string name="local_recovery_confirm_description">Dein Master-Passwort wird geprüft, bevor neue Speicherschlüssel für dieses Gerät erstellt werden. Die Originaldateien bleiben erhalten. Biometrisches Entsperren muss erneut aktiviert werden. Abbrechen lässt deine Daten unverändert.</string>
+    <string name="local_recovery_confirm_action">Wiederherstellung bestätigen</string>
 </resources>

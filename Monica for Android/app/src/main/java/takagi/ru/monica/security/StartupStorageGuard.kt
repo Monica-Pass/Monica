@@ -10,7 +10,12 @@ internal class StartupStorageGuard(base: Context) {
     @Volatile var abandoned = false
         private set
 
-    fun abandon() { abandoned = true }
+    fun abandon() = synchronized(this) { abandoned = true }
+    /** Serialize withdrawal with the final, disk-only recovery selector publication. */
+    fun publishWhileActive(operation: () -> Unit) = synchronized(this) {
+        checkActive()
+        operation()
+    }
     fun checkActive() {
         if (abandoned) throw CancellationException("Secure startup attempt abandoned")
     }

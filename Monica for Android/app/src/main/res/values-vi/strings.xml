@@ -4581,4 +4581,7 @@
     <string name="autofill_save_overlay_continue">Tiếp tục lưu</string>
     <string name="autofill_save_overlay_permission_action">Cho phép hiển thị trên ứng dụng khác</string>
     <string name="autofill_save_overlay_permission_required">Cho phép Monica hiển thị trên ứng dụng khác trong cài đặt tương thích lưu HyperOS 1, rồi thử lưu lại.</string>
+    <string name="local_recovery_confirm_title">Khôi phục bộ nhớ bảo mật trên thiết bị này?</string>
+    <string name="local_recovery_confirm_description">Mật khẩu chính sẽ được xác minh trước khi tạo khóa lưu trữ mới cho thiết bị. Các tệp gốc được giữ nguyên. Cần bật lại mở khóa sinh trắc học. Hủy sẽ không thay đổi dữ liệu.</string>
+    <string name="local_recovery_confirm_action">Xác nhận khôi phục</string>
 </resources>

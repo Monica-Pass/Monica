@@ -4364,4 +4364,7 @@
     <string name="autofill_save_overlay_continue">Continuer</string>
     <string name="autofill_save_overlay_permission_action">Autoriser l’affichage en superposition</string>
     <string name="autofill_save_overlay_permission_required">Autorisez la superposition de Monica dans les réglages de compatibilité d’enregistrement HyperOS 1, puis réessayez.</string>
+    <string name="local_recovery_confirm_title">Restaurer le stockage sécurisé de cet appareil ?</string>
+    <string name="local_recovery_confirm_description">Votre mot de passe principal sera vérifié avant de créer de nouvelles clés de stockage sur cet appareil. Les fichiers originaux seront conservés. Le déverrouillage biométrique devra être réactivé. Annuler ne modifiera pas vos données.</string>
+    <string name="local_recovery_confirm_action">Confirmer la restauration</string>
 </resources>

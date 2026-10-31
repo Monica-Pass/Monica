@@ -74,4 +74,7 @@
     <string name="settings_export_data_description">导出 ZIP 备份、KDBX 或 Steam maFile</string>
     <string name="import_data_description">从 ZIP、KDBX、CSV 等支持的文件导入</string>
     <string name="import_data_supported_formats">从 ZIP、KDBX、CSV 等支持的文件导入</string>
+    <string name="local_recovery_confirm_title">确认恢复本机安全存储？</string>
+    <string name="local_recovery_confirm_description">将验证主密码并创建新的本机存储密钥。原文件会保留，生物识别解锁需重新开启。取消不会更改数据。</string>
+    <string name="local_recovery_confirm_action">确认恢复</string>
 </resources>

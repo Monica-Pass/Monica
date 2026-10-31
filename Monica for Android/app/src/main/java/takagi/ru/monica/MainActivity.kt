@@ -430,7 +430,6 @@ class MainActivity : BaseMonicaActivity() {
             is takagi.ru.monica.security.SecureStartupResult.Blocked -> {
                 Log.w(TAG, "Secure storage startup blocked: ${startup.failure.reason}")
                 val diagnostic = takagi.ru.monica.security.SecureStorageStartup.diagnostic(startup.failure, startup.attempts)
-                val recovery = takagi.ru.monica.security.LocalVaultRecovery(this)
                 // Availability was checked inside the bounded worker. A late provider call may
                 // still hold the recovery lock; never reacquire it on the UI thread after timeout.
                 val canRecover = startup.recoveryAvailable
@@ -445,8 +444,8 @@ class MainActivity : BaseMonicaActivity() {
                             },
                             onExit = { finish() },
                             onRecover = if (canRecover) { password ->
-                                val recovered = withContext(Dispatchers.IO) { recovery.recover(password) }
-                                if (recovered) recreate()
+                                val recovered = takagi.ru.monica.security.ConfirmedStorageRecovery.recover(this@MainActivity, password)
+                                if (recovered) withContext(Dispatchers.Main.immediate) { recreate() }
                                 recovered
                             } else null
                         )

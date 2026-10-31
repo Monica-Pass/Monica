@@ -4568,4 +4568,7 @@
     <string name="autofill_save_overlay_continue">保存を続ける</string>
     <string name="autofill_save_overlay_permission_action">他のアプリの上への表示を許可</string>
     <string name="autofill_save_overlay_permission_required">HyperOS 1 保存互換モードの設定で Monica の他のアプリの上への表示を許可し、もう一度保存してください。</string>
+    <string name="local_recovery_confirm_title">この端末の安全なストレージを復元しますか？</string>
+    <string name="local_recovery_confirm_description">マスターパスワードを確認してから、端末用の新しい保存鍵を作成します。元のファイルは保持されます。生体認証による解除は再度有効にする必要があります。キャンセルしてもデータは変更されません。</string>
+    <string name="local_recovery_confirm_action">復元を確認</string>
 </resources>

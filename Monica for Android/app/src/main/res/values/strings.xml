@@ -4774,4 +4774,7 @@
     <string name="autofill_save_overlay_continue">Continue saving</string>
     <string name="autofill_save_overlay_permission_action">Allow display over other apps</string>
     <string name="autofill_save_overlay_permission_required">Allow Monica to display over other apps in the HyperOS 1 save compatibility settings, then try saving again.</string>
+    <string name="local_recovery_confirm_title">Restore secure storage on this device?</string>
+    <string name="local_recovery_confirm_description">Your master password will be verified before new device storage keys are created. Original files are kept. Biometric unlock must be enabled again. Cancelling leaves your data unchanged.</string>
+    <string name="local_recovery_confirm_action">Confirm recovery</string>
 </resources>
