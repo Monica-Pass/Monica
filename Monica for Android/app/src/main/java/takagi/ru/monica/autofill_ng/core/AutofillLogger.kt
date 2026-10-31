@@ -276,6 +276,12 @@ object AutofillLogger {
      */
     private fun emitAndroidLog(level: Level, message: String) {
         try {
+            // Keep the fixed save-handoff diagnostics in release Logcat too;
+            // ordinary verbose autofill logging retains its existing R8 policy.
+            if (message.startsWith("[SAVE] ")) {
+                Log.println(Log.INFO, TAG, message)
+                return
+            }
             when (level) {
                 Level.DEBUG -> Log.d(TAG, message)
                 Level.INFO -> Log.i(TAG, message)

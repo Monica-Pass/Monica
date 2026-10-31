@@ -45,6 +45,7 @@ class AutofillPreferences(private val context: Context) {
         private val KEY_FILL_SUGGESTIONS_ENABLED = booleanPreferencesKey("fill_suggestions_enabled")
         private val KEY_MANUAL_SELECTION_ENABLED = booleanPreferencesKey("manual_selection_enabled")
         private val KEY_REQUEST_SAVE_DATA = booleanPreferencesKey("request_save_data")
+        private val KEY_HYPEROS_SAVE_COMPATIBILITY = booleanPreferencesKey("hyperos_save_compatibility")
         private val KEY_AUTO_SAVE_APP_INFO = booleanPreferencesKey("auto_save_app_info")
         private val KEY_AUTO_SAVE_WEBSITE_INFO = booleanPreferencesKey("auto_save_website_info")
         
@@ -205,6 +206,15 @@ class AutofillPreferences(private val context: Context) {
         context.dataStore.edit { preferences ->
             preferences[KEY_REQUEST_SAVE_DATA] = enabled
         }
+    }
+
+    /** Explicit, opt-in workaround for the reported HyperOS 1 save-launch issue. */
+    val isHyperOsSaveCompatibilityEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
+        preferences[KEY_HYPEROS_SAVE_COMPATIBILITY] ?: false
+    }
+
+    suspend fun setHyperOsSaveCompatibilityEnabled(enabled: Boolean) {
+        context.dataStore.edit { it[KEY_HYPEROS_SAVE_COMPATIBILITY] = enabled }
     }
     
     /**

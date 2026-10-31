@@ -325,7 +325,7 @@
     <string name="import_data_title">Nhập dữ liệu</string>
     <string name="importing">Đang nhập...</string>
     <string name="start_import">Bắt đầu nhập</string>
-    <string name="export_data_description">Xuất tất cả dữ liệu của bạn dưới dạng tệp CSV vào bộ nhớ cục bộ. Bạn có thể sử dụng tệp này để sao lưu hoặc di chuyển dữ liệu.</string>
+    <string name="export_data_description">Xuất bản sao ZIP, KDBX hoặc Steam maFile</string>
     <string name="export_data_select_type">Chọn loại dữ liệu để xuất:</string>
     <string name="export_data_type_passwords">Mật khẩu</string>
     <string name="export_data_type_totp">Mã TOTP</string>
@@ -336,14 +336,14 @@
     <string name="export_data_success">Xuất dữ liệu thành công</string>
     <string name="export_data_error">Xuất thất bại</string>
     <string name="export_data_warning">Tệp CSV không được mã hóa, vui lòng giữ tệp đã xuất an toàn</string>
-    <string name="import_data_description">Nhập dữ liệu từ tệp sao lưu CSV. Vui lòng đảm bảo định dạng tệp là chính xác.</string>
+    <string name="import_data_description">Nhập từ ZIP, KDBX, CSV và các tệp được hỗ trợ khác</string>
     <string name="import_data_warning_title">Cảnh báo</string>
     <string name="import_data_warning_message">Nhập dữ liệu có thể ghi đè dữ liệu hiện có. Vui lòng sao lưu dữ liệu hiện tại trước khi nhập.</string>
     <string name="import_data_select_file">Chọn tệp</string>
     <string name="import_data_button">Nhập</string>
     <string name="import_data_success">Nhập dữ liệu thành công</string>
     <string name="import_data_error">Nhập thất bại</string>
-    <string name="import_data_supported_formats">Hỗ trợ tệp CSV được xuất bởi ứng dụng và chi tiết giao dịch Alipay</string>
+    <string name="import_data_supported_formats">Nhập từ ZIP, KDBX, CSV và các tệp được hỗ trợ khác</string>
     <string name="import_data_select_type">Chọn loại nhập</string>
     <string name="import_data_type_normal">Dữ liệu ứng dụng</string>
     <string name="import_data_type_alipay">Hóa đơn Alipay</string>
@@ -584,7 +584,7 @@
     <string name="settings_bottom_sheet_title">Chế độ ngăn kéo dưới</string>
     <string name="settings_bottom_sheet_description">Bật điều hướng ngăn kéo có thể kéo lên</string>
     <string name="settings_export_data">Xuất dữ liệu</string>
-    <string name="settings_export_data_description">Xuất dưới dạng file CSV cục bộ</string>
+    <string name="settings_export_data_description">Xuất bản sao ZIP, KDBX hoặc Steam maFile</string>
     <string name="settings_import_data">Nhập dữ liệu</string>
     <string name="settings_import_data_description">Khôi phục từ file sao lưu</string>
     <string name="settings_version_info">Thông tin phiên bản</string>
@@ -4574,4 +4574,11 @@
     <string name="url_match_limited_context">Máy chủ không bao gồm tên miền phụ khác. Khi chỉ có tên máy chủ, không suy đoán giao thức, đường dẫn hay truy vấn. URL chính xác và tiền tố cần URL đầy đủ. Biểu thức chính quy dùng cú pháp RE2.</string>
     <string name="url_match_regex_error">Trước tiên hãy sửa URL thành biểu thức chính quy RE2 hợp lệ.</string>
     <string name="url_match_unreadable">Không đọc được quy tắc URL. Dữ liệu hiện có được giữ lại và việc lưu bị tắt.</string>
+    <string name="autofill_hyperos_save_compatibility">Tương thích lưu trên HyperOS 1</string>
+    <string name="autofill_hyperos_save_compatibility_desc">Sau khi nhấn Lưu của hệ thống, một bảng nổi sẽ xuất hiện. Nhấn Tiếp tục lưu để mở Monica. Cần quyền hiển thị trên ứng dụng khác.</string>
+    <string name="autofill_save_overlay_title">Lưu vào Monica</string>
+    <string name="autofill_save_overlay_body">Tiếp tục để xác minh danh tính và kiểm tra mật khẩu. Đóng bảng này sẽ không lưu gì.</string>
+    <string name="autofill_save_overlay_continue">Tiếp tục lưu</string>
+    <string name="autofill_save_overlay_permission_action">Cho phép hiển thị trên ứng dụng khác</string>
+    <string name="autofill_save_overlay_permission_required">Cho phép Monica hiển thị trên ứng dụng khác trong cài đặt tương thích lưu HyperOS 1, rồi thử lưu lại.</string>
 </resources>

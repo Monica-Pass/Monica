@@ -33,6 +33,8 @@ internal data class KeePassMonicaPasswordDraft(
 
 internal enum class KeePassFileState { READY, BUSY, SAVED, EXTERNAL_RELOADED, RELOADED, MERGED, MERGED_CONFLICTS, RELOAD_FAILED, WRITE_FAILED }
 
+internal class KeePassFileNotice(val state: KeePassFileState)
+
 /** An in-memory presentation adapter. Its IDs are never Room rows or KDBX ownership fields. */
 internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxService, private val security: SecurityManager? = null) {
     internal data class Snapshot(
@@ -48,10 +50,13 @@ internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxServic
 
     private val mutex = Mutex()
     private val snapshots = MutableStateFlow<Map<Long, Snapshot>>(emptyMap())
-    private val _fileStates = MutableStateFlow<Map<Long, KeePassFileState>>(emptyMap())
+    private val _fileStates = MutableStateFlow<Map<Long, KeePassFileNotice>>(emptyMap())
     val fileStates = _fileStates.asStateFlow()
     private val lastSourceChecks = mutableMapOf<Long, Long>()
-    private fun fileState(id: Long, state: KeePassFileState) { _fileStates.update { it + (id to state) } }
+    private fun fileState(id: Long, state: KeePassFileState) { _fileStates.update { it + (id to KeePassFileNotice(state)) } }
+    fun dismissFileNotice(id: Long, notice: KeePassFileNotice) {
+        _fileStates.update { if (it[id] === notice) it + (id to KeePassFileNotice(KeePassFileState.READY)) else it }
+    }
     private val active = MutableStateFlow<Set<Long>>(emptySet())
     private val identities = mutableMapOf<Long, KeePassNativeEntryIdentity>()
     private val drafts = mutableMapOf<Long, Snapshot>()
@@ -176,7 +181,7 @@ internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxServic
         lastSourceChecks[databaseId] = now
         try {
             if (service.currentNativeSourceRevision(databaseId) == before.browser.sourceRevision) {
-                if (_fileStates.value[databaseId] == KeePassFileState.RELOAD_FAILED) fileState(databaseId, KeePassFileState.RELOADED)
+                if (_fileStates.value[databaseId]?.state == KeePassFileState.RELOAD_FAILED) fileState(databaseId, KeePassFileState.RELOADED)
                 return@withLock false
             }
             service.reloadNativeDatabase(databaseId)
@@ -212,6 +217,20 @@ internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxServic
             service.saveNativeDatabase(databaseId, before.browser.sourceRevision.sha256)
             load(databaseId)
             fileState(databaseId, KeePassFileState.SAVED)
+        } catch (error: Exception) {
+            fileState(databaseId, KeePassFileState.WRITE_FAILED)
+            throw error
+        }
+    }
+
+    suspend fun mergeCurrentDatabase(databaseId: Long) = mutex.withLock {
+        requireReadable(databaseId)
+        val before = snapshots.value[databaseId] ?: load(databaseId)
+        fileState(databaseId, KeePassFileState.BUSY)
+        try {
+            val conflicts = service.synchronizeCurrentNativeDatabase(databaseId, before.browser.sourceRevision.sha256)
+            load(databaseId)
+            fileState(databaseId, if (conflicts > 0) KeePassFileState.MERGED_CONFLICTS else KeePassFileState.MERGED)
         } catch (error: Exception) {
             fileState(databaseId, KeePassFileState.WRITE_FAILED)
             throw error
@@ -311,7 +330,7 @@ internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxServic
                 requireReadable(databaseId)
                 check((KeePassKdbxService.nativeLockVersions.value[databaseId] ?: 0L) == lockVersion) { "KeePass database was locked while reading" }
                 snapshots.update { it + (databaseId to snapshot) }
-                _fileStates.update { if (databaseId in it) it else it + (databaseId to KeePassFileState.READY) }
+                _fileStates.update { if (databaseId in it) it else it + (databaseId to KeePassFileNotice(KeePassFileState.READY)) }
             }
         }
     }

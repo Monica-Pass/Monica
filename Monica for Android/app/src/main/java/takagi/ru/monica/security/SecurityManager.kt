@@ -1295,6 +1295,21 @@ class SecurityManager(private val context: Context) {
     }
     
     fun decryptData(encryptedData: String): String {
+        try {
+            return decryptDataWithoutDiagnostic(encryptedData)
+        } catch (error: Exception) {
+            val format = when {
+                encryptedData.startsWith(DATA_PREFIX_MDK) -> RuntimeDiagnostics.DataFormat.MDK
+                encryptedData.startsWith(DATA_PREFIX_V2) -> RuntimeDiagnostics.DataFormat.V2
+                encryptedData.startsWith(DATA_PREFIX_COMPAT) -> RuntimeDiagnostics.DataFormat.C2
+                else -> null
+            }
+            if (format != null) RuntimeDiagnostics.dataFailure(format, error)
+            throw error
+        }
+    }
+
+    private fun decryptDataWithoutDiagnostic(encryptedData: String): String {
         if (encryptedData.isEmpty()) {
             return ""
         }
@@ -1314,12 +1329,7 @@ class SecurityManager(private val context: Context) {
         }
 
         if (encryptedData.startsWith(DATA_PREFIX_V2)) {
-            return try {
-                decryptDataV2(encryptedData)
-            } catch (e: Exception) {
-                android.util.Log.e("SecurityManager", "V2 Decryption failed", e)
-                throw e // Rethrow to let caller handle auth failure
-            }
+            return decryptDataV2(encryptedData)
         }
 
         if (encryptedData.startsWith(DATA_PREFIX_COMPAT)) {

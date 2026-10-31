@@ -2,6 +2,8 @@
 
 > Current status (2026-10-30): production hardening and final covering-update tests are recorded in the last section. Earlier "production unchanged" and indefinite-wait conclusions below are historical findings from 2026-10-29.
 
+> Logcat follow-up (2026-10-30): [startup-logcat-323.md](startup-logcat-323.md) documents the new MonicaDiag events and LogFox capture instructions. Both distributions passed 49 API32 startup/data/recovery/diagnostic tests and one API35 real AndroidKeyStore authentication-failure test (50 each). New logs omit exception messages, vault values and file paths; failures still propagate to existing handlers, and encryption/locking/recovery behavior is preserved. Ordinary Debug, test and minified Release builds passed, with retained diagnostics verified in the actual ordinary Release APK; F-Droid Debug/test builds passed, without a separate minified Release check. This follow-up remains uncommitted and unreleased and does not confirm the affected users' modified-phone crashes are fixed.
+
 Date: 2026-10-29. Normal development build, unreleased.
 
 The initial two reports were reviewed: an application crash after changing keybox and including Monica in a module's scope, and a startup hang that reportedly cleared after a Google online check. Neither initial report includes an application version, Android version, module configuration or crash trace. The user has already confirmed that these details are unavailable. The latest instruction is to investigate as far as practical, report unresolved cases explicitly, and prioritize existing users' data. Later screenshots are assessed separately below.

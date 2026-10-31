@@ -73,9 +73,9 @@ class KeePassExternalReloadRegressionTest {
             db.modifyParentGroup { copy(entries = emptyList()) }
         }) { _, service, id, _, _ ->
             val store = KeePassMonicaPasswordStore(service)
-            assertNull(store.fileStates.value[id])
+            assertNull(store.fileStates.value[id]?.state)
             assertTrue(store.refresh(id).rows.isEmpty())
-            assertEquals(KeePassFileState.READY, store.fileStates.value[id])
+            assertEquals(KeePassFileState.READY, store.fileStates.value[id]?.state)
             assertTrue(store.isDatabaseAvailable(id))
         }
     }
@@ -145,7 +145,7 @@ class KeePassExternalReloadRegressionTest {
             externalDelete(uri)
             assertTrue(store.checkForExternalChanges(id))
             assertTrue(store.rows(id).first().isEmpty())
-            assertEquals(KeePassFileState.EXTERNAL_RELOADED, store.fileStates.value[id])
+            assertEquals(KeePassFileState.EXTERNAL_RELOADED, store.fileStates.value[id]?.state)
             assertEquals(2, counter(uri, "commits"))
         }
     }
@@ -158,7 +158,7 @@ class KeePassExternalReloadRegressionTest {
             val broken = byteArrayOf(1,2,3)
             resolver.openOutputStream(uri, "wt")!!.use { it.write(broken) }
             assertFalse(store.checkForExternalChanges(id))
-            assertEquals(KeePassFileState.RELOAD_FAILED, store.fileStates.value[id])
+            assertEquals(KeePassFileState.RELOAD_FAILED, store.fileStates.value[id]?.state)
             assertTrue("Failed reload must keep the last valid session available for a retry", store.isDatabaseAvailable(id))
             assertArrayEquals(broken, resolver.openInputStream(uri)!!.use { it.readBytes() })
             assertEquals(300, store.rows(id).first().size)
@@ -206,7 +206,7 @@ class KeePassExternalReloadRegressionTest {
             store.mergeDatabase(id, uri, "Synthetic KDBX deletion test", null)
             assertEquals(300, store.refresh(id).rows.size)
             assertEquals(before.rows.map { it.keepassEntryUuid }.toSet(), store.rows(id).first().map { it.keepassEntryUuid }.toSet())
-            assertEquals(KeePassFileState.MERGED, store.fileStates.value[id])
+            assertEquals(KeePassFileState.MERGED, store.fileStates.value[id]?.state)
         }
     }
 

@@ -328,7 +328,7 @@
     <string name="import_data_button">インポート</string>
     <string name="import_data_success">データのインポートに成功しました</string>
     <string name="import_data_error">インポートに失敗しました</string>
-    <string name="import_data_supported_formats">アプリでエクスポートされたCSVファイルとAlipay取引明細をサポート</string>
+    <string name="import_data_supported_formats">ZIP、KDBX、CSV などの対応ファイルからインポート</string>
     <string name="import_data_select_type">インポートタイプを選択</string>
     <string name="import_data_type_normal">アプリデータ</string>
     <string name="import_data_type_alipay">Alipay明細</string>
@@ -597,7 +597,7 @@
     <string name="settings_bottom_sheet_title">ボトムシートモード</string>
     <string name="settings_bottom_sheet_description">引き上げ可能な引き出し式ナビゲーションを有効化</string>
     <string name="settings_export_data">データをエクスポート</string>
-    <string name="settings_export_data_description">CSVファイルとしてローカルにエクスポート</string>
+    <string name="settings_export_data_description">ZIP バックアップ、KDBX、Steam maFile をエクスポート</string>
     <string name="settings_import_data">データをインポート</string>
     <string name="settings_import_data_description">バックアップファイルから復元</string>
     <string name="settings_version_info">バージョン情報</string>
@@ -754,9 +754,9 @@
     <!-- Data Management in Settings -->
     <string name="data_management">データ管理</string>
     <string name="export_data">データをエクスポート</string>
-    <string name="export_data_description">すべてのデータをCSVファイルにエクスポート</string>
+    <string name="export_data_description">ZIP バックアップ、KDBX、Steam maFile をエクスポート</string>
     <string name="import_data">データをインポート</string>
-    <string name="import_data_description">CSVファイルからデータをインポート</string>
+    <string name="import_data_description">ZIP、KDBX、CSV などの対応ファイルからインポート</string>
     
     <!-- WebDAV Backup -->
     <string name="webdav_backup">WebDAVバックアップ</string>
@@ -4561,4 +4561,11 @@
     <string name="url_match_limited_context">ホストは他のサブドメインを含みません。ホスト名のみの場合、プロトコル・パス・クエリを推測しません。完全一致と URL の前方一致には完全な URL が必要です。正規表現は RE2 構文です。</string>
     <string name="url_match_regex_error">先に URL を有効な RE2 正規表現に変更してください。</string>
     <string name="url_match_unreadable">URL の一致設定を読み取れません。既存データを保持し、保存を無効にしました。</string>
+    <string name="autofill_hyperos_save_compatibility">HyperOS 1 保存互換モード</string>
+    <string name="autofill_hyperos_save_compatibility_desc">システムの「保存」の後にフローティングパネルを表示します。「保存を続ける」で Monica を開きます。他のアプリの上に表示する権限が必要です。</string>
+    <string name="autofill_save_overlay_title">Monica に保存</string>
+    <string name="autofill_save_overlay_body">本人確認を行い、保存するパスワードを確認します。このパネルを閉じても何も保存されません。</string>
+    <string name="autofill_save_overlay_continue">保存を続ける</string>
+    <string name="autofill_save_overlay_permission_action">他のアプリの上への表示を許可</string>
+    <string name="autofill_save_overlay_permission_required">HyperOS 1 保存互換モードの設定で Monica の他のアプリの上への表示を許可し、もう一度保存してください。</string>
 </resources>

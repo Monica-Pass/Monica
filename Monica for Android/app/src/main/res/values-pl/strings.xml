@@ -602,7 +602,7 @@
     <string name="import_data_button">Importuj</string>
     <string name="import_data_success">Dane zaimportowane</string>
     <string name="import_data_error">Import nieudany</string>
-    <string name="import_data_supported_formats">Obsługuje pliki CSV z aplikacji i historię transakcji Alipay</string>
+    <string name="import_data_supported_formats">Importuj ZIP, KDBX, CSV i inne obsługiwane pliki</string>
     <string name="import_data_select_type">Typ importu</string>
     <string name="import_data_type_normal">Dane aplikacji</string>
     <string name="import_data_type_alipay">Historia Alipay</string>
@@ -1204,7 +1204,7 @@
     <string name="settings_bottom_sheet_title">Wysuwany panel</string>
     <string name="settings_bottom_sheet_description">Włącz nawigację w wysuwanym panelu</string>
     <string name="settings_export_data">Eksport danych</string>
-    <string name="settings_export_data_description">Zapisz lokalnie jako plik CSV</string>
+    <string name="settings_export_data_description">Eksportuj kopie ZIP, KDBX lub Steam maFile</string>
     <string name="settings_import_data">Import danych</string>
     <string name="settings_import_data_description">Przywróć z kopii zapasowej</string>
     <string name="settings_version_info">Informacje o wersji</string>
@@ -1506,9 +1506,9 @@
     <string name="support_author_subtitle">Aplikacja jest bezpłatna. Dziękujemy za wsparcie</string>
     <string name="data_management">Zarządzanie danymi</string>
     <string name="export_data">Eksport danych</string>
-    <string name="export_data_description">Eksportuj wszystkie dane do pliku CSV</string>
+    <string name="export_data_description">Eksportuj kopie ZIP, KDBX lub Steam maFile</string>
     <string name="import_data">Import danych</string>
-    <string name="import_data_description">Importuj dane z pliku CSV</string>
+    <string name="import_data_description">Importuj ZIP, KDBX, CSV i inne obsługiwane pliki</string>
     <string name="webdav_backup">Kopia WebDAV</string>
     <string name="webdav_backup_description">Kopia zapasowa na serwerze WebDAV</string>
     <string name="webdav_config">Konfiguracja WebDAV</string>
@@ -4358,4 +4358,11 @@
     <string name="url_match_limited_context">Host wyklucza inne subdomeny. Sama nazwa hosta nie określa protokołu, ścieżki ani zapytania. Dokładny URL i prefiks wymagają pełnego URL. Wyrażenia regularne używają RE2.</string>
     <string name="url_match_regex_error">Najpierw zmień URL na poprawne wyrażenie regularne RE2.</string>
     <string name="url_match_unreadable">Nie można odczytać reguł URL. Zachowano dane i wyłączono zapisywanie.</string>
+    <string name="autofill_hyperos_save_compatibility">Zgodność zapisu z HyperOS 1</string>
+    <string name="autofill_hyperos_save_compatibility_desc">Po systemowym przycisku Zapisz pojawi się pływający panel. Naciśnij Kontynuuj, aby otworzyć Monica. Wymaga zgody na wyświetlanie nad innymi aplikacjami.</string>
+    <string name="autofill_save_overlay_title">Zapisz w Monica</string>
+    <string name="autofill_save_overlay_body">Kontynuuj, aby potwierdzić tożsamość i sprawdzić hasło. Zamknięcie panelu niczego nie zapisuje.</string>
+    <string name="autofill_save_overlay_continue">Kontynuuj</string>
+    <string name="autofill_save_overlay_permission_action">Zezwól na wyświetlanie nad aplikacjami</string>
+    <string name="autofill_save_overlay_permission_required">Zezwól Monica na wyświetlanie nad innymi aplikacjami w ustawieniach zgodności zapisu HyperOS 1, a następnie spróbuj ponownie.</string>
 </resources>

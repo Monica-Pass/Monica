@@ -1,0 +1,592 @@
+=== ordinary-compat-on.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest:
+INSTRUMENTATION_STATUS: test=frameworkSavesTheNewPasswordAfterChangeFormCommit
+INSTRUMENTATION_STATUS_CODE: 1
+s_glBindAttribLocation: bind attrib 0 name position
+s_glBindAttribLocation: bind attrib 1 name localCoord
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=1, flags=65618, fixtureStatus=null
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:1819)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:1769)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.open(AutofillFlowInstrumentedTest.kt:1597)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.open$default(AutofillFlowInstrumentedTest.kt:1575)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest$frameworkSavesTheNewPasswordAfterChangeFormCommit$1.invokeSuspend(AutofillFlowInstrumentedTest.kt:350)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:266)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:46)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.frameworkSavesTheNewPasswordAfterChangeFormCommit(AutofillFlowInstrumentedTest.kt:348)
+
+INSTRUMENTATION_STATUS: stream=
+Error in frameworkSavesTheNewPasswordAfterChangeFormCommit(takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest):
+java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=1, flags=65618, fixtureStatus=null
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:1819)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:1769)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.open(AutofillFlowInstrumentedTest.kt:1597)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.open$default(AutofillFlowInstrumentedTest.kt:1575)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest$frameworkSavesTheNewPasswordAfterChangeFormCommit$1.invokeSuspend(AutofillFlowInstrumentedTest.kt:350)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:266)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:46)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.frameworkSavesTheNewPasswordAfterChangeFormCommit(AutofillFlowInstrumentedTest.kt:348)
+
+INSTRUMENTATION_STATUS: test=frameworkSavesTheNewPasswordAfterChangeFormCommit
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=saveReviewUpdatesAnExtraProjectAccountAndPreservesMetadata
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=saveReviewUpdatesAnExtraProjectAccountAndPreservesMetadata
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockedSaveRequiresVerificationAndCancellationDoesNotWrite
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockedSaveRequiresVerificationAndCancellationDoesNotWrite
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=verifiedSaveClosesWhenAlreadyLockedMainSessionIsLockedAgain
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=verifiedSaveClosesWhenAlreadyLockedMainSessionIsLockedAgain
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=saveReviewUpdatesChosenEntryAndPreservesNotesAndSibling
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=saveReviewUpdatesChosenEntryAndPreservesNotesAndSibling
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 56.298
+There was 1 failure:
+1) frameworkSavesTheNewPasswordAfterChangeFormCommit(takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest)
+java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=1, flags=65618, fixtureStatus=null
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:1819)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:1769)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.open(AutofillFlowInstrumentedTest.kt:1597)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.open$default(AutofillFlowInstrumentedTest.kt:1575)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest$frameworkSavesTheNewPasswordAfterChangeFormCommit$1.invokeSuspend(AutofillFlowInstrumentedTest.kt:350)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:266)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:46)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.frameworkSavesTheNewPasswordAfterChangeFormCommit(AutofillFlowInstrumentedTest.kt:348)
+
+FAILURES!!!
+Tests run: 6,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== ordinary-compat-on-change-repeat.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest:
+INSTRUMENTATION_STATUS: test=frameworkSavesTheNewPasswordAfterChangeFormCommit
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=frameworkSavesTheNewPasswordAfterChangeFormCommit
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 9.349
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== ordinary-compat-off.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest:
+INSTRUMENTATION_STATUS: test=frameworkSavesTheNewPasswordAfterChangeFormCommit
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=frameworkSavesTheNewPasswordAfterChangeFormCommit
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=saveReviewUpdatesAnExtraProjectAccountAndPreservesMetadata
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=saveReviewUpdatesAnExtraProjectAccountAndPreservesMetadata
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockedSaveRequiresVerificationAndCancellationDoesNotWrite
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockedSaveRequiresVerificationAndCancellationDoesNotWrite
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=verifiedSaveClosesWhenAlreadyLockedMainSessionIsLockedAgain
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=verifiedSaveClosesWhenAlreadyLockedMainSessionIsLockedAgain
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=saveReviewUpdatesChosenEntryAndPreservesNotesAndSibling
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=saveReviewUpdatesChosenEntryAndPreservesNotesAndSibling
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 33.354
+
+OK (6 tests)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== ordinary-toggle-ui-zh.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.HyperOsSaveCompatibilitySettingsTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.HyperOsSaveCompatibilitySettingsTest:
+INSTRUMENTATION_STATUS: test=compatibilityCanBeEnabledAndDisabledFromSaveSettings
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.HyperOsSaveCompatibilitySettingsTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=compatibilityCanBeEnabledAndDisabledFromSaveSettings
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 2.907
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== ordinary-toggle-ui-en.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.HyperOsSaveCompatibilitySettingsTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.HyperOsSaveCompatibilitySettingsTest:
+INSTRUMENTATION_STATUS: test=compatibilityCanBeEnabledAndDisabledFromSaveSettings
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.HyperOsSaveCompatibilitySettingsTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=compatibilityCanBeEnabledAndDisabledFromSaveSettings
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 3.809
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== ordinary-compat-cold.txt ===
+Application process absent before form; no active instrumentation; no Monica activity opened.
+Gboard selected; Android autofill service enabled.
+Real Android save prompt appeared after form submission.
+One system Save tap opened AutofillSaveTransparentActivity directly; locked vault shows identity verification.
+Original master-password verification reached the save editor. No intermediate launcher sheet; editor Save was not tapped.
+PASS
+
+
+=== fdroid-compat-on.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest:
+INSTRUMENTATION_STATUS: test=frameworkSavesTheNewPasswordAfterChangeFormCommit
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=frameworkSavesTheNewPasswordAfterChangeFormCommit
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=saveReviewUpdatesAnExtraProjectAccountAndPreservesMetadata
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=saveReviewUpdatesAnExtraProjectAccountAndPreservesMetadata
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockedSaveRequiresVerificationAndCancellationDoesNotWrite
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockedSaveRequiresVerificationAndCancellationDoesNotWrite
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=verifiedSaveClosesWhenAlreadyLockedMainSessionIsLockedAgain
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=verifiedSaveClosesWhenAlreadyLockedMainSessionIsLockedAgain
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=saveReviewUpdatesChosenEntryAndPreservesNotesAndSibling
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=saveReviewUpdatesChosenEntryAndPreservesNotesAndSibling
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 33.396
+
+OK (6 tests)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== fdroid-compat-off.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest:
+INSTRUMENTATION_STATUS: test=frameworkSavesTheNewPasswordAfterChangeFormCommit
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=frameworkSavesTheNewPasswordAfterChangeFormCommit
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=saveReviewUpdatesAnExtraProjectAccountAndPreservesMetadata
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=saveReviewUpdatesAnExtraProjectAccountAndPreservesMetadata
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockedSaveRequiresVerificationAndCancellationDoesNotWrite
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockedSaveRequiresVerificationAndCancellationDoesNotWrite
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=verifiedSaveClosesWhenAlreadyLockedMainSessionIsLockedAgain
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=verifiedSaveClosesWhenAlreadyLockedMainSessionIsLockedAgain
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=saveReviewUpdatesChosenEntryAndPreservesNotesAndSibling
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=saveReviewUpdatesChosenEntryAndPreservesNotesAndSibling
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 30.707
+
+OK (6 tests)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== fdroid-toggle-ui-zh.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.HyperOsSaveCompatibilitySettingsTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.HyperOsSaveCompatibilitySettingsTest:
+INSTRUMENTATION_STATUS: test=compatibilityCanBeEnabledAndDisabledFromSaveSettings
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.HyperOsSaveCompatibilitySettingsTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=compatibilityCanBeEnabledAndDisabledFromSaveSettings
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 3.964
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== fdroid-toggle-ui-en.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.HyperOsSaveCompatibilitySettingsTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.HyperOsSaveCompatibilitySettingsTest:
+INSTRUMENTATION_STATUS: test=compatibilityCanBeEnabledAndDisabledFromSaveSettings
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.HyperOsSaveCompatibilitySettingsTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=compatibilityCanBeEnabledAndDisabledFromSaveSettings
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 3.921
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== fdroid-compat-cold.txt ===
+Application process absent before form; no active instrumentation; no Monica activity opened.
+Gboard selected; Android autofill service enabled.
+Real Android save prompt appeared after form submission.
+One system Save tap opened AutofillSaveTransparentActivity directly; locked vault shows identity verification.
+Original master-password verification reached the save editor. No intermediate launcher sheet; editor Save was not tapped.
+PASS

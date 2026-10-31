@@ -1,0 +1,9 @@
+Ordinary 1.0.323 release APK: R8 maps RuntimeDiagnostics to te.v.
+APK Analyzer confirms the retained Log.println call and structured diagnostic strings:
+    const-string v1, "MonicaDiag"
+    invoke-static {p1, v1, v2}, Landroid/util/Log;->println(ILjava/lang/String;Ljava/lang/String;)I
+    const-string v2, "MonicaDiag session="
+    const-string v2, "event=data_read_failure format="
+    const-string v2, "event=app_start version=1.0.323-26103012-18 code=12 git=09b7140fb6 build=2026-10-30 09:22:28 CST api="
+    const-string v11, "event=previous_exit reason="
+    const-string v2, "event=previous_exit_unavailable type="

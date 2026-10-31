@@ -3466,6 +3466,127 @@ class KeePassKdbxService(
         }
     }
 
+    /** Like KeePassDX's merge-current command: reread this source with the open session's key. */
+    internal suspend fun synchronizeCurrentNativeDatabase(databaseId: Long, expectedRevision: String): Int =
+        withContext(Dispatchers.IO) {
+            withRemoteDatabaseLocks(databaseId) {
+                // Do not call loadDatabase here: its expiry/signature check can discard the
+                // very in-memory version that must be merged with another client's write.
+                val previous = synchronized(loadedDatabaseCache) { loadedDatabaseCache[databaseId] }
+                    ?: error("KeePass database is locked")
+                val loaded = previous.loaded
+                val registration = requireNotNull(dao.getDatabaseById(databaseId))
+                val lockVersion = nativeLockVersions.value[databaseId] ?: 0L
+                assertNativeRevision(expectedRevision, loaded.sourceRevision.sha256)
+                suspend fun requireCurrentSession() {
+                    accessPolicy.requireWritable(databaseId)
+                    check(sameNativeSourceConfiguration(registration, requireNotNull(dao.getDatabaseById(databaseId))) &&
+                        sameNativeSourceConfiguration(registration, loaded.database)) { "KeePass source configuration changed" }
+                    synchronized(loadedDatabaseCache) {
+                        check(loadedDatabaseCache[databaseId] === previous &&
+                            takagi.ru.monica.security.SessionManager.isUnlocked.value &&
+                            (nativeLockVersions.value[databaseId] ?: 0L) == lockVersion) { "KeePass session changed during merge" }
+                    }
+                }
+                requireCurrentSession()
+                val remoteDb = PasswordDatabase.getDatabase(context)
+                val remoteSource = if (registration.isRemoteSource()) {
+                    requireNotNull(remoteDb.keepassRemoteSourceDao().getSourceById(requireNotNull(registration.sourceId)))
+                } else null
+                val fileSource = remoteSource?.let { createRemoteFileSource(registration, it) }
+                val stat = fileSource?.stat()
+                val remoteVersion = stat?.let {
+                    requireNotNull(it.etag ?: it.versionToken) { "Remote version information is unavailable" }
+                }
+                openDatabaseStreamSource(registration).use { localSource ->
+                    if (fileSource != null && localSource.revision != loaded.sourceRevision) {
+                        throw KeePassSourceChangedException("KeePass working copy changed before remote merge")
+                    }
+                    val remoteBytes = fileSource?.read()
+                    if (fileSource != null) {
+                        val after = fileSource.stat()
+                        check((after.etag ?: after.versionToken) == remoteVersion) { "Remote source changed while reading" }
+                    }
+                    requirePreflightAllowed(KeePassWritePreflight.evaluateRuntime(
+                        currentDatabaseBytes = loaded.sourceRevision.sizeBytes,
+                        incomingPayloadBytes = remoteBytes?.size?.toLong() ?: localSource.revision.sizeBytes))
+                    val incoming = if (remoteBytes != null) {
+                        decodeDatabase(remoteBytes, loaded.credentials, sourceName = "merge-current-remote")
+                    } else {
+                        decodeDatabase(input = localSource.openStream(), credentials = loaded.credentials,
+                            header = localSource.header, sourceName = "merge-current")
+                    }
+                    val merged = takagi.ru.monica.keepass.KeePassDatabaseSynchronizer.merge(loaded.keePassDatabase, incoming)
+                    encodeDatabaseArtifact(merged.database).use { artifact ->
+                        decodeDatabase(input = artifact.file.inputStream(), credentials = loaded.credentials,
+                            header = readFileHeader(artifact.file))
+                        requireCurrentSession()
+                        openDatabaseStreamSource(registration).use { current ->
+                            if (current.revision != localSource.revision) throw KeePassSourceChangedException("KeePass source changed during merge")
+                            current.openStream().use { recoveryStore.create(databaseId, it) }
+                        }
+                        // Keep both sides recoverable when the file no longer holds our baseline.
+                        if (localSource.revision != loaded.sourceRevision) {
+                            encodeDatabaseArtifact(loaded.keePassDatabase).use { baseline ->
+                                baseline.file.inputStream().use { recoveryStore.create(databaseId, it) }
+                            }
+                        }
+                        if (remoteBytes != null) recoveryStore.create(databaseId, remoteBytes)
+                        requireCurrentSession()
+                        openDatabaseStreamSource(registration).use { current ->
+                            if (current.revision != localSource.revision) throw KeePassSourceChangedException("KeePass source changed before merge write")
+                        }
+                        if (fileSource != null) {
+                            check(remoteDb.keepassRemoteSourceDao().getSourceById(requireNotNull(registration.sourceId)) == remoteSource) {
+                                "KeePass remote source configuration changed"
+                            }
+                            val pendingRepository = keePassPendingChangeRepository()
+                            val pendingIds = pendingRepository.getUnfinishedChangesByDatabase(databaseId).map { it.id }
+                            val bytes = artifact.readBytes()
+                            val writeResult = fileSource.write(bytes, expectedVersion = requireNotNull(remoteVersion))
+                            val verified = verifyRemoteKdbxWrite(database = registration, fileSource = fileSource,
+                                credentials = loaded.credentials, expectedBytes = bytes,
+                                expectedRevision = artifact.revision, sourceLabel = "merge-current")
+                            // The upload may have finished while locking. Keep disk/cache sync
+                            // bookkeeping, but never restore an unlocked in-memory session.
+                            withContext(NonCancellable) {
+                                writeInternalRelative(requireNotNull(registration.workingCopyPath), verified.bytes)
+                                writeInternalRelative(requireNotNull(registration.cacheCopyPath), verified.bytes)
+                                remoteDb.withTransaction {
+                                    updateOneDriveRemoteSourceBindingIfNeeded(registration, writeResult)
+                                    RemoteKeePassSyncService(dao, remoteDb.keepassRemoteSourceDao(),
+                                        remoteDb.keepassRemoteSyncStateDao(), strings = strings).markSynchronized(
+                                        databaseId, versionToken = writeResult.versionToken, etag = writeResult.etag,
+                                        baseHash = verified.hash, workingHash = verified.hash)
+                                    pendingRepository.settleConflictChanges(databaseId, pendingIds, discardLocalChanges = false)
+                                }
+                            }
+                        } else if (registration.resolvedActiveStorageLocation() == KeePassStorageLocation.INTERNAL) {
+                            writeInternal(registration, artifact.file)
+                        } else {
+                            writeExternal(registration, artifact.file, artifact.revision, localSource.revision)
+                        }
+                        requireCurrentSession()
+                        synchronized(loadedDatabaseCache) {
+                            check(loadedDatabaseCache[databaseId] === previous &&
+                                takagi.ru.monica.security.SessionManager.isUnlocked.value &&
+                                (nativeLockVersions.value[databaseId] ?: 0L) == lockVersion) { "KeePass session changed after merge" }
+                            cachePersistedDatabase(registration, loaded.credentials, merged.database,
+                                artifact.revision, null, null)
+                        }
+                    }
+                    merged.equalTimeConflicts
+                }
+            }
+        }
+
+    private fun sameNativeSourceConfiguration(a: LocalKeePassDatabase, b: LocalKeePassDatabase): Boolean =
+        a.filePath == b.filePath && a.storageLocation == b.storageLocation && a.sourceType == b.sourceType &&
+            a.sourceId == b.sourceId && a.workingCopyPath == b.workingCopyPath && a.cacheCopyPath == b.cacheCopyPath &&
+            a.keyFileUri == b.keyFileUri && a.keyFileInternalPath == b.keyFileInternalPath &&
+            a.keyFileFingerprint == b.keyFileFingerprint && a.encryptedPassword == b.encryptedPassword
+
+
     internal suspend fun synchronizeNativeDatabaseFrom(
         databaseId: Long, sourceUri: Uri, sourcePassword: String, sourceKeyFileUri: Uri?, expectedRevision: String,
     ): Int = withContext(Dispatchers.IO) {

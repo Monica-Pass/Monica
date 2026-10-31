@@ -1,5 +1,7 @@
 package takagi.ru.monica.ui
 
+import takagi.ru.monica.ui.password.KeePassFileActions
+
 import takagi.ru.monica.ui.screens.NativeTokenListUi
 import takagi.ru.monica.ui.screens.NativeTokenFilterChip
 import takagi.ru.monica.ui.screens.rememberNativeTokenList
@@ -54,6 +56,7 @@ internal fun PasswordListMainPane(
     onQuickStatusDeleteClick: (() -> Unit)? = null,
     quickStatusBitwardenSyncState: QuickStatusBitwardenSyncState? = null,
     quickStatusKeePassSyncState: QuickStatusKeePassSyncState? = null,
+    keePassFileActions: KeePassFileActions? = null,
     currentFilter: CategoryFilter,
     onNavigateFilter: (CategoryFilter) -> Unit,
     shouldGateInitialPasswordFirstFrame: Boolean,
@@ -131,7 +134,8 @@ internal fun PasswordListMainPane(
                     deleteState = quickStatusDeleteState,
                     onDeleteStatusClick = onQuickStatusDeleteClick,
                     bitwardenSyncState = quickStatusBitwardenSyncState,
-                    keePassSyncState = quickStatusKeePassSyncState
+                    keePassSyncState = quickStatusKeePassSyncState,
+                    keePassFileActions = keePassFileActions
                 )
             }
 

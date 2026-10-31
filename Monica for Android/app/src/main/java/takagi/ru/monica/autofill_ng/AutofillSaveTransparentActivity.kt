@@ -80,9 +80,23 @@ class AutofillSaveTransparentActivity : androidx.fragment.app.FragmentActivity()
     private lateinit var autofillPreferences: AutofillPreferences
     @Volatile
     private var didSave = false
+    private var saveRequestId = "direct"
+
+    private fun recordSaveEvent(event: AutofillSaveDiagnostics.Event) {
+        AutofillSaveDiagnostics.record(this, saveRequestId, event,
+            compatibilityMode = intent.getBooleanExtra(AutofillSaveLaunch.EXTRA_COMPATIBILITY_MODE, false))
+    }
+
+    private fun closeSave(event: AutofillSaveDiagnostics.Event) {
+        recordSaveEvent(event)
+        finish()
+    }
 
     override fun onNewIntent(intent: android.content.Intent) {
         super.onNewIntent(intent)
+        AutofillSaveDiagnostics.record(this,
+            intent.getStringExtra(AutofillSaveLaunch.EXTRA_REQUEST_ID).orEmpty(),
+            AutofillSaveDiagnostics.Event.ACTIVITY_NEW_INTENT)
         setIntent(intent)
         recreate()
     }
@@ -94,6 +108,9 @@ class AutofillSaveTransparentActivity : androidx.fragment.app.FragmentActivity()
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        saveRequestId = intent.getStringExtra(AutofillSaveLaunch.EXTRA_REQUEST_ID).orEmpty()
+        takagi.ru.monica.autofill_ng.core.AutofillLogger.initialize(applicationContext)
+        recordSaveEvent(AutofillSaveDiagnostics.Event.ACTIVITY_CREATED)
 
         autofillPreferences = AutofillPreferences(applicationContext)
         val settingsManager = SettingsManager(applicationContext)
@@ -133,7 +150,7 @@ class AutofillSaveTransparentActivity : androidx.fragment.app.FragmentActivity()
         setContent {
             val lockGeneration by SessionManager.lockGeneration.collectAsState()
             LaunchedEffect(lockGeneration) {
-                if (lockGeneration != lockGenerationAtOpen) finish()
+                if (lockGeneration != lockGenerationAtOpen) closeSave(AutofillSaveDiagnostics.Event.LOCK_CHANGED)
             }
             val unlocked by SessionManager.isUnlocked.collectAsState()
             var authorized by remember { mutableStateOf(unlocked || !securityManager.isMasterPasswordSet()) }
@@ -151,19 +168,19 @@ class AutofillSaveTransparentActivity : androidx.fragment.app.FragmentActivity()
                             title = getString(R.string.autofill_auth_title), subtitle = getString(R.string.autofill_auth_subtitle),
                             description = getString(R.string.autofill_auth_description), negativeButtonText = getString(R.string.use_password),
                             onSuccess = { if (securityManager.unlockVaultWithBiometric()) authorized = true },
-                            onError = { _, _ -> }, onCancel = { finish() }, onNegativeButton = { })
+                            onError = { _, _ -> }, onCancel = { closeSave(AutofillSaveDiagnostics.Event.AUTH_CANCELED) }, onNegativeButton = { })
                     }
                 }
             }
             LaunchedEffect(unlocked) {
-                if (wasUnlocked && !unlocked) finish()
+                if (wasUnlocked && !unlocked) closeSave(AutofillSaveDiagnostics.Event.SESSION_LOCKED)
                 if (unlocked) wasUnlocked = true
             }
             // Never enumerate saved accounts or open their editor while the vault is locked.
             DisposableEffect(Unit) {
                 val receiver = object : android.content.BroadcastReceiver() {
                     override fun onReceive(context: Context?, intent: android.content.Intent?) {
-                        if (intent?.action == android.content.Intent.ACTION_SCREEN_OFF) finish()
+                        if (intent?.action == android.content.Intent.ACTION_SCREEN_OFF) closeSave(AutofillSaveDiagnostics.Event.SCREEN_OFF)
                     }
                 }
                 androidx.core.content.ContextCompat.registerReceiver(this@AutofillSaveTransparentActivity, receiver,
@@ -171,6 +188,7 @@ class AutofillSaveTransparentActivity : androidx.fragment.app.FragmentActivity()
                 onDispose { unregisterReceiver(receiver) }
             }
             if (!authorized) {
+                LaunchedEffect(Unit) { recordSaveEvent(AutofillSaveDiagnostics.Event.AUTH_READY) }
                 MonicaPasswordDialogAuthScreen(
                     settingsFlow = settingsManager.settingsFlow,
                     appName = getString(R.string.app_name), title = getString(R.string.verify_identity),
@@ -180,7 +198,7 @@ class AutofillSaveTransparentActivity : androidx.fragment.app.FragmentActivity()
                     unsupportedCharacterError = getString(R.string.error_password_contains_unsupported_characters),
                     minLengthError = getString(R.string.error_password_too_short), incorrectError = getString(R.string.password_incorrect),
                     verifyPassword = { securityManager.unlockVaultWithPassword(it) },
-                    onSuccess = { authorized = true }, onCancel = { finish() },
+                    onSuccess = { authorized = true }, onCancel = { closeSave(AutofillSaveDiagnostics.Event.AUTH_CANCELED) },
                 )
                 return@setContent
             }
@@ -321,14 +339,16 @@ class AutofillSaveTransparentActivity : androidx.fragment.app.FragmentActivity()
                     return@MonicaTheme
                 }
                 if (matches.isNotEmpty() && !reviewed) {
+                    LaunchedEffect(Unit) { recordSaveEvent(AutofillSaveDiagnostics.Event.REVIEW_READY) }
                     AutofillSaveReview(matches, listOf(website.ifBlank { appName }, username).filter { it.isNotBlank() }.joinToString(" · "),
-                        onSelect = { updateId = it; reviewed = true }, onCancel = { finish() })
+                        onSelect = { updateId = it; reviewed = true }, onCancel = { closeSave(AutofillSaveDiagnostics.Event.REVIEW_CANCELED) })
                     return@MonicaTheme
                 }
                 Column(Modifier.fillMaxSize()) {
                     Box(Modifier.weight(1f)) {
                     val resolvedInitialTarget = initialTarget
                     if (resolvedInitialTarget != null) {
+                        LaunchedEffect(Unit) { recordSaveEvent(AutofillSaveDiagnostics.Event.EDITOR_READY) }
                         AddEditPasswordScreen(
                             viewModel = passwordViewModel,
                             localKeePassViewModel = localKeePassViewModel,
@@ -348,6 +368,7 @@ class AutofillSaveTransparentActivity : androidx.fragment.app.FragmentActivity()
                             initialMdbxFolderId = resolvedInitialTarget.mdbxFolderId,
                             onSaveCompleted = { savedId ->
                                 didSave = true
+                                recordSaveEvent(AutofillSaveDiagnostics.Event.SAVE_COMPLETED)
                                 MdbxDiagLogger.append(
                                     "[MDBX][autofill-save-complete] source=transparent target=${resolvedInitialTarget.diagnosticLabel()} roomId=${savedId ?: "-"}"
                                 )
@@ -357,7 +378,7 @@ class AutofillSaveTransparentActivity : androidx.fragment.app.FragmentActivity()
                                 if (!didSave) {
                                     setResult(Activity.RESULT_CANCELED)
                                 }
-                                finish()
+                                closeSave(AutofillSaveDiagnostics.Event.EDITOR_CLOSED)
                             },
                         )
                     }
@@ -387,6 +408,16 @@ class AutofillSaveTransparentActivity : androidx.fragment.app.FragmentActivity()
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        recordSaveEvent(AutofillSaveDiagnostics.Event.ACTIVITY_RESUMED)
+    }
+
+    override fun onDestroy() {
+        recordSaveEvent(AutofillSaveDiagnostics.Event.ACTIVITY_DESTROYED)
+        super.onDestroy()
+    }
+
     private fun blockCurrentTarget(packageName: String, website: String) {
         lifecycleScope.launch {
             runCatching {
@@ -396,7 +427,7 @@ class AutofillSaveTransparentActivity : androidx.fragment.app.FragmentActivity()
                 )
             }
             setResult(Activity.RESULT_CANCELED)
-            finish()
+            closeSave(AutofillSaveDiagnostics.Event.TARGET_BLOCKED)
         }
     }
 

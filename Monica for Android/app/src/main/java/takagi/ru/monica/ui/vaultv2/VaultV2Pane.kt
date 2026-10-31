@@ -213,7 +213,6 @@ import takagi.ru.monica.ui.password.CommonPasswordTopActionsMenuItems
 import takagi.ru.monica.ui.password.KeepassRefreshTopActionsMenuItem
 import takagi.ru.monica.ui.password.rememberKeePassFileActions
 import takagi.ru.monica.ui.password.KeePassFileMenuItems
-import takagi.ru.monica.ui.password.KeePassFileStatus
 import takagi.ru.monica.ui.password.KeepassNativeManagerTopActionsMenuItem
 import takagi.ru.monica.ui.password.MdbxCommitHistoryTopActionsMenuItem
 import takagi.ru.monica.ui.password.MdbxCreateSnapshotTopActionsMenuItem
@@ -3785,10 +3784,10 @@ fun VaultV2Pane(
 					transferState = quickStatusTransferState,
 					deleteState = quickStatusDeleteState,
 					onNavigateFilter = navigateCategoryFilter,
+					keePassFileActions = keePassFileActions,
 				)
 			}
 
-            keePassFileActions?.let { KeePassFileStatus(it) }
 			val contentPullOffset = pullAction.currentOffset.toInt()
 			val listInteractionModifier = Modifier
 				.offset { IntOffset(x = 0, y = contentPullOffset) }
@@ -4879,7 +4878,7 @@ private fun VaultV2List(
 }
 
 @Composable
-private fun VaultV2QuickStatusBar(
+internal fun VaultV2QuickStatusBar(
 	dateSort: Boolean,
 	pathLabel: String,
 	currentSectionLabel: String,
@@ -4889,12 +4888,14 @@ private fun VaultV2QuickStatusBar(
 	transferState: PasswordBatchTransferGlobalProgressState?,
 	deleteState: PasswordBatchDeleteGlobalProgressState?,
 	onNavigateFilter: (CategoryFilter) -> Unit,
+	keePassFileActions: takagi.ru.monica.ui.password.KeePassFileActions?,
 ) {
+	if (keePassFileActions != null && !keePassFileActions.available) return
 	Box(Modifier.fillMaxWidth().animateContentSize(
 		animationSpec = tween(260, easing = FastOutSlowInEasing),
 		alignment = Alignment.TopStart
 	)) {
-		if (transferState != null || deleteState != null) {
+		if (transferState != null || deleteState != null || keePassFileActions?.showStatus == true) {
 			PasswordQuickFolderBreadcrumbBanner(
 				breadcrumbs = breadcrumbs,
 				currentFilter = currentFilter,
@@ -4903,6 +4904,7 @@ private fun VaultV2QuickStatusBar(
 				transferState = transferState,
 				deleteState = deleteState,
 				animateHeight = false,
+				keePassFileActions = keePassFileActions,
 			)
 		} else {
 		QuickStatusBar(

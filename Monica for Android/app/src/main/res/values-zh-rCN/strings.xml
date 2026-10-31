@@ -63,4 +63,15 @@
     <string name="auto_focus_search_on_startup_desc">解锁后进入主页面时展开搜索并显示键盘。</string>
     <string name="ime_key_vibration_title">按键震动</string>
     <string name="ime_key_vibration_description">使用 Monica 内置键盘时，每按一次按键震动一下。</string>
+    <string name="autofill_hyperos_save_compatibility">HyperOS 1 保存兼容模式</string>
+    <string name="autofill_hyperos_save_compatibility_desc">点击系统“保存”后先显示悬浮面板，再点“继续保存”进入 Monica。需允许显示在其他应用上层。</string>
+    <string name="autofill_save_overlay_title">保存到 Monica</string>
+    <string name="autofill_save_overlay_body">继续验证身份并检查要保存的密码。关闭面板不会保存任何内容。</string>
+    <string name="autofill_save_overlay_continue">继续保存</string>
+    <string name="autofill_save_overlay_permission_action">允许显示悬浮窗</string>
+    <string name="autofill_save_overlay_permission_required">请在 HyperOS 1 保存兼容模式设置中允许 Monica 显示悬浮窗，然后重新保存。</string>
+    <string name="export_data_description">导出 ZIP 备份、KDBX 或 Steam maFile</string>
+    <string name="settings_export_data_description">导出 ZIP 备份、KDBX 或 Steam maFile</string>
+    <string name="import_data_description">从 ZIP、KDBX、CSV 等支持的文件导入</string>
+    <string name="import_data_supported_formats">从 ZIP、KDBX、CSV 等支持的文件导入</string>
 </resources>

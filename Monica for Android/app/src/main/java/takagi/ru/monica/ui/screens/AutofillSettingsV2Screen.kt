@@ -131,6 +131,7 @@ fun AutofillSettingsV2Screen(
     val subdomainMatch by preferences.isBitwardenSubdomainMatchEnabled.collectAsState(initial = true)
     val domainMatchStrategy by preferences.domainMatchStrategy.collectAsState(initial = DomainMatchStrategy.BASE_DOMAIN)
     val savePromptEnabled by preferences.isRequestSaveDataEnabled.collectAsState(initial = true)
+    val hyperOsSaveCompatibility by preferences.isHyperOsSaveCompatibilityEnabled.collectAsState(initial = false)
     val autoUpdateDuplicatePasswordsEnabled by preferences.isAutoUpdateDuplicatePasswordsEnabled.collectAsState(initial = false)
     val showSaveNotificationEnabled by preferences.isShowSaveNotificationEnabled.collectAsState(initial = true)
     val smartTitleGenerationEnabled by preferences.isSmartTitleGenerationEnabled.collectAsState(initial = true)
@@ -673,6 +674,16 @@ fun AutofillSettingsV2Screen(
                         scope.launch { preferences.setRequestSaveDataEnabled(enabled) }
                     },
                 )
+                Box(Modifier.testTag("hyperos_save_compatibility_setting")) { SwitchSettingItem(
+                    icon = Icons.Outlined.Settings,
+                    title = stringResource(R.string.autofill_hyperos_save_compatibility),
+                    subtitle = stringResource(R.string.autofill_hyperos_save_compatibility_desc),
+                    checked = hyperOsSaveCompatibility,
+                    onCheckedChange = { enabled ->
+                        scope.launch { preferences.setHyperOsSaveCompatibilityEnabled(enabled) }
+                    },
+                ) }
+                takagi.ru.monica.autofill_ng.HyperOsSaveOverlayPermission(hyperOsSaveCompatibility)
                 SwitchSettingItem(
                     icon = Icons.Outlined.Refresh,
                     title = stringResource(R.string.autofill_save_update_duplicate),

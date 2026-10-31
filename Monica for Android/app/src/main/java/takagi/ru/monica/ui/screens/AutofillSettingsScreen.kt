@@ -91,6 +91,7 @@ fun AutofillSettingsScreen(
     val manualSelectionEnabled by autofillPreferences.isManualSelectionEnabled.collectAsState(initial = true)
     val biometricQuickFillEnabled by autofillPreferences.isBiometricQuickFillEnabled.collectAsState(initial = true)
     val requestSaveDataEnabled by autofillPreferences.isRequestSaveDataEnabled.collectAsState(initial = true)
+    val hyperOsSaveCompatibility by autofillPreferences.isHyperOsSaveCompatibilityEnabled.collectAsState(initial = false)
     val autoSaveAppInfoEnabled by autofillPreferences.isAutoSaveAppInfoEnabled.collectAsState(initial = true)
     val autoSaveWebsiteInfoEnabled by autofillPreferences.isAutoSaveWebsiteInfoEnabled.collectAsState(initial = true)
     val autoUpdateDuplicatePasswordsEnabled by autofillPreferences.isAutoUpdateDuplicatePasswordsEnabled.collectAsState(initial = false)
@@ -420,6 +421,16 @@ fun AutofillSettingsScreen(
                         }
                     }
                 )
+                Box(Modifier.testTag("hyperos_save_compatibility_setting")) { SwitchSettingItem(
+                    icon = Icons.Outlined.Settings,
+                    title = stringResource(R.string.autofill_hyperos_save_compatibility),
+                    subtitle = stringResource(R.string.autofill_hyperos_save_compatibility_desc),
+                    checked = hyperOsSaveCompatibility,
+                    onCheckedChange = { enabled ->
+                        scope.launch { autofillPreferences.setHyperOsSaveCompatibilityEnabled(enabled) }
+                    },
+                ) }
+                takagi.ru.monica.autofill_ng.HyperOsSaveOverlayPermission(hyperOsSaveCompatibility)
                 
 
                 SwitchSettingItem(

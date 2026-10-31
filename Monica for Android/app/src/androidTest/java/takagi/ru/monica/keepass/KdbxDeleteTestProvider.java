@@ -27,6 +27,8 @@ public final class KdbxDeleteTestProvider extends ContentProvider {
     private final ConcurrentHashMap<String, Boolean> blocked = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, byte[]> takeover = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, Boolean> takeoverReady = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, AtomicInteger> replaceReadCountdown = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, byte[]> readReplacement = new ConcurrentHashMap<>();
     private File file(Uri uri) {
         String name = uri.getLastPathSegment();
         if (name == null || !name.matches("delete-[a-f0-9-]+\\.kdbx")) throw new IllegalArgumentException("Fixture only");
@@ -57,6 +59,15 @@ public final class KdbxDeleteTestProvider extends ContentProvider {
     }
     @Override public ParcelFileDescriptor openFile(Uri uri, String mode) throws FileNotFoundException {
         File f = file(uri);
+        if (!mode.contains("w")) {
+            AtomicInteger countdown = replaceReadCountdown.get(f.getName());
+            if (countdown != null && countdown.decrementAndGet() == 0) {
+                replaceReadCountdown.remove(f.getName());
+                byte[] replacement = readReplacement.remove(f.getName());
+                try (java.io.FileOutputStream output = new java.io.FileOutputStream(f)) { output.write(replacement); }
+                catch (java.io.IOException error) { throw new FileNotFoundException("Fixture replacement failed"); }
+            }
+        }
         if (mode.contains("t")) {
             commitStarted.put(f.getName(), android.os.SystemClock.elapsedRealtime());
             commits.computeIfAbsent(f.getName(), k -> new AtomicInteger()).incrementAndGet();
@@ -90,6 +101,10 @@ public final class KdbxDeleteTestProvider extends ContentProvider {
     @Override public Bundle call(String method, String arg, Bundle extras) {
         File f = file(Uri.parse(arg));
         switch (method) {
+            case "replace-on-read":
+                readReplacement.put(f.getName(), extras.getByteArray("bytes"));
+                replaceReadCountdown.put(f.getName(), new AtomicInteger(extras.getInt("read", 2)));
+                break;
             case "arm-other-writer": takeover.put(f.getName(), extras.getByteArray("bytes")); break;
             case "deny-write": denied.put(f.getName(), true); break;
             case "block-next-write": barriers.put(f.getName(), new java.util.concurrent.CountDownLatch(1)); break;

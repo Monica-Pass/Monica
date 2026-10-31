@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_config_backup_hint">Gồm cài đặt ứng dụng, tài khoản thường dùng, quy tắc tự điền, câu hỏi bảo mật và cấu hình WebDAV/Bitwarden. Cần mã hóa.</string>
+    <string name="zip_config_encryption_required">Mã hóa bản sao ZIP để đưa cấu hình Monica vào.</string>
+    <string name="zip_config_backup_failed">Không thể sao lưu đầy đủ cấu hình Monica đã chọn. Chưa xuất bản sao lưu.</string>
+    <string name="zip_restore_config">Khôi phục cấu hình Monica</string>
+    <string name="zip_restore_config_hint">Khôi phục cả cấu hình nếu có trong bản sao. Bỏ chọn để giữ cài đặt cục bộ. Giữ nguyên kết nối WebDAV hiện có; kho Bitwarden cần xác minh lại.</string>
+</resources>

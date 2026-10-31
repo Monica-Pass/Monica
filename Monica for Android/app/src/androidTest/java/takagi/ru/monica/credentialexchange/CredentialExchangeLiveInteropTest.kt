@@ -44,7 +44,7 @@ class CredentialExchangeLiveInteropTest {
                     ImportDataScreen(onNavigateBack = {}, onImport = { Result.success(0) },
                         onImportExchange = { writes++; Result.success(2) },
                         onImportAegis = { Result.success(0) }, onImportEncryptedAegis = { _, _ -> Result.success(0) },
-                        onImportSteamMaFile = { Result.success(0) }, onImportZip = { _, _ -> Result.success(0) })
+                        onImportSteamMaFile = { Result.success(0) }, onImportZip = { _, _, _ -> Result.success(0) })
                 }
             }
             compose.onNodeWithText(context.getString(R.string.exchange_choose_app)).performClick()

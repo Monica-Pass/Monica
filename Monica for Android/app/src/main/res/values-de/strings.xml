@@ -674,7 +674,7 @@
     <string name="import_data_button">Importieren</string>
     <string name="import_data_success">Daten erfolgreich importiert</string>
     <string name="import_data_error">Import fehlgeschlagen</string>
-    <string name="import_data_supported_formats">Unterstützt von der App exportierte CSV-Dateien und Alipay-Transaktionsdetails</string>
+    <string name="import_data_supported_formats">ZIP, KDBX, CSV und andere unterstützte Dateien importieren</string>
     <string name="import_data_select_type">Importtyp auswählen</string>
     <string name="import_data_type_normal">App-Daten</string>
     <string name="import_data_type_alipay">Alipay-Rechnung</string>
@@ -1325,7 +1325,7 @@
     <string name="settings_bottom_sheet_title">Bottom Sheet-Modus</string>
     <string name="settings_bottom_sheet_description">Pullup-Schubladennavigation aktivieren</string>
     <string name="settings_export_data">Daten exportieren</string>
-    <string name="settings_export_data_description">Als CSV-Datei lokal exportieren</string>
+    <string name="settings_export_data_description">ZIP-Sicherungen, KDBX oder Steam maFile exportieren</string>
     <string name="settings_import_data">Daten importieren</string>
     <string name="settings_import_data_description">Aus Sicherungsdatei wiederherstellen</string>
     <string name="settings_version_info">Versionsinformationen</string>
@@ -1659,9 +1659,9 @@
     <!-- Data Management in Settings -->
     <string name="data_management">Datenverwaltung</string>
     <string name="export_data">Daten exportieren</string>
-    <string name="export_data_description">Alle Daten in eine CSV-Datei exportieren</string>
+    <string name="export_data_description">ZIP-Sicherungen, KDBX oder Steam maFile exportieren</string>
     <string name="import_data">Daten importieren</string>
-    <string name="import_data_description">Daten aus einer CSV-Datei importieren</string>
+    <string name="import_data_description">ZIP, KDBX, CSV und andere unterstützte Dateien importieren</string>
 
     <!-- WebDAV Backup -->
     <string name="webdav_backup">WebDAV-Sicherung</string>
@@ -4682,4 +4682,11 @@
     <string name="url_match_limited_context">Host schließt andere Subdomains aus. Liegt nur der Hostname vor, werden Protokoll, Pfad und Abfrage nicht abgeleitet. Exakte URLs und URL-Präfixe benötigen die vollständige URL. Regex verwendet RE2.</string>
     <string name="url_match_regex_error">Zuerst die URL in einen gültigen regulären RE2-Ausdruck ändern.</string>
     <string name="url_match_unreadable">URL-Abgleichdaten sind nicht lesbar. Bestehende Daten bleiben erhalten; Speichern ist deaktiviert.</string>
+    <string name="autofill_hyperos_save_compatibility">Speicherkompatibilität für HyperOS 1</string>
+    <string name="autofill_hyperos_save_compatibility_desc">Nach „Speichern“ im System erscheint ein schwebendes Fenster. Mit „Weiter zum Speichern“ öffnet sich Monica. Die Anzeige über anderen Apps muss erlaubt sein.</string>
+    <string name="autofill_save_overlay_title">In Monica speichern</string>
+    <string name="autofill_save_overlay_body">Bestätigen Sie Ihre Identität und prüfen Sie das Passwort. Beim Schließen wird nichts gespeichert.</string>
+    <string name="autofill_save_overlay_continue">Weiter zum Speichern</string>
+    <string name="autofill_save_overlay_permission_action">Anzeige über anderen Apps erlauben</string>
+    <string name="autofill_save_overlay_permission_required">Erlauben Sie Monica in den Einstellungen zum HyperOS-1-Speichermodus die Anzeige über anderen Apps und versuchen Sie es erneut.</string>
 </resources>

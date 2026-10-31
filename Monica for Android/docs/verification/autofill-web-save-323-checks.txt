@@ -1,0 +1,57 @@
+Web-save compatibility checks, 2026-10-31
+API32 / WebView 155.0.8059.43 / Gboard / synthetic isolated user
+
+main JVM: 153 tests, zero failures/errors/skips
+  takagi.ru.monica.autofill_ng.AutofillPasswordPurposeResponseTest: 14 tests; timestamp=2026-10-31T07:53:15
+  takagi.ru.monica.autofill_ng.AutofillSaveContextPolicyTest: 6 tests; timestamp=2026-10-31T07:53:17
+  takagi.ru.monica.autofill_ng.AutofillSaveLaunchTest: 16 tests; timestamp=2026-10-31T07:53:17
+  takagi.ru.monica.autofill_ng.AutofillSaveValuePolicyTest: 5 tests; timestamp=2026-10-31T07:53:18
+  takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest: 106 tests; timestamp=2026-10-31T07:53:18
+  takagi.ru.monica.autofill_ng.AutofillWebSaveRegressionTest: 6 tests; timestamp=2026-10-31T07:53:04
+  APK version=1.0.323-26103112-96 code=12
+  main APK SHA256=68743b3217bfd82f6496304ec8464bb1079d9675519981cfd578791833fb5ec9
+  final AndroidTest APK SHA256=a4a34ded78476e8a8805b842d86285009f78dffa05538c7496930c60293bcc66
+
+fdroid JVM: 153 tests, zero failures/errors/skips
+  takagi.ru.monica.autofill_ng.AutofillPasswordPurposeResponseTest: 14 tests; timestamp=2026-10-31T08:29:53
+  takagi.ru.monica.autofill_ng.AutofillSaveContextPolicyTest: 6 tests; timestamp=2026-10-31T08:30:52
+  takagi.ru.monica.autofill_ng.AutofillSaveLaunchTest: 16 tests; timestamp=2026-10-31T08:30:09
+  takagi.ru.monica.autofill_ng.AutofillSaveValuePolicyTest: 5 tests; timestamp=2026-10-31T08:30:53
+  takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest: 106 tests; timestamp=2026-10-31T08:30:11
+  takagi.ru.monica.autofill_ng.AutofillWebSaveRegressionTest: 6 tests; timestamp=2026-10-31T08:30:19
+  APK version=1.0.323 code=30
+  main APK SHA256=0571c927dbee828b7a668ed0e8a21113d6ba25adac69b69f11aff9ed4eaa6b54
+  final AndroidTest APK SHA256=a645259c16a0e1fce11de20bcad9c05ae4310e7d6f6575ec84abccd8c2c442fe
+
+Shared production/test files: 8
+6845b15b44a15cb73f533a424d173051e67919e1695407b11cf3a71d869ba04e  app/src/main/java/takagi/ru/monica/autofill_ng/AutofillSaveInfoPolicy.kt
+18cf118cdef8df7d6d31e75bede1e9ac0c7e03cbdc4e85b1455fa6c1f360d8f3  app/src/main/java/takagi/ru/monica/autofill_ng/MonicaAutofillServiceNg.kt
+77377ac25276c57f86fa0be0cb09e36f433dd401bb65f0c761900b68a26541d7  app/src/main/java/takagi/ru/monica/autofill_ng/builder/FillResponseBuilderNg.kt
+82ad2dbb0e00a4ac5e9f20509b9cbb41d4c9cd3d4cd8bdcffe988303b189f3a8  app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPickerActivityV2.kt
+7c2884e6573b4c21be727ed44708f58655407c90f093646691ab489fb1dcc7c2  app/src/test/java/takagi/ru/monica/autofill_ng/AutofillWebSaveRegressionTest.kt
+4d674946d5b382393902b57827908448b230e537af835f143741dfad3a5456aa  app/src/androidTest/java/takagi/ru/monica/autofill_ng/AutofillFlowInstrumentedTest.kt
+c8fabae02c342972ace2ae240a82f4038f25fd56bfb929719c7e9a666bb3acc1  app/src/androidTest/java/takagi/ru/monica/autofill_ng/fixture/AutofillFormFixtureActivity.java
+3247f70079599a2ab85d0d76f5ee7dae8bbcf4e29fb273b54ddbae634768eea3  app/src/androidTest/assets/autofill-save-fixture.html
+
+Main final ordinary device regressions: 7/7, 67.365 s.
+F-Droid mixed run: 7 ordinary regressions passed; 1 hidden-WebView probe failed, 110.505 s.
+The probe is now explicitly opt-in. Its failure has NOT been reclassified as passing.
+Final FD test rebuild changes only the diagnostic name/opt-in gate; ordinary tests are unchanged.
+Old main package: standard web login/signup passed 2/2 (27.626 s); no negative device reproduction.
+Before-fix JVM: 6 tests, 4 failures (two cases at API29/34).
+No R8 build, physical-device test, live website login, commit, push, release or APK delivery.
+
+Installed package verification before cleanup:
+takagi.ru.monica 68743b3217bfd82f6496304ec8464bb1079d9675519981cfd578791833fb5ec9
+takagi.ru.monica.test a4a34ded78476e8a8805b842d86285009f78dffa05538c7496930c60293bcc66
+takagi.ru.monica.fdroid 0571c927dbee828b7a668ed0e8a21113d6ba25adac69b69f11aff9ed4eaa6b54
+takagi.ru.monica.fdroid.test fd157837352e4a616e5c2985d94c306dba6e796046dcd4bb280b2b9cec54e5aa
+FD installed test APK is the mixed 8-test run package; final test APK only renames/gates the known failing probe.
+
+Cleanup verified:
+Returned to original user 0; removed only dedicated user 14 (Monica_WebSave323).
+Other users preserved: 0,10,11,12
+Removed only /data/local/tmp/web-save323.xml from shared device temp.
+No app-data clear, package uninstall, emulator recreation, or data-disk removal.
+Stopped only this task-started emulator-5582 (Monica_Issue136_API_32); configuration/data disk retained.
+Final git diff --check passed; new verification text whitespace checked; earlier unrelated changes preserved.

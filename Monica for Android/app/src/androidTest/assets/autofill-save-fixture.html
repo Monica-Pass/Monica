@@ -1,0 +1,13 @@
+<!doctype html>
+<html><head><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>body{font:16px sans-serif;padding:8px}h1{font-size:20px;margin:6px 0}input,button{display:block;font:inherit;margin:6px 0;padding:6px;width:85%}</style></head>
+<body><h1>__TITLE__</h1>
+<form id="credentials" onsubmit="event.preventDefault(); this.style.display='none'; document.getElementById('done').hidden=false; report();">
+<input id="username" autocomplete="username" placeholder="Username" aria-label="Username">
+<input id="password" type="password" autocomplete="__PASSWORD_HINT__" placeholder="__PASSWORD_LABEL__" aria-label="__PASSWORD_LABEL__">
+__CONFIRMATION__
+<button type="submit">Submit registration fixture</button></form>
+<p id="done" hidden>Form completed</p>
+<script>function report(){const u=document.getElementById('username'),p=document.getElementById('password'),c=document.getElementById('confirmation');
+Fixture.reportSave(u.value==='new-synthetic-account'&&p.value==='Registration-synthetic-42!'&&(!c||c.value===p.value),document.getElementById('credentials').style.display==='none')}
+document.addEventListener('input',report);document.addEventListener('change',report);report();</script></body></html>

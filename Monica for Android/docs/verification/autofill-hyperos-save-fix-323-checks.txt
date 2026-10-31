@@ -1,0 +1,183 @@
+=== final-checks.txt ===
+11 shared production/test files are byte-identical; 2 new resource keys match in all 14 configurations. Other existing flavor resource differences preserved.
+6a8338680c279d6730b965a1344c531614a00be949dabdebd74ee502d1d25a79  app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPreferences.kt
+8c1f8ed523a2a59f84880d111814610e0304dae4efc8a12ed855257e6efc1917  app/src/main/java/takagi/ru/monica/autofill_ng/AutofillSaveLaunch.kt
+7ea4f186ec037c64bbe403046fac1b12681075622fc879a28deb36b187f845a3  app/src/main/java/takagi/ru/monica/autofill_ng/AutofillSaveDiagnostics.kt
+3d5bd87fcf451b157c81aa366c70617acd92ef1cb2dfe09f6922635d32cedfb7  app/src/main/java/takagi/ru/monica/autofill_ng/MonicaAutofillServiceNg.kt
+9c3ae201c1404be23be5f33e29cbd306565a7ef21f8492659018cd3642db44a4  app/src/main/java/takagi/ru/monica/autofill_ng/AutofillSaveTransparentActivity.kt
+0a42eb0c719f8413b95d351c398edd0833de86e39bb80b30f2b652edf88e851c  app/src/main/java/takagi/ru/monica/autofill_ng/core/AutofillLogger.kt
+431b4700fa3e1490082428633334f1c0ae7e80820ec7e1fdbd02d70a88c5b661  app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsScreen.kt
+b070893709eb4b72f32d50f3b1ee6a23add93c15cdd7f8c5d443fe52f8f6703d  app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsV2Screen.kt
+a65edcc289ba0286d28bbf3fa2d49360b9c3de31fd32b99e89330b9bcbf6b3c3  app/src/test/java/takagi/ru/monica/autofill_ng/AutofillSaveLaunchTest.kt
+8822732b86b21d66d16adbb7a60f6497748e4fec52ab56a74a8b3861392c642c  app/src/androidTest/java/takagi/ru/monica/autofill_ng/AutofillFlowInstrumentedTest.kt
+1dada1159a1d6396cc163c3b173deb09a0810740c7af253911f2f635279e9a36  app/src/androidTest/java/takagi/ru/monica/autofill_ng/HyperOsSaveCompatibilitySettingsTest.kt
+Two new resource values identical: app/src/main/res/values/strings.xml
+Two new resource values identical: app/src/main/res/values-b+lzh/strings.xml
+Two new resource values identical: app/src/main/res/values-b+zh+Hant/strings.xml
+Two new resource values identical: app/src/main/res/values-de/strings.xml
+Two new resource values identical: app/src/main/res/values-es/strings.xml
+Two new resource values identical: app/src/main/res/values-fr/strings.xml
+Two new resource values identical: app/src/main/res/values-it/strings.xml
+Two new resource values identical: app/src/main/res/values-ja/strings.xml
+Two new resource values identical: app/src/main/res/values-ko/strings.xml
+Two new resource values identical: app/src/main/res/values-pl/strings.xml
+Two new resource values identical: app/src/main/res/values-ru/strings.xml
+Two new resource values identical: app/src/main/res/values-vi/strings.xml
+Two new resource values identical: app/src/main/res/values-zh/strings.xml
+Two new resource values identical: app/src/main/res/values-zh-rCN/strings.xml
+ordinary JVM takagi.ru.monica.autofill_ng.AutofillSaveContextPolicyTest tests=6 failures=0 errors=0
+ordinary JVM takagi.ru.monica.autofill_ng.AutofillSaveLaunchTest tests=16 failures=0 errors=0
+ordinary JVM takagi.ru.monica.autofill_ng.AutofillSaveValuePolicyTest tests=5 failures=0 errors=0
+ordinary debug 1.0.323-26103112-94 3f7f97853b678d982dc57b59081c793134b9772445d05f7c1fb6a86d98f5da04 Monica-Android-x86_64-1.0.323-26103112-94.APK
+ordinary androidTest/debug  a6196188b9a3008d0f7d84330d89c15b4e8afdae93f998073b714024e32f58f9 app-debug-androidTest.apk
+fdroid JVM takagi.ru.monica.autofill_ng.AutofillSaveContextPolicyTest tests=6 failures=0 errors=0
+fdroid JVM takagi.ru.monica.autofill_ng.AutofillSaveLaunchTest tests=16 failures=0 errors=0
+fdroid JVM takagi.ru.monica.autofill_ng.AutofillSaveValuePolicyTest tests=5 failures=0 errors=0
+fdroid debug 1.0.323 460ed9b9cdb9a6e3a3a9b87019934e46f90066b54a85b05726caf1527cc4ac54 Monica-Android-x86_64-1.0.323.apk
+fdroid androidTest/debug  ac75d2af93f8df588aab8c8bf9065fe152657948b3041c4d6507017b13f06a02 app-debug-androidTest.apk
+F-Droid fastlane30 zh-CN characters=495
+F-Droid fastlane30 en-US characters=485
+
+
+=== ordinary-toggle-apk-resources.txt ===
+    resource 0x7f1101de string/autofill_hyperos_save_compatibility
+      () "HyperOS 1 save compatibility"
+      (lzh) "HyperOS 1 存密相容模式"
+      (ja) "HyperOS 1 保存互換モード"
+      (de) "Speicherkompatibilität für HyperOS 1"
+      (zh) "HyperOS 1 保存兼容模式"
+      (b+zh+Hant) "HyperOS 1 儲存相容模式"
+      (vi) "Tương thích lưu trên HyperOS 1"
+      (pl) "Zgodność zapisu z HyperOS 1"
+      (ko) "HyperOS 1 저장 호환 모드"
+      (fr) "Compatibilité de sauvegarde HyperOS 1"
+      (es) "Compatibilidad de guardado con HyperOS 1"
+      (it) "Compatibilità salvataggio HyperOS 1"
+      (ru) "Совместимость сохранения с HyperOS 1"
+      (zh-rCN) "HyperOS 1 保存兼容模式"
+    resource 0x7f1101df string/autofill_hyperos_save_compatibility_desc
+      () "Try this if tapping the system Save button does nothing on HyperOS 1. Opens the save page directly and keeps existing identity checks."
+      (lzh) "若於 HyperOS 1 點系統「儲存」而無應，可試啟之。直達儲存頁，仍循原驗身之法。"
+      (ja) "HyperOS 1 でシステムの「保存」を押しても反応がない場合にお試しください。保存画面を直接開き、従来の本人確認は維持します。"
+      (de) "Aktivieren, wenn die Systemschaltfläche „Speichern“ unter HyperOS 1 nicht reagiert. Öffnet die Speicherseite direkt und behält die bisherige Identitätsprüfung bei."
+      (zh) "在 HyperOS 1 上点击系统“保存”后没有反应时尝试开启。直接打开保存页，保留原有身份验证。"
+      (b+zh+Hant) "在 HyperOS 1 上點選系統「儲存」後沒有反應時，可嘗試開啟。直接開啟儲存頁面，保留原有身分驗證。"
+      (vi) "Hãy thử bật nếu nút Lưu của hệ thống không phản hồi trên HyperOS 1. Mở trực tiếp trang lưu và giữ nguyên bước xác minh danh tính hiện có."
+      (pl) "Wypróbuj, jeśli systemowy przycisk Zapisz nie reaguje w HyperOS 1. Otwiera bezpośrednio ekran zapisu i zachowuje dotychczasową weryfikację tożsamości."
+      (ko) "HyperOS 1에서 시스템의 저장 버튼을 눌러도 반응이 없으면 켜 보세요. 저장 화면을 바로 열며 기존 본인 확인 절차는 유지합니다."
+      (fr) "À essayer si le bouton système Enregistrer ne répond pas sous HyperOS 1. Ouvre directement la page de sauvegarde et conserve la vérification d’identité existante."
+      (es) "Prueba esta opción si el botón Guardar del sistema no responde en HyperOS 1. Abre directamente la página de guardado y mantiene la verificación de identidad existente."
+      (it) "Prova questa opzione se il pulsante Salva del sistema non risponde su HyperOS 1. Apre direttamente la pagina di salvataggio e mantiene la verifica dell’identità esistente."
+      (ru) "Попробуйте включить, если системная кнопка «Сохранить» не реагирует в HyperOS 1. Открывает экран сохранения напрямую и сохраняет действующую проверку личности."
+      (zh-rCN) "在 HyperOS 1 上点击系统“保存”后没有反应时尝试开启。直接打开保存页，保留原有身份验证。"
+
+
+=== fdroid-toggle-apk-resources.txt ===
+    resource 0x7f1101dd string/autofill_hyperos_save_compatibility
+      () "HyperOS 1 save compatibility"
+      (lzh) "HyperOS 1 存密相容模式"
+      (ja) "HyperOS 1 保存互換モード"
+      (de) "Speicherkompatibilität für HyperOS 1"
+      (zh) "HyperOS 1 保存兼容模式"
+      (b+zh+Hant) "HyperOS 1 儲存相容模式"
+      (vi) "Tương thích lưu trên HyperOS 1"
+      (pl) "Zgodność zapisu z HyperOS 1"
+      (ko) "HyperOS 1 저장 호환 모드"
+      (fr) "Compatibilité de sauvegarde HyperOS 1"
+      (es) "Compatibilidad de guardado con HyperOS 1"
+      (it) "Compatibilità salvataggio HyperOS 1"
+      (ru) "Совместимость сохранения с HyperOS 1"
+      (zh-rCN) "HyperOS 1 保存兼容模式"
+    resource 0x7f1101de string/autofill_hyperos_save_compatibility_desc
+      () "Try this if tapping the system Save button does nothing on HyperOS 1. Opens the save page directly and keeps existing identity checks."
+      (lzh) "若於 HyperOS 1 點系統「儲存」而無應，可試啟之。直達儲存頁，仍循原驗身之法。"
+      (ja) "HyperOS 1 でシステムの「保存」を押しても反応がない場合にお試しください。保存画面を直接開き、従来の本人確認は維持します。"
+      (de) "Aktivieren, wenn die Systemschaltfläche „Speichern“ unter HyperOS 1 nicht reagiert. Öffnet die Speicherseite direkt und behält die bisherige Identitätsprüfung bei."
+      (zh) "在 HyperOS 1 上点击系统“保存”后没有反应时尝试开启。直接打开保存页，保留原有身份验证。"
+      (b+zh+Hant) "在 HyperOS 1 上點選系統「儲存」後沒有反應時，可嘗試開啟。直接開啟儲存頁面，保留原有身分驗證。"
+      (vi) "Hãy thử bật nếu nút Lưu của hệ thống không phản hồi trên HyperOS 1. Mở trực tiếp trang lưu và giữ nguyên bước xác minh danh tính hiện có."
+      (pl) "Wypróbuj, jeśli systemowy przycisk Zapisz nie reaguje w HyperOS 1. Otwiera bezpośrednio ekran zapisu i zachowuje dotychczasową weryfikację tożsamości."
+      (ko) "HyperOS 1에서 시스템의 저장 버튼을 눌러도 반응이 없으면 켜 보세요. 저장 화면을 바로 열며 기존 본인 확인 절차는 유지합니다."
+      (fr) "À essayer si le bouton système Enregistrer ne répond pas sous HyperOS 1. Ouvre directement la page de sauvegarde et conserve la vérification d’identité existante."
+      (es) "Prueba esta opción si el botón Guardar del sistema no responde en HyperOS 1. Abre directamente la página de guardado y mantiene la verificación de identidad existente."
+      (it) "Prova questa opzione se il pulsante Salva del sistema non risponde su HyperOS 1. Apre direttamente la pagina di salvataggio e mantiene la verifica dell’identità esistente."
+      (ru) "Попробуйте включить, если системная кнопка «Сохранить» не реагирует в HyperOS 1. Открывает экран сохранения напрямую и сохраняет действующую проверку личности."
+      (zh-rCN) "在 HyperOS 1 上点击系统“保存”后没有反应时尝试开启。直接打开保存页，保留原有身份验证。"
+
+
+=== cleanup.txt ===
+Restored original Android user 0.
+Removed only the owned guest 13.
+Users:
+	UserInfo{0:Owner:c13} running
+	UserInfo{10:Monica:410}
+	UserInfo{11:Monica_Recovery316:410}
+	UserInfo{12:Monica_Recovery316_Retest:410}
+Stopped the public AVD started by this task; configuration and data disk preserved.
+=== cleanup.txt ===
+Restored original Android user 0.
+Removed only the owned guest 10.
+Users:
+	UserInfo{0:机主:4c13} running
+	UserInfo{11:Paysage:410}
+Stopped the existing API35 AVD started by this task; configuration and data disk preserved.
+
+=== ordinary-toggle-build.log (tail) ===
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/ui/screens/SettingsSubpagesInstrumentedTest.kt:42:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/ui/screens/UnifiedSettingsInstrumentedTest.kt:27:29 'fun <reified A : ComponentActivity> createAndroidComposeRule(effectContext: CoroutineContext = ...): AndroidComposeTestRule<ActivityScenarioRule<A>, A>' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createAndroidComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/ui/vaultv2/VaultOverviewMainActivityTest.kt:32:29 'fun createEmptyComposeRule(effectContext: CoroutineContext = ...): ComposeTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createEmptyComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/ui/vaultv2/VaultOverviewPaneTest.kt:51:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/ui/vaultv2/VaultOverviewPickerScreenTest.kt:27:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/ui/vaultv2/VaultOverviewScreenTest.kt:52:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+
+> Task :app:compileDebugAndroidTestJavaWithJavac
+> Task :app:processDebugAndroidTestJavaRes UP-TO-DATE
+> Task :app:mergeDebugAndroidTestJavaResource UP-TO-DATE
+> Task :app:dexBuilderDebugAndroidTest
+> Task :app:mergeProjectDexDebugAndroidTest
+> Task :app:packageDebugAndroidTest
+> Task :app:createDebugAndroidTestApkListingFileRedirect UP-TO-DATE
+> Task :app:assembleDebugAndroidTest
+
+BUILD SUCCESSFUL in 7m 33s
+99 actionable tasks: 32 executed, 67 up-to-date
+
+=== fdroid-toggle-build.log (tail) ===
+w: file:///C:/Users/joyins/Desktop/Monica-all/.codex-worktrees/monica-fdroid-nearby-steam/app/src/androidTest/java/takagi/ru/monica/ui/screens/SettingsSubpagesInstrumentedTest.kt:42:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/.codex-worktrees/monica-fdroid-nearby-steam/app/src/androidTest/java/takagi/ru/monica/ui/screens/UnifiedSettingsInstrumentedTest.kt:27:29 'fun <reified A : ComponentActivity> createAndroidComposeRule(effectContext: CoroutineContext = ...): AndroidComposeTestRule<ActivityScenarioRule<A>, A>' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createAndroidComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/.codex-worktrees/monica-fdroid-nearby-steam/app/src/androidTest/java/takagi/ru/monica/ui/vaultv2/VaultOverviewMainActivityTest.kt:32:29 'fun createEmptyComposeRule(effectContext: CoroutineContext = ...): ComposeTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createEmptyComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/.codex-worktrees/monica-fdroid-nearby-steam/app/src/androidTest/java/takagi/ru/monica/ui/vaultv2/VaultOverviewPaneTest.kt:51:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/.codex-worktrees/monica-fdroid-nearby-steam/app/src/androidTest/java/takagi/ru/monica/ui/vaultv2/VaultOverviewPickerScreenTest.kt:27:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/.codex-worktrees/monica-fdroid-nearby-steam/app/src/androidTest/java/takagi/ru/monica/ui/vaultv2/VaultOverviewScreenTest.kt:52:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+
+> Task :app:compileDebugAndroidTestJavaWithJavac UP-TO-DATE
+> Task :app:processDebugAndroidTestJavaRes UP-TO-DATE
+> Task :app:mergeDebugAndroidTestJavaResource UP-TO-DATE
+> Task :app:dexBuilderDebugAndroidTest
+> Task :app:mergeProjectDexDebugAndroidTest
+> Task :app:packageDebugAndroidTest
+> Task :app:createDebugAndroidTestApkListingFileRedirect UP-TO-DATE
+> Task :app:assembleDebugAndroidTest
+
+BUILD SUCCESSFUL in 7m 13s
+100 actionable tasks: 23 executed, 77 up-to-date
+
+=== ordinary-toggle-release.log (tail) ===
+> Task :app:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :app:processReleaseJavaRes
+> Task :app:mergeReleaseJavaResource UP-TO-DATE
+> Task :app:expandReleaseArtProfileWildcards
+> Task :app:minifyReleaseWithR8
+WARNING: R8: An error occurred when parsing kotlin metadata. This normally happens when using a newer version of kotlin than the kotlin version released when this version of R8 was created. To find compatible kotlin versions, please see: https://developer.android.com/studio/build/kotlin-d8-r8-versions
+WARNING: R8: An error occurred when parsing kotlin metadata. This normally happens when using a newer version of kotlin than the kotlin version released when this version of R8 was created. To find compatible kotlin versions, please see: https://developer.android.com/studio/build/kotlin-d8-r8-versions
+
+> Task :app:compileReleaseArtProfile
+> Task :app:shrinkReleaseRes
+> Task :app:convertShrunkResourcesToBinaryRelease
+> Task :app:optimizeReleaseResources
+> Task :app:packageRelease
+> Task :app:createReleaseApkListingFileRedirect
+> Task :app:assembleRelease
+
+BUILD SUCCESSFUL in 9m 33s
+72 actionable tasks: 25 executed, 47 up-to-date

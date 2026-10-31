@@ -46,7 +46,9 @@ class WebDavSecurityStorageGuardTest {
 
         assertTrue(source.contains("private const val LEGACY_WEBDAV_BACKUP_FALLBACK_KEY = \"Monica_WebDAV_Config_Key\""))
         assertTrue(source.contains("private fun decryptBackupValueWithLegacyFallback"))
-        assertTrue(source.contains("if (decryptPassword.isNullOrBlank())"))
+        // Whitespace is a valid non-empty archive password, not a legacy fallback request.
+        assertTrue(source.contains("if (decryptPassword.isNullOrEmpty())"))
+        assertFalse(source.contains("if (decryptPassword.isNullOrBlank())"))
         assertTrue(source.contains("val resolvedDecryptPassword = if (isEncrypted)"))
         assertTrue(source.contains("restoreBitwardenVaultBackups("))
         assertTrue(source.contains("resolvedDecryptPassword,"))

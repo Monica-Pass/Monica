@@ -61,7 +61,7 @@ class BackgroundDataTaskTest {
                     if (visible.value) ImportDataScreen(initialApplicationSource = false,
                         onNavigateBack = { visible.value = false }, onImport = { Result.success(0) },
                         onImportAegis = { Result.success(0) }, onImportEncryptedAegis = { _, _ -> Result.success(0) },
-                        onImportSteamMaFile = { Result.success(0) }, onImportZip = { uri, password ->
+                        onImportSteamMaFile = { Result.success(0) }, onImportZip = { uri, password, restoreConfig ->
                             calls.incrementAndGet()
                             DatabaseExportJobs.reportImportProgress(TransferProgress(TransferPhase.WRITING, 1, 4))
                             started.complete(Unit)

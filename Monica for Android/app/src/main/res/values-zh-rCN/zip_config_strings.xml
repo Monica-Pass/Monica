@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_config_backup_hint">包含应用设置、常用账号、自动填充规则、安全问题及 WebDAV/Bitwarden 配置，需要加密备份。</string>
+    <string name="zip_config_encryption_required">备份 Monica 配置需要开启 ZIP 加密。</string>
+    <string name="zip_config_backup_failed">所选 Monica 配置未能完整备份，未导出备份文件。</string>
+    <string name="zip_restore_config">恢复 Monica 配置</string>
+    <string name="zip_restore_config_hint">若备份包含配置，将同时恢复。关闭时保留本机配置。已有 WebDAV 连接保持不变，Bitwarden 库需要重新验证。</string>
+</resources>

@@ -674,7 +674,7 @@
     <string name="import_data_button">가져오기</string>
     <string name="import_data_success">데이터 가져오기 성공</string>
     <string name="import_data_error">가져오기 실패</string>
-    <string name="import_data_supported_formats">앱에서 내보낸 CSV 파일 및 Alipay 거래 세부정보 지원</string>
+    <string name="import_data_supported_formats">ZIP, KDBX, CSV 및 기타 지원 파일 가져오기</string>
     <string name="import_data_select_type">가져오기 유형 선택</string>
     <string name="import_data_type_normal">앱 데이터</string>
     <string name="import_data_type_alipay">알리페이 빌</string>
@@ -1325,7 +1325,7 @@
     <string name="settings_bottom_sheet_title">하단 시트 모드</string>
     <string name="settings_bottom_sheet_description">풀업 서랍 탐색 활성화</string>
     <string name="settings_export_data">데이터 내보내기</string>
-    <string name="settings_export_data_description">CSV 파일로 로컬 내보내기</string>
+    <string name="settings_export_data_description">ZIP 백업, KDBX 또는 Steam maFile 내보내기</string>
     <string name="settings_import_data">데이터 가져오기</string>
     <string name="settings_import_data_description">백업 파일에서 복원</string>
     <string name="settings_version_info">버전 정보</string>
@@ -1659,9 +1659,9 @@
     <!-- Data Management in Settings -->
     <string name="data_management">데이터 관리</string>
     <string name="export_data">데이터 내보내기</string>
-    <string name="export_data_description">모든 데이터를 CSV 파일로 내보내기</string>
+    <string name="export_data_description">ZIP 백업, KDBX 또는 Steam maFile 내보내기</string>
     <string name="import_data">데이터 가져오기</string>
-    <string name="import_data_description">CSV 파일에서 데이터 가져오기</string>
+    <string name="import_data_description">ZIP, KDBX, CSV 및 기타 지원 파일 가져오기</string>
 
     <!-- WebDAV Backup -->
     <string name="webdav_backup">WebDAV 백업</string>
@@ -4681,4 +4681,11 @@
     <string name="url_match_limited_context">호스트에는 다른 하위 도메인이 포함되지 않습니다. 호스트 이름만 제공되면 프로토콜, 경로, 쿼리를 추측하지 않습니다. 정확한 URL과 접두사 일치에는 전체 URL이 필요합니다. 정규식은 RE2 구문을 사용합니다.</string>
     <string name="url_match_regex_error">먼저 URL을 유효한 RE2 정규식으로 수정하세요.</string>
     <string name="url_match_unreadable">URL 일치 데이터를 읽을 수 없습니다. 기존 데이터를 보존하고 저장을 비활성화했습니다.</string>
+    <string name="autofill_hyperos_save_compatibility">HyperOS 1 저장 호환 모드</string>
+    <string name="autofill_hyperos_save_compatibility_desc">시스템 저장 버튼을 누르면 플로팅 패널이 표시됩니다. 저장 계속을 눌러 Monica를 여세요. 다른 앱 위에 표시 권한이 필요합니다.</string>
+    <string name="autofill_save_overlay_title">Monica에 저장</string>
+    <string name="autofill_save_overlay_body">본인 인증 후 저장할 비밀번호를 확인합니다. 이 패널을 닫으면 아무것도 저장되지 않습니다.</string>
+    <string name="autofill_save_overlay_continue">저장 계속</string>
+    <string name="autofill_save_overlay_permission_action">다른 앱 위에 표시 허용</string>
+    <string name="autofill_save_overlay_permission_required">HyperOS 1 저장 호환 모드 설정에서 Monica의 다른 앱 위에 표시를 허용한 후 다시 저장하세요.</string>
 </resources>

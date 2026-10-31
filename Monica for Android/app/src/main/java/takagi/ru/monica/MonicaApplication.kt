@@ -46,6 +46,13 @@ class MonicaApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        takagi.ru.monica.security.RuntimeDiagnostics.install()
+
+        // Historical exit lookup is independent of vault locks and never runs on the UI thread.
+        startupScope.launch(Dispatchers.IO) {
+            delay(POST_LAUNCH_DELAY_MS)
+            takagi.ru.monica.security.RuntimeDiagnostics.reportPreviousExits(this@MonicaApplication)
+        }
 
         SessionManager.attachAppContext(this)
         takagi.ru.monica.autofill_ng.auth.AutofillSessionGrants.initialize(this)
@@ -66,6 +73,7 @@ class MonicaApplication : Application() {
         WebDavCertificateTrustStore.attach(this)
 
         schedulePostLaunchMaintenance()
+        takagi.ru.monica.security.RuntimeDiagnostics.applicationReady()
     }
 
     /**

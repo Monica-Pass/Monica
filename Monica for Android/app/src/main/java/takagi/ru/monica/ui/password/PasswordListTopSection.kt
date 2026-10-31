@@ -1,5 +1,7 @@
 package takagi.ru.monica.ui
 
+import takagi.ru.monica.ui.password.KeePassFileActions
+
 import takagi.ru.monica.utils.AppLocaleStringResolver
 
 import android.content.Context
@@ -97,6 +99,7 @@ internal fun PasswordListTopSection(
     mdbxViewModel: MdbxViewModel? = null,
     selectedBitwardenVaultId: Long?,
     selectedKeePassDatabaseId: Long?,
+    keePassFileActions: KeePassFileActions?,
     selectedMdbxDatabaseId: Long?,
     selectedMdbxFolders: List<MdbxStoredFolderEntry>,
     isTopBarSyncing: Boolean,
@@ -185,9 +188,6 @@ internal fun PasswordListTopSection(
         selectedKeePassDatabaseId?.let { databaseId ->
             takagi.ru.monica.ui.screens.DatabaseManagerNavigation.open(takagi.ru.monica.credentialexchange.ImportDestination(takagi.ru.monica.credentialexchange.ImportDestinationKind.KEEPASS, databaseId))
         }
-    }
-    val keePassFileActions = rememberKeePassFileActions(selectedKeePassDatabaseId, viewModel) {
-        selectedKeePassDatabaseId?.let { localKeePassViewModel.refreshGroups(it); viewModel.refreshKeePassOverviewAfterNativeRead(it) }
     }
     Column {
         val title = when (val filter = currentFilter) {
@@ -576,7 +576,6 @@ internal fun PasswordListTopSection(
             }
         )
 
-        keePassFileActions?.let { KeePassFileStatus(it) }
         if (showBitwardenUnlockDialog && selectedBitwardenVault != null) {
             UnlockVaultDialog(
                 email = selectedBitwardenVault.email,

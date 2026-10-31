@@ -68,10 +68,14 @@ internal object SecurePreferencesStore {
 
     fun open(context: Context, name: String, alias: String = MasterKey.DEFAULT_MASTER_KEY_ALIAS): Opened {
         if (name == MONICA && alias == MasterKey.DEFAULT_MASTER_KEY_ALIAS) {
+            RuntimeDiagnostics.stage(RuntimeDiagnostics.Stage.ACTIVE_STORE)
             val recovery = LocalVaultRecovery(context)
             val active = recovery.activeStore()
             val opened = openRaw(context, active?.first ?: name, active?.second ?: alias)
-            try { recovery.validate(opened.preferences) }
+            try {
+                RuntimeDiagnostics.stage(RuntimeDiagnostics.Stage.RECOVERY_VALIDATION)
+                recovery.validate(opened.preferences)
+            }
             catch (error: SecureStorageUnavailableException) { throw error }
             catch (cancelled: CancellationException) { throw cancelled }
             catch (error: Exception) {
@@ -86,17 +90,21 @@ internal object SecurePreferencesStore {
     internal fun openRaw(context: Context, name: String, alias: String): Opened {
         var phase = SecureStoragePhase.PREFLIGHT
         try {
+            RuntimeDiagnostics.stage(RuntimeDiagnostics.Stage.PREFLIGHT)
             preflight(context, name, alias)
             phase = SecureStoragePhase.MASTER_KEY
+            RuntimeDiagnostics.stage(RuntimeDiagnostics.Stage.MASTER_KEY)
             val masterKey = MasterKey.Builder(context, alias)
                 .setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build()
             phase = SecureStoragePhase.KEYSET_OPEN
+            RuntimeDiagnostics.stage(RuntimeDiagnostics.Stage.KEYSET_OPEN)
             val prefs = EncryptedSharedPreferences.create(context, name, masterKey,
                 EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
                 EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM)
             // Keyset authentication alone does not detect an unreadable individual preference.
             // Validate before any caller can interpret missing credentials as a fresh installation.
             phase = SecureStoragePhase.VALUE_READ
+            RuntimeDiagnostics.stage(RuntimeDiagnostics.Stage.VALUE_READ)
             prefs.all
             return Opened(masterKey, prefs)
         } catch (error: SecureStorageUnavailableException) {
@@ -149,6 +157,7 @@ internal object SecureStorageStartup {
     /** Bound the wait, not the native call. Keep its single slot occupied until it really exits. */
     suspend fun prepareWithRetry(context: Context, timeoutMillis: Long = 15_000): SecureStartupResult {
         require(timeoutMillis > 0)
+        val trace = RuntimeDiagnostics.beginStartup()
         var work: StartupWork? = null
         var accepted = false
         try {
@@ -161,18 +170,26 @@ internal object SecureStorageStartup {
                         readiness.value = false
                         StartupWork(context.applicationContext).also { running = it; work = it }
                     }
+                    trace.stage(RuntimeDiagnostics.Stage.QUEUED)
                     executor.execute {
-                        try {
-                            started.result.complete(checkWithRetry(started.guard))
-                        } catch (cancelled: CancellationException) {
-                            started.result.completeExceptionally(cancelled)
-                        } catch (error: Exception) {
-                            started.result.complete(SecureStartupResult.Blocked(SecureStorageUnavailableException(
-                                SecurePreferencesStore.MONICA, "UNREADABLE_SECURE_STORAGE", error, SecureStoragePhase.STARTUP_CHECK)))
-                        } finally {
-                            synchronized(workLock) {
-                                started.finished = true
-                                if (started.released && running === started) running = null
+                        trace.run {
+                            try {
+                                trace.stage(RuntimeDiagnostics.Stage.STARTUP_CHECK)
+                                started.result.complete(checkWithRetry(started.guard))
+                            } catch (cancelled: CancellationException) {
+                                started.result.completeExceptionally(cancelled)
+                            } catch (error: Exception) {
+                                val failure = SecureStorageUnavailableException(SecurePreferencesStore.MONICA,
+                                    "UNREADABLE_SECURE_STORAGE", error, SecureStoragePhase.STARTUP_CHECK)
+                                trace.failure(failure, 1)
+                                started.result.complete(SecureStartupResult.Blocked(failure))
+                            } finally {
+                                val callerReleased = synchronized(workLock) {
+                                    started.finished = true
+                                    if (started.released && running === started) running = null
+                                    started.released
+                                }
+                                trace.event("secure_worker_exit", "caller_released=$callerReleased")
                             }
                         }
                     }
@@ -180,7 +197,10 @@ internal object SecureStorageStartup {
                     ensureActive()
                     checked
                 }
-            } ?: return blocked("SECURE_OPERATION_TIMEOUT")
+            } ?: run {
+                trace.outcome(RuntimeDiagnostics.Outcome.TIMEOUT)
+                return blocked("SECURE_OPERATION_TIMEOUT")
+            }
             currentCoroutineContext().ensureActive()
             // Publish only after the timeout scope has accepted the result. A timeout racing a
             // completed worker must not return Blocked with maintenance already enabled.
@@ -189,7 +209,14 @@ internal object SecureStorageStartup {
                 accepted = true
             }
             if (result is SecureStartupResult.Blocked && work != null) SessionManager.markLocked()
+            if (result is SecureStartupResult.Blocked) {
+                trace.event("secure_result_code", "code=${SafeExceptionDiagnostic.reason(result.failure.reason)}", android.util.Log.WARN)
+            }
+            trace.outcome(if (result is SecureStartupResult.Ready) RuntimeDiagnostics.Outcome.READY else RuntimeDiagnostics.Outcome.BLOCKED)
             return result
+        } catch (cancelled: CancellationException) {
+            trace.outcome(RuntimeDiagnostics.Outcome.CANCELLED)
+            throw cancelled
         } finally {
             synchronized(workLock) {
                 work?.let {
@@ -214,12 +241,15 @@ internal object SecureStorageStartup {
         while (result is SecureStartupResult.Blocked) {
             guard.checkActive()
             SecurityDiagLogger.append("W/SecureStorageStartup ${diagnostic(result.failure, attempt)}")
+            RuntimeDiagnostics.startupFailure(result.failure, attempt)
             // Authentication errors and missing key material require explicit user action.
             if (result.failure.reason != "UNREADABLE_SECURE_STORAGE" || attempt == 3) {
+                RuntimeDiagnostics.stage(RuntimeDiagnostics.Stage.RECOVERY_AVAILABLE)
                 val recoveryAvailable = LocalVaultRecovery(guard.context).available()
                 guard.checkActive()
                 return result.copy(attempts = attempt, recoveryAvailable = recoveryAvailable)
             }
+            RuntimeDiagnostics.stage(RuntimeDiagnostics.Stage.RETRY_DELAY)
             Thread.sleep(if (attempt == 1) 200L else 600L)
             guard.checkActive()
             attempt++
@@ -252,10 +282,12 @@ internal object SecureStorageStartup {
     private fun checkStorage(context: Context): SecureStartupResult {
         return try {
             SecurityDiagLogger.initialize(context.applicationContext)
+            RuntimeDiagnostics.stage(RuntimeDiagnostics.Stage.ACTIVE_STORE)
             // Do not create the shared legacy alias over an existing Bitwarden store.
             // An unreadable Bitwarden settings store must not block a healthy local vault.
             if (LocalVaultRecovery(context).activeStore() == null &&
                 context.getSharedPreferences(SecurePreferencesStore.MONICA, Context.MODE_PRIVATE).all.isEmpty()) {
+                RuntimeDiagnostics.stage(RuntimeDiagnostics.Stage.PREFLIGHT)
                 SecurePreferencesStore.preflight(context, SecurePreferencesStore.BITWARDEN)
             }
             val manager = SecurityManager(context)
@@ -271,7 +303,9 @@ internal object SecureStorageStartup {
     }
 
     fun diagnostic(failure: SecureStorageUnavailableException, attempts: Int = 1): String = buildString {
-        appendLine("Monica ${takagi.ru.monica.BuildConfig.VERSION_NAME}")
+        appendLine("Monica ${takagi.ru.monica.BuildConfig.FULL_VERSION_NAME}")
+        appendLine("Build: ${takagi.ru.monica.BuildConfig.GIT_SHA}")
+        appendLine("Logcat tag: ${RuntimeDiagnostics.TAG}")
         appendLine("Android API ${android.os.Build.VERSION.SDK_INT}")
         appendLine("Secure storage: ${failure.store}")
         appendLine("Code: ${failure.reason}")

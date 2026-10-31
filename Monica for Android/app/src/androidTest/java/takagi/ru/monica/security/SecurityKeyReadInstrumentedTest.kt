@@ -34,6 +34,11 @@ class SecurityKeyReadInstrumentedTest {
                 runCatching { f.manager.decryptData(ciphertext) }.exceptionOrNull() is java.security.UnrecoverableKeyException)
             assertFalse("Reading old ciphertext must not generate a replacement key", f.keystore.containsAlias(alias))
             assertEquals(before, f.raw.all)
+            val logs = RuntimeDiagnosticsInstrumentedTest.readLogcat()
+            assertTrue(logs.contains("event=data_read_failure format=${prefix.removeSuffix("|")}"))
+            assertTrue(logs.contains("type=java.security.UnrecoverableKeyException"))
+            assertFalse(logs.contains(ciphertext))
+            assertFalse(logs.contains("synthetic-old-value"))
         }
     }
 

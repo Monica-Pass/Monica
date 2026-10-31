@@ -1,0 +1,6 @@
+
+takagi.ru.monica.security.RuntimeDiagnosticsInstrumentedTest:.
+
+Time: 0.094
+
+OK (1 test)

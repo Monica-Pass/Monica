@@ -1,0 +1,262 @@
+Incomplete cold runs contain only stages reached; the absence of PASS is not a passing result. See the markdown record for input and locale failures.
+
+=== ordinary-compat-on.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest:
+INSTRUMENTATION_STATUS: test=frameworkSavesTheNewPasswordAfterChangeFormCommit
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=2, flags=65618, fixtureStatus=null
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:1819)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:1769)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:393)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.access$submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:58)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest$frameworkSavesTheNewPasswordAfterChangeFormCommit$1.invokeSuspend(AutofillFlowInstrumentedTest.kt:354)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:266)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:46)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.frameworkSavesTheNewPasswordAfterChangeFormCommit(AutofillFlowInstrumentedTest.kt:348)
+
+INSTRUMENTATION_STATUS: stream=
+Error in frameworkSavesTheNewPasswordAfterChangeFormCommit(takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest):
+java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=2, flags=65618, fixtureStatus=null
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:1819)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:1769)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:393)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.access$submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:58)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest$frameworkSavesTheNewPasswordAfterChangeFormCommit$1.invokeSuspend(AutofillFlowInstrumentedTest.kt:354)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:266)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:46)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.frameworkSavesTheNewPasswordAfterChangeFormCommit(AutofillFlowInstrumentedTest.kt:348)
+
+INSTRUMENTATION_STATUS: test=frameworkSavesTheNewPasswordAfterChangeFormCommit
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=2, flags=65618, fixtureStatus=null
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:1819)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:1769)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:393)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.access$submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:58)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest$frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword$1.invokeSuspend(AutofillFlowInstrumentedTest.kt:365)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:266)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:46)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword(AutofillFlowInstrumentedTest.kt:357)
+
+INSTRUMENTATION_STATUS: stream=
+Error in frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword(takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest):
+java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=2, flags=65618, fixtureStatus=null
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:1819)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:1769)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:393)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.access$submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:58)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest$frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword$1.invokeSuspend(AutofillFlowInstrumentedTest.kt:365)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:266)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:46)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword(AutofillFlowInstrumentedTest.kt:357)
+
+INSTRUMENTATION_STATUS: test=frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 62.431
+There were 2 failures:
+1) frameworkSavesTheNewPasswordAfterChangeFormCommit(takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest)
+java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=2, flags=65618, fixtureStatus=null
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:1819)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:1769)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:393)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.access$submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:58)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest$frameworkSavesTheNewPasswordAfterChangeFormCommit$1.invokeSuspend(AutofillFlowInstrumentedTest.kt:354)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:266)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:46)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.frameworkSavesTheNewPasswordAfterChangeFormCommit(AutofillFlowInstrumentedTest.kt:348)
+2) frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword(takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest)
+java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=2, flags=65618, fixtureStatus=null
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:1819)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:1769)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:393)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.access$submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:58)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest$frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword$1.invokeSuspend(AutofillFlowInstrumentedTest.kt:365)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.UndispatchedCoroutine.afterResume(CoroutineContext.kt:266)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:46)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword(AutofillFlowInstrumentedTest.kt:357)
+
+FAILURES!!!
+Tests run: 2,  Failures: 2
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== ordinary-first-saveui.txt ===
+--------- beginning of main
+10-31 03:30:26.373  1903  1903 D AutofillManager: Fill dialog is enabled:false, hints=[password, passwordAuto, creditCardNumber, creditCardSecurityCode, creditCardExpirationDate]
+10-31 03:31:15.744  7041  7041 D AutofillManager: notifyViewReadyInner:1073741824
+10-31 03:31:15.745  7041  7041 D AutofillManager: notifyViewReadyInner:1073741825
+10-31 03:31:15.745  7041  7041 D AutofillManager: Triggering pre-emptive request for fill dialog.
+10-31 03:31:15.756  7041  7041 D AutofillManager: notifyViewReadyInner:1073741826
+10-31 03:31:15.757  7041  7041 D AutofillManager: notifyViewReadyInner:1073741827
+10-31 03:31:18.584  1383  1403 D AutofillManager: Fill dialog is enabled:false, hints=[password, passwordAuto, creditCardNumber, creditCardSecurityCode, creditCardExpirationDate]
+10-31 03:31:19.092  7041  7041 D AutofillManager: View 1073741824 autofilled synchronously.
+10-31 03:31:19.127  7041  7041 D AutofillManager: View 1073741825 autofilled synchronously.
+10-31 03:31:19.745  7041  7041 D AutofillManager: setSaveUiState(1237076140): true
+--------- beginning of system
+10-31 03:31:19.746  1383  1403 D SaveUi  : on constructor: title=要将密码保存到Monica 自动填充吗？, subTitle=null
+10-31 03:31:19.748  1383  1403 I SaveUi  : Showing save dialog: 要将密码保存到Monica 自动填充吗？
+10-31 03:31:20.919  7041  7041 D AutofillManager: onActivityFinishing(): calling commitLocked()
+10-31 03:31:21.098  1383  1403 D SaveUi  : OneTimeListener.onCancel(): false
+10-31 03:31:21.099  1383  1403 D SaveUi  : destroy()
+10-31 03:31:21.099  1383  1403 D SaveUi  : OneTimeListener.onDestroy(): false
+10-31 03:31:21.100  7041  7041 D AutofillManager: setSaveUiState(1237076140): false
+10-31 03:31:21.100  7041  7041 W AutofillManager: setSaveUiState(1237076140, false) called on existing session 1237076140; cancelling it
+10-31 03:31:44.373  7041  7041 D AutofillManager: Fill dialog is enabled:false, hints=[password, passwordAuto, creditCardNumber, creditCardSecurityCode, creditCardExpirationDate]
+10-31 03:31:44.431  7041  7041 D AutofillManager: notifyViewReadyInner:1073741824
+10-31 03:31:46.839  7041  7041 D AutofillManager: View 1073741824 autofilled synchronously.
+10-31 03:31:47.281  7041  7041 D AutofillManager: notifyViewVisibilityChangedLocked(): id=1073741832 isVisible=true
+10-31 03:31:47.286  7041  7041 D AutofillManager: notifyViewReadyInner:1073741832
+10-31 03:31:47.286  7041  7041 D AutofillManager: Triggering pre-emptive request for fill dialog.
+10-31 03:31:47.289  7041  7041 D AutofillManager: Hidding UI when view 1073741824 became invisible
+10-31 03:31:47.289  7041  7041 D AutofillManager: notifyViewVisibilityChangedLocked(): id=1073741824 isVisible=false
+10-31 03:31:48.617  1383  1403 D SaveUi  : on constructor: title=要将密码保存到Monica 自动填充吗？, subTitle=null
+10-31 03:31:48.638  1383  1403 I SaveUi  : Showing save dialog: 要将密码保存到Monica 自动填充吗？
+10-31 03:31:48.660  7041  7041 D AutofillManager: setSaveUiState(1488073623): true
+10-31 03:31:49.430  7041  7041 D AutofillManager: onActivityFinishing(): calling commitLocked()
+10-31 03:31:50.066  1383  1403 D SaveUi  : OneTimeListener.onCancel(): false
+10-31 03:31:50.066  1383  1403 D SaveUi  : destroy()
+10-31 03:31:50.066  1383  1403 D SaveUi  : OneTimeListener.onDestroy(): false
+10-31 03:31:50.068  7041  7041 D AutofillManager: setSaveUiState(1488073623): false
+10-31 03:31:50.068  7041  7041 W AutofillManager: setSaveUiState(1488073623, false) called on existing session 1488073623; cancelling it
+
+
+=== ordinary-compat-cold.txt ===
+Application process absent before form; no active instrumentation; no Monica activity opened.
+Gboard selected; Android autofill service enabled.
+Real Android save prompt appeared after form submission.
+
+
+=== ordinary-compat-cold-slow.txt ===
+Application process absent before form; no active instrumentation; no Monica activity opened.
+Gboard selected; Android autofill service enabled.
+Real Android save prompt appeared after form submission.
+
+
+=== ordinary-compat-cold-final.txt ===
+Application process absent before form; no active instrumentation; no Monica activity opened.
+Gboard selected; Android autofill service enabled.
+
+
+=== ordinary-compat-cold-verified.txt ===
+Application process absent before form; no active instrumentation; no Monica activity opened.
+Gboard selected; Android autofill service enabled.
+Before submitting, fixture confirms the two non-empty new-password values match.
+Real Android save prompt appeared after form submission.
+One system Save tap opened AutofillSaveTransparentActivity directly; locked vault shows identity verification.
+
+
+=== ordinary-auth-completion.txt ===
+Previously entered synthetic master matches expected: False length: 26
+
+
+=== fdroid-locked.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest:
+INSTRUMENTATION_STATUS: test=lockedSaveRequiresVerificationAndCancellationDoesNotWrite
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockedSaveRequiresVerificationAndCancellationDoesNotWrite
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 8.346
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== fdroid-compat-cold-launch.txt ===
+Application process absent before form; no active instrumentation; no Monica activity opened.
+Gboard selected; Android autofill service enabled.
+Before submitting, fixture confirms the two non-empty new-password values match.
+Real Android save prompt appeared after form submission.
+One system Save tap opened AutofillSaveTransparentActivity directly; locked vault shows identity verification.
+PASS: API35 launch/authentication boundary only; no authentication or save submitted.

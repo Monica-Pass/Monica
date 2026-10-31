@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_config_backup_hint">Включает настройки, частые аккаунты, правила автозаполнения, контрольные вопросы и конфигурацию WebDAV/Bitwarden. Требуется шифрование.</string>
+    <string name="zip_config_encryption_required">Зашифруйте ZIP-копию, чтобы включить конфигурацию Monica.</string>
+    <string name="zip_config_backup_failed">Не удалось сохранить всю выбранную конфигурацию Monica. Резервная копия не экспортирована.</string>
+    <string name="zip_restore_config">Восстановить конфигурацию Monica</string>
+    <string name="zip_restore_config_hint">Также восстановить настройки из копии. Без отметки сохранятся локальные настройки. Существующие подключения WebDAV сохраняются; хранилища Bitwarden требуют повторной проверки.</string>
+</resources>

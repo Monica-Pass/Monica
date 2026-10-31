@@ -34,6 +34,8 @@
         tools:ignore="ProtectedPermissions" />
     
     <!-- Phase 9: Haptic feedback permission -->
+    <!-- Optional: only the user-enabled HyperOS save compatibility panel uses this. -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.VIBRATE" />
     
     <!-- Foreground Service permissions for Notification Validator -->

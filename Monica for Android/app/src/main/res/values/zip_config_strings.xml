@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_config_backup_hint">Includes app settings, common accounts, autofill rules, security questions and WebDAV/Bitwarden configuration. Encryption is required.</string>
+    <string name="zip_config_encryption_required">Encrypt the ZIP backup to include Monica configuration.</string>
+    <string name="zip_config_backup_failed">Could not back up all selected Monica configuration. No backup was exported.</string>
+    <string name="zip_restore_config">Restore Monica configuration</string>
+    <string name="zip_restore_config_hint">If present in the backup, restore configuration too. Leave unchecked to keep local settings. Existing WebDAV connections are kept; Bitwarden vaults require verification again.</string>
+</resources>

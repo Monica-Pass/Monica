@@ -602,7 +602,7 @@
     <string name="import_data_button">Importer</string>
     <string name="import_data_success">Données importées avec succès</string>
     <string name="import_data_error">Échec de l\'importation</string>
-    <string name="import_data_supported_formats">Prend en charge les fichiers CSV exportés par l\'application et les détails des transactions Alipay</string>
+    <string name="import_data_supported_formats">Importer des fichiers ZIP, KDBX, CSV et autres formats pris en charge</string>
     <string name="import_data_select_type">Format d’import</string>
     <string name="import_data_type_normal">Données de l\'application</string>
     <string name="import_data_type_alipay">Facture Alipay</string>
@@ -1204,7 +1204,7 @@
     <string name="settings_bottom_sheet_title">Mode feuille inférieure</string>
     <string name="settings_bottom_sheet_description">Activer la navigation dans les tiroirs déroulants</string>
     <string name="settings_export_data">Exporter des données</string>
-    <string name="settings_export_data_description">Exporter en CSV sur l’appareil.</string>
+    <string name="settings_export_data_description">Exporter des sauvegardes ZIP, KDBX ou Steam maFile</string>
     <string name="settings_import_data">Importer des données</string>
     <string name="settings_import_data_description">Restaurer une sauvegarde.</string>
     <string name="settings_version_info">Informations sur la version</string>
@@ -1506,9 +1506,9 @@
     <string name="support_author_subtitle">Logiciel gratuit. Merci de votre soutien !</string>
     <string name="data_management">Gestion des données</string>
     <string name="export_data">Exporter des données</string>
-    <string name="export_data_description">Exporter toutes les données vers un fichier CSV</string>
+    <string name="export_data_description">Exporter des sauvegardes ZIP, KDBX ou Steam maFile</string>
     <string name="import_data">Importer des données</string>
-    <string name="import_data_description">Importer des données à partir d\'un fichier CSV</string>
+    <string name="import_data_description">Importer des fichiers ZIP, KDBX, CSV et autres formats pris en charge</string>
     <string name="webdav_backup">Sauvegarde WebDAV</string>
     <string name="webdav_backup_description">Sauvegarde sur le serveur WebDAV</string>
     <string name="webdav_config">Configuration WebDAV</string>
@@ -4357,4 +4357,11 @@
     <string name="url_match_limited_context">Le mode Hôte exclut les autres sous-domaines. Avec le seul nom d’hôte, le protocole, le chemin et la requête ne sont pas déduits. URL exacte et préfixe exigent une URL complète. La syntaxe des expressions régulières est RE2.</string>
     <string name="url_match_regex_error">Modifiez d’abord l’URL en une expression régulière RE2 valide.</string>
     <string name="url_match_unreadable">Les règles URL sont illisibles. Les données sont conservées et l’enregistrement est désactivé.</string>
+    <string name="autofill_hyperos_save_compatibility">Compatibilité de sauvegarde HyperOS 1</string>
+    <string name="autofill_hyperos_save_compatibility_desc">Après Enregistrer dans le système, un panneau flottant apparaît. Touchez Continuer pour ouvrir Monica. Autorisez l’affichage par-dessus les autres applications.</string>
+    <string name="autofill_save_overlay_title">Enregistrer dans Monica</string>
+    <string name="autofill_save_overlay_body">Continuez pour vérifier votre identité et examiner le mot de passe. Fermer ce panneau ne sauvegarde rien.</string>
+    <string name="autofill_save_overlay_continue">Continuer</string>
+    <string name="autofill_save_overlay_permission_action">Autoriser l’affichage en superposition</string>
+    <string name="autofill_save_overlay_permission_required">Autorisez la superposition de Monica dans les réglages de compatibilité d’enregistrement HyperOS 1, puis réessayez.</string>
 </resources>

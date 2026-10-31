@@ -80,12 +80,16 @@
 
 # Rust JNI uses statically exported Java_* symbols, so R8 must not rename this facade.
 -keep class takagi.ru.monica.rustcore.RustPasswordListCore { *; }
+-keep class takagi.ru.monica.rustcore.RustKeePassKdfCore { *; }
 -keep class takagi.ru.monica.rustcore.RustListSortCore { *; }
 -keep class takagi.ru.monica.rustcore.RustWalletStackCore { *; }
 -keep class takagi.ru.monica.rustcore.RustVaultPickerCore { *; }
 -keep class takagi.ru.monica.rustcore.RustAutofillCore { *; }
 
 # 移除日志 (Release构建)
+# Structured diagnostics use Log.println, so retain them without enabling general debug logs.
+-keepnames class takagi.ru.monica.security.SecureStorageUnavailableException
+
 -assumenosideeffects class android.util.Log {
     public static *** d(...);
     public static *** v(...);

@@ -1,0 +1,46 @@
+Coolapk official live form — 2026-10-31
+Flavor: ordinary
+WebView: com.google.android.webview 155.0.8059.43; Android API32.
+Observed page: https://account.coolapk.com/auth/loginByCoolapk
+APK login entry: https://account.coolapk.com/auth/login?type=coolapk
+Entry redirect: https://account.coolapk.com/auth/loginByCoolapk
+Public source snapshot SHA-256: eb621201d741ce1188e9e0342f812ac051d4abed20472feb02ce29c1f3d73634
+This snapshot was archived for provenance only; device tests used WebView.loadUrl, not local HTML.
+Observed values below are equality checks against synthetic fixture credentials. No values are assigned by the observer.
+
+dropdown-password.txt
+url=https://account.coolapk.com/auth/loginByCoolapk
+live=READY user=OK password=OK focus=passwordInput authWrites=0
+
+dropdown-username.txt
+url=https://account.coolapk.com/auth/loginByCoolapk
+live=READY user=OK password=OK focus=loginInput authWrites=0
+
+inline-password.txt
+url=https://account.coolapk.com/auth/loginByCoolapk
+live=READY user=OK password=OK focus=passwordInput authWrites=0
+
+inline-username.txt
+url=https://account.coolapk.com/auth/loginByCoolapk
+live=READY user=OK password=OK focus=loginInput authWrites=0
+
+takagi.ru.monica installed SHA-256: 33b0aa38c0f951557d3d53ac0538acdf098662a9b6441c8cacf3ca74367cebbb
+takagi.ru.monica.test installed SHA-256: a5f78fff40439bd5f55ac8a2ddee99c10de493196d29677908ef58ec6fcff679
+
+Shared test source SHA-256:
+app/src/androidTest/java/takagi/ru/monica/autofill_ng/fixture/CoolapkLiveFormActivity.java: 98c27f11f08d97952861272e8f267fb4c9e7cf493b5e23bbad73e5240e78d13b
+app/src/androidTest/java/takagi/ru/monica/autofill_ng/AutofillFlowInstrumentedTest.kt: b6ed7a3bfcaf2a142068db658bf07d371497ffd5f1c4657260d290ebb27ccad4
+
+Cleanup:
+Dedicated user 13 removed; current user 0.
+Users:
+
+	UserInfo{0:Owner:c13} running
+
+	UserInfo{10:Monica:410}
+
+	UserInfo{11:Monica_Recovery316:410}
+
+	UserInfo{12:Monica_Recovery316_Retest:410}
+
+Emulator stopped using adb emu kill; original configuration/data disk retained.

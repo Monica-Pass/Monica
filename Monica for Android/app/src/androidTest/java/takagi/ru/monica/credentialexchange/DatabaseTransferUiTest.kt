@@ -48,7 +48,7 @@ class DatabaseTransferUiTest {
     private fun screenshot(fixture: TransferFixture, name: String) {
         compose.waitForIdle()
         val bitmap = InstrumentationRegistry.getInstrumentation().uiAutomation.takeScreenshot()
-        val directory = File(fixture.context.getExternalFilesDir(null), "database-transfer-validation").apply { mkdirs() }
+        val directory = File(fixture.context.filesDir, "database-transfer-validation").apply { mkdirs() }
         File(directory, name).outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
         bitmap.recycle()
     }
@@ -59,6 +59,9 @@ class DatabaseTransferUiTest {
         val gate = CompletableDeferred<Unit>()
         val stage = mutableStateOf<TransferProgress?>(null)
         val target = fixture.mdbx()
+        val settings = takagi.ru.monica.utils.SettingsManager(fixture.context)
+        val originalSettings = settings.exportPageAdjustmentSettings()
+        settings.updateHapticFeedbackEnabled(false)
         val localized = fixture.context.createConfigurationContext(Configuration(fixture.context.resources.configuration).apply {
             // Match this rule's Activity locale: Dialog creates a separate Android window.
             setLocale(Locale.ENGLISH)
@@ -66,6 +69,9 @@ class DatabaseTransferUiTest {
         val plain = File(fixture.root, "ui.zip")
         val encrypted = File(fixture.root, "ui.enc.zip")
         ZipOutputStream(plain.outputStream()).use {
+            it.putNextEntry(ZipEntry("monica_config/page_adjustment_settings.json"))
+            it.write("""{"hapticFeedbackEnabled":true}""".toByteArray())
+            it.closeEntry()
             it.putNextEntry(ZipEntry("passwords/password.json"))
             it.write(JSONObject().put("id", 1).put("title", "${fixture.prefix}-ui")
                 .put("username", "alice").put("password", "Synthetic UI password").put("website", "https://example.invalid")
@@ -84,13 +90,13 @@ class DatabaseTransferUiTest {
                         importProgress = stage.value ?: progress, importSummary = summary,
                         onImport = { Result.success(0) }, onImportAegis = { Result.success(0) },
                         onImportEncryptedAegis = { _, _ -> Result.success(0) }, onImportSteamMaFile = { Result.success(0) },
-                        onImportZip = { uri, password ->
+                        onImportZip = { uri, password, restoreConfig ->
                             if (password == "archive password") {
                                 stage.value = TransferProgress(TransferPhase.PREPARING, 3, 10)
                                 gate.await()
                                 stage.value = null
                             }
-                            fixture.model.importZipBackup(uri, password, target)
+                            fixture.model.importZipBackup(uri, password, target, restoreConfig)
                         }) }
                 }
             }
@@ -103,6 +109,8 @@ class DatabaseTransferUiTest {
             }
             compose.onNodeWithText(text(R.string.start_import)).performClick()
             compose.waitUntil(10_000) { compose.onAllNodesWithText(text(R.string.webdav_restore_action)).fetchSemanticsNodes().isNotEmpty() }
+            compose.onNodeWithText(text(R.string.zip_restore_config)).assertIsOff().performClick().assertIsOn()
+            screenshot(fixture, "zip-restore-config.png")
             compose.onNodeWithText(text(R.string.webdav_restore_action)).performClick()
             compose.waitUntil(10_000) { compose.onAllNodesWithText(text(R.string.transfer_zip_password_title)).fetchSemanticsNodes().isNotEmpty() }
             compose.onNode(hasSetTextAction()).performTextInput("wrong password")
@@ -110,6 +118,7 @@ class DatabaseTransferUiTest {
             compose.waitUntil(20_000) { compose.onAllNodesWithText(text(R.string.import_data_password_incorrect_retry)).fetchSemanticsNodes().isNotEmpty() }
             compose.onNodeWithText(text(R.string.confirm)).assertIsEnabled()
             assertTrue(fixture.importedPasswords(target).isEmpty())
+            assertFalse(settings.exportPageAdjustmentSettings().hapticFeedbackEnabled)
             screenshot(fixture, "zip-password-retry.png")
             compose.onNode(hasSetTextAction()).performTextReplacement("archive password")
             compose.onNodeWithText(text(R.string.confirm)).performClick()
@@ -124,6 +133,7 @@ class DatabaseTransferUiTest {
             compose.onNodeWithTag("transfer-progress").assertDoesNotExist()
             compose.onNodeWithText(text(R.string.start_import)).assertIsEnabled()
             assertEquals(1, fixture.model.lastImportSummary.value!!.imported)
+            assertTrue(settings.exportPageAdjustmentSettings().hapticFeedbackEnabled)
         } catch (error: Throwable) {
             runCatching { screenshot(fixture, "zip-flow-failure.png") }
             throw error
@@ -131,6 +141,7 @@ class DatabaseTransferUiTest {
             gate.complete(Unit)
             compose.runOnUiThread { visible.value = false }
             compose.waitForIdle()
+            settings.importPageAdjustmentSettings(originalSettings)
             fixture.close()
         }
     }
@@ -174,6 +185,8 @@ class DatabaseTransferUiTest {
             compose.waitUntil(10_000) { compose.onAllNodesWithText("${fixture.prefix}-MDBX").fetchSemanticsNodes().isNotEmpty() }
             compose.onNodeWithText("${fixture.prefix}-MDBX").performClick()
             screenshot(fixture, "export-source.png")
+            compose.onNodeWithText(text(R.string.backup_content_webdav_config)).performScrollTo().performClick()
+            screenshot(fixture, "zip-export-config.png")
             compose.onNodeWithText(text(R.string.transfer_choose_location)).performClick()
             compose.onAllNodes(hasSetTextAction())[0].performTextInput("export password")
             compose.onAllNodes(hasSetTextAction())[1].performTextInput("export password")
@@ -187,6 +200,11 @@ class DatabaseTransferUiTest {
             val result = withTimeout(60_000) { DatabaseExportJobs.state.first { it?.status != ExportJobStatus.RUNNING }!! }
             assertEquals(result.message, ExportJobStatus.SUCCEEDED, result.status)
             assertTrue(output.length() > 0)
+            val decoded = File(fixture.root, "ui-config-decoded.zip")
+            EncryptionHelper.decryptFile(output, decoded, "export password", AppLocaleStringResolver(fixture.context)).getOrThrow()
+            java.util.zip.ZipFile(decoded).use { archive ->
+                assertNotNull(archive.getEntry("monica_config/page_adjustment_settings.json"))
+            }
             compose.runOnUiThread { visible.value = true }
             compose.waitUntil(10_000) {
                 compose.onAllNodesWithText("${fixture.prefix}-MDBX", useUnmergedTree = true).fetchSemanticsNodes().isNotEmpty()

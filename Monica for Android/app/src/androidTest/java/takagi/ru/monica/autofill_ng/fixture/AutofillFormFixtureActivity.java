@@ -93,7 +93,21 @@ public class AutofillFormFixtureActivity extends Activity {
                 field("document","Passport number",InputType.TYPE_CLASS_TEXT,"identityNumber");
                 field("person","Full Name",InputType.TYPE_CLASS_TEXT,View.AUTOFILL_HINT_NAME);
                 break;
-            case "web": case "web_dynamic": case "web_forms": addWebForm(scenario); break;
+            case "web_save_login": case "web_save_signup":
+                addWebForm(scenario);
+                button("Submit web fixture", () -> webView.evaluateJavascript("document.getElementById('credentials').requestSubmit()", null));
+                break;
+            case "web_save_signup_hidden":
+                addWebForm(scenario);
+                button("Submit web fixture", () -> {
+                    // Embedded browser screens can replace their WebView without
+                    // a DOM submit, Activity finish, or AutofillManager.commit().
+                    webView.setVisibility(View.GONE);
+                    status.setText("web=HIDDEN");
+                });
+                break;
+            case "web": case "web_dynamic": case "web_forms": case "web_paired": case "web_paired_inline":
+                addWebForm(scenario); break;
             case "unlabelled":
                 field("user","",InputType.TYPE_CLASS_TEXT,null);
                 button("Request autofill", () -> {
@@ -222,6 +236,9 @@ public class AutofillFormFixtureActivity extends Activity {
     }
 
     public class WebReporter {
+        @JavascriptInterface public void reportSave(boolean ready, boolean submitted) {
+            runOnUiThread(() -> status.setText("saveReady=" + ready + " submitted=" + submitted + (webVisualReady ? " web=READY" : " web=LOADING")));
+        }
         @JavascriptInterface public void report(String user,String password) {
             runOnUiThread(() -> status.setText("user=" + state(user,USERNAME) + " password=" + state(password,PASSWORD) + (webVisualReady ? " web=READY" : " web=LOADING")));
         }
@@ -248,12 +265,21 @@ public class AutofillFormFixtureActivity extends Activity {
         webView.getSettings().setJavaScriptEnabled(true);
         if (getIntent().getBooleanExtra("accessibilityOnly",false)) webView.setImportantForAutofill(View.IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS);
         webView.addJavascriptInterface(new WebReporter(),"Fixture");
-        String asset = scenario.equals("web_forms") ? "autofill-forms-fixture.html" : "autofill-fixture.html";
+        String asset = scenario.startsWith("web_save_") ? "autofill-save-fixture.html" :
+                scenario.startsWith("web_paired") ? "autofill-paired-fixture.html" :
+                scenario.equals("web_forms") ? "autofill-forms-fixture.html" : "autofill-fixture.html";
         try (InputStream input = getAssets().open(asset); ByteArrayOutputStream output = new ByteArrayOutputStream()) {
             byte[] buffer = new byte[4096];
             int count;
             while ((count = input.read(buffer)) != -1) output.write(buffer,0,count);
             String html = new String(output.toByteArray(),StandardCharsets.UTF_8).replace("__DYNAMIC__",Boolean.toString(scenario.equals("web_dynamic")));
+            if (scenario.startsWith("web_save_")) {
+                boolean signup = scenario.startsWith("web_save_signup");
+                html = html.replace("__TITLE__", signup ? "Create account" : "Sign in")
+                        .replace("__PASSWORD_HINT__", signup ? "new-password" : "current-password")
+                        .replace("__PASSWORD_LABEL__", signup ? "New password" : "Password")
+                        .replace("__CONFIRMATION__", signup ? "<input id='confirmation' type='password' autocomplete='new-password' placeholder='Confirm password' aria-label='Confirm password'>" : "");
+            }
             webView.loadDataWithBaseURL(ORIGIN,html,"text/html","UTF-8",null);
         } catch (Exception error) { throw new IllegalStateException("Cannot load test form",error); }
         layout.addView(webView,new LinearLayout.LayoutParams(-1,750));

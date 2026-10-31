@@ -1,5 +1,8 @@
 package takagi.ru.monica.ui
 
+import takagi.ru.monica.ui.password.KeePassFileActions
+import takagi.ru.monica.ui.password.KeePassFileStatus
+
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
@@ -26,6 +29,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -148,14 +152,18 @@ internal fun PasswordQuickFolderBreadcrumbBanner(
     onDeleteStatusClick: (() -> Unit)? = null,
     bitwardenSyncState: QuickStatusBitwardenSyncState? = null,
     keePassSyncState: QuickStatusKeePassSyncState? = null,
+    keePassFileActions: KeePassFileActions? = null,
     animateHeight: Boolean = true
 ) {
+    // Do not keep an outgoing path or status composed after this vault is locked.
+    if (keePassFileActions != null && !keePassFileActions.available) return
     val sourceLabel = buildQuickStatusSourceLabel(breadcrumbs = breadcrumbs)
     val statusMode = when {
         transferState?.phase == PasswordBatchTransferPhase.RUNNING -> PasswordQuickStatusMode.TRANSFER_RUNNING
         transferState?.phase == PasswordBatchTransferPhase.SUCCESS -> PasswordQuickStatusMode.TRANSFER_SUCCESS
         deleteState?.phase == PasswordBatchDeletePhase.RUNNING -> PasswordQuickStatusMode.DELETE_RUNNING
         deleteState != null -> PasswordQuickStatusMode.DELETE_SUCCESS
+        keePassFileActions?.showStatus == true -> PasswordQuickStatusMode.KEEPASS_FILE
         keePassSyncState != null -> PasswordQuickStatusMode.KEEPASS_SYNC
         bitwardenSyncState != null -> PasswordQuickStatusMode.BITWARDEN_SYNC
         else -> PasswordQuickStatusMode.BREADCRUMB
@@ -203,6 +211,8 @@ internal fun PasswordQuickFolderBreadcrumbBanner(
                     onDeleteStatusClick?.invoke()
                 }
             )
+        } else if (activeMode == PasswordQuickStatusMode.KEEPASS_FILE && keePassFileActions?.showStatus == true) {
+            KeePassFileStatus(keePassFileActions)
         } else if (
             activeMode == PasswordQuickStatusMode.KEEPASS_SYNC &&
             activeKeePassSyncState != null
@@ -240,6 +250,7 @@ private enum class PasswordQuickStatusMode {
     TRANSFER_SUCCESS,
     DELETE_RUNNING,
     DELETE_SUCCESS,
+    KEEPASS_FILE,
     KEEPASS_SYNC,
     BITWARDEN_SYNC
 }
@@ -491,13 +502,13 @@ internal fun PasswordQuickFolderBreadcrumbPath(
 ) {
     Box(
         modifier = modifier
-            .height(36.dp)
+            .heightIn(min = 36.dp)
             .clip(RoundedCornerShape(14.dp))
             .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.35f))
     ) {
         Row(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .horizontalScroll(rememberScrollState())
                 .padding(horizontal = horizontalContentPadding, vertical = 6.dp),
             verticalAlignment = Alignment.CenterVertically

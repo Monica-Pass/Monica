@@ -603,7 +603,7 @@
     <string name="import_data_button">纳</string>
     <string name="import_data_success">数据已纳</string>
     <string name="import_data_error">未能纳入</string>
-    <string name="import_data_supported_formats">可纳本应用所出 CSV 文件及 Alipay 交易明细。</string>
+    <string name="import_data_supported_formats">自 ZIP、KDBX、CSV 等檔匯入</string>
     <string name="import_data_select_type">择所纳之类</string>
     <string name="import_data_type_normal">应用数据</string>
     <string name="import_data_type_alipay">Alipay 账单</string>
@@ -1205,7 +1205,7 @@
     <string name="settings_bottom_sheet_title">底屉之式</string>
     <string name="settings_bottom_sheet_description">启上拉抽屉导航</string>
     <string name="settings_export_data">出数据</string>
-    <string name="settings_export_data_description">出为 CSV 文件，存于本机。</string>
+    <string name="settings_export_data_description">匯出 ZIP 備份、KDBX 或 Steam maFile</string>
     <string name="settings_import_data">纳数据</string>
     <string name="settings_import_data_description">自备份文件复原</string>
     <string name="settings_version_info">版本之识</string>
@@ -1507,9 +1507,9 @@
     <string name="support_author_subtitle">此软件不取分文，谢君相助。</string>
     <string name="data_management">理数据</string>
     <string name="export_data">出数据</string>
-    <string name="export_data_description">尽出数据为 CSV 文件</string>
+    <string name="export_data_description">匯出 ZIP 備份、KDBX 或 Steam maFile</string>
     <string name="import_data">纳数据</string>
-    <string name="import_data_description">自 CSV 文件纳数据</string>
+    <string name="import_data_description">自 ZIP、KDBX、CSV 等檔匯入</string>
     <string name="webdav_backup">WebDAV 备份</string>
     <string name="webdav_backup_description">备份至 WebDAV 服务器</string>
     <string name="webdav_config">WebDAV 之设</string>
@@ -4357,4 +4357,11 @@
     <string name="url_match_limited_context">主机不含旁支域。浏览器仅报主机名时，不臆定协议、路径及查询；精确 URL 与 URL 前缀须得全址。正则从 RE2 法。</string>
     <string name="url_match_regex_error">请先修 URL，使合 RE2 正则之法。</string>
     <string name="url_match_unreadable">URL 匹配资料不可读；旧数据留存，暂禁保存。</string>
+    <string name="autofill_hyperos_save_compatibility">HyperOS 1 存密相容模式</string>
+    <string name="autofill_hyperos_save_compatibility_desc">按系統「存」後，先示浮窗，再按「續存」以入 Monica。須允浮窗權限。</string>
+    <string name="autofill_save_overlay_title">存於 Monica</string>
+    <string name="autofill_save_overlay_body">續驗身分，核所存之密碼。閉此窗則不存。</string>
+    <string name="autofill_save_overlay_continue">續存</string>
+    <string name="autofill_save_overlay_permission_action">允顯浮窗</string>
+    <string name="autofill_save_overlay_permission_required">請於 HyperOS 1 存儲相容設定中允 Monica 顯浮窗，再行存儲。</string>
 </resources>

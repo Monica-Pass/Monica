@@ -38,6 +38,43 @@ class KeePassConflictMergeInstrumentedTest {
     private val dao = room.localKeePassDatabaseDao()
     private val pending = room.keepassPendingChangeDao()
 
+    @Test fun currentMergeReadsRemoteAndKeepsBothClientsEntries() = runBlocking {
+        scenario {
+            takagi.ru.monica.security.SessionManager.markUnlocked()
+            val localId = UUID.randomUUID()
+            val remoteId = UUID.randomUUID()
+            working.writeBytes(encode(base.modifyParentGroup { copy(entries = entries + entry("local-extra", "").copy(uuid = localId)) }))
+            remote.bytes = encode(base.modifyParentGroup { copy(entries = entries + entry("remote-extra", "").copy(uuid = remoteId)) })
+            val store = KeePassMonicaPasswordStore(service)
+            store.refresh(id)
+            store.mergeCurrentDatabase(id)
+            val saved = decode(remote.bytes)
+            assertEquals(setOf(localId, remoteId) + base.content.group.entries.single().uuid,
+                saved.content.group.entries.map { it.uuid }.toSet())
+            assertArrayEquals(remote.bytes, working.readBytes())
+            assertArrayEquals(remote.bytes, baseFile.readBytes())
+            assertEquals(listOf("\"revision-1\""), remote.putConditions)
+            assertEquals(KeePassSyncStatus.IN_SYNC, dao.getDatabaseById(id)!!.lastSyncStatus)
+            assertTrue(pending.getUnfinishedChangesByDatabase(id).isEmpty())
+        }
+    }
+
+    @Test fun currentMergeRejectsAThirdClientWriteAndPreservesLocalCopy() = runBlocking {
+        scenario {
+            takagi.ru.monica.security.SessionManager.markUnlocked()
+            val store = KeePassMonicaPasswordStore(service)
+            store.refresh(id)
+            val before = working.readBytes()
+            val remoteBefore = remote.bytes.copyOf()
+            remote.raceOnPut = true
+            assertTrue(runCatching { store.mergeCurrentDatabase(id) }.isFailure)
+            assertArrayEquals(before, working.readBytes())
+            assertArrayEquals(remoteBefore, remote.bytes)
+            assertFalse(pending.getUnfinishedChangesByDatabase(id).isEmpty())
+            assertTrue(store.isDatabaseAvailable(id))
+        }
+    }
+
     @Test fun independentFieldsMergeAndSyncStatusAndPendingQueueFinishTogether() = runBlocking {
         scenario {
             val review = service.inspectCurrentRemoteConflict(id).getOrThrow()

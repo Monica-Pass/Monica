@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>input{display:block;box-sizing:border-box;width:95%;height:56px;margin:16px 4px;font-size:20px}</style>
+<form id="login" onsubmit="return false">
+<input id="loginInput" name="loginInput" type="text" placeholder="用户名、邮箱或手机号">
+<input id="passwordInput" name="passwordInput" type="password" placeholder="请输入密码">
+</form>
+<script>
+function report() {
+  Fixture.report(document.getElementById('loginInput').value, document.getElementById('passwordInput').value);
+}
+document.addEventListener('input', report);
+document.addEventListener('change', report);
+report();
+</script>
+</html>

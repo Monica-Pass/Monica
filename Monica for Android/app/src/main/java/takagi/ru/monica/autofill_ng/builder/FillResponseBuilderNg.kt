@@ -509,6 +509,8 @@ class FillResponseBuilderNg(
         takagi.ru.monica.autofill_ng.AutofillSaveInfoPolicy.build(
             request.partition.views.map { it.data.autofillId to it.data.hint },
             enabled = request.saveEnabled, compatMode = request.isCompatMode,
+            saveOnAllViewsInvisible = request.uri.orEmpty().startsWith("https://", ignoreCase = true) ||
+                request.uri.orEmpty().startsWith("http://", ignoreCase = true),
         )?.let(responseBuilder::setSaveInfo)
     }
 }

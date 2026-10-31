@@ -1,0 +1,28 @@
+Ordinary R8 Release build successful.
+Version: 1.0.323-26103112-94
+SHA256: 377c60de9b8ba3ac2aff1a55c8c40946a106bb37ad12848860dcf4298524cb34
+Mapped AutofillLogger: Ld.c
+Actual Release DEX retains the [SAVE] branch and android.util.Log.println.
+Release artifact inspection only; no additional Release device run. F-Droid R8 not run for this change.
+
+Actual DEX excerpts:
+.method private final i(LLd/c$a;Ljava/lang/String;)V
+    .registers 7
+
+    :try_start_0
+    const-string v0, "[SAVE] "
+
+    const/4 v1, 0x0
+
+    const/4 v2, 0x0
+
+
+    if-eqz v0, :cond_12
+
+    :try_start_e
+    invoke-static {v1, v2, p2}, Landroid/util/Log;->println(ILjava/lang/String;Ljava/lang/String;)I
+
+    return-void
+
+    :cond_12
+    sget-object v0, LLd/c$c;->a:[I

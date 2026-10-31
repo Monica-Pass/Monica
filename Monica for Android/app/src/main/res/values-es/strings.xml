@@ -674,7 +674,7 @@
     <string name="import_data_button">Importar</string>
     <string name="import_data_success">Datos importados correctamente</string>
     <string name="import_data_error">Importación fallida</string>
-    <string name="import_data_supported_formats">Admite archivos CSV exportados por la aplicación y detalles de transacciones de Alipay</string>
+    <string name="import_data_supported_formats">Importar ZIP, KDBX, CSV y otros archivos compatibles</string>
     <string name="import_data_select_type">Seleccione el tipo de importación</string>
     <string name="import_data_type_normal">Datos de la aplicación</string>
     <string name="import_data_type_alipay">Factura de Alipay</string>
@@ -1325,7 +1325,7 @@
     <string name="settings_bottom_sheet_title">Modo de hoja inferior</string>
     <string name="settings_bottom_sheet_description">Habilitar navegación por cajón desplegable</string>
     <string name="settings_export_data">Exportar datos</string>
-    <string name="settings_export_data_description">Exportar como archivo CSV localmente</string>
+    <string name="settings_export_data_description">Exportar copias ZIP, KDBX o Steam maFile</string>
     <string name="settings_import_data">Importar datos</string>
     <string name="settings_import_data_description">Restaurar desde un archivo de copia de seguridad</string>
     <string name="settings_version_info">Información de la versión</string>
@@ -1659,9 +1659,9 @@
     <!-- Data Management in Settings -->
     <string name="data_management">Gestión de datos</string>
     <string name="export_data">Exportar datos</string>
-    <string name="export_data_description">Exportar todos los datos a un archivo CSV</string>
+    <string name="export_data_description">Exportar copias ZIP, KDBX o Steam maFile</string>
     <string name="import_data">Importar datos</string>
-    <string name="import_data_description">Importar datos desde un archivo CSV</string>
+    <string name="import_data_description">Importar ZIP, KDBX, CSV y otros archivos compatibles</string>
 
     <!-- WebDAV Backup -->
     <string name="webdav_backup">WebDAV Copia de seguridad</string>
@@ -4682,4 +4682,11 @@
     <string name="url_match_limited_context">Host excluye otros subdominios. Si solo hay un nombre de host, no se deducen protocolo, ruta ni consulta. URL exacta y prefijo requieren la URL completa. Las expresiones regulares usan RE2.</string>
     <string name="url_match_regex_error">Primero cambia la URL por una expresión regular RE2 válida.</string>
     <string name="url_match_unreadable">No se pueden leer los datos de coincidencia de URL. Se conservan los datos y se desactiva el guardado.</string>
+    <string name="autofill_hyperos_save_compatibility">Compatibilidad de guardado con HyperOS 1</string>
+    <string name="autofill_hyperos_save_compatibility_desc">Tras pulsar Guardar en el sistema aparece un panel flotante. Pulsa Continuar guardando para abrir Monica. Requiere permiso para mostrarse sobre otras apps.</string>
+    <string name="autofill_save_overlay_title">Guardar en Monica</string>
+    <string name="autofill_save_overlay_body">Continúa para verificar tu identidad y revisar la contraseña. Cerrar este panel no guarda nada.</string>
+    <string name="autofill_save_overlay_continue">Continuar guardando</string>
+    <string name="autofill_save_overlay_permission_action">Permitir mostrar sobre otras apps</string>
+    <string name="autofill_save_overlay_permission_required">Permite que Monica se muestre sobre otras apps en los ajustes de compatibilidad de guardado de HyperOS 1 y vuelve a guardar.</string>
 </resources>

@@ -2,7 +2,7 @@ package takagi.ru.monica.data
 
 /**
  * 备份偏好设置数据类
- * 用于控制 WebDAV 备份中包含哪些内容类型
+ * 用于控制云备份及文件 ZIP 导出中包含哪些内容类型
  */
 data class BackupPreferences(
     val includePasswords: Boolean = true,
@@ -16,7 +16,7 @@ data class BackupPreferences(
     val includeTimeline: Boolean = true,           // 保留用于向后兼容
     val includeTrash: Boolean = true,              // 保留用于向后兼容
     val includeTrashAndHistory: Boolean = true,    // ✅ 新增：回收站与历史（合并项）
-    val includeWebDavConfig: Boolean = false,      // WebDAV 配置（默认关闭，需手动开启）
+    val includeWebDavConfig: Boolean = false,      // Monica 配置（旧字段名，默认关闭，需手动开启）
     val includeLocalKeePass: Boolean = false      // 本地 KeePass 数据库（默认关闭）
 ) {
     /**

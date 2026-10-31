@@ -1,15 +1,30 @@
 # Monica for Android 1.0.323
 
-> 未发布 / Unreleased
+> 发布日期 / Released: 2026-10-31
 
 ## 中文
 
-- KDBX 文件管理新增“保存数据”“合并数据”“重新加载数据”，移除单库菜单中多余的手动 Wi-Fi 同步。修复本地原库重新加载未生效、关闭回收站后旧回收条目混入普通列表，以及冷启动解锁后列表偶发空白的问题；前台检查外部文件变化并更新列表和状态，保留旧编辑冲突保护。合并按 UUID、修改/移动时间和删除记录处理，保留条目历史、附件与图标，写入前保存恢复副本。面包屑与状态栏随文字、按钮和任务状态平滑展开/收缩，下方列表连续移动。界面覆盖全部 13 种语言，保留跨库复制/移动规则。
+本次附件使用开发者提供的 arm64-v8a 与 armeabi-v7a 两个现成安装包，构建版本 `1.0.323-26103112-97`（versionCode `12`）；发布时未重新打包。
+
+- **本版本支持原生管理 KeePass（KDBX）数据库**：直接在 Monica 界面打开、浏览、编辑和保存原库，支持当前库合并、重新加载、分组、历史、附件及自定义图标。
+
+- 改进网页自动填充保存：补齐表单不可见时的系统保存标志，允许从系统快照读取已隐藏的原字段；保留保存开关、排除规则、表单边界和新密码一致性检查。实际提示仍依赖浏览器上报；全部自动填充后未修改，以及未上报提交或可见性的页面，仍可能不弹提示。生成密码历史不等于账号已保存。
+
+- ZIP 导出新增默认关闭的“Monica 配置”选项，勾选后使用加密备份，包含应用设置、常用账号、自动填充规则、安全问题及 WebDAV/Bitwarden 配置；记录仍限于选中的来源数据库，也可仅备份配置。ZIP 导入可选择同时恢复配置，默认保留本机配置；沿用已有连接保护与 Bitwarden 恢复后锁定规则。修正导入/导出入口仅提及 CSV 的误导说明，明确支持 ZIP、KDBX 等格式。
+
+- 修正 Monica 键盘触感调用：开启按键震动后，通过当前输入法窗口请求系统键盘反馈；保留默认关闭、即时开关和系统触感设置。
+
+- “HyperOS 1 保存兼容模式”改为独立悬浮中转面板：授予悬浮窗权限后，点击系统保存先显示面板，再点“继续保存”进入原有身份验证与编辑；关闭开关保持直接跳转。取消、熄屏、锁定或超时释放临时请求，不要求切换键盘。旧参数方案经用户反馈无效，新方案仍需故障真机复测；保留无凭据阶段日志。
+
+- 修复系统自动填充在“用户名、邮箱或手机号”等混合账号提示下漏填普通用户名，以及虚拟 HTML 输入框复用 WebView 类名时把账号、密码错误拆开的问题；通用登录表单可一次填写两项，保留跨域、跨表单及验证码/新密码保护。
+
+- KDBX 文件管理新增“保存数据”“合并数据”“重新加载数据”，移除单库菜单中多余的手动 Wi-Fi 同步。修复本地原库重新加载未生效、关闭回收站后旧回收条目混入普通列表，以及冷启动解锁后列表偶发空白的问题；前台检查外部文件变化并更新列表和状态，保留旧编辑冲突保护。“合并数据”直接重读当前原库，复用现有解锁凭据合并其他客户端版本，不再弹出选库窗口；云端库读取绑定远端并按版本条件写入。合并按 UUID、修改/移动时间和删除记录处理，保留条目历史、附件与图标，写入前保存恢复副本。文件状态临时替换面包屑路径，普通成功提示 3 秒后恢复路径，错误/合并冲突可关闭；修复大字号路径文字裁切，同一区域平滑展开/收缩，下方列表连续移动。界面覆盖全部 13 种语言，保留跨库复制/移动规则。
 
 - 物理 Passkey 管理、注册位置、PIN 操作、帮助及错误提示补齐全部 13 种语言，并修正繁体中文中混用简体的问题。
 
 - Monica Plus 诚信付款解锁前新增确认弹窗，取消或关闭弹窗不解锁；正文与确认按钮覆盖应用全部 13 种语言。
 
+- 增强本地启动与异常诊断：LogFox 可按 MonicaDiag 标签抓取完整构建版本、启动阶段、耗时、异常类型链和系统 Keystore 错误码；Android 11+ 补充系统保存的上次进程退出原因。新增日志不记录密码、密钥、PIN、密文或异常原文，保留既有锁定、恢复与崩溃处理。
 
 - 安全存储启动增加 15 秒等待上限，异常或超时后保持锁定并提供重试；未退出的底层调用不会重复启动，迟到结果不会放行后台维护。读取失败保留密文、旧密钥包装与恢复材料，不自动重建丢失密钥；系统密钥永久丢失时仍需原密码及已有恢复材料。
 - Passkey 管理页新增“物理密钥”FAB，密钥信息改为紧凑两列，PIN 操作分组显示；支持 USB/NFC FIDO2 信息、PIN 设置与更改、只读查看可发现凭据。Android 14 及以上注册到 Monica 时，可在保存位置选择已检测到的物理密钥；断开或取消不会自动改存软件库，也可通过系统入口注册或登录。标准 FIDO2 无法导入现有私钥，硬件 PIN 和凭据不保存到 Monica；本次通过合成协议与模拟器验证，尚未实体密钥实测。
@@ -24,12 +39,27 @@
 
 ## English
 
-- KDBX file menus now offer Save data, Merge data and Reload data, replacing the redundant per-vault manual Wi-Fi sync action. Fixed local reloads, recycled entries appearing after recycling was disabled, and intermittent empty lists after cold-start unlocking. Visible vaults check external file changes and update the list/status while retaining stale-editor conflict protection. UUID-based merging reconciles modification/move times and deletion records, retains entry history, attachments and icons, and creates a recovery copy before writing. Breadcrumb and status bars smoothly expand/collapse as content changes, moving the list continuously. All 13 languages and existing cross-vault copy/move rules are retained.
+The two attached APKs are the developer-provided arm64-v8a and armeabi-v7a builds, `1.0.323-26103112-97` (versionCode `12`). They were not rebuilt for publication.
+
+- **This release supports native KeePass (KDBX) database management**: open, browse, edit and save the original database in Monica, with current-file merging, reloading, groups, history, attachments and custom icons.
+
+- Improve web autofill save handling with the all-fields-invisible framework flag and exact-field reads from captured structures after fields become hidden. Keep save preferences, exclusions, form boundaries and new-password consistency checks. Prompts still depend on browser notifications and may remain suppressed for unchanged autofilled values or unreported submission/visibility changes. Generated-password history is not a saved account.
+
+- ZIP export now offers an opt-in Monica configuration backup with required encryption: app settings, common accounts, autofill rules, security questions and WebDAV/Bitwarden configuration. Records remain scoped to the selected database, and configuration-only exports are supported. ZIP import can restore configuration when selected, keeping local settings by default and preserving existing connection safeguards and locked Bitwarden restoration. Import/export descriptions now identify ZIP, KDBX and other supported formats instead of suggesting CSV only.
+
+- Corrected Monica keyboard haptic routing: enabling key vibration now requests system keyboard feedback through the active IME window. The default remains off, with live toggling and system haptic settings respected.
+
+- HyperOS 1 save compatibility now uses a separate floating panel. With display-over-other-apps permission, system Save opens the panel; Continue saving enters the existing authentication and editor flow. The default-off switch preserves direct launch when disabled. Cancel, screen-off, locking or timeout releases the temporary request; no keyboard switching is needed. The earlier flag-only approach failed on the reported device; this replacement still needs a device retest. Credential-free stage logs remain.
+
+- Fixed missing usernames in system autofill for mixed login labels such as “Username or email”, and incorrect account/password separation when virtual HTML controls reuse the WebView class name. The shared form parser keeps paired fields together while preserving origin, form, OTP and new-password boundaries.
+
+- KDBX file menus now offer Save data, Merge data and Reload data, replacing the redundant per-vault manual Wi-Fi sync action. Fixed local reloads, recycled entries appearing after recycling was disabled, and intermittent empty lists after cold-start unlocking. Visible vaults check external file changes and update the list/status while retaining stale-editor conflict protection. Merge data now rereads the current source with the open session’s credentials, without a database picker; remote vaults read their bound source and write with a version condition. UUID-based merging reconciles modification/move times and deletion records, retains entry history, attachments and icons, and creates a recovery copy before writing. File status temporarily replaces the breadcrumb path; ordinary success returns to the path after three seconds, while errors/merge conflicts can be dismissed. Large breadcrumb text is no longer clipped; the shared area smoothly expands/collapses, moving the list continuously. All 13 languages and existing cross-vault copy/move rules are retained.
 
 - Hardware Passkey management, registration location, PIN actions, help and errors now cover all 13 app languages; corrected Simplified Chinese text in the Traditional Chinese resources.
 
 - Monica Plus now asks for payment unlock confirmation in all 13 app languages; cancelling or dismissing the dialog leaves Plus locked.
 
+- Added local startup and failure diagnostics under the MonicaDiag Logcat tag for LogFox: full build version, startup stages, elapsed time, exception types and system Keystore codes. Android 11+ also reports retained process-exit reasons. New diagnostics omit passwords, keys, PINs, ciphertext and exception messages, preserving existing locking, recovery and crash handling.
 
 - Secure-storage startup now limits waiting to 15 seconds and stays locked on errors or timeouts, with retry available. Outstanding provider calls are not duplicated, and late results cannot enable maintenance. Read failures preserve ciphertext, existing key wrappers and recovery material without generating replacement keys; permanently lost system keys still require the original password and existing recovery material.
 - Added a physical-key FAB to Passkey management with compact two-column information and grouped PIN controls for USB/NFC FIDO2 keys and read-only credential browsing. On Android 14+, registration through Monica can select a detected physical key as the save location; disconnection or cancellation never falls back to software storage. System registration and sign-in remain available. Standard FIDO2 cannot import existing private keys; hardware PINs and credentials are not stored in Monica. Verified with synthetic peers and emulators; physical-key testing is pending.

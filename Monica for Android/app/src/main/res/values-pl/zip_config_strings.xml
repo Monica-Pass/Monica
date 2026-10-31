@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_config_backup_hint">Zawiera ustawienia, typowe konta, reguły autouzupełniania, pytania zabezpieczające i konfigurację WebDAV/Bitwarden. Wymaga szyfrowania.</string>
+    <string name="zip_config_encryption_required">Zaszyfruj kopię ZIP, aby dołączyć konfigurację Monica.</string>
+    <string name="zip_config_backup_failed">Nie udało się zapisać całej wybranej konfiguracji Monica. Nie wyeksportowano kopii.</string>
+    <string name="zip_restore_config">Przywróć konfigurację Monica</string>
+    <string name="zip_restore_config_hint">Przywróć również dołączoną konfigurację. Bez zaznaczenia zachowasz ustawienia lokalne. Istniejące połączenia WebDAV pozostają; sejfy Bitwarden wymagają ponownej weryfikacji.</string>
+</resources>

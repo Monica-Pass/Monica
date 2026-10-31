@@ -1,0 +1,26 @@
+Final AndroidTest builds (existing main APKs reused):
+ordinary: BUILD SUCCESSFUL in 1m 1s
+fdroid: BUILD SUCCESSFUL in 35s
+
+Shared source verification:
+app/src/main/java/takagi/ru/monica/autofill_ng/MonicaAutofillServiceNg.kt
+SHA-256 df73485eae7d17b017d884ccdc2b16c94a93bf76d98d65f3f90e0a8eb04f5f72; ordinary == F-Droid
+app/src/main/java/takagi/ru/monica/autofill_ng/AutofillSaveTransparentActivity.kt
+SHA-256 7a949724f2a4c56e6137fd91a70798eb1038b4a87d220574172543f8b2b68399; ordinary == F-Droid
+app/src/androidTest/java/takagi/ru/monica/autofill_ng/AutofillFlowInstrumentedTest.kt
+SHA-256 a993f4f37b5318a546285b20861fa15065095b0305f5fd7940c8d9212b96471a; ordinary == F-Droid
+MonicaAutofillServiceNg.kt: unchanged from V1.0.322
+AutofillSaveTransparentActivity.kt: unchanged from V1.0.322
+
+Restored original Android user 0.
+Removed only the owned guest 14.
+Users:
+
+	UserInfo{0:Owner:c13} running
+
+	UserInfo{10:Monica:410}
+
+	UserInfo{11:Monica_Recovery316:410}
+
+	UserInfo{12:Monica_Recovery316_Retest:410}
+Stopped the public AVD started by this task; configuration and data disk preserved.

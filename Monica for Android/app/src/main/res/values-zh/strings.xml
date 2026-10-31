@@ -710,7 +710,7 @@
     <string name="import_data_button">导入</string>
     <string name="import_data_success">数据导入成功</string>
     <string name="import_data_error">导入失败</string>
-    <string name="import_data_supported_formats">支持应用导出的CSV文件和支付宝交易明细</string>
+    <string name="import_data_supported_formats">从 ZIP、KDBX、CSV 等支持的文件导入</string>
     <string name="import_data_select_type">选择导入类型</string>
     <string name="import_data_type_normal">应用数据</string>
     <string name="import_data_type_alipay">支付宝账单</string>
@@ -1312,7 +1312,7 @@
     <string name="settings_bottom_sheet_title">底部抽屉模式</string>
     <string name="settings_bottom_sheet_description">启用可上拉的抽屉式导航</string>
     <string name="settings_export_data">导出数据</string>
-    <string name="settings_export_data_description">导出为CSV文件到本地</string>
+    <string name="settings_export_data_description">导出 ZIP 备份、KDBX 或 Steam maFile</string>
     <string name="settings_import_data">导入数据</string>
     <string name="settings_import_data_description">从备份文件恢复</string>
     <string name="settings_version_info">版本信息</string>
@@ -1642,9 +1642,9 @@
     <!-- Data Management in Settings -->
     <string name="data_management">数据管理</string>
     <string name="export_data">导出数据</string>
-    <string name="export_data_description">导出所有数据到CSV文件</string>
+    <string name="export_data_description">导出 ZIP 备份、KDBX 或 Steam maFile</string>
     <string name="import_data">导入数据</string>
-    <string name="import_data_description">从CSV文件导入数据</string>
+    <string name="import_data_description">从 ZIP、KDBX、CSV 等支持的文件导入</string>
     
     <!-- WebDAV Backup -->
     <string name="webdav_backup">WebDAV 备份</string>
@@ -4702,4 +4702,11 @@
     <string name="auto_focus_search_on_startup_desc">解锁后进入主页面时展开搜索并显示键盘。</string>
     <string name="ime_key_vibration_title">按键震动</string>
     <string name="ime_key_vibration_description">使用 Monica 内置键盘时，每按一次按键震动一下。</string>
+    <string name="autofill_hyperos_save_compatibility">HyperOS 1 保存兼容模式</string>
+    <string name="autofill_hyperos_save_compatibility_desc">点击系统“保存”后先显示悬浮面板，再点“继续保存”进入 Monica。需允许显示在其他应用上层。</string>
+    <string name="autofill_save_overlay_title">保存到 Monica</string>
+    <string name="autofill_save_overlay_body">继续验证身份并检查要保存的密码。关闭面板不会保存任何内容。</string>
+    <string name="autofill_save_overlay_continue">继续保存</string>
+    <string name="autofill_save_overlay_permission_action">允许显示悬浮窗</string>
+    <string name="autofill_save_overlay_permission_required">请在 HyperOS 1 保存兼容模式设置中允许 Monica 显示悬浮窗，然后重新保存。</string>
 </resources>

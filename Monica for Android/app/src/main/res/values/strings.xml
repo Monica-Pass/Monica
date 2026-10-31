@@ -676,7 +676,7 @@
     <string name="import_data_button">Import</string>
     <string name="import_data_success">Data imported successfully</string>
     <string name="import_data_error">Import failed</string>
-    <string name="import_data_supported_formats">Supports CSV files exported by the app and Alipay transaction details</string>
+    <string name="import_data_supported_formats">Import from ZIP, KDBX, CSV and other supported files</string>
     <string name="import_data_select_type">Select import type</string>
     <string name="import_data_type_normal">App Data</string>
     <string name="import_data_type_alipay">Alipay Bill</string>
@@ -1328,7 +1328,7 @@
     <string name="settings_bottom_sheet_title">Bottom Sheet Mode</string>
     <string name="settings_bottom_sheet_description">Enable pull-up drawer navigation</string>
     <string name="settings_export_data">Export Data</string>
-    <string name="settings_export_data_description">Export as CSV file locally</string>
+    <string name="settings_export_data_description">Export ZIP backups, KDBX or Steam maFile</string>
     <string name="settings_import_data">Import Data</string>
     <string name="settings_import_data_description">Restore from backup file</string>
     <string name="settings_version_info">Version Info</string>
@@ -1670,9 +1670,9 @@
     <!-- Data Management in Settings -->
     <string name="data_management">Data Management</string>
     <string name="export_data">Export Data</string>
-    <string name="export_data_description">Export all data to CSV file</string>
+    <string name="export_data_description">Export ZIP backups, KDBX or Steam maFile</string>
     <string name="import_data">Import Data</string>
-    <string name="import_data_description">Import data from CSV file</string>
+    <string name="import_data_description">Import from ZIP, KDBX, CSV and other supported files</string>
     
     <!-- WebDAV Backup -->
     <string name="webdav_backup">WebDAV Backup</string>
@@ -4767,4 +4767,11 @@
     <string name="auto_focus_search_on_startup_desc">Open search and show the keyboard when entering the main page after unlocking.</string>
     <string name="ime_key_vibration_title">Keypress vibration</string>
     <string name="ime_key_vibration_description">Vibrate once when pressing a key on the Monica keyboard.</string>
+    <string name="autofill_hyperos_save_compatibility">HyperOS 1 save compatibility</string>
+    <string name="autofill_hyperos_save_compatibility_desc">Show a floating panel after the system Save button; tap Continue saving to open Monica. Requires permission to display over other apps.</string>
+    <string name="autofill_save_overlay_title">Save to Monica</string>
+    <string name="autofill_save_overlay_body">Continue to verify your identity and review the password. Closing this panel saves nothing.</string>
+    <string name="autofill_save_overlay_continue">Continue saving</string>
+    <string name="autofill_save_overlay_permission_action">Allow display over other apps</string>
+    <string name="autofill_save_overlay_permission_required">Allow Monica to display over other apps in the HyperOS 1 save compatibility settings, then try saving again.</string>
 </resources>

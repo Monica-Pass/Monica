@@ -1,0 +1,286 @@
+=== ordinary-compat-on-final.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest:
+INSTRUMENTATION_STATUS: test=frameworkSavesTheNewPasswordAfterChangeFormCommit
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=2, flags=65618, fixtureStatus=null
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:1947)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:1897)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:407)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.access$submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:58)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest$submitAndReviewSavedPassword$1.invokeSuspend(Unknown Source:14)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:99)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.frameworkSavesTheNewPasswordAfterChangeFormCommit(AutofillFlowInstrumentedTest.kt:348)
+
+INSTRUMENTATION_STATUS: stream=
+Error in frameworkSavesTheNewPasswordAfterChangeFormCommit(takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest):
+java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=2, flags=65618, fixtureStatus=null
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:1947)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:1897)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:407)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.access$submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:58)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest$submitAndReviewSavedPassword$1.invokeSuspend(Unknown Source:14)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:99)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.frameworkSavesTheNewPasswordAfterChangeFormCommit(AutofillFlowInstrumentedTest.kt:348)
+
+INSTRUMENTATION_STATUS: test=frameworkSavesTheNewPasswordAfterChangeFormCommit
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=2, flags=65618, fixtureStatus=null
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:1947)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:1897)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:407)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.access$submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:58)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest$submitAndReviewSavedPassword$1.invokeSuspend(Unknown Source:14)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:99)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword(AutofillFlowInstrumentedTest.kt:357)
+
+INSTRUMENTATION_STATUS: stream=
+Error in frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword(takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest):
+java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=2, flags=65618, fixtureStatus=null
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:1947)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:1897)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:407)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.access$submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:58)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest$submitAndReviewSavedPassword$1.invokeSuspend(Unknown Source:14)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:99)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword(AutofillFlowInstrumentedTest.kt:357)
+
+INSTRUMENTATION_STATUS: test=frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 62.465
+There were 2 failures:
+1) frameworkSavesTheNewPasswordAfterChangeFormCommit(takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest)
+java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=2, flags=65618, fixtureStatus=null
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:1947)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:1897)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:407)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.access$submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:58)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest$submitAndReviewSavedPassword$1.invokeSuspend(Unknown Source:14)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:99)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.frameworkSavesTheNewPasswordAfterChangeFormCommit(AutofillFlowInstrumentedTest.kt:348)
+2) frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword(takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest)
+java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=2, flags=65618, fixtureStatus=null
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:1947)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:1897)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:407)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.access$submitAndReviewSavedPassword(AutofillFlowInstrumentedTest.kt:58)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest$submitAndReviewSavedPassword$1.invokeSuspend(Unknown Source:14)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:99)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.frameworkCarriesUsernameAcrossStepsWhenSavingNewPassword(AutofillFlowInstrumentedTest.kt:357)
+
+FAILURES!!!
+Tests run: 2,  Failures: 2
+
+
+INSTRUMENTATION_CODE: -1
+
+=== ordinary-system-save-first.txt ===
+--------- beginning of system
+D/SaveUi  (  618): on constructor: title=要将密码保存到Monica 自动填充吗？, subTitle=null
+I/SaveUi  (  618): Showing save dialog: 要将密码保存到Monica 自动填充吗？
+D/SaveUi  (  618): OneTimeListener.onCancel(): false
+D/SaveUi  (  618): destroy()
+D/SaveUi  (  618): OneTimeListener.onDestroy(): false
+D/SaveUi  (  618): on constructor: title=要将密码保存到Monica 自动填充吗？, subTitle=null
+I/SaveUi  (  618): Showing save dialog: 要将密码保存到Monica 自动填充吗？
+D/SaveUi  (  618): OneTimeListener.onCancel(): false
+D/SaveUi  (  618): destroy()
+D/SaveUi  (  618): OneTimeListener.onDestroy(): false
+
+=== ordinary-overlay-continue-final.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest:
+INSTRUMENTATION_STATUS: test=overlayWaitsForUserThenRequiresAuthenticationAndCancelDoesNotWrite
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=overlayWaitsForUserThenRequiresAuthenticationAndCancelDoesNotWrite
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 7.094
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+=== ordinary-cold-overlay-final.txt ===
+Application process absent before form; no active instrumentation; no Monica activity opened.
+Gboard selected; Android autofill service enabled.
+Real Android save prompt appeared after form submission.
+
+=== ordinary-cold-overlay-repeat.txt ===
+Application process absent before form; no active instrumentation; no Monica activity opened.
+Gboard selected; Android autofill service enabled.
+
+=== ordinary-cold-overlay-paced.txt ===
+Application process absent before form; no active instrumentation; no Monica activity opened.
+Gboard selected; Android autofill service enabled.
+
+=== ordinary-cold-overlay-focused.txt ===
+Application process absent before form; no active instrumentation; no Monica activity opened.
+Gboard selected; Android autofill service enabled.
+
+=== ordinary-cold-overlay-final-driver.txt ===
+Application process absent before form; no active instrumentation; no Monica activity opened.
+Gboard selected; Android autofill service enabled.
+
+=== ordinary-cold-overlay-popup-aware.txt ===
+Application process absent before form; no active instrumentation; no Monica activity opened.
+Gboard selected; Android autofill service enabled.
+Fixture verified matching nonempty new-password and confirmation fields before submit.
+Real Android save prompt appeared after form submission.
+Independent overlay appeared; tapped Continue saving with Gboard still selected.
+Overlay Continue opened AutofillSaveTransparentActivity; locked vault shows identity verification.
+Cold launch reached identity verification; this API35 driver does not enter the master password.
+PASS
+
+=== fdroid-overlay-continue-final.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest:
+INSTRUMENTATION_STATUS: test=overlayWaitsForUserThenRequiresAuthenticationAndCancelDoesNotWrite
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=overlayWaitsForUserThenRequiresAuthenticationAndCancelDoesNotWrite
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 10.49
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+=== fdroid-cold-overlay-final.txt ===
+Application process absent before form; no active instrumentation; no Monica activity opened.
+Gboard selected; Android autofill service enabled.
+Fixture verified matching nonempty new-password and confirmation fields before submit.
+Real Android save prompt appeared after form submission.
+Independent overlay appeared; tapped Continue saving with Gboard still selected.
+Overlay Continue opened AutofillSaveTransparentActivity; locked vault shows identity verification.
+Cold launch reached identity verification; this API35 driver does not enter the master password.
+PASS
+
+=== save-stage-logcat.txt ===
+I/MonicaAutofill( 6772): [SAVE] OVERLAY_SHOWN {requestId=3f69f58e-bb2b-4e49-9986-def714d71ed5, pid=6772, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill( 6772): [SAVE] OVERLAY_CONTINUED {requestId=3f69f58e-bb2b-4e49-9986-def714d71ed5, pid=6772, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill( 6772): [SAVE] ACTIVITY_CREATED {requestId=3f69f58e-bb2b-4e49-9986-def714d71ed5, pid=6772, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill( 6772): [SAVE] ACTIVITY_RESUMED {requestId=3f69f58e-bb2b-4e49-9986-def714d71ed5, pid=6772, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill( 6772): [SAVE] AUTH_READY {requestId=3f69f58e-bb2b-4e49-9986-def714d71ed5, pid=6772, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill( 6772): [SAVE] AUTH_CANCELED {requestId=3f69f58e-bb2b-4e49-9986-def714d71ed5, pid=6772, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill( 6772): [SAVE] ACTIVITY_DESTROYED {requestId=3f69f58e-bb2b-4e49-9986-def714d71ed5, pid=6772, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill( 7107): [SAVE] REQUEST_RECEIVED {requestId=cb00648e-f0b9-4b7c-ba93-8977d6847efd, pid=7107, sdk=35, monicaImeSelected=false}
+I/MonicaAutofill( 7107): [SAVE] NO_SAVE_DATA {requestId=cb00648e-f0b9-4b7c-ba93-8977d6847efd, pid=7107, sdk=35, monicaImeSelected=false}
+I/MonicaAutofill(10353): [SAVE] REQUEST_RECEIVED {requestId=8637835d-3e1e-462b-a113-0e3ed5e8d43d, pid=10353, sdk=35, monicaImeSelected=false}
+I/MonicaAutofill(10353): [SAVE] OVERLAY_SHOWN {requestId=8637835d-3e1e-462b-a113-0e3ed5e8d43d, pid=10353, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill(10353): [SAVE] OVERLAY_CONTINUED {requestId=8637835d-3e1e-462b-a113-0e3ed5e8d43d, pid=10353, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill(10353): [SAVE] ACTIVITY_CREATED {requestId=8637835d-3e1e-462b-a113-0e3ed5e8d43d, pid=10353, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill(10353): [SAVE] ACTIVITY_RESUMED {requestId=8637835d-3e1e-462b-a113-0e3ed5e8d43d, pid=10353, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill(10353): [SAVE] AUTH_READY {requestId=8637835d-3e1e-462b-a113-0e3ed5e8d43d, pid=10353, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill(11391): [SAVE] OVERLAY_SHOWN {requestId=3b8a642c-20e1-45b1-b891-73e914d6dae5, pid=11391, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill(11391): [SAVE] OVERLAY_CONTINUED {requestId=3b8a642c-20e1-45b1-b891-73e914d6dae5, pid=11391, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill(11391): [SAVE] ACTIVITY_CREATED {requestId=3b8a642c-20e1-45b1-b891-73e914d6dae5, pid=11391, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill(11391): [SAVE] ACTIVITY_RESUMED {requestId=3b8a642c-20e1-45b1-b891-73e914d6dae5, pid=11391, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill(11391): [SAVE] AUTH_READY {requestId=3b8a642c-20e1-45b1-b891-73e914d6dae5, pid=11391, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill(11391): [SAVE] AUTH_CANCELED {requestId=3b8a642c-20e1-45b1-b891-73e914d6dae5, pid=11391, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill(11391): [SAVE] ACTIVITY_DESTROYED {requestId=3b8a642c-20e1-45b1-b891-73e914d6dae5, pid=11391, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill(10353): [SAVE] ACTIVITY_RESUMED {requestId=8637835d-3e1e-462b-a113-0e3ed5e8d43d, pid=10353, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill(10353): [SAVE] ACTIVITY_RESUMED {requestId=8637835d-3e1e-462b-a113-0e3ed5e8d43d, pid=10353, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill(10353): [SAVE] ACTIVITY_DESTROYED {requestId=8637835d-3e1e-462b-a113-0e3ed5e8d43d, pid=10353, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill(11841): [SAVE] REQUEST_RECEIVED {requestId=2bb5c59d-0866-4a6f-b36a-45f0141e680e, pid=11841, sdk=35, monicaImeSelected=false}
+I/MonicaAutofill(11841): [SAVE] OVERLAY_SHOWN {requestId=2bb5c59d-0866-4a6f-b36a-45f0141e680e, pid=11841, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill(11841): [SAVE] OVERLAY_CONTINUED {requestId=2bb5c59d-0866-4a6f-b36a-45f0141e680e, pid=11841, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill(11841): [SAVE] ACTIVITY_CREATED {requestId=2bb5c59d-0866-4a6f-b36a-45f0141e680e, pid=11841, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill(11841): [SAVE] ACTIVITY_RESUMED {requestId=2bb5c59d-0866-4a6f-b36a-45f0141e680e, pid=11841, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+I/MonicaAutofill(11841): [SAVE] AUTH_READY {requestId=2bb5c59d-0866-4a6f-b36a-45f0141e680e, pid=11841, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+
+=== cleanup.txt ===
+Restored original Android user 0.
+Initial remove-user returned failure; explicit --wait removal then succeeded.
+Removed only owned guest 12 (Monica_HyperOS_Sheet_API35_323).
+Users:
+
+	UserInfo{0:机主:4c13} running
+
+	UserInfo{11:Paysage:410}
+Stopped the existing API35 AVD started by this task; configuration and data disk preserved.

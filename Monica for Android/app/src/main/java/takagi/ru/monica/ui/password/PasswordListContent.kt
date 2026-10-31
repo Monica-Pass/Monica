@@ -2,6 +2,8 @@ package takagi.ru.monica.ui
 
 import takagi.ru.monica.utils.AppLocaleStringResolver
 
+import takagi.ru.monica.ui.password.KeePassFileActions
+import takagi.ru.monica.ui.password.rememberKeePassFileActions
 import takagi.ru.monica.ui.screens.NativeTokenListUi
 import takagi.ru.monica.ui.screens.NativeTokenFilterChip
 import takagi.ru.monica.ui.screens.rememberNativeTokenList
@@ -429,6 +431,9 @@ fun PasswordListContent(
         is CategoryFilter.KeePassDatabaseStarred -> filter.databaseId
         is CategoryFilter.KeePassDatabaseUncategorized -> filter.databaseId
         else -> null
+    }
+    val keePassFileActions = rememberKeePassFileActions(selectedKeePassDatabaseId, viewModel) {
+        selectedKeePassDatabaseId?.let { localKeePassViewModel.refreshGroups(it); viewModel.refreshKeePassOverviewAfterNativeRead(it) }
     }
     val selectedMdbxDatabaseId = when (val filter = currentFilter) {
         is CategoryFilter.MdbxDatabase -> filter.databaseId
@@ -1593,7 +1598,7 @@ fun PasswordListContent(
             quickStatusBitwardenSyncState != null
     val showPinnedQuickFolderPathBanner =
         quickStatusBannerEnabled &&
-            (effectiveQuickFolderBreadcrumbs.isNotEmpty() || hasQuickStatusProgress)
+            (effectiveQuickFolderBreadcrumbs.isNotEmpty() || hasQuickStatusProgress || keePassFileActions?.showStatus == true)
     val hasScrollableHeaderContent = remember(
         hasVisibleQuickFilters,
         hasVisibleCategoryQuickFilters,
@@ -1801,6 +1806,7 @@ fun PasswordListContent(
             mdbxViewModel = mdbxViewModel,
             selectedBitwardenVaultId = selectedBitwardenVaultId,
             selectedKeePassDatabaseId = selectedKeePassDatabaseId,
+            keePassFileActions = keePassFileActions,
             selectedMdbxDatabaseId = selectedMdbxDatabaseId,
             selectedMdbxFolders = selectedMdbxFolders,
             isTopBarSyncing = isTopBarSyncing,
@@ -1920,6 +1926,7 @@ fun PasswordListContent(
             },
             quickStatusBitwardenSyncState = quickStatusBitwardenSyncState,
             quickStatusKeePassSyncState = quickStatusKeePassSyncState,
+            keePassFileActions = keePassFileActions,
             currentFilter = currentFilter,
             onNavigateFilter = viewModel::setCategoryFilter,
             shouldGateInitialPasswordFirstFrame = shouldGateInitialPasswordFirstFrame,
@@ -2206,6 +2213,7 @@ private fun PasswordListMainPaneHost(
     onShowQuickStatusDeleteDialog: () -> Unit,
     quickStatusBitwardenSyncState: QuickStatusBitwardenSyncState?,
     quickStatusKeePassSyncState: QuickStatusKeePassSyncState?,
+    keePassFileActions: KeePassFileActions?,
     currentFilter: CategoryFilter,
     onNavigateFilter: (CategoryFilter) -> Unit,
     shouldGateInitialPasswordFirstFrame: Boolean,
@@ -2307,6 +2315,7 @@ private fun PasswordListMainPaneHost(
         },
         quickStatusBitwardenSyncState = quickStatusBitwardenSyncState,
         quickStatusKeePassSyncState = quickStatusKeePassSyncState,
+        keePassFileActions = keePassFileActions,
         currentFilter = currentFilter,
         onNavigateFilter = onNavigateFilter,
         shouldGateInitialPasswordFirstFrame = shouldGateInitialPasswordFirstFrame,

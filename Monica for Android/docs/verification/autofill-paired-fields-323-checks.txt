@@ -1,0 +1,60 @@
+Autofill paired fields — 2026-10-31
+Flavor: ordinary
+Package: takagi.ru.monica
+Version: 1.0.323-26103112-92
+Build evidence: pre-interruption Debug / AndroidTest builds; unchanged sources verified at closeout.
+No new production or test changes during resume; no extra build required.
+
+JVM:
+name=takagi.ru.monica.autofill_ng.AutofillDetectionPolicyTest tests=8 failures=0 errors=0 skipped=0 time=0.003
+name=takagi.ru.monica.autofill_ng.AutofillFieldRolePolicyTest tests=3 failures=0 errors=0 skipped=0 time=0.007
+name=takagi.ru.monica.autofill_ng.AutofillHtmlHintTokensTest tests=3 failures=0 errors=0 skipped=0 time=0.002
+name=takagi.ru.monica.autofill_ng.AutofillPasswordPurposeResponseTest tests=14 failures=0 errors=0 skipped=0 time=1.756
+name=takagi.ru.monica.autofill_ng.AutofillProfileValuesTest tests=10 failures=0 errors=0 skipped=0 time=0.198
+name=takagi.ru.monica.autofill_ng.AutofillResponseCompatibilityTest tests=8 failures=0 errors=0 skipped=0 time=0.297
+name=takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest tests=106 failures=0 errors=0 skipped=0 time=14.612
+
+APK SHA-256:
+Monica-Android-x86_64-1.0.323-26103112-92.APK: 33b0aa38c0f951557d3d53ac0538acdf098662a9b6441c8cacf3ca74367cebbb (87046772 bytes)
+app-debug-androidTest.apk: 53a3de983f5482cb4924d8aa96333bd5b53658d5ba66c8328651fefede3d64a9 (7788738 bytes)
+
+Shared source SHA-256 (identical in ordinary and canonical F-Droid):
+app/src/main/java/takagi/ru/monica/autofill_ng/EnhancedAutofillStructureParserV2.kt: 93e489d597fed4bfd5895c700d750dc4b2d6ddbcf49001909ac03ba462bd7300
+app/src/test/java/takagi/ru/monica/autofill_ng/AutofillStructureIntegrationTest.kt: 2265b825d43621980871cddffd77f2ec26b901b3def5a1074d9d3ce99928c583
+app/src/androidTest/java/takagi/ru/monica/autofill_ng/AutofillFlowInstrumentedTest.kt: 3ca3fb1d3b0f91fb78bb5324d1a1e821fe0c245ac8ba65e75e59a84e923568f5
+app/src/androidTest/java/takagi/ru/monica/autofill_ng/fixture/AutofillFormFixtureActivity.java: db418b5454e764ee73625c169a3c4486a74ddec162b401d7c419c66413d8c938
+app/src/androidTest/assets/autofill-paired-fixture.html: bdbcb6bde8280db3eb733c11eebd0ae01f5b5d5c9d59b2f18ec8ed71d5f77234
+
+API32: 13 passed, 0 failed; seconds=75.52
+Ordinary negative control: old Debug 1.0.323-26103112-91 filled password but left username EMPTY.
+Old structure suite: 106 tests, 6 failures (3 cases on API29/34), 100 passed.
+Prior ordinary 13-case run: 1 inline-password suggestion timeout, 12 passed (205.043s).
+Resume cold-boot single case: fixture window not observed within 20s; failed before field focus (25.285s).
+Same ordinary APK/test APK warm single inline-password case: passed (10.092s).
+Prior inline absence was not reproduced in the final suites; root cause is unconfirmed.
+Coolapk 16.7.0 could not start on the emulator: UnsatisfiedLinkError in com.netease.nis.wrapper.MyJni.load.
+No Coolapk in-app, real-device, OEM-ROM, or real-account sign-in claim.
+
+Installed artifact verification:
+takagi.ru.monica: installed APK SHA-256 matches 33b0aa38c0f951557d3d53ac0538acdf098662a9b6441c8cacf3ca74367cebbb
+takagi.ru.monica.test: installed APK SHA-256 matches 53a3de983f5482cb4924d8aa96333bd5b53658d5ba66c8328651fefede3d64a9
+takagi.ru.monica.fdroid: installed APK SHA-256 matches ba7ac05907d8ed76a0243197b0d95290931abb33a76cec07e5fcb02700fb6e6c
+takagi.ru.monica.fdroid.test: installed APK SHA-256 matches ba59f8ca595f11578501f5b6de0709225d139bcb0abbde173204360f72306a3b
+
+Dedicated synthetic test user cleanup:
+com.coolapk.market: uninstalled from user 14; no other user installation.
+local.monica.pairedprobe: uninstalled from user 14; no other user installation.
+Dedicated user 14 removed, including its synthetic vaults, failure screenshots and input-method settings.
+Current user: 0. Other existing users retained.
+Users:
+
+	UserInfo{0:Owner:c13} running
+
+	UserInfo{10:Monica:410}
+
+	UserInfo{11:Monica_Recovery316:410}
+
+	UserInfo{12:Monica_Recovery316_Retest:410}
+Public AVD configuration and data disk retained; emulator shutdown is performed separately.
+
+Emulator shutdown: adb emu kill returned OK; original AVD configuration and data disk retained.

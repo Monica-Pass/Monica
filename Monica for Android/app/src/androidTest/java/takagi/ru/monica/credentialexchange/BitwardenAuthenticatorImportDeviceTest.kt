@@ -100,7 +100,7 @@ class BitwardenAuthenticatorImportDeviceTest {
                         onImportBitwardenCsv = { passwordImports++; f.model.importBitwardenCsv(it, selected) },
                         onImportBitwardenAuthenticatorCsv = { authenticatorImports++; f.model.importBitwardenAuthenticatorCsv(it, selected) },
                         onImportAegis = { Result.success(0) }, onImportEncryptedAegis = { _, _ -> Result.success(0) },
-                        onImportSteamMaFile = { Result.success(0) }, onImportZip = { _, _ -> Result.success(0) }) }
+                        onImportSteamMaFile = { Result.success(0) }, onImportZip = { _, _, _ -> Result.success(0) }) }
                 }
             }
             fun label(id: Int) = localized.getString(id)

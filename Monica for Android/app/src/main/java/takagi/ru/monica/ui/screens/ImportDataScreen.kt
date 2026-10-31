@@ -123,7 +123,7 @@ fun ImportDataScreen(
     }, // Steam 登录导入（提交验证码）
     onClearSteamLoginImportSession: (String) -> Unit = {}, // 清理 Steam 登录会话
     importProgress: takagi.ru.monica.transfer.TransferProgress? = null,
-    onImportZip: suspend (Uri, String?) -> Result<Int>,  // Monica ZIP导入
+    onImportZip: suspend (Uri, String?, Boolean) -> Result<Int>,  // Monica ZIP导入
     onImportKdbx: suspend (Uri, String, Uri?) -> Result<Int> = { _, _, _ -> Result.failure(Exception("Not implemented")) },  // KDBX导入
     onImportKeePassCsv: suspend (Uri) -> Result<Int> = onImport,  // KeePass CSV导入
     onImportBitwardenCsv: suspend (Uri) -> Result<Int> = onImport,  // Bitwarden CSV导入
@@ -198,6 +198,7 @@ fun ImportDataScreen(
     var csvImportType by remember { mutableStateOf("normal") } // CSV子类型
     var showPasswordDialog by remember { mutableStateOf(false) }
     var showZipRestoreConfirmDialog by remember { mutableStateOf(false) }
+    var restoreZipConfig by remember(selectedFileUri) { mutableStateOf(false) }
     var showPasswordKeyboardTagDialog by remember { mutableStateOf(false) }
     var aegisPassword by remember { mutableStateOf("") }
     var passwordError by remember { mutableStateOf<String?>(null) }
@@ -1012,6 +1013,8 @@ fun ImportDataScreen(
         ZipRestoreConfirmDialog(
             selectedFileName = selectedFileName,
             isImporting = isImporting,
+            restoreConfig = restoreZipConfig,
+            onRestoreConfigChange = { restoreZipConfig = it },
             onDismiss = { showZipRestoreConfirmDialog = false },
             onConfirm = {
                 val uri = selectedFileUri
@@ -1020,7 +1023,7 @@ fun ImportDataScreen(
                     scope.launch {
                         localImporting = true
                         try {
-                            val result = backgroundImporter.run(onImportZip, uri, null)
+                            val result = backgroundImporter.run(onImportZip, uri, null, restoreZipConfig)
                             localImporting = false
                             result.onSuccess { count ->
                                 localImporting = false
@@ -1096,7 +1099,7 @@ fun ImportDataScreen(
                             selectedFileUri?.let { uri ->
                                 // 使用加密导入回调
                                 val result = when (importType) {
-                                    "monica_zip" -> backgroundImporter.run(onImportZip, uri, aegisPassword)
+                                    "monica_zip" -> backgroundImporter.run(onImportZip, uri, aegisPassword, restoreZipConfig)
                                     "stratum" -> backgroundImporter.run(onImportStratum, uri, aegisPassword)
                                     else -> backgroundImporter.run(onImportEncryptedAegis, uri, aegisPassword)
                                 }

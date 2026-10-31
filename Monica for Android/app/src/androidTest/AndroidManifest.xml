@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
     <application android:label="Monica Icon Fixture">
         <provider android:name="takagi.ru.monica.keepass.KeePassFileTestDocumentsProvider"
             android:authorities="${applicationId}.kdbx-files" android:exported="true"
@@ -18,6 +19,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="takagi.ru.monica.autofill_ng.fixture.CoolapkLiveFormActivity"
+            android:exported="true"
+            android:process=":autofill_fixture"
+            android:theme="@android:style/Theme.Material.Light.NoActionBar" />
         <activity
             android:name="takagi.ru.monica.autofill_ng.fixture.AutofillFormFixtureActivity"
             android:exported="true"

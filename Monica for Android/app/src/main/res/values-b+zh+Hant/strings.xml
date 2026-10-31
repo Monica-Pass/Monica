@@ -637,7 +637,7 @@
     <string name="import_data_button">匯入</string>
     <string name="import_data_success">數據匯入成功</string>
     <string name="import_data_error">匯入失敗</string>
-    <string name="import_data_supported_formats">支援應用程式匯出的CSV檔案和支付寶交易明細</string>
+    <string name="import_data_supported_formats">從 ZIP、KDBX、CSV 等支援的檔案匯入</string>
     <string name="import_data_select_type">選擇匯入類型</string>
     <string name="import_data_type_normal">應用程式數據</string>
     <string name="import_data_type_alipay">支付寶賬單</string>
@@ -1195,7 +1195,7 @@
     <string name="settings_bottom_sheet_title">底部抽屜模式</string>
     <string name="settings_bottom_sheet_description">啟用可上拉的抽屜式導航</string>
     <string name="settings_export_data">匯出數據</string>
-    <string name="settings_export_data_description">匯出為CSV檔案到本地</string>
+    <string name="settings_export_data_description">匯出 ZIP 備份、KDBX 或 Steam maFile</string>
     <string name="settings_import_data">匯入數據</string>
     <string name="settings_import_data_description">從備份檔案還原</string>
     <string name="settings_version_info">版本資料</string>
@@ -1485,9 +1485,9 @@
     <string name="support_author_subtitle">軟件完全免費，感謝您的支援</string>
     <string name="data_management">數據管理</string>
     <string name="export_data">匯出數據</string>
-    <string name="export_data_description">匯出所有數據到CSV檔案</string>
+    <string name="export_data_description">匯出 ZIP 備份、KDBX 或 Steam maFile</string>
     <string name="import_data">匯入數據</string>
-    <string name="import_data_description">從CSV檔案匯入數據</string>
+    <string name="import_data_description">從 ZIP、KDBX、CSV 等支援的檔案匯入</string>
     <string name="webdav_backup">WebDAV 備份</string>
     <string name="webdav_backup_description">備份到 WebDAV 伺服器</string>
     <string name="webdav_config">WebDAV 設定</string>
@@ -4380,4 +4380,11 @@
     <string name="auto_focus_search_on_startup_desc">解鎖後進入主頁面時展開搜尋並顯示鍵盤。</string>
     <string name="ime_key_vibration_title">按鍵震動</string>
     <string name="ime_key_vibration_description">使用 Monica 內建鍵盤時，每按一次按鍵震動一下。</string>
+    <string name="autofill_hyperos_save_compatibility">HyperOS 1 儲存相容模式</string>
+    <string name="autofill_hyperos_save_compatibility_desc">點擊系統「儲存」後先顯示浮動面板，再點「繼續儲存」進入 Monica。需允許顯示在其他應用程式上層。</string>
+    <string name="autofill_save_overlay_title">儲存到 Monica</string>
+    <string name="autofill_save_overlay_body">繼續驗證身分並檢查要儲存的密碼。關閉面板不會儲存任何內容。</string>
+    <string name="autofill_save_overlay_continue">繼續儲存</string>
+    <string name="autofill_save_overlay_permission_action">允許顯示浮動視窗</string>
+    <string name="autofill_save_overlay_permission_required">請在 HyperOS 1 儲存相容模式設定中允許 Monica 顯示浮動視窗，然後重新儲存。</string>
 </resources>

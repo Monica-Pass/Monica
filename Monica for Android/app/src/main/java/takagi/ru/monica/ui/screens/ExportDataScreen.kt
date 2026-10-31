@@ -226,8 +226,14 @@ fun ExportDataScreen(
                             includeGeneratorHistory = false, includeTimeline = false)
                     }
                 }
+                ExportScopeToggle(stringResource(R.string.backup_content_webdav_config), preferences.includeWebDavConfig, 0, 1) {
+                    preferences = preferences.copy(includeWebDavConfig = it)
+                    if (it) encrypt = true
+                }
+                Text(stringResource(R.string.zip_config_backup_hint), style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 4.dp))
                 ExportScopeToggle(stringResource(R.string.transfer_encrypt_backup), encrypt, 0, 1,
-                    enabled = !preferences.includePasskeys && !preferences.includeImages) { encrypt = it }
+                    enabled = !preferences.includePasskeys && !preferences.includeImages && !preferences.includeWebDavConfig) { encrypt = it }
                 Text(stringResource(R.string.transfer_encryption_hint), style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 4.dp))
             }

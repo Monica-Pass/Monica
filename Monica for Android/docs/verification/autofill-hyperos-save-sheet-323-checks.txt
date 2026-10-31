@@ -1,0 +1,240 @@
+=== final-checks.txt ===
+SHARED app/src/main/java/takagi/ru/monica/autofill_ng/AutofillSaveOverlay.kt SHA256=b7ca961f2902b56aac87a6ecb5e45756eed84fc085ee0c4e867ffa71f2960e9a
+SHARED app/src/main/java/takagi/ru/monica/autofill_ng/HyperOsSaveOverlayPermission.kt SHA256=a60a6faecb3dbdf991677592a48d974c216a5d05d4406edeac27d14edc6defd9
+SHARED app/src/main/java/takagi/ru/monica/autofill_ng/AutofillSaveLaunch.kt SHA256=d7390d1459a7496d89f1c15e162467af2463ec43651fb1eddc9a5465588efbba
+SHARED app/src/main/java/takagi/ru/monica/autofill_ng/AutofillSaveDiagnostics.kt SHA256=e341208b69e2766fd57dfeb26fc53c396a2970777ad9e1e56e341d4c860e3cc9
+SHARED app/src/main/java/takagi/ru/monica/autofill_ng/MonicaAutofillServiceNg.kt SHA256=d900ec42dff8faed67edd98633739fc08df521bf2840e89f8c0a1d77605c02f6
+SHARED app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsScreen.kt SHA256=76288f9c7b3efaf951fe6189beee000cd72841635c317d8f802734533c9ab6be
+SHARED app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsV2Screen.kt SHA256=a807ba383a9daa6bee9aedc13aca2456e048540bb86a601a3ee2146f6b0314b3
+SHARED app/src/androidTest/java/takagi/ru/monica/autofill_ng/AutofillFlowInstrumentedTest.kt SHA256=d6b10d3fc32fe8ce9fd4cbcd000e0b8e252719aeb27d7e861b1628a15207e965
+SHARED app/src/main/res/values/strings.xml SHA256=b7d9cfde456f30fb1b9e1bd193ba0d3a2f38fb6b4c5828aa4c2d4e7495d5bb90
+SHARED app/src/main/res/values-b+lzh/strings.xml SHA256=3052be86cb4cfdfefb8e428f2bc257fa4984c1a2eb068811058ec0a8f3d5843e
+SHARED app/src/main/res/values-b+zh+Hant/strings.xml SHA256=aae7cd47af68fb5b444e2fd29e369d41b0f73ec99f1c9f91003a6ae2c93b4e22
+SHARED app/src/main/res/values-de/strings.xml SHA256=ee38cd91d007548d8be59e72b7c8b4750dc02d06215d115755e74dc6b3740ff5
+SHARED app/src/main/res/values-es/strings.xml SHA256=50d3ebe1426df5e44cd8301a5706a42e2812c5b020f2f5ed79f213a3a1e0b4d5
+SHARED app/src/main/res/values-fr/strings.xml SHA256=4f15ef4917c43d3edc5563fdb4b95f9c3f6cddc1584c130b9f9e460ff86b6754
+SHARED app/src/main/res/values-it/strings.xml SHA256=9a0487e37b6eec2ac92465cfcefc0b21f075b496c1ca41f98740f866d18b6699
+SHARED app/src/main/res/values-ja/strings.xml SHA256=b6401f4c4977c97ea1145f67cfe7b9f16ff0c05ecc4efc7467961f4ecdffacde
+SHARED app/src/main/res/values-ko/strings.xml SHA256=6518d56c728938d906efc29ef1c525813d35f5f37ccc0d2997ee45b0848bfc6a
+SHARED app/src/main/res/values-pl/strings.xml SHA256=8d5eb1d47d0dc1db2069f80559cbddcf94e2d0b0410f8f690a71a1c652b6cb54
+SHARED app/src/main/res/values-ru/strings.xml SHA256=f660f275a3e9c458886f4f6659072817ffa13f55eb0fa16add5305d624095018
+SHARED app/src/main/res/values-vi/strings.xml SHA256=4cda578b02f75a8f9badf01ae94db05255acac60acad74e878febabdcb4e35e3
+SHARED app/src/main/res/values-zh/strings.xml SHA256=a7f7c4f1b3ad77c35d197106982a8400ce18aa18e131d4f2ee2a8992199f8828
+SHARED app/src/main/res/values-zh-rCN/strings.xml SHA256=31d45f12dd51af069c0da13fdd531d6d02b6bf7eaf9c5540b3c21d1fe429bf06
+SHARED app/src/androidTest/java/takagi/ru/monica/autofill_ng/HyperOsSaveCompatibilitySettingsTest.kt SHA256=82f9bf3c7f3b932cb5a500a3b54c720244958ac08b27237ecfbbf68d9a3043ef
+ordinary SYSTEM_ALERT_WINDOW declared once
+ordinary git diff --check PASS
+ordinary debug 1.0.323-26103112-96 SHA256=861134c2f350400bf0c161566f572554a609a041d71293eef2e6529ad5daa718
+ordinary androidTest SHA256=95b160fc6ae1ab7465db77dc04452483b79b92f11c9c6e11304d11e94febbbfa
+ordinary JVM PASS [('AutofillSaveLaunchTest', '16'), ('AutofillSaveContextPolicyTest', '6'), ('AutofillSaveValuePolicyTest', '5')]
+fdroid SYSTEM_ALERT_WINDOW declared once
+fdroid git diff --check PASS
+fdroid debug 1.0.323 SHA256=1db527f7a1d75f2357ba18403f2bbac85f573ffa4434070156100c0eeb7160df
+fdroid androidTest SHA256=8af34733a15e8e05e5615ab269011a3dc02de4a43e8f09e05e4b4cbe29ed3ba6
+fdroid JVM PASS [('AutofillSaveLaunchTest', '16'), ('AutofillSaveContextPolicyTest', '6'), ('AutofillSaveValuePolicyTest', '5')]
+F-Droid changelog zh-CN characters=489
+F-Droid changelog en-US characters=497
+
+=== reference-evidence.json ===
+{
+  "reference_zip_sha256": "db412c64597d26a08001d4183e49a8c918156242a8ad9a4a80c1418050a393d3",
+  "package": "com.kongzue.secretinput",
+  "version": "5.4.6.A / 76",
+  "target_sdk": 31,
+  "visible_application_sources": [
+    "com/kongzue/secretinput/R.java",
+    "com/qihoo/util/a.java",
+    "com/qihoo/util/AppZygotePreload.java",
+    "com/qihoo/util/b.java",
+    "com/qihoo/util/c.java",
+    "com/qihoo/util/Configuration.java",
+    "com/qihoo/util/QHClassLoader.java",
+    "com/qihoo/util/QHDialog.java",
+    "com/stub/StubApp.java"
+  ],
+  "limits": "Business service source is protected; SYSTEM_ALERT_WINDOW and bottom-dialog resources are evidence of capability, not proof of onSaveRequest implementation."
+}
+
+=== ordinary-toggle-apk-resources.txt ===
+resource 0x7f1101df string/autofill_hyperos_save_compatibility_desc
+      () "Show a floating panel after the system Save button; tap Continue saving to open Monica. Requires permission to display over other apps."
+      (lzh) "按系統「存」後，先示浮窗，再按「續存」以入 Monica。須允浮窗權限。"
+      (ja) "システムの「保存」の後にフローティングパネルを表示します。「保存を続ける」で Monica を開きます。他のアプリの上に表示する権限が必要です。"
+      (de) "Nach „Speichern“ im System erscheint ein schwebendes Fenster. Mit „Weiter zum Speichern“ öffnet sich Monica. Die Anzeige über anderen Apps muss erlaubt sein."
+      (zh) "点击系统“保存”后先显示悬浮面板，再点“继续保存”进入 Monica。需允许显示在其他应用上层。"
+      (b+zh+Hant) "點擊系統「儲存」後先顯示浮動面板，再點「繼續儲存」進入 Monica。需允許顯示在其他應用程式上層。"
+      (vi) "Sau khi nhấn Lưu của hệ thống, một bảng nổi sẽ xuất hiện. Nhấn Tiếp tục lưu để mở Monica. Cần quyền hiển thị trên ứng dụng khác."
+      (pl) "Po systemowym przycisku Zapisz pojawi się pływający panel. Naciśnij Kontynuuj, aby otworzyć Monica. Wymaga zgody na wyświetlanie nad innymi aplikacjami."
+      (ko) "시스템 저장 버튼을 누르면 플로팅 패널이 표시됩니다. 저장 계속을 눌러 Monica를 여세요. 다른 앱 위에 표시 권한이 필요합니다."
+      (fr) "Après Enregistrer dans le système, un panneau flottant apparaît. Touchez Continuer pour ouvrir Monica. Autorisez l’affichage par-dessus les autres applications."
+      (es) "Tras pulsar Guardar en el sistema aparece un panel flotante. Pulsa Continuar guardando para abrir Monica. Requiere permiso para mostrarse sobre otras apps."
+      (it) "Dopo Salva nel sistema appare un pannello mobile. Tocca Continua per aprire Monica. Richiede il permesso di visualizzazione sopra altre app."
+      (ru) "После системной кнопки «Сохранить» появится плавающая панель. Нажмите «Продолжить», чтобы открыть Monica. Нужно разрешение на показ поверх других приложений."
+      (zh-rCN) "点击系统“保存”后先显示悬浮面板，再点“继续保存”进入 Monica。需允许显示在其他应用上层。"
+    resource 0x7f11026a string/autofill_save_overlay_title
+      () "Save to Monica"
+      (lzh) "存於 Monica"
+      (ja) "Monica に保存"
+      (de) "In Monica speichern"
+      (zh) "保存到 Monica"
+      (b+zh+Hant) "儲存到 Monica"
+      (vi) "Lưu vào Monica"
+      (pl) "Zapisz w Monica"
+      (ko) "Monica에 저장"
+      (fr) "Enregistrer dans Monica"
+      (es) "Guardar en Monica"
+      (it) "Salva in Monica"
+      (ru) "Сохранить в Monica"
+      (zh-rCN) "保存到 Monica"
+    resource 0x7f110266 string/autofill_save_overlay_body
+      () "Continue to verify your identity and review the password. Closing this panel saves nothing."
+      (lzh) "續驗身分，核所存之密碼。閉此窗則不存。"
+      (ja) "本人確認を行い、保存するパスワードを確認します。このパネルを閉じても何も保存されません。"
+      (de) "Bestätigen Sie Ihre Identität und prüfen Sie das Passwort. Beim Schließen wird nichts gespeichert."
+      (zh) "继续验证身份并检查要保存的密码。关闭面板不会保存任何内容。"
+      (b+zh+Hant) "繼續驗證身分並檢查要儲存的密碼。關閉面板不會儲存任何內容。"
+      (vi) "Tiếp tục để xác minh danh tính và kiểm tra mật khẩu. Đóng bảng này sẽ không lưu gì."
+      (pl) "Kontynuuj, aby potwierdzić tożsamość i sprawdzić hasło. Zamknięcie panelu niczego nie zapisuje."
+      (ko) "본인 인증 후 저장할 비밀번호를 확인합니다. 이 패널을 닫으면 아무것도 저장되지 않습니다."
+      (fr) "Continuez pour vérifier votre identité et examiner le mot de passe. Fermer ce panneau ne sauvegarde rien."
+      (es) "Continúa para verificar tu identidad y revisar la contraseña. Cerrar este panel no guarda nada."
+      (it) "Continua per verificare la tua identità e controllare la password. Chiudendo il pannello non verrà salvato nulla."
+      (ru) "Продолжите, чтобы подтвердить личность и проверить пароль. Закрытие панели ничего не сохраняет."
+      (zh-rCN) "继续验证身份并检查要保存的密码。关闭面板不会保存任何内容。"
+    resource 0x7f110267 string/autofill_save_overlay_continue
+      () "Continue saving"
+      (lzh) "續存"
+      (ja) "保存を続ける"
+      (de) "Weiter zum Speichern"
+      (zh) "继续保存"
+      (b+zh+Hant) "繼續儲存"
+      (vi) "Tiếp tục lưu"
+      (pl) "Kontynuuj"
+      (ko) "저장 계속"
+      (fr) "Continuer"
+      (es) "Continuar guardando"
+      (it) "Continua"
+      (ru) "Продолжить"
+      (zh-rCN) "继续保存"
+    resource 0x7f110268 string/autofill_save_overlay_permission_action
+      () "Allow display over other apps"
+      (lzh) "允顯浮窗"
+      (ja) "他のアプリの上への表示を許可"
+      (de) "Anzeige über anderen Apps erlauben"
+      (zh) "允许显示悬浮窗"
+      (b+zh+Hant) "允許顯示浮動視窗"
+      (vi) "Cho phép hiển thị trên ứng dụng khác"
+      (pl) "Zezwól na wyświetlanie nad aplikacjami"
+      (ko) "다른 앱 위에 표시 허용"
+      (fr) "Autoriser l’affichage en superposition"
+      (es) "Permitir mostrar sobre otras apps"
+      (it) "Consenti visualizzazione sopra altre app"
+      (ru) "Разрешить показ поверх приложений"
+      (zh-rCN) "允许显示悬浮窗"
+    resource 0x7f110269 string/autofill_save_overlay_permission_required
+      () "Allow Monica to display over other apps in the HyperOS 1 save compatibility settings, then try saving again."
+      (lzh) "請於 HyperOS 1 存儲相容設定中允 Monica 顯浮窗，再行存儲。"
+      (ja) "HyperOS 1 保存互換モードの設定で Monica の他のアプリの上への表示を許可し、もう一度保存してください。"
+      (de) "Erlauben Sie Monica in den Einstellungen zum HyperOS-1-Speichermodus die Anzeige über anderen Apps und versuchen Sie es erneut."
+      (zh) "请在 HyperOS 1 保存兼容模式设置中允许 Monica 显示悬浮窗，然后重新保存。"
+      (b+zh+Hant) "請在 HyperOS 1 儲存相容模式設定中允許 Monica 顯示浮動視窗，然後重新儲存。"
+      (vi) "Cho phép Monica hiển thị trên ứng dụng khác trong cài đặt tương thích lưu HyperOS 1, rồi thử lưu lại."
+      (pl) "Zezwól Monica na wyświetlanie nad innymi aplikacjami w ustawieniach zgodności zapisu HyperOS 1, a następnie spróbuj ponownie."
+      (ko) "HyperOS 1 저장 호환 모드 설정에서 Monica의 다른 앱 위에 표시를 허용한 후 다시 저장하세요."
+      (fr) "Autorisez la superposition de Monica dans les réglages de compatibilité d’enregistrement HyperOS 1, puis réessayez."
+      (es) "Permite que Monica se muestre sobre otras apps en los ajustes de compatibilidad de guardado de HyperOS 1 y vuelve a guardar."
+      (it) "Consenti a Monica di apparire sopra altre app nelle impostazioni di compatibilità del salvataggio HyperOS 1, quindi riprova."
+      (ru) "Разрешите Monica показ поверх других приложений в настройках совместимости сохранения HyperOS 1 и повторите сохранение."
+      (zh-rCN) "请在 HyperOS 1 保存兼容模式设置中允许 Monica 显示悬浮窗，然后重新保存。"
+
+=== fdroid-toggle-apk-resources.txt ===
+resource 0x7f1101de string/autofill_hyperos_save_compatibility_desc
+      () "Show a floating panel after the system Save button; tap Continue saving to open Monica. Requires permission to display over other apps."
+      (lzh) "按系統「存」後，先示浮窗，再按「續存」以入 Monica。須允浮窗權限。"
+      (ja) "システムの「保存」の後にフローティングパネルを表示します。「保存を続ける」で Monica を開きます。他のアプリの上に表示する権限が必要です。"
+      (de) "Nach „Speichern“ im System erscheint ein schwebendes Fenster. Mit „Weiter zum Speichern“ öffnet sich Monica. Die Anzeige über anderen Apps muss erlaubt sein."
+      (zh) "点击系统“保存”后先显示悬浮面板，再点“继续保存”进入 Monica。需允许显示在其他应用上层。"
+      (b+zh+Hant) "點擊系統「儲存」後先顯示浮動面板，再點「繼續儲存」進入 Monica。需允許顯示在其他應用程式上層。"
+      (vi) "Sau khi nhấn Lưu của hệ thống, một bảng nổi sẽ xuất hiện. Nhấn Tiếp tục lưu để mở Monica. Cần quyền hiển thị trên ứng dụng khác."
+      (pl) "Po systemowym przycisku Zapisz pojawi się pływający panel. Naciśnij Kontynuuj, aby otworzyć Monica. Wymaga zgody na wyświetlanie nad innymi aplikacjami."
+      (ko) "시스템 저장 버튼을 누르면 플로팅 패널이 표시됩니다. 저장 계속을 눌러 Monica를 여세요. 다른 앱 위에 표시 권한이 필요합니다."
+      (fr) "Après Enregistrer dans le système, un panneau flottant apparaît. Touchez Continuer pour ouvrir Monica. Autorisez l’affichage par-dessus les autres applications."
+      (es) "Tras pulsar Guardar en el sistema aparece un panel flotante. Pulsa Continuar guardando para abrir Monica. Requiere permiso para mostrarse sobre otras apps."
+      (it) "Dopo Salva nel sistema appare un pannello mobile. Tocca Continua per aprire Monica. Richiede il permesso di visualizzazione sopra altre app."
+      (ru) "После системной кнопки «Сохранить» появится плавающая панель. Нажмите «Продолжить», чтобы открыть Monica. Нужно разрешение на показ поверх других приложений."
+      (zh-rCN) "点击系统“保存”后先显示悬浮面板，再点“继续保存”进入 Monica。需允许显示在其他应用上层。"
+    resource 0x7f110269 string/autofill_save_overlay_title
+      () "Save to Monica"
+      (lzh) "存於 Monica"
+      (ja) "Monica に保存"
+      (de) "In Monica speichern"
+      (zh) "保存到 Monica"
+      (b+zh+Hant) "儲存到 Monica"
+      (vi) "Lưu vào Monica"
+      (pl) "Zapisz w Monica"
+      (ko) "Monica에 저장"
+      (fr) "Enregistrer dans Monica"
+      (es) "Guardar en Monica"
+      (it) "Salva in Monica"
+      (ru) "Сохранить в Monica"
+      (zh-rCN) "保存到 Monica"
+    resource 0x7f110265 string/autofill_save_overlay_body
+      () "Continue to verify your identity and review the password. Closing this panel saves nothing."
+      (lzh) "續驗身分，核所存之密碼。閉此窗則不存。"
+      (ja) "本人確認を行い、保存するパスワードを確認します。このパネルを閉じても何も保存されません。"
+      (de) "Bestätigen Sie Ihre Identität und prüfen Sie das Passwort. Beim Schließen wird nichts gespeichert."
+      (zh) "继续验证身份并检查要保存的密码。关闭面板不会保存任何内容。"
+      (b+zh+Hant) "繼續驗證身分並檢查要儲存的密碼。關閉面板不會儲存任何內容。"
+      (vi) "Tiếp tục để xác minh danh tính và kiểm tra mật khẩu. Đóng bảng này sẽ không lưu gì."
+      (pl) "Kontynuuj, aby potwierdzić tożsamość i sprawdzić hasło. Zamknięcie panelu niczego nie zapisuje."
+      (ko) "본인 인증 후 저장할 비밀번호를 확인합니다. 이 패널을 닫으면 아무것도 저장되지 않습니다."
+      (fr) "Continuez pour vérifier votre identité et examiner le mot de passe. Fermer ce panneau ne sauvegarde rien."
+      (es) "Continúa para verificar tu identidad y revisar la contraseña. Cerrar este panel no guarda nada."
+      (it) "Continua per verificare la tua identità e controllare la password. Chiudendo il pannello non verrà salvato nulla."
+      (ru) "Продолжите, чтобы подтвердить личность и проверить пароль. Закрытие панели ничего не сохраняет."
+      (zh-rCN) "继续验证身份并检查要保存的密码。关闭面板不会保存任何内容。"
+    resource 0x7f110266 string/autofill_save_overlay_continue
+      () "Continue saving"
+      (lzh) "續存"
+      (ja) "保存を続ける"
+      (de) "Weiter zum Speichern"
+      (zh) "继续保存"
+      (b+zh+Hant) "繼續儲存"
+      (vi) "Tiếp tục lưu"
+      (pl) "Kontynuuj"
+      (ko) "저장 계속"
+      (fr) "Continuer"
+      (es) "Continuar guardando"
+      (it) "Continua"
+      (ru) "Продолжить"
+      (zh-rCN) "继续保存"
+    resource 0x7f110267 string/autofill_save_overlay_permission_action
+      () "Allow display over other apps"
+      (lzh) "允顯浮窗"
+      (ja) "他のアプリの上への表示を許可"
+      (de) "Anzeige über anderen Apps erlauben"
+      (zh) "允许显示悬浮窗"
+      (b+zh+Hant) "允許顯示浮動視窗"
+      (vi) "Cho phép hiển thị trên ứng dụng khác"
+      (pl) "Zezwól na wyświetlanie nad aplikacjami"
+      (ko) "다른 앱 위에 표시 허용"
+      (fr) "Autoriser l’affichage en superposition"
+      (es) "Permitir mostrar sobre otras apps"
+      (it) "Consenti visualizzazione sopra altre app"
+      (ru) "Разрешить показ поверх приложений"
+      (zh-rCN) "允许显示悬浮窗"
+    resource 0x7f110268 string/autofill_save_overlay_permission_required
+      () "Allow Monica to display over other apps in the HyperOS 1 save compatibility settings, then try saving again."
+      (lzh) "請於 HyperOS 1 存儲相容設定中允 Monica 顯浮窗，再行存儲。"
+      (ja) "HyperOS 1 保存互換モードの設定で Monica の他のアプリの上への表示を許可し、もう一度保存してください。"
+      (de) "Erlauben Sie Monica in den Einstellungen zum HyperOS-1-Speichermodus die Anzeige über anderen Apps und versuchen Sie es erneut."
+      (zh) "请在 HyperOS 1 保存兼容模式设置中允许 Monica 显示悬浮窗，然后重新保存。"
+      (b+zh+Hant) "請在 HyperOS 1 儲存相容模式設定中允許 Monica 顯示浮動視窗，然後重新儲存。"
+      (vi) "Cho phép Monica hiển thị trên ứng dụng khác trong cài đặt tương thích lưu HyperOS 1, rồi thử lưu lại."
+      (pl) "Zezwól Monica na wyświetlanie nad innymi aplikacjami w ustawieniach zgodności zapisu HyperOS 1, a następnie spróbuj ponownie."
+      (ko) "HyperOS 1 저장 호환 모드 설정에서 Monica의 다른 앱 위에 표시를 허용한 후 다시 저장하세요."
+      (fr) "Autorisez la superposition de Monica dans les réglages de compatibilité d’enregistrement HyperOS 1, puis réessayez."
+      (es) "Permite que Monica se muestre sobre otras apps en los ajustes de compatibilidad de guardado de HyperOS 1 y vuelve a guardar."
+      (it) "Consenti a Monica di apparire sopra altre app nelle impostazioni di compatibilità del salvataggio HyperOS 1, quindi riprova."
+      (ru) "Разрешите Monica показ поверх других приложений в настройках совместимости сохранения HyperOS 1 и повторите сохранение."
+      (zh-rCN) "请在 HyperOS 1 保存兼容模式设置中允许 Monica 显示悬浮窗，然后重新保存。"

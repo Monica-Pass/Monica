@@ -112,7 +112,11 @@ class AutofillFlowInstrumentedTest {
         oldSettings = settings.settingsFlow.first()
         oldPreferences = listOf(preferences.isAutofillEnabled.first(),
             preferences.isPasswordSuggestionEnabled.first(), preferences.isV2RespectAutofillOffEnabled.first(),
-            preferences.isRequestSaveDataEnabled.first())
+            preferences.isRequestSaveDataEnabled.first(), preferences.isHyperOsSaveCompatibilityEnabled.first())
+        InstrumentationRegistry.getArguments().getString("hyperosSaveCompatibility")?.let { value ->
+            require(value == "true" || value == "false")
+            preferences.setHyperOsSaveCompatibilityEnabled(value.toBoolean())
+        }
         oldOtpPreferences = Triple(preferences.isOtpNotificationEnabled.first(), preferences.isAutoCopyOtpEnabled.first(),
             preferences.otpNotificationDuration.first())
         security = SecurityManager(context)
@@ -172,6 +176,7 @@ class AutofillFlowInstrumentedTest {
             settings.updateBiometricEnabled(it.biometricEnabled)
             settings.updateScreenshotProtectionEnabled(it.screenshotProtectionEnabled)
             settings.updateAutoLockMinutes(it.autoLockMinutes)
+            settings.updateSeparateUsernameAccountEnabled(it.separateUsernameAccountEnabled)
             SessionManager.updateAutoLockTimeout(it.autoLockMinutes)
             AutofillSessionGrants.clear()
         }
@@ -181,6 +186,7 @@ class AutofillFlowInstrumentedTest {
             preferences.setPasswordSuggestionEnabled(it[1])
             preferences.setV2RespectAutofillOffEnabled(it[2])
             preferences.setRequestSaveDataEnabled(it[3])
+            preferences.setHyperOsSaveCompatibilityEnabled(it[4])
         }
         oldOtpPreferences?.let {
             preferences.setOtpNotificationEnabled(it.first)
@@ -339,6 +345,142 @@ class AutofillFlowInstrumentedTest {
         expectStatus("new=EMPTY confirmation=EMPTY")
     }
 
+    @Test fun frameworkOffersSaveAfterTypedRegistrationCommit(): Unit = runBlocking {
+        preferences.setRequestSaveDataEnabled(true)
+        preferences.setHyperOsSaveCompatibilityEnabled(false)
+        open("signup")
+        focusFirstField()
+        waitNode { it.text?.toString() == NATIVE_TITLE }
+        setFixtureText(0, "new-synthetic-account")
+        setFixtureText(1, "Registration-synthetic-42!")
+        setFixtureText(2, "Registration-synthetic-42!")
+        dismissKeyboardForSave()
+        tap(waitNode { it.text?.toString().equals("Submit fixture", ignoreCase = true) })
+        waitForFrameworkSave()
+    }
+
+    @Test fun frameworkOffersSaveWhenWebLoginHidesSubmittedForm() = runBlocking {
+        webFormSaveAfterSubmit(signup = false)
+    }
+
+    @Test fun frameworkOffersSaveWhenWebRegistrationHidesSubmittedForm() = runBlocking {
+        webFormSaveAfterSubmit(signup = true)
+    }
+
+    /** Diagnostic for browsers that do not forward virtual-field visibility. */
+    @Test fun hiddenEmbeddedWebViewSaveCompatibilityProbe() = runBlocking {
+        assumeTrue("Known WebView-dependent boundary; this probe is not a passing regression",
+            InstrumentationRegistry.getArguments().getString("autofillHiddenWebViewSaveProbe") == "true")
+        webFormSaveAfterSubmit(signup = true, hideWebView = true)
+    }
+
+    private suspend fun webFormSaveAfterSubmit(signup: Boolean, hideWebView: Boolean = false) {
+        preferences.setRequestSaveDataEnabled(true)
+        preferences.setHyperOsSaveCompatibilityEnabled(false)
+        open(if (hideWebView) "web_save_signup_hidden" else if (signup) "web_save_signup" else "web_save_login")
+        waitNode { it.text?.contains("web=READY") == true }
+        focusFirstField(web = true)
+        waitNode { it.text?.toString() == WEB_TITLE || it.contentDescription?.contains(WEB_TITLE) == true }
+        fun input(id: String, value: String) {
+            val field = waitNode { it.isEditable && it.packageName?.toString() == fixturePackage &&
+                it.viewIdResourceName == id }
+            if (!field.isFocused) assertTrue(field.performAction(AccessibilityNodeInfo.ACTION_FOCUS))
+            waitNode { it.viewIdResourceName == id && it.isFocused }
+            // Keep the external keyboard's inline surface active. Accessibility
+            // assignment can update the DOM without notifying Android Autofill.
+            require(value.matches(Regex("[A-Za-z0-9!-]+")))
+            value.forEachIndexed { index, char ->
+                shell("input text $char")
+                waitNode { it.viewIdResourceName == id && it.text?.toString() == value.take(index + 1) }
+            }
+            waitNode { it.viewIdResourceName == id && it.text?.toString() == value }
+        }
+        input("username", "new-synthetic-account")
+        input("password", "Registration-synthetic-42!")
+        if (signup) input("confirmation", "Registration-synthetic-42!")
+        waitNode { it.text?.contains("saveReady=true") == true }
+        dismissKeyboardForSave()
+        // Submit via the fixture's DOM requestSubmit button, avoiding Chromium's
+        // suggestion popup. The host never calls AutofillManager.commit().
+        tap(waitNode { it.text?.toString().equals("Submit web fixture", ignoreCase = true) })
+        // The page performs a normal DOM submit transition. The host deliberately
+        // does not call AutofillManager.commit(): browsers keep their Activity open.
+        waitNode { it.text?.contains(if (hideWebView) "web=HIDDEN" else "submitted=true") == true }
+        tap(waitForFrameworkSave())
+        // A new account opens the editor directly; only matching existing accounts
+        // first show the update-choice sheet.
+        waitNode { it.text?.contains("new-synthetic-account") == true }
+        val previousIds = dao.getAllPasswordEntriesSync().map { it.id }.toSet()
+        try {
+            val save = waitNode { (it.text?.toString() == context.getString(R.string.save) ||
+                it.contentDescription?.toString() == context.getString(R.string.save)) && it.isEnabled }
+            tap(save)
+            val deadline = SystemClock.elapsedRealtime() + 15_000
+            var saved: PasswordEntry? = null
+            while (saved == null && SystemClock.elapsedRealtime() < deadline) {
+                saved = dao.getAllPasswordEntriesSync().firstOrNull { it.id !in previousIds }
+                if (saved == null) delay(100)
+            }
+            assertNotNull("The reviewed web credential must be persisted", saved)
+            assertEquals("new-synthetic-account", security.decryptData(requireNotNull(saved).username))
+            assertEquals("Registration-synthetic-42!", security.decryptData(saved.password))
+        } finally {
+            // The explicitly isolated test user contains only this test's new row.
+            insertedIds += dao.getAllPasswordEntriesSync().filter { it.id !in previousIds }.map { it.id }
+        }
+    }
+
+    @Test fun generatedRegistrationKeepsRecoveryHistoryWhenAndroidSuppressesUnchangedAutofill() = runBlocking {
+        preferences.setRequestSaveDataEnabled(true)
+        preferences.setPasswordSuggestionEnabled(true)
+        preferences.setHyperOsSaveCompatibilityEnabled(false)
+        val history = takagi.ru.monica.data.PasswordHistoryManager(context)
+        val oldHistory = history.historyFlow.first()
+        try {
+            open("signup")
+            fillFromSystem(NATIVE_TITLE)
+            tap(waitNode { it.contentDescription?.toString() == "fixture-field-1" })
+            tap(waitNode { it.text?.toString() == context.getString(R.string.password_suggestion_title) })
+            val accept = waitNode { it.text?.toString() == context.getString(R.string.password_suggestion_accept) }
+            assertTrue(generateSequence(accept) { it.parent }.first { it.isClickable }
+                .performAction(AccessibilityNodeInfo.ACTION_CLICK))
+            expectStatus("new=MATCH confirmation=SET")
+            val generated = history.historyFlow.first().first()
+            assertTrue(generated.password.isNotBlank())
+            dismissKeyboardForSave()
+            tap(waitNode { it.text?.toString().equals("Submit fixture", ignoreCase = true) })
+            // Android suppresses SaveUI if every savable value equals its autofilled
+            // baseline, including generated passwords. History is recovery, not a
+            // completed account save; do not bypass the user's save confirmation.
+            val end = SystemClock.elapsedRealtime() + 1500
+            while (SystemClock.elapsedRealtime() < end) {
+                val queue = ArrayDeque<AccessibilityNodeInfo>()
+                ui.windows.mapNotNull { it.root }.forEach(queue::add)
+                while (queue.isNotEmpty()) {
+                    val node = queue.removeFirst()
+                    assertNotEquals("android:id/autofill_save_yes", node.viewIdResourceName)
+                    for (i in 0 until node.childCount) node.getChild(i)?.let(queue::add)
+                }
+                delay(100)
+            }
+            assertEquals(generated, history.historyFlow.first().first())
+            assertEquals(AutofillFormFixtureActivity.PASSWORD,
+                security.decryptData(requireNotNull(dao.getPasswordEntryById(insertedIds.first())).password))
+        } finally {
+            history.importHistory(oldHistory)
+        }
+    }
+
+    private fun dismissKeyboardForSave() {
+        if (ui.windows.any { it.type == AccessibilityWindowInfo.TYPE_INPUT_METHOD }) {
+            ui.performGlobalAction(android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_BACK)
+        }
+    }
+
+    private fun waitForFrameworkSave(): AccessibilityNodeInfo = waitNode {
+        it.viewIdResourceName == "android:id/autofill_save_yes"
+    }
+
     @Test fun frameworkSavesTheNewPasswordAfterChangeFormCommit() = runBlocking {
         preferences.setRequestSaveDataEnabled(true)
         open("change")
@@ -352,11 +494,37 @@ class AutofillFlowInstrumentedTest {
         preferences.setRequestSaveDataEnabled(true)
         open("step")
         fillFromSystem(NATIVE_TITLE)
-        tap(waitNode { it.text?.toString().equals("Next step", ignoreCase = true) })
+        takagi.ru.monica.autofill_ng.core.AutofillLogger.clear()
+        assertTrue(waitNode { it.text?.toString().equals("Next step", ignoreCase = true) }
+            .performAction(AccessibilityNodeInfo.ACTION_CLICK))
+        expectStatus("user=ABSENT")
         focusFirstField()
-        waitNode { it.text?.toString() == NATIVE_TITLE }
+        // A hardware keyboard can leave Gboard's inline surface hidden. This
+        // save test types a new value, so await the actual second-step response
+        // (including SaveInfo) rather than an unused password suggestion.
+        val deadline = SystemClock.elapsedRealtime() + 10_000
+        var ready = false
+        while (!ready && SystemClock.elapsedRealtime() < deadline) {
+            val log = takagi.ru.monica.autofill_ng.core.AutofillLogger.exportLogs()
+            ready = log.contains("purpose=PASSWORD_STEP") && log.contains("onFillRequest callback success")
+            if (!ready) delay(50)
+        }
+        assertTrue("The password step must receive its framework fill response", ready)
         setFixtureText(0,"Updated-synthetic-42!")
         submitAndReviewSavedPassword()
+    }
+
+    private fun selectExternalSaveImeIfRequested() {
+        if (InstrumentationRegistry.getArguments().getString("autofillSaveExternalIme") != "true") return
+        val ime = requireNotNull(oldIme) { "An external keyboard must be selected before this test" }
+        val component = requireNotNull(ComponentName.unflattenFromString(ime))
+        val keyboardUid = context.packageManager.getApplicationInfo(component.packageName, 0).uid
+        check(keyboardUid != android.os.Process.myUid() && component.packageName != fixturePackage) {
+            "The save comparison requires an external keyboard, outside both Monica and its fixture"
+        }
+        selectIme(ime)
+        check(Settings.Secure.getString(context.contentResolver, Settings.Secure.DEFAULT_INPUT_METHOD) == ime)
+        android.util.Log.i("AutofillFlowTest", "External save keyboard selected: ${component.packageName}")
     }
 
     private fun setFixtureText(index: Int, value: String) {
@@ -367,10 +535,15 @@ class AutofillFlowInstrumentedTest {
     }
 
     private suspend fun submitAndReviewSavedPassword() {
-        ui.performGlobalAction(android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_BACK)
+        if (ui.windows.any { it.type == AccessibilityWindowInfo.TYPE_INPUT_METHOD }) {
+            ui.performGlobalAction(android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_BACK)
+        }
         tap(waitNode { it.text?.toString().equals("Submit fixture",ignoreCase=true) })
         tap(waitNode { it.viewIdResourceName == "android:id/autofill_save_yes" ||
             (it.packageName?.toString() == "android" && it.text?.toString().equals("Save",ignoreCase=true)) })
+        if (preferences.isHyperOsSaveCompatibilityEnabled.first()) {
+            tap(waitNode { it.text?.toString() == context.getString(R.string.autofill_save_overlay_continue) })
+        }
         waitNode { it.text?.toString() == context.getString(R.string.autofill_save_review_title) }
         tap(waitNode { it.text?.toString() == NATIVE_TITLE })
         val save=waitNode { (it.text?.toString() == context.getString(R.string.save) ||
@@ -381,6 +554,118 @@ class AutofillFlowInstrumentedTest {
         while (SystemClock.elapsedRealtime()<end && dao.getPasswordEntryById(insertedIds.first())?.let {
             security.decryptData(it.password) } != "Updated-synthetic-42!") delay(100)
         assertEquals("Updated-synthetic-42!",security.decryptData(requireNotNull(dao.getPasswordEntryById(insertedIds.first())).password))
+    }
+
+    private suspend fun showSaveOverlay(): android.app.PendingIntent {
+        preferences.setHyperOsSaveCompatibilityEnabled(true)
+        preferences.setRequestSaveDataEnabled(true)
+        val id = java.util.UUID.randomUUID().toString()
+        val intent = Intent(context, AutofillSaveTransparentActivity::class.java).apply {
+            putExtra(AutofillSaveTransparentActivity.EXTRA_USERNAME, AutofillFormFixtureActivity.USERNAME)
+            putExtra(AutofillSaveTransparentActivity.EXTRA_PASSWORD, "Never-save-overlay-cancel")
+            putExtra(AutofillSaveTransparentActivity.EXTRA_PACKAGE_NAME, fixturePackage)
+        }
+        val pending = AutofillSaveLaunch.pendingIntent(context, intent, id, true)
+        instrumentation.runOnMainSync { AutofillSaveOverlay.show(context, pending, id) }
+        waitNode { it.text?.toString() == context.getString(R.string.autofill_save_overlay_continue) }
+        return pending
+    }
+
+    private fun assertOverlayTokenCanceled(pending: android.app.PendingIntent) {
+        assertThrows(android.app.PendingIntent.CanceledException::class.java) { pending.send() }
+    }
+
+    @Test fun overlayWaitsForUserThenRequiresAuthenticationAndCancelDoesNotWrite() = runBlocking {
+        open("change")
+        selectExternalSaveImeIfRequested()
+        SessionManager.markLocked()
+        val original = requireNotNull(dao.getPasswordEntryById(insertedIds.first()))
+        takagi.ru.monica.autofill_ng.core.AutofillLogger.clear()
+        val pending = showSaveOverlay()
+        assertFalse(takagi.ru.monica.autofill_ng.core.AutofillLogger.exportLogs().contains("ACTIVITY_CREATED"))
+        assertFalse(SessionManager.isUnlocked.value)
+        assertEquals(original, dao.getPasswordEntryById(original.id))
+        if (InstrumentationRegistry.getArguments().getString("hyperosSheetScreenshot") == "true") {
+            instrumentation.runOnMainSync {
+                val root = android.view.inspector.WindowInspector.getGlobalWindowViews().last { it.isShown }
+                val bitmap = android.graphics.Bitmap.createBitmap(root.width, root.height, android.graphics.Bitmap.Config.ARGB_8888)
+                root.draw(android.graphics.Canvas(bitmap))
+                java.io.File(context.filesDir,"hyperos-save-sheet.png").outputStream().use {
+                    bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG,100,it)
+                }
+            }
+        }
+        tap(waitNode { it.text?.toString() == context.getString(R.string.autofill_save_overlay_continue) })
+        waitNode { it.isEditable && it.packageName?.toString() == context.packageName }
+        assertOverlayTokenCanceled(pending)
+        assertFalse(SessionManager.isUnlocked.value)
+        tap(waitNode { it.text?.toString() == context.getString(R.string.cancel) })
+        delay(300)
+        assertEquals(original, dao.getPasswordEntryById(original.id))
+    }
+
+    @Test fun overlayReplacementAndBackCancelEveryOutstandingToken() = runBlocking {
+        open("change")
+        val original = requireNotNull(dao.getPasswordEntryById(insertedIds.first()))
+        val first = showSaveOverlay()
+        val second = showSaveOverlay()
+        assertOverlayTokenCanceled(first)
+        ui.performGlobalAction(android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_BACK)
+        delay(400)
+        assertOverlayTokenCanceled(second)
+        assertEquals(original, dao.getPasswordEntryById(original.id))
+    }
+
+    @Test fun overlayClosesOnLockDisableAndScreenOff() = runBlocking {
+        open("change")
+        val first = showSaveOverlay()
+        SessionManager.markLocked()
+        delay(400)
+        assertOverlayTokenCanceled(first)
+        val second = showSaveOverlay()
+        preferences.setHyperOsSaveCompatibilityEnabled(false)
+        delay(400)
+        assertOverlayTokenCanceled(second)
+        takagi.ru.monica.autofill_ng.core.AutofillLogger.clear()
+        val third = showSaveOverlay()
+        try {
+            shell("input keyevent KEYCODE_SLEEP")
+            val deadline = SystemClock.elapsedRealtime() + 8_000
+            while (!takagi.ru.monica.autofill_ng.core.AutofillLogger.exportLogs().contains("SCREEN_OFF") &&
+                SystemClock.elapsedRealtime() < deadline) delay(100)
+            assertTrue("Wait for the actual screen-off broadcast, not a fixed animation delay",
+                takagi.ru.monica.autofill_ng.core.AutofillLogger.exportLogs().contains("SCREEN_OFF"))
+            assertOverlayTokenCanceled(third)
+        } finally {
+            shell("input keyevent KEYCODE_WAKEUP")
+            shell("wm dismiss-keyguard")
+        }
+    }
+
+    @Test fun overlayExpiresWithoutLaunchingOrSaving() = runBlocking {
+        open("change")
+        val original = requireNotNull(dao.getPasswordEntryById(insertedIds.first()))
+        val pending = showSaveOverlay()
+        delay(61_000)
+        assertOverlayTokenCanceled(pending)
+        assertEquals(original, dao.getPasswordEntryById(original.id))
+        assertTrue(takagi.ru.monica.autofill_ng.core.AutofillLogger.exportLogs().contains("OVERLAY_EXPIRED"))
+    }
+
+    @Test fun overlayWithoutPermissionRejectsAndRevokesTheToken() = runBlocking {
+        val user = android.os.Process.myUid() / 100000
+        assumeTrue(Settings.canDrawOverlays(context))
+        shell("appops set --user $user ${context.packageName} SYSTEM_ALERT_WINDOW deny")
+        try {
+            assertFalse(Settings.canDrawOverlays(context))
+            val id = java.util.UUID.randomUUID().toString()
+            val pending = AutofillSaveLaunch.pendingIntent(context,
+                Intent(context, AutofillSaveTransparentActivity::class.java), id, true)
+            instrumentation.runOnMainSync {
+                assertThrows(SecurityException::class.java) { AutofillSaveOverlay.show(context, pending, id) }
+            }
+            assertOverlayTokenCanceled(pending)
+        } finally { shell("appops set --user $user ${context.packageName} SYSTEM_ALERT_WINDOW allow") }
     }
 
     @Test fun saveReviewUpdatesChosenEntryAndPreservesNotesAndSibling() = runBlocking {
@@ -516,7 +801,13 @@ class AutofillFlowInstrumentedTest {
             assertTrue(field.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, Bundle().apply {
                 putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, MASTER_PASSWORD)
             }))
-            tap(waitNode { it.text?.toString() == context.getString(R.string.confirm) })
+            // Gboard can move this button after we read its bounds. Dispatch to
+            // the actual button instead of tapping a stale keyboard coordinate.
+            var confirmButton = waitNode { it.text?.toString() == context.getString(R.string.confirm) }
+            while (!confirmButton.isClickable) {
+                confirmButton = requireNotNull(confirmButton.parent) { "Verification button must be clickable" }
+            }
+            assertTrue(confirmButton.performAction(AccessibilityNodeInfo.ACTION_CLICK))
             waitNode { it.text?.toString() == context.getString(R.string.autofill_save_review_title) }
             assertFalse("Save verification must not unlock the main app", SessionManager.isUnlocked.value)
             SessionManager.markLocked()
@@ -673,6 +964,82 @@ class AutofillFlowInstrumentedTest {
         open("web")
         waitNode { it.contentDescription?.toString() == "fixture-status" && it.text?.contains("web=READY") == true }
         fillFromSystem(WEB_TITLE, web = true)
+        expectStatus("user=OK password=OK")
+    }
+
+    @Test fun systemDropdownFillsMixedAccountPairFromUsername() = fillMixedWebPair(false, false)
+
+    @Test fun systemDropdownFillsMixedAccountPairFromPassword() = fillMixedWebPair(true, false)
+
+    @Test fun systemInlineFillsMixedAccountPairFromUsername() = fillMixedWebPair(false, true)
+
+    @Test fun systemInlineFillsMixedAccountPairFromPassword() = fillMixedWebPair(true, true)
+
+    @Test fun coolapkLiveDropdownFromUsername() = fillCoolapkLive(false, false)
+    @Test fun coolapkLiveDropdownFromPassword() = fillCoolapkLive(true, false)
+    @Test fun coolapkLiveInlineFromUsername() = fillCoolapkLive(false, true)
+    @Test fun coolapkLiveInlineFromPassword() = fillCoolapkLive(true, true)
+
+    private fun fillCoolapkLive(passwordFocus: Boolean, inline: Boolean): Unit = runBlocking {
+        assumeTrue("Live external-page checks are opt in",
+            InstrumentationRegistry.getArguments().getString("autofillCoolapkLive") == "true")
+        val liveActivity = takagi.ru.monica.autofill_ng.fixture.CoolapkLiveFormActivity::class.java
+        val title = "Coolapk live synthetic credential"
+        settings.updateSeparateUsernameAccountEnabled(false)
+        insertedIds.forEach { dao.deletePasswordEntryById(it) }
+        insertedIds += dao.insertPasswordEntry(PasswordEntry(title = title,
+            website = takagi.ru.monica.autofill_ng.fixture.CoolapkLiveFormActivity.URL,
+            username = security.encryptData(AutofillFormFixtureActivity.USERNAME),
+            password = security.encryptData(AutofillFormFixtureActivity.PASSWORD)))
+        selectIme(if (inline) requireNotNull(oldIme) else
+            "$fixturePackage/takagi.ru.monica.autofill_ng.fixture.AutofillFixtureInputMethodService")
+        val instance = java.util.UUID.randomUUID().toString()
+        context.startActivity(Intent().apply {
+            component = ComponentName(fixturePackage, liveActivity.name)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            putExtra("fixtureInstance", instance)
+        })
+        waitNode(timeoutMs = 45000) { it.contentDescription?.toString() == "coolapk-instance-$instance" }
+        waitNode(timeoutMs = 45000) {
+            it.contentDescription?.toString() == "coolapk-live-status" &&
+                it.text?.startsWith("live=READY user=EMPTY password=EMPTY") == true
+        }
+        tap(waitNode { it.packageName?.toString() == fixturePackage && it.isEditable && it.isPassword == passwordFocus })
+        waitNode {
+            it.contentDescription?.toString() == "coolapk-live-status" &&
+                it.text?.contains("focus=${if (passwordFocus) "passwordInput" else "loginInput"}") == true
+        }
+        val suggestion = waitNode {
+            (it.text?.toString() == title || it.contentDescription?.contains(title) == true) &&
+                (!inline || it.window?.type == AccessibilityWindowInfo.TYPE_INPUT_METHOD)
+        }
+        val evidenceDir = java.io.File(context.filesDir, "coolapk-live-checks").apply { mkdirs() }
+        val case = "${if (inline) "inline" else "dropdown"}-${if (passwordFocus) "password" else "username"}"
+        java.io.File(evidenceDir, "$case-before.png").outputStream().use {
+            ui.takeScreenshot()?.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it)
+        }
+        tap(suggestion)
+        val result = waitNode {
+            it.contentDescription?.toString() == "coolapk-live-status" &&
+                it.text?.startsWith("live=READY user=OK password=OK") == true
+        }.text.toString()
+        assertTrue("Filling must not submit login", result.endsWith("authWrites=0"))
+        java.io.File(evidenceDir, "$case.txt").writeText(
+            "url=${takagi.ru.monica.autofill_ng.fixture.CoolapkLiveFormActivity.URL}\n$result\n")
+        java.io.File(evidenceDir, "$case-after.png").outputStream().use {
+            ui.takeScreenshot()?.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it)
+        }
+    }
+
+    private fun fillMixedWebPair(passwordFocus: Boolean, inline: Boolean) {
+        runBlocking { settings.updateSeparateUsernameAccountEnabled(false) }
+        open(if (inline) "web_paired_inline" else "web_paired")
+        waitNode { it.text?.contains("web=READY") == true }
+        tap(waitNode { it.isEditable && it.isPassword == passwordFocus && it.packageName?.toString() == fixturePackage })
+        tap(waitNode {
+            (it.text?.toString() == WEB_TITLE || it.contentDescription?.contains(WEB_TITLE) == true) &&
+                (!inline || it.window?.type == AccessibilityWindowInfo.TYPE_INPUT_METHOD)
+        })
         expectStatus("user=OK password=OK")
     }
 
@@ -1473,7 +1840,11 @@ class AutofillFlowInstrumentedTest {
 
     private fun open(scenario: String, accessibilityOnly: Boolean = false) {
         val instance = java.util.UUID.randomUUID().toString()
-        selectIme(if (scenario == "inline") {
+        val externalSaveIme = scenario in setOf("change", "step") &&
+            InstrumentationRegistry.getArguments().getString("autofillSaveExternalIme") == "true"
+        // Select the keyboard before creating the form and its Autofill session.
+        // Switching afterward races the first inline-suggestions request.
+        if (externalSaveIme) selectExternalSaveImeIfRequested() else selectIme(if (scenario == "inline" || scenario == "web_paired_inline" || scenario.startsWith("web_save_")) {
             requireNotNull(oldIme) { "Install an inline-capable keyboard for the inline test" }
         } else {
             "$fixturePackage/takagi.ru.monica.autofill_ng.fixture.AutofillFixtureInputMethodService"
@@ -1661,11 +2032,11 @@ class AutofillFlowInstrumentedTest {
         assertTrue("Notification must contain the selected fixture's current OTP", code in expected)
     }
 
-    private fun waitNode(scroll: Boolean = false, predicate: (AccessibilityNodeInfo) -> Boolean): AccessibilityNodeInfo {
+    private fun waitNode(scroll: Boolean = false, timeoutMs: Long = 20000, predicate: (AccessibilityNodeInfo) -> Boolean): AccessibilityNodeInfo {
         // SwiftShader occasionally delays the system's inline-suggestion surface
         // beyond 10s even after rendering it. Keep the operation bounded while
         // recording application phase timings separately from system UI latency.
-        val end = SystemClock.elapsedRealtime() + 20000
+        val end = SystemClock.elapsedRealtime() + timeoutMs
         var fixtureStatus: String? = null
         var lastScroll = 0L
         do {
@@ -1711,7 +2082,7 @@ class AutofillFlowInstrumentedTest {
                 ui.takeScreenshot()?.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it)
             }
         }
-        throw AssertionError("Expected autofill UI/status did not appear within 20 seconds; " +
+        throw AssertionError("Expected autofill UI/status did not appear within ${timeoutMs / 1000} seconds; " +
             "activeRoot=${ui.rootInActiveWindow?.className}, windows=${ui.windows.size}, " +
             "flags=${ui.serviceInfo.flags}, fixtureStatus=$fixtureStatus")
     }

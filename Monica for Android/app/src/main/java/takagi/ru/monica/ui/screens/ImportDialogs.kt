@@ -1,5 +1,12 @@
 package takagi.ru.monica.ui.screens
 
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.Checkbox
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.semantics.Role
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -58,6 +65,8 @@ fun PasswordKeyboardTagDialog(
 fun ZipRestoreConfirmDialog(
     selectedFileName: String?,
     isImporting: Boolean,
+    restoreConfig: Boolean = false,
+    onRestoreConfigChange: (Boolean) -> Unit = {},
     onDismiss: () -> Unit,
     onConfirm: () -> Unit
 ) {
@@ -65,12 +74,18 @@ fun ZipRestoreConfirmDialog(
         onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.webdav_restore_backup_title)) },
         text = {
-            Text(
-                stringResource(
-                    R.string.webdav_restore_backup_confirm_message,
-                    selectedFileName ?: stringResource(R.string.import_data_file_selected)
-                )
-            )
+            Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text(stringResource(R.string.webdav_restore_backup_confirm_message,
+                    selectedFileName ?: stringResource(R.string.import_data_file_selected)))
+                Row(Modifier.fillMaxWidth().toggleable(value = restoreConfig, enabled = !isImporting,
+                    role = Role.Checkbox, onValueChange = onRestoreConfigChange),
+                    verticalAlignment = Alignment.CenterVertically) {
+                    Text(stringResource(R.string.zip_restore_config), modifier = Modifier.weight(1f))
+                    Checkbox(checked = restoreConfig, onCheckedChange = null, enabled = !isImporting)
+                }
+                Text(stringResource(R.string.zip_restore_config_hint), style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
         },
         confirmButton = {
             TextButton(

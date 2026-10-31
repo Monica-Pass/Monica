@@ -512,7 +512,7 @@
     <string name="import_data_button">Импорт</string>
     <string name="import_data_success">Данные успешно импортированы</string>
     <string name="import_data_error">Ошибка импорта</string>
-    <string name="import_data_supported_formats">Поддерживаются CSV-файлы, экспортированные приложением, и выписки Alipay</string>
+    <string name="import_data_supported_formats">Импорт ZIP, KDBX, CSV и других поддерживаемых файлов</string>
     <string name="import_data_select_type">Выберите тип импорта</string>
     <string name="import_data_type_normal">Данные приложения</string>
     <string name="import_data_type_alipay">Выписка Alipay</string>
@@ -944,7 +944,7 @@
     <string name="settings_bottom_sheet_title">Режим нижней панели</string>
     <string name="settings_bottom_sheet_description">Включить выдвижную нижнюю навигацию</string>
     <string name="settings_export_data">Экспорт данных</string>
-    <string name="settings_export_data_description">Экспорт в CSV-файл локально</string>
+    <string name="settings_export_data_description">Экспорт резервных копий ZIP, KDBX или Steam maFile</string>
     <string name="settings_import_data">Импорт данных</string>
     <string name="settings_import_data_description">Восстановление из резервной копии</string>
     <string name="settings_version_info">Информация о версии</string>
@@ -1173,9 +1173,9 @@
     <!-- Data Management in Settings -->
     <string name="data_management">Управление данными</string>
     <string name="export_data">Экспорт данных</string>
-    <string name="export_data_description">Экспорт всех данных в CSV-файл</string>
+    <string name="export_data_description">Экспорт резервных копий ZIP, KDBX или Steam maFile</string>
     <string name="import_data">Импорт данных</string>
-    <string name="import_data_description">Импорт данных из CSV-файла</string>
+    <string name="import_data_description">Импорт ZIP, KDBX, CSV и других поддерживаемых файлов</string>
 
     <!-- WebDAV Backup -->
     <string name="webdav_backup">Резервное копирование WebDAV</string>
@@ -4668,4 +4668,11 @@
     <string name="url_match_limited_context">Хост исключает другие поддомены. По одному имени хоста протокол, путь и запрос не определяются. Точный URL и префикс требуют полного URL. Регулярные выражения используют RE2.</string>
     <string name="url_match_regex_error">Сначала замените URL корректным регулярным выражением RE2.</string>
     <string name="url_match_unreadable">Правила URL не читаются. Данные сохранены, сохранение изменений отключено.</string>
+    <string name="autofill_hyperos_save_compatibility">Совместимость сохранения с HyperOS 1</string>
+    <string name="autofill_hyperos_save_compatibility_desc">После системной кнопки «Сохранить» появится плавающая панель. Нажмите «Продолжить», чтобы открыть Monica. Нужно разрешение на показ поверх других приложений.</string>
+    <string name="autofill_save_overlay_title">Сохранить в Monica</string>
+    <string name="autofill_save_overlay_body">Продолжите, чтобы подтвердить личность и проверить пароль. Закрытие панели ничего не сохраняет.</string>
+    <string name="autofill_save_overlay_continue">Продолжить</string>
+    <string name="autofill_save_overlay_permission_action">Разрешить показ поверх приложений</string>
+    <string name="autofill_save_overlay_permission_required">Разрешите Monica показ поверх других приложений в настройках совместимости сохранения HyperOS 1 и повторите сохранение.</string>
 </resources>

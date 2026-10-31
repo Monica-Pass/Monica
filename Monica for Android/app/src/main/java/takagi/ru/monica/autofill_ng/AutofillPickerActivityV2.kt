@@ -1066,7 +1066,8 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
             hint?.let { id to it }
         }
         return FillResponse.Builder().addDataset(dataset).apply {
-            AutofillSaveInfoPolicy.build(fields, args.saveEnabled, args.saveCompatMode)?.let(::setSaveInfo)
+            AutofillSaveInfoPolicy.build(fields, args.saveEnabled, args.saveCompatMode,
+                saveOnAllViewsInvisible = !args.webDomain.isNullOrBlank())?.let(::setSaveInfo)
         }.build()
     }
 

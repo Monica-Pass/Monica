@@ -58,8 +58,10 @@ internal fun MonicaKeyboard(
     keyVibrationEnabled: Boolean = false,
 ) {
     val context = androidx.compose.ui.platform.LocalContext.current
-    val haptic = remember(context, keyVibrationEnabled) {
-        takagi.ru.monica.ui.haptic.HapticFeedbackHelper(context, enabled = keyVibrationEnabled)
+    val view = androidx.compose.ui.platform.LocalView.current
+    val haptic = remember(context, view, keyVibrationEnabled) {
+        // Use the IME window's keyboard haptic route instead of an unscoped vibrator request.
+        takagi.ru.monica.ui.haptic.HapticFeedbackHelper(context, view = view, enabled = keyVibrationEnabled)
     }
     BoxWithConstraints(modifier.padding(horizontal = 8.dp, vertical = 12.dp).testTag("ime_key_grid")) {
         val density = LocalDensity.current

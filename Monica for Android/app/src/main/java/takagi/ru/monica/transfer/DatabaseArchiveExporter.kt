@@ -37,6 +37,9 @@ internal class DatabaseArchiveExporter(context: Context) {
         progress: TransferProgressReporter = TransferProgressReporter.None,
     ): Pair<File, String> = withContext(Dispatchers.IO) {
         require(preferences.hasDatabaseExportContent()) { strings.get(R.string.backup_select_content) }
+        require(!preferences.includeWebDavConfig || !password.isNullOrEmpty()) {
+            strings.get(R.string.zip_config_encryption_required)
+        }
         progress.report(TransferProgress(TransferPhase.READING))
         val snapshot = DatabaseExportSnapshotLoader(context).load(source, preferences)
         val passwords = snapshot.passwords.filter { preferences.includePasswords && !it.isDeleted }
@@ -77,6 +80,9 @@ internal class DatabaseArchiveExporter(context: Context) {
                 fun count() { progress.report(TransferProgress(TransferPhase.PACKING, ++written, total)) }
                 write("database_export.json", JSONObject().put("version", 1).put("source", source.kind.name)
                     .put("nativeTokenCount", tokens.size).toString())
+                if (preferences.includeWebDavConfig) {
+                    WebDavHelper(context).writeFileExportConfiguration(zip, password)
+                }
                 progress.report(TransferProgress(TransferPhase.PACKING, total = total))
                 for (entry in passwords) {
                     currentCoroutineContext().ensureActive()
@@ -225,4 +231,4 @@ internal class DatabaseArchiveExporter(context: Context) {
 }
 
 internal fun BackupPreferences.hasDatabaseExportContent(): Boolean = includePasswords || includeAuthenticators ||
-    includePasskeys || includeNotes || includeDocuments || includeBankCards
+    includePasskeys || includeNotes || includeDocuments || includeBankCards || includeWebDavConfig

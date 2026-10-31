@@ -4,7 +4,6 @@ import takagi.ru.monica.R
 import takagi.ru.monica.utils.AppLocaleStringResolver
 import takagi.ru.monica.utils.LocaleHelper
 import takagi.ru.monica.utils.StartupLanguageCache
-import android.app.PendingIntent
 import android.app.assist.AssistStructure
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -1201,37 +1200,69 @@ class MonicaAutofillServiceNg : AutofillService() {
     }
 
     override fun onSaveRequest(request: SaveRequest, callback: SaveCallback) {
+        val requestId = java.util.UUID.randomUUID().toString()
+        AutofillSaveDiagnostics.record(this, requestId, AutofillSaveDiagnostics.Event.REQUEST_RECEIVED)
         scope.launch {
+            var callbackCompleted = false
             try {
                 if (!autofillPreferences.isRequestSaveDataEnabled.first()) {
+                    AutofillSaveDiagnostics.record(this@MonicaAutofillServiceNg, requestId, AutofillSaveDiagnostics.Event.SAVE_DISABLED)
+                    callbackCompleted = true
                     callback.onSuccess()
                     return@launch
                 }
 
                 val saveIntent = withContext(Dispatchers.Default) { buildSaveIntent(request) }
                 if (saveIntent == null) {
+                    AutofillSaveDiagnostics.record(this@MonicaAutofillServiceNg, requestId, AutofillSaveDiagnostics.Event.NO_SAVE_DATA)
+                    callbackCompleted = true
                     callback.onSuccess()
                     return@launch
                 }
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    val code = (System.currentTimeMillis().toInt() and 0x7FFFFFFF)
-                    val flags = PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                    val pendingIntent = PendingIntent.getActivity(
-                        this@MonicaAutofillServiceNg,
-                        code,
-                        saveIntent,
-                        flags,
-                    )
+                val compatibilityMode = autofillPreferences.isHyperOsSaveCompatibilityEnabled.first()
+                if (compatibilityMode) {
+                    if (!android.provider.Settings.canDrawOverlays(this@MonicaAutofillServiceNg)) {
+                        AutofillSaveDiagnostics.record(this@MonicaAutofillServiceNg, requestId,
+                            AutofillSaveDiagnostics.Event.OVERLAY_PERMISSION_MISSING)
+                        callbackCompleted = true
+                        callback.onFailure(strings.get(R.string.autofill_save_overlay_permission_required))
+                        return@launch
+                    }
+                    val pendingIntent = AutofillSaveLaunch.pendingIntent(this@MonicaAutofillServiceNg, saveIntent, requestId, true)
+                    AutofillSaveOverlay.show(this@MonicaAutofillServiceNg, pendingIntent, requestId)
+                    callbackCompleted = true
+                    // The credentials have only been staged in memory; the overlay's
+                    // user action performs the Activity launch, authentication and review.
+                    callback.onSuccess()
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    val pendingIntent = AutofillSaveLaunch.pendingIntent(this@MonicaAutofillServiceNg, saveIntent, requestId, compatibilityMode)
+                    AutofillSaveDiagnostics.record(this@MonicaAutofillServiceNg, requestId, AutofillSaveDiagnostics.Event.LAUNCH_READY,
+                        compatibilityMode = compatibilityMode)
+                    // SaveCallback permits only one terminal call, even if its Binder call throws.
+                    callbackCompleted = true
                     callback.onSuccess(pendingIntent.intentSender)
+                    AutofillSaveDiagnostics.record(this@MonicaAutofillServiceNg, requestId, AutofillSaveDiagnostics.Event.HANDOFF_SENT,
+                        compatibilityMode = compatibilityMode)
                 } else {
                     saveIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    saveIntent.putExtra(AutofillSaveLaunch.EXTRA_REQUEST_ID, requestId)
                     startActivity(saveIntent)
+                    AutofillSaveDiagnostics.record(this@MonicaAutofillServiceNg, requestId, AutofillSaveDiagnostics.Event.LEGACY_LAUNCH_SENT)
+                    callbackCompleted = true
                     callback.onSuccess()
                 }
+            } catch (e: CancellationException) {
+                AutofillSaveDiagnostics.record(this@MonicaAutofillServiceNg, requestId, AutofillSaveDiagnostics.Event.REQUEST_CANCELED)
+                throw e
             } catch (e: Exception) {
-                AutofillLogger.e("AF", "onSaveRequest failed", e)
-                callback.onFailure(e.message ?: strings.get(R.string.legacy_ui_autofill_save_failed))
+                AutofillSaveDiagnostics.record(this@MonicaAutofillServiceNg, requestId,
+                    if (callbackCompleted) AutofillSaveDiagnostics.Event.CALLBACK_FAILED else AutofillSaveDiagnostics.Event.REQUEST_FAILED, e)
+                if (!callbackCompleted) {
+                    callbackCompleted = true
+                    runCatching { callback.onFailure(strings.get(R.string.legacy_ui_autofill_save_failed)) }
+                        .onFailure { AutofillSaveDiagnostics.record(this@MonicaAutofillServiceNg, requestId, AutofillSaveDiagnostics.Event.CALLBACK_FAILED, it) }
+                }
             }
         }
     }
@@ -1325,7 +1356,9 @@ class MonicaAutofillServiceNg : AutofillService() {
         }
         for (childIndex in 0 until node.childCount) {
             val child = node.getChildAt(childIndex) ?: continue
-            if (child.visibility != View.VISIBLE) continue
+            // SaveRequest contains Android's captured form. Its already-scoped
+            // target can become hidden after submission; visibility gates filling,
+            // not reading this exact ID for the user's confirmed save operation.
             val value = extractTextFromNode(child, targetId)
             if (!value.isNullOrBlank()) {
                 return value

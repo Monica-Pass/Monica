@@ -1,0 +1,52 @@
+{
+  "app/src/main/java/takagi/ru/monica/data/BackupPreferences.kt": {
+    "identical": true,
+    "main_sha256": "3ab1675d9c7e3615673d21a6c55752774e16ac6f6b574ee9a9fc802abe9f6589"
+  },
+  "app/src/main/java/takagi/ru/monica/transfer/DatabaseArchiveExporter.kt": {
+    "identical": true,
+    "main_sha256": "74c6cbae9b5346f60ff8575beac995932539f980e5c1d23876cd15208eaa8045"
+  },
+  "app/src/main/java/takagi/ru/monica/utils/WebDavHelper.kt": {
+    "identical": false,
+    "main_sha256": "c0c3b9cc1cb81b2f4824ec341fd52144c0951a0869746878667d20574c1e5b86"
+  },
+  "app/src/main/java/takagi/ru/monica/ui/screens/ExportDataScreen.kt": {
+    "identical": true,
+    "main_sha256": "1e6567d9e41434f470f65b70770204f52fd8cdee57e474278e85cab279eaab85"
+  },
+  "app/src/main/java/takagi/ru/monica/ui/screens/ImportDataScreen.kt": {
+    "identical": false,
+    "main_sha256": "1f632febc5ff7d99849bb4d45b314ee6cd829a4debebec0ec434544f587f2dcd"
+  },
+  "app/src/main/java/takagi/ru/monica/ui/screens/ImportDialogs.kt": {
+    "identical": true,
+    "main_sha256": "d527d2a115c577c5d4943351e27261fd6f59ea982576c607068d060a4d51fe64"
+  },
+  "app/src/main/java/takagi/ru/monica/viewmodel/DataExportImportViewModel.kt": {
+    "identical": false,
+    "main_sha256": "1d086ab4dba9ff805315f7773f05de8042466b56e12487ff6d563b71cd31dc70"
+  },
+  "app/src/androidTest/java/takagi/ru/monica/credentialexchange/ZipConfigurationBackupTest.kt": {
+    "identical": true,
+    "main_sha256": "066857c868bbca6e73acf7ef66c50b235452c006209b9ea6d2c876341293d79f"
+  },
+  "app/src/androidTest/java/takagi/ru/monica/credentialexchange/DatabaseTransferUiTest.kt": {
+    "identical": false,
+    "main_sha256": "72c8d8d068d3588f0de40e7a35397197150d649bd10cf186e0d60075f8dc6446"
+  },
+  "app/src/test/java/takagi/ru/monica/utils/WebDavSecurityStorageGuardTest.kt": {
+    "identical": true,
+    "main_sha256": "1e477d7e066ad95f37695add25df1c82ed1681346b72586c8b7962feb6886d6a"
+  },
+  "localized_values_per_edition": 126,
+  "shared_sections": {
+    "private suspend fun writeCommonAccountBackup(": true,
+    "private fun decryptBackupValueWithLegacyFallback(": true,
+    "suspend fun importZipBackup(": true
+  },
+  "fastlane_lengths": {
+    "zh-CN": 431,
+    "en-US": 498
+  }
+}

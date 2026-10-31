@@ -1,0 +1,43 @@
+=== ordinary-compat-cold-save-logcat.txt ===
+10-31 03:22:57.477  9964  9964 I MonicaAutofill: [SAVE] REQUEST_RECEIVED {requestId=9ccc5ab2-07d1-4072-bf08-6883f810722c, pid=9964, sdk=32, monicaImeSelected=false}
+10-31 03:22:57.501  9964  9964 I MonicaAutofill: [SAVE] LAUNCH_READY {requestId=9ccc5ab2-07d1-4072-bf08-6883f810722c, pid=9964, sdk=32, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:22:57.506  9964  9964 I MonicaAutofill: [SAVE] HANDOFF_SENT {requestId=9ccc5ab2-07d1-4072-bf08-6883f810722c, pid=9964, sdk=32, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:22:57.586  9964  9964 I MonicaAutofill: [SAVE] ACTIVITY_CREATED {requestId=9ccc5ab2-07d1-4072-bf08-6883f810722c, pid=9964, sdk=32, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:22:57.673  9964  9964 I MonicaAutofill: [SAVE] ACTIVITY_RESUMED {requestId=9ccc5ab2-07d1-4072-bf08-6883f810722c, pid=9964, sdk=32, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:22:58.420  9964  9964 I MonicaAutofill: [SAVE] AUTH_READY {requestId=9ccc5ab2-07d1-4072-bf08-6883f810722c, pid=9964, sdk=32, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:23:10.118  9964  9964 I MonicaAutofill: [SAVE] EDITOR_READY {requestId=9ccc5ab2-07d1-4072-bf08-6883f810722c, pid=9964, sdk=32, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:23:13.158  9964  9964 I MonicaAutofill: [SAVE] ACTIVITY_DESTROYED {requestId=9ccc5ab2-07d1-4072-bf08-6883f810722c, pid=9964, sdk=32, monicaImeSelected=false, compatibilityMode=true}
+
+
+=== fdroid-compat-cold-save-logcat.txt ===
+10-31 03:27:30.642 13159 13159 I MonicaAutofill: [SAVE] REQUEST_RECEIVED {requestId=eea50958-29e5-4924-bec8-c13967cd27fc, pid=13159, sdk=32, monicaImeSelected=false}
+10-31 03:27:30.667 13159 13159 I MonicaAutofill: [SAVE] LAUNCH_READY {requestId=eea50958-29e5-4924-bec8-c13967cd27fc, pid=13159, sdk=32, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:27:30.669 13159 13159 I MonicaAutofill: [SAVE] HANDOFF_SENT {requestId=eea50958-29e5-4924-bec8-c13967cd27fc, pid=13159, sdk=32, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:27:30.785 13159 13159 I MonicaAutofill: [SAVE] ACTIVITY_CREATED {requestId=eea50958-29e5-4924-bec8-c13967cd27fc, pid=13159, sdk=32, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:27:30.867 13159 13159 I MonicaAutofill: [SAVE] ACTIVITY_RESUMED {requestId=eea50958-29e5-4924-bec8-c13967cd27fc, pid=13159, sdk=32, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:27:31.536 13159 13159 I MonicaAutofill: [SAVE] AUTH_READY {requestId=eea50958-29e5-4924-bec8-c13967cd27fc, pid=13159, sdk=32, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:27:43.007 13159 13159 I MonicaAutofill: [SAVE] EDITOR_READY {requestId=eea50958-29e5-4924-bec8-c13967cd27fc, pid=13159, sdk=32, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:27:46.040 13159 13159 I MonicaAutofill: [SAVE] ACTIVITY_DESTROYED {requestId=eea50958-29e5-4924-bec8-c13967cd27fc, pid=13159, sdk=32, monicaImeSelected=false, compatibilityMode=true}
+=== ordinary-compat-cold-save-logcat.txt ===
+10-31 03:32:54.385  7870  7870 I MonicaAutofill: [SAVE] REQUEST_RECEIVED {requestId=ab8b37bb-b8d8-4075-8ec3-318be1d43ca6, pid=7870, sdk=35, monicaImeSelected=false}
+10-31 03:32:54.445  7870  7870 I MonicaAutofill: [SAVE] NO_SAVE_DATA {requestId=ab8b37bb-b8d8-4075-8ec3-318be1d43ca6, pid=7870, sdk=35, monicaImeSelected=false}
+
+
+=== ordinary-compat-cold-verified-save-logcat.txt ===
+10-31 03:38:19.455 10353 10353 I MonicaAutofill: [SAVE] REQUEST_RECEIVED {requestId=65a71229-8e5c-4789-bafd-73a2089b4432, pid=10353, sdk=35, monicaImeSelected=false}
+10-31 03:38:19.571 10353 10353 I MonicaAutofill: [SAVE] LAUNCH_READY {requestId=65a71229-8e5c-4789-bafd-73a2089b4432, pid=10353, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:38:19.590 10353 10353 I MonicaAutofill: [SAVE] HANDOFF_SENT {requestId=65a71229-8e5c-4789-bafd-73a2089b4432, pid=10353, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:38:19.945 10353 10353 I MonicaAutofill: [SAVE] ACTIVITY_CREATED {requestId=65a71229-8e5c-4789-bafd-73a2089b4432, pid=10353, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:38:20.213 10353 10353 I MonicaAutofill: [SAVE] ACTIVITY_RESUMED {requestId=65a71229-8e5c-4789-bafd-73a2089b4432, pid=10353, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:38:21.023 10353 10353 I MonicaAutofill: [SAVE] AUTH_READY {requestId=65a71229-8e5c-4789-bafd-73a2089b4432, pid=10353, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:42:06.726 10353 10353 I MonicaAutofill: [SAVE] ACTIVITY_RESUMED {requestId=65a71229-8e5c-4789-bafd-73a2089b4432, pid=10353, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:42:08.604 10353 10353 I MonicaAutofill: [SAVE] ACTIVITY_DESTROYED {requestId=65a71229-8e5c-4789-bafd-73a2089b4432, pid=10353, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+
+
+=== fdroid-compat-cold-launch-save-logcat.txt ===
+10-31 03:43:19.220 12463 12463 I MonicaAutofill: [SAVE] REQUEST_RECEIVED {requestId=0859eb11-b3fc-4a70-93cb-de68ba1bc6a2, pid=12463, sdk=35, monicaImeSelected=false}
+10-31 03:43:19.334 12463 12463 I MonicaAutofill: [SAVE] LAUNCH_READY {requestId=0859eb11-b3fc-4a70-93cb-de68ba1bc6a2, pid=12463, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:43:19.342 12463 12463 I MonicaAutofill: [SAVE] HANDOFF_SENT {requestId=0859eb11-b3fc-4a70-93cb-de68ba1bc6a2, pid=12463, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:43:19.655 12463 12463 I MonicaAutofill: [SAVE] ACTIVITY_CREATED {requestId=0859eb11-b3fc-4a70-93cb-de68ba1bc6a2, pid=12463, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:43:19.937 12463 12463 I MonicaAutofill: [SAVE] ACTIVITY_RESUMED {requestId=0859eb11-b3fc-4a70-93cb-de68ba1bc6a2, pid=12463, sdk=35, monicaImeSelected=false, compatibilityMode=true}
+10-31 03:43:20.821 12463 12463 I MonicaAutofill: [SAVE] AUTH_READY {requestId=0859eb11-b3fc-4a70-93cb-de68ba1bc6a2, pid=12463, sdk=35, monicaImeSelected=false, compatibilityMode=true}

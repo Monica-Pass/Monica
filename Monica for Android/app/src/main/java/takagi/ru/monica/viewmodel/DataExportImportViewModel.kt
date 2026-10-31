@@ -1429,10 +1429,11 @@ class DataExportImportViewModel(
      * 导入完整备份 (ZIP格式)
      * @param inputUri 用户选择的ZIP文件URI
      */
-    suspend fun importZipBackup(inputUri: Uri, decryptPassword: String? = null, destination: ImportDestination? = null): Result<Int> =
-        withContext(Dispatchers.IO) { importZipBackupOnIo(inputUri, decryptPassword, destination) }
+    suspend fun importZipBackup(inputUri: Uri, decryptPassword: String? = null, destination: ImportDestination? = null,
+        restoreMonicaConfig: Boolean = false): Result<Int> =
+        withContext(Dispatchers.IO) { importZipBackupOnIo(inputUri, decryptPassword, destination, restoreMonicaConfig) }
 
-    private suspend fun importZipBackupOnIo(inputUri: Uri, decryptPassword: String?, destination: ImportDestination?): Result<Int> {
+    private suspend fun importZipBackupOnIo(inputUri: Uri, decryptPassword: String?, destination: ImportDestination?, restoreMonicaConfig: Boolean): Result<Int> {
         return try {
             // A file import must ask for this archive's password before copying a large file.
             // The cloud-backup password is unrelated to the archive the user selected.
@@ -1458,7 +1459,7 @@ class DataExportImportViewModel(
                 } ?: throw IOException(strings.get(R.string.bitwarden_message_file_unreadable))
                 // 2. 调用 restoreFromBackupFile 解析备份
                 val result = webDavHelper.restoreFromBackupFile(
-                    tempFile, decryptPassword, restoreMonicaConfig = destination == null, importDataOnly = destination != null,
+                    tempFile, decryptPassword, restoreMonicaConfig = restoreMonicaConfig, importDataOnly = destination != null,
                     progress = importProgressReporter,
                 )
                 

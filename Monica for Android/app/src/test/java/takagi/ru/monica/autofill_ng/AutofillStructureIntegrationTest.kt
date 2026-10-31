@@ -70,6 +70,69 @@ class AutofillStructureIntegrationTest {
 
     private fun parse(vararg roots: AssistStructure.ViewNode) = parser.parse(structure(*roots))
 
+    @Test fun mixedLoginIdentifierAndPasswordRemainAPairFromEitherFocus() {
+        for (focusPassword in listOf(false, true)) {
+            val account = node(html=mapOf("id" to "loginInput", "type" to "text",
+                "placeholder" to "用户名、邮箱或手机号"), focused=!focusPassword)
+            val password = node(html=mapOf("id" to "passwordInput", "type" to "password",
+                "placeholder" to "请输入密码"), focused=focusPassword)
+            val parsed = parse(node(domain="account.example.test",children=arrayOf(account,password)))
+            assertEquals("focusPassword=$focusPassword", mapOf(account.autofillId to FieldHint.USERNAME,
+                password.autofillId to FieldHint.PASSWORD), parsed.items.associate { it.id to it.hint })
+        }
+    }
+
+    @Test fun genericWebViewInputClassesDoNotSplitTheLoginPair() {
+        for (focusPassword in listOf(false, true)) {
+            val account = node(html=mapOf("type" to "text", "placeholder" to "Username"), focused=!focusPassword)
+            val password = node(html=mapOf("type" to "password"), focused=focusPassword)
+            listOf(account, password).forEach {
+                ReflectionHelpers.setField(it,"mClassName","android.webkit.WebView")
+            }
+            val parsed = parse(node(domain="account.example.test",children=arrayOf(account,password)))
+            assertEquals("focusPassword=$focusPassword",setOf(account.autofillId,password.autofillId),parsed.items.map { it.id }.toSet())
+        }
+    }
+
+    @Test fun mixedAccountLabelsWorkInNativeAndHtmlFields() {
+        for (label in listOf("用户名、邮箱或手机号", "Username or email", "Email / phone", "用戶名或電郵")) {
+            for (htmlField in listOf(false, true)) {
+                val account = if (htmlField) node(html=mapOf("type" to "text", "placeholder" to label),focused=true)
+                    else node(hint=label,focused=true)
+                val password = node(inputType=InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
+                val parsed = parse(node(children=arrayOf(account,password)))
+                assertEquals("$label html=$htmlField",FieldHint.USERNAME,parsed.items.single { it.id == account.autofillId }.hint)
+            }
+        }
+    }
+
+    @Test fun dedicatedContactFieldsAndExplicitHtmlSemanticsKeepTheirRoles() {
+        for ((label, role) in listOf("Account email" to FieldHint.EMAIL_ADDRESS,
+            "Email address" to FieldHint.EMAIL_ADDRESS, "手机号" to FieldHint.PHONE_NUMBER,
+            "Username or email password" to FieldHint.PASSWORD, "邮箱或手机验证码" to FieldHint.OTP_CODE)) {
+            assertEquals(label,role,parse(node(hint=label,focused=true)).items.single().hint)
+        }
+        val explicit = node(html=mapOf("type" to "email", "autocomplete" to "email",
+            "placeholder" to "Username or email"),focused=true)
+        assertEquals(FieldHint.EMAIL_ADDRESS,parse(node(domain="account.example.test",children=arrayOf(explicit))).items.single().hint)
+    }
+
+    @Test fun virtualWebViewInputsKeepHtmlFormAndOriginBoundaries() {
+        for (otherOrigin in listOf(false, true)) {
+            val account = node(html=mapOf("type" to "text", "placeholder" to "Username"),focused=true)
+            val password = node(html=mapOf("type" to "password"))
+            listOf(account,password).forEach { ReflectionHelpers.setField(it,"mClassName","android.webkit.WebView") }
+            val roots = if (otherOrigin) {
+                ReflectionHelpers.setField(password,"mWebDomain","other.example.test")
+                arrayOf(account,password)
+            } else arrayOf(node(html=mapOf("id" to "login"),htmlTag="form",children=arrayOf(account)),
+                node(html=mapOf("id" to "other"),htmlTag="form",children=arrayOf(password)))
+            val parsed = parse(node(domain="account.example.test",children=roots))
+            assertEquals(listOf(account.autofillId),parsed.items.map { it.id })
+            assertFalse(password.autofillId in parsed.scopeAutofillIds)
+        }
+    }
+
     @Test fun longFormTraversalCooperatesWithCancellation() {
         val root=node(children=Array(200) { node(hint="Username") })
         var checks=0

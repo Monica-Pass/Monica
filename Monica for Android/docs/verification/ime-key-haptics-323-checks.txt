@@ -1,0 +1,30 @@
+Identical shared file: 1627c9e09b185766311e02d2b07b8fca90124473ba40eea5d33ebbd8210d50b2 app/src/main/java/takagi/ru/monica/ime/MonicaKeyboardLayout.kt
+Identical shared file: d68e819a4ab7c157d4598b5922ea2a53a9fb43c11c7d4725aed9524513acb2d9 app/src/androidTest/java/takagi/ru/monica/ime/ImeKeyHapticsInstrumentedTest.kt
+ordinary JVM takagi.ru.monica.ime.ImeKeyboardBehaviorTest tests=3 failures=0 errors=0
+ordinary JVM takagi.ru.monica.ime.ImeKeyboardOptionsSerializerTest tests=3 failures=0 errors=0
+ordinary JVM takagi.ru.monica.ime.ImeKeyGeometryTest tests=1 failures=0 errors=0
+ordinary 1.0.323-26103112-95 APK SHA256 ff6938de55e2beecde595ee19c82dc6cb1e3806263bd2a7c469f6a905bbf9d5a
+ordinary build successful in 2m 34s
+ordinary API32 9/10 first run; failed system case passed separately; UI=56.588s system=20.875s
+ordinary real IME key request:
+    startTime: 10-31 04:20:11.094, endTime: 10-31 04:20:11.197, status: finished, effect: Mono{mEffect=Composed{segments=[Prebaked{effect=CLICK, strength=LIGHT, fallback=true}], repeat=-1}}, originalEffect: Mono{mEffect=Composed{segments=[Prebaked{effect=CLICK, strength=MEDIUM, fallback=true}], repeat=-1}}, scale: 0.00, attrs: VibrationAttributes: Usage=TOUCH Audio Usage= USAGE_ASSISTANCE_SONIFICATION Flags=0, uid: 1410171, opPkg: takagi.ru.monica, reason: null
+
+fdroid JVM takagi.ru.monica.ime.ImeKeyboardBehaviorTest tests=3 failures=0 errors=0
+fdroid JVM takagi.ru.monica.ime.ImeKeyboardOptionsSerializerTest tests=3 failures=0 errors=0
+fdroid JVM takagi.ru.monica.ime.ImeKeyGeometryTest tests=1 failures=0 errors=0
+fdroid 1.0.323 APK SHA256 61550a5113c193179f33e3d5dbb7a18c9559793f67b507b15458c1aac31732cb
+fdroid build successful in 2m 40s
+fdroid API32 9/9 UI tests; system case passed separately; UI=25.332s system=21.359s
+fdroid real IME key request:
+    startTime: 10-31 04:22:45.871, endTime: 10-31 04:22:45.986, status: finished, effect: Mono{mEffect=Composed{segments=[Prebaked{effect=CLICK, strength=LIGHT, fallback=true}], repeat=-1}}, originalEffect: Mono{mEffect=Composed{segments=[Prebaked{effect=CLICK, strength=MEDIUM, fallback=true}], repeat=-1}}, scale: 0.00, attrs: VibrationAttributes: Usage=TOUCH Audio Usage= USAGE_ASSISTANCE_SONIFICATION Flags=0, uid: 1410149, opPkg: takagi.ru.monica.fdroid, reason: null
+
+fastlane30 zh-CN characters=499
+fastlane30 en-US characters=492
+Restored original Android user 0.
+Removed only the owned guest 14.
+Users:
+	UserInfo{0:Owner:c13} running
+	UserInfo{10:Monica:410}
+	UserInfo{11:Monica_Recovery316:410}
+	UserInfo{12:Monica_Recovery316_Retest:410}
+Stopped the public AVD started by this task; configuration and data disk preserved.

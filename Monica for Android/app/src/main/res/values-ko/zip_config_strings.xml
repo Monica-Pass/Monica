@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_config_backup_hint">앱 설정, 자주 쓰는 계정, 자동 완성 규칙, 보안 질문 및 WebDAV/Bitwarden 설정을 포함합니다. 암호화가 필요합니다.</string>
+    <string name="zip_config_encryption_required">Monica 설정을 포함하려면 ZIP 백업을 암호화하세요.</string>
+    <string name="zip_config_backup_failed">선택한 Monica 설정을 모두 백업하지 못해 백업 파일을 내보내지 않았습니다.</string>
+    <string name="zip_restore_config">Monica 설정 복원</string>
+    <string name="zip_restore_config_hint">백업에 설정이 있으면 함께 복원합니다. 선택하지 않으면 기기 설정을 유지합니다. 기존 WebDAV 연결은 유지되며 Bitwarden 보관함은 다시 인증해야 합니다.</string>
+</resources>

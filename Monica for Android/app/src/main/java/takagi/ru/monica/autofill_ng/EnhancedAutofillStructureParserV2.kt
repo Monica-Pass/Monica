@@ -21,6 +21,8 @@ class EnhancedAutofillStructureParserV2(
     private companion object {
         private val PACKAGE_NAME_REGEX =
             Regex("^[a-zA-Z][a-zA-Z0-9_]*(\\.[a-zA-Z][a-zA-Z0-9_]*)+$")
+        private val LOGIN_ALTERNATIVES_REGEX =
+            Regex("\\s+(?:or|oder|ou|o|или|hoặc)\\s+|[/／、,，|]|或者?|または|또는")
     }
 
     data class ParsedStructure(
@@ -1003,12 +1005,17 @@ class EnhancedAutofillStructureParserV2(
 
         val out = mutableListOf<RawParsedItem>()
         webView = node.className == "android.webkit.WebView"
+        val html = node.htmlInfo
+        // Some providers reuse the WebView class name for virtual HTML controls.
+        // Those controls belong to their ancestor's scope; they are not new documents.
+        val isHtmlControl = html?.tag?.lowercase(Locale.ROOT) in setOf("input", "select", "textarea")
+        val startsWebViewScope = webView && (parentWebViewNodeId == null || !isHtmlControl)
         val inheritedScope = parentWebViewNodeId?.let(context.webScopes::get)
         val changesOrigin = webDomain != null && inheritedScope?.domain != null &&
             !webDomain.equals(inheritedScope.domain, ignoreCase = true)
         // View ids are often NO_ID for multiple WebViews. Traversal identity
         // keeps their virtual fields (and cross-origin subtrees) separate.
-        val webViewNodeId = if (webView || changesOrigin || (webDomain != null && parentWebViewNodeId == null)) {
+        val webViewNodeId = if (startsWebViewScope || changesOrigin || (webDomain != null && parentWebViewNodeId == null)) {
             context.totalNodesVisited.also {
                 // Some providers report the origin on an enclosing virtual node only.
                 // Inherit from this ancestor, never from an unrelated sibling WebView.
@@ -1026,7 +1033,6 @@ class EnhancedAutofillStructureParserV2(
         var focusedWebViewNodeId = webViewNodeId.takeIf { hasFocus }
         var focusedAutofillId = node.autofillId.takeIf { hasFocus }
         var htmlFormId = parentHtmlFormId.takeIf { webViewNodeId == parentWebViewNodeId }
-        val html = node.htmlInfo
         if (htmlFormScopesEnabled && webViewNodeId != null && html?.tag.equals("form", ignoreCase = true)) {
             htmlFormId = context.totalNodesVisited
             context.htmlForms.registerForm(webViewNodeId, htmlFormId,
@@ -1632,6 +1638,13 @@ class EnhancedAutofillStructureParserV2(
                     reason = "label:$hint",
                 )
 
+            isMixedLoginIdentifierLabel(hint) ->
+                ParsedItemBuilder(
+                    accuracy = Accuracy.MEDIUM,
+                    hint = InternalHint.USERNAME,
+                    reason = "mixed-login-label",
+                )
+
             autofillLabelEmailTranslations.any { it in hint } ->
                 ParsedItemBuilder(
                     accuracy = Accuracy.MEDIUM,
@@ -1719,6 +1732,21 @@ class EnhancedAutofillStructureParserV2(
             else -> null
         }
         return listOfNotNull(out)
+    }
+
+    private fun isMixedLoginIdentifierLabel(label: String): Boolean {
+        // A single "account email" is still an email field. Only alternatives
+        // between different identifier types describe a general login account.
+        val alternatives = label.split(LOGIN_ALTERNATIVES_REGEX)
+        if (alternatives.size < 2) return false
+        return alternatives.mapNotNull { option ->
+            when {
+                autofillLabelEmailTranslations.any { it in option } -> InternalHint.EMAIL_ADDRESS
+                AutofillDetectionPolicy.matchesPhoneFieldName(option) -> InternalHint.PHONE_NUMBER
+                AutofillDetectionPolicy.matchesUsernameLabel(option) -> InternalHint.USERNAME
+                else -> null
+            }
+        }.distinct().size > 1
     }
 
     private fun parseNodeByAndroidInput(

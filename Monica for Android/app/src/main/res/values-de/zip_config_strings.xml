@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_config_backup_hint">Enthält App-Einstellungen, häufige Konten, Autofill-Regeln, Sicherheitsfragen und WebDAV-/Bitwarden-Konfiguration. Verschlüsselung erforderlich.</string>
+    <string name="zip_config_encryption_required">ZIP-Sicherung verschlüsseln, um die Monica-Konfiguration einzuschließen.</string>
+    <string name="zip_config_backup_failed">Die gewählte Monica-Konfiguration konnte nicht vollständig gesichert werden. Keine Sicherung exportiert.</string>
+    <string name="zip_restore_config">Monica-Konfiguration wiederherstellen</string>
+    <string name="zip_restore_config_hint">Enthaltene Konfiguration ebenfalls wiederherstellen. Ohne Auswahl bleiben lokale Einstellungen erhalten. Bestehende WebDAV-Verbindungen bleiben; Bitwarden-Tresore erfordern eine erneute Verifizierung.</string>
+</resources>

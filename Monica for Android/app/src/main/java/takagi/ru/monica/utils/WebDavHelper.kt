@@ -833,6 +833,69 @@ class WebDavHelper(
         )
     }
 
+    private suspend fun writeCommonAccountBackup(
+        zipOut: ZipOutputStream,
+        cacheBackupDir: File,
+        warnings: MutableList<String>,
+    ) {
+        try {
+            val commonAccountPreferences = takagi.ru.monica.data.CommonAccountPreferences(context)
+            val commonInfo = commonAccountPreferences.commonAccountInfo.first()
+            val commonTemplates = commonAccountPreferences.templatesFlow.first()
+
+            if (commonInfo.hasAnyInfo() || commonInfo.autoFillEnabled || commonTemplates.isNotEmpty()) {
+                val templateBackups = commonTemplates.map { template ->
+                    CommonAccountTemplateBackupEntry(
+                        id = template.id,
+                        type = template.type,
+                        title = "",
+                        content = template.content
+                    )
+                }
+                val commonAccountBackup = CommonAccountBackupEntry(
+                    email = commonInfo.email,
+                    phone = commonInfo.phone,
+                    username = commonInfo.username,
+                    autoFillEnabled = commonInfo.autoFillEnabled,
+                    billingAddress = CardWalletDataCodec.encodeBillingAddress(commonInfo.billingAddress),
+                    templates = templateBackups
+                )
+                val json = Json { prettyPrint = false }
+                val monicaConfigDir = File(cacheBackupDir, "monica_config").apply { mkdirs() }
+                val commonAccountFile = File(monicaConfigDir, "common_account.json")
+                commonAccountFile.writeText(
+                    json.encodeToString(CommonAccountBackupEntry.serializer(), commonAccountBackup),
+                    Charsets.UTF_8
+                )
+                addFileToZip(zipOut, commonAccountFile, "monica_config/${commonAccountFile.name}")
+                commonAccountFile.delete()
+                android.util.Log.d("WebDavHelper", "Backup common account info (templates=${templateBackups.size})")
+            } else {
+                // no-op
+            }
+        } catch (e: Exception) {
+            android.util.Log.w("WebDavHelper", "Failed to backup common account info: ${e.message}")
+            warnings.add(strings.get(R.string.backup_report_backup_failed, strings.get(R.string.backup_component_common_accounts), e.message ?: strings.get(R.string.import_data_unknown_error)))
+        }
+    }
+
+    /** Adds only portable configuration; database records still come from the selected source. */
+    internal suspend fun writeFileExportConfiguration(zipOut: ZipOutputStream, password: String?) {
+        require(!password.isNullOrEmpty()) { strings.get(R.string.zip_config_encryption_required) }
+        val directory = java.nio.file.Files.createTempDirectory(context.cacheDir.toPath(), "zip-config-").toFile()
+        val warnings = mutableListOf<String>()
+        try {
+            writeCommonAccountBackup(zipOut, directory, warnings)
+            writePortableAppSettingsBackup(zipOut, directory, password, warnings)
+            writeConnectionConfigBackup(zipOut, directory, password, warnings)
+            kotlinx.coroutines.currentCoroutineContext().ensureActive()
+            // Do not report a complete local export if any selected configuration was omitted.
+            check(warnings.isEmpty()) { strings.get(R.string.zip_config_backup_failed) }
+        } finally {
+            directory.deleteRecursively()
+        }
+    }
+
     private suspend fun writePortableAppSettingsBackup(
         zipOut: ZipOutputStream,
         cacheBackupDir: File,
@@ -2573,47 +2636,9 @@ class WebDavHelper(
                         }
                     }
                     
-                    // 7.7 ✅ 备份常用账号信息
-                    try {
-                        val commonAccountPreferences = takagi.ru.monica.data.CommonAccountPreferences(context)
-                        val commonInfo = commonAccountPreferences.commonAccountInfo.first()
-                        val commonTemplates = commonAccountPreferences.templatesFlow.first()
-                        
-                        if (commonInfo.hasAnyInfo() || commonInfo.autoFillEnabled || commonTemplates.isNotEmpty()) {
-                            val templateBackups = commonTemplates.map { template ->
-                                CommonAccountTemplateBackupEntry(
-                                    id = template.id,
-                                    type = template.type,
-                                    title = "",
-                                    content = template.content
-                                )
-                            }
-                            val commonAccountBackup = CommonAccountBackupEntry(
-                                email = commonInfo.email,
-                                phone = commonInfo.phone,
-                                username = commonInfo.username,
-                                autoFillEnabled = commonInfo.autoFillEnabled,
-                                billingAddress = CardWalletDataCodec.encodeBillingAddress(commonInfo.billingAddress),
-                                templates = templateBackups
-                            )
-                            val json = Json { prettyPrint = false }
-                            val monicaConfigDir = File(cacheBackupDir, "monica_config").apply { mkdirs() }
-                            val commonAccountFile = File(monicaConfigDir, "common_account.json")
-                            commonAccountFile.writeText(
-                                json.encodeToString(CommonAccountBackupEntry.serializer(), commonAccountBackup),
-                                Charsets.UTF_8
-                            )
-                            addFileToZip(zipOut, commonAccountFile, "monica_config/${commonAccountFile.name}")
-                            commonAccountFile.delete()
-                            android.util.Log.d("WebDavHelper", "Backup common account info (templates=${templateBackups.size})")
-                        } else {
-                            // no-op
-                        }
-                    } catch (e: Exception) {
-                        android.util.Log.w("WebDavHelper", "Failed to backup common account info: ${e.message}")
-                        warnings.add(strings.get(R.string.backup_report_backup_failed, strings.get(R.string.backup_component_common_accounts), e.message ?: strings.get(R.string.import_data_unknown_error)))
-                    }
-                    
+                    // Shared with optional configuration in file ZIP exports.
+                    writeCommonAccountBackup(zipOut, cacheBackupDir, warnings)
+
                     // 7.8 ✅ 便携应用设置始终随正常备份保存；连接凭据仍需用户明确选择。
                     writePortableAppSettingsBackup(
                         zipOut = zipOut,
@@ -6152,8 +6177,8 @@ class WebDavHelper(
     private fun decryptBackupValueWithLegacyFallback(value: String?, decryptPassword: String?): String? {
         val sanitizedValue = value?.takeIf { it.isNotBlank() } ?: return null
         val candidatePasswords = buildList {
-            decryptPassword?.takeIf { it.isNotBlank() }?.let(::add)
-            if (decryptPassword.isNullOrBlank()) {
+            decryptPassword?.takeIf { it.isNotEmpty() }?.let(::add)
+            if (decryptPassword.isNullOrEmpty()) {
                 add(LEGACY_WEBDAV_BACKUP_FALLBACK_KEY)
             }
         }
