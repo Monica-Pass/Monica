@@ -98,7 +98,7 @@ object BackupRestoreApplier {
             throw error
         } finally {
             // Staged attachment plaintext must also be removed on unlock/write/cancellation failures.
-            restoreResult.content.portableAttachments.payloads.values.distinct().forEach { it.delete() }
+            restoreResult.content.portableAttachments.close()
         }
     }
 

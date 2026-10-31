@@ -4,9 +4,38 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.io.File
+import java.nio.file.Files
 import java.util.Date
 
 class BackupRetentionPolicyTest {
+    @Test fun generatedArchiveNamesEnterRetentionButMarkedAndUnrelatedFilesRemainOutsideIt() {
+        val cache = Files.createTempDirectory("backup-retention-name-test-").toFile()
+        try {
+            val plain = File.createTempFile("monica_backup_20260930_120000_", ".zip", cache)
+            val encrypted = File.createTempFile("monica_backup_20260930_120000_", ".enc.zip", cache)
+            val newest = File.createTempFile("monica_backup_20261031_120000_", ".enc.zip", cache)
+            listOf(plain, encrypted, newest).forEach {
+                assertTrue("Generated archive must remain managed: ${it.name}", BackupRetentionPolicy.isManagedTemporaryBackup(it.name))
+            }
+            val excluded = listOf(
+                plain.name.replace(".zip", "_permanent.zip"),
+                encrypted.name.replace(".zip", "_permanent.zip"),
+                encrypted.name.replace(".enc.zip", "_partial_fixture.enc.zip"),
+                "family_12345.zip", "monica_backup_20260930_120000_custom.zip",
+                "monica_backup_20260930_120000_123_extra.zip",
+                "monica_backup_20260930_120000_123456789012345678901.zip",
+            )
+            excluded.forEach { assertFalse(it, BackupRetentionPolicy.isManagedTemporaryBackup(it)) }
+            val candidates = listOf(backup(plain.name, 1000L), backup(encrypted.name, 2000L), backup(newest.name, 3000L)) +
+                excluded.map { backup(it, 1L) }
+            val managed = candidates.filter { BackupRetentionPolicy.isManagedTemporaryBackup(it.name) }
+            assertEquals(listOf(plain.name, encrypted.name), BackupRetentionPolicy.backupsToDelete(
+                managed, BackupRetentionConfig(enabled = true, maxBackups = 1), protectedBackupName = newest.name,
+            ).map { it.name })
+        } finally { check(cache.deleteRecursively()) }
+    }
+
     @Test fun automaticCleanupOnlyOwnsStandardTemporaryArchiveNames() {
         assertTrue(BackupRetentionPolicy.isManagedTemporaryBackup("monica_backup_20260930_120000.zip"))
         assertTrue(BackupRetentionPolicy.isManagedTemporaryBackup("monica_backup_20260930_120000.enc.zip"))

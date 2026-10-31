@@ -1214,7 +1214,9 @@ class DataExportImportViewModel(
         backupEncryptionPassword: String? = null,
         source: ImportDestination = ImportDestination.Local,
         progress: TransferProgressReporter = TransferProgressReporter.None,
-    ): Result<Pair<File, String>> = withContext(Dispatchers.IO) {
+    ): Result<Pair<File, String>> = takagi.ru.monica.utils.BackupTemporaryFiles.deliverOnIo(
+        discard = { result -> result.getOrNull()?.first?.delete() },
+    ) {
         try {
             Result.success(DatabaseArchiveExporter(context).prepare(source, preferences, backupEncryptionPassword, progress))
         } catch (cancelled: CancellationException) { throw cancelled }
@@ -1319,11 +1321,16 @@ class DataExportImportViewModel(
         }
     }
 
-    suspend fun prepareSteamMaFileExport(accountIds: Set<Long>, source: ImportDestination = ImportDestination.Local): Result<PreparedSteamMaFileExport> = withContext(Dispatchers.IO) {
+    suspend fun prepareSteamMaFileExport(accountIds: Set<Long>, source: ImportDestination = ImportDestination.Local): Result<PreparedSteamMaFileExport> =
+        takagi.ru.monica.utils.BackupTemporaryFiles.deliverOnIo(
+            discard = { result -> result.getOrNull()?.file?.delete() },
+        ) {
+        var preparedFile: File? = null
+        var handedOff = false
         try {
             val selectedIds = accountIds
             if (selectedIds.isEmpty()) {
-                return@withContext Result.failure(Exception(context.getString(R.string.steam_mafile_export_no_selection)))
+                return@deliverOnIo Result.failure(Exception(context.getString(R.string.steam_mafile_export_no_selection)))
             }
 
             val accounts = takagi.ru.monica.transfer.DatabaseExportSnapshotLoader(context).loadSteamAccounts(source)
@@ -1331,14 +1338,14 @@ class DataExportImportViewModel(
                 .filter { account -> account.id in selectedIds && account.sharedSecret.isNotBlank() }
 
             if (selectedAccounts.isEmpty()) {
-                return@withContext Result.failure(Exception(context.getString(R.string.steam_mafile_export_empty)))
+                return@deliverOnIo Result.failure(Exception(context.getString(R.string.steam_mafile_export_empty)))
             }
 
             val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
             val prepared = if (selectedAccounts.size == 1) {
                 val account = selectedAccounts.first()
                 val fileName = SteamMaFileBackupCodec.fileName(account)
-                val tempFile = File(context.cacheDir, "steam_mafile_export_${System.nanoTime()}_$fileName")
+                val tempFile = File(context.cacheDir, "steam_mafile_export_${System.nanoTime()}_$fileName").also { preparedFile = it }
                 tempFile.writeText(SteamMaFileBackupCodec.encode(account), Charsets.UTF_8)
                 if (!tempFile.isFile || tempFile.length() <= 0L) {
                     throw IOException(strings.get(R.string.export_message_empty_mafile))
@@ -1352,7 +1359,7 @@ class DataExportImportViewModel(
                 )
             } else {
                 val fileName = "steam_mafiles_$timestamp.zip"
-                val tempFile = File(context.cacheDir, "steam_mafile_export_${System.nanoTime()}.zip")
+                val tempFile = File(context.cacheDir, "steam_mafile_export_${System.nanoTime()}.zip").also { preparedFile = it }
                 val usedFileNames = mutableSetOf<String>()
                 ZipOutputStream(tempFile.outputStream()).use { zip ->
                     selectedAccounts.forEach { account ->
@@ -1379,11 +1386,13 @@ class DataExportImportViewModel(
                 )
             }
 
-            Result.success(prepared)
+            Result.success(prepared).also { handedOff = true }
         } catch (cancelled: CancellationException) { throw cancelled }
         catch (e: Exception) {
             android.util.Log.e("DataExport", "准备Steam maFile导出失败: ${e.message}", e)
             Result.failure(e)
+        } finally {
+            if (!handedOff) preparedFile?.delete()
         }
     }
 
@@ -1448,8 +1457,10 @@ class DataExportImportViewModel(
             val webDavHelper = takagi.ru.monica.utils.WebDavHelper(context)
             
             // 1. 将Uri内容复制到临时文件
-            val tempFile = java.io.File(context.cacheDir, "import_temp_${System.nanoTime()}.zip")
+            val temporary = takagi.ru.monica.utils.BackupTemporaryFiles.create(context.cacheDir)
+            var parsed: takagi.ru.monica.utils.RestoreResult? = null
             try {
+                val tempFile = temporary.file("import_temp_${System.nanoTime()}.zip")
                 val length = runCatching { context.contentResolver.openFileDescriptor(inputUri, "r")?.use { it.statSize } }
                     .getOrNull()?.takeIf { it > 0 }
                 context.contentResolver.openInputStream(inputUri)?.use { input ->
@@ -1462,6 +1473,7 @@ class DataExportImportViewModel(
                     tempFile, decryptPassword, restoreMonicaConfig = restoreMonicaConfig, importDataOnly = destination != null,
                     progress = importProgressReporter,
                 )
+                parsed = result.getOrNull()
                 
                 result.fold(
                     onSuccess = { restoreResult ->
@@ -1495,7 +1507,8 @@ class DataExportImportViewModel(
                     }
                 )
             } finally {
-                tempFile.delete()
+                try { parsed?.content?.portableAttachments?.close() }
+                finally { temporary.close() }
             }
         } catch (e: Exception) {
             if (e is CancellationException) throw e

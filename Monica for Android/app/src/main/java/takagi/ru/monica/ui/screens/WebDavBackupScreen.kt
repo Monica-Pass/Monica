@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import takagi.ru.monica.transfer.*
 import takagi.ru.monica.R
 import takagi.ru.monica.repository.PasswordRepository
@@ -1087,6 +1088,7 @@ private fun WebDavRestoreDialogs(
     ) {
         isRestoring = true
         coroutineScope.launch {
+            var parsed: RestoreResult? = null
             try {
                 val result = webDavHelper.downloadAndRestoreBackup(
                     backupFile = backup,
@@ -1094,6 +1096,7 @@ private fun WebDavRestoreDialogs(
                     overwrite = resolveRestoreOverwrite(),
                     restoreMonicaConfig = restoreMonicaConfig,
                 )
+                parsed = result.getOrNull()
                 handleRestoreResult(
                     result = result,
                     localOnlyDedup = resolveLocalOnlyDedup(),
@@ -1106,6 +1109,10 @@ private fun WebDavRestoreDialogs(
                     context.getString(R.string.webdav_restore_failed, e.message),
                     Toast.LENGTH_LONG
                 ).show()
+            } finally {
+                withContext(kotlinx.coroutines.NonCancellable + kotlinx.coroutines.Dispatchers.IO) {
+                    parsed?.content?.portableAttachments?.close()
+                }
             }
         }
     }

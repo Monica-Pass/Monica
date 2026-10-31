@@ -75,10 +75,16 @@ object PortableAttachmentBackup {
 
     data class RestorePlan(
         val entries: List<Entry> = emptyList(),
-        val payloads: Map<String, File> = emptyMap()
-    ) {
+        val payloads: Map<String, File> = emptyMap(),
+        val temporaryFiles: java.io.Closeable? = null,
+    ) : java.io.Closeable {
         val isNotEmpty: Boolean
             get() = entries.isNotEmpty()
+
+        override fun close() {
+            try { payloads.values.distinct().forEach { it.delete() } }
+            finally { temporaryFiles?.close() }
+        }
     }
 
     fun decodeManifest(text: String): Manifest {

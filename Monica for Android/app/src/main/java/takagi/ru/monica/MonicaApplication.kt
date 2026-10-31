@@ -48,6 +48,17 @@ class MonicaApplication : Application() {
         super.onCreate()
         takagi.ru.monica.security.RuntimeDiagnostics.install()
 
+        // Temporary backup plaintext must be cleaned even when secure startup cannot open the vault.
+        startupScope.launch(Dispatchers.IO) {
+            try {
+                takagi.ru.monica.utils.BackupTemporaryFiles.cleanOrphans(cacheDir)
+            } catch (cancelled: kotlinx.coroutines.CancellationException) {
+                throw cancelled
+            } catch (error: Exception) {
+                Log.w(TAG, "Backup temporary cleanup failed: ${error.javaClass.simpleName}")
+            }
+        }
+
         // Historical exit lookup is independent of vault locks and never runs on the UI thread.
         startupScope.launch(Dispatchers.IO) {
             delay(POST_LAUNCH_DELAY_MS)

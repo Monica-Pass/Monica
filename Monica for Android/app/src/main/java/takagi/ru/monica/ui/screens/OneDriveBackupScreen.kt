@@ -276,8 +276,13 @@ private class OneDriveBackupScreenState(
 
     suspend fun performRestore(backup: BackupFile, decryptPasswordValue: String?) {
         restoringBackupPath = backup.path
+        var temporary: takagi.ru.monica.utils.BackupTemporaryFiles.Workspace? = null
+        var parsed: RestoreResult? = null
         try {
-            val downloadedFile = File(context.cacheDir, "restore_${backup.name}")
+            val workspace = withContext(Dispatchers.IO) {
+                takagi.ru.monica.utils.BackupTemporaryFiles.create(context.cacheDir).also { temporary = it }
+            }
+            val downloadedFile = workspace.file("download.zip")
             val result = backupHelper.downloadBackup(backup, downloadedFile)
                 .mapCatching {
                     webDavHelper.restoreFromBackupFile(
@@ -285,7 +290,7 @@ private class OneDriveBackupScreenState(
                         decryptPassword = decryptPasswordValue,
                         overwrite = restoreMode == OneDriveRestoreMode.ReplaceLocal,
                         restoreMonicaConfig = true
-                    ).getOrThrow()
+                    ).getOrThrow().also { restored -> parsed = restored }
                 }
 
             result.fold(
@@ -324,9 +329,11 @@ private class OneDriveBackupScreenState(
                     }
                 }
             )
-            downloadedFile.delete()
-
         } finally {
+            withContext(kotlinx.coroutines.NonCancellable + Dispatchers.IO) {
+                try { parsed?.content?.portableAttachments?.close() }
+                finally { temporary?.close() }
+            }
             restoringBackupPath = null
         }
     }

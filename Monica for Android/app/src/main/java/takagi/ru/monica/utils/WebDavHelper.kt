@@ -882,7 +882,8 @@ class WebDavHelper(
     /** Adds only portable configuration; database records still come from the selected source. */
     internal suspend fun writeFileExportConfiguration(zipOut: ZipOutputStream, password: String?) {
         require(!password.isNullOrEmpty()) { strings.get(R.string.zip_config_encryption_required) }
-        val directory = java.nio.file.Files.createTempDirectory(context.cacheDir.toPath(), "zip-config-").toFile()
+        val temporary = BackupTemporaryFiles.create(context.cacheDir)
+        val directory = temporary.directory
         val warnings = mutableListOf<String>()
         try {
             writeCommonAccountBackup(zipOut, directory, warnings)
@@ -892,7 +893,7 @@ class WebDavHelper(
             // Do not report a complete local export if any selected configuration was omitted.
             check(warnings.isEmpty()) { strings.get(R.string.zip_config_backup_failed) }
         } finally {
-            directory.deleteRecursively()
+            temporary.close()
         }
     }
 
@@ -1805,12 +1806,17 @@ class WebDavHelper(
         allowBackupEncryption: Boolean = true,
         backupEncryptionPassword: String? = null,
         skippedPasskeys: List<FailedItem> = emptyList(),
-    ): Result<Pair<File, BackupReport>> = withContext(Dispatchers.IO) {
+    ): Result<Pair<File, BackupReport>> = BackupTemporaryFiles.deliverOnIo(
+        discard = { result -> result.getOrNull()?.first?.delete() },
+    ) {
+        var temporary: BackupTemporaryFiles.Workspace? = null
+        var backupArtifact: File? = null
+        var completed = false
         try {
             // 验证：检查是否至少启用了一种内容类型
             if (!preferences.hasAnyEnabled()) {
                 android.util.Log.w("WebDavHelper", "Backup cancelled: no content types selected")
-                return@withContext Result.failure(Exception(strings.get(R.string.backup_select_content)))
+                return@deliverOnIo Result.failure(Exception(strings.get(R.string.backup_select_content)))
             }
 
             android.util.Log.d(
@@ -1844,15 +1850,6 @@ class WebDavHelper(
 
             // 1. 创建临时导出文件/目录
             val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-            val cacheBackupDir = File(context.cacheDir, "Monica_${timestamp}_backup")
-            if (!cacheBackupDir.exists()) cacheBackupDir.mkdirs()
-
-            val passwordsCsvFile = File(cacheBackupDir, "Monica_${timestamp}_password.csv")
-            val foldersRootDir = File(cacheBackupDir, "folders")
-            val passwordHistoryJsonFile = File(cacheBackupDir, "password_history.json")
-            
-            val historyJsonFile = File(context.cacheDir, "Monica_${timestamp}_generated_history.json")
-            val zipFile = File(context.cacheDir, "monica_backup_$timestamp.zip")
             val backupEncryptPassword = BackupEncryptionPolicy.resolvePassword(
                 allowBackupEncryption = allowBackupEncryption,
                 explicitPassword = backupEncryptionPassword,
@@ -1861,13 +1858,18 @@ class WebDavHelper(
             )
             val shouldEncryptBackup = backupEncryptPassword != null
             require(skippedPasskeys.isEmpty() || shouldEncryptBackup) { context.getString(R.string.passkey_partial_requires_encryption) }
-            val finalFile = if (shouldEncryptBackup) {
-                File(context.cacheDir, "monica_backup_$timestamp.enc.zip")
-            } else {
-                zipFile
-            }
+            val workspace = BackupTemporaryFiles.create(context.cacheDir).also { temporary = it }
+            val cacheBackupDir = workspace.directory
+            val passwordsCsvFile = workspace.file("Monica_${timestamp}_password.csv")
+            val foldersRootDir = File(cacheBackupDir, "folders")
+            val passwordHistoryJsonFile = workspace.file("password_history.json")
+            val historyJsonFile = workspace.file("Monica_${timestamp}_generated_history.json")
+            val zipFile = workspace.file("monica_backup_$timestamp.zip")
+            // The caller owns the completed artifact; cleanup only owns its intermediates.
+            val finalFile = File.createTempFile("monica_backup_${timestamp}_",
+                if (shouldEncryptBackup) ".enc.zip" else ".zip", context.cacheDir)
+                .also { backupArtifact = it }
 
-            try {
                 // 2. 根据偏好设置过滤密码数据
                 val backupPasswordCandidates = if (preferences.includePasswords) passwords else emptyList()
                 val includedMdbxPasswordCount = backupPasswordCandidates.count { entry ->
@@ -2865,6 +2867,8 @@ class WebDavHelper(
                         strings = strings,
                     )
                     if (encryptResult.isFailure) throw encryptResult.exceptionOrNull()!!
+                } else {
+                    zipFile.copyTo(finalFile, overwrite = true)
                 }
 
                 // 生成报告
@@ -2911,17 +2915,17 @@ class WebDavHelper(
                         "notes=${successCounts.notes}/${totalCounts.notes}, warnings=${warnings.size}, failures=${failedItems.size}"
                 )
 
-                Result.success(Pair(finalFile, report))
-            } finally {
-                // 清理临时文件 (保留 finalFile 即 ZIP 文件)
-                passwordsCsvFile.delete()
-                foldersRootDir.deleteRecursively()
-                historyJsonFile.delete()
-                if (finalFile != zipFile) zipFile.delete()
-                cacheBackupDir.deleteRecursively()
-            }
+                kotlinx.coroutines.currentCoroutineContext().ensureActive()
+                val result = Result.success(Pair(finalFile, report))
+                completed = true
+                result
         } catch (e: Exception) {
+            if (e is kotlinx.coroutines.CancellationException) throw e
             Result.failure(e)
+        } finally {
+            if (!completed) backupArtifact?.delete()
+            try { temporary?.close() }
+            catch (error: Throwable) { backupArtifact?.delete(); throw error }
         }
     }
 
@@ -3248,11 +3252,15 @@ class WebDavHelper(
         restoreMonicaConfig: Boolean? = true,
         importDataOnly: Boolean = false,
         progress: TransferProgressReporter = TransferProgressReporter.None,
-    ): Result<RestoreResult> = withContext(Dispatchers.IO) {
+    ): Result<RestoreResult> = BackupTemporaryFiles.deliverOnIo(
+        discard = { result -> result.getOrNull()?.content?.portableAttachments?.close() },
+    ) {
         val stagedAttachmentFiles = mutableSetOf<File>()
         var decryptedBackup: File? = null
         var handedOff = false
+        var temporary: BackupTemporaryFiles.Workspace? = null
         try {
+            val workspace = BackupTemporaryFiles.create(context.cacheDir).also { temporary = it }
             // P0修复：错误跟踪
             val failedItems = mutableListOf<FailedItem>()
             val warnings = mutableListOf<String>()
@@ -3290,17 +3298,17 @@ class WebDavHelper(
             val zipFile = if (isEncrypted) {
                 val password = resolvedDecryptPassword
                 if (password == null) {
-                    return@withContext Result.failure(PasswordRequiredException(strings.get(R.string.backup_password_required)))
+                    return@deliverOnIo Result.failure(PasswordRequiredException(strings.get(R.string.backup_password_required)))
                 }
                 
-                val decryptedFile = File(context.cacheDir, "restore_decrypted_${System.nanoTime()}.zip")
+                val decryptedFile = workspace.file("restore_decrypted_${System.nanoTime()}.zip")
                     .also { decryptedBackup = it }
                 progress.report(TransferProgress(TransferPhase.DECRYPTING))
                 val decryptResult = EncryptionHelper.decryptFile(backupFile, decryptedFile, password, strings)
                 
                 if (decryptResult.isFailure) {
                     decryptedFile.delete()
-                    return@withContext Result.failure(decryptResult.exceptionOrNull() 
+                    return@deliverOnIo Result.failure(decryptResult.exceptionOrNull()
                         ?: Exception(strings.get(R.string.backup_decryption_failed)))
                 }
                 
@@ -3330,7 +3338,7 @@ class WebDavHelper(
             }.getOrDefault(emptyList())
 
             if (detectedMonicaConfigEntries.isNotEmpty() && restoreMonicaConfig == null) {
-                return@withContext Result.failure(
+                return@deliverOnIo Result.failure(
                     MonicaConfigDecisionRequiredException(detectedMonicaConfigEntries, strings.get(R.string.backup_config_decision))
                 )
             }
@@ -3342,7 +3350,7 @@ class WebDavHelper(
             }
 
             val keepassRestoreTempDir = File(
-                context.cacheDir,
+                workspace.directory,
                 "restore_keepass_${System.nanoTime()}",
             )
 
@@ -3379,7 +3387,7 @@ class WebDavHelper(
                 progress.report(TransferProgress(TransferPhase.READING))
                 val zipEntryCount = java.util.zip.ZipFile(zipFile).use { archive ->
                     if (archive.getEntry("monica_partial_backup.json") != null) {
-                        if (overwrite) return@withContext Result.failure(IllegalArgumentException(strings.get(R.string.passkey_partial_replace_blocked)))
+                        if (overwrite) return@deliverOnIo Result.failure(IllegalArgumentException(strings.get(R.string.passkey_partial_replace_blocked)))
                         warnings.add(strings.get(R.string.passkey_partial_restore_warning))
                     }
                     archive.size().toLong()
@@ -3391,14 +3399,14 @@ class WebDavHelper(
                         kotlinx.coroutines.currentCoroutineContext().ensureActive()
                         progress.report(TransferProgress(TransferPhase.READING, readEntries++, zipEntryCount))
                         // 防止Zip Slip漏洞
-                        val entryName = entry.name.substringAfterLast('/')
+                        val entryName = entry.name.replace('\\', '/').substringAfterLast('/')
                         if (entryName.contains("..")) {
                              android.util.Log.w("WebDavHelper", "Skipping unsafe zip entry: ${entry.name}")
                              entry = zipIn.nextEntry
                              continue
                         }
 
-                        val tempFile = File(context.cacheDir, "restore_${System.nanoTime()}_${entryName}")
+                        val tempFile = workspace.file("restore_${System.nanoTime()}_${entryName}")
                         FileOutputStream(tempFile).use { fileOut ->
                             zipIn.copyTo(fileOut)
                         }
@@ -4796,12 +4804,12 @@ class WebDavHelper(
                             "failedItems=${failedItems.size}, warnings=${warnings.size}"
                     )
                     if (failedItems.isNotEmpty()) {
-                        return@withContext Result.failure(
+                        return@deliverOnIo Result.failure(
                             Exception(strings.get(R.string.backup_parse_replace_blocked))
                         )
                     }
                     if (!hasRestorableCoreData) {
-                        return@withContext Result.failure(
+                        return@deliverOnIo Result.failure(
                             Exception(strings.get(R.string.backup_empty_replace_blocked))
                         )
                     }
@@ -4817,7 +4825,7 @@ class WebDavHelper(
                     warnings = warnings
                 )
                 
-                Result.success(RestoreResult(
+                val restored = RestoreResult(
                     overwriteLocal = overwrite,
                     content = BackupContent(
                         passwords = if (isDatabaseExport) passwords.map { entry ->
@@ -4851,17 +4859,17 @@ class WebDavHelper(
                         if (shouldRestoreMonicaConfig) detectedMonicaConfigEntries.size else 0,
                     restartRecommended =
                         shouldRestoreMonicaConfig && detectedMonicaConfigEntries.isNotEmpty(),
-                )).also {
-                    kotlinx.coroutines.currentCoroutineContext().ensureActive()
-                    handedOff = true
-                }
+                )
+                kotlinx.coroutines.currentCoroutineContext().ensureActive()
+                val (payloads, cleanup) = workspace.handOff(pendingPortableAttachmentPayloads)
+                Result.success(restored.copy(content = restored.content.copy(
+                    portableAttachments = restored.content.portableAttachments.copy(
+                        payloads = payloads, temporaryFiles = cleanup))))
+                    .also { handedOff = true }
             } finally {
                 // 清除临时存储的自定义字段，避免内存泄漏
                 pendingCustomFields.clear()
-                keepassRestoreTempDir.deleteRecursively()
-                if (zipFile != backupFile) {
-                    zipFile.delete()
-                }
+                // The workspace owns all deferred CSVs, partial entries and decrypted ZIPs.
             }
         } catch (e: Exception) {
             if (e is kotlinx.coroutines.CancellationException) throw e
@@ -4870,6 +4878,7 @@ class WebDavHelper(
         } finally {
             decryptedBackup?.delete()
             if (!handedOff) stagedAttachmentFiles.forEach { it.delete() }
+            if (handedOff) temporary?.close() else temporary?.discard()
         }
     }
 
@@ -4883,15 +4892,20 @@ class WebDavHelper(
         decryptPassword: String? = null,
         overwrite: Boolean = false,
         restoreMonicaConfig: Boolean? = true,
-    ): Result<RestoreResult> = 
-        withContext(Dispatchers.IO) {
+    ): Result<RestoreResult> = BackupTemporaryFiles.deliverOnIo(
+        discard = { result -> result.getOrNull()?.content?.portableAttachments?.close() },
+    ) {
+        var temporary: BackupTemporaryFiles.Workspace? = null
+        var parsed: RestoreResult? = null
+        var handedOff = false
         try {
             // 1. 下载备份文件
-            val downloadedFile = File(context.cacheDir, "restore_${backupFile.name}")
+            val workspace = BackupTemporaryFiles.create(context.cacheDir).also { temporary = it }
+            val downloadedFile = workspace.file("download.zip")
             val downloadResult = downloadBackup(backupFile, downloadedFile)
             
             if (downloadResult.isFailure) {
-                return@withContext Result.failure(downloadResult.exceptionOrNull() 
+                return@deliverOnIo Result.failure(downloadResult.exceptionOrNull()
                     ?: Exception(strings.get(R.string.backup_download_failed)))
             }
             
@@ -4907,15 +4921,15 @@ class WebDavHelper(
                     // 如果是密码错误，传递具体的异常
                     val ex = restoreResult.exceptionOrNull()
                     if (ex is PasswordRequiredException || ex is MonicaConfigDecisionRequiredException) {
-                        return@withContext Result.failure(ex)
+                        return@deliverOnIo Result.failure(ex)
                     }
-                    return@withContext Result.failure(ex ?: Exception(strings.get(R.string.legacy_ui_report_restore_failed)))
+                    return@deliverOnIo Result.failure(ex ?: Exception(strings.get(R.string.legacy_ui_report_restore_failed)))
                 }
                 
                 // 记录 WebDAV 下载/同步操作到时间线
                 // 注意：此时数据还未真正写入数据库，result 包含的是备份文件中解析出的条目
                 // 实际新增/修改的统计需要在合并逻辑中完成
-                val result = restoreResult.getOrThrow()
+                val result = restoreResult.getOrThrow().also { parsed = it }
                 val downloadDetails = mutableListOf<FieldChange>()
                 val newItemNames = mutableListOf<FieldChange>()
                 
@@ -5006,13 +5020,20 @@ class WebDavHelper(
                     OperationLogger.logWebDavDownload(addedItems = allDetails)
                 }
                 
-                Result.success(result)
+                Result.success(result).also { handedOff = true }
             } finally {
                 // 清理下载的文件
                 downloadedFile.delete()
             }
         } catch (e: Exception) {
+            if (e is kotlinx.coroutines.CancellationException) throw e
             Result.failure(Exception(strings.get(R.string.webdav_restore_failed, e.message ?: strings.get(R.string.import_data_unknown_error))))
+        } finally {
+            try { if (!handedOff) parsed?.content?.portableAttachments?.close() }
+            finally {
+                try { temporary?.close() }
+                catch (error: Throwable) { parsed?.content?.portableAttachments?.close(); throw error }
+            }
         }
     }
     

@@ -35,7 +35,7 @@ internal class DatabaseArchiveExporter(context: Context) {
         preferences: BackupPreferences,
         password: String?,
         progress: TransferProgressReporter = TransferProgressReporter.None,
-    ): Pair<File, String> = withContext(Dispatchers.IO) {
+    ): Pair<File, String> = BackupTemporaryFiles.deliverOnIo(discard = { it.first.delete() }) {
         require(preferences.hasDatabaseExportContent()) { strings.get(R.string.backup_select_content) }
         require(!preferences.includeWebDavConfig || !password.isNullOrEmpty()) {
             strings.get(R.string.zip_config_encryption_required)
@@ -57,10 +57,11 @@ internal class DatabaseArchiveExporter(context: Context) {
         check(keys.isEmpty() || encrypted) { strings.get(R.string.passkey_backup_encryption_required, keys.size) }
         check((attachments.isEmpty() && tokens.all { it.attachments.isEmpty() }) || encrypted) { strings.get(R.string.transfer_attachment_encryption) }
         NativeTokenBackupAssets.validate(tokens)
-        val file = File.createTempFile("monica-database-", ".zip", context.cacheDir)
-        var encryptedFile: File? = null
+        val temporary = takagi.ru.monica.utils.BackupTemporaryFiles.create(context.cacheDir)
+        var completedFile: File? = null
         var success = false
         try {
+            val file = temporary.file("database.zip")
             val total = (passwords.size + items.size + keys.size + snapshot.steamAccounts.size + tokens.size + trashPasswords.size + trashItems.size).toLong()
             var written = 0L
             ZipOutputStream(file.outputStream().buffered(64 * 1024)).use { zip ->
@@ -178,16 +179,21 @@ internal class DatabaseArchiveExporter(context: Context) {
             val output = if (encrypted) {
                 progress.report(TransferProgress(TransferPhase.ENCRYPTING))
                 File.createTempFile("monica-database-", ".enc.zip", context.cacheDir).also { target ->
-                    encryptedFile = target
+                    completedFile = target
                     EncryptionHelper.encryptFile(file, target, checkNotNull(password), AppLocaleStringResolver(context)).getOrThrow()
                 }
-            } else file
+            } else File.createTempFile("monica-database-", ".zip", context.cacheDir).also { target ->
+                completedFile = target
+                file.copyTo(target, overwrite = true)
+            }
             currentCoroutineContext().ensureActive()
+            val result = output to strings.get(R.string.transfer_export_complete, total)
             success = true
-            output to strings.get(R.string.transfer_export_complete, total)
+            result
         } finally {
-            if (!success || encrypted) file.delete()
-            if (!success) encryptedFile?.delete()
+            if (!success) completedFile?.delete()
+            try { temporary.close() }
+            catch (error: Throwable) { completedFile?.delete(); throw error }
         }
     }
 
