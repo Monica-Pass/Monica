@@ -1,0 +1,57 @@
+name: Notify MonicaDocs
+
+on:
+  release:
+    types: [published]
+  workflow_run:
+    workflows: ['Android Preview Build']
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+jobs:
+  notify:
+    if: >-
+      github.repository != 'Monica-Pass/MonicaDocs' &&
+      (github.event_name == 'release' ||
+       (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event != 'pull_request'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Notify documentation repository
+        uses: actions/github-script@v8
+        env:
+          SOURCE_TOKEN: ${{ github.token }}
+        with:
+          github-token: ${{ secrets.DOCS_REPO_TOKEN }}
+          script: |
+            let type = context.eventName === 'push' ? 'monica-main-updated' : 'monica-release-published';
+            if (context.eventName === 'workflow_run') {
+              const run = context.payload.workflow_run;
+              const source = require('@actions/github').getOctokit(process.env.SOURCE_TOKEN);
+              const jobs = await source.paginate(source.rest.actions.listJobsForWorkflowRun, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: run.id,
+                filter: 'latest',
+                per_page: 100,
+              });
+              const targets = { 'Android Preview Build': 'Build & Publish Preview' };
+              if (!targets[run.name] || !jobs.some(job => job.name === targets[run.name] && job.conclusion === 'success')) {
+                core.info('No successful publication job found; notification skipped.');
+                return;
+              }
+              type = 'monica-release-published';
+            }
+            await github.rest.repos.createDispatchEvent({
+              owner: 'Monica-Pass',
+              repo: 'MonicaDocs',
+              event_type: type,
+              client_payload: {
+                source_repository: `${context.repo.owner}/${context.repo.repo}`,
+                source_sha: context.eventName === 'workflow_run' ? context.payload.workflow_run.head_sha : context.sha,
+                source_ref: context.ref,
+                release_tag: context.payload.release?.tag_name || '',
+              },
+            });
