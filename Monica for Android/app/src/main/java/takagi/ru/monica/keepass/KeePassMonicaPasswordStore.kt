@@ -356,6 +356,20 @@ internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxServic
         snapshot.rows.firstOrNull { it.id == id }?.also { if (forEdit) drafts[id] = snapshot }
     }
 
+    /** All credentials loaded by one editor share the primary entry's opening revision. */
+    fun prepareEditorSiblings(primaryId: Long, entryIds: List<Long>): Boolean = synchronized(this) {
+        val origin = drafts[primaryId] ?: return false
+        val databaseId = identities[primaryId]?.databaseId ?: return false
+        val current = snapshots.value[databaseId] ?: return false
+        if (!SessionManager.isUnlocked.value || origin.lockVersion != current.lockVersion ||
+            origin.lockVersion != (KeePassKdbxService.nativeLockVersions.value[databaseId] ?: 0L) ||
+            origin.browser.sourceRevision != current.browser.sourceRevision || entryIds.any { id ->
+                identities[id]?.databaseId != databaseId || origin.rows.none { it.id == id }
+            }) return false
+        entryIds.forEach { drafts[it] = origin }
+        true
+    }
+
     fun databaseId(id: Long): Long? = synchronized(this) { identities[id]?.databaseId }
 
     fun hasOriginalHistory(id: Long): Boolean = synchronized(this) {
@@ -446,6 +460,8 @@ internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxServic
         val identity = synchronized(this) { identities[id] }
         if (!unlocked || identity == null || get(id) == null) emptyList() else {
             data[identity.databaseId]?.browser?.entriesByIdentity?.get(identity)?.singleOrNull()?.history.orEmpty()
+                .sortedWith(compareByDescending<KeePassNativeHistoryVersion> { it.times?.lastModificationTime }
+                    .thenByDescending { it.index })
                 .map { version ->
                     val historyId = auxiliaryId(identity, "history:${version.index}:${version.times?.lastModificationTime}")
                     synchronized(this) { historyIdentities[historyId] = HistoryIdentity(identity, version.index,
@@ -458,14 +474,83 @@ internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxServic
         }
     }
 
+    /** Selection metadata uses the current list snapshot, independently of open editor drafts. */
+    suspend fun applyManualStackMode(entryIds: List<Long>, groupId: String?, neverStack: Boolean): Int = mutex.withLock {
+        require(groupId == null || !neverStack)
+        groupId?.let { require(UUID.fromString(it).toString() == it) }
+        val ids = entryIds.distinct()
+        val selected = synchronized(this) { ids.map { id ->
+            val identity = requireNotNull(identities[id]) { "Stale KeePass selection" }
+            requireReadable(identity.databaseId)
+            val snapshot = requireNotNull(snapshots.value[identity.databaseId]) { "KeePass database must be reloaded" }
+            check(snapshot.lockVersion == (KeePassKdbxService.nativeLockVersions.value[identity.databaseId] ?: 0L)) { "KeePass selection was locked" }
+            check(snapshot.rows.any { it.id == id }) { "KeePass selected password no longer exists" }
+            val record = requireNotNull(snapshot.browser.entriesByIdentity[identity]?.singleOrNull())
+            check(!record.isInRecycleBin) { "KeePass selected password was deleted" }
+            Triple(identity, snapshot, record)
+        } }
+        selected.groupBy { it.first.databaseId }.forEach { (databaseId, records) ->
+            val snapshot = records.first().second
+            val prepared = records.map { (_, _, record) ->
+                val updated = record.fields.filterNot {
+                    it.name == "__monica_manual_stack_group" || it.name == "__monica_no_stack"
+                }.map { KeePassFieldChange(it.name, it.rawValue, it.isProtected) }.toMutableList()
+                if (groupId != null) updated += KeePassFieldChange("__monica_manual_stack_group", groupId)
+                if (neverStack) updated += KeePassFieldChange("__monica_no_stack", "1")
+                KeePassMonicaPasswordDraft(record.identity.entryUuid, true, record.parentGroup.groupUuid, updated)
+            }
+            // Preserve revision checks, recovery copies and atomic replacement of this file.
+            // Do not publish an editor draft here: a stale open editor must remain stale.
+            service.saveMonicaPasswordDrafts(databaseId, prepared, emptySet(), snapshot.browser.sourceRevision.sha256).getOrThrow()
+            load(databaseId)
+        }
+        ids.size
+    }
+
     suspend fun save(databaseId: Long, entries: List<PasswordEntry>, fields: Map<Long, List<CustomFieldDraft>>,
                      removedIds: List<Long> = emptyList()): List<PasswordEntry> = mutex.withLock {
+        saveLocked(databaseId, entries, fields, removedIds)
+    }
+
+    suspend fun saveCredentialRows(databaseId: Long, rows: List<Pair<PasswordEntry, List<CustomFieldDraft>>>): List<PasswordEntry> = mutex.withLock {
+        saveLocked(databaseId, rows.map { it.first }, emptyMap(), emptyList(), rows.map { it.second })
+    }
+
+    /** Finish an already saved destination after sibling credentials and assets were written. */
+    suspend fun publishEmbeddedContent(entryId: Long, commit: takagi.ru.monica.data.model.DeferredEmbeddedContentSave.Commit) = mutex.withLock {
+        val identity = synchronized(this) { requireNotNull(identities[entryId]) }
+        requireReadable(identity.databaseId)
+        val current = requireNotNull(snapshots.value[identity.databaseId])
+        val origin = synchronized(this) { requireNotNull(drafts[entryId]) }
+        check(origin.lockVersion == current.lockVersion) { "KeePass content destination was locked" }
+        val originalRecord = requireNotNull(origin.browser.entriesByIdentity[identity]?.singleOrNull())
+        val currentRecord = requireNotNull(current.browser.entriesByIdentity[identity]?.singleOrNull())
+        check(!currentRecord.isInRecycleBin && originalRecord.parentGroup == currentRecord.parentGroup &&
+            KeePassLosslessTransfer.entriesEquivalent(originalRecord.nativeEntry, currentRecord.nativeEntry)) {
+            "KeePass copied-content destination changed after its initial save"
+        }
+        // Advance only this unchanged destination for this explicit final publication.
+        // Ordinary editor saves keep their original file revision and still reject stale drafts.
+        synchronized(this) { drafts[entryId] = current }
+        try {
+            val row = requireNotNull(current.rows.singleOrNull { it.id == entryId }).copy(boundNoteId = commit.boundNoteId)
+            saveLocked(identity.databaseId, listOf(row), mapOf(entryId to commit.fields), emptyList())
+            Unit
+        } catch (error: Throwable) {
+            synchronized(this) { drafts[entryId] = origin }
+            throw error
+        }
+    }
+
+    private suspend fun saveLocked(databaseId: Long, entries: List<PasswordEntry>, fields: Map<Long, List<CustomFieldDraft>>,
+                                   removedIds: List<Long>, fieldsByIndex: List<List<CustomFieldDraft>>? = null): List<PasswordEntry> {
+        require(fieldsByIndex == null || fieldsByIndex.size == entries.size)
         requireReadable(databaseId)
         val snapshot = snapshots.value[databaseId] ?: load(databaseId)
         val origins = synchronized(this) { entries.mapNotNull { drafts[it.id] } }
         val revision = origins.firstOrNull()?.browser?.sourceRevision?.sha256 ?: snapshot.browser.sourceRevision.sha256
         check(origins.all { it.browser.sourceRevision.sha256 == revision }) { "KeePass drafts have different source revisions" }
-        val prepared = entries.map { row ->
+        val prepared = entries.mapIndexed { index, row ->
             check(row.keepassDatabaseId == databaseId && row.mdbxDatabaseId == null && row.bitwardenVaultId == null) { "KeePass ownership changed" }
             val origin = synchronized(this) { drafts[row.id] } ?: snapshot
             val identity = synchronized(this) { identities[row.id] }
@@ -480,8 +565,8 @@ internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxServic
                 origin.browser.groups.singleOrNull { it.legacyPath == row.keepassGroupPath }
                     ?: error("KeePass group is missing or ambiguous")
             } else origin.browser.rootGroup
-            val fieldDrafts = fields[row.id]?.mapIndexed { index, field ->
-                KeePassCustomFieldData(field.title, field.value, field.isProtected, index)
+            val fieldDrafts = (fieldsByIndex?.get(index) ?: fields[row.id])?.mapIndexed { fieldIndex, field ->
+                KeePassCustomFieldData(field.title, field.value, field.isProtected, fieldIndex)
             } ?: origin.customFields[row.id].orEmpty().map { KeePassCustomFieldData(it.title, it.value, it.isProtected, it.sortOrder) }
             val ssoIdentity = row.ssoRefEntryId?.takeIf(::isUiId)?.let { ref -> requireNotNull(synchronized(this) { identities[ref] }) }
             val noteIdentity = row.boundNoteId?.takeIf(::isUiId)?.let { ref -> requireNotNull(synchronized(this) { secureIdentities[ref] }) }
@@ -505,7 +590,7 @@ internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxServic
         }.toSet() }
         service.saveMonicaPasswordDrafts(databaseId, prepared, removed, revision).getOrThrow()
         val after = load(databaseId)
-        prepared.map { draft ->
+        return prepared.map { draft ->
             val id = idFor(KeePassNativeEntryIdentity(databaseId, draft.uuid))
             requireNotNull(after.rows.firstOrNull { it.id == id }).also { synchronized(this) { drafts[id] = after } }
         }

@@ -1,0 +1,12 @@
+
+takagi.ru.monica.keepass.KeePassAddContentUiRegressionTest:.
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=645
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=531
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=532
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=114
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=653
+.
+
+Time: 61.524
+
+OK (2 tests)

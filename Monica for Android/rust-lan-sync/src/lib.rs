@@ -6,6 +6,9 @@ mod discovery;
 mod network;
 mod peering;
 mod replica;
+mod resume;
+#[cfg(test)]
+mod resume_transfer_tests;
 mod storage;
 mod transport;
 
@@ -38,6 +41,7 @@ type Result<T> = std::result::Result<T, &'static str>;
 struct Progress {
     phase: &'static str,
     transferred: u64,
+    resumed: u64,
     total: u64,
     error: Option<&'static str>,
     failed_at: Option<&'static str>,
@@ -63,6 +67,7 @@ impl Job {
             progress: Mutex::new(Progress {
                 phase,
                 transferred: 0,
+                resumed: 0,
                 total: 0,
                 error: None,
                 failed_at: None,
@@ -191,15 +196,23 @@ struct Prepared {
     secrets: peering::PairSecrets,
     expected_device: Option<String>,
     network_bindings: network::Bindings,
+    resume_root: Option<PathBuf>,
 }
 
 fn prepare(value: &Value) -> Result<Prepared> {
+    let resume_root = value
+        .get("resume_root")
+        .and_then(Value::as_str)
+        .map(PathBuf::from);
+    if resume_root.as_ref().is_some_and(|path| !path.is_absolute()) {
+        return Err("invalid_destination");
+    }
     let network_bindings = network::read(value)?;
     let protocol = value.get("protocol").and_then(Value::as_u64).unwrap_or(1);
     if !matches!(protocol, 1 | 2) {
         return Err("unsupported_protocol");
     }
-    let device = if protocol == 2 {
+    let mut device = if protocol == 2 {
         let device: peering::DeviceHello =
             serde_json::from_value(value.get("device").cloned().ok_or("invalid_device")?)
                 .map_err(|_| "invalid_device")?;
@@ -236,6 +249,16 @@ fn prepare(value: &Value) -> Result<Prepared> {
         .is_some_and(|id| !peering::identifier(id))
     {
         return Err("invalid_device");
+    }
+    if let Some(device) = &mut device {
+        // Advertise only features this endpoint can actually perform. This also
+        // prevents an unpaired/receive-only call from changing the wire sequence.
+        if expected_device.is_none() || secrets.content_key.is_empty() {
+            device.incremental_sync = 0;
+        }
+        if expected_device.is_none() || resume_root.is_none() {
+            device.resume_sync = 0;
+        }
     }
     let vault_id = value
         .get("vault_id")
@@ -299,6 +322,7 @@ fn prepare(value: &Value) -> Result<Prepared> {
         secrets,
         expected_device,
         network_bindings,
+        resume_root,
     })
 }
 
@@ -499,6 +523,18 @@ fn connect(value: &Value) -> Result<Value> {
 }
 
 fn request(value: Value) -> Result<Value> {
+    if string(&value, "operation")?.starts_with("resume_") {
+        let path = Path::new(string(&value, "root")?);
+        if !path.is_absolute() {
+            return Err("invalid_destination");
+        }
+        match string(&value, "operation")? {
+            "resume_prune" => resume::prune(path)?,
+            "resume_clear" => resume::clear(path)?,
+            _ => return Err("invalid_request"),
+        }
+        return Ok(json!({}));
+    }
     if string(&value, "operation")?.starts_with("asset_") {
         return assets::request(&value);
     }

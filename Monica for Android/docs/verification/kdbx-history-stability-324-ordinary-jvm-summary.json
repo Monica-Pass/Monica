@@ -1,0 +1,366 @@
+[
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassAutoTypeEditorTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassBatchMoveTransactionGuardTest",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassChangeSetApplierConflictTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassChangeSetTest",
+    "tests": 11,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassConflictCenterTest",
+    "tests": 19,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassConflictResolutionControllerTest",
+    "tests": 7,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassCreateEntryReplayTest",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassCrossDatabaseTransferTest",
+    "tests": 7,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassCustomIconEditorTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassDatabaseAccessPolicyTest",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassDatabaseCredentialsTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassDatabaseSettingsTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest",
+    "tests": 17,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassDxPasskeyCodecTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassEncodeBufferPolicyTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassEntryFieldPatchTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassEntryGroupRelocatorTest",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassEntryPresentationPatchTest",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassEntrySnapshotTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassFieldRegistryTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassFieldSafetyTest",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassFolderDragPolicyTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassFolderPathRegressionGuardTest",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassKdbxFixtureIntegrationTest",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassLosslessTransferTest",
+    "tests": 8,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassMaintenanceTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassNativeBrowserTest",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassNativeEntryMutationTest",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassNativeEntryRouteTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassNativeManagementTest",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassNativeMutationTest",
+    "tests": 10,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassNativeSearchTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassNativeSessionTest",
+    "tests": 8,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassPasswordEntryAttachmentRegressionGuardTest",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassPendingChangeRepositoryTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassPendingFlushPlannerTest",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassProjectionIndexGateTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassRecoveryCatalogTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassRecycleBinApplierTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassRecycleBinPolicyTest",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassRemoteRebaseTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassSecureItemPhotoAttachmentTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassSecureItemPhotoIntegrationGuardTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassSourceSafetyTest",
+    "tests": 10,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassTemplateEngineTest",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassTotpCodecTest",
+    "tests": 16,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassTotpDisplaySourceTest",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassTotpExtensionsTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassTotpProjectionMatcherTest",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassWriteCachePerformanceGuardTest",
+    "tests": 16,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassWritePreflightTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "suite": "takagi.ru.monica.keepass.KeePassXmlContentParserTest",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  }
+]

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nearby_hotspot_create">임시 핫스팟</string>
+    <string name="nearby_hotspot_create_hint">공유 Wi-Fi가 없는 기기를 연결합니다.</string>
+    <string name="nearby_hotspot_title">임시 핫스팟</string>
+    <string name="nearby_hotspot_help">코드는 10분 후 만료됩니다. 패널을 닫거나 잠그거나 Monica를 떠나면 핫스팟이 종료됩니다. 연결 후에도 페어링을 확인합니다.</string>
+    <string name="nearby_hotspot_active">임시 핫스팟 활성화됨</string>
+    <string name="nearby_hotspot_stop">임시 핫스팟 종료</string>
+    <string name="nearby_hotspot_starting">핫스팟과 페어링 코드 생성 중…</string>
+    <string name="nearby_hotspot_join_title">이 핫스팟에 연결할까요?</string>
+    <string name="nearby_hotspot_join_hint">Android의 확인을 통해 %1$s에 연결합니다. 이후 Monica가 페어링된 기기를 확인합니다.</string>
+    <string name="nearby_hotspot_connecting">Wi-Fi 연결을 기다리는 중…</string>
+    <string name="nearby_hotspot_failure">Android가 연결을 완료하지 못했습니다. 수동으로 연결한 후 코드를 다시 스캔할 수 있습니다.</string>
+    <string name="nearby_hotspot_permissions">핫스팟을 만들거나 연결하려면 Android가 요청하는 Wi-Fi 권한을 허용하세요.</string>
+    <string name="nearby_hotspot_unsupported">핫스팟 자동 연결을 사용할 수 없습니다. 수동으로 연결한 후 다시 스캔하세요.</string>
+    <string name="nearby_hotspot_manual">이미 연결됨, 계속</string>
+    <string name="nearby_hotspot_open_wifi">Wi-Fi 설정</string>
+    <string name="nearby_hotspot_scan_hint">Monica 페어링 코드 또는 임시 핫스팟 코드를 스캔하세요.</string>
+    <string name="nearby_hotspot_connect">연결</string>
+    <string name="nearby_hotspot_copy_password">핫스팟 비밀번호 복사</string>
+    <string name="nearby_hotspot_interrupted">Monica가 백그라운드로 이동하여 연결이 취소되었습니다. 핫스팟에 수동으로 연결한 후 코드를 다시 스캔하세요.</string>
+</resources>

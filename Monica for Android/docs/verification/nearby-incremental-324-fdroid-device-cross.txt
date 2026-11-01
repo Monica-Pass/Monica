@@ -1,0 +1,6 @@
+
+takagi.ru.monica.lansync.NearbySteamTransportTest:.
+
+Time: 1.964
+
+OK (1 test)

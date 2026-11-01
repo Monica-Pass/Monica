@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nearby_hotspot_create">创建临时热点</string>
+    <string name="nearby_hotspot_create_hint">没有共同 Wi-Fi 时连接另一台设备。</string>
+    <string name="nearby_hotspot_title">临时热点</string>
+    <string name="nearby_hotspot_help">此码 10 分钟后失效。关闭面板、锁定或离开 Monica 会结束热点。连接后仍须验证配对。</string>
+    <string name="nearby_hotspot_active">临时热点已开启</string>
+    <string name="nearby_hotspot_stop">结束临时热点</string>
+    <string name="nearby_hotspot_starting">正在创建热点和配对码…</string>
+    <string name="nearby_hotspot_join_title">连接此热点？</string>
+    <string name="nearby_hotspot_join_hint">通过 Android 的确认连接 %1$s，随后 Monica 会验证配对设备。</string>
+    <string name="nearby_hotspot_connecting">正在等待 Wi-Fi 连接…</string>
+    <string name="nearby_hotspot_failure">Android 未完成连接。可以手动连接后重新扫描此码。</string>
+    <string name="nearby_hotspot_permissions">请授予 Android 请求的 Wi-Fi 权限，以创建或连接热点。</string>
+    <string name="nearby_hotspot_unsupported">此设备无法自动连接热点。请手动连接后重新扫描。</string>
+    <string name="nearby_hotspot_manual">已手动连接，继续</string>
+    <string name="nearby_hotspot_open_wifi">Wi-Fi 设置</string>
+    <string name="nearby_hotspot_scan_hint">扫描 Monica 配对码或临时热点码。</string>
+    <string name="nearby_hotspot_connect">连接</string>
+    <string name="nearby_hotspot_copy_password">复制热点口令</string>
+    <string name="nearby_hotspot_interrupted">Monica 进入后台，已取消本次连接。请手动连接热点后重新扫描此码。</string>
+</resources>

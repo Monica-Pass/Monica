@@ -5,6 +5,7 @@ import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.SystemClock
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -47,6 +48,10 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
     private val app = context.applicationContext
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val gate = Mutex()
+    private val wake = Channel<Unit>(Channel.CONFLATED)
+    private val networkObserver = DeviceSyncNetworkObserver(app)
+    private var networkObserved = -1L
+    private var networkCheckedAt = 0L
     private val appVisible = MutableStateFlow(DeviceSyncService.isAppVisible)
     private var presence: DeviceSyncPresence = ForegroundDeviceSyncPresence(app)
     private var discoverPeers: (JSONObject) -> JSONObject = RustLanSync::request
@@ -55,6 +60,8 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
     private val dataProvider = lazy { DevicePasswordSyncProvider(app, security, store).also { provider -> provider.onProgress = { updateProgress(it) } } }
     private val data by dataProvider
     private val root = File(app.cacheDir, "device-sync/${UUID.randomUUID()}")
+    private val cacheGate = Mutex()
+    @Volatile private var cacheLease: DeviceSyncCacheRoots.Lease? = null
     private val mutableState = MutableStateFlow(DeviceSyncState())
     val state = mutableState.asStateFlow()
     private var preferences: DeviceSyncPreferences? = null
@@ -62,6 +69,8 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
     private val snapshots = mutableSetOf<File>()
     private val transfers = mutableMapOf<String, Transfer>()
     private val retiring = mutableMapOf<Long, Transfer>()
+    private var retirementCleanup: Job? = null
+    private var transferControl: (JSONObject) -> JSONObject = RustLanSync::request
     private val attempts = mutableMapOf<String, Long>()
     private val retry = mutableMapOf<String, Pair<Int, Long>>()
     private val statuses = mutableMapOf<String, String>()
@@ -137,10 +146,22 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
         var applyFailure: Exception? = null
         var rejectionDeadline = 0L
         var syncRequest = 0L
+        var discardResume = false
     }
 
     fun start() {
         if (running != null) return
+        scope.launch {
+            while (currentCoroutineContext().isActive) {
+                runCatching {
+                    ensureCacheRoot()
+                    RustLanSync.request(JSONObject().put("operation", "resume_prune").put("root", File(root, "resume").absolutePath))
+                }
+                delay(60_000)
+            }
+        }
+        scope.launch { networkObserver.changes.collect { wake.trySend(Unit) } }
+        scope.launch { presence.online.collect { wake.trySend(Unit) } }
         val active = combine(SessionManager.isUnlocked, appVisible) { unlocked, visible -> unlocked && visible }.distinctUntilChanged()
         scope.launch {
             active.collect { foreground ->
@@ -155,7 +176,8 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
                     try {
                         while (currentCoroutineContext().isActive) {
                             gate.withLock { tick() }
-                            delay(500)
+                            val interval = if (transfers.isNotEmpty() || pairing || manualPeers.isNotEmpty()) 500L else 5_000L
+                            withTimeoutOrNull(interval) { wake.receive() }
                         }
                     } finally {
                         withContext(NonCancellable) { gate.withLock { pause(locked = !SessionManager.isUnlocked.value); publish() } }
@@ -231,7 +253,7 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
         start()
         scope.launch {
             gate.withLock {
-                try { if (SessionManager.isUnlocked.value) block() }
+                try { if (SessionManager.isUnlocked.value) block(); wake.trySend(Unit) }
                 catch (cancelled: CancellationException) { throw cancelled }
                 catch (failure: Exception) { recordFailure(failure, if (pairing) phase else "preparing") }
                 finally { publish() }
@@ -396,14 +418,16 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
         if (ids.isEmpty()) return
         if (deletionDecision.get()?.first?.deviceId in ids) cancelSync()
         action {
+            retiring.values.forEach { it.discardResume = true }
             ids.forEach { deviceId ->
                 passkeyConsent.forget(deviceId)
-                transfers.remove(deviceId)?.let { stop(it) }
+                transfers.remove(deviceId)?.let { it.discardResume = true; stop(it) }
                 force.remove(deviceId); manualPeers.remove(deviceId); retry.remove(deviceId); statuses.remove(deviceId)
             }
             settings().peers.removeAll { it.deviceId in ids }
             store.save(settings())
             cleanSnapshots()
+            clearResume()
         }
     }
 
@@ -419,6 +443,7 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
         acquireNetwork()
         publish()
         try {
+            ensureCacheRoot()
             val directory = File(root, "out-${UUID.randomUUID()}").also { snapshots += it }
             val outgoing = DevicePairingSnapshot.prepare(directory, settings().deviceId)
             transfers["pairing"] = startTransfer(outgoing, null, invitation, true)
@@ -439,9 +464,32 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
     }
 
     private fun request(operation: String, handle: Long): JSONObject =
-        RustLanSync.request(JSONObject().put("operation", operation).put("handle", handle))
+        transferControl(JSONObject().put("operation", operation).put("handle", handle))
+
+    private suspend fun ensureCacheRoot() {
+        cacheGate.withLock {
+            if (cacheLease == null) {
+                // Cancellation cannot lose an acquired lease while its native workers may use this root.
+                withContext(NonCancellable) {
+                    val lease = DeviceSyncCacheRoots.acquire(app.cacheDir, root.name)
+                    if (lease.root.canonicalFile != root.canonicalFile) {
+                        lease.close()
+                        throw LanSyncException("invalid_destination")
+                    }
+                    cacheLease = lease
+                }
+            }
+        }
+        currentCoroutineContext().ensureActive()
+    }
+
+    private fun clearResume() {
+        if (cacheLease == null) return
+        runCatching { RustLanSync.request(JSONObject().put("operation", "resume_clear").put("root", File(root, "resume").absolutePath)) }
+    }
 
     private suspend fun currentSnapshot(): DevicePasswordExport {
+        ensureCacheRoot()
         if (failureStage == "preparing") {
             error = null; failureStage = ""; failureKind = ""; failureOperation = ""; failureRecordName = ""
         }
@@ -465,6 +513,7 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
 
     private suspend fun startTransfer(outgoing: DevicePasswordExport, peer: SavedSyncPeer?, invitation: String?, enrollment: Boolean): Transfer {
         currentCoroutineContext().ensureActive()
+        ensureCacheRoot()
         check(SessionManager.isUnlocked.value) { "device_sync_locked" }
         if (!appVisible.value) throw CancellationException("device_sync_background")
         val directory = File(root, "in-${UUID.randomUUID()}")
@@ -475,6 +524,8 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
             .put("settings_version", settings.settingsVersion).put("settings_writer", settings.settingsWriter)
             .put("sync_request", settings.syncRequest).put("revision", outgoing.revision).put("content_type", "vault").put("vault_content_version", 2)
             .put("sync_mode", (if (enrollment) DeviceSyncMode.BIDIRECTIONAL else settings.mode).wireName)
+            .put("incremental_sync", if (!enrollment && outgoing.contentKey.isNotEmpty()) 1 else 0)
+            .put("resume_sync", if (!enrollment) 1 else 0)
         val parameters = JSONObject().put("operation", if (invitation == null) "start" else "connect").put("protocol", 2)
             .put("name", Build.MODEL.take(64)).put("device", device).put("revision", advertisement)
             .put("vault_id", "monica-passwords-v1").put("content_key", outgoing.contentKey)
@@ -482,6 +533,7 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
             .put("incoming_directory", directory.absolutePath)
         invitation?.let { parameters.put("invitation", it) }
         peer?.let {
+            parameters.put("resume_root", File(root, "resume").absolutePath)
             parameters.put("expected_device_id", it.deviceId)
             if (invitation == null) parameters.put("trusted_key", it.trustedKey)
         }
@@ -539,7 +591,13 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
             if (!pairing && settings.peers.isEmpty()) { if (!paused) pause(locked = false); return }
             paused = false
             acquireNetwork()
-            val currentNetwork = DeviceSyncLocalNetwork.signature(app)
+            networkObserver.start()
+            val observed = networkObserver.changes.value
+            val now = SystemClock.elapsedRealtime()
+            val currentNetwork = if (networkSignature == null || observed != networkObserved || now - networkCheckedAt >= 5_000) {
+                networkObserved = observed; networkCheckedAt = now
+                DeviceSyncLocalNetwork.signature(app)
+            } else requireNotNull(networkSignature)
             if (networkSignature != null && networkSignature != currentNetwork) {
                 presence.stop()
                 // Pairing owns the displayed QR and listens on all interfaces; keep it alive.
@@ -676,7 +734,7 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
         if(transfer.enrollment || next != "waiting") phase = next else if(!pairing) phase = "idle"
         transfer.stage = if (next == "failed") progress.optString("failed_at", transfer.stage) else next
         transfer.attempts = progress.optInt("connection_attempt")
-        if (next in listOf("sending", "receiving", "transferring")) updateProgress(DeviceSyncProgress(next, bytes = progress.optLong("transferred"), totalBytes = progress.optLong("total")))
+        if (next in listOf("sending", "receiving", "transferring")) updateProgress(DeviceSyncProgress(next, bytes = progress.optLong("transferred") + progress.optLong("resumed"), totalBytes = progress.optLong("total")))
         else if (dataProgress?.stage in listOf("sending", "receiving", "transferring")) dataProgress = null
         transfer.remoteAddress = progress.optString("remote_address", transfer.remoteAddress)
         if (transfer.enrollment) phase = next else if (next != "waiting") statuses[id] = "syncing"
@@ -788,8 +846,8 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
             presence.stop()
             deletionDecision.getAndSet(null)?.second?.cancel()
             manualPeers.clear()
-            transfers.values.toList().forEach { stop(it) }; transfers.clear()
-            retiring.values.toList().forEach { stop(it) }
+            transfers.values.toList().forEach { it.discardResume = true; stop(it) }; transfers.clear()
+            retiring.values.toList().forEach { it.discardResume = true; stop(it) }
             if (!paused && dataProvider.isInitialized()) data.pause()
             snapshot = null; dataProgress = null; cleanSnapshots()
             passkeyConsent.clearPending()
@@ -801,6 +859,10 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
             multicast?.let { if (it.isHeld) it.release() }; multicast = null
             multicastAttempted = false
             networkSignature = null
+            networkObserver.close()
+            networkObserved = -1; networkCheckedAt = 0
+            // In-flight owners are excluded; their retired workers are cleared below.
+            clearResume()
             paused = true
         }
     }
@@ -815,12 +877,37 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
                     activeHandles -= transfer.handle
                     retiring.remove(transfer.handle)
                     deleteOwned(transfer.directory)
+                    if (transfer.discardResume || paused || cancellationRequested.get() || !SessionManager.isUnlocked.value || !appVisible.value) {
+                        clearResume()
+                    }
                     return
                 }
                 delay(50)
             }
         } catch (cancelled: CancellationException) { throw cancelled }
         catch (_: Exception) { }
+        scheduleRetirementCleanup()
+    }
+
+    // Called under gate. A late native exit must be reclaimed even while locked or
+    // backgrounded; this job never discovers, exports, imports or acknowledges data.
+    private fun scheduleRetirementCleanup() {
+        if (retirementCleanup?.isActive == true || !scope.isActive) return
+        val cleanup = scope.launch(start = CoroutineStart.LAZY) {
+            while (isActive) {
+                delay(250)
+                gate.withLock {
+                    retiring.values.toList().forEach { stop(it) }
+                    cleanSnapshots()
+                    if (retiring.isEmpty()) {
+                        retirementCleanup = null
+                        return@launch
+                    }
+                }
+            }
+        }
+        retirementCleanup = cleanup
+        cleanup.start()
     }
 
     private fun cleanSnapshots() {

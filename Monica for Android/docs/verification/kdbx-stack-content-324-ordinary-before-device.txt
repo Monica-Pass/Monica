@@ -1,0 +1,57 @@
+
+takagi.ru.monica.keepass.KeePassStackContentRegressionTest:
+Error in stackModesCommitTheWholeSelectionOnceAndSurviveColdReopen(takagi.ru.monica.keepass.KeePassStackContentRegressionTest):
+takagi.ru.monica.utils.KeePassOperationException: KeePass pending change conflict changeId=native-editor entryUuid=: Database changed after the native editor was opened
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException$wrap(KeePassError.kt:37)
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException(KeePassError.kt:114)
+	at takagi.ru.monica.utils.KeePassKdbxService.normalizeError(KeePassKdbxService.kt:10017)
+	at takagi.ru.monica.utils.KeePassKdbxService.logMutationFailure(KeePassKdbxService.kt:10025)
+	at takagi.ru.monica.utils.KeePassKdbxService.access$logMutationFailure(KeePassKdbxService.kt:445)
+	at takagi.ru.monica.utils.KeePassKdbxService$mutateDatabase$2.invokeSuspend(KeePassKdbxService.kt:7924)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+Caused by: takagi.ru.monica.keepass.KeePassChangeConflictException: KeePass pending change conflict changeId=native-editor entryUuid=: Database changed after the native editor was opened
+	at takagi.ru.monica.utils.KeePassKdbxService.assertNativeRevision(KeePassKdbxService.kt:3729)
+	at takagi.ru.monica.utils.KeePassKdbxService.assertNativeRevision$default(KeePassKdbxService.kt:3723)
+	at takagi.ru.monica.utils.KeePassKdbxService$saveMonicaPasswordDrafts$2.invokeSuspend$lambda$11(KeePassKdbxService.kt:2281)
+	at takagi.ru.monica.utils.KeePassKdbxService$saveMonicaPasswordDrafts$2.$r8$lambda$eRpVQ6anlLk3Uil_9UtlI9DdlSs(Unknown Source:0)
+	at takagi.ru.monica.utils.KeePassKdbxService$saveMonicaPasswordDrafts$2$$ExternalSyntheticLambda3.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.utils.KeePassKdbxService$mutateDatabase$2.invokeSuspend(KeePassKdbxService.kt:7910)
+	... 8 more
+..
+
+Time: 19.836
+There was 1 failure:
+1) stackModesCommitTheWholeSelectionOnceAndSurviveColdReopen(takagi.ru.monica.keepass.KeePassStackContentRegressionTest)
+takagi.ru.monica.utils.KeePassOperationException: KeePass pending change conflict changeId=native-editor entryUuid=: Database changed after the native editor was opened
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException$wrap(KeePassError.kt:37)
+	at takagi.ru.monica.utils.KeePassErrorKt.toKeePassOperationException(KeePassError.kt:114)
+	at takagi.ru.monica.utils.KeePassKdbxService.normalizeError(KeePassKdbxService.kt:10017)
+	at takagi.ru.monica.utils.KeePassKdbxService.logMutationFailure(KeePassKdbxService.kt:10025)
+	at takagi.ru.monica.utils.KeePassKdbxService.access$logMutationFailure(KeePassKdbxService.kt:445)
+	at takagi.ru.monica.utils.KeePassKdbxService$mutateDatabase$2.invokeSuspend(KeePassKdbxService.kt:7924)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+Caused by: takagi.ru.monica.keepass.KeePassChangeConflictException: KeePass pending change conflict changeId=native-editor entryUuid=: Database changed after the native editor was opened
+	at takagi.ru.monica.utils.KeePassKdbxService.assertNativeRevision(KeePassKdbxService.kt:3729)
+	at takagi.ru.monica.utils.KeePassKdbxService.assertNativeRevision$default(KeePassKdbxService.kt:3723)
+	at takagi.ru.monica.utils.KeePassKdbxService$saveMonicaPasswordDrafts$2.invokeSuspend$lambda$11(KeePassKdbxService.kt:2281)
+	at takagi.ru.monica.utils.KeePassKdbxService$saveMonicaPasswordDrafts$2.$r8$lambda$eRpVQ6anlLk3Uil_9UtlI9DdlSs(Unknown Source:0)
+	at takagi.ru.monica.utils.KeePassKdbxService$saveMonicaPasswordDrafts$2$$ExternalSyntheticLambda3.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.utils.KeePassKdbxService$mutateDatabase$2.invokeSuspend(KeePassKdbxService.kt:7910)
+	... 8 more
+
+FAILURES!!!
+Tests run: 3,  Failures: 1

@@ -84,6 +84,7 @@ class NearbyAutomaticSyncTest {
                     DeviceSyncCoordinator::class.java.getDeclaredMethod("pause", Boolean::class.javaPrimitiveType, kotlin.coroutines.Continuation::class.java)
                         .apply { isAccessible = true }.invoke(coordinator, false, continuation)
                 }
+                if ((get("retiring") as Map<*, *>).isEmpty()) (get("cacheLease") as? AutoCloseable)?.close()
             }
             provider.pause(); db.close(); steam.close(); context.deleteSharedPreferences(preferenceName); root.deleteRecursively()
         }
@@ -160,6 +161,56 @@ class NearbyAutomaticSyncTest {
             assertFalse(sender.store.load().enabled); assertFalse(receiver.store.load().enabled)
             assertEquals(1, receiver.db.passwordEntryDao().getDeviceSyncLocalPasswords().size)
         } finally { sender.close(); receiver.close(); SessionManager.markLocked() }
+    }
+
+    @Test fun bidirectional_incremental_edit_keeps_room_records_and_waits_for_application_receipt() = runBlocking {
+        SessionManager.markUnlocked()
+        val left = Fixture("z-incremental-room", "a-incremental-room", DeviceSyncMode.BIDIRECTIONAL)
+        val right = Fixture("a-incremental-room", "z-incremental-room", DeviceSyncMode.BIDIRECTIONAL)
+        suspend fun finishRound() = withTimeout(120_000) {
+            do {
+                left.tick(); right.tick(); delay(25)
+                assertNull(left.coordinator.state.value.error); assertNull(right.coordinator.state.value.error)
+            } while (left.coordinator.state.value.manualSync || right.coordinator.state.value.manualSync)
+        }
+        fun handles(fixture: Fixture) = (fixture.get("transfers") as Map<*, *>).values.map { transfer ->
+            transfer!!.javaClass.getDeclaredField("handle").apply { isAccessible = true }.getLong(transfer)
+        }
+        try {
+            left.toggle(false); right.toggle(false)
+            val ids = (0 until 80).map { index -> left.db.passwordEntryDao().insertPasswordEntry(takagi.ru.monica.data.PasswordEntry(
+                title = "Delta Room $index", website = "example.test", username = "fixture", password = left.security.encryptData("original"))) }
+            right.db.passwordEntryDao().insertPasswordEntry(takagi.ru.monica.data.PasswordEntry(
+                title = "Receiver original", website = "example.test", username = "fixture", password = right.security.encryptData("receiver")))
+            left.manual(); right.manual(); finishRound()
+            assertEquals(81, left.db.passwordEntryDao().getDeviceSyncLocalPasswords().size)
+            assertEquals(81, right.db.passwordEntryDao().getDeviceSyncLocalPasswords().size)
+            val priorReceipt = right.settings.peers.single().lastSyncedAt
+            assertTrue(priorReceipt > 0)
+            val entry = left.db.passwordEntryDao().getPasswordEntryById(ids.last())!!
+            left.db.passwordEntryDao().updatePasswordEntry(entry.copy(password = left.security.encryptData("delta-edited")))
+            left.manual(); right.manual(); left.tick(); right.tick()
+            val active = handles(left) + handles(right)
+            assertEquals(2, active.size)
+            withTimeout(30_000) {
+                while (active.any { RustLanSync.request(JSONObject().put("operation", "progress").put("handle", it)).getString("phase") != "received" }) delay(10)
+            }
+            // Native transfer completion does not advance the Room application receipt.
+            assertEquals(priorReceipt, right.settings.peers.single().lastSyncedAt)
+            val beforeApply = right.db.passwordEntryDao().getDeviceSyncLocalPasswords().single { it.title == "Delta Room 79" }
+            assertEquals("original", right.security.decryptDataIfMonicaCiphertext(beforeApply.password))
+            for (handle in active) {
+                val status = RustLanSync.request(JSONObject().put("operation", "progress").put("handle", handle))
+                assertTrue("A single edit must use a small delta", status.getLong("transferred") < 20_000)
+            }
+            finishRound()
+            assertTrue(right.settings.peers.single().lastSyncedAt > priorReceipt)
+            val result = right.db.passwordEntryDao().getDeviceSyncLocalPasswords()
+            assertEquals(81, result.size)
+            assertEquals("delta-edited", right.security.decryptDataIfMonicaCiphertext(result.single { it.title == "Delta Room 79" }.password))
+            assertEquals(79, result.count { it.title.startsWith("Delta Room") && right.security.decryptDataIfMonicaCiphertext(it.password) == "original" })
+            assertEquals("receiver", right.security.decryptDataIfMonicaCiphertext(result.single { it.title == "Receiver original" }.password))
+        } finally { left.close(); right.close(); SessionManager.markLocked() }
     }
 
     private fun verifyRealPresence(receiverHosts: Boolean, noMdns: Boolean = false) = runBlocking {

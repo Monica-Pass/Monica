@@ -57,7 +57,7 @@ internal object KeePassDatabaseSynchronizer {
                     val sourceNewer = modified(b.times) > modified(a.times)
                     val current = if (sourceNewer) b else a
                     val previous = if (sourceNewer) a else b
-                    val same = sameEntry(current.copy(history = emptyList()), previous.copy(history = emptyList()))
+                    val same = sameContentRevision(current, previous)
                     if (!same && modified(a.times) == modified(b.times)) conflicts++
                     val history = mutableListOf<Entry>()
                     (a.history + b.history + if (same) emptyList() else listOf(previous.copy(history = emptyList())))
@@ -94,7 +94,9 @@ internal object KeePassDatabaseSynchronizer {
             val b = right.entries[uuid]
             val movement = when { a == null -> requireNotNull(b); b == null -> a
                 moved(b.times) > moved(a.times) -> b; else -> a }
-            entry.copy(times = entry.times?.copy(locationChanged = movement.times?.locationChanged),
+            entry.copy(times = entry.times?.copy(locationChanged = movement.times?.locationChanged,
+                lastAccessTime = latest(a?.times?.lastAccessTime, b?.times?.lastAccessTime),
+                usageCount = maxOf(a?.times?.usageCount ?: 0, b?.times?.usageCount ?: 0)),
                 previousParentGroup = movement.previousParentGroup)
         }
         val leftBin = target.content.meta.recycleBinUuid?.takeIf { it != root && it in groups }
@@ -182,6 +184,13 @@ internal object KeePassDatabaseSynchronizer {
     }
 
     private fun sameEntry(a: Entry, b: Entry) = KeePassLosslessTransfer.entriesEquivalent(a, b)
+    private fun sameContentRevision(a: Entry, b: Entry): Boolean {
+        fun content(entry: Entry) = entry.copy(history = emptyList(), previousParentGroup = null,
+            times = entry.times?.copy(lastAccessTime = null, usageCount = 0, locationChanged = null))
+        // Usage and movement merge independently. Modification time, expiry,
+        // fields/protection, attachments and plugin data still identify revisions.
+        return sameEntry(content(a), content(b))
+    }
     private fun sameIcon(a: CustomIcon, b: CustomIcon) = a.data.contentEquals(b.data) && a.name == b.name && a.lastModified == b.lastModified
     private fun newer(a: Instant?, b: Instant?) = (a ?: Instant.MIN) > (b ?: Instant.MIN)
     private fun latest(a: Instant?, b: Instant?): Instant? = listOfNotNull(a, b).maxOrNull()

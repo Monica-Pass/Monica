@@ -1,0 +1,6 @@
+
+takagi.ru.monica.keepass.KeePassStackContentRegressionTest:..........
+
+Time: 18.103
+
+OK (10 tests)

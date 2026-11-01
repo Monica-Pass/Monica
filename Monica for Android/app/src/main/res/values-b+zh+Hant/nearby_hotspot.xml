@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nearby_hotspot_create">建立臨時熱點</string>
+    <string name="nearby_hotspot_create_hint">沒有共同 Wi-Fi 時連線至另一台裝置。</string>
+    <string name="nearby_hotspot_title">臨時熱點</string>
+    <string name="nearby_hotspot_help">此碼 10 分鐘後失效。關閉面板、鎖定或離開 Monica 會結束熱點。連線後仍須驗證配對。</string>
+    <string name="nearby_hotspot_active">臨時熱點已開啟</string>
+    <string name="nearby_hotspot_stop">結束臨時熱點</string>
+    <string name="nearby_hotspot_starting">正在建立熱點及配對碼…</string>
+    <string name="nearby_hotspot_join_title">連線至此熱點？</string>
+    <string name="nearby_hotspot_join_hint">透過 Android 的確認連線至 %1$s，隨後 Monica 會驗證配對裝置。</string>
+    <string name="nearby_hotspot_connecting">正在等待 Wi-Fi 連線…</string>
+    <string name="nearby_hotspot_failure">Android 未完成連線。可以手動連線後重新掃描此碼。</string>
+    <string name="nearby_hotspot_permissions">請授予 Android 要求的 Wi-Fi 權限，以建立或連線至熱點。</string>
+    <string name="nearby_hotspot_unsupported">此裝置無法自動連線至熱點。請手動連線後重新掃描。</string>
+    <string name="nearby_hotspot_manual">已手動連線，繼續</string>
+    <string name="nearby_hotspot_open_wifi">Wi-Fi 設定</string>
+    <string name="nearby_hotspot_scan_hint">掃描 Monica 配對碼或臨時熱點碼。</string>
+    <string name="nearby_hotspot_connect">連線</string>
+    <string name="nearby_hotspot_copy_password">複製熱點密碼</string>
+    <string name="nearby_hotspot_interrupted">Monica 進入背景，已取消此次連線。請手動連線至熱點後重新掃描此碼。</string>
+</resources>

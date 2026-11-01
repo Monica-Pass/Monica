@@ -3,8 +3,14 @@ package takagi.ru.monica.ui.screens
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.provider.Settings
 import android.os.PersistableBundle
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -29,6 +35,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.coroutines.Dispatchers
@@ -49,10 +58,25 @@ import java.util.Date
 fun LanSyncScreen(onNavigateBack: () -> Unit, onScanPairingQr: () -> Unit) {
     val context = LocalContext.current
     val coordinator = remember { DeviceSyncCoordinator.get(context) }
+    val hotspot = remember { NearbyHotspotSession.get(context) }
+    val hotspotState by hotspot.state.collectAsStateWithLifecycle()
+    var pendingHost by remember { mutableStateOf(false) }
+    val owner = LocalLifecycleOwner.current
+    DisposableEffect(owner) {
+        val observer = LifecycleEventObserver { _, event -> if (event == Lifecycle.Event.ON_STOP) pendingHost = false }
+        owner.lifecycle.addObserver(observer)
+        onDispose { owner.lifecycle.removeObserver(observer) }
+    }
+    val permissions = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+        val requested = pendingHost; pendingHost = false
+        if (requested && NearbyHotspotSession.requiredPermissions().all { permission -> ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED }) {
+            hotspot.host { coordinator.pair() }
+        } else if (requested) hotspot.permissionDenied()
+    }
     val state by coordinator.state.collectAsStateWithLifecycle()
     val databaseFlow = remember(context) { PasswordDatabase.getDatabase(context).localMdbxDatabaseDao().getAvailableDatabases() }
     val databases by databaseFlow.collectAsStateWithLifecycle(initialValue = emptyList())
-    DisposableEffect(coordinator) { onDispose { coordinator.cancelPairing() } }
+    DisposableEffect(coordinator, hotspot) { onDispose { pendingHost = false; coordinator.cancelPairing(); hotspot.close() } }
     state.passkeyReview?.let { review ->
         NearbyPasskeyPreflightDialog(review, onCancel = coordinator::cancelPasskeySync,
             onContinue = { dontAskAgain -> coordinator.confirmPasskeySync(review, dontAskAgain) })
@@ -61,22 +85,104 @@ fun LanSyncScreen(onNavigateBack: () -> Unit, onScanPairingQr: () -> Unit) {
         { coordinator.pair(it) }, coordinator::cancelPairing, coordinator::setEnabled, coordinator::setMode,
         coordinator::setInterval, coordinator::syncNow, coordinator::forget, coordinator::setDatabase, coordinator::cancelSync,
         coordinator::setPasskeyNoticeSuppressed, coordinator::refreshPasskeyDiagnostics, coordinator::forgetDevices,
-        coordinator::confirmReceivedDeletions),
-        databases.filter { it.isUsable })
+        coordinator::confirmReceivedDeletions,
+        createHotspot = {
+            if (NearbyHotspotSession.requiredPermissions().all { ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED }) {
+                hotspot.host { coordinator.pair() }
+            } else { pendingHost = true; permissions.launch(NearbyHotspotSession.requiredPermissions()) }
+        }, cancelHotspot = { hotspot.close(); coordinator.cancelPairing() }, hotspotInvitation = hotspot::invitation),
+        databases.filter { it.isUsable }, hotspotState)
 }
 
 @Composable
 fun LanSyncScannerScreen(onNavigateBack: () -> Unit) {
     val context = LocalContext.current
     val coordinator = remember { DeviceSyncCoordinator.get(context) }
+    val hotspot = remember { NearbyHotspotSession.get(context) }
+    val hotspotState by hotspot.state.collectAsStateWithLifecycle()
     var handled by remember { mutableStateOf(false) }
-    QrScannerScreen(
-        onQrCodeScanned = { if (!handled) { handled = true; onNavigateBack(); coordinator.pair(it) } },
+    var networkInvitation by remember { mutableStateOf<NearbyHotspotInvitation?>(null) }
+    var keepConnection by remember { mutableStateOf(false) }
+    var waitingPermission by remember { mutableStateOf(false) }
+    var interrupted by remember { mutableStateOf(false) }
+    var scanEpoch by remember { mutableIntStateOf(0) }
+    val owner = LocalLifecycleOwner.current
+    fun proceed(pairing: String) {
+        keepConnection = true; networkInvitation = null
+        onNavigateBack(); coordinator.pair(pairing)
+    }
+    val permissions = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+        val requested = waitingPermission; waitingPermission = false
+        val invitation = networkInvitation
+        if (requested && invitation != null) {
+            if (NearbyHotspotSession.requiredPermissions().all { permission -> ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED }) {
+                hotspot.join(invitation) { proceed(invitation.pairing) }
+            } else hotspot.permissionDenied()
+        }
+    }
+    DisposableEffect(owner, hotspot) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_STOP) {
+                if (!keepConnection && hotspot.state.value.phase == "connecting") interrupted = true
+                waitingPermission = false; networkInvitation = null; handled = false
+                scanEpoch++
+                if (!keepConnection) hotspot.close()
+            }
+        }
+        owner.lifecycle.addObserver(observer)
+        onDispose { owner.lifecycle.removeObserver(observer); waitingPermission = false; networkInvitation = null; if (!keepConnection) hotspot.close() }
+    }
+    key(scanEpoch) { QrScannerScreen(
+        onQrCodeScanned = { if (!handled) {
+            handled = true
+            val network = NearbyHotspotInvitation.parse(it)
+            if (network == null) { onNavigateBack(); coordinator.pair(it) } else networkInvitation = network
+        } },
         onNavigateBack = onNavigateBack, title = stringResource(R.string.lan_scan),
-        subtitle = stringResource(R.string.nearby_scan_hint), allowedFormats = listOf(BarcodeFormat.QR_CODE),
-        resultValidator = { LanPairingInvitation.parse(it)?.version == 2 },
+        subtitle = stringResource(R.string.nearby_hotspot_scan_hint), allowedFormats = listOf(BarcodeFormat.QR_CODE),
+        resultValidator = { !interrupted && (LanPairingInvitation.parse(it)?.version == 2 || NearbyHotspotInvitation.parse(it) != null) },
         invalidResultMessage = stringResource(R.string.device_sync_qr_invalid),
-        diagnosticLabel = "lan-pairing", onDiagnostic = DeviceSyncDiagLogger::scanner)
+        diagnosticLabel = "lan-pairing", onDiagnostic = DeviceSyncDiagLogger::scanner) }
+    if (interrupted) NearbyHotspotInterruptedDialog(onDismiss = { interrupted = false },
+        onOpenWifi = { interrupted = false; runCatching { context.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS)) } })
+    networkInvitation?.let { invitation ->
+        AlertDialog(onDismissRequest = { networkInvitation = null; handled = false; waitingPermission = false; scanEpoch++; hotspot.close() },
+            title = { Text(stringResource(R.string.nearby_hotspot_join_title)) },
+            text = { Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text(stringResource(R.string.nearby_hotspot_join_hint, invitation.ssid))
+                if (hotspotState.phase == "connecting") {
+                    LinearProgressIndicator(Modifier.fillMaxWidth()); Text(stringResource(R.string.nearby_hotspot_connecting))
+                }
+                hotspotState.error?.let {
+                    Text(hotspotError(it), color = MaterialTheme.colorScheme.error)
+                    OutlinedButton({ copyNearbyText(context, invitation.passphrase, true) }, Modifier.fillMaxWidth()) {
+                        Text(stringResource(R.string.nearby_hotspot_copy_password))
+                    }
+                    OutlinedButton({ runCatching { context.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS)) } }, Modifier.fillMaxWidth()) {
+                        Text(stringResource(R.string.nearby_hotspot_open_wifi))
+                    }
+                    OutlinedButton({ hotspot.close(); proceed(invitation.pairing) }, Modifier.fillMaxWidth()) {
+                        Text(stringResource(R.string.nearby_hotspot_manual))
+                    }
+                }
+            } },
+            confirmButton = { TextButton({
+                if (NearbyHotspotSession.requiredPermissions().all { ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED }) {
+                    hotspot.join(invitation) { proceed(invitation.pairing) }
+                } else { waitingPermission = true; permissions.launch(NearbyHotspotSession.requiredPermissions()) }
+            }, enabled = hotspotState.phase != "connecting" && !waitingPermission) { Text(stringResource(R.string.nearby_hotspot_connect)) } },
+            dismissButton = { TextButton({ networkInvitation = null; handled = false; waitingPermission = false; scanEpoch++; hotspot.close() }) { Text(stringResource(R.string.cancel)) } })
+    }
+}
+
+/** Keeps only a fixed interruption message; the scanned credentials have already been cleared. */
+@Composable
+internal fun NearbyHotspotInterruptedDialog(onDismiss: () -> Unit, onOpenWifi: () -> Unit) {
+    AlertDialog(onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.nearby_hotspot_title)) },
+        text = { Text(stringResource(R.string.nearby_hotspot_interrupted), Modifier.verticalScroll(rememberScrollState())) },
+        confirmButton = { TextButton(onOpenWifi) { Text(stringResource(R.string.nearby_hotspot_open_wifi)) } },
+        dismissButton = { TextButton(onDismiss) { Text(stringResource(R.string.cancel)) } })
 }
 
 internal data class NearbySyncActions(
@@ -87,17 +193,29 @@ internal data class NearbySyncActions(
     val database: (Long?) -> Unit = {}, val cancelSync: () -> Unit = {},
     val suppressPasskeyNotice: (Boolean) -> Unit = {}, val refreshPasskeys: () -> Unit = {},
     val forgetDevices: ((Set<String>) -> Unit)? = null,
-    val receivedDeletions: (DeviceDeletionReview, Boolean) -> Unit = { _, _ -> })
+    val receivedDeletions: (DeviceDeletionReview, Boolean) -> Unit = { _, _ -> },
+    val createHotspot: (() -> Unit)? = null, val cancelHotspot: () -> Unit = {},
+    val hotspotInvitation: (String) -> String? = { null })
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun NearbySyncContent(state: DeviceSyncState, actions: NearbySyncActions, databases: List<LocalMdbxDatabase> = emptyList()) {
+internal fun NearbySyncContent(state: DeviceSyncState, actions: NearbySyncActions, databases: List<LocalMdbxDatabase> = emptyList(), hotspot: NearbyHotspotState = NearbyHotspotState()) {
     val context = LocalContext.current
     var sheet by rememberSaveable { mutableStateOf<String?>(null) }
-    var invitation by rememberSaveable { mutableStateOf("") }
+    var invitation by remember { mutableStateOf("") }
     var minutes by rememberSaveable { mutableStateOf("10") }
     var custom by rememberSaveable { mutableStateOf(false) }
     var viewingPasskeys by rememberSaveable { mutableStateOf(false) }
+    val owner = LocalLifecycleOwner.current
+    DisposableEffect(owner) {
+        val observer = LifecycleEventObserver { _, event -> if (event == Lifecycle.Event.ON_STOP) {
+            invitation = ""
+            if (sheet == "hotspot") { actions.cancelHotspot(); sheet = null }
+            if (sheet == "qr") { actions.cancelPairing(); sheet = null }
+        } }
+        owner.lifecycle.addObserver(observer)
+        onDispose { invitation = ""; owner.lifecycle.removeObserver(observer) }
+    }
     LaunchedEffect(sheet, state.databaseId) { if (sheet == "details") actions.refreshPasskeys() }
     if (viewingPasskeys && state.passkeyReview == null) {
         NearbyPasskeyRestrictionsDialog(state.passkeyDiagnosticIssues.orEmpty()) { viewingPasskeys = false }
@@ -110,7 +228,11 @@ internal fun NearbySyncContent(state: DeviceSyncState, actions: NearbySyncAction
             invitation = ""
         }
     }
-    fun closeSheet() { if (sheet == "qr") actions.cancelPairing(); sheet = null }
+    fun closeSheet() {
+        if (sheet == "qr") actions.cancelPairing()
+        if (sheet == "hotspot") actions.cancelHotspot()
+        invitation = ""; sheet = null
+    }
     if (custom) {
         val value = minutes.toIntOrNull()
         AlertDialog(onDismissRequest = { custom = false }, title = { Text(stringResource(R.string.device_sync_custom)) },
@@ -147,6 +269,29 @@ internal fun NearbySyncContent(state: DeviceSyncState, actions: NearbySyncAction
                         TextButton(actions.showQr, enabled = !state.pairing) { Text(stringResource(R.string.nearby_regenerate)) }
                     }
                     TextButton(::closeSheet, Modifier.fillMaxWidth()) { Text(stringResource(R.string.nearby_cancel_pairing)) }
+                }
+                "hotspot" -> {
+                    Text(stringResource(R.string.nearby_hotspot_title), style = MaterialTheme.typography.headlineSmall)
+                    Text(stringResource(R.string.nearby_hotspot_help), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    val link = actions.hotspotInvitation(state.invitations.firstOrNull().orEmpty()).orEmpty()
+                    if (link.isNotEmpty()) {
+                        NearbyPairingCode(link)
+                        Text(hotspot.networkName, style = MaterialTheme.typography.titleMedium)
+                        Button({ copyNearbyText(context, link, true) }, Modifier.fillMaxWidth()) {
+                            Icon(Icons.Default.ContentCopy, null); Spacer(Modifier.width(8.dp)); Text(stringResource(R.string.lan_copy_link))
+                        }
+                    } else if (hotspot.hosting && !state.pairing && state.error == null) {
+                        Text(stringResource(R.string.nearby_hotspot_active), style = MaterialTheme.typography.titleMedium)
+                        TextButton(actions.showQr) { Text(stringResource(R.string.nearby_regenerate)) }
+                    } else if (hotspot.error == null && state.error == null) {
+                        LinearProgressIndicator(Modifier.fillMaxWidth()); Text(stringResource(R.string.nearby_hotspot_starting))
+                    }
+                    hotspot.error?.let { Text(hotspotError(it), color = MaterialTheme.colorScheme.error) }
+                    if (state.error != null) Text(nearbyError(state), color = MaterialTheme.colorScheme.error)
+                    if (hotspot.error != null || state.error != null) {
+                        TextButton({ actions.createHotspot?.invoke() }) { Text(stringResource(R.string.nearby_regenerate)) }
+                    }
+                    TextButton(::closeSheet, Modifier.fillMaxWidth()) { Text(stringResource(R.string.nearby_hotspot_stop)) }
                 }
                 "link" -> {
                     Text(stringResource(R.string.device_sync_use_link), style = MaterialTheme.typography.headlineSmall)
@@ -230,6 +375,12 @@ internal fun NearbySyncContent(state: DeviceSyncState, actions: NearbySyncAction
                     onClick = actions.scan, enabled = !state.pairing)
                 SettingsPanelRow(Icons.Default.Link, stringResource(R.string.device_sync_use_link), stringResource(R.string.nearby_paste_hint),
                     onClick = { sheet = "link" }, enabled = !state.pairing)
+                actions.createHotspot?.let { create ->
+                    SettingsPanelRow(Icons.Default.WifiTethering, stringResource(if (hotspot.hosting) R.string.nearby_hotspot_active else R.string.nearby_hotspot_create),
+                        stringResource(R.string.nearby_hotspot_create_hint), onClick = {
+                            sheet = "hotspot"; if (!hotspot.hosting) create()
+                        }, enabled = hotspot.hosting || !state.pairing && !state.manualSync)
+                }
             }
             SettingsPanelGroup("") {
                 SettingsPanelRow(Icons.Default.Info, stringResource(R.string.nearby_details), nearbyStageLabel(context, state), onClick = { sheet = "details" })
@@ -238,6 +389,12 @@ internal fun NearbySyncContent(state: DeviceSyncState, actions: NearbySyncAction
         }
     }
 }
+
+@Composable private fun hotspotError(error: String): String = stringResource(when (error) {
+    "permission_denied" -> R.string.nearby_hotspot_permissions
+    "unsupported" -> R.string.nearby_hotspot_unsupported
+    else -> R.string.nearby_hotspot_failure
+})
 
 @Composable private fun modeName(mode: DeviceSyncMode): String = stringResource(when (mode) {
     DeviceSyncMode.BIDIRECTIONAL -> R.string.device_sync_bidirectional

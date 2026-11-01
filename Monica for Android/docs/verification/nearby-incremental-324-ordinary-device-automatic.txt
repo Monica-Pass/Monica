@@ -1,0 +1,7 @@
+
+takagi.ru.monica.lansync.NearbyAutomaticSyncTest:........
+takagi.ru.monica.lansync.NearbyMetadataAssetsInstrumentedTest:...
+
+Time: 175.936
+
+OK (11 tests)

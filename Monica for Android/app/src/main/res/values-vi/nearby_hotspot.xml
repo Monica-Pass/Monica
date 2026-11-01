@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nearby_hotspot_create">Điểm phát sóng tạm thời</string>
+    <string name="nearby_hotspot_create_hint">Kết nối các thiết bị không có Wi-Fi chung.</string>
+    <string name="nearby_hotspot_title">Điểm phát sóng tạm thời</string>
+    <string name="nearby_hotspot_help">Mã hết hạn sau 10 phút. Đóng bảng này, khóa hoặc rời Monica sẽ dừng điểm phát sóng. Việc ghép nối vẫn được xác minh.</string>
+    <string name="nearby_hotspot_active">Điểm phát sóng tạm thời đang bật</string>
+    <string name="nearby_hotspot_stop">Dừng điểm phát sóng</string>
+    <string name="nearby_hotspot_starting">Đang tạo điểm phát sóng và mã…</string>
+    <string name="nearby_hotspot_join_title">Kết nối với điểm phát sóng này?</string>
+    <string name="nearby_hotspot_join_hint">Tham gia %1$s qua xác nhận của Android. Sau đó Monica xác minh thiết bị đã ghép nối.</string>
+    <string name="nearby_hotspot_connecting">Đang chờ kết nối Wi-Fi…</string>
+    <string name="nearby_hotspot_failure">Android không thể hoàn tất kết nối. Bạn có thể kết nối thủ công rồi quét lại mã.</string>
+    <string name="nearby_hotspot_permissions">Cấp quyền Wi-Fi mà Android yêu cầu để tạo hoặc tham gia điểm phát sóng.</string>
+    <string name="nearby_hotspot_unsupported">Không có kết nối điểm phát sóng tự động. Hãy kết nối thủ công rồi quét lại.</string>
+    <string name="nearby_hotspot_manual">Đã kết nối, tiếp tục</string>
+    <string name="nearby_hotspot_open_wifi">Cài đặt Wi-Fi</string>
+    <string name="nearby_hotspot_scan_hint">Quét mã ghép nối Monica hoặc mã điểm phát sóng tạm thời.</string>
+    <string name="nearby_hotspot_connect">Kết nối</string>
+    <string name="nearby_hotspot_copy_password">Sao chép mật khẩu điểm phát sóng</string>
+    <string name="nearby_hotspot_interrupted">Kết nối đã bị hủy khi Monica chuyển sang nền. Hãy kết nối thủ công với điểm phát sóng, rồi quét lại mã.</string>
+</resources>

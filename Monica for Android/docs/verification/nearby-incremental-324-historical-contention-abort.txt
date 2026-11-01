@@ -1,0 +1,4 @@
+
+takagi.ru.monica.lansync.NearbyIncrementalTransportTest:..
+takagi.ru.monica.lansync.DeviceAssetStreamingInstrumentedTest:...
+takagi.ru.monica.lansync.NearbyHotspotUiTest:

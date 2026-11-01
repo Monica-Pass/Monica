@@ -1,0 +1,51 @@
+
+takagi.ru.monica.lansync.NearbyPasskeyPreflightTest:.
+takagi.ru.monica.lansync.NearbySteamTransportTest:...
+takagi.ru.monica.lansync.NearbyBrowserInteropTest:
+Error in initializationError(takagi.ru.monica.lansync.NearbyBrowserInteropTest):
+java.lang.RuntimeException: Failed loading specified test class 'takagi.ru.monica.lansync.NearbyBrowserInteropTest'
+	at androidx.test.internal.runner.DirectTestLoader.doCreateRunner(DirectTestLoader.java:50)
+	at androidx.test.internal.runner.TestLoader.getRunnersFor(TestLoader.java:64)
+	at androidx.test.internal.runner.TestRequestBuilder.build(TestRequestBuilder.java:842)
+	at androidx.test.runner.AndroidJUnitRunner.buildRequest(AndroidJUnitRunner.java:672)
+	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:453)
+	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2278)
+Caused by: java.lang.ClassNotFoundException: takagi.ru.monica.lansync.NearbyBrowserInteropTest
+	at java.lang.Class.classForName(Native Method)
+	at java.lang.Class.forName(Class.java:454)
+	at androidx.test.internal.runner.DirectTestLoader.doCreateRunner(DirectTestLoader.java:44)
+	... 5 more
+Caused by: java.lang.ClassNotFoundException: Didn't find class "takagi.ru.monica.lansync.NearbyBrowserInteropTest" on path: DexPathList[[zip file "/system/framework/android.test.runner.jar", zip file "/system/framework/android.test.mock.jar", zip file "/system/framework/android.test.base.jar", zip file "/data/app/~~CBdbJWPquLyet3VRo-pQxA==/takagi.ru.monica.fdroid.test-nZMO3vNkxlYXydA6o9BRXw==/base.apk", zip file "/data/app/~~wNSZPpJz9FijW0-C6P3nsQ==/takagi.ru.monica.fdroid-zBXubiGBzhoRwZl-x2Vwbg==/base.apk"],nativeLibraryDirectories=[/data/app/~~CBdbJWPquLyet3VRo-pQxA==/takagi.ru.monica.fdroid.test-nZMO3vNkxlYXydA6o9BRXw==/lib/x86_64, /data/app/~~wNSZPpJz9FijW0-C6P3nsQ==/takagi.ru.monica.fdroid-zBXubiGBzhoRwZl-x2Vwbg==/lib/x86_64, /data/app/~~CBdbJWPquLyet3VRo-pQxA==/takagi.ru.monica.fdroid.test-nZMO3vNkxlYXydA6o9BRXw==/base.apk!/lib/x86_64, /data/app/~~wNSZPpJz9FijW0-C6P3nsQ==/takagi.ru.monica.fdroid-zBXubiGBzhoRwZl-x2Vwbg==/base.apk!/lib/x86_64, /system/lib64, /system_ext/lib64]]
+	at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:218)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:379)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:312)
+	... 8 more
+
+s_glBindAttribLocation: bind attrib 0 name position
+s_glBindAttribLocation: bind attrib 1 name localCoord
+takagi.ru.monica.lansync.NearbyDeviceManagementTest:...
+takagi.ru.monica.lansync.NearbySyncStatusTest:...
+
+Time: 144.799
+There was 1 failure:
+1) initializationError(takagi.ru.monica.lansync.NearbyBrowserInteropTest)
+java.lang.RuntimeException: Failed loading specified test class 'takagi.ru.monica.lansync.NearbyBrowserInteropTest'
+	at androidx.test.internal.runner.DirectTestLoader.doCreateRunner(DirectTestLoader.java:50)
+	at androidx.test.internal.runner.TestLoader.getRunnersFor(TestLoader.java:64)
+	at androidx.test.internal.runner.TestRequestBuilder.build(TestRequestBuilder.java:842)
+	at androidx.test.runner.AndroidJUnitRunner.buildRequest(AndroidJUnitRunner.java:672)
+	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:453)
+	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2278)
+Caused by: java.lang.ClassNotFoundException: takagi.ru.monica.lansync.NearbyBrowserInteropTest
+	at java.lang.Class.classForName(Native Method)
+	at java.lang.Class.forName(Class.java:454)
+	at androidx.test.internal.runner.DirectTestLoader.doCreateRunner(DirectTestLoader.java:44)
+	... 5 more
+Caused by: java.lang.ClassNotFoundException: Didn't find class "takagi.ru.monica.lansync.NearbyBrowserInteropTest" on path: DexPathList[[zip file "/system/framework/android.test.runner.jar", zip file "/system/framework/android.test.mock.jar", zip file "/system/framework/android.test.base.jar", zip file "/data/app/~~CBdbJWPquLyet3VRo-pQxA==/takagi.ru.monica.fdroid.test-nZMO3vNkxlYXydA6o9BRXw==/base.apk", zip file "/data/app/~~wNSZPpJz9FijW0-C6P3nsQ==/takagi.ru.monica.fdroid-zBXubiGBzhoRwZl-x2Vwbg==/base.apk"],nativeLibraryDirectories=[/data/app/~~CBdbJWPquLyet3VRo-pQxA==/takagi.ru.monica.fdroid.test-nZMO3vNkxlYXydA6o9BRXw==/lib/x86_64, /data/app/~~wNSZPpJz9FijW0-C6P3nsQ==/takagi.ru.monica.fdroid-zBXubiGBzhoRwZl-x2Vwbg==/lib/x86_64, /data/app/~~CBdbJWPquLyet3VRo-pQxA==/takagi.ru.monica.fdroid.test-nZMO3vNkxlYXydA6o9BRXw==/base.apk!/lib/x86_64, /data/app/~~wNSZPpJz9FijW0-C6P3nsQ==/takagi.ru.monica.fdroid-zBXubiGBzhoRwZl-x2Vwbg==/base.apk!/lib/x86_64, /system/lib64, /system_ext/lib64]]
+	at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:218)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:379)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:312)
+	... 8 more
+
+FAILURES!!!
+Tests run: 12,  Failures: 1

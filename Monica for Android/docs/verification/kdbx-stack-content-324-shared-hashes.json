@@ -1,0 +1,8 @@
+{
+  "app/src/main/java/takagi/ru/monica/keepass/KeePassMonicaPasswordStore.kt": "02475520214A2398F6893D62FAB462D5E7BE7E0B720E70E0F1C5B5A2E5202277",
+  "app/src/androidTest/java/takagi/ru/monica/keepass/KeePassStackContentRegressionTest.kt": "07981C4814DAA71B5CDC5B0412D7B10EB12047FBF70F8DA7CFB74A14359F28C7",
+  "app/src/main/java/takagi/ru/monica/viewmodel/PasswordViewModel.kt": "21AD947864301990B0DD5901D4840E7B03A0B2E989848272E4C53E77C4F42D70",
+  "app/src/main/java/takagi/ru/monica/ui/screens/AddEditPasswordScreen.kt": "C35285502A8767D0600CB7FA839C367E86B2DDA62A81EA5927F8FA095FE1696D",
+  "app/src/androidTest/java/takagi/ru/monica/keepass/KeePassAddContentUiRegressionTest.kt": "721F0968C486A139823832311E2AD54E7AD48EC3F8D6483608F81ECB04E982B0",
+  "app/src/main/java/takagi/ru/monica/ui/password/PasswordListDialogs.kt": "CACDEE544CC6F0F6242129AE08B54BEBA72285EB7400ACADD8A5AD685479428D"
+}

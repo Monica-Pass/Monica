@@ -2357,6 +2357,9 @@ private fun PasswordEntryEditor(
                         }
                         
                         allProjectOriginalIds = siblings.map { it.id }
+                        if (!viewModel.prepareNativeEditorSiblings(actualId, allProjectOriginalIds)) {
+                            projectCredentialLoadFailed = true
+                        }
                         val projectFields = withContext(Dispatchers.IO) {
                             viewModel.getCustomFieldsByEntryIds(siblings.map { it.id }).mapValues { (_, fields) -> fields.map(CustomFieldDraft::fromCustomField) }
                         }

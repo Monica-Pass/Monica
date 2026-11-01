@@ -1,0 +1,90 @@
+[
+  {
+    "path": "app/src/main/java/takagi/ru/monica/keepass/KeePassNativeMutation.kt",
+    "sha256": "4578D2B5DD55B9355FA2A3F33321C00A2B77D7E8D459F7F27BDF564345D23226"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/keepass/KeePassDatabaseSynchronizer.kt",
+    "sha256": "427431BDF65562420BEC758155E5F518F13E31DFEE678A2BD8937DC06B1DFA30"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/keepass/KeePassMonicaPasswordStore.kt",
+    "sha256": "995F9B03E4534F4324930108B0252AC3B9818C919A5EFDE017D362EE7D35C5C8"
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/ui/screens/PasswordDetailScreen.kt",
+    "sha256": "E1766BF32F7F33526B3E23CA54EC73FDE68F8BCE66BF3D9E09FFA5F6AEFEE46D"
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/keepass/KeePassNativeMutationTest.kt",
+    "sha256": "CBE0BFCF4CECA3BDE6904ED1DF1AE34467CF3D878F3A4D0974383B2E535577D9"
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/keepass/KeePassDatabaseSynchronizerTest.kt",
+    "sha256": "31A5418178E723F1E2917836CA36DA5BC655F9A24A78ABB160C8A61DCAF2C91E"
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/keepass/KeePassHistoryStabilityTest.kt",
+    "sha256": "C062D5B713C40EB5DEE117A3C85B7001267F3DA4D16CBF4ECAB81A0FB05227A3"
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/keepass/KeePassHistoryUiTest.kt",
+    "sha256": "2051CD66413F5577BE99235A47D964DD1096EC974D87D3B5F0A5D03B3AC4D441"
+  },
+  {
+    "path": "app/src/main/res/values/keepass_password_history.xml",
+    "sha256": "AAD9D46F34542BAD23FBC3EDFF77C9B4CC50E697E338FC10E9A6610860950ECE"
+  },
+  {
+    "path": "app/src/main/res/values-b+lzh/keepass_password_history.xml",
+    "sha256": "7C7574D1B8D33F24A6949826E57DEDBE08D8FF5319E45BF1EB60B68198519754"
+  },
+  {
+    "path": "app/src/main/res/values-b+zh+Hant/keepass_password_history.xml",
+    "sha256": "3DD175CB247DB4B8969533305CA0C7B50CE337A4B5FF1BA1CCFAC6F86B5D773E"
+  },
+  {
+    "path": "app/src/main/res/values-de/keepass_password_history.xml",
+    "sha256": "293819590C03B4DE6F6D2CECE2080CEBE2CAB417D240D2A9BB0F03EE160B0086"
+  },
+  {
+    "path": "app/src/main/res/values-es/keepass_password_history.xml",
+    "sha256": "DF047D2F58F7022DCD8A46A8F1F27F62A2772E7F3CAD6EB506C886FC70A395D7"
+  },
+  {
+    "path": "app/src/main/res/values-fr/keepass_password_history.xml",
+    "sha256": "02539C69E6308118828C5E95A57C941762372739017581C90B7602B81ABCC512"
+  },
+  {
+    "path": "app/src/main/res/values-it/keepass_password_history.xml",
+    "sha256": "42C352D723570ED64111C90EC6D4A472FA95CFFE100B86F8C0FF4A2FF95837E1"
+  },
+  {
+    "path": "app/src/main/res/values-ja/keepass_password_history.xml",
+    "sha256": "DF0A9356996F4999DC1E6327751B17272351F828F2D6203B1AF40ACB6FA9081B"
+  },
+  {
+    "path": "app/src/main/res/values-ko/keepass_password_history.xml",
+    "sha256": "F21ED2145E70DB081611AE078637BDA343C91843750846ABB4E5664D0473946C"
+  },
+  {
+    "path": "app/src/main/res/values-pl/keepass_password_history.xml",
+    "sha256": "F0439ECDAB8DF5F37AF87F2D87493950BD6C0A08E507931177079F9DB1947464"
+  },
+  {
+    "path": "app/src/main/res/values-ru/keepass_password_history.xml",
+    "sha256": "A31E1EAE0527E69170EFDE6B5DEFBE57EEA0F6E0F191D6E1A28E1F6BEF82CB16"
+  },
+  {
+    "path": "app/src/main/res/values-vi/keepass_password_history.xml",
+    "sha256": "A2B4248C02A8E765DDE61011FE64DF19448D69F52154133D626D8CC84D18966B"
+  },
+  {
+    "path": "app/src/main/res/values-zh/keepass_password_history.xml",
+    "sha256": "34CE5C767E62CD87F4E47E9C60D606166A0A08AFB62AB772216992330D5091BB"
+  },
+  {
+    "path": "app/src/main/res/values-zh-rCN/keepass_password_history.xml",
+    "sha256": "34CE5C767E62CD87F4E47E9C60D606166A0A08AFB62AB772216992330D5091BB"
+  }
+]

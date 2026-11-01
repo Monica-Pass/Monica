@@ -33,7 +33,7 @@ pub(super) fn serve(
                 match Channel::handshake(stream, &key, false, job, prepared.protocol) {
                     Ok(mut channel) => {
                         job.update(|p| p.remote_address = Some(peer.ip().to_string()));
-                        return exchange(&mut channel, prepared, job, true);
+                        return exchange(&mut channel, prepared, job, true, &key);
                     }
                     Err("cancelled") => return Err("cancelled"),
                     Err(_) => {
@@ -75,7 +75,7 @@ pub(super) fn connect(
         match Channel::handshake(stream, &key, true, job, prepared.protocol) {
             Ok(mut channel) => {
                 job.update(|p| p.remote_address = Some(address.ip().to_string()));
-                return exchange(&mut channel, prepared, job, false);
+                return exchange(&mut channel, prepared, job, false, &key);
             }
             Err("cancelled") => return Err("cancelled"),
             Err(error) => last_failure = (error, "authenticating"),
@@ -335,7 +335,13 @@ fn validate_manifest(manifest: &Manifest) -> Result<()> {
     Ok(())
 }
 
-fn exchange(channel: &mut Channel<'_>, prepared: Prepared, job: &Job, host: bool) -> Result<()> {
+fn exchange(
+    channel: &mut Channel<'_>,
+    mut prepared: Prepared,
+    job: &Job,
+    host: bool,
+    handshake_key: &[u8; 32],
+) -> Result<()> {
     job.update(|p| p.phase = "checking");
     let mut local = manifest(&prepared, job)?;
     validate_manifest(&local)?;
@@ -494,6 +500,100 @@ fn exchange(channel: &mut Channel<'_>, prepared: Prepared, job: &Job, host: bool
     if !flow.receive {
         remote.files.clear();
     }
+    // Older v2 peers ignore the optional capability and keep the exact original
+    // wire sequence. No discovery hint can opt a connection into this exchange.
+    let incremental = prepared.protocol == 2
+        && !needs_bootstrap
+        && !remote_needs_bootstrap
+        && prepared.expected_device.is_some()
+        && local
+            .device
+            .as_ref()
+            .is_some_and(|d| d.incremental_sync == 1 && !d.pair_id.is_empty())
+        && remote
+            .device
+            .as_ref()
+            .is_some_and(|d| d.incremental_sync == 1 && !d.pair_id.is_empty());
+    if incremental {
+        if local.device.as_ref().map(|d| &d.pair_id) != remote.device.as_ref().map(|d| &d.pair_id) {
+            return Err("different_device");
+        }
+        let snapshot = replica::incremental::Snapshot::open(
+            prepared.outgoing.as_ref().ok_or("missing_sync_bundle")?,
+            &prepared.secrets.content_key,
+            job,
+        )?;
+        let empty = replica::incremental::Inventory::empty();
+        let inventory = if flow.receive {
+            &snapshot.inventory
+        } else {
+            &empty
+        };
+        let local_bytes = inventory.bytes()?;
+        let remote_bytes = if host {
+            send_control(channel, &local_bytes)?;
+            receive_control(channel)?
+        } else {
+            let bytes = receive_control(channel)?;
+            send_control(channel, &local_bytes)?;
+            bytes
+        };
+        let remote_inventory = replica::incremental::Inventory::parse(&remote_bytes)?;
+        if flow.send {
+            let peer_id = remote
+                .device
+                .as_ref()
+                .ok_or("invalid_device")?
+                .device_id
+                .as_str();
+            prepared.outgoing = Some(snapshot.delta(&remote_inventory, peer_id, job)?);
+            local.files = manifest(&prepared, job)?.files;
+            local.files.retain(|file| file.name != "vault.mdbx");
+        }
+        let selected = serde_json::to_vec(&local.files).map_err(|_| "invalid_manifest")?;
+        let selected_remote = if host {
+            channel.send(&selected)?;
+            channel.receive()?
+        } else {
+            let bytes = channel.receive()?;
+            channel.send(&selected)?;
+            bytes
+        };
+        remote.files = serde_json::from_slice(&selected_remote).map_err(|_| "invalid_manifest")?;
+        validate_manifest(&remote)?;
+        if remote.files.iter().any(|f| f.name == "vault.mdbx")
+            || (!flow.receive && !remote.files.is_empty())
+        {
+            return Err("invalid_manifest");
+        }
+    }
+    let resumable = prepared.protocol == 2
+        && !needs_bootstrap
+        && !remote_needs_bootstrap
+        && prepared.expected_device.is_some()
+        && prepared.resume_root.is_some()
+        && local
+            .device
+            .as_ref()
+            .is_some_and(|d| d.resume_sync == 1 && !d.pair_id.is_empty())
+        && remote
+            .device
+            .as_ref()
+            .is_some_and(|d| d.resume_sync == 1 && !d.pair_id.is_empty());
+    let resume_scope = if resumable {
+        let peer = remote.device.as_ref().ok_or("invalid_device")?;
+        let local_pair = &local.device.as_ref().ok_or("invalid_device")?.pair_id;
+        if &peer.pair_id != local_pair {
+            return Err("different_device");
+        }
+        Some(resume::Scope::paired(
+            &peer.device_id,
+            local_pair,
+            handshake_key,
+        )?)
+    } else {
+        None
+    };
     job.update(|p| {
         p.total = local
             .files
@@ -504,11 +604,11 @@ fn exchange(channel: &mut Channel<'_>, prepared: Prepared, job: &Job, host: bool
         p.phase = "transferring";
     });
     if host {
-        send_files(channel, &prepared, &local, job)?;
-        receive_files(channel, &prepared, &remote, job)?;
+        send_files(channel, &prepared, &local, job, resumable)?;
+        receive_files(channel, &prepared, &remote, job, resume_scope.as_ref())?;
     } else {
-        receive_files(channel, &prepared, &remote, job)?;
-        send_files(channel, &prepared, &local, job)?;
+        receive_files(channel, &prepared, &remote, job, resume_scope.as_ref())?;
+        send_files(channel, &prepared, &local, job, resumable)?;
     }
     // Receipt means authenticated transport completion, never database merge completion.
     channel.send(b"received")?;
@@ -541,11 +641,50 @@ fn exchange(channel: &mut Channel<'_>, prepared: Prepared, job: &Job, host: bool
     Ok(())
 }
 
+/// Large inventories are bounded and framed inside Noise, without changing its
+/// frame size or letting a peer extend a control exchange indefinitely.
+fn send_control(channel: &mut Channel<'_>, bytes: &[u8]) -> Result<()> {
+    if bytes.len() > replica::incremental::MAX_INVENTORY {
+        return Err("replica_limit");
+    }
+    let deadline = Instant::now() + Duration::from_secs(60);
+    channel.send(&(bytes.len() as u64).to_le_bytes())?;
+    for chunk in bytes.chunks(CHUNK) {
+        if Instant::now() >= deadline {
+            return Err("transfer_timeout");
+        }
+        channel.send(chunk)?;
+    }
+    Ok(())
+}
+
+fn receive_control(channel: &mut Channel<'_>) -> Result<Zeroizing<Vec<u8>>> {
+    let length = channel.receive()?;
+    let length = u64::from_le_bytes(length.try_into().map_err(|_| "invalid_frame")?);
+    if length == 0 || length > replica::incremental::MAX_INVENTORY as u64 {
+        return Err("replica_limit");
+    }
+    let deadline = Instant::now() + Duration::from_secs(60);
+    let mut result = Zeroizing::new(Vec::with_capacity(length as usize));
+    while result.len() < length as usize {
+        let remaining = deadline
+            .checked_duration_since(Instant::now())
+            .ok_or("transfer_timeout")?;
+        let chunk = Zeroizing::new(channel.receive_with_timeout(remaining.min(IO_TIMEOUT))?);
+        if chunk.is_empty() || result.len() + chunk.len() > length as usize {
+            return Err("invalid_frame");
+        }
+        result.extend_from_slice(&chunk);
+    }
+    Ok(result)
+}
+
 fn send_files(
     channel: &mut Channel<'_>,
     prepared: &Prepared,
     manifest: &Manifest,
     job: &Job,
+    resumable: bool,
 ) -> Result<()> {
     for artifact in &manifest.files {
         let mut file = File::open(
@@ -556,9 +695,38 @@ fn send_files(
                 .join(&artifact.name),
         )
         .map_err(|_| "artifact_unavailable")?;
+        let offset = if resumable {
+            let offer: resume::Offer =
+                serde_json::from_slice(&channel.receive()?).map_err(|_| "invalid_resume")?;
+            let descriptor =
+                resume::Descriptor::new(&artifact.name, artifact.size, &artifact.sha256)?;
+            let source = prepared
+                .outgoing
+                .as_ref()
+                .ok_or("artifact_unavailable")?
+                .join(&artifact.name);
+            let offset = resume::accept_offset(&source, &descriptor, &offer, &mut || job.check())?;
+            channel.send(&offset.to_le_bytes())?;
+            job.update(|p| p.resumed += offset);
+            offset
+        } else {
+            0
+        };
         let mut remaining = artifact.size;
         let mut buffer = [0u8; CHUNK];
         let mut hash = Sha256::new();
+        // Hash resumed bytes locally as well, keeping the original final source
+        // mutation check while transmitting only the missing suffix.
+        let mut prefix = offset;
+        while prefix > 0 {
+            job.check()?;
+            let count = prefix.min(CHUNK as u64) as usize;
+            file.read_exact(&mut buffer[..count])
+                .map_err(|_| "storage_read_failed")?;
+            hash.update(&buffer[..count]);
+            prefix -= count as u64;
+        }
+        remaining -= offset;
         while remaining > 0 {
             job.check()?;
             let maximum = remaining.min(CHUNK as u64) as usize;
@@ -593,8 +761,42 @@ fn receive_files(
     prepared: &Prepared,
     manifest: &Manifest,
     job: &Job,
+    resume_scope: Option<&resume::Scope>,
 ) -> Result<()> {
     for artifact in &manifest.files {
+        if let Some(scope) = resume_scope {
+            let descriptor =
+                resume::Descriptor::new(&artifact.name, artifact.size, &artifact.sha256)?;
+            let mut partial = resume::Partial::open(
+                prepared.resume_root.as_ref().ok_or("invalid_destination")?,
+                scope,
+                descriptor,
+                &mut || job.check(),
+            )?;
+            let offer = partial.offer(&mut || job.check())?;
+            channel.send(&serde_json::to_vec(&offer).map_err(|_| "invalid_resume")?)?;
+            let offset = u64::from_le_bytes(
+                channel
+                    .receive()?
+                    .try_into()
+                    .map_err(|_| "invalid_resume")?,
+            );
+            partial.restart(offset)?;
+            job.update(|p| p.resumed += offset);
+            let mut remaining = artifact.size.checked_sub(offset).ok_or("invalid_resume")?;
+            while remaining > 0 {
+                let bytes = channel.receive()?;
+                if bytes.is_empty() || bytes.len() as u64 > remaining {
+                    return Err("invalid_frame");
+                }
+                partial.append(&bytes, &mut || job.check())?;
+                remaining -= bytes.len() as u64;
+                job.update(|p| p.transferred += bytes.len() as u64);
+            }
+            partial.finish(&prepared.incoming.join(&artifact.name), &mut || job.check())?;
+            channel.send(b"file_received")?;
+            continue;
+        }
         let temporary = prepared.incoming.join(format!("{}.part", artifact.name));
         let mut file = OpenOptions::new()
             .write(true)

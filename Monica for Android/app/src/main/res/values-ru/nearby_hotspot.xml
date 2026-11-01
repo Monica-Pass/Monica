@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nearby_hotspot_create">Временная точка доступа</string>
+    <string name="nearby_hotspot_create_hint">Подключите устройства без общей сети Wi-Fi.</string>
+    <string name="nearby_hotspot_title">Временная точка доступа</string>
+    <string name="nearby_hotspot_help">Код истекает через 10 минут. Закрытие панели, блокировка или выход из Monica отключает точку доступа. Сопряжение по-прежнему проверяется.</string>
+    <string name="nearby_hotspot_active">Временная точка доступа включена</string>
+    <string name="nearby_hotspot_stop">Отключить точку доступа</string>
+    <string name="nearby_hotspot_starting">Создание точки доступа и кода…</string>
+    <string name="nearby_hotspot_join_title">Подключиться к этой точке доступа?</string>
+    <string name="nearby_hotspot_join_hint">Подключитесь к %1$s через подтверждение Android. Затем Monica проверит сопряжённое устройство.</string>
+    <string name="nearby_hotspot_connecting">Ожидание подключения Wi-Fi…</string>
+    <string name="nearby_hotspot_failure">Android не завершил подключение. Можно подключиться вручную и снова отсканировать код.</string>
+    <string name="nearby_hotspot_permissions">Предоставьте разрешение Wi-Fi, запрошенное Android, для создания точки доступа или подключения к ней.</string>
+    <string name="nearby_hotspot_unsupported">Автоматическое подключение недоступно. Подключитесь вручную и отсканируйте снова.</string>
+    <string name="nearby_hotspot_manual">Уже подключено, продолжить</string>
+    <string name="nearby_hotspot_open_wifi">Настройки Wi-Fi</string>
+    <string name="nearby_hotspot_scan_hint">Сканируйте код сопряжения Monica или временной точки доступа.</string>
+    <string name="nearby_hotspot_connect">Подключить</string>
+    <string name="nearby_hotspot_copy_password">Копировать пароль точки доступа</string>
+    <string name="nearby_hotspot_interrupted">Подключение отменено, когда Monica перешла в фон. Подключитесь к точке доступа вручную, затем снова отсканируйте код.</string>
+</resources>

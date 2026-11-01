@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nearby_hotspot_create">Temporärer Hotspot</string>
+    <string name="nearby_hotspot_create_hint">Geräte ohne gemeinsames WLAN verbinden.</string>
+    <string name="nearby_hotspot_title">Temporärer Hotspot</string>
+    <string name="nearby_hotspot_help">Dieser Code läuft nach 10 Minuten ab. Schließen, Sperren oder Verlassen von Monica beendet den Hotspot. Die Kopplung wird weiterhin geprüft.</string>
+    <string name="nearby_hotspot_active">Temporärer Hotspot aktiv</string>
+    <string name="nearby_hotspot_stop">Temporären Hotspot beenden</string>
+    <string name="nearby_hotspot_starting">Hotspot und Kopplungscode werden erstellt…</string>
+    <string name="nearby_hotspot_join_title">Mit diesem Hotspot verbinden?</string>
+    <string name="nearby_hotspot_join_hint">Mit %1$s über die Android-Bestätigung verbinden. Monica prüft dann das gekoppelte Gerät.</string>
+    <string name="nearby_hotspot_connecting">Warten auf die WLAN-Verbindung…</string>
+    <string name="nearby_hotspot_failure">Android konnte die Verbindung nicht herstellen. Manuell verbinden und den Code erneut scannen.</string>
+    <string name="nearby_hotspot_permissions">Die von Android angeforderte WLAN-Berechtigung erteilen, um einen Hotspot zu erstellen oder ihm beizutreten.</string>
+    <string name="nearby_hotspot_unsupported">Automatische Hotspot-Verbindung nicht verfügbar. Manuell verbinden und erneut scannen.</string>
+    <string name="nearby_hotspot_manual">Bereits verbunden, fortfahren</string>
+    <string name="nearby_hotspot_open_wifi">WLAN-Einstellungen</string>
+    <string name="nearby_hotspot_scan_hint">Monica-Kopplungscode oder temporären Hotspot-Code scannen.</string>
+    <string name="nearby_hotspot_connect">Verbinden</string>
+    <string name="nearby_hotspot_copy_password">Hotspot-Passwort kopieren</string>
+    <string name="nearby_hotspot_interrupted">Die Verbindung wurde abgebrochen, als Monica in den Hintergrund wechselte. Manuell mit dem Hotspot verbinden und den Code erneut scannen.</string>
+</resources>

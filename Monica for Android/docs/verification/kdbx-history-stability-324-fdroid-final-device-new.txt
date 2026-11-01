@@ -1,0 +1,7 @@
+
+takagi.ru.monica.keepass.KeePassHistoryStabilityTest:...
+takagi.ru.monica.keepass.KeePassHistoryUiTest:.
+
+Time: 13.392
+
+OK (4 tests)

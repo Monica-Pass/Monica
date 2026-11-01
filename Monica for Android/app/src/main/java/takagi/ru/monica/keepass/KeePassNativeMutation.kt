@@ -33,7 +33,9 @@ internal class KeePassNativeMutation(
         transform: (Entry) -> Entry
     ): Entry {
         val transformed = transform(entry)
-        if (transformed == entry) return entry
+        // Protected values use fresh random salts when rebuilt or decoded. Compare
+        // their content and protection bits while retaining every native property.
+        if (KeePassLosslessTransfer.entriesEquivalent(entry, transformed)) return entry
 
         val now = nowProvider()
         val originalTimes = entry.times

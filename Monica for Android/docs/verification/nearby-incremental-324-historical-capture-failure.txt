@@ -1,0 +1,30 @@
+
+takagi.ru.monica.lansync.NearbyIncrementalTransportTest:..
+takagi.ru.monica.lansync.DeviceAssetStreamingInstrumentedTest:...
+takagi.ru.monica.lansync.NearbyHotspotUiTest:.
+Error in hotspotRequiresAnExplicitTapAndDismissalCancelsOwnedSession(takagi.ru.monica.lansync.NearbyHotspotUiTest):
+java.lang.NullPointerException: Attempt to invoke virtual method 'android.graphics.Bitmap android.app.UiAutomation.takeScreenshot()' on a null object reference
+	at takagi.ru.monica.lansync.NearbyHotspotUiTest.capture(NearbyHotspotUiTest.kt:80)
+	at takagi.ru.monica.lansync.NearbyHotspotUiTest.hotspotRequiresAnExplicitTapAndDismissalCancelsOwnedSession(NearbyHotspotUiTest.kt:34)
+
+Error in hotspotFailuresOfferRetryWithoutClaimingReadyOrExposingPassword(takagi.ru.monica.lansync.NearbyHotspotUiTest):
+java.lang.NullPointerException: Attempt to invoke virtual method 'android.graphics.Bitmap android.app.UiAutomation.takeScreenshot()' on a null object reference
+	at takagi.ru.monica.lansync.NearbyHotspotUiTest.capture(NearbyHotspotUiTest.kt:80)
+	at takagi.ru.monica.lansync.NearbyHotspotUiTest.hotspotFailuresOfferRetryWithoutClaimingReadyOrExposingPassword(NearbyHotspotUiTest.kt:49)
+
+takagi.ru.monica.lansync.NearbyRetirementCleanupTest:.
+takagi.ru.monica.lansync.DeviceSyncCacheRootsInstrumentedTest:...
+
+Time: 158.485
+There were 2 failures:
+1) hotspotRequiresAnExplicitTapAndDismissalCancelsOwnedSession(takagi.ru.monica.lansync.NearbyHotspotUiTest)
+java.lang.NullPointerException: Attempt to invoke virtual method 'android.graphics.Bitmap android.app.UiAutomation.takeScreenshot()' on a null object reference
+	at takagi.ru.monica.lansync.NearbyHotspotUiTest.capture(NearbyHotspotUiTest.kt:80)
+	at takagi.ru.monica.lansync.NearbyHotspotUiTest.hotspotRequiresAnExplicitTapAndDismissalCancelsOwnedSession(NearbyHotspotUiTest.kt:34)
+2) hotspotFailuresOfferRetryWithoutClaimingReadyOrExposingPassword(takagi.ru.monica.lansync.NearbyHotspotUiTest)
+java.lang.NullPointerException: Attempt to invoke virtual method 'android.graphics.Bitmap android.app.UiAutomation.takeScreenshot()' on a null object reference
+	at takagi.ru.monica.lansync.NearbyHotspotUiTest.capture(NearbyHotspotUiTest.kt:80)
+	at takagi.ru.monica.lansync.NearbyHotspotUiTest.hotspotFailuresOfferRetryWithoutClaimingReadyOrExposingPassword(NearbyHotspotUiTest.kt:49)
+
+FAILURES!!!
+Tests run: 12,  Failures: 2

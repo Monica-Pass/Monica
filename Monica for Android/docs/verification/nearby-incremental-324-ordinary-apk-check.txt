@@ -1,0 +1,22 @@
+{
+  "applicationId": "takagi.ru.monica",
+  "version": "1.0.324-26110112-06",
+  "resources": 266,
+  "native": [
+    {
+      "abi": "armeabi-v7a",
+      "sha256": "c0f48c65c2fcea720b71d89b07d2a2fc3b66439cff7bc7716a802c26e4f35bc5",
+      "apk": "Monica-Android-armeabi-v7a-1.0.324-26110112-06.APK"
+    },
+    {
+      "abi": "x86_64",
+      "sha256": "51a70a62a93588866738ceb7109df830aa1b233d0193da295faab5b6806b0f5f",
+      "apk": "Monica-Android-x86_64-1.0.324-26110112-06.APK"
+    },
+    {
+      "abi": "arm64-v8a",
+      "sha256": "8ecc0d63faa569fda46eb4698dfae461bfe2135305c20a8f07d80d393b34933f",
+      "apk": "Monica-Android-arm64-v8a-1.0.324-26110112-06.APK"
+    }
+  ]
+}

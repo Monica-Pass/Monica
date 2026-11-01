@@ -1,4 +1,6 @@
 //! Logical password replicas; local storage IDs and decryption keys never become peer identities.
+#[path = "incremental.rs"]
+pub(super) mod incremental;
 use super::*;
 use chacha20poly1305::{
     aead::{Aead, KeyInit, Payload},

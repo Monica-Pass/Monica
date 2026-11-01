@@ -1,0 +1,14 @@
+{
+  "fdroid": {
+    "tests": 283,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "ordinary": {
+    "tests": 287,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  }
+}

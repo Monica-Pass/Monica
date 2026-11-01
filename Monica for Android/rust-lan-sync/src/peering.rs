@@ -58,6 +58,11 @@ pub(super) struct DeviceHello {
     pub sync_request: u64,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub sync_mode: Option<SyncMode>,
+    /// Optional capability, exchanged only in the authenticated v2 manifest.
+    #[serde(default, skip_serializing_if = "is_zero")]
+    pub incremental_sync: u32,
+    #[serde(default, skip_serializing_if = "is_zero")]
+    pub resume_sync: u32,
 }
 
 impl DeviceHello {
@@ -68,6 +73,8 @@ impl DeviceHello {
             || self.vault_content_version > 2
             || self.settings_version > i64::MAX as u64
             || self.sync_request > i64::MAX as u64
+            || self.incremental_sync > 1
+            || self.resume_sync > 1
             || self.name.chars().count() > 64
             || self.name.chars().any(char::is_control)
             || (!self.pair_id.is_empty() && !identifier(&self.pair_id))
@@ -82,6 +89,10 @@ impl DeviceHello {
         }
         Ok(())
     }
+}
+
+fn is_zero(value: &u32) -> bool {
+    *value == 0
 }
 
 #[derive(Clone, Default, Serialize, Deserialize)]

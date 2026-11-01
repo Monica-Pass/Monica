@@ -10,6 +10,37 @@ import java.time.Instant
 import java.util.UUID
 
 class KeePassDatabaseSynchronizerTest {
+    @Test fun accessAndUsageOnlyDifferencesDoNotInventHistoryOrConflict() {
+        val seed = entry(1, "Same")
+        val original = seed.copy(times = seed.times!!.copy(lastAccessTime = epoch.plusSeconds(1), usageCount = 0))
+        val accessed = original.copy(times = original.times!!.copy(lastAccessTime = epoch.plusSeconds(10), usageCount = 9))
+        val a = database(listOf(original))
+        val b = a.modifyParentGroup { copy(entries = listOf(accessed)) }
+        val result = KeePassDatabaseSynchronizer.merge(a, b)
+        val current = values(result.database).single()
+        assertEquals(0, result.equalTimeConflicts)
+        assertTrue(current.history.isEmpty())
+        assertEquals(epoch.plusSeconds(10), current.times!!.lastAccessTime)
+        assertEquals(9, current.times!!.usageCount)
+        assertTrue(values(merge(result.database, b)).single().history.isEmpty())
+    }
+
+    @Test fun reencodedHistoryKeepsDistinctRealVersionsWithoutGrowingOnMerge() {
+        val current = entry(4, "Current")
+        val older = current.copy(times = times(1), fields = current.fields + ("Notes" to EntryValue.Plain("Before")))
+        val newer = older.copy(times = times(2), fields = older.fields + ("Notes" to EntryValue.Plain("After")))
+        val a = database(listOf(current.copy(history = listOf(older, newer))))
+        fun rewrap(e: Entry): Entry = e.copy(fields = EntryFields.of(*e.fields.entries.map { (key, value) ->
+            key to if (value is EntryValue.Encrypted) EntryValue.Encrypted(EncryptedValue.fromString(value.content)) else value
+        }.toTypedArray()), history = e.history.map(::rewrap))
+        val b = a.modifyParentGroup { copy(entries = entries.map(::rewrap)) }
+        var merged = a
+        repeat(4) { merged = merge(merged, b) }
+        val result = values(merged).single()
+        assertEquals(listOf("Before", "After"), result.history.map { it.fields["Notes"]!!.content })
+        assertTrue(result.history.all { it.fields["Password"] is EntryValue.Encrypted })
+    }
+
     private val epoch = Instant.parse("2026-01-01T00:00:00Z")
     private fun times(second: Long) = TimeData.create().copy(lastModificationTime=epoch.plusSeconds(second), locationChanged=epoch.plusSeconds(second))
     private fun entry(second: Long, value: String, uuid: UUID = UUID.randomUUID()) = Entry(uuid=uuid,times=times(second),fields=EntryFields.of(

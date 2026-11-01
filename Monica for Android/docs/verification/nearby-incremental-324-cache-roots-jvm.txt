@@ -1,0 +1,12 @@
+Simulated worker java.class.path; probe uses actual code-source locations.
+Finished: rootAndOwnerSymlinksRejectAndInternalLinksNeverFollowExternalFiles
+Finished: excessiveRootEnumerationFailsWithoutPublishingANewLease
+Finished: cancellationWaitingForCrossProcessGatePublishesNoRoot
+Finished: crossProcessActiveOwnerSurvivesAllLocalScanners
+Finished: legacyOrphanAndReleasedRootsAreReclaimedWithOnlyProtocolFiles
+Finished: cancellationAtIoReturnClosesTheUnreceivedLease
+Finished: unknownLayoutsAndNamesArePreserved
+Finished: twoActiveLeasesAndRepeatedScannersKeepAllActiveInstances
+Finished: hardLinkedOwnerCannotReleaseALiveProcessesOriginalOsLock
+Finished: requestedInvalidLayoutAndInvalidNameNeverReturnALease
+Run=10; failures=0; ignored=0; assumptions=0; milliseconds=3820

@@ -1,0 +1,293 @@
+{
+  "shared_source_count": 43,
+  "shared_sources": [
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/lansync/DeviceAssetStreamingInstrumentedTest.kt",
+      "normalized_sha256": "379ae6c8f1cac5dfcdb77dadd14ec84ef2050d672097d7944c5c47537b64a025"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/lansync/DeviceSyncCacheRootsInstrumentedTest.kt",
+      "normalized_sha256": "890b45ecbb85371897f9751677050bb07f6f44ed0836fa658ad65de9e3e5ab63"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/lansync/NearbyAutomaticSyncTest.kt",
+      "normalized_sha256": "60214c69650e1acc585ec7ccad40b04dcbeecb17a59ac6365ef20fa338b0027b"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/lansync/NearbyHotspotUiTest.kt",
+      "normalized_sha256": "addbc3512f908e9e50a0fb2f23a7bea8d7406c26d08d112507f32df724050e0e"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/lansync/NearbyIncrementalTransportTest.kt",
+      "normalized_sha256": "008c4d87b1b0a8f03147cd9c645c4a02d5a5a8ad0240924c55ec138abd72fdce"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/lansync/NearbyRetirementCleanupTest.kt",
+      "normalized_sha256": "205ab53a59b883ec2d5f0f9647a797c288a41bd5263be099446c5fde64f4a428"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/lansync/DeviceAssetInputStream.kt",
+      "normalized_sha256": "53716ac38e8ec7dd91cced46e77ec159ae38fa449a99fd51f38260bdd59b599d"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/lansync/DeviceAssetTransfer.kt",
+      "normalized_sha256": "a7731c5e9a94b38320ba6b2cc620b30367c38321116ee60a7aa45a51d69adf12"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/lansync/DeviceMetadataAssets.kt",
+      "normalized_sha256": "2eaccb19041a93d9bb1a6a2da07cb8fbb5458d5ed334b14619a0b1c6ce3735b9"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/lansync/DevicePasswordSyncProvider.kt",
+      "normalized_sha256": "41ef34ba8c742e2daf0036381fda8698e9b5ffe396712b93cbd5c88b432fd4bc"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/lansync/DeviceSyncCacheRoots.kt",
+      "normalized_sha256": "9c7c42e9b530db482abf607a6146d33ca3a1962cb8d2b2ba4fe15e8d8edffd30"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/lansync/DeviceSyncCoordinator.kt",
+      "normalized_sha256": "c9312df57b42e78581b304694ee741065207a828d9d1bade6ed61c062a58fd14"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/lansync/DeviceSyncNetworkObserver.kt",
+      "normalized_sha256": "fe0dc61bd5008b4ce0574777607a4b26f50843ee7ad67d714436e953b9047302"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/lansync/NearbyHotspotInvitation.kt",
+      "normalized_sha256": "4bf3daee5c60bc7945f5a4c6aa6a4aeda4ceedbcd7a9b3076b920f8a77beeee6"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/lansync/NearbyHotspotSession.kt",
+      "normalized_sha256": "280392a3c35ac841308726dc452ee6346c9e741834c6b8ef93959cfd694bc886"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/NearbySyncScreen.kt",
+      "normalized_sha256": "181860790bd7e887cb85c5a1aee1b4906d7927ff87d8cd08df533a8ca3d82c27"
+    },
+    {
+      "path": "app/src/main/res/values-b+lzh/nearby_hotspot.xml",
+      "normalized_sha256": "eb776c6683445ecc6938c96a3df8b441d05f49a194c2bf4eebaebf25c763b966"
+    },
+    {
+      "path": "app/src/main/res/values-b+zh+Hant/nearby_hotspot.xml",
+      "normalized_sha256": "1750e424728031aec107f74e9c4f5fd7d12d52a37f97ca3c7261963fe5aea33b"
+    },
+    {
+      "path": "app/src/main/res/values-de/nearby_hotspot.xml",
+      "normalized_sha256": "a177e14d38f7b1c456b692815d4ee9667e52af4bd169b2299ad1bba65ffd2e06"
+    },
+    {
+      "path": "app/src/main/res/values-es/nearby_hotspot.xml",
+      "normalized_sha256": "4b66191e80011f83e0353d9de60d32af8dfc65371ac6048eeec24f1ff10eedf7"
+    },
+    {
+      "path": "app/src/main/res/values-fr/nearby_hotspot.xml",
+      "normalized_sha256": "0e9c2738c14437ee4b50eb060f6dc35bee83476a066ff83b25ff80992c198763"
+    },
+    {
+      "path": "app/src/main/res/values-it/nearby_hotspot.xml",
+      "normalized_sha256": "5b3faa43514679d2e6cfb5f35d1ca6285496b380f6ab3ebeb12e9645572025ad"
+    },
+    {
+      "path": "app/src/main/res/values-ja/nearby_hotspot.xml",
+      "normalized_sha256": "691e5309a459643b57673d5c252857a9b837312a302ff5d8d9d032c4dcc19d05"
+    },
+    {
+      "path": "app/src/main/res/values-ko/nearby_hotspot.xml",
+      "normalized_sha256": "8f0ae4640012af0ac630b972fefd8d037e715b1f8542579c8cc2ef003e73b168"
+    },
+    {
+      "path": "app/src/main/res/values-pl/nearby_hotspot.xml",
+      "normalized_sha256": "f2b66f6d7c3f0dbf141d4b1aa2523c1d612421f27173701140bb7476226ac324"
+    },
+    {
+      "path": "app/src/main/res/values-ru/nearby_hotspot.xml",
+      "normalized_sha256": "0228a5ebe17d3813ffe26a4c029fac9a529ee75ced6eba2e4095efa467e10cb3"
+    },
+    {
+      "path": "app/src/main/res/values-vi/nearby_hotspot.xml",
+      "normalized_sha256": "d14c7113921c3d9d37380cc92d2714773e4e7347802038102fc0f139a39416c0"
+    },
+    {
+      "path": "app/src/main/res/values-zh-rCN/nearby_hotspot.xml",
+      "normalized_sha256": "01e022d6bb793d5d20df16536ae1e8cd3ebb4fba83bcbb34286ac5f01735bb78"
+    },
+    {
+      "path": "app/src/main/res/values-zh/nearby_hotspot.xml",
+      "normalized_sha256": "01e022d6bb793d5d20df16536ae1e8cd3ebb4fba83bcbb34286ac5f01735bb78"
+    },
+    {
+      "path": "app/src/main/res/values/nearby_hotspot.xml",
+      "normalized_sha256": "421b851084dc0dcd7baf235f5df976c5211e49619a29ea29c21888ab38db8c3f"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/lansync/DeviceAssetInputStreamTest.kt",
+      "normalized_sha256": "a4460490f028ad52d8418ee2bb5f3d8fe314ec63719653df3b5e909f60fe02e5"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/lansync/DeviceSyncCacheRootsTest.kt",
+      "normalized_sha256": "4da033c4dd00e9ca020374240370dc26772626e21cc9c3fa3334d5853c88bc10"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/lansync/NearbyHotspotInvitationTest.kt",
+      "normalized_sha256": "ea1d368725486be74700ec9612009b64f5292848166bb1d96c2c9e30825d19ed"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/lansync/NearbyHotspotSessionTest.kt",
+      "normalized_sha256": "2a288942400055d99d4b2e861aeb26b43c7ba40d7d9ca261d4b12e5f13f1323a"
+    },
+    {
+      "path": "rust-lan-sync/src/incremental_transfer_tests.rs",
+      "normalized_sha256": "9420460afb4688037e178a334cbf539d66be354fa9eca419b7be9f39c1cf16c2"
+    },
+    {
+      "path": "rust-lan-sync/src/incremental.rs",
+      "normalized_sha256": "4b8583e34190ec88fbca4c1e9b014f4a84d0cca8de375f8dad8e9be47a2a1c6c"
+    },
+    {
+      "path": "rust-lan-sync/src/lib.rs",
+      "normalized_sha256": "2ff66b05236e7a869481de97beadf5d781c28c15ee91a5f07472236afc801355"
+    },
+    {
+      "path": "rust-lan-sync/src/peering.rs",
+      "normalized_sha256": "55ba561427f19cc89325056fa5f5ce5d30ccde0a02e9de254a4a59eeaa5de340"
+    },
+    {
+      "path": "rust-lan-sync/src/replica.rs",
+      "normalized_sha256": "f4975edddf0f0f94dd546816f810b79299d4eade85c8c816e805ffe39c333b5c"
+    },
+    {
+      "path": "rust-lan-sync/src/resume_transfer_tests.rs",
+      "normalized_sha256": "fccb3c78c57e4c98e7d5c02385f848283f4d58d4c4b0f349b78d44cf6a99a403"
+    },
+    {
+      "path": "rust-lan-sync/src/resume.rs",
+      "normalized_sha256": "7d8e961618dd5b293e1b9755e0db9d8398d1f507cc98a0b94eb044537fa141fa"
+    },
+    {
+      "path": "rust-lan-sync/src/tests.rs",
+      "normalized_sha256": "48cbd1e2496a2e41385fbed5e2b3aa9d7339e6cac1323028ad1de0e6b23b8557"
+    },
+    {
+      "path": "rust-lan-sync/src/transport.rs",
+      "normalized_sha256": "96324fe5f48379af432ee0d3546855bcf091fbf64284024c8408d61a1e2533f6"
+    }
+  ],
+  "distributions": {
+    "ordinary": {
+      "build_log": "ordinary-build-05.txt",
+      "build_duration": "4m 37s",
+      "jvm": {
+        "tests": 104,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 1,
+        "passed": 103
+      },
+      "device": {
+        "new": {
+          "tests": 12,
+          "failures": 0,
+          "skipped": 0,
+          "duration_seconds": 23.508,
+          "actually_executed": 12,
+          "passed": 12
+        },
+        "automatic": {
+          "tests": 11,
+          "failures": 0,
+          "skipped": 0,
+          "duration_seconds": 175.936,
+          "actually_executed": 11,
+          "passed": 11
+        },
+        "controls": {
+          "tests": 11,
+          "failures": 0,
+          "skipped": 0,
+          "duration_seconds": 23.838,
+          "actually_executed": 11,
+          "passed": 11
+        },
+        "security": {
+          "tests": 12,
+          "failures": 0,
+          "skipped": 2,
+          "duration_seconds": 48.018,
+          "actually_executed": 10,
+          "passed": 10
+        },
+        "ui": {
+          "tests": 3,
+          "failures": 0,
+          "skipped": 0,
+          "duration_seconds": 7.757,
+          "actually_executed": 3,
+          "passed": 3
+        },
+        "cross": {
+          "tests": 1,
+          "failures": 0,
+          "skipped": 0,
+          "duration_seconds": 3.929,
+          "actually_executed": 1,
+          "passed": 1
+        }
+      }
+    },
+    "fdroid": {
+      "build_log": "fdroid-build-02.txt",
+      "build_duration": "4m 8s",
+      "jvm": {
+        "tests": 104,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 1,
+        "passed": 103
+      },
+      "device": {
+        "new": {
+          "tests": 12,
+          "failures": 0,
+          "skipped": 0,
+          "duration_seconds": 13.934,
+          "actually_executed": 12,
+          "passed": 12
+        },
+        "automatic": {
+          "tests": 11,
+          "failures": 0,
+          "skipped": 0,
+          "duration_seconds": 157.854,
+          "actually_executed": 11,
+          "passed": 11
+        },
+        "controls": {
+          "tests": 11,
+          "failures": 0,
+          "skipped": 0,
+          "duration_seconds": 45.233,
+          "actually_executed": 11,
+          "passed": 11
+        },
+        "security": {
+          "tests": 11,
+          "failures": 0,
+          "skipped": 1,
+          "duration_seconds": 130.125,
+          "actually_executed": 10,
+          "passed": 10
+        },
+        "cross": {
+          "tests": 1,
+          "failures": 0,
+          "skipped": 0,
+          "duration_seconds": 1.964,
+          "actually_executed": 1,
+          "passed": 1
+        }
+      }
+    }
+  }
+}

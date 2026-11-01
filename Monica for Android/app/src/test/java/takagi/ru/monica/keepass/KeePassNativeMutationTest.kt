@@ -19,6 +19,40 @@ import java.time.Instant
 import java.util.UUID
 
 class KeePassNativeMutationTest {
+    @Test fun rewritingIdenticalProtectedFieldsKeepsOriginalHistoryAndTimes() {
+        val original = entry(title = "Unchanged", history = listOf(entry(title = "Retained")))
+        val updated = KeePassNativeMutation().editEntry(original, Meta(), emptyMap()) { current ->
+            current.copy(fields = EntryFields.of(*current.fields.entries.reversed().map { (name, value) ->
+                name to if (value is EntryValue.Encrypted) EntryValue.Encrypted(EncryptedValue.fromString(value.content)) else value
+            }.toTypedArray()))
+        }
+        org.junit.Assert.assertSame(original, updated)
+    }
+
+    @Test fun replayingAnIdenticalProtectedFieldPatchDoesNotAddHistory() {
+        val original = entry(title = "Unchanged", history = listOf(entry(title = "Retained")))
+        var db = database(entries = listOf(original))
+        val patch = KeePassChangeSet(databaseId = DATABASE_ID, target = KeePassChangeTarget.PASSWORD,
+            operation = KeePassChangeOperation.FIELD_PATCH, entryUuid = original.uuid.toString(), baseFingerprint = "base",
+            fieldPatch = KeePassFieldChangePatch(managedScope = KeePassManagedFieldScope.EXPLICIT_ONLY,
+                replacementFields = listOf(KeePassFieldChange("Password", "secret", true)),
+                baseFields = listOf(KeePassFieldBaseValue("Password", "secret", true))))
+        repeat(4) { db = KeePassChangeSetApplier().apply(db, patch).updatedDatabase }
+        val actual = findEntry(db.content.group, original.uuid)!!
+        assertEquals(original.times, actual.times)
+        assertEquals(original.history.size, actual.history.size)
+    }
+
+    @Test fun changingProtectionIsStillARealEditEvenWithIdenticalText() {
+        val original = entry(title = "Protected")
+        val updated = KeePassNativeMutation().editEntry(original, Meta(), emptyMap()) { current ->
+            current.copy(fields = current.fields + ("Password" to EntryValue.Plain("secret")))
+        }
+        assertEquals(1, updated.history.size)
+        assertTrue(updated.history.single().fields.getValue("Password") is EntryValue.Encrypted)
+        assertTrue(updated.fields.getValue("Password") is EntryValue.Plain)
+    }
+
     @Test
     fun fieldEditCreatesFlatHistoryAndTouchesKeePassTimes() {
         val entryUuid = UUID.randomUUID()

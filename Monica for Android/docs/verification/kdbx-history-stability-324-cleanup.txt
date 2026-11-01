@@ -1,0 +1,34 @@
+Success: removed user
+Users:
+	UserInfo{0:Owner:c13} running
+	UserInfo{10:Monica:410}
+	UserInfo{11:Monica_Recovery316:410}
+	UserInfo{12:Monica_Recovery316_Retest:410}
+0
+OK: killing emulator, bye bye
+
+OK
+
+
+FullName                                                                    Length
+--------                                                                    ------
+C:\Users\joyins\.android\avd\Monica_Issue136_API_32.ini                        109
+D:\AndroidSDK\codex-avd\issue-136-vault-navigation-20260914\config.ini        3908
+                                                                       12884901888
+                                                                       21325348864
+                                                                           1048576
+
+[
+  {
+    "Name": "userdata-qemu.img",
+    "Length": 12884901888
+  },
+  {
+    "Name": "userdata-qemu.img.qcow2",
+    "Length": 21325348864
+  },
+  {
+    "Name": "userdata.img",
+    "Length": 1048576
+  }
+]

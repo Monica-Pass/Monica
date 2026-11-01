@@ -1,0 +1,54 @@
+
+takagi.ru.monica.lansync.NearbyAutomaticSyncTest:...
+Error in toggling_during_export_and_import_preserves_data_and_stops_later_automatic_rounds(takagi.ru.monica.lansync.NearbyAutomaticSyncTest):
+java.lang.AssertionError: expected null, but was:<connection_failed>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotNull(Assert.java:756)
+	at org.junit.Assert.assertNull(Assert.java:738)
+	at org.junit.Assert.assertNull(Assert.java:748)
+	at takagi.ru.monica.lansync.NearbyAutomaticSyncTest$toggling_during_export_and_import_preserves_data_and_stops_later_automatic_rounds$1$awaitSuccess$2$1.invokeSuspend(NearbyAutomaticSyncTest.kt:376)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTaskKt.resume(DispatchedTask.kt:221)
+	at kotlinx.coroutines.DispatchedTaskKt.dispatch(DispatchedTask.kt:154)
+	at kotlinx.coroutines.CancellableContinuationImpl.dispatchResume(CancellableContinuationImpl.kt:470)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core(CancellableContinuationImpl.kt:504)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core$default(CancellableContinuationImpl.kt:493)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeUndispatched(CancellableContinuationImpl.kt:596)
+	at kotlinx.coroutines.EventLoopImplBase$DelayedResumeTask.run(EventLoop.common.kt:497)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.lansync.NearbyAutomaticSyncTest.toggling_during_export_and_import_preserves_data_and_stops_later_automatic_rounds(NearbyAutomaticSyncTest.kt:310)
+....
+takagi.ru.monica.lansync.NearbyMetadataAssetsInstrumentedTest:...
+
+Time: 303.014
+There was 1 failure:
+1) toggling_during_export_and_import_preserves_data_and_stops_later_automatic_rounds(takagi.ru.monica.lansync.NearbyAutomaticSyncTest)
+java.lang.AssertionError: expected null, but was:<connection_failed>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotNull(Assert.java:756)
+	at org.junit.Assert.assertNull(Assert.java:738)
+	at org.junit.Assert.assertNull(Assert.java:748)
+	at takagi.ru.monica.lansync.NearbyAutomaticSyncTest$toggling_during_export_and_import_preserves_data_and_stops_later_automatic_rounds$1$awaitSuccess$2$1.invokeSuspend(NearbyAutomaticSyncTest.kt:376)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTaskKt.resume(DispatchedTask.kt:221)
+	at kotlinx.coroutines.DispatchedTaskKt.dispatch(DispatchedTask.kt:154)
+	at kotlinx.coroutines.CancellableContinuationImpl.dispatchResume(CancellableContinuationImpl.kt:470)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core(CancellableContinuationImpl.kt:504)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core$default(CancellableContinuationImpl.kt:493)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeUndispatched(CancellableContinuationImpl.kt:596)
+	at kotlinx.coroutines.EventLoopImplBase$DelayedResumeTask.run(EventLoop.common.kt:497)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.lansync.NearbyAutomaticSyncTest.toggling_during_export_and_import_preserves_data_and_stops_later_automatic_rounds(NearbyAutomaticSyncTest.kt:310)
+
+FAILURES!!!
+Tests run: 11,  Failures: 1

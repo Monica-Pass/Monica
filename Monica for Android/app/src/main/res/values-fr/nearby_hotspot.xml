@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nearby_hotspot_create">Point d’accès temporaire</string>
+    <string name="nearby_hotspot_create_hint">Connecter des appareils sans Wi-Fi commun.</string>
+    <string name="nearby_hotspot_title">Point d’accès temporaire</string>
+    <string name="nearby_hotspot_help">Ce code expire après 10 minutes. Fermer ce panneau, verrouiller ou quitter Monica arrête le point d’accès. L’association reste vérifiée.</string>
+    <string name="nearby_hotspot_active">Point d’accès temporaire actif</string>
+    <string name="nearby_hotspot_stop">Arrêter le point d’accès</string>
+    <string name="nearby_hotspot_starting">Création du point d’accès et du code…</string>
+    <string name="nearby_hotspot_join_title">Se connecter à ce point d’accès ?</string>
+    <string name="nearby_hotspot_join_hint">Rejoignez %1$s via la confirmation Android. Monica vérifie ensuite l’appareil associé.</string>
+    <string name="nearby_hotspot_connecting">En attente de la connexion Wi-Fi…</string>
+    <string name="nearby_hotspot_failure">Android n’a pas pu établir la connexion. Connectez-vous manuellement et scannez à nouveau le code.</string>
+    <string name="nearby_hotspot_permissions">Accordez l’autorisation Wi-Fi demandée par Android pour créer ou rejoindre un point d’accès.</string>
+    <string name="nearby_hotspot_unsupported">La connexion automatique est indisponible. Connectez-vous manuellement et scannez à nouveau.</string>
+    <string name="nearby_hotspot_manual">Déjà connecté, continuer</string>
+    <string name="nearby_hotspot_open_wifi">Paramètres Wi-Fi</string>
+    <string name="nearby_hotspot_scan_hint">Scannez un code d’association Monica ou de point d’accès temporaire.</string>
+    <string name="nearby_hotspot_connect">Connecter</string>
+    <string name="nearby_hotspot_copy_password">Copier le mot de passe du point d’accès</string>
+    <string name="nearby_hotspot_interrupted">La connexion a été annulée lorsque Monica est passée en arrière-plan. Connectez-vous manuellement au point d’accès, puis scannez à nouveau le code.</string>
+</resources>

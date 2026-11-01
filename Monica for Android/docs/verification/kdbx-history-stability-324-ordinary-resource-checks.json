@@ -1,0 +1,72 @@
+[
+  {
+    "configuration": "",
+    "sha256": "AAD9D46F34542BAD23FBC3EDFF77C9B4CC50E697E338FC10E9A6610860950ECE",
+    "apkMatches": true
+  },
+  {
+    "configuration": "lzh",
+    "sha256": "7C7574D1B8D33F24A6949826E57DEDBE08D8FF5319E45BF1EB60B68198519754",
+    "apkMatches": true
+  },
+  {
+    "configuration": "b+zh+Hant",
+    "sha256": "3DD175CB247DB4B8969533305CA0C7B50CE337A4B5FF1BA1CCFAC6F86B5D773E",
+    "apkMatches": true
+  },
+  {
+    "configuration": "de",
+    "sha256": "293819590C03B4DE6F6D2CECE2080CEBE2CAB417D240D2A9BB0F03EE160B0086",
+    "apkMatches": true
+  },
+  {
+    "configuration": "es",
+    "sha256": "DF047D2F58F7022DCD8A46A8F1F27F62A2772E7F3CAD6EB506C886FC70A395D7",
+    "apkMatches": true
+  },
+  {
+    "configuration": "fr",
+    "sha256": "02539C69E6308118828C5E95A57C941762372739017581C90B7602B81ABCC512",
+    "apkMatches": true
+  },
+  {
+    "configuration": "it",
+    "sha256": "42C352D723570ED64111C90EC6D4A472FA95CFFE100B86F8C0FF4A2FF95837E1",
+    "apkMatches": true
+  },
+  {
+    "configuration": "ja",
+    "sha256": "DF0A9356996F4999DC1E6327751B17272351F828F2D6203B1AF40ACB6FA9081B",
+    "apkMatches": true
+  },
+  {
+    "configuration": "ko",
+    "sha256": "F21ED2145E70DB081611AE078637BDA343C91843750846ABB4E5664D0473946C",
+    "apkMatches": true
+  },
+  {
+    "configuration": "pl",
+    "sha256": "F0439ECDAB8DF5F37AF87F2D87493950BD6C0A08E507931177079F9DB1947464",
+    "apkMatches": true
+  },
+  {
+    "configuration": "ru",
+    "sha256": "A31E1EAE0527E69170EFDE6B5DEFBE57EEA0F6E0F191D6E1A28E1F6BEF82CB16",
+    "apkMatches": true
+  },
+  {
+    "configuration": "vi",
+    "sha256": "A2B4248C02A8E765DDE61011FE64DF19448D69F52154133D626D8CC84D18966B",
+    "apkMatches": true
+  },
+  {
+    "configuration": "zh",
+    "sha256": "34CE5C767E62CD87F4E47E9C60D606166A0A08AFB62AB772216992330D5091BB",
+    "apkMatches": true
+  },
+  {
+    "configuration": "zh-rCN",
+    "sha256": "34CE5C767E62CD87F4E47E9C60D606166A0A08AFB62AB772216992330D5091BB",
+    "apkMatches": true
+  }
+]

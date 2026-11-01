@@ -1,0 +1,41 @@
+{
+  "ordinary": {
+    "captureOnlyBuild": "24s",
+    "captureUiSeconds": 4.324,
+    "deviceDistinct": 48,
+    "mainTestBuild": "5m29s",
+    "deviceExistingSeconds": 90.994,
+    "deviceNewSeconds": 13.967,
+    "apkSHA256": "4E424C3DB0706C554E75D88A757121C53EA9CF7C9567526FC394F9423893A047",
+    "jvm": 258
+  },
+  "fdroid": {
+    "deviceNewSeconds": 13.392,
+    "deviceExistingSeconds": 75.961,
+    "jvm": 258,
+    "apkSHA256": "FD93E75C27CC16E72DA8594CCC1D94DFC3E265E21C8FF884CED8E3E29E64CF14",
+    "deviceDistinct": 48,
+    "mainTestBuild": "6m19s",
+    "captureOnlyBuild": "13s"
+  },
+  "negative": {
+    "oldApkDeviceTests": 3,
+    "oldApkDeviceFailures": 3,
+    "nativeMutationJvmFailures": 2,
+    "oldApkSHA256": "EF607CAC00B5556C61C36FA5F7CCD5FFE0350014DD9063622785812789EECE4D",
+    "synchronizerJvmFailures": 1
+  },
+  "sharedFiles": 22,
+  "localizedApkValuesPerDistribution": 14,
+  "metadataScriptTests": 6,
+  "originalUsers": [
+    0,
+    10,
+    11,
+    12
+  ],
+  "ownedGuestRemoved": 13,
+  "ownedAVDStopped": true,
+  "committed": false,
+  "published": false
+}

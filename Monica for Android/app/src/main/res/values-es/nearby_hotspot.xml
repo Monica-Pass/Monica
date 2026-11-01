@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nearby_hotspot_create">Punto de acceso temporal</string>
+    <string name="nearby_hotspot_create_hint">Conecta dispositivos sin una red Wi-Fi compartida.</string>
+    <string name="nearby_hotspot_title">Punto de acceso temporal</string>
+    <string name="nearby_hotspot_help">Este código caduca en 10 minutos. Cerrar este panel, bloquear o salir de Monica detiene el punto de acceso. El emparejamiento sigue verificándose.</string>
+    <string name="nearby_hotspot_active">Punto de acceso temporal activo</string>
+    <string name="nearby_hotspot_stop">Finalizar punto de acceso</string>
+    <string name="nearby_hotspot_starting">Creando punto de acceso y código…</string>
+    <string name="nearby_hotspot_join_title">¿Conectar a este punto de acceso?</string>
+    <string name="nearby_hotspot_join_hint">Conecta a %1$s mediante la confirmación de Android. Monica verificará el dispositivo emparejado.</string>
+    <string name="nearby_hotspot_connecting">Esperando la conexión Wi-Fi…</string>
+    <string name="nearby_hotspot_failure">Android no pudo completar la conexión. Puedes conectar manualmente y volver a escanear el código.</string>
+    <string name="nearby_hotspot_permissions">Concede el permiso Wi-Fi solicitado por Android para crear o conectar a un punto de acceso.</string>
+    <string name="nearby_hotspot_unsupported">La conexión automática no está disponible. Conecta manualmente y vuelve a escanear.</string>
+    <string name="nearby_hotspot_manual">Ya conectado, continuar</string>
+    <string name="nearby_hotspot_open_wifi">Ajustes de Wi-Fi</string>
+    <string name="nearby_hotspot_scan_hint">Escanea un código de emparejamiento de Monica o de punto de acceso temporal.</string>
+    <string name="nearby_hotspot_connect">Conectar</string>
+    <string name="nearby_hotspot_copy_password">Copiar contraseña del punto de acceso</string>
+    <string name="nearby_hotspot_interrupted">La conexión se canceló cuando Monica pasó a segundo plano. Conecta al punto de acceso manualmente y vuelve a escanear el código.</string>
+</resources>

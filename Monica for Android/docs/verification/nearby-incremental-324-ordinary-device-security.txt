@@ -1,0 +1,13 @@
+
+takagi.ru.monica.lansync.NearbyPasskeyPreflightTest:.
+takagi.ru.monica.lansync.NearbySteamTransportTest:...
+takagi.ru.monica.lansync.NearbyBrowserInteropTest:
+takagi.ru.monica.lansync.NearbyBrowserInteropTest:
+s_glBindAttribLocation: bind attrib 0 name position
+s_glBindAttribLocation: bind attrib 1 name localCoord
+takagi.ru.monica.lansync.NearbyDeviceManagementTest:...
+takagi.ru.monica.lansync.NearbySyncStatusTest:...
+
+Time: 48.018
+
+OK (12 tests)

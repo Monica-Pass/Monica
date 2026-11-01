@@ -4334,6 +4334,10 @@ class PasswordViewModel internal constructor(
         }
     }
 
+    fun prepareNativeEditorSiblings(primaryId: Long, entryIds: List<Long>): Boolean =
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(primaryId))
+            monicaKeePassStore?.prepareEditorSiblings(primaryId, entryIds) == true else true
+
     suspend fun recoverUnreadableBitwardenEntry(entryId: Long): BitwardenRecoveryResult {
         val entry = repository.getPasswordEntryById(entryId)
             ?: return BitwardenRecoveryResult.Error("Entry not found")
@@ -5373,6 +5377,7 @@ class PasswordViewModel internal constructor(
         val created = mutableListOf<Long>()
         val changed = mutableListOf<Pair<PasswordEntry, List<CustomFieldDraft>>>()
         var destinationsCommitted = false
+        var nativeBatchCommitted = false
         try {
             val rows = takagi.ru.monica.data.model.ProjectCredentialGroup.rows(groups)
             val destinations = targets.distinctBy(StorageTarget::stableKey)
@@ -5408,6 +5413,62 @@ class PasswordViewModel internal constructor(
                 val preferredProject = targetRows.firstOrNull()?.explicitPasswordGroupId() ?: projectId
                 val targetProjectId = if (preferredProject in usedProjects) UUID.randomUUID().toString() else preferredProject
                 usedProjects += targetProjectId
+                val nativeTarget = target as? StorageTarget.KeePass
+                if (nativeTarget != null && monicaKeePassStore != null &&
+                    (targetRows.any { takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(it.id) } ||
+                        synchronized(nativeKeePassReaders) { nativeTarget.databaseId in nativeKeePassReaders })) {
+                    check(targetRows.all { takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(it.id) })
+                    val originals = rows.map { row -> targetRows.firstOrNull { it.id == row.password.originalEntryId }
+                        ?: targetRows.singleOrNull {
+                            takagi.ru.monica.data.model.ProjectCredentialGroup.read(fieldsById[it.id].orEmpty())?.passwordId == row.password.id
+                        }
+                    }
+                    val finalFields = rows.mapIndexed { index, row ->
+                        val existing = originals[index]
+                        if (existing != null) {
+                            val metadata = takagi.ru.monica.data.model.ProjectCredentialGroup.read(fieldsById[existing.id].orEmpty())
+                            check(row.password.metadata == null || (metadata?.passwordId == row.password.id && metadata.groupId == row.metadata.groupId))
+                            val secret = inspectSecretState(existing)
+                            check(secret is SecretValueState.Available || secret == SecretValueState.Empty)
+                        }
+                        takagi.ru.monica.data.model.ProjectCredentialGroup.put(
+                            if (index == 0) commonFields else fieldsById[existing?.id ?: row.password.originalEntryId].orEmpty(),
+                            row.metadata.forProject(targetProjectId))
+                    }
+                    val batch = rows.mapIndexed { index, row ->
+                        val existing = originals[index]
+                        val entry = target.applyToPasswordEntry(commonEntry.copy(
+                            id = existing?.id ?: 0L, keepassEntryUuid = existing?.keepassEntryUuid,
+                            keepassGroupUuid = existing?.keepassGroupUuid?.takeIf { existing.keepassGroupPath == nativeTarget.groupPath },
+                            passwordGroupId = targetProjectId, username = row.username, password = row.password.value,
+                            authenticatorKey = row.otp, createdAt = existing?.createdAt ?: Date()), replicaGroupId = replicaId)
+                        entry to if (index == 0 && embeddedContentSave != null)
+                            embeddedContentSave.initialFields(finalFields[index], fieldsById[existing?.id].orEmpty()) else finalFields[index]
+                    }
+                    // One file revision for every account, with its own fields even for new id=0 rows.
+                    val committed = requireNotNull(monicaKeePassStore).saveCredentialRows(nativeTarget.databaseId, batch)
+                    nativeBatchCommitted = true
+                    committed.forEachIndexed { index, entry ->
+                        saved += entry.id
+                        if (originals[index] == null) {
+                            created += entry.id
+                            rows[index].password.originalEntryId?.let { sourceId -> all.firstOrNull { it.id == sourceId }?.let { source ->
+                                copyProjectCredentialAttachments(source, entry)
+                            } }
+                        }
+                    }
+                    val owner = committed.first()
+                    embeddedContentSave?.record(owner.id, finalFields.first(), owner.boundNoteId)
+                    val previousOwner = original.minWithOrNull(compareBy<PasswordEntry> {
+                        if (takagi.ru.monica.data.model.ProjectCredentialGroup.read(fieldsById[it.id].orEmpty())?.primary != false) 0 else 1
+                    }.thenBy { takagi.ru.monica.data.model.ProjectCredentialGroup.read(fieldsById[it.id].orEmpty())?.passwordOrder ?: 0 }.thenBy { it.id })
+                    if (previousOwner != null && previousOwner.id != owner.id &&
+                        previousOwner.id !in rows.mapNotNull { it.password.originalEntryId }) {
+                        copyProjectCredentialAttachments(previousOwner, owner)
+                    }
+                    owners += owner.id
+                    continue
+                }
                 for ((index, row) in rows.withIndex()) {
                     val existing = targetRows.firstOrNull { it.id == row.password.originalEntryId }
                         ?: targetRows.singleOrNull {
@@ -5476,7 +5537,7 @@ class PasswordViewModel internal constructor(
             }
             owners
         } catch (error: Exception) {
-            if (!destinationsCommitted) withContext(NonCancellable) {
+            if (!destinationsCommitted && !nativeBatchCommitted) withContext(NonCancellable) {
                 changed.asReversed().forEach { (entry, fields) ->
                     runCatching {
                         check(updatePasswordEntryInternal(entry, customFieldsOverride = fields, skipCategoryBinding = true))
@@ -5821,6 +5882,10 @@ class PasswordViewModel internal constructor(
      */
     /** Called only after every attachment referenced by the final metadata was uploaded. */
     suspend fun publishEmbeddedContent(entryId: Long, commit: takagi.ru.monica.data.model.DeferredEmbeddedContentSave.Commit) {
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(entryId)) {
+            requireNotNull(monicaKeePassStore).publishEmbeddedContent(entryId, commit)
+            return
+        }
         val entry = requireNotNull(getPasswordEntryById(entryId)).copy(boundNoteId = commit.boundNoteId)
         // Assets already belong to this saved destination. A changed list filter must not move it.
         check(updatePasswordEntryInternal(entry, customFieldsOverride = commit.fields, skipCategoryBinding = true)) {
@@ -5912,9 +5977,14 @@ class PasswordViewModel internal constructor(
         if (validIds.isEmpty()) return 0
 
         val stackGroupId = if (mode == ManualStackMode.STACK) UUID.randomUUID().toString() else null
-        val existingFieldsByEntry = getCustomFieldsByEntryIds(validIds)
+        val nativeIds = validIds.filter(takagi.ru.monica.keepass.KeePassMonicaPasswordStore::isUiId)
+        if (nativeIds.isNotEmpty()) {
+            requireNotNull(monicaKeePassStore).applyManualStackMode(nativeIds, stackGroupId, mode == ManualStackMode.NEVER_STACK)
+        }
+        val storedIds = validIds - nativeIds.toSet()
+        val existingFieldsByEntry = getCustomFieldsByEntryIds(storedIds)
 
-        validIds.forEach { entryId ->
+        storedIds.forEach { entryId ->
             val keptFields = existingFieldsByEntry[entryId]
                 .orEmpty()
                 .asSequence()

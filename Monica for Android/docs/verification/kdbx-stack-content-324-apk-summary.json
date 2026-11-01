@@ -1,0 +1,10 @@
+{
+  "fdroid": {
+    "sha256": "8736F4897AC2F8126A75C676B54F9EC3E3AEF39E83E609EF74405315E871D7C1",
+    "metadata": "package: name='takagi.ru.monica.fdroid' versionCode='31' versionName='1.0.324' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'\nnative-code: 'x86_64'"
+  },
+  "ordinary": {
+    "sha256": "EF607CAC00B5556C61C36FA5F7CCD5FFE0350014DD9063622785812789EECE4D",
+    "metadata": "package: name='takagi.ru.monica' versionCode='12' versionName='1.0.324-26110112-07' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'\nnative-code: 'x86_64'"
+  }
+}

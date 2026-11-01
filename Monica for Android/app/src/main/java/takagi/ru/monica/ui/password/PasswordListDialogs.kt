@@ -191,7 +191,7 @@ internal fun PasswordListDialogs(
                     if (count > 0) onSelectionCleared()
                     onShowManualStackConfirmDialogChange(false)
                 } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
-                catch (_: Exception) { Toast.makeText(context, R.string.api_token_load_error, Toast.LENGTH_LONG).show() }
+                catch (_: Exception) { Toast.makeText(context, R.string.entry_message_storage_save_failed, Toast.LENGTH_LONG).show() }
             } })
     }
 

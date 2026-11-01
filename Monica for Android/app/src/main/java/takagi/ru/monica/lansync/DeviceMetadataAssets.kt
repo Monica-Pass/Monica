@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.withTransaction
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import org.json.JSONArray
 import org.json.JSONObject
 import takagi.ru.monica.attachments.storage.AttachmentKeyVault
@@ -12,6 +14,8 @@ import takagi.ru.monica.data.PasswordDatabase
 import takagi.ru.monica.security.SecurityManager
 import java.security.MessageDigest
 import java.util.UUID
+import java.io.InputStream
+import java.io.FilterInputStream
 
 /** Metadata files have no PasswordEntry/SecureItem parent. Keep them outside the
  * ordinary attachment table and its orphan collector, using the same encryption. */
@@ -45,26 +49,38 @@ internal class DeviceMetadataAssets(context: Context, private val database: Pass
     suspend fun read(blob: Blob): ByteArray {
         val size = blob.descriptor.getLong("size")
         if (size !in 0..MAX_BYTES) throw LanSyncException("asset_limit")
+        val bytes = ByteArray(size.toInt())
+        try {
+            openStream(blob).use { stream ->
+                var offset = 0
+                while (offset < bytes.size) {
+                    val count = stream.read(bytes, offset, bytes.size - offset)
+                    if (count <= 0) throw LanSyncException("invalid_asset")
+                    offset += count
+                }
+                if (stream.read() != -1) throw LanSyncException("invalid_asset")
+            }
+            return bytes
+        } catch (failure: Throwable) { bytes.fill(0); throw failure }
+    }
+
+    suspend fun openStream(blob: Blob): InputStream {
+        val size = blob.descriptor.getLong("size")
+        val id = blob.descriptor.getString("id")
+        if (size !in 0..MAX_BYTES) throw LanSyncException("asset_limit")
+        if (!id.matches(Regex("[0-9a-fA-F]{64}"))) throw LanSyncException("invalid_asset")
         // Only locally generated UUID paths are valid; never trust portable paths.
         require(Regex("[0-9a-f-]{36}\\.enc").matches(blob.path)) { "invalid_asset_path" }
         val cek = keys.unwrap(blob.wrappedKey)
-        val bytes = try {
-            storage.openDecryptedStream(blob.path, cek).use { stream ->
-                val result = ByteArray(size.toInt())
-                try {
-                    var offset = 0
-                    while (offset < result.size) {
-                        val count = stream.read(result, offset, result.size - offset)
-                        if (count <= 0) throw LanSyncException("invalid_asset")
-                        offset += count
-                    }
-                    if (stream.read() != -1) throw LanSyncException("invalid_asset")
-                    result
-                } catch (error: Throwable) { result.fill(0); throw error }
+        val source = try { storage.openDecryptedStream(blob.path, cek) }
+            catch (failure: Throwable) { cek.fill(0); throw failure }
+        val owned = object : FilterInputStream(source) {
+            override fun close() {
+                try { super.close() } finally { cek.fill(0) }
             }
-        } finally { cek.fill(0) }
-        try { validate(blob.descriptor, bytes) } catch (error: Throwable) { bytes.fill(0); throw error }
-        return bytes
+        }
+        val context = currentCoroutineContext()
+        return DeviceAssetInputStream.verified(owned, id, size) { context.ensureActive() }
     }
 
     /** The encrypted row and owner metadata commit together. Blob deletion is
@@ -88,7 +104,11 @@ internal class DeviceMetadataAssets(context: Context, private val database: Pass
         internal val obsolete = mutableListOf<String>()
 
         suspend fun adopt(owner: String, incoming: JSONObject, purge: Boolean,
-            reader: suspend (JSONObject) -> ByteArray): JSONObject {
+            reader: suspend (JSONObject) -> ByteArray): JSONObject =
+            adoptStream(owner, incoming, purge) { DeviceAssetInputStream.ownedBytes(reader(it)) }
+
+        suspend fun adoptStream(owner: String, incoming: JSONObject, purge: Boolean,
+            reader: suspend (JSONObject) -> InputStream): JSONObject {
             val existing = rows(owner)
             val data = if(purge) JSONObject() else JSONObject(incoming.toString())
             val desired = if (purge) JSONArray() else data.optJSONArray("assets")
@@ -112,12 +132,20 @@ internal class DeviceMetadataAssets(context: Context, private val database: Pass
                 val same = old != null && old.descriptor.getString("id") == descriptor.getString("id") &&
                     old.descriptor.getLong("size") == descriptor.getLong("size") && storage.exists(old.path)
                 val blob = if (same) {
-                    read(old!!).fill(0)
+                    openStream(old!!).use { stream ->
+                        val buffer = ByteArray(64 * 1024)
+                        try { while (stream.read(buffer) != -1) currentCoroutineContext().ensureActive() }
+                        finally { buffer.fill(0) }
+                    }
                     Blob(descriptor, old.path, old.wrappedKey)
                 } else {
-                    val bytes = reader(descriptor)
-                    val written = try { validate(descriptor, bytes); storage.writeEncrypted(bytes.inputStream()) }
-                        finally { bytes.fill(0) }
+                    val context = currentCoroutineContext()
+                    val id = descriptor.getString("id")
+                    val size = descriptor.getLong("size")
+                    if (size !in 0..MAX_BYTES || !id.matches(Regex("[0-9a-fA-F]{64}"))) throw LanSyncException("invalid_asset")
+                    val written = DeviceAssetInputStream.verified(reader(descriptor), id, size) {
+                        context.ensureActive()
+                    }.use { storage.writeEncrypted(it) }
                     created += written.relativePath
                     try { Blob(descriptor, written.relativePath, keys.wrap(written.cek)) }
                     finally { written.cek.fill(0) }

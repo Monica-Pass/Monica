@@ -4,12 +4,30 @@
 
 ## 中文
 
+- 修复 KDBX 相同受保护字段重复保存时误增历史，以及仅访问时间或使用次数不同被合并为冲突的问题；历史密码按修改时间倒序展示。保留密码相同但备注等内容不同的有效历史版本，删除仍对应原始版本。
+
+- 修复 KDBX 多选密码堆叠、账号组重复保存及复制内容保存失败：同一文件的选择一次提交，保留原字段、保护位和附件；保存复制内容时，目标条目必须核对未变，目标被外部修改或锁定时仍拒绝保存。
+
 - 新增系统密钥异常后的确认恢复：已有有效的本机恢复材料、且系统密钥服务正常时，可用原主密码恢复本机安全配置，再正常登录。创建新存储密钥前会弹窗二次确认；取消、返回或离开前台不会继续恢复。原配置、数据库和附件保留，超时或失败保持锁定；恢复后需重新开启生物识别解锁。
 - 本机恢复材料由支持该机制的版本在设置或成功验证主密码时自动建立、维护，包含由主密码保护的恢复密钥与加密配置快照，无需提前手动导出。请保留应用数据；未生成或已丢失恢复材料，以及仅依赖永久丢失旧密钥的数据，无法通过此路径恢复。
 - 已在 Android 模拟器验证真实系统密钥丢失、替换及确认恢复登录流程。真实 OMK 设备尚未验证，不保证所有模块或改机环境均可恢复。
 
+- 升级已配对设备的局域网同步：双方均支持新协议、且都有可发送的本地快照时，按记录版本、别名和已验证附件协商增量，减少重复传输。首次配对、旧版本、仅接收场景及增量缓存达到限额时，沿原加密流程完整同步；省略未变化记录不代表删除，删除确认、冲突保留和同步方向规则继续生效。
+- 附件改为分块读取、验证和加密写入，降低普通二进制附件的峰值内存；图标和图片等部分接口仍有整块读取限制。断线后可在前台尝试续传配对身份与完整密文摘要绑定的暂存，重新认证并校验前缀及最终摘要，应用成功后才确认完成。取消、锁定或离开前台清理本轮续传状态；进程重启后重新同步，并回收确认属于旧进程的同步缓存，正在使用或无法确认归属的目录保留。
+- 新增临时热点与扫码接入入口，创建热点和加入网络均由用户主动操作，加入仍需系统确认；不支持或连接被系统中断时可手动联网后重新扫描。网络变化会唤醒同步检查，空闲检查间隔延长。热点邀请短期有效，锁定或后台关闭本应用创建的热点与连接请求。
+- 新协议已进行原生 TCP 与 Android 模拟器回归；真实双手机热点、不同 ROM 的系统联网确认及大库性能仍需实机验证。
+
 ## English
+
+- Fixed spurious KDBX history from unchanged protected-field saves and merge conflicts caused only by access time or usage count. Password history now shows newest modification times first. Valid versions with the same password but different notes or other content are retained, and deletion still targets the original version.
+
+- Fixed KDBX stacking, account-group resaves and copied-content publication: each selected file is committed once, preserving original fields, protection flags and attachments. Copied content is published only after confirming its destination is unchanged; external changes and locking still block unsafe saves.
 
 - Added confirmed recovery when device Keystore keys become unavailable. With valid local recovery material and a working system key service, use your original master password to restore secure settings and then sign in normally. A second dialog confirmation is required before new storage keys are created. Cancelling, going back or leaving the foreground stops recovery. Original settings, databases and attachments are retained; timeout or failure keeps the app locked. Biometric unlock must be enabled again after recovery.
 - Supported versions automatically create and maintain local recovery material when you set or successfully verify your master password. It contains a password-protected recovery key and an encrypted settings snapshot; no manual export is required. Keep the app data. This route cannot recover data if the required material was never created or has been lost, or if the data depends solely on permanently lost old keys.
 - Real key loss, replacement and confirmed recovery followed by normal login were tested on an Android emulator. Actual OMK devices remain unverified; recovery is not guaranteed for every module or modified system.
+
+- Upgraded LAN sync for paired devices: when both support the new protocol and have an outgoing local snapshot, exact record versions, aliases and verified attachments determine the delta, reducing repeat transfers. Initial pairing, older versions, receive-only sessions and exhausted delta caches retain the original encrypted full sync. Omitted records are retained; deletion review, conflict preservation and direction policies remain in effect.
+- Binary attachments now use chunked reads, validation and encrypted writes to reduce peak memory. Some image and icon APIs still require complete buffers. Interrupted foreground transfers can resume identity-bound encrypted partial files after fresh authentication and prefix/full-digest checks. Completion is acknowledged only after application succeeds. Cancellation, locking or leaving the foreground clears this session's resume state. Process restarts begin a new sync and reclaim recognized caches from exited processes; active or unrecognized paths are retained.
+- Added temporary-hotspot and QR connection controls. Users explicitly create or join a network, with system confirmation still required. Unsupported or interrupted connections offer manual Wi-Fi setup and rescanning. Network events wake sync checks, with longer idle intervals. Invitations expire, and locking or backgrounding closes only the app's hotspot and connection request.
+- Native TCP and Android emulator regressions cover the new protocol. Real two-phone hotspots, ROM-specific system confirmation and large-vault performance still need device validation.

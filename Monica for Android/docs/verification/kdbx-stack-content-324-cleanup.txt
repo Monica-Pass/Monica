@@ -1,0 +1,16 @@
+No active instrumentation; verified owned guest14 and shared AVD.
+Before cleanup:
+Users:
+	UserInfo{0:Owner:c13} running
+	UserInfo{10:Monica:410}
+	UserInfo{11:Monica_Recovery316:410}
+	UserInfo{12:Monica_Recovery316_Retest:410}
+	UserInfo{14:Monica_Kdbx324_Test:414} running
+
+After cleanup (foreground user0):
+Users:
+	UserInfo{0:Owner:c13} running
+	UserInfo{10:Monica:410}
+	UserInfo{11:Monica_Recovery316:410}
+	UserInfo{12:Monica_Recovery316_Retest:410}
+Removed only guest14 and its temporary screenshot.

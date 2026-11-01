@@ -1,0 +1,12 @@
+
+takagi.ru.monica.lansync.NearbyIncrementalTransportTest:..
+takagi.ru.monica.lansync.DeviceAssetStreamingInstrumentedTest:...
+s_glBindAttribLocation: bind attrib 0 name position
+s_glBindAttribLocation: bind attrib 1 name localCoord
+takagi.ru.monica.lansync.NearbyHotspotUiTest:...
+takagi.ru.monica.lansync.NearbyRetirementCleanupTest:.
+takagi.ru.monica.lansync.DeviceSyncCacheRootsInstrumentedTest:...
+
+Time: 23.508
+
+OK (12 tests)

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nearby_hotspot_create">一時的なホットスポット</string>
+    <string name="nearby_hotspot_create_hint">共通の Wi-Fi がない端末を接続します。</string>
+    <string name="nearby_hotspot_title">一時的なホットスポット</string>
+    <string name="nearby_hotspot_help">このコードは10分後に期限切れになります。パネルを閉じる、ロックする、Monica を離れるとホットスポットが終了します。接続後もペアリングを検証します。</string>
+    <string name="nearby_hotspot_active">一時的なホットスポットが有効</string>
+    <string name="nearby_hotspot_stop">ホットスポットを終了</string>
+    <string name="nearby_hotspot_starting">ホットスポットとコードを作成中…</string>
+    <string name="nearby_hotspot_join_title">このホットスポットに接続しますか？</string>
+    <string name="nearby_hotspot_join_hint">Android の確認で %1$s に接続します。その後 Monica がペアリングした端末を検証します。</string>
+    <string name="nearby_hotspot_connecting">Wi-Fi 接続を待機中…</string>
+    <string name="nearby_hotspot_failure">Android は接続を完了できませんでした。手動で接続し、コードを再度スキャンできます。</string>
+    <string name="nearby_hotspot_permissions">ホットスポットの作成・接続には、Android が求める Wi-Fi 権限を許可してください。</string>
+    <string name="nearby_hotspot_unsupported">ホットスポットへの自動接続は利用できません。手動で接続し、再度スキャンしてください。</string>
+    <string name="nearby_hotspot_manual">接続済み、続行</string>
+    <string name="nearby_hotspot_open_wifi">Wi-Fi 設定</string>
+    <string name="nearby_hotspot_scan_hint">Monica のペアリングコードか一時ホットスポットのコードをスキャンします。</string>
+    <string name="nearby_hotspot_connect">接続</string>
+    <string name="nearby_hotspot_copy_password">ホットスポットのパスワードをコピー</string>
+    <string name="nearby_hotspot_interrupted">Monica がバックグラウンドに移ったため、接続をキャンセルしました。ホットスポットに手動で接続してから、コードを再度スキャンしてください。</string>
+</resources>

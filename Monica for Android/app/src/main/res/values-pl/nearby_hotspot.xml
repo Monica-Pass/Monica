@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nearby_hotspot_create">Tymczasowy hotspot</string>
+    <string name="nearby_hotspot_create_hint">Połącz urządzenia bez wspólnej sieci Wi-Fi.</string>
+    <string name="nearby_hotspot_title">Tymczasowy hotspot</string>
+    <string name="nearby_hotspot_help">Kod wygasa po 10 minutach. Zamknięcie panelu, zablokowanie lub opuszczenie Monica wyłącza hotspot. Parowanie nadal jest weryfikowane.</string>
+    <string name="nearby_hotspot_active">Tymczasowy hotspot aktywny</string>
+    <string name="nearby_hotspot_stop">Zakończ tymczasowy hotspot</string>
+    <string name="nearby_hotspot_starting">Tworzenie hotspotu i kodu parowania…</string>
+    <string name="nearby_hotspot_join_title">Połączyć z tym hotspotem?</string>
+    <string name="nearby_hotspot_join_hint">Połącz z %1$s po potwierdzeniu w Androidzie. Monica następnie zweryfikuje sparowane urządzenie.</string>
+    <string name="nearby_hotspot_connecting">Oczekiwanie na połączenie Wi-Fi…</string>
+    <string name="nearby_hotspot_failure">Android nie mógł ukończyć połączenia. Możesz połączyć ręcznie i ponownie zeskanować kod.</string>
+    <string name="nearby_hotspot_permissions">Nadaj wymagane przez Androida uprawnienie Wi-Fi, aby utworzyć hotspot lub z nim połączyć.</string>
+    <string name="nearby_hotspot_unsupported">Automatyczne połączenie z hotspotem jest niedostępne. Połącz ręcznie i zeskanuj ponownie.</string>
+    <string name="nearby_hotspot_manual">Już połączono, kontynuuj</string>
+    <string name="nearby_hotspot_open_wifi">Ustawienia Wi-Fi</string>
+    <string name="nearby_hotspot_scan_hint">Zeskanuj kod parowania Monica lub tymczasowego hotspotu.</string>
+    <string name="nearby_hotspot_connect">Połącz</string>
+    <string name="nearby_hotspot_copy_password">Kopiuj hasło hotspotu</string>
+    <string name="nearby_hotspot_interrupted">Połączenie anulowano, gdy Monica przeszła w tło. Połącz ręcznie z hotspotem, a następnie ponownie zeskanuj kod.</string>
+</resources>

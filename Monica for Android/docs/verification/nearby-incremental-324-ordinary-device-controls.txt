@@ -1,0 +1,10 @@
+
+takagi.ru.monica.lansync.NearbySyncNativeInstrumentedTest:.....
+takagi.ru.monica.lansync.NearbyHotspotPresenceTest:..
+s_glBindAttribLocation: bind attrib 0 name position
+s_glBindAttribLocation: bind attrib 1 name localCoord
+takagi.ru.monica.lansync.NearbyManualControlsTest:....
+
+Time: 23.838
+
+OK (11 tests)

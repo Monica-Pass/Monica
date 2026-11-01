@@ -1,0 +1,37 @@
+
+takagi.ru.monica.keepass.KeePassAddContentUiRegressionTest:
+Error in allVisibleAddContentChoicesPersistInOriginalVault(takagi.ru.monica.keepass.KeePassAddContentUiRegressionTest):
+java.lang.IllegalArgumentException: Failed requirement.
+	at takagi.ru.monica.utils.GpgKeyGenerator.generate(GpgKeyGenerator.kt:29)
+	at takagi.ru.monica.utils.GpgKeyGenerator.generate$default(GpgKeyGenerator.kt:28)
+	at takagi.ru.monica.keepass.KeePassAddContentUiRegressionTest$allVisibleAddContentChoicesPersistInOriginalVault$1$1$gpg$1.invokeSuspend(KeePassAddContentUiRegressionTest.kt:76)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:832)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+takagi.ru.monica.keepass.KeePassMonicaEditorUiTest:KDBX_SAVE_PERF stage=monica_editor_save_handler_until_return ms=2090
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_open ms=1512
+KDBX_SAVE_PERF stage=monica_editor_until_target_write_close ms=1524
+KDBX_SAVE_PERF stage=monica_editor_write_open_until_return ms=578
+KDBX_SAVE_PERF stage=monica_editor_test_wait_until_idle ms=2105
+.
+
+Time: 14.831
+There was 1 failure:
+1) allVisibleAddContentChoicesPersistInOriginalVault(takagi.ru.monica.keepass.KeePassAddContentUiRegressionTest)
+java.lang.IllegalArgumentException: Failed requirement.
+	at takagi.ru.monica.utils.GpgKeyGenerator.generate(GpgKeyGenerator.kt:29)
+	at takagi.ru.monica.utils.GpgKeyGenerator.generate$default(GpgKeyGenerator.kt:28)
+	at takagi.ru.monica.keepass.KeePassAddContentUiRegressionTest$allVisibleAddContentChoicesPersistInOriginalVault$1$1$gpg$1.invokeSuspend(KeePassAddContentUiRegressionTest.kt:76)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:832)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+FAILURES!!!
+Tests run: 2,  Failures: 1

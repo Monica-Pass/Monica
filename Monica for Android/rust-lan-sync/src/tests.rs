@@ -327,15 +327,15 @@ fn directed_broadcast_discovery_works_without_multicast_or_remembered_addresses(
         "Directed broadcast must discover the listener when mDNS/multicast and old addresses are unavailable");
 }
 
-fn serial_sessions() -> std::sync::MutexGuard<'static, ()> {
+pub(crate) fn serial_sessions() -> std::sync::MutexGuard<'static, ()> {
     SESSION_TESTS
         .lock()
         .unwrap_or_else(|error| error.into_inner())
 }
 
-struct TestDirectory(PathBuf);
+pub(crate) struct TestDirectory(PathBuf);
 impl TestDirectory {
-    fn new() -> Self {
+    pub(crate) fn new() -> Self {
         let root = std::env::temp_dir().join(format!(
             "monica-lan-test-{}-{}",
             std::process::id(),
@@ -347,7 +347,7 @@ impl TestDirectory {
         std::fs::create_dir(&root).unwrap();
         Self(root)
     }
-    fn directory(&self, name: &str) -> PathBuf {
+    pub(crate) fn directory(&self, name: &str) -> PathBuf {
         let path = self.0.join(name);
         std::fs::create_dir(&path).unwrap();
         path
@@ -371,7 +371,7 @@ fn request_ok(value: Value) -> Value {
     response["data"].clone()
 }
 
-fn call(value: Value) -> Value {
+pub(crate) fn call(value: Value) -> Value {
     if value["operation"] == "release" {
         let handle = value["handle"].as_u64().unwrap();
         request_ok(json!({"operation":"cancel", "handle":handle}));
@@ -394,7 +394,7 @@ fn call(value: Value) -> Value {
     data
 }
 
-fn wait(handle: u64) -> Progress {
+pub(crate) fn wait(handle: u64) -> Progress {
     let deadline = Instant::now() + Duration::from_secs(10);
     loop {
         let progress = job(handle).unwrap().progress.lock().unwrap().clone();

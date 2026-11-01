@@ -22,6 +22,8 @@ import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.security.SessionManager
 import takagi.ru.monica.viewmodel.MdbxViewModel
 import java.io.File
+import java.io.InputStream
+import java.io.FilterInputStream
 import java.util.concurrent.atomic.AtomicLong
 
 internal data class DevicePasswordExport(val revision: String, val directory: File, val contentKey: String,
@@ -216,9 +218,9 @@ internal class DevicePasswordSyncProvider(context: Context, private val security
         val outgoingAssets = assets.filter { it.id in ids }
         val total = outgoingAssets.sumOf { it.size }; var completed = 0L
         for(asset in outgoingAssets) {
-            val bytes = readAsset(asset)
-            try { transfer.append(asset.id, bytes) { count -> onProgress?.invoke(DeviceSyncProgress("preparing", bytes = completed + count, totalBytes = total)) } }
-            finally { bytes.fill(0) }
+            openAsset(asset).use { source ->
+                transfer.append(asset.id, asset.size, source) { count -> onProgress?.invoke(DeviceSyncProgress("preparing", bytes = completed + count, totalBytes = total)) }
+            }
             completed += asset.size
         }
         preparedAssets = transfer
@@ -239,7 +241,7 @@ internal class DevicePasswordSyncProvider(context: Context, private val security
             val keyBytes = ByteArray(32).also { java.security.SecureRandom().nextBytes(it) }
             val key = java.util.Base64.getUrlEncoder().withoutPadding().encodeToString(keyBytes); keyBytes.fill(0)
             fallbackAssets = DeviceAssetTransfer(cache,key)
-            for(asset in assets) { val bytes = readAsset(asset); try { fallbackAssets!!.append(asset.id,bytes) } finally { bytes.fill(0) } }
+            for(asset in assets) { openAsset(asset).use { fallbackAssets!!.append(asset.id, asset.size, it) } }
         }
         fun incoming(operation: String, extra: JSONObject.() -> Unit = {}) = request(operation) {
             put("path", File(directory, "changes.mdbxsync").absolutePath)
@@ -405,7 +407,7 @@ internal class DevicePasswordSyncProvider(context: Context, private val security
         if(previous?.guard != expected && !(previous == null && expected.isNullOrEmpty())) return@transaction null
         val incoming = JSONObject(data.toString())
         if(!incoming.has("labels")) previous?.data?.optJSONArray("labels")?.let { incoming.put("labels",it) }
-        val actual = adopt(owner, incoming, deleted && !data.optBoolean("trashed"), ::readIncomingAsset)
+        val actual = adoptStream(owner, incoming, deleted && !data.optBoolean("trashed"), ::openIncomingAsset)
         metadata.applyRootMetadata(globalId, address, expected, deleted, actual)?.let(metadataAssets::snapshot)
     }
 
@@ -416,7 +418,7 @@ internal class DevicePasswordSyncProvider(context: Context, private val security
         if(previous == null && !expected.isNullOrEmpty()) return@transaction null
         if(deleted) {
             if(data.optBoolean("trashed")) throw LanSyncException("folder_trash_unavailable")
-            mapped?.let { adopt(it, JSONObject(), true, ::readIncomingAsset); metadata.forget(it) }
+            mapped?.let { adoptStream(it, JSONObject(), true, ::openIncomingAsset); metadata.forget(it) }
             previous?.let {
                 database.openHelper.writableDatabase.execSQL("UPDATE password_entries SET categoryId=NULL WHERE categoryId=?", arrayOf(it.id))
                 database.openHelper.writableDatabase.execSQL("UPDATE secure_items SET categoryId=NULL WHERE categoryId=?", arrayOf(it.id))
@@ -441,7 +443,7 @@ internal class DevicePasswordSyncProvider(context: Context, private val security
                 if(index == path.length()-1 && !partial.has("labels") && previous != null)
                     metadata.folder(previous).optJSONArray("labels")?.let { partial.put("labels",it) }
                 partial.getJSONObject("payload").put("path",JSONArray().apply { for(i in 0..index) put(path.getJSONObject(i)) })
-                metadata.save("folder:$savedId", if(index == path.length()-1) adopt("folder:$savedId", partial, false, ::readIncomingAsset) else partial)
+                metadata.save("folder:$savedId", if(index == path.length()-1) adoptStream("folder:$savedId", partial, false, ::openIncomingAsset) else partial)
             }
         }
         val saved = categories.getCategoryById(savedId) ?: error("device_sync_write_failed")
@@ -671,25 +673,25 @@ internal class DevicePasswordSyncProvider(context: Context, private val security
         val guard = if(snapshot.scope == "secure") DevicePasskeyShape.guard(data) + ":${snapshot.deleted}" else DevicePasskeyShape.guard(data)
         return snapshot.copy(data = data, assets = sources, guard = guard)
     }
-    private suspend fun readAsset(asset: DeviceVaultAsset): ByteArray {
-        val bytes = when {
-            asset.metadata != null -> metadataAssets.read(asset.metadata)
-            asset.icon != null -> DeviceVaultShape.readIcon(app,asset.icon)
-            asset.image != null -> images.readImageBytes(asset.image) ?: throw LanSyncException("asset_unavailable")
+    private suspend fun openAsset(asset: DeviceVaultAsset): InputStream {
+        if (asset.size !in 0..DeviceAssetInputStream.MAX_BYTES) throw LanSyncException("asset_limit")
+        val source = when {
+            asset.metadata != null -> metadataAssets.openStream(asset.metadata)
+            asset.icon != null -> DeviceAssetInputStream.ownedBytes(DeviceVaultShape.readIcon(app,asset.icon))
+            asset.image != null -> DeviceAssetInputStream.ownedBytes(images.readImageBytes(asset.image) ?: throw LanSyncException("asset_unavailable"))
             asset.local != null -> {
                 val cek = attachmentKeys.unwrap(asset.local.wrappedCek!!)
-                try { attachmentStorage.openDecryptedStream(asset.local.localPath!!, cek).use { stream ->
-                    val output = java.io.ByteArrayOutputStream(); val buffer = ByteArray(64*1024)
-                    try { while(true) { val count = stream.read(buffer); if(count < 0) break
-                        if(output.size().toLong() + count > 64L*1024*1024) throw LanSyncException("asset_limit"); output.write(buffer,0,count) }; output.toByteArray() }
-                    finally { buffer.fill(0) }
-                } } finally { cek.fill(0) }
+                val raw = try { attachmentStorage.openDecryptedStream(asset.local.localPath!!, cek) }
+                    catch (failure: Throwable) { cek.fill(0); throw failure }
+                object : FilterInputStream(raw) {
+                    override fun close() { try { super.close() } finally { cek.fill(0) } }
+                }
             }
-            else -> native.readDeviceSyncAsset(asset)
+            // Image and native-store APIs still require a bounded byte array; close clears its owner.
+            else -> DeviceAssetInputStream.ownedBytes(native.readDeviceSyncAsset(asset))
         }
-        val hash = java.security.MessageDigest.getInstance("SHA-256").digest(bytes).joinToString("") { "%02x".format(it) }
-        if(bytes.size.toLong() != asset.size || hash != asset.id) { bytes.fill(0); throw LanSyncException("invalid_asset") }
-        return bytes
+        val context = currentCoroutineContext()
+        return DeviceAssetInputStream.verified(source, asset.id, asset.size) { context.ensureActive() }
     }
     private suspend fun restoreLocalAssets(data: JSONObject, passwordId: Long?, secureId: Long?): String {
         val descriptors = data.optJSONArray("assets") ?: return data.toString()
@@ -710,8 +712,11 @@ internal class DevicePasswordSyncProvider(context: Context, private val security
             }
             val old = existing.firstOrNull { it.id !in keep && !it.isDeleted && it.sha256Hex == hash && it.fileName == name }
             val rowId = if(old != null) old.id else {
-                val bytes = readIncomingAsset(descriptor)
-                val result = try { attachmentStorage.writeEncrypted(bytes.inputStream()) } finally { bytes.fill(0) }
+                val result = openIncomingAsset(descriptor).use { attachmentStorage.writeEncrypted(it) }
+                if (result.sizeBytes != descriptor.getLong("size") || result.sha256Hex != hash) {
+                    try { attachmentStorage.delete(result.relativePath) } finally { result.cek.fill(0) }
+                    throw LanSyncException("invalid_asset")
+                }
                 try { attachments.insert(takagi.ru.monica.attachments.model.Attachment(parentPasswordId = passwordId, parentSecureItemId = secureId,
                     source = "LOCAL", fileName = name, mimeType = descriptor.optString("media_type", "application/octet-stream"), sizeBytes = result.sizeBytes,
                     sha256Hex = result.sha256Hex, wrappedCek = attachmentKeys.wrap(result.cek), localPath = result.relativePath, downloadState = "DOWNLOADED",
@@ -727,6 +732,13 @@ internal class DevicePasswordSyncProvider(context: Context, private val security
         val id = descriptor.getString("id")
         return if(incomingAssets?.contains(id) == true) incomingAssets!!.read(descriptor)
             else if(fallbackAssets?.contains(id) == true) fallbackAssets!!.read(descriptor) else throw LanSyncException("asset_unavailable")
+    }
+
+    private suspend fun openIncomingAsset(descriptor: JSONObject): InputStream {
+        val id = descriptor.getString("id")
+        return if (incomingAssets?.contains(id) == true) incomingAssets!!.openStream(descriptor)
+            else if (fallbackAssets?.contains(id) == true) fallbackAssets!!.openStream(descriptor)
+            else throw LanSyncException("asset_unavailable")
     }
 
     suspend fun pause() = gate.withLock {

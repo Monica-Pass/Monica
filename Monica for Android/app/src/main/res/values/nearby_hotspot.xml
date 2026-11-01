@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nearby_hotspot_create">Temporary hotspot</string>
+    <string name="nearby_hotspot_create_hint">Connect when devices have no shared Wi-Fi.</string>
+    <string name="nearby_hotspot_title">Temporary hotspot</string>
+    <string name="nearby_hotspot_help">This code expires in 10 minutes. Closing this panel, locking, or leaving Monica stops the hotspot. Pairing is still verified.</string>
+    <string name="nearby_hotspot_active">Temporary hotspot active</string>
+    <string name="nearby_hotspot_stop">End temporary hotspot</string>
+    <string name="nearby_hotspot_starting">Creating hotspot and pairing code…</string>
+    <string name="nearby_hotspot_join_title">Connect to this hotspot?</string>
+    <string name="nearby_hotspot_join_hint">Join %1$s through Android’s confirmation. Monica then verifies the paired device.</string>
+    <string name="nearby_hotspot_connecting">Waiting for the Wi-Fi connection…</string>
+    <string name="nearby_hotspot_failure">Android could not complete the connection. You can connect manually and scan the code again.</string>
+    <string name="nearby_hotspot_permissions">Grant the Wi-Fi permission requested by Android to create or join a hotspot.</string>
+    <string name="nearby_hotspot_unsupported">Automatic hotspot connection is unavailable. Connect manually and scan again.</string>
+    <string name="nearby_hotspot_manual">Already connected, continue</string>
+    <string name="nearby_hotspot_open_wifi">Wi-Fi settings</string>
+    <string name="nearby_hotspot_scan_hint">Scan a Monica pairing or temporary hotspot code.</string>
+    <string name="nearby_hotspot_connect">Connect</string>
+    <string name="nearby_hotspot_copy_password">Copy hotspot password</string>
+    <string name="nearby_hotspot_interrupted">The connection was cancelled when Monica left the foreground. Connect to the hotspot manually, then scan the code again.</string>
+</resources>

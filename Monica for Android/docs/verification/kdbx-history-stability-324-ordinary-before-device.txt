@@ -1,0 +1,105 @@
+
+takagi.ru.monica.keepass.KeePassHistoryStabilityTest:
+Error in accessOnlyExternalMergesAndRepeatedMergesKeepRealHistory(takagi.ru.monica.keepass.KeePassHistoryStabilityTest):
+java.lang.AssertionError: expected:<2> but was:<3>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.keepass.KeePassHistoryStabilityTest$accessOnlyExternalMergesAndRepeatedMergesKeepRealHistory$1$2.invokeSuspend(KeePassHistoryStabilityTest.kt:87)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.keepass.KeePassHistoryStabilityTest.accessOnlyExternalMergesAndRepeatedMergesKeepRealHistory(KeePassHistoryStabilityTest.kt:75)
+
+Error in repeatedIdenticalNativeSavesPreserveHistoryAfterDiskReopen(takagi.ru.monica.keepass.KeePassHistoryStabilityTest):
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.keepass.KeePassHistoryStabilityTest$repeatedIdenticalNativeSavesPreserveHistoryAfterDiskReopen$1$2.invokeSuspend(KeePassHistoryStabilityTest.kt:60)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.keepass.KeePassHistoryStabilityTest.repeatedIdenticalNativeSavesPreserveHistoryAfterDiskReopen(KeePassHistoryStabilityTest.kt:46)
+
+Error in historyDisplayIsNewestFirstAndDeleteKeepsOriginalNativeIndex(takagi.ru.monica.keepass.KeePassHistoryStabilityTest):
+java.lang.AssertionError: expected:<[1793455320000, 1793455260000]> but was:<[1793455260000, 1793455320000]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.keepass.KeePassHistoryStabilityTest$historyDisplayIsNewestFirstAndDeleteKeepsOriginalNativeIndex$1$2.invokeSuspend(KeePassHistoryStabilityTest.kt:35)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:99)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.keepass.KeePassHistoryStabilityTest.historyDisplayIsNewestFirstAndDeleteKeepsOriginalNativeIndex(KeePassHistoryStabilityTest.kt:30)
+
+
+Time: 27.805
+There were 3 failures:
+1) accessOnlyExternalMergesAndRepeatedMergesKeepRealHistory(takagi.ru.monica.keepass.KeePassHistoryStabilityTest)
+java.lang.AssertionError: expected:<2> but was:<3>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.keepass.KeePassHistoryStabilityTest$accessOnlyExternalMergesAndRepeatedMergesKeepRealHistory$1$2.invokeSuspend(KeePassHistoryStabilityTest.kt:87)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.keepass.KeePassHistoryStabilityTest.accessOnlyExternalMergesAndRepeatedMergesKeepRealHistory(KeePassHistoryStabilityTest.kt:75)
+2) repeatedIdenticalNativeSavesPreserveHistoryAfterDiskReopen(takagi.ru.monica.keepass.KeePassHistoryStabilityTest)
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.keepass.KeePassHistoryStabilityTest$repeatedIdenticalNativeSavesPreserveHistoryAfterDiskReopen$1$2.invokeSuspend(KeePassHistoryStabilityTest.kt:60)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.keepass.KeePassHistoryStabilityTest.repeatedIdenticalNativeSavesPreserveHistoryAfterDiskReopen(KeePassHistoryStabilityTest.kt:46)
+3) historyDisplayIsNewestFirstAndDeleteKeepsOriginalNativeIndex(takagi.ru.monica.keepass.KeePassHistoryStabilityTest)
+java.lang.AssertionError: expected:<[1793455320000, 1793455260000]> but was:<[1793455260000, 1793455320000]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.keepass.KeePassHistoryStabilityTest$historyDisplayIsNewestFirstAndDeleteKeepsOriginalNativeIndex$1$2.invokeSuspend(KeePassHistoryStabilityTest.kt:35)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:99)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.keepass.KeePassHistoryStabilityTest.historyDisplayIsNewestFirstAndDeleteKeepsOriginalNativeIndex(KeePassHistoryStabilityTest.kt:30)
+
+FAILURES!!!
+Tests run: 3,  Failures: 3

@@ -1106,6 +1106,7 @@ fun PasswordDetailScreen(
                     MonicaExpandableContent(expanded = passwordHistory.isNotEmpty()) {
                         PasswordHistorySection(
                             history = passwordHistory,
+                            nativeKeePass = nativeDatabaseId != null,
                             visibilityState = passwordHistoryVisibility,
                             context = context,
                             onDeleteHistoryItem = { item ->
@@ -1201,8 +1202,8 @@ fun PasswordDetailScreen(
 
     historyItemToDelete?.let { historyItem ->
         HistoryPasswordConfirmDialog(
-            title = stringResource(R.string.delete_password_history_entry_title),
-            message = stringResource(R.string.delete_password_history_entry_message),
+            title = stringResource(if (nativeDatabaseId != null) R.string.keepass_native_delete_history else R.string.delete_password_history_entry_title),
+            message = stringResource(if (nativeDatabaseId != null) R.string.keepass_native_delete_history_message else R.string.delete_password_history_entry_message),
             confirmText = stringResource(R.string.delete),
             onDismiss = { historyItemToDelete = null },
             onConfirm = {
@@ -1216,7 +1217,7 @@ fun PasswordDetailScreen(
     if (showClearHistoryDialog) {
         HistoryPasswordConfirmDialog(
             title = stringResource(R.string.clear_password_history_title),
-            message = stringResource(R.string.clear_password_history_message),
+            message = stringResource(if (nativeDatabaseId != null) R.string.keepass_password_history_clear_message else R.string.clear_password_history_message),
             confirmText = stringResource(R.string.clear_password_history),
             onDismiss = { showClearHistoryDialog = false },
             onConfirm = {
@@ -1310,12 +1311,13 @@ fun PasswordDetailScreen(
 }
 
 @Composable
-private fun PasswordHistorySection(
+internal fun PasswordHistorySection(
     history: List<PasswordHistoryEntry>,
     visibilityState: MutableMap<Long, Boolean>,
     context: Context,
     onDeleteHistoryItem: (PasswordHistoryEntry) -> Unit,
-    onClearHistory: () -> Unit
+    onClearHistory: () -> Unit,
+    nativeKeePass: Boolean = false
 ) {
     val dateFormatter = remember { DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT) }
     var sectionMenuExpanded by remember { mutableStateOf(false) }
@@ -1344,7 +1346,8 @@ private fun PasswordHistorySection(
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     Text(
-                        text = stringResource(R.string.password_history_description),
+                        text = if (nativeKeePass) stringResource(R.string.keepass_native_history_subtitle, history.size)
+                            else stringResource(R.string.password_history_description),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -1417,7 +1420,7 @@ private fun PasswordHistorySection(
                                 }
                                 Text(
                                     text = stringResource(
-                                        R.string.password_history_last_used,
+                                        if (nativeKeePass) R.string.modified_field else R.string.password_history_last_used,
                                         dateFormatter.format(item.lastUsedAt)
                                     ),
                                     style = MaterialTheme.typography.labelMedium,
