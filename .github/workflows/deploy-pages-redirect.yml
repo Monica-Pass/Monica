@@ -1,0 +1,39 @@
+name: Redirect old GitHub Pages site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/pages-redirect/**
+      - .github/workflows/deploy-pages-redirect.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - name: Prepare redirect pages
+        run: |
+          mkdir -p "$RUNNER_TEMP/monica-redirect"
+          cp .github/pages-redirect/index.html "$RUNNER_TEMP/monica-redirect/index.html"
+          cp .github/pages-redirect/index.html "$RUNNER_TEMP/monica-redirect/404.html"
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ runner.temp }}/monica-redirect
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
