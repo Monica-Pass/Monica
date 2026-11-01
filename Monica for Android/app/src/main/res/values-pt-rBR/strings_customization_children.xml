@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="customization_live_preview">"Prévia em tempo real"</string>
+    <string name="customization_filters_navigation">"Filtros e navegação"</string>
+    <string name="customization_drag_handle">"Reordenar %1$s"</string>
+    <string name="customization_clear_presets_message">"Remover todos os campos predefinidos? As entradas já salvas manterão seus campos."</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="kp_file_save">"Salvar dados"</string>
+    <string name="kp_file_merge">"Mesclar dados"</string>
+    <string name="kp_file_reload">"Recarregar dados"</string>
+    <string name="kp_file_ready">"Salvo · KDBX"</string>
+    <string name="kp_file_busy">"Processando o banco de dados…"</string>
+    <string name="kp_file_saved">"Dados salvos"</string>
+    <string name="kp_file_external_reloaded">"Alterações externas carregadas"</string>
+    <string name="kp_file_reloaded">"Dados recarregados"</string>
+    <string name="kp_file_merged">"Dados mesclados"</string>
+    <string name="kp_file_merged_conflicts">"Mesclagem concluída; os carimbos de data/hora iguais têm versões alternativas no histórico da entrada"</string>
+    <string name="kp_file_reload_failed">"Não foi possível recarregar; mostrando os dados carregados anteriormente"</string>
+    <string name="kp_file_failed">"Não foi possível concluir a operação"</string>
+    <string name="kp_file_failure_help">"Verifique o acesso ao arquivo, a senha de origem e as alterações externas e tente novamente."</string>
+    <string name="kp_file_merge_summary">"Corresponde entradas existentes e mescla atualizações, histórico e registros de exclusão."</string>
+    <string name="kp_file_select_source">"Selecionar arquivo KDBX"</string>
+    <string name="kp_file_source_selected">"Origem selecionada · trocar arquivo"</string>
+    <string name="kp_file_source_password">"Senha do banco de dados de origem"</string>
+    <string name="kp_file_select_key">"Arquivo de chave (opcional)"</string>
+    <string name="kp_file_key_selected">"Arquivo de chave selecionado · trocar"</string>
+    <string name="kp_file_merge_notice">"Primeiro é criada uma cópia de recuperação. As entradas mais recentes têm prioridade. Se os carimbos de data/hora forem iguais, a versão atual é mantida e a outra vai para o histórico."</string>
+    <string name="kp_file_merge_confirm">"Mesclar e salvar"</string>
+</resources>

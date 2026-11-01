@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="passkey_cross_device">"Uso entre dispositivos"</string>
+    <string name="passkey_portability_checking">"Verificando…"</string>
+    <string name="passkey_portability_exportable">"A chave pode ser exportada"</string>
+    <string name="passkey_portability_local_only">"Apenas local"</string>
+    <string name="passkey_portability_key_unavailable">"Chave indisponível"</string>
+    <string name="passkey_portability_invalid">"Metadados em conflito"</string>
+    <string name="passkey_portability_unknown">"Não verificado"</string>
+    <string name="passkey_portability_restricted">"Transferência limitada"</string>
+    <string name="passkey_portability_exportable_hint">"A chave pode ser exportada em um formato criptografado compatível. O destino deve preservar o ID, a chave e as propriedades de cadastro; a compatibilidade com sites continua dependendo do cliente de destino."</string>
+    <string name="passkey_portability_local_hint">"A chave privada está vinculada a este dispositivo e não pode ser exportada. Copiar apenas o banco de dados não permitirá entrar em outro dispositivo."</string>
+    <string name="passkey_portability_missing_hint">"Não foi encontrada uma chave privada utilizável neste dispositivo. Este registro, por si só, não permite entrar aqui nem em outro dispositivo."</string>
+    <string name="passkey_portability_backup_hint">"Esta credencial foi marcada como não elegível para backup. Só um destino que preserve essa propriedade pode usá-la; a conversão para Bitwarden ou a troca de credenciais está bloqueada."</string>
+    <string name="passkey_portability_counter_hint">"Esta credencial tem um histórico de contadores de assinatura diferentes de zero. Monica usa contadores zero; o uso entre dispositivos pode ser rejeitado por um site que verifica contadores anteriores."</string>
+    <string name="passkey_portability_algorithm_hint">"O destino deve oferecer suporte ao mesmo algoritmo de chave. A transferência Bitwarden atual oferece suporte apenas a ES256."</string>
+    <string name="passkey_portability_invalid_hint">"As propriedades de backup entram em conflito. A assinatura não deve alterar silenciosamente as propriedades cadastradas; mantenha a credencial de origem para recuperação."</string>
+    <string name="passkey_portability_unknown_hint">"Não foi possível verificar as capacidades da chave. Desbloqueie o banco de dados de origem e tente novamente."</string>
+</resources>

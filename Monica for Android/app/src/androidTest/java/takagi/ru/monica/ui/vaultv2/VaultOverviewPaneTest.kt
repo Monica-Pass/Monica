@@ -2,6 +2,10 @@ package takagi.ru.monica.ui.vaultv2
 
 import takagi.ru.monica.utils.AppLocaleStringResolver
 
+import app.keemobile.kotpass.database.modifiers.modifyParentGroup
+import app.keemobile.kotpass.models.Group
+import java.util.UUID
+import takagi.ru.monica.keepass.KeePassDeleteInvestigationTest
 import android.app.Application
 import android.graphics.Bitmap
 import androidx.compose.foundation.background
@@ -60,6 +64,9 @@ class VaultOverviewPaneTest {
     private var openedPassword: Long? = null
     private var darkTheme by mutableStateOf(false)
     private var keyboardVisible = false
+    private var testKeePassDatabases by mutableStateOf<List<LocalKeePassDatabase>>(emptyList())
+    private lateinit var testKeepassModel: LocalKeePassViewModel
+    private var fixtureFontScale by mutableFloatStateOf(1f)
     private var testBitwardenVaults by mutableStateOf<List<BitwardenVault>>(emptyList())
 
     @Before fun prepareVault(): Unit = runBlocking {
@@ -90,14 +97,17 @@ class VaultOverviewPaneTest {
             bitwardenFolderDao = database.bitwardenFolderDao(), passwordArchiveSyncMetaDao = database.passwordArchiveSyncMetaDao())
         val items = SecureItemRepository(database.secureItemDao())
         fun <T : ViewModel> keep(model: T): T = model.also { models += it }
-        val passwordModel = keep(PasswordViewModel(passwords, security, strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext))).also { it.restoreAuthenticatedUiState() }
+        val passwordModel = keep(PasswordViewModel(passwords, security,
+            context = context.takeIf { testKeePassDatabases.isNotEmpty() },
+            localKeePassDatabaseDao = PasswordDatabase.getDatabase(context).localKeePassDatabaseDao(), strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext))).also { it.restoreAuthenticatedUiState() }
         val totp = keep(TotpViewModel(items, passwords, strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext)))
         val cards = keep(BankCardViewModel(items, strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext)))
         val documents = keep(DocumentViewModel(items, strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext)))
         val addresses = keep(BillingAddressViewModel(items))
         val notes = keep(NoteViewModel(items, strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext)))
         val passkeys = keep(PasskeyViewModel(PasskeyRepository(database.passkeyDao()), strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext)))
-        val keepass = keep(LocalKeePassViewModel(context.applicationContext as Application, database.localKeePassDatabaseDao(), security))
+        val keepass = keep(LocalKeePassViewModel(context.applicationContext as Application, (if (testKeePassDatabases.isEmpty()) database else PasswordDatabase.getDatabase(context)).localKeePassDatabaseDao(), security))
+        testKeepassModel = keepass
         // The app always supplies this model, including when there are no MDBX vaults.
         // Overview -> list navigation changes the native-token collector from null to this model.
         val mdbx = keep(MdbxViewModel(context.applicationContext as Application,
@@ -112,16 +122,18 @@ class VaultOverviewPaneTest {
                     appSettings = appSettings.copy(vaultOverviewConfig = persisted.vaultOverviewConfig, vaultListSort = persisted.vaultListSort)
                 }
             }
+            CompositionLocalProvider(LocalDensity provides androidx.compose.ui.unit.Density(LocalDensity.current.density, fixtureFontScale)) {
             MaterialTheme(colorScheme = if (darkTheme) darkColorScheme() else lightColorScheme()) {
                 state = rememberVaultV2PaneState(remember { VaultV2RetainedState() })
                 VaultV2Pane(passwordModel, totp, cards, documents, addresses, notes, passkeys,
-                    keepassDatabases = emptyList(), mdbxDatabases = emptyList(), bitwardenVaults = testBitwardenVaults,
+                    keepassDatabases = testKeePassDatabases, mdbxDatabases = emptyList(), bitwardenVaults = testBitwardenVaults,
                     localKeePassViewModel = keepass, mdbxViewModel = mdbx, settingsViewModel = settingsModel, state = state,
                     onOpenPassword = { openedPassword = it }, onOpenTotp = {}, onOpenBankCard = {}, onOpenDocument = {},
                     onOpenBillingAddress = {}, onOpenNote = {}, onOpenPasskey = {}, onOpenMdbxCommitHistory = {},
                     onOpenHistory = {}, onOpenTrashPage = {}, onOpenArchivePage = {}, onOpenCommonAccountTemplates = {},
                     appSettings = appSettings, securityManager = security, biometricEnabled = false,
                     modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background))
+            }
             }
         }
         compose.waitUntil(15_000) {
@@ -569,6 +581,128 @@ class VaultOverviewPaneTest {
         sortScreenshot("vault-sort-folder-search.png")
     }
 
+    private fun prepareFolderNavigationFixture() = runBlocking {
+        database.passwordEntryDao().deleteAllPasswordEntries()
+        listOf(1760L to "Parent", 1761L to "Parent/zebra", 1762L to "Parent/Alpha",
+            1763L to "Parent/Alpha/Grandchild", 1764L to "Other").forEach { (id, name) ->
+            database.categoryDao().insert(Category(id = id, name = name))
+        }
+        listOf(1L to 1760L, 2L to 1761L, 3L to 1763L).forEach { (id, folder) ->
+            database.passwordEntryDao().insertPasswordEntry(PasswordEntry(id = id,
+                title = "Layer entry $id", website = "", username = "", password = "", categoryId = folder))
+        }
+        settings.updateVaultListSort(VaultListSort.TITLE_ASC)
+        val fixtureConfig = VaultOverviewConfig(scope = "local", order = listOf(VaultOverviewModule.FOLDERS.name))
+        settings.updateVaultOverviewConfig { fixtureConfig }
+        appSettings = appSettings.copy(vaultV2LayoutMode = VaultV2LayoutMode.CLASSIC,
+            vaultListSort = VaultListSort.TITLE_ASC, vaultOverviewConfig = fixtureConfig)
+    }
+
+    @Test fun overviewFolderListShowsOnlyTopLevelFolders() {
+        prepareFolderNavigationFixture()
+        showPane(expectedOverviewCount = 3)
+        compose.waitUntil(10_000) { state.overviewSnapshot?.folders?.size == 5 }
+        compose.onNodeWithTag("overview_folder_local/1760").assertIsDisplayed()
+        compose.onNodeWithTag("overview_folder_local/1764").assertIsDisplayed()
+        compose.onNodeWithTag("overview_folder_local/1761").assertDoesNotExist()
+        compose.onNodeWithTag("overview_folder_local/1762").assertDoesNotExist()
+        compose.onNodeWithTag("overview_folder_local/1763").assertDoesNotExist()
+    }
+
+    @Test fun overviewFolderLargeFontDarkKeepsFoldersAboveEntries() {
+        fixtureFontScale = 1.5f
+        darkTheme = true
+        overviewFolderEntryKeepsAllSortedChildFoldersTogetherAboveDirectEntries()
+    }
+
+    @Test fun overviewFolderEntryKeepsAllSortedChildFoldersTogetherAboveDirectEntries() {
+        prepareFolderNavigationFixture()
+        showPane(followOverviewSettings = true, expectedOverviewCount = 3)
+        openOverviewNode("overview_folder_local/1760")
+        fun awaitFolderOrder(vararg titles: String) {
+            compose.waitUntil(15_000) {
+                val nodes = (titles.toList() + "Layer entry 1").map { title ->
+                    compose.onAllNodesWithText(title).fetchSemanticsNodes().singleOrNull()
+                }
+                nodes.all { it != null } && nodes.map { it!!.boundsInRoot.top }.zipWithNext().all { (a, b) -> a < b }
+            }
+            titles.forEach { compose.onNodeWithText(it).assertIsDisplayed() }
+            compose.onNodeWithText("Layer entry 1").assertIsDisplayed()
+            compose.onNodeWithText("Layer entry 2").assertDoesNotExist()
+            compose.onNodeWithText("Layer entry 3").assertDoesNotExist()
+        }
+        awaitFolderOrder("Alpha", "zebra")
+        chooseSort(VaultListSort.TITLE_DESC)
+        awaitFolderOrder("zebra", "Alpha")
+        capture(if (darkTheme) "folder-navigation-176-desc-dark-large.png" else "folder-navigation-176-desc.png")
+        compose.onNodeWithText("Alpha").performClick()
+        compose.waitUntil(10_000) { compose.onAllNodesWithText("Grandchild").fetchSemanticsNodes().isNotEmpty() }
+        compose.onNodeWithText("zebra").assertDoesNotExist()
+        compose.onNodeWithText("Layer entry 3").assertDoesNotExist()
+        compose.onNodeWithText("Grandchild").performClick()
+        awaitListText("Layer entry 3")
+        Espresso.pressBack()
+        compose.onNodeWithText("Grandchild").assertIsDisplayed()
+        Espresso.pressBack()
+        awaitFolderOrder("zebra", "Alpha")
+        Espresso.pressBack()
+        compose.onNodeWithTag("vault_overview_screen").assertIsDisplayed()
+        compose.runOnIdle { assertEquals(VaultV2LayoutMode.CLASSIC, appSettings.vaultV2LayoutMode) }
+    }
+
+    @Test fun kdbxOverviewNavigatesDuplicateParentsByUuidAndLocksWithoutWriting() = runBlocking {
+        val a = UUID.randomUUID(); val b = UUID.randomUUID()
+        val ac = UUID.randomUUID(); val bc = UUID.randomUUID()
+        KeePassDeleteInvestigationTest().scenario(databaseTransform = { file ->
+            file.modifyParentGroup {
+                val fixture = entries.take(4).mapIndexed { index, entry ->
+                    entry.copy(fields = entry.fields + ("Title" to app.keemobile.kotpass.models.EntryValue.Plain("KDBX layer $index")))
+                }
+                copy(entries = listOf(fixture[0]), groups = listOf(
+                    Group(uuid = a, name = "Same", entries = listOf(fixture[1]), groups = listOf(
+                        Group(uuid = ac, name = "Alpha", entries = listOf(fixture[2])))),
+                    Group(uuid = b, name = "Same", groups = listOf(
+                        Group(uuid = bc, name = "Beta", entries = listOf(fixture[3])))),
+                    Group(uuid = UUID.randomUUID(), name = "A/B")))
+            }
+        }) { model, service, id, room, uri ->
+            val original = context.contentResolver.openInputStream(uri)!!.use { it.readBytes() }
+            val snapshot = service.loadWorkspace(id).getOrThrow()
+            assertTrue(model.applyKeePassWorkspaceSnapshot(id, snapshot, true, false))
+            database.passwordEntryDao().deleteAllPasswordEntries()
+            room.passwordEntryDao().getPasswordEntriesByKeePassDatabaseSync(id).forEach {
+                database.passwordEntryDao().insertPasswordEntry(it)
+            }
+            val config = VaultOverviewConfig(scope = "keepass:$id", order = listOf(VaultOverviewModule.FOLDERS.name))
+            settings.updateVaultOverviewConfig { config }
+            appSettings = appSettings.copy(vaultV2LayoutMode = VaultV2LayoutMode.CLASSIC, vaultOverviewConfig = config)
+            testKeePassDatabases = listOf(PasswordDatabase.getDatabase(context).localKeePassDatabaseDao().getDatabaseById(id)!!)
+            showPane(expectedOverviewCount = 4)
+            compose.waitUntil(15_000) { state.overviewSnapshot?.folders?.size == 5 }
+            compose.onNodeWithTag("overview_folder_keepass:$id/$a").assertIsDisplayed()
+            compose.onNodeWithTag("overview_folder_keepass:$id/$b").assertIsDisplayed()
+            compose.onNodeWithTag("overview_folder_keepass:$id/$ac").assertDoesNotExist()
+            openOverviewNode("overview_folder_keepass:$id/$a")
+            awaitListText("KDBX layer 1")
+            compose.onNodeWithTag("vault_folder_hierarchy:keepass:$id/$ac").assertIsDisplayed().performClick()
+            awaitListText("KDBX layer 2")
+            compose.onNodeWithText("KDBX layer 3").assertDoesNotExist()
+            Espresso.pressBack()
+            awaitListText("KDBX layer 1")
+            compose.onNodeWithTag("vault_folder_hierarchy:keepass:$id/$bc").assertDoesNotExist()
+            Espresso.pressBack()
+            compose.onNodeWithTag("vault_overview_screen").assertIsDisplayed()
+            openOverviewNode("overview_folder_keepass:$id/$b")
+            compose.waitUntil(10_000) { compose.onAllNodesWithTag("vault_folder_hierarchy:keepass:$id/$bc").fetchSemanticsNodes().isNotEmpty() }
+            compose.onNodeWithTag("vault_folder_hierarchy:keepass:$id/$bc").performClick()
+            awaitListText("KDBX layer 3")
+            compose.runOnIdle { testKeepassModel.lockKeePassDatabase(id) }
+            compose.waitUntil(15_000) { compose.onAllNodesWithText("KDBX layer 3").fetchSemanticsNodes().isEmpty() }
+            assertArrayEquals(original, context.contentResolver.openInputStream(uri)!!.use { it.readBytes() })
+            assertEquals(VaultV2LayoutMode.CLASSIC, appSettings.vaultV2LayoutMode)
+        }
+    }
+
     private fun prepareSortEntries() = runBlocking {
         settings.updateVaultListSort(VaultListSort.TITLE_ASC)
         database.passwordEntryDao().deleteAllPasswordEntries()
@@ -611,7 +745,7 @@ class VaultOverviewPaneTest {
 
     private fun capture(name: String) {
         compose.waitForIdle()
-        File(context.getExternalFilesDir("overview-verification"), name).outputStream().use {
+        File(context.cacheDir, name).outputStream().use {
             compose.onRoot().captureToImage().asAndroidBitmap().compress(Bitmap.CompressFormat.PNG, 100, it)
         }
     }

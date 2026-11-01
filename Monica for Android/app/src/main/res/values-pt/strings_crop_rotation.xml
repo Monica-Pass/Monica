@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="card_face_rotate_left">"Rodar 90° para a esquerda"</string>
+    <string name="card_face_rotate_right">"Rodar 90° para a direita"</string>
+    <string name="card_face_crop_rotation_hint">"Arraste para posicionar, faça gesto de pinça para ampliar ou rode e inverta com os controlos."</string>
+    <string name="card_face_flip_horizontal">"Inverter horizontalmente"</string>
+    <string name="card_face_flip_vertical">"Inverter verticalmente"</string>
+</resources>

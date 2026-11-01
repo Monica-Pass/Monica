@@ -1,0 +1,32 @@
+# Portuguese regional localization — Android 1.0.324
+
+## Scope and regional wording
+
+Ordinary Android and canonical F-Droid now offer Português (Brasil), explicitly pt-BR, and Português (Portugal), explicitly pt-PT. European Portuguese is also the values-pt fallback; generic pt and pt-AO use this pack. Existing language enum values retain their ordering. Both regions have all 7,087 current translatable default resources, including plural parts and formatting contracts. Ordinary uses 99 XML files per region; F-Droid uses 100. Its unavailable-provider and insecure-HTTP wording remains flavor-specific; ordinary app import/OTP export entries are not added to F-Droid defaults.
+
+The translation uses regional app language: Portugal has palavra-passe, ficheiro, utilizador, ecrã, Guardar and Definições; Brazil has senha, arquivo, usuário, tela, Salvar and Configurações. Instructions were written and reviewed in context, with technical tokens, brands and formats such as Passkey, Keystore, KDBX, KeePass, WebDAV and Steam retained. Deletion, overwrite, lock, recovery, cancellation and failure conditions are retained without abbreviation. This is engineering/editorial review, not a claim of native-speaker human certification.
+
+## Dock and runtime UI
+
+Compact labels include Login/Senha, OTP, Cart., Gerar, Notas, Cofre, Env., Chave, Steam and Def./Conf. Full page names remain descriptive. Portuguese compact navigation uses the shared production DockLabel with one line and bounded 10–12sp autosizing; SP follows the system font scale. Other language navigation behavior remains the existing two-line behavior. Default and optional sets cover all ten current destinations. Tests check no ellipsis, clipping or word splitting at 360dp normal/1.5 font scale and 320dp optional/1.5 scale. These are representative six-item layouts, not a promise that an arbitrarily dense ten-item Dock fits every screen/font size.
+
+The actual language-selection dialog at normal and 1.6 scale keeps all choices reachable. Quick setup persists both regional selections and refreshes welcome text. Tests render the actual SecureStorageRecoveryScreen and verify the full second-confirmation warning at large text; cancelling does not authorize recovery. Recovery, authentication, database formats, KDF parameters and synchronization protocols were not changed. Date month/day presentation is dd-MM in Portuguese and existing English/French date behavior remains verified.
+
+## Validation
+
+Each final Debug main/test pair passed seven selected JVM cases and 38 distinct API32 device cases: 12 regional resource/locale cases, 14 regional UI cases, nine existing recovery-dialog cases and three timeline-date cases. Android reads all 7,086 translated strings per region and formats all 882 argument-bearing strings. Separate aapt2 checks compare all 7,087 packaged resources per region, including plural values, with the generated source: zero differences for both APKs. Shared-source freeze covers 202 files with normalized byte equality. F-Droid metadata and its six script regressions passed.
+
+The first ordinary device suite passed 36 cases but screenshot review found words split across two lines. Its fixture had allowed two lines and did not establish visual acceptance. The final fixture now uses the same DockLabel as production and requires one uncut line. First screenshots remain only in the local ignored design directory. The prior APK was also deliberately checked after source labels changed; exactly six stale regional labels were rejected, and final packaged checks have zero differences. These earlier results are not counted as final layout acceptance.
+
+Before localization, the legacy full-class LocaleResourceCoverageTest already failed one of three cases due to incomplete other-language packs. This pre-existing global-coverage failure remains recorded and was not weakened. The advertised-language contract case and the new independent full Portuguese coverage checks pass. Translation workers produced all keys, but feature/core-a completion hit rate limits during final review; root took over complete contract/editorial validation and retained their review artifacts. Initial F-Droid changelog length exceeded its newline-inclusive limit; it was shortened while preserving prior security/sync conditions. Host prep/export diagnostics had wrong relative cwd/options and GBK/CRLF parser failures; corrected absolute paths, SDK32 run-as ordering and UTF8/line-ending handling before final validation. No failed host step is counted as device success.
+
+Twelve final native screenshots per flavor were reviewed locally, covering both regions in the language dialog, quick setup and three Dock sizes/theme combinations. Images and composite review sheets remain ignored, and are not embedded in repository documentation. Tests use a synthetic dedicated guest on the registered public Monica_Issue136_API_32 AVD (API32 x86_64); no private accounts or vault data are used. Physical-device/OEM validation, every application screen and a new R8 build are outside this verification.
+
+## Final artifacts and publication boundary
+
+- ordinary: versionCode 12, device JUnit 71.758s / host 81.503s; main SHA-256 `1075662ce4225e705a69ed0d6feffe92f88e43fa4408dcccbbcd5d154b12f276`, test SHA-256 `365f258175f36e9c64415381207ba89b4514a60a2a2452fb451a64913e9ab299`.
+- fdroid: versionCode 31, device JUnit 63.642s / host 70.486s; main SHA-256 `ab45f981d92d061a766bfdcc80ebc14f3a70ffe58f43a0fce1bc5fac638468ac`, test SHA-256 `15c6fe6427127aec2b50f5cac1e792f2c5dbef0179e470cdf82ed7114585c246`.
+
+Ordinary versionCode12 and F-Droid versionCode31 remain unreleased 1.0.324. Chinese/English root and local next notes, and F-Droid fastlane31, include the new regions while retaining earlier 324 recovery/sync/KDBX notes and published 323/323b. This task does not commit, push, tag, publish or deliver APKs. Emulator/user cleanup is documented in the cleanup receipt; original users and the public configuration/data disk are retained.
+
+Cleanup restored user0, removed only the exact named guest13, and stopped this task's emulator5556; users0/10/11/12 and the registration/configuration/userdata images remain. The optional dumpsys activity instrumentation diagnostic is unsupported on this image and returned Unknown command; it is not counted as verification. Both instrument runners had already returned successful final38-case receipts before cleanup.

@@ -161,6 +161,7 @@ internal fun VaultOverviewContent(
         cardStackState = cardStackState, isDetailVisible = isDetailVisible,
         reduceAnimations = appSettings.reduceAnimations, trashCount = trashCount,
         walletStackLoopEnabled = appSettings.walletStackLoopEnabled,
+        sort = appSettings.vaultListSort, onSortChange = settingsViewModel::updateVaultListSort,
         onConfigChange = settingsViewModel::updateVaultOverviewConfig,
         onSelectScope = onSelectScope, onOpenSource = onOpenSource, onOpenItem = onOpenItem,
         onOpenType = onOpenType, onOpenFolder = onOpenFolder, onFavorites = onFavorites,

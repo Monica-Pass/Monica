@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="manager_open_database">"Abrir configurações do banco de dados"</string>
+    <string name="manager_dual">"Alternar um / dois painéis"</string>
+    <string name="manager_databases">"Bancos de dados"</string>
+    <string name="manager_choose_destination">"Escolher destino"</string>
+    <string name="manager_selection_destination">"%1$d selecionados → %2$s"</string>
+    <string name="manager_items_selected">"%1$d itens · %2$d selecionados"</string>
+    <string name="manager_confirm_transfer">"Transferir %1$d itens selecionados de %2$s para %3$s / %4$s? A origem é preservada até o destino ser verificado."</string>
+    <string name="manager_result">"Resultado da transferência"</string>
+    <string name="manager_result_count">"Concluídos: %1$d · Requerem atenção: %2$d"</string>
+    <string name="manager_technical_details">"Detalhes técnicos"</string>
+    <string name="manager_select">"Selecionar item"</string>
+    <string name="manager_failure_format">"O destino não consegue preservar todas as informações originais. Mantenha a origem e escolha um banco de dados do mesmo formato. Veja os detalhes dos campos afetados."</string>
+    <string name="manager_failure_changed">"Os dados mudaram ou a verificação falhou. A origem foi preservada. Atualize ambos os painéis e revise o destino antes de tentar novamente."</string>
+    <string name="manager_failure_locked">"É necessário desbloquear o banco de dados ou o arquivo original está indisponível. Abra-o nas configurações do banco de dados e atualize este painel."</string>
+    <string name="manager_failure_general">"Não foi possível concluir esta operação. Verifique ambos os painéis e os detalhes antes de tentar novamente: o destino pode conter uma cópia parcial."</string>
+    <string name="manager_left_pane">"Painel esquerdo"</string>
+    <string name="manager_right_pane">"Painel direito"</string>
+    <string name="manager_copy_left">"← Copiar"</string>
+    <string name="manager_copy_right">"Copiar →"</string>
+    <string name="manager_move_left">"← Mover"</string>
+    <string name="manager_move_right">"Mover →"</string>
+    <string name="manager_focused_selection">"Ativo: %1$s · %2$d selecionados"</string>
+    <string name="manager_focused_location">"Ativo: %1$s · %2$s"</string>
+    <string name="manager_history_back">"Voltar"</string>
+    <string name="manager_history_forward">"Avançar"</string>
+    <string name="manager_new_folder_short">"Nova pasta"</string>
+    <string name="manager_switch_pane">"Alternar painel"</string>
+    <string name="manager_parent">"Subir"</string>
+    <string name="manager_open_item">"Abrir"</string>
+    <string name="manager_clear_selection">"Limpar seleção"</string>
+</resources>

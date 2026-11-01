@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="secure_startup_title">"Armazenamento seguro indisponível"</string>
+    <string name="secure_startup_preserved">"Dados existentes preservados"</string>
+    <string name="secure_startup_description">"O Android não consegue verificar neste momento as definições encriptadas desta instalação. O início normal foi interrompido. Monica não limpou as definições nem substituiu as chaves."</string>
+    <string name="secure_startup_restart">"Reinicie o telemóvel, desbloqueie-o com a credencial de bloqueio de ecrã do sistema e tente novamente."</string>
+    <string name="secure_startup_environment">"Se isto começou após restaurar dados da aplicação, instalar uma ROM ou modificar o sistema, verifique se é possível restaurar o sistema original e o ambiente de chaves. Este erro, por si só, não determina a causa."</string>
+    <string name="secure_startup_no_reset">"Não limpe os dados da aplicação nem desinstale a Monica. Mantenha os ficheiros originais. Se tiver uma cópia de segurança exportada pela Monica, verifique-a noutra instalação. Uma chave do sistema perdida permanentemente não pode ser recriada ao tentar novamente."</string>
+    <string name="secure_startup_retry">"Tentar novamente"</string>
+    <string name="secure_startup_diagnostic">"Copiar informações de diagnóstico"</string>
+</resources>

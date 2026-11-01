@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="cg_symbols">"Símbolos aleatórios"</string>
+    <string name="cg_random_username">"Nome de usuário aleatório"</string>
+    <string name="cg_email_alias">"Alias de email com +"</string>
+    <string name="cg_username_title">"Gerador de nomes de usuário"</string>
+    <string name="cg_valid_email">"Digite um endereço de email válido"</string>
+    <string name="cg_invalid_options">"Selecione caracteres e mantenha o total mínimo dentro do comprimento."</string>
+    <string name="cg_use">"Usar"</string>
+    <string name="cg_saved_suggestions">"Sugestões salvas"</string>
+    <string name="cg_length">"Comprimento"</string>
+    <string name="cg_words">"Palavras"</string>
+    <string name="cg_minimum">"Contagem mínima"</string>
+    <string name="cg_decrease">"Diminuir"</string>
+    <string name="cg_increase">"Aumentar"</string>
+</resources>

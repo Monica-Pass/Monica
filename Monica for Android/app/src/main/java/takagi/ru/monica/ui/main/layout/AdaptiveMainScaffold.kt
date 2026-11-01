@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.ui.main.navigation.BottomNavItem
+import takagi.ru.monica.ui.main.navigation.DockLabel
 import takagi.ru.monica.ui.main.navigation.shortLabelRes
 
 @Composable
@@ -41,11 +42,7 @@ fun AdaptiveMainScaffold(
                             onClick = { onTabSelected(item) },
                             icon = { Icon(item.icon, contentDescription = label) },
                             label = {
-                                Text(
-                                    text = label,
-                                    maxLines = 2,
-                                    overflow = TextOverflow.Clip
-                                )
+                                DockLabel(label)
                             }
                         )
                     }

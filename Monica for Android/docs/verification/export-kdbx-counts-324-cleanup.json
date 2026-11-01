@@ -1,0 +1,32 @@
+{
+  "owned_guest_removed": 14,
+  "original_user_restored": 0,
+  "preserved_users": [
+    0,
+    10,
+    11,
+    12
+  ],
+  "users_before": "Users:\r\n\tUserInfo{0:Owner:c13} running\r\n\tUserInfo{10:Monica:410}\r\n\tUserInfo{11:Monica_Recovery316:410}\r\n\tUserInfo{12:Monica_Recovery316_Retest:410}\r\n\tUserInfo{14:Monica_ExportCounts324_Test:414} running\r\n",
+  "users_after": "Users:\r\n\tUserInfo{0:Owner:c13} running\r\n\tUserInfo{10:Monica:410}\r\n\tUserInfo{11:Monica_Recovery316:410}\r\n\tUserInfo{12:Monica_Recovery316_Retest:410}\r\n",
+  "owned_avd_stopped": "Monica_Issue136_API_32",
+  "preserved_files": [
+    {
+      "path": "C:\\Users\\joyins\\.android\\avd\\Monica_Issue136_API_32.ini",
+      "bytes": 109
+    },
+    {
+      "path": "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\config.ini",
+      "bytes": 3908
+    },
+    {
+      "path": "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img",
+      "bytes": 12884901888
+    },
+    {
+      "path": "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img.qcow2",
+      "bytes": 21325348864
+    }
+  ],
+  "other_app_data_cleared": false
+}

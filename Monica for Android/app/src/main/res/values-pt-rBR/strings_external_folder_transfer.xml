@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="external_folder_bitwarden_hint">"As pastas Bitwarden permanecem na mesma conta. Ainda não há suporte para copiar pastas com anexos, Passkeys ou entradas de organização."</string>
+    <string name="external_folder_choose_destination">"Escolha um banco de dados e pasta de destino"</string>
+    <string name="external_folder_root">"Raiz do banco de dados"</string>
+    <string name="external_folder_copy_hint">"Copiar a pasta e seu conteúdo; manter o original."</string>
+    <string name="external_folder_move_hint">"Mover a pasta e seu conteúdo. O original só é removido depois de salvar o destino."</string>
+</resources>

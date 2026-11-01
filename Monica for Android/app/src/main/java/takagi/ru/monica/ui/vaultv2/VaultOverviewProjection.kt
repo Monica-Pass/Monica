@@ -26,6 +26,7 @@ internal data class VaultOverviewFolder(
     val sourceKey: String,
     val target: UnifiedCategoryFilterSelection,
     val count: Int = 0,
+    val isTopLevel: Boolean = true,
 )
 
 internal data class VaultOverviewSnapshot(
@@ -122,8 +123,11 @@ internal fun prepareVaultOverview(
     fun addFolder(folder: VaultOverviewFolder) {
         if (folder.sourceKey in availableSources) folders[folder.key] = folder
     }
-    categories.filter { it.bitwardenVaultId == null && it.mdbxDatabaseId == null }.forEach {
-        addFolder(VaultOverviewFolder("local/${it.id}", it.name, "local", UnifiedCategoryFilterSelection.Custom(it.id)))
+    val localCategories = categories.filter { it.bitwardenVaultId == null && it.mdbxDatabaseId == null }
+    val localPaths = localCategories.map { takagi.ru.monica.ui.normalizePasswordQuickFolderPath(it.name) }.toSet()
+    localCategories.forEach {
+        addFolder(VaultOverviewFolder("local/${it.id}", it.name, "local", UnifiedCategoryFilterSelection.Custom(it.id),
+            isTopLevel = takagi.ru.monica.ui.passwordQuickFolderParentPath(it.name).let { parent -> parent == null || parent !in localPaths }))
     }
     categories.filter { it.mdbxDatabaseId != null }.forEach {
         val source = "mdbx:${it.mdbxDatabaseId}"
@@ -139,17 +143,22 @@ internal fun prepareVaultOverview(
     mdbxFolders.forEach { (databaseId, entries) -> entries.filter { it.folderId != "root" }.forEach {
         val source = "mdbx:$databaseId"
         addFolder(VaultOverviewFolder("$source/${it.folderId}", it.name, source,
-            UnifiedCategoryFilterSelection.MdbxFolderFilter(databaseId, it.folderId)))
+            UnifiedCategoryFilterSelection.MdbxFolderFilter(databaseId, it.folderId),
+            isTopLevel = it.parentFolderId?.trim().let { parent -> parent.isNullOrBlank() || parent.equals("root", ignoreCase = true) }))
     } }
     // Passkeys carry a path but no group UUID. Resolve both representations to the
     // same folder identity before assigning numeric indices to Kotlin/Rust aggregation.
+    val ambiguousKeePassPaths = keepassGroups.flatMap { (id, groups) ->
+        groups.groupBy { it.path }.filterValues { it.size > 1 }.keys.map { id to it }
+    }.toSet()
     val keepassFolderKeysByPath = mutableMapOf<Pair<Long, String>, String>()
     keepassGroups.forEach { (databaseId, groups) -> groups.filter { it.path.isNotBlank() }.forEach { group ->
         val source = "keepass:$databaseId"
         val key = "$source/${group.uuid?.takeIf(String::isNotBlank) ?: group.path}"
-        keepassFolderKeysByPath[databaseId to group.path] = key
+        if ((databaseId to group.path) !in ambiguousKeePassPaths) keepassFolderKeysByPath[databaseId to group.path] = key
         addFolder(VaultOverviewFolder(key, group.displayPath, source,
-            UnifiedCategoryFilterSelection.KeePassGroupFilter(databaseId, group.path, group.uuid)))
+            UnifiedCategoryFilterSelection.KeePassGroupFilter(databaseId, group.path, group.uuid),
+            isTopLevel = !group.path.trim('/').contains('/')))
     } }
     // Also cover the initial snapshot before the group catalogue has loaded. A
     // two-pass lookup makes identity independent of password/passkey item order.
@@ -173,12 +182,14 @@ internal fun prepareVaultOverview(
             source.startsWith("keepass:") -> item.keepassGroupPath()?.takeIf(String::isNotBlank)?.let { path ->
                 val databaseId = item.keepassDatabaseId()!!
                 val uuid = item.keepassGroupUuid()?.takeIf(String::isNotBlank)
+                if (uuid == null && (databaseId to path) in ambiguousKeePassPaths) return@let null
                 val key = uuid?.let { "$source/$it" }
                     ?: keepassFolderKeysByPath[databaseId to path] ?: "$source/$path"
                 val resolvedUuid = uuid ?: key.removePrefix("$source/").takeIf { it != path }
                 folders.getOrPut(key) {
                     VaultOverviewFolder(key, decodeKeePassPathForDisplay(path), source,
-                        UnifiedCategoryFilterSelection.KeePassGroupFilter(databaseId, path, resolvedUuid))
+                        UnifiedCategoryFilterSelection.KeePassGroupFilter(databaseId, path, resolvedUuid),
+                        isTopLevel = !path.trim('/').contains('/'))
                 }
                 key
             }

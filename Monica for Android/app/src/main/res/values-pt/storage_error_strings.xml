@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="keepass_error_read_only">"Esta base de dados é só de leitura. Desative o modo só de leitura nas definições antes de editar."</string>
+    <string name="keepass_error_write_permission">"Falta acesso de escrita KDBX. Conceda acesso novamente nas definições da base de dados antes de guardar ou eliminar."</string>
+    <string name="keepass_error_memory">"As definições KDF requerem mais memória do que este dispositivo pode fornecer. Reduza a utilização de memória ou o paralelismo."</string>
+    <string name="keepass_error_credentials">"Palavra-passe ou ficheiro de chave da base de dados incorreto"</string>
+    <string name="keepass_error_legacy">"As bases de dados antigas .kdb (KeePass 1.x) não são suportadas. Guarde a base de dados como .kdbx no KeePassDX ou KeePassXC e importe-a."</string>
+    <string name="keepass_error_format">"Formato de base de dados não suportado ou ficheiro danificado"</string>
+    <string name="keepass_error_io">"Não foi possível ler ou escrever o ficheiro KeePass"</string>
+    <string name="keepass_error_operation">"A operação KeePass falhou"</string>
+    <string name="onedrive_error_redirect">"Uma versão antiga do Monica Steam está a intercetar o login OneDrive. Atualize Monica Steam e tente novamente. O ficheiro de base de dados não está danificado."</string>
+    <string name="onedrive_error_power">"OneDrive não consegue renovar a sessão de login neste momento. Desative a otimização de bateria ou ligue o ecrã e reabra Monica antes de tentar novamente."</string>
+    <string name="onedrive_error_operation">"A operação OneDrive falhou"</string>
+    <string name="keepass_error_not_remote">"Esta base de dados não tem origem remota"</string>
+    <string name="keepass_error_remote_source_missing">"Origem remota não encontrada"</string>
+    <string name="keepass_error_working_copy_missing">"Cópia de trabalho local não encontrada"</string>
+    <string name="keepass_sync_pulled">"Versão remota mais recente descarregada"</string>
+    <string name="keepass_sync_both_changed">"O ficheiro remoto e a cópia de trabalho local mudaram. Resolva o conflito antes de sincronizar."</string>
+    <string name="keepass_sync_up_to_date">"A base de dados remota está atualizada"</string>
+    <string name="keepass_sync_remote_changed">"O ficheiro remoto mudou. Sincronize novamente antes de continuar."</string>
+    <string name="keepass_sync_complete">"Sincronização remota concluída"</string>
+    <string name="keepass_error_group_name_required">"Introduza um nome de grupo"</string>
+    <string name="keepass_error_group_path">"Caminho de grupo inválido"</string>
+    <string name="keepass_error_group_missing">"Grupo não encontrado: %1$s"</string>
+    <string name="keepass_error_group_child">"Não é possível mover um grupo para si mesmo ou para um dos seus subgrupos"</string>
+    <string name="keepass_error_group_uuid">"O destino já tem um grupo diferente com o mesmo UUID: %1$s"</string>
+    <string name="keepass_error_select_folder">"Selecione pelo menos uma pasta"</string>
+    <string name="keepass_group_unnamed">"Grupo sem nome"</string>
+    <string name="keepass_error_parent_group">"Grupo superior não encontrado: %1$s"</string>
+    <string name="keepass_error_group_exists">"Já existe um grupo com este nome aqui"</string>
+    <string name="keepass_error_no_credentials">"Não há credenciais da base de dados disponíveis"</string>
+    <string name="keepass_error_source_type">"Tipo de origem remota não suportado: %1$s"</string>
+    <string name="keepass_error_upload_verification">"A verificação remota falhou: o conteúdo enviado difere (%1$d/%2$d bytes)"</string>
+    <string name="storage_error_invalid_path">"Caminho de ficheiro inválido"</string>
+    <string name="storage_error_create_directory">"Não foi possível criar a pasta da base de dados"</string>
+    <string name="storage_error_read_database">"Não foi possível ler o ficheiro de base de dados"</string>
+    <string name="storage_error_open_database">"Não foi possível abrir o ficheiro de base de dados"</string>
+    <string name="storage_error_recovery_copy">"Não foi possível criar uma cópia de recuperação KeePass"</string>
+    <string name="storage_error_verify_database">"Não foi possível verificar o ficheiro de base de dados"</string>
+    <string name="storage_error_write_verification">"A verificação falhou após escrever o ficheiro KeePass externo"</string>
+    <string name="storage_error_rollback_verification">"A verificação falhou após restaurar o ficheiro KeePass externo"</string>
+    <string name="storage_error_write_database">"Não foi possível escrever o ficheiro de base de dados"</string>
+    <string name="keepass_error_conflict_cache_missing">"Falta a cópia em cache necessária para resolver conflitos"</string>
+    <string name="onedrive_error_session_expired">"A sessão da conta OneDrive expirou. Entre novamente."</string>
+</resources>

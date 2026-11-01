@@ -346,5 +346,7 @@ internal fun getLanguageDisplayName(language: Language, context: Context): Strin
         Language.FRENCH -> R.string.language_french
         Language.POLISH -> R.string.language_polish
         Language.ITALIAN -> R.string.language_italian
+        Language.PORTUGUESE_PORTUGAL -> R.string.language_portuguese_portugal
+        Language.PORTUGUESE_BRAZIL -> R.string.language_portuguese_brazil
     }
 )

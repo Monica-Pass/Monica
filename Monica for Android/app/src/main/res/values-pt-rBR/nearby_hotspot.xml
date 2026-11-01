@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="nearby_hotspot_create">"Hotspot temporário"</string>
+    <string name="nearby_hotspot_create_hint">"Conecte quando os dispositivos não têm uma rede Wi-Fi comum."</string>
+    <string name="nearby_hotspot_title">"Hotspot temporário"</string>
+    <string name="nearby_hotspot_help">"Este código expira em 10 minutos. Fechar este painel, bloquear ou sair do Monica desativa o hotspot. O pareamento continua sendo verificado."</string>
+    <string name="nearby_hotspot_active">"Hotspot temporário ativo"</string>
+    <string name="nearby_hotspot_stop">"Terminar hotspot temporário"</string>
+    <string name="nearby_hotspot_starting">"Criando hotspot e código de pareamento…"</string>
+    <string name="nearby_hotspot_join_title">"Conectar a este hotspot?"</string>
+    <string name="nearby_hotspot_join_hint">"Conecte a %1$s pela confirmação do Android. Monica verifica depois o dispositivo pareado."</string>
+    <string name="nearby_hotspot_connecting">"Aguardando a conexão Wi-Fi…"</string>
+    <string name="nearby_hotspot_failure">"O Android não conseguiu concluir a conexão. Pode conectar manualmente e escanear o código novamente."</string>
+    <string name="nearby_hotspot_permissions">"Conceda a permissão Wi-Fi solicitada pelo Android para criar ou conectar a um hotspot."</string>
+    <string name="nearby_hotspot_unsupported">"A conexão automática ao hotspot está indisponível. Conecte manualmente e escaneie novamente."</string>
+    <string name="nearby_hotspot_manual">"Já conectado, continuar"</string>
+    <string name="nearby_hotspot_open_wifi">"Configurações Wi-Fi"</string>
+    <string name="nearby_hotspot_scan_hint">"Escaneie um código de pareamento ou hotspot temporário do Monica."</string>
+    <string name="nearby_hotspot_connect">"Conectar"</string>
+    <string name="nearby_hotspot_copy_password">"Copiar senha do hotspot"</string>
+    <string name="nearby_hotspot_interrupted">"A conexão foi cancelada quando Monica saiu do primeiro plano. Conecte ao hotspot manualmente e escaneie o código novamente."</string>
+</resources>

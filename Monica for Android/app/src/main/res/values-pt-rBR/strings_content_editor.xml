@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="entry_content_remove_title">"Excluir %1$s?"</string>
+    <string name="entry_content_remove_message">"Remove o conteúdo deste rascunho. As alterações entram em vigor ao salvar."</string>
+    <string name="entry_content_drag">"Pressione e arraste para reordenar"</string>
+</resources>

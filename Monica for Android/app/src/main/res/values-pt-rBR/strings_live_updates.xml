@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="live_update_smart_copy_channel">"Cópia sequencial de credenciais"</string>
+    <string name="permission_live_updates_name">"Atualizações em tempo real"</string>
+    <string name="permission_live_updates_description">"Mostrar contagens regressivas OTP e a próxima credencial a copiar"</string>
+    <string name="live_update_unlock_to_view">"Desbloqueie para ver e continuar"</string>
+    <string name="live_update_copy_status">"Copiar"</string>
+    <string name="live_update_seconds">"%1$ds"</string>
+    <string name="live_update_unlock_to_copy">"Desbloqueie o dispositivo para copiar"</string>
+</resources>

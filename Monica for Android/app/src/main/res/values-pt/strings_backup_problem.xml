@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="passkey_backup_problem_title">"A cópia de segurança requer atenção"</string>
+    <string name="passkey_backup_problem_detail">"Não foi possível criar uma cópia de segurança destes itens. Os dados locais e as cópias de segurança remotas existentes permanecem inalterados."</string>
+    <string name="passkey_device_bound_solution">"Registe uma nova Passkey exportável no serviço e verifique se funciona antes de deixar de usar a chave antiga. Também pode ignorar este item por agora."</string>
+    <string name="passkey_skip_explanation">"Ignorar afeta apenas esta cópia de segurança e não elimina itens locais. Será guardada uma cópia parcial separada; as cópias de segurança remotas existentes são mantidas. Não substitui uma cópia de segurança completa."</string>
+    <string name="passkey_skip_and_backup">"Ignorar %1$d e criar cópia de segurança"</string>
+    <string name="passkey_retry_full_backup">"Tentar cópia de segurança completa novamente"</string>
+    <string name="passkey_problem_close">"Fechar"</string>
+    <string name="passkey_partial_saved">"Cópia de segurança parcial guardada"</string>
+    <string name="passkey_partial_saved_detail">"As Passkeys abaixo não estão incluídas. Os respetivos registos locais e as cópias de segurança remotas existentes são mantidos. A hora da última cópia de segurança completa não muda."</string>
+    <string name="passkey_partial_requires_encryption">"As cópias de segurança parciais que ignoram Passkeys também têm de ser encriptadas."</string>
+    <string name="passkey_partial_replace_blocked">"Esta cópia de segurança omite algumas Passkeys. Use a restauração por união; a substituição de dados locais está bloqueada."</string>
+    <string name="passkey_partial_restore_warning">"Esta cópia de segurança parcial omite as Passkeys ignoradas. A restauração une os dados aos registos locais existentes."</string>
+</resources>

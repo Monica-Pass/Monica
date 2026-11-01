@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="autofill_save_review_title">"Atualizar uma palavra-passe existente?"</string>
+    <string name="autofill_save_review_description">"Selecione uma entrada para a rever antes de guardar. As pastas, notas e outras contas existentes são preservadas."</string>
+    <string name="autofill_save_as_new">"Guardar como nova entrada"</string>
+    <string name="autofill_save_local_source">"Local"</string>
+</resources>

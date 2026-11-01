@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="wallet_selection_stack_title">"Pilha · %1$s"</string>
+    <string name="wallet_selection_unstacked">"Cartões individuais"</string>
+    <string name="wallet_selection_group_count">"%1$d de %2$d selecionados"</string>
+    <string name="wallet_selection_visible_group_count">"%1$d de %2$d cartões visíveis selecionados"</string>
+    <string name="wallet_selection_collapse_stack">"Recolher pilha"</string>
+    <string name="wallet_selection_expand_stack">"Expandir pilha"</string>
+</resources>

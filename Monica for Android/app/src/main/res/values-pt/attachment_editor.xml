@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="attachment_editor_empty">"Ainda não há anexos"</string>
+    <string name="attachment_editor_hint">"Escolha ficheiros, imagens ou documentos"</string>
+    <string name="attachment_editor_working">"A processar…"</string>
+</resources>

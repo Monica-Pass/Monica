@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="clear_data_completed">"Limpeza concluída"</string>
+    <string name="clear_data_failed">"Não foi possível limpar todos os dados selecionados"</string>
+    <string name="clear_data_preparing">"Contando as entradas selecionadas…"</string>
+    <string name="clear_data_passwords">"Limpando senhas…"</string>
+    <string name="clear_data_totp">"Limpando autenticadores…"</string>
+    <string name="clear_data_notes">"Limpando notas…"</string>
+    <string name="clear_data_documents">"Limpando documentos…"</string>
+    <string name="clear_data_bank_cards">"Limpando cartões bancários…"</string>
+    <string name="clear_data_generator_history">"Limpando o histórico de geração de senhas…"</string>
+    <string name="clear_data_count">"%1$d / %2$d entradas limpas"</string>
+    <string name="clear_data_wait">"Aguarde até esta operação terminar."</string>
+    <string name="clear_data_completed_hint">"Os dados selecionados foram limpos."</string>
+    <string name="clear_data_failed_hint">"A limpeza parou. As entradas já limpas não serão restauradas. Verifique a conexão com o banco de dados e tente novamente."</string>
+    <string name="clear_data_verifying">"Verificando…"</string>
+</resources>

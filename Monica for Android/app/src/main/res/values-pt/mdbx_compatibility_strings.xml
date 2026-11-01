@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="mdbx_unknown_read_only">"Este tipo de item ainda não permite edição. Ainda pode ver todos os dados."</string>
+    <string name="mdbx_unknown_unavailable">"Não foi possível ler este item. Desbloqueie a base de dados e reabra os detalhes."</string>
+    <string name="mdbx_unknown_show">"Mostrar valor"</string>
+    <string name="mdbx_unknown_hide">"Ocultar valor"</string>
+</resources>

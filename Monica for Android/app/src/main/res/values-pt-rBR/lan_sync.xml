@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="lan_title">"Sincronização próxima"</string>
+    <string name="lan_description">"Sincronize um cofre entre celulares e computadores na mesma rede Wi-Fi. Encontre um dispositivo e digite o código de pareamento ou escaneie o código QR."</string>
+    <string name="lan_select_vault">"Escolher um cofre"</string>
+    <string name="lan_receive_new">"Receber como novo cofre"</string>
+    <string name="lan_new_vault_hint">"Na primeira conexão, digite a senha do cofre de origem. O cofre recebido é adicionado separadamente. Nas sincronizações seguintes, selecione esse mesmo cofre em ambos os dispositivos."</string>
+    <string name="lan_vault_name">"Nome do cofre recebido"</string>
+    <string name="lan_vault_password">"Senha do cofre de origem"</string>
+    <string name="lan_host">"Permitir a conexão de um dispositivo"</string>
+    <string name="lan_manage">"Gerenciar cofres"</string>
+    <string name="lan_invitation_hint">"O pareamento expira após 10 minutos. Compartilhe este código ou código QR apenas com o dispositivo que deseja conectar."</string>
+    <string name="lan_pairing_code">"Código de pareamento"</string>
+    <string name="lan_pairing_autofilled">"Código e link de pareamento preenchidos automaticamente. Toque em Parear e sincronizar para continuar."</string>
+    <string name="lan_pairing_needs_vault_password">"Informações de pareamento preenchidas automaticamente. Digite a senha do cofre de origem para a primeira transferência e toque em Parear e sincronizar."</string>
+    <string name="lan_no_network">"Não foi encontrado um endereço Wi-Fi local."</string>
+    <string name="lan_copy_link">"Copiar link de pareamento"</string>
+    <string name="lan_discover">"Procurar dispositivos próximos"</string>
+    <string name="lan_discovering">"Procurando dispositivos…"</string>
+    <string name="lan_no_devices">"Ainda não foram encontrados dispositivos. No outro dispositivo, escolha “Permitir a conexão de um dispositivo”. Também pode escanear ou colar o link de pareamento."</string>
+    <string name="lan_paste_link">"Link de pareamento"</string>
+    <string name="lan_scan">"Escanear QR de pareamento"</string>
+    <string name="lan_connect">"Parear e sincronizar"</string>
+    <string name="lan_preparing">"Preparando dados criptografados do cofre…"</string>
+    <string name="lan_waiting">"Aguardando o outro dispositivo…"</string>
+    <string name="lan_connecting">"Verificando o pareamento…"</string>
+    <string name="lan_transferring">"Transferindo dados criptografados…"</string>
+    <string name="lan_merging">"Aplicando alterações ao cofre…"</string>
+    <string name="lan_confirming">"Aguardando que o outro dispositivo termine de aplicar as alterações…"</string>
+    <string name="lan_completed">"Ambos os dispositivos terminaram a sincronização"</string>
+    <string name="lan_cancelled">"Sincronização cancelada"</string>
+    <string name="lan_failed">"A sincronização não terminou"</string>
+    <string name="lan_bytes">"%1$d / %2$d KiB"</string>
+    <string name="lan_conflicts">"%1$d conflitos precisam de revisão no gerenciamento de cofres. Ambas as versões são preservadas."</string>
+    <string name="lan_imported">"O cofre recebido foi adicionado ao gerenciamento de cofres."</string>
+    <string name="lan_different_vault">"Estes cofres são diferentes. Selecione o mesmo cofre em ambos os dispositivos ou receba este como novo cofre."</string>
+    <string name="lan_unavailable">"A sincronização próxima está indisponível nesta compilação."</string>
+    <string name="lan_invalid_code">"O código de pareamento é inválido ou não corresponde mais. Obtenha um novo código no outro dispositivo."</string>
+    <string name="lan_expired">"O pareamento expirou. Permita novamente a conexão de um dispositivo para criar um novo código."</string>
+    <string name="lan_peer_failed">"O outro dispositivo não conseguiu aplicar as alterações. Verifique-o e tente novamente."</string>
+    <string name="lan_vault_failed">"Não foi possível abrir ou mesclar o cofre. Verifique a senha do cofre e o armazenamento disponível e tente novamente."</string>
+    <string name="lan_failed_hint">"Verifique se ambos os dispositivos continuam conectados à mesma rede Wi-Fi e pareie novamente. As alterações já confirmadas são preservadas."</string>
+    <string name="lan_external_blobs">"Este cofre referencia arquivos salvos fora dele. A sincronização próxima requer atualmente que todos os anexos estejam salvos dentro do cofre."</string>
+</resources>

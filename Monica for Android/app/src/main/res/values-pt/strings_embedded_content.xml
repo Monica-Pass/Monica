@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="embedded_copy_working">"A copiar conteúdo completo…"</string>
+    <string name="embedded_copy_failed">"A cópia do conteúdo está incompleta"</string>
+    <string name="embedded_copy_failed_message">"Não foi possível copiar %1$s por completo. A origem e o rascunho são mantidos. Verifique se a base de dados de origem está desbloqueada e os anexos disponíveis e tente novamente."</string>
+    <string name="embedded_copy_note">"Copiar nota"</string>
+    <string name="embedded_copy_card">"Copiar cartão"</string>
+    <string name="embedded_copy_independent">"Cópia independente · %1$d anexos"</string>
+    <string name="embedded_copy_document">"Copiar documento"</string>
+    <string name="password_content_document">"Documento de identificação"</string>
+    <string name="password_content_document_description">"Campos de identidade, frente do cartão, fotografias e anexos"</string>
+</resources>

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="default_manager_title">"Gerenciador de senhas padrão"</string>
+    <string name="default_manager_entry_hint">"Defina Monica com Shizuku ou Root quando HyperOS oculta as configurações de gerenciadores de senhas de terceiros"</string>
+    <string name="default_manager_description">"Define o gerenciador padrão para o usuário Android atual. Requer Android 14 ou posterior e autorização Shizuku ou Root. A verificação bem-sucedida das configurações não garante todos os fluxos Passkey do HyperOS."</string>
+    <string name="default_manager_denied">"Permissão negada. Autorize Monica no Shizuku e tente novamente"</string>
+    <string name="default_manager_read_failed">"Não foi possível ler as configurações do sistema. Atualize e tente novamente"</string>
+    <string name="default_manager_unset">"Não definido"</string>
+    <string name="default_manager_unknown">"Ainda não lido"</string>
+    <string name="default_manager_restore">"Restaurar configurações anteriores"</string>
+    <string name="default_manager_apply">"Definir como Monica"</string>
+    <string name="default_manager_restore_confirm">"Restaurar a configuração do sistema salva antes da última troca."</string>
+    <string name="default_manager_confirm">"Alterar o gerenciador de senhas padrão deste usuário. A configuração atual será primeiro salva localmente para restauração."</string>
+    <string name="default_manager_credential">"Provedor principal de credenciais"</string>
+    <string name="default_manager_autofill">"Serviço de preenchimento automático"</string>
+    <string name="default_manager_replace_warning">"Os outros provedores de credenciais serão desativados. Seus dados não serão excluídos."</string>
+    <string name="default_manager_restored">"Configurações anteriores do sistema restauradas e verificadas"</string>
+    <string name="default_manager_applied">"Monica selecionado e configurações do sistema verificadas"</string>
+    <string name="default_manager_write_failed">"Não foi possível concluir ou verificar a alteração. Atualize para verificar o status; a configuração salva está disponível para restauração."</string>
+    <string name="default_manager_ready">"Conectado e autorizado"</string>
+    <string name="default_manager_permission">"Autorização necessária"</string>
+    <string name="default_manager_stopped">"Instale e inicie Shizuku"</string>
+    <string name="default_manager_unsupported">"Requer Android 14+ e Shizuku 13+"</string>
+    <string name="default_manager_grant">"Autorizar Shizuku"</string>
+    <string name="default_manager_open_shizuku">"Abrir Shizuku"</string>
+    <string name="default_manager_include_autofill">"Definir também o preenchimento automático"</string>
+    <string name="default_manager_include_autofill_hint">"Trocar o serviço de preenchimento automático para Monica"</string>
+    <string name="default_manager_keep_others">"Manter outros provedores de credenciais"</string>
+    <string name="default_manager_keep_others_hint">"Manter os provedores ativados e tornar Monica o principal"</string>
+    <string name="default_manager_refresh">"Atualizar status"</string>
+    <string name="default_manager_source">"Baseado em cr-zhichen/password-manager-switch · MIT"</string>
+</resources>

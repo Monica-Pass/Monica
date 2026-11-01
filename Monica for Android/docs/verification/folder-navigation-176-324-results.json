@@ -1,0 +1,127 @@
+{
+  "flavor": "ordinary",
+  "device": {
+    "flavor": "ordinary",
+    "name": "regression",
+    "version_code": 12,
+    "version_name": "1.0.324-26110212-10",
+    "main_apk": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.324-26110212-10.APK",
+    "main_sha256": "998d644f45d180cae63a424c96917eb5ea0cb3e7e71ebc14e8826ba51dd90f71",
+    "test_apk": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk",
+    "test_sha256": "1a31216be68af28661a60d62aed0b8573942ecebd0223b20041b4b42ea2ae47b",
+    "classes": [
+      "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest",
+      "takagi.ru.monica.ui.vaultv2.VaultOverviewScreenTest"
+    ],
+    "capture": false,
+    "elapsed_seconds": 522.498,
+    "process_exit": 0,
+    "success": true
+  },
+  "jvm": [
+    {
+      "name": "takagi.ru.monica.keepass.KeePassNativeSessionTest",
+      "tests": "8",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-11-01T23:16:27",
+      "hostname": "JOYIN",
+      "time": "0.11"
+    },
+    {
+      "name": "takagi.ru.monica.ui.vaultv2.VaultFolderNavigationTest",
+      "tests": "9",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-11-01T23:16:22",
+      "hostname": "JOYIN",
+      "time": "0.378"
+    },
+    {
+      "name": "takagi.ru.monica.ui.vaultv2.VaultOverviewKeePassFolderTest",
+      "tests": "6",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-11-01T23:16:23",
+      "hostname": "JOYIN",
+      "time": "4.003"
+    },
+    {
+      "name": "takagi.ru.monica.ui.vaultv2.VaultOverviewProjectionTest",
+      "tests": "8",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-11-01T23:16:27",
+      "hostname": "JOYIN",
+      "time": "0.087"
+    },
+    {
+      "name": "takagi.ru.monica.ui.vaultv2.VaultV2DetailReturnRetentionGuardTest",
+      "tests": "3",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-11-01T23:16:27",
+      "hostname": "JOYIN",
+      "time": "0.033"
+    },
+    {
+      "name": "takagi.ru.monica.ui.vaultv2.VaultV2FolderLayoutTest",
+      "tests": "5",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-11-01T23:16:27",
+      "hostname": "JOYIN",
+      "time": "0.016"
+    },
+    {
+      "name": "takagi.ru.monica.ui.vaultv2.VaultV2SortingTest",
+      "tests": "8",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-11-01T23:16:27",
+      "hostname": "JOYIN",
+      "time": "0.055"
+    }
+  ],
+  "shared_sha256": {
+    "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultOverviewContent.kt": "ccaabc6861162f95fc27761b7550f94117ad3820d7aec605293881d67efce92e",
+    "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultOverviewProjection.kt": "7316b71ee44554b4edf5c83f0324bc98bccc059d256c12fd7ea86edd466c9cf8",
+    "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultOverviewScreen.kt": "34434fadaba082e0551447835fc47641552466eedc95c2c493e873d7333b1017",
+    "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultV2FolderLayout.kt": "d854b4328c71a01224a8afaa3c4c25b43b221544ab11cdc64459c652897ccc9d",
+    "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultV2Pane.kt": "e3fdc395a68f67c6a80e1e57d055f6eabf02757ba82270957cd7687759abcb62",
+    "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultV2PaneState.kt": "3296a9948a1f4e7af3f5eb24157cdbdc0e218db4d770ab76e5a14cb1804e284c",
+    "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultV2Sorting.kt": "bdb04613f5e738ce6199a3c403c66bf9b2271d68a204baff49b668beb98b7d95",
+    "app/src/main/java/takagi/ru/monica/ui/vaultv2/KeePassFolderHierarchy.kt": "6bf46a9c42e0da542af278048c17b9a491be95998bb06398e2a513a042a415a1",
+    "app/src/main/java/takagi/ru/monica/utils/KeePassKdbxService.kt": "123acba097c2abc98942ce774d69017bd33449114c30df83bb2de1f1c76ef81d",
+    "app/src/main/java/takagi/ru/monica/utils/KeePassNativeProjectionBundle.kt": "e2bbbf41cfbb76df800755a8cc84349eb5f7e94bf825dc473021a2f592db06be",
+    "app/src/test/java/takagi/ru/monica/ui/vaultv2/VaultV2FolderLayoutTest.kt": "e0c4458a10bdc5db772839acb91076abe21d97d0a1a53d596735c675921a4cda",
+    "app/src/test/java/takagi/ru/monica/ui/vaultv2/VaultFolderNavigationTest.kt": "658f9e091f14a5c7f6408f49eed203ee6fc03bce978b49efbe85b05969233f75",
+    "app/src/androidTest/java/takagi/ru/monica/ui/vaultv2/VaultOverviewPaneTest.kt": "4c7698304b28d96b8424b261fb0a7168de2bfefba505eac48c0f5b34d39b658c",
+    "app/src/test/java/takagi/ru/monica/ui/vaultv2/VaultOverviewKeePassFolderTest.kt": "02a96b80256c0a4e5c6a3c5fa4a0f1e52dcab5fd70e84c2b1dbc2d7a9c6b65d1"
+  },
+  "capture_repeat": {
+    "flavor": "ordinary",
+    "name": "capture-final",
+    "version_code": 12,
+    "version_name": "1.0.324-26110212-10",
+    "main_apk": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.324-26110212-10.APK",
+    "main_sha256": "998d644f45d180cae63a424c96917eb5ea0cb3e7e71ebc14e8826ba51dd90f71",
+    "test_apk": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk",
+    "test_sha256": "adfbe8515e55d7ff8fa001b4e6e36a60217e14d4d9449390715bb04fe17a63fc",
+    "classes": [
+      "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#overviewFolderEntryKeepsAllSortedChildFoldersTogetherAboveDirectEntries",
+      "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#overviewFolderLargeFontDarkKeepsFoldersAboveEntries"
+    ],
+    "capture": false,
+    "elapsed_seconds": 59.507,
+    "process_exit": 0,
+    "success": true
+  }
+}

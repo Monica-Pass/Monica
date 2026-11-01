@@ -1,6 +1,7 @@
 package takagi.ru.monica.utils
 
 import takagi.ru.monica.keepass.hasKeePassSourceChangedCause
+import takagi.ru.monica.keepass.KeePassRecordCountCache
 
 import takagi.ru.monica.R
 
@@ -256,7 +257,8 @@ data class KeePassGroupInfo(
     val path: String,
     val uuid: String?,
     val depth: Int = 0,
-    val displayPath: String = path
+    val displayPath: String = path,
+    val parentUuid: String? = null,
 )
 
 data class KeePassSecureItemData(
@@ -467,6 +469,12 @@ class KeePassKdbxService(
 
     companion object {
         internal val nativeLockVersions = kotlinx.coroutines.flow.MutableStateFlow<Map<Long, Long>>(emptyMap())
+        internal val nativeRecordCountCache = KeePassRecordCountCache(
+            { takagi.ru.monica.security.SessionManager.isUnlocked.value },
+            { takagi.ru.monica.security.SessionManager.lockGeneration.value },
+            { nativeLockVersions.value[it] ?: 0L },
+        )
+        internal val nativeRecordCounts = nativeRecordCountCache.state
         internal val nativeIconVersions = kotlinx.coroutines.flow.MutableStateFlow<Map<Long, Long>>(emptyMap())
 
         // Called under loadedDatabaseCache's monitor for every replacement/removal.
@@ -645,6 +653,7 @@ class KeePassKdbxService(
         fun invalidateProcessCache(databaseId: Long) {
             synchronized(loadedDatabaseCache) {
                 loadedDatabaseCache.remove(databaseId)
+                nativeRecordCountCache.invalidate(databaseId)
                 notifyNativeIconsChanged(databaseId)
                 if (activeDatabaseId == databaseId) {
                     activeDatabaseId = null
@@ -3436,6 +3445,7 @@ class KeePassKdbxService(
             val previous = synchronized(loadedDatabaseCache) { loadedDatabaseCache[databaseId] }
                 ?: error("KeePass database is locked")
             val lockVersion = nativeLockVersions.value[databaseId] ?: 0L
+            val recordCountScope = nativeRecordCountCache.capture(databaseId)
             val registration = requireNotNull(dao.getDatabaseById(databaseId))
             openDatabaseStreamSource(registration).use { source ->
                 val (decoded, credentials) = decodeDatabaseWithFallback(
@@ -3453,7 +3463,7 @@ class KeePassKdbxService(
                         nativeBrowser = lazy(LazyThreadSafetyMode.SYNCHRONIZED) { KeePassNativeBrowserBuilder.build(nativeSession.value) },
                         projectionBundle = nativeProjectionBundleCache.deferred(nativeSession),
                         sourceEtag = source.etag, sourceLastModified = source.lastModified,
-                        sourceSignature = currentSourceSignature(registration), sourceRevision = source.revision))
+                        sourceSignature = currentSourceSignature(registration), sourceRevision = source.revision), recordCountScope)
                 }
             }
         }
@@ -3477,6 +3487,7 @@ class KeePassKdbxService(
                 val loaded = previous.loaded
                 val registration = requireNotNull(dao.getDatabaseById(databaseId))
                 val lockVersion = nativeLockVersions.value[databaseId] ?: 0L
+                val recordCountScope = nativeRecordCountCache.capture(databaseId)
                 assertNativeRevision(expectedRevision, loaded.sourceRevision.sha256)
                 suspend fun requireCurrentSession() {
                     accessPolicy.requireWritable(databaseId)
@@ -3572,7 +3583,7 @@ class KeePassKdbxService(
                                 takagi.ru.monica.security.SessionManager.isUnlocked.value &&
                                 (nativeLockVersions.value[databaseId] ?: 0L) == lockVersion) { "KeePass session changed after merge" }
                             cachePersistedDatabase(registration, loaded.credentials, merged.database,
-                                artifact.revision, null, null)
+                                artifact.revision, null, null, recordCountScope)
                         }
                     }
                     merged.equalTimeConflicts
@@ -7412,7 +7423,8 @@ class KeePassKdbxService(
         result: MutableList<KeePassGroupInfo>,
         recycleBinUuid: UUID?,
         includeRecycleBin: Boolean,
-        parentInRecycleBin: Boolean
+        parentInRecycleBin: Boolean,
+        parentUuid: String? = null,
     ) {
         val inRecycleBin = parentInRecycleBin || (recycleBinUuid != null && group.uuid == recycleBinUuid)
         if (!includeRecycleBin && inRecycleBin) {
@@ -7427,7 +7439,8 @@ class KeePassKdbxService(
                 path = currentPathKey,
                 uuid = group.uuid.toString(),
                 depth = depth,
-                displayPath = currentDisplayPath
+                displayPath = currentDisplayPath,
+                parentUuid = parentUuid
             )
         )
         group.groups.forEach { child ->
@@ -7438,7 +7451,8 @@ class KeePassKdbxService(
                 result = result,
                 recycleBinUuid = recycleBinUuid,
                 includeRecycleBin = includeRecycleBin,
-                parentInRecycleBin = inRecycleBin
+                parentInRecycleBin = inRecycleBin,
+                parentUuid = group.uuid.toString(),
             )
         }
     }
@@ -7932,9 +7946,19 @@ class KeePassKdbxService(
     }
 
     private suspend fun loadDatabase(databaseId: Long): LoadedDatabase {
-        getCachedLoadedDatabase(databaseId)?.let { return it }
+        val requestScope = nativeRecordCountCache.capture(databaseId)
+        getCachedLoadedDatabase(databaseId)?.let {
+            if (nativeRecordCountCache.count(databaseId) == null) publishRecordCount(it, requestScope)
+            return it
+        }
         return loadMutexForDatabase(databaseId).withLock {
-            getCachedLoadedDatabase(databaseId)?.let { return@withLock it }
+            val cachedScope = requestScope.copy(invalidationVersion = nativeRecordCountCache.capture(databaseId).invalidationVersion)
+            getCachedLoadedDatabase(databaseId)?.let {
+                if (nativeRecordCountCache.count(databaseId) == null) publishRecordCount(it, cachedScope)
+                return@withLock it
+            }
+            // Cache validation may invalidate the source; keep the request's original lock epochs.
+            val recordCountScope = requestScope.copy(invalidationVersion = nativeRecordCountCache.capture(databaseId).invalidationVersion)
             val database = dao.getDatabaseById(databaseId) ?: throw Exception(strings.get(R.string.keepass_connection_status_missing))
             val credentials = buildCredentials(database)
             val source = openDatabaseStreamSource(database)
@@ -7964,7 +7988,7 @@ class KeePassKdbxService(
                 sourceSignature = currentSourceSignature(database),
                 sourceRevision = source.revision
             )
-            cacheLoadedDatabase(loaded)
+            cacheLoadedDatabase(loaded, recordCountScope)
             loaded
             } finally {
                 source.close()
@@ -8410,6 +8434,7 @@ class KeePassKdbxService(
         expectedSourceRevision: KeePassSourceRevision? = null,
         beforeRemoteUpload: (suspend (LocalKeePassDatabase, KeePassSourceRevision) -> Unit)? = null
     ) {
+        val recordCountScope = nativeRecordCountCache.capture(database.id)
         accessPolicy.requireWritable(database.id)
         encodeDatabaseArtifact(keePassDatabase).use { artifact ->
             val encodedRevision = artifact.revision
@@ -8460,6 +8485,7 @@ class KeePassKdbxService(
                 sourceRevision = persistedRevision,
                 sourceEtag = resolvedSourceEtag,
                 sourceLastModified = resolvedSourceLastModified,
+                recordCountScope = recordCountScope,
             )
         }
     }
@@ -8471,6 +8497,7 @@ class KeePassKdbxService(
         sourceRevision: KeePassSourceRevision,
         sourceEtag: String?,
         sourceLastModified: String?,
+        recordCountScope: KeePassRecordCountCache.Scope,
     ) {
         val nativeSession = nativeSessionCache.deferred(
             databaseId = database.id,
@@ -8491,7 +8518,8 @@ class KeePassKdbxService(
                 sourceLastModified = sourceLastModified,
                 sourceSignature = currentSourceSignature(database),
                 sourceRevision = sourceRevision,
-            )
+            ),
+            recordCountScope,
         )
     }
 
@@ -9155,12 +9183,28 @@ class KeePassKdbxService(
         )
     }
 
-    private fun cacheLoadedDatabase(loaded: LoadedDatabase) {
+    private fun publishRecordCount(loaded: LoadedDatabase, scope: KeePassRecordCountCache.Scope) {
+        // Count group membership only; do not resolve/decrypt fields, history or attachments.
+        val recycleBin = loaded.keePassDatabase.content.meta.recycleBinUuid?.takeUnless { it == UUID(0, 0) }
+        val pending = ArrayDeque<Group>()
+        pending.add(loaded.keePassDatabase.content.group)
+        var count = 0L
+        while (pending.isNotEmpty()) {
+            val group = pending.removeLast()
+            if (group.uuid == recycleBin) continue
+            count += group.entries.size.toLong()
+            pending.addAll(group.groups)
+        }
+        nativeRecordCountCache.publish(scope, count)
+    }
+
+    private fun cacheLoadedDatabase(loaded: LoadedDatabase, recordCountScope: KeePassRecordCountCache.Scope) {
         synchronized(loadedDatabaseCache) {
             loadedDatabaseCache[loaded.database.id] = CachedLoadedDatabase(
                 loaded = loaded,
                 cachedAtMs = System.currentTimeMillis()
             )
+            publishRecordCount(loaded, recordCountScope)
             notifyNativeIconsChanged(loaded.database.id)
             trimLoadedDatabaseCacheLocked()
         }
@@ -9169,6 +9213,7 @@ class KeePassKdbxService(
     private fun invalidateLoadedDatabaseCache(databaseId: Long) {
         synchronized(loadedDatabaseCache) {
             loadedDatabaseCache.remove(databaseId)
+            nativeRecordCountCache.invalidate(databaseId)
             notifyNativeIconsChanged(databaseId)
         }
         nativeSessionCache.invalidate(databaseId)
@@ -9631,6 +9676,7 @@ class KeePassKdbxService(
         bytes: ByteArray,
         expectedSourceRevision: KeePassSourceRevision?
     ) {
+        val recordCountScope = nativeRecordCountCache.capture(database.id)
         accessPolicy.requireWritable(database.id)
         val sourceRevision = KeePassSourceSafety.revisionOf(bytes)
         decodeDatabase(bytes, credentials, sourceName = "databaseId=${database.id}:raw-write-verify")
@@ -9672,6 +9718,7 @@ class KeePassKdbxService(
             sourceRevision = persistedRevision,
             sourceEtag = sourceEtag,
             sourceLastModified = sourceLastModified,
+            recordCountScope = recordCountScope,
         )
         updateStoredDatabaseMetadata(database, resolvedDatabase)
     }
@@ -9685,6 +9732,7 @@ class KeePassKdbxService(
         sourceRevision: KeePassSourceRevision,
         expectedSourceRevision: KeePassSourceRevision?,
     ) {
+        val recordCountScope = nativeRecordCountCache.capture(database.id)
         accessPolicy.requireWritable(database.id)
         require(KeePassSourceSafety.revisionOf(file) == sourceRevision) {
             "KeePass recovery source changed before restore"
@@ -9725,6 +9773,7 @@ class KeePassKdbxService(
             sourceRevision = sourceRevision,
             sourceEtag = sourceEtag,
             sourceLastModified = sourceLastModified,
+            recordCountScope = recordCountScope,
         )
         updateStoredDatabaseMetadata(database, keePassDatabase)
     }

@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="keepass_conflict_review">"Revisar e mesclar"</string>
+    <string name="keepass_conflict_banner_title">"É necessário mesclar as alterações"</string>
+    <string name="keepass_conflict_banner_summary">"Revise ambas as versões para continuar sincronizando."</string>
+    <string name="keepass_conflict_merge_sync">"Mesclar e sincronizar"</string>
+    <string name="keepass_conflict_comparing">"Comparando ambas as versões…"</string>
+    <string name="keepass_conflict_merging">"Mesclando e sincronizando…"</string>
+    <string name="keepass_conflict_refresh">"Atualizar comparação"</string>
+    <string name="keepass_conflict_merge_help">"As alterações em entradas ou campos diferentes são combinadas. Escolha uma versão quando o mesmo campo tiver sido alterado em ambos os lados."</string>
+    <string name="keepass_conflict_auto_merge">"Pronto para mesclar"</string>
+    <string name="keepass_conflict_other_options">"Outras opções"</string>
+    <string name="keepass_conflict_recovery_hint">"As versões originais são mantidas em cópias de recuperação do banco de dados."</string>
+    <string name="keepass_conflict_keep_local_confirm">"Substituir o banco de dados remoto pela versão local completa? As alterações apenas remotas permanecerão em uma cópia de recuperação."</string>
+    <string name="keepass_conflict_use_remote_confirm">"Substituir o banco de dados local pela versão remota completa? As alterações apenas locais permanecerão em uma cópia de recuperação."</string>
+    <string name="keepass_conflict_selected_count">"%1$d de %2$d conflitos selecionados"</string>
+    <string name="keepass_conflict_no_changes">"Ambas as versões contêm os mesmos dados."</string>
+    <string name="keepass_conflict_protected_value">"Valor protegido"</string>
+    <string name="keepass_conflict_properties_value">"Propriedades desta versão"</string>
+    <string name="keepass_conflict_kind_entry">"Entrada"</string>
+    <string name="keepass_conflict_kind_group">"Pasta"</string>
+    <string name="keepass_conflict_kind_metadata">"Configurações do banco de dados"</string>
+    <string name="keepass_conflict_kind_deleted_object">"Registro de exclusão"</string>
+    <string name="keepass_conflict_kind_binary">"Anexo"</string>
+    <string name="keepass_conflict_kind_icon">"Ícone personalizado"</string>
+    <string name="keepass_conflict_change_added">"Adicionado"</string>
+    <string name="keepass_conflict_change_modified">"Alterado"</string>
+    <string name="keepass_conflict_change_moved">"Movido"</string>
+    <string name="keepass_conflict_change_deleted">"Excluído"</string>
+    <string name="keepass_conflict_change_unchanged">"Inalterado"</string>
+</resources>

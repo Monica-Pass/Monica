@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="attachment_error_bitwarden_locked">"O cofre Bitwarden está bloqueado ou a sessão expirou. Desbloqueie-o ou entre novamente."</string>
+    <string name="attachment_error_remote_data">"O servidor devolveu informações incompletas sobre o anexo. Sincronize o cofre e tente novamente."</string>
+    <string name="attachment_error_unsupported_encryption">"Este anexo usa um formato de encriptação não suportado (tipo %1$d). Exporte-o com o cliente oficial e envie-o novamente."</string>
+    <string name="attachment_error_unknown">"A operação com o anexo falhou. Tente novamente."</string>
+    <string name="attachment_error_decryption_failed">"A desencriptação ou a verificação de integridade do anexo falhou. Sincronize o cofre e tente novamente."</string>
+    <string name="password_batch_attachment_failure">"Não foi possível transferir os anexos de %1$d item(ns). %2$s"</string>
+</resources>

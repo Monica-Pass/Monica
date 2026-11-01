@@ -1,0 +1,670 @@
+
+ordinary-final-build-jvm.txt
+
+WARNING: We recommend using a newer Android Gradle plugin to use compileSdk = 36
+
+This Android Gradle plugin (8.7.3) was tested up to compileSdk = 35.
+
+You are strongly encouraged to update your project to use a newer
+Android Gradle plugin that has been tested with compileSdk = 36.
+
+If you are already using the latest version of the Android Gradle plugin,
+you may need to wait until a newer version with support for compileSdk = 36 is available.
+
+For more information refer to the compatibility table:
+https://d.android.com/r/tools/api-level-support
+
+To suppress this warning, add/update
+    android.suppressUnsupportedCompileSdk=36
+to this project's gradle.properties.
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :kotpass:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :kotpass:compileKotlin UP-TO-DATE
+> Task :kotpass:compileJava NO-SOURCE
+> Task :kotpass:processResources NO-SOURCE
+> Task :kotpass:classes UP-TO-DATE
+> Task :kotpass:jar UP-TO-DATE
+> Task :app:compileDebugAidl UP-TO-DATE
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:generateDebugBuildConfig
+> Task :mdbx-engine:preBuild UP-TO-DATE
+> Task :mdbx-engine:preDebugBuild UP-TO-DATE
+> Task :mdbx-engine:writeDebugAarMetadata UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :mdbx-engine:generateDebugResValues UP-TO-DATE
+> Task :mdbx-engine:generateDebugResources UP-TO-DATE
+> Task :mdbx-engine:packageDebugResources UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :mdbx-engine:extractDeepLinksDebug UP-TO-DATE
+> Task :mdbx-engine:processDebugManifest UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :mdbx-engine:compileDebugLibraryResources UP-TO-DATE
+> Task :mdbx-engine:parseDebugLocalResources UP-TO-DATE
+> Task :mdbx-engine:generateDebugRFile UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :mdbx-engine:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :mdbx-engine:compileDebugKotlin UP-TO-DATE
+> Task :mdbx-engine:javaPreCompileDebug UP-TO-DATE
+> Task :mdbx-engine:compileDebugJavaWithJavac NO-SOURCE
+> Task :mdbx-engine:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:mergeDebugShaders UP-TO-DATE
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :mdbx-engine:mergeDebugShaders UP-TO-DATE
+> Task :mdbx-engine:compileDebugShaders NO-SOURCE
+> Task :mdbx-engine:generateDebugAssets UP-TO-DATE
+> Task :mdbx-engine:packageDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:compressDebugAssets UP-TO-DATE
+> Task :mdbx-engine:processDebugJavaRes UP-TO-DATE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :mdbx-engine:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :app:buildMonicaRustJniFromSource UP-TO-DATE
+> Task :app:mergeLibDexDebug UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :mdbx-engine:mergeDebugJniLibFolders UP-TO-DATE
+> Task :mdbx-engine:mergeDebugNativeLibs UP-TO-DATE
+> Task :mdbx-engine:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :app:mergeDebugNativeLibs UP-TO-DATE
+> Task :app:stripDebugDebugSymbols UP-TO-DATE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :app:writeDebugAppMetadata UP-TO-DATE
+> Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+> Task :app:preDebugAndroidTestBuild SKIPPED
+> Task :app:compileDebugAndroidTestAidl NO-SOURCE
+> Task :app:processDebugAndroidTestManifest UP-TO-DATE
+> Task :app:generateDebugAndroidTestBuildConfig
+> Task :app:checkDebugAndroidTestAarMetadata UP-TO-DATE
+> Task :app:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :app:mapDebugAndroidTestSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugAndroidTestResources UP-TO-DATE
+> Task :app:mergeDebugAndroidTestResources UP-TO-DATE
+> Task :app:processDebugAndroidTestResources UP-TO-DATE
+> Task :app:javaPreCompileDebugAndroidTest UP-TO-DATE
+> Task :app:mergeDebugAndroidTestShaders UP-TO-DATE
+> Task :app:compileDebugAndroidTestShaders NO-SOURCE
+> Task :app:generateDebugAndroidTestAssets UP-TO-DATE
+> Task :app:mergeDebugAndroidTestAssets UP-TO-DATE
+> Task :app:compressDebugAndroidTestAssets UP-TO-DATE
+> Task :app:checkDebugAndroidTestDuplicateClasses UP-TO-DATE
+> Task :app:desugarDebugAndroidTestFileDependencies UP-TO-DATE
+> Task :app:mergeExtDexDebugAndroidTest UP-TO-DATE
+> Task :app:mergeLibDexDebugAndroidTest UP-TO-DATE
+> Task :app:mergeDebugAndroidTestJniLibFolders UP-TO-DATE
+> Task :app:mergeDebugAndroidTestNativeLibs NO-SOURCE
+> Task :app:stripDebugAndroidTestDebugSymbols NO-SOURCE
+> Task :app:validateSigningDebugAndroidTest UP-TO-DATE
+> Task :app:writeDebugAndroidTestSigningConfigVersions UP-TO-DATE
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :app:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :app:packageDebugUnitTestForUnitTest
+> Task :mdbx-engine:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :app:generateDebugUnitTestConfig
+> Task :app:kspDebugKotlin
+> Task :app:compileDebugKotlin
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/security/RuntimeDiagnostics.kt:41:63 'val id: Long' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:516:48 'val Icons.Filled.ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:1760:48 'val Icons.Filled.Note: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Note.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2095:57 'val Icons.Filled.ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2287:21 'fun Divider(modifier: Modifier = ..., thickness: Dp = ..., color: Color = ...): Unit' is deprecated. Renamed to HorizontalDivider.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultOverviewScreen.kt:497:28 'val Icons.Filled.List: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.List.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt:113:8 'interface ClipboardManager : Any' is deprecated. Use Clipboard instead, which supports suspend functions.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt:1917:49 'val Icons.Filled.ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt:1927:53 'val Icons.Filled.Login: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Login.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt:2092:21 'val LocalClipboardManager: ProvidableCompositionLocal<ClipboardManager>' is deprecated. Use LocalClipboard instead which supports suspend functions.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt:2343:21 'val LocalClipboardManager: ProvidableCompositionLocal<ClipboardManager>' is deprecated. Use LocalClipboard instead which supports suspend functions.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt:2495:36 'val Icons.Filled.Login: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Login.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt:2507:16 'interface ClipboardManager : Any' is deprecated. Use Clipboard instead, which supports suspend functions.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt:2746:16 'interface ClipboardManager : Any' is deprecated. Use Clipboard instead, which supports suspend functions.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt:2925:16 'interface ClipboardManager : Any' is deprecated. Use Clipboard instead, which supports suspend functions.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt:4313:40 'val Icons.Filled.Login: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Login.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/steam/ui/SteamScreen.kt:4524:40 'val Icons.Filled.Login: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Login.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/components/UnifiedCategoryFilterBottomSheet.kt:519:58 'val Icons.Filled.List: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.List.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/components/UnifiedCategoryFilterChipMenu.kt:495:97 'val Icons.Filled.List: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.List.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/password/PasswordListTopSection.kt:497:105 Condition is always 'true'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/password/PasswordListTopSection.kt:540:45 Condition is always 'true'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditBankCardScreen.kt:868:68 'val Icons.Filled.Notes: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Notes.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditBankCardScreen.kt:875:56 'val Icons.Filled.Notes: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Notes.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditBankCardScreen.kt:986:49 'fun Modifier.menuAnchor(): Modifier' is deprecated. Use overload that takes ExposedDropdownMenuAnchorType and enabled parameters.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditBankCardScreen.kt:1034:84 'val Icons.Filled.Notes: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Notes.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditBankCardScreen.kt:1050:56 'val Icons.Filled.ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditBillingAddressScreen.kt:384:82 'val Icons.Filled.Notes: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Notes.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditBillingAddressScreen.kt:388:68 'val Icons.Filled.Notes: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Notes.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditBillingAddressScreen.kt:392:56 'val Icons.Filled.Notes: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Notes.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditBillingAddressScreen.kt:555:52 'val Icons.Filled.ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditDocumentScreen.kt:850:68 'val Icons.Filled.Notes: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Notes.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditDocumentScreen.kt:857:56 'val Icons.Filled.Notes: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Notes.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditDocumentScreen.kt:970:49 'fun Modifier.menuAnchor(): Modifier' is deprecated. Use overload that takes ExposedDropdownMenuAnchorType and enabled parameters.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditDocumentScreen.kt:1112:84 'val Icons.Filled.Notes: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Notes.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditDocumentScreen.kt:1128:56 'val Icons.Filled.ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditNoteScreen.kt:489:26 'val LocalLifecycleOwner: ProvidableCompositionLocal<LifecycleOwner>' is deprecated. Moved to lifecycle-runtime-compose library in androidx.lifecycle.compose package.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditPasswordScreen.kt:3745:68 'val Icons.Filled.Label: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Label.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditPasswordScreen.kt:3906:130 'val Icons.Filled.Rule: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Rule.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditPasswordScreen.kt:5432:30 'fun Modifier.menuAnchor(): Modifier' is deprecated. Use overload that takes ExposedDropdownMenuAnchorType and enabled parameters.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditPasswordScreen.kt:5473:30 'fun Modifier.menuAnchor(): Modifier' is deprecated. Use overload that takes ExposedDropdownMenuAnchorType and enabled parameters.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditPasswordScreen.kt:5514:30 'fun Modifier.menuAnchor(): Modifier' is deprecated. Use overload that takes ExposedDropdownMenuAnchorType and enabled parameters.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditPasswordScreen.kt:5557:34 'fun Modifier.menuAnchor(): Modifier' is deprecated. Use overload that takes ExposedDropdownMenuAnchorType and enabled parameters.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditPasswordScreen.kt:6356:30 'fun Modifier.menuAnchor(): Modifier' is deprecated. Use overload that takes ExposedDropdownMenuAnchorType and enabled parameters.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditPasswordScreen.kt:6468:35 'val Icons.Filled.Chat: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Chat.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditPasswordScreen.kt:6469:31 'val Icons.Filled.Chat: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Chat.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditPasswordScreen.kt:6471:31 'val Icons.Filled.Login: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Login.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditTotpScreen.kt:441:13 Condition is always 'false'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditTotpScreen.kt:899:64 'val Icons.Filled.Notes: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Notes.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/AddEditTotpScreen.kt:1006:84 'val Icons.Filled.Notes: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Notes.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/ApiKeyScreen.kt:97:27 'val Icons.Filled.Notes: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Notes.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/GpgKeyScreen.kt:111:48 'fun Modifier.menuAnchor(): Modifier' is deprecated. Use overload that takes ExposedDropdownMenuAnchorType and enabled parameters.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/NoteListScreen.kt:677:87 'val Icons.Filled.ViewList: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ViewList.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/PasskeyListScreen.kt:1935:57 'val Icons.Filled.ArrowForward: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowForward.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/totp/TotpListContent.kt:237:26 'val LocalLifecycleOwner: ProvidableCompositionLocal<LifecycleOwner>' is deprecated. Moved to lifecycle-runtime-compose library in androidx.lifecycle.compose package.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/totp/TotpListContent.kt:843:59 'val Icons.Filled.ViewList: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ViewList.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/viewmodel/PasswordViewModel.kt:613:10 This declaration is in a preview state and can be changed in a backwards-incompatible manner with a best-effort migration. Its usage should be marked with '@kotlinx.coroutines.FlowPreview' or '@OptIn(kotlinx.coroutines.FlowPreview::class)' if you accept the drawback of relying on preview API
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/viewmodel/PasswordViewModel.kt:644:10 This declaration needs opt-in. Its usage should be marked with '@kotlinx.coroutines.ExperimentalCoroutinesApi' or '@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)'
+
+> Task :app:compileDebugJavaWithJavac
+> Task :app:processDebugJavaRes
+> Task :app:mergeDebugJavaResource
+> Task :app:dexBuilderDebug
+> Task :app:mergeProjectDexDebug
+> Task :app:packageDebug
+> Task :app:createDebugApkListingFileRedirect UP-TO-DATE
+> Task :app:assembleDebug
+> Task :app:bundleDebugClassesToCompileJar
+> Task :app:bundleDebugClassesToRuntimeJar
+> Task :app:kspDebugAndroidTestKotlin
+> Task :app:kspDebugUnitTestKotlin
+
+> Task :app:compileDebugUnitTestKotlin FAILED
+e: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/ui/vaultv2/VaultFolderNavigationTest.kt:44:85 No value passed for parameter 'revisionDate'.
+
+> Task :app:compileDebugAndroidTestKotlin
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/credentialexchange/ApiKeyStorageInstrumentedTest.kt:140:26 Redundant creation of Json format. Creating instances for each usage can be slow.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/credentialexchange/ExportSourceRecordCountTest.kt:27:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/credentialexchange/PasswordOtpStorageInstrumentedTest.kt:120:38 Redundant creation of Json format. Creating instances for each usage can be slow.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/credentialexchange/ProjectCredentialStorageTest.kt:48:32 Redundant creation of Json format. Creating instances for each usage can be slow.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/credentialexchange/WalletPassTemplatesDeviceTest.kt:28:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/credentialexchange/WalletPassTemplatesDeviceTest.kt:226:28 Redundant creation of Json format. Creating instances for each usage can be slow.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/keepass/KeePassAddContentUiRegressionTest.kt:29:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/keepass/KeePassCustomIconUiTest.kt:40:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/keepass/KeePassDxSaveComparisonTest.kt:69:27 'var isChecked: Boolean' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/keepass/KeePassHistoryUiTest.kt:19:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/keepass/KeePassMonicaEditorUiTest.kt:29:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/keepass/KeePassPasswordNativeInstrumentedTest.kt:27:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/keepass/KeePassPathStatusUiTest.kt:29:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/keepass/KeePassVaultDeleteUiTest.kt:31:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/steam/SteamFolderFilterMenuTest.kt:29:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/steam/SteamFolderPickerTest.kt:22:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/ui/FilterFolderActionsTest.kt:71:29 'fun <reified A : ComponentActivity> createAndroidComposeRule(effectContext: CoroutineContext = ...): AndroidComposeTestRule<ActivityScenarioRule<A>, A>' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createAndroidComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/ui/components/BoardingPassCodeTest.kt:24:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/ui/components/UnifiedFilterMenusTest.kt:41:29 'fun <reified A : ComponentActivity> createAndroidComposeRule(effectContext: CoroutineContext = ...): AndroidComposeTestRule<ActivityScenarioRule<A>, A>' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createAndroidComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/ui/screens/KeePassManagementUiTest.kt:65:29 'fun <reified A : ComponentActivity> createAndroidComposeRule(effectContext: CoroutineContext = ...): AndroidComposeTestRule<ActivityScenarioRule<A>, A>' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createAndroidComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/ui/screens/KeePassManagementUiTest.kt:109:101 'val Icons.Filled.ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/ui/screens/KeePassManagementUiTest.kt:281:67 'static field SOFT_INPUT_ADJUST_RESIZE: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/ui/screens/KeePassManagementUiTest.kt:388:67 'static field SOFT_INPUT_ADJUST_RESIZE: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/ui/vaultv2/VaultOverviewPaneTest.kt:55:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/ui/vaultv2/VaultOverviewScreenTest.kt:52:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/ui/vaultv2/VaultOverviewTypeGridTest.kt:49:29 'fun <reified A : ComponentActivity> createAndroidComposeRule(effectContext: CoroutineContext = ...): AndroidComposeTestRule<ActivityScenarioRule<A>, A>' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createAndroidComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileDebugUnitTestKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 2m 29s
+89 actionable tasks: 18 executed, 71 up-to-date
+
+ordinary-final-build-jvm-retry.txt
+
+WARNING: We recommend using a newer Android Gradle plugin to use compileSdk = 36
+
+This Android Gradle plugin (8.7.3) was tested up to compileSdk = 35.
+
+You are strongly encouraged to update your project to use a newer
+Android Gradle plugin that has been tested with compileSdk = 36.
+
+If you are already using the latest version of the Android Gradle plugin,
+you may need to wait until a newer version with support for compileSdk = 36 is available.
+
+For more information refer to the compatibility table:
+https://d.android.com/r/tools/api-level-support
+
+To suppress this warning, add/update
+    android.suppressUnsupportedCompileSdk=36
+to this project's gradle.properties.
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :kotpass:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :kotpass:compileKotlin UP-TO-DATE
+> Task :kotpass:compileJava NO-SOURCE
+> Task :kotpass:processResources NO-SOURCE
+> Task :kotpass:classes UP-TO-DATE
+> Task :kotpass:jar UP-TO-DATE
+> Task :app:compileDebugAidl UP-TO-DATE
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:generateDebugBuildConfig
+> Task :mdbx-engine:preBuild UP-TO-DATE
+> Task :mdbx-engine:preDebugBuild UP-TO-DATE
+> Task :mdbx-engine:writeDebugAarMetadata UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :mdbx-engine:generateDebugResValues UP-TO-DATE
+> Task :mdbx-engine:generateDebugResources UP-TO-DATE
+> Task :mdbx-engine:packageDebugResources UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :mdbx-engine:extractDeepLinksDebug UP-TO-DATE
+> Task :mdbx-engine:processDebugManifest UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :mdbx-engine:compileDebugLibraryResources UP-TO-DATE
+> Task :mdbx-engine:parseDebugLocalResources UP-TO-DATE
+> Task :mdbx-engine:generateDebugRFile UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :mdbx-engine:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :mdbx-engine:compileDebugKotlin UP-TO-DATE
+> Task :mdbx-engine:javaPreCompileDebug UP-TO-DATE
+> Task :mdbx-engine:compileDebugJavaWithJavac NO-SOURCE
+> Task :mdbx-engine:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:mergeDebugShaders UP-TO-DATE
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :mdbx-engine:mergeDebugShaders UP-TO-DATE
+> Task :mdbx-engine:compileDebugShaders NO-SOURCE
+> Task :mdbx-engine:generateDebugAssets UP-TO-DATE
+> Task :mdbx-engine:packageDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:compressDebugAssets UP-TO-DATE
+> Task :mdbx-engine:processDebugJavaRes UP-TO-DATE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :mdbx-engine:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :app:buildMonicaRustJniFromSource UP-TO-DATE
+> Task :app:mergeLibDexDebug UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :mdbx-engine:mergeDebugJniLibFolders UP-TO-DATE
+> Task :mdbx-engine:mergeDebugNativeLibs UP-TO-DATE
+> Task :mdbx-engine:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :app:mergeDebugNativeLibs UP-TO-DATE
+> Task :app:stripDebugDebugSymbols UP-TO-DATE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :app:writeDebugAppMetadata UP-TO-DATE
+> Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+> Task :app:preDebugAndroidTestBuild SKIPPED
+> Task :app:compileDebugAndroidTestAidl NO-SOURCE
+> Task :app:processDebugAndroidTestManifest UP-TO-DATE
+> Task :app:generateDebugAndroidTestBuildConfig
+> Task :app:checkDebugAndroidTestAarMetadata UP-TO-DATE
+> Task :app:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :app:mapDebugAndroidTestSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugAndroidTestResources UP-TO-DATE
+> Task :app:mergeDebugAndroidTestResources UP-TO-DATE
+> Task :app:processDebugAndroidTestResources UP-TO-DATE
+> Task :app:javaPreCompileDebugAndroidTest UP-TO-DATE
+> Task :app:mergeDebugAndroidTestShaders UP-TO-DATE
+> Task :app:compileDebugAndroidTestShaders NO-SOURCE
+> Task :app:generateDebugAndroidTestAssets UP-TO-DATE
+> Task :app:mergeDebugAndroidTestAssets UP-TO-DATE
+> Task :app:compressDebugAndroidTestAssets UP-TO-DATE
+> Task :app:checkDebugAndroidTestDuplicateClasses UP-TO-DATE
+> Task :app:desugarDebugAndroidTestFileDependencies UP-TO-DATE
+> Task :app:mergeExtDexDebugAndroidTest UP-TO-DATE
+> Task :app:mergeLibDexDebugAndroidTest UP-TO-DATE
+> Task :app:mergeDebugAndroidTestJniLibFolders UP-TO-DATE
+> Task :app:mergeDebugAndroidTestNativeLibs NO-SOURCE
+> Task :app:stripDebugAndroidTestDebugSymbols NO-SOURCE
+> Task :app:validateSigningDebugAndroidTest UP-TO-DATE
+> Task :app:writeDebugAndroidTestSigningConfigVersions UP-TO-DATE
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :app:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :app:packageDebugUnitTestForUnitTest UP-TO-DATE
+> Task :app:generateDebugUnitTestConfig UP-TO-DATE
+> Task :mdbx-engine:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :app:kspDebugKotlin
+
+> Task :app:compileDebugKotlin
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/security/RuntimeDiagnostics.kt:41:63 'val id: Long' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:516:48 'val Icons.Filled.ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:1760:48 'val Icons.Filled.Note: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Note.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2095:57 'val Icons.Filled.ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2287:21 'fun Divider(modifier: Modifier = ..., thickness: Dp = ..., color: Color = ...): Unit' is deprecated. Renamed to HorizontalDivider.
+
+> Task :app:compileDebugJavaWithJavac
+> Task :app:processDebugJavaRes UP-TO-DATE
+> Task :app:mergeDebugJavaResource UP-TO-DATE
+> Task :app:dexBuilderDebug
+> Task :app:mergeProjectDexDebug
+> Task :app:packageDebug
+> Task :app:createDebugApkListingFileRedirect UP-TO-DATE
+> Task :app:assembleDebug
+> Task :app:bundleDebugClassesToCompileJar
+> Task :app:bundleDebugClassesToRuntimeJar
+> Task :app:kspDebugAndroidTestKotlin
+> Task :app:kspDebugUnitTestKotlin
+> Task :app:compileDebugAndroidTestKotlin
+> Task :app:compileDebugAndroidTestJavaWithJavac
+> Task :app:processDebugAndroidTestJavaRes UP-TO-DATE
+> Task :app:mergeDebugAndroidTestJavaResource UP-TO-DATE
+> Task :app:dexBuilderDebugAndroidTest
+> Task :app:mergeProjectDexDebugAndroidTest
+> Task :app:packageDebugAndroidTest
+> Task :app:createDebugAndroidTestApkListingFileRedirect UP-TO-DATE
+> Task :app:assembleDebugAndroidTest
+
+> Task :app:compileDebugUnitTestKotlin
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/attachments/crypto/BitwardenAttachmentKeyResolverTest.kt:111:30 Redundant creation of Json format. Creating instances for each usage can be slow.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/autofill_ng/AutofillSaveLaunchTest.kt:71:42 'static field MODE_BACKGROUND_ACTIVITY_START_ALLOWED: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/autofill_ng/privilege/RootCommandTest.kt:38:14 Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'java.security.ProtectionDomain?'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/lansync/DeviceNativePasskeyPreparationTest.kt:36:28 Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'kotlin.String?'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/lansync/DeviceNativePasskeyPreparationTest.kt:39:36 Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'kotlin.String?'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/lansync/DeviceSyncCacheRootsTest.kt:29:84 Java type mismatch: inferred type is 'kotlin.String?', but 'kotlin.String' was expected.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/lansync/DeviceSyncCacheRootsTest.kt:196:25 Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'java.security.ProtectionDomain?'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/lansync/NearbyHotspotSessionTest.kt:10:8 'class WifiConfiguration : Any, Parcelable' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/lansync/NearbyHotspotSessionTest.kt:165:53 'class WifiConfiguration : Any, Parcelable' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/lansync/NearbyHotspotSessionTest.kt:165:73 'constructor(): WifiConfiguration' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/lansync/NearbyHotspotSessionTest.kt:166:13 'field SSID: String!' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/lansync/NearbyHotspotSessionTest.kt:166:40 'field preSharedKey: String!' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/localization/PolishResourceCoverageTest.kt:71:20 Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'java.io.File?'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/repository/MdbxKeyPayloadTest.kt:54:31 Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'kotlin.String?'.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/security/DeveloperVerificationIntegrationGuardTest.kt:9:37 Java type mismatch: inferred type is 'kotlin.String?', but 'kotlin.String' was expected.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/service/AccessibilityCredentialFillTest.kt:36:38 'static fun obtain(p0: View!): AccessibilityNodeInfo!' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/service/AccessibilityCredentialFillTest.kt:44:42 'static fun obtain(p0: View!): AccessibilityNodeInfo!' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/service/AccessibilityCredentialFillTest.kt:116:46 'static fun obtain(p0: View!): AccessibilityNodeInfo!' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/service/AccessibilityCredentialFillTest.kt:180:43 'static fun obtain(): AccessibilityNodeInfo!' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/service/AccessibilityCredentialFillTest.kt:228:46 'static fun obtain(p0: View!): AccessibilityNodeInfo!' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/service/AccessibilityCredentialFillTest.kt:247:46 'static fun obtain(p0: View!): AccessibilityNodeInfo!' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/steam/SteamMiniProfileBackgroundTest.kt:83:25 'fun createTempDir(prefix: String = ..., suffix: String? = ..., directory: File? = ...): File' is deprecated. Avoid creating temporary directories in the default temp location with this function due to too wide permissions on the newly created directory. Use kotlin.io.path.createTempDirectory instead.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/ui/vaultv2/VaultV2SortingTest.kt:16:90 'constructor(p0: String!): Locale' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/utils/MdbxSyncSidecarStoreTest.kt:14:20 'fun createTempDir(prefix: String = ..., suffix: String? = ..., directory: File? = ...): File' is deprecated. Avoid creating temporary directories in the default temp location with this function due to too wide permissions on the newly created directory. Use kotlin.io.path.createTempDirectory instead.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/utils/MdbxSyncSidecarStoreTest.kt:51:20 'fun createTempDir(prefix: String = ..., suffix: String? = ..., directory: File? = ...): File' is deprecated. Avoid creating temporary directories in the default temp location with this function due to too wide permissions on the newly created directory. Use kotlin.io.path.createTempDirectory instead.
+
+> Task :app:compileDebugUnitTestJavaWithJavac
+> Task :app:processDebugUnitTestJavaRes UP-TO-DATE
+
+> Task :app:testDebugUnitTest
+
+VaultFolderNavigationTest > directFolderEntriesExcludeDescendantsAndOtherSources FAILED
+    java.lang.AssertionError at VaultFolderNavigationTest.kt:59
+
+VaultOverviewKeePassFolderTest > passkeyOnlyUsesCatalogueUuid FAILED
+    java.lang.RuntimeException at ContextCompat.java:977
+
+VaultOverviewKeePassFolderTest > initialSnapshotWithoutCatalogueIsOrderIndependent FAILED
+    java.lang.RuntimeException at ContextCompat.java:977
+
+VaultOverviewKeePassFolderTest > passkeysShareCatalogueFolderWithPasswordsAndCombinedCount FAILED
+    java.lang.RuntimeException at ContextCompat.java:977
+
+VaultOverviewKeePassFolderTest > identicalPathsInDifferentDatabasesRemainSeparate FAILED
+    java.lang.RuntimeException at ContextCompat.java:977
+
+VaultOverviewKeePassFolderTest > differentUuidsRemainDistinctEvenWithIdenticalPaths FAILED
+    java.lang.RuntimeException at ContextCompat.java:977
+
+VaultOverviewKeePassFolderTest > passkeyOnlyFallbackDecodesOnceAndKeepsEncodedNavigationPath FAILED
+    java.lang.RuntimeException at ContextCompat.java:977
+
+47 tests completed, 7 failed
+
+> Task :app:testDebugUnitTest FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:testDebugUnitTest'.
+> There were failing tests. See the report at: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/build/reports/tests/testDebugUnitTest/index.html
+
+* Try:
+> Run with --scan to get full insights.
+
+BUILD FAILED in 1m 19s
+99 actionable tasks: 20 executed, 79 up-to-date
+
+ordinary-final-jvm.txt
+
+WARNING: We recommend using a newer Android Gradle plugin to use compileSdk = 36
+
+This Android Gradle plugin (8.7.3) was tested up to compileSdk = 35.
+
+You are strongly encouraged to update your project to use a newer
+Android Gradle plugin that has been tested with compileSdk = 36.
+
+If you are already using the latest version of the Android Gradle plugin,
+you may need to wait until a newer version with support for compileSdk = 36 is available.
+
+For more information refer to the compatibility table:
+https://d.android.com/r/tools/api-level-support
+
+To suppress this warning, add/update
+    android.suppressUnsupportedCompileSdk=36
+to this project's gradle.properties.
+> Task :kotpass:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :kotpass:compileKotlin UP-TO-DATE
+> Task :kotpass:compileJava NO-SOURCE
+> Task :kotpass:processResources NO-SOURCE
+> Task :kotpass:classes UP-TO-DATE
+> Task :kotpass:jar UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:compileDebugAidl UP-TO-DATE
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:generateDebugBuildConfig
+> Task :mdbx-engine:preBuild UP-TO-DATE
+> Task :mdbx-engine:preDebugBuild UP-TO-DATE
+> Task :mdbx-engine:writeDebugAarMetadata UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :mdbx-engine:generateDebugResValues UP-TO-DATE
+> Task :mdbx-engine:generateDebugResources UP-TO-DATE
+> Task :mdbx-engine:packageDebugResources UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :mdbx-engine:extractDeepLinksDebug UP-TO-DATE
+> Task :mdbx-engine:processDebugManifest UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :mdbx-engine:compileDebugLibraryResources UP-TO-DATE
+> Task :mdbx-engine:parseDebugLocalResources UP-TO-DATE
+> Task :mdbx-engine:generateDebugRFile UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :mdbx-engine:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :mdbx-engine:compileDebugKotlin UP-TO-DATE
+> Task :mdbx-engine:javaPreCompileDebug UP-TO-DATE
+> Task :mdbx-engine:compileDebugJavaWithJavac NO-SOURCE
+> Task :mdbx-engine:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :app:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :app:mergeDebugShaders UP-TO-DATE
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :mdbx-engine:mergeDebugShaders UP-TO-DATE
+> Task :mdbx-engine:compileDebugShaders NO-SOURCE
+> Task :mdbx-engine:generateDebugAssets UP-TO-DATE
+> Task :mdbx-engine:packageDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:packageDebugUnitTestForUnitTest UP-TO-DATE
+> Task :app:generateDebugUnitTestConfig UP-TO-DATE
+> Task :mdbx-engine:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :mdbx-engine:processDebugJavaRes UP-TO-DATE
+> Task :app:kspDebugKotlin
+
+> Task :app:compileDebugKotlin
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/security/RuntimeDiagnostics.kt:41:63 'val id: Long' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:516:48 'val Icons.Filled.ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:1760:48 'val Icons.Filled.Note: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Note.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2095:57 'val Icons.Filled.ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2287:21 'fun Divider(modifier: Modifier = ..., thickness: Dp = ..., color: Color = ...): Unit' is deprecated. Renamed to HorizontalDivider.
+
+> Task :app:compileDebugJavaWithJavac
+> Task :app:processDebugJavaRes UP-TO-DATE
+> Task :app:bundleDebugClassesToCompileJar
+> Task :app:bundleDebugClassesToRuntimeJar
+> Task :app:kspDebugUnitTestKotlin
+> Task :app:compileDebugUnitTestKotlin
+> Task :app:compileDebugUnitTestJavaWithJavac UP-TO-DATE
+> Task :app:processDebugUnitTestJavaRes UP-TO-DATE
+> Task :app:testDebugUnitTest
+
+BUILD SUCCESSFUL in 52s
+50 actionable tasks: 9 executed, 41 up-to-date
+
+ordinary-capture-test-build.txt
+
+Starting a Gradle Daemon, 2 busy and 2 stopped Daemons could not be reused, use --status for details
+WARNING: We recommend using a newer Android Gradle plugin to use compileSdk = 36
+
+This Android Gradle plugin (8.7.3) was tested up to compileSdk = 35.
+
+You are strongly encouraged to update your project to use a newer
+Android Gradle plugin that has been tested with compileSdk = 36.
+
+If you are already using the latest version of the Android Gradle plugin,
+you may need to wait until a newer version with support for compileSdk = 36 is available.
+
+For more information refer to the compatibility table:
+https://d.android.com/r/tools/api-level-support
+
+To suppress this warning, add/update
+    android.suppressUnsupportedCompileSdk=36
+to this project's gradle.properties.
+> Task :kotpass:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :kotpass:compileKotlin UP-TO-DATE
+> Task :kotpass:compileJava NO-SOURCE
+> Task :kotpass:processResources NO-SOURCE
+> Task :kotpass:classes UP-TO-DATE
+> Task :kotpass:jar UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:compileDebugAidl UP-TO-DATE
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:generateDebugBuildConfig
+> Task :mdbx-engine:preBuild UP-TO-DATE
+> Task :mdbx-engine:preDebugBuild UP-TO-DATE
+> Task :mdbx-engine:writeDebugAarMetadata UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :mdbx-engine:generateDebugResValues UP-TO-DATE
+> Task :mdbx-engine:generateDebugResources UP-TO-DATE
+> Task :mdbx-engine:packageDebugResources UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :mdbx-engine:extractDeepLinksDebug UP-TO-DATE
+> Task :mdbx-engine:processDebugManifest UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :mdbx-engine:compileDebugLibraryResources UP-TO-DATE
+> Task :mdbx-engine:parseDebugLocalResources UP-TO-DATE
+> Task :mdbx-engine:generateDebugRFile UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :mdbx-engine:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :mdbx-engine:compileDebugKotlin UP-TO-DATE
+> Task :mdbx-engine:javaPreCompileDebug UP-TO-DATE
+> Task :mdbx-engine:compileDebugJavaWithJavac NO-SOURCE
+> Task :mdbx-engine:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:preDebugAndroidTestBuild SKIPPED
+> Task :app:compileDebugAndroidTestAidl NO-SOURCE
+> Task :app:processDebugAndroidTestManifest UP-TO-DATE
+> Task :app:generateDebugAndroidTestBuildConfig
+> Task :app:checkDebugAndroidTestAarMetadata UP-TO-DATE
+> Task :app:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :app:mapDebugAndroidTestSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugAndroidTestResources UP-TO-DATE
+> Task :app:mergeDebugAndroidTestResources UP-TO-DATE
+> Task :app:processDebugAndroidTestResources UP-TO-DATE
+> Task :app:javaPreCompileDebugAndroidTest UP-TO-DATE
+> Task :app:mergeDebugAndroidTestShaders UP-TO-DATE
+> Task :app:compileDebugAndroidTestShaders NO-SOURCE
+> Task :app:generateDebugAndroidTestAssets UP-TO-DATE
+> Task :mdbx-engine:mergeDebugShaders UP-TO-DATE
+> Task :mdbx-engine:compileDebugShaders NO-SOURCE
+> Task :mdbx-engine:generateDebugAssets UP-TO-DATE
+> Task :mdbx-engine:packageDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAndroidTestAssets UP-TO-DATE
+> Task :app:compressDebugAndroidTestAssets UP-TO-DATE
+> Task :mdbx-engine:processDebugJavaRes UP-TO-DATE
+> Task :app:checkDebugAndroidTestDuplicateClasses UP-TO-DATE
+> Task :app:desugarDebugAndroidTestFileDependencies UP-TO-DATE
+> Task :app:mergeExtDexDebugAndroidTest UP-TO-DATE
+> Task :mdbx-engine:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :app:buildMonicaRustJniFromSource UP-TO-DATE
+> Task :app:mergeDebugAndroidTestJniLibFolders UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :mdbx-engine:mergeDebugJniLibFolders UP-TO-DATE
+> Task :mdbx-engine:mergeDebugNativeLibs UP-TO-DATE
+> Task :mdbx-engine:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :app:mergeDebugNativeLibs UP-TO-DATE
+> Task :app:mergeLibDexDebugAndroidTest UP-TO-DATE
+> Task :app:mergeDebugAndroidTestNativeLibs NO-SOURCE
+> Task :app:stripDebugAndroidTestDebugSymbols NO-SOURCE
+> Task :app:validateSigningDebugAndroidTest UP-TO-DATE
+> Task :app:writeDebugAndroidTestSigningConfigVersions UP-TO-DATE
+> Task :app:kspDebugKotlin
+
+> Task :app:compileDebugKotlin
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/security/RuntimeDiagnostics.kt:41:63 'val id: Long' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:516:48 'val Icons.Filled.ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:1760:48 'val Icons.Filled.Note: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Note.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2095:57 'val Icons.Filled.ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2287:21 'fun Divider(modifier: Modifier = ..., thickness: Dp = ..., color: Color = ...): Unit' is deprecated. Renamed to HorizontalDivider.
+
+> Task :app:compileDebugJavaWithJavac
+> Task :app:bundleDebugClassesToCompileJar
+> Task :app:kspDebugAndroidTestKotlin
+
+> Task :app:compileDebugAndroidTestKotlin
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/androidTest/java/takagi/ru/monica/ui/vaultv2/VaultOverviewPaneTest.kt:55:29 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+
+> Task :app:compileDebugAndroidTestJavaWithJavac
+> Task :app:processDebugAndroidTestJavaRes UP-TO-DATE
+> Task :app:mergeDebugAndroidTestJavaResource UP-TO-DATE
+> Task :app:dexBuilderDebugAndroidTest
+> Task :app:mergeProjectDexDebugAndroidTest
+> Task :app:packageDebugAndroidTest
+> Task :app:createDebugAndroidTestApkListingFileRedirect UP-TO-DATE
+> Task :app:assembleDebugAndroidTest
+
+BUILD SUCCESSFUL in 1m 12s
+72 actionable tasks: 12 executed, 60 up-to-date

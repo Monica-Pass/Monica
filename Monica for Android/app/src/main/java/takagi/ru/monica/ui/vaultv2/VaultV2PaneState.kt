@@ -112,6 +112,7 @@ class VaultV2PaneState internal constructor(
     internal var archiveReturnStorageFilterIdentityKey by mutableStateOf(archiveReturnStorageFilterIdentityKey)
 
     internal var overviewListOpen by mutableStateOf(false)
+    internal var overviewFolderBrowsing by mutableStateOf(false)
     internal var overviewScope by mutableStateOf<String?>(null)
     internal var overviewItemType by mutableStateOf<String?>(null)
     internal var overviewFavorites by mutableStateOf(false)
@@ -289,6 +290,7 @@ internal fun vaultV2PaneStateSaver(
             it.overviewScrollIndex,
             it.overviewScrollOffset,
             it.overviewCardKey,
+            it.overviewFolderBrowsing,
         )
     },
     restore = { restored ->
@@ -318,6 +320,7 @@ internal fun vaultV2PaneStateSaver(
             overviewScrollIndex = restored.getOrNull(20) as? Int ?: 0
             overviewScrollOffset = restored.getOrNull(21) as? Int ?: 0
             overviewCardKey = restored.getOrNull(22) as? String
+            overviewFolderBrowsing = restored.getOrNull(23) as? Boolean ?: false
         }
     },
 )

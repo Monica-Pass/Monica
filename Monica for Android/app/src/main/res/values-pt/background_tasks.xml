@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="transfer_uploading">"A enviar"</string>
+    <string name="transfer_downloading">"A descarregar"</string>
+    <string name="transfer_task_busy">"Outra tarefa de dados está em execução. Aguarde até terminar."</string>
+    <string name="transfer_task_done">"Tarefa de dados concluída"</string>
+    <string name="transfer_task_failed">"A tarefa de dados parou ou requer atenção"</string>
+    <string name="transfer_interrupted_check_result">"A tarefa anterior foi interrompida pelo sistema. Verifique os dados importados ou a cópia de segurança antes de tentar novamente; a tarefa não foi reiniciada automaticamente."</string>
+</resources>

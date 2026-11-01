@@ -10,7 +10,7 @@ import takagi.ru.monica.ui.components.UnifiedCategoryFilterSelection
 import takagi.ru.monica.utils.KeePassGroupInfo
 
 @RunWith(RobolectricTestRunner::class)
-@Config(sdk = [29], manifest = Config.NONE)
+@Config(sdk = [29], manifest = Config.NONE, application = android.app.Application::class)
 class VaultOverviewKeePassFolderTest {
     private val path = "%E9%80%9A%E8%A1%8C%E5%AF%86%E9%92%A5"
     private fun password(db: Long = 3, folder: String = path) = buildVaultV2PasswordItems(listOf(

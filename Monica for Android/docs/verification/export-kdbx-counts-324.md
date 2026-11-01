@@ -1,0 +1,19 @@
+# KDBX export source totals in 1.0.324
+
+Date: 2026-11-01. Ordinary code 12 and canonical F-Droid code 31 remain unreleased.
+
+The user confirmed the databases were already unlocked and readable in the password list. The old export counter equated decoded LRU membership with an unlocked source. With four displayed files and a two-file inactive warm-cache limit, decoded eviction left valid password-list presentation snapshots but caused export totals to report Locked. The old APK failed both the counter and actual source-picker regression tests in 59.289 seconds. Raw failure evidence is retained in the companion baseline log.
+
+The fix records only a process-local scalar total after a successful authenticated load or confirmed persisted-cache update. It counts native group entry membership, excluding recycle subtrees regardless of whether recycling is enabled. History versions, attachments and folders are not additional records; unmapped native entry types are included. It neither decrypts fields to count nor creates a Room projection, a persistent count cache, an export snapshot or a new credential prompt. Cached reads reuse a valid scalar; normal saves update it. The decoded-cache LRU limit and native-index eviction remain unchanged.
+
+Each scalar is bound to the original global lock generation, per-file lock version and source-invalidation generation. Locking, credential/source invalidation or removal revokes it, and stale read/save scopes cannot publish afterward. Reunlocking the app does not authorize an old scalar. The source field observes scalar and lock changes so a save updates the selected count without reopening the picker. Import destinations do not show or request counts. Existing export authentication and write/conflict checks are unchanged.
+
+Counts describe the last verified in-process database revision. Unobserved external edits are reflected after normal source validation/reload; the statistics feature does not poll or decrypt external files to obtain a fresher total. Never-opened or invalidated sources remain Locked until a successful normal read. Failed decoding cannot restore the previous total.
+
+Ordinary main/test build and initial six-cache JVM tests succeeded in 2m 29s; the follow-up related write-cache/source-safety/access-policy JVM run also passed. F-Droid main/test and the same related JVM suites succeeded in 2m 46s. Final suites passed 37 ordinary and 37 F-Droid JVM methods, with no skips or failures.
+
+Public Android 32 x86_64 device runs passed 19 distinct methods per flavor: ordinary in 143.0 seconds, F-Droid in 94.529 seconds. These include actual four-file LRU eviction with readable presentation rows, no count-triggered file reads/commits or decoded-session recreation, actual export source selection and per-file lock removal, live native-save count refresh, unopened credentials not used for counting, zero records, unmapped records/history/recycle semantics, global lock/reunlock, explicit source invalidation and corrupt-read rejection. Existing local/Bitwarden/MDBX total tests and six native password save/conflict/failed-write/browser cases also passed. Byte comparisons preserve unchanged source files in read-only cases. Only synthetic KDBX4 data and this task's guest 14 were used.
+
+Six shared source/test files match byte-for-byte. The results JSON freezes their SHA256 and both tested APK digests. Root/next bilingual 324 notes and FD 31 were updated; F-Droid metadata and six script tests passed. Portuguese localization work and released 323/323b are retained. The native export-page screenshot was checked locally and remains in the ignored design directory.
+
+No physical phone, user database, remote/cloud source, other KDBX format or new R8 release build was tested. No commit, push, tag, release publication or APK delivery was performed. Cleanup ownership and preservation checks are in the companion cleanup JSON.

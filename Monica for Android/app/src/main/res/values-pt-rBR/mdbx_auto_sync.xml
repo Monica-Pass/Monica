@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="mdbx_auto_sync_title">"Sincronização automática"</string>
+    <string name="mdbx_auto_sync_manual_hint">"Desativada · Sincronize manualmente quando necessário"</string>
+    <string name="mdbx_auto_sync_enabled_hint">"Envia ao salvar; verifica atualizações enquanto desbloqueado em primeiro plano"</string>
+</resources>

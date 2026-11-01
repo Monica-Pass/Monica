@@ -4,6 +4,12 @@
 
 ## 中文
 
+- 概览文件夹改为只显示顶层，点击文件夹或数据库后逐层浏览；当前层的文件夹始终连续排列在条目上方，A–Z／Z–A 只调整文件夹块内的顺序。保留原列表布局偏好与返回位置；KDBX 同名分组按 UUID 和父组区分，浏览与排序不改写数据库。
+
+- 修复导出页将已解锁 KDBX 误显示为“待解锁”、无法显示记录总数的问题；多个库切换后仍能显示已核验总数，保存后自动刷新，锁定或来源失效后撤销统计。统计不额外读取文件或解密字段。
+
+- 新增葡萄牙语（巴西／葡萄牙），按地区使用自然的密码、文件和操作术语；Dock 与底部导航采用简短标签，技术名称、格式占位符及安全提示的完整条件保留。
+
 - 修复 KDBX 相同受保护字段重复保存时误增历史，以及仅访问时间或使用次数不同被合并为冲突的问题；历史密码按修改时间倒序展示。保留密码相同但备注等内容不同的有效历史版本，删除仍对应原始版本。
 
 - 修复 KDBX 多选密码堆叠、账号组重复保存及复制内容保存失败：同一文件的选择一次提交，保留原字段、保护位和附件；保存复制内容时，目标条目必须核对未变，目标被外部修改或锁定时仍拒绝保存。
@@ -18,6 +24,12 @@
 - 新协议已进行原生 TCP 与 Android 模拟器回归；真实双手机热点、不同 ROM 的系统联网确认及大库性能仍需实机验证。
 
 ## English
+
+- The folder overview now shows the top level. Open a folder or database to browse its children; all folders at the current level stay together above entries, with A–Z/Z–A ordering inside that block. Your saved list layout and back position are preserved. KDBX groups with identical names use their UUID and parent identity; browsing and sorting do not rewrite the database.
+
+- Fixed missing export totals for already-unlocked KDBX files after switching databases. Verified totals remain available after decoded-cache eviction and refresh after saves; locking or source invalidation revokes them. Counting does not reread files or decrypt fields.
+
+- Added Portuguese for Brazil and Portugal with regional terminology and concise Dock/navigation labels. Technical names, formatting placeholders and the full conditions of security warnings are retained.
 
 - Fixed spurious KDBX history from unchanged protected-field saves and merge conflicts caused only by access time or usage count. Password history now shows newest modification times first. Valid versions with the same password but different notes or other content are retained, and deletion still targets the original version.
 

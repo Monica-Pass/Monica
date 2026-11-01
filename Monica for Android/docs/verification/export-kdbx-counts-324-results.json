@@ -1,0 +1,125 @@
+{
+  "shared_sha256": {
+    "app/src/main/java/takagi/ru/monica/utils/KeePassKdbxService.kt": "74a6918568da7e1f44b21cf0281e75116bbb218a6b251c53c51e7ce67b957315",
+    "app/src/main/java/takagi/ru/monica/keepass/KeePassRecordCountCache.kt": "6d0a0c25bd65477a50ce0d552e0a3537a03cc245c1d5e12d8d1e6f35f97cc212",
+    "app/src/main/java/takagi/ru/monica/credentialexchange/DatabaseRecordCounts.kt": "607b3ce9cf9b7b81fd3091bd3b22db8d75424a43176cd137045b69cd82a22f90",
+    "app/src/main/java/takagi/ru/monica/credentialexchange/CredentialTransferUi.kt": "78b306b7b78fbc2dbf0ae5fac4003eac34922086d2ec56099709dd76c56868be",
+    "app/src/test/java/takagi/ru/monica/keepass/KeePassRecordCountCacheTest.kt": "2840c0a87a06644e7b62742b315646ca7427089365b4a701831ee5bdf82f1b82",
+    "app/src/androidTest/java/takagi/ru/monica/credentialexchange/ExportSourceRecordCountTest.kt": "73e2d951e536759f12e8c3e3885a8391f759b47d4dd915f27b5a3eaa119cf5e8"
+  },
+  "builds": {
+    "ordinary": "2m 29s",
+    "ordinary-support-jvm": "1m 8s",
+    "fdroid": "2m 46s"
+  },
+  "jvm": {
+    "ordinary": {
+      "suites": [
+        {
+          "name": "KeePassRecordCountCacheTest",
+          "tests": 6,
+          "seconds": 0.038
+        },
+        {
+          "name": "KeePassWriteCachePerformanceGuardTest",
+          "tests": 16,
+          "seconds": 0.045
+        },
+        {
+          "name": "KeePassSourceSafetyTest",
+          "tests": 10,
+          "seconds": 1.602
+        },
+        {
+          "name": "KeePassDatabaseAccessPolicyTest",
+          "tests": 5,
+          "seconds": 0.091
+        }
+      ],
+      "tests": 37
+    },
+    "fdroid": {
+      "suites": [
+        {
+          "name": "KeePassRecordCountCacheTest",
+          "tests": 6,
+          "seconds": 0.03
+        },
+        {
+          "name": "KeePassWriteCachePerformanceGuardTest",
+          "tests": 16,
+          "seconds": 0.07
+        },
+        {
+          "name": "KeePassSourceSafetyTest",
+          "tests": 10,
+          "seconds": 1.685
+        },
+        {
+          "name": "KeePassDatabaseAccessPolicyTest",
+          "tests": 5,
+          "seconds": 0.111
+        }
+      ],
+      "tests": 37
+    }
+  },
+  "device": {
+    "ordinary": {
+      "flavor": "ordinary",
+      "name": "final-device",
+      "version_code": 12,
+      "version_name": "1.0.324-26110112-09",
+      "main_apk": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.324-26110112-09.APK",
+      "main_sha256": "a99462a16c6617453f0ec3b6ef8878f23458525f7c28c1f75eb689ec8e1b679d",
+      "test_apk": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk",
+      "test_sha256": "9eb30e99f697887986f78c7983308d9b6a7c43e207a10a0c4cb607112a476ed1",
+      "classes": [
+        "takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest",
+        "takagi.ru.monica.keepass.KeePassPasswordNativeInstrumentedTest"
+      ],
+      "capture": false,
+      "elapsed_seconds": 143.0,
+      "process_exit": 0,
+      "success": true,
+      "different_passed_methods": 19
+    },
+    "fdroid": {
+      "flavor": "fdroid",
+      "name": "final-device",
+      "version_code": 31,
+      "version_name": "1.0.324",
+      "main_apk": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-worktrees\\monica-fdroid-nearby-steam\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.324.apk",
+      "main_sha256": "73d4ee9c04af7ec70fdf5226dc01f6bdb052bac5cc396e2eeaf98489d6cd72dc",
+      "test_apk": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-worktrees\\monica-fdroid-nearby-steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk",
+      "test_sha256": "187865e83b24fa27e4dbb9f431fcd31b9c1ccba695d8f308affe1acb34709ce2",
+      "classes": [
+        "takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest",
+        "takagi.ru.monica.keepass.KeePassPasswordNativeInstrumentedTest"
+      ],
+      "capture": false,
+      "elapsed_seconds": 94.529,
+      "process_exit": 0,
+      "success": true,
+      "different_passed_methods": 19
+    }
+  },
+  "baseline": {
+    "flavor": "ordinary",
+    "name": "baseline-cache-eviction",
+    "version_code": 12,
+    "version_name": "1.0.324-26110112-08",
+    "main_apk": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.324-26110112-08.APK",
+    "main_sha256": "1075662ce4225e705a69ed0d6feffe92f88e43fa4408dcccbbcd5d154b12f276",
+    "test_apk": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk",
+    "test_sha256": "9eee51fabd2340ed70ef647d9f8284b59359da43a043e08c7475be290c81c682",
+    "classes": [
+      "takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest#alreadyDisplayedNativeCountsSurviveDecodedCacheEvictionWithoutReadingOrWriting",
+      "takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest#sourcePickerShowsAllAlreadyDisplayedDatabasesAfterWarmCacheEviction"
+    ],
+    "capture": false,
+    "elapsed_seconds": 139.964,
+    "process_exit": 0,
+    "success": false
+  }
+}

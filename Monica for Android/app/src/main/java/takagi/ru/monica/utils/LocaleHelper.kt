@@ -25,6 +25,8 @@ object LocaleHelper {
             Language.FRENCH -> Locale.FRENCH
             Language.POLISH -> Locale.forLanguageTag("pl")
             Language.ITALIAN -> Locale.ITALIAN
+            Language.PORTUGUESE_PORTUGAL -> Locale.forLanguageTag("pt-PT")
+            Language.PORTUGUESE_BRAZIL -> Locale.forLanguageTag("pt-BR")
         }
 
         return updateResources(context, locale)
@@ -118,6 +120,7 @@ object LocaleHelper {
             "fr" -> Language.FRENCH
             "pl" -> Language.POLISH
             "it" -> Language.ITALIAN
+            "pt" -> if (currentLocale.country == "BR") Language.PORTUGUESE_BRAZIL else Language.PORTUGUESE_PORTUGAL
             else -> Language.SYSTEM
         }
     }

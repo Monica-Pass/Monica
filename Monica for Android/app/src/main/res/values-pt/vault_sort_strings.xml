@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="vault_sort">"Ordenar por"</string>
+    <string name="vault_sort_scope">"Aplica-se a todos os itens, pastas e resultados de pesquisa"</string>
+    <string name="vault_sort_title_asc">"Nome: A → Z"</string>
+    <string name="vault_sort_title_desc">"Nome: Z → A"</string>
+    <string name="vault_sort_created_desc">"Criação: mais recentes primeiro"</string>
+    <string name="vault_sort_created_asc">"Criação: mais antigos primeiro"</string>
+    <string name="vault_sort_updated_desc">"Atualização: mais recentes primeiro"</string>
+    <string name="vault_sort_updated_asc">"Atualização: mais antigos primeiro"</string>
+    <string name="vault_sort_unknown_date">"Data desconhecida"</string>
+</resources>

@@ -1,0 +1,34 @@
+[
+  {
+    "name": "takagi.ru.monica.localization.DefaultLanguageResourceTest",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.34"
+  },
+  {
+    "name": "takagi.ru.monica.localization.LocaleResourceCoverageTest",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.03"
+  },
+  {
+    "name": "takagi.ru.monica.localization.PortugueseResourceTest",
+    "tests": "3",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.973"
+  },
+  {
+    "name": "takagi.ru.monica.utils.StartupLanguageCacheTest",
+    "tests": "2",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.027"
+  }
+]

@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="kp_file_save">"Guardar dados"</string>
+    <string name="kp_file_merge">"Unir dados"</string>
+    <string name="kp_file_reload">"Recarregar dados"</string>
+    <string name="kp_file_ready">"Guardado · KDBX"</string>
+    <string name="kp_file_busy">"A processar a base de dados…"</string>
+    <string name="kp_file_saved">"Dados guardados"</string>
+    <string name="kp_file_external_reloaded">"Alterações externas carregadas"</string>
+    <string name="kp_file_reloaded">"Dados recarregados"</string>
+    <string name="kp_file_merged">"Dados unidos"</string>
+    <string name="kp_file_merged_conflicts">"União concluída; os carimbos de data/hora iguais têm versões alternativas no histórico da entrada"</string>
+    <string name="kp_file_reload_failed">"Não foi possível recarregar; a mostrar os dados anteriormente carregados"</string>
+    <string name="kp_file_failed">"Não foi possível concluir a operação"</string>
+    <string name="kp_file_failure_help">"Verifique o acesso ao ficheiro, a palavra-passe de origem e as alterações externas e tente novamente."</string>
+    <string name="kp_file_merge_summary">"Corresponde entradas existentes e une atualizações, histórico e registos de eliminação."</string>
+    <string name="kp_file_select_source">"Selecionar ficheiro KDBX"</string>
+    <string name="kp_file_source_selected">"Origem selecionada · mudar ficheiro"</string>
+    <string name="kp_file_source_password">"Palavra-passe da base de dados de origem"</string>
+    <string name="kp_file_select_key">"Ficheiro de chave (opcional)"</string>
+    <string name="kp_file_key_selected">"Ficheiro de chave selecionado · mudar"</string>
+    <string name="kp_file_merge_notice">"Primeiro é criada uma cópia de recuperação. As entradas mais recentes têm prioridade. Se os carimbos de data/hora forem iguais, a versão atual é mantida e a outra vai para o histórico."</string>
+    <string name="kp_file_merge_confirm">"Unir e guardar"</string>
+</resources>

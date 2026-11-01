@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="totp_temporarily_unavailable">"Esta chave de autenticador está temporariamente ilegível. Desbloqueie Monica e tente novamente. Os dados originais foram mantidos."</string>
+</resources>

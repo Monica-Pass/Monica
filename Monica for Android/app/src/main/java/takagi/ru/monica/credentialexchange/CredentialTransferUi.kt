@@ -80,9 +80,11 @@ fun TransferDestinationField(
     val current = options?.firstOrNull { it.destination == destination }
     val unlocked by SessionManager.isUnlocked.collectAsState()
     val lockVersions by KeePassKdbxService.nativeLockVersions.collectAsState()
+    val nativeRecordCounts by KeePassKdbxService.nativeRecordCounts.collectAsState()
+    val lockGeneration by SessionManager.lockGeneration.collectAsState()
     val counter = remember(context) { DatabaseRecordCounts(context) }
     val counts by produceState<Map<ImportDestination, DatabaseRecordCount>>(emptyMap(),
-        options, destination, show, forExport, unlocked, lockVersions) {
+        options, destination, show, forExport, unlocked, lockVersions, nativeRecordCounts, lockGeneration) {
         value = emptyMap()
         if (forExport && unlocked) {
             val requested = if (show) options.orEmpty().sortedBy { it.destination != destination }

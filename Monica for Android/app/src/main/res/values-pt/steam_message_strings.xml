@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="steam_message_credentials_required">"Introduza o nome da conta e a palavra-passe"</string>
+    <string name="steam_message_rsa_failed">"Não foi possível obter a chave RSA Steam"</string>
+    <string name="steam_message_rsa_incomplete">"Steam devolveu dados RSA incompletos"</string>
+    <string name="steam_message_password_encrypt">"Não foi possível encriptar a palavra-passe Steam"</string>
+    <string name="steam_message_login_request">"Não foi possível enviar o pedido de login Steam"</string>
+    <string name="steam_message_login_failed">"O login Steam falhou"</string>
+    <string name="steam_message_login_rejected">"Steam rejeitou o login (EResult=%1$s, interval=%2$s)"</string>
+    <string name="steam_message_login_incomplete">"Steam devolveu uma resposta de login incompleta. Pode ser necessária verificação adicional."</string>
+    <string name="steam_message_session_invalid">"Sessão de login inválida"</string>
+    <string name="steam_message_code_required">"Introduza um código de verificação"</string>
+    <string name="steam_message_session_expired">"A sessão de login expirou. Comece novamente."</string>
+    <string name="steam_message_verification_failed">"A verificação Steam falhou"</string>
+    <string name="steam_message_qr_create">"Não foi possível iniciar o login Steam por QR"</string>
+    <string name="steam_message_qr_failed">"O login Steam por QR falhou"</string>
+    <string name="steam_message_code_submit">"Não foi possível enviar o código de verificação Steam"</string>
+    <string name="steam_message_session_needs_code">"Esta sessão de login requer um código de verificação"</string>
+    <string name="steam_message_qr_expired">"A sessão de login por QR expirou. Comece novamente."</string>
+    <string name="steam_message_not_qr">"Esta sessão não usa login por QR"</string>
+    <string name="steam_message_poll_failed">"Não foi possível verificar o estado do login Steam"</string>
+    <string name="steam_message_steamid_missing">"Login Steam efetuado, mas falta SteamID. Não é possível continuar."</string>
+    <string name="steam_message_token_missing">"Login Steam efetuado, mas não foi obtido um token de acesso. Não é possível continuar a importação."</string>
+    <string name="steam_message_login_timeout">"O tempo de espera pelo login Steam expirou. Tente mais tarde."</string>
+    <string name="steam_message_qr_parameters">"Dados da sessão de login por QR inválidos. Comece novamente."</string>
+    <string name="steam_message_replacement_code">"Esta conta já tem um autenticador. Introduza o código para o substituir."</string>
+    <string name="steam_message_steamid_invalid">"SteamID inválido. Não é possível configurar Steam Guard."</string>
+    <string name="steam_message_account_restricted">"Esta conta Steam tem restrições e não pode adicionar Steam Guard"</string>
+    <string name="steam_message_rate_limited">"Demasiados pedidos Steam. Tente mais tarde."</string>
+    <string name="steam_message_add_failed">"Não foi possível adicionar Steam Guard"</string>
+    <string name="steam_message_phone_required">"Associe um número de telemóvel a esta conta Steam antes de adicionar Steam Guard"</string>
+    <string name="steam_message_response_missing">"Steam devolveu dados de autenticador incompletos: falta %1$s"</string>
+    <string name="steam_message_activation_expired">"A ativação Steam Guard expirou. Entre novamente."</string>
+    <string name="steam_message_activation_data">"Os dados Steam Guard estão incompletos. Não é possível gerar um código de ativação."</string>
+    <string name="steam_message_activation_failed">"A ativação Steam Guard falhou"</string>
+    <string name="steam_message_activation_code_invalid">"O código de ativação Steam é inválido ou expirou"</string>
+    <string name="steam_message_activation_status">"A ativação Steam Guard falhou (status=%1$d)"</string>
+    <string name="steam_message_sequential_codes">"A ativação Steam Guard falhou: não foi possível gerar os códigos consecutivos exigidos pelo Steam"</string>
+    <string name="steam_message_replace_start">"Não foi possível iniciar a substituição do autenticador"</string>
+    <string name="steam_message_replace_sms">"Introduza o código SMS para substituir o autenticador atual"</string>
+    <string name="steam_message_replace_denied">"O login Steam foi concluído, mas a transferência do autenticador foi recusada (EResult=2). A conta pode não ter um número de telemóvel utilizável ou a transferência pode estar restrita. Importe um maFile ou associe um número de telemóvel no Steam e tente novamente."</string>
+    <string name="steam_message_replace_forbidden">"O login Steam foi concluído, mas o acesso à transferência do autenticador foi negado (EResult=15). Importe um maFile ou entre novamente mais tarde e tente outra vez."</string>
+    <string name="steam_message_replace_limited">"O login Steam foi concluído, mas a transferência do autenticador está temporariamente limitada (EResult=84). Tente mais tarde."</string>
+    <string name="steam_message_replace_result">"O login Steam foi concluído, mas a transferência do autenticador falhou (EResult=%1$d)"</string>
+    <string name="steam_message_replace_session">"Sessão de substituição inválida. Entre novamente para importar."</string>
+    <string name="steam_message_replace_failed">"A substituição do autenticador falhou"</string>
+    <string name="steam_message_session_state">"Estado da sessão de login inválido. Comece novamente."</string>
+    <string name="steam_message_oauth_missing">"O login Steam foi concluído, mas não foi devolvido um token OAuth. Não é possível continuar a importação."</string>
+    <string name="steam_message_captcha_unsupported">"Steam exige um CAPTCHA que esta versão não consegue concluir. Entre uma vez com o cliente Steam e tente novamente."</string>
+    <string name="steam_message_enter_token_code">"Introduza o código Steam Guard"</string>
+    <string name="steam_message_enter_email_code">"Introduza o código enviado por email"</string>
+    <string name="steam_message_invalid_parameters">"Steam rejeitou o pedido: parâmetros inválidos"</string>
+    <string name="steam_message_access_denied">"Steam negou o acesso"</string>
+    <string name="steam_message_already_bound">"Esta conta já tem um autenticador Steam. Use o fluxo de substituição."</string>
+    <string name="steam_message_operation_disallowed">"Steam não permite esta ação no estado atual"</string>
+    <string name="steam_message_confirmation_required">"Steam exige confirmação adicional"</string>
+    <string name="steam_message_code_invalid">"O código de verificação Steam é inválido ou expirou"</string>
+    <string name="steam_message_request_status">"O pedido Steam falhou (status=%1$d)"</string>
+    <string name="steam_message_bad_credentials">"Nome da conta ou palavra-passe Steam incorreto"</string>
+    <string name="steam_message_duplicate_request">"Steam indicou um pedido duplicado (EResult=29). A conta pode já ter um autenticador."</string>
+    <string name="steam_message_session_conflict">"Conflito na sessão de login Steam. Tente mais tarde."</string>
+    <string name="steam_message_extra_verification">"Steam exige verificação adicional de login (EResult=63)"</string>
+    <string name="steam_message_login_result">"O login Steam falhou (EResult=%1$d)"</string>
+    <string name="steam_message_token_code_invalid">"O código Steam Guard é inválido ou expirou"</string>
+    <string name="steam_message_sms_email_code_invalid">"O código de verificação por SMS ou email é inválido ou expirou"</string>
+</resources>

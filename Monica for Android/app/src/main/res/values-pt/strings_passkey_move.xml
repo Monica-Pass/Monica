@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="passkey_move_result_title">"Resultado da mudança"</string>
+    <string name="passkey_move_result_summary">"Concluídos %1$d; requerem atenção %2$d"</string>
+    <string name="passkey_move_success_count">"%1$d itens movidos"</string>
+    <string name="passkey_move_unnamed_account">"Conta sem nome"</string>
+    <string name="passkey_move_bound_reason">"Esta Passkey está associada a uma entrada de palavra-passe e não pode ser movida separadamente. Mova a entrada de palavra-passe associada ou desassocie primeiro a Passkey."</string>
+    <string name="passkey_move_reference_reason">"Este item é apenas uma referência e não tem chave privada que possa ser movida separadamente. Use o app ou cofre original que contém a Passkey real."</string>
+    <string name="passkey_move_bitwarden_reason">"O modo de armazenamento ou a chave privada não cumpre os requisitos de migração Bitwarden. Desbloqueie Monica e tente novamente ou escolha outro cofre. As chaves vinculadas ao dispositivo não podem ser exportadas; mantenha-as no dispositivo original ou registe uma nova Passkey no serviço."</string>
+    <string name="passkey_move_conflict_reason">"A base de dados KeePass de destino já contém a mesma credencial Passkey. Nada foi substituído. Verifique a entrada existente ou escolha outra base de dados."</string>
+    <string name="passkey_move_update_reason">"A mudança não foi concluída e não foi possível determinar a causa exata. Verifique se os cofres de origem e destino estão desbloqueados, permitem escrita e têm espaço livre suficiente. Inspecione ambos antes de tentar novamente; não elimine a origem."</string>
+    <string name="passkey_move_cleanup_reason">"O destino foi guardado, mas a limpeza da origem não terminou. Podem permanecer cópias em ambos os cofres. Verifique o destino e o cofre de origem ou o estado da sincronização antes de continuar; não repita a mudança sem verificar."</string>
+</resources>

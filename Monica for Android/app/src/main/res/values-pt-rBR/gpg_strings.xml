@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="gpg_title">"Chave GPG"</string>
+    <string name="gpg_entry_title">"Título"</string>
+    <string name="gpg_name">"Nome"</string>
+    <string name="gpg_email">"Email (opcional)"</string>
+    <string name="gpg_error">"Não foi possível processar a chave. Verifique a identidade, o arquivo de chave e o acesso ao armazenamento e tente novamente."</string>
+    <string name="gpg_storage">"Locais de armazenamento (%1$d)"</string>
+    <string name="gpg_generate">"Gerar chave"</string>
+    <string name="gpg_import">"Importar chave"</string>
+    <string name="gpg_save">"Salvar no cofre"</string>
+    <string name="gpg_no_expiry">"Nunca expira"</string>
+    <string name="gpg_days">"%1$d dias"</string>
+    <string name="gpg_passphrase">"Frase secreta (opcional)"</string>
+    <string name="gpg_copy_fingerprint">"Copiar impressão digital"</string>
+    <string name="gpg_copy_public">"Copiar chave pública"</string>
+    <string name="gpg_copy_private">"Copiar chave privada"</string>
+    <string name="gpg_export_public">"Exportar chave pública"</string>
+    <string name="gpg_export_private">"Exportar chave privada"</string>
+    <string name="gpg_show_private">"Mostrar chave privada"</string>
+    <string name="gpg_hide_private">"Ocultar chave privada"</string>
+    <string name="gpg_add_title">"Nova chave GPG"</string>
+    <string name="gpg_edit_title">"Editar chave GPG"</string>
+    <string name="gpg_empty">"Gere ou importe uma chave"</string>
+    <string name="gpg_ready">"Chave adicionada"</string>
+    <string name="gpg_options">"Opções de geração"</string>
+    <string name="gpg_expiry">"Expira"</string>
+    <string name="gpg_actions">"Ações da chave GPG"</string>
+    <string name="gpg_export_pair">"Exportar par de chaves"</string>
+    <string name="gpg_create_entry">"Criar nova entrada GPG"</string>
+    <string name="gpg_name_invalid">"Digite um nome (1–128 caracteres, sem sinais de menor/maior nem quebras de linha)."</string>
+    <string name="gpg_email_invalid">"Digite um endereço de email válido ou deixe este campo vazio."</string>
+    <string name="gpg_generate_error">"Não foi possível gerar a chave. Tente novamente."</string>
+    <string name="gpg_import_error">"Não foi possível importar a chave. Selecione um arquivo de chave OpenPGP válido (até 1 MB)."</string>
+    <string name="gpg_load_error">"Não foi possível ler esta chave. Reabra a entrada após verificar o cofre."</string>
+    <string name="gpg_save_error">"Não foi possível salvar a chave. Verifique se o cofre selecionado permite gravação."</string>
+    <string name="gpg_export_error">"Não foi possível exportar a chave. Escolha um local que permita gravação e tente novamente."</string>
+</resources>

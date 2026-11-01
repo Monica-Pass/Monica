@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="passkey_backup_problem_title">"O backup requer atenção"</string>
+    <string name="passkey_backup_problem_detail">"Não foi possível fazer backup destes itens. Os dados locais e os backups remotos existentes permanecem inalterados."</string>
+    <string name="passkey_device_bound_solution">"Cadastre uma nova Passkey exportável no serviço e verifique se funciona antes de deixar de usar a chave antiga. Também pode ignorar este item por enquanto."</string>
+    <string name="passkey_skip_explanation">"Ignorar afeta apenas este backup e não exclui itens locais. Será salvo um backup parcial separado; os backups remotos existentes são mantidos. Não substitui um backup completo."</string>
+    <string name="passkey_skip_and_backup">"Ignorar %1$d e fazer backup"</string>
+    <string name="passkey_retry_full_backup">"Tentar backup completo novamente"</string>
+    <string name="passkey_problem_close">"Fechar"</string>
+    <string name="passkey_partial_saved">"Backup parcial salvo"</string>
+    <string name="passkey_partial_saved_detail">"As Passkeys abaixo não estão incluídas. Seus registros locais e os backups remotos existentes são mantidos. A hora do último backup completo não muda."</string>
+    <string name="passkey_partial_requires_encryption">"Os backups parciais que ignoram Passkeys também precisam ser criptografados."</string>
+    <string name="passkey_partial_replace_blocked">"Este backup omite algumas Passkeys. Use a restauração por mesclagem; a substituição de dados locais está bloqueada."</string>
+    <string name="passkey_partial_restore_warning">"Este backup parcial omite as Passkeys ignoradas. A restauração mescla os dados com os registros locais existentes."</string>
+</resources>

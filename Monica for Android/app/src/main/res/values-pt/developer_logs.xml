@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="developer_logs_title">"Registos de diagnóstico"</string>
+    <string name="developer_logs_entry_description">"Pesquisar, filtrar e partilhar um relatório de diagnóstico completo"</string>
+    <string name="developer_logs_search">"Pesquisar registos, etiquetas ou exceções"</string>
+    <string name="developer_logs_source">"Origem: %1$s"</string>
+    <string name="developer_logs_hint">"Reproduza o problema e atualize. Os registos de nível de erro nem sempre significam que uma funcionalidade falhou."</string>
+    <string name="developer_logs_share_full">"Partilhar registos completos"</string>
+    <string name="developer_logs_result_count">"%1$d de %2$d eventos · Atualizado %3$s"</string>
+    <string name="developer_logs_no_matches">"Não há registos correspondentes. Tente outra palavra-chave ou filtro."</string>
+    <string name="developer_logs_clear_confirmation">"Limpar os buffers de registos de diagnóstico? Os dados do cofre e as definições são mantidos. Os detalhes do ambiente atual e novos registos podem continuar a aparecer."</string>
+    <string name="developer_logs_copy_event">"Copiar evento"</string>
+    <string name="developer_logs_preview_limit">"Pré-visualização abreviada. Copie o evento ou partilhe o relatório completo para ver todo o texto."</string>
+    <string name="developer_logs_expand">"Expandir evento de registo"</string>
+    <string name="developer_logs_collapse">"Recolher evento de registo"</string>
+    <string name="developer_logs_security">"Segurança"</string>
+    <string name="developer_verification_group">"Verificação e compatibilidade"</string>
+    <string name="developer_forensics_group">"Diagnóstico de sincronização Bitwarden"</string>
+    <string name="developer_logs_copy_failed">"Não foi possível copiar este evento. Partilhe o ficheiro de registo completo."</string>
+</resources>

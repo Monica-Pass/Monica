@@ -1,0 +1,28 @@
+{
+  "ordinary": {
+    "version_code": 12,
+    "junit_seconds": "71.758",
+    "host_seconds": 81.503,
+    "main_sha256": "1075662ce4225e705a69ed0d6feffe92f88e43fa4408dcccbbcd5d154b12f276",
+    "test_sha256": "365f258175f36e9c64415381207ba89b4514a60a2a2452fb451a64913e9ab299",
+    "selected_jvm_cases": 7,
+    "device_cases": 38,
+    "packaged_values": {
+      "pt": 7087,
+      "pt-rBR": 7087
+    }
+  },
+  "fdroid": {
+    "version_code": 31,
+    "junit_seconds": "63.642",
+    "host_seconds": 70.486,
+    "main_sha256": "ab45f981d92d061a766bfdcc80ebc14f3a70ffe58f43a0fce1bc5fac638468ac",
+    "test_sha256": "15c6fe6427127aec2b50f5cac1e792f2c5dbef0179e470cdf82ed7114585c246",
+    "selected_jvm_cases": 7,
+    "device_cases": 38,
+    "packaged_values": {
+      "pt": 7087,
+      "pt-rBR": 7087
+    }
+  }
+}

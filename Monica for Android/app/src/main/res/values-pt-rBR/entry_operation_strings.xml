@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="entry_message_bitwarden_unavailable">"Bitwarden está indisponível"</string>
+    <string name="entry_message_unsupported_type">"Esta operação não oferece suporte a este tipo de item"</string>
+    <string name="entry_message_ownership_conflict">"Resolva os vínculos de armazenamento em conflito antes de mover este item para Monica"</string>
+    <string name="entry_message_local_copy_failed">"Não foi possível criar uma cópia local no Monica"</string>
+    <string name="entry_message_attachments_incomplete">"Nem todos os anexos foram copiados"</string>
+    <string name="entry_message_bitwarden_sync_id_missing">"O item Bitwarden não tem ID de sincronização"</string>
+    <string name="entry_message_keepass_source_delete_failed">"Não foi possível excluir o item KeePass original"</string>
+    <string name="entry_message_source_delete_failed">"Não foi possível excluir o item original"</string>
+    <string name="entry_message_storage_save_failed">"Não foi possível salvar no local selecionado"</string>
+    <string name="entry_message_from_password">"Da senha: %1$s"</string>
+    <string name="entry_message_passkey_android_required">"O suporte completo a Passkey requer Android 14 ou posterior. Este dispositivo: %1$s"</string>
+    <string name="entry_message_passkey_save_failed">"Não foi possível salvar a Passkey: %1$s"</string>
+    <string name="entry_message_passkey_missing">"Passkey não encontrada"</string>
+    <string name="entry_message_passkey_update_failed">"Não foi possível atualizar a Passkey: %1$s"</string>
+    <string name="entry_message_passkey_ownership_failed">"Não foi possível atualizar o vínculo MDBX da Passkey: %1$s"</string>
+    <string name="entry_message_passkey_binding_failed">"Não foi possível atualizar o vínculo: %1$s"</string>
+    <string name="entry_message_passkey_usage_failed">"Não foi possível atualizar o histórico de uso: %1$s"</string>
+    <string name="entry_message_passkey_delete_failed">"Não foi possível excluir a Passkey: %1$s"</string>
+    <string name="entry_message_category_path_invalid">"Caminho de pasta inválido"</string>
+    <string name="entry_message_category_move_into_self">"Não é possível mover uma pasta para si mesma ou para uma das suas subpastas"</string>
+    <string name="entry_message_category_missing">"Pasta não encontrada"</string>
+    <string name="entry_message_category_exists">"Já existe uma pasta com este nome no destino"</string>
+    <string name="entry_message_category_move_conflict">"A movimentação entraria em conflito com uma pasta existente"</string>
+    <string name="entry_message_category_name_required">"Digite um nome de pasta"</string>
+    <string name="entry_message_category_name_separator">"O nome de uma pasta não pode conter /"</string>
+    <string name="entry_message_category_rename_conflict">"A renomeação entraria em conflito com uma pasta existente"</string>
+    <string name="entry_message_saved">"Salvo"</string>
+</resources>

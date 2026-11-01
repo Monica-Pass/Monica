@@ -1667,9 +1667,10 @@ fun VaultV2Pane(
 		state.overviewItemType = null; state.overviewFavorites = false
 	}
 	fun openOverviewList(selection: UnifiedCategoryFilterSelection = state.toUnifiedCategoryFilterSelection(),
-		type: VaultV2ItemType? = null, favorites: Boolean = false) {
+		type: VaultV2ItemType? = null, favorites: Boolean = false, browseFolders: Boolean = false) {
 		resetOverviewFilters()
 		state.overviewListOpen = true
+		state.overviewFolderBrowsing = browseFolders
 		state.overviewItemType = type?.name
 		state.overviewFavorites = favorites
 		quickFilterFavorite = favorites
@@ -1681,6 +1682,7 @@ fun VaultV2Pane(
 		if (state.isArchiveView) state.closeArchiveView(scrollToTop = false)
 		resetOverviewFilters()
 		state.overviewListOpen = false
+		state.overviewFolderBrowsing = false
 		state.clearFolderNavigationHistory()
 		state.updateStorageFilter(overviewScopeSelection(state.overviewScope ?: appSettings.vaultOverviewConfig.scope))
 	}
@@ -1906,6 +1908,7 @@ fun VaultV2Pane(
 			resetOverviewFilters()
 			state.overviewListOpen = false
 			state.overviewScope = null
+			state.overviewFolderBrowsing = false
 			state.clearFolderNavigationHistory()
 		}
 		val restoredFilter = persistedFilter.toVaultV2SavedStorageFilter()
@@ -2759,13 +2762,14 @@ fun VaultV2Pane(
 	val useHierarchicalLayout = remember(
 		showOverview,
 		appSettings.vaultV2LayoutMode,
+		state.overviewFolderBrowsing,
 		normalizedQuery,
 		state.isArchiveView,
 		storageSelection,
 		hasHierarchyBreakingQuickFilter,
 		state.overviewItemType,
 	) {
-		!showOverview && appSettings.vaultV2LayoutMode == VaultV2LayoutMode.HIERARCHICAL &&
+		!showOverview && (appSettings.vaultV2LayoutMode == VaultV2LayoutMode.HIERARCHICAL || state.overviewFolderBrowsing) &&
 			normalizedQuery.isBlank() &&
 			!state.isArchiveView &&
 			!hasHierarchyBreakingQuickFilter && state.overviewItemType == null &&
@@ -3036,6 +3040,7 @@ fun VaultV2Pane(
 		bitwardenVaults,
 		mdbxDatabases,
 		selectedMdbxFolders,
+		selectedKeePassGroups,
 		hierarchyLocalSourceTitle,
 		showOnlyLocalData,
 	) {
@@ -3052,12 +3057,15 @@ fun VaultV2Pane(
 				selectedMdbxFolders = selectedMdbxFolders,
 				localSourceTitle = hierarchyLocalSourceTitle,
 				includeExternalSources = !showOnlyLocalData,
+				keepassGroups = selectedKeePassGroups,
 			)
 		} else {
 			VaultV2HierarchicalContent()
 		}
 	}
-	val folderRows = if (useHierarchicalLayout) hierarchicalContent.folderRows else emptyList()
+	val folderRows = remember(useHierarchicalLayout, hierarchicalContent.folderRows, appSettings.vaultListSort) {
+		if (useHierarchicalLayout) sortVaultV2Folders(hierarchicalContent.folderRows, appSettings.vaultListSort) else emptyList()
+	}
 	val filteredItems = if (useHierarchicalLayout) {
 		hierarchicalContent.directItems
 	} else {
@@ -3359,7 +3367,7 @@ fun VaultV2Pane(
 					settingsViewModel.updateVaultOverviewConfig { it.copy(scope = selectedScope) }
 					scope.launch { overviewListState.scrollToItem(0) }
 				},
-				onOpenSource = { openOverviewList(overviewScopeSelection(it)) },
+				onOpenSource = { openOverviewList(overviewScopeSelection(it), browseFolders = true) },
 				onOpenItem = { item -> when (item.type) {
 					VaultV2ItemType.PASSWORD -> {
                             val token = item.nativeToken
@@ -3375,7 +3383,7 @@ fun VaultV2Pane(
 					VaultV2ItemType.BILLING_ADDRESS -> item.secureItem?.id?.let(onOpenBillingAddress)
 				} },
 				onOpenType = { openOverviewList(type = it) },
-				onOpenFolder = { openOverviewList(selection = it.target) },
+				onOpenFolder = { openOverviewList(selection = it.target, browseFolders = true) },
 				onFavorites = { openOverviewList(favorites = true) },
 				onArchive = { openOverviewList(); state.openArchiveView() },
 				onTrash = { overviewSelection.clear(); handleOpenTrashPage() },

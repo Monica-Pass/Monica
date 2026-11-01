@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="privilege_method">"Método de autorização"</string>
+    <string name="privilege_root_hint">"Usar diretamente o acesso Root deste dispositivo"</string>
+    <string name="privilege_shizuku_hint">"Autorizar através de um serviço Shizuku em execução"</string>
+    <string name="privilege_root_requesting">"A aguardar autorização Root…"</string>
+    <string name="privilege_root_denied">"O acesso Root foi negado. Autorize Monica no gestor Root e tente novamente."</string>
+    <string name="privilege_root_unavailable">"Não foi encontrado um comando su utilizável. Este dispositivo precisa primeiro de ter root."</string>
+    <string name="privilege_root_timeout">"A autorização Root ou o comando excedeu o tempo limite. Verifique o gestor Root e tente novamente."</string>
+    <string name="privilege_root_ready">"Root ativado para definições do sistema"</string>
+    <string name="privilege_root_not_authorized">"Root não está autorizado. Toque em Autorizar Root para continuar."</string>
+    <string name="privilege_root_grant">"Autorizar Root"</string>
+    <string name="privilege_root_disable">"Desativar Root no Monica"</string>
+    <string name="privilege_root_confirm_title">"Permitir que Monica use Root?"</string>
+    <string name="privilege_root_confirm_body">"Requer um dispositivo que já tenha root e aprovação no respetivo gestor Root. Monica usa Root apenas para as definições do sistema necessárias à recuperação avançada da acessibilidade e ao gestor de palavras-passe predefinido. Não desbloqueia o cofre nem lê dados de outros apps.\n\nA recuperação avançada apenas volta a ligar um serviço de acessibilidade Monica já ativado. Depois de ativada, pode continuar após reiniciar o app ou dispositivo e pode interromper brevemente o preenchimento.\n\nDesative Root aqui para impedir utilizações futuras. Para revogar a autorização do sistema, remova Monica do gestor Root. Root nunca é pedido como alternativa ao Shizuku."</string>
+    <string name="privilege_recovery_title">"Recuperação avançada · Opcional"</string>
+    <string name="privilege_default_requires_android14">"Definir o gestor de palavras-passe predefinido requer Android 14 ou posterior."</string>
+</resources>

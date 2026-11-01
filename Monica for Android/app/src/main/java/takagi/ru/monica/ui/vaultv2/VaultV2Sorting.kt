@@ -4,6 +4,27 @@ import takagi.ru.monica.data.VaultListSort
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.text.Collator
+
+/** Sort one continuous folder block; entry sections and stored folder order are unaffected. */
+private fun <T> sortFolderNames(rows: List<T>, sort: VaultListSort, locale: Locale,
+    title: (T) -> String, identity: (T) -> String): List<T> {
+    if (!sort.isAlphabetical) return rows
+    val collator = Collator.getInstance(locale).apply { strength = Collator.SECONDARY }
+    return rows.sortedWith(Comparator { a, b ->
+        val order = collator.compare(title(a), title(b))
+        (if (sort == VaultListSort.TITLE_DESC) -order else order).takeIf { it != 0 }
+            ?: identity(a).compareTo(identity(b))
+    })
+}
+
+internal fun sortVaultV2Folders(rows: List<VaultV2FolderRowModel>, sort: VaultListSort,
+    locale: Locale = Locale.getDefault()): List<VaultV2FolderRowModel> =
+    sortFolderNames(rows, sort, locale, { it.title }, { it.key })
+
+internal fun topLevelVaultOverviewFolders(rows: List<VaultOverviewFolder>, sort: VaultListSort,
+    locale: Locale = Locale.getDefault()): List<VaultOverviewFolder> =
+    sortFolderNames(rows.filter { it.isTopLevel }, sort, locale, { it.name }, { it.key })
 
 internal fun VaultV2Item.sortTimestamp(sort: VaultListSort): Long? {
     val created = when {

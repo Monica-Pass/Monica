@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ime_scramble_pin_title">"Embaralhar teclas numéricas"</string>
+    <string name="ime_scramble_pin_description">"Embaralha ao abrir o teclado numérico. As teclas ficam na mesma posição enquanto digita."</string>
+    <string name="ime_hide_pin_preview_title">"Ocultar prévias das teclas numéricas"</string>
+    <string name="ime_hide_pin_preview_description">"Oculta os números ampliados e o destaque das teclas pressionadas."</string>
+    <string name="ime_hide_keyboard">"Ocultar teclado"</string>
+    <string name="ime_switch_keyboard">"Trocar método de entrada"</string>
+    <string name="ime_fill_current_otp">"Preencher código atual"</string>
+    <string name="ime_otp_unavailable">"O código de verificação atual está indisponível."</string>
+</resources>

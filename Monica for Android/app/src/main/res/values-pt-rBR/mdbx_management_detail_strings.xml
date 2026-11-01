@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="mdbx_conflict_choice_effect">"Resolve os campos em conflito com a versão selecionada, incluindo uma exclusão em conflito. O resultado será compartilhado na próxima sincronização. Revise a escolha antes de continuar."</string>
+    <string name="mdbx_conflict_confirm_choice">"Confirmar escolha"</string>
+    <string name="mdbx_conflict_values_unavailable">"Não é possível visualizar valores históricos aqui. Verifique o item nos dispositivos de origem antes de escolher."</string>
+    <string name="mdbx_conflict_show_values">"Mostrar comparação de versões"</string>
+    <string name="mdbx_conflict_version_help">"Local: este dispositivo no momento do conflito.\nRecebida: a versão recebida, que pode não ser a mais recente."</string>
+    <string name="mdbx_copy_parameters">"Copiar parâmetros"</string>
+    <string name="mdbx_snapshot_retention_help">"Os snapshots automáticos podem ser removidos. Os snapshots manuais permanecem até excluí-los."</string>
+</resources>

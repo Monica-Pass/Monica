@@ -94,6 +94,7 @@ internal fun buildVaultV2HierarchicalContent(
     selectedMdbxFolders: List<MdbxStoredFolderEntry>,
     localSourceTitle: String,
     includeExternalSources: Boolean,
+    keepassGroups: List<takagi.ru.monica.utils.KeePassGroupInfo> = emptyList(),
 ): VaultV2HierarchicalContent {
     if (!storageSelection.supportsVaultV2FolderHierarchy()) {
         return VaultV2HierarchicalContent(
@@ -102,7 +103,7 @@ internal fun buildVaultV2HierarchicalContent(
         )
     }
 
-    val directItems = filterVaultV2DirectItems(storageSelection, filteredItems)
+    val directItems = filterVaultV2DirectItems(storageSelection, filteredItems, keepassGroups)
     val folderRows = if (storageSelection is UnifiedCategoryFilterSelection.All) {
         buildVaultV2SourceRows(
             allItems = allItems,
@@ -112,6 +113,25 @@ internal fun buildVaultV2HierarchicalContent(
             localSourceTitle = localSourceTitle,
             includeExternalSources = includeExternalSources,
         )
+    } else if (storageSelection is UnifiedCategoryFilterSelection.KeePassDatabaseFilter ||
+        storageSelection is UnifiedCategoryFilterSelection.KeePassGroupFilter) {
+        val databaseId = when (storageSelection) {
+            is UnifiedCategoryFilterSelection.KeePassDatabaseFilter -> storageSelection.databaseId
+            is UnifiedCategoryFilterSelection.KeePassGroupFilter -> storageSelection.databaseId
+            else -> error("Unsupported KDBX folder selection")
+        }
+        val parent = storageSelection as? UnifiedCategoryFilterSelection.KeePassGroupFilter
+        val hierarchy = KeePassFolderHierarchy(keepassGroups)
+        hierarchy.children(parent?.groupPath, parent?.groupUuid).map { group ->
+            VaultV2FolderRowModel(
+                key = "hierarchy:keepass:$databaseId/${group.uuid ?: group.path}",
+                title = group.name,
+                sourceName = keepassDatabases.firstOrNull { it.id == databaseId }?.name ?: "KeePass",
+                itemCount = hierarchy.countItems(databaseId, group, allItems),
+                targetFilter = CategoryFilter.KeePassGroupFilter(databaseId, group.path, group.uuid),
+                kind = VaultV2FolderRowKind.FOLDER,
+            )
+        }
     } else {
         val visibleShortcuts = when (storageSelection) {
             is UnifiedCategoryFilterSelection.BitwardenFolderFilter -> emptyList()
@@ -123,7 +143,14 @@ internal fun buildVaultV2HierarchicalContent(
                 )
             }
         }
-        visibleShortcuts.map { shortcut ->
+        val localOrphans = if (storageSelection == UnifiedCategoryFilterSelection.Local) {
+            val paths = quickFolderNodes.map { it.path }.toSet()
+            quickFolderNodes.filter { it.parentPath != null && it.parentPath !in paths }.map { node ->
+                PasswordQuickFolderShortcut("folder_${node.category.id}_${node.path}", node.path, "Monica", false,
+                    CategoryFilter.Custom(node.category.id), null, node.category)
+            }
+        } else emptyList()
+        (visibleShortcuts + localOrphans).distinctBy { it.key }.map { shortcut ->
             VaultV2FolderRowModel(
                 key = "hierarchy:${shortcut.key}",
                 title = shortcut.title,
@@ -156,19 +183,30 @@ internal fun buildVaultV2HierarchicalContent(
 internal fun filterVaultV2DirectItems(
     storageSelection: UnifiedCategoryFilterSelection,
     filteredItems: List<VaultV2Item>,
+    keepassGroups: List<takagi.ru.monica.utils.KeePassGroupInfo> = emptyList(),
 ): List<VaultV2Item> = when (storageSelection) {
     UnifiedCategoryFilterSelection.All -> emptyList()
     UnifiedCategoryFilterSelection.Local -> filteredItems.filter { it.categoryId().let { id -> id == null } }
-    is UnifiedCategoryFilterSelection.Custom -> filteredItems
+    is UnifiedCategoryFilterSelection.Custom -> filteredItems.filter {
+        it.isLocalOnly() && it.categoryId() == storageSelection.categoryId
+    }
     is UnifiedCategoryFilterSelection.KeePassDatabaseFilter ->
         filteredItems.filter { it.keepassGroupPath().isNullOrBlank() }
-    is UnifiedCategoryFilterSelection.KeePassGroupFilter -> filteredItems
+    is UnifiedCategoryFilterSelection.KeePassGroupFilter -> filteredItems.filter {
+        val ambiguousPath = keepassGroups.count { group -> group.path == storageSelection.groupPath } > 1
+        if (ambiguousPath && (storageSelection.groupUuid.isNullOrBlank() || it.keepassGroupUuid().isNullOrBlank())) return@filter false
+        takagi.ru.monica.ui.KeePassGroupFilterIdentity(storageSelection.databaseId,
+            storageSelection.groupPath, storageSelection.groupUuid).matches(
+                it.keepassDatabaseId(), it.keepassGroupPath(), it.keepassGroupUuid())
+    }
     is UnifiedCategoryFilterSelection.BitwardenVaultFilter ->
         filteredItems.filter { it.bitwardenFolderId().isNullOrBlank() }
     is UnifiedCategoryFilterSelection.BitwardenFolderFilter -> filteredItems
     is UnifiedCategoryFilterSelection.MdbxDatabaseFilter ->
         filteredItems.filter { it.mdbxFolderId().isNullOrBlank() && it.categoryId() == null }
-    is UnifiedCategoryFilterSelection.MdbxFolderFilter -> filteredItems
+    is UnifiedCategoryFilterSelection.MdbxFolderFilter -> filteredItems.filter {
+        it.matchesMdbxFolder(storageSelection.databaseId, storageSelection.folderId)
+    }
     else -> filteredItems
 }
 

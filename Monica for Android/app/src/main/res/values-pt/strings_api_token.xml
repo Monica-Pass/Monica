@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="entry_type_api_token">"Token API"</string>
+    <string name="api_token_no_database">"Abra uma base de dados MDBX nativa para ver ou criar tokens API."</string>
+    <string name="api_token_load_error">"Não foi possível carregar ou guardar o token. Reabra ou sincronize a base de dados e recarregue. Os dados existentes foram mantidos."</string>
+    <string name="api_token_reload">"Recarregar"</string>
+    <string name="api_token_root_collection">"Raiz da base de dados"</string>
+    <string name="api_token_database">"Base de dados"</string>
+    <string name="api_token_collection">"Categoria"</string>
+    <string name="api_token_complete_payload">"Dados completos do token (JSON)"</string>
+    <string name="api_token_empty">"Não há tokens API nesta base de dados."</string>
+    <string name="api_token_native_hint">"Armazenado como token API MDBX nativo, compatível com Monica CLI."</string>
+    <string name="api_token_toggle_visibility">"Mostrar ou ocultar valor"</string>
+    <string name="api_token_validation">"Introduza um fornecedor e um token. O endereço API opcional deve ser um URL HTTP ou HTTPS."</string>
+    <string name="api_token_fields_limit">"Use até 128 campos personalizados. As notas e os valores dos campos devem totalizar no máximo 64 KB."</string>
+    <string name="api_token_import_json">"Colar JSON do token"</string>
+    <string name="api_token_parse">"Analisar"</string>
+    <string name="api_token_delete_confirmation">"Eliminar este token API da base de dados?"</string>
+    <string name="api_token_entry_id">"ID da entrada"</string>
+    <string name="api_token_collection_id">"ID da coleção"</string>
+    <string name="api_token_provider">"Fornecedor"</string>
+    <string name="api_token_api_base">"URL base da API"</string>
+    <string name="api_token_note">"Nota"</string>
+    <string name="api_token_schema">"Esquema do conteúdo"</string>
+    <string name="api_token_name">"Nome do token"</string>
+    <string name="api_token_add">"Adicionar token API"</string>
+    <string name="api_token_edit">"Editar token API"</string>
+    <string name="api_token_credentials">"Detalhes do token"</string>
+    <string name="api_token_manage_databases">"Gerir bases de dados"</string>
+    <string name="api_token_folder_error">"Não foi possível carregar as categorias. Reabra o seletor de armazenamento para tentar novamente."</string>
+    <string name="api_token_storage">"Local de armazenamento"</string>
+    <string name="api_token_advanced">"Mais informações"</string>
+    <string name="api_token_unknown_schema">"Este token usa outro formato. Pode ver e copiar os dados completos abaixo."</string>
+    <string name="api_token_discard_title">"Descartar alterações?"</string>
+    <string name="api_token_discard_message">"As alterações não guardadas serão perdidas."</string>
+    <string name="api_token_discard">"Descartar"</string>
+    <string name="api_token_name_hint">"1–64 letras, dígitos, - ou _"</string>
+</resources>

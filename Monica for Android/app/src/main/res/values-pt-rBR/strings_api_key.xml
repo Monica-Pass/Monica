@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="api_key_title">"Chave API"</string>
+    <string name="api_key_add">"Adicionar chave API"</string>
+    <string name="api_key_edit">"Editar chave API"</string>
+    <string name="api_key_provider">"Nome do provedor *"</string>
+    <string name="api_key_provider_hint">"Por exemplo, Claude ou um provedor de IA personalizado"</string>
+    <string name="api_key_website">"Site oficial (opcional)"</string>
+    <string name="api_key_website_label">"Site oficial"</string>
+    <string name="api_key_secret_required">"Chave API *"</string>
+    <string name="api_key_url">"URL da solicitação API (opcional)"</string>
+    <string name="api_key_url_label">"URL da solicitação API"</string>
+    <string name="api_key_required">"Obrigatório"</string>
+    <string name="api_key_invalid_url">"Digite um URL http:// ou https:// com um host e sem credenciais incorporadas."</string>
+    <string name="api_key_show">"Mostrar chave"</string>
+    <string name="api_key_hide">"Ocultar chave"</string>
+    <string name="api_key_open_website">"Abrir site"</string>
+    <string name="api_key_load_error">"Não foi possível ler esta chave API. Reabra o banco de dados correspondente e tente novamente."</string>
+    <string name="api_key_save_error">"Não foi possível salvar em todos os locais selecionados. Verifique a disponibilidade e tente novamente."</string>
+    <string name="api_key_locked">"O cofre está bloqueado. Desbloqueie-o para continuar."</string>
+</resources>

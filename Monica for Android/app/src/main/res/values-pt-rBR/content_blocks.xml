@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="content_block_api_key">"Chave API"</string>
+    <string name="content_block_api_token">"Token API"</string>
+    <string name="content_block_ssh">"Chave SSH"</string>
+    <string name="content_block_gpg">"Chave GPG"</string>
+    <string name="content_block_qr">"Código QR"</string>
+    <string name="content_block_key">"Chave"</string>
+    <string name="content_block_token">"Token"</string>
+    <string name="content_block_provider">"Provedor"</string>
+    <string name="content_block_url">"Endpoint da API"</string>
+    <string name="content_block_algorithm">"Algoritmo"</string>
+    <string name="content_block_public">"Chave pública"</string>
+    <string name="content_block_private">"Chave privada"</string>
+    <string name="content_block_fingerprint">"Impressão digital"</string>
+    <string name="content_block_identity">"Identidade / comentário"</string>
+    <string name="content_block_content">"Texto ou link"</string>
+    <string name="content_block_import">"Importar de arquivo"</string>
+    <string name="content_block_export">"Exportar para arquivo"</string>
+    <string name="content_block_unavailable">"Conteúdo não compatível"</string>
+    <string name="content_block_preserved">"Conteúdo original preservado. Abra com uma versão compatível para editar."</string>
+    <string name="content_block_save_error">"Não foi possível salvar ou ler este conteúdo. Verifique o arquivo e o tamanho (máximo de 256 KiB)."</string>
+    <string name="content_block_more">"Mais conteúdo"</string>
+    <string name="content_block_key_size">"Tamanho da chave"</string>
+    <string name="content_block_format">"Formato"</string>
+    <string name="content_block_qr_error">"Este conteúdo é longo demais para um código QR. Ainda pode ver ou copiar o valor completo."</string>
+</resources>

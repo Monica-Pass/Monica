@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="bitwarden_message_delete_queue_failed">"Não foi possível colocar a eliminação Bitwarden na fila"</string>
+    <string name="bitwarden_message_conflict_detail">"Esta entrada mudou tanto localmente como no servidor"</string>
+    <string name="bitwarden_message_empty_vault">"O servidor não devolveu dados, mas ainda existem %1$d entradas locais. A sincronização está em pausa para proteger os dados. Verifique o servidor e a conta antes de continuar."</string>
+    <string name="runtime_kdbx_decode_failed">"Não foi possível ler a base de dados KDBX"</string>
+</resources>

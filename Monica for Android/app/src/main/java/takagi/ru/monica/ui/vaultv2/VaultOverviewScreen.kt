@@ -89,12 +89,15 @@ internal fun VaultOverviewScreen(
     selection: VaultOverviewSelectionState = remember { VaultOverviewSelectionState() },
     onRequestDeleteItem: (VaultV2Item) -> Unit = {},
     walletStackLoopEnabled: Boolean = false,
+    sort: takagi.ru.monica.data.VaultListSort = takagi.ru.monica.data.VaultListSort.RECENT_DESC,
+    onSortChange: (takagi.ru.monica.data.VaultListSort) -> Unit = {},
 ) {
     var showTopActions by rememberSaveable { mutableStateOf(false) }
     var showSources by rememberSaveable { mutableStateOf(false) }
     var showCustomization by rememberSaveable { mutableStateOf(false) }
     var pinModule by rememberSaveable { mutableStateOf<String?>(null) }
     var showAllFolders by rememberSaveable { mutableStateOf(false) }
+    var showSort by rememberSaveable { mutableStateOf(false) }
     var searchExpanded by rememberSaveable { mutableStateOf(false) }
     var searchQuery by rememberSaveable { mutableStateOf("") }
     val searchListState = rememberLazyListState()
@@ -109,6 +112,9 @@ internal fun VaultOverviewScreen(
         }
     }
     val sourceByKey = remember(sources) { sources.associateBy(VaultOverviewSource::key) }
+    val overviewFolders = remember(snapshot?.folders, sort) {
+        topLevelVaultOverviewFolders(snapshot?.folders.orEmpty(), sort)
+    }
     val selectedSource = sourceByKey[currentScope]
     val frequentPreview = snapshot?.selectablePreview(VaultOverviewModule.ITEMS, config).orEmpty()
     val favoritesPreview = snapshot?.selectablePreview(VaultOverviewModule.FAVORITES, config).orEmpty()
@@ -173,6 +179,7 @@ internal fun VaultOverviewScreen(
                         onDismissRequest = { showTopActions = false },
                     ) {
                         takagi.ru.monica.ui.screens.DatabaseManagerMenuItem(overviewScopeSelection(currentScope).managerDatabase()) { showTopActions = false }
+                        VaultV2SortMenuItem(sort) { showTopActions = false; showSort = true }
                         DropdownMenuItem(
                             text = { Text(stringResource(R.string.vault_overview_customize)) },
                             leadingIcon = { Icon(Icons.Default.Tune, null) },
@@ -246,7 +253,7 @@ internal fun VaultOverviewScreen(
                             VaultOverviewModule.CARDS -> snapshot.cards.size
                             VaultOverviewModule.ITEMS -> snapshot.frequentItems.size
                             VaultOverviewModule.FAVORITES -> snapshot.favorites.size
-                            VaultOverviewModule.FOLDERS -> snapshot.folders.size
+                            VaultOverviewModule.FOLDERS -> overviewFolders.size
                             VaultOverviewModule.DATABASES -> sources.size
                             else -> null
                         }
@@ -338,10 +345,10 @@ internal fun VaultOverviewScreen(
                                 }
                                 VaultOverviewModule.TYPES -> VaultOverviewTypeGrid(snapshot.typeCounts, onOpenType)
                                 VaultOverviewModule.FOLDERS -> {
-                                    if (snapshot.folders.isEmpty()) OverviewEmpty(R.string.vault_overview_empty_folders)
+                                    if (overviewFolders.isEmpty()) OverviewEmpty(R.string.vault_overview_empty_folders)
                                     else Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                                        snapshot.folders.take(6).forEach { folder -> OverviewFolderRow(folder, sourceByKey, currentScope, onOpenFolder) }
-                                        if (snapshot.folders.size > 6) TextButton(onClick = { showAllFolders = true }) {
+                                        overviewFolders.take(6).forEach { folder -> OverviewFolderRow(folder, sourceByKey, currentScope, onOpenFolder) }
+                                        if (overviewFolders.size > 6) TextButton(onClick = { showAllFolders = true }) {
                                             Text(stringResource(R.string.vault_overview_folder_list))
                                         }
                                     }
@@ -373,8 +380,9 @@ internal fun VaultOverviewScreen(
         loopEnabled = walletStackLoopEnabled,
     )
     if (showCustomization) VaultOverviewCustomizationSheet(config, onConfigChange, { showCustomization = false })
+    if (showSort) VaultV2SortSheet(sort, { onSortChange(it); showSort = false }, { showSort = false })
     if (showAllFolders && snapshot != null) OverviewSheet(stringResource(R.string.vault_overview_folder_list), { showAllFolders = false }) {
-        items(snapshot.folders, key = { it.key }) { folder ->
+        items(overviewFolders, key = { it.key }) { folder ->
             OverviewFolderRow(folder, sourceByKey, currentScope) { showAllFolders = false; onOpenFolder(it) }
         }
     }

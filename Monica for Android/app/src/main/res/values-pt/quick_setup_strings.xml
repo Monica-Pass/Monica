@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="qs_step_presets_title">"Comece com uma predefinição"</string>
+    <string name="qs_step_presets_subtitle">"Escolha uma disposição. Pode ajustá-la nos passos seguintes."</string>
+    <string name="qs_dock_subtitle">"Escolha as páginas do Dock e a sua ordem."</string>
+    <string name="qs_step_customize_title">"Ajuste as páginas"</string>
+    <string name="qs_step_customize_subtitle">"Expanda apenas o que pretende alterar. Estas opções são independentes do Dock."</string>
+    <string name="qs_step_protect_title">"Segurança e preenchimento automático"</string>
+    <string name="qs_step_protect_subtitle">"Proteja o cofre e facilite o login."</string>
+    <string name="qs_ready_title">"Tudo pronto"</string>
+    <string name="qs_ready_subtitle">"Esta é a sua disposição. Pode alterá-la a qualquer momento nas Definições."</string>
+    <string name="qs_save_failed">"Não foi possível guardar as definições. Tente novamente."</string>
+    <string name="qs_use_preset">"Usar predefinição"</string>
+    <string name="qs_enter_monica">"Abrir Monica"</string>
+    <string name="qs_current_layout">"Disposição atual"</string>
+    <string name="qs_data_optional">"Pode ligar uma base de dados ou importar dados agora, ou fazê-lo mais tarde nas Definições."</string>
+    <string name="qs_preset_bitwarden_preview">"Bitwarden · Visão geral"</string>
+    <string name="qs_preset_bitwarden_preview_desc">"Abre a visão geral do cofre, com Send e Gerador no Dock."</string>
+    <string name="qs_preset_bitwarden_list">"Bitwarden · Lista"</string>
+    <string name="qs_preset_bitwarden_list_desc">"Abre diretamente a lista do cofre, com Send e Gerador no Dock."</string>
+    <string name="qs_preset_authenticator">"Autenticador"</string>
+    <string name="qs_preset_authenticator_desc">"Autenticador e Steam, com foco nos códigos de verificação."</string>
+    <string name="qs_preset_paged">"Páginas separadas"</string>
+    <string name="qs_preset_paged_desc">"Palavras-passe, Autenticador, Carteira e Notas em páginas próprias."</string>
+    <string name="qs_preset_everyday">"Dia a dia"</string>
+    <string name="qs_preset_everyday_desc">"Mantenha Palavras-passe, Autenticador e Gerador à mão."</string>
+    <string name="qs_preset_minimal">"Mínimo"</string>
+    <string name="qs_preset_minimal_desc">"Apenas Palavras-passe e Gerador para um Dock mais simples."</string>
+    <string name="qs_keep_layout">"Manter disposição atual"</string>
+    <string name="qs_keep_layout_desc">"Continue com a disposição existente e ajuste conforme necessário."</string>
+    <string name="qs_presets_hint">"Definições permanece no Dock. As predefinições funcionam com qualquer base de dados; ligue a sua no passo de dados."</string>
+    <string name="qs_move_up">"Mover para cima"</string>
+    <string name="qs_move_down">"Mover para baixo"</string>
+    <string name="qs_settings_kept">"Sempre disponível"</string>
+    <string name="qs_vault_overview">"Abrir o cofre na visão geral"</string>
+    <string name="qs_import_from_apps">"Importar de outro app"</string>
+    <string name="qs_import_from_apps_desc">"Transfira palavras-passe e Passkeys e volte à configuração."</string>
+</resources>

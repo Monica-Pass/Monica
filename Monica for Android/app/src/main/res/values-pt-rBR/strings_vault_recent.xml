@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="vault_sort_recent_desc">"Alterados recentemente"</string>
+    <string name="vault_overview_recent">"Recentes"</string>
+    <string name="vault_overview_recent_empty">"Não há itens recentes"</string>
+</resources>

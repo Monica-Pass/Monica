@@ -1,0 +1,28 @@
+{
+  "avd": "Monica_Issue136_API_32",
+  "serial": "emulator-5556",
+  "removed_user_id": 13,
+  "removed_user_name": "Monica_Portuguese324_Test",
+  "restored_foreground_user": 0,
+  "preserved_users": [
+    0,
+    10,
+    11,
+    12
+  ],
+  "owned_emulator_stopped": true,
+  "registration_preserved": true,
+  "data_configuration_preserved": true,
+  "userdata_files_preserved": [
+    "userdata-qemu.img",
+    "userdata-qemu.img.qcow2",
+    "userdata.img"
+  ],
+  "remaining_device_inventory": [
+    "List of devices attached",
+    ""
+  ],
+  "instrumentation_before_cleanup": "Unknown command: instrumentation\r\nBad activity command, or no activities match: instrumentation\r\nUse -h for help.",
+  "instrumentation_diagnostic_supported": false,
+  "completed_test_receipts_verified": true
+}

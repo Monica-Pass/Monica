@@ -66,7 +66,8 @@ internal object KeePassNativeProjectionBundleBuilder {
                         path = node.legacyPath.orEmpty(),
                         uuid = node.identity.groupUuid.toString(),
                         depth = node.depth,
-                        displayPath = decodeLegacyPathForProjection(node.legacyPath)
+                        displayPath = decodeLegacyPathForProjection(node.legacyPath),
+                        parentUuid = node.parentGroup?.groupUuid?.toString().takeIf { node.depth > 0 }
                     ) to node.isInRecycleBin
                 }
                 .sortedBy { (group, _) -> group.displayPath }

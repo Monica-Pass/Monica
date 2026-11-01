@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="transfer_zip_title">"Cópia de segurança ZIP"</string>
+    <string name="transfer_zip_description">"Cria uma cópia de segurança apenas da base de dados selecionada."</string>
+    <string name="transfer_contents">"Incluir"</string>
+    <string name="transfer_images_attachments">"Imagens e anexos"</string>
+    <string name="transfer_encrypt_backup">"Encriptar cópia de segurança"</string>
+    <string name="transfer_encryption_hint">"As Passkeys e os anexos requerem uma cópia de segurança encriptada."</string>
+    <string name="transfer_choose_location">"Escolher onde guardar"</string>
+    <string name="transfer_background_continue">"Continuar em segundo plano"</string>
+    <string name="transfer_background_hint">"Pode sair desta página. O progresso aparecerá numa notificação."</string>
+    <string name="transfer_reading">"A ler ficheiro…"</string>
+    <string name="transfer_decrypting">"A desencriptar cópia de segurança…"</string>
+    <string name="transfer_preparing">"A preparar itens…"</string>
+    <string name="transfer_writing">"A escrever na base de dados…"</string>
+    <string name="transfer_attachments">"A copiar anexos…"</string>
+    <string name="transfer_packing">"A criar arquivo compactado…"</string>
+    <string name="transfer_encrypting">"A encriptar ficheiro…"</string>
+    <string name="transfer_saving">"A guardar ficheiro…"</string>
+    <string name="transfer_items_progress">"%1$d / %2$d"</string>
+    <string name="transfer_export_complete">"%1$d itens exportados."</string>
+    <string name="transfer_export_done">"Exportação concluída"</string>
+    <string name="transfer_channel">"Importações e exportações"</string>
+    <string name="transfer_open_result">"Abra Monica para ver o resultado."</string>
+    <string name="transfer_background_start_failed">"Não foi possível iniciar a exportação. Tente novamente com Monica aberto."</string>
+    <string name="transfer_cancelled">"Exportação cancelada."</string>
+    <string name="transfer_attachment_encryption">"Encripte a cópia de segurança para incluir anexos."</string>
+    <string name="transfer_password_mismatch">"As palavras-passe não coincidem."</string>
+    <string name="transfer_kdbx_password_description">"Defina uma palavra-passe para proteger a base de dados KDBX exportada."</string>
+    <string name="transfer_unsupported_token">"Este formato de token não pode ser convertido. Use uma cópia de segurança ZIP."</string>
+    <string name="steam_mafile_export_title">"Steam maFile"</string>
+    <string name="steam_mafile_export_desc">"Exporta as contas Steam selecionadas desta base de dados."</string>
+    <string name="transfer_kdbx_description">"Palavras-passe, autenticadores, Passkeys e anexos em formato KeePass."</string>
+    <string name="transfer_unsupported_records">"Esta base de dados contém tipos de item não suportados. Guarde uma cópia no formato nativo da base de dados."</string>
+    <string name="transfer_zip_password_title">"Desbloquear cópia de segurança ZIP"</string>
+    <string name="transfer_zip_password_description">"Introduza a palavra-passe usada para criar esta cópia de segurança ZIP."</string>
+    <string name="transfer_attachment_export_failed">"Não foi possível exportar o anexo “%2$s” de “%1$s”. %3$s"</string>
+    <string name="transfer_attachment_key_unavailable">"Não foi possível desencriptar a chave do anexo. Desbloqueie Monica e tente abrir o anexo no respetivo item. Se continuar a falhar, importe-o novamente do dispositivo original ou de uma cópia de segurança legível."</string>
+    <string name="transfer_attachment_content_unreadable">"O anexo falhou na verificação de integridade, por isso a exportação foi interrompida. Verifique o ficheiro original ou restaure o anexo a partir de uma cópia de segurança legível."</string>
+    <string name="transfer_incomplete_export_file">"Não foi possível remover automaticamente o ficheiro de exportação inacabado. Elimine manualmente este ficheiro vazio ou incompleto; não é uma cópia de segurança utilizável."</string>
+</resources>

@@ -88,6 +88,7 @@ import takagi.ru.monica.ui.components.rankRecentPasswordQuickAccessItems
 import takagi.ru.monica.ui.components.CardWalletAddTypeChip
 import takagi.ru.monica.ui.main.navigation.BottomNavItem
 import takagi.ru.monica.ui.main.navigation.indexToDefaultTabKey
+import takagi.ru.monica.ui.main.navigation.DockLabel
 import takagi.ru.monica.ui.main.navigation.shortLabelRes
 import takagi.ru.monica.ui.main.navigation.toBottomNavItem
 import takagi.ru.monica.ui.password.StackCardMode
@@ -2100,11 +2101,7 @@ fun SimpleMainScreen(
                                     Icon(item.icon, contentDescription = label)
                                 },
                                 label = {
-                                    Text(
-                                        text = label,
-                                        maxLines = 2,
-                                        overflow = TextOverflow.Clip
-                                    )
+                                    DockLabel(label)
                                 },
                                 selected = item.key == selectedDockTab.key,
                                 onClick = { selectedTabKey = item.key }

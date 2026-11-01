@@ -94,6 +94,8 @@ class VaultV2FolderLayoutTest {
 
         val result = buildVaultV2HierarchicalContent(
             storageSelection = UnifiedCategoryFilterSelection.KeePassDatabaseFilter(7),
+            keepassGroups = listOf(takagi.ru.monica.utils.KeePassGroupInfo("Group A", "group-a", null),
+                takagi.ru.monica.utils.KeePassGroupInfo("Group B", "group-a/group-b", null, 1)),
             allItems = listOf(rootItem, parentItem, childItem),
             filteredItems = listOf(rootItem, parentItem, childItem),
             folderShortcuts = listOf(

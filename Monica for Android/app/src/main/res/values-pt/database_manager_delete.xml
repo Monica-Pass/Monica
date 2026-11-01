@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="manager_delete_title">"Eliminar os itens selecionados?"</string>
+    <string name="manager_delete_source">"%1$s · %2$s · %3$d selecionados"</string>
+    <string name="manager_delete_local_hint">"As pastas e o respetivo conteúdo estão incluídos. As palavras-passe locais e os itens seguros vão para a Reciclagem. As pastas e as Passkeys são eliminadas permanentemente."</string>
+    <string name="manager_delete_native_hint">"Os itens selecionados e o conteúdo das pastas serão eliminados permanentemente desta base de dados. Esta ação não pode ser desfeita."</string>
+</resources>

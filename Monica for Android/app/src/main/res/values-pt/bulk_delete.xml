@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="batch_delete_incomplete_title">"Eliminação incompleta"</string>
+    <string name="batch_delete_interrupted_count">"Interrompido após processar %1$d de %2$d itens. Verifique os itens restantes antes de tentar novamente."</string>
+</resources>

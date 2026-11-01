@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="launcher_icon_default">"Ícone predefinido"</string>
+    <string name="launcher_icon_blue_star">"Bot Grok"</string>
+    <string name="launcher_icon_selection_description">"Escolha o ícone do ecrã inicial. Pode voltar ao anterior a qualquer momento."</string>
+    <string name="launcher_icon_refresh_hint">"O lançador pode demorar alguns segundos a atualizar o ícone."</string>
+</resources>

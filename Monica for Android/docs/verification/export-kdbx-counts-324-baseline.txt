@@ -1,0 +1,140 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest:
+INSTRUMENTATION_STATUS: test=alreadyDisplayedNativeCountsSurviveDecodedCacheEvictionWithoutReadingOrWriting
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<Ready(count=1)> but was:<Locked>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest$alreadyDisplayedNativeCountsSurviveDecodedCacheEvictionWithoutReadingOrWriting$1$1.invokeSuspend(ExportSourceRecordCountTest.kt:73)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest.alreadyDisplayedNativeCountsSurviveDecodedCacheEvictionWithoutReadingOrWriting(ExportSourceRecordCountTest.kt:68)
+
+INSTRUMENTATION_STATUS: stream=
+Error in alreadyDisplayedNativeCountsSurviveDecodedCacheEvictionWithoutReadingOrWriting(takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest):
+java.lang.AssertionError: expected:<Ready(count=1)> but was:<Locked>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest$alreadyDisplayedNativeCountsSurviveDecodedCacheEvictionWithoutReadingOrWriting$1$1.invokeSuspend(ExportSourceRecordCountTest.kt:73)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest.alreadyDisplayedNativeCountsSurviveDecodedCacheEvictionWithoutReadingOrWriting(ExportSourceRecordCountTest.kt:68)
+
+INSTRUMENTATION_STATUS: test=alreadyDisplayedNativeCountsSurviveDecodedCacheEvictionWithoutReadingOrWriting
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sourcePickerShowsAllAlreadyDisplayedDatabasesAfterWarmCacheEviction
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 15000 ms
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:887)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:482)
+	at takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest$sourcePickerShowsAllAlreadyDisplayedDatabasesAfterWarmCacheEviction$1$1.invokeSuspend(ExportSourceRecordCountTest.kt:92)
+	at takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest$sourcePickerShowsAllAlreadyDisplayedDatabasesAfterWarmCacheEviction$1$1.invoke(Unknown Source:8)
+	at takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest$sourcePickerShowsAllAlreadyDisplayedDatabasesAfterWarmCacheEviction$1$1.invoke(Unknown Source:4)
+	at takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest$withSeveralDisplayedDatabases$open$3.invokeSuspend(ExportSourceRecordCountTest.kt:60)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:99)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest.sourcePickerShowsAllAlreadyDisplayedDatabasesAfterWarmCacheEviction(ExportSourceRecordCountTest.kt:80)
+
+INSTRUMENTATION_STATUS: stream=
+Error in sourcePickerShowsAllAlreadyDisplayedDatabasesAfterWarmCacheEviction(takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest):
+androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 15000 ms
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:887)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:482)
+	at takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest$sourcePickerShowsAllAlreadyDisplayedDatabasesAfterWarmCacheEviction$1$1.invokeSuspend(ExportSourceRecordCountTest.kt:92)
+	at takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest$sourcePickerShowsAllAlreadyDisplayedDatabasesAfterWarmCacheEviction$1$1.invoke(Unknown Source:8)
+	at takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest$sourcePickerShowsAllAlreadyDisplayedDatabasesAfterWarmCacheEviction$1$1.invoke(Unknown Source:4)
+	at takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest$withSeveralDisplayedDatabases$open$3.invokeSuspend(ExportSourceRecordCountTest.kt:60)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:99)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest.sourcePickerShowsAllAlreadyDisplayedDatabasesAfterWarmCacheEviction(ExportSourceRecordCountTest.kt:80)
+
+INSTRUMENTATION_STATUS: test=sourcePickerShowsAllAlreadyDisplayedDatabasesAfterWarmCacheEviction
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 59.289
+There were 2 failures:
+1) alreadyDisplayedNativeCountsSurviveDecodedCacheEvictionWithoutReadingOrWriting(takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest)
+java.lang.AssertionError: expected:<Ready(count=1)> but was:<Locked>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest$alreadyDisplayedNativeCountsSurviveDecodedCacheEvictionWithoutReadingOrWriting$1$1.invokeSuspend(ExportSourceRecordCountTest.kt:73)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest.alreadyDisplayedNativeCountsSurviveDecodedCacheEvictionWithoutReadingOrWriting(ExportSourceRecordCountTest.kt:68)
+2) sourcePickerShowsAllAlreadyDisplayedDatabasesAfterWarmCacheEviction(takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest)
+androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 15000 ms
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:887)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:482)
+	at takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest$sourcePickerShowsAllAlreadyDisplayedDatabasesAfterWarmCacheEviction$1$1.invokeSuspend(ExportSourceRecordCountTest.kt:92)
+	at takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest$sourcePickerShowsAllAlreadyDisplayedDatabasesAfterWarmCacheEviction$1$1.invoke(Unknown Source:8)
+	at takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest$sourcePickerShowsAllAlreadyDisplayedDatabasesAfterWarmCacheEviction$1$1.invoke(Unknown Source:4)
+	at takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest$withSeveralDisplayedDatabases$open$3.invokeSuspend(ExportSourceRecordCountTest.kt:60)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:99)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.ExportSourceRecordCountTest.sourcePickerShowsAllAlreadyDisplayedDatabasesAfterWarmCacheEviction(ExportSourceRecordCountTest.kt:80)
+
+FAILURES!!!
+Tests run: 2,  Failures: 2
+
+
+INSTRUMENTATION_CODE: -1

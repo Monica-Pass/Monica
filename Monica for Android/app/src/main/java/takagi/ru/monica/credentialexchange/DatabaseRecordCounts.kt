@@ -25,12 +25,11 @@ internal sealed interface DatabaseRecordCount {
 internal class DatabaseRecordCounts(context: Context, private val db: PasswordDatabase = PasswordDatabase.getDatabase(context)) {
     private val context = context.applicationContext
     private val security by lazy { SecurityManager(this.context) }
-    private val keepass by lazy { KeePassKdbxService(this.context, db.localKeePassDatabaseDao(), security) }
     private val bitwarden by lazy { BitwardenRepository.getInstance(this.context) }
     private val mdbx by lazy { MdbxRepositoryFactory.create(this.context, db, security) }
 
     fun isLocked(source: ImportDestination): Boolean = !SessionManager.isUnlocked.value || when (source.kind) {
-        ImportDestinationKind.KEEPASS -> !keepass.isDatabaseUnlocked(source.databaseId)
+        ImportDestinationKind.KEEPASS -> KeePassKdbxService.nativeRecordCountCache.count(source.databaseId) == null
         ImportDestinationKind.BITWARDEN -> !bitwarden.isVaultUnlocked(source.databaseId)
         else -> false
     }
@@ -42,8 +41,7 @@ internal class DatabaseRecordCounts(context: Context, private val db: PasswordDa
                 ImportDestinationKind.LOCAL -> countRoomRecords(source) +
                     SteamDatabase.getDatabase(context).steamAccountDao().count().toLong()
                 ImportDestinationKind.BITWARDEN -> countRoomRecords(source)
-                ImportDestinationKind.KEEPASS -> keepass.openNativeBrowser(source.databaseId).getOrThrow()
-                    .entries.count { !it.isInRecycleBin }.toLong()
+                ImportDestinationKind.KEEPASS -> checkNotNull(KeePassKdbxService.nativeRecordCountCache.count(source.databaseId))
                 ImportDestinationKind.MDBX -> mdbx.countActiveEntries(source.databaseId)
             }
             if (isLocked(source)) DatabaseRecordCount.Locked else DatabaseRecordCount.Ready(count)

@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="autofill_compat_android_old">"O preenchimento automático requer Android 8.0 ou posterior"</string>
+    <string name="autofill_compat_huawei">"Os dispositivos Huawei podem restringir o preenchimento automático no Android 10 ou posterior"</string>
+    <string name="autofill_compat_xiaomi">"Os dispositivos Xiaomi podem exigir permissão de preenchimento automático na Segurança MIUI"</string>
+    <string name="autofill_compat_oppo">"Os dispositivos OPPO/Realme podem exigir permissão de preenchimento automático nas definições de permissões"</string>
+    <string name="autofill_compat_vivo">"Os dispositivos Vivo podem exigir permissão de preenchimento automático no iManager"</string>
+    <string name="autofill_compat_android12_rom">"O preenchimento automático pode falhar em algumas ROMs Android 12 devido a problemas de compatibilidade do sistema"</string>
+    <string name="autofill_compat_inline">"Este dispositivo não suporta sugestões no teclado. O preenchimento automático usará uma lista suspensa."</string>
+    <string name="autofill_compat_emulator">"O preenchimento automático pode falhar neste emulador"</string>
+    <string name="autofill_compat_unsupported">"Este dispositivo não suporta a estrutura de preenchimento automático"</string>
+    <string name="autofill_compat_check_failed">"Não foi possível concluir a verificação de compatibilidade"</string>
+    <string name="autofill_check_manifest">"Verifique se MonicaAutofillServiceNg está declarado em AndroidManifest.xml"</string>
+    <string name="autofill_check_permission_manifest">"O serviço deve declarar BIND_AUTOFILL_SERVICE e um intent-filter de preenchimento automático"</string>
+    <string name="autofill_check_enable_system">"Selecione Monica como serviço de preenchimento automático nas definições do sistema"</string>
+    <string name="autofill_check_path_system">"Definições → Sistema → Idiomas e introdução → Serviço de preenchimento automático"</string>
+    <string name="autofill_check_path_xiaomi">"Xiaomi: Definições → Definições adicionais → Idiomas e introdução → Serviço de preenchimento automático"</string>
+    <string name="autofill_check_miui_permission">"Permita também as permissões necessárias na Segurança MIUI"</string>
+    <string name="autofill_check_path_huawei">"Huawei: Definições → Sistema e atualizações → Idiomas e introdução → Serviço de preenchimento automático"</string>
+    <string name="autofill_check_path_oppo">"OPPO/Realme: Definições → Definições adicionais → Teclado e método de introdução → Serviço de preenchimento automático"</string>
+    <string name="autofill_check_path_vivo">"Vivo: Definições → Mais definições → Método de introdução → Serviço de preenchimento automático"</string>
+    <string name="autofill_check_path_samsung">"Samsung: Definições → Gestão geral → Idioma e introdução → Serviço de preenchimento automático"</string>
+    <string name="autofill_check_enable_app">"Ative o preenchimento automático nas definições do Monica"</string>
+    <string name="autofill_check_app_permissions">"Verifique se Monica tem as permissões necessárias"</string>
+    <string name="autofill_check_issue_count">"Problemas de compatibilidade: %1$d. Veja os detalhes abaixo."</string>
+    <string name="autofill_check_xiaomi_permission">"Xiaomi: Segurança → Gerir apps → Monica → Permissões → Permitir preenchimento automático"</string>
+    <string name="autofill_check_huawei_autostart">"Huawei: pode ser necessário permitir o início automático do Monica no Gestor do telemóvel"</string>
+    <string name="autofill_check_oppo_permission">"OPPO/Realme: Definições → Gestão de apps → Monica → Permissões → Permitir preenchimento automático"</string>
+    <string name="autofill_check_vivo_permission">"Vivo: iManager → Gestão de apps → Gestão de permissões → Monica → Permitir preenchimento automático"</string>
+    <string name="autofill_check_background">"Desative as restrições de bateria do Monica e permita o início automático e a atividade em segundo plano"</string>
+    <string name="autofill_check_trigger_manually">"Se o preenchimento automático continuar a falhar, acione-o manualmente num campo de login para iniciar uma sessão"</string>
+    <string name="autofill_check_configured">"O serviço está configurado corretamente. Se o problema persistir, reinicie Monica."</string>
+    <string name="autofill_check_view_logs">"Use as ferramentas de diagnóstico para ver registos detalhados"</string>
+    <string name="autofill_check_restart">"Reinicie Monica após aplicar estas alterações"</string>
+    <string name="autofill_check_recommendations_failed">"Não foi possível gerar sugestões. Contacte o suporte."</string>
+    <string name="autofill_report_parsing">"Reconhecimento de campos"</string>
+    <string name="autofill_report_matching">"Correspondência de palavras-passe"</string>
+    <string name="autofill_report_building">"Construção de respostas"</string>
+    <string name="autofill_report_performance">"Desempenho"</string>
+    <string name="autofill_report_parsing_failures">"Falhas no reconhecimento de campos: %1$d"</string>
+    <string name="autofill_report_matching_failures">"Pedidos sem palavra-passe correspondente: %1$d"</string>
+    <string name="autofill_report_building_failures">"Falhas na construção de respostas: %1$d"</string>
+    <string name="autofill_report_slow">"O tempo médio de resposta é demasiado elevado: %1$d ms"</string>
+    <string name="autofill_report_improve_recognition">"Melhorar o reconhecimento de campos"</string>
+    <string name="autofill_report_recognition_hint">"Não foi possível reconhecer alguns campos de apps. Verifique as definições do analisador de campos."</string>
+    <string name="autofill_report_add_passwords">"Adicionar entradas de palavras-passe"</string>
+    <string name="autofill_report_add_passwords_hint">"Não foram encontradas palavras-passe correspondentes. Adicione entradas de palavras-passe para estes apps."</string>
+    <string name="autofill_report_integrity">"Verificar se os dados estão completos"</string>
+    <string name="autofill_report_integrity_hint">"As respostas podem falhar se os dados estiverem incompletos. Verifique as entradas de palavras-passe."</string>
+    <string name="autofill_report_optimize">"Melhorar o desempenho"</string>
+    <string name="autofill_report_optimize_hint">"As respostas são lentas. Tente limpar a cache ou reduzir o número de entradas de palavras-passe."</string>
+    <string name="autofill_report_title">"=== Diagnóstico do preenchimento automático Monica ==="</string>
+    <string name="autofill_report_exported_at">"Exportado em: %1$s"</string>
+    <string name="autofill_report_device">"Informações do dispositivo"</string>
+    <string name="autofill_report_manufacturer">"Fabricante: %1$s"</string>
+    <string name="autofill_report_model">"Modelo: %1$s"</string>
+    <string name="autofill_report_android">"Android: %1$s (API %2$d)"</string>
+    <string name="autofill_report_rom">"ROM: %1$s"</string>
+    <string name="autofill_report_inline">"Sugestões no teclado suportadas: %1$s"</string>
+    <string name="autofill_report_statistics">"Estatísticas"</string>
+    <string name="autofill_report_log_details">"Detalhes do registo"</string>
+    <string name="autofill_report_end">"=== Fim do registo ==="</string>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="image_sources_title">"Subscrições de imagens"</string>
+    <string name="image_sources_icons">"Ícones"</string>
+    <string name="image_sources_cards">"Ilustrações de cartões"</string>
+    <string name="image_sources_add">"Adicionar subscrição"</string>
+    <string name="image_sources_refresh">"Atualizar"</string>
+    <string name="image_sources_remove">"Cancelar subscrição"</string>
+    <string name="image_sources_remove_hint">"Remover esta subscrição? As imagens já usadas nos itens serão mantidas."</string>
+    <string name="image_sources_name">"Nome (opcional)"</string>
+    <string name="image_sources_url">"URL da subscrição ou imagem"</string>
+    <string name="image_sources_formats">"Pacotes de imagens JSON por HTTPS ou ligações para imagens PNG, JPEG e WebP."</string>
+    <string name="image_sources_empty">"Adicione a primeira origem de imagens"</string>
+    <string name="image_sources_count">"%1$d imagens"</string>
+    <string name="image_sources_error">"Não foi possível carregar ou guardar. Verifique a origem, o formato e a ligação e tente novamente. As subscrições existentes e as imagens dos itens são preservadas."</string>
+    <string name="image_sources_search">"Pesquisar imagens"</string>
+    <string name="image_sources_retry">"Tentar novamente"</string>
+    <string name="image_sources_options">"Opções da subscrição"</string>
+    <string name="image_sources_no_results">"Nenhuma imagem correspondente"</string>
+    <string name="image_sources_use_hint">"Escolha imagens no editor de ícones personalizados ou de ilustrações de cartões."</string>
+    <string name="image_sources_choose">"Escolher das subscrições"</string>
+    <string name="image_sources_settings_hint">"Gerir pacotes de ícones e origens de ilustrações de cartões"</string>
+</resources>

@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="boarding_code_show">"Mostrar código de embarque"</string>
+    <string name="boarding_code_add">"Editar e digitalizar cartão de embarque"</string>
+    <string name="boarding_code_missing">"Não há código de embarque guardado neste cartão"</string>
+    <string name="boarding_code_saved">"Código de embarque original guardado"</string>
+    <string name="wallet_code_hint">"Código QR ou código de barras · Toque para mostrar"</string>
+    <string name="boarding_code_original_hint">"Este é o original digitalizado. Editar os detalhes do cartão não altera este código."</string>
+    <string name="boarding_code_expand">"Ampliar código"</string>
+    <string name="boarding_code_collapse">"Mostrar detalhes do cartão"</string>
+    <string name="boarding_code_unavailable">"Não é possível mostrar este código aqui. Tente na horizontal ou digitalize novamente o cartão de embarque original."</string>
+    <string name="boarding_code_rescan">"Digitalizar novamente"</string>
+    <string name="boarding_code_remove">"Remover código guardado"</string>
+    <string name="wallet_pass_scan_boarding_pass">"Digitalizar cartão de embarque"</string>
+    <string name="wallet_pass_scan_boarding_pass_hint">"Alinhe o código de barras do cartão de embarque com a moldura"</string>
+    <string name="wallet_pass_boarding_pass_invalid">"Não é um código de barras IATA de cartão de embarque"</string>
+    <string name="wallet_pass_boarding_pass_filled">"Detalhes do cartão de embarque preenchidos; guarde para manter o código"</string>
+    <string name="boarding_code_draft_hint">"Guarde o cartão para manter as alterações ao código"</string>
+    <string name="wallet_pass_show_code">"Ver código de membro"</string>
+</resources>

@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="settings_search_result_count">"%1$d configurações"</string>
+    <string name="settings_search_no_results">"Nenhuma configuração encontrada"</string>
+</resources>

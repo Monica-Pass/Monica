@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="mdbx_legacy_unavailable_title">"MDBX1 não é mais compatível"</string>
+    <string name="mdbx_legacy_unavailable_badge">"MDBX1 · Indisponível"</string>
+    <string name="mdbx_legacy_unavailable_description">"Este banco de dados está indisponível. Atualize para MDBX2 para continuar usando-o. A atualização preserva o arquivo original."</string>
+    <string name="mdbx_legacy_creation_disabled">"Os novos bancos de dados usam MDBX2. Os arquivos MDBX1 só podem ser abertos para atualização."</string>
+    <string name="mdbx_legacy_local_copy_required">"Não é possível ler a cópia local MDBX1. Reabra o arquivo MDBX1 original para atualizá-lo. O banco de dados original não foi alterado."</string>
+    <string name="mdbx_legacy_remote_copy_warning">"A atualização converte a cópia salva neste dispositivo em um novo banco de dados MDBX2 local. As alterações remotas que não foram baixadas não são incluídas. O arquivo remoto original e a cópia local são preservados. Configure a sincronização separadamente para o novo banco de dados."</string>
+    <string name="mdbx_legacy_import_option">"MDBX1 (atualizar)"</string>
+    <string name="mdbx_legacy_upgrade_action">"Atualizar para MDBX2"</string>
+</resources>

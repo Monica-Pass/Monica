@@ -1,0 +1,11 @@
+{
+  "flavor": "ordinary",
+  "apk_sha256": "1075662ce4225e705a69ed0d6feffe92f88e43fa4408dcccbbcd5d154b12f276",
+  "version_name": "1.0.324-26110112-08",
+  "version_code": 12,
+  "checked_per_region": {
+    "pt": 7087,
+    "pt-rBR": 7087
+  },
+  "errors": []
+}

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="native_token_assets_limit">"Até 64 MiB de ficheiros novos ou movidos por gravação e 128 anexos por token."</string>
+    <string name="native_token_assets_error">"Não foi possível ler ou guardar todos os ficheiros. O conteúdo original foi mantido. Verifique o acesso aos ficheiros e o tamanho e tente novamente."</string>
+    <string name="native_token_backup_needs_files">"Esta base de dados contém tokens API com ficheiros. Inclua imagens e anexos para exportar uma cópia de segurança completa."</string>
+    <string name="native_token_backup_limit">"Os ficheiros de tokens API nativos numa cópia de segurança ZIP devem totalizar no máximo 64 MiB. Use a cópia de segurança nativa da base de dados para cofres maiores."</string>
+    <string name="native_token_kdbx_files_unsupported">"Os tokens API com ficheiros requerem um ZIP Monica encriptado ou uma cópia de segurança nativa da base de dados. A exportação KDBX suporta tokens API sem ficheiros."</string>
+</resources>

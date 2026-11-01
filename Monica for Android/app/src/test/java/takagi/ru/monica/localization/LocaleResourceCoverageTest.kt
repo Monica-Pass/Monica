@@ -30,6 +30,8 @@ class LocaleResourceCoverageTest {
         Language.FRENCH to "values-fr",
         Language.POLISH to "values-pl",
         Language.ITALIAN to "values-it",
+        Language.PORTUGUESE_PORTUGAL to "values-pt",
+        Language.PORTUGUESE_BRAZIL to "values-pt-rBR",
     )
     private val base by lazy { resources("values") }
 

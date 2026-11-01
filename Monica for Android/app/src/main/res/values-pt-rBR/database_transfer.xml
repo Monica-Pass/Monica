@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="transfer_zip_title">"Backup ZIP"</string>
+    <string name="transfer_zip_description">"Faz backup apenas do banco de dados selecionado."</string>
+    <string name="transfer_contents">"Incluir"</string>
+    <string name="transfer_images_attachments">"Imagens e anexos"</string>
+    <string name="transfer_encrypt_backup">"Criptografar backup"</string>
+    <string name="transfer_encryption_hint">"As Passkeys e os anexos requerem um backup criptografado."</string>
+    <string name="transfer_choose_location">"Escolher onde salvar"</string>
+    <string name="transfer_background_continue">"Continuar em segundo plano"</string>
+    <string name="transfer_background_hint">"Pode sair desta página. O progresso aparecerá em uma notificação."</string>
+    <string name="transfer_reading">"Lendo arquivo…"</string>
+    <string name="transfer_decrypting">"Descriptografando backup…"</string>
+    <string name="transfer_preparing">"Preparando itens…"</string>
+    <string name="transfer_writing">"Gravando no banco de dados…"</string>
+    <string name="transfer_attachments">"Copiando anexos…"</string>
+    <string name="transfer_packing">"Criando arquivo compactado…"</string>
+    <string name="transfer_encrypting">"Criptografando arquivo…"</string>
+    <string name="transfer_saving">"Salvando arquivo…"</string>
+    <string name="transfer_items_progress">"%1$d / %2$d"</string>
+    <string name="transfer_export_complete">"%1$d itens exportados."</string>
+    <string name="transfer_export_done">"Exportação concluída"</string>
+    <string name="transfer_channel">"Importações e exportações"</string>
+    <string name="transfer_open_result">"Abra Monica para ver o resultado."</string>
+    <string name="transfer_background_start_failed">"Não foi possível iniciar a exportação. Tente novamente com Monica aberto."</string>
+    <string name="transfer_cancelled">"Exportação cancelada."</string>
+    <string name="transfer_attachment_encryption">"Criptografe o backup para incluir anexos."</string>
+    <string name="transfer_password_mismatch">"As senhas não coincidem."</string>
+    <string name="transfer_kdbx_password_description">"Defina uma senha para proteger o banco de dados KDBX exportado."</string>
+    <string name="transfer_unsupported_token">"Este formato de token não pode ser convertido. Use um backup ZIP."</string>
+    <string name="steam_mafile_export_title">"Steam maFile"</string>
+    <string name="steam_mafile_export_desc">"Exporta as contas Steam selecionadas deste banco de dados."</string>
+    <string name="transfer_kdbx_description">"Senhas, autenticadores, Passkeys e anexos em formato KeePass."</string>
+    <string name="transfer_unsupported_records">"Este banco de dados contém tipos de item não compatíveis. Salve uma cópia no formato nativo do banco de dados."</string>
+    <string name="transfer_zip_password_title">"Desbloquear backup ZIP"</string>
+    <string name="transfer_zip_password_description">"Digite a senha usada para criar este backup ZIP."</string>
+    <string name="transfer_attachment_export_failed">"Não foi possível exportar o anexo “%2$s” de “%1$s”. %3$s"</string>
+    <string name="transfer_attachment_key_unavailable">"Não foi possível descriptografar a chave do anexo. Desbloqueie Monica e tente abrir o anexo no item correspondente. Se continuar falhando, importe-o novamente do dispositivo original ou de um backup legível."</string>
+    <string name="transfer_attachment_content_unreadable">"O anexo falhou na verificação de integridade, por isso a exportação foi interrompida. Verifique o arquivo original ou restaure o anexo a partir de um backup legível."</string>
+    <string name="transfer_incomplete_export_file">"Não foi possível remover automaticamente o arquivo de exportação inacabado. Exclua manualmente este arquivo vazio ou incompleto; não é um backup utilizável."</string>
+</resources>

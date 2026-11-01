@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="photo_crop_title">"Recortar foto"</string>
+    <string name="photo_crop_skip">"Ignorar recorte"</string>
+    <string name="photo_crop_continue">"Recortar e continuar"</string>
+    <string name="card_face_crop_apply">"Usar ilustração"</string>
+</resources>

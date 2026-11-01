@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="external_folder_delete_contents">"Excluir a pasta “%1$s” e seu conteúdo? Confirme antes de continuar."</string>
+    <string name="external_folder_delete_keep_items">"Excluir a pasta “%1$s”? Os itens nela contidos serão mantidos sem esta pasta."</string>
+</resources>

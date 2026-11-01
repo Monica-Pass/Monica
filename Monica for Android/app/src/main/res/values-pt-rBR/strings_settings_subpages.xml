@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="customization_group_library">"Biblioteca e listas"</string>
+    <string name="customization_group_cards">"Cartões e carteira"</string>
+    <string name="customization_group_fields_icons">"Campos e ícones"</string>
+    <string name="permission_summary_title">"Permissões do seu jeito"</string>
+    <string name="permission_summary_hint">"Ative apenas as permissões necessárias aos recursos que usa. Algumas são concedidas automaticamente pelo Android."</string>
+    <string name="permission_summary_granted">"%1$d permissões concedidas"</string>
+    <string name="permission_refresh_status">"Atualizar status"</string>
+    <string name="permission_action_request">"Solicitar permissão"</string>
+    <string name="permission_action_none">"Nenhuma ação necessária"</string>
+    <string name="permission_action_for">"%1$s: %2$s"</string>
+    <string name="permission_help_actions">"Use Solicitar permissão para pedir acesso ao Android ou Abrir configurações para gerenciar serviços e permissões concedidas.\n\nOs itens marcados Nenhuma ação necessária ou Indisponível não têm botão de ação. Ative apenas o que precisa.\n\nOs status são atualizados ao voltar das configurações do sistema. Também pode tocar em Atualizar status para verificar novamente."</string>
+</resources>

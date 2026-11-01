@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="export_message_empty">"O ficheiro de cópia de segurança exportado está vazio"</string>
+    <string name="export_message_empty_zip">"A cópia de segurança ZIP não tem conteúdo"</string>
+    <string name="export_message_open_failed">"Não é possível abrir o destino da exportação"</string>
+    <string name="export_message_incomplete">"A exportação está incompleta: %1$d/%2$d bytes"</string>
+    <string name="export_message_invalid_encrypted">"A cópia de segurança escrita tem um formato encriptado inválido"</string>
+    <string name="export_message_verify_failed">"Não foi possível verificar o ficheiro exportado"</string>
+    <string name="export_message_backup_summary">"Cópia de segurança exportada: %1$d palavras-passe e %2$d imagens"</string>
+    <string name="import_message_aegis_unencrypted">"Esta importação requer uma exportação JSON Aegis não encriptada"</string>
+    <string name="import_message_aegis_missing">"Ficheiro Aegis inválido: falta %1$s"</string>
+    <string name="import_message_aegis_empty_slots">"Ficheiro Aegis inválido: slots está vazio"</string>
+    <string name="import_message_aegis_slot_type">"Tipo de slot Aegis não suportado: %1$s"</string>
+    <string name="import_message_aegis_no_totp">"Não foram encontradas entradas TOTP válidas no ficheiro Aegis"</string>
+    <string name="import_message_aegis_failed">"Não foi possível importar o ficheiro Aegis: %1$s"</string>
+    <string name="import_message_key_length">"A chave desencriptada tem um comprimento inválido"</string>
+    <string name="import_message_steam_missing">"Dados Steam Guard inválidos: falta %1$s"</string>
+    <string name="import_message_steam_device_id">"ID de dispositivo inválido. Formato esperado: android:xxxx"</string>
+    <string name="import_message_steam_secret">"Formato shared_secret Steam inválido"</string>
+    <string name="import_message_steam_exists">"Este autenticador Steam Guard já existe"</string>
+    <string name="export_message_empty_mafile">"O maFile exportado está vazio"</string>
+    <string name="crypto_message_encrypt_failed">"Falha na encriptação: %1$s"</string>
+    <string name="crypto_message_decrypt_failed">"Falha na desencriptação: %1$s"</string>
+    <string name="crypto_message_file_too_small">"O ficheiro encriptado é demasiado pequeno e pode estar danificado"</string>
+    <string name="crypto_message_invalid_file">"Formato de ficheiro encriptado inválido"</string>
+    <string name="crypto_message_password_or_corrupt">"Palavra-passe incorreta ou dados encriptados danificados"</string>
+    <string name="crypto_message_invalid_text">"Formato de texto encriptado inválido"</string>
+    <string name="photo_message_camera_failed">"Não foi possível abrir a câmara: %1$s"</string>
+    <string name="photo_message_gallery_missing">"Não há app de galeria disponível"</string>
+    <string name="photo_message_gallery_failed">"Não foi possível abrir a galeria: %1$s"</string>
+    <string name="photo_message_data_failed">"Não foi possível ler a imagem devolvida: %1$s"</string>
+    <string name="photo_message_file_missing">"O ficheiro da fotografia está vazio ou em falta"</string>
+    <string name="photo_message_not_selected">"Nenhuma imagem selecionada"</string>
+</resources>

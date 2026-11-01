@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ime_custom_field_unavailable">"Este campo está indisponível. Reabra a entrada ou desbloqueie o cofre e tente novamente."</string>
+</resources>

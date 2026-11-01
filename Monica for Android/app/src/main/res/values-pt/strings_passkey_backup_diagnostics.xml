@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="backup_passkey_unavailable">"A chave privada está ausente ou ilegível. Importe novamente uma cópia de segurança com a chave privada ou verifique o dispositivo original. Os outros dados e a cópia de segurança remota foram mantidos."</string>
+    <string name="backup_passkey_device_bound">"Esta Passkey usa uma chave Android Keystore vinculada ao dispositivo que não pode ser exportada. Pode continuar a funcionar no dispositivo original, mas não pode ser incluída numa cópia de segurança portátil."</string>
+    <string name="backup_passkey_unreadable">"Não foi possível ler a chave privada protegida. Desbloqueie a Monica e tente novamente; se o problema persistir, verifique o dispositivo original ou uma cópia de segurança com a chave privada."</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="wallet_stack_loop_title">"Percorrer pilhas de cartões em ciclo"</string>
+    <string name="wallet_stack_loop_desc">"Deslize por uma pilha de cartões em qualquer direção. O último cartão liga ao primeiro."</string>
+    <string name="page_adjustment_preview_games">"Jogos"</string>
+    <string name="page_adjustment_preview_folder">"Pasta 1"</string>
+    <string name="page_adjustment_preview_subfolder">"Subpasta"</string>
+</resources>
