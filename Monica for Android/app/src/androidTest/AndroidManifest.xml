@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
     <application android:label="Monica Icon Fixture" android:usesCleartextTraffic="true">
+        <provider android:name="takagi.ru.monica.util.PhotoPermissionDocumentsProvider"
+            android:authorities="${applicationId}.permission-photos" android:exported="true"
+            android:grantUriPermissions="true" android:permission="android.permission.MANAGE_DOCUMENTS">
+            <intent-filter><action android:name="android.content.action.DOCUMENTS_PROVIDER" /></intent-filter>
+        </provider>
         <provider android:name="takagi.ru.monica.keepass.KeePassFileTestDocumentsProvider"
             android:authorities="${applicationId}.kdbx-files" android:exported="true"
             android:grantUriPermissions="true" android:permission="android.permission.MANAGE_DOCUMENTS">

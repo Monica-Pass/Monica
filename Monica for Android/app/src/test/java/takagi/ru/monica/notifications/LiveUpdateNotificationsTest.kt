@@ -19,7 +19,7 @@ import takagi.ru.monica.data.model.PermissionStatus
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [29, 32, 34], application = Application::class)
 class LiveUpdateNotificationsTest {
-    @Test fun oldPlatformsKeepStandardNotificationAndDoNotExposePromotionPermission() {
+    @Test fun oldPlatformsKeepStandardNotificationAndPromotionCannotBeEnabled() {
         val context = RuntimeEnvironment.getApplication()
         context.getSystemService(NotificationManager::class.java).createNotificationChannel(
             NotificationChannel("test", "test", NotificationManager.IMPORTANCE_DEFAULT))
@@ -29,7 +29,9 @@ class LiveUpdateNotificationsTest {
         assertFalse(LiveUpdateNotifications.canPostPromotedNotifications(context))
         assertSame(notification, LiveUpdateNotifications.enhance(context, notification, "10s"))
         assertFalse(notification.extras.getBoolean(LiveUpdateNotifications.REQUEST_PROMOTED_ONGOING))
-        assertFalse(PermissionRepository(context).getAllPermissions().any { it.id == "LIVE_UPDATES" })
+        PermissionRepository(context).getAllPermissions().filter { it.id == "LIVE_UPDATES" }.forEach {
+            assertEquals(PermissionStatus.UNAVAILABLE, it.status)
+        }
         val settings = LiveUpdateNotifications.settingsIntent(context)
         assertEquals(Settings.ACTION_APP_NOTIFICATION_SETTINGS, settings.action)
         assertEquals(context.packageName, settings.getStringExtra(Settings.EXTRA_APP_PACKAGE))

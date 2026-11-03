@@ -1,337 +1,166 @@
 package takagi.ru.monica.repository
 
 import android.Manifest
+import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
+import android.credentials.CredentialManager
 import android.os.Build
-import android.util.Log
+import android.os.PowerManager
+import android.provider.Settings
+import android.view.inputmethod.InputMethodManager
+import android.view.autofill.AutofillManager
 import androidx.biometric.BiometricManager
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import rikka.shizuku.Shizuku
 import takagi.ru.monica.R
-import takagi.ru.monica.data.model.PermissionCategory
-import takagi.ru.monica.data.model.PermissionImportance
-import takagi.ru.monica.data.model.PermissionInfo
-import takagi.ru.monica.data.model.PermissionStats
-import takagi.ru.monica.data.model.PermissionStatus
-import takagi.ru.monica.service.MonicaAccessibilityService
+import takagi.ru.monica.data.model.*
 import takagi.ru.monica.notifications.LiveUpdateNotifications
+import takagi.ru.monica.service.MonicaAccessibilityService
 
-/**
- * 权限管理Repository
- * Permission management repository
- */
+/** Inventory comes from the installed package, including dependency declarations. */
 class PermissionRepository(private val context: Context) {
-
-    private var cachedPermissions: List<PermissionInfo>? = null
-    private var cacheTimestamp: Long = 0
-    private val cacheValidityMs = 5000L // 5秒缓存
-
-    /**
-     * 获取所有权限信息
-     * Get all permissions with current status
-     */
+    @Suppress("DEPRECATION", "UNUSED_PARAMETER")
     fun getAllPermissions(forceRefresh: Boolean = false): List<PermissionInfo> {
-        val now = System.currentTimeMillis()
-
-        if (!forceRefresh &&
-            cachedPermissions != null &&
-            (now - cacheTimestamp) < cacheValidityMs
-        ) {
-            return cachedPermissions!!
-        }
-
-        val permissions = loadPermissions()
-        cachedPermissions = permissions
-        cacheTimestamp = now
-
-        return permissions
-    }
-
-    /**
-     * 加载所有权限并检测状态
-     * Load all permissions and check their status
-     */
-    private fun loadPermissions(): List<PermissionInfo> {
-        return listOfNotNull(
-            createBiometricPermission(),
-            createCameraPermission(),
-            createStoragePermission(),
-            createInternetPermission(),
-            createNetworkStatePermission(),
-            createVibratePermission(),
-            createNotificationPermission(),
-            if (LiveUpdateNotifications.isSupported()) createLiveUpdatePermission() else null,
-            createPhoneStatePermission(),
-            createAutofillPermission(),
-            createAccessibilityPermission()
-        ).map { permission ->
-            try {
-                val status = checkPermissionStatus(permission)
-                permission.copy(status = status)
-            } catch (e: Exception) {
-                Log.e(TAG, "Failed to check permission: ${permission.id}", e)
-                permission.copy(status = PermissionStatus.UNKNOWN)
+        val pkg = context.packageManager.getPackageInfo(context.packageName,
+            PackageManager.GET_PERMISSIONS or PackageManager.GET_SERVICES or PackageManager.GET_DISABLED_COMPONENTS)
+        val names = pkg.requestedPermissions.orEmpty().distinct()
+        val declared = names.toSet()
+        val result = names.map { name ->
+            val p = descriptor(name)
+            val runtime = if (name == Manifest.permission.ACCESS_FINE_LOCATION) {
+                listOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION).filter { it in declared }
+            } else if (name in setOf(Manifest.permission.CAMERA, Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.NEARBY_WIFI_DEVICES, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.POST_NOTIFICATIONS) && p.category == PermissionCategory.RUNTIME) listOf(name) else emptyList()
+            p.copy(runtimePermissions = runtime)
+        }.toMutableList()
+        if (result.none { it.id == "NOTIFICATION" }) result += service("NOTIFICATION", "",
+            R.string.permission_notification_name, R.string.pm_notifications, PermissionSettingsTarget.NOTIFICATIONS)
+        result += service("BIOMETRIC", "", R.string.permission_biometric_name,
+            R.string.pm_biometric, PermissionSettingsTarget.BIOMETRIC).copy(availability = true)
+        for (binding in pkg.services.orEmpty().mapNotNull { it.permission }.distinct().filterNot { it in declared }) {
+            result += when (binding) {
+                Manifest.permission.BIND_AUTOFILL_SERVICE -> service("AUTOFILL", binding,
+                    R.string.permission_autofill_name, R.string.pm_autofill, PermissionSettingsTarget.AUTOFILL)
+                Manifest.permission.BIND_ACCESSIBILITY_SERVICE -> service("ACCESSIBILITY", binding,
+                    R.string.permission_accessibility_name, R.string.pm_accessibility, PermissionSettingsTarget.ACCESSIBILITY)
+                Manifest.permission.BIND_INPUT_METHOD -> service("IME", binding,
+                    R.string.ime_settings_title, R.string.pm_ime, PermissionSettingsTarget.IME)
+                "android.permission.BIND_CREDENTIAL_PROVIDER_SERVICE" -> service("CREDENTIALS", binding,
+                    R.string.pm_credentials_name, R.string.pm_credentials, PermissionSettingsTarget.CREDENTIALS).copy(minSdk = 34)
+                else -> descriptor(binding).copy(id = "BINDING:$binding", requested = false,
+                    category = PermissionCategory.AUTOMATIC, internalProtection = true,
+                    descriptionResId = R.string.pm_binding, settingsTarget = PermissionSettingsTarget.NONE)
             }
         }
+        return result.map { it.copy(status = runCatching { status(it) }.getOrDefault(PermissionStatus.UNKNOWN)) }.sortedBy { it.category.ordinal }
     }
 
-    /**
-     * 检测权限状态
-     * Check permission status
-     */
-    private fun checkPermissionStatus(permission: PermissionInfo): PermissionStatus {
-        return when (permission.id) {
-            "BIOMETRIC" -> checkBiometricStatus()
-            "AUTOFILL" -> checkAutofillStatus()
-            "ACCESSIBILITY" -> checkAccessibilityStatus()
-            "LIVE_UPDATES" -> if (LiveUpdateNotifications.canPostPromotedNotifications(context)) {
-                PermissionStatus.GRANTED
-            } else PermissionStatus.DENIED
-            "INTERNET", "NETWORK_STATE", "VIBRATE" -> {
-                // 这些权限在安装时自动授予
-                PermissionStatus.GRANTED
-            }
-            "NOTIFICATION" -> {
-                if (Build.VERSION.SDK_INT >= 33) {
-                    val result = ContextCompat.checkSelfPermission(
-                        context,
-                        permission.androidPermission
-                    )
-                    if (result == PackageManager.PERMISSION_GRANTED) {
-                        PermissionStatus.GRANTED
-                    } else {
-                        PermissionStatus.DENIED
-                    }
-                } else {
-                    PermissionStatus.GRANTED
-                }
-            }
-            else -> {
-                val result = ContextCompat.checkSelfPermission(
-                    context,
-                    permission.androidPermission
-                )
-                if (result == PackageManager.PERMISSION_GRANTED) {
-                    PermissionStatus.GRANTED
-                } else {
-                    PermissionStatus.DENIED
-                }
-            }
+    private fun service(id: String, name: String, title: Int, description: Int, target: PermissionSettingsTarget) =
+        PermissionInfo(id, name, Icons.Default.Settings, title, description, PermissionCategory.SPECIAL,
+            settingsTarget = target, requested = false)
+
+    @Suppress("DEPRECATION")
+    private fun descriptor(name: String): PermissionInfo {
+        val short = name.substringAfterLast('.')
+        var p = PermissionInfo("PERMISSION:$name", name, Icons.Default.Shield, R.string.permission_management_title,
+            R.string.pm_other, PermissionCategory.AUTOMATIC,
+            systemLabel = runCatching { context.packageManager.getPermissionInfo(name, 0).loadLabel(context.packageManager).toString() }.getOrDefault(name))
+        val baseProtection = runCatching { context.packageManager.getPermissionInfo(name, 0).protectionLevel and
+            android.content.pm.PermissionInfo.PROTECTION_MASK_BASE }.getOrNull()
+        if (baseProtection == android.content.pm.PermissionInfo.PROTECTION_DANGEROUS) p = p.copy(
+            category = PermissionCategory.RUNTIME, settingsTarget = PermissionSettingsTarget.APP)
+        if (baseProtection == android.content.pm.PermissionInfo.PROTECTION_SIGNATURE) p = p.copy(internalProtection = true)
+        fun known(id: String, title: Int, desc: Int, category: PermissionCategory = PermissionCategory.AUTOMATIC,
+                  target: PermissionSettingsTarget = PermissionSettingsTarget.NONE) {
+            p = p.copy(id = id, nameResId = title, descriptionResId = desc, category = category, settingsTarget = target, systemLabel = null)
         }
+        when (if (name == "android.permission.$short") short else null) {
+            "CAMERA" -> known("CAMERA", R.string.permission_camera_name, R.string.pm_camera, PermissionCategory.RUNTIME, PermissionSettingsTarget.APP)
+            "ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION" -> known(short, R.string.permission_location_name,
+                R.string.pm_location, PermissionCategory.RUNTIME, PermissionSettingsTarget.APP)
+            "NEARBY_WIFI_DEVICES" -> {
+                known(short, R.string.pm_nearby_name, R.string.pm_nearby, PermissionCategory.RUNTIME, PermissionSettingsTarget.APP)
+                p = p.copy(minSdk = 33)
+            }
+            "WRITE_EXTERNAL_STORAGE" -> {
+                known("STORAGE", R.string.permission_storage_name, R.string.pm_storage, PermissionCategory.RUNTIME, PermissionSettingsTarget.APP)
+                p = p.copy(maxSdk = 28)
+            }
+            "READ_EXTERNAL_STORAGE" -> if (Build.VERSION.SDK_INT <= 28) {
+                known("LEGACY_STORAGE_READ",R.string.permission_storage_name,R.string.pm_storage,PermissionCategory.RUNTIME,PermissionSettingsTarget.APP)
+                p=p.copy(maxSdk=28)
+            }
+            "POST_NOTIFICATIONS" -> known("NOTIFICATION", R.string.permission_notification_name, R.string.pm_notifications,
+                if (Build.VERSION.SDK_INT >= 33) PermissionCategory.RUNTIME else PermissionCategory.SPECIAL, PermissionSettingsTarget.NOTIFICATIONS)
+            "POST_PROMOTED_NOTIFICATIONS" -> {
+                known("LIVE_UPDATES", R.string.permission_live_updates_name, R.string.pm_live_updates, PermissionCategory.SPECIAL, PermissionSettingsTarget.LIVE_UPDATES)
+                p = p.copy(minSdk = 36)
+            }
+            "NFC" -> known("NFC", R.string.pm_nfc_name, R.string.pm_nfc, target = PermissionSettingsTarget.NFC)
+            "USE_BIOMETRIC", "USE_FINGERPRINT" -> {
+                p = p.copy(descriptionResId = R.string.pm_biometric)
+                if (short == "USE_BIOMETRIC") p = p.copy(minSdk = 28)
+            }
+            "INTERNET" -> known("INTERNET", R.string.permission_internet_name, R.string.pm_network)
+            "ACCESS_NETWORK_STATE" -> known("NETWORK_STATE", R.string.permission_network_state_name, R.string.pm_network_state)
+            "ACCESS_WIFI_STATE", "CHANGE_WIFI_STATE", "CHANGE_NETWORK_STATE" -> p = p.copy(descriptionResId = R.string.pm_wifi)
+            "CHANGE_WIFI_MULTICAST_STATE" -> p = p.copy(descriptionResId = R.string.pm_multicast)
+            "VIBRATE" -> known("VIBRATE", R.string.permission_vibrate_name, R.string.pm_vibrate)
+            "SYSTEM_ALERT_WINDOW" -> known("OVERLAY", R.string.pm_overlay_name, R.string.pm_overlay, PermissionCategory.SPECIAL, PermissionSettingsTarget.OVERLAY)
+            "REQUEST_INSTALL_PACKAGES" -> known("INSTALL", R.string.pm_install_name, R.string.pm_install, PermissionCategory.SPECIAL, PermissionSettingsTarget.INSTALL)
+            "REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" -> known("BATTERY", R.string.autofill_protection_battery_title, R.string.pm_battery, PermissionCategory.SPECIAL, PermissionSettingsTarget.BATTERY)
+            "FOREGROUND_SERVICE", "FOREGROUND_SERVICE_DATA_SYNC", "FOREGROUND_SERVICE_CONNECTED_DEVICE", "FOREGROUND_SERVICE_SPECIAL_USE" -> p = p.copy(
+                descriptionResId = R.string.pm_foreground, minSdk = if (short == "FOREGROUND_SERVICE") 28 else 34)
+            "RECEIVE_BOOT_COMPLETED" -> p = p.copy(descriptionResId = R.string.pm_boot)
+            "WAKE_LOCK" -> p = p.copy(descriptionResId = R.string.pm_wake)
+            "HIDE_OVERLAY_WINDOWS" -> p = p.copy(descriptionResId = R.string.pm_hide_overlay, minSdk = 31)
+        }
+        if (name == "${context.packageName}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION") {
+            p = p.copy(descriptionResId = R.string.pm_internal, internalProtection = true)
+        }
+        if (name == "moe.shizuku.manager.permission.API_V23") known("SHIZUKU", R.string.pm_shizuku_name, R.string.pm_shizuku,
+            PermissionCategory.SPECIAL, PermissionSettingsTarget.SHIZUKU)
+        if (name == Manifest.permission.ACCESS_FINE_LOCATION) p = p.copy(nameResId = R.string.pm_location_precise)
+        if (name == Manifest.permission.ACCESS_COARSE_LOCATION) p = p.copy(nameResId = R.string.pm_location_approximate)
+        // Future unknown declarations are visible but never requested blindly.
+        return p
     }
 
-    /**
-     * 检测生物识别状态
-     * Check biometric authentication status
-     */
-    private fun checkBiometricStatus(): PermissionStatus {
-        return try {
-            val biometricManager = BiometricManager.from(context)
-            when (biometricManager.canAuthenticate(
-                BiometricManager.Authenticators.BIOMETRIC_STRONG or
-                        BiometricManager.Authenticators.BIOMETRIC_WEAK
-            )) {
+    private fun granted(value: Boolean) = if (value) PermissionStatus.GRANTED else PermissionStatus.DENIED
+    private fun status(p: PermissionInfo): PermissionStatus {
+        if (Build.VERSION.SDK_INT < p.minSdk || p.maxSdk?.let { Build.VERSION.SDK_INT > it } == true) return PermissionStatus.UNAVAILABLE
+        return when (p.id) {
+            "BIOMETRIC" -> when (BiometricManager.from(context).canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
                 BiometricManager.BIOMETRIC_SUCCESS -> PermissionStatus.GRANTED
-                BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE,
-                BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> PermissionStatus.UNAVAILABLE
+                BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE, BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> PermissionStatus.UNAVAILABLE
                 else -> PermissionStatus.DENIED
             }
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to check biometric status", e)
-            PermissionStatus.UNKNOWN
+            "AUTOFILL" -> granted(context.getSystemService(AutofillManager::class.java)?.hasEnabledAutofillServices() == true)
+            "ACCESSIBILITY" -> granted(MonicaAccessibilityService.isServiceEnabled(context))
+            "IME" -> granted(context.getSystemService(InputMethodManager::class.java)?.enabledInputMethodList?.any {
+                it.packageName == context.packageName && it.serviceName == "takagi.ru.monica.ime.MonicaInputMethodService"
+            } == true)
+            "CREDENTIALS" -> if (Build.VERSION.SDK_INT >= 34) granted(context.getSystemService(CredentialManager::class.java)
+                ?.isEnabledCredentialProviderService(ComponentName(context.packageName, "takagi.ru.monica.passkey.MonicaCredentialProviderService")) == true) else PermissionStatus.UNAVAILABLE
+            "NOTIFICATION" -> granted(NotificationManagerCompat.from(context).areNotificationsEnabled() && (Build.VERSION.SDK_INT < 33 ||
+                ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED))
+            "LIVE_UPDATES" -> granted(NotificationManagerCompat.from(context).areNotificationsEnabled() && LiveUpdateNotifications.canPostPromotedNotifications(context))
+            "OVERLAY" -> granted(Settings.canDrawOverlays(context))
+            "INSTALL" -> granted(context.packageManager.canRequestPackageInstalls())
+            "BATTERY" -> granted(context.getSystemService(PowerManager::class.java)?.isIgnoringBatteryOptimizations(context.packageName) == true)
+            "SHIZUKU" -> if (!Shizuku.pingBinder()) PermissionStatus.UNAVAILABLE else granted(Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED)
+            else -> if (!p.requested && p.internalProtection) PermissionStatus.UNKNOWN else granted(
+                ContextCompat.checkSelfPermission(context, p.androidPermission) == PackageManager.PERMISSION_GRANTED)
         }
     }
-
-    /**
-     * 检测自动填充服务状态
-     * Check autofill service status
-     */
-    private fun checkAutofillStatus(): PermissionStatus {
-        return try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val autofillManager = context.getSystemService(android.view.autofill.AutofillManager::class.java)
-                if (autofillManager?.hasEnabledAutofillServices() == true) {
-                    PermissionStatus.GRANTED
-                } else {
-                    PermissionStatus.DENIED
-                }
-            } else {
-                PermissionStatus.UNAVAILABLE
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to check autofill status", e)
-            PermissionStatus.UNKNOWN
-        }
-    }
-
-    private fun checkAccessibilityStatus(): PermissionStatus {
-        return try {
-            if (MonicaAccessibilityService.isServiceEnabled(context)) {
-                PermissionStatus.GRANTED
-            } else {
-                PermissionStatus.DENIED
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to check accessibility status", e)
-            PermissionStatus.UNKNOWN
-        }
-    }
-
-    /**
-     * 按分类分组权限
-     * Group permissions by category
-     */
-    fun getPermissionsByCategory(): Map<PermissionCategory, List<PermissionInfo>> {
-        return getAllPermissions().groupBy { it.category }
-    }
-
-    /**
-     * 获取权限统计信息
-     * Get permission statistics
-     */
+    fun getPermissionsByCategory(): Map<PermissionCategory, List<PermissionInfo>> = getAllPermissions().groupBy { it.category }
     fun getPermissionStats(): PermissionStats {
-        val allPermissions = getAllPermissions()
-        val requiredPermissions = allPermissions.filter {
-            it.importance == PermissionImportance.REQUIRED
-        }
-        val grantedRequired = requiredPermissions.count {
-            it.status == PermissionStatus.GRANTED
-        }
-
-        return PermissionStats(
-            totalRequired = requiredPermissions.size,
-            grantedRequired = grantedRequired,
-            totalPermissions = allPermissions.size,
-            grantedPermissions = allPermissions.count {
-                it.status == PermissionStatus.GRANTED
-            }
-        )
-    }
-
-    // 创建各个权限信息的私有方法
-    // Private methods to create permission info
-
-    private fun createBiometricPermission() = PermissionInfo(
-        id = "BIOMETRIC",
-        androidPermission = Manifest.permission.USE_BIOMETRIC,
-        icon = Icons.Default.Fingerprint,
-        nameResId = R.string.permission_biometric_name,
-        descriptionResId = R.string.permission_biometric_description,
-        category = PermissionCategory.SECURITY,
-        importance = PermissionImportance.RECOMMENDED
-    )
-
-    private fun createCameraPermission() = PermissionInfo(
-        id = "CAMERA",
-        androidPermission = Manifest.permission.CAMERA,
-        icon = Icons.Default.CameraAlt,
-        nameResId = R.string.permission_camera_name,
-        descriptionResId = R.string.permission_camera_description,
-        category = PermissionCategory.DEVICE,
-        importance = PermissionImportance.RECOMMENDED
-    )
-
-    private fun createStoragePermission() = PermissionInfo(
-        id = "STORAGE",
-        androidPermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            Manifest.permission.READ_MEDIA_IMAGES
-        } else {
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        },
-        icon = Icons.Default.Storage,
-        nameResId = R.string.permission_storage_name,
-        descriptionResId = R.string.permission_storage_description,
-        category = PermissionCategory.STORAGE,
-        importance = PermissionImportance.RECOMMENDED
-    )
-
-    private fun createInternetPermission() = PermissionInfo(
-        id = "INTERNET",
-        androidPermission = Manifest.permission.INTERNET,
-        icon = Icons.Default.Language,
-        nameResId = R.string.permission_internet_name,
-        descriptionResId = R.string.permission_internet_description,
-        category = PermissionCategory.NETWORK,
-        importance = PermissionImportance.OPTIONAL
-    )
-
-    private fun createNetworkStatePermission() = PermissionInfo(
-        id = "NETWORK_STATE",
-        androidPermission = Manifest.permission.ACCESS_NETWORK_STATE,
-        icon = Icons.Default.NetworkCheck,
-        nameResId = R.string.permission_network_state_name,
-        descriptionResId = R.string.permission_network_state_description,
-        category = PermissionCategory.NETWORK,
-        importance = PermissionImportance.RECOMMENDED
-    )
-
-    private fun createVibratePermission() = PermissionInfo(
-        id = "VIBRATE",
-        androidPermission = Manifest.permission.VIBRATE,
-        icon = Icons.Default.Vibration,
-        nameResId = R.string.permission_vibrate_name,
-        descriptionResId = R.string.permission_vibrate_description,
-        category = PermissionCategory.DEVICE,
-        importance = PermissionImportance.OPTIONAL
-    )
-
-    private fun createNotificationPermission() = PermissionInfo(
-        id = "NOTIFICATION",
-        androidPermission = if (Build.VERSION.SDK_INT >= 33) {
-            "android.permission.POST_NOTIFICATIONS"
-        } else {
-            "android.permission.POST_NOTIFICATIONS"
-        },
-        icon = Icons.Default.Notifications,
-        nameResId = R.string.permission_notification_name,
-        descriptionResId = R.string.permission_notification_description,
-        category = PermissionCategory.DEVICE,
-        importance = PermissionImportance.RECOMMENDED
-    )
-
-    private fun createLiveUpdatePermission() = PermissionInfo(
-        id = "LIVE_UPDATES",
-        androidPermission = "android.permission.POST_PROMOTED_NOTIFICATIONS",
-        icon = Icons.Default.NotificationsActive,
-        nameResId = R.string.permission_live_updates_name,
-        descriptionResId = R.string.permission_live_updates_description,
-        category = PermissionCategory.DEVICE,
-        importance = PermissionImportance.OPTIONAL
-    )
-
-    private fun createPhoneStatePermission() = PermissionInfo(
-        id = "PHONE_STATE",
-        androidPermission = Manifest.permission.READ_PHONE_STATE,
-        icon = Icons.Default.PhoneAndroid,
-        nameResId = R.string.permission_phone_state_name,
-        descriptionResId = R.string.permission_phone_state_description,
-        category = PermissionCategory.DEVICE,
-        importance = PermissionImportance.OPTIONAL
-    )
-
-    private fun createAutofillPermission() = PermissionInfo(
-        id = "AUTOFILL",
-        androidPermission = "android.permission.BIND_AUTOFILL_SERVICE",
-        icon = Icons.Default.AutoAwesome,
-        nameResId = R.string.permission_autofill_name,
-        descriptionResId = R.string.permission_autofill_description,
-        category = PermissionCategory.SECURITY,
-        importance = PermissionImportance.RECOMMENDED
-    )
-
-    private fun createAccessibilityPermission() = PermissionInfo(
-        id = "ACCESSIBILITY",
-        androidPermission = "android.permission.BIND_ACCESSIBILITY_SERVICE",
-        icon = Icons.Default.Accessibility,
-        nameResId = R.string.permission_accessibility_name,
-        descriptionResId = R.string.permission_accessibility_description,
-        category = PermissionCategory.SECURITY,
-        importance = PermissionImportance.RECOMMENDED
-    )
-
-    companion object {
-        private const val TAG = "PermissionRepository"
+        val all = getAllPermissions()
+        return PermissionStats(0, 0, all.size, all.count { it.status == PermissionStatus.GRANTED }, all.count { it.requested })
     }
 }

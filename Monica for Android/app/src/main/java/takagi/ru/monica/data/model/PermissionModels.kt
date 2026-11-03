@@ -2,66 +2,46 @@ package takagi.ru.monica.data.model
 
 import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.vector.ImageVector
+import takagi.ru.monica.R
 
-/**
- * 权限信息数据类
- * Permission information data class
- */
 data class PermissionInfo(
-    val id: String,                          // 权限ID (如 "CAMERA")
-    val androidPermission: String,           // Android权限名称 (如 "android.permission.CAMERA")
-    val icon: ImageVector,                   // Material图标
-    @StringRes val nameResId: Int,           // 权限名称资源ID
-    @StringRes val descriptionResId: Int,    // 功能说明资源ID
-    val category: PermissionCategory,        // 权限分类
-    val importance: PermissionImportance,    // 重要性级别
-    val status: PermissionStatus = PermissionStatus.UNKNOWN  // 当前状态
+    val id: String,
+    val androidPermission: String,
+    val icon: ImageVector,
+    @StringRes val nameResId: Int,
+    @StringRes val descriptionResId: Int,
+    val category: PermissionCategory,
+    val importance: PermissionImportance = PermissionImportance.OPTIONAL,
+    val status: PermissionStatus = PermissionStatus.UNKNOWN,
+    val settingsTarget: PermissionSettingsTarget = PermissionSettingsTarget.NONE,
+    val runtimePermissions: List<String> = emptyList(),
+    val requested: Boolean = true,
+    val internalProtection: Boolean = false,
+    val availability: Boolean = false,
+    val minSdk: Int = 26,
+    val maxSdk: Int? = null,
+    val systemLabel: String? = null,
 )
 
-/**
- * 权限分类
- * Permission category
- */
-enum class PermissionCategory(
-    @StringRes val titleResId: Int
-) {
-    SECURITY(takagi.ru.monica.R.string.permission_category_security),      // 安全权限
-    STORAGE(takagi.ru.monica.R.string.permission_category_storage),        // 存储权限
-    NETWORK(takagi.ru.monica.R.string.permission_category_network),        // 网络权限
-    DEVICE(takagi.ru.monica.R.string.permission_category_device),          // 设备权限
-    LOCATION(takagi.ru.monica.R.string.permission_category_location)       // 位置权限
+enum class PermissionCategory(@StringRes val titleResId: Int) {
+    RUNTIME(R.string.pm_category_runtime),
+    SPECIAL(R.string.pm_category_special),
+    AUTOMATIC(R.string.pm_category_automatic),
 }
-
-/**
- * 权限重要性级别
- * Permission importance level
- */
-enum class PermissionImportance(
-    @StringRes val labelResId: Int
-) {
-    REQUIRED(takagi.ru.monica.R.string.permission_importance_required),    // 必需
-    RECOMMENDED(takagi.ru.monica.R.string.permission_importance_recommended), // 推荐
-    OPTIONAL(takagi.ru.monica.R.string.permission_importance_optional)     // 可选
+enum class PermissionSettingsTarget {
+    NONE, APP, NOTIFICATIONS, LIVE_UPDATES, AUTOFILL, ACCESSIBILITY, BIOMETRIC,
+    OVERLAY, INSTALL, BATTERY, IME, CREDENTIALS, NFC, SHIZUKU,
 }
-
-/**
- * 权限状态
- * Permission status
- */
-enum class PermissionStatus {
-    GRANTED,        // 已授予
-    DENIED,         // 未授予
-    UNAVAILABLE,    // 不可用（设备不支持）
-    UNKNOWN         // 未知
+enum class PermissionImportance(@StringRes val labelResId: Int) {
+    REQUIRED(R.string.permission_importance_required),
+    RECOMMENDED(R.string.permission_importance_recommended),
+    OPTIONAL(R.string.permission_importance_optional),
 }
-
-/**
- * 权限统计数据
- * Permission statistics data
- */
+enum class PermissionStatus { GRANTED, DENIED, UNAVAILABLE, UNKNOWN }
 data class PermissionStats(
     val totalRequired: Int,
     val grantedRequired: Int,
     val totalPermissions: Int,
-    val grantedPermissions: Int
+    val grantedPermissions: Int,
+    val declaredPermissions: Int = totalPermissions,
 )

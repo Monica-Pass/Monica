@@ -26,9 +26,9 @@ fun PermissionStatsCard(
         Column(Modifier.padding(16.dp)) {
             Text(stringResource(R.string.permission_summary_title), style = MaterialTheme.typography.titleMedium)
             Spacer(Modifier.height(8.dp))
-            Text(stringResource(R.string.permission_summary_hint), style = MaterialTheme.typography.bodyMedium)
+            Text(stringResource(R.string.pm_inventory_hint), style = MaterialTheme.typography.bodyMedium)
             stats?.let {
-                Text(stringResource(R.string.permission_summary_granted, it.grantedPermissions),
+                Text(stringResource(R.string.pm_inventory_count, it.declaredPermissions),
                     style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 12.dp))
             }
             TextButton(onClick = onRefresh, enabled = !isLoading,

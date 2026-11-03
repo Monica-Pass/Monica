@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import takagi.ru.monica.data.model.PermissionCategory
 import takagi.ru.monica.data.model.PermissionInfo
 import takagi.ru.monica.data.model.PermissionStats
+import takagi.ru.monica.data.model.PermissionStatus
 import takagi.ru.monica.repository.PermissionRepository
 
 /**
@@ -42,8 +43,7 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                _permissionsByCategory.value = repository.getPermissionsByCategory()
-                _permissionStats.value = repository.getPermissionStats()
+                publish(repository.getAllPermissions())
             } finally {
                 _isLoading.value = false
             }
@@ -59,13 +59,16 @@ class PermissionViewModel(application: Application) : AndroidViewModel(applicati
             _isLoading.value = true
             try {
                 // 强制刷新，不使用缓存
-                _permissionsByCategory.value = repository.apply {
-                    getAllPermissions(forceRefresh = true)
-                }.getPermissionsByCategory()
-                _permissionStats.value = repository.getPermissionStats()
+                publish(repository.getAllPermissions(forceRefresh = true))
             } finally {
                 _isLoading.value = false
             }
         }
+    }
+
+    private fun publish(items: List<PermissionInfo>) {
+        _permissionsByCategory.value = items.groupBy { it.category }
+        _permissionStats.value = PermissionStats(0, 0, items.size,
+            items.count { it.status == PermissionStatus.GRANTED }, items.count { it.requested })
     }
 }

@@ -1,10 +1,12 @@
 # Monica Android 1.0.324
 
-> 未发布 / Unreleased
-
 ## 中文
 
-- 修复局域网 IP 网站的自动填充地址识别，支持 IPv4、IPv6 及带端口地址；IP 按完整地址匹配，不再套用主域名或数字模糊匹配。仍只从系统报告的网站来源或浏览器地址栏获取地址。 浏览器未提供表单或未触发系统请求时，仍无法自动填充。
+- 修复局域网 IP 网站的自动填充地址识别，支持 IPv4、IPv6 及带端口地址；IP 按完整地址匹配，不再套用主域名或数字模糊匹配。仍只从系统报告的网站来源或浏览器地址栏获取地址。浏览器未提供表单或未触发系统请求时，仍无法自动填充。
+
+- Android 8–9 为兼容保存图片保留旧版存储写入权限，系统会由此附带读取访问；权限页明确说明这项旧系统行为，现代 Android 选图只授予所选文件访问权。
+
+- 精简权限并升级权限管理：移除电话状态、广泛相册读取与外部存储读取权限，照片通过系统选择器获取单个文件访问权。权限页按运行时授权、特殊访问与服务、自动授予与内部保护分组，覆盖安装包与依赖声明，展示用途、实际状态和设置入口；保留 NFC 硬件密钥与 Android 8–9 保存图片兼容，授权仍由用户按需操作。
 
 - 概览文件夹改为只显示顶层，点击文件夹或数据库后逐层浏览；当前层的文件夹始终连续排列在条目上方，A–Z／Z–A 只调整文件夹块内的顺序。保留原列表布局偏好与返回位置；KDBX 同名分组按 UUID 和父组区分，浏览与排序不改写数据库。
 
@@ -28,6 +30,10 @@
 ## English
 
 - Fix LAN IP website address recovery for autofill, including IPv4, IPv6 and addresses with ports. IP matching uses the complete address instead of base-domain or numeric heuristics. Origins still come only from system-reported website context or the browser address bar. Autofill still requires the browser to expose the form and send a system request.
+
+- Android 8–9 image saving retains legacy storage-write permission, from which those systems also derive read access. The permission page explains this older-system behavior; photo selection on modern Android uses selected-file grants.
+
+- Reduced permissions and expanded permission management: removed phone-state and broad photo/storage-reading permissions; photos use selected-file access through the system picker. The page covers installed-package and dependency declarations, grouped into runtime permissions, special access/services, and automatic permissions/internal protections, with purposes, current status and settings links. NFC security keys and Android 8–9 image saving remain supported; requests stay user initiated.
 
 - The folder overview now shows the top level. Open a folder or database to browse its children; all folders at the current level stay together above entries, with A–Z/Z–A ordering inside that block. Your saved list layout and back position are preserved. KDBX groups with identical names use their UUID and parent identity; browsing and sorting do not rewrite the database.
 

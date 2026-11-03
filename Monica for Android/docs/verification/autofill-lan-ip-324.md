@@ -26,3 +26,7 @@ The first FD device run was7/12 because the driver incorrectly expanded the serv
 ## Device cleanup
 
 Restored user0; removed only owned synthetic user13. Preserved users0,10,11,12, public registration/configuration and userdata/qcow2 disks. Stopped the public emulator only if started and still owned by this task. The existing API36 emulator and unrelated Java processes were untouched. Android multi-user APK installation replaces shared package code but no original user's app data was cleared.
+
+## 2026-11-03 release preparation
+
+The LAN-only submission scope above describes the earlier commit. Release preparation now includes the previously verified permission-management source, resources, tests and photo-test provider in both editions. The 52 shared permission files and 14 LAN files match their frozen SHA256 receipts. Earlier test results and limitations are retained; no new build or device test was performed for publication.

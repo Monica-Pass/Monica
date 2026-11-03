@@ -1,0 +1,20 @@
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/service/AccessibilityCredentialFillTest.kt:116:46 'static fun obtain(p0: View!): AccessibilityNodeInfo!' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/service/AccessibilityCredentialFillTest.kt:180:43 'static fun obtain(): AccessibilityNodeInfo!' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/service/AccessibilityCredentialFillTest.kt:228:46 'static fun obtain(p0: View!): AccessibilityNodeInfo!' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/service/AccessibilityCredentialFillTest.kt:247:46 'static fun obtain(p0: View!): AccessibilityNodeInfo!' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/steam/SteamMiniProfileBackgroundTest.kt:83:25 'fun createTempDir(prefix: String = ..., suffix: String? = ..., directory: File? = ...): File' is deprecated. Avoid creating temporary directories in the default temp location with this function due to too wide permissions on the newly created directory. Use kotlin.io.path.createTempDirectory instead.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/ui/vaultv2/VaultV2SortingTest.kt:16:90 'constructor(p0: String!): Locale' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/utils/MdbxSyncSidecarStoreTest.kt:14:20 'fun createTempDir(prefix: String = ..., suffix: String? = ..., directory: File? = ...): File' is deprecated. Avoid creating temporary directories in the default temp location with this function due to too wide permissions on the newly created directory. Use kotlin.io.path.createTempDirectory instead.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/test/java/takagi/ru/monica/utils/MdbxSyncSidecarStoreTest.kt:51:20 'fun createTempDir(prefix: String = ..., suffix: String? = ..., directory: File? = ...): File' is deprecated. Avoid creating temporary directories in the default temp location with this function due to too wide permissions on the newly created directory. Use kotlin.io.path.createTempDirectory instead.
+
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :app:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :app:compileDebugUnitTestJavaWithJavac UP-TO-DATE
+> Task :app:packageDebugUnitTestForUnitTest UP-TO-DATE
+> Task :app:generateDebugUnitTestConfig UP-TO-DATE
+> Task :app:processDebugUnitTestJavaRes UP-TO-DATE
+> Task :mdbx-engine:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :app:testDebugUnitTest
+
+BUILD SUCCESSFUL in 9m 37s
+99 actionable tasks: 19 executed, 80 up-to-date

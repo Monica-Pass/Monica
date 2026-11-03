@@ -26,18 +26,9 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     
-    <!-- Storage permissions for saving images -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
+    <!-- Only Android 8/9 public-image saving needs legacy write access. Selected files use URI grants. -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    
-    <!-- Autofill permission -->
-    <uses-permission android:name="android.permission.BIND_AUTOFILL_SERVICE"
-        tools:ignore="ProtectedPermissions" />
-    
-    <!-- Phase 9: Haptic feedback permission -->
     <!-- Optional: only the user-enabled HyperOS save compatibility panel uses this. -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -55,10 +46,7 @@
         android:minSdkVersion="33" />
     <uses-permission android:name="android.permission.POST_PROMOTED_NOTIFICATIONS" />
     
-    <!-- 添加电话状态权限 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    
-    <!-- 如果需要精确位置 -->
+    <!-- Foreground location is requested only for user-initiated address filling or legacy hotspots. -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 

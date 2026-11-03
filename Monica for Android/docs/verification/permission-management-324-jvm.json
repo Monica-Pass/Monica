@@ -1,0 +1,33 @@
+{
+  "flavor": "main",
+  "suites": [
+    {
+      "name": "takagi.ru.monica.repository.PermissionRepositoryTest",
+      "time": "5.633",
+      "tests": 32,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.ui.screens.PermissionClickPolicyTest",
+      "time": "0.001",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.notifications.LiveUpdateNotificationsTest",
+      "time": "9.967",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "tests": 41,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0
+}

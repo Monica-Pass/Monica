@@ -1,0 +1,21 @@
+{
+  "flavor": "main",
+  "name": "permissions-complete",
+  "version_name": "1.0.324-26110212-04",
+  "version_code": 12,
+  "classes": [
+    "takagi.ru.monica.ui.screens.PermissionInventoryInstrumentedTest",
+    "takagi.ru.monica.util.PhotoPickerPermissionInstrumentedTest",
+    "takagi.ru.monica.ui.screens.SettingsSubpagesInstrumentedTest#permissionsExposeDetailsForEveryDeclaredPermissionAndService",
+    "takagi.ru.monica.ui.screens.SettingsSubpagesInstrumentedTest#permissionDescriptionsAndActionsFitNarrowDarkEnglishAtDoubleFontSize",
+    "takagi.ru.monica.ui.screens.SettingsSubpagesInstrumentedTest#permissionRefreshIsDisabledWhileLoading",
+    "takagi.ru.monica.ui.screens.SettingsSubpagesInstrumentedTest#permissionSystemSettingsReturnKeepsPageAndHelpUsable",
+    "takagi.ru.monica.ui.components.PhotoImportEditorTest"
+  ],
+  "main_sha256": "18fbdb3bcad1be6c5713166049f15731e8933197a16d1251bc53bc3f792d7a12",
+  "test_sha256": "0908f631239c8eb023e996a797e04a74b2c2f6c3a5d65bafd93b22f64bea37b9",
+  "user": 13,
+  "reset_own_synthetic_app_data": true,
+  "elapsed_seconds": 59.764,
+  "success": true
+}

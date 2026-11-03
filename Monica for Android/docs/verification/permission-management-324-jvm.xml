@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites>
+  <testsuite name="takagi.ru.monica.repository.PermissionRepositoryTest" tests="32" skipped="0" failures="0" errors="0" timestamp="2026-11-02T03:24:00" hostname="JOYIN" time="5.633">
+    <properties />
+    <testcase name="galleryUsesOpenableSingleImageUriWithoutExplicitGalleryOrBroadGrant[26]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="1.553" />
+    <testcase name="authorizationUsesOnlyDeclaredPermissionsAndRequestsCoarseWithFine[26]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.198" />
+    <testcase name="notificationStateRespectsSystemDisablementEvenBeforeAndroid13[26]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.101" />
+    <testcase name="unexpectedDependencyDeclarationRemainsVisibleWithoutBlindRequest[26]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.049" />
+    <testcase name="inventoryExactlyCoversInstalledDeclarationsAndKeepsBindingProtectionSeparate[26]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.101" />
+    <testcase name="versionSpecificDeclarationsCannotRequestOnUnsupportedAndroid[26]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.073" />
+    <testcase name="overlayRefreshAndDedicatedSettingsNeverUseRuntimeRequests[26]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.054" />
+    <testcase name="approximateConsentIsReportedWithoutAcceptingUnrelatedGrants[26]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.086" />
+    <testcase name="galleryUsesOpenableSingleImageUriWithoutExplicitGalleryOrBroadGrant[28]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="1.713" />
+    <testcase name="authorizationUsesOnlyDeclaredPermissionsAndRequestsCoarseWithFine[28]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.296" />
+    <testcase name="notificationStateRespectsSystemDisablementEvenBeforeAndroid13[28]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.097" />
+    <testcase name="unexpectedDependencyDeclarationRemainsVisibleWithoutBlindRequest[28]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.043" />
+    <testcase name="inventoryExactlyCoversInstalledDeclarationsAndKeepsBindingProtectionSeparate[28]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.049" />
+    <testcase name="versionSpecificDeclarationsCannotRequestOnUnsupportedAndroid[28]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.048" />
+    <testcase name="overlayRefreshAndDedicatedSettingsNeverUseRuntimeRequests[28]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.053" />
+    <testcase name="approximateConsentIsReportedWithoutAcceptingUnrelatedGrants[28]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.071" />
+    <testcase name="galleryUsesOpenableSingleImageUriWithoutExplicitGalleryOrBroadGrant[32]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.031" />
+    <testcase name="authorizationUsesOnlyDeclaredPermissionsAndRequestsCoarseWithFine[32]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.092" />
+    <testcase name="notificationStateRespectsSystemDisablementEvenBeforeAndroid13[32]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.112" />
+    <testcase name="unexpectedDependencyDeclarationRemainsVisibleWithoutBlindRequest[32]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.06" />
+    <testcase name="inventoryExactlyCoversInstalledDeclarationsAndKeepsBindingProtectionSeparate[32]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.07" />
+    <testcase name="versionSpecificDeclarationsCannotRequestOnUnsupportedAndroid[32]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.049" />
+    <testcase name="overlayRefreshAndDedicatedSettingsNeverUseRuntimeRequests[32]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.085" />
+    <testcase name="approximateConsentIsReportedWithoutAcceptingUnrelatedGrants[32]" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.037" />
+    <testcase name="galleryUsesOpenableSingleImageUriWithoutExplicitGalleryOrBroadGrant" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.025" />
+    <testcase name="authorizationUsesOnlyDeclaredPermissionsAndRequestsCoarseWithFine" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.069" />
+    <testcase name="notificationStateRespectsSystemDisablementEvenBeforeAndroid13" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.102" />
+    <testcase name="unexpectedDependencyDeclarationRemainsVisibleWithoutBlindRequest" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.04" />
+    <testcase name="inventoryExactlyCoversInstalledDeclarationsAndKeepsBindingProtectionSeparate" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.084" />
+    <testcase name="versionSpecificDeclarationsCannotRequestOnUnsupportedAndroid" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.072" />
+    <testcase name="overlayRefreshAndDedicatedSettingsNeverUseRuntimeRequests" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.063" />
+    <testcase name="approximateConsentIsReportedWithoutAcceptingUnrelatedGrants" classname="takagi.ru.monica.repository.PermissionRepositoryTest" time="0.038" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="takagi.ru.monica.ui.screens.PermissionClickPolicyTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-02T03:24:06" hostname="JOYIN" time="0.001">
+    <properties />
+    <testcase name="unavailablePermissionIgnoresClicks" classname="takagi.ru.monica.ui.screens.PermissionClickPolicyTest" time="0.001" />
+    <testcase name="servicePermissionsOpenTheirDedicatedSystemPages" classname="takagi.ru.monica.ui.screens.PermissionClickPolicyTest" time="0.0" />
+    <testcase name="deniedRuntimePermissionUsesNativeRequest" classname="takagi.ru.monica.ui.screens.PermissionClickPolicyTest" time="0.0" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="takagi.ru.monica.notifications.LiveUpdateNotificationsTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-02T03:23:50" hostname="JOYIN" time="9.967">
+    <properties />
+    <testcase name="promotionPermissionNeverUsesRuntimeRequest[29]" classname="takagi.ru.monica.notifications.LiveUpdateNotificationsTest" time="3.383" />
+    <testcase name="oldPlatformsKeepStandardNotificationAndPromotionCannotBeEnabled[29]" classname="takagi.ru.monica.notifications.LiveUpdateNotificationsTest" time="0.52" />
+    <testcase name="promotionPermissionNeverUsesRuntimeRequest[32]" classname="takagi.ru.monica.notifications.LiveUpdateNotificationsTest" time="2.929" />
+    <testcase name="oldPlatformsKeepStandardNotificationAndPromotionCannotBeEnabled[32]" classname="takagi.ru.monica.notifications.LiveUpdateNotificationsTest" time="0.397" />
+    <testcase name="promotionPermissionNeverUsesRuntimeRequest" classname="takagi.ru.monica.notifications.LiveUpdateNotificationsTest" time="2.444" />
+    <testcase name="oldPlatformsKeepStandardNotificationAndPromotionCannotBeEnabled" classname="takagi.ru.monica.notifications.LiveUpdateNotificationsTest" time="0.28" />
+    <system-out />
+    <system-err />
+  </testsuite>
+</testsuites>

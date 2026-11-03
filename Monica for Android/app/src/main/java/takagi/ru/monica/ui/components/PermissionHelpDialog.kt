@@ -21,7 +21,7 @@ fun PermissionHelpDialog(
     onDismiss: () -> Unit
 ) {
     val title = stringResource(R.string.permission_help_title)
-    val content = stringResource(R.string.permission_help_actions)
+    val content = stringResource(R.string.pm_inventory_hint)
     val confirm = stringResource(R.string.ok)
     AlertDialog(
         onDismissRequest = onDismiss,

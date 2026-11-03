@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pm_location_precise">Точное местоположение</string>
+    <string name="pm_location_approximate">Приблизительное местоположение</string>
+</resources>

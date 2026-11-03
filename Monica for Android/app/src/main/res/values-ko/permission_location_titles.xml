@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pm_location_precise">정확한 위치</string>
+    <string name="pm_location_approximate">대략적인 위치</string>
+</resources>

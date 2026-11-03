@@ -25,9 +25,11 @@ import takagi.ru.monica.data.model.PermissionStats
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.viewmodel.compose.viewModel
 import takagi.ru.monica.R
 import takagi.ru.monica.data.model.PermissionInfo
+import takagi.ru.monica.data.model.PermissionSettingsTarget
 import takagi.ru.monica.ui.components.*
 import takagi.ru.monica.viewmodel.PermissionViewModel
 import takagi.ru.monica.notifications.LiveUpdateNotifications
@@ -50,6 +52,7 @@ fun PermissionManagementScreen(
     var showHelpDialog by rememberSaveable { mutableStateOf(false) }
     var pendingRuntimePermission by remember { mutableStateOf<PermissionInfo?>(null) }
     var deniedRuntimePermission by remember { mutableStateOf<PermissionInfo?>(null) }
+    var selectedPermission by remember { mutableStateOf<PermissionInfo?>(null) }
 
     val settingsLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
@@ -58,14 +61,16 @@ fun PermissionManagementScreen(
     }
 
     val runtimePermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { granted ->
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ) { grants ->
         val permission = pendingRuntimePermission
         pendingRuntimePermission = null
         viewModel.refreshPermissions()
         if (permission != null) {
-            val name = context.getString(permission.nameResId)
-            if (granted) {
+            val grantedPermission = runtimeGrantedPermission(permission,grants)
+            val name = if(grantedPermission==android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                context.getString(R.string.pm_location_approximate) else permission.systemLabel ?: context.getString(permission.nameResId)
+            if (grantedPermission != null) {
                 Toast.makeText(
                     context,
                     context.getString(R.string.permission_request_granted, name),
@@ -79,14 +84,12 @@ fun PermissionManagementScreen(
 
     fun launchPermissionSettings(permission: PermissionInfo) {
         try {
-            settingsLauncher.launch(createPermissionSettingsIntent(context, permission.id))
+            settingsLauncher.launch(createPermissionSettingsIntent(context, permission.settingsTarget))
         } catch (_: RuntimeException) {
-            if (permission.id == "LIVE_UPDATES") {
-                try {
-                    settingsLauncher.launch(LiveUpdateNotifications.appSettingsIntent(context))
-                    return
-                } catch (_: RuntimeException) { /* Report below. */ }
-            }
+            try {
+                settingsLauncher.launch(LiveUpdateNotifications.appSettingsIntent(context))
+                return
+            } catch (_: RuntimeException) { /* Report below. */ }
             Toast.makeText(
                 context,
                 context.getString(R.string.cannot_open_settings),
@@ -96,15 +99,18 @@ fun PermissionManagementScreen(
     }
 
     fun handlePermissionClick(permission: PermissionInfo) {
-        when (resolvePermissionClickAction(permission.id, permission.status)) {
+        // Re-read immediately before requesting: never request an undeclared/stale permission.
+        val current = takagi.ru.monica.repository.PermissionRepository(context).getAllPermissions()
+            .firstOrNull { it.id == permission.id } ?: return
+        when (resolvePermissionClickAction(current)) {
             PermissionClickAction.REQUEST_RUNTIME_PERMISSION -> {
-                pendingRuntimePermission = permission
-                runtimePermissionLauncher.launch(permission.androidPermission)
+                pendingRuntimePermission = current
+                runtimePermissionLauncher.launch(current.runtimePermissions.toTypedArray())
             }
             PermissionClickAction.OPEN_AUTOFILL_SETTINGS,
             PermissionClickAction.OPEN_ACCESSIBILITY_SETTINGS,
             PermissionClickAction.OPEN_BIOMETRIC_SETTINGS,
-            PermissionClickAction.OPEN_APP_SETTINGS -> launchPermissionSettings(permission)
+            PermissionClickAction.OPEN_APP_SETTINGS -> launchPermissionSettings(current)
             PermissionClickAction.SHOW_GRANTED -> Toast.makeText(
                 context,
                 context.getString(
@@ -128,7 +134,7 @@ fun PermissionManagementScreen(
         onNavigateBack = onNavigateBack,
         onRefresh = viewModel::refreshPermissions,
         onHelp = { showHelpDialog = true },
-        onPermissionClick = ::handlePermissionClick,
+        onPermissionClick = { selectedPermission = it },
     )
 
     // 帮助对话框
@@ -138,8 +144,16 @@ fun PermissionManagementScreen(
         )
     }
 
+    selectedPermission?.let { selected ->
+        val permission = permissionsByCategory.values.flatten().firstOrNull { it.id == selected.id } ?: selected
+        PermissionDetailsDialog(permission, { selectedPermission = null }) {
+            selectedPermission = null
+            handlePermissionClick(permission)
+        }
+    }
+
     deniedRuntimePermission?.let { permission ->
-        val permissionName = stringResource(permission.nameResId)
+        val permissionName = permission.systemLabel ?: stringResource(permission.nameResId)
         AlertDialog(
             onDismissRequest = { deniedRuntimePermission = null },
             title = { Text(stringResource(R.string.permission_request_denied_title)) },
@@ -206,22 +220,62 @@ internal fun PermissionManagementContent(
     }
 }
 
-private fun createPermissionSettingsIntent(context: Context, permissionId: String): Intent {
-    return when (permissionId) {
-        "LIVE_UPDATES" -> LiveUpdateNotifications.settingsIntent(context)
-        "AUTOFILL" -> Intent(Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE).apply {
+internal fun createPermissionSettingsIntent(context: Context, target: PermissionSettingsTarget): Intent {
+    val packageUri = Uri.fromParts("package", context.packageName, null)
+    return when (target) {
+        PermissionSettingsTarget.LIVE_UPDATES -> LiveUpdateNotifications.settingsIntent(context)
+        PermissionSettingsTarget.NOTIFICATIONS -> Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+            .putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+        PermissionSettingsTarget.AUTOFILL -> Intent(Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE).apply {
             data = Uri.parse("package:${context.packageName}")
         }
-        "ACCESSIBILITY" -> Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
-        "BIOMETRIC" -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        PermissionSettingsTarget.ACCESSIBILITY -> Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+        PermissionSettingsTarget.BIOMETRIC -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             Intent(Settings.ACTION_BIOMETRIC_ENROLL)
         } else {
             Intent(Settings.ACTION_SECURITY_SETTINGS)
         }
-        else -> Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-            data = Uri.fromParts("package", context.packageName, null)
-        }
+        PermissionSettingsTarget.OVERLAY -> Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, packageUri)
+        PermissionSettingsTarget.INSTALL -> Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageUri)
+        PermissionSettingsTarget.BATTERY -> Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
+        PermissionSettingsTarget.IME -> Intent(Settings.ACTION_INPUT_METHOD_SETTINGS)
+        PermissionSettingsTarget.CREDENTIALS -> if (Build.VERSION.SDK_INT >= 34) Intent(Settings.ACTION_CREDENTIAL_PROVIDER, packageUri)
+            else Intent(Settings.ACTION_SECURITY_SETTINGS)
+        PermissionSettingsTarget.NFC -> Intent(Settings.ACTION_NFC_SETTINGS)
+        PermissionSettingsTarget.SHIZUKU -> context.packageManager.getLaunchIntentForPackage("moe.shizuku.privileged.api")
+            ?: Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:moe.shizuku.privileged.api"))
+        else -> Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageUri)
     }
+}
+
+@Composable
+internal fun PermissionDetailsDialog(permission: PermissionInfo, onDismiss: () -> Unit, onAction: () -> Unit) {
+    val canAct = resolvePermissionClickAction(permission) != PermissionClickAction.IGNORE
+    AlertDialog(onDismissRequest = onDismiss,
+        modifier = Modifier.testTag("permission_details"),
+        title = { Text(permission.systemLabel ?: stringResource(permission.nameResId)) },
+        text = {
+            Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text(permissionStatusText(permission), style = MaterialTheme.typography.labelLarge)
+                Text(stringResource(permission.descriptionResId))
+                Text(stringResource(when {
+                    permission.internalProtection -> R.string.pm_mode_internal
+                    permission.availability -> R.string.pm_mode_biometric
+                    permission.category == PermissionCategory.RUNTIME -> R.string.pm_mode_runtime
+                    permission.category == PermissionCategory.SPECIAL -> R.string.pm_mode_special
+                    else -> R.string.pm_mode_auto
+                }))
+                Text(if (permission.maxSdk != null) stringResource(R.string.pm_version_max, permission.maxSdk)
+                    else stringResource(R.string.pm_version_min, permission.minSdk), style = MaterialTheme.typography.bodySmall)
+                if (permission.androidPermission.isNotEmpty()) Text(permission.androidPermission,
+                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        },
+        confirmButton = { if (canAct) TextButton(onClick = onAction, modifier = Modifier.testTag("permission_details_action")) {
+            Text(stringResource(if (resolvePermissionClickAction(permission) == PermissionClickAction.REQUEST_RUNTIME_PERMISSION)
+                R.string.permission_action_request else R.string.permission_open_system_settings))
+        } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.close)) } })
 }
 
 

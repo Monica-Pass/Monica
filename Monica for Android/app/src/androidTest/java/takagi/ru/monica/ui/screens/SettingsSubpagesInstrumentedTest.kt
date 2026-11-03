@@ -166,7 +166,7 @@ class SettingsSubpagesInstrumentedTest {
         })
     }
 
-    @Test fun permissionsExposeCorrectActionsAndKeepStaticStatusesNonInteractive() {
+    @Test fun permissionsExposeDetailsForEveryDeclaredPermissionAndService() {
         val items = fixtures()
         val clicked = mutableListOf<String>()
         var refresh = 0
@@ -182,28 +182,17 @@ class SettingsSubpagesInstrumentedTest {
         compose.onNodeWithContentDescription(localized.getString(R.string.help)).performClick()
         compose.onNodeWithContentDescription(localized.getString(R.string.back)).performClick()
         assertEquals(listOf(1,1,1), listOf(refresh,help,back))
-        for (id in listOf("BIOMETRIC", "INTERNET", "NETWORK_STATE", "VIBRATE")) {
-            compose.onNodeWithTag("permission_row_$id").assertHasNoClickAction()
+        assertFalse("Phone state was removed in both variants", items.any { it.id == "PHONE_STATE" })
+        val detailIds = items.map { it.id }
+        for (id in detailIds) {
+            compose.onNodeWithTag("permission_row_$id").performScrollTo().assertIsDisplayed()
+                .assertHeightIsAtLeast(48.dp).performClick()
         }
-        val actionableIds = mutableListOf("AUTOFILL", "ACCESSIBILITY", "CAMERA", "STORAGE", "NOTIFICATION")
-        if (context.packageName.endsWith(".fdroid")) {
-            assertFalse("F-Droid does not request phone state", items.any { it.id == "PHONE_STATE" })
-        } else {
-            actionableIds += "PHONE_STATE"
-        }
-        for (id in actionableIds) {
-            val button = compose.onNodeWithTag("permission_row_$id").performScrollTo().assertIsDisplayed()
-            button.assertHeightIsAtLeast(48.dp).performClick()
-        }
-        assertEquals(actionableIds, clicked)
-        compose.onAllNodesWithText(localized.getString(R.string.permission_status_granted)).assertCountEquals(0)
-        compose.onAllNodesWithText(localized.getString(R.string.permission_open_system_settings)).assertCountEquals(0)
-        compose.onAllNodesWithText(localized.getString(R.string.permission_action_none)).assertCountEquals(0)
+        assertEquals(detailIds, clicked)
         compose.onNodeWithTag("permission_row_CAMERA").assert(
             SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, localized.getString(R.string.permission_status_denied)))
-
         val cameraBounds = compose.onNodeWithTag("permission_row_CAMERA").performScrollTo().getUnclippedBoundsInRoot()
-        assertTrue(cameraBounds.bottom - cameraBounds.top <= 120.dp)
+        assertTrue("Compact camera row with visible status", cameraBounds.bottom - cameraBounds.top <= 180.dp)
         val statusRightEdges = listOf("CAMERA", "VIBRATE", "NOTIFICATION").map { id ->
             compose.onNodeWithTag("permission_row_$id").performScrollTo()
             compose.onNodeWithTag("permission_status_$id", useUnmergedTree = true)
@@ -238,17 +227,18 @@ class SettingsSubpagesInstrumentedTest {
         compose.onNodeWithTag("permission_refresh").assertIsNotEnabled()
     }
 
-    @Test fun permissionSystemSettingsReturnKeepsPageAndHelpUsable() {
+    @Test fun permissionSystemSettingsReturnKeepsPageAndHelpUsable() = takagi.ru.monica.util.PermissionTestSystemUi().use { system ->
         val model = PermissionViewModel(context.applicationContext as Application)
         store.put("permissions", model)
         show { PermissionManagementScreen({ navigation += "back" }, model) }
         compose.onNodeWithTag("permission_row_ACCESSIBILITY").performScrollTo().performClick()
-        val automation = instrumentation.uiAutomation
-        compose.waitUntil(10_000) { automation.rootInActiveWindow?.packageName?.toString() == "com.android.settings" }
+        compose.onNodeWithTag("permission_details_action").performClick()
+        val automation = system.automation
+        compose.waitUntil(10_000) { system.hasPackage("com.android.settings") }
         android.os.ParcelFileDescriptor.AutoCloseInputStream(
             automation.executeShellCommand("input keyevent KEYCODE_BACK")
         ).use { it.readBytes() }
-        compose.waitUntil(10_000) { automation.rootInActiveWindow?.packageName?.toString() == context.packageName }
+        compose.waitUntil(10_000) { system.hasPackage(context.packageName) }
         automation.waitForIdle(500, 5_000)
         compose.onNodeWithTag("permission_refresh").performScrollTo().assertIsEnabled()
         compose.onNodeWithContentDescription(localized.getString(R.string.help)).performClick()

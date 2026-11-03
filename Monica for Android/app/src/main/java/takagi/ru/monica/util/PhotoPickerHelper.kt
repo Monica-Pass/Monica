@@ -16,8 +16,6 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import android.content.pm.PackageManager
-import android.content.ComponentName
-import android.content.pm.ResolveInfo
 import android.Manifest
 import android.content.DialogInterface
 import androidx.core.app.ActivityCompat
@@ -149,75 +147,34 @@ object PhotoPickerHelper {
      * 从相册选择照片
      * @param activity 调用的Activity
      */
+    internal fun galleryIntent(): Intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+        type = "image/*"
+        addCategory(Intent.CATEGORY_OPENABLE)
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    }
+
     fun pickFromGallery(activity: Activity) {
+        weakContext = WeakReference(activity)
         try {
-            // 保存context引用
-            this.weakContext = WeakReference(activity)
-            
-            // 尝试多种Intent方式来启动图库
-            val intents = listOf(
-                // 标准方式
-                Intent(Intent.ACTION_PICK).apply { type = "image/*" },
-                // 替代方式1
-                Intent(Intent.ACTION_GET_CONTENT).apply { type = "image/*" },
-                // 替代方式2
-                Intent(Intent.ACTION_OPEN_DOCUMENT).apply { 
-                    type = "image/*" 
+            // Launch the system chooser directly: package visibility must not hide it.
+            // The returned URI grants access to the selected image only.
+            activity.startActivityForResult(galleryIntent(), REQUEST_CODE_GALLERY)
+        } catch (_: android.content.ActivityNotFoundException) {
+            try {
+                activity.startActivityForResult(Intent(Intent.ACTION_GET_CONTENT).apply {
+                    type = "image/*"
                     addCategory(Intent.CATEGORY_OPENABLE)
-                },
-                // 特定图库应用
-                Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            )
-            
-            // 尝试找到可以处理的Intent
-            var success = false
-            for (intent in intents) {
-                try {
-                    // 使用queryIntentActivities检查是否有应用可以处理
-                    val activities = activity.packageManager.queryIntentActivities(intent, 0)
-                    if (activities.isNotEmpty()) {
-                        // 尝试使用特定的图库应用
-                        if (intent.data != null) {
-                            // 对于特定URI的Intent，直接启动
-                            activity.startActivityForResult(intent, REQUEST_CODE_GALLERY)
-                            success = true
-                            break
-                        } else {
-                            // 对于其他Intent，尝试找到最佳的处理应用
-                            val resolveInfoList: List<ResolveInfo> = activity.packageManager.queryIntentActivities(intent, 0)
-                            if (resolveInfoList.isNotEmpty()) {
-                                // 选择第一个可用的应用
-                                val resolveInfo = resolveInfoList.first()
-                                intent.component = ComponentName(
-                                    resolveInfo.activityInfo.packageName,
-                                    resolveInfo.activityInfo.name
-                                )
-                                activity.startActivityForResult(intent, REQUEST_CODE_GALLERY)
-                                success = true
-                                break
-                            }
-                        }
-                    }
-                } catch (e: Exception) {
-                    // 忽略单个Intent的异常，继续尝试下一个
-                    continue
-                }
-            }
-            
-            if (!success) {
-                // 如果所有方式都失败，尝试使用系统默认的图库应用
-                try {
-                    val defaultIntent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                    activity.startActivityForResult(defaultIntent, REQUEST_CODE_GALLERY)
-                } catch (e: Exception) {
-                    currentCallback?.onError(strings.get(R.string.photo_message_gallery_missing))
-                }
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }, REQUEST_CODE_GALLERY)
+            } catch (_: Exception) {
+                currentCallback?.onError(strings.get(R.string.photo_message_gallery_missing))
             }
         } catch (e: Exception) {
-            currentCallback?.onError(strings.get(R.string.photo_message_gallery_failed, e.message ?: strings.get(R.string.import_data_unknown_error)))
+            currentCallback?.onError(strings.get(R.string.photo_message_gallery_failed,
+                e.message ?: strings.get(R.string.import_data_unknown_error)))
         }
     }
-    
+
     /**
      * 创建临时照片文件
      */
