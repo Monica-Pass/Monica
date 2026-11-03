@@ -9,8 +9,7 @@ import takagi.ru.monica.data.model.PasswordUrlRules.Rule
 /** Never invent an unavailable scheme, path or query from a browser's hostname. */
 internal object PasswordUrlRuleMatcher {
     private fun http(value: String): HttpUrl? = value.trim().toHttpUrlOrNull()
-    private fun host(value: String): String? =
-        (http(value) ?: "https://${value.trim()}".toHttpUrlOrNull())?.host
+    private fun host(value: String): String? = AutofillHostPolicy.host(value)
 
     fun validRegex(pattern: String): Boolean = pattern.length <= 2048 &&
         runCatching { Pattern.compile(pattern) }.isSuccess
@@ -25,8 +24,8 @@ internal object PasswordUrlRuleMatcher {
             Mode.DEFAULT, Mode.NEVER -> 0 // DEFAULT is handled by the existing global policy.
             Mode.HOST -> if (savedHost == targetHost) 140 else 0
             Mode.BASE_DOMAIN -> {
-                val saved = http(value) ?: "https://$value".toHttpUrlOrNull()
-                val actual = targetUrl ?: "https://$targetHost".toHttpUrlOrNull()
+                val saved = AutofillHostPolicy.address(value)
+                val actual = targetUrl ?: AutofillHostPolicy.address(targetHost)
                 val a = saved?.topPrivateDomain() ?: saved?.host
                 val b = actual?.topPrivateDomain() ?: actual?.host
                 if (a != null && a == b) 100 else 0

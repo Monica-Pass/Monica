@@ -1,0 +1,88 @@
+{
+  "edition": "main",
+  "version_name": "1.0.324-26110312-01",
+  "version_code": 12,
+  "classes": [
+    "takagi.ru.monica.autofill_ng.LanIpAutofillInstrumentedTest",
+    "takagi.ru.monica.autofill_ng.AutofillNativeIndexInstrumentedTest#urlOverridesSurviveNativePruningAndMetadataChanges",
+    "takagi.ru.monica.autofill_ng.AutofillNativeIndexInstrumentedTest#realNativeIndexPreservesPoliciesOrderAndUpdates",
+    "takagi.ru.monica.autofill_ng.AutofillNativeIndexInstrumentedTest#nativeLifecycleAndOversizedFallbackStaySafe",
+    "takagi.ru.monica.autofill_ng.LocalWebViewPackageMatchingTest",
+    "takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#systemAutofillFillsIpv4HttpWebViewWithPort",
+    "takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#systemAutofillFillsIpv6HttpWebViewWithPort",
+    "takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#systemAutofillFillsWebViewAndDispatchesInputEvents",
+    "takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#systemAutofillFillsStandardNativeLoginWithoutVerification",
+    "takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest#systemAutofillKeepsTheOtherHtmlFormEmpty"
+  ],
+  "main_sha256": "8dadf844a604b35afde21304dec848918b0a12ab17e59b1942e59fdfc09664c7",
+  "test_sha256": "fceed6a8b232de1b01d5af52672857b30cd9cf27470eae0565d75e381fcf5aab",
+  "user": 13,
+  "previous_autofill_service": "com.google.android.gms/.autofill.service.AutofillService",
+  "selected_autofill_service": "takagi.ru.monica/.autofill_ng.MonicaAutofillServiceNg",
+  "elapsed_seconds": 92.297,
+  "methods": [
+    {
+      "class": "takagi.ru.monica.autofill_ng.LanIpAutofillInstrumentedTest",
+      "test": "realAndroidAddressCacheAndExplicitRulesSupportIpHosts",
+      "code": 0
+    },
+    {
+      "class": "takagi.ru.monica.autofill_ng.LanIpAutofillInstrumentedTest",
+      "test": "ipv4NativeIndexAndLooseFallbackKeepDifferentDevicesSeparate",
+      "code": 0
+    },
+    {
+      "class": "takagi.ru.monica.autofill_ng.LanIpAutofillInstrumentedTest",
+      "test": "ipv6NativeIndexCanonicalizesAndRefreshesChangedAddresses",
+      "code": 0
+    },
+    {
+      "class": "takagi.ru.monica.autofill_ng.AutofillNativeIndexInstrumentedTest",
+      "test": "urlOverridesSurviveNativePruningAndMetadataChanges",
+      "code": 0
+    },
+    {
+      "class": "takagi.ru.monica.autofill_ng.AutofillNativeIndexInstrumentedTest",
+      "test": "nativeLifecycleAndOversizedFallbackStaySafe",
+      "code": 0
+    },
+    {
+      "class": "takagi.ru.monica.autofill_ng.AutofillNativeIndexInstrumentedTest",
+      "test": "realNativeIndexPreservesPoliciesOrderAndUpdates",
+      "code": 0
+    },
+    {
+      "class": "takagi.ru.monica.autofill_ng.LocalWebViewPackageMatchingTest",
+      "test": "localFileLoginRecommendsOnlyExplicitAppBindingsWithNativeIndex",
+      "code": 0
+    },
+    {
+      "class": "takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest",
+      "test": "systemAutofillFillsWebViewAndDispatchesInputEvents",
+      "code": 0
+    },
+    {
+      "class": "takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest",
+      "test": "systemAutofillFillsIpv6HttpWebViewWithPort",
+      "code": -2
+    },
+    {
+      "class": "takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest",
+      "test": "systemAutofillFillsIpv4HttpWebViewWithPort",
+      "code": -2
+    },
+    {
+      "class": "takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest",
+      "test": "systemAutofillFillsStandardNativeLoginWithoutVerification",
+      "code": 0
+    },
+    {
+      "class": "takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest",
+      "test": "systemAutofillKeepsTheOtherHtmlFormEmpty",
+      "code": 0
+    }
+  ],
+  "passed_methods": 10,
+  "skipped_methods": 0,
+  "success": false
+}

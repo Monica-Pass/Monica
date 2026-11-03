@@ -4,6 +4,8 @@
 
 ## 中文
 
+- 修复局域网 IP 网站的自动填充地址识别，支持 IPv4、IPv6 及带端口地址；IP 按完整地址匹配，不再套用主域名或数字模糊匹配。仍只从系统报告的网站来源或浏览器地址栏获取地址。 浏览器未提供表单或未触发系统请求时，仍无法自动填充。
+
 - 概览文件夹改为只显示顶层，点击文件夹或数据库后逐层浏览；当前层的文件夹始终连续排列在条目上方，A–Z／Z–A 只调整文件夹块内的顺序。保留原列表布局偏好与返回位置；KDBX 同名分组按 UUID 和父组区分，浏览与排序不改写数据库。
 
 - 修复导出页将已解锁 KDBX 误显示为“待解锁”、无法显示记录总数的问题；多个库切换后仍能显示已核验总数，保存后自动刷新，锁定或来源失效后撤销统计。统计不额外读取文件或解密字段。
@@ -24,6 +26,8 @@
 - 新协议已进行原生 TCP 与 Android 模拟器回归；真实双手机热点、不同 ROM 的系统联网确认及大库性能仍需实机验证。
 
 ## English
+
+- Fix LAN IP website address recovery for autofill, including IPv4, IPv6 and addresses with ports. IP matching uses the complete address instead of base-domain or numeric heuristics. Origins still come only from system-reported website context or the browser address bar. Autofill still requires the browser to expose the form and send a system request.
 
 - The folder overview now shows the top level. Open a folder or database to browse its children; all folders at the current level stay together above entries, with A–Z/Z–A ordering inside that block. Your saved list layout and back position are preserved. KDBX groups with identical names use their UUID and parent identity; browsing and sorting do not rewrite the database.
 

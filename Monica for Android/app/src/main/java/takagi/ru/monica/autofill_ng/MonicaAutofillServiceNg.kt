@@ -595,7 +595,7 @@ class MonicaAutofillServiceNg : AutofillService() {
             return blockedAutofillResponse(fillableTargets.map { it.id })
         }
         val effectiveScheme = parsed.webScheme?.takeIf { it.isNotBlank() } ?: "https"
-        val requestUri = webDomain?.let { "$effectiveScheme://$it" } ?: "androidapp://$packageName"
+        val requestUri = webDomain?.let { AutofillHostPolicy.origin(effectiveScheme, it) } ?: "androidapp://$packageName"
         val appDisplayName = resolveAppDisplayName(packageName)
         val interactionContext = AutofillInteractionContextResolver.build(
             packageName = packageName,

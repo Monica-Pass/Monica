@@ -1,0 +1,58 @@
+{
+  "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillHostPolicy.kt": [
+    "e3344696e66fbf87316bfa6340386d087c7fd6673d076b97537262790ce9ec86",
+    "e3344696e66fbf87316bfa6340386d087c7fd6673d076b97537262790ce9ec86"
+  ],
+  "app/src/test/java/takagi/ru/monica/autofill_ng/AutofillHostPolicyTest.kt": [
+    "ec7aaea48964c8ad4fe47482d8bb80a69839fb6704038dfb5df6e86cc331602a",
+    "ec7aaea48964c8ad4fe47482d8bb80a69839fb6704038dfb5df6e86cc331602a"
+  ],
+  "app/src/test/java/takagi/ru/monica/service/BrowserAutofillContextStoreTest.kt": [
+    "4dfb86f2c15823bc0d0b2aa5f0c63d53f2f772d52c2ac16a766442a4505b435a",
+    "4dfb86f2c15823bc0d0b2aa5f0c63d53f2f772d52c2ac16a766442a4505b435a"
+  ],
+  "app/src/androidTest/java/takagi/ru/monica/autofill_ng/LanIpAutofillInstrumentedTest.kt": [
+    "dfb1263b3856d76cffe5fc11e9b89b9ee10a4fbd9b4c12af075418b043e9f653",
+    "dfb1263b3856d76cffe5fc11e9b89b9ee10a4fbd9b4c12af075418b043e9f653"
+  ],
+  "app/src/main/java/takagi/ru/monica/autofill_ng/EnhancedAutofillStructureParserV2.kt": [
+    "c724c7c03a84e4f4daa17b8524ab64d9d2ca74d264bc5757fadebc7439f9a4b5",
+    "c724c7c03a84e4f4daa17b8524ab64d9d2ca74d264bc5757fadebc7439f9a4b5"
+  ],
+  "app/src/main/java/takagi/ru/monica/autofill_ng/BitwardenLikeAutofillMatcherNg.kt": [
+    "372771e53ecce20a3fc0fbacaac6fed525d6ea78bf95e6e9d1ca42cc4d99b4db",
+    "372771e53ecce20a3fc0fbacaac6fed525d6ea78bf95e6e9d1ca42cc4d99b4db"
+  ],
+  "app/src/main/java/takagi/ru/monica/service/BrowserAutofillContextStore.kt": [
+    "bf409d6d230a246adcdd7a45d2f593fbaa80dd32379314c0113efe9021966df1",
+    "bf409d6d230a246adcdd7a45d2f593fbaa80dd32379314c0113efe9021966df1"
+  ],
+  "app/src/main/java/takagi/ru/monica/autofill_ng/PasswordUrlRuleMatcher.kt": [
+    "bd36589ec11af2e8e1186387e0c87192bbe0dbd03e167a1e73c5c1f34e0e2079",
+    "bd36589ec11af2e8e1186387e0c87192bbe0dbd03e167a1e73c5c1f34e0e2079"
+  ],
+  "app/src/main/java/takagi/ru/monica/autofill_ng/MonicaAutofillServiceNg.kt": [
+    "cbf5886817ed457b0b6b36bcca28224a4c64ee7560a1d97511d914d1dbfef1ec",
+    "cbf5886817ed457b0b6b36bcca28224a4c64ee7560a1d97511d914d1dbfef1ec"
+  ],
+  "app/src/test/java/takagi/ru/monica/autofill_ng/AutofillStructureIntegrationTest.kt": [
+    "f7f4de95f9e8a13ce43119a99050e3b2683ded99141990728fcec0bf933f0165",
+    "f7f4de95f9e8a13ce43119a99050e3b2683ded99141990728fcec0bf933f0165"
+  ],
+  "app/src/test/java/takagi/ru/monica/autofill_ng/BitwardenLikeAutofillMatcherNgTest.kt": [
+    "4c472dd4abd9daa8fcd404116e002667887d7314c20feb8f78e8114b53235a1a",
+    "4c472dd4abd9daa8fcd404116e002667887d7314c20feb8f78e8114b53235a1a"
+  ],
+  "app/src/androidTest/java/takagi/ru/monica/autofill_ng/fixture/AutofillFormFixtureActivity.java": [
+    "1d80c138e8800b4a4acf395f6c81ee061fb2d1eb6497263a29f601fa9f61a24d",
+    "1d80c138e8800b4a4acf395f6c81ee061fb2d1eb6497263a29f601fa9f61a24d"
+  ],
+  "app/src/androidTest/java/takagi/ru/monica/autofill_ng/AutofillFlowInstrumentedTest.kt": [
+    "b4fdbfaade41844adc05f54b0990226cc1e25300a76024dfb1affcd9777de052",
+    "b4fdbfaade41844adc05f54b0990226cc1e25300a76024dfb1affcd9777de052"
+  ],
+  "app/src/test/java/takagi/ru/monica/autofill_ng/PasswordUrlRuleMatcherTest.kt": [
+    "66dd2bc195f3abb29a870e4b88477f686726ad32d209bf4f3a25d0de6cca85a9",
+    "66dd2bc195f3abb29a870e4b88477f686726ad32d209bf4f3a25d0de6cca85a9"
+  ]
+}

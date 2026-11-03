@@ -1,8 +1,6 @@
 package takagi.ru.monica.service
 
-import android.net.Uri
-import java.net.IDN
-import java.util.Locale
+import takagi.ru.monica.autofill_ng.AutofillHostPolicy
 
 object BrowserAutofillContextStore {
     private const val MAX_DOMAIN_AGE_MS = 60_000L
@@ -19,7 +17,15 @@ object BrowserAutofillContextStore {
     @Synchronized
     fun update(packageName: String, rawUrlOrDomain: String) {
         val normalizedPackage = packageName.trim()
-        val normalizedDomain = normalizeDomain(rawUrlOrDomain) ?: return
+        val normalizedDomain = normalizeDomain(rawUrlOrDomain)
+        if (normalizedDomain == null) {
+            // A newly rejected address must not keep the same browser's older
+            // origin eligible for autofill during the cache's freshness window.
+            if (latestSnapshot?.packageName?.equals(normalizedPackage, ignoreCase = true) == true) {
+                latestSnapshot = null
+            }
+            return
+        }
         latestSnapshot = Snapshot(
             packageName = normalizedPackage,
             domain = normalizedDomain,
@@ -34,21 +40,5 @@ object BrowserAutofillContextStore {
         return snapshot.domain
     }
 
-    private fun normalizeDomain(rawValue: String): String? {
-        val candidate = rawValue.trim()
-        if (candidate.isBlank()) return null
-
-        val host = runCatching {
-            val parsed = Uri.parse(candidate)
-            when {
-                !parsed.host.isNullOrBlank() -> parsed.host
-                candidate.contains("://") -> null
-                else -> Uri.parse("https://$candidate").host
-            }
-        }.getOrNull() ?: return null
-
-        val asciiHost = runCatching { IDN.toASCII(host.trim().trimEnd('.')) }.getOrNull() ?: return null
-        val normalized = asciiHost.lowercase(Locale.ROOT)
-        return normalized.takeIf { it.isNotBlank() }
-    }
+    private fun normalizeDomain(rawValue: String): String? = AutofillHostPolicy.host(rawValue)
 }

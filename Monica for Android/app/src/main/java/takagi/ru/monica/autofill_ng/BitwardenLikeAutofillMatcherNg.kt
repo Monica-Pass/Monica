@@ -3,7 +3,6 @@ package takagi.ru.monica.autofill_ng
 import takagi.ru.monica.data.PasswordEntry
 import takagi.ru.monica.data.model.PasswordUrlRules
 import takagi.ru.monica.rustcore.RustAutofillCore
-import java.net.URL
 import java.util.Locale
 
 /**
@@ -151,6 +150,7 @@ class BitwardenLikeAutofillMatcherNg internal constructor(
             ?.distinct()
             ?: emptyList()
         val targetHost = normalizeHost(webDomain)
+        if (!webDomain.isNullOrBlank() && targetHost == null) return emptyList()
         val preferDomainSignals = !targetHost.isNullOrBlank()
         val targetRoot = targetHost?.let(::extractBaseDomain)
         val targetAppDisplayName = normalizeLabel(appDisplayName)
@@ -241,6 +241,11 @@ class BitwardenLikeAutofillMatcherNg internal constructor(
         }
         val entryHosts = prepared?.hosts ?: extractNormalizedHosts(entry.website)
         val entryRoots = prepared?.roots ?: entryHosts.map(::extractBaseDomain).toSet()
+        // IP credentials are tied to a complete address, even with loose
+        // matching enabled. A numeric title/token is never an IP identity.
+        if (targetHost != null && targetHost !in entryHosts &&
+            (AutofillHostPolicy.isIp(targetHost) ||
+                (entryHosts.isNotEmpty() && entryHosts.all(AutofillHostPolicy::isIp)))) return null
 
         if (!preferDomainSignals &&
             config.allowExactPackageMatch &&
@@ -422,29 +427,11 @@ class BitwardenLikeAutofillMatcherNg internal constructor(
             .mapNotNull(::normalizeHost)
             .toCollection(linkedSetOf())
 
-    private fun normalizeHost(value: String?): String? {
-        if (value.isNullOrBlank()) return null
-        val raw = value.trim().lowercase(Locale.ROOT)
-        if (raw.startsWith("androidapp://")) return null
-
-        val fullValue = if (raw.contains("://")) raw else "https://$raw"
-        val parsedHost = runCatching { URL(fullValue).host }
-            .getOrNull()
-            ?.trim()
-            ?.lowercase(Locale.ROOT)
-        val fallbackHost = raw
-            .substringBefore('/')
-            .substringBefore(':')
-            .trim()
-            .lowercase(Locale.ROOT)
-        val host = (parsedHost ?: fallbackHost)
-            .removePrefix("www.")
-            .trim('.')
-            .takeIf { it.isNotBlank() }
-        return host
-    }
+    private fun normalizeHost(value: String?): String? =
+        AutofillHostPolicy.host(value)?.removePrefix("www.")
 
     private fun extractBaseDomain(host: String): String {
+        if (AutofillHostPolicy.isIp(host)) return host
         val parts = host.split(".").filter { it.isNotBlank() }
         if (parts.size < 2) return host
 
@@ -461,7 +448,7 @@ class BitwardenLikeAutofillMatcherNg internal constructor(
     }
 
     private fun isSubdomainRelation(left: String, right: String): Boolean {
-        if (left == right) return false
+        if (left == right || AutofillHostPolicy.isIp(left) || AutofillHostPolicy.isIp(right)) return false
         return left.endsWith(".$right") || right.endsWith(".$left")
     }
 }

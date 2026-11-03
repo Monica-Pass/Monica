@@ -188,22 +188,73 @@ class AutofillStructureIntegrationTest {
     }
 
     @Test fun browserLoopbackPagesKeepTheirOriginForMatching() {
-        for (domain in listOf("127.0.0.1", "localhost")) {
+        for ((domain, expected) in listOf("127.0.0.1" to "127.0.0.1", "localhost" to "localhost",
+                "::1" to "::1", "[0:0:0:0:0:0:0:1]" to "::1")) {
             val field = node(hints = arrayOf(View.AUTOFILL_HINT_USERNAME), focused = true)
             val input = structure(node(domain = domain, children = arrayOf(field)))
             ReflectionHelpers.setField(input, "mActivityComponent", ComponentName("com.android.chrome", "com.android.chrome.Main"))
             val parsed = parser.parse(input)
-            assertEquals(domain, parsed.webDomain)
+            assertEquals(expected, parsed.webDomain)
             assertTrue(parsed.webView)
         }
     }
 
+    private fun browserAddressBar(address: String, id: String = "url_bar"): AssistStructure.ViewNode =
+        node(hint = "Address").also {
+            ReflectionHelpers.setField(it, "mIdEntry", id)
+            val text = ReflectionHelpers.getField<Any>(it, "mText")
+            ReflectionHelpers.setField(text, "mText", address)
+        }
+
+    private fun originlessBrowser(address: String, id: String = "url_bar"): EnhancedAutofillStructureParserV2.ParsedStructure {
+        val user = node(hints = arrayOf(View.AUTOFILL_HINT_USERNAME), focused = true)
+        val web = node(children = arrayOf(user))
+        ReflectionHelpers.setField(web, "mClassName", "android.webkit.WebView")
+        val input = structure(node(children = arrayOf(browserAddressBar(address, id), web)))
+        ReflectionHelpers.setField(input, "mActivityComponent", ComponentName("com.android.chrome", "com.android.chrome.Main"))
+        return parser.parse(input)
+    }
+
+    @Test fun browserAddressBarRecoversIpv4WithOrWithoutSchemeAndPort() {
+        for (address in listOf("http://192.168.1.1:8080/login", "192.168.1.1:8080", "192.168.1.1")) {
+            assertEquals(address, "192.168.1.1", originlessBrowser(address).webDomain)
+        }
+    }
+
+    @Test fun browserAddressBarRecoversCanonicalIpv6() {
+        for (address in listOf("http://[fd00:0:0:0:0:0:0:1]:8080/login", "[fd00::1]:8080", "fd00::1")) {
+            assertEquals(address, "fd00::1", originlessBrowser(address).webDomain)
+        }
+        assertEquals("::1", originlessBrowser("::1").webDomain)
+    }
+
+    @Test fun directlyReportedIpv6OriginKeepsBothLoginFieldsInOneScope() {
+        val user = node(hints = arrayOf(View.AUTOFILL_HINT_USERNAME), focused = true)
+        val password = node(hints = arrayOf(View.AUTOFILL_HINT_PASSWORD))
+        val parsed = parse(node(domain = "[fd00:0:0:0:0:0:0:1]", children = arrayOf(user, password)))
+        assertEquals("fd00::1", parsed.webDomain)
+        assertEquals(setOf(user.autofillId, password.autofillId), parsed.items.map { it.id }.toSet())
+    }
+
+    @Test fun pageTextCannotSupplyAnIpOrigin() {
+        assertNull(originlessBrowser("http://192.168.1.1:8080/login", "page_content").webDomain)
+    }
+
+    @Test fun invalidNumericAddressBarDoesNotBecomeAnOrigin() {
+        for (address in listOf("3.14", "http://999.168.1.1", "http://192.168.01.1", "http://[fd00:::1]")) {
+            assertNull(address, originlessBrowser(address).webDomain)
+        }
+    }
+
     @Test fun nativeHybridLoopbackUiRetainsPackageMatchingCompatibility() {
-        val field = node(hints = arrayOf(View.AUTOFILL_HINT_USERNAME), focused = true)
-        val parsed = parse(node(domain = "localhost", children = arrayOf(field)))
-        assertNull(parsed.webDomain)
-        assertFalse(parsed.webView)
-        assertEquals(listOf(field.autofillId), parsed.items.map { it.id })
+        for (domain in listOf("localhost", "127.0.0.1", "::1", "[0:0:0:0:0:0:0:1]")) {
+            val field = node(hints = arrayOf(View.AUTOFILL_HINT_USERNAME), focused = true)
+            val parsed = parse(node(domain = domain, children = arrayOf(field)))
+            assertNull(domain, parsed.webDomain)
+            assertFalse(domain, parsed.webView)
+            assertEquals(listOf(field.autofillId), parsed.items.map { it.id })
+            assertTrue(AutofillRequestContextPolicy.allowPackageMatching(parsed.applicationId.orEmpty(), parsed.webDomain, parsed.webView))
+        }
     }
 
     @Test fun nativeLoginIsNotDroppedBecauseThePageHasAnUnrelatedWebView() {

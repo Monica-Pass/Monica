@@ -1,0 +1,31 @@
+{
+  "edition": "main",
+  "negative": true,
+  "tests": 6,
+  "failures": 6,
+  "errors": 0,
+  "skipped": 0,
+  "suites": [
+    {
+      "name": "takagi.ru.monica.autofill_ng.AutofillCancellationTest",
+      "tests": 0,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest",
+      "tests": 4,
+      "failures": 4,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest",
+      "tests": 2,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0
+    }
+  ]
+}

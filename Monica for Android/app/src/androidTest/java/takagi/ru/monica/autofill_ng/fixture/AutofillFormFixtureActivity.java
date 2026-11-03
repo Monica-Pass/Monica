@@ -280,7 +280,8 @@ public class AutofillFormFixtureActivity extends Activity {
                         .replace("__PASSWORD_LABEL__", signup ? "New password" : "Password")
                         .replace("__CONFIRMATION__", signup ? "<input id='confirmation' type='password' autocomplete='new-password' placeholder='Confirm password' aria-label='Confirm password'>" : "");
             }
-            webView.loadDataWithBaseURL(ORIGIN,html,"text/html","UTF-8",null);
+            String origin = getIntent().getStringExtra("webOrigin");
+            webView.loadDataWithBaseURL(origin == null ? ORIGIN : origin,html,"text/html","UTF-8",null);
         } catch (Exception error) { throw new IllegalStateException("Cannot load test form",error); }
         layout.addView(webView,new LinearLayout.LayoutParams(-1,750));
     }

@@ -9,6 +9,38 @@ import java.util.Date
 class BitwardenLikeAutofillMatcherNgTest {
     private val matcher = BitwardenLikeAutofillMatcherNg()
 
+    @Test fun `IP defaults never match other IPs or numeric title heuristics`() {
+        val entries = listOf(
+            entry(id = 901, title = "Correct router", website = "http://192.168.1.1:8080/login"),
+            entry(id = 902, title = "Other LAN", website = "http://10.0.1.1:8080/login"),
+            entry(id = 903, title = "Other router", website = "http://192.168.1.10"),
+            entry(id = 904, title = "192 account", website = "https://unrelated.example"),
+            entry(id = 905, title = "192 account", appPackage = "com.android.chrome"),
+        )
+        for (strict in listOf(true, false)) {
+            for (cached in listOf(true, false)) {
+                val ipMatcher = BitwardenLikeAutofillMatcherNg(useNativeIndex = false, cacheMetadata = cached)
+                assertEquals("strict=$strict cached=$cached", listOf(901L), ipMatcher.match(entries,
+                    "com.android.chrome", "192.168.1.1", config = BitwardenLikeAutofillMatcherNg.Config(
+                        strictOnly = strict, allowBaseDomainMatch = true, allowSubdomainMatch = true)).map { it.id })
+            }
+        }
+    }
+
+    @Test fun `equivalent IPv6 forms match the same host`() {
+        val entries = listOf(
+            entry(id = 911, title = "NAS", website = "http://[fd00:0:0:0:0:0:0:1]:8080/login"),
+            entry(id = 912, title = "Other NAS", website = "http://[fd00::2]:8080/login"),
+        )
+        assertEquals(listOf(911L), matcher.match(entries, "com.android.chrome", "fd00::1").map { it.id })
+    }
+
+    @Test fun `invalid reported address never falls back to a browser package binding`() {
+        val entries = listOf(entry(id = 921, title = "192 account", appPackage = "com.android.chrome"))
+        assertTrue(matcher.match(entries, "com.android.chrome", "http://999.168.1.1",
+            config = BitwardenLikeAutofillMatcherNg.Config(strictOnly = false)).isEmpty())
+    }
+
     @Test fun `local html app matches bindings without title or package token fallback`() {
         val entries = listOf(
             entry(id = 1, title = "Bound app", appPackage = "com.cn21.ecloud"),

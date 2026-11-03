@@ -1,0 +1,7 @@
+2026-11-03
+python scripts/check-fdroid-release.py
+Metadata checked: v1.0.324 / takagi.ru.monica.fdroid, versionCode31. Static version fields, existing tags and changelogs checked.
+python -m unittest discover -s scripts -p test_fdroid_release.py
+Ran6 tests in0.216s; OK.
+Browser form/system-request limitation synchronized in324 regular/FD Chinese/English root and ignored next notes.
+FD31 English 499 characters plus newline; Chinese 483 characters plus newline.

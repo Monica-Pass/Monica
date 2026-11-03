@@ -1,0 +1,66 @@
+{
+  "edition": "main",
+  "negative": false,
+  "tests": 160,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "suites": [
+    {
+      "name": "takagi.ru.monica.autofill_ng.AutofillCancellationTest",
+      "tests": 0,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.autofill_ng.AutofillHostPolicyTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.autofill_ng.AutofillRequestContextPolicyTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.autofill_ng.AutofillSaveContextPolicyTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest",
+      "tests": 116,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.autofill_ng.PasswordUrlRuleMatcherTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "takagi.ru.monica.service.BrowserAutofillContextStoreTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ]
+}

@@ -1,0 +1,206 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites>
+  <testsuite name="takagi.ru.monica.autofill_ng.AutofillCancellationTest" tests="0" skipped="0" failures="0" errors="0" timestamp="1970-01-01T00:00:00" time="0.0">
+    <properties />
+    <system-out />
+    <system-err>[Robolectric] WARN: Android SDK 36 requires Java 21 (have Java 17). Tests won't be run on SDK 36 unless explicitly requested.
+</system-err>
+  </testsuite>
+  <testsuite name="takagi.ru.monica.autofill_ng.AutofillHostPolicyTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-03T02:35:24" time="0.153">
+    <properties />
+    <testcase name="ipv4HostRecoveryPreservesTheWholeAddress" classname="takagi.ru.monica.autofill_ng.AutofillHostPolicyTest" time="0.104" />
+    <testcase name="domainsAndInternationalNamesStillNormalize" classname="takagi.ru.monica.autofill_ng.AutofillHostPolicyTest" time="0.037" />
+    <testcase name="userInfoAndNonWebSchemesCannotSupplyAHost" classname="takagi.ru.monica.autofill_ng.AutofillHostPolicyTest" time="0.001" />
+    <testcase name="malformedAndAmbiguousIpLiteralsAreRejected" classname="takagi.ru.monica.autofill_ng.AutofillHostPolicyTest" time="0.005" />
+    <testcase name="ipv6EquivalentRepresentationsHaveOneCanonicalHost" classname="takagi.ru.monica.autofill_ng.AutofillHostPolicyTest" time="0.006" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="takagi.ru.monica.autofill_ng.AutofillRequestContextPolicyTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-03T02:35:24" time="0.006">
+    <properties />
+    <testcase name="webViewWithoutOriginCannotUsePackageFallbackEvenForUnknownHostApp" classname="takagi.ru.monica.autofill_ng.AutofillRequestContextPolicyTest" time="0.005" />
+    <testcase name="knownBrowserWithoutOriginCannotUsePackageFallback" classname="takagi.ru.monica.autofill_ng.AutofillRequestContextPolicyTest" time="0.0" />
+    <testcase name="nativeAppKeepsExactPackageMatching" classname="takagi.ru.monica.autofill_ng.AutofillRequestContextPolicyTest" time="0.0" />
+    <testcase name="localHtmlAppAllowsOnlyExplicitBindings" classname="takagi.ru.monica.autofill_ng.AutofillRequestContextPolicyTest" time="0.001" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="takagi.ru.monica.autofill_ng.AutofillSaveContextPolicyTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-03T02:35:24" time="0.028">
+    <properties />
+    <testcase name="updateSuggestionsRequireExactAccountAndHostInsteadOfBrowserPackageOrParentDomain" classname="takagi.ru.monica.autofill_ng.AutofillSaveContextPolicyTest" time="0.015" />
+    <testcase name="latestAccountWinsAndRecoveryStopsAtTheBoundedHistory" classname="takagi.ru.monica.autofill_ng.AutofillSaveContextPolicyTest" time="0.009" />
+    <testcase name="relatedAndroidContextsSupplyTheAccountWithoutGlobalMemory" classname="takagi.ru.monica.autofill_ng.AutofillSaveContextPolicyTest" time="0.002" />
+    <testcase name="maliciousAndUnsupportedUrlsNeverSuggestUpdatingAnExistingWebAccount" classname="takagi.ru.monica.autofill_ng.AutofillSaveContextPolicyTest" time="0.0" />
+    <testcase name="explicitEmptyAccountAndNewPasswordNeverReuseEarlierAccount" classname="takagi.ru.monica.autofill_ng.AutofillSaveContextPolicyTest" time="0.0" />
+    <testcase name="accountCannotCrossAppHostSchemeOrAnUnrelatedIntermediateForm" classname="takagi.ru.monica.autofill_ng.AutofillSaveContextPolicyTest" time="0.001" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" tests="116" skipped="0" failures="0" errors="0" timestamp="2026-11-03T02:35:25" time="15.834">
+    <properties />
+    <testcase name="genericWebViewInputClassesDoNotSplitTheLoginPair[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="4.77" />
+    <testcase name="mixedLoginIdentifierAndPasswordRemainAPairFromEitherFocus[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.122" />
+    <testcase name="repeatedUnmarkedCardBlocksStaySeparate[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.103" />
+    <testcase name="syntheticFocusFallbackDoesNotUndoSearchOrOtpExclusion[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.358" />
+    <testcase name="browserNativeHintArraysAlsoIgnoreSectionNames[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.081" />
+    <testcase name="nativeLoginIsNotDroppedBecauseThePageHasAnUnrelatedWebView[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.092" />
+    <testcase name="invalidNumericAddressBarDoesNotBecomeAnOrigin[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.178" />
+    <testcase name="standardLoginRemainsRecognized[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.076" />
+    <testcase name="mixedAccountLabelsWorkInNativeAndHtmlFields[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.167" />
+    <testcase name="explicitFormReferencesCannotCrossWebOrigins[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.072" />
+    <testcase name="missingAndAmbiguousExplicitFormIdsCannotJoinOtherFields[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.102" />
+    <testcase name="pageTextCannotSupplyAnIpOrigin[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.059" />
+    <testcase name="directlyReportedIpv6OriginKeepsBothLoginFieldsInOneScope[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.07" />
+    <testcase name="phoneVerificationCodeIsNeverAnAccount[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.051" />
+    <testcase name="explicitCurrentPasswordPreventsRegistrationCueFromChangingItsRole[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.056" />
+    <testcase name="nativeHybridLoopbackUiRetainsPackageMatchingCompatibility[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.148" />
+    <testcase name="browserNewPasswordIsNotDowngradedByPasswordInputType[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.045" />
+    <testcase name="absentFormMarkupPreservesTheExistingWebViewScope[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.043" />
+    <testcase name="enterpriseIdentifiersAreRecognizedWithoutStandardHints[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.067" />
+    <testcase name="explicitRegistrationFormPromotesGenericPasswordFields[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.05" />
+    <testcase name="manualRequestCanSelectAnUnlabelledFocusedTextField[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.045" />
+    <testcase name="adjacentRegistrationFormCannotReclassifyTheLogin[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.065" />
+    <testcase name="focusedCrossOriginSubtreeCannotReceiveTheOuterSitesFields[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.047" />
+    <testcase name="htmlSectionNamesDoNotBecomeFieldRoles[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.038" />
+    <testcase name="computedOtpOnAMaskedFieldIsNeverAnAccountOrSavedPassword[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.038" />
+    <testcase name="exactHtmlRolesPreserveExistingContactAndWalletSupport[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.071" />
+    <testcase name="parserSupportsPhoneAndNumericStudentAccountSteps[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.04" />
+    <testcase name="unknownAndAmbiguousHtmlHintsDoNotMatchBySubstring[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.042" />
+    <testcase name="accountPasswordLabelsRemainPasswordTargets[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.054" />
+    <testcase name="htmlFormAttributeCanAssociateAnOutsideFieldWithItsForm[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.05" />
+    <testcase name="formPurposeUsesFieldSemanticsForStepAndOtpPages[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.048" />
+    <testcase name="browserLoopbackPagesKeepTheirOriginForMatching[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.064" />
+    <testcase name="syntheticFallbackCannotAddFieldsFromAnotherWindow[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.043" />
+    <testcase name="chromeTokenArraysPreserveContactAndSectionQualifiers[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.043" />
+    <testcase name="webViewsWithoutAndroidViewIdsStillHaveSeparateScopes[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.05" />
+    <testcase name="focusedWebViewKeepsItsOwnOriginAndFields[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.044" />
+    <testcase name="onlyTheFocusedHtmlFormContributesFillAndFallbackTargets[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.044" />
+    <testcase name="dedicatedContactFieldsAndExplicitHtmlSemanticsKeepTheirRoles[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.048" />
+    <testcase name="focusedDialogIsPreferredToTheFormBehindIt[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.038" />
+    <testcase name="focusingTheOtherFormDropsTheLoginTargets[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.046" />
+    <testcase name="autocompleteOffRetainsTheExistingPreference[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.049" />
+    <testcase name="browserAddressBarRecoversCanonicalIpv6[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.101" />
+    <testcase name="longFormTraversalCooperatesWithCancellation[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.568" />
+    <testcase name="htmlAutocompleteAcceptsSectionTokens[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.04" />
+    <testcase name="ambiguousLoginAndRegistrationCuesKeepLegacyRoles[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.027" />
+    <testcase name="nestedWebViewKeepsItsReportedAncestorOriginForBoundSuggestions[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.043" />
+    <testcase name="browserComputedHintsRecognizeLoginAndOtpRoles[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.066" />
+    <testcase name="compatibilitySwitchesCanBeRolledBackIndependently[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.05" />
+    <testcase name="compatibilityModeDoesNotPromoteOneTimePasswordsToSavedPasswords[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.035" />
+    <testcase name="computedHintsStillRespectOffAndSearchExclusion[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.036" />
+    <testcase name="virtualWebViewInputsKeepHtmlFormAndOriginBoundaries[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.048" />
+    <testcase name="originlessSiblingWebViewCannotBorrowAnotherSitesOrigin[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.045" />
+    <testcase name="repeatedHtmlFormNamesDoNotCombineIndependentForms[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.038" />
+    <testcase name="nativeSearchIsExcludedEvenBesideAPasswordField[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.032" />
+    <testcase name="dynamicCardExpirySelectIdsKeepSeparateMonthAndYearRoles[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.05" />
+    <testcase name="browserAddressBarRecoversIpv4WithOrWithoutSchemeAndPort[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.048" />
+    <testcase name="explicitProfileHintsKeepTheirMeaningAndBillingScope[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.031" />
+    <testcase name="nativeChangePasswordLabelsKeepCurrentAndNewRolesSeparate[29]" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.041" />
+    <testcase name="genericWebViewInputClassesDoNotSplitTheLoginPair" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="3.663" />
+    <testcase name="mixedLoginIdentifierAndPasswordRemainAPairFromEitherFocus" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.059" />
+    <testcase name="repeatedUnmarkedCardBlocksStaySeparate" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.085" />
+    <testcase name="syntheticFocusFallbackDoesNotUndoSearchOrOtpExclusion" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.19" />
+    <testcase name="browserNativeHintArraysAlsoIgnoreSectionNames" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.048" />
+    <testcase name="nativeLoginIsNotDroppedBecauseThePageHasAnUnrelatedWebView" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.048" />
+    <testcase name="invalidNumericAddressBarDoesNotBecomeAnOrigin" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.12" />
+    <testcase name="standardLoginRemainsRecognized" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.054" />
+    <testcase name="mixedAccountLabelsWorkInNativeAndHtmlFields" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.128" />
+    <testcase name="explicitFormReferencesCannotCrossWebOrigins" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.046" />
+    <testcase name="missingAndAmbiguousExplicitFormIdsCannotJoinOtherFields" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.063" />
+    <testcase name="pageTextCannotSupplyAnIpOrigin" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.039" />
+    <testcase name="directlyReportedIpv6OriginKeepsBothLoginFieldsInOneScope" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.036" />
+    <testcase name="phoneVerificationCodeIsNeverAnAccount" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.029" />
+    <testcase name="explicitCurrentPasswordPreventsRegistrationCueFromChangingItsRole" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.039" />
+    <testcase name="nativeHybridLoopbackUiRetainsPackageMatchingCompatibility" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.069" />
+    <testcase name="browserNewPasswordIsNotDowngradedByPasswordInputType" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.032" />
+    <testcase name="absentFormMarkupPreservesTheExistingWebViewScope" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.033" />
+    <testcase name="enterpriseIdentifiersAreRecognizedWithoutStandardHints" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.055" />
+    <testcase name="explicitRegistrationFormPromotesGenericPasswordFields" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.036" />
+    <testcase name="manualRequestCanSelectAnUnlabelledFocusedTextField" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.04" />
+    <testcase name="adjacentRegistrationFormCannotReclassifyTheLogin" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.035" />
+    <testcase name="focusedCrossOriginSubtreeCannotReceiveTheOuterSitesFields" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.032" />
+    <testcase name="htmlSectionNamesDoNotBecomeFieldRoles" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.023" />
+    <testcase name="computedOtpOnAMaskedFieldIsNeverAnAccountOrSavedPassword" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.025" />
+    <testcase name="exactHtmlRolesPreserveExistingContactAndWalletSupport" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.045" />
+    <testcase name="parserSupportsPhoneAndNumericStudentAccountSteps" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.036" />
+    <testcase name="unknownAndAmbiguousHtmlHintsDoNotMatchBySubstring" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.039" />
+    <testcase name="accountPasswordLabelsRemainPasswordTargets" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.045" />
+    <testcase name="htmlFormAttributeCanAssociateAnOutsideFieldWithItsForm" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.067" />
+    <testcase name="formPurposeUsesFieldSemanticsForStepAndOtpPages" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.038" />
+    <testcase name="browserLoopbackPagesKeepTheirOriginForMatching" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.046" />
+    <testcase name="syntheticFallbackCannotAddFieldsFromAnotherWindow" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.035" />
+    <testcase name="chromeTokenArraysPreserveContactAndSectionQualifiers" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.042" />
+    <testcase name="webViewsWithoutAndroidViewIdsStillHaveSeparateScopes" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.034" />
+    <testcase name="focusedWebViewKeepsItsOwnOriginAndFields" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.041" />
+    <testcase name="onlyTheFocusedHtmlFormContributesFillAndFallbackTargets" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.048" />
+    <testcase name="dedicatedContactFieldsAndExplicitHtmlSemanticsKeepTheirRoles" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.05" />
+    <testcase name="focusedDialogIsPreferredToTheFormBehindIt" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.032" />
+    <testcase name="focusingTheOtherFormDropsTheLoginTargets" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.052" />
+    <testcase name="autocompleteOffRetainsTheExistingPreference" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.034" />
+    <testcase name="browserAddressBarRecoversCanonicalIpv6" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.072" />
+    <testcase name="longFormTraversalCooperatesWithCancellation" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.421" />
+    <testcase name="htmlAutocompleteAcceptsSectionTokens" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.025" />
+    <testcase name="ambiguousLoginAndRegistrationCuesKeepLegacyRoles" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.025" />
+    <testcase name="nestedWebViewKeepsItsReportedAncestorOriginForBoundSuggestions" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.029" />
+    <testcase name="browserComputedHintsRecognizeLoginAndOtpRoles" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.044" />
+    <testcase name="compatibilitySwitchesCanBeRolledBackIndependently" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.036" />
+    <testcase name="compatibilityModeDoesNotPromoteOneTimePasswordsToSavedPasswords" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.038" />
+    <testcase name="computedHintsStillRespectOffAndSearchExclusion" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.03" />
+    <testcase name="virtualWebViewInputsKeepHtmlFormAndOriginBoundaries" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.038" />
+    <testcase name="originlessSiblingWebViewCannotBorrowAnotherSitesOrigin" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.041" />
+    <testcase name="repeatedHtmlFormNamesDoNotCombineIndependentForms" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.057" />
+    <testcase name="nativeSearchIsExcludedEvenBesideAPasswordField" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.037" />
+    <testcase name="dynamicCardExpirySelectIdsKeepSeparateMonthAndYearRoles" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.039" />
+    <testcase name="browserAddressBarRecoversIpv4WithOrWithoutSchemeAndPort" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.056" />
+    <testcase name="explicitProfileHintsKeepTheirMeaningAndBillingScope" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.04" />
+    <testcase name="nativeChangePasswordLabelsKeepCurrentAndNewRolesSeparate" classname="takagi.ru.monica.autofill_ng.AutofillStructureIntegrationTest" time="0.048" />
+    <system-out />
+    <system-err>Intent = Intent { act=takagi.ru.monica.action.LANGUAGE_CHANGED pkg=takagi.ru.monica (has extras) }; Matching wrappers: [Wrapper[receiver=[takagi.ru.monica.utils.StartupLanguageCache$registerLanguageReceiver$1$1@6e043bb5], context=[android.app.ContextImpl@17b99f71], intentFilter=[android.content.IntentFilter@2d66070f]]]
+Intent = Intent { act=takagi.ru.monica.action.LANGUAGE_CHANGED pkg=takagi.ru.monica (has extras) }; Matching wrappers: [Wrapper[receiver=[takagi.ru.monica.utils.StartupLanguageCache$registerLanguageReceiver$1$1@5cf9ae30], context=[android.app.ContextImpl@20afa854], intentFilter=[android.content.IntentFilter@4df59b39]]]
+</system-err>
+  </testsuite>
+  <testsuite name="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-11-03T02:35:41" time="0.028">
+    <properties />
+    <testcase name="strict mode should match bare package name stored in website" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.01" />
+    <testcase name="domain match does not depend on browser package ordering" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.001" />
+    <testcase name="strict mode should match androidapp package from mixed website bindings" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.001" />
+    <testcase name="strict mode should return exact package match" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.0" />
+    <testcase name="strict mode should match base domain" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.001" />
+    <testcase name="invalid reported address never falls back to a browser package binding" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.0" />
+    <testcase name="strict mode should match androidapp package stored in website" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.0" />
+    <testcase name="strict mode should match one of multiple websites" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.001" />
+    <testcase name="non strict mode should allow heuristic fallback" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.004" />
+    <testcase name="IP defaults never match other IPs or numeric title heuristics" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.004" />
+    <testcase name="local html app matches bindings without title or package token fallback" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.0" />
+    <testcase name="equivalent IPv6 forms match the same host" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.0" />
+    <testcase name="bare package bindings use exact matching across cached and uncached paths" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.004" />
+    <testcase name="strict mode should normalize androidapp package prefix" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.0" />
+    <testcase name="domainless browser request does not use shared browser package bindings" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.001" />
+    <testcase name="strict mode rejects title-only package token matches" classname="takagi.ru.monica.autofill_ng.BitwardenLikeAutofillMatcherNgTest" time="0.0" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="takagi.ru.monica.autofill_ng.PasswordUrlRuleMatcherTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-11-03T02:35:41" time="0.192">
+    <properties />
+    <testcase name="exactAndPrefixNeedRealUrlContextAndRetainPathAndQueryCase" classname="takagi.ru.monica.autofill_ng.PasswordUrlRuleMatcherTest" time="0.004" />
+    <testcase name="hostOverrideSeparatesEnvironmentsWhileBaseDomainSharesCredentials" classname="takagi.ru.monica.autofill_ng.PasswordUrlRuleMatcherTest" time="0.023" />
+    <testcase name="metadataRoundTripPreservesRegexCommasAndCaseAndDefaultRemoval" classname="takagi.ru.monica.autofill_ng.PasswordUrlRuleMatcherTest" time="0.125" />
+    <testcase name="registeredDomainsUsePublicSuffixBoundariesAndIpsRemainExact" classname="takagi.ru.monica.autofill_ng.PasswordUrlRuleMatcherTest" time="0.001" />
+    <testcase name="ipv6HostRulesCanonicalizeWithoutInventingAPathOrPort" classname="takagi.ru.monica.autofill_ng.PasswordUrlRuleMatcherTest" time="0.001" />
+    <testcase name="regexIsLinearAndInvalidOrUnsupportedExpressionsDoNotMatch" classname="takagi.ru.monica.autofill_ng.PasswordUrlRuleMatcherTest" time="0.036" />
+    <testcase name="hostIsCaseInsensitiveButDoesNotCollapseWwwOrSiblingSubdomains" classname="takagi.ru.monica.autofill_ng.PasswordUrlRuleMatcherTest" time="0.001" />
+    <testcase name="neverCannotBeBypassedByTitleOrLooseMatchingAndRulesRefreshWithoutWebsiteEdits" classname="takagi.ru.monica.autofill_ng.PasswordUrlRuleMatcherTest" time="0.001" />
+    <testcase name="explicitRuleOverridesGlobalNeverAndOneMatchingUrlIsEnough" classname="takagi.ru.monica.autofill_ng.PasswordUrlRuleMatcherTest" time="0.0" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="takagi.ru.monica.service.BrowserAutofillContextStoreTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-03T02:35:43" time="0.076">
+    <properties />
+    <testcase name="accessibilityAddressCacheUsesCanonicalIpHosts[29]" classname="takagi.ru.monica.service.BrowserAutofillContextStoreTest" time="0.021" />
+    <testcase name="rejectedNumericAddressRevokesTheSameBrowsersPreviousSnapshot[29]" classname="takagi.ru.monica.service.BrowserAutofillContextStoreTest" time="0.016" />
+    <testcase name="accessibilityAddressCacheUsesCanonicalIpHosts" classname="takagi.ru.monica.service.BrowserAutofillContextStoreTest" time="0.019" />
+    <testcase name="rejectedNumericAddressRevokesTheSameBrowsersPreviousSnapshot" classname="takagi.ru.monica.service.BrowserAutofillContextStoreTest" time="0.017" />
+    <system-out />
+    <system-err />
+  </testsuite>
+</testsuites>

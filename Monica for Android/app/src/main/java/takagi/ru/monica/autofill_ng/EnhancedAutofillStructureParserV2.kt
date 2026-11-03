@@ -9,7 +9,6 @@ import androidx.autofill.HintConstants
 import takagi.ru.monica.autofill_ng.core.AutofillLogger
 import takagi.ru.monica.autofill_ng.core.safeTextOrNull
 import android.util.Log
-import java.net.URL
 import java.util.Locale
 
 class EnhancedAutofillStructureParserV2(
@@ -890,7 +889,7 @@ class EnhancedAutofillStructureParserV2(
             // loopback page is still a website and must keep its reported origin.
             webView && !AutofillRequestContextPolicy.isKnownBrowser(
                 structure.activityComponent?.packageName ?: applicationId.orEmpty()) &&
-                (webDomain == "127.0.0.1" || webDomain == "localhost")
+                (webDomain == "127.0.0.1" || webDomain == "localhost" || webDomain == "::1")
         }
 
         val effectiveWebDomain = rawStructure?.webDomain.takeUnless { isInSelfHostedServer }
@@ -968,19 +967,15 @@ class EnhancedAutofillStructureParserV2(
 
     private fun extractDomainFromUrl(text: String): String? {
         val trimmed = text.trim()
-        if (trimmed.length < 4 || trimmed.length > 2048) return null
-        if (!trimmed.contains(".")) return null
-        // Skip obvious non-URL text (e.g. "v2.0", "3.14", placeholder text without slashes/colons)
+        if (trimmed.isEmpty() || trimmed.length > 2048) return null
+        val host = AutofillHostPolicy.host(trimmed) ?: return null
+        if (AutofillHostPolicy.isIp(host)) return host
+        // Keep the existing domain fallback conservative; numeric literals have
+        // already been validated independently, including bare IPv6 addresses.
         val looksLikeUrl = trimmed.contains("://") ||
             trimmed.startsWith("www.") ||
             (trimmed.contains(".") && trimmed.any { it == '/' || it == ':' })
-        if (!looksLikeUrl) return null
-        val urlStr = if (trimmed.contains("://")) trimmed else "https://$trimmed"
-        val host = runCatching { URL(urlStr).host }.getOrNull()
-            ?.trim()
-            ?.lowercase(Locale.ROOT)
-            ?.takeIf { it.isNotBlank() && it.contains(".") && it.any { c -> c.isLetter() } }
-        return host
+        return host.takeIf { looksLikeUrl && it.contains(".") && it.any { c -> c.isLetter() } }
     }
 
     private fun parseViewNode(
@@ -992,7 +987,7 @@ class EnhancedAutofillStructureParserV2(
         var webView = false
         val rawWebDomain = node.webDomain
         val rawWebScheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) node.webScheme else null
-        var webDomain: String? = rawWebDomain?.takeIf { it.isNotEmpty() }
+        var webDomain: String? = AutofillHostPolicy.host(rawWebDomain)
         var webScheme: String? = rawWebScheme?.takeIf { it.isNotEmpty() }
         if (context.traversalIndex == 0) {
             Log.d(

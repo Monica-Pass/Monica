@@ -1,0 +1,348 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.LanIpAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.LanIpAutofillInstrumentedTest:
+INSTRUMENTATION_STATUS: test=realAndroidAddressCacheAndExplicitRulesSupportIpHosts
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.LanIpAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=realAndroidAddressCacheAndExplicitRulesSupportIpHosts
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.LanIpAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=ipv4NativeIndexAndLooseFallbackKeepDifferentDevicesSeparate
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.LanIpAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=ipv4NativeIndexAndLooseFallbackKeepDifferentDevicesSeparate
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.LanIpAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=ipv6NativeIndexCanonicalizesAndRefreshesChangedAddresses
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.LanIpAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=ipv6NativeIndexCanonicalizesAndRefreshesChangedAddresses
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillNativeIndexInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.AutofillNativeIndexInstrumentedTest:
+INSTRUMENTATION_STATUS: test=urlOverridesSurviveNativePruningAndMetadataChanges
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillNativeIndexInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=urlOverridesSurviveNativePruningAndMetadataChanges
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillNativeIndexInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeLifecycleAndOversizedFallbackStaySafe
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillNativeIndexInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeLifecycleAndOversizedFallbackStaySafe
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillNativeIndexInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=realNativeIndexPreservesPoliciesOrderAndUpdates
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillNativeIndexInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=realNativeIndexPreservesPoliciesOrderAndUpdates
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.LocalWebViewPackageMatchingTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.LocalWebViewPackageMatchingTest:
+INSTRUMENTATION_STATUS: test=localFileLoginRecommendsOnlyExplicitAppBindingsWithNativeIndex
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.LocalWebViewPackageMatchingTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=localFileLoginRecommendsOnlyExplicitAppBindingsWithNativeIndex
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest:
+INSTRUMENTATION_STATUS: test=systemAutofillFillsWebViewAndDispatchesInputEvents
+INSTRUMENTATION_STATUS_CODE: 1
+s_glBindAttribLocation: bind attrib 0 name position
+s_glBindAttribLocation: bind attrib 1 name localCoord
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=4, flags=65618, fixtureStatus=user=EMPTY password=EMPTY web=READY
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:2118)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:2068)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillFromSystem(AutofillFlowInstrumentedTest.kt:1908)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.systemAutofillFillsWebViewAndDispatchesInputEvents(AutofillFlowInstrumentedTest.kt:998)
+
+INSTRUMENTATION_STATUS: stream=
+Error in systemAutofillFillsWebViewAndDispatchesInputEvents(takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest):
+java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=4, flags=65618, fixtureStatus=user=EMPTY password=EMPTY web=READY
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:2118)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:2068)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillFromSystem(AutofillFlowInstrumentedTest.kt:1908)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.systemAutofillFillsWebViewAndDispatchesInputEvents(AutofillFlowInstrumentedTest.kt:998)
+
+INSTRUMENTATION_STATUS: test=systemAutofillFillsWebViewAndDispatchesInputEvents
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=systemAutofillFillsStandardNativeLoginWithoutVerification
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=4, flags=65618, fixtureStatus=user=EMPTY password=EMPTY otp=ABSENT other=ABSENT
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:2118)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:2068)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillFromSystem(AutofillFlowInstrumentedTest.kt:1908)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillFromSystem$default(AutofillFlowInstrumentedTest.kt:1905)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.systemAutofillFillsStandardNativeLoginWithoutVerification(AutofillFlowInstrumentedTest.kt:313)
+
+INSTRUMENTATION_STATUS: stream=
+Error in systemAutofillFillsStandardNativeLoginWithoutVerification(takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest):
+java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=4, flags=65618, fixtureStatus=user=EMPTY password=EMPTY otp=ABSENT other=ABSENT
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:2118)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:2068)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillFromSystem(AutofillFlowInstrumentedTest.kt:1908)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillFromSystem$default(AutofillFlowInstrumentedTest.kt:1905)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.systemAutofillFillsStandardNativeLoginWithoutVerification(AutofillFlowInstrumentedTest.kt:313)
+
+INSTRUMENTATION_STATUS: test=systemAutofillFillsStandardNativeLoginWithoutVerification
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=systemAutofillFillsIpv4HttpsWebViewWithPort
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=4, flags=65618, fixtureStatus=user=EMPTY password=EMPTY web=READY
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:2118)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:2068)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillFromSystem(AutofillFlowInstrumentedTest.kt:1908)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillLanIpWebView(AutofillFlowInstrumentedTest.kt:991)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.access$fillLanIpWebView(AutofillFlowInstrumentedTest.kt:58)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest$fillLanIpWebView$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.systemAutofillFillsIpv4HttpsWebViewWithPort(AutofillFlowInstrumentedTest.kt:975)
+
+INSTRUMENTATION_STATUS: stream=
+Error in systemAutofillFillsIpv4HttpsWebViewWithPort(takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest):
+java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=4, flags=65618, fixtureStatus=user=EMPTY password=EMPTY web=READY
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:2118)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:2068)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillFromSystem(AutofillFlowInstrumentedTest.kt:1908)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillLanIpWebView(AutofillFlowInstrumentedTest.kt:991)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.access$fillLanIpWebView(AutofillFlowInstrumentedTest.kt:58)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest$fillLanIpWebView$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.systemAutofillFillsIpv4HttpsWebViewWithPort(AutofillFlowInstrumentedTest.kt:975)
+
+INSTRUMENTATION_STATUS: test=systemAutofillFillsIpv4HttpsWebViewWithPort
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=systemAutofillFillsIpv6HttpsWebViewWithPort
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=4, flags=65618, fixtureStatus=user=EMPTY password=EMPTY web=READY
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:2118)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:2068)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillFromSystem(AutofillFlowInstrumentedTest.kt:1908)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillLanIpWebView(AutofillFlowInstrumentedTest.kt:991)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.access$fillLanIpWebView(AutofillFlowInstrumentedTest.kt:58)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest$fillLanIpWebView$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.systemAutofillFillsIpv6HttpsWebViewWithPort(AutofillFlowInstrumentedTest.kt:979)
+
+INSTRUMENTATION_STATUS: stream=
+Error in systemAutofillFillsIpv6HttpsWebViewWithPort(takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest):
+java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=4, flags=65618, fixtureStatus=user=EMPTY password=EMPTY web=READY
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:2118)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:2068)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillFromSystem(AutofillFlowInstrumentedTest.kt:1908)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillLanIpWebView(AutofillFlowInstrumentedTest.kt:991)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.access$fillLanIpWebView(AutofillFlowInstrumentedTest.kt:58)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest$fillLanIpWebView$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.systemAutofillFillsIpv6HttpsWebViewWithPort(AutofillFlowInstrumentedTest.kt:979)
+
+INSTRUMENTATION_STATUS: test=systemAutofillFillsIpv6HttpsWebViewWithPort
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=systemAutofillKeepsTheOtherHtmlFormEmpty
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=4, flags=65618, fixtureStatus=user=EMPTY password=EMPTY newsletter=EMPTY web=READY
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:2118)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:2068)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillFromSystem(AutofillFlowInstrumentedTest.kt:1908)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.systemAutofillKeepsTheOtherHtmlFormEmpty(AutofillFlowInstrumentedTest.kt:1081)
+
+INSTRUMENTATION_STATUS: stream=
+Error in systemAutofillKeepsTheOtherHtmlFormEmpty(takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest):
+java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=4, flags=65618, fixtureStatus=user=EMPTY password=EMPTY newsletter=EMPTY web=READY
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:2118)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:2068)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillFromSystem(AutofillFlowInstrumentedTest.kt:1908)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.systemAutofillKeepsTheOtherHtmlFormEmpty(AutofillFlowInstrumentedTest.kt:1081)
+
+INSTRUMENTATION_STATUS: test=systemAutofillKeepsTheOtherHtmlFormEmpty
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 125.23
+There were 5 failures:
+1) systemAutofillFillsWebViewAndDispatchesInputEvents(takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest)
+java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=4, flags=65618, fixtureStatus=user=EMPTY password=EMPTY web=READY
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:2118)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:2068)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillFromSystem(AutofillFlowInstrumentedTest.kt:1908)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.systemAutofillFillsWebViewAndDispatchesInputEvents(AutofillFlowInstrumentedTest.kt:998)
+2) systemAutofillFillsStandardNativeLoginWithoutVerification(takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest)
+java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=4, flags=65618, fixtureStatus=user=EMPTY password=EMPTY otp=ABSENT other=ABSENT
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:2118)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:2068)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillFromSystem(AutofillFlowInstrumentedTest.kt:1908)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillFromSystem$default(AutofillFlowInstrumentedTest.kt:1905)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.systemAutofillFillsStandardNativeLoginWithoutVerification(AutofillFlowInstrumentedTest.kt:313)
+3) systemAutofillFillsIpv4HttpsWebViewWithPort(takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest)
+java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=4, flags=65618, fixtureStatus=user=EMPTY password=EMPTY web=READY
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:2118)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:2068)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillFromSystem(AutofillFlowInstrumentedTest.kt:1908)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillLanIpWebView(AutofillFlowInstrumentedTest.kt:991)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.access$fillLanIpWebView(AutofillFlowInstrumentedTest.kt:58)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest$fillLanIpWebView$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.systemAutofillFillsIpv4HttpsWebViewWithPort(AutofillFlowInstrumentedTest.kt:975)
+4) systemAutofillFillsIpv6HttpsWebViewWithPort(takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest)
+java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=4, flags=65618, fixtureStatus=user=EMPTY password=EMPTY web=READY
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:2118)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:2068)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillFromSystem(AutofillFlowInstrumentedTest.kt:1908)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillLanIpWebView(AutofillFlowInstrumentedTest.kt:991)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.access$fillLanIpWebView(AutofillFlowInstrumentedTest.kt:58)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest$fillLanIpWebView$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.systemAutofillFillsIpv6HttpsWebViewWithPort(AutofillFlowInstrumentedTest.kt:979)
+5) systemAutofillKeepsTheOtherHtmlFormEmpty(takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest)
+java.lang.AssertionError: Expected autofill UI/status did not appear within 20 seconds; activeRoot=android.widget.FrameLayout, windows=4, flags=65618, fixtureStatus=user=EMPTY password=EMPTY newsletter=EMPTY web=READY
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode(AutofillFlowInstrumentedTest.kt:2118)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.waitNode$default(AutofillFlowInstrumentedTest.kt:2068)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.fillFromSystem(AutofillFlowInstrumentedTest.kt:1908)
+	at takagi.ru.monica.autofill_ng.AutofillFlowInstrumentedTest.systemAutofillKeepsTheOtherHtmlFormEmpty(AutofillFlowInstrumentedTest.kt:1081)
+
+FAILURES!!!
+Tests run: 12,  Failures: 5
+
+
+INSTRUMENTATION_CODE: -1

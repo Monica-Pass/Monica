@@ -1,0 +1,17 @@
+{
+  "restored_user": 0,
+  "removed_owned_user": 13,
+  "remaining_users": [
+    0,
+    10,
+    11,
+    12
+  ],
+  "stopped_owned_emulator": true,
+  "preserved": {
+    "C:\\Users\\joyins\\.android\\avd\\Monica_Issue136_API_32.ini": true,
+    "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\config.ini": true,
+    "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img": true,
+    "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img.qcow2": true
+  }
+}

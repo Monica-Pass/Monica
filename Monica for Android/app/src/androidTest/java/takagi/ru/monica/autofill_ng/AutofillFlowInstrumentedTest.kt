@@ -960,6 +960,38 @@ class AutofillFlowInstrumentedTest {
         expectStatus("user=ABSENT password=OK")
     }
 
+    @Test fun systemAutofillFillsIpv4HttpWebViewWithPort() = runBlocking {
+        assumeTrue("HTTP loadDataWithBaseURL is a diagnostic probe on this WebView",
+            InstrumentationRegistry.getArguments().getString("autofillLanHttpProbe") == "true")
+        fillLanIpWebView("http://192.168.1.1:8080/login")
+    }
+
+    @Test fun systemAutofillFillsIpv6HttpWebViewWithPort() = runBlocking {
+        assumeTrue("HTTP loadDataWithBaseURL is a diagnostic probe on this WebView",
+            InstrumentationRegistry.getArguments().getString("autofillLanHttpProbe") == "true")
+        fillLanIpWebView("http://[fd00:0:0:0:0:0:0:1]:8080/login")
+    }
+
+    @Test fun systemAutofillFillsIpv4HttpsWebViewWithPort() = runBlocking {
+        fillLanIpWebView("https://192.168.1.1:8080/login")
+    }
+
+    @Test fun systemAutofillFillsIpv6HttpsWebViewWithPort() = runBlocking {
+        fillLanIpWebView("https://[fd00:0:0:0:0:0:0:1]:8080/login")
+    }
+
+    private suspend fun fillLanIpWebView(origin: String) {
+        val original = requireNotNull(dao.getPasswordEntryById(insertedIds[1]))
+        dao.updatePasswordEntry(original.copy(website = origin))
+        for (url in listOf("http://10.0.1.1:8080/login", "http://192.168.1.10:8080/login", "http://[fd00::2]:8080/login")) {
+            insertedIds += dao.insertPasswordEntry(original.copy(id = 0, title = "Unrelated IP fixture", website = url))
+        }
+        open("web", webOrigin = origin)
+        expectStatus("web=READY")
+        fillFromSystem(WEB_TITLE, web = true)
+        expectStatus("user=OK password=OK")
+    }
+
     @Test fun systemAutofillFillsWebViewAndDispatchesInputEvents() {
         open("web")
         waitNode { it.contentDescription?.toString() == "fixture-status" && it.text?.contains("web=READY") == true }
@@ -1838,7 +1870,7 @@ class AutofillFlowInstrumentedTest {
         expectStatus("user=EMPTY password=EMPTY")
     }
 
-    private fun open(scenario: String, accessibilityOnly: Boolean = false) {
+    private fun open(scenario: String, accessibilityOnly: Boolean = false, webOrigin: String? = null) {
         val instance = java.util.UUID.randomUUID().toString()
         val externalSaveIme = scenario in setOf("change", "step") &&
             InstrumentationRegistry.getArguments().getString("autofillSaveExternalIme") == "true"
@@ -1853,6 +1885,7 @@ class AutofillFlowInstrumentedTest {
             component = ComponentName(fixturePackage,AutofillFormFixtureActivity::class.java.name)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             putExtra("scenario",scenario)
+            putExtra("webOrigin",webOrigin)
             putExtra("expectedUsername", expectedUsername)
             putExtra("expectedPassword", expectedPassword)
             putExtra("accessibilityOnly",accessibilityOnly)

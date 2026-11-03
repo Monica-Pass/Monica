@@ -49,6 +49,15 @@ class PasswordUrlRuleMatcherTest {
         assertTrue(matches(Mode.BASE_DOMAIN, "localhost", "localhost"))
     }
 
+    @Test fun ipv6HostRulesCanonicalizeWithoutInventingAPathOrPort() {
+        assertTrue(matches(Mode.HOST, "http://[fd00:0:0:0:0:0:0:1]:8080/login", "fd00::1"))
+        assertTrue(matches(Mode.BASE_DOMAIN, "[fd00::1]", "fd00:0:0:0:0:0:0:1"))
+        assertFalse(matches(Mode.BASE_DOMAIN, "fd00::1", "fd00::2"))
+        assertFalse(matches(Mode.EXACT, "http://[fd00::1]:8080/login", "fd00::1"))
+        assertFalse(matches(Mode.STARTS_WITH, "http://[fd00::1]:8080/login", "fd00::1"))
+        assertTrue(matches(Mode.EXACT, "http://[fd00::1]:8080/login", "http://[fd00:0:0:0:0:0:0:1]:8080/login"))
+    }
+
     @Test fun hostIsCaseInsensitiveButDoesNotCollapseWwwOrSiblingSubdomains() {
         assertTrue(matches(Mode.HOST, "https://LOGIN.example.com/path", "login.example.com"))
         assertFalse(matches(Mode.HOST, "https://example.com", "www.example.com"))
