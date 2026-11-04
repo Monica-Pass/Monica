@@ -4777,4 +4777,17 @@
     <string name="local_recovery_confirm_title">Restore secure storage on this device?</string>
     <string name="local_recovery_confirm_description">Your master password will be verified before new device storage keys are created. Original files are kept. Biometric unlock must be enabled again. Cancelling leaves your data unchanged.</string>
     <string name="local_recovery_confirm_action">Confirm recovery</string>
+
+    <string name="send_edit_title">Edit Send</string>
+    <string name="send_deletion_date">Deletion date</string>
+    <string name="send_expiration_date">Expiration date</string>
+    <string name="send_no_expiration">No expiration</string>
+    <string name="send_new_password">New access password</string>
+    <string name="send_keep_password">Keep the current access password when blank</string>
+    <string name="send_remove_password">Remove access password</string>
+    <string name="send_saved">Send saved</string>
+    <string name="send_edit_conflict">This Send changed. Reopen it before saving.</string>
+    <string name="send_edit_invalid">Check the access limit and dates. Deletion must be within 31 days and expiration cannot follow it.</string>
+    <string name="send_edit_failed">Send could not be saved. Refresh and check its current state before retrying.</string>
+    <string name="send_edit_unsupported_auth">This Send uses an access method that cannot be changed here.</string>
 </resources>

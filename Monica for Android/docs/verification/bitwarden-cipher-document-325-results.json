@@ -1,0 +1,54 @@
+{
+  "jvm": [
+    {
+      "name": "takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest",
+      "tests": "23",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-11-04T02:58:25",
+      "hostname": "JOYIN",
+      "time": "10.326"
+    },
+    {
+      "name": "takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest",
+      "tests": "14",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-11-04T02:58:35",
+      "hostname": "JOYIN",
+      "time": "0.903"
+    }
+  ],
+  "device": {
+    "edition": "main",
+    "classes": "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest,takagi.ru.monica.bitwarden.BitwardenSshNativeSyncInstrumentedTest,takagi.ru.monica.bitwarden.BitwardenOrganizationSyncTest",
+    "log": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261104-bitwarden-native-client\\canonical-device-main-20261104-110351.log",
+    "commandExit": 0,
+    "driverSeconds": 23.8523106,
+    "apk": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.325-26110412-16.APK",
+    "apkSHA256": "9005d518bd2d16bd96b746135c972a38ac42dfac551608aa392cfba5867e5e93",
+    "testAPK": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk",
+    "testSHA256": "a313cd596a7196e6d2749b9df55acfa6ba5927abdf2fb421aab2827daa051ba6"
+  },
+  "migration": {
+    "edition": "main",
+    "schema": 81,
+    "entry": [
+      2,
+      "Synthetic schema80 migration main",
+      "synthetic-migration-user",
+      ""
+    ],
+    "history": [
+      1,
+      2,
+      "",
+      1793650000000
+    ],
+    "foreignKeys": "ok",
+    "quickCheck": "ok",
+    "syntheticUser": 13
+  }
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_account_create">Criar conta</string>
+    <string name="bitwarden_account_request_hint">Solicitar dica de senha</string>
+    <string name="bitwarden_account_password_hint">Dica da senha mestra (opcional)</string>
+    <string name="bitwarden_account_send_verification">Enviar email de verificação</string>
+    <string name="bitwarden_account_verification_pending">Abra o email de verificação e cole aqui o link ou o token.</string>
+    <string name="bitwarden_account_verification_input">Link ou token de verificação do email</string>
+    <string name="bitwarden_account_verification_invalid">O link ou token de verificação não é válido para esta conta.</string>
+    <string name="bitwarden_account_password_requirements">Use uma senha mestra forte com pelo menos 12 caracteres.</string>
+    <string name="bitwarden_account_password_mismatch">As senhas mestras não coincidem.</string>
+    <string name="bitwarden_account_registration_success">Conta criada. Entre com sua nova senha mestra.</string>
+    <string name="bitwarden_account_hint_sent">Se esta conta existir, o email com a dica de senha foi solicitado.</string>
+    <string name="bitwarden_account_security">Segurança da conta</string>
+    <string name="bitwarden_account_devices">Dispositivos da conta</string>
+    <string name="bitwarden_account_device_trusted">Dispositivo confiável</string>
+    <string name="bitwarden_account_device_untrusted">Dispositivo não confiável</string>
+    <string name="bitwarden_account_last_activity">Última atividade</string>
+    <string name="bitwarden_account_web_settings">Gerenciar conta no cofre web</string>
+    <string name="bitwarden_account_no_devices">Nenhum dispositivo encontrado.</string>
+    <string name="bitwarden_account_request_failed">A solicitação da conta falhou (HTTP %1$d).</string>
+    <string name="bitwarden_account_operation_failed">Não foi possível concluir a operação da conta.</string>
+    <string name="bitwarden_account_invalid_email">Digite um endereço de email válido.</string>
+</resources>

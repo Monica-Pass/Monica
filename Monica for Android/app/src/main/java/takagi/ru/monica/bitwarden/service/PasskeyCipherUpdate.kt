@@ -10,7 +10,7 @@ import takagi.ru.monica.passkey.PasskeyPrivateKeySupport
 
 /** Patch the original encrypted document; typed create DTOs discard unrelated and future fields. */
 internal object PasskeyCipherUpdate {
-    private val serverFields = setOf("id", "object", "creationdate", "revisiondate", "lastknownrevisiondate", "edit", "viewpassword")
+    private val serverFields = setOf("id", "object", "creationdate", "revisiondate", "lastknownrevisiondate", "encryptedfor", "edit", "viewpassword")
 
     fun build(original: JsonObject, item: PasskeyEntry, cipherId: String, vaultKey: SymmetricCryptoKey,
         folderChange: takagi.ru.monica.passkey.PasskeyCipherFolderIntent.Change? = null,

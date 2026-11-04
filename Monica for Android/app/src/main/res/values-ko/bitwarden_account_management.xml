@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_account_create">계정 만들기</string>
+    <string name="bitwarden_account_request_hint">비밀번호 힌트 요청</string>
+    <string name="bitwarden_account_password_hint">마스터 비밀번호 힌트 (선택 사항)</string>
+    <string name="bitwarden_account_send_verification">인증 이메일 보내기</string>
+    <string name="bitwarden_account_verification_pending">인증 이메일을 열고 링크 또는 토큰을 여기에 붙여넣으세요.</string>
+    <string name="bitwarden_account_verification_input">이메일 인증 링크 또는 토큰</string>
+    <string name="bitwarden_account_verification_invalid">이 인증 링크 또는 토큰은 이 계정에 유효하지 않습니다.</string>
+    <string name="bitwarden_account_password_requirements">12자 이상의 강력한 마스터 비밀번호를 사용하세요.</string>
+    <string name="bitwarden_account_password_mismatch">마스터 비밀번호가 일치하지 않습니다.</string>
+    <string name="bitwarden_account_registration_success">계정이 만들어졌습니다. 새 마스터 비밀번호로 로그인하세요.</string>
+    <string name="bitwarden_account_hint_sent">이 계정이 존재하는 경우 비밀번호 힌트 이메일을 요청했습니다.</string>
+    <string name="bitwarden_account_security">계정 보안</string>
+    <string name="bitwarden_account_devices">계정 기기</string>
+    <string name="bitwarden_account_device_trusted">신뢰하는 기기</string>
+    <string name="bitwarden_account_device_untrusted">신뢰하지 않는 기기</string>
+    <string name="bitwarden_account_last_activity">최근 활동</string>
+    <string name="bitwarden_account_web_settings">웹 보관함에서 계정 관리</string>
+    <string name="bitwarden_account_no_devices">기기를 찾을 수 없습니다.</string>
+    <string name="bitwarden_account_request_failed">계정 요청이 실패했습니다 (HTTP %1$d).</string>
+    <string name="bitwarden_account_operation_failed">계정 작업을 완료할 수 없습니다.</string>
+    <string name="bitwarden_account_invalid_email">유효한 이메일 주소를 입력하세요.</string>
+</resources>

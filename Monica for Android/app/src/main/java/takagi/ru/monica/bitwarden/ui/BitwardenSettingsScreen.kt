@@ -48,6 +48,7 @@ fun BitwardenSettingsScreen(
     onNavigateBack: () -> Unit,
     onNavigateToLogin: () -> Unit,
     onNavigateToVault: (Long) -> Unit,
+    onNavigateToAccount: (Long) -> Unit,
     onNavigateToSyncQueue: () -> Unit = {}
 ) {
     val vaults by viewModel.vaults.collectAsState()
@@ -198,6 +199,9 @@ fun BitwardenSettingsScreen(
                             showLogoutConfirmDialog = true
                         }
                     )
+                    TextButton(onClick = { onNavigateToAccount(vault.id) }, modifier = Modifier.fillMaxWidth()) {
+                        Text(stringResource(R.string.bitwarden_account_security))
+                    }
                 }
             }
             

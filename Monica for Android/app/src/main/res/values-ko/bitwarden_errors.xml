@@ -11,4 +11,5 @@
     <string name="bitwarden_error_proxy">프록시가 연결을 거부했거나 인증이 필요합니다. 프록시 주소, 포트 및 계정 설정을 확인하세요.</string>
     <string name="bitwarden_error_cleartext">서버 주소가 HTTP를 사용하며 현재 보안 정책에서 허용되지 않습니다. HTTPS 주소를 사용하고 리버스 프록시의 HTTPS 설정을 확인하세요.</string>
     <string name="bitwarden_error_network_io">네트워크 오류로 서버와의 통신이 중단되었습니다. 네트워크, VPN 및 프록시 설정을 확인한 후 다시 시도하세요.</string>
+    <string name="bitwarden_sync_incomplete_items">일부 항목을 동기화하지 못했습니다(%1$d). 읽을 수 있는 항목은 동기화되었으며 기존 로컬 데이터는 유지됩니다.</string>
 </resources>

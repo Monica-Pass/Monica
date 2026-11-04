@@ -1,0 +1,192 @@
+[
+  {
+    "stage": "installed-app-ready",
+    "edition": "main",
+    "version": "1.0.325-26110412-21",
+    "code": 12
+  },
+  {
+    "stage": "native-login-success",
+    "edition": "main",
+    "officialRegion": "US"
+  },
+  {
+    "stage": "official-schema-shapes",
+    "edition": "main",
+    "shapes": [
+      {
+        "dataEmpty": false,
+        "dataJsonObject": true,
+        "dataKind": "jsonObject",
+        "dataKnownKeys": [],
+        "dataType": "str",
+        "hasItemKey": false,
+        "hasName": true,
+        "hasTypeSection": true,
+        "legacyDataKnownKeys": [
+          "fields",
+          "name"
+        ],
+        "partialEmpty": false,
+        "partialType": "NoneType",
+        "type": 1,
+        "count": 2
+      },
+      {
+        "dataEmpty": false,
+        "dataJsonObject": true,
+        "dataKind": "jsonObject",
+        "dataKnownKeys": [],
+        "dataType": "str",
+        "hasItemKey": false,
+        "hasName": true,
+        "hasTypeSection": true,
+        "legacyDataKnownKeys": [
+          "name",
+          "password"
+        ],
+        "partialEmpty": false,
+        "partialType": "NoneType",
+        "type": 1,
+        "count": 1
+      },
+      {
+        "dataEmpty": false,
+        "dataJsonObject": true,
+        "dataKind": "jsonObject",
+        "dataKnownKeys": [],
+        "dataType": "str",
+        "hasItemKey": true,
+        "hasName": true,
+        "hasTypeSection": true,
+        "legacyDataKnownKeys": [
+          "fields",
+          "name",
+          "notes",
+          "password",
+          "uris",
+          "username"
+        ],
+        "partialEmpty": false,
+        "partialType": "NoneType",
+        "type": 1,
+        "count": 40
+      },
+      {
+        "dataEmpty": false,
+        "dataJsonObject": true,
+        "dataKind": "jsonObject",
+        "dataKnownKeys": [],
+        "dataType": "str",
+        "hasItemKey": true,
+        "hasName": true,
+        "hasTypeSection": true,
+        "legacyDataKnownKeys": [
+          "fields",
+          "name",
+          "notes",
+          "username"
+        ],
+        "partialEmpty": false,
+        "partialType": "NoneType",
+        "type": 4,
+        "count": 20
+      },
+      {
+        "dataEmpty": false,
+        "dataJsonObject": true,
+        "dataKind": "jsonObject",
+        "dataKnownKeys": [],
+        "dataType": "str",
+        "hasItemKey": true,
+        "hasName": true,
+        "hasTypeSection": true,
+        "legacyDataKnownKeys": [
+          "fields",
+          "name",
+          "notes"
+        ],
+        "partialEmpty": false,
+        "partialType": "NoneType",
+        "type": 3,
+        "count": 20
+      },
+      {
+        "dataEmpty": false,
+        "dataJsonObject": true,
+        "dataKind": "jsonObject",
+        "dataKnownKeys": [],
+        "dataType": "str",
+        "hasItemKey": true,
+        "hasName": true,
+        "hasTypeSection": true,
+        "legacyDataKnownKeys": [
+          "fields",
+          "name",
+          "notes",
+          "type"
+        ],
+        "partialEmpty": false,
+        "partialType": "NoneType",
+        "type": 2,
+        "count": 20
+      }
+    ]
+  },
+  {
+    "stage": "official-cloud-baseline",
+    "edition": "main",
+    "remoteTotal": 103,
+    "activeTotal": 103,
+    "wrappingKeyIdCount": 0
+  },
+  {
+    "stage": "manual-production-sync",
+    "edition": "main",
+    "result": "Success",
+    "UploadedCount": 0,
+    "UploadFailedCount": 0,
+    "RemoteAddedCount": 103,
+    "RemoteUpdatedCount": 0,
+    "ConflictCount": 0,
+    "SkippedDueToLocalDirtyCount": 0,
+    "DeletedCount": 0
+  },
+  {
+    "stage": "official-data-audit",
+    "edition": "main",
+    "sourceDocumentsMatched": 103,
+    "representedActiveCipherIds": 103,
+    "missingCount": 0,
+    "types": {
+      "1": 43,
+      "4": 20,
+      "3": 20,
+      "2": 20
+    },
+    "independentlyVerifiedTitles": 103,
+    "independentlyVerifiedLoginFields": 43,
+    "organizationPlaintextNotIndependentlyChecked": 0,
+    "passkeyProjections": 0,
+    "attachmentMetadata": 0,
+    "attachmentDownloadsVerified": 0,
+    "attachmentBytes": 0,
+    "foldersMatched": 2,
+    "sendsMatched": 0
+  },
+  {
+    "stage": "remote-data-preserved",
+    "edition": "main",
+    "passed": true,
+    "secondSync": {
+      "result": "Success",
+      "UploadedCount": 0,
+      "UploadFailedCount": 0,
+      "RemoteAddedCount": 0,
+      "RemoteUpdatedCount": 0,
+      "ConflictCount": 0,
+      "SkippedDueToLocalDirtyCount": 0,
+      "DeletedCount": 0
+    }
+  }
+]

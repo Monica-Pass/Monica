@@ -83,6 +83,21 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
     // 仓库
     private val strings = AppLocaleStringResolver(application)
     private val repository = BitwardenRepository.getInstance(application)
+    private val accountService = takagi.ru.monica.bitwarden.service.BitwardenAccountService(application)
+
+    internal suspend fun startAccountRegistration(server: String, email: String, name: String?, tls: takagi.ru.monica.bitwarden.api.BitwardenTlsConfig?) =
+        accountService.startRegistration(server, email, name, tls)
+
+    internal suspend fun verifyAccountRegistration(ticket: takagi.ru.monica.bitwarden.service.BitwardenRegistrationTicket, token: String) =
+        accountService.verifyRegistration(ticket, token)
+
+    internal suspend fun finishAccountRegistration(ticket: takagi.ru.monica.bitwarden.service.BitwardenRegistrationTicket, password: String, confirmation: String, hint: String?) =
+        accountService.finishRegistration(ticket, password, confirmation, hint)
+
+    internal suspend fun requestAccountPasswordHint(server: String, email: String, tls: takagi.ru.monica.bitwarden.api.BitwardenTlsConfig?) =
+        accountService.requestPasswordHint(server, email, tls)
+
+    suspend fun getAccountDevices(vaultId: Long) = repository.getAccountDevices(vaultId)
     private val securityManager = SecurityManager(application.applicationContext)
     private val bitwardenOfflineSecretCache = BitwardenOfflineSecretCache(
         application.applicationContext,
@@ -92,6 +107,7 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
     
     // 两步验证临时状态
     private var twoFactorState: LoginResult.TwoFactorRequired? = null
+    private var authenticationJob: Job? = null
     private val _sendingTwoFactorEmail = MutableStateFlow(false)
     val sendingTwoFactorEmail = _sendingTwoFactorEmail.asStateFlow()
     private var pendingServerUrl: String? = null
@@ -308,7 +324,8 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
             return
         }
         
-        viewModelScope.launch {
+        authenticationJob?.cancel()
+        authenticationJob = viewModelScope.launch {
             _loginState.value = LoginState.Loading
             
             val result = repository.login(
@@ -372,7 +389,8 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
     fun loginWithTwoFactor(
         twoFactorCode: String,
         twoFactorMethod: Int,
-        captchaResponse: String? = null
+        captchaResponse: String? = null,
+        remember: Boolean = false
     ) {
         val state = twoFactorState ?: run {
             viewModelScope.launch {
@@ -381,7 +399,8 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
             return
         }
         
-        viewModelScope.launch {
+        authenticationJob?.cancel()
+        authenticationJob = viewModelScope.launch {
             _loginState.value = LoginState.Loading
             
             val result = repository.loginWithTwoFactor(
@@ -390,7 +409,8 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
                 twoFactorProvider = twoFactorMethod,
                 serverUrl = pendingServerUrl,
                 captchaResponse = captchaResponse,
-                tlsConfig = pendingTlsConfig
+                tlsConfig = pendingTlsConfig,
+                remember = remember
             )
             
             when (result) {
@@ -869,6 +889,67 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
     /**
      * 创建文本 Send
      */
+    fun saveSendDraft(
+        vaultId: Long,
+        draft: takagi.ru.monica.bitwarden.service.BitwardenSendDraft,
+        existing: BitwardenSend? = null,
+        fileUri: Uri? = null,
+        fileName: String? = null
+    ) {
+        if (existing != null && existing.vaultId != vaultId) {
+            _sendState.value = SendState.Error(strings.get(R.string.send_edit_failed))
+            return
+        }
+        val vault = resolveVault(vaultId) ?: return
+        if (!repository.isVaultUnlocked(vault.id)) {
+            _sendState.value = SendState.Locked
+            return
+        }
+        viewModelScope.launch {
+            _sendState.value = SendState.Creating
+            try {
+                draft.validate(System.currentTimeMillis(), existing?.isTextType ?: (fileUri == null))
+            } catch (_: IllegalArgumentException) {
+                _sendState.value = SendState.Error(strings.get(R.string.send_edit_invalid))
+                return@launch
+            }
+            val result = when {
+                existing != null -> {
+                    repository.updateSend(existing, draft)
+                }
+                fileUri != null -> repository.createFileSend(vault.id, draft.title, fileUri,
+                    fileName.orEmpty(), draft.notes, draft.password, draft.maxAccessCount,
+                    draft.hideEmail, draft.deletionMillis, draft.expirationMillis)
+                else -> repository.createTextSend(vault.id, draft.title, draft.text,
+                    draft.notes, draft.password, draft.maxAccessCount, draft.hideEmail,
+                    draft.hiddenText, draft.deletionMillis, draft.expirationMillis)
+            }
+            when (result) {
+                is BitwardenRepository.SendMutationResult.Success -> {
+                    if (!repository.isVaultUnlocked(vault.id)) {
+                        _sendState.value = SendState.Locked
+                        return@launch
+                    }
+                    if (_activeVault.value?.id == vault.id) {
+                        _sends.value = listOf(result.send) + _sends.value.filterNot {
+                            it.vaultId == vault.id && it.bitwardenSendId == result.send.bitwardenSendId
+                        }
+                    }
+                    refreshSendsAcrossVaults()
+                    _sendState.value = SendState.Idle
+                    _sendCreateSuccessVersion.value += 1
+                    requestLocalMutationSync(vault.id)
+                    _events.emit(BitwardenEvent.ShowSuccess(strings.get(R.string.send_saved)))
+                }
+                is BitwardenRepository.SendMutationResult.Error -> {
+                    _sendState.value = SendState.Error(result.message)
+                    _events.emit(BitwardenEvent.ShowError(result.message))
+                }
+                is BitwardenRepository.SendMutationResult.Deleted -> _sendState.value = SendState.Idle
+            }
+        }
+    }
+
     fun createTextSend(
         vaultId: Long? = null,
         title: String,
@@ -1114,8 +1195,10 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
     /**
      * 重置登录状态
      */
-    fun resetLoginState() {
-        if (_loginState.value is LoginState.Loading) return
+    fun resetLoginState(cancelInFlight: Boolean = false) {
+        if (_loginState.value is LoginState.Loading && !cancelInFlight) return
+        authenticationJob?.cancel()
+        authenticationJob = null
         twoFactorState?.clear()
         twoFactorState = null
         pendingServerUrl = null

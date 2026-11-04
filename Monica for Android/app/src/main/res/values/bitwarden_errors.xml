@@ -12,4 +12,5 @@
     <string name="bitwarden_error_cleartext">The server address uses HTTP, which the current security policy does not allow. Use an HTTPS address and check the reverse proxy\'s HTTPS configuration.</string>
     <string name="bitwarden_error_network_io">A network error interrupted communication with the server. Check your network, VPN, and proxy settings, then try again.</string>
     <string name="bitwarden_organization_sync_incomplete">Some team items could not be decrypted (%1$d). Readable items were synced; existing affected items were retained. Check organization membership and sign in again.</string>
+    <string name="bitwarden_sync_incomplete_items">Some items could not be synced (%1$d). Readable items were synced; existing local data was retained.</string>
 </resources>

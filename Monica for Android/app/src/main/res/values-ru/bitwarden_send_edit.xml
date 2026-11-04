@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="send_edit_title">Изменить Send</string>
+    <string name="send_deletion_date">Дата удаления</string>
+    <string name="send_expiration_date">Дата истечения</string>
+    <string name="send_no_expiration">Без срока действия</string>
+    <string name="send_keep_password">Оставьте пустым, чтобы сохранить текущий пароль доступа</string>
+    <string name="send_new_password">Новый пароль доступа</string>
+    <string name="send_remove_password">Удалить пароль доступа</string>
+    <string name="send_saved">Send сохранён</string>
+    <string name="send_edit_conflict">Этот Send был изменён. Откройте его заново перед сохранением.</string>
+    <string name="send_edit_invalid">Проверьте лимит доступа и даты. Удаление должно произойти в течение 31 дня, а срок действия не может истекать позднее.</string>
+    <string name="send_edit_failed">Не удалось сохранить Send. Обновите и проверьте его текущее состояние перед повторной попыткой.</string>
+    <string name="send_edit_unsupported_auth">Этот Send использует способ доступа, который нельзя изменить здесь.</string>
+</resources>

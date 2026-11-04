@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="send_edit_title">Edytuj Send</string>
+    <string name="send_deletion_date">Data usunięcia</string>
+    <string name="send_expiration_date">Data wygaśnięcia</string>
+    <string name="send_no_expiration">Bez wygaśnięcia</string>
+    <string name="send_keep_password">Pozostaw puste, aby zachować obecne hasło dostępu</string>
+    <string name="send_new_password">Nowe hasło dostępu</string>
+    <string name="send_remove_password">Usuń hasło dostępu</string>
+    <string name="send_saved">Send zapisany</string>
+    <string name="send_edit_conflict">Ten Send został zmieniony. Otwórz go ponownie przed zapisaniem.</string>
+    <string name="send_edit_invalid">Sprawdź limit dostępu i daty. Usunięcie musi nastąpić w ciągu 31 dni, a wygaśnięcie nie może nastąpić później.</string>
+    <string name="send_edit_failed">Nie można zapisać Send. Odśwież i sprawdź jego obecny stan przed ponowną próbą.</string>
+    <string name="send_edit_unsupported_auth">Ten Send używa metody dostępu, której nie można tutaj zmienić.</string>
+</resources>

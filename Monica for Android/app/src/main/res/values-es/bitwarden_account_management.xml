@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_account_create">Crear cuenta</string>
+    <string name="bitwarden_account_request_hint">Solicitar pista de contraseña</string>
+    <string name="bitwarden_account_password_hint">Pista de la contraseña maestra (opcional)</string>
+    <string name="bitwarden_account_send_verification">Enviar correo de verificación</string>
+    <string name="bitwarden_account_verification_pending">Abre el correo de verificación y pega aquí su enlace o token.</string>
+    <string name="bitwarden_account_verification_input">Enlace o token de verificación del correo</string>
+    <string name="bitwarden_account_verification_invalid">El enlace o token de verificación no es válido para esta cuenta.</string>
+    <string name="bitwarden_account_password_requirements">Usa una contraseña maestra segura de al menos 12 caracteres.</string>
+    <string name="bitwarden_account_password_mismatch">Las contraseñas maestras no coinciden.</string>
+    <string name="bitwarden_account_registration_success">Cuenta creada. Inicia sesión con tu nueva contraseña maestra.</string>
+    <string name="bitwarden_account_hint_sent">Si esta cuenta existe, se ha solicitado el correo con la pista de contraseña.</string>
+    <string name="bitwarden_account_security">Seguridad de la cuenta</string>
+    <string name="bitwarden_account_devices">Dispositivos de la cuenta</string>
+    <string name="bitwarden_account_device_trusted">Dispositivo de confianza</string>
+    <string name="bitwarden_account_device_untrusted">El dispositivo no es de confianza</string>
+    <string name="bitwarden_account_last_activity">Última actividad</string>
+    <string name="bitwarden_account_web_settings">Gestionar la cuenta en la bóveda web</string>
+    <string name="bitwarden_account_no_devices">No se encontraron dispositivos.</string>
+    <string name="bitwarden_account_request_failed">La solicitud de la cuenta falló (HTTP %1$d).</string>
+    <string name="bitwarden_account_operation_failed">No se pudo completar la operación de la cuenta.</string>
+    <string name="bitwarden_account_invalid_email">Introduce un correo electrónico válido.</string>
+</resources>

@@ -94,7 +94,7 @@ class LocalizedBitwardenUiInstrumentedTest(private val language: Language) {
         var login by mutableStateOf(false)
         show {
             if (login) BitwardenLoginScreen(model, { login = false }, {})
-            else BitwardenSettingsScreen(model, {}, { login = true }, {})
+            else BitwardenSettingsScreen(model, {}, { login = true }, {}, {})
         }
         compose.onNodeWithText(localized.getString(R.string.legacy_ui_bitwarden_settings)).assertIsDisplayed()
         compose.onNodeWithText(localized.getString(R.string.legacy_ui_connected_vaults)).assertIsDisplayed()

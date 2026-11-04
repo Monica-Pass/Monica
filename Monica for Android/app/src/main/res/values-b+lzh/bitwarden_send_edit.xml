@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="send_edit_title">編修 Send</string>
+    <string name="send_deletion_date">刪除之時</string>
+    <string name="send_expiration_date">失效之時</string>
+    <string name="send_no_expiration">無期</string>
+    <string name="send_keep_password">留空則存原訪問密碼</string>
+    <string name="send_new_password">新訪問密碼</string>
+    <string name="send_remove_password">去訪問密碼</string>
+    <string name="send_saved">Send 已存</string>
+    <string name="send_edit_conflict">此 Send 已變。請復開而後存。</string>
+    <string name="send_edit_invalid">請核訪問次數與時限：刪除須在三十一日內，失效不得晚於刪除。</string>
+    <string name="send_edit_failed">Send 未能存。請更新核其現狀，而後重試。</string>
+    <string name="send_edit_unsupported_auth">此 Send 所用訪問之法，不能於此更改。</string>
+</resources>

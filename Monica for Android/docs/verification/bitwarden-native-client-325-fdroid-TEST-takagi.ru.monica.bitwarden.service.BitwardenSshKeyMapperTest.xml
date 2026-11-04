@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.service.BitwardenSshKeyMapperTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-03T18:36:08" hostname="JOYIN" time="0.418">
+  <properties/>
+  <testcase name="nativeCreateAndUpdateUseRealEncryptedRetrofitBodiesAndReadBackAllMaterial" classname="takagi.ru.monica.bitwarden.service.BitwardenSshKeyMapperTest" time="0.12"/>
+  <testcase name="nativeMetadataReplacedOnceWithoutTouchingUnknownOrRepeatedFieldCiphertext" classname="takagi.ru.monica.bitwarden.service.BitwardenSshKeyMapperTest" time="0.056"/>
+  <testcase name="nativeItemEncryptionCannotBeOpenedWithItsParentUserKey" classname="takagi.ru.monica.bitwarden.service.BitwardenSshKeyMapperTest" time="0.046"/>
+  <testcase name="legacyMetadataWithoutSidecarAndPrivateOnlyNativeKeyRemainReadable" classname="takagi.ru.monica.bitwarden.service.BitwardenSshKeyMapperTest" time="0.048"/>
+  <testcase name="nativeKeysOverrideSpoofedMetadataAndAmbiguousMetadataRejects" classname="takagi.ru.monica.bitwarden.service.BitwardenSshKeyMapperTest" time="0.048"/>
+  <testcase name="unreadableEmptyOrDifferentSourceTypeNeverProducesRequest" classname="takagi.ru.monica.bitwarden.service.BitwardenSshKeyMapperTest" time="0.052"/>
+  <testcase name="existingCompatibilityLoginStaysTypeOneAndPreservesAllEncryptedCustomFields" classname="takagi.ru.monica.bitwarden.service.BitwardenSshKeyMapperTest" time="0.047"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

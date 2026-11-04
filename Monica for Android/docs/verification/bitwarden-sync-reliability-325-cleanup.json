@@ -1,0 +1,40 @@
+{
+  "passed": true,
+  "restoredUser": 0,
+  "retainedUsers": [
+    0,
+    10,
+    11,
+    12
+  ],
+  "removedOwnUser": 14,
+  "ownProbePackagesRemoved": true,
+  "temporaryForwardAlreadyAbsent": true,
+  "ownEmulatorStopped": true,
+  "ownIsolatedServerStopped": true,
+  "helperStopped": true,
+  "taskPortsClosed": true,
+  "browserTabClosed": true,
+  "avdRegistrationPreserved": true,
+  "avdDiskFiles": [
+    {
+      "Name": "config.ini",
+      "Length": 3908
+    },
+    {
+      "Name": "userdata-qemu.img",
+      "Length": 12884901888
+    },
+    {
+      "Name": "userdata-qemu.img.qcow2",
+      "Length": 22077046784
+    },
+    {
+      "Name": "userdata.img",
+      "Length": 1048576
+    }
+  ],
+  "sourceAndIsolatedServerDataPreserved": true,
+  "noOriginalAppDataCleared": true,
+  "time": "2026-11-04T13:44:16.5490094+08:00"
+}

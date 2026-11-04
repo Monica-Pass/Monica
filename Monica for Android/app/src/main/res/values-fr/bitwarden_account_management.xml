@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_account_create">Créer un compte</string>
+    <string name="bitwarden_account_request_hint">Demander un indice de mot de passe</string>
+    <string name="bitwarden_account_password_hint">Indice du mot de passe principal (facultatif)</string>
+    <string name="bitwarden_account_send_verification">Envoyer le courriel de vérification</string>
+    <string name="bitwarden_account_verification_pending">Ouvrez le courriel de vérification, puis collez son lien ou son jeton ici.</string>
+    <string name="bitwarden_account_verification_input">Lien ou jeton de vérification du courriel</string>
+    <string name="bitwarden_account_verification_invalid">Le lien ou le jeton de vérification est invalide pour ce compte.</string>
+    <string name="bitwarden_account_password_requirements">Utilisez un mot de passe principal fort avec au moins 12 caractères.</string>
+    <string name="bitwarden_account_password_mismatch">Les mots de passe principaux ne correspondent pas.</string>
+    <string name="bitwarden_account_registration_success">Compte créé. Connectez-vous avec votre nouveau mot de passe principal.</string>
+    <string name="bitwarden_account_hint_sent">Si ce compte existe, le courriel contenant son indice a été demandé.</string>
+    <string name="bitwarden_account_security">Sécurité du compte</string>
+    <string name="bitwarden_account_devices">Appareils du compte</string>
+    <string name="bitwarden_account_device_trusted">Appareil de confiance</string>
+    <string name="bitwarden_account_device_untrusted">Appareil non approuvé</string>
+    <string name="bitwarden_account_last_activity">Dernière activité</string>
+    <string name="bitwarden_account_web_settings">Gérer le compte dans le coffre web</string>
+    <string name="bitwarden_account_no_devices">Aucun appareil trouvé.</string>
+    <string name="bitwarden_account_request_failed">La demande du compte a échoué (HTTP %1$d).</string>
+    <string name="bitwarden_account_operation_failed">L’opération du compte n’a pas pu être effectuée.</string>
+    <string name="bitwarden_account_invalid_email">Saisissez une adresse courriel valide.</string>
+</resources>

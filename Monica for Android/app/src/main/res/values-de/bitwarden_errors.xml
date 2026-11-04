@@ -11,4 +11,5 @@
     <string name="bitwarden_error_proxy">Der Proxy hat die Verbindung abgelehnt oder verlangt eine Anmeldung. Prüfe Proxy-Adresse, Port und Zugangsdaten.</string>
     <string name="bitwarden_error_cleartext">Die Serveradresse verwendet HTTP, was die aktuelle Sicherheitsrichtlinie nicht erlaubt. Verwende eine HTTPS-Adresse und prüfe die HTTPS-Konfiguration des Reverse-Proxys.</string>
     <string name="bitwarden_error_network_io">Ein Netzwerkfehler hat die Kommunikation mit dem Server unterbrochen. Prüfe Netzwerk, VPN und Proxy und versuche es erneut.</string>
+    <string name="bitwarden_sync_incomplete_items">Einige Einträge konnten nicht synchronisiert werden (%1$d). Lesbare Einträge wurden synchronisiert; vorhandene lokale Daten bleiben erhalten.</string>
 </resources>

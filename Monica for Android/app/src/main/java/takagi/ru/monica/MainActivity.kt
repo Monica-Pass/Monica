@@ -2299,6 +2299,9 @@ fun MonicaContent(
                 initialTitle = pendingSendDraft?.title.orEmpty(),
                 initialText = pendingSendDraft?.text.orEmpty(),
                 initialNotes = pendingSendDraft?.notes.orEmpty(),
+                onSaveDraft = { vaultId, draft, uri, fileName ->
+                    bitwardenViewModel.saveSendDraft(vaultId, draft, fileUri = uri, fileName = fileName)
+                },
                 onNavigateBack = {
                     navController.popBackStack()
                 },
@@ -4258,12 +4261,24 @@ fun MonicaContent(
                     // 未来可以添加 Vault 详情页面
                     // 目前保持空实现
                 },
+                onNavigateToAccount = { vaultId -> navController.navigate("bitwarden/account/$vaultId") },
                 onNavigateToSyncQueue = {
                     navController.navigate(Screen.SyncQueue.route)
                 }
             )
         }
         
+        composable("bitwarden/account/{vaultId}") { backStackEntry ->
+            val vaultId = backStackEntry.arguments?.getString("vaultId")?.toLongOrNull()
+            if (vaultId != null) {
+                val accountViewModel: takagi.ru.monica.bitwarden.viewmodel.BitwardenViewModel =
+                    androidx.lifecycle.viewmodel.compose.viewModel()
+                takagi.ru.monica.bitwarden.ui.BitwardenAccountScreen(accountViewModel, vaultId) {
+                    navController.popBackStack()
+                }
+            }
+        }
+
         // 同步队列管理页面
         composable(
             route = Screen.SyncQueue.route,

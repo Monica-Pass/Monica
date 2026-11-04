@@ -11,4 +11,5 @@
     <string name="bitwarden_error_proxy">プロキシが接続を拒否したか、認証を要求しています。プロキシのアドレス、ポート、アカウント設定を確認してください。</string>
     <string name="bitwarden_error_cleartext">サーバーのアドレスは HTTP を使用していますが、現在のセキュリティポリシーでは許可されていません。HTTPS アドレスを使用し、リバースプロキシの HTTPS 設定を確認してください。</string>
     <string name="bitwarden_error_network_io">ネットワークエラーによりサーバーとの通信が中断されました。ネットワーク、VPN、プロキシの設定を確認して再試行してください。</string>
+    <string name="bitwarden_sync_incomplete_items">一部の項目を同期できませんでした（%1$d）。読み取れる項目は同期され、既存のローカルデータは保持されています。</string>
 </resources>

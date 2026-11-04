@@ -355,7 +355,7 @@ object BitwardenSyncForensicsLogger {
             .forEach { cipher ->
                 val cipherId = cipher.id.trim()
                 if (cipherId.isEmpty()) return@forEach
-                val payload = runCatching { json.encodeToString(cipher) }.getOrNull() ?: return@forEach
+                val payload = runCatching { cipher.sourceDocument?.toString() ?: json.encodeToString(cipher) }.getOrNull() ?: return@forEach
                 persistRawEntrySnapshot(
                     context = appContext,
                     vaultId = vaultId,

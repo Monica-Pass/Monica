@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="send_edit_title">Modifier le Send</string>
+    <string name="send_deletion_date">Date de suppression</string>
+    <string name="send_expiration_date">Date d’expiration</string>
+    <string name="send_no_expiration">Sans expiration</string>
+    <string name="send_keep_password">Laisser vide pour conserver le mot de passe d’accès actuel</string>
+    <string name="send_new_password">Nouveau mot de passe d’accès</string>
+    <string name="send_remove_password">Supprimer le mot de passe d’accès</string>
+    <string name="send_saved">Send enregistré</string>
+    <string name="send_edit_conflict">Ce Send a été modifié. Rouvrez-le avant de l’enregistrer.</string>
+    <string name="send_edit_invalid">Vérifiez la limite d’accès et les dates. La suppression doit avoir lieu sous 31 jours et l’expiration ne peut pas être postérieure.</string>
+    <string name="send_edit_failed">Le Send n’a pas pu être enregistré. Actualisez-le et vérifiez son état avant de réessayer.</string>
+    <string name="send_edit_unsupported_auth">Ce Send utilise une méthode d’accès qui ne peut pas être modifiée ici.</string>
+</resources>

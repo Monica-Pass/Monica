@@ -68,6 +68,9 @@ fun BitwardenLoginScreen(
     totpSuggestions: List<ParsedTotpItem> = emptyList()
 ) {
     val loginState by viewModel.loginState.collectAsState()
+    DisposableEffect(viewModel) {
+        onDispose { viewModel.resetLoginState(cancelInFlight = true) }
+    }
     val sendingEmail by viewModel.sendingTwoFactorEmail.collectAsState()
     val focusManager = LocalFocusManager.current
     val context = LocalContext.current
@@ -92,8 +95,11 @@ fun BitwardenLoginScreen(
     
     // 两步验证状态
     var showTwoFactorDialog by remember { mutableStateOf(false) }
+    var showRegistration by remember { mutableStateOf(false) }
+    var showPasswordHint by remember { mutableStateOf(false) }
     var showTotpPicker by remember { mutableStateOf(false) }
     var twoFactorCode by remember { mutableStateOf("") }
+    var rememberTwoFactor by remember { mutableStateOf(false) }
     var selectedTwoFactorMethod by remember { mutableStateOf(0) }
     var availableTwoFactorMethods by remember { mutableStateOf<List<Int>>(emptyList()) }
     var twoFactorStatusMessage by remember { mutableStateOf<String?>(null) }
@@ -127,6 +133,7 @@ fun BitwardenLoginScreen(
     }
 
     fun submitPrimaryLogin(captcha: String? = null) {
+        rememberTwoFactor = false
         val normalizedEmail = email.trim()
         val resolvedServerUrl = resolveServerUrlForLogin()
         if (normalizedEmail.isBlank() || masterPassword.isBlank()) return
@@ -146,7 +153,8 @@ fun BitwardenLoginScreen(
         viewModel.loginWithTwoFactor(
             twoFactorCode = twoFactorCode,
             twoFactorMethod = selectedTwoFactorMethod,
-            captchaResponse = captcha
+            captchaResponse = captcha,
+            remember = rememberTwoFactor
         )
     }
     
@@ -163,6 +171,7 @@ fun BitwardenLoginScreen(
                 is BitwardenViewModel.BitwardenEvent.NavigateToVault -> {
                     showTwoFactorDialog = false
                     twoFactorCode = ""
+                    rememberTwoFactor = false
                     onLoginSuccess()
                 }
                 is BitwardenViewModel.BitwardenEvent.ShowCaptchaDialog -> {
@@ -499,6 +508,17 @@ fun BitwardenLoginScreen(
                     }
                 }
                 
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    TextButton(onClick = { showRegistration = true }, enabled = loginState !is BitwardenViewModel.LoginState.Loading && resolveServerUrlForLogin() != null,
+                        modifier = Modifier.weight(1f).testTag("bitwarden_create_account")) {
+                        Text(stringResource(R.string.bitwarden_account_create))
+                    }
+                    TextButton(onClick = { showPasswordHint = true }, enabled = loginState !is BitwardenViewModel.LoginState.Loading && resolveServerUrlForLogin() != null,
+                        modifier = Modifier.weight(1f).testTag("bitwarden_request_password_hint")) {
+                        Text(stringResource(R.string.bitwarden_account_request_hint))
+                    }
+                }
+
                 // 错误信息
                 if (loginState is BitwardenViewModel.LoginState.Error) {
                     Spacer(modifier = Modifier.height(16.dp))
@@ -567,6 +587,14 @@ fun BitwardenLoginScreen(
     }
     
     // 两步验证对话框
+    if (showRegistration) {
+        BitwardenRegistrationDialog(viewModel, resolveServerUrlForLogin().orEmpty(), email, buildTlsConfigForLogin(),
+            onRegistered = { email = it; showRegistration = false }, onDismiss = { showRegistration = false })
+    }
+    if (showPasswordHint) {
+        BitwardenPasswordHintDialog(viewModel, resolveServerUrlForLogin().orEmpty(), email, buildTlsConfigForLogin(),
+            onDismiss = { showPasswordHint = false })
+    }
     if (showTwoFactorDialog && !showTotpPicker) {
         TwoFactorDialog(
             availableMethods = availableTwoFactorMethods,
@@ -578,6 +606,8 @@ fun BitwardenLoginScreen(
             },
             code = twoFactorCode,
             onCodeChange = { twoFactorCode = it },
+            rememberTwoFactor = rememberTwoFactor,
+            onRememberTwoFactorChange = { rememberTwoFactor = it },
             onPickFromMonica = if (selectedTwoFactorMethod == BitwardenAuthService.TWO_FACTOR_AUTHENTICATOR) {
                 { showTotpPicker = true }
             } else null,
@@ -594,6 +624,7 @@ fun BitwardenLoginScreen(
             onDismiss = {
                 showTwoFactorDialog = false
                 twoFactorCode = ""
+                rememberTwoFactor = false
                 viewModel.resetLoginState()
             }
         )
@@ -824,6 +855,8 @@ fun TwoFactorDialog(
     onDismiss: () -> Unit,
     busy: Boolean = false,
     sendingEmail: Boolean = false,
+    rememberTwoFactor: Boolean = false,
+    onRememberTwoFactorChange: (Boolean) -> Unit = {},
 ) {
     val choosing = selectedMethod !in availableMethods
     val supported = !choosing && BitwardenTwoFactorPolicy.supportsCode(selectedMethod)
@@ -898,6 +931,14 @@ fun TwoFactorDialog(
                             imeAction = ImeAction.Done),
                         keyboardActions = KeyboardActions(onDone = { if (!working && code.isNotBlank()) onConfirm() }),
                         singleLine = true, modifier = Modifier.fillMaxWidth().testTag("bitwarden_two_factor_code"))
+                    if (supported && selectedMethod != BitwardenAuthService.TWO_FACTOR_EMAIL_NEW_DEVICE) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Checkbox(checked = rememberTwoFactor, onCheckedChange = onRememberTwoFactorChange,
+                                enabled = !working, modifier = Modifier.testTag("bitwarden_two_factor_remember"))
+                            Text(stringResource(R.string.bitwarden_remember_two_factor),
+                                style = MaterialTheme.typography.bodyMedium)
+                        }
+                    }
                 }
             }
         },

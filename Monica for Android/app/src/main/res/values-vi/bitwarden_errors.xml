@@ -11,4 +11,5 @@
     <string name="bitwarden_error_proxy">Proxy đã từ chối kết nối hoặc yêu cầu xác thực. Hãy kiểm tra địa chỉ, cổng và thông tin tài khoản proxy.</string>
     <string name="bitwarden_error_cleartext">Địa chỉ máy chủ sử dụng HTTP, không được chính sách bảo mật hiện tại cho phép. Hãy dùng địa chỉ HTTPS và kiểm tra cấu hình HTTPS của proxy ngược.</string>
     <string name="bitwarden_error_network_io">Lỗi mạng đã làm gián đoạn liên lạc với máy chủ. Hãy kiểm tra mạng, VPN và proxy rồi thử lại.</string>
+    <string name="bitwarden_sync_incomplete_items">Không thể đồng bộ một số mục (%1$d). Các mục có thể đọc đã được đồng bộ; dữ liệu cục bộ hiện có được giữ lại.</string>
 </resources>

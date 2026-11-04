@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-11-04T04:56:54" hostname="JOYIN" time="0.746">
+  <properties/>
+  <testcase name="cachedProfileIdentityDoesNotNeedAnotherNetworkRequest" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.073"/>
+  <testcase name="corruptOrWrongKeyUriNeverProducesAnUpload" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.049"/>
+  <testcase name="missingCachedIdentityUsesAuthenticatedProfileWithMatchingEmail" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.077"/>
+  <testcase name="missingAndMalformedAccountIdsAreNeverReplacedByEmailOrOrganization" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.053"/>
+  <testcase name="createAndUpdateUseRealRetrofitBodiesWithEncryptedUriChecksums" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.087"/>
+  <testcase name="exactPlaintextAndDuplicateUrisKeepTheirOwnChecksumsAndRules" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.04"/>
+  <testcase name="updatesRetainOriginalMatchRulesOnlyForRemainingExactUris" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.048"/>
+  <testcase name="rawRequestsKeepUnknownFieldsAndServerReadbackIgnoresRequestOnlyAccount" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.04"/>
+  <testcase name="invalidChecksumIsRepairedWithoutChangingUriCiphertext" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.045"/>
+  <testcase name="changedProfileAccountAndUnauthorizedProfilePreventUpload" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.073"/>
+  <testcase name="updatingLoginPreservesExistingEncryptedPasswordHistory" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.044"/>
+  <testcase name="unchangedChecksumsAndCiphertextRemainByteForByte" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.036"/>
+  <testcase name="allItemTypesReceiveAccountMetadataWithoutInventingLoginData" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.041"/>
+  <testcase name="nullUriAndAbsentLoginKeepTheirShape" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.039"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -75,7 +75,7 @@ class EnglishBitwardenUiInstrumentedTest {
         var login by mutableStateOf(false)
         show(Language.ENGLISH) {
             if (login) BitwardenLoginScreen(model, { login = false }, {})
-            else BitwardenSettingsScreen(model, {}, { login = true }, {})
+            else BitwardenSettingsScreen(model, {}, { login = true }, {}, {})
         }
         compose.onNodeWithText("Bitwarden settings").assertIsDisplayed()
         compose.onNodeWithText("Connected vaults").assertIsDisplayed()

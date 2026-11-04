@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" tests="28" skipped="0" failures="0" errors="0" timestamp="2026-11-04T05:00:13" hostname="JOYIN" time="6.577">
+  <properties/>
+  <testcase name="serverNormalizingAbsentCustomFieldsToEmptyArrayConfirmsTheSameContent" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="4.666"/>
+  <testcase name="syncRetainsEveryCipherBeforeProjectionAndRejectsDuplicateIds" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.123"/>
+  <testcase name="ordinaryEditPreservesUnknownEnvelopeAndNestedLoginData" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.115"/>
+  <testcase name="ordinaryEditPreservesArchiveState" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.063"/>
+  <testcase name="acknowledgmentRejectsMissingUnknownEnvelopeAndNestedContent" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.067"/>
+  <testcase name="ownershipArchiveHistoryAndItemKeyRemainUntouched" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.048"/>
+  <testcase name="duplicateKeysIncludingEscapedSpellingAreRejectedBeforeParsing" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.052"/>
+  <testcase name="legacyWrappingKeyIdMatchesOfficialSdkVectorAndUsesBothKeyHalves" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.065"/>
+  <testcase name="acknowledgmentRetainsArrayOrderOccurrenceAndOpaqueHistoryShape" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.071"/>
+  <testcase name="unsupportedBlobPartialAndKeyIdFormatsCannotBecomeEmptyEditableRecords" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.054"/>
+  <testcase name="acknowledgmentRejectsChangedTypeOwnershipAndNullClearedKnownValues" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.058"/>
+  <testcase name="explicitArchiveIntentChangesOnlyArchiveWhileDefaultRetainsIt" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.061"/>
+  <testcase name="rawRetrofitUpdateKeepsUnknownFieldsAndRevisionInActualHttpBody" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.471"/>
+  <testcase name="passwordChangeDoesNotReencodeOrTrimOpaqueFidoAndHistory" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.058"/>
+  <testcase name="legacyPrimaryUriWithoutModernArrayIsProjectedBeforeEditing" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.056"/>
+  <testcase name="reencryptedUrisAndDuplicateCustomNamesRetainTheirOwnUnknownMetadata" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.07"/>
+  <testcase name="reencryptedUriUpdatesTheLegacyPrimaryAliasAndStillConfirmsEveryUri" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.041"/>
+  <testcase name="incompleteAndFutureTypesCannotEnterLegacyProjection" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.042"/>
+  <testcase name="staleOrAbsentRevisionIsNeverReauthorizedByFreshSource" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.049"/>
+  <testcase name="acknowledgmentAllowsEquivalentDatesAndServerOnlyTransportFields" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.046"/>
+  <testcase name="typedNullsCanClearKnownFieldsWithoutClearingUnknownOnes" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.042"/>
+  <testcase name="oversizedAndDeepWireDocumentsAreRejected" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.038"/>
+  <testcase name="deletionReadOnlyAndTypeChangeAreRejected" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.034"/>
+  <testcase name="unknownObjectKeyCaseAndArrayOrderArePreservedExactly" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.034"/>
+  <testcase name="acknowledgmentAllowsRefreshedAttachmentUrlsButRequiresStableMetadataAndKey" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.038"/>
+  <testcase name="acknowledgmentAcceptsKnownNullOmissionAndCasingButKeepsUnknownNullsExact" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.042"/>
+  <testcase name="ambiguousRecognizedCasingInNestedSourcesIsRejected" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.033"/>
+  <testcase name="legacyLoginWithOfficialWrappingKeyIdRemainsProjectable" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest" time="0.035"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Exception in thread "DefaultDispatcher-worker-7 @coroutine#7" takagi.ru.monica.security.SecureStorageUnavailableException: Secure storage unavailable: UNREADABLE_SECURE_STORAGE
+	at takagi.ru.monica.security.SecurePreferencesStore.openRaw$app_debug(SecurePreferencesStore.kt:117)
+	at takagi.ru.monica.security.SecurePreferencesStore.open(SecurePreferencesStore.kt:74)
+	at takagi.ru.monica.security.SecurePreferencesStore.open$default(SecurePreferencesStore.kt:69)
+	at takagi.ru.monica.security.SecurityManager.<init>(SecurityManager.kt:74)
+	at takagi.ru.monica.lansync.DeviceSyncCoordinator.security_delegate$lambda$0(DeviceSyncCoordinator.kt:58)
+	at kotlin.SynchronizedLazyImpl.getValue(LazyJVM.kt:83)
+	at takagi.ru.monica.lansync.DeviceSyncCoordinator.getSecurity(DeviceSyncCoordinator.kt:58)
+	at takagi.ru.monica.lansync.DeviceSyncCoordinator.store_delegate$lambda$1(DeviceSyncCoordinator.kt:59)
+	at kotlin.SynchronizedLazyImpl.getValue(LazyJVM.kt:83)
+	at takagi.ru.monica.lansync.DeviceSyncCoordinator.getStore(DeviceSyncCoordinator.kt:59)
+	at takagi.ru.monica.lansync.DeviceSyncCoordinator.automaticSyncEnabled(DeviceSyncCoordinator.kt:232)
+	at takagi.ru.monica.lansync.DeviceSyncCoordinator.publish(DeviceSyncCoordinator.kt:200)
+	at takagi.ru.monica.lansync.DeviceSyncCoordinator.access$publish(DeviceSyncCoordinator.kt:47)
+	at takagi.ru.monica.lansync.DeviceSyncCoordinator$pause$2.invokeSuspend(DeviceSyncCoordinator.kt:857)
+	at takagi.ru.monica.lansync.DeviceSyncCoordinator$pause$2.invoke(DeviceSyncCoordinator.kt)
+	at takagi.ru.monica.lansync.DeviceSyncCoordinator$pause$2.invoke(DeviceSyncCoordinator.kt)
+	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturn(Undispatched.kt:42)
+	at kotlinx.coroutines.BuildersKt__Builders_commonKt.withContext(Builders.common.kt:164)
+	at kotlinx.coroutines.BuildersKt.withContext(Unknown Source)
+	at takagi.ru.monica.lansync.DeviceSyncCoordinator.pause(DeviceSyncCoordinator.kt:845)
+	at takagi.ru.monica.lansync.DeviceSyncCoordinator.access$pause(DeviceSyncCoordinator.kt:47)
+	at takagi.ru.monica.lansync.DeviceSyncCoordinator$start$5$1.invokeSuspend(DeviceSyncCoordinator.kt:174)
+	at takagi.ru.monica.lansync.DeviceSyncCoordinator$start$5$1.invoke(DeviceSyncCoordinator.kt)
+	at takagi.ru.monica.lansync.DeviceSyncCoordinator$start$5$1.invoke(DeviceSyncCoordinator.kt)
+	at kotlinx.coroutines.flow.FlowKt__MergeKt$mapLatest$1.invokeSuspend(Merge.kt:213)
+	at kotlinx.coroutines.flow.FlowKt__MergeKt$mapLatest$1.invoke(Merge.kt)
+	at kotlinx.coroutines.flow.FlowKt__MergeKt$mapLatest$1.invoke(Merge.kt)
+	at kotlinx.coroutines.flow.internal.ChannelFlowTransformLatest$flowCollect$3$1$2.invokeSuspend(Merge.kt:30)
+	at kotlinx.coroutines.flow.internal.ChannelFlowTransformLatest$flowCollect$3$1$2.invoke(Merge.kt)
+	at kotlinx.coroutines.flow.internal.ChannelFlowTransformLatest$flowCollect$3$1$2.invoke(Merge.kt)
+	at kotlinx.coroutines.intrinsics.UndispatchedKt.startCoroutineUndispatched(Undispatched.kt:20)
+	at kotlinx.coroutines.CoroutineStart.invoke(CoroutineStart.kt:360)
+	at kotlinx.coroutines.AbstractCoroutine.start(AbstractCoroutine.kt:124)
+	at kotlinx.coroutines.BuildersKt__Builders_commonKt.launch(Builders.common.kt:52)
+	at kotlinx.coroutines.BuildersKt.launch(Unknown Source)
+	at kotlinx.coroutines.BuildersKt__Builders_commonKt.launch$default(Builders.common.kt:43)
+	at kotlinx.coroutines.BuildersKt.launch$default(Unknown Source)
+	at kotlinx.coroutines.flow.internal.ChannelFlowTransformLatest$flowCollect$3$1.emit(Merge.kt:29)
+	at kotlinx.coroutines.flow.DistinctFlowImpl$collect$2.emit(Distinct.kt:73)
+	at kotlinx.coroutines.flow.FlowKt__ZipKt$combine$1$1.invokeSuspend(Zip.kt:29)
+	at kotlinx.coroutines.flow.FlowKt__ZipKt$combine$1$1.invoke(Zip.kt)
+	at kotlinx.coroutines.flow.FlowKt__ZipKt$combine$1$1.invoke(Zip.kt)
+	at kotlinx.coroutines.flow.internal.CombineKt$combineInternal$2.invokeSuspend(Combine.kt:73)
+	at kotlinx.coroutines.flow.internal.CombineKt$combineInternal$2.invoke(Combine.kt)
+	at kotlinx.coroutines.flow.internal.CombineKt$combineInternal$2.invoke(Combine.kt)
+	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturn(Undispatched.kt:42)
+	at kotlinx.coroutines.flow.internal.FlowCoroutineKt.flowScope(FlowCoroutine.kt:29)
+	at kotlinx.coroutines.flow.internal.CombineKt.combineInternal(Combine.kt:16)
+	at kotlinx.coroutines.flow.FlowKt__ZipKt$combine$$inlined$unsafeFlow$1.collect(SafeCollector.common.kt:109)
+	at kotlinx.coroutines.flow.DistinctFlowImpl.collect(Distinct.kt:68)
+	at kotlinx.coroutines.flow.internal.ChannelFlowTransformLatest$flowCollect$3.invokeSuspend(Merge.kt:23)
+	at kotlinx.coroutines.flow.internal.ChannelFlowTransformLatest$flowCollect$3.invoke(Merge.kt)
+	at kotlinx.coroutines.flow.internal.ChannelFlowTransformLatest$flowCollect$3.invoke(Merge.kt)
+	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturn(Undispatched.kt:42)
+	at kotlinx.coroutines.CoroutineScopeKt.coroutineScope(CoroutineScope.kt:261)
+	at kotlinx.coroutines.flow.internal.ChannelFlowTransformLatest.flowCollect(Merge.kt:21)
+	at kotlinx.coroutines.flow.internal.ChannelFlowOperator.collectTo$suspendImpl(ChannelFlow.kt:153)
+	at kotlinx.coroutines.flow.internal.ChannelFlowOperator.collectTo(ChannelFlow.kt)
+	at kotlinx.coroutines.flow.internal.ChannelFlow$collectToFun$1.invokeSuspend(ChannelFlow.kt:56)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+	Suppressed: kotlinx.coroutines.internal.DiagnosticCoroutineContextException: [CoroutineId(7), "coroutine#7":StandaloneCoroutine{Cancelling}@74259fae, Dispatchers.IO]
+Caused by: java.security.KeyStoreException: AndroidKeyStore not found
+	at java.base/java.security.KeyStore.getInstance(Unknown Source)
+	at androidx.security.crypto.MasterKeys.keyExists(MasterKeys.java:155)
+	at androidx.security.crypto.MasterKeys.getOrCreate(MasterKeys.java:99)
+	at androidx.security.crypto.MasterKey$Builder$Api23Impl.build(MasterKey.java:380)
+	at androidx.security.crypto.MasterKey$Builder.build(MasterKey.java:320)
+	at takagi.ru.monica.security.SecurePreferencesStore.openRaw$app_debug(SecurePreferencesStore.kt:98)
+	... 66 more
+Caused by: java.security.NoSuchAlgorithmException: AndroidKeyStore KeyStore not available
+	at java.base/sun.security.jca.GetInstance.getInstance(Unknown Source)
+	at java.base/java.security.Security.getImpl(Unknown Source)
+	... 72 more
+]]></system-err>
+</testsuite>

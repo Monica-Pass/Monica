@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_account_create">Создать аккаунт</string>
+    <string name="bitwarden_account_request_hint">Запросить подсказку пароля</string>
+    <string name="bitwarden_account_password_hint">Подсказка мастер-пароля (необязательно)</string>
+    <string name="bitwarden_account_send_verification">Отправить письмо для проверки</string>
+    <string name="bitwarden_account_verification_pending">Откройте письмо для проверки и вставьте сюда ссылку или токен.</string>
+    <string name="bitwarden_account_verification_input">Ссылка или токен проверки почты</string>
+    <string name="bitwarden_account_verification_invalid">Ссылка или токен проверки недействителен для этого аккаунта.</string>
+    <string name="bitwarden_account_password_requirements">Используйте надёжный мастер-пароль длиной не менее 12 символов.</string>
+    <string name="bitwarden_account_password_mismatch">Мастер-пароли не совпадают.</string>
+    <string name="bitwarden_account_registration_success">Аккаунт создан. Войдите с новым мастер-паролем.</string>
+    <string name="bitwarden_account_hint_sent">Если этот аккаунт существует, запрошено письмо с подсказкой пароля.</string>
+    <string name="bitwarden_account_security">Безопасность аккаунта</string>
+    <string name="bitwarden_account_devices">Устройства аккаунта</string>
+    <string name="bitwarden_account_device_trusted">Доверенное устройство</string>
+    <string name="bitwarden_account_device_untrusted">Устройство не является доверенным</string>
+    <string name="bitwarden_account_last_activity">Последняя активность</string>
+    <string name="bitwarden_account_web_settings">Управлять аккаунтом в веб-хранилище</string>
+    <string name="bitwarden_account_no_devices">Устройства не найдены.</string>
+    <string name="bitwarden_account_request_failed">Запрос аккаунта не выполнен (HTTP %1$d).</string>
+    <string name="bitwarden_account_operation_failed">Не удалось выполнить операцию аккаунта.</string>
+    <string name="bitwarden_account_invalid_email">Введите действительный адрес электронной почты.</string>
+</resources>

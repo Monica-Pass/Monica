@@ -171,7 +171,8 @@ class BitwardenAuthService(
         password: String,
         serverUrl: String = BitwardenApiFactory.OFFICIAL_VAULT_URL,
         captchaResponse: String? = null,
-        tlsConfig: BitwardenTlsConfig? = null
+        tlsConfig: BitwardenTlsConfig? = null,
+        rememberedTwoFactorToken: String? = null
     ): Result<LoginResult> = withContext(Dispatchers.IO) {
         var masterKey: ByteArray? = null
         var stretchedKey: SymmetricCryptoKey? = null
@@ -301,7 +302,16 @@ class BitwardenAuthService(
                 headerProfile = primaryHeaderProfile,
                 tlsConfig = tlsConfig
             )
-            val response = identityApi.login(
+            val response = if (!rememberedTwoFactorToken.isNullOrBlank()) identityApi.loginTwoFactor(
+                authEmail = authEmail,
+                username = normalizedEmail,
+                passwordHash = passwordHash,
+                captchaResponse = normalizedCaptcha,
+                deviceIdentifier = deviceId,
+                twoFactorToken = rememberedTwoFactorToken,
+                twoFactorProvider = TWO_FACTOR_REMEMBER,
+                twoFactorRemember = 0
+            ) else identityApi.login(
                 authEmail = authEmail,
                 username = normalizedEmail,
                 passwordHash = passwordHash,
@@ -372,7 +382,8 @@ class BitwardenAuthService(
                         kdfIterations = preLoginResult.kdfIterations,
                         kdfMemory = preLoginResult.kdfMemory,
                         kdfParallelism = preLoginResult.kdfParallelism,
-                        serverUrls = urls
+                        serverUrls = urls,
+                        twoFactorToken = body.twoFactorToken
                     )
                 )
             } else {
@@ -487,7 +498,16 @@ class BitwardenAuthService(
                             headerProfile = retryHeaderProfile,
                             tlsConfig = tlsConfig
                         )
-                        val retryResponse = retryIdentityApi.login(
+                        val retryResponse = if (!rememberedTwoFactorToken.isNullOrBlank()) retryIdentityApi.loginTwoFactor(
+                            authEmail = authEmail,
+                            username = normalizedEmail,
+                            passwordHash = passwordHash,
+                            captchaResponse = normalizedCaptcha,
+                            deviceIdentifier = deviceId,
+                            twoFactorToken = rememberedTwoFactorToken,
+                            twoFactorProvider = TWO_FACTOR_REMEMBER,
+                            twoFactorRemember = 0
+                        ) else retryIdentityApi.login(
                             authEmail = authEmail,
                             username = normalizedEmail,
                             passwordHash = passwordHash,
@@ -553,7 +573,8 @@ class BitwardenAuthService(
                                     kdfIterations = preLoginResult.kdfIterations,
                                     kdfMemory = preLoginResult.kdfMemory,
                                     kdfParallelism = preLoginResult.kdfParallelism,
-                                    serverUrls = urls
+                                    serverUrls = urls,
+                                    twoFactorToken = retryBody.twoFactorToken
                                 )
                             )
                         } else {
@@ -1287,7 +1308,8 @@ sealed class LoginResult {
         val kdfMemory: Int?,
         val kdfParallelism: Int?,
         val authHeaderProfile: BitwardenApiFactory.HeaderProfile = BitwardenApiFactory.HeaderProfile.MONICA_DEFAULT,
-        val diagnosticAttemptId: String? = null
+        val diagnosticAttemptId: String? = null,
+        val authSessionEpoch: Long? = null
     ) : LoginResult() {
         
         /**

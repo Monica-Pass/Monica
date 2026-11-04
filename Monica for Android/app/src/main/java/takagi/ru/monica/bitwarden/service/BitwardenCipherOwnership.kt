@@ -24,6 +24,9 @@ internal object BitwardenCipherOwnership {
             key = source.key,
             lastKnownRevisionDate = source.revisionDate.takeIf(String::isNotBlank),
             reprompt = source.reprompt,
+            archivedDate = source.archivedDate,
+            // Ordinary edits must not clear history maintained by other clients.
+            passwordHistory = source.passwordHistory,
             login = request.login?.copy(
                 fido2Credentials = source.login?.fido2Credentials,
                 passwordRevisionDate = source.login?.passwordRevisionDate

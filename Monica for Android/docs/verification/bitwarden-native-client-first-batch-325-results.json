@@ -1,0 +1,56 @@
+{
+  "scope": "Validated existing first batch; organizations/collections and advanced authentication deferred by user",
+  "jvmTestsPerEdition": 44,
+  "deviceMethodsPerEdition": 12,
+  "mainDeviceEvidence": [
+    "first-batch-main-device-run.log",
+    "first-batch-main-device-regression.log",
+    "closeout-main-disabled-field-negative-device.log",
+    "closeout-main-device.log"
+  ],
+  "fdroidDeviceEvidence": "closeout-fdroid-device.log",
+  "deviceMethods": [
+    "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativeAccountDeviceListValidatesProfileAndRevokesChangedStampBeforeLoadingDevices",
+    "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativePasswordHintRequestSendsOnlyEmailAndKeepsLoginAvailable",
+    "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativeRegistrationUsesVerifiedEmailAndDoesNotCreateAPartialLocalVault",
+    "takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest#checkedNativeRememberIsSealedReusedAsProviderFiveAndRejectedOnlyOnceBeforeFallback",
+    "takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest#leavingDuringMfaAndLogoutDuringRememberedLoginPreventLatePublication",
+    "takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest#uncheckedNativeRememberSendsZeroAndNeverPersistsTheReturnedToken",
+    "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#fileEditPreservesIdKeyAndCiphertextRejectsRemoteRevisionsAndReadsBackLostResponse",
+    "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#nativeTextAndFileEditorsSaveRealRowsWithPasswordRemovalDatePickerAndEnableSwitch",
+    "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#textEditRoundTripsExactContentPasswordThreeStatesAndDatesThroughHttpAndRoom",
+    "takagi.ru.monica.bitwarden.BitwardenSshNativeSyncInstrumentedTest#createsNativeSshAndColdReloadsThenEditsAllMaterialAndCustomFields",
+    "takagi.ru.monica.bitwarden.BitwardenSshNativeSyncInstrumentedTest#serverFailureKeepsNativeSshChangesPendingAndNeverFallsBackToLogin",
+    "takagi.ru.monica.bitwarden.BitwardenSshNativeSyncInstrumentedTest#staleLocalRevisionNeverOverwritesRemoteAndRepeatedPullRetainsOneCompleteConflict"
+  ],
+  "sharedFilesMatched": 100,
+  "compiledSendResourceValuesPerEdition": 216,
+  "resourceConfigurations": 18,
+  "mainArtifacts": {
+    "edition": "main",
+    "classes": "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#nativeTextAndFileEditorsSaveRealRowsWithPasswordRemovalDatePickerAndEnableSwitch",
+    "driverSeconds": 71.254,
+    "apk": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.325-26110412-12.APK",
+    "apkSHA256": "d51309126f195da20eb2434ee38198f800b3dcffcc6eb323366fb9113cba79ca",
+    "testAPK": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk",
+    "testSHA256": "a8024d707f61700c6efa00dc5bae48f572eac8710521dafd9e9a21dd4bb30b86",
+    "runnerResult": [
+      "Time: 45.849\r",
+      "OK (1 test)"
+    ]
+  },
+  "fdroidArtifacts": {
+    "edition": "fdroid",
+    "classes": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest,takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest,takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest,takagi.ru.monica.bitwarden.BitwardenSshNativeSyncInstrumentedTest",
+    "driverSeconds": 127.993,
+    "apk": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-worktrees\\monica-fdroid-nearby-steam\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.325.apk",
+    "apkSHA256": "f48bbf3ecea9636553cc7073271dedc131af4da70c1c67a31dc14cee46f0b129",
+    "testAPK": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-worktrees\\monica-fdroid-nearby-steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk",
+    "testSHA256": "0333136e2c61b48c83bb2efb95799f9ce73dbdae96eed9ad3aca44e3819a5934",
+    "runnerResult": [
+      "Time: 101.395\r",
+      "OK (12 tests)"
+    ]
+  },
+  "completeNativeClientParity": false
+}

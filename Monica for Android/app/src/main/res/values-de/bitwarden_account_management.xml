@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_account_create">Konto erstellen</string>
+    <string name="bitwarden_account_request_hint">Passworthinweis anfordern</string>
+    <string name="bitwarden_account_password_hint">Master-Passworthinweis (optional)</string>
+    <string name="bitwarden_account_send_verification">Bestätigungs-E-Mail senden</string>
+    <string name="bitwarden_account_verification_pending">Öffne die Bestätigungs-E-Mail und füge hier ihren Link oder ihr Token ein.</string>
+    <string name="bitwarden_account_verification_input">E-Mail-Bestätigungslink oder Token</string>
+    <string name="bitwarden_account_verification_invalid">Der Bestätigungslink oder das Token ist für dieses Konto ungültig.</string>
+    <string name="bitwarden_account_password_requirements">Verwende ein starkes Master-Passwort mit mindestens 12 Zeichen.</string>
+    <string name="bitwarden_account_password_mismatch">Die Master-Passwörter stimmen nicht überein.</string>
+    <string name="bitwarden_account_registration_success">Konto erstellt. Melde dich mit deinem neuen Master-Passwort an.</string>
+    <string name="bitwarden_account_hint_sent">Falls dieses Konto existiert, wurde eine E-Mail mit dem Passworthinweis angefordert.</string>
+    <string name="bitwarden_account_security">Kontosicherheit</string>
+    <string name="bitwarden_account_devices">Kontogeräte</string>
+    <string name="bitwarden_account_device_trusted">Vertrauenswürdiges Gerät</string>
+    <string name="bitwarden_account_device_untrusted">Gerät ist nicht vertrauenswürdig</string>
+    <string name="bitwarden_account_last_activity">Letzte Aktivität</string>
+    <string name="bitwarden_account_web_settings">Konto im Web-Tresor verwalten</string>
+    <string name="bitwarden_account_no_devices">Keine Geräte gefunden.</string>
+    <string name="bitwarden_account_request_failed">Kontoanfrage fehlgeschlagen (HTTP %1$d).</string>
+    <string name="bitwarden_account_operation_failed">Die Kontoaktion konnte nicht abgeschlossen werden.</string>
+    <string name="bitwarden_account_invalid_email">Gib eine gültige E-Mail-Adresse ein.</string>
+</resources>

@@ -30,5 +30,5 @@ internal fun folderCopyPreserved(request: JsonObject, response: JsonObject): Boo
         else -> value
     }
     val actual = canonical(response) as JsonObject
-    return (canonical(request) as JsonObject).all { (key, value) -> actual[key] == value }
+    return (canonical(request) as JsonObject).filterKeys { it != "encryptedfor" }.all { (key, value) -> actual[key] == value }
 }

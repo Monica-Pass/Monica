@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="send_edit_title">Send を編集</string>
+    <string name="send_deletion_date">削除日時</string>
+    <string name="send_expiration_date">有効期限</string>
+    <string name="send_no_expiration">有効期限なし</string>
+    <string name="send_keep_password">空欄の場合は現在のアクセス用パスワードを保持</string>
+    <string name="send_new_password">新しいアクセス用パスワード</string>
+    <string name="send_remove_password">アクセス用パスワードを削除</string>
+    <string name="send_saved">Send を保存しました</string>
+    <string name="send_edit_conflict">この Send は変更されています。保存する前に開き直してください。</string>
+    <string name="send_edit_invalid">アクセス回数の上限と日時を確認してください。削除日時は31日以内、有効期限は削除日時以前である必要があります。</string>
+    <string name="send_edit_failed">Send を保存できませんでした。再試行する前に更新し、現在の状態を確認してください。</string>
+    <string name="send_edit_unsupported_auth">この Send のアクセス方法はここでは変更できません。</string>
+</resources>

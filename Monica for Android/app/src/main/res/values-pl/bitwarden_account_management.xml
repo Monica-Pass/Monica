@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_account_create">Utwórz konto</string>
+    <string name="bitwarden_account_request_hint">Poproś o podpowiedź hasła</string>
+    <string name="bitwarden_account_password_hint">Podpowiedź hasła głównego (opcjonalna)</string>
+    <string name="bitwarden_account_send_verification">Wyślij e-mail weryfikacyjny</string>
+    <string name="bitwarden_account_verification_pending">Otwórz e-mail weryfikacyjny i wklej tutaj jego link lub token.</string>
+    <string name="bitwarden_account_verification_input">Link lub token weryfikacji e-mail</string>
+    <string name="bitwarden_account_verification_invalid">Link lub token weryfikacyjny jest nieprawidłowy dla tego konta.</string>
+    <string name="bitwarden_account_password_requirements">Użyj silnego hasła głównego o długości co najmniej 12 znaków.</string>
+    <string name="bitwarden_account_password_mismatch">Hasła główne nie są zgodne.</string>
+    <string name="bitwarden_account_registration_success">Konto utworzone. Zaloguj się nowym hasłem głównym.</string>
+    <string name="bitwarden_account_hint_sent">Jeśli to konto istnieje, poproszono o e-mail z podpowiedzią hasła.</string>
+    <string name="bitwarden_account_security">Bezpieczeństwo konta</string>
+    <string name="bitwarden_account_devices">Urządzenia konta</string>
+    <string name="bitwarden_account_device_trusted">Zaufane urządzenie</string>
+    <string name="bitwarden_account_device_untrusted">Urządzenie nie jest zaufane</string>
+    <string name="bitwarden_account_last_activity">Ostatnia aktywność</string>
+    <string name="bitwarden_account_web_settings">Zarządzaj kontem w sejfie internetowym</string>
+    <string name="bitwarden_account_no_devices">Nie znaleziono urządzeń.</string>
+    <string name="bitwarden_account_request_failed">Żądanie konta nie powiodło się (HTTP %1$d).</string>
+    <string name="bitwarden_account_operation_failed">Nie udało się ukończyć operacji konta.</string>
+    <string name="bitwarden_account_invalid_email">Wprowadź prawidłowy adres e-mail.</string>
+</resources>

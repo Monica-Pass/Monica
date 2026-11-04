@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="send_edit_title">Editar Send</string>
+    <string name="send_deletion_date">Fecha de eliminación</string>
+    <string name="send_expiration_date">Fecha de caducidad</string>
+    <string name="send_no_expiration">Sin caducidad</string>
+    <string name="send_keep_password">Dejar en blanco para conservar la contraseña de acceso actual</string>
+    <string name="send_new_password">Nueva contraseña de acceso</string>
+    <string name="send_remove_password">Eliminar contraseña de acceso</string>
+    <string name="send_saved">Send guardado</string>
+    <string name="send_edit_conflict">Este Send ha cambiado. Vuelve a abrirlo antes de guardar.</string>
+    <string name="send_edit_invalid">Revisa el límite de accesos y las fechas. La eliminación debe ocurrir en un plazo de 31 días y la caducidad no puede ser posterior.</string>
+    <string name="send_edit_failed">No se pudo guardar el Send. Actualiza y comprueba su estado actual antes de volver a intentarlo.</string>
+    <string name="send_edit_unsupported_auth">Este Send usa un método de acceso que no se puede cambiar aquí.</string>
+</resources>

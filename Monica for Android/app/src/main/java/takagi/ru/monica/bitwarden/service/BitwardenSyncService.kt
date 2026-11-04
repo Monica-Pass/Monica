@@ -3,6 +3,7 @@ package takagi.ru.monica.bitwarden.service
 import takagi.ru.monica.R
 import takagi.ru.monica.utils.AppLocaleStringResolver
 import android.content.Context
+import androidx.room.withTransaction
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
@@ -50,7 +51,9 @@ import java.util.Date
  */
 class BitwardenSyncService(
     private val context: Context,
-    private val apiManager: BitwardenApiManager = BitwardenApiManager()
+    private val apiManager: BitwardenApiManager = BitwardenApiManager(),
+    private val sessionProfileValidator: (suspend (Long, String, ProfileResponse) -> Boolean)? = null,
+    private val sessionIsActive: ((Long, SymmetricCryptoKey) -> Boolean)? = null
 ) {
     
     companion object {
@@ -75,7 +78,12 @@ class BitwardenSyncService(
     
     // 多类型 Cipher 同步处理器
     private val cipherSyncProcessor = CipherSyncProcessor(context)
-    private val cipherUploadProcessor = CipherUploadProcessor(context, apiManager)
+    private val cipherUploadProcessor = CipherUploadProcessor(context, apiManager, sessionIsActive)
+    private val cipherSourceStore = BitwardenCipherSourceStore(context)
+
+    private fun requireActive(vaultId: Long, key: SymmetricCryptoKey) {
+        check(sessionIsActive?.invoke(vaultId, key) != false) { "Vault session changed; local data retained" }
+    }
 
     // 附件元数据对齐器（只对齐元数据 + 清理本地孤儿缓存，不下载字节）
     private val attachmentReconciler = AttachmentContainer.bitwardenReconciler(context)
@@ -115,8 +123,9 @@ class BitwardenSyncService(
         android.util.Log.i(TAG, "Starting full sync for vault ${vault.id}")
         
         try {
-                val vaultApi = apiManager.getVaultApi(vault)
-            val response = vaultApi.sync(
+            requireActive(vault.id, symmetricKey)
+            val vaultApi = apiManager.getVaultApi(vault)
+            val response = vaultApi.syncSource(
                 authorization = "Bearer $accessToken"
             )
             
@@ -138,7 +147,7 @@ class BitwardenSyncService(
                 )
             }
             
-            val syncResponse = response.body()
+            val syncResponse = response.body()?.let { BitwardenCipherDocument.decodeSync(BitwardenCipherDocument.read(it, sync = true)) }
             if (syncResponse == null) {
                 captureRawExchange(
                     vaultId = vault.id,
@@ -153,6 +162,15 @@ class BitwardenSyncService(
                 )
                 return@withContext SyncResult.Error("Empty sync response")
             }
+
+            requireActive(vault.id, symmetricKey)
+            val sessionValid = sessionProfileValidator?.invoke(vault.id, accessToken, syncResponse.profile)
+                ?: run {
+                    val current = vaultDao.getVaultById(vault.id) ?: return@withContext SyncResult.Error("Vault unavailable")
+                    val decision = BitwardenSecurityStampPolicy.compare(current.revisionDate, syncResponse.profile.securityStamp)
+                    decision == BitwardenStampDecision.MATCH || decision == BitwardenStampDecision.FIRST_OBSERVATION
+                }
+            if (!sessionValid) return@withContext SyncResult.Error("Account session changed; local data retained")
 
             val rawForensicsEnabled = runCatching {
                 BitwardenSyncForensicsLogger.isRawCaptureEnabled(context)
@@ -282,6 +300,8 @@ class BitwardenSyncService(
         var skippedDueToLocalDirty = 0
         var sendsSynced = 0
         var failedOrganizationCiphers = 0
+        var failedPersonalCiphers = 0
+        var failedOtherRecords = 0
         val organizationKeys = runCatching {
             takagi.ru.monica.bitwarden.crypto.BitwardenOrganizationKeys.fromProfile(response.profile, symmetricKey)
         }.getOrNull()
@@ -301,6 +321,7 @@ class BitwardenSyncService(
             // 1. 同步文件夹
             response.folders.forEach { folderApi ->
                 try {
+                    requireActive(vault.id, symmetricKey)
                     val existingFolder = folderDao.getFolderByBitwardenId(folderApi.id)
                     if (existingFolder != null &&
                         existingFolder.revisionDate == folderApi.revisionDate &&
@@ -335,6 +356,8 @@ class BitwardenSyncService(
                         )
                     }
                 } catch (e: Exception) {
+                    if (e is kotlinx.coroutines.CancellationException) throw e
+                    failedOtherRecords++
                     android.util.Log.w(TAG, "Failed to sync folder ${folderApi.id}: ${e.message}")
                 }
             }
@@ -343,18 +366,30 @@ class BitwardenSyncService(
             response.ciphers.forEach { cipherApi ->
                 try {
                     // 使用 CipherSyncProcessor 处理所有类型
-                    val result = cipherSyncProcessor.syncCipherFromServer(
-                        vault = vault,
-                        cipher = cipherApi,
-                        symmetricKey = symmetricKey,
-                        forensicsCollector = forensicsCollector,
-                        organizationKeys = organizationKeys?.keys.orEmpty()
-                    )
+                    val result = database.withTransaction {
+                        requireActive(vault.id, symmetricKey)
+                        val outcome = cipherSyncProcessor.syncCipherFromServer(
+                            vault = vault,
+                            cipher = cipherApi,
+                            symmetricKey = symmetricKey,
+                            forensicsCollector = forensicsCollector,
+                            organizationKeys = organizationKeys?.keys.orEmpty()
+                        )
+                        val bound = passwordEntryDao.getByBitwardenCipherIdInVault(vault.id, cipherApi.id)?.bitwardenRevisionDate
+                            ?: secureItemDao.getByBitwardenCipherIdInVault(vault.id, cipherApi.id)?.bitwardenRevisionDate
+                        requireActive(vault.id, symmetricKey)
+                        cipherSourceStore.accept(vault.copy(userId = response.profile.id), cipherApi, bound)
+                        outcome
+                    }
                     when (result) {
                         is CipherSyncResult.Added -> ciphersAdded++
                         is CipherSyncResult.Updated -> ciphersUpdated++
                         is CipherSyncResult.Conflict -> conflictsDetected++
                         is CipherSyncResult.Skipped -> {
+                            if (cipherApi.organizationId.isNullOrBlank() &&
+                                (result.reason.startsWith("Unsupported or incomplete") || result.reason.contains("decrypt failed", ignoreCase = true))) {
+                                failedPersonalCiphers++
+                            }
                             if (!cipherApi.organizationId.isNullOrBlank() && result.reason.contains("decrypt failed", ignoreCase = true)) {
                                 failedOrganizationCiphers++
                             }
@@ -363,7 +398,7 @@ class BitwardenSyncService(
                             }
                         }
                         is CipherSyncResult.Error -> {
-                            if (!cipherApi.organizationId.isNullOrBlank()) failedOrganizationCiphers++
+                            if (!cipherApi.organizationId.isNullOrBlank()) failedOrganizationCiphers++ else failedPersonalCiphers++
                             android.util.Log.w(TAG, "Cipher sync error: ${result.message}")
                         }
                     }
@@ -372,7 +407,7 @@ class BitwardenSyncService(
                         result is CipherSyncResult.Skipped &&
                             result.reason == CipherSyncProcessor.SKIP_REMOTE_UNCHANGED
                     val shouldReconcileAttachments =
-                        cipherApi.attachments != null &&
+                        BitwardenCipherDocument.canProject(cipherApi) && cipherApi.attachments != null &&
                             (!remoteUnchanged || cipherApi.attachments.isNotEmpty())
                     if (shouldReconcileAttachments) {
                         runCatching {
@@ -400,12 +435,14 @@ class BitwardenSyncService(
                                 }
                             }
                         }.onFailure { err ->
+                            if (err is kotlinx.coroutines.CancellationException) throw err
+                            failedOtherRecords++
                             android.util.Log.w(TAG, "Attachment reconcile failed for ${cipherApi.id}: ${err.message}")
                         }
                     }
                 } catch (e: Exception) {
                     if (e is kotlinx.coroutines.CancellationException) throw e
-                    if (!cipherApi.organizationId.isNullOrBlank()) failedOrganizationCiphers++
+                    if (!cipherApi.organizationId.isNullOrBlank()) failedOrganizationCiphers++ else failedPersonalCiphers++
                     android.util.Log.w(TAG, "Failed to sync cipher ${cipherApi.id}: ${e.message}")
                     BitwardenSyncForensicsLogger.recordCipher(
                         forensicsSession,
@@ -422,6 +459,7 @@ class BitwardenSyncService(
                 }
             }
 
+            requireActive(vault.id, symmetricKey)
             // 2.1 清理服务器已不存在的本地 Cipher（delete-wins）
             if (activeServerCipherIds.isEmpty()) {
                 passwordEntryDao.deleteAllSyncedBitwardenEntries(vault.id)
@@ -443,8 +481,12 @@ class BitwardenSyncService(
                     val synced = syncSend(vault, sendApi, symmetricKey)
                     if (synced) {
                         sendsSynced++
+                    } else {
+                        failedOtherRecords++
                     }
                 } catch (e: Exception) {
+                    if (e is kotlinx.coroutines.CancellationException) throw e
+                    failedOtherRecords++
                     android.util.Log.w(TAG, "Failed to sync send ${sendApi.id}: ${e.message}")
                 }
             }
@@ -462,6 +504,11 @@ class BitwardenSyncService(
                 android.util.Log.i(TAG, "Sends synced: $sendsSynced")
             }
 
+            if (failedPersonalCiphers > 0 || failedOtherRecords > 0) {
+                val failure = SyncResult.Error(strings.get(R.string.bitwarden_sync_incomplete_items, failedPersonalCiphers + failedOrganizationCiphers + failedOtherRecords))
+                BitwardenSyncForensicsLogger.finishSession(context, forensicsSession, failure)
+                return failure
+            }
             if (failedOrganizationCiphers > 0) {
                 val failure = SyncResult.Error(strings.get(R.string.bitwarden_organization_sync_incomplete, failedOrganizationCiphers))
                 BitwardenSyncForensicsLogger.finishSession(context, forensicsSession, failure)
@@ -768,44 +815,7 @@ class BitwardenSyncService(
         serverCipher: CipherApiResponse,
         conflictType: String
     ) {
-        try {
-            val localJson = json.encodeToString(
-                mapOf(
-                    "id" to entry.id.toString(),
-                    "title" to entry.title,
-                    "website" to entry.website,
-                    "username" to entry.username,
-                    "notes" to entry.notes
-                    // 不包含密码等敏感数据的明文
-                )
-            )
-            
-            val serverJson = json.encodeToString(
-                mapOf(
-                    "id" to serverCipher.id,
-                    "revisionDate" to serverCipher.revisionDate
-                )
-            )
-            
-            conflictDao.insert(
-                BitwardenConflictBackup(
-                    vaultId = vault.id,
-                    entryId = entry.id,
-                    bitwardenCipherId = serverCipher.id,
-                    conflictType = conflictType,
-                    localDataJson = localJson,
-                    serverDataJson = serverJson,
-                    localRevisionDate = entry.bitwardenRevisionDate,
-                    serverRevisionDate = serverCipher.revisionDate,
-                    entryTitle = entry.title,
-                    description = strings.get(R.string.bitwarden_message_conflict_detail)
-                )
-            )
-            
-            android.util.Log.w(TAG, "Created conflict backup for entry ${entry.id}")
-        } catch (e: Exception) {
-            android.util.Log.e(TAG, "Failed to create conflict backup: ${e.message}")
-        }
+        BitwardenConflictStore(context).record(entry, serverCipher)
     }
     
     /**
@@ -813,11 +823,7 @@ class BitwardenSyncService(
      */
     private fun decryptFolderName(encrypted: String?, key: SymmetricCryptoKey): String {
         if (encrypted.isNullOrBlank()) return "Unnamed Folder"
-        return try {
-            takagi.ru.monica.bitwarden.crypto.BitwardenCrypto.decryptToString(encrypted, key)
-        } catch (e: Exception) {
-            "Unnamed Folder"
-        }
+        return takagi.ru.monica.bitwarden.crypto.BitwardenCrypto.decryptToString(encrypted, key)
     }
     
     /**
@@ -1103,7 +1109,10 @@ class BitwardenSyncService(
         }
 
         // 构建加密的 Cipher 请求
-        val createRequest = passwordEntryToCipherRequest(latestEntry, symmetricKey)
+        val createRequest = BitwardenCipherUploadProtocol.create(
+            passwordEntryToCipherRequest(latestEntry, symmetricKey),
+            BitwardenCipherUploadProtocol.userId(vault, apiManager.getVaultApi(vault), accessToken), symmetricKey
+        )
         val requestPayload = runCatching { json.encodeToString(createRequest) }.getOrNull()
 
         try {
@@ -1176,13 +1185,17 @@ class BitwardenSyncService(
             )
 
             // 更新本地条目，添加服务器返回的 cipherId 和 revisionDate
-            val updatedEntry = latestEntry.copy(
-                bitwardenCipherId = createdCipher.id,
-                bitwardenRevisionDate = createdCipher.revisionDate,
-                bitwardenLocalModified = false,
-                updatedAt = Date()
-            )
-            passwordEntryDao.update(updatedEntry)
+            database.withTransaction {
+                val current = passwordEntryDao.getPasswordEntryById(latestEntry.id)
+                if (current != null && current.bitwardenVaultId == vault.id && current.bitwardenCipherId == null) {
+                    passwordEntryDao.update(current.copy(
+                        bitwardenCipherId = createdCipher.id,
+                        bitwardenCipherType = createdCipher.type,
+                        bitwardenRevisionDate = createdCipher.revisionDate,
+                        bitwardenLocalModified = current != latestEntry
+                    ))
+                }
+            }
             passwordCustomFieldSyncState.markInitialized(vault.id, createdCipher.id)
 
             android.util.Log.d(TAG, "Successfully uploaded entry ${entry.id} as cipher ${createdCipher.id}")
@@ -1228,13 +1241,19 @@ class BitwardenSyncService(
     ): UploadAttemptResult {
         return try {
             val api = apiManager.getVaultApi(vault)
-            val response = api.getCipher("Bearer $accessToken", cipherId)
+            requireActive(vault.id, symmetricKey)
+            val response = api.getCipherSource("Bearer $accessToken", cipherId)
             if (!response.isSuccessful) return UploadAttemptResult(success = false)
-            val baseline = response.body() ?: return UploadAttemptResult(success = false)
+            val baseline = response.body()?.let { BitwardenCipherDocument.decode(BitwardenCipherDocument.read(it)) }
+                ?: return UploadAttemptResult(success = false)
             BitwardenCipherOwnership.requireWritable(baseline, cipherId)
+            if (!BitwardenCipherRevisionGuard.matches(entry.bitwardenRevisionDate, baseline.revisionDate)) {
+                BitwardenConflictStore(context).record(entry, baseline)
+                return UploadAttemptResult(success = false)
+            }
             val key = BitwardenCipherKeyResolver.resolveRemoteCipherKey(api, accessToken, baseline, symmetricKey)
             try {
-                updateRemoteCipherWithKey(vault, entry, cipherId, accessToken, key, baseline)
+                updateRemoteCipherWithKey(vault, entry, cipherId, accessToken, key, baseline, symmetricKey)
             } finally { key.clear() }
         } catch (error: kotlinx.coroutines.CancellationException) {
             throw error
@@ -1246,7 +1265,7 @@ class BitwardenSyncService(
 
     private suspend fun updateRemoteCipherWithKey(
         vault: BitwardenVault, entry: PasswordEntry, cipherId: String, accessToken: String,
-        symmetricKey: SymmetricCryptoKey, baselineCipher: CipherApiResponse
+        symmetricKey: SymmetricCryptoKey, baselineCipher: CipherApiResponse, sessionKey: SymmetricCryptoKey
     ): UploadAttemptResult {
         val vaultApi = apiManager.getVaultApi(vault)
         val customFieldsInitialized = passwordCustomFieldSyncState.isInitialized(vault.id, cipherId)
@@ -1263,14 +1282,30 @@ class BitwardenSyncService(
             entry = entry,
             symmetricKey = symmetricKey,
             mergedFields = mergedFields
-        ), baselineCipher)
-        val requestPayload = runCatching { json.encodeToString(updateRequest) }.getOrNull()
+        ), baselineCipher).let {
+            BitwardenCipherUploadProtocol.update(it,
+                BitwardenCipherUploadProtocol.userId(vault, vaultApi, accessToken), symmetricKey, baselineCipher.login)
+        }
+        val archiveMeta = database.passwordArchiveSyncMetaDao().getByEntryId(entry.id)
+        val archivePending = archiveMeta?.providerType == takagi.ru.monica.data.PasswordArchiveSyncMeta.PROVIDER_BITWARDEN_NATIVE &&
+            archiveMeta.syncStatus != takagi.ru.monica.data.PasswordArchiveSyncMeta.STATUS_SYNCED
+        val archiveIntent = if (archivePending) kotlinx.serialization.json.JsonPrimitive(toBitwardenArchivedDate(entry)) else null
+        val document = BitwardenCipherDocument.update(
+            requireNotNull(baselineCipher.sourceDocument) { "Complete cipher source unavailable" }, updateRequest, symmetricKey, archiveIntent)
+        val requestPayload = document.toString()
 
         try {
-            val response = vaultApi.updateCipher(
+            if (passwordEntryDao.getPasswordEntryById(entry.id) != entry) {
+                return UploadAttemptResult(success = false)
+            }
+            if (archivePending && database.passwordArchiveSyncMetaDao().getByEntryId(entry.id) != archiveMeta) {
+                return UploadAttemptResult(success = false)
+            }
+            requireActive(vault.id, sessionKey)
+            val response = vaultApi.updateCipherSource(
                 authorization = "Bearer $accessToken",
                 cipherId = cipherId,
-                cipher = updateRequest
+                cipher = document
             )
 
             if (!response.isSuccessful) {
@@ -1299,7 +1334,10 @@ class BitwardenSyncService(
                 return UploadAttemptResult(success = false)
             }
 
-            val updatedCipher = response.body()
+            val updatedCipher = response.body()?.let { BitwardenCipherDocument.decode(BitwardenCipherDocument.read(it)) }
+            require(updatedCipher == null || (updatedCipher.id == cipherId && updatedCipher.revisionDate.isNotBlank())) {
+                "Unexpected cipher acknowledgment"
+            }
             if (updatedCipher == null) {
                 captureRawExchange(
                     vaultId = vault.id,
@@ -1324,6 +1362,10 @@ class BitwardenSyncService(
                 return UploadAttemptResult(success = false)
             }
 
+            require(BitwardenCipherDocument.confirms(document, requireNotNull(updatedCipher.sourceDocument))) {
+                "Cipher acknowledgment did not retain uploaded content"
+            }
+
             captureRawExchange(
                 vaultId = vault.id,
                 operation = "upload_password_update",
@@ -1335,13 +1377,25 @@ class BitwardenSyncService(
                 success = true
             )
 
-            // 更新本地条目
-            val updatedEntry = entry.copy(
-                bitwardenRevisionDate = updatedCipher.revisionDate,
-                bitwardenLocalModified = false,
-                updatedAt = Date()
-            )
-            passwordEntryDao.update(updatedEntry)
+            database.withTransaction {
+                requireActive(vault.id, sessionKey)
+                val latest = passwordEntryDao.getPasswordEntryById(entry.id)
+                if (latest == entry) {
+                    passwordEntryDao.update(entry.copy(
+                        bitwardenRevisionDate = updatedCipher.revisionDate,
+                        bitwardenLocalModified = false
+                    ))
+                    if (archivePending && database.passwordArchiveSyncMetaDao().getByEntryId(entry.id) == archiveMeta) {
+                        database.passwordArchiveSyncMetaDao().upsert(requireNotNull(archiveMeta).copy(
+                            syncStatus = takagi.ru.monica.data.PasswordArchiveSyncMeta.STATUS_SYNCED, lastError = null))
+                    }
+                } else if (latest != null && latest.bitwardenVaultId == vault.id &&
+                    latest.bitwardenCipherId == cipherId && latest.bitwardenRevisionDate == entry.bitwardenRevisionDate) {
+                    // A newer local edit is based on the upload just acknowledged. Keep it pending.
+                    passwordEntryDao.update(latest.copy(bitwardenRevisionDate = updatedCipher.revisionDate))
+                }
+                cipherSourceStore.accept(vault, updatedCipher, passwordEntryDao.getPasswordEntryById(entry.id)?.bitwardenRevisionDate)
+            }
             passwordCustomFieldSyncState.markInitialized(vault.id, cipherId)
 
             logBitwardenPasswordEditHistory(
@@ -1697,10 +1751,7 @@ class BitwardenSyncService(
     /**
      * 将 PasswordEntry 转换为加密的 CipherCreateRequest
      *
-     * SSH 密钥使用 Type 1 (Login) + 自定义字段上传，而非 Type 5。
-     * 原因：Vaultwarden 等兼容服务端不支持 Type 5，会在 /sync 时将其
-     * 降级为 Type 1 并丢弃 sshKey 数据，导致同步回来后 SSH 密钥丢失。
-     * 使用 Type 1 + 自定义字段可确保数据在服务端完整保留并正确往返。
+     * 新 SSH 密钥创建原生 Type 5；已有 Type 1 兼容条目在更新时保持原类型。
      */
     private suspend fun passwordEntryToCipherRequest(
         entry: PasswordEntry,
@@ -1708,22 +1759,10 @@ class BitwardenSyncService(
     ): CipherCreateRequest {
         val crypto = takagi.ru.monica.bitwarden.crypto.BitwardenCrypto
         if (entry.loginType.equals(LOGIN_TYPE_SSH_KEY, ignoreCase = true)) {
-            // 使用 Type 1 + 自定义字段，兼容不支持 Type 5 的服务端
-            val encryptedName = crypto.encryptString(entry.title, symmetricKey)
-            val encryptedNotes = entry.notes.takeIf { it.isNotBlank() }?.let {
-                crypto.encryptString(it, symmetricKey)
-            }
-            return CipherCreateRequest(
-                type = 1,
-                folderId = entry.bitwardenFolderId,
-                name = encryptedName,
-                notes = encryptedNotes,
-                login = CipherLoginApiData(
-                    uris = emptyList(),
-                    fido2Credentials = emptyList()
-                ),
+            return takagi.ru.monica.bitwarden.mapper.BitwardenSshKeyMapper.create(
+                entry = entry,
+                key = symmetricKey,
                 fields = buildEncryptedPasswordCustomFields(entry, symmetricKey),
-                favorite = entry.isFavorite,
                 archivedDate = toBitwardenArchivedDate(entry)
             )
         }
@@ -1776,22 +1815,10 @@ class BitwardenSyncService(
     ): CipherUpdateRequest {
         val crypto = takagi.ru.monica.bitwarden.crypto.BitwardenCrypto
         if (entry.loginType.equals(LOGIN_TYPE_SSH_KEY, ignoreCase = true)) {
-            // 使用 Type 1 + 自定义字段，兼容不支持 Type 5 的服务端
-            val encryptedName = crypto.encryptString(entry.title, symmetricKey)
-            val encryptedNotes = entry.notes.takeIf { it.isNotBlank() }?.let {
-                crypto.encryptString(it, symmetricKey)
-            }
-            return CipherUpdateRequest(
-                type = 1,
-                folderId = entry.bitwardenFolderId,
-                name = encryptedName,
-                notes = encryptedNotes,
-                login = CipherLoginApiData(
-                    uris = emptyList(),
-                    fido2Credentials = emptyList()
-                ),
+            return takagi.ru.monica.bitwarden.mapper.BitwardenSshKeyMapper.update(
+                entry = entry,
+                key = symmetricKey,
                 fields = mergedFields ?: buildEncryptedPasswordCustomFields(entry, symmetricKey),
-                favorite = entry.isFavorite,
                 archivedDate = toBitwardenArchivedDate(entry)
             )
         }

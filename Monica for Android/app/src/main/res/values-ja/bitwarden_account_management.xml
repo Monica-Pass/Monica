@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_account_create">アカウントを作成</string>
+    <string name="bitwarden_account_request_hint">パスワードのヒントを要求</string>
+    <string name="bitwarden_account_password_hint">マスターパスワードのヒント（任意）</string>
+    <string name="bitwarden_account_send_verification">確認メールを送信</string>
+    <string name="bitwarden_account_verification_pending">確認メールを開き、リンクまたはトークンをここに貼り付けてください。</string>
+    <string name="bitwarden_account_verification_input">メール確認リンクまたはトークン</string>
+    <string name="bitwarden_account_verification_invalid">確認リンクまたはトークンはこのアカウントでは無効です。</string>
+    <string name="bitwarden_account_password_requirements">12 文字以上の強力なマスターパスワードを使用してください。</string>
+    <string name="bitwarden_account_password_mismatch">マスターパスワードが一致しません。</string>
+    <string name="bitwarden_account_registration_success">アカウントを作成しました。新しいマスターパスワードでログインしてください。</string>
+    <string name="bitwarden_account_hint_sent">このアカウントが存在する場合、パスワードのヒントメールを要求しました。</string>
+    <string name="bitwarden_account_security">アカウントのセキュリティ</string>
+    <string name="bitwarden_account_devices">アカウントのデバイス</string>
+    <string name="bitwarden_account_device_trusted">信頼済みデバイス</string>
+    <string name="bitwarden_account_device_untrusted">信頼されていないデバイス</string>
+    <string name="bitwarden_account_last_activity">最後のアクティビティ</string>
+    <string name="bitwarden_account_web_settings">Web 保管庫でアカウントを管理</string>
+    <string name="bitwarden_account_no_devices">デバイスが見つかりません。</string>
+    <string name="bitwarden_account_request_failed">アカウントへのリクエストに失敗しました（HTTP %1$d）。</string>
+    <string name="bitwarden_account_operation_failed">アカウントの操作を完了できませんでした。</string>
+    <string name="bitwarden_account_invalid_email">有効なメールアドレスを入力してください。</string>
+</resources>

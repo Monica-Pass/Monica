@@ -1,0 +1,1185 @@
+{
+  "version": "1.0.325",
+  "unpublished": true,
+  "validationScope": "Installed debug Android API32 apps, official CLI 2026.6.0, isolated real Vaultwarden 1.37.5, synthetic data only",
+  "officialCloudOrActualKeyguardVerified": false,
+  "build": {
+    "main": {
+      "stage": "full-fields-final",
+      "jvm": [
+        {
+          "name": "takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest",
+          "tests": "28",
+          "skipped": "0",
+          "failures": "0",
+          "errors": "0",
+          "timestamp": "2026-11-04T04:56:47",
+          "hostname": "JOYIN",
+          "time": "6.959"
+        },
+        {
+          "name": "takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest",
+          "tests": "14",
+          "skipped": "0",
+          "failures": "0",
+          "errors": "0",
+          "timestamp": "2026-11-04T04:56:54",
+          "hostname": "JOYIN",
+          "time": "0.746"
+        }
+      ],
+      "device": {
+        "apk": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.325-26110412-20.APK",
+        "apkSHA256": "e82926c9bb39679274b6edc834cc8a2dc09db2a3d035690d930b7fb443d7097f",
+        "testAPK": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk",
+        "testSHA256": "1d9458d3d71b34d5c557735814de4fda5424874f38efde0b26de9ebc35292da2"
+      }
+    },
+    "fdroid": {
+      "stage": "full-fields-final",
+      "jvm": [
+        {
+          "name": "takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest",
+          "tests": "28",
+          "skipped": "0",
+          "failures": "0",
+          "errors": "0",
+          "timestamp": "2026-11-04T05:00:13",
+          "hostname": "JOYIN",
+          "time": "6.577"
+        },
+        {
+          "name": "takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest",
+          "tests": "14",
+          "skipped": "0",
+          "failures": "0",
+          "errors": "0",
+          "timestamp": "2026-11-04T05:00:20",
+          "hostname": "JOYIN",
+          "time": "0.772"
+        }
+      ],
+      "device": {
+        "apk": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-worktrees\\monica-fdroid-nearby-steam\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.325.apk",
+        "apkSHA256": "fab764f08b3a09cc996222905d3794330a5be6427234f75097429065055fb44a",
+        "testAPK": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-worktrees\\monica-fdroid-nearby-steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk",
+        "testSHA256": "463df594031d15adba23427418d2ba99e2cbd49c7d5df2243e7984de3c0f0ca2"
+      }
+    }
+  },
+  "device": {
+    "main": {
+      "driverSeconds": 21.8274162,
+      "expectedDifferentMethods": 22,
+      "edition": "main",
+      "commandExit": 0,
+      "passed": true,
+      "apkSHA256": "e82926c9bb39679274b6edc834cc8a2dc09db2a3d035690d930b7fb443d7097f"
+    },
+    "fdroid": {
+      "edition": "fdroid",
+      "expectedDifferentMethods": 22,
+      "driverSeconds": 15.2192568,
+      "commandExit": 0,
+      "apkSHA256": "fab764f08b3a09cc996222905d3794330a5be6427234f75097429065055fb44a",
+      "passed": true
+    }
+  },
+  "reliability": {
+    "run": 11,
+    "overallPassed": true,
+    "scenariosPerEdition": 16,
+    "receipts": [
+      {
+        "test": "official-cli-baseline",
+        "client": "@bitwarden/cli",
+        "version": "2026.6.0",
+        "existingSyntheticItems": 40,
+        "versions": {
+          "main": "1.0.325-26110412-20",
+          "fdroid": "1.0.325"
+        }
+      },
+      {
+        "test": "main-probe-auth",
+        "ready": true,
+        "package": "takagi.ru.monica",
+        "version": "1.0.325-26110412-20",
+        "code": 12
+      },
+      {
+        "test": "main-probe-auth",
+        "ready": true,
+        "package": "takagi.ru.monica",
+        "version": "1.0.325-26110412-20",
+        "code": 12
+      },
+      {
+        "test": "main-initial-pull",
+        "sync": {
+          "result": "Success",
+          "UploadedCount": 0,
+          "UploadFailedCount": 0,
+          "RemoteAddedCount": 10,
+          "RemoteUpdatedCount": 7,
+          "ConflictCount": 0,
+          "SkippedDueToLocalDirtyCount": 0,
+          "DeletedCount": 0
+        }
+      },
+      {
+        "test": "ack-field-differences",
+        "paths": [
+          ".creationDate:NoneType>str",
+          ".edit:NoneType>bool",
+          ".encryptedFor:str>NoneType",
+          ".fields:NoneType>list",
+          ".id:NoneType>str",
+          ".lastKnownRevisionDate:str>NoneType",
+          ".object:NoneType>str",
+          ".organizationUseTotp:NoneType>bool",
+          ".permissions:NoneType>dict",
+          ".revisionDate:NoneType>str",
+          ".viewPassword:NoneType>bool"
+        ]
+      },
+      {
+        "test": "main-local-to-cli",
+        "sync": {
+          "result": "Success",
+          "UploadedCount": 1,
+          "UploadFailedCount": 0,
+          "RemoteAddedCount": 0,
+          "RemoteUpdatedCount": 9,
+          "ConflictCount": 0,
+          "SkippedDueToLocalDirtyCount": 0,
+          "DeletedCount": 0
+        }
+      },
+      {
+        "test": "main-cli-to-local",
+        "sync": {
+          "result": "Success",
+          "UploadedCount": 0,
+          "UploadFailedCount": 0,
+          "RemoteAddedCount": 0,
+          "RemoteUpdatedCount": 10,
+          "ConflictCount": 0,
+          "SkippedDueToLocalDirtyCount": 0,
+          "DeletedCount": 0
+        }
+      },
+      {
+        "test": "main-offline-retained",
+        "sync": {
+          "result": "Error"
+        },
+        "state": {
+          "exists": true,
+          "dirty": true,
+          "revision": "2026-11-04T05:33:20.280596Z",
+          "deleted": false,
+          "usernameMatches": true,
+          "passwordMatches": true,
+          "notesMatches": true,
+          "sourceDigest": "f2dfcefe7e651c1cd6716c664ec198f81fd32fe1aeaf2a71fa9f7527093f4306",
+          "localCopies": 1,
+          "conflicts": [],
+          "operations": []
+        }
+      },
+      {
+        "test": "main-probe-auth",
+        "ready": true,
+        "package": "takagi.ru.monica",
+        "version": "1.0.325-26110412-20",
+        "code": 12
+      },
+      {
+        "test": "main-offline-process-restart",
+        "state": {
+          "exists": true,
+          "dirty": true,
+          "revision": "2026-11-04T05:33:20.280596Z",
+          "deleted": false,
+          "usernameMatches": true,
+          "passwordMatches": true,
+          "notesMatches": true,
+          "sourceDigest": "f2dfcefe7e651c1cd6716c664ec198f81fd32fe1aeaf2a71fa9f7527093f4306",
+          "localCopies": 1,
+          "conflicts": [],
+          "operations": []
+        }
+      },
+      {
+        "test": "ack-field-differences",
+        "paths": [
+          ".creationDate:NoneType>str",
+          ".edit:NoneType>bool",
+          ".encryptedFor:str>NoneType",
+          ".fields:NoneType>list",
+          ".id:NoneType>str",
+          ".lastKnownRevisionDate:str>NoneType",
+          ".object:NoneType>str",
+          ".organizationUseTotp:NoneType>bool",
+          ".permissions:NoneType>dict",
+          ".revisionDate:NoneType>str",
+          ".viewPassword:NoneType>bool"
+        ]
+      },
+      {
+        "test": "main-offline-retry",
+        "sync": {
+          "result": "Success",
+          "UploadedCount": 1,
+          "UploadFailedCount": 0,
+          "RemoteAddedCount": 0,
+          "RemoteUpdatedCount": 9,
+          "ConflictCount": 0,
+          "SkippedDueToLocalDirtyCount": 0,
+          "DeletedCount": 0
+        }
+      },
+      {
+        "test": "main-conflict-keep-server",
+        "sync": {
+          "result": "Success",
+          "UploadedCount": 0,
+          "UploadFailedCount": 1,
+          "RemoteAddedCount": 0,
+          "RemoteUpdatedCount": 9,
+          "ConflictCount": 1,
+          "SkippedDueToLocalDirtyCount": 0,
+          "DeletedCount": 0
+        }
+      },
+      {
+        "test": "main-newer-server-revision-rejected",
+        "oldConflictId": 31
+      },
+      {
+        "test": "ack-field-differences",
+        "paths": [
+          ".creationDate:NoneType>str",
+          ".edit:NoneType>bool",
+          ".encryptedFor:str>NoneType",
+          ".fields:NoneType>list",
+          ".id:NoneType>str",
+          ".lastKnownRevisionDate:str>NoneType",
+          ".object:NoneType>str",
+          ".organizationUseTotp:NoneType>bool",
+          ".permissions:NoneType>dict",
+          ".revisionDate:NoneType>str",
+          ".viewPassword:NoneType>bool"
+        ]
+      },
+      {
+        "test": "main-conflict-keep-local",
+        "sync": {
+          "result": "Success",
+          "UploadedCount": 1,
+          "UploadFailedCount": 0,
+          "RemoteAddedCount": 0,
+          "RemoteUpdatedCount": 9,
+          "ConflictCount": 0,
+          "SkippedDueToLocalDirtyCount": 0,
+          "DeletedCount": 0
+        },
+        "olderConflictBackupRetained": true
+      },
+      {
+        "test": "main-delete-failure-retained",
+        "sync": {
+          "result": "Error"
+        },
+        "state": {
+          "exists": true,
+          "dirty": false,
+          "revision": "2026-11-04T05:32:44.142866Z",
+          "deleted": true,
+          "sourceDigest": "385a3b2feec0d9454281291b17aa303fd6957ac184915819239629f59be49f21",
+          "localCopies": 1,
+          "conflicts": [],
+          "operations": [
+            {
+              "status": "PENDING",
+              "type": "DELETE"
+            }
+          ]
+        }
+      },
+      {
+        "test": "main-probe-auth",
+        "ready": true,
+        "package": "takagi.ru.monica",
+        "version": "1.0.325-26110412-20",
+        "code": 12
+      },
+      {
+        "test": "main-delete-retry-after-restart",
+        "sync": {
+          "result": "Success",
+          "UploadedCount": 0,
+          "UploadFailedCount": 0,
+          "RemoteAddedCount": 0,
+          "RemoteUpdatedCount": 10,
+          "ConflictCount": 0,
+          "SkippedDueToLocalDirtyCount": 0,
+          "DeletedCount": 1
+        },
+        "state": {
+          "exists": true,
+          "dirty": false,
+          "revision": "2026-11-04T05:34:54.984644Z",
+          "deleted": true,
+          "sourceDigest": "7456e999bd854887c3018ffac0059d237ecc9a1749eee4e1aafa3a56d12d17d0",
+          "localCopies": 1,
+          "conflicts": [],
+          "operations": []
+        }
+      },
+      {
+        "test": "main-cli-delete-to-local",
+        "sync": {
+          "result": "Success",
+          "UploadedCount": 0,
+          "UploadFailedCount": 0,
+          "RemoteAddedCount": 0,
+          "RemoteUpdatedCount": 11,
+          "ConflictCount": 0,
+          "SkippedDueToLocalDirtyCount": 0,
+          "DeletedCount": 0
+        },
+        "state": {
+          "exists": true,
+          "dirty": false,
+          "revision": "2026-11-04T05:35:06.232577Z",
+          "deleted": true,
+          "sourceDigest": "15a5dad36f28b5b5e1759be724a45656533c9b916fed9c9eb8a56987197ef41a",
+          "localCopies": 1,
+          "conflicts": [],
+          "operations": []
+        }
+      },
+      {
+        "test": "ack-field-differences",
+        "paths": [
+          ".creationDate:NoneType>str",
+          ".edit:NoneType>bool",
+          ".encryptedFor:str>NoneType",
+          ".fields:NoneType>list",
+          ".id:NoneType>str",
+          ".lastKnownRevisionDate:str>NoneType",
+          ".object:NoneType>str",
+          ".organizationUseTotp:NoneType>bool",
+          ".permissions:NoneType>dict",
+          ".revisionDate:NoneType>str",
+          ".viewPassword:NoneType>bool"
+        ]
+      },
+      {
+        "test": "main-lost-ack",
+        "sync": {
+          "result": "Success",
+          "UploadedCount": 0,
+          "UploadFailedCount": 1,
+          "RemoteAddedCount": 0,
+          "RemoteUpdatedCount": 11,
+          "ConflictCount": 1,
+          "SkippedDueToLocalDirtyCount": 0,
+          "DeletedCount": 0
+        },
+        "state": {
+          "exists": true,
+          "dirty": true,
+          "revision": "2026-11-04T05:32:50.384385Z",
+          "deleted": false,
+          "usernameMatches": true,
+          "passwordMatches": true,
+          "notesMatches": true,
+          "sourceDigest": "bab8511f6c6691b91a8f735b600e2307efc5c7ad8e822b980362149eaf3f9af7",
+          "localCopies": 1,
+          "conflicts": [
+            {
+              "id": 33,
+              "serverRevision": "2026-11-04T05:35:09.231337Z"
+            }
+          ],
+          "operations": []
+        },
+        "dropped": 1
+      },
+      {
+        "test": "main-lost-ack-recovered"
+      },
+      {
+        "test": "ack-field-differences",
+        "paths": [
+          ".creationDate:NoneType>str",
+          ".edit:NoneType>bool",
+          ".encryptedFor:str>NoneType",
+          ".fields:NoneType>list",
+          ".id:NoneType>str",
+          ".lastKnownRevisionDate:str>NoneType",
+          ".object:NoneType>str",
+          ".organizationUseTotp:NoneType>bool",
+          ".permissions:NoneType>dict",
+          ".revisionDate:NoneType>str",
+          ".viewPassword:NoneType>bool"
+        ]
+      },
+      {
+        "test": "main-late-edit-protected",
+        "sync": {
+          "result": "Success",
+          "UploadedCount": 1,
+          "UploadFailedCount": 0,
+          "RemoteAddedCount": 0,
+          "RemoteUpdatedCount": 11,
+          "ConflictCount": 0,
+          "SkippedDueToLocalDirtyCount": 1,
+          "DeletedCount": 0
+        },
+        "state": {
+          "exists": true,
+          "dirty": true,
+          "revision": "2026-11-04T05:35:25.257629Z",
+          "deleted": false,
+          "usernameMatches": true,
+          "passwordMatches": true,
+          "notesMatches": true,
+          "sourceDigest": "17b86003bb54f58b5f132e2e41b2f0a0a1077cbb1dcebb2b825ace28972fa111",
+          "localCopies": 1,
+          "conflicts": [],
+          "operations": []
+        }
+      },
+      {
+        "test": "ack-field-differences",
+        "paths": [
+          ".creationDate:NoneType>str",
+          ".edit:NoneType>bool",
+          ".encryptedFor:str>NoneType",
+          ".fields:NoneType>list",
+          ".id:NoneType>str",
+          ".lastKnownRevisionDate:str>NoneType",
+          ".object:NoneType>str",
+          ".organizationUseTotp:NoneType>bool",
+          ".permissions:NoneType>dict",
+          ".revisionDate:NoneType>str",
+          ".viewPassword:NoneType>bool"
+        ]
+      },
+      {
+        "test": "main-late-edit-recovered"
+      },
+      {
+        "test": "fdroid-probe-auth",
+        "ready": true,
+        "package": "takagi.ru.monica.fdroid",
+        "version": "1.0.325",
+        "code": 32
+      },
+      {
+        "test": "fdroid-probe-auth",
+        "ready": true,
+        "package": "takagi.ru.monica.fdroid",
+        "version": "1.0.325",
+        "code": 32
+      },
+      {
+        "test": "fdroid-initial-pull",
+        "sync": {
+          "result": "Success",
+          "UploadedCount": 0,
+          "UploadFailedCount": 0,
+          "RemoteAddedCount": 10,
+          "RemoteUpdatedCount": 9,
+          "ConflictCount": 0,
+          "SkippedDueToLocalDirtyCount": 0,
+          "DeletedCount": 0
+        }
+      },
+      {
+        "test": "ack-field-differences",
+        "paths": [
+          ".creationDate:NoneType>str",
+          ".edit:NoneType>bool",
+          ".encryptedFor:str>NoneType",
+          ".fields:NoneType>list",
+          ".id:NoneType>str",
+          ".lastKnownRevisionDate:str>NoneType",
+          ".object:NoneType>str",
+          ".organizationUseTotp:NoneType>bool",
+          ".permissions:NoneType>dict",
+          ".revisionDate:NoneType>str",
+          ".viewPassword:NoneType>bool"
+        ]
+      },
+      {
+        "test": "fdroid-local-to-cli",
+        "sync": {
+          "result": "Success",
+          "UploadedCount": 1,
+          "UploadFailedCount": 0,
+          "RemoteAddedCount": 0,
+          "RemoteUpdatedCount": 11,
+          "ConflictCount": 0,
+          "SkippedDueToLocalDirtyCount": 0,
+          "DeletedCount": 0
+        }
+      },
+      {
+        "test": "fdroid-cli-to-local",
+        "sync": {
+          "result": "Success",
+          "UploadedCount": 0,
+          "UploadFailedCount": 0,
+          "RemoteAddedCount": 0,
+          "RemoteUpdatedCount": 12,
+          "ConflictCount": 0,
+          "SkippedDueToLocalDirtyCount": 0,
+          "DeletedCount": 0
+        }
+      },
+      {
+        "test": "fdroid-offline-retained",
+        "sync": {
+          "result": "Error"
+        },
+        "state": {
+          "exists": true,
+          "dirty": true,
+          "revision": "2026-11-04T05:36:43.974687Z",
+          "deleted": false,
+          "usernameMatches": true,
+          "passwordMatches": true,
+          "notesMatches": true,
+          "sourceDigest": "9c4a6a8777ed07048dcfbab1d47d56609470b4026637e71b3c8638e377cbbe13",
+          "localCopies": 1,
+          "conflicts": [],
+          "operations": []
+        }
+      },
+      {
+        "test": "fdroid-probe-auth",
+        "ready": true,
+        "package": "takagi.ru.monica.fdroid",
+        "version": "1.0.325",
+        "code": 32
+      },
+      {
+        "test": "fdroid-offline-process-restart",
+        "state": {
+          "exists": true,
+          "dirty": true,
+          "revision": "2026-11-04T05:36:43.974687Z",
+          "deleted": false,
+          "usernameMatches": true,
+          "passwordMatches": true,
+          "notesMatches": true,
+          "sourceDigest": "9c4a6a8777ed07048dcfbab1d47d56609470b4026637e71b3c8638e377cbbe13",
+          "localCopies": 1,
+          "conflicts": [],
+          "operations": []
+        }
+      },
+      {
+        "test": "ack-field-differences",
+        "paths": [
+          ".creationDate:NoneType>str",
+          ".edit:NoneType>bool",
+          ".encryptedFor:str>NoneType",
+          ".fields:NoneType>list",
+          ".id:NoneType>str",
+          ".lastKnownRevisionDate:str>NoneType",
+          ".object:NoneType>str",
+          ".organizationUseTotp:NoneType>bool",
+          ".permissions:NoneType>dict",
+          ".revisionDate:NoneType>str",
+          ".viewPassword:NoneType>bool"
+        ]
+      },
+      {
+        "test": "fdroid-offline-retry",
+        "sync": {
+          "result": "Success",
+          "UploadedCount": 1,
+          "UploadFailedCount": 0,
+          "RemoteAddedCount": 0,
+          "RemoteUpdatedCount": 11,
+          "ConflictCount": 0,
+          "SkippedDueToLocalDirtyCount": 0,
+          "DeletedCount": 0
+        }
+      },
+      {
+        "test": "fdroid-conflict-keep-server",
+        "sync": {
+          "result": "Success",
+          "UploadedCount": 0,
+          "UploadFailedCount": 1,
+          "RemoteAddedCount": 0,
+          "RemoteUpdatedCount": 11,
+          "ConflictCount": 1,
+          "SkippedDueToLocalDirtyCount": 0,
+          "DeletedCount": 0
+        }
+      },
+      {
+        "test": "fdroid-newer-server-revision-rejected",
+        "oldConflictId": 18
+      },
+      {
+        "test": "ack-field-differences",
+        "paths": [
+          ".creationDate:NoneType>str",
+          ".edit:NoneType>bool",
+          ".encryptedFor:str>NoneType",
+          ".fields:NoneType>list",
+          ".id:NoneType>str",
+          ".lastKnownRevisionDate:str>NoneType",
+          ".object:NoneType>str",
+          ".organizationUseTotp:NoneType>bool",
+          ".permissions:NoneType>dict",
+          ".revisionDate:NoneType>str",
+          ".viewPassword:NoneType>bool"
+        ]
+      },
+      {
+        "test": "fdroid-conflict-keep-local",
+        "sync": {
+          "result": "Success",
+          "UploadedCount": 1,
+          "UploadFailedCount": 0,
+          "RemoteAddedCount": 0,
+          "RemoteUpdatedCount": 11,
+          "ConflictCount": 0,
+          "SkippedDueToLocalDirtyCount": 0,
+          "DeletedCount": 0
+        },
+        "olderConflictBackupRetained": true
+      },
+      {
+        "test": "fdroid-delete-failure-retained",
+        "sync": {
+          "result": "Error"
+        },
+        "state": {
+          "exists": true,
+          "dirty": false,
+          "revision": "2026-11-04T05:36:09.083676Z",
+          "deleted": true,
+          "sourceDigest": "c9a05ce6842918dec5ec036beeb329d6bb97ba6a58a9c944bc8d72e0ea10b8ef",
+          "localCopies": 1,
+          "conflicts": [],
+          "operations": [
+            {
+              "status": "PENDING",
+              "type": "DELETE"
+            }
+          ]
+        }
+      },
+      {
+        "test": "fdroid-probe-auth",
+        "ready": true,
+        "package": "takagi.ru.monica.fdroid",
+        "version": "1.0.325",
+        "code": 32
+      },
+      {
+        "test": "fdroid-delete-retry-after-restart",
+        "sync": {
+          "result": "Success",
+          "UploadedCount": 0,
+          "UploadFailedCount": 0,
+          "RemoteAddedCount": 0,
+          "RemoteUpdatedCount": 12,
+          "ConflictCount": 0,
+          "SkippedDueToLocalDirtyCount": 0,
+          "DeletedCount": 1
+        },
+        "state": {
+          "exists": true,
+          "dirty": false,
+          "revision": "2026-11-04T05:38:18.300078Z",
+          "deleted": true,
+          "sourceDigest": "c27e7cee7d0f0b1cdd992edf9cd5ba3baea4e48c45308858da0bde3b59dd02fe",
+          "localCopies": 1,
+          "conflicts": [],
+          "operations": []
+        }
+      },
+      {
+        "test": "fdroid-cli-delete-to-local",
+        "sync": {
+          "result": "Success",
+          "UploadedCount": 0,
+          "UploadFailedCount": 0,
+          "RemoteAddedCount": 0,
+          "RemoteUpdatedCount": 13,
+          "ConflictCount": 0,
+          "SkippedDueToLocalDirtyCount": 0,
+          "DeletedCount": 0
+        },
+        "state": {
+          "exists": true,
+          "dirty": false,
+          "revision": "2026-11-04T05:38:29.239362Z",
+          "deleted": true,
+          "sourceDigest": "23371324682a845789c7f194d988f08e0be474fca2963e9a848114fa75eb786d",
+          "localCopies": 1,
+          "conflicts": [],
+          "operations": []
+        }
+      },
+      {
+        "test": "ack-field-differences",
+        "paths": [
+          ".creationDate:NoneType>str",
+          ".edit:NoneType>bool",
+          ".encryptedFor:str>NoneType",
+          ".fields:NoneType>list",
+          ".id:NoneType>str",
+          ".lastKnownRevisionDate:str>NoneType",
+          ".object:NoneType>str",
+          ".organizationUseTotp:NoneType>bool",
+          ".permissions:NoneType>dict",
+          ".revisionDate:NoneType>str",
+          ".viewPassword:NoneType>bool"
+        ]
+      },
+      {
+        "test": "fdroid-lost-ack",
+        "sync": {
+          "result": "Success",
+          "UploadedCount": 0,
+          "UploadFailedCount": 1,
+          "RemoteAddedCount": 0,
+          "RemoteUpdatedCount": 13,
+          "ConflictCount": 1,
+          "SkippedDueToLocalDirtyCount": 0,
+          "DeletedCount": 0
+        },
+        "state": {
+          "exists": true,
+          "dirty": true,
+          "revision": "2026-11-04T05:36:15.224977Z",
+          "deleted": false,
+          "usernameMatches": true,
+          "passwordMatches": true,
+          "notesMatches": true,
+          "sourceDigest": "7a97e918eaa2f9814eacaca76d78bac3eab96fcbbfe23e1a937fe1fbbe6594fd",
+          "localCopies": 1,
+          "conflicts": [
+            {
+              "id": 20,
+              "serverRevision": "2026-11-04T05:38:32.211605Z"
+            }
+          ],
+          "operations": []
+        },
+        "dropped": 2
+      },
+      {
+        "test": "fdroid-lost-ack-recovered"
+      },
+      {
+        "test": "ack-field-differences",
+        "paths": [
+          ".creationDate:NoneType>str",
+          ".edit:NoneType>bool",
+          ".encryptedFor:str>NoneType",
+          ".fields:NoneType>list",
+          ".id:NoneType>str",
+          ".lastKnownRevisionDate:str>NoneType",
+          ".object:NoneType>str",
+          ".organizationUseTotp:NoneType>bool",
+          ".permissions:NoneType>dict",
+          ".revisionDate:NoneType>str",
+          ".viewPassword:NoneType>bool"
+        ]
+      },
+      {
+        "test": "fdroid-late-edit-protected",
+        "sync": {
+          "result": "Success",
+          "UploadedCount": 1,
+          "UploadFailedCount": 0,
+          "RemoteAddedCount": 0,
+          "RemoteUpdatedCount": 13,
+          "ConflictCount": 0,
+          "SkippedDueToLocalDirtyCount": 1,
+          "DeletedCount": 0
+        },
+        "state": {
+          "exists": true,
+          "dirty": true,
+          "revision": "2026-11-04T05:38:47.870038Z",
+          "deleted": false,
+          "usernameMatches": true,
+          "passwordMatches": true,
+          "notesMatches": true,
+          "sourceDigest": "23d27cd44e4238c47c5ff5452f90e2e9b3a5ba83c6ca6f0c5f9026236a0d137d",
+          "localCopies": 1,
+          "conflicts": [],
+          "operations": []
+        }
+      },
+      {
+        "test": "ack-field-differences",
+        "paths": [
+          ".creationDate:NoneType>str",
+          ".edit:NoneType>bool",
+          ".encryptedFor:str>NoneType",
+          ".fields:NoneType>list",
+          ".id:NoneType>str",
+          ".lastKnownRevisionDate:str>NoneType",
+          ".object:NoneType>str",
+          ".organizationUseTotp:NoneType>bool",
+          ".permissions:NoneType>dict",
+          ".revisionDate:NoneType>str",
+          ".viewPassword:NoneType>bool"
+        ]
+      },
+      {
+        "test": "fdroid-late-edit-recovered"
+      },
+      {
+        "test": "all-preexisting-remote-records-preserved",
+        "count": 82,
+        "originalBatchCount": 40,
+        "excludedTransientField": "attachments[].url",
+        "transientUrlChanges": [
+          {
+            "cid": "77127873-6146-4580-8767-cfb9fd7e0965",
+            "paths": [
+              ".attachments[0].url:str>str"
+            ]
+          },
+          {
+            "cid": "acce8fce-d6c0-4d1d-bb83-071ae7d7126f",
+            "paths": [
+              ".attachments[0].url:str>str"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "allData": {
+    "main": {
+      "audit": {
+        "test": "main-all-data-reconciled",
+        "remoteTotal": 101,
+        "activeCipherIds": 88,
+        "representedUniqueCipherIds": 88,
+        "completeSourcesMatched": 101,
+        "types": {
+          "1": 80,
+          "5": 2,
+          "2": 2,
+          "4": 2,
+          "3": 2
+        },
+        "passkeyProjections": 2,
+        "attachments": 2,
+        "missingIds": [],
+        "officialCliCreatedTypes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "folderAndSendVerified": true
+      },
+      "downloads": [
+        {
+          "test": "main-attachment-bytes-verified",
+          "byteCount": 1048853,
+          "digestMatches": true
+        },
+        {
+          "test": "main-attachment-bytes-verified",
+          "byteCount": 1048853,
+          "digestMatches": true
+        }
+      ],
+      "receipts": [
+        {
+          "test": "official-cli-baseline",
+          "client": "@bitwarden/cli",
+          "version": "2026.6.0",
+          "existingSyntheticItems": 40,
+          "versions": {
+            "main": "1.0.325-26110412-20"
+          }
+        },
+        {
+          "test": "main-probe-auth",
+          "ready": true,
+          "package": "takagi.ru.monica",
+          "version": "1.0.325-26110412-20",
+          "code": 12
+        },
+        {
+          "test": "main-attachment-bytes-verified",
+          "byteCount": 1048853,
+          "digestMatches": true
+        },
+        {
+          "test": "main-attachment-bytes-verified",
+          "byteCount": 1048853,
+          "digestMatches": true
+        },
+        {
+          "test": "main-all-data-reconciled",
+          "remoteTotal": 101,
+          "activeCipherIds": 88,
+          "representedUniqueCipherIds": 88,
+          "completeSourcesMatched": 101,
+          "types": {
+            "1": 80,
+            "5": 2,
+            "2": 2,
+            "4": 2,
+            "3": 2
+          },
+          "passkeyProjections": 2,
+          "attachments": 2,
+          "missingIds": [],
+          "officialCliCreatedTypes": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "folderAndSendVerified": true
+        },
+        {
+          "test": "all-preexisting-remote-records-preserved",
+          "count": 88,
+          "originalBatchCount": 40,
+          "excludedTransientField": "attachments[].url",
+          "transientUrlChanges": []
+        }
+      ]
+    },
+    "fdroid": {
+      "audit": {
+        "test": "fdroid-all-data-reconciled",
+        "remoteTotal": 106,
+        "activeCipherIds": 93,
+        "representedUniqueCipherIds": 93,
+        "completeSourcesMatched": 106,
+        "types": {
+          "1": 81,
+          "5": 3,
+          "2": 3,
+          "4": 3,
+          "3": 3
+        },
+        "passkeyProjections": 3,
+        "attachments": 3,
+        "missingIds": [],
+        "officialCliCreatedTypes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "folderAndSendVerified": true
+      },
+      "downloads": [
+        {
+          "test": "fdroid-attachment-bytes-verified",
+          "byteCount": 1048853,
+          "digestMatches": true
+        },
+        {
+          "test": "fdroid-attachment-bytes-verified",
+          "byteCount": 1048853,
+          "digestMatches": true
+        },
+        {
+          "test": "fdroid-attachment-bytes-verified",
+          "byteCount": 1048853,
+          "digestMatches": true
+        }
+      ],
+      "receipts": [
+        {
+          "test": "official-cli-baseline",
+          "client": "@bitwarden/cli",
+          "version": "2026.6.0",
+          "existingSyntheticItems": 40,
+          "versions": {
+            "fdroid": "1.0.325"
+          }
+        },
+        {
+          "test": "fdroid-cli-type-created",
+          "type": 1
+        },
+        {
+          "test": "fdroid-cli-type-created",
+          "type": 2
+        },
+        {
+          "test": "fdroid-cli-type-created",
+          "type": 3
+        },
+        {
+          "test": "fdroid-cli-type-created",
+          "type": 4
+        },
+        {
+          "test": "fdroid-cli-type-created",
+          "type": 5
+        },
+        {
+          "test": "fdroid-probe-auth",
+          "ready": true,
+          "package": "takagi.ru.monica.fdroid",
+          "version": "1.0.325",
+          "code": 32
+        },
+        {
+          "test": "fdroid-attachment-bytes-verified",
+          "byteCount": 1048853,
+          "digestMatches": true
+        },
+        {
+          "test": "fdroid-attachment-bytes-verified",
+          "byteCount": 1048853,
+          "digestMatches": true
+        },
+        {
+          "test": "fdroid-attachment-bytes-verified",
+          "byteCount": 1048853,
+          "digestMatches": true
+        },
+        {
+          "test": "fdroid-all-data-reconciled",
+          "remoteTotal": 106,
+          "activeCipherIds": 93,
+          "representedUniqueCipherIds": 93,
+          "completeSourcesMatched": 106,
+          "types": {
+            "1": 81,
+            "5": 3,
+            "2": 3,
+            "4": 3,
+            "3": 3
+          },
+          "passkeyProjections": 3,
+          "attachments": 3,
+          "missingIds": [],
+          "officialCliCreatedTypes": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "folderAndSendVerified": true
+        },
+        {
+          "test": "all-preexisting-remote-records-preserved",
+          "count": 88,
+          "originalBatchCount": 40,
+          "excludedTransientField": "attachments[].url",
+          "transientUrlChanges": []
+        }
+      ]
+    }
+  },
+  "originalCipherPreservation": {
+    "originalCipherCount": 40,
+    "matchedCipherIds": 40,
+    "allOriginalCipherColumnsPreserved": true,
+    "changes": [],
+    "verification": "final read-only SQLite comparison"
+  },
+  "sharedFileCount": 33,
+  "retainedFailures": [
+    {
+      "run": 9,
+      "overallPassed": false,
+      "gate": "raw CLI document hash included rotating attachment URLs",
+      "completedScenarios": 32,
+      "diagnostics": []
+    },
+    {
+      "run": 10,
+      "overallPassed": false,
+      "gate": "raw CLI document hash included rotating attachment URLs",
+      "completedScenarios": 32,
+      "diagnostics": [
+        {
+          "test": "preexisting-record-changes",
+          "changes": [
+            {
+              "cid": "77127873-6146-4580-8767-cfb9fd7e0965",
+              "paths": [
+                ".attachments[0].url:str>str"
+              ],
+              "originalBatch": false
+            },
+            {
+              "cid": "acce8fce-d6c0-4d1d-bb83-071ae7d7126f",
+              "paths": [
+                ".attachments[0].url:str>str"
+              ],
+              "originalBatch": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "cleanup": {
+    "passed": true,
+    "restoredUser": 0,
+    "retainedUsers": [
+      0,
+      10,
+      11,
+      12
+    ],
+    "removedOwnUser": 14,
+    "ownProbePackagesRemoved": true,
+    "temporaryForwardAlreadyAbsent": true,
+    "ownEmulatorStopped": true,
+    "ownIsolatedServerStopped": true,
+    "helperStopped": true,
+    "taskPortsClosed": true,
+    "browserTabClosed": true,
+    "avdRegistrationPreserved": true,
+    "avdDiskFiles": [
+      {
+        "Name": "config.ini",
+        "Length": 3908
+      },
+      {
+        "Name": "userdata-qemu.img",
+        "Length": 12884901888
+      },
+      {
+        "Name": "userdata-qemu.img.qcow2",
+        "Length": 22077046784
+      },
+      {
+        "Name": "userdata.img",
+        "Length": 1048576
+      }
+    ],
+    "sourceAndIsolatedServerDataPreserved": true,
+    "noOriginalAppDataCleared": true,
+    "time": "2026-11-04T13:44:16.5490094+08:00"
+  }
+}

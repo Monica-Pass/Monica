@@ -4712,4 +4712,17 @@
     <string name="local_recovery_confirm_title">确认恢复本机安全存储？</string>
     <string name="local_recovery_confirm_description">将验证主密码并创建新的本机存储密钥。原文件会保留，生物识别解锁需重新开启。取消不会更改数据。</string>
     <string name="local_recovery_confirm_action">确认恢复</string>
+
+    <string name="send_edit_title">编辑 Send</string>
+    <string name="send_deletion_date">删除时间</string>
+    <string name="send_expiration_date">过期时间</string>
+    <string name="send_no_expiration">不过期</string>
+    <string name="send_new_password">新访问密码</string>
+    <string name="send_keep_password">留空则保留当前访问密码</string>
+    <string name="send_remove_password">移除访问密码</string>
+    <string name="send_saved">Send 已保存</string>
+    <string name="send_edit_conflict">此 Send 已变化，请重新打开后保存。</string>
+    <string name="send_edit_invalid">请检查访问次数和时间：删除时间必须在31天内，过期时间不能晚于删除时间。</string>
+    <string name="send_edit_failed">无法保存 Send，请刷新并核对当前状态后重试。</string>
+    <string name="send_edit_unsupported_auth">此 Send 的访问认证方式暂不支持在这里更改。</string>
 </resources>

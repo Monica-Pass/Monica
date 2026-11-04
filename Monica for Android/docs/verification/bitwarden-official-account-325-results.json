@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.325",
+  "released": false,
+  "officialCloud": {
+    "edition": "main",
+    "region": "US",
+    "readOnly": true,
+    "audit": {
+      "stage": "official-data-audit",
+      "edition": "main",
+      "sourceDocumentsMatched": 103,
+      "representedActiveCipherIds": 103,
+      "missingCount": 0,
+      "types": {
+        "1": 43,
+        "4": 20,
+        "3": 20,
+        "2": 20
+      },
+      "independentlyVerifiedTitles": 103,
+      "independentlyVerifiedLoginFields": 43,
+      "organizationPlaintextNotIndependentlyChecked": 0,
+      "passkeyProjections": 0,
+      "attachmentMetadata": 0,
+      "attachmentDownloadsVerified": 0,
+      "attachmentBytes": 0,
+      "foldersMatched": 2,
+      "sendsMatched": 0
+    },
+    "remoteDataUnchanged": true,
+    "secondSyncChanges": 0,
+    "fdroidRealAccountTested": false
+  },
+  "editions": {
+    "main": {
+      "apk": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.325-26110412-21.APK",
+      "apkSHA256": "49a92dd5edb4d94e7cbe560cf547b1dd90376417c84fff85cdd3baf87e40cb96",
+      "testAPK": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk",
+      "testSHA256": "914fa8a7cbe156175f58b2c218b89b6dc6b12c66a153b35caffc77854fac3529",
+      "buildDuration": "2m30s",
+      "jvm": [
+        {
+          "name": "takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest",
+          "tests": "31",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        },
+        {
+          "name": "takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest",
+          "tests": "14",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        }
+      ],
+      "supplementalJvm": [
+        {
+          "name": "takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest",
+          "tests": "32",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        },
+        {
+          "name": "takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest",
+          "tests": "14",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        }
+      ],
+      "supplementalJvmDuration": "1m 46s",
+      "device": {
+        "edition": "main",
+        "classes": "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest,takagi.ru.monica.bitwarden.BitwardenSshNativeSyncInstrumentedTest,takagi.ru.monica.bitwarden.BitwardenOrganizationSyncTest",
+        "log": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261104-bitwarden-official-account\\canonical-device-main-20261104-142630.log",
+        "commandExit": 0,
+        "driverSeconds": 189.5492529,
+        "apk": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.325-26110412-21.APK",
+        "apkSHA256": "49a92dd5edb4d94e7cbe560cf547b1dd90376417c84fff85cdd3baf87e40cb96",
+        "testAPK": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk",
+        "testSHA256": "914fa8a7cbe156175f58b2c218b89b6dc6b12c66a153b35caffc77854fac3529",
+        "tests": 22,
+        "runnerSeconds": 87.965
+      }
+    },
+    "fdroid": {
+      "apk": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-worktrees\\monica-fdroid-nearby-steam\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.325.apk",
+      "apkSHA256": "c95a9ec1e862069dcb05124eeb6e4dc670fcb4af71867783f0d55ef69819d22d",
+      "testAPK": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-worktrees\\monica-fdroid-nearby-steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk",
+      "testSHA256": "463df594031d15adba23427418d2ba99e2cbd49c7d5df2243e7984de3c0f0ca2",
+      "jvm": [
+        {
+          "name": "takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest",
+          "tests": "31",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        },
+        {
+          "name": "takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest",
+          "tests": "14",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        }
+      ],
+      "buildDuration": "2m 3s",
+      "supplementalJvm": [
+        {
+          "name": "takagi.ru.monica.bitwarden.service.BitwardenCipherDocumentTest",
+          "tests": "32",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        },
+        {
+          "name": "takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest",
+          "tests": "14",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        }
+      ],
+      "supplementalJvmDuration": "47s",
+      "device": {
+        "edition": "fdroid",
+        "classes": "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest,takagi.ru.monica.bitwarden.BitwardenSshNativeSyncInstrumentedTest,takagi.ru.monica.bitwarden.BitwardenOrganizationSyncTest",
+        "log": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261104-bitwarden-official-account\\canonical-device-fdroid-20261104-143021.log",
+        "commandExit": 0,
+        "driverSeconds": 22.6587668,
+        "apk": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-worktrees\\monica-fdroid-nearby-steam\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.325.apk",
+        "apkSHA256": "c95a9ec1e862069dcb05124eeb6e4dc670fcb4af71867783f0d55ef69819d22d",
+        "testAPK": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-worktrees\\monica-fdroid-nearby-steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk",
+        "testSHA256": "463df594031d15adba23427418d2ba99e2cbd49c7d5df2243e7984de3c0f0ca2",
+        "tests": 22,
+        "runnerSeconds": 10.388
+      }
+    }
+  },
+  "sharedFilesMatched": 33,
+  "upstreamServer": "efcb82062b18923c7acc03ddc3675eb90f06b06f",
+  "fdroidMetadataPassed": true,
+  "fdroidMetadataScriptTests": 6,
+  "limitations": [
+    "No attachments, Send, SSH, passkeys or organizations in this real account; no real-account coverage for them.",
+    "No new R8, physical-device or actual Keyguard app UI test.",
+    "Encrypted blob/partial/new unsupported formats remain explicitly rejected."
+  ],
+  "negativeLegacyDataTests": 3,
+  "cleanup": {
+    "realAccountUser13Removed": true,
+    "realAccountProbeRemoved": true,
+    "syntheticUser14Removed": true,
+    "restoredUser": 0,
+    "preservedUsers": [
+      0,
+      10,
+      11,
+      12
+    ],
+    "emulatorOwnershipVerified": true,
+    "startedPID": 149956,
+    "serial": "emulator-5556",
+    "avd": "Monica_Issue136_API_32",
+    "emulatorStopRequested": true,
+    "testForwardRemoved": true,
+    "remoteDataModified": false,
+    "time": "2026-11-04T14:34:03.8782907+08:00",
+    "emulatorStopped": true,
+    "avdRegistrationPreserved": true,
+    "avdConfigPreserved": true,
+    "userDataDiskPreserved": true
+  },
+  "finalChecks": [
+    {
+      "edition": "main",
+      "filesChecked": 17,
+      "whitespacePassed": true,
+      "reportJsonXmlValid": true
+    },
+    {
+      "edition": "fdroid",
+      "filesChecked": 17,
+      "whitespacePassed": true,
+      "reportJsonXmlValid": true
+    }
+  ]
+}

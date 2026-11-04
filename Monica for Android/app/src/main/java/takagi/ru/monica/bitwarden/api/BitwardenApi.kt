@@ -15,6 +15,16 @@ import retrofit2.http.*
  *       或自托管服务的 /identity 路径
  */
 interface BitwardenIdentityApi {
+    @POST("accounts/register/send-verification-email")
+    suspend fun sendRegistrationVerification(@Body request: BitwardenRegistrationStartRequest): Response<BitwardenRegistrationStartResponse>
+
+    @POST("accounts/register/verification-email-clicked")
+    suspend fun verifyRegistrationEmail(@Body request: BitwardenRegistrationVerifyRequest): Response<Unit>
+
+    @POST("accounts/register/finish")
+    suspend fun finishRegistration(@Body request: kotlinx.serialization.json.JsonObject): Response<Unit>
+
+
     
     /**
      * 获取预登录信息 (KDF 类型和参数)
@@ -122,6 +132,17 @@ interface BitwardenIdentityApi {
  *       或自托管服务的 /api 路径
  */
 interface BitwardenVaultApi {
+    @POST("accounts/register")
+    suspend fun registerLegacyAccount(@Body request: kotlinx.serialization.json.JsonObject): Response<Unit>
+
+
+    @POST("accounts/password-hint")
+    suspend fun requestPasswordHint(@Body request: BitwardenEmailRequest): Response<Unit>
+
+    @GET("devices")
+    suspend fun getAccountDevices(@Header("Authorization") authorization: String): Response<BitwardenAccountDevicesResponse>
+
+
     @GET("accounts/profile")
     suspend fun profile(@Header("Authorization") authorization: String): Response<ProfileResponse>
 
@@ -140,6 +161,26 @@ interface BitwardenVaultApi {
         @Header("Authorization") authorization: String,
         @Query("excludeDomains") excludeDomains: Boolean = true
     ): Response<SyncResponse>
+
+    /** Raw responses are validated before converting to the local projection. */
+    @GET("sync")
+    suspend fun syncSource(
+        @Header("Authorization") authorization: String,
+        @Query("excludeDomains") excludeDomains: Boolean = true
+    ): Response<okhttp3.ResponseBody>
+
+    @GET("ciphers/{id}")
+    suspend fun getCipherSource(
+        @Header("Authorization") authorization: String,
+        @Path("id") cipherId: String
+    ): Response<okhttp3.ResponseBody>
+
+    @PUT("ciphers/{id}")
+    suspend fun updateCipherSource(
+        @Header("Authorization") authorization: String,
+        @Path("id") cipherId: String,
+        @Body cipher: kotlinx.serialization.json.JsonObject
+    ): Response<okhttp3.ResponseBody>
     
     /**
      * 获取单个 Cipher
@@ -359,6 +400,25 @@ interface BitwardenVaultApi {
         @Header("Authorization") authorization: String,
         @Path("id") sendId: String,
         @Body send: SendCreateRequest
+    ): Response<SendApiResponse>
+
+    @GET("sends/{id}")
+    suspend fun getSendDocument(
+        @Header("Authorization") authorization: String,
+        @Path("id") sendId: String
+    ): Response<kotlinx.serialization.json.JsonObject>
+
+    @PUT("sends/{id}")
+    suspend fun updateSendDocument(
+        @Header("Authorization") authorization: String,
+        @Path("id") sendId: String,
+        @Body send: kotlinx.serialization.json.JsonObject
+    ): Response<kotlinx.serialization.json.JsonObject>
+
+    @PUT("sends/{id}/remove-password")
+    suspend fun removeSendPassword(
+        @Header("Authorization") authorization: String,
+        @Path("id") sendId: String
     ): Response<SendApiResponse>
 
     /**
@@ -625,7 +685,18 @@ data class CipherApiResponse(
     val deletedDate: String? = null,
     @JsonNames("attachments")
     @SerialName("Attachments")
-    val attachments: List<CipherAttachmentApiData>? = null
+    val attachments: List<CipherAttachmentApiData>? = null,
+    @JsonNames("passwordHistory")
+    @SerialName("PasswordHistory")
+    val passwordHistory: kotlinx.serialization.json.JsonElement? = null,
+    @JsonNames("Data") @SerialName("data")
+    val data: kotlinx.serialization.json.JsonElement? = null,
+    @JsonNames("PartialData") @SerialName("partialData")
+    val partialData: kotlinx.serialization.json.JsonElement? = null,
+    @JsonNames("EncryptedByKeyId") @SerialName("encryptedByKeyId")
+    val encryptedByKeyId: kotlinx.serialization.json.JsonElement? = null,
+    @kotlinx.serialization.Transient
+    val sourceDocument: kotlinx.serialization.json.JsonObject? = null
 )
 
 @Serializable
@@ -700,7 +771,10 @@ data class CipherUriApiData(
     val uri: String? = null,
     @JsonNames("Match", "match")
     @SerialName("match")
-    val match: Int? = null
+    val match: Int? = null,
+    @JsonNames("UriChecksum", "uriChecksum")
+    @SerialName("uriChecksum")
+    val uriChecksum: String? = null
 )
 
 @Serializable
@@ -981,7 +1055,10 @@ data class CipherCreateRequest(
     val reprompt: Int = 0,
     @JsonNames("ArchivedDate", "archivedDate")
     @SerialName("archivedDate")
-    val archivedDate: String? = null
+    val archivedDate: String? = null,
+    @JsonNames("EncryptedFor", "encryptedFor")
+    @SerialName("encryptedFor")
+    val encryptedFor: String? = null
 )
 
 @Serializable
@@ -1028,7 +1105,13 @@ data class CipherUpdateRequest(
     @SerialName("organizationId") val organizationId: String? = null,
     @SerialName("collectionIds") val collectionIds: List<String>? = null,
     @SerialName("key") val key: String? = null,
-    @SerialName("lastKnownRevisionDate") val lastKnownRevisionDate: String? = null
+    @SerialName("lastKnownRevisionDate") val lastKnownRevisionDate: String? = null,
+    @JsonNames("PasswordHistory", "passwordHistory")
+    @SerialName("passwordHistory")
+    val passwordHistory: kotlinx.serialization.json.JsonElement? = null,
+    @JsonNames("EncryptedFor", "encryptedFor")
+    @SerialName("encryptedFor")
+    val encryptedFor: String? = null
 )
 
 @Serializable

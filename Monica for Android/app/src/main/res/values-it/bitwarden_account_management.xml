@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_account_create">Crea account</string>
+    <string name="bitwarden_account_request_hint">Richiedi suggerimento password</string>
+    <string name="bitwarden_account_password_hint">Suggerimento password principale (facoltativo)</string>
+    <string name="bitwarden_account_send_verification">Invia email di verifica</string>
+    <string name="bitwarden_account_verification_pending">Apri l’email di verifica e incolla qui il collegamento o il token.</string>
+    <string name="bitwarden_account_verification_input">Collegamento o token di verifica email</string>
+    <string name="bitwarden_account_verification_invalid">Il collegamento o il token non è valido per questo account.</string>
+    <string name="bitwarden_account_password_requirements">Usa una password principale sicura di almeno 12 caratteri.</string>
+    <string name="bitwarden_account_password_mismatch">Le password principali non corrispondono.</string>
+    <string name="bitwarden_account_registration_success">Account creato. Accedi con la nuova password principale.</string>
+    <string name="bitwarden_account_hint_sent">Se questo account esiste, è stata richiesta l’email con il suggerimento.</string>
+    <string name="bitwarden_account_security">Sicurezza account</string>
+    <string name="bitwarden_account_devices">Dispositivi dell’account</string>
+    <string name="bitwarden_account_device_trusted">Dispositivo attendibile</string>
+    <string name="bitwarden_account_device_untrusted">Dispositivo non attendibile</string>
+    <string name="bitwarden_account_last_activity">Ultima attività</string>
+    <string name="bitwarden_account_web_settings">Gestisci account nella cassaforte web</string>
+    <string name="bitwarden_account_no_devices">Nessun dispositivo trovato.</string>
+    <string name="bitwarden_account_request_failed">Richiesta account non riuscita (HTTP %1$d).</string>
+    <string name="bitwarden_account_operation_failed">Impossibile completare l’operazione dell’account.</string>
+    <string name="bitwarden_account_invalid_email">Inserisci un indirizzo email valido.</string>
+</resources>

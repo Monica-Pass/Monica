@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="send_edit_title">Send bearbeiten</string>
+    <string name="send_deletion_date">Löschdatum</string>
+    <string name="send_expiration_date">Ablaufdatum</string>
+    <string name="send_no_expiration">Kein Ablauf</string>
+    <string name="send_keep_password">Leer lassen, um das aktuelle Zugriffspasswort beizubehalten</string>
+    <string name="send_new_password">Neues Zugriffspasswort</string>
+    <string name="send_remove_password">Zugriffspasswort entfernen</string>
+    <string name="send_saved">Send gespeichert</string>
+    <string name="send_edit_conflict">Dieser Send wurde geändert. Öffne ihn vor dem Speichern erneut.</string>
+    <string name="send_edit_invalid">Prüfe Zugriffslimit und Daten. Die Löschung muss innerhalb von 31 Tagen erfolgen; der Ablauf darf nicht später liegen.</string>
+    <string name="send_edit_failed">Send konnte nicht gespeichert werden. Aktualisiere ihn und prüfe den aktuellen Stand vor einem erneuten Versuch.</string>
+    <string name="send_edit_unsupported_auth">Dieser Send verwendet eine Zugriffsmethode, die hier nicht geändert werden kann.</string>
+</resources>

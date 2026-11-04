@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_account_create">Tạo tài khoản</string>
+    <string name="bitwarden_account_request_hint">Yêu cầu gợi ý mật khẩu</string>
+    <string name="bitwarden_account_password_hint">Gợi ý mật khẩu chính (tùy chọn)</string>
+    <string name="bitwarden_account_send_verification">Gửi email xác minh</string>
+    <string name="bitwarden_account_verification_pending">Mở email xác minh rồi dán liên kết hoặc mã thông báo vào đây.</string>
+    <string name="bitwarden_account_verification_input">Liên kết hoặc mã thông báo xác minh email</string>
+    <string name="bitwarden_account_verification_invalid">Liên kết hoặc mã thông báo xác minh không hợp lệ cho tài khoản này.</string>
+    <string name="bitwarden_account_password_requirements">Dùng mật khẩu chính mạnh có ít nhất 12 ký tự.</string>
+    <string name="bitwarden_account_password_mismatch">Mật khẩu chính không khớp.</string>
+    <string name="bitwarden_account_registration_success">Đã tạo tài khoản. Đăng nhập bằng mật khẩu chính mới.</string>
+    <string name="bitwarden_account_hint_sent">Nếu tài khoản này tồn tại, email gợi ý mật khẩu đã được yêu cầu.</string>
+    <string name="bitwarden_account_security">Bảo mật tài khoản</string>
+    <string name="bitwarden_account_devices">Thiết bị của tài khoản</string>
+    <string name="bitwarden_account_device_trusted">Thiết bị đáng tin cậy</string>
+    <string name="bitwarden_account_device_untrusted">Thiết bị không được tin cậy</string>
+    <string name="bitwarden_account_last_activity">Hoạt động gần nhất</string>
+    <string name="bitwarden_account_web_settings">Quản lý tài khoản trong kho web</string>
+    <string name="bitwarden_account_no_devices">Không tìm thấy thiết bị.</string>
+    <string name="bitwarden_account_request_failed">Yêu cầu tài khoản thất bại (HTTP %1$d).</string>
+    <string name="bitwarden_account_operation_failed">Không thể hoàn tất thao tác tài khoản.</string>
+    <string name="bitwarden_account_invalid_email">Nhập địa chỉ email hợp lệ.</string>
+</resources>

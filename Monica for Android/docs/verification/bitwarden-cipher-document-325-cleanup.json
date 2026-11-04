@@ -1,0 +1,38 @@
+{
+  "avd": "Monica_Issue136_API_32",
+  "serial": "emulator-5556",
+  "ownedStartedPid": 204664,
+  "restoredUser": 0,
+  "removedOwnedUser": 13,
+  "preservedUsers": [
+    0,
+    10,
+    11,
+    12
+  ],
+  "before": "Users:\r\n\tUserInfo{0:Owner:c13} running\r\n\tUserInfo{10:Monica:410}\r\n\tUserInfo{11:Monica_Recovery316:410}\r\n\tUserInfo{12:Monica_Recovery316_Retest:410}\r\n\tUserInfo{13:Monica_CipherDocument325_Test:414} running\r\n",
+  "after": "Users:\r\n\tUserInfo{0:Owner:c13} running\r\n\tUserInfo{10:Monica:410}\r\n\tUserInfo{11:Monica_Recovery316:410}\r\n\tUserInfo{12:Monica_Recovery316_Retest:410}\r\n",
+  "serialStopped": true,
+  "preservedFiles": [
+    {
+      "path": "C:\\Users\\joyins\\.android\\avd\\Monica_Issue136_API_32.ini",
+      "bytes": 109
+    },
+    {
+      "path": "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\config.ini",
+      "bytes": 3908
+    },
+    {
+      "path": "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img",
+      "bytes": 12884901888
+    },
+    {
+      "path": "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img.qcow2",
+      "bytes": 22077046784
+    }
+  ],
+  "deletedRemoteSyntheticFiles": [
+    "/data/local/tmp/monica-schema80-main.db",
+    "/data/local/tmp/monica-schema80-fdroid.db"
+  ]
+}

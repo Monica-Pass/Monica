@@ -9,8 +9,29 @@ import takagi.ru.monica.bitwarden.crypto.BitwardenCrypto
 import takagi.ru.monica.bitwarden.crypto.BitwardenCrypto.SymmetricCryptoKey
 import takagi.ru.monica.data.bitwarden.BitwardenSend
 import java.time.Instant
+import kotlinx.serialization.json.JsonObject
+import takagi.ru.monica.bitwarden.service.BitwardenSendDraft
+import takagi.ru.monica.bitwarden.service.BitwardenSendEdit
+import takagi.ru.monica.bitwarden.service.SendPasswordAction
 
 object BitwardenSendMapper {
+
+    internal fun buildUpdatePayload(source: JsonObject, draft: BitwardenSendDraft,
+        vaultKey: SymmetricCryptoKey): JsonObject {
+        val encryptedKey = requireNotNull(BitwardenSendEdit.string(source, "key"))
+        val raw = BitwardenCrypto.decrypt(encryptedKey, vaultKey)
+        val keyMaterial = try { requireNotNull(decodeKeyMaterial(raw)).copyOf() } finally { raw.fill(0) }
+        val sendKey = BitwardenCrypto.deriveSendKey(keyMaterial)
+        try {
+            val isText = BitwardenSendEdit.string(source, "type") == "0"
+            return BitwardenSendEdit.patch(source, draft,
+                name = BitwardenCrypto.encryptString(draft.title, sendKey),
+                notes = draft.notes?.let { BitwardenCrypto.encryptString(it, sendKey) },
+                text = if (isText) BitwardenCrypto.encryptString(draft.text, sendKey) else null,
+                passwordHash = if (draft.passwordAction == SendPasswordAction.REPLACE)
+                    BitwardenCrypto.hashSendPassword(requireNotNull(draft.password), keyMaterial) else null)
+        } finally { sendKey.clear(); keyMaterial.fill(0) }
+    }
 
     data class CreateTextSendPayload(
         val request: SendCreateRequest,
@@ -36,45 +57,51 @@ object BitwardenSendMapper {
             val keyMaterial = decodeKeyMaterial(encryptedKeyBytes) ?: return null
             val keyBase64 = Base64.encodeToString(keyMaterial, Base64.NO_WRAP)
             val sendKey = BitwardenCrypto.deriveSendKey(keyMaterial)
+            try {
+                require(api.type == 0 && api.text != null || api.type == 1 && api.file != null) { "Unsupported or incomplete Send" }
+                val decryptedName = decryptString(api.name, sendKey) ?: "Untitled Send"
+                val decryptedNotes = decryptString(api.notes, sendKey).orEmpty()
+                val decryptedText = decryptString(api.text?.text, sendKey)
+                val decryptedFileName = api.file?.fileName?.let { fileName ->
+                    decryptString(fileName, sendKey) ?: fileName
+                }
 
-            val decryptedName = decryptString(api.name, sendKey) ?: "Untitled Send"
-            val decryptedNotes = decryptString(api.notes, sendKey).orEmpty()
-            val decryptedText = decryptString(api.text?.text, sendKey)
-            val decryptedFileName = api.file?.fileName?.let { fileName ->
-                decryptString(fileName, sendKey) ?: fileName
-            }
-
-            val now = System.currentTimeMillis()
-            BitwardenSend(
-                vaultId = vaultId,
-                bitwardenSendId = api.id,
-                accessId = api.accessId,
-                keyBase64 = keyBase64,
-                type = api.type,
-                name = decryptedName,
-                notes = decryptedNotes,
-                textContent = decryptedText,
-                isTextHidden = api.text?.hidden ?: false,
-                fileName = decryptedFileName,
-                fileSize = api.file?.size,
-                accessCount = api.accessCount,
-                maxAccessCount = api.maxAccessCount,
-                hasPassword = api.password != null,
-                disabled = api.disabled,
-                hideEmail = api.hideEmail ?: false,
-                revisionDate = api.revisionDate,
-                expirationDate = api.expirationDate,
-                deletionDate = api.deletionDate,
-                shareUrl = buildShareUrl(
-                    serverUrl = serverUrl,
+                val now = System.currentTimeMillis()
+                BitwardenSend(
+                    vaultId = vaultId,
+                    bitwardenSendId = api.id,
                     accessId = api.accessId,
-                    keyMaterial = keyMaterial,
-                    urlB64Key = api.urlB64Key
-                ),
-                lastSyncedAt = now,
-                createdAt = now,
-                updatedAt = now
-            )
+                    keyBase64 = keyBase64,
+                    type = api.type,
+                    name = decryptedName,
+                    notes = decryptedNotes,
+                    textContent = decryptedText,
+                    isTextHidden = api.text?.hidden ?: false,
+                    fileName = decryptedFileName,
+                    fileSize = api.file?.size,
+                    accessCount = api.accessCount,
+                    maxAccessCount = api.maxAccessCount,
+                    hasPassword = api.password != null,
+                    disabled = api.disabled,
+                    hideEmail = api.hideEmail ?: false,
+                    revisionDate = api.revisionDate,
+                    expirationDate = api.expirationDate,
+                    deletionDate = api.deletionDate,
+                    shareUrl = buildShareUrl(
+                        serverUrl = serverUrl,
+                        accessId = api.accessId,
+                        keyMaterial = keyMaterial,
+                        urlB64Key = api.urlB64Key
+                    ),
+                    lastSyncedAt = now,
+                    createdAt = now,
+                    updatedAt = now
+                )
+            } finally {
+                sendKey.clear()
+                keyMaterial.fill(0)
+                encryptedKeyBytes.fill(0)
+            }
         } catch (_: Exception) {
             null
         }
@@ -213,11 +240,7 @@ object BitwardenSendMapper {
 
     private fun decryptString(value: String?, key: SymmetricCryptoKey): String? {
         if (value.isNullOrBlank()) return null
-        return try {
-            BitwardenCrypto.decryptToString(value, key)
-        } catch (_: Exception) {
-            null
-        }
+        return BitwardenCrypto.decryptToString(value, key)
     }
 
     private fun decodeKeyMaterial(raw: ByteArray): ByteArray? {

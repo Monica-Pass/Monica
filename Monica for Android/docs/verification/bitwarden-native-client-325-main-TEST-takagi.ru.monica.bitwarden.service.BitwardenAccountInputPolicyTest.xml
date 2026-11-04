@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-03T18:05:27" hostname="JOYIN" time="0.07">
+  <properties/>
+  <testcase name="selfHostedVerificationIsBoundToTheExactPort" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest" time="0.031"/>
+  <testcase name="rejectsDuplicatedVerificationParametersAndOversizedTokens" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest" time="0.005"/>
+  <testcase name="normalizesEmailWithoutChangingTheToken" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest" time="0.001"/>
+  <testcase name="pastedLinkCannotSelectAnotherServerOrAccount" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest" time="0.002"/>
+  <testcase name="rejectsMissingLocalPartAndMultipleOrWhitespaceEmails" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest" time="0.014"/>
+  <testcase name="acceptsOfficialFragmentVerificationLinkBoundToTheAccount" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest" time="0.0"/>
+  <testcase name="webSettingsKeepTheAccountServerWithoutTransmittingCredentials" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest" time="0.014"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

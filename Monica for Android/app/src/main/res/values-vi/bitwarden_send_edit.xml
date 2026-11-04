@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="send_edit_title">Chỉnh sửa Send</string>
+    <string name="send_deletion_date">Ngày xóa</string>
+    <string name="send_expiration_date">Ngày hết hạn</string>
+    <string name="send_no_expiration">Không hết hạn</string>
+    <string name="send_keep_password">Để trống để giữ mật khẩu truy cập hiện tại</string>
+    <string name="send_new_password">Mật khẩu truy cập mới</string>
+    <string name="send_remove_password">Xóa mật khẩu truy cập</string>
+    <string name="send_saved">Đã lưu Send</string>
+    <string name="send_edit_conflict">Send này đã thay đổi. Hãy mở lại trước khi lưu.</string>
+    <string name="send_edit_invalid">Kiểm tra giới hạn truy cập và các ngày. Ngày xóa phải trong vòng 31 ngày và ngày hết hạn không được sau ngày xóa.</string>
+    <string name="send_edit_failed">Không thể lưu Send. Hãy làm mới và kiểm tra trạng thái hiện tại trước khi thử lại.</string>
+    <string name="send_edit_unsupported_auth">Send này dùng phương thức truy cập không thể thay đổi tại đây.</string>
+</resources>

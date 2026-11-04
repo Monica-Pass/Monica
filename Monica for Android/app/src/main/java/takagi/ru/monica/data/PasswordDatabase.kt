@@ -37,6 +37,7 @@ import takagi.ru.monica.keepass.KeePassPendingChangeDao
         BitwardenConflictBackup::class,
         BitwardenPendingOperation::class,
         BitwardenSyncRawEntryRecord::class,
+        BitwardenCipherSource::class,
         // 附件（可挂在 PasswordEntry 或 SecureItem 上，跨来源统一元数据）
         Attachment::class,
         // MDBX 数据库格式
@@ -46,7 +47,7 @@ import takagi.ru.monica.keepass.KeePassPendingChangeDao
         // KeePass entry-level pending changes
         KeePassPendingChange::class
     ],
-    version = 80,
+    version = 81,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -77,6 +78,7 @@ abstract class PasswordDatabase : RoomDatabase() {
     abstract fun bitwardenConflictBackupDao(): BitwardenConflictBackupDao
     abstract fun bitwardenPendingOperationDao(): BitwardenPendingOperationDao
     abstract fun bitwardenSyncRawEntryRecordDao(): BitwardenSyncRawEntryRecordDao
+    abstract fun bitwardenCipherSourceDao(): BitwardenCipherSourceDao
 
     // KeePass 增量变更队列
     abstract fun keepassPendingChangeDao(): KeePassPendingChangeDao
@@ -88,6 +90,22 @@ abstract class PasswordDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: PasswordDatabase? = null
         
+        private val MIGRATION_80_81 = object : androidx.room.migration.Migration(80, 81) {
+            override fun migrate(database: androidx.sqlite.db.SupportSQLiteDatabase) {
+                database.execSQL("""
+                    CREATE TABLE IF NOT EXISTS bitwarden_cipher_sources (
+                        vaultId INTEGER NOT NULL,
+                        cipherId TEXT NOT NULL,
+                        revisionDate TEXT NOT NULL,
+                        accountKey TEXT NOT NULL,
+                        sealedDocument TEXT NOT NULL,
+                        PRIMARY KEY(vaultId, cipherId, revisionDate),
+                        FOREIGN KEY(vaultId) REFERENCES bitwarden_vaults(id) ON DELETE CASCADE
+                    )
+                """.trimIndent())
+            }
+        }
+
         private val MIGRATION_1_2 = object : androidx.room.migration.Migration(1, 2) {
             override fun migrate(database: androidx.sqlite.db.SupportSQLiteDatabase) {
                 // 创建secure_items表
@@ -2450,7 +2468,8 @@ abstract class PasswordDatabase : RoomDatabase() {
                         MIGRATION_76_77,   // Attachments for PasswordEntry and SecureItem
                         MIGRATION_77_78,   // Monica-owned KeePass key-file copies
                         MIGRATION_78_79,   // Explicit multi-password project identity
-                        MIGRATION_79_80    // Preserve explicit WebAuthn backup flags
+                        MIGRATION_79_80,   // Preserve explicit WebAuthn backup flags
+                        MIGRATION_80_81    // Complete encrypted Bitwarden source documents
                     )
                     // 启用多进程失效通知：IME 跑在 :ime 独立进程，主进程需要
                     // 感知 IME 进程对数据库的修改（例如最近填充时间戳等）。

@@ -192,7 +192,8 @@ class CipherSyncProcessor(
                 )
             )
         }
-        if (existing.bitwardenRevisionDate != cipher.revisionDate) {
+        if (!BitwardenCipherRevisionGuard.matches(existing.bitwardenRevisionDate, cipher.revisionDate)) {
+            BitwardenConflictStore(context).record(existing, cipher)
             return CipherSyncResult.Conflict
         }
         return CipherSyncResult.Skipped("Local changes pending upload")
@@ -225,9 +226,12 @@ class CipherSyncProcessor(
         if (!cipher.organizationId.isNullOrBlank() && cipher.viewPassword == false) {
             return CipherSyncResult.Skipped("Organization item restricts password visibility")
         }
+        if (!BitwardenCipherDocument.canProject(cipher)) {
+            return CipherSyncResult.Skipped("Unsupported or incomplete cipher format; source retained")
+        }
         return BitwardenCipherKeyResolver.withCipherKey(cipher, symmetricKey, TAG, organizationKeys) { effectiveKey ->
-            // Authenticate the record before field-level compatibility fallbacks can produce empty values.
-            cipher.name?.let { BitwardenCrypto.decryptToString(it, effectiveKey) }
+            // Validate every encrypted field before any projection or source revision is committed.
+            validateEncryptedFields(cipher, effectiveKey)
             val serverDeletedAt = parseBitwardenDeletedAt(cipher.deletedDate)
             val serverArchivedAt = parseBitwardenArchivedAt(cipher.archivedDate)
             val metrics = if (forensicsCollector != null) {
@@ -508,7 +512,8 @@ class CipherSyncProcessor(
                         )
                     )
                 }
-                if (existing.bitwardenRevisionDate != cipher.revisionDate) {
+                if (!BitwardenCipherRevisionGuard.matches(existing.bitwardenRevisionDate, cipher.revisionDate)) {
+                    BitwardenConflictStore(context).record(existing, cipher)
                     return CipherSyncResult.Conflict
                 }
                 return CipherSyncResult.Skipped("Local changes pending upload")
@@ -746,24 +751,16 @@ class CipherSyncProcessor(
 
         val name = decryptString(cipher.name, symmetricKey) ?: "SSH Key"
         val notes = decryptString(cipher.notes, symmetricKey) ?: ""
-        val privateKey = decryptString(sshKey.privateKey, symmetricKey).orEmpty()
-        val publicKey = decryptString(sshKey.publicKey, symmetricKey).orEmpty()
-        val fingerprint = decryptString(sshKey.keyFingerprint, symmetricKey).orEmpty()
-        val sshKeyData = SshKeyDataCodec.encode(
-            SshKeyData(
-                algorithm = inferSshAlgorithm(publicKey),
-                publicKeyOpenSsh = publicKey,
-                privateKeyOpenSsh = privateKey,
-                fingerprintSha256 = fingerprint,
-                format = SshKeyData.FORMAT_OPENSSH
-            )
+        val sshKeyData = SshKeyDataCodec.encode(BitwardenSshKeyMapper.decodeNative(sshKey, cipher.fields, symmetricKey))
+        val userFields = BitwardenPasswordCustomFieldAdapter.extractUserFields(
+            decryptCustomFields(cipher.fields, symmetricKey).map { it.toPlainField() }
         )
         if (sshKeyData.isBlank()) {
             return CipherSyncResult.Skipped("Empty SSH key data")
         }
 
         if (existing == null) {
-            passwordEntryDao.insert(
+            val newEntryId = passwordEntryDao.insert(
                 PasswordEntry(
                     title = name,
                     website = "",
@@ -787,11 +784,14 @@ class CipherSyncProcessor(
                     archivedAt = serverArchivedAt
                 )
             )
+            replacePasswordCustomFields(newEntryId, userFields)
+            passwordCustomFieldSyncState.markInitialized(vault.id, cipher.id)
             return CipherSyncResult.Added
         }
 
         if (existing.bitwardenLocalModified) {
-            if (existing.bitwardenRevisionDate != cipher.revisionDate) {
+            if (!BitwardenCipherRevisionGuard.matches(existing.bitwardenRevisionDate, cipher.revisionDate)) {
+                BitwardenConflictStore(context).record(existing, cipher)
                 return CipherSyncResult.Conflict
             }
             return CipherSyncResult.Skipped("Local changes pending upload")
@@ -819,6 +819,8 @@ class CipherSyncProcessor(
                 bitwardenLocalModified = false
             )
         )
+        replacePasswordCustomFields(existing.id, userFields)
+        passwordCustomFieldSyncState.markInitialized(vault.id, cipher.id)
         return CipherSyncResult.Updated
     }
 
@@ -1618,6 +1620,53 @@ class CipherSyncProcessor(
                 creationDateMillis = creationDate,
                 publicKeyAlgorithm = publicKeyAlgorithm
             )
+        }
+    }
+
+    private fun validateEncryptedFields(cipher: CipherApiResponse, key: SymmetricCryptoKey) {
+        fun encrypted(value: String?) {
+            if (!value.isNullOrEmpty()) BitwardenCrypto.decryptToString(value, key)
+        }
+        // Legacy extension metadata may be plaintext; recognizable ciphertext must still authenticate.
+        fun compatible(value: String?) {
+            if (value != null && looksLikeCipherString(value)) encrypted(value)
+        }
+        encrypted(requireNotNull(cipher.name))
+        encrypted(cipher.notes)
+        cipher.login?.let { login ->
+            listOf(login.username, login.password, login.totp).forEach(::encrypted)
+            login.uris.orEmpty().forEach { encrypted(it.uri); encrypted(it.uriChecksum) }
+            login.fido2Credentials.orEmpty().forEach { credential ->
+                listOf(credential.credentialId, credential.keyType, credential.keyAlgorithm,
+                    credential.keyCurve, credential.keyValue, credential.rpId, credential.rpName,
+                    credential.counter, credential.userHandle, credential.userName,
+                    credential.userDisplayName, credential.discoverable, credential.creationDate)
+                    .forEach(::compatible)
+            }
+        }
+        cipher.card?.let { card ->
+            listOf(card.cardholderName, card.brand, card.number, card.expMonth, card.expYear, card.code)
+                .forEach(::encrypted)
+        }
+        cipher.identity?.let { identity ->
+            listOf(identity.title, identity.firstName, identity.middleName, identity.lastName,
+                identity.address1, identity.address2, identity.address3, identity.city, identity.state,
+                identity.postalCode, identity.country, identity.company, identity.email, identity.phone,
+                identity.ssn, identity.username, identity.passportNumber, identity.licenseNumber)
+                .forEach(::encrypted)
+        }
+        cipher.sshKey?.let { ssh ->
+            listOf(ssh.privateKey, ssh.publicKey, ssh.keyFingerprint).forEach(::encrypted)
+        }
+        cipher.fields.orEmpty().forEach { compatible(it.name); compatible(it.value) }
+        cipher.attachments.orEmpty().forEach { compatible(it.fileName) }
+        (cipher.passwordHistory as? kotlinx.serialization.json.JsonArray)?.forEach { entry ->
+            val history = entry as? kotlinx.serialization.json.JsonObject ?: error("Invalid password history")
+            val password = history["password"] ?: history["Password"]
+            if (password != null && password != kotlinx.serialization.json.JsonNull) {
+                require(password is kotlinx.serialization.json.JsonPrimitive && password.isString) { "Invalid history password" }
+                encrypted(password.content)
+            }
         }
     }
 

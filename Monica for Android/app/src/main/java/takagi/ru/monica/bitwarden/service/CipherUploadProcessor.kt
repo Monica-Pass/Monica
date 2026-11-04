@@ -52,8 +52,14 @@ import java.security.MessageDigest
  */
 class CipherUploadProcessor(
     private val context: Context,
-    private val apiManager: BitwardenApiManager = BitwardenApiManager()
+    private val apiManager: BitwardenApiManager = BitwardenApiManager(),
+    private val sessionIsActive: ((Long, SymmetricCryptoKey) -> Boolean)? = null
 ) {
+    private val cipherSourceStore = BitwardenCipherSourceStore(context)
+    private fun requireActive(vaultId: Long, key: SymmetricCryptoKey) {
+        check(sessionIsActive?.invoke(vaultId, key) != false) { "Vault session changed; local data retained" }
+    }
+
     companion object {
         private const val TAG = "CipherUploadProcessor"
         private val passkeyUpdateMutex = Mutex()
@@ -157,16 +163,18 @@ class CipherUploadProcessor(
         symmetricKey: SymmetricCryptoKey
     ): UploadItemResult {
         return try {
-            val request = when (item.itemType) {
+            val unpreparedRequest = when (item.itemType) {
                 ItemType.TOTP -> createTotpCipherRequest(item, symmetricKey)
                 ItemType.BANK_CARD -> createCardCipherRequest(item, symmetricKey)
                 ItemType.NOTE -> createSecureNoteCipherRequest(item, symmetricKey)
                 ItemType.DOCUMENT -> createIdentityCipherRequest(item, symmetricKey)
                 else -> return UploadItemResult.Error("Unsupported item type: ${item.itemType}")
             }
+            val vaultApi = apiManager.getVaultApi(vault)
+            val request = BitwardenCipherUploadProtocol.create(unpreparedRequest,
+                BitwardenCipherUploadProtocol.userId(vault, vaultApi, accessToken), symmetricKey)
             val requestPayload = runCatching { json.encodeToString(request) }.getOrNull()
             
-            val vaultApi = apiManager.getVaultApi(vault)
             val response = vaultApi.createCipher(
                 authorization = "Bearer $accessToken",
                 cipher = request
@@ -268,6 +276,10 @@ class CipherUploadProcessor(
             val baseline = fetchCipherForFieldMerge(api, accessToken, cipherId)
                 ?: return UploadItemResult.Error("Cannot read cipher before update; local changes retained")
             BitwardenCipherOwnership.requireWritable(baseline, cipherId)
+            if (!BitwardenCipherRevisionGuard.matches(item.bitwardenRevisionDate, baseline.revisionDate)) {
+                BitwardenConflictStore(context).record(item, baseline)
+                return UploadItemResult.Error("Remote cipher changed; review the saved conflict before uploading")
+            }
             val key = BitwardenCipherKeyResolver.resolveRemoteCipherKey(api, accessToken, baseline, symmetricKey)
             try {
                 updateSecureItemWithKey(vault, item, cipherId, accessToken, key, symmetricKey, baseline)
@@ -283,7 +295,7 @@ class CipherUploadProcessor(
         symmetricKey: SymmetricCryptoKey, userKey: SymmetricCryptoKey, baselineCipher: CipherApiResponse
     ): UploadItemResult {
         return try {
-            val request = when (item.itemType) {
+            val unpreparedRequest = when (item.itemType) {
                 ItemType.TOTP -> createTotpCipherRequest(item, symmetricKey)
                 ItemType.BANK_CARD -> createCardCipherRequest(item, symmetricKey)
                 ItemType.NOTE -> createSecureNoteCipherRequest(item, symmetricKey)
@@ -292,13 +304,22 @@ class CipherUploadProcessor(
             }
 
             val vaultApi = apiManager.getVaultApi(vault)
-            val mergedRequest = mergeRequestWithCipherBaseline(request, baselineCipher, symmetricKey)
-            val updateRequest = BitwardenCipherOwnership.preserve(mergedRequest.toUpdateRequest(), baselineCipher)
-            val requestPayload = runCatching { json.encodeToString(updateRequest) }.getOrNull()
-            val response = vaultApi.updateCipher(
+            val mergedRequest = mergeRequestWithCipherBaseline(unpreparedRequest, baselineCipher, symmetricKey)
+            val updateRequest = BitwardenCipherOwnership.preserve(mergedRequest.toUpdateRequest(), baselineCipher).let {
+                BitwardenCipherUploadProtocol.update(it,
+                    BitwardenCipherUploadProtocol.userId(vault, vaultApi, accessToken), symmetricKey, baselineCipher.login)
+            }
+            val document = BitwardenCipherDocument.update(
+                requireNotNull(baselineCipher.sourceDocument) { "Complete cipher source unavailable" }, updateRequest, symmetricKey)
+            val requestPayload = document.toString()
+            if (secureItemDao.getItemById(item.id) != item) {
+                return UploadItemResult.Error("Newer local changes are still pending")
+            }
+            requireActive(vault.id, userKey)
+            val response = vaultApi.updateCipherSource(
                 authorization = "Bearer $accessToken",
                 cipherId = cipherId,
-                cipher = updateRequest
+                cipher = document
             )
 
             if (!response.isSuccessful) {
@@ -316,7 +337,10 @@ class CipherUploadProcessor(
                 return UploadItemResult.Error("Update cipher failed: ${response.code()}")
             }
 
-            val updatedCipher = response.body()
+            val updatedCipher = response.body()?.let { BitwardenCipherDocument.decode(BitwardenCipherDocument.read(it)) }
+            require(updatedCipher == null || (updatedCipher.id == cipherId && updatedCipher.revisionDate.isNotBlank())) {
+                "Unexpected cipher acknowledgment"
+            }
             if (updatedCipher == null) {
                 captureRawExchange(
                     vaultId = vault.id,
@@ -330,6 +354,10 @@ class CipherUploadProcessor(
                     error = "update cipher returned empty body"
                 )
                 return UploadItemResult.Error("Empty response")
+            }
+
+            require(BitwardenCipherDocument.confirms(document, requireNotNull(updatedCipher.sourceDocument))) {
+                "Cipher acknowledgment did not retain uploaded content"
             }
 
             captureRawExchange(
@@ -350,13 +378,21 @@ class CipherUploadProcessor(
                 accessToken = accessToken,
                 vaultKey = userKey
             )
-            val updatedItem = item.copy(
-                bitwardenRevisionDate = updatedCipher.revisionDate,
-                bitwardenLocalModified = cardFaceAttachmentResult.isFailure,
-                syncStatus = if (cardFaceAttachmentResult.isSuccess) "SYNCED" else "FAILED",
-                updatedAt = Date()
-            )
-            secureItemDao.update(updatedItem)
+            database.withTransaction {
+                requireActive(vault.id, userKey)
+                val latest = secureItemDao.getItemById(item.id)
+                if (latest == item) {
+                    secureItemDao.update(item.copy(
+                        bitwardenRevisionDate = updatedCipher.revisionDate,
+                        bitwardenLocalModified = cardFaceAttachmentResult.isFailure,
+                        syncStatus = if (cardFaceAttachmentResult.isSuccess) "SYNCED" else "FAILED"
+                    ))
+                } else if (latest != null && latest.bitwardenVaultId == vault.id &&
+                    latest.bitwardenCipherId == cipherId && latest.bitwardenRevisionDate == item.bitwardenRevisionDate) {
+                    secureItemDao.update(latest.copy(bitwardenRevisionDate = updatedCipher.revisionDate))
+                }
+                cipherSourceStore.accept(vault, updatedCipher, secureItemDao.getItemById(item.id)?.bitwardenRevisionDate)
+            }
 
             if (cardFaceAttachmentResult.isFailure) {
                 return UploadItemResult.Error("Card face attachment upload failed")
@@ -497,7 +533,8 @@ class CipherUploadProcessor(
             }
             
             // 加密请求
-            val encryptedRequest = encryptCipherRequest(request, symmetricKey)
+            val encryptedRequest = BitwardenCipherUploadProtocol.create(encryptCipherRequest(request, symmetricKey),
+                BitwardenCipherUploadProtocol.userId(vault, apiManager.getVaultApi(vault), accessToken), symmetricKey)
             val requestPayload = runCatching { json.encodeToString(encryptedRequest) }.getOrNull()
             
             val vaultApi = apiManager.getVaultApi(vault)
@@ -611,10 +648,11 @@ class CipherUploadProcessor(
             val folderChange = takagi.ru.monica.passkey.PasskeyCipherFolderIntent.pending(context, passkey)
             val source = json.decodeFromString<CipherApiResponse>(original.toString())
             BitwardenCipherOwnership.requireWritable(source, cipherId)
+            val encryptionAccount = BitwardenCipherUploadProtocol.userId(vault, api, accessToken)
             val ownerKey = BitwardenCipherKeyResolver.resolveRemoteCipherKey(api, accessToken, source.copy(key = null), symmetricKey)
             val request = try {
-                PasskeyCipherUpdate.build(original, normalizePasskeyForUpload(passkey), cipherId, symmetricKey, folderChange,
-                    source.organizationId?.let { mapOf(it to ownerKey) }.orEmpty())
+                BitwardenCipherUploadProtocol.documentAccount(PasskeyCipherUpdate.build(original, normalizePasskeyForUpload(passkey), cipherId, symmetricKey, folderChange,
+                    source.organizationId?.let { mapOf(it to ownerKey) }.orEmpty()), encryptionAccount)
             } finally { ownerKey.clear() }
             if (passkeyDao.getPasskeyByRecordId(passkey.id) != passkey) {
                 return@withLock UploadItemResult.Error("Passkey changed during upload; retry with the latest version")
@@ -1403,12 +1441,12 @@ class CipherUploadProcessor(
         cipherId: String
     ): CipherApiResponse? {
         return try {
-            val response = vaultApi.getCipher(
+            val response = vaultApi.getCipherSource(
                 authorization = "Bearer $accessToken",
                 cipherId = cipherId
             )
             if (response.isSuccessful) {
-                response.body()
+                response.body()?.let { BitwardenCipherDocument.decode(BitwardenCipherDocument.read(it)) }
             } else {
                 android.util.Log.w(
                     TAG,

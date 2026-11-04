@@ -1,0 +1,22 @@
+{
+  "avd": "Monica_Issue136_API_32",
+  "serial": "emulator-5556",
+  "ownedStartedPid": 99140,
+  "restoredUser": 0,
+  "removedOwnedUser": 14,
+  "preservedUsers": [
+    0,
+    10,
+    11,
+    12
+  ],
+  "serialStopped": true,
+  "preservedFiles": [
+    "C:\\Users\\joyins\\.android\\avd\\Monica_Issue136_API_32.ini",
+    "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\config.ini",
+    "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img",
+    "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img.qcow2"
+  ],
+  "before": "Users:\r\n\tUserInfo{0:Owner:c13} running\r\n\tUserInfo{10:Monica:410}\r\n\tUserInfo{11:Monica_Recovery316:410}\r\n\tUserInfo{12:Monica_Recovery316_Retest:410}\r\n\tUserInfo{14:Monica_NativeClient325_Test:414} running\r\n",
+  "after": "Users:\r\n\tUserInfo{0:Owner:c13} running\r\n\tUserInfo{10:Monica:410}\r\n\tUserInfo{11:Monica_Recovery316:410}\r\n\tUserInfo{12:Monica_Recovery316_Retest:410}\r\n"
+}

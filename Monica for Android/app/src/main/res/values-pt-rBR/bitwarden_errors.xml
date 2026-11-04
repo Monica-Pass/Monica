@@ -12,4 +12,5 @@
     <string name="bitwarden_error_cleartext">"O endereço do servidor usa HTTP, que a política de segurança atual não permite. Use um endereço HTTPS e verifique a configuração HTTPS do proxy reverso."</string>
     <string name="bitwarden_error_network_io">"Um erro de rede interrompeu a comunicação com o servidor. Verifique as configurações de rede, VPN e proxy e tente novamente."</string>
     <string name="bitwarden_organization_sync_incomplete">"Não foi possível descriptografar alguns itens da equipe (%1$d). Os itens legíveis foram sincronizados; os itens existentes afetados foram preservados. Verifique a participação na organização e entre novamente."</string>
+    <string name="bitwarden_sync_incomplete_items">Não foi possível sincronizar alguns itens (%1$d). Os itens legíveis foram sincronizados e os dados locais existentes foram mantidos.</string>
 </resources>

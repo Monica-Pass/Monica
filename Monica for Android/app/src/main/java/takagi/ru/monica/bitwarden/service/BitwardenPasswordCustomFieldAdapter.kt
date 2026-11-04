@@ -60,7 +60,8 @@ internal object BitwardenPasswordCustomFieldAdapter {
         "monica_ssh_private_key",
         "monica_ssh_fingerprint",
         "monica_ssh_comment",
-        "monica_ssh_format"
+        "monica_ssh_format",
+        "monica_ssh_metadata"
     )
 
     fun extractUserFields(fields: List<BitwardenPlainCustomField>): List<MonicaPlainCustomField> {

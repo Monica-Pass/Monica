@@ -1,0 +1,257 @@
+[
+  {
+    "stage": "installed-app-ready",
+    "edition": "main",
+    "version": "1.0.325-26110412-20",
+    "code": 12
+  },
+  {
+    "stage": "native-login-success",
+    "edition": "main",
+    "officialRegion": "US"
+  },
+  {
+    "stage": "official-schema-shapes",
+    "edition": "main",
+    "shapes": [
+      {
+        "dataEmpty": false,
+        "dataJsonObject": true,
+        "dataKind": "jsonObject",
+        "dataKnownKeys": [],
+        "dataType": "str",
+        "hasItemKey": false,
+        "hasName": true,
+        "hasTypeSection": true,
+        "legacyDataKnownKeys": [
+          "fields",
+          "name"
+        ],
+        "partialEmpty": false,
+        "partialType": "NoneType",
+        "type": 1,
+        "count": 2
+      },
+      {
+        "dataEmpty": false,
+        "dataJsonObject": true,
+        "dataKind": "jsonObject",
+        "dataKnownKeys": [],
+        "dataType": "str",
+        "hasItemKey": false,
+        "hasName": true,
+        "hasTypeSection": true,
+        "legacyDataKnownKeys": [
+          "name",
+          "password"
+        ],
+        "partialEmpty": false,
+        "partialType": "NoneType",
+        "type": 1,
+        "count": 1
+      },
+      {
+        "dataEmpty": false,
+        "dataJsonObject": true,
+        "dataKind": "jsonObject",
+        "dataKnownKeys": [],
+        "dataType": "str",
+        "hasItemKey": true,
+        "hasName": true,
+        "hasTypeSection": true,
+        "legacyDataKnownKeys": [
+          "fields",
+          "name",
+          "notes",
+          "password",
+          "uris",
+          "username"
+        ],
+        "partialEmpty": false,
+        "partialType": "NoneType",
+        "type": 1,
+        "count": 40
+      },
+      {
+        "dataEmpty": false,
+        "dataJsonObject": true,
+        "dataKind": "jsonObject",
+        "dataKnownKeys": [],
+        "dataType": "str",
+        "hasItemKey": true,
+        "hasName": true,
+        "hasTypeSection": true,
+        "legacyDataKnownKeys": [
+          "fields",
+          "name",
+          "notes",
+          "username"
+        ],
+        "partialEmpty": false,
+        "partialType": "NoneType",
+        "type": 4,
+        "count": 20
+      },
+      {
+        "dataEmpty": false,
+        "dataJsonObject": true,
+        "dataKind": "jsonObject",
+        "dataKnownKeys": [],
+        "dataType": "str",
+        "hasItemKey": true,
+        "hasName": true,
+        "hasTypeSection": true,
+        "legacyDataKnownKeys": [
+          "fields",
+          "name",
+          "notes"
+        ],
+        "partialEmpty": false,
+        "partialType": "NoneType",
+        "type": 3,
+        "count": 20
+      },
+      {
+        "dataEmpty": false,
+        "dataJsonObject": true,
+        "dataKind": "jsonObject",
+        "dataKnownKeys": [],
+        "dataType": "str",
+        "hasItemKey": true,
+        "hasName": true,
+        "hasTypeSection": true,
+        "legacyDataKnownKeys": [
+          "fields",
+          "name",
+          "notes",
+          "type"
+        ],
+        "partialEmpty": false,
+        "partialType": "NoneType",
+        "type": 2,
+        "count": 20
+      }
+    ]
+  },
+  {
+    "stage": "official-cloud-baseline",
+    "edition": "main",
+    "remoteTotal": 103,
+    "activeTotal": 103,
+    "wrappingKeyIdCount": 0
+  },
+  {
+    "stage": "manual-production-sync",
+    "edition": "main",
+    "result": "Error",
+    "unreadableDataError": true,
+    "errorNumbers": [
+      "103"
+    ]
+  },
+  {
+    "stage": "official-data-audit",
+    "edition": "main",
+    "sourceDocumentsMatched": 103,
+    "representedActiveCipherIds": 0,
+    "missingCount": 103,
+    "types": {
+      "1": 43,
+      "4": 20,
+      "3": 20,
+      "2": 20
+    },
+    "independentlyVerifiedTitles": 103,
+    "independentlyVerifiedLoginFields": 0,
+    "organizationPlaintextNotIndependentlyChecked": 0,
+    "passkeyProjections": 0,
+    "attachmentMetadata": 0,
+    "attachmentDownloadsVerified": 0,
+    "attachmentBytes": 0,
+    "foldersMatched": 2,
+    "sendsMatched": 0
+  },
+  {
+    "stage": "projection-differences",
+    "edition": "main",
+    "differenceCount": 103,
+    "differences": [
+      {
+        "index": 0,
+        "type": 1,
+        "field": "title",
+        "sourcePresent": true,
+        "sourceMatches": true,
+        "passwordCopies": 0,
+        "secureCopies": 0
+      },
+      {
+        "index": 1,
+        "type": 1,
+        "field": "title",
+        "sourcePresent": true,
+        "sourceMatches": true,
+        "passwordCopies": 0,
+        "secureCopies": 0
+      },
+      {
+        "index": 2,
+        "type": 1,
+        "field": "title",
+        "sourcePresent": true,
+        "sourceMatches": true,
+        "passwordCopies": 0,
+        "secureCopies": 0
+      },
+      {
+        "index": 3,
+        "type": 1,
+        "field": "title",
+        "sourcePresent": true,
+        "sourceMatches": true,
+        "passwordCopies": 0,
+        "secureCopies": 0
+      },
+      {
+        "index": 4,
+        "type": 4,
+        "field": "title",
+        "sourcePresent": true,
+        "sourceMatches": true,
+        "passwordCopies": 0,
+        "secureCopies": 0
+      },
+      {
+        "index": 5,
+        "type": 4,
+        "field": "title",
+        "sourcePresent": true,
+        "sourceMatches": true,
+        "passwordCopies": 0,
+        "secureCopies": 0
+      },
+      {
+        "index": 6,
+        "type": 1,
+        "field": "title",
+        "sourcePresent": true,
+        "sourceMatches": true,
+        "passwordCopies": 0,
+        "secureCopies": 0
+      },
+      {
+        "index": 7,
+        "type": 1,
+        "field": "title",
+        "sourcePresent": true,
+        "sourceMatches": true,
+        "passwordCopies": 0,
+        "secureCopies": 0
+      }
+    ]
+  },
+  {
+    "stage": "verification-error",
+    "errorType": "AssertionError"
+  }
+]

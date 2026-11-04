@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="send_edit_title">Send 편집</string>
+    <string name="send_deletion_date">삭제 날짜</string>
+    <string name="send_expiration_date">만료 날짜</string>
+    <string name="send_no_expiration">만료 없음</string>
+    <string name="send_keep_password">비워 두면 현재 접근 비밀번호 유지</string>
+    <string name="send_new_password">새 접근 비밀번호</string>
+    <string name="send_remove_password">접근 비밀번호 제거</string>
+    <string name="send_saved">Send 저장됨</string>
+    <string name="send_edit_conflict">이 Send가 변경되었습니다. 저장하기 전에 다시 여세요.</string>
+    <string name="send_edit_invalid">접근 횟수 제한과 날짜를 확인하세요. 삭제는 31일 이내여야 하며 만료는 삭제 이후일 수 없습니다.</string>
+    <string name="send_edit_failed">Send를 저장하지 못했습니다. 다시 시도하기 전에 새로고침하여 현재 상태를 확인하세요.</string>
+    <string name="send_edit_unsupported_auth">이 Send는 여기에서 변경할 수 없는 접근 방식을 사용합니다.</string>
+</resources>

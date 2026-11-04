@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_account_create">Create account</string>
+    <string name="bitwarden_account_request_hint">Request password hint</string>
+    <string name="bitwarden_account_password_hint">Master password hint (optional)</string>
+    <string name="bitwarden_account_send_verification">Send verification email</string>
+    <string name="bitwarden_account_verification_pending">Open the verification email, then paste its link or token here.</string>
+    <string name="bitwarden_account_verification_input">Email verification link or token</string>
+    <string name="bitwarden_account_verification_invalid">The verification link or token is invalid for this account.</string>
+    <string name="bitwarden_account_password_requirements">Use a strong master password with at least 12 characters.</string>
+    <string name="bitwarden_account_password_mismatch">The master passwords do not match.</string>
+    <string name="bitwarden_account_registration_success">Account created. Sign in with your new master password.</string>
+    <string name="bitwarden_account_hint_sent">If this account exists, its password hint email has been requested.</string>
+    <string name="bitwarden_account_security">Account security</string>
+    <string name="bitwarden_account_devices">Account devices</string>
+    <string name="bitwarden_account_device_trusted">Trusted device</string>
+    <string name="bitwarden_account_device_untrusted">Device is not trusted</string>
+    <string name="bitwarden_account_last_activity">Last activity</string>
+    <string name="bitwarden_account_web_settings">Manage account in web vault</string>
+    <string name="bitwarden_account_no_devices">No devices found.</string>
+    <string name="bitwarden_account_request_failed">Account request failed (HTTP %1$d).</string>
+    <string name="bitwarden_account_operation_failed">The account operation could not be completed.</string>
+    <string name="bitwarden_account_invalid_email">Enter a valid email address.</string>
+</resources>

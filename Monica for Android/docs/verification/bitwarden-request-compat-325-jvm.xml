@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf8'?>
+<testsuites tests="40" failures="0" errors="0" skipped="0">
+  <testsuite name="takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-03T07:06:12" hostname="JOYIN" time="2.52">
+    <testcase name="deniedOrUnknownTeamEditPermissionAndDeletedSourcesRejectUpdates" classname="takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest" time="0.159" />
+    <testcase name="resolvesOrganizationThenItemKeyAndWipesOwnedKeys" classname="takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest" time="0.174" />
+    <testcase name="remoteOrganizationResolutionUsesAuthenticatedProfileAndDoesNotPersistKeys" classname="takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest" time="0.643" />
+    <testcase name="missingWrongAndTamperedKeysNeverFallBackToPersonalVault" classname="takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest" time="0.24" />
+    <testcase name="teamUpdatesPreserveOwnershipItemKeyCollectionsAndPasskeys" classname="takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest" time="0.398" />
+    <testcase name="parsesBothOfficialAndVaultwardenProfileCasing" classname="takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest" time="0.357" />
+    <testcase name="decryptsSha256AndLegacySha1OrganizationEnvelopes" classname="takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest" time="0.166" />
+    <testcase name="malformedOrganizationDoesNotHideAnotherReadableOrganization" classname="takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest" time="0.382" />
+  </testsuite>
+  <testsuite name="takagi.ru.monica.bitwarden.service.BitwardenCipherProtocolTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-03T07:06:03" hostname="JOYIN" time="8.107">
+    <testcase name="updateModelRetainsAuthenticatedEncryptionAccount" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherProtocolTest" time="5.356" />
+    <testcase name="uriModelRetainsOfficialEncryptedChecksumAndMatchRule" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherProtocolTest" time="0.311" />
+    <testcase name="createModelRetainsAuthenticatedEncryptionAccount" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherProtocolTest" time="2.439" />
+  </testsuite>
+  <testsuite name="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2026-11-03T07:06:15" hostname="JOYIN" time="1.106">
+    <testcase name="cachedProfileIdentityDoesNotNeedAnotherNetworkRequest" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.184" />
+    <testcase name="corruptOrWrongKeyUriNeverProducesAnUpload" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.059" />
+    <testcase name="missingCachedIdentityUsesAuthenticatedProfileWithMatchingEmail" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.183" />
+    <testcase name="missingAndMalformedAccountIdsAreNeverReplacedByEmailOrOrganization" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.045" />
+    <testcase name="createAndUpdateUseRealRetrofitBodiesWithEncryptedUriChecksums" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.173" />
+    <testcase name="exactPlaintextAndDuplicateUrisKeepTheirOwnChecksumsAndRules" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.049" />
+    <testcase name="updatesRetainOriginalMatchRulesOnlyForRemainingExactUris" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.05" />
+    <testcase name="rawRequestsKeepUnknownFieldsAndServerReadbackIgnoresRequestOnlyAccount" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.048" />
+    <testcase name="invalidChecksumIsRepairedWithoutChangingUriCiphertext" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.048" />
+    <testcase name="changedProfileAccountAndUnauthorizedProfilePreventUpload" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.092" />
+    <testcase name="unchangedChecksumsAndCiphertextRemainByteForByte" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.048" />
+    <testcase name="allItemTypesReceiveAccountMetadataWithoutInventingLoginData" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.05" />
+    <testcase name="nullUriAndAbsentLoginKeepTheirShape" classname="takagi.ru.monica.bitwarden.service.BitwardenCipherUploadProtocolTest" time="0.075" />
+  </testsuite>
+  <testsuite name="takagi.ru.monica.bitwarden.service.BitwardenFolderTransferTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-03T07:06:16" hostname="JOYIN" time="0.018">
+    <testcase name="copyAtSameLocationAllocatesIndependentFolderNames" classname="takagi.ru.monica.bitwarden.service.BitwardenFolderTransferTest" time="0.003" />
+    <testcase name="encryptedCopyRetainsUnknownFieldsAndItemKeyWithNewFolderIdentity" classname="takagi.ru.monica.bitwarden.service.BitwardenFolderTransferTest" time="0.015" />
+    <testcase name="attachmentsPasskeysAndOrganizationKeysCannotBeSilentlyCopied" classname="takagi.ru.monica.bitwarden.service.BitwardenFolderTransferTest" time="0.0" />
+    <testcase name="movePlansWholeTreeWithoutSimilarlyNamedSiblings" classname="takagi.ru.monica.bitwarden.service.BitwardenFolderTransferTest" time="0.0" />
+    <testcase name="staleCyclicAndUnchangedMoveTargetsAreRejected" classname="takagi.ru.monica.bitwarden.service.BitwardenFolderTransferTest" time="0.0" />
+  </testsuite>
+  <testsuite name="takagi.ru.monica.bitwarden.service.BitwardenPasswordCustomFieldAdapterTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-03T07:06:16" hostname="JOYIN" time="0.014">
+    <testcase name="same revision merges historical local and remote fields without losing either" classname="takagi.ru.monica.bitwarden.service.BitwardenPasswordCustomFieldAdapterTest" time="0.006" />
+    <testcase name="initialized upload replaces editable remote fields while preserving other types" classname="takagi.ru.monica.bitwarden.service.BitwardenPasswordCustomFieldAdapterTest" time="0.006" />
+    <testcase name="first upload preserves unmatched remote user fields and unsupported fields" classname="takagi.ru.monica.bitwarden.service.BitwardenPasswordCustomFieldAdapterTest" time="0.0" />
+    <testcase name="new remote revision replaces clean local cache" classname="takagi.ru.monica.bitwarden.service.BitwardenPasswordCustomFieldAdapterTest" time="0.0" />
+    <testcase name="extract user fields keeps order duplicates and hidden type" classname="takagi.ru.monica.bitwarden.service.BitwardenPasswordCustomFieldAdapterTest" time="0.0" />
+  </testsuite>
+  <testsuite name="takagi.ru.monica.bitwarden.service.PasskeyCipherUpdateTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-03T07:06:16" hostname="JOYIN" time="0.383">
+    <testcase name="rejectsChangedIdentityOrMissingTargetWithoutProducingReplacement" classname="takagi.ru.monica.bitwarden.service.PasskeyCipherUpdateTest" time="0.137" />
+    <testcase name="patchesOnlyRequestedCredentialAndNotesInFullEncryptedCipher" classname="takagi.ru.monica.bitwarden.service.PasskeyCipherUpdateTest" time="0.046" />
+    <testcase name="rejectsDeletedReadonlyOrganizationAndMissingRevision" classname="takagi.ru.monica.bitwarden.service.PasskeyCipherUpdateTest" time="0.06" />
+    <testcase name="refusesAmbiguousCredentialIdsAndCasingAliases" classname="takagi.ru.monica.bitwarden.service.PasskeyCipherUpdateTest" time="0.047" />
+    <testcase name="verificationRejectsDroppedSiblingOrChangedPasswordButAllowsServerRevision" classname="takagi.ru.monica.bitwarden.service.PasskeyCipherUpdateTest" time="0.047" />
+    <testcase name="decryptsAndReencryptsWithPerItemKeyWithoutChangingWrappedKey" classname="takagi.ru.monica.bitwarden.service.PasskeyCipherUpdateTest" time="0.046" />
+  </testsuite>
+</testsuites>

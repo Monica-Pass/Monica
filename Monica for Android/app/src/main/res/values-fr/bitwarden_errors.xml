@@ -11,4 +11,5 @@
   <string name="bitwarden_error_proxy">Le proxy a refusé la connexion ou nécessite une authentification. Vérifiez l\'adresse proxy, le port et les paramètres du compte.</string>
   <string name="bitwarden_error_cleartext">L\'adresse du serveur utilise HTTP, ce que la politique de sécurité actuelle ne permet pas. Utilisez une adresse HTTPS et vérifiez la configuration HTTPS du proxy inverse.</string>
   <string name="bitwarden_error_network_io">Une erreur réseau a interrompu la communication avec le serveur. Vérifiez vos paramètres réseau, VPN et proxy, puis réessayez.</string>
+    <string name="bitwarden_sync_incomplete_items">Certains éléments n’ont pas pu être synchronisés (%1$d). Les éléments lisibles ont été synchronisés et les données locales existantes ont été conservées.</string>
 </resources>

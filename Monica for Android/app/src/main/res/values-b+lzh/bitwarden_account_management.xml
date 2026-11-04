@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_account_create">立帳</string>
+    <string name="bitwarden_account_request_hint">索主密提示</string>
+    <string name="bitwarden_account_password_hint">主密提示（可略）</string>
+    <string name="bitwarden_account_send_verification">寄驗書</string>
+    <string name="bitwarden_account_verification_pending">啟驗書，貼其鏈或符於此。</string>
+    <string name="bitwarden_account_verification_input">郵驗鏈或符</string>
+    <string name="bitwarden_account_verification_invalid">此驗鏈或符不合此帳。</string>
+    <string name="bitwarden_account_password_requirements">主密須強，字數至少十二。</string>
+    <string name="bitwarden_account_password_mismatch">兩次主密不合。</string>
+    <string name="bitwarden_account_registration_success">帳已立，以新主密登入。</string>
+    <string name="bitwarden_account_hint_sent">若此帳存，已索主密提示書。</string>
+    <string name="bitwarden_account_security">帳安</string>
+    <string name="bitwarden_account_devices">帳之機</string>
+    <string name="bitwarden_account_device_trusted">可信之機</string>
+    <string name="bitwarden_account_device_untrusted">此機未信</string>
+    <string name="bitwarden_account_last_activity">近動</string>
+    <string name="bitwarden_account_web_settings">於網庫治帳</string>
+    <string name="bitwarden_account_no_devices">未見其機。</string>
+    <string name="bitwarden_account_request_failed">帳請失敗（HTTP %1$d）。</string>
+    <string name="bitwarden_account_operation_failed">帳事未成。</string>
+    <string name="bitwarden_account_invalid_email">請書有效郵址。</string>
+</resources>

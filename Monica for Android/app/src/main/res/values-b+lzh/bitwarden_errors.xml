@@ -12,4 +12,5 @@
     <string name="bitwarden_error_proxy">代理拒连，或须验身。请察代理地址、端口及名籍之设。</string>
     <string name="bitwarden_error_cleartext">服务器地址用 HTTP，今之安全规则不许明文连接。请改 HTTPS，并察反向代理所用 HTTPS 之设。</string>
     <string name="bitwarden_error_network_io">网络有误，与服务器通信已断。请察网络、VPN、代理之设，再试之。</string>
+    <string name="bitwarden_sync_incomplete_items">有目未同步（%1$d）。可讀者已同步，本機舊存仍留。</string>
 </resources>

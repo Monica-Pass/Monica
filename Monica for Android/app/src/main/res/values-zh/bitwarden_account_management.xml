@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_account_create">创建账号</string>
+    <string name="bitwarden_account_request_hint">请求主密码提示</string>
+    <string name="bitwarden_account_password_hint">主密码提示（可选）</string>
+    <string name="bitwarden_account_send_verification">发送验证邮件</string>
+    <string name="bitwarden_account_verification_pending">打开验证邮件，将其中的链接或令牌粘贴到此处。</string>
+    <string name="bitwarden_account_verification_input">邮箱验证链接或令牌</string>
+    <string name="bitwarden_account_verification_invalid">验证链接或令牌不适用于此账号。</string>
+    <string name="bitwarden_account_password_requirements">请使用至少 12 个字符的强主密码。</string>
+    <string name="bitwarden_account_password_mismatch">两次输入的主密码不一致。</string>
+    <string name="bitwarden_account_registration_success">账号已创建，请使用新主密码登录。</string>
+    <string name="bitwarden_account_hint_sent">如果该账号存在，已请求发送主密码提示邮件。</string>
+    <string name="bitwarden_account_security">账号安全</string>
+    <string name="bitwarden_account_devices">账号设备</string>
+    <string name="bitwarden_account_device_trusted">受信任设备</string>
+    <string name="bitwarden_account_device_untrusted">此设备未受信任</string>
+    <string name="bitwarden_account_last_activity">最近活动</string>
+    <string name="bitwarden_account_web_settings">在网页保险库管理账号</string>
+    <string name="bitwarden_account_no_devices">未找到设备。</string>
+    <string name="bitwarden_account_request_failed">账号请求失败（HTTP %1$d）。</string>
+    <string name="bitwarden_account_operation_failed">未能完成账号操作。</string>
+    <string name="bitwarden_account_invalid_email">请输入有效的邮箱地址。</string>
+</resources>

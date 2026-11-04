@@ -102,6 +102,9 @@ internal fun SendPane(
                         onNavigateBack = onInlineSendEditorBack,
                         onCreate = onCreateSend,
                         onCreateFile = onCreateFileSend,
+                        onSaveDraft = { vaultId, draft, uri, fileName ->
+                            bitwardenViewModel.saveSendDraft(vaultId, draft, fileUri = uri, fileName = fileName)
+                        },
                         modifier = Modifier.fillMaxSize()
                     )
                 } else if (selectedSend == null) {

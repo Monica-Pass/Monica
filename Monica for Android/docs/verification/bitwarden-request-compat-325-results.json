@@ -1,0 +1,55 @@
+{
+  "edition": "main",
+  "version": "1.0.325-26110312-04",
+  "code": 12,
+  "apk_sha256": "8a182d6af31167e26dbf0f5491cc056d6ac0428e729924473d15e1a2ddd254f2",
+  "shared_source_sha256": {
+    "app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenApi.kt": "c29b0f362b82c5db4f314cf228aa6ce49e01afccca0c703035b8c2e782060814",
+    "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSyncService.kt": "b108d829a4c63c9aab50ef937578b257f575fd7f45bbb8a09e44ebbfeed0eef3",
+    "app/src/main/java/takagi/ru/monica/bitwarden/service/CipherUploadProcessor.kt": "71d91a5a8b385b8f0ea54ffb764fcb3b109da8f607a7f08c6ccbefbe650a6214",
+    "app/src/main/java/takagi/ru/monica/bitwarden/service/PasskeyCipherUpdate.kt": "41f795dc81aa2cada9725a93c0cfa3d6ec6780050c487e40202d10dbb276b462",
+    "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenFolderCopyDocument.kt": "63406cdd3a06dcef96820979c3a9782e22f4f55c077214f2359d4b0194138cf0",
+    "app/src/main/java/takagi/ru/monica/bitwarden/repository/BitwardenRepository.kt": "793e2f90d835e04da3ce465c757b0468b54f8af2165c03b58991c3ec06ecd428",
+    "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenCipherUploadProtocol.kt": "34c6487e4f413cbf0d00d5cc97d50eab0989214ddf529f13c3d7f9706252c78d",
+    "app/src/test/java/takagi/ru/monica/bitwarden/service/BitwardenCipherUploadProtocolTest.kt": "2f63be207fd4f5a69cce07276dfb009cadeab127ee1692a8176bde4299816c30",
+    "app/src/test/java/takagi/ru/monica/bitwarden/service/BitwardenCipherProtocolTest.kt": "4c0c16c910005b9d6f432379defac864a8bbe8db292c4fe5a1f030fdf674b46f"
+  },
+  "distinct_jvm_cases": 40,
+  "new_protocol_cases": 16,
+  "existing_regressions": 24,
+  "empty_suites_not_counted": [],
+  "wire_crypto": {
+    "edition": "main",
+    "requests": [
+      {
+        "request": "create",
+        "uri_count": 3,
+        "mac_checks": 6,
+        "uri_checksum_matches": 3,
+        "plaintext_in_wire_body": false,
+        "wire_sha256": "ac79d8ff5ef41865e6f7d8c393dd822ac64d8b658d3ad5064e63ed9e3ff6f990"
+      },
+      {
+        "request": "update",
+        "uri_count": 3,
+        "mac_checks": 6,
+        "uri_checksum_matches": 3,
+        "plaintext_in_wire_body": false,
+        "wire_sha256": "62dc9d5b83cd3e74fa0fbe39095cab1e53c6315cbca7a4409085e7fe425cbe22"
+      }
+    ],
+    "independent_crypto_backend": "Python cryptography43.0.3 / hashlib / hmac",
+    "passed": true
+  },
+  "released_vaultwarden_schema": {
+    "version": "1.37.5",
+    "actual_request_acceptances": 2,
+    "missing_account_negative_rejections": 2,
+    "full_server_session": false
+  },
+  "original_reporter_server_tested": false,
+  "new_official_account_tested": false,
+  "physical_device_tested": false,
+  "existing_remote100_entries_modified_this_task": false,
+  "avd_started_this_task": false
+}

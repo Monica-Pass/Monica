@@ -1,0 +1,18 @@
+{
+  "app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenApi.kt": "d4f6dd151fa4353a1516aea2f381291ef338c195b35a755775d651e5b0c4b42d",
+  "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSyncService.kt": "e13593feb2a89fade13c50c68ca572ed6bf6e279c688cec56c399698e6b89602",
+  "app/src/main/java/takagi/ru/monica/bitwarden/service/CipherUploadProcessor.kt": "60513dc50c5d5196420b6bb02a1c93be1e69c7ebf0d9e973e5915cf42441292d",
+  "app/src/main/java/takagi/ru/monica/bitwarden/service/CipherSyncProcessor.kt": "6185ee26b1f57984de497b5dbbc97ba78c5e200600c252874cf8be504531dd86",
+  "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenCipherOwnership.kt": "3bd4fd445bb2d8965411484d6984bb6297855f648775bcae06105cc024b4b772",
+  "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenConflictStore.kt": "10a5b858392f09a5e1c15f23fa7f71052270051e5ee3485234c852fb5e8baed5",
+  "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSyncForensicsLogger.kt": "fa163d319e5bf1f9dab160b6cab0c5c7c4bc686299bc8b241e10768733cb1cd5",
+  "app/src/main/java/takagi/ru/monica/bitwarden/repository/BitwardenRepository.kt": "cd720bc4ea044e0d01885cb2f4233bf7d45c982efb90d00bfd8bbb39673b424b",
+  "app/src/main/java/takagi/ru/monica/data/PasswordDatabase.kt": "beec2477a153520168c1cf84994b1d857ff6d2318c174815c82245160af44339",
+  "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenCipherDocument.kt": "60810bf6dc35e6e6637bc0e39ac16f99cda421675631283f4f230c73085b7a34",
+  "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenWireJson.kt": "f7ad938ed08faf0946ef310625a1d2b2a2d53d923970d5846b9cf35a680e424f",
+  "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenCipherSourceStore.kt": "030980ccec5f36f350b47a9d996c64a43372936ad3712ecb4adf7a83796cae3a",
+  "app/src/main/java/takagi/ru/monica/data/bitwarden/BitwardenCipherSource.kt": "c865dfe0f2ff74d95508dd54ce061467ace53e410e95bd2e82ad2eb72bfc2dcf",
+  "app/src/test/java/takagi/ru/monica/bitwarden/service/BitwardenCipherDocumentTest.kt": "c7d26f6aa1316657aaa7fa8803bb0af386cc043781c3dbd891c1c97d4e585482",
+  "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenCipherDocumentInstrumentedTest.kt": "10c1cdce06337fbbc01cc3f36d9ab38eba9ac5eb47474571c145f353323ac892",
+  "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenOrganizationSyncTest.kt": "401a29e8ca2dc590af6b0b4167a377b86ef2507426db35a420602d4a7c7495b3"
+}

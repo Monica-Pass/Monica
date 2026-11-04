@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_remember_two_factor">Recordar el inicio de sesión en dos pasos en este dispositivo</string>
+</resources>

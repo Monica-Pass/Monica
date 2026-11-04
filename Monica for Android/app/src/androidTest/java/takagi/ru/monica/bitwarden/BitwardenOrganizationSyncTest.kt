@@ -142,7 +142,7 @@ class BitwardenOrganizationSyncTest {
         suspend fun initialize() {
             val uuid = UUID.randomUUID().toString()
             val endpoint = server.url("/").toString()
-            val id = db.bitwardenVaultDao().insert(BitwardenVault(email = "$uuid@example.invalid", accountKey = uuid,
+            val id = db.bitwardenVaultDao().insert(BitwardenVault(email = "$uuid@example.invalid", userId = uuid, accountKey = uuid,
                 serverUrl = endpoint, identityUrl = endpoint, apiUrl = endpoint))
             vault = requireNotNull(db.bitwardenVaultDao().getVaultById(id))
             val rsa = KeyPairGenerator.getInstance("RSA").apply { initialize(2048) }.generateKeyPair()
@@ -154,7 +154,7 @@ class BitwardenOrganizationSyncTest {
                 }
                 return OrganizationResponse(id, "Synthetic $id", "$type.${Base64.getEncoder().encodeToString(bytes)}")
             }
-            profile = ProfileResponse(id = uuid, email = vault.email,
+            profile = ProfileResponse(id = uuid, email = vault.email, securityStamp = "synthetic-organization-stamp",
                 privateKey = BitwardenCrypto.encrypt(rsa.private.encoded, userKey),
                 organizations = listOf(org("team-a", orgKey, 3), org("team-b", legacyOrgKey, 4)))
             fun login(id: String, owner: String?, key: SymmetricCryptoKey, password: String) = CipherApiResponse(

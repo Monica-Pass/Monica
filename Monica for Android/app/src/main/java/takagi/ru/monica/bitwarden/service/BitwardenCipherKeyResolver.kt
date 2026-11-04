@@ -42,6 +42,12 @@ internal object BitwardenCipherKeyResolver {
         val parent = cipher.organizationId?.takeIf(String::isNotBlank)?.let {
             organizationKeys[it] ?: error("Organization key unavailable; sync the account again")
         } ?: vaultKey
+        cipher.encryptedByKeyId?.takeUnless { it == kotlinx.serialization.json.JsonNull }?.let { identifier ->
+            val primitive = identifier as? kotlinx.serialization.json.JsonPrimitive
+            require(primitive?.isString == true && primitive.content == legacyWrappingKeyId(parent)) {
+                "Wrapping key identity mismatch; local data retained"
+            }
+        }
         val encryptedKey = cipher.key?.takeIf(String::isNotBlank)
         if (encryptedKey == null) return SymmetricCryptoKey(parent.encKey.copyOf(), parent.macKey.copyOf())
         require(BitwardenCrypto.parseCipherString(encryptedKey).type == 2) { "Item key must be authenticated" }
@@ -50,5 +56,17 @@ internal object BitwardenCipherKeyResolver {
 
     fun clearIfDerived(effectiveKey: SymmetricCryptoKey?, vaultKey: SymmetricCryptoKey?) {
         if (effectiveKey != null && effectiveKey !== vaultKey) effectiveKey.clear()
+    }
+
+    /** Official SDK: leading 16 bytes of the RFC 9679 COSE symmetric-key thumbprint. */
+    internal fun legacyWrappingKeyId(key: SymmetricCryptoKey): String {
+        require(key.encKey.size == 32 && key.macKey.size == 32)
+        val hash = java.security.MessageDigest.getInstance("SHA-256")
+        // Deterministic CBOR map {1: 4, -1: bytes(64)}; update without making another key copy.
+        hash.update(byteArrayOf(0xa2.toByte(), 1, 4, 0x20, 0x58, 0x40))
+        hash.update(key.encKey)
+        hash.update(key.macKey)
+        val bytes = hash.digest()
+        return try { bytes.take(16).joinToString("") { "%02x".format(it) } } finally { bytes.fill(0) }
     }
 }

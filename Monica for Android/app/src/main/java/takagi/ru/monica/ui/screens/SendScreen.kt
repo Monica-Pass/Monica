@@ -114,11 +114,17 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
+import takagi.ru.monica.bitwarden.service.BitwardenSendDraft
+import takagi.ru.monica.bitwarden.service.SendPasswordAction
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.lifecycle.viewmodel.compose.viewModel
 import takagi.ru.monica.R
 import takagi.ru.monica.attachments.facade.AttachmentUriMetadata
@@ -179,6 +185,8 @@ fun SendScreen(
     val vaultLookup = remember(allVaults) { allVaults.associateBy { it.id } }
 
     var deletingSend by remember { mutableStateOf<BitwardenSend?>(null) }
+    var editingSend by remember { mutableStateOf<BitwardenSend?>(null) }
+    val sendSaveVersion by bitwardenViewModel.sendCreateSuccessVersion.collectAsState()
     var searchQuery by remember { mutableStateOf("") }
     var isSearchExpanded by remember { mutableStateOf(false) }
     var showTopActionsMenu by remember { mutableStateOf(false) }
@@ -418,13 +426,33 @@ fun SendScreen(
                                                 context.startActivity(intent)
                                             }
                                         },
-                                        onDelete = { deletingSend = send }
+                                        onDelete = { deletingSend = send },
+                                        onEdit = { editingSend = send }
                                     )
                                 }
                             }
                         }
                     }
                 }
+            }
+        }
+    }
+
+    editingSend?.let { send ->
+        Dialog(
+            onDismissRequest = { if (sendState !is BitwardenViewModel.SendState.Creating) editingSend = null },
+            properties = DialogProperties(usePlatformDefaultWidth = false, dismissOnClickOutside = false)
+        ) {
+            Surface(modifier = Modifier.fillMaxSize()) {
+                AddEditSendScreen(
+                    sendState = sendState, sendCreateSuccessVersion = sendSaveVersion,
+                    vaults = allVaults, activeVault = vaultLookup[send.vaultId],
+                    unlockStateByVault = unlockStateByVault, existingSend = send,
+                    onNavigateBack = { editingSend = null },
+                    onCreate = { _, _, _, _, _, _, _, _, _ -> },
+                    onCreateFile = { _, _, _, _, _, _, _, _, _ -> },
+                    onSaveDraft = { vaultId, draft, _, _ -> bitwardenViewModel.saveSendDraft(vaultId, draft, send) }
+                )
             }
         }
     }
@@ -536,7 +564,8 @@ private fun SendItemCard(
     onClick: () -> Unit,
     onCopyLink: () -> Unit,
     onOpenLink: () -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    onEdit: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
     val interactionSource = remember { MutableInteractionSource() }
@@ -749,6 +778,9 @@ private fun SendItemCard(
                     }
                 }
                 
+                OutlinedButton(onClick = onEdit, modifier = Modifier.fillMaxWidth()) {
+                    Text(stringResource(R.string.edit))
+                }
                 OutlinedButton(
                     onClick = onDelete,
                     modifier = Modifier.fillMaxWidth(),
@@ -828,21 +860,28 @@ fun AddEditSendScreen(
         maxAccessCount: Int?,
         hideEmail: Boolean,
         expireInDays: Int
-    ) -> Unit
+    ) -> Unit,
+    existingSend: BitwardenSend? = null,
+    onSaveDraft: ((Long, BitwardenSendDraft, Uri?, String?) -> Unit)? = null
 ) {
-    var title by remember(initialTitle) { mutableStateOf(initialTitle) }
-    var text by remember(initialText) { mutableStateOf(initialText) }
-    var notes by remember(initialNotes) { mutableStateOf(initialNotes) }
+    var title by remember(initialTitle, existingSend) { mutableStateOf(existingSend?.name ?: initialTitle) }
+    var text by remember(initialText, existingSend) { mutableStateOf(existingSend?.textContent ?: initialText) }
+    var notes by remember(initialNotes, existingSend) { mutableStateOf(existingSend?.notes ?: initialNotes) }
     var password by remember { mutableStateOf("") }
-    var maxAccessCount by remember { mutableStateOf("") }
+    var maxAccessCount by remember { mutableStateOf(existingSend?.maxAccessCount?.toString().orEmpty()) }
     var expireDaysText by remember { mutableStateOf("7") }
-    var hideEmail by remember { mutableStateOf(false) }
-    var hiddenText by remember { mutableStateOf(false) }
-    var sendType by remember { mutableStateOf(SendCreateType.Text) }
+    var hideEmail by remember { mutableStateOf(existingSend?.hideEmail ?: false) }
+    var hiddenText by remember { mutableStateOf(existingSend?.isTextHidden ?: false) }
+    var disabled by remember { mutableStateOf(existingSend?.disabled ?: false) }
+    var removePassword by remember { mutableStateOf(false) }
+    val initialNow = remember { System.currentTimeMillis() }
+    var deletionMillis by remember { mutableStateOf(existingSend?.deletionDate?.let { runCatching { Instant.parse(it).toEpochMilli() }.getOrNull() } ?: initialNow + 8L * 86_400_000L) }
+    var expirationMillis by remember { mutableStateOf(if (existingSend != null) existingSend.expirationDate?.let { runCatching { Instant.parse(it).toEpochMilli() }.getOrNull() } else initialNow + 7L * 86_400_000L) }
+    var sendType by remember { mutableStateOf(if (existingSend?.isFileType == true) SendCreateType.File else SendCreateType.Text) }
     var selectedFileUri by remember { mutableStateOf<Uri?>(null) }
     var selectedFileMeta by remember { mutableStateOf<AttachmentUriMetadata.Metadata?>(null) }
     var selectedVaultId by rememberSaveable {
-        mutableStateOf(activeVault?.id ?: vaults.firstOrNull()?.id)
+        mutableStateOf(existingSend?.vaultId ?: activeVault?.id ?: vaults.firstOrNull()?.id)
     }
     var submitRequested by rememberSaveable { mutableStateOf(false) }
     var submitStarted by rememberSaveable { mutableStateOf(false) }
@@ -863,14 +902,20 @@ fun AddEditSendScreen(
 
     val creating = sendState is BitwardenViewModel.SendState.Creating
     val isSubmitting = submitRequested || creating
-    val availableVaults = remember(vaults, activeVault, unlockStateByVault) {
+    val availableVaults = remember(vaults, activeVault, unlockStateByVault, existingSend) {
         val knownVaults = if (vaults.isNotEmpty()) vaults else listOfNotNull(activeVault)
         knownVaults.filter { vault ->
-            unlockStateByVault[vault.id] == BitwardenViewModel.UnlockState.Unlocked ||
-                (vault.id == activeVault?.id && unlockStateByVault[vault.id] == null)
+            (existingSend == null || vault.id == existingSend.vaultId) &&
+                (unlockStateByVault[vault.id] == BitwardenViewModel.UnlockState.Unlocked ||
+                (vault.id == activeVault?.id && unlockStateByVault[vault.id] == null))
         }
     }
     LaunchedEffect(availableVaults, selectedVaultId) {
+        if (existingSend != null && availableVaults.isEmpty()) {
+            password = ""
+            onNavigateBack()
+            return@LaunchedEffect
+        }
         if (selectedVaultId == null || availableVaults.none { it.id == selectedVaultId }) {
             selectedVaultId = availableVaults.firstOrNull { it.id == activeVault?.id }?.id
                 ?: availableVaults.firstOrNull()?.id
@@ -924,14 +969,21 @@ fun AddEditSendScreen(
 
     BackHandler(enabled = isSubmitting) {}
 
-    val canSave = !isSubmitting && selectedVault != null && title.isNotBlank() && when (sendType) {
-        SendCreateType.Text -> text.isNotBlank()
+    val draft = BitwardenSendDraft(title, text, notes.takeUnless { it.isEmpty() },
+        passwordAction = when { removePassword -> SendPasswordAction.REMOVE; password.isNotEmpty() -> SendPasswordAction.REPLACE; else -> SendPasswordAction.KEEP },
+        password = password.takeUnless { it.isEmpty() }, maxAccessCount = maxAccessCount.toIntOrNull(),
+        hideEmail = hideEmail, hiddenText = hiddenText, disabled = disabled,
+        deletionMillis = deletionMillis, expirationMillis = expirationMillis)
+    val datesValid = onSaveDraft == null || runCatching { draft.validate(System.currentTimeMillis(), sendType == SendCreateType.Text) }.isSuccess
+    val accessLimitValid = maxAccessCount.isEmpty() || (maxAccessCount.toIntOrNull()?.let { it > 0 } == true)
+    val canSave = !isSubmitting && selectedVault != null && title.isNotBlank() && datesValid && accessLimitValid && when (sendType) {
+        SendCreateType.Text -> text.isNotEmpty()
         // fileSendAllowed 已经在文件选择按钮的 enabled 上做了门控，
         // 如果用户能选到文件说明已经允许。这里不再重复检查，避免
         // remember 缓存时序问题导致按钮灰色。
-        SendCreateType.File -> selectedFileUri != null && selectedFileMeta != null
+        SendCreateType.File -> existingSend?.isFileType == true || (selectedFileUri != null && selectedFileMeta != null)
     }
-    val sendTopBarTitle = stringResource(R.string.send_create_title)
+    val sendTopBarTitle = stringResource(if (existingSend == null) R.string.send_create_title else R.string.send_edit_title)
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -961,7 +1013,9 @@ fun AddEditSendScreen(
                     submitStarted = false
                     submitSuccessBaseline = sendCreateSuccessVersion
                     val targetVaultId = selectedVault?.id ?: return@FloatingActionButton
-                    if (sendType == SendCreateType.File) {
+                    if (onSaveDraft != null) {
+                        onSaveDraft(targetVaultId, draft, selectedFileUri, selectedFileMeta?.fileName)
+                    } else if (sendType == SendCreateType.File) {
                         val uri = selectedFileUri ?: return@FloatingActionButton
                         val meta = selectedFileMeta ?: return@FloatingActionButton
                         onCreateFile(
@@ -1027,6 +1081,8 @@ fun AddEditSendScreen(
                 if (isSubmitting) {
                     StateBanner(stringResource(R.string.legacy_ui_send_creating))
                 }
+                if (sendState is BitwardenViewModel.SendState.Error) StateBanner(sendState.message)
+                if (!datesValid || !accessLimitValid) StateBanner(stringResource(R.string.send_edit_invalid))
 
                 SendFormSectionCard(title = stringResource(R.string.send_account_section_title)) {
                     if (availableVaults.isEmpty()) {
@@ -1037,7 +1093,7 @@ fun AddEditSendScreen(
                                 SendVaultChoiceRow(
                                     vault = vault,
                                     selected = vault.id == selectedVaultId,
-                                    onClick = { selectedVaultId = vault.id }
+                                    onClick = { if (!isSubmitting) selectedVaultId = vault.id }
                                 )
                             }
                         }
@@ -1049,6 +1105,7 @@ fun AddEditSendScreen(
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             FilterChip(
                                 selected = sendType == SendCreateType.Text,
+                                enabled = existingSend == null && !isSubmitting,
                                 onClick = { sendType = SendCreateType.Text },
                                 label = { Text(stringResource(R.string.send_type_text)) },
                                 leadingIcon = if (sendType == SendCreateType.Text) {
@@ -1057,7 +1114,7 @@ fun AddEditSendScreen(
                             )
                             FilterChip(
                                 selected = sendType == SendCreateType.File,
-                                enabled = fileSendAllowed,
+                                enabled = existingSend == null && fileSendAllowed && !isSubmitting,
                                 onClick = { sendType = SendCreateType.File },
                                 label = { Text(stringResource(R.string.send_type_file)) },
                                 leadingIcon = if (sendType == SendCreateType.File) {
@@ -1065,7 +1122,7 @@ fun AddEditSendScreen(
                                 } else null
                             )
                         }
-                        if (!fileSendAllowed) {
+                        if (!fileSendAllowed && existingSend == null) {
                             StateBanner(stringResource(R.string.send_file_premium_required_hint))
                         }
                     }
@@ -1081,6 +1138,7 @@ fun AddEditSendScreen(
                     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                         OutlinedTextField(
                             value = title,
+                            enabled = !isSubmitting,
                             onValueChange = { title = it },
                             label = { Text(stringResource(R.string.title)) },
                             singleLine = true,
@@ -1091,10 +1149,10 @@ fun AddEditSendScreen(
                         if (sendType == SendCreateType.File) {
                             OutlinedButton(
                                 onClick = { filePicker.launch(arrayOf("*/*")) },
-                                enabled = fileSendAllowed && !creating,
+                                enabled = existingSend == null && fileSendAllowed && !creating,
                                 modifier = Modifier.fillMaxWidth()
                             ) {
-                                Text(selectedFileMeta?.fileName ?: stringResource(R.string.send_select_file))
+                                Text(existingSend?.fileName ?: selectedFileMeta?.fileName ?: stringResource(R.string.send_select_file))
                             }
                             selectedFileMeta?.let { meta ->
                                 Text(
@@ -1106,6 +1164,7 @@ fun AddEditSendScreen(
                         } else {
                             OutlinedTextField(
                                 value = text,
+                                enabled = !isSubmitting,
                                 onValueChange = { text = it },
                                 label = { Text(stringResource(R.string.send_content_label)) },
                                 shape = RoundedCornerShape(12.dp),
@@ -1117,6 +1176,7 @@ fun AddEditSendScreen(
 
                         OutlinedTextField(
                             value = notes,
+                            enabled = !isSubmitting,
                             onValueChange = { notes = it },
                             label = { Text(stringResource(R.string.notes_optional)) },
                             shape = RoundedCornerShape(12.dp),
@@ -1130,7 +1190,9 @@ fun AddEditSendScreen(
                         OutlinedTextField(
                             value = password,
                             onValueChange = { password = it },
-                            label = { Text(stringResource(R.string.send_access_password_optional)) },
+                            label = { Text(stringResource(if (existingSend == null) R.string.send_access_password_optional else R.string.send_new_password)) },
+                            enabled = !removePassword && !isSubmitting,
+                            visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
                             singleLine = true,
                             shape = RoundedCornerShape(12.dp),
                             modifier = Modifier.fillMaxWidth()
@@ -1139,14 +1201,16 @@ fun AddEditSendScreen(
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             OutlinedTextField(
                                 value = maxAccessCount,
+                                enabled = !isSubmitting,
                                 onValueChange = { maxAccessCount = it.filter(Char::isDigit) },
                                 label = { Text(stringResource(R.string.send_max_access_count)) },
                                 singleLine = true,
                                 shape = RoundedCornerShape(12.dp),
                                 modifier = Modifier.weight(1f)
                             )
-                            OutlinedTextField(
+                            if (onSaveDraft == null) OutlinedTextField(
                                 value = expireDaysText,
+                                enabled = !isSubmitting,
                                 onValueChange = { expireDaysText = it.filter(Char::isDigit) },
                                 label = { Text(stringResource(R.string.send_valid_days)) },
                                 singleLine = true,
@@ -1154,11 +1218,30 @@ fun AddEditSendScreen(
                                 modifier = Modifier.weight(1f)
                             )
                         }
+                        if (existingSend != null) {
+                            Text(stringResource(R.string.send_keep_password), style = MaterialTheme.typography.bodySmall)
+                            if (existingSend.hasPassword) SendSwitchRow(
+                                title = stringResource(R.string.send_remove_password), description = "",
+                                checked = removePassword, enabled = !isSubmitting,
+                                onCheckedChange = { removePassword = it; if (it) password = "" })
+                            SendSwitchRow(title = stringResource(R.string.enabled), description = "",
+                                checked = !disabled, enabled = !isSubmitting, onCheckedChange = { disabled = !it })
+                        }
+                        if (onSaveDraft != null) {
+                            SendDateTimeField(stringResource(R.string.send_deletion_date), deletionMillis, !isSubmitting) { deletionMillis = it }
+                            SendSwitchRow(title = stringResource(R.string.send_no_expiration), description = "",
+                                checked = expirationMillis == null, enabled = !isSubmitting,
+                                onCheckedChange = { expirationMillis = if (it) null else minOf(deletionMillis, System.currentTimeMillis() + 7L * 86_400_000L) })
+                            expirationMillis?.let { value ->
+                                SendDateTimeField(stringResource(R.string.send_expiration_date), value, !isSubmitting) { expirationMillis = it }
+                            }
+                        }
 
                         SendSwitchRow(
                             title = stringResource(R.string.send_hide_email),
                             description = stringResource(R.string.send_hide_email_desc),
                             checked = hideEmail,
+                            enabled = !isSubmitting,
                             onCheckedChange = { hideEmail = it }
                         )
 
@@ -1167,6 +1250,7 @@ fun AddEditSendScreen(
                                 title = stringResource(R.string.send_hide_text),
                                 description = stringResource(R.string.send_hide_text_desc),
                                 checked = hiddenText,
+                                enabled = !isSubmitting,
                                 onCheckedChange = { hiddenText = it }
                             )
                         }
@@ -1176,6 +1260,27 @@ fun AddEditSendScreen(
                 Spacer(modifier = Modifier.height(76.dp))
             }
         }
+    }
+}
+
+@Composable
+private fun SendDateTimeField(label: String, millis: Long, enabled: Boolean, onChange: (Long) -> Unit) {
+    val context = LocalContext.current
+    val time = Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault())
+    OutlinedButton(
+        modifier = Modifier.fillMaxWidth(),
+        enabled = enabled,
+        onClick = {
+            android.app.DatePickerDialog(context, { _, year, month, day ->
+                android.app.TimePickerDialog(context, { _, hour, minute ->
+                    val selected = java.time.LocalDateTime.of(year, month + 1, day, hour, minute)
+                        .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+                    onChange(selected)
+                }, time.hour, time.minute, android.text.format.DateFormat.is24HourFormat(context)).show()
+            }, time.year, time.monthValue - 1, time.dayOfMonth).show()
+        }
+    ) {
+        Text("$label: ${java.text.DateFormat.getDateTimeInstance(java.text.DateFormat.MEDIUM, java.text.DateFormat.SHORT).format(java.util.Date(millis))}")
     }
 }
 
@@ -1253,7 +1358,8 @@ private fun SendSwitchRow(
     title: String,
     description: String,
     checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit
+    onCheckedChange: (Boolean) -> Unit,
+    enabled: Boolean = true
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -1269,7 +1375,9 @@ private fun SendSwitchRow(
         }
         Switch(
             checked = checked,
-            onCheckedChange = onCheckedChange
+            onCheckedChange = onCheckedChange,
+            enabled = enabled,
+            modifier = Modifier.semantics { contentDescription = title }
         )
     }
 }

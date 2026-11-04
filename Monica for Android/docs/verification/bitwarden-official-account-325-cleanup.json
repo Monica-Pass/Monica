@@ -1,0 +1,24 @@
+{
+  "realAccountUser13Removed": true,
+  "realAccountProbeRemoved": true,
+  "syntheticUser14Removed": true,
+  "restoredUser": 0,
+  "preservedUsers": [
+    0,
+    10,
+    11,
+    12
+  ],
+  "emulatorOwnershipVerified": true,
+  "startedPID": 149956,
+  "serial": "emulator-5556",
+  "avd": "Monica_Issue136_API_32",
+  "emulatorStopRequested": true,
+  "testForwardRemoved": true,
+  "remoteDataModified": false,
+  "time": "2026-11-04T14:34:03.8782907+08:00",
+  "emulatorStopped": true,
+  "avdRegistrationPreserved": true,
+  "avdConfigPreserved": true,
+  "userDataDiskPreserved": true
+}

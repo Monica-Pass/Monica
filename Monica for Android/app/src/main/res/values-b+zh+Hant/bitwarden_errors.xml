@@ -11,4 +11,5 @@
     <string name="bitwarden_error_proxy">代理伺服器拒絕連線或需要身份驗證。請檢查代理地址、端口和帳戶設定。</string>
     <string name="bitwarden_error_cleartext">伺服器地址使用 HTTP，目前安全策略不允許明文連線。請使用 HTTPS 地址，並檢查反向代理的 HTTPS 設定。</string>
     <string name="bitwarden_error_network_io">與伺服器通信時發生網絡錯誤。請檢查網絡、VPN 或代理設定後重試。</string>
+    <string name="bitwarden_sync_incomplete_items">部分項目未能同步（%1$d）。可讀項目已同步，原有本機資料已保留。</string>
 </resources>
