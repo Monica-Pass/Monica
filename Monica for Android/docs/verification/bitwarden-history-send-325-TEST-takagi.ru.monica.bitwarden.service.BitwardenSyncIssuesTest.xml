@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.service.BitwardenSyncIssuesTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-04T09:26:58" hostname="JOYIN" time="0.012">
+  <properties/>
+  <testcase name="lockRevokesInFlightReportAndUnlockCannotReviveOldTitles" classname="takagi.ru.monica.bitwarden.service.BitwardenSyncIssuesTest" time="0.011"/>
+  <testcase name="staleAttemptCannotBeginAfterLockOrReplaceNewSessionReport" classname="takagi.ru.monica.bitwarden.service.BitwardenSyncIssuesTest" time="0.0"/>
+  <testcase name="oneItemCanFailInDifferentPhasesButDuplicateReportsDoNotMultiply" classname="takagi.ru.monica.bitwarden.service.BitwardenSyncIssuesTest" time="0.001"/>
+  <testcase name="accountsAreIsolatedAndSuccessReplacesPriorAttempt" classname="takagi.ru.monica.bitwarden.service.BitwardenSyncIssuesTest" time="0.0"/>
+  <testcase name="untrustedErrorsBecomeCategoriesWithoutKeepingServerBodies" classname="takagi.ru.monica.bitwarden.service.BitwardenSyncIssuesTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

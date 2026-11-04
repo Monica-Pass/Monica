@@ -74,6 +74,9 @@ class BitwardenSshNativeSyncInstrumentedTest {
             assertEquals(listOf("User field"), db.customFieldDao().getFieldsByEntryIdSync(pulled.id).map { it.title })
 
             val changed = sourceData.copy(privateKeyOpenSsh = sourceData.privateKeyOpenSsh + "\n", comment = "edited comment", keySize = 384)
+            val oldMetadata = remote.getValue("synthetic-ssh").fields.orEmpty().single {
+                BitwardenCrypto.decryptToString(requireNotNull(it.name), key) == BitwardenSshKeyMapper.METADATA_FIELD
+            }.value
             db.passwordEntryDao().update(pulled.copy(title = "Edited SSH", sshKeyData = SshKeyDataCodec.encode(changed), bitwardenLocalModified = true))
             val uploaded = service.uploadModifiedEntries(vault, token, key) as UploadResult.Success
             assertEquals(1, uploaded.uploaded)
@@ -82,6 +85,10 @@ class BitwardenSshNativeSyncInstrumentedTest {
             assertEquals("5", update.getValue("type").jsonPrimitive.content)
             assertEquals(revision1, update.getValue("lastKnownRevisionDate").jsonPrimitive.content)
             val response = remote.getValue("synthetic-ssh")
+            val history = takagi.ru.monica.bitwarden.service.BitwardenPasswordHistory.decode(response.passwordHistory, key)
+            assertEquals(listOf("monica_ssh_private_key: " + sourceData.privateKeyOpenSsh,
+                BitwardenSshKeyMapper.METADATA_FIELD + ": " +
+                BitwardenCrypto.decryptToString(requireNotNull(oldMetadata), key)), history.map { it.password })
             assertEquals(changed, BitwardenSshKeyMapper.decodeNative(requireNotNull(response.sshKey), response.fields, key))
             assertEquals("Edited SSH", BitwardenCrypto.decryptToString(requireNotNull(response.name), key))
             db.passwordEntryDao().deleteAllByBitwardenVaultId(vault.id)
@@ -199,7 +206,8 @@ class BitwardenSshNativeSyncInstrumentedTest {
                         val update = json.decodeFromJsonElement(CipherUpdateRequest.serializer(), body)
                         if (update.lastKnownRevisionDate != source.revisionDate || update.type != source.type || update.encryptedFor != account) return MockResponse().setResponseCode(409)
                         val next = source.copy(name = update.name, notes = update.notes, fields = update.fields, sshKey = update.sshKey,
-                            login = update.login, favorite = update.favorite, archivedDate = update.archivedDate, revisionDate = revision2)
+                            login = update.login, favorite = update.favorite, archivedDate = update.archivedDate,
+                            passwordHistory = update.passwordHistory, revisionDate = revision2)
                         remote[source.id] = next
                         return ok(next)
                     }

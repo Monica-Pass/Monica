@@ -18,6 +18,13 @@ import takagi.ru.monica.R
 fun importTypeOptions(): List<ImportTypeInfo> {
     return listOf(
         ImportTypeInfo(
+            key = "bitwarden_json",
+            icon = Icons.Default.Lock,
+            title = stringResource(R.string.bw_json_title),
+            description = stringResource(R.string.bw_json_description),
+            fileHint = stringResource(R.string.bw_json_import_hint)
+        ),
+        ImportTypeInfo(
             key = "monica_zip",
             icon = Icons.Default.Archive,
             title = stringResource(R.string.import_type_monica_backup_title),

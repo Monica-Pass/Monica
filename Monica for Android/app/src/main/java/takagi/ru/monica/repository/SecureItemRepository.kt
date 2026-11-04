@@ -95,15 +95,10 @@ class SecureItemRepository(
         return withOriginalKeePass(secureItemDao.getAllItems())
     }
 
-    suspend fun getAllLocalItems(): List<SecureItem> {
-        return ItemType.entries.flatMap { type ->
-            if (type == ItemType.PASSWORD) {
-                emptyList()
-            } else {
-                secureItemDao.getActiveLocalItemsByTypeSync(type)
-            }
-        }
-    }
+    fun getAllItemsIncludingArchived(): Flow<List<SecureItem>> =
+        withOriginalKeePass(secureItemDao.getAllItemsIncludingArchived())
+
+    suspend fun getAllLocalItems(): List<SecureItem> = secureItemDao.getLocalItemsIncludingArchived()
 
     suspend fun getDeletedItemsSync(): List<SecureItem> = secureItemDao.getDeletedItemsSync()
     

@@ -1,0 +1,59 @@
+﻿id,capability,status,current,remaining_or_boundary,evidence,source
+AUTH_A01,主密码与PBKDF2/Argon2id登录,已有并沿用证据,原生prelogin、KDF、token及user key解包、离线验证均在现有链路。,旧账号算法已实现；不把单一官方测试账号验证推广至所有KDF/部署。,E_AUTH;E_OFFICIAL,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAuthService.kt
+AUTH_A02,TOTP、邮件与YubiKey OTP,已有并沿用证据,识别provider 0/1/3及新设备邮件OTP；原生验证码提交。,YubiKey仅手输OTP，不等于FIDO2/WebAuthn；未声称实体硬件验收。,E_AUTH,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenTwoFactorPolicy.kt
+AUTH_A03,新设备邮件OTP重发,用户暂缓,已能识别和提交新设备OTP。,专门重发endpoint/UI仍缺；按本轮高级认证暂缓，不计当前必交项。,E_SCOPE;A_AUTH,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAuthService.kt
+AUTH_A04,记住二步验证,已有并沿用证据,默认关闭开关、按server+email密封token、provider5重用与撤销门禁已实现。,旧矩阵的硬编码remember=true/未存token已过时；不代表全部账号存储已加固。,E_AUTH,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAccountSessionGuard.kt
+AUTH_A05,WebAuthn/FIDO2账号二步认证,用户暂缓,普通条目Passkey与账号二步认证分开；当前code provider明确拒绝不支持类型。,缺浏览器挑战、单次回调与provider7完整链；用户继续暂缓。,E_SCOPE;A_AUTH,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenTwoFactorPolicy.kt
+AUTH_A06,Duo二步认证,用户暂缓,未知/非code认证不降级为普通验证码。,Duo和Organization Duo挑战及回调未实现。,E_SCOPE;A_AUTH,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenTwoFactorPolicy.kt
+AUTH_A07,企业SSO/PKCE,用户暂缓,当前登录入口保持个人账号主密码流程。,缺组织SSO预验证、PKCE、state及安全回调；条目ssoProvider不是该能力。,E_SCOPE;A_AUTH,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAuthService.kt
+AUTH_A08,Key Connector,用户暂缓,未新增绕过主密码的密钥下载流程。,依赖SSO与可信endpoint确认，尚未实现。,E_SCOPE;A_AUTH,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAuthService.kt
+AUTH_A09,可信设备与TDE,用户暂缓,保留现有账号密钥解包及锁定边界。,缺可信设备注册、保护密钥、审批与无密码解密全链。,E_SCOPE;A_AUTH,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAuthService.kt
+AUTH_A10,设备登录审批,用户暂缓,没有把登录设备列表当成登录审批。,缺auth-request创建、等待、批准/拒绝与撤销。,E_SCOPE;A_AUTH,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAuthService.kt
+AUTH_A11,原生注册与邮箱验证,已有并沿用证据,原生注册发起、验证链接/验证码、完成及输入校验已接实际API。,仅合成HTTP/Compose验收；未在本轮真实创建邮箱账号。,E_AUTH,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAccountService.kt
+AUTH_A12,账号指纹短语,用户暂缓,本机生物识别不冒充账号fingerprint phrase。,安全比对短语尚无原生生成/查看入口；依既有范围暂缓。,E_SCOPE;A_AUTH,app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenAccountScreen.kt
+AUTH_A13,密码提示请求与编辑,部分/明确限制,原生忘记密码提示请求与注册时提示字段已实现。,既有账号提示编辑没有独立原生更新流程，使用服务器网页管理。,E_AUTH,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAccountService.kt
+AUTH_A14,SSO设密与策略强制重设,用户暂缓,不会仅因DTO存在resetMasterPassword就宣称完成。,首次设密、策略重设与移除密码依赖高级认证完整链，未实现。,E_SCOPE;A_AUTH,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAuthService.kt
+AUTH_A15,账号安全设置入口,部分/明确限制,原生设备列表可刷新，后台清除、回到前台重新加载；账号身份或锁定改变时撤销迟到结果。,主密码、二步验证、KDF修改继续使用服务器网页；没有原生全库重加密。,E_AUTH;E_CURRENT;A_PROTOCOL;E_FINAL,app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenAccountScreen.kt
+AUTH_A16,最低KDF自动升级,用户暂缓,登录沿账号已有KDF参数执行。,缺账号级强制升级、重包装与失败恢复流程；继续暂缓。,E_SCOPE;A_AUTH,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAuthService.kt
+AUTH_A17,删除服务器账号,用户暂缓,本地退出/移除账号已实现，服务器网页管理入口存在。,没有原生远端注销API流程；本地logout不是服务器账号删除。,E_SCOPE;A_AUTH,app/src/main/java/takagi/ru/monica/bitwarden/repository/BitwardenRepository.kt
+AUTH_A18,多账号、地区与自托管TLS,部分/明确限制,已有US/EU、自托管、多账号和定制CA/mTLS；通知复用同账号TLS。,独立Notifications/API/Identity/Web自定义入口、任意header/discovery仍不完整；通知仅标准推导地址。,E_AUTH;A_PROTOCOL;E_CURRENT,app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenApiFactory.kt
+AUTH_A19,token刷新与失效恢复,部分/明确限制,旋转token已保存；通知401/到期触发刷新并带会话发布门禁，设备列表/导出也有门禁。,所有HTTP操作尚非统一401后一次重试；通知成功刷新与迟到HTTP的实际设备覆盖未完成。,E_AUTH;E_CURRENT,app/src/main/java/takagi/ru/monica/bitwarden/repository/BitwardenRepository.kt
+AUTH_A20,securityStamp变更撤销,已有并沿用证据,同步删除/上传前profile验证，账号ID或stamp改变撤销密钥/token及验证码记忆。,已修复旧矩阵所述仅同步后观察；本轮新UI撤销测试另计，不扩展为全部认证场景。,E_AUTH;E_OFFICIAL,app/src/main/java/takagi/ru/monica/bitwarden/repository/BitwardenRepository.kt
+DATA_DC01,离线修订冲突拒写,已有并沿用证据,保存本地基线修订，上传前比对远端并拒绝旧编辑覆盖。,API无服务端CAS时仍有最终竞态窗口；不承诺任意服务的原子条件写入。,E_AUTH;E_RELIABILITY;E_HISTORY,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSyncService.kt
+DATA_DC02,保留双方与冲突选择,已有并沿用证据,保存本地/服务器冲突材料，现有界面可分别选择并重新验证当前远端。,隔离服务run11及后续定向回归是限定证据；新版本未重新验证所有真实服务竞态。,E_RELIABILITY;E_HISTORY,app/src/main/java/takagi/ru/monica/bitwarden/repository/BitwardenRepository.kt
+DATA_DC03,完整密文源与未知字段保留,已有并沿用证据,受限JSON解析、canonical来源、选择性修改及完整回执确认进入生产事务。,不能安全关联/确认未知内容时保留待同步并报告，不能把未知格式变成空白可编辑项。,E_DOCUMENT;E_OFFICIAL;E_HISTORY,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenCipherDocument.kt
+DATA_DC04,旧Data镜像与新加密blob,上游实验,旧序列化Data字段已兼容并由普通官方103记录验证；新blob拒绝普通投影。,SDK新blob及账号安全状态未实现；上游开关/账号状态决定实际可用，不能称所有官方用户默认开启。,E_OFFICIAL;A_PROTOCOL,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenCipherDocument.kt
+DATA_DC05,partialData受限视图,部分/明确限制,识别partialData并保留安全拒绝，阻止普通编辑/覆盖。,没有完整受限投影体验；组织策略/权限扩展继续暂缓。,E_DOCUMENT;E_OFFICIAL;E_SCOPE,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenCipherDocument.kt
+DATA_DC06,逐网址匹配规则,已有并沿用证据,原生有序网址规则编辑、Default、重复URL及未知元数据保留已接保存/冷读/填充。,仅所列规则与合成测试验收，不声称全站点/全部浏览器设备互操作。,E_HISTORY,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenLoginUriRules.kt
+DATA_DC07,支持类型的归档,已有并沿用证据,登录/SSH以及笔记/卡片/身份可归档/恢复，导出备份查询包含归档项。,标准Bitwarden JSON无归档字段，本轮JSON会显式阻止，不能把格式限制当原生归档缺失。,E_HISTORY,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSecureItemArchiveStore.kt
+DATA_DC08,原生SSH type5,已有并沿用证据,原生type5创建/编辑/冷读及失败保留已接入，旧type1兼容资料保留。,没有本轮真实官方SSH账号写入验收；隔离合成与实际生产链证据按原版本沿用。,E_AUTH;E_HISTORY;E_RELIABILITY,app/src/main/java/takagi/ru/monica/bitwarden/mapper/BitwardenSshKeyMapper.kt
+DATA_DC09,银行账户/驾照/护照type6–8,上游实验,完整源识别未知新类型并安全报告，不当作现有银行卡/Identity覆盖写入。,未实现原生6–8 CRUD；官方Android创建受默认false flag控制，Vaultwarden亦属实验配置。,A_PROTOCOL,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenCipherDocument.kt
+DATA_DC10,完整密码历史操作,已有并沿用证据,查看/删除/清空/密码与隐藏字段变更，离线意图、丢响应与锁代均已生产接入。,旧候选38项未接入结论已过时；当前依据上一批实际87JVM/58设备中的对应方法。,E_HISTORY,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenPasswordHistoryStore.kt
+DATA_DC11,CryptoV2/COSE账号体系,上游实验,继续支持旧EncString 0/2和现有RSA；未知新算法不降级解读。,无EncString7、COSE/DataEnvelope及新账号安全状态全链；官方注册相关flag默认false。,A_PROTOCOL,app/src/main/java/takagi/ru/monica/bitwarden/crypto/BitwardenCrypto.kt
+DATA_DC12,encryptedByKeyId识别,部分/明确限制,传统账号/条目链已验证父密钥RFC9679 thumbprint并解包独立item key。,不等于新V2任意key ID解析/迁移；不匹配ID明确拒绝。,E_RELIABILITY;E_OFFICIAL,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenCipherKeyResolver.kt
+DATA_DC13,账号改KDF与密钥轮换,用户暂缓,PBKDF2/Argon2id登录保留，账号管理提供网页入口。,原生全量重包装、轮换、失败回滚未实现，归入本轮暂缓的高级账号安全流程。,E_SCOPE;A_PROTOCOL,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAuthService.kt
+DATA_DC14,组织密钥与策略扩展,用户暂缓,现有组织key/每条key解密及只读/归属拒绝继续保留。,不实施完整组织角色、策略与新格式；旧安全能力不是完整组织客户端。,E_SCOPE;E_HISTORY;A_ORG,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenCipherKeyResolver.kt
+DATA_DC15,离线操作日志与可见队列,部分/明确限制,真实Room同步队列、失败项目定位、按账号重试及锁定撤销名称已验收。Send使用独立加密草稿和明确提交。,没有所有类型统一typed journal；队列不表示所有操作共用单一日志。,E_RELIABILITY;E_CURRENT;A_SEND;E_R2_DEVICE;E_FINAL,app/src/main/java/takagi/ru/monica/bitwarden/sync/BitwardenSyncQueueReader.kt
+DATA_DC16,服务器通知触发同步,本轮已验收（限定范围）,前台解锁的SignalR监听、重连补拉和现有调度器已接通；每版核心3项及真实Compose Effect3项通过。,无被杀后常驻、独立通知主机或header/discovery；真实官方hub、自签CA/mTLS hub及401成功刷新设备路径未验证。,E_CURRENT;A_PROTOCOL;E_R2_DEVICE;E_NOTIFICATIONS;E_FINAL,app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenForegroundNotificationEffect.kt
+DATA_DC17,普通/密码保护Bitwarden JSON,本轮已验收（限定范围）,普通及密码加密JSON严格预检、本地导入、个人Bitwarden/本地可表达导出已验收；每版11项含实际写出及中途锁定清空部分输出。,不支持账号绑定密文、组织、新类型或不能保真字段；整批拒绝阻止项；不包含附件文件、Send或归档状态。,A_JSON;E_CURRENT;E_R2_DEVICE;E_FINAL,app/src/main/java/takagi/ru/monica/bitwarden/export/BitwardenJsonTransfer.kt
+DATA_DC18,附件迁移与交换,部分/明确限制,密码编辑保存后按精确账号/条目ID持久排队补传；失败保留本地密文与意图，两版实际编辑和文件选择器已验收。,附件必须独立迁移；标准JSON/CSV不携带文件。,E_RELIABILITY;A_ATTACH;E_CURRENT;E_FINAL,app/src/main/java/takagi/ru/monica/credentialexchange/BitwardenImportAttachmentQueue.kt
+ORG_SEND_O01,组织条目解密与更新,用户暂缓,已有组织/条目密钥解密与安全更新边界。,完整组织客户端及新的组织操作继续暂缓；保留原安全回归。,E_SCOPE;E_HISTORY;A_ORG,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenCipherKeyResolver.kt
+ORG_SEND_O02,组织集合列表/筛选/详情,用户暂缓,没有将现有collectionIds元数据当作完整集合UI。,缺按账号组织集合持久化、浏览筛选与详情。,E_SCOPE;A_ORG,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSyncService.kt
+ORG_SEND_O03,在组织中新建条目,用户暂缓,现有个人新建及组织归属保护保留。,缺组织owner选择、可写集合与组织key专用create全链。,E_SCOPE;A_ORG,app/src/main/java/takagi/ru/monica/bitwarden/repository/BitwardenRepository.kt
+ORG_SEND_O04,个人条目共享到组织,用户暂缓,不把普通移动/复制入口当组织share API。,组织共享、重包key、附件迁移及修订确认未实现。,E_SCOPE;A_ORG,app/src/main/java/takagi/ru/monica/bitwarden/repository/BitwardenRepository.kt
+ORG_SEND_O05,组织条目变更集合,用户暂缓,保留来源collectionIds，不隐式清空或改变。,集合增删与权限约束原生操作未实现。,E_SCOPE;A_ORG,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenCipherDocument.kt
+ORG_SEND_O06,组织查看/编辑/管理权限,用户暂缓,既有edit/viewPassword/归属保护及明确只读拒绝保留。,缺完整跨入口有效权限与撤权缓存/导出/附件策略体系。,E_SCOPE;E_HISTORY;A_ORG,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenCipherKeyResolver.kt
+ORG_SEND_O07,组织状态/角色/管理,用户暂缓,个人账号设置与设备列表不等于组织管理。,成员、角色、停用组织等管理界面与API未实现。,E_SCOPE;A_ORG,app/src/main/java/takagi/ru/monica/bitwarden/repository/BitwardenRepository.kt
+ORG_SEND_P01,企业策略同步与适用性,用户暂缓,保留现有基础组织资料。,缺按角色/状态/多组织计算有效策略的统一服务。,E_SCOPE;A_ORG,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSyncService.kt
+ORG_SEND_P02,移动端企业策略执行,用户暂缓,现有个人设置继续运行。,密码生成/超时/归属/导出/类型/URI等企业策略完整执行未实现。,E_SCOPE;A_ORG,app/src/main/java/takagi/ru/monica/bitwarden/viewmodel/BitwardenViewModel.kt
+ORG_SEND_P03,企业SendControls策略,用户暂缓,本轮个人Send认证升级独立进行。,旧Send策略与SendControls适用性/优先级/动态撤销仍未实现。,E_SCOPE;A_ORG,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSendAuth.kt
+ORG_SEND_S01,文本/文件Send创建列表删除,本轮已验收（限定范围）,文本/文件创建、列表、删除及密封缓存已集成验证；按账号身份与锁代读取，未知或不可读缓存清理时保留。,不保证清除历史SQLite WAL/freelist中的旧明文；未做真实官方账号Send端到端。,E_AUTH;E_HISTORY;A_SEND;E_FINAL,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSendCache.kt
+ORG_SEND_S02,Send编辑与启停,本轮已验收（限定范围）,完整来源编辑、启停与新认证/草稿提交链已验收，保留明确操作及不确定回包对账。,服务端无CAS时仍存在最终竞态窗口，不保证原子覆盖。,E_AUTH;E_HISTORY;A_SEND;E_FINAL,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSendEdit.kt
+ORG_SEND_S03,Send独立到期/删除时间,本轮已验收（限定范围）,独立到期与删除绝对时间、原生日期/时间选择及草稿恢复已验收。,重新提交保留已保存的绝对时间，不自动延长期限。,E_AUTH;E_HISTORY;A_SEND;E_FINAL,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSendEdit.kt
+ORG_SEND_S04,Send访问密码替换/移除,本轮已验收（限定范围）,KEEP/REPLACE/REMOVE与认证模式共同验证；普通PUT保持原密码模式，专用移除后核对最终无密码状态。,普通PUT不冒充移除密码；不确定结果必须按完整内容与精确key对账。,E_AUTH;A_SEND;E_FINAL,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSendAuth.kt
+ORG_SEND_S05,Send None/Password/Email认证,本轮已验收（限定范围）,显式None/Password/Email模式、接收邮箱及Premium校验、服务端响应核对已验收。,Email取决于服务器支持；Vaultwarden拒绝时显示失败并保留草稿，不自动降级NONE。,A_SEND;A_ATTACH;E_FINAL,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSendAuth.kt
+ORG_SEND_S06,Send分享/复制与原生接收,部分/明确限制,既有系统分享/复制Send链接可用。,匿名收件方的原生访问/邮件验证/下载流程仍未实现；网页接收链接不是完整原生receiver。,E_AUTH;A_ORG;A_ATTACH,app/src/main/java/takagi/ru/monica/ui/screens/SendScreen.kt
+ORG_SEND_S07,Send持久草稿与失败恢复,本轮已验收（限定范围）,文本/文件草稿按账号密封保存，显式恢复和提交；两版实际force-stop后恢复精确文本及131109文件字节通过。旧缺失时间戳使用稳定文件时间且不改写。,不是自动离线发件箱；不确定文件提交只有持久成功上传回执才能确认，文件元数据不能证明上传完成。,A_SEND;E_CURRENT;E_FINAL,app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSendDraftStore.kt
+ORG_SEND_A01,附件下载/预览/上传/删除,部分/明确限制,已有Direct/Azure上传、刷新URL下载、完整性校验及删除；本轮两版包含现有附件传输5项和新增密码编辑/队列验证。,远端占位分配后失败的全量回收及未知上传类型仍需专验；不将合成测试推广至所有真实部署。,E_RELIABILITY;A_ATTACH;E_FINAL,app/src/main/java/takagi/ru/monica/attachments/executor/BitwardenAttachmentExecutor.kt
+ORG_SEND_A02,登录编辑器附件新增/删除,本轮已验收（限定范围）,真实owner上下文、系统文件选择、密文暂存、父项保存后精确ID队列及补传删除已通过两版设备验收。,只支持现有个人库权限范围；失败保留本地文件和意图，不隐式丢失附件。,A_ATTACH;E_CURRENT;E_FINAL,app/src/main/java/takagi/ru/monica/credentialexchange/BitwardenImportAttachmentQueue.kt
+ORG_SEND_A03,附件资格/权限/额度,部分/明确限制,保留Plus/Premium、owner、独立条目key、只读和大小检查；新增精确ID及失败保留设备回归通过。,没有完整组织策略或实时服务器quota预估；最终服务资格仍由服务器决定。,A_ATTACH;E_CURRENT;E_FINAL,app/src/main/java/takagi/ru/monica/attachments/facade/AttachmentFacade.kt

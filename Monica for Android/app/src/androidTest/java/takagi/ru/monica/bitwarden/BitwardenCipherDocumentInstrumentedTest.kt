@@ -110,7 +110,7 @@ class BitwardenCipherDocumentInstrumentedTest {
             db.passwordEntryDao().update(entry.copy(notes = "Confirmed notes edit", bitwardenLocalModified = true))
             acknowledgmentTransform = { response ->
                 val login = response["login"]!!.jsonObject
-                JsonObject(response + ("fields" to JsonArray(emptyList())) + ("login" to JsonObject(login +
+                JsonObject(response + ("fields" to (response["fields"]?.takeUnless { it == JsonNull } ?: JsonArray(emptyList()))) + ("login" to JsonObject(login +
                     ("uri" to login["uris"]!!.jsonArray.first().jsonObject.getValue("uri")))))
             }
             val result = service.uploadModifiedEntries(vault, token, key) as UploadResult.Success
@@ -180,7 +180,11 @@ class BitwardenCipherDocumentInstrumentedTest {
             assertEquals(1, result.uploaded)
             assertEquals(0, result.failed)
             val actual = remote.getValue("login")
-            for (field in listOf("archivedDate", "FutureEnvelope", "passwordHistory", "attachments")) assertEquals(field, original[field], actual[field])
+            for (field in listOf("archivedDate", "FutureEnvelope", "attachments")) assertEquals(field, original[field], actual[field])
+            val history = actual.getValue("passwordHistory").jsonArray
+            assertEquals(original.getValue("passwordHistory").jsonArray, JsonArray(history.dropLast(1)))
+            assertEquals(BitwardenCrypto.decryptToString(original.getValue("login").jsonObject.getValue("password").jsonPrimitive.content, key),
+                BitwardenCrypto.decryptToString(history.last().jsonObject.getValue("password").jsonPrimitive.content, key))
             assertEquals(original["login"]!!.jsonObject["FutureLogin"], actual["login"]!!.jsonObject["FutureLogin"])
             assertEquals("edited-secret", BitwardenCrypto.decryptToString(actual["login"]!!.jsonObject["password"]!!.jsonPrimitive.content, key))
             assertEquals(revision1, bodies.single()["lastKnownRevisionDate"]!!.jsonPrimitive.content)
@@ -285,7 +289,7 @@ class BitwardenCipherDocumentInstrumentedTest {
         scenario {
             seed("login", 1)
             assertTrue(service.fullSync(vault, token, key) is SyncResult.Success)
-            assertEquals(81, db.openHelper.writableDatabase.version)
+            assertEquals(82, db.openHelper.writableDatabase.version)
             val entry = requireNotNull(db.passwordEntryDao().getByBitwardenCipherIdInVault(vault.id, "login"))
             val original = remote.getValue("login")
             db.passwordEntryDao().update(entry.copy(title = "Pending baseline", bitwardenLocalModified = true))
@@ -422,13 +426,106 @@ class BitwardenCipherDocumentInstrumentedTest {
         }
     }
 
+    @Test fun syncIssuesIdentifyBrokenItemsAndVerifiedTitlesThenClearOnSuccessfulRetry(): Unit = runBlocking {
+        scenario {
+            seed("readable", 1); seed("broken", 1)
+            val original = remote.getValue("broken")
+            val wrong = SymmetricCryptoKey(ByteArray(32) { 91 }, ByteArray(32) { 92 })
+            val bad = try { JsonPrimitive(BitwardenCrypto.encryptString("private-secret-never-in-report", wrong)) }
+                finally { wrong.clear() }
+            remote["broken"] = JsonObject(original + ("notes" to bad))
+            extraFolders = JsonArray(listOf(JsonObject(mapOf("id" to JsonPrimitive("broken-folder"), "name" to bad))))
+            val issues = BitwardenSyncIssues()
+            val attempt = issues.begin(vault.id)
+            assertTrue(service.fullSync(vault, token, key, attempt) is SyncResult.Error)
+            attempt.finish()
+            val report = issues.reports.value.getValue(vault.id)
+            assertEquals(setOf("broken", "broken-folder"), report.items.map { it.itemId }.toSet())
+            assertEquals("Synthetic broken", report.items.single { it.itemId == "broken" }.title)
+            assertEquals(SyncIssuePhase.DOWNLOAD, report.items.single { it.itemId == "broken" }.phase)
+            assertFalse(report.toString().contains("private-secret-never-in-report"))
+            assertFalse(report.toString().contains(bad.jsonPrimitive.content))
+            assertNotNull(db.passwordEntryDao().getByBitwardenCipherIdInVault(vault.id, "readable"))
+            assertNull(db.passwordEntryDao().getByBitwardenCipherIdInVault(vault.id, "broken"))
+            remote["broken"] = original; extraFolders = JsonArray(emptyList())
+            val retry = issues.begin(vault.id)
+            assertTrue(service.fullSync(vault, token, key, retry) is SyncResult.Success)
+            retry.finish()
+            assertTrue(issues.reports.value.getValue(vault.id).items.isEmpty())
+            assertNotNull(db.passwordEntryDao().getByBitwardenCipherIdInVault(vault.id, "broken"))
+        }
+    }
+
+    @Test fun syncIssuesIdentifyEachFailedUploadAndKeepPendingEditsUntilRetry(): Unit = runBlocking {
+        scenario {
+            seed("upload-login", 1); seed("upload-note", 2)
+            assertTrue(service.fullSync(vault, token, key) is SyncResult.Success)
+            val login = requireNotNull(db.passwordEntryDao().getByBitwardenCipherIdInVault(vault.id, "upload-login"))
+            val note = requireNotNull(db.secureItemDao().getByBitwardenCipherIdInVault(vault.id, "upload-note"))
+            db.passwordEntryDao().update(login.copy(notes = "Pending login note", bitwardenLocalModified = true))
+            db.secureItemDao().update(note.copy(title = "Pending note title", bitwardenLocalModified = true))
+            updateStatus = 409
+            val issues = BitwardenSyncIssues()
+            val attempt = issues.begin(vault.id)
+            val result = service.uploadModifiedEntries(vault, token, key, attempt) as UploadResult.Success
+            attempt.finish()
+            assertEquals(2, result.failed)
+            val rows = issues.reports.value.getValue(vault.id).items
+            assertEquals(setOf("upload-login", "upload-note"), rows.map { it.itemId }.toSet())
+            assertTrue(rows.all { it.phase == SyncIssuePhase.UPDATE && it.reason == SyncIssueReason.CONFLICT })
+            assertTrue(requireNotNull(db.passwordEntryDao().getPasswordEntryById(login.id)).bitwardenLocalModified)
+            assertEquals(true, db.secureItemDao().getItemById(note.id)?.bitwardenLocalModified)
+            updateStatus = 200
+            val retry = issues.begin(vault.id)
+            val saved = service.uploadModifiedEntries(vault, token, key, retry) as UploadResult.Success
+            retry.finish()
+            assertEquals(2, saved.uploaded); assertEquals(0, saved.failed)
+            assertTrue(issues.reports.value.getValue(vault.id).items.isEmpty())
+        }
+    }
+
+    @Test fun lostCreateRebindsWithoutPostingAgainAndKeepsExplicitHistoryClear(): Unit = runBlocking {
+        scenario {
+            seed("lost-create", 1)
+            val id = db.passwordEntryDao().insert(takagi.ru.monica.data.PasswordEntry(
+                title = "Synthetic lost-create", website = "", username = "synthetic-user",
+                password = security.encryptData("synthetic-secret"), notes = "Synthetic notes",
+                bitwardenVaultId = vault.id, bitwardenCipherType = 1, bitwardenLocalModified = true))
+            db.passwordHistoryDao().insert(takagi.ru.monica.data.PasswordHistoryEntry(entryId = id,
+                password = security.encryptData("old-synthetic-secret"), lastUsedAt = java.util.Date.from(java.time.Instant.parse(revision1))))
+            assertTrue(BitwardenPasswordHistoryStore(context).clear(id))
+            // A fresh service/store sees the earlier explicit clear after an uncertain POST.
+            val rebound = service.uploadLocalEntries(vault, token, key) as UploadResult.Success
+            assertEquals(0, rebound.uploaded); assertEquals(0, rebound.failed)
+            val pending = requireNotNull(db.passwordEntryDao().getPasswordEntryById(id))
+            assertEquals("lost-create", pending.bitwardenCipherId)
+            assertTrue(pending.bitwardenLocalModified)
+            assertTrue(db.passwordHistoryDao().getHistoryByEntryIdSync(id).isEmpty())
+            assertNotNull(BitwardenCipherSourceStore(context).read(vault, "lost-create", revision1) { active })
+            val result = service.uploadModifiedEntries(vault, token, key) as UploadResult.Success
+            assertEquals(1, result.uploaded); assertEquals(0, result.failed)
+            assertEquals(JsonArray(emptyList()), remote.getValue("lost-create")["passwordHistory"])
+            assertEquals(1, bodies.size)
+            assertFalse(requireNotNull(db.passwordEntryDao().getPasswordEntryById(id)).bitwardenLocalModified)
+        }
+    }
+
     private suspend fun scenario(block: suspend Fixture.() -> Unit) {
         val unlocked = SessionManager.isUnlocked.value
+        val cache = SecurityManager::class.java.getDeclaredField("processCachedMdk").apply { isAccessible = true }
+        val original = cache.get(null)
+        val synthetic = ByteArray(32).also { java.security.SecureRandom().nextBytes(it) }
+        cache.set(null, synthetic)
         SessionManager.markUnlocked()
-        MockWebServer().use { server ->
-            val fixture = Fixture(server)
-            try { fixture.initialize(); fixture.block() }
-            finally { fixture.close(); if (!unlocked) SessionManager.markLocked() }
+        try {
+            MockWebServer().use { server ->
+                val fixture = Fixture(server)
+                try { fixture.initialize(); fixture.block() } finally { fixture.close() }
+            }
+        } finally {
+            cache.set(null, original)
+            synthetic.fill(0)
+            if (!unlocked) SessionManager.markLocked()
         }
     }
 
@@ -450,12 +547,18 @@ class BitwardenCipherDocumentInstrumentedTest {
         var updateStatus = 200
         var acknowledgmentTransform: (JsonObject) -> JsonObject = { it }
         lateinit var vault: BitwardenVault
+        private val repository by lazy { takagi.ru.monica.bitwarden.repository.BitwardenRepository.getInstance(context) }
+        @Suppress("UNCHECKED_CAST")
+        private fun <T> cache(name: String): MutableMap<Long, T> =
+            repository.javaClass.getDeclaredField(name).apply { isAccessible = true }.get(repository) as MutableMap<Long, T>
 
         suspend fun initialize() {
             val endpoint = server.url("/").toString()
             val id = db.bitwardenVaultDao().insert(BitwardenVault(email = "$account@example.invalid", userId = account,
                 accountKey = account, serverUrl = endpoint, identityUrl = endpoint, apiUrl = endpoint))
             vault = requireNotNull(db.bitwardenVaultDao().getVaultById(id))
+            cache<SymmetricCryptoKey>("symmetricKeyCache")[id] = key
+            cache<String>("accessTokenCache")[id] = token
             server.dispatcher = object : Dispatcher() {
                 override fun dispatch(request: RecordedRequest): MockResponse {
                     if (request.getHeader("Authorization") != "Bearer $token") return MockResponse().setResponseCode(401)
@@ -498,6 +601,8 @@ class BitwardenCipherDocumentInstrumentedTest {
         private fun ok(value: String) = MockResponse().setHeader("Content-Type", "application/json").setBody(value)
         suspend fun close() {
             if (::vault.isInitialized) {
+                cache<SymmetricCryptoKey>("symmetricKeyCache").remove(vault.id)
+                cache<String>("accessTokenCache").remove(vault.id)
                 db.passwordEntryDao().deleteAllByBitwardenVaultId(vault.id)
                 db.secureItemDao().deleteAllByBitwardenVaultId(vault.id)
                 db.passkeyDao().deleteAllByBitwardenVaultId(vault.id)

@@ -3,6 +3,10 @@ package takagi.ru.monica.bitwarden.service
 import java.nio.ByteBuffer
 import java.security.MessageDigest
 import java.util.concurrent.ConcurrentHashMap
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
@@ -85,9 +89,15 @@ internal object BitwardenAuthSessionGate {
         val state = states.getOrPut(scope) { State() }
         return state.mutex.withLock {
             if (!predicate()) return@withLock false
-            ++state.epoch
-            action()
-            true
+            currentCoroutineContext().ensureActive()
+            // Removing runtime keys can itself cancel the requesting UI via its session flow.
+            // Once committed, finish only this local security revocation before releasing the
+            // account gate; a new login must not race the durable credential removal.
+            withContext(NonCancellable) {
+                ++state.epoch
+                action()
+                true
+            }
         }
     }
 }

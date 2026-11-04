@@ -49,7 +49,8 @@ fun M3IdentityVerifyDialog(
     passwordErrorText: String? = null,
     showBiometricSlot: Boolean = true,
     onBiometricClick: (() -> Unit)? = null,
-    biometricHintText: String? = null
+    biometricHintText: String? = null,
+    savePasswordTextState: Boolean = true
 ) {
     AlertDialog(
         modifier = modifier,
@@ -91,6 +92,7 @@ fun M3IdentityVerifyDialog(
                 )
                 if (requireIdentityVerification) {
                     MasterPasswordTextField(
+                        saveTextState = savePasswordTextState,
                         value = passwordValue,
                         onValueChange = onPasswordChange,
                         modifier = Modifier.fillMaxWidth(),

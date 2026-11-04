@@ -277,9 +277,11 @@ class WalletContentEditorTest {
         closeEditor()
     }
 
-    @Test fun smallDarkLargeTextEditorUsesConnectedFieldsAndKeepsEmptyAddedFields() {
+    @Test fun smallDarkLargeTextEditorUsesIndependentFieldsAndKeepsEmptyAddedFields() {
+        var editorDensity = 0f
         show {
             val density = LocalDensity.current
+            SideEffect { editorDensity = density.density }
             CompositionLocalProvider(LocalDensity provides Density(density.density, 1.7f)) {
                 MaterialTheme(colorScheme = darkColorScheme()) {
                     Box(Modifier.width(320.dp).fillMaxHeight()) { AddEditBankCardScreen(bank, initialStorageExplicit = true, onNavigateBack = {}) }
@@ -299,7 +301,7 @@ class WalletContentEditorTest {
         val pin = compose.onNodeWithTag("entry_extra_pin").fetchSemanticsNode().boundsInRoot
         assertEquals(month.width, pin.width, 1f)
         assertEquals(month.height, year.height, 1f)
-        assertTrue("Connected fields need a small gap", year.top - month.bottom in 0f..8f)
+        assertEquals("Independent rounded fields need the designed 12dp gap", 12f * editorDensity, year.top - month.bottom, 1f)
         compose.onNodeWithTag("entry_extra_branchCode").performScrollTo().performClick().performTextInput("00123")
         waitForEditorKeyboard()
         compose.onNodeWithTag("entry_extra_branchCode").assertIsDisplayed()

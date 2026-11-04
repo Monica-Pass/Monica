@@ -306,6 +306,9 @@ class PasswordViewModel internal constructor(
 ) : ViewModel() {
     private val decryptLock = Any()
     private val appContext: Context? = context?.applicationContext
+    private val bitwardenPasswordHistoryStore by lazy {
+        appContext?.let { takagi.ru.monica.bitwarden.service.BitwardenPasswordHistoryStore(it) }
+    }
     private val _keepassPermissionRepairRequests = MutableSharedFlow<KeePassPermissionRepairRequest>(extraBufferCapacity = 1)
     val keepassPermissionRepairRequests: SharedFlow<KeePassPermissionRepairRequest> =
         _keepassPermissionRepairRequests.asSharedFlow()
@@ -1606,13 +1609,20 @@ class PasswordViewModel internal constructor(
     }
 
     private suspend fun decodeHistoryPasswordForDisplay(entry: PasswordHistoryEntry): String {
-        val decoded = decryptForDisplay(entry.password)
-        if (decoded.isBlank()) return ""
-
-        val stableEncoded = securityManager.encryptDataLegacyCompat(decoded)
-        if (stableEncoded != entry.password) {
-            repository.updatePasswordHistoryPassword(entry.id, stableEncoded)
+        val parent = repository.getPasswordEntryById(entry.entryId)
+        val vaultId = parent?.bitwardenVaultId
+        if (vaultId != null) {
+            val store = requireNotNull(bitwardenPasswordHistoryStore)
+            val session = store.captureSession(vaultId)
+            check(entry.password.startsWith("MDK|")) { "Bitwarden password history requires MDK protection" }
+            val decoded = securityManager.decryptData(entry.password)
+            check(store.isSessionCurrent(session)) { "History session changed" }
+            return decoded
         }
+        val decoded = decryptForDisplay(entry.password)
+        if (decoded.isEmpty()) return ""
+        val stableEncoded = securityManager.encryptDataLegacyCompat(decoded)
+        if (stableEncoded != entry.password) repository.updatePasswordHistoryPassword(entry.id, stableEncoded)
         return decoded
     }
 
@@ -2616,7 +2626,9 @@ class PasswordViewModel internal constructor(
         val deletedSecureItems = secureItemRepository?.getDeletedItemsSync()
             ?.count { item -> item.categoryId in categoryIds }
             ?: 0
-        return archivedPasswords + deletedPasswords + deletedSecureItems
+        val archivedSecureItems = secureItemRepository?.getAllItemsIncludingArchived()?.first()
+            ?.count { item -> item.isArchived && item.categoryId in categoryIds } ?: 0
+        return archivedPasswords + deletedPasswords + deletedSecureItems + archivedSecureItems
     }
 
     internal suspend fun copyLocalOnlySecureItemsToMonicaCategoryBatch(
@@ -3595,6 +3607,9 @@ class PasswordViewModel internal constructor(
             boundEntry
         }
         
+        val historySession = entryToUpdate.bitwardenVaultId?.let {
+            requireNotNull(bitwardenPasswordHistoryStore).captureSession(it)
+        }
         val oldPassword = oldEntry?.let { decryptForDisplay(it.password) } ?: ""
         val resolvedPassword = resolvePasswordForUpdate(
             existing = oldEntry,
@@ -3608,6 +3623,7 @@ class PasswordViewModel internal constructor(
             updatedAt = Date()
         )
 
+        var storedWithBitwardenHistory = false
         val keepassSync = keepassPasswordUpdateExecutor.syncUpdatedEntry(
             existingEntry = oldEntry,
             updatedEntry = persistedEntry,
@@ -3617,7 +3633,13 @@ class PasswordViewModel internal constructor(
                 customFieldsOverride = customFieldsOverride
             ),
             persistUpdate = { updated ->
-                repository.updatePasswordEntry(updated)
+                if (historySession != null) check(requireNotNull(bitwardenPasswordHistoryStore).isSessionCurrent(historySession)) {
+                    "History session changed while editing"
+                }
+                storedWithBitwardenHistory = if (oldEntry != null && updated.bitwardenVaultId != null) {
+                    requireNotNull(bitwardenPasswordHistoryStore).persistPasswordTransition(oldEntry, updated, oldPassword, historySession)
+                } else false
+                if (!storedWithBitwardenHistory) repository.updatePasswordEntry(updated)
             }
         )
         if (keepassSync.isFailure) {
@@ -3628,7 +3650,7 @@ class PasswordViewModel internal constructor(
             return false
         }
 
-        if (oldEntry != null && oldPassword.isNotBlank() && oldPassword != newPassword) {
+        if (oldEntry != null && !storedWithBitwardenHistory && oldPassword.isNotEmpty() && oldPassword != newPassword) {
             savePasswordHistorySnapshot(entryToUpdate.id, oldPassword)
         }
 
@@ -3678,7 +3700,12 @@ class PasswordViewModel internal constructor(
     }
 
     private suspend fun savePasswordHistorySnapshot(entryId: Long, plainPassword: String) {
-        if (plainPassword.isBlank()) return
+        if (plainPassword.isEmpty()) return
+        val owner = repository.getPasswordEntryById(entryId)
+        if (owner?.bitwardenVaultId != null) {
+            check(requireNotNull(bitwardenPasswordHistoryStore).captureSnapshot(entryId, plainPassword))
+            return
+        }
 
         val latestHistory = repository.getPasswordHistoryByEntryIdSync(entryId).firstOrNull()
         val latestPassword = latestHistory?.let { decryptForDisplay(it.password) }
@@ -4361,20 +4388,43 @@ class PasswordViewModel internal constructor(
         }
     }
 
+    @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     fun getPasswordHistoryFlow(passwordId: Long): Flow<List<PasswordHistoryEntry>> {
-        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(passwordId)) return monicaKeePassStore?.history(passwordId) ?: flowOf(emptyList())
-        return repository.getPasswordHistoryByEntryId(passwordId)
-            .map { entries ->
-                entries.mapNotNull { entry ->
-                    val decoded = decodeHistoryPasswordForDisplay(entry)
-                    if (decoded.isBlank()) {
-                        null
-                    } else {
-                        entry.copy(password = decoded)
+        if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(passwordId))
+            return monicaKeePassStore?.history(passwordId) ?: flowOf(emptyList())
+        val ownerFlow = appContext?.let {
+            takagi.ru.monica.data.PasswordDatabase.getDatabase(it).passwordHistoryDao().observeOwningEntry(passwordId)
+        } ?: flow { emit(repository.getPasswordEntryById(passwordId)) }
+        return ownerFlow.flatMapLatest { owner ->
+            if (owner == null) return@flatMapLatest flowOf(emptyList())
+            val vaultId = owner.bitwardenVaultId
+            val vaultGeneration = if (vaultId != null) {
+                bitwardenRepository?.getVaultSessionGenerationFlow(vaultId) ?: flowOf(0L)
+            } else flowOf(0L)
+            combine(repository.getPasswordHistoryByEntryId(passwordId), SessionManager.isUnlocked,
+                SessionManager.lockGeneration, vaultGeneration) { entries, unlocked, globalGeneration, accountGeneration ->
+                if (!unlocked || SessionManager.lockGeneration.value != globalGeneration) return@combine emptyList()
+                val store = bitwardenPasswordHistoryStore
+                val session = if (vaultId != null) {
+                    if (store == null || bitwardenRepository?.isVaultUnlocked(vaultId) != true) return@combine emptyList()
+                    runCatching { store.captureSession(vaultId) }.getOrNull()?.takeIf { it.vaultGeneration == accountGeneration }
+                        ?: return@combine emptyList()
+                } else null
+                val decoded = try {
+                    entries.mapNotNull { entry ->
+                        val password = decodeHistoryPasswordForDisplay(entry)
+                        if (password.isEmpty()) null else entry.copy(password = password)
                     }
+                } catch (cancelled: CancellationException) { throw cancelled }
+                catch (error: Exception) {
+                    Log.w("PasswordViewModel", "History decryption failed: ${error.javaClass.simpleName}")
+                    return@combine emptyList()
                 }
+                if (!SessionManager.isUnlocked.value || SessionManager.lockGeneration.value != globalGeneration ||
+                    repository.getPasswordEntryById(passwordId) != owner ||
+                    (session != null && store?.isSessionCurrent(session) != true)) emptyList() else decoded
             }
-            .flowOn(Dispatchers.IO)
+        }.flowOn(Dispatchers.IO)
     }
 
     /**
@@ -4418,8 +4468,12 @@ class PasswordViewModel internal constructor(
             .flowOn(Dispatchers.IO)
     }
 
-    fun deletePasswordHistoryEntry(historyId: Long) {
+    fun deletePasswordHistoryEntry(historyId: Long, vaultId: Long? = null) {
+        val generation = SessionManager.lockGeneration.value
+        val historySession = if (vaultId != null) runCatching { bitwardenPasswordHistoryStore?.captureSession(vaultId) }.getOrNull() ?: return else null
         viewModelScope.launch {
+            if (!SessionManager.isUnlocked.value || generation != SessionManager.lockGeneration.value ||
+                historySession != null && bitwardenPasswordHistoryStore?.isSessionCurrent(historySession) != true) return@launch
             if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(historyId)) {
                 runCatching { requireNotNull(monicaKeePassStore).deleteHistory(historyId) }.onFailure {
                     if (it is CancellationException) throw it
@@ -4427,12 +4481,28 @@ class PasswordViewModel internal constructor(
                 }
                 return@launch
             }
-            repository.deletePasswordHistoryById(historyId)
+            val row = appContext?.let {
+                takagi.ru.monica.data.PasswordDatabase.getDatabase(it).passwordHistoryDao().getById(historyId)
+            }
+            val parent = row?.let { repository.getPasswordEntryById(it.entryId) }
+            try {
+                if (bitwardenPasswordHistoryStore?.deleteHistory(historyId, historySession) == true) {
+                    parent?.bitwardenVaultId?.let { bitwardenRepository?.requestLocalMutationSync(it) }
+                } else repository.deletePasswordHistoryById(historyId)
+            } catch (cancelled: CancellationException) { throw cancelled }
+            catch (error: Exception) {
+                Log.w("PasswordViewModel", "Bitwarden history deletion failed: ${error.javaClass.simpleName}")
+                appContext?.let { Toast.makeText(it, strings.get(R.string.save_failed), Toast.LENGTH_SHORT).show() }
+            }
         }
     }
 
-    fun clearPasswordHistory(entryId: Long) {
+    fun clearPasswordHistory(entryId: Long, vaultId: Long? = null) {
+        val generation = SessionManager.lockGeneration.value
+        val historySession = if (vaultId != null) runCatching { bitwardenPasswordHistoryStore?.captureSession(vaultId) }.getOrNull() ?: return else null
         viewModelScope.launch {
+            if (!SessionManager.isUnlocked.value || generation != SessionManager.lockGeneration.value ||
+                historySession != null && bitwardenPasswordHistoryStore?.isSessionCurrent(historySession) != true) return@launch
             if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(entryId)) {
                 runCatching { requireNotNull(monicaKeePassStore).clearHistory(entryId) }.onFailure {
                     if (it is CancellationException) throw it
@@ -4440,7 +4510,16 @@ class PasswordViewModel internal constructor(
                 }
                 return@launch
             }
-            repository.clearPasswordHistory(entryId)
+            val parent = repository.getPasswordEntryById(entryId)
+            try {
+                if (bitwardenPasswordHistoryStore?.clear(entryId, historySession) == true) {
+                    parent?.bitwardenVaultId?.let { bitwardenRepository?.requestLocalMutationSync(it) }
+                } else repository.clearPasswordHistory(entryId)
+            } catch (cancelled: CancellationException) { throw cancelled }
+            catch (error: Exception) {
+                Log.w("PasswordViewModel", "Bitwarden history clear failed: ${error.javaClass.simpleName}")
+                appContext?.let { Toast.makeText(it, strings.get(R.string.save_failed), Toast.LENGTH_SHORT).show() }
+            }
         }
     }
 
@@ -4537,7 +4616,7 @@ class PasswordViewModel internal constructor(
 
         val conflictIds = findMdbxReplicaTargetConflictIds(
             selectedItems = items,
-            activeItems = secureRepository.getAllItems().first(),
+            activeItems = secureRepository.getAllItemsIncludingArchived().first(),
             databaseId = databaseId,
             folderId = folderId
         )
@@ -5900,6 +5979,15 @@ class PasswordViewModel internal constructor(
             if (monicaKeePassStore.fields(entryId).map { Triple(it.title, it.value, it.isProtected) } != fields.map { Triple(it.title, it.value, it.isProtected) }) {
                 monicaKeePassStore.save(requireNotNull(entry.keepassDatabaseId), listOf(entry), mapOf(entryId to fields))
             }
+            return
+        }
+        val fieldOwner = repository.getPasswordEntryById(entryId)
+        if (fieldOwner?.bitwardenVaultId != null && fieldOwner.bitwardenCipherType == 1 &&
+            !fieldOwner.loginType.equals("ssh_key", true)) {
+            val store = requireNotNull(bitwardenPasswordHistoryStore)
+            val session = store.captureSession(requireNotNull(fieldOwner.bitwardenVaultId))
+            check(store.persistHiddenFieldTransition(fieldOwner, fields, session))
+            bitwardenRepository?.requestLocalMutationSync(requireNotNull(fieldOwner.bitwardenVaultId))
             return
         }
         customFieldRepository?.saveFieldsForEntry(entryId, fields)

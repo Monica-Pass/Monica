@@ -612,7 +612,7 @@ class NoteViewModel internal constructor(
                 ?: distinctTargets.first()
             val replicaGroupId = existingItem?.replicaGroupId?.takeIf { it.isNotBlank() } ?: UUID.randomUUID().toString()
             val existingReplicasByKey = if (existingItem != null) {
-                repository.getAllItems().first()
+                repository.getAllItemsIncludingArchived().first()
                     .asSequence()
                     .filter {
                         it.itemType == ItemType.NOTE &&
@@ -862,7 +862,7 @@ class NoteViewModel internal constructor(
 
             if (existingItem != null && distinctTargets.size == 1 &&
                 currentTarget.stableKey != existingItem.toStorageTarget().stableKey) {
-                repository.getAllItems().first()
+                repository.getAllItemsIncludingArchived().first()
                 .filter {
                     it.itemType == ItemType.NOTE &&
                         it.replicaGroupId == replicaGroupId &&
@@ -1060,7 +1060,7 @@ class NoteViewModel internal constructor(
         target: StorageTarget
     ): Boolean {
         if (replicaGroupId.isNullOrBlank()) return false
-        return repository.getAllItems().first()
+        return repository.getAllItemsIncludingArchived().first()
             .asSequence()
             .filter { candidate ->
                 candidate.itemType == itemType &&

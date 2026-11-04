@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_sync_issues_title">Элементы, которые не удалось синхронизировать</string>
+    <string name="bitwarden_sync_issues_button">Проблемы синхронизации (%1$d)</string>
+    <string name="bitwarden_sync_issues_help">Последняя попытка для этого аккаунта. Названия отображаются, если их удалось прочитать; иначе найдите элемент по его ID. Эти сведения удаляются при блокировке аккаунта.</string>
+    <string name="bitwarden_sync_issues_empty">В этой попытке нет ошибок отдельных элементов.</string>
+    <string name="bitwarden_sync_issues_running">Синхронизация ещё выполняется.</string>
+    <string name="bitwarden_sync_issues_no_title">Название недоступно</string>
+    <string name="bitwarden_sync_issues_id">ID элемента: %1$s</string>
+    <string name="bitwarden_sync_issues_search">Поиск по названию или ID элемента</string>
+    <string name="bitwarden_sync_issues_no_matches">Совпадающих элементов нет</string>
+    <string name="bitwarden_sync_issue_kind_cipher">Элемент хранилища</string>
+    <string name="bitwarden_sync_issue_kind_folder">Папка</string>
+    <string name="bitwarden_sync_issue_kind_send">Send</string>
+    <string name="bitwarden_sync_issue_kind_attachment">Вложение</string>
+    <string name="bitwarden_sync_issue_kind_passkey">Ключ доступа</string>
+    <string name="bitwarden_sync_issue_phase_download">Скачать</string>
+    <string name="bitwarden_sync_issue_phase_create">Загрузить новый элемент</string>
+    <string name="bitwarden_sync_issue_phase_update">Загрузить изменения</string>
+    <string name="bitwarden_sync_issue_phase_delete">Удалить</string>
+    <string name="bitwarden_sync_issue_phase_restore">Восстановить</string>
+    <string name="bitwarden_sync_issue_reason_authentication">Разблокируйте аккаунт или войдите снова, затем повторите попытку.</string>
+    <string name="bitwarden_sync_issue_reason_network">Не удалось связаться с сервером. Проверьте соединение и повторите попытку.</string>
+    <string name="bitwarden_sync_issue_reason_conflict">Этот элемент изменён. Проверьте конфликт перед повторной попыткой.</string>
+    <string name="bitwarden_sync_issue_reason_unsupported">Формат этого элемента не поддерживается или неполон.</string>
+    <string name="bitwarden_sync_issue_reason_decryption">Не удалось расшифровать или проверить этот элемент.</string>
+    <string name="bitwarden_sync_issue_reason_rejected">Не удалось завершить операцию. Локальные изменения сохранены.</string>
+    <string name="bitwarden_sync_issue_reason_attachment">Не удалось передать или проверить вложение.</string>
+    <string name="bitwarden_sync_issue_reason_pending_parent">Загрузите элемент, которому принадлежит вложение, и проверьте доступность вложения перед повторной попыткой.</string>
+</resources>

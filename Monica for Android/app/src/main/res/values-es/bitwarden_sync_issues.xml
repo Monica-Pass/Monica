@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_sync_issues_title">Elementos que no se pudieron sincronizar</string>
+    <string name="bitwarden_sync_issues_button">Ver problemas de sincronización (%1$d)</string>
+    <string name="bitwarden_sync_issues_help">Último intento de esta cuenta. Los títulos se muestran cuando están disponibles; si no se puede leer un título, use el ID para localizar el elemento. Estos detalles se borran al bloquear la cuenta.</string>
+    <string name="bitwarden_sync_issues_empty">No falló ningún elemento en este intento.</string>
+    <string name="bitwarden_sync_issues_running">La sincronización sigue en curso.</string>
+    <string name="bitwarden_sync_issues_no_title">Título no disponible</string>
+    <string name="bitwarden_sync_issues_id">ID del elemento: %1$s</string>
+    <string name="bitwarden_sync_issues_search">Buscar por título o ID del elemento</string>
+    <string name="bitwarden_sync_issues_no_matches">No hay elementos coincidentes</string>
+    <string name="bitwarden_sync_issue_kind_cipher">Elemento de la bóveda</string>
+    <string name="bitwarden_sync_issue_kind_folder">Carpeta</string>
+    <string name="bitwarden_sync_issue_kind_send">Send</string>
+    <string name="bitwarden_sync_issue_kind_attachment">Adjunto</string>
+    <string name="bitwarden_sync_issue_kind_passkey">Clave de acceso</string>
+    <string name="bitwarden_sync_issue_phase_download">Descargar</string>
+    <string name="bitwarden_sync_issue_phase_create">Subir elemento nuevo</string>
+    <string name="bitwarden_sync_issue_phase_update">Subir cambios</string>
+    <string name="bitwarden_sync_issue_phase_delete">Eliminar</string>
+    <string name="bitwarden_sync_issue_phase_restore">Restaurar</string>
+    <string name="bitwarden_sync_issue_reason_authentication">Desbloquee o vuelva a iniciar sesión y reinténtelo.</string>
+    <string name="bitwarden_sync_issue_reason_network">No se pudo conectar con el servidor. Compruebe la conexión y reinténtelo.</string>
+    <string name="bitwarden_sync_issue_reason_conflict">Este elemento ha cambiado. Revise el conflicto antes de reintentarlo.</string>
+    <string name="bitwarden_sync_issue_reason_unsupported">Este elemento usa un formato no compatible o incompleto.</string>
+    <string name="bitwarden_sync_issue_reason_decryption">No se pudo descifrar o verificar este elemento.</string>
+    <string name="bitwarden_sync_issue_reason_rejected">No se pudo completar la operación. Los cambios locales se conservan.</string>
+    <string name="bitwarden_sync_issue_reason_attachment">No se pudo transferir o verificar el adjunto.</string>
+    <string name="bitwarden_sync_issue_reason_pending_parent">Suba el elemento al que pertenece el adjunto y compruebe su disponibilidad antes de reintentarlo.</string>
+</resources>

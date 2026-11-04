@@ -78,7 +78,9 @@ fun AttachmentsEditSection(
     keepassContext: AttachmentFacade.KeePassContext? = null,
     pendingDrafts: SnapshotStateList<AttachmentPendingDraft>? = null,
     excludedFileNames: Set<String> = emptySet(),
-    hideManagedCardFaces: Boolean = false
+    hideManagedCardFaces: Boolean = false,
+    persistAttachment: (suspend (Uri, Boolean) -> Unit)? = null,
+    removeAttachment: (suspend (Long) -> Unit)? = null
 ) = AttachmentsEditSection(
     owner = passwordId.takeIf { it > 0L }?.let { AttachmentOwner.password(it) },
     isPlusActivated = isPlusActivated,
@@ -89,7 +91,9 @@ fun AttachmentsEditSection(
     keepassContext = keepassContext,
     pendingDrafts = pendingDrafts,
     excludedFileNames = excludedFileNames,
-    hideManagedCardFaces = hideManagedCardFaces
+    hideManagedCardFaces = hideManagedCardFaces,
+    persistAttachment = persistAttachment,
+    removeAttachment = removeAttachment
 )
 
 @Composable
@@ -103,7 +107,9 @@ fun AttachmentsEditSection(
     keepassContext: AttachmentFacade.KeePassContext? = null,
     pendingDrafts: SnapshotStateList<AttachmentPendingDraft>? = null,
     excludedFileNames: Set<String> = emptySet(),
-    hideManagedCardFaces: Boolean = false
+    hideManagedCardFaces: Boolean = false,
+    persistAttachment: (suspend (Uri, Boolean) -> Unit)? = null,
+    removeAttachment: (suspend (Long) -> Unit)? = null
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -131,8 +137,13 @@ fun AttachmentsEditSection(
         scope.launch {
             try {
                 if (isDraftMode) {
+                    if (attachmentSource == AttachmentSource.BITWARDEN && !bitwardenPremium) {
+                        throw AttachmentError.PremiumRequired
+                    }
                     val meta = AttachmentUriMetadata.resolve(context, uri)
                     pendingDrafts!!.add(AttachmentPendingDraft(uri, meta.fileName, meta.sizeBytes.coerceAtLeast(0)))
+                } else if (persistAttachment != null) {
+                    persistAttachment(uri, acceptSoftLimit)
                 } else {
                     facade.addAttachment(
                         AttachmentFacade.UploadRequest(
@@ -234,7 +245,8 @@ fun AttachmentsEditSection(
                         errorMessage = null
                         scope.launch {
                             try {
-                                facade.deleteAttachment(attachment.id, bitwardenContext, keepassContext)
+                                if (removeAttachment != null) removeAttachment(attachment.id)
+                                else facade.deleteAttachment(attachment.id, bitwardenContext, keepassContext)
                             } catch (error: CancellationException) {
                                 throw error
                             } catch (error: Exception) {
@@ -274,7 +286,8 @@ suspend fun flushPendingDraftsTo(
     bitwardenContext: AttachmentFacade.BitwardenContext? = null,
     bitwardenPremium: Boolean = true,
     keepassContext: AttachmentFacade.KeePassContext? = null,
-    kdbxSoftLimitAccepted: Boolean = true
+    kdbxSoftLimitAccepted: Boolean = true,
+    persistAttachment: (suspend (Uri, Boolean) -> Unit)? = null
 ): Int = flushPendingDraftsTo(
     context = context,
     owner = AttachmentOwner.password(passwordId),
@@ -284,7 +297,8 @@ suspend fun flushPendingDraftsTo(
     bitwardenContext = bitwardenContext,
     bitwardenPremium = bitwardenPremium,
     keepassContext = keepassContext,
-    kdbxSoftLimitAccepted = kdbxSoftLimitAccepted
+    kdbxSoftLimitAccepted = kdbxSoftLimitAccepted,
+    persistAttachment = persistAttachment
 )
 
 suspend fun flushPendingDraftsTo(
@@ -296,7 +310,8 @@ suspend fun flushPendingDraftsTo(
     bitwardenContext: AttachmentFacade.BitwardenContext? = null,
     bitwardenPremium: Boolean = true,
     keepassContext: AttachmentFacade.KeePassContext? = null,
-    kdbxSoftLimitAccepted: Boolean = true
+    kdbxSoftLimitAccepted: Boolean = true,
+    persistAttachment: (suspend (Uri, Boolean) -> Unit)? = null
 ): Int {
     if (pendingDrafts.isEmpty()) return 0
     val facade = AttachmentContainer.facade(context)
@@ -304,7 +319,8 @@ suspend fun flushPendingDraftsTo(
     val snapshot = pendingDrafts.toList()
     snapshot.forEach { draft ->
         val result = runCatching {
-            facade.addAttachment(
+            if (persistAttachment != null) persistAttachment(draft.uri, kdbxSoftLimitAccepted)
+            else facade.addAttachment(
                 AttachmentFacade.UploadRequest(
                     owner = owner,
                     source = attachmentSource,
@@ -321,9 +337,10 @@ suspend fun flushPendingDraftsTo(
             pendingDrafts.remove(draft)
             successCount++
         } else {
+            result.exceptionOrNull()?.let { if (it is CancellationException) throw it }
             android.util.Log.w(
                 "AttachmentsEditSection",
-                "Failed to flush pending attachment ${draft.fileName}: ${result.exceptionOrNull()?.message}"
+                "Pending attachment could not be saved (${result.exceptionOrNull()?.javaClass?.simpleName})"
             )
         }
     }

@@ -40,8 +40,9 @@ internal object BitwardenCipherUploadProtocol {
         val sourceRules = originalLogin?.uris.orEmpty().filter { !it.uri.isNullOrBlank() }.groupBy {
             BitwardenCrypto.decryptToString(requireNotNull(it.uri), key)
         }
+        val explicitRules = BitwardenLoginUriRules.hasExplicitRules(request.fields, key)
         val login = request.login?.copy(uris = request.login.uris?.map { uri ->
-            if (uri.match != null || uri.uri.isNullOrBlank()) uri else {
+            if (explicitRules || uri.match != null || uri.uri.isNullOrBlank()) uri else {
                 val original = sourceRules[BitwardenCrypto.decryptToString(requireNotNull(uri.uri), key)]
                 val rules = original.orEmpty().map { it.match }.distinct()
                 require(rules.size <= 1) { "Ambiguous Bitwarden URI match rules; sync the account again" }

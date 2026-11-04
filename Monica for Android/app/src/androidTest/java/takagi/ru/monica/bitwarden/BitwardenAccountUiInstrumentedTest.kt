@@ -19,9 +19,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import java.io.File
 import java.util.UUID
+import java.util.concurrent.CountDownLatch
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicReference
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
@@ -35,6 +38,8 @@ import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import takagi.ru.monica.security.SessionManager
+import androidx.lifecycle.Lifecycle
 import takagi.ru.monica.R
 import takagi.ru.monica.bitwarden.crypto.BitwardenCrypto.SymmetricCryptoKey
 import takagi.ru.monica.bitwarden.repository.BitwardenRepository
@@ -139,7 +144,7 @@ class BitwardenAccountUiInstrumentedTest {
                 waitForTag("bitwarden_account_device_owned-device")
                 compose.onNodeWithTag("bitwarden_account_device_owned-device").performScrollTo().assertIsDisplayed()
                 compose.onNodeWithText("Synthetic Android").assertIsDisplayed()
-                compose.onNodeWithText(localized.getString(R.string.bitwarden_account_device_trusted)).assertIsDisplayed()
+                compose.onNodeWithText(localized.getString(R.string.bitwarden_account_device_trusted), substring = true).assertIsDisplayed()
                 compose.onNodeWithText("never expose encrypted keys").assertDoesNotExist()
                 assertEquals(listOf("/api/accounts/profile", "/api/devices"), fixture.paths.toList())
                 screenshotIfRequested("account-devices")
@@ -152,13 +157,70 @@ class BitwardenAccountUiInstrumentedTest {
                 compose.waitForIdle()
                 compose.onNodeWithTag("bitwarden_account_device_owned-device").assertDoesNotExist()
                 assertEquals(listOf("/api/accounts/profile", "/api/devices", "/api/accounts/profile"), fixture.paths.toList())
-                val preserved = runBlocking { fixture.database.bitwardenVaultDao().getVaultById(fixture.vaultId) }
+                // Runtime revocation hides the UI first; wait for its durable half, not UI idleness.
+                val preserved = runBlocking { withTimeout(20_000) {
+                    fixture.database.bitwardenVaultDao().getVaultByIdFlow(fixture.vaultId).first {
+                        it?.isLocked == true && !it.isConnected && it.encryptedAccessToken == null &&
+                            it.encryptedRefreshToken == null && it.accessTokenExpiresAt == null
+                    }
+                } }
                 assertNotNull(preserved)
                 assertTrue(preserved!!.isLocked)
                 assertFalse(preserved.isConnected)
                 assertNull(preserved.encryptedAccessToken)
+                assertNull(preserved.encryptedRefreshToken)
+                assertNull(preserved.accessTokenExpiresAt)
                 screenshotIfRequested("account-reauthentication")
             } finally {
+                compose.runOnIdle { models.clear() }
+                runBlocking { fixture.close() }
+            }
+        }
+    }
+
+    @Test fun nativeDeviceListClearsOnLockAndReloadsAfterReturningToForeground() {
+        MockWebServer().use { server ->
+            val fixture = DeviceFixture(server)
+            try {
+                runBlocking { fixture.initialize() }
+                val viewModel = model()
+                show { BitwardenAccountScreen(viewModel, fixture.vaultId) {} }
+                waitForTag("bitwarden_account_device_owned-device")
+                compose.activityRule.scenario.moveToState(Lifecycle.State.CREATED)
+                compose.activityRule.scenario.moveToState(Lifecycle.State.RESUMED)
+                compose.waitUntil(20_000) { fixture.paths.count { it == "/api/devices" } == 2 }
+                waitForTag("bitwarden_account_device_owned-device")
+                runBlocking { fixture.repository.forceLock(fixture.vaultId) }
+                compose.waitUntil(20_000) {
+                    compose.onAllNodesWithTag("bitwarden_account_device_owned-device").fetchSemanticsNodes().isEmpty()
+                }
+                compose.onNodeWithText("Synthetic Android").assertDoesNotExist()
+            } finally {
+                compose.runOnIdle { models.clear() }
+                runBlocking { fixture.close() }
+            }
+        }
+    }
+
+    @Test fun lateAccountDeviceResponseCannotReappearAfterLock() {
+        MockWebServer().use { server ->
+            val fixture = DeviceFixture(server)
+            try {
+                runBlocking { fixture.initialize() }
+                fixture.deviceResponseGate = CountDownLatch(1)
+                val viewModel = model()
+                show { BitwardenAccountScreen(viewModel, fixture.vaultId) {} }
+                assertTrue(fixture.deviceResponseEntered.await(20, TimeUnit.SECONDS))
+                runBlocking { fixture.repository.forceLock(fixture.vaultId) }
+                fixture.deviceResponseGate!!.countDown()
+                compose.waitUntil(20_000) {
+                    compose.onAllNodesWithText(localized.getString(R.string.legacy_ui_vault_locked)).fetchSemanticsNodes().isNotEmpty()
+                }
+                compose.waitForIdle()
+                compose.onNodeWithText("Synthetic Android").assertDoesNotExist()
+                assertFalse(fixture.repository.isVaultUnlocked(fixture.vaultId))
+            } finally {
+                fixture.deviceResponseGate?.countDown()
                 compose.runOnIdle { models.clear() }
                 runBlocking { fixture.close() }
             }
@@ -221,13 +283,21 @@ class BitwardenAccountUiInstrumentedTest {
         private val key = SymmetricCryptoKey(ByteArray(32) { 7 }, ByteArray(32) { 11 })
         private val uuid = UUID.randomUUID().toString()
         private val email = "native-account-$uuid@example.invalid"
+        private val originallyUnlocked = SessionManager.isUnlocked.value
+        val deviceResponseEntered = CountDownLatch(1)
+        @Volatile var deviceResponseGate: CountDownLatch? = null
         var vaultId = 0L
 
         suspend fun initialize() {
+            SessionManager.markUnlocked()
             val endpoint = server.url("/").toString().trimEnd('/')
             vaultId = database.bitwardenVaultDao().insert(BitwardenVault(
                 email = email, canonicalEmail = email, userId = uuid, accountKey = "native-account-$uuid",
                 serverUrl = endpoint, identityUrl = "$endpoint/identity", apiUrl = "$endpoint/api/",
+                // Synthetic opaque persisted markers prove invalidation actually clears storage.
+                // HTTP uses the separate in-memory token and does not decrypt these fixture values.
+                encryptedAccessToken = "synthetic-encrypted-access-marker",
+                encryptedRefreshToken = "synthetic-encrypted-refresh-marker",
                 accessTokenExpiresAt = System.currentTimeMillis() + 3_600_000,
                 revisionDate = stamp.get(), isLocked = false, isConnected = true, syncEnabled = false,
             ))
@@ -242,7 +312,11 @@ class BitwardenAccountUiInstrumentedTest {
                     }
                     return when (path) {
                         "/api/accounts/profile" -> ok("{\"id\":\"$uuid\",\"email\":\"$email\",\"securityStamp\":\"${stamp.get()}\"}")
-                        "/api/devices" -> ok("{\"data\":[{\"id\":\"owned-device\",\"name\":\"Synthetic Android\",\"isTrusted\":true,\"encryptedUserKey\":\"never expose encrypted keys\"}]}")
+                        "/api/devices" -> {
+                            deviceResponseEntered.countDown()
+                            deviceResponseGate?.await(20, TimeUnit.SECONDS)
+                            ok("{\"data\":[{\"id\":\"owned-device\",\"name\":\"Synthetic Android\",\"isTrusted\":true,\"encryptedUserKey\":\"never expose encrypted keys\"}]}")
+                        }
                         else -> MockResponse().setResponseCode(404)
                     }
                 }
@@ -264,6 +338,7 @@ class BitwardenAccountUiInstrumentedTest {
                 }
             }
             key.clear()
+            if (!originallyUnlocked) SessionManager.markLocked()
         }
     }
 

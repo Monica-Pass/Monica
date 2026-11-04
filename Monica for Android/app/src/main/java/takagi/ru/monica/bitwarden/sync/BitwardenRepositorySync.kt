@@ -1,5 +1,8 @@
 package takagi.ru.monica.bitwarden.sync
 
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.currentCoroutineContext
+
 import takagi.ru.monica.R
 import takagi.ru.monica.utils.StringResolver
 import takagi.ru.monica.bitwarden.repository.BitwardenRepository
@@ -51,16 +54,22 @@ suspend fun BitwardenRepository.syncViaCoordinator(
     )
 
     @Suppress("DEPRECATION")
-    return awaitCoordinatedBitwardenSync(request, strings) { sync(vaultId) }
+    val notificationLease = currentCoroutineContext()[BitwardenNotificationSyncLease]
+    return awaitCoordinatedBitwardenSync(request, strings, cancelWhenWaiterCancelled = notificationLease != null) {
+        if (notificationLease != null && !notificationLease.isCurrent()) throw CancellationException("Notification request revoked")
+        sync(vaultId)
+    }
 }
 
 internal suspend fun awaitCoordinatedBitwardenSync(
     request: SyncRequest,
     strings: StringResolver,
+    cancelWhenWaiterCancelled: Boolean = false,
     sync: suspend () -> BitwardenRepository.SyncResult
 ): BitwardenCoordinatedSyncResult {
     return when (val result = SyncTaskRunner.requestAndAwait(
         request = request,
+        cancelWhenWaiterCancelled = cancelWhenWaiterCancelled,
         resultClassifier = { it.toCoordinatorExecutionResult(strings) },
         block = sync
     )) {

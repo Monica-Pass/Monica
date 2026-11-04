@@ -766,7 +766,7 @@ class DocumentViewModel internal constructor(
                 val replicaGroupId = existingItem?.replicaGroupId?.takeIf(String::isNotBlank)
                     ?: UUID.randomUUID().toString()
                 val existingReplicas = if (existingItem != null) {
-                    repository.getAllItems().first().filter {
+                    repository.getAllItemsIncludingArchived().first().filter {
                         it.itemType == ItemType.DOCUMENT && it.replicaGroupId == replicaGroupId &&
                             it.id != existingItem.id && !it.isDeleted
                     }.associateBy { it.toStorageTarget().stableKey }
@@ -1004,7 +1004,7 @@ class DocumentViewModel internal constructor(
         target: StorageTarget
     ): Boolean {
         if (replicaGroupId.isNullOrBlank()) return false
-        return repository.getAllItems().first()
+        return repository.getAllItemsIncludingArchived().first()
             .asSequence()
             .filter { candidate ->
                 candidate.itemType == itemType &&

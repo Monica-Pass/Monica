@@ -103,6 +103,9 @@ object BitwardenMutationStateHelper {
             existing.notes != candidate.notes ||
             existing.isFavorite != candidate.isFavorite ||
             existing.itemData != candidate.itemData ||
-            existing.imagePaths != candidate.imagePaths
+            existing.imagePaths != candidate.imagePaths ||
+            existing.isArchived != candidate.isArchived ||
+            existing.archivedAt != candidate.archivedAt ||
+            existing.bitwardenArchiveIntent != candidate.bitwardenArchiveIntent
     }
 }

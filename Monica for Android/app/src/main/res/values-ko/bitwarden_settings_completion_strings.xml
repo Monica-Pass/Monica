@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_settings_security">보안</string>
+    <string name="bitwarden_settings_queue_hint">동기화 대기 중인 변경 사항 및 동기화 문제 보기</string>
+    <string name="bitwarden_account_web_settings_hint">웹에서 마스터 비밀번호, 2단계 로그인 및 구독 관리</string>
+    <string name="bitwarden_settings_select_account">현재 계정으로 설정</string>
+    <string name="bitwarden_settings_account_management">계정 관리</string>
+    <string name="bitwarden_queue_help">동기화 대기 중인 로컬 변경 사항과 최근 동기화 결과를 표시합니다. 목록이 비어 있어도 서버와 동기화되었다는 뜻은 아닙니다.</string>
+    <string name="bitwarden_queue_empty_local">동기화 대기 중인 로컬 변경 사항이 없습니다.</string>
+    <string name="bitwarden_queue_locked">대기 중인 항목을 보려면 이 계정의 잠금을 해제하세요.</string>
+    <string name="bitwarden_queue_loading_error">대기 중인 항목을 읽지 못했습니다. 이 페이지를 다시 열어 재시도하세요.</string>
+    <string name="bitwarden_queue_awaiting_confirmation">서버 확인 대기 중</string>
+    <string name="bitwarden_queue_idle">실행 중인 동기화 작업 없음</string>
+</resources>

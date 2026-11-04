@@ -1238,7 +1238,7 @@ class TotpViewModel internal constructor(
                         ?: distinctTargets.first()
                     val replicaGroupId = existingItem?.replicaGroupId?.takeIf { it.isNotBlank() } ?: UUID.randomUUID().toString()
                     val existingReplicasByKey = if (existingItem != null) {
-                        repository.getAllItems().first()
+                        repository.getAllItemsIncludingArchived().first()
                             .asSequence()
                             .filter {
                                 it.itemType == ItemType.TOTP &&
@@ -1343,7 +1343,7 @@ class TotpViewModel internal constructor(
 
                         if (existingItem != null && distinctTargets.size == 1 &&
                             currentTarget.stableKey != existingItem.toStorageTarget().stableKey) {
-                            repository.getAllItems().first()
+                            repository.getAllItemsIncludingArchived().first()
                             .filter {
                                 it.itemType == ItemType.TOTP &&
                                     it.replicaGroupId == replicaGroupId &&

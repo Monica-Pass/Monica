@@ -121,6 +121,7 @@ fun OutlinedTextField(
             focusedIndicatorColor = androidx.compose.ui.graphics.Color.Transparent,
             unfocusedIndicatorColor = androidx.compose.ui.graphics.Color.Transparent,
             disabledIndicatorColor = androidx.compose.ui.graphics.Color.Transparent,
+            errorIndicatorColor = androidx.compose.ui.graphics.Color.Transparent,
         ),
     )
     } else {
@@ -218,6 +219,7 @@ fun OutlinedTextField(
             focusedIndicatorColor = androidx.compose.ui.graphics.Color.Transparent,
             unfocusedIndicatorColor = androidx.compose.ui.graphics.Color.Transparent,
             disabledIndicatorColor = androidx.compose.ui.graphics.Color.Transparent,
+            errorIndicatorColor = androidx.compose.ui.graphics.Color.Transparent,
         ),
     )
     } else {

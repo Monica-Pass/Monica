@@ -116,6 +116,7 @@ internal fun prepareVaultOverview(
     mdbxFolders: Map<Long, List<MdbxStoredFolderEntry>>,
     archivedPasswords: List<PasswordEntry>,
     keepassGroups: Map<Long, List<KeePassGroupInfo>> = emptyMap(),
+    archivedSecureItems: List<takagi.ru.monica.data.SecureItem> = emptyList(),
 ): VaultOverviewPreparedData {
     val availableSources = sources.filterNot { it.locked }.mapTo(hashSetOf()) { it.key }
     val sourceIndices = sources.withIndex().associate { it.value.key to it.index }
@@ -229,6 +230,10 @@ internal fun prepareVaultOverview(
     }
     val archiveCounts = IntArray(sources.size)
     archivedPasswords.forEach {
+        val source = vaultOverviewSourceKey(it.bitwardenVaultId, it.keepassDatabaseId, it.mdbxDatabaseId)
+        if (source in availableSources) sourceIndices[source]?.let { index -> archiveCounts[index]++ }
+    }
+    archivedSecureItems.forEach {
         val source = vaultOverviewSourceKey(it.bitwardenVaultId, it.keepassDatabaseId, it.mdbxDatabaseId)
         if (source in availableSources) sourceIndices[source]?.let { index -> archiveCounts[index]++ }
     }

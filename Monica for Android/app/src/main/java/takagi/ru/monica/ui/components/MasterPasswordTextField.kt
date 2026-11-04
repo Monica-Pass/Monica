@@ -40,7 +40,8 @@ fun MasterPasswordTextField(
     imeAction: ImeAction = ImeAction.Done,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     showVisibilityToggle: Boolean = true,
-    onUnsupportedCharacterAttempt: (() -> Unit)? = null
+    onUnsupportedCharacterAttempt: (() -> Unit)? = null,
+    saveTextState: Boolean = true
 ) {
     val fieldModifier = if (focusRequester != null) {
         modifier.focusRequester(focusRequester)
@@ -49,6 +50,7 @@ fun MasterPasswordTextField(
     }
 
     OutlinedTextField(
+        saveTextState = saveTextState,
         value = value,
         onValueChange = { raw ->
             val transformed = MasterPasswordPolicy.transformInput(raw)

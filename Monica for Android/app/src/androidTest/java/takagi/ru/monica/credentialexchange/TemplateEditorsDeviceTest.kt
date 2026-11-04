@@ -55,9 +55,14 @@ class TemplateEditorsDeviceTest {
     }
     @Test fun barcodeCreationRendersGroupedFieldsAndKeepsSaveReachable() {
         compose.setContent { MaterialTheme {
-            AddEditPasswordScreen(model, passwordId = null, initialLoginType = "barcode",
+            AddEditPasswordScreen(model, passwordId = null, initialStorageExplicit = true, initialLoginType = "barcode",
                 onNavigateBack = {}, onSwitchToWifi = {})
         } }
+        // The editor first loads its database metadata; wait for the real action, not just composition.
+        compose.waitUntil(20_000) {
+            runCatching { compose.onNodeWithTag("password_editor_save").isDisplayed() }.getOrDefault(false)
+        }
+        compose.onNodeWithTag("password_editor_save").assertIsDisplayed()
         compose.onNodeWithContentDescription(text(R.string.save)).assertIsDisplayed()
         capture("barcode.png")
     }

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="bw_send_auth_title">アクセス制御</string>
+    <string name="bw_send_auth_none">認証なし</string>
+    <string name="bw_send_auth_password">パスワード</string>
+    <string name="bw_send_auth_email">メール認証</string>
+    <string name="bw_send_auth_email_label">メールアドレス %1$d</string>
+    <string name="bw_send_auth_add_email">メールアドレスを追加</string>
+    <string name="bw_send_auth_remove_email">メールアドレスを削除</string>
+    <string name="bw_send_auth_recipients_notice">認証のため、受信者のメールアドレスがサーバーに送信されます。</string>
+    <string name="bw_send_auth_premium">メール認証には、このアカウントの Premium が必要です。</string>
+    <string name="bw_send_auth_unsupported">このサーバーはメール認証を受け付けませんでした。対応状況を確認して再試行してください。</string>
+    <string name="bw_send_auth_invalid">アクセス方法とメールアドレスを確認してください。</string>
+    <string name="bw_send_auth_unchanged">現在の認証方法を維持</string>
+    <string name="bw_send_auth_password_set">パスワード設定済み</string>
+    <string name="bw_send_drafts">Send の下書き</string>
+    <string name="bw_send_draft_save">下書きを保存</string>
+    <string name="bw_send_draft_saved">この端末に下書きを保存しました。</string>
+    <string name="bw_send_draft_local">この端末にのみ保存されます。再開後に手動で送信してください。</string>
+    <string name="bw_send_draft_resume">再開</string>
+    <string name="bw_send_draft_discard">下書きを破棄</string>
+    <string name="bw_send_draft_discard_confirm">この端末の下書きと保存済みファイルを破棄しますか？公開済みの Send は保持されます。</string>
+    <string name="bw_send_draft_failed">下書きを保存または読み込めませんでした。既存のコピーは保持されます。</string>
+    <string name="bw_send_draft_unavailable">一部の下書きを開けませんでした。この端末に保持されています。</string>
+    <string name="bw_send_draft_reconcile">前回の送信を確認</string>
+    <string name="bw_send_draft_uncertain">前回の送信はサーバーに届いている可能性があります。再送信の前に確認してください。</string>
+    <string name="bw_send_draft_not_found">前回の送信を確認できませんでした。この下書きを破棄する前に Send の一覧を確認してください。</string>
+    <string name="bw_send_cache_unavailable">一部のキャッシュ済みSendを開けませんでした。既存のデータは保持されます。</string>
+    <string name="bw_send_draft_empty">保存された下書きはありません</string>
+    <string name="bw_send_draft_missing_file">保存済みファイルが見つかりません。再選択してください。</string>
+    <string name="bw_send_logout_drafts">このアカウントのローカル Send 下書きと保存済みファイルも削除されます。再ログインしても下書きは復元できません。</string>
+</resources>

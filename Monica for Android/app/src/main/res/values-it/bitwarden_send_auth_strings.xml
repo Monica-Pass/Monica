@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="bw_send_auth_title">Controllo accessi</string>
+    <string name="bw_send_auth_none">Nessuna verifica</string>
+    <string name="bw_send_auth_password">Password</string>
+    <string name="bw_send_auth_email">Verifica tramite email</string>
+    <string name="bw_send_auth_email_label">Indirizzo email %1$d</string>
+    <string name="bw_send_auth_add_email">Aggiungi indirizzo email</string>
+    <string name="bw_send_auth_remove_email">Rimuovi indirizzo email</string>
+    <string name="bw_send_auth_recipients_notice">Gli indirizzi dei destinatari vengono inviati al server per la verifica.</string>
+    <string name="bw_send_auth_premium">La verifica tramite email richiede Premium per questo account.</string>
+    <string name="bw_send_auth_unsupported">Questo server non ha accettato la verifica tramite email. Controlla che sia supportata e riprova.</string>
+    <string name="bw_send_auth_invalid">Controlla il metodo di accesso e gli indirizzi email.</string>
+    <string name="bw_send_auth_unchanged">Mantieni la verifica attuale</string>
+    <string name="bw_send_auth_password_set">Password impostata</string>
+    <string name="bw_send_drafts">Bozze Send</string>
+    <string name="bw_send_draft_save">Salva bozza</string>
+    <string name="bw_send_draft_saved">Bozza salvata su questo dispositivo.</string>
+    <string name="bw_send_draft_local">Salvata solo su questo dispositivo. Riprendila per inviarla manualmente.</string>
+    <string name="bw_send_draft_resume">Riprendi</string>
+    <string name="bw_send_draft_discard">Elimina bozza</string>
+    <string name="bw_send_draft_discard_confirm">Eliminare questa bozza locale e il file salvato? I Send pubblicati verranno mantenuti.</string>
+    <string name="bw_send_draft_failed">Impossibile salvare o leggere questa bozza. La copia esistente viene mantenuta.</string>
+    <string name="bw_send_draft_unavailable">Impossibile aprire alcune bozze. Sono mantenute su questo dispositivo.</string>
+    <string name="bw_send_draft_reconcile">Controlla l’invio precedente</string>
+    <string name="bw_send_draft_uncertain">L’invio precedente potrebbe essere arrivato al server. Controllalo prima di inviare di nuovo.</string>
+    <string name="bw_send_draft_not_found">Impossibile confermare l’invio precedente. Controlla i tuoi Send prima di eliminare questa bozza.</string>
+    <string name="bw_send_cache_unavailable">Impossibile aprire alcuni Send nella cache. I dati esistenti vengono conservati.</string>
+    <string name="bw_send_draft_empty">Nessuna bozza salvata</string>
+    <string name="bw_send_draft_missing_file">Il file salvato non è presente. Selezionalo di nuovo.</string>
+    <string name="bw_send_logout_drafts">Verranno eliminati anche le bozze Send locali e i relativi file salvati. Un nuovo accesso non consente di ripristinare queste bozze.</string>
+</resources>

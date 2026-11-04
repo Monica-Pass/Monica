@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bw_json_title">JSON do Bitwarden</string>
+    <string name="bw_json_encrypted_title">JSON do Bitwarden criptografado com senha</string>
+    <string name="bw_json_description">JSON padrão ou criptografado com senha para logins, notas, cartões, identidades e chaves SSH.</string>
+    <string name="bw_json_boundary">Importação apenas para o cofre local. Exportação do cofre local ou de uma conta pessoal do Bitwarden. Não inclui arquivos anexos, Send nem o estado de arquivamento. O conteúdo incompatível bloqueia toda a transferência; revise todos os itens indicados.</string>
+    <string name="bw_json_import_hint">Escolha um arquivo JSON do Bitwarden padrão ou criptografado com senha.</string>
+    <string name="bw_json_file_password">Senha do arquivo</string>
+    <string name="bw_json_check">Verificar arquivo</string>
+    <string name="bw_json_review">Revisar importação JSON</string>
+    <string name="bw_json_counts">%1$d itens · %2$d pastas</string>
+    <string name="bw_json_blocked">Toda a transferência foi bloqueada. Resolva todos os itens abaixo antes de tentar novamente.</string>
+    <string name="bw_json_ready">O arquivo pode ser importado. Confirme para adicionar todos os itens ao cofre local.</string>
+    <string name="bw_json_export_success">Foram exportados %1$d itens e %2$d pastas. Não inclui arquivos anexos, Send nem o estado de arquivamento.</string>
+    <string name="bw_json_reason_invalid">Dados inválidos ou danificados</string>
+    <string name="bw_json_reason_unknown">Campo desconhecido; não é possível preservá-lo</string>
+    <string name="bw_json_reason_type">Tipo de item incompatível</string>
+    <string name="bw_json_reason_value">Não é possível preservar este valor por completo</string>
+    <string name="bw_json_reason_limit">Limite de arquivo ou de processamento excedido</string>
+    <string name="bw_json_reason_organization">O conteúdo de organizações e coleções não é compatível</string>
+    <string name="bw_json_reason_attachments">Os arquivos anexos exigem uma transferência separada</string>
+    <string name="bw_json_reason_archived">Este formato não preserva o estado de arquivamento</string>
+    <string name="bw_json_reason_destination">Esta origem ou destino não é compatível</string>
+    <string name="bw_json_reason_pending">Conclua as alterações pendentes antes de exportar a conta</string>
+    <string name="bw_json_reason_unavailable">Os dados de origem ou a chave necessários não estão disponíveis</string>
+    <string name="bw_json_item">Item %1$d</string>
+    <string name="bw_json_plain_warning">O JSON não criptografado contém senhas e chaves privadas legíveis. Salve o arquivo em um local seguro.</string>
+</resources>

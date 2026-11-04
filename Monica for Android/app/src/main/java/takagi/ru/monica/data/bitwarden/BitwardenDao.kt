@@ -273,6 +273,16 @@ interface BitwardenFolderDao {
 @Dao
 interface BitwardenSendDao {
 
+    @Query("SELECT COUNT(*) FROM bitwarden_sends WHERE vault_id = :vaultId")
+    suspend fun countByVault(vaultId: Long): Int
+
+    @Query("""
+        SELECT id, vault_id, bitwarden_send_id, created_at, updated_at, last_synced_at, is_dirty
+        FROM bitwarden_sends WHERE vault_id = :vaultId AND bitwarden_send_id = :sendId LIMIT 1
+    """)
+    suspend fun getIdentity(vaultId: Long, sendId: String): BitwardenSendIdentity?
+
+
     @Query("SELECT * FROM bitwarden_sends WHERE vault_id = :vaultId ORDER BY updated_at DESC")
     fun getSendsByVaultFlow(vaultId: Long): Flow<List<BitwardenSend>>
 
@@ -414,6 +424,65 @@ interface BitwardenConflictBackupDao {
  */
 @Dao
 interface BitwardenPendingOperationDao {
+    /** Account-scoped metadata only; active operations take precedence over dirty item rows. */
+    @Query("""
+        SELECT 'password:' || p.id AS queueKey,
+               COALESCE(p.bitwarden_cipher_id, 'local:password:' || p.id) AS itemId,
+               p.title AS title, 'CIPHER' AS kind,
+               CASE WHEN p.bitwarden_cipher_id IS NULL THEN 'CREATE' ELSE 'UPDATE' END AS operation,
+               'PENDING' AS status
+        FROM password_entries p
+        WHERE p.bitwarden_vault_id = :vaultId AND p.isDeleted = 0
+          AND (p.bitwarden_local_modified = 1 OR p.bitwarden_cipher_id IS NULL)
+          AND NOT EXISTS (SELECT 1 FROM bitwarden_pending_operations op
+              WHERE op.vault_id = :vaultId AND op.target_type = 'CIPHER' AND op.item_type = 'PASSWORD'
+                AND op.status IN ('PENDING', 'IN_PROGRESS', 'FAILED')
+                AND (op.entry_id = p.id OR op.bitwarden_cipher_id = p.bitwarden_cipher_id))
+        UNION ALL
+        SELECT 'secure:' || s.id, COALESCE(s.bitwarden_cipher_id, 'local:secure:' || s.id),
+               s.title, 'CIPHER',
+               CASE WHEN s.bitwarden_cipher_id IS NULL THEN 'CREATE' ELSE 'UPDATE' END, 'PENDING'
+        FROM secure_items s
+        WHERE s.bitwarden_vault_id = :vaultId AND s.isDeleted = 0
+          AND (s.bitwarden_local_modified = 1 OR s.bitwarden_cipher_id IS NULL)
+          AND NOT EXISTS (SELECT 1 FROM bitwarden_pending_operations op
+              WHERE op.vault_id = :vaultId AND op.target_type = 'CIPHER'
+                AND op.item_type IN ('TOTP', 'CARD', 'NOTE', 'DOCUMENT', 'BILLING_ADDRESS', 'PAYMENT_ACCOUNT')
+                AND op.status IN ('PENDING', 'IN_PROGRESS', 'FAILED')
+                AND (op.entry_id = s.id OR op.bitwarden_cipher_id = s.bitwarden_cipher_id))
+        UNION ALL
+        SELECT 'passkey:' || pk.id, COALESCE(pk.bitwarden_cipher_id, 'passkey:' || pk.id),
+               pk.rp_name, 'PASSKEY',
+               CASE WHEN pk.bitwarden_cipher_id IS NULL THEN 'CREATE' ELSE 'UPDATE' END,
+               CASE WHEN pk.sync_status = 'FAILED' THEN 'FAILED' ELSE 'PENDING' END
+        FROM passkeys pk
+        WHERE pk.bitwarden_vault_id = :vaultId AND pk.passkey_mode = 'BW_COMPAT'
+          AND pk.sync_status != 'REFERENCE'
+          AND (pk.bitwarden_cipher_id IS NULL OR (pk.sync_status IN ('PENDING', 'FAILED') AND pk.private_key_alias != ''))
+          AND NOT EXISTS (SELECT 1 FROM bitwarden_pending_operations op
+              WHERE op.vault_id = :vaultId AND op.item_type = 'PASSKEY'
+                AND op.status IN ('PENDING', 'IN_PROGRESS', 'FAILED')
+                AND (op.entry_id = pk.id OR op.bitwarden_cipher_id = pk.bitwarden_cipher_id))
+        UNION ALL
+        SELECT 'send:' || id, bitwarden_send_id, name, 'SEND', 'CONFIRM', 'PENDING'
+        FROM bitwarden_sends WHERE vault_id = :vaultId AND is_dirty = 1
+        UNION ALL
+        SELECT 'operation:' || op.id,
+               COALESCE(op.bitwarden_cipher_id, 'local:operation:' || op.id),
+               CASE WHEN op.item_type = 'PASSWORD' THEN p.title ELSE s.title END,
+               CASE WHEN op.item_type = 'PASSKEY' THEN 'PASSKEY' ELSE op.target_type END,
+               op.operation_type, op.status
+        FROM bitwarden_pending_operations op
+        LEFT JOIN password_entries p ON op.target_type = 'CIPHER' AND op.item_type = 'PASSWORD'
+             AND p.id = op.entry_id AND p.bitwarden_vault_id = op.vault_id
+        LEFT JOIN secure_items s ON op.target_type = 'CIPHER'
+             AND op.item_type IN ('TOTP', 'CARD', 'NOTE', 'DOCUMENT', 'BILLING_ADDRESS', 'PAYMENT_ACCOUNT')
+             AND s.id = op.entry_id AND s.bitwarden_vault_id = op.vault_id
+        WHERE op.vault_id = :vaultId AND op.status IN ('PENDING', 'IN_PROGRESS', 'FAILED')
+        ORDER BY queueKey
+    """)
+    fun observeQueueRecords(vaultId: Long): Flow<List<BitwardenSyncQueueRecord>>
+
     
     @Query("SELECT * FROM bitwarden_pending_operations WHERE status = 'PENDING' ORDER BY created_at ASC")
     fun getPendingOperationsFlow(): Flow<List<BitwardenPendingOperation>>

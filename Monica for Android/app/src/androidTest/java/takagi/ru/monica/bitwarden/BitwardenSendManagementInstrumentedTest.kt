@@ -17,6 +17,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.espresso.Espresso.onView
@@ -77,7 +83,8 @@ import takagi.ru.monica.utils.LocaleHelper
 /**
  * Real production Repository/Room and AddEditSendScreen, backed by synthetic local HTTP.
  * No real accounts, global settings, migrations, or other vault rows are changed.
- * Optional: -e sendManagementScreenshots true. Images remain in this UUID's external-files folder.
+ * Optional: -e sendManagementScreenshots true, -e sendLargeFont true, -e sendDark true.
+ * Images go to filesDir/editor-shapes-325; HTTP fixtures retain their prior external copy too.
  * Pending review/compilation/device execution; source alone does not establish a passing result.
  */
 @RunWith(AndroidJUnit4::class)
@@ -91,6 +98,17 @@ class BitwardenSendManagementInstrumentedTest {
         })
     }
     private val json = Json { ignoreUnknownKeys = true }
+    private val testFontScale get() = if (InstrumentationRegistry.getArguments().getString("sendLargeFont") == "true") 1.5f else 1f
+    private val testDark get() = InstrumentationRegistry.getArguments().getString("sendDark") == "true"
+    private fun editorConfiguration() = Configuration(localized.resources.configuration).apply { fontScale = testFontScale }
+
+    @org.junit.Before fun unlockSyntheticRuntime() {
+        val security = takagi.ru.monica.security.SecurityManager(context)
+        val password = InstrumentationRegistry.getArguments().getString("testMasterPassword") ?: "Synthetic Bitwarden settings fixture 325!"
+        if (!security.isMasterPasswordSet()) check(security.setMasterPassword(password))
+        if (!security.isVaultRuntimeUnlocked()) check(security.unlockVaultWithPassword(password))
+        takagi.ru.monica.security.SessionManager.markUnlocked()
+    }
 
     @Test fun textEditRoundTripsExactContentPasswordThreeStatesAndDatesThroughHttpAndRoom() = runBlocking {
         MockWebServer().use { server ->
@@ -132,6 +150,9 @@ class BitwardenSendManagementInstrumentedTest {
                 assertFalse(saved.hasPassword)
                 assertEquals(JsonNull, fixture.document(saved)["password"])
                 assertEquals(1, fixture.passwordRemovals.get())
+                assertEquals(JsonPrimitive(1), fixture.putBodies.last()["authType"])
+                assertEquals(JsonNull, fixture.putBodies.last()["password"])
+                assertEquals(JsonPrimitive(2), fixture.document(saved)["authType"])
                 assertEquals(3, fixture.putBodies.size)
                 assertOpaqueIdentity(originalDocument, fixture.document(saved))
                 fixture.assertNoUnexpectedRequests()
@@ -204,13 +225,34 @@ class BitwardenSendManagementInstrumentedTest {
                 val successVersion = mutableStateOf(0)
                 val outcome = AtomicReference<SendMutationResult?>()
                 val capturedDraft = AtomicReference<BitwardenSendDraft?>()
+                val navigationDiagnostic = AtomicReference("No navigation callback")
+                fun clickVisibleSwitch(target: SemanticsNodeInteraction, expectedOn: Boolean) {
+                    try {
+                        // Scroll-to can leave the right-hand switch beneath the fixed Save button.
+                        // Assert actual hit-target visibility before injecting a physical click.
+                        revealFully(target)
+                        assertNull("No save before the explicit Save action", outcome.get())
+                        target.performClick()
+                        assertNull("Toggling must not submit the editor", outcome.get())
+                        if (expectedOn) target.assertIsOn() else target.assertIsOff()
+                    } catch (failure: Throwable) {
+                        writeUiDiagnostic("send-switch-failure", buildString {
+                            appendLine("navigation=${navigationDiagnostic.get()}")
+                            appendLine("lifecycle=${compose.activity.lifecycle.currentState} unlocked=${takagi.ru.monica.security.SessionManager.isUnlocked.value} lock=${takagi.ru.monica.security.SessionManager.lockGeneration.value}")
+                            appendLine("editorPresent=${current.value != null} submitted=${outcome.get() != null} state=${state.value.javaClass.simpleName}")
+                            appendLine(runCatching { compose.onRoot().printToString() }.getOrElse { "Tree unavailable: $it" })
+                        })
+                        throw failure
+                    }
+                }
                 val english = localized
-                val configuration = Configuration(english.resources.configuration)
+                val configuration = editorConfiguration()
                 compose.setContent {
                     val scope = rememberCoroutineScope()
                     CompositionLocalProvider(LocalContext provides english, LocalConfiguration provides configuration,
+                        LocalDensity provides Density(compose.activity.resources.displayMetrics.density, configuration.fontScale),
                         LocalActivityResultRegistryOwner provides compose.activity) {
-                        MonicaTheme {
+                        MonicaTheme(darkTheme = testDark) {
                             Surface(Modifier.fillMaxSize()) {
                                 val editing = current.value
                                 if (editing == null) Text("Synthetic Send edit complete")
@@ -219,7 +261,10 @@ class BitwardenSendManagementInstrumentedTest {
                                         sendState = state.value, sendCreateSuccessVersion = successVersion.value,
                                         vaults = listOf(fixture.vault), activeVault = fixture.vault,
                                         unlockStateByVault = mapOf(fixture.vaultId to BitwardenViewModel.UnlockState.Unlocked),
-                                        existingSend = editing, onNavigateBack = { current.value = null },
+                                        existingSend = editing, onNavigateBack = {
+                                            navigationDiagnostic.set("lifecycle=${compose.activity.lifecycle.currentState} unlocked=${takagi.ru.monica.security.SessionManager.isUnlocked.value} lock=${takagi.ru.monica.security.SessionManager.lockGeneration.value} submitted=${outcome.get() != null} state=${state.value.javaClass.simpleName}")
+                                            current.value = null
+                                        },
                                         onCreate = { _, _, _, _, _, _, _, _, _ -> error("Unexpected create-text fallback") },
                                         onCreateFile = { _, _, _, _, _, _, _, _, _ -> error("Unexpected create-file fallback") },
                                         onSaveDraft = { vaultId, draft, uri, fileName ->
@@ -245,14 +290,14 @@ class BitwardenSendManagementInstrumentedTest {
                 field(R.string.title).performScrollTo().performTextReplacement("  Native edited text  ")
                 field(R.string.send_content_label).performScrollTo().performTextReplacement("  native text\n ")
                 field(R.string.notes_optional).performScrollTo().performTextReplacement(" native notes ")
-                toggle(R.string.send_remove_password).performScrollTo().performClick().assertIsOn()
-                compose.onNodeWithText(localized.getString(R.string.send_new_password)).assertIsNotEnabled()
-                toggle(R.string.enabled).performScrollTo().performClick().assertIsOff()
-                toggle(R.string.send_no_expiration).performScrollTo().performClick().assertIsOn()
-                compose.onNode(hasText("${english.getString(R.string.send_expiration_date)}:", substring = true)).assertDoesNotExist()
-                val deletionLabel = dateLabel(R.string.send_deletion_date, originalDeletion)
-                compose.onNodeWithText(deletionLabel).performScrollTo().assertIsDisplayed()
-                screenshotIfRequested(fixture, "text-options")
+                clickVisibleSwitch(compose.onNodeWithTag("send_auth_remove_password"), expectedOn = true)
+                compose.onNode(hasSetTextAction() and hasText(localized.getString(R.string.send_new_password))).assertDoesNotExist()
+                clickVisibleSwitch(toggle(R.string.enabled), expectedOn = false)
+                clickVisibleSwitch(toggle(R.string.send_no_expiration), expectedOn = true)
+                compose.onNode(hasClickAction() and hasText(english.getString(R.string.send_expiration_date))).assertDoesNotExist()
+                dateRow(R.string.send_deletion_date, originalDeletion).performScrollTo().assertIsDisplayed()
+                screenshotIfRequested(fixture, "text-options", dateRow(R.string.send_deletion_date, originalDeletion))
+                assertBottomActionsDoNotOverlap()
                 compose.onNodeWithContentDescription(english.getString(R.string.save)).performClick()
                 awaitSaved(outcome)
                 val textDraft = requireNotNull(capturedDraft.get())
@@ -273,25 +318,26 @@ class BitwardenSendManagementInstrumentedTest {
                 field(R.string.title).performScrollTo().performTextReplacement("Native edited file")
                 compose.onNode(hasSetTextAction() and hasText(english.getString(R.string.send_content_label))).assertDoesNotExist()
                 field(R.string.notes_optional).performScrollTo().performTextReplacement(" file UI note ")
-                field(R.string.send_new_password).performScrollTo().performTextInput(" native file password ")
-                toggle(R.string.enabled).performScrollTo().performClick().assertIsOff()
+                // Existing password stays protected until explicit removal. API replacement is exercised above.
+                compose.onNode(hasSetTextAction() and hasText(english.getString(R.string.send_new_password))).assertDoesNotExist()
+                clickVisibleSwitch(toggle(R.string.enabled), expectedOn = false)
                 // Exercise the production native DatePicker -> TimePicker, confirming an exact minute.
                 val newDeletion = ((System.currentTimeMillis() + 6 * 86_400_000L) / 60_000L) * 60_000L
-                selectNativeDateTime(R.string.send_deletion_date, newDeletion)
-                compose.onNodeWithText(dateLabel(R.string.send_deletion_date, newDeletion)).performScrollTo().assertIsDisplayed()
-                screenshotIfRequested(fixture, "file-options")
+                selectNativeDateTime(R.string.send_deletion_date, Instant.parse(seeded.second.deletionDate!!).toEpochMilli(), newDeletion)
+                dateRow(R.string.send_deletion_date, newDeletion).performScrollTo().assertIsDisplayed()
+                screenshotIfRequested(fixture, "file-options", dateRow(R.string.send_deletion_date, newDeletion))
+                assertBottomActionsDoNotOverlap()
                 compose.onNodeWithContentDescription(english.getString(R.string.save)).performClick()
                 awaitSaved(outcome)
                 val fileDraft = requireNotNull(capturedDraft.get())
                 assertEquals(newDeletion, fileDraft.deletionMillis)
-                assertEquals(SendPasswordAction.REPLACE, fileDraft.passwordAction)
-                assertEquals(" native file password ", fileDraft.password)
+                assertEquals(SendPasswordAction.KEEP, fileDraft.passwordAction)
+                assertNull(fileDraft.password)
                 val fileSaved = success(requireNotNull(outcome.get()))
                 runBlocking { fixture.assertStored(fileSaved, fileDraft, seeded.second) }
                 assertTrue(fileSaved.hasPassword)
                 assertArrayEquals(fixture.fileCiphertext, fixture.fetchStoredFileBytes())
                 fixture.assertNoUnexpectedRequests()
-                screenshotIfRequested(fixture, "completed")
             } finally {
                 compose.runOnIdle { compose.activity.setContentView(android.widget.FrameLayout(compose.activity)) }
                 runBlocking { fixture.close() }
@@ -299,17 +345,156 @@ class BitwardenSendManagementInstrumentedTest {
         }
     }
 
+    @Test fun nativeNewSendUsesSharedContentPickerAndSavesCompleteDraft() {
+        MockWebServer().use { server ->
+            val fixture = Fixture(server)
+            try {
+                runBlocking { fixture.initialize() }
+                val english = localized
+                val configuration = editorConfiguration()
+                val draft = AtomicReference<BitwardenSendDraft?>()
+                compose.setContent {
+                    CompositionLocalProvider(LocalContext provides english, LocalConfiguration provides configuration,
+                        androidx.compose.ui.platform.LocalDensity provides androidx.compose.ui.unit.Density(
+                            compose.activity.resources.displayMetrics.density, configuration.fontScale),
+                        LocalActivityResultRegistryOwner provides compose.activity) {
+                        MonicaTheme(darkTheme = testDark) {
+                            Surface(Modifier.fillMaxSize()) {
+                                AddEditSendScreen(sendState = BitwardenViewModel.SendState.Idle,
+                                    vaults = listOf(fixture.vault), activeVault = fixture.vault,
+                                    unlockStateByVault = mapOf(fixture.vaultId to BitwardenViewModel.UnlockState.Unlocked),
+                                    onNavigateBack = {},
+                                    onCreate = { _, _, _, _, _, _, _, _, _ -> error("Unexpected legacy create") },
+                                    onCreateFile = { _, _, _, _, _, _, _, _, _ -> error("Unexpected legacy file create") },
+                                    onSaveDraft = { id, value, uri, file ->
+                                        assertEquals(fixture.vaultId, id); assertNull(uri); assertNull(file); draft.set(value)
+                                    })
+                            }
+                        }
+                    }
+                }
+                compose.onNodeWithTag("send_editor_save").assertIsNotEnabled()
+                compose.onNodeWithTag("item_editor_section_notes").assertDoesNotExist()
+                compose.onNodeWithTag("item_editor_section_options").assertDoesNotExist()
+                compose.onNodeWithTag("item_editor_title").performScrollTo().performTextReplacement("New synthetic Send")
+                field(R.string.send_content_label).performScrollTo().performTextReplacement("  complete new content\n  ")
+                screenshotIfRequested(fixture, "new-send-fields", field(R.string.send_content_label))
+                compose.onNodeWithTag("item_editor_add_content").performScrollTo().performClick()
+                compose.onNodeWithTag("item_editor_choose_notes").performClick()
+                field(R.string.notes_optional).performScrollTo().performTextReplacement("  optional note  ")
+                compose.onNodeWithTag("item_editor_add_content").performScrollTo().performClick()
+                compose.onNodeWithTag("item_editor_choose_options").performClick()
+                field(R.string.send_max_access_count).performScrollTo().performTextReplacement("3")
+                toggle(R.string.send_no_expiration).performScrollTo().performClick().assertIsOn()
+                toggle(R.string.send_hide_email).performScrollTo().performClick().assertIsOn()
+                screenshotIfRequested(fixture, "new-send-options", toggle(R.string.send_hide_email))
+                assertBottomActionsDoNotOverlap()
+                screenshotIfRequested(fixture, "new-send-bottom", compose.onNodeWithTag("item_editor_add_content"))
+                compose.onNodeWithTag("send_editor_save").assertIsEnabled().performClick()
+                compose.waitUntil(5000) { draft.get() != null }
+                val actual = requireNotNull(draft.get())
+                assertEquals("New synthetic Send", actual.title)
+                assertEquals("  complete new content\n  ", actual.text)
+                assertEquals("  optional note  ", actual.notes)
+                assertEquals(3, actual.maxAccessCount); assertNull(actual.expirationMillis); assertTrue(actual.hideEmail)
+            } finally {
+                compose.runOnIdle { compose.activity.setContentView(android.widget.FrameLayout(compose.activity)) }
+                runBlocking { fixture.close() }
+            }
+        }
+    }
+
+    /** Actual production editor with in-memory display data only; no HTTP, Room or account mutation. */
+    @Test fun nativeAccountTypesAndBottomActionsRemainReadableAcrossUiSettings() {
+        val vault = BitwardenVault(id = Long.MAX_VALUE - 325, email = "sample@example.invalid",
+            serverUrl = "https://vault.example.invalid", isLocked = false, isConnected = true)
+        val displayName = mutableStateOf<String?>(null)
+        val english = localized
+        val configuration = editorConfiguration()
+        compose.setContent {
+            CompositionLocalProvider(LocalContext provides english, LocalConfiguration provides configuration,
+                LocalDensity provides Density(compose.activity.resources.displayMetrics.density, configuration.fontScale),
+                LocalActivityResultRegistryOwner provides compose.activity) {
+                MonicaTheme(darkTheme = testDark) {
+                    val shown = vault.copy(displayName = displayName.value)
+                    Surface(Modifier.fillMaxSize()) {
+                        AddEditSendScreen(sendState = BitwardenViewModel.SendState.Idle,
+                            vaults = listOf(shown), activeVault = shown,
+                            unlockStateByVault = mapOf(vault.id to BitwardenViewModel.UnlockState.Unlocked),
+                            initialTitle = "Synthetic Send", initialText = "Synthetic content",
+                            onNavigateBack = {},
+                            onCreate = { _, _, _, _, _, _, _, _, _ -> error("Visual test must not create a Send") },
+                            onCreateFile = { _, _, _, _, _, _, _, _, _ -> error("Visual test must not upload a file") },
+                            onSaveDraft = { _, _, _, _ -> error("Visual test must not save a draft") })
+                    }
+                }
+            }
+        }
+        val account = compose.onNodeWithTag("send_vault_${vault.id}")
+        revealFully(account)
+        account.assertIsSelected()
+        compose.onAllNodesWithText(vault.email, useUnmergedTree = true).assertCountEquals(1)
+        compose.onAllNodesWithText(vault.serverUrl, useUnmergedTree = true).assertCountEquals(1)
+        assertTextFits(hasText(vault.email))
+        assertTextFits(hasText(vault.serverUrl))
+        screenshotIfRequested(null, "account", account)
+
+        // A configured name replaces the heading, while the email still appears exactly once.
+        compose.runOnIdle { displayName.value = "Synthetic team" }
+        compose.waitForIdle()
+        compose.onAllNodesWithText("Synthetic team", useUnmergedTree = true).assertCountEquals(1)
+        compose.onAllNodesWithText(vault.email, useUnmergedTree = true).assertCountEquals(1)
+        compose.onAllNodesWithText(vault.serverUrl, useUnmergedTree = true).assertCountEquals(1)
+        assertTextFits(hasText("Synthetic team"))
+        assertTextFits(hasText(vault.email))
+        assertTextFits(hasText(vault.serverUrl))
+
+        val textChip = compose.onNode(hasClickAction() and hasText(english.getString(R.string.send_type_text)))
+        val fileChip = compose.onNode(hasClickAction() and hasText(english.getString(R.string.send_type_file)))
+        revealFully(textChip)
+        textChip.assertIsSelected()
+        fileChip.assertIsNotSelected().assertIsEnabled()
+        assertFullyVisible(fileChip)
+        assertTextFits(hasText(english.getString(R.string.send_type_text)))
+        assertTextFits(hasText(english.getString(R.string.send_type_file)))
+        screenshotIfRequested(null, "types", textChip)
+        assertFullyVisible(fileChip)
+        assertBottomActionsDoNotOverlap()
+        screenshotIfRequested(null, "bottom", compose.onNodeWithTag("item_editor_add_content"))
+    }
+
     private fun field(label: Int) = compose.onNode(hasSetTextAction() and hasText(localized.getString(label)))
     private fun toggle(label: Int) = compose.onNode(
         isToggleable() and hasContentDescription(localized.getString(label)), useUnmergedTree = true)
+        .assert(SemanticsMatcher.expectValue(SemanticsProperties.Role, Role.Switch))
 
-    private fun dateLabel(label: Int, millis: Long) = "${localized.getString(label)}: " +
+    private fun dateValue(millis: Long) =
         java.text.DateFormat.getDateTimeInstance(java.text.DateFormat.MEDIUM, java.text.DateFormat.SHORT)
             .format(java.util.Date(millis))
 
-    private fun selectNativeDateTime(label: Int, millis: Long) {
+    private fun dateRow(label: Int, millis: Long): SemanticsNodeInteraction {
+        val target = compose.onNode(hasClickAction() and hasText(localized.getString(label)) and hasText(dateValue(millis)))
+        try {
+            target.fetchSemanticsNode()
+        } catch (failure: Throwable) {
+            val detail = buildString {
+                appendLine("Synthetic Send fixture date lookup failed: label=${localized.getString(label)} millis=$millis formatted=${dateValue(millis)}")
+                appendLine("locale=${java.util.Locale.getDefault()} timezone=${ZoneId.systemDefault()} localizedLocales=${localized.resources.configuration.locales}")
+                appendLine("fontScale=$testFontScale dark=$testDark cause=$failure")
+                appendLine("Merged tree:")
+                appendLine(runCatching { compose.onRoot().printToString() }.getOrElse { "Unavailable: $it" })
+                appendLine("Unmerged tree:")
+                appendLine(runCatching { compose.onRoot(useUnmergedTree = true).printToString() }.getOrElse { "Unavailable: $it" })
+            }
+            writeUiDiagnostic("send-date-lookup", detail)
+            throw failure
+        }
+        return target
+    }
+
+    private fun selectNativeDateTime(label: Int, currentMillis: Long, millis: Long) {
         val selected = Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault())
-        compose.onNode(hasText("${localized.getString(label)}:", substring = true)).performScrollTo().performClick()
+        dateRow(label, currentMillis).performScrollTo().performClick()
         onView(isAssignableFrom(DatePicker::class.java)).perform(object : ViewAction {
             override fun getConstraints(): Matcher<View> = isAssignableFrom(DatePicker::class.java)
             override fun getDescription() = "Select the synthetic Send deletion date in the native DatePicker"
@@ -340,13 +525,125 @@ class BitwardenSendManagementInstrumentedTest {
         compose.waitForIdle()
     }
 
-    private fun screenshotIfRequested(fixture: Fixture, name: String) {
-        if (InstrumentationRegistry.getArguments().getString("sendManagementScreenshots") != "true") return
+    private fun scrollContainer() = compose.onNode(hasScrollAction() and
+        hasAnyDescendant(hasTestTag("item_editor_add_content")))
+
+    private fun assertFullyVisible(target: SemanticsNodeInteraction) {
+        target.assertIsDisplayed()
+        val node = target.fetchSemanticsNode()
+        assertEquals("Full target height must remain visible", node.size.height.toFloat(), node.boundsInRoot.height, 1f)
+        assertEquals("Full target width must remain visible", node.size.width.toFloat(), node.boundsInRoot.width, 1f)
+    }
+
+    private fun overlaps(first: SemanticsNodeInteraction, second: SemanticsNodeInteraction): Boolean {
+        val a = first.fetchSemanticsNode().boundsInRoot
+        val b = second.fetchSemanticsNode().boundsInRoot
+        return minOf(a.right, b.right) > maxOf(a.left, b.left) && minOf(a.bottom, b.bottom) > maxOf(a.top, b.top)
+    }
+
+    private fun revealFully(target: SemanticsNodeInteraction) {
+        androidx.test.espresso.Espresso.closeSoftKeyboard()
         compose.waitForIdle()
+        target.performScrollTo()
+        compose.waitForIdle()
+        val save = compose.onNodeWithTag("send_editor_save")
+        if (overlaps(target, save)) {
+            val delta = target.fetchSemanticsNode().boundsInRoot.bottom - save.fetchSemanticsNode().boundsInRoot.top + 16f
+            scrollContainer().performSemanticsAction(SemanticsActions.ScrollBy) { it(0f, delta) }
+            compose.waitForIdle()
+        }
+        assertFullyVisible(target)
+        assertFalse("Screenshot target must not be obscured by Save", overlaps(target, save))
+    }
+
+    private fun assertBottomActionsDoNotOverlap() {
+        androidx.test.espresso.Espresso.closeSoftKeyboard()
+        compose.waitForIdle()
+        val scroll = scrollContainer()
+        scroll.performSemanticsAction(SemanticsActions.ScrollBy) { it(0f, 100_000f) }
+        compose.waitForIdle()
+        compose.waitUntil(5000) {
+            val current = scroll.fetchSemanticsNode().config[SemanticsProperties.VerticalScrollAxisRange]
+            kotlin.math.abs(current.maxValue() - current.value()) <= 1f
+        }
+        val range = scroll.fetchSemanticsNode().config[SemanticsProperties.VerticalScrollAxisRange]
+        assertEquals("Check the actual end of the scrollable editor", range.maxValue(), range.value(), 1f)
+        val add = compose.onNodeWithTag("item_editor_add_content")
+        val save = compose.onNodeWithTag("send_editor_save")
+        assertFullyVisible(add)
+        assertFullyVisible(save)
+        assertFalse("Add content and Save must not overlap at the end of the editor", overlaps(add, save))
+    }
+
+    private fun assertTextFits(matcher: SemanticsMatcher) {
+        val text = compose.onAllNodes(matcher and SemanticsMatcher.keyIsDefined(SemanticsActions.GetTextLayoutResult),
+            useUnmergedTree = true)
+        val count = text.fetchSemanticsNodes().size
+        assertTrue("Expected real text layout for $matcher", count > 0)
+        repeat(count) { index ->
+            val layouts = mutableListOf<TextLayoutResult>()
+            text[index].performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(layouts) }
+            val node = text[index].fetchSemanticsNode()
+            writeUiDiagnostic("send-text-layout", buildString {
+                appendLine("matcher=$matcher index=$index nodeSize=${node.size} bounds=${node.boundsInRoot} window=${node.boundsInWindow}")
+                layouts.forEach { layout ->
+                    val input = layout.layoutInput
+                    appendLine("text=${input.text.text} fontSize=${input.style.fontSize} lineHeight=${input.style.lineHeight} density=${input.density.density} fontScale=${input.density.fontScale}")
+                    appendLine("constraints=${input.constraints} size=${layout.size} paragraph=${layout.multiParagraph.width}x${layout.multiParagraph.height}")
+                    appendLine("widthOverflow=${layout.didOverflowWidth} heightOverflow=${layout.didOverflowHeight} maxLinesExceeded=${layout.multiParagraph.didExceedMaxLines} maxLines=${input.maxLines} overflow=${input.overflow}")
+                    repeat(layout.lineCount) { line ->
+                        appendLine("line=$line top=${layout.getLineTop(line)} bottom=${layout.getLineBottom(line)} baseline=${layout.getLineBaseline(line)} left=${layout.getLineLeft(line)} right=${layout.getLineRight(line)} end=${layout.getLineEnd(line)} visibleEnd=${layout.getLineEnd(line, visibleEnd = true)} ellipsized=${layout.isLineEllipsized(line)}")
+                    }
+                }
+            })
+            assertTrue(layouts.isNotEmpty())
+            layouts.forEach { assertActualTextFits(it, matcher.toString()) }
+            assertTrue("Editor must retain system font scale", layouts.all { it.layoutInput.density.fontScale == testFontScale })
+            assertEquals("Text height must remain fully visible", node.size.height.toFloat(), node.boundsInRoot.height, 1f)
+            assertEquals("Text width must remain fully visible", node.size.width.toFloat(), node.boundsInRoot.width, 1f)
+        }
+    }
+
+    private fun assertActualTextFits(layout: TextLayoutResult, label: String) {
+        val value = layout.layoutInput.text.text
+        assertTrue("$label must contain measured text", value.isNotEmpty() && layout.lineCount > 0)
+        assertFalse("$label must not drop lines", layout.multiParagraph.didExceedMaxLines)
+        // Compare rendered line/character extents, not an unused parent paragraph constraint.
+        fun inside(left: Float, top: Float, right: Float, bottom: Float, part: String) {
+            assertTrue("$label $part [$left,$top,$right,$bottom] exceeds ${layout.size}",
+                left >= -1f && top >= -1f && right <= layout.size.width + 1f && bottom <= layout.size.height + 1f)
+        }
+        repeat(layout.lineCount) { line ->
+            assertFalse("$label line $line must not ellipsize", layout.isLineEllipsized(line))
+            inside(layout.getLineLeft(line), layout.getLineTop(line), layout.getLineRight(line),
+                layout.getLineBottom(line), "line $line")
+        }
+        value.indices.filter { !value[it].isWhitespace() }.forEach { offset ->
+            val box = layout.getBoundingBox(offset)
+            inside(box.left, box.top, box.right, box.bottom, "character $offset")
+        }
+    }
+
+    private fun writeUiDiagnostic(name: String, detail: String) {
+        android.util.Log.i("SendEditorLayout", detail)
+        val directory = File(context.filesDir, "editor-shapes-325").apply { check(isDirectory || mkdirs()) }
+        File(directory, "$name.txt").appendText("time=${System.currentTimeMillis()}\n$detail\n")
+    }
+
+    private fun screenshotIfRequested(fixture: Fixture?, name: String, target: SemanticsNodeInteraction) {
+        // Visibility assertions run even when image capture is disabled.
+        revealFully(target)
+        if (InstrumentationRegistry.getArguments().getString("sendManagementScreenshots") != "true") return
         val bitmap = requireNotNull(instrumentation.uiAutomation.takeScreenshot())
-        val folder = File(context.getExternalFilesDir(null), "send-management-${fixture.uuid}").apply { mkdirs() }
-        try { File(folder, "$name.png").outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) } }
-        finally { bitmap.recycle() }
+        val folder = File(context.filesDir, "editor-shapes-325").apply { check(isDirectory || mkdirs()) }
+        val suffix = "${if (testDark) "dark" else "light"}-${if (testFontScale > 1f) "large" else "normal"}"
+        try {
+            File(folder, "send-$name-$suffix.png").outputStream().use { check(bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)) }
+            if (fixture != null) {
+                val previous = File(context.getExternalFilesDir(null), "send-management-${fixture.uuid}").apply { check(isDirectory || mkdirs()) }
+                File(previous, "$name.png").outputStream().use { check(bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)) }
+            }
+        } finally { bitmap.recycle() }
     }
 
     private fun success(result: SendMutationResult): BitwardenSend {
@@ -368,6 +665,7 @@ class BitwardenSendManagementInstrumentedTest {
         private val token = "synthetic-send-token-$uuid"
         val repository = BitwardenRepository.getInstance(context)
         val database = PasswordDatabase.getDatabase(context)
+        private val sendCache = takagi.ru.monica.bitwarden.service.BitwardenSendCache(context)
         val material = ByteArray(16) { (it + 21).toByte() }
         private val vaultKey = SymmetricCryptoKey(ByteArray(32) { 7 }, ByteArray(32) { 11 })
         private val sendKey = BitwardenCrypto.deriveSendKey(material)
@@ -467,8 +765,8 @@ class BitwardenSendManagementInstrumentedTest {
                 })
             }
             val entity = map(requireNotNull(documents[sendId]))
-            database.bitwardenSendDao().upsert(entity)
-            return requireNotNull(database.bitwardenSendDao().getBySendId(vaultId, sendId))
+            sendCache.upsert(entity)
+            return requireNotNull(sendCache.getBySendId(vaultId, sendId))
         }
 
         fun document(send: BitwardenSend) = requireNotNull(documents[send.bitwardenSendId])
@@ -476,11 +774,11 @@ class BitwardenSendManagementInstrumentedTest {
             maxAccessCount = send.maxAccessCount, hideEmail = send.hideEmail, hiddenText = send.isTextHidden,
             disabled = send.disabled, deletionMillis = Instant.parse(send.deletionDate!!).toEpochMilli(),
             expirationMillis = send.expirationDate?.let { Instant.parse(it).toEpochMilli() })
-        suspend fun row(send: BitwardenSend) = requireNotNull(database.bitwardenSendDao().getBySendId(vaultId, send.bitwardenSendId))
+        suspend fun row(send: BitwardenSend) = requireNotNull(sendCache.getBySendId(vaultId, send.bitwardenSendId))
         private fun map(document: JsonObject) = requireNotNull(BitwardenSendMapper.mapApiToEntity(vaultId,
             vault.serverUrl, json.decodeFromString<SendApiResponse>(document.toString()), vaultKey))
         suspend fun reloadLocal(send: BitwardenSend): BitwardenSend {
-            database.bitwardenSendDao().upsert(map(document(send)).copy(id = send.id, createdAt = send.createdAt))
+            sendCache.upsert(map(document(send)).copy(id = send.id, createdAt = send.createdAt))
             return row(send)
         }
         fun changeRevision(send: BitwardenSend) = changeRevisionDocument(send.bitwardenSendId)
@@ -491,6 +789,10 @@ class BitwardenSendManagementInstrumentedTest {
 
         suspend fun assertStored(saved: BitwardenSend, draft: BitwardenSendDraft, original: BitwardenSend) {
             val stored = row(saved)
+            val raw = requireNotNull(database.bitwardenSendDao().getBySendId(vaultId, saved.bitwardenSendId))
+            assertEquals(1, raw.cacheVersion); assertTrue(raw.encryptedCache!!.startsWith("MDK|"))
+            assertEquals("", raw.name); assertEquals("", raw.notes); assertNull(raw.textContent)
+            assertNull(raw.fileName); assertNull(raw.keyBase64); assertEquals("", raw.shareUrl); assertEquals("", raw.accessId)
             assertEquals(saved, stored)
             assertEquals(original.id, stored.id); assertEquals(original.createdAt, stored.createdAt)
             assertEquals(original.accessId, stored.accessId); assertEquals(original.keyBase64, stored.keyBase64)

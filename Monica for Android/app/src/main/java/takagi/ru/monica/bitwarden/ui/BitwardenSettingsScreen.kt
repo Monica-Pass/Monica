@@ -3,8 +3,6 @@ package takagi.ru.monica.bitwarden.ui
 import androidx.compose.ui.res.stringResource
 import takagi.ru.monica.R
 import android.widget.Toast
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,14 +13,16 @@ import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.platform.testTag
+import androidx.compose.animation.animateContentSize
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.bitwarden.sync.VaultSyncStatus
 import takagi.ru.monica.bitwarden.viewmodel.BitwardenViewModel
@@ -53,15 +53,15 @@ fun BitwardenSettingsScreen(
 ) {
     val vaults by viewModel.vaults.collectAsState()
     val activeVault by viewModel.activeVault.collectAsState()
-    val unlockState by viewModel.unlockState.collectAsState()
     val unlockStateByVault by viewModel.unlockStateByVault.collectAsState()
     val syncStatusByVault by viewModel.syncStatusByVault.collectAsState()
     val syncState by viewModel.syncState.collectAsState()
+    val issueReports by viewModel.syncIssueReports.collectAsState()
+    var issueVaultId by remember { mutableStateOf<Long?>(null) }
     val isNeverLockEnabled by viewModel.isNeverLockEnabledFlow.collectAsState()
     val isAutoSyncEnabled by viewModel.isAutoSyncEnabledFlow.collectAsState()
     val isSyncOnWifiOnly by viewModel.isSyncOnWifiOnlyFlow.collectAsState()
-    val pendingCount by viewModel.pendingSyncCount.collectAsState()
-    val failedCount by viewModel.failedSyncCount.collectAsState()
+    val queueSummary by viewModel.syncQueueSummary.collectAsState()
     val context = LocalContext.current
     val hasUnlockedVault = vaults.any { vault ->
         (unlockStateByVault[vault.id] ?: BitwardenViewModel.UnlockState.Locked) ==
@@ -76,7 +76,20 @@ fun BitwardenSettingsScreen(
     var showUnlockDialog by remember { mutableStateOf(false) }
     var vaultToUnlock by remember { mutableStateOf<BitwardenVault?>(null) }
     var showNeverLockUnlockDialog by remember { mutableStateOf(false) }
-    var pendingEnableNeverLock by remember { mutableStateOf(false) }
+    var neverLockRequest by remember { mutableStateOf<Pair<Long, String>?>(null) }
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    DisposableEffect(lifecycle, activeVault?.id, activeVault?.accountKey, activeVault?.email, activeVault?.serverUrl, activeVault?.userId) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_STOP) {
+                neverLockRequest = null
+                showNeverLockUnlockDialog = false
+                showUnlockDialog = false
+                vaultToUnlock = null
+            }
+        }
+        lifecycle.addObserver(observer)
+        onDispose { lifecycle.removeObserver(observer); neverLockRequest = null; showNeverLockUnlockDialog = false }
+    }
     
     // 监听事件
     LaunchedEffect(Unit) {
@@ -96,23 +109,13 @@ fun BitwardenSettingsScreen(
         }
     }
 
-    LaunchedEffect(unlockState, showNeverLockUnlockDialog) {
-        if (pendingEnableNeverLock && unlockState == BitwardenViewModel.UnlockState.Unlocked) {
-            viewModel.isNeverLockEnabled = true
-            pendingEnableNeverLock = false
-        }
-
-        if (pendingEnableNeverLock && !showNeverLockUnlockDialog &&
-            unlockState == BitwardenViewModel.UnlockState.Locked
-        ) {
-            pendingEnableNeverLock = false
-        }
-    }
-    
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.legacy_ui_bitwarden_settings)) },
+                expandedHeight = if (LocalDensity.current.fontScale > 1.2f) {
+                    with(LocalDensity.current) { MaterialTheme.typography.titleLarge.lineHeight.toDp() * 2 + 16.dp }
+                } else 64.dp,
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.back))
@@ -139,31 +142,23 @@ fun BitwardenSettingsScreen(
                             }
                         }
                     }
+                    IconButton(onClick = onNavigateToLogin) {
+                        Icon(Icons.Default.Add, contentDescription = stringResource(R.string.legacy_ui_add_vault))
+                    }
                 }
             )
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = onNavigateToLogin
-            ) {
-                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.legacy_ui_add_vault))
-            }
         }
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             // 已连接的 Vault
             item {
-                Text(
-                    text = stringResource(R.string.legacy_ui_connected_vaults),
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
+                BitwardenSectionTitle(stringResource(R.string.legacy_ui_connected_vaults))
             }
             
             if (vaults.isEmpty()) {
@@ -179,6 +174,9 @@ fun BitwardenSettingsScreen(
                             BitwardenViewModel.UnlockState.Locked
                         }
                     val vaultSyncStatus = syncStatusByVault[vault.id]
+                    val issueReport = issueReports[vault.id]
+                    val hasIssues = vaultUnlockState == BitwardenViewModel.UnlockState.Unlocked && issueReport != null &&
+                        (issueReport.items.isNotEmpty() || issueReport.accountFailure != null)
                     VaultCard(
                         vault = vault,
                         isActive = vault.id == activeVault?.id,
@@ -197,32 +195,33 @@ fun BitwardenSettingsScreen(
                         onLogout = {
                             vaultToLogout = vault
                             showLogoutConfirmDialog = true
-                        }
+                        },
+                        onAccount = { onNavigateToAccount(vault.id) },
+                        issueCount = if (hasIssues) issueReport?.items?.size else null,
+                        onIssues = { issueVaultId = vault.id }
                     )
-                    TextButton(onClick = { onNavigateToAccount(vault.id) }, modifier = Modifier.fillMaxWidth()) {
-                        Text(stringResource(R.string.bitwarden_account_security))
-                    }
+
                 }
             }
             
             // 同步设置
             item {
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = stringResource(R.string.legacy_ui_sync_settings),
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
+                BitwardenSectionTitle(stringResource(R.string.legacy_ui_sync_settings))
             }
             
             item {
                 SyncSettingsCard(
+                    pendingCount = queueSummary.pending,
+                    failedCount = queueSummary.failed,
+                    onOpenSyncQueue = onNavigateToSyncQueue,
                     isAutoSyncEnabled = isAutoSyncEnabled,
                     onAutoSyncChanged = { viewModel.isAutoSyncEnabled = it },
                     isSyncOnWifiOnly = isSyncOnWifiOnly,
                     onSyncOnWifiOnlyChanged = { viewModel.isSyncOnWifiOnly = it },
+                    canEnableNeverLock = activeVault != null,
                     isNeverLockEnabled = isNeverLockEnabled,
                     onNeverLockChanged = { enabled ->
+                        neverLockRequest = null
                         if (!enabled) {
                             viewModel.isNeverLockEnabled = false
                             return@SyncSettingsCard
@@ -233,34 +232,19 @@ fun BitwardenSettingsScreen(
                             return@SyncSettingsCard
                         }
 
-                        if (unlockState == BitwardenViewModel.UnlockState.Unlocked) {
+                        if (viewModel.isVaultUnlocked(vault.id)) {
                             viewModel.isNeverLockEnabled = true
                         } else {
-                            pendingEnableNeverLock = true
+                            neverLockRequest = vault.id to UUID.randomUUID().toString()
                             showNeverLockUnlockDialog = true
                         }
                     }
                 )
             }
             
-            // 同步队列 (仅在有任务或失败时显示)
-            if (pendingCount > 0 || failedCount > 0) {
-                item {
-                    SyncQueueEntryCard(
-                        pendingCount = pendingCount,
-                        failedCount = failedCount
-                    )
-                }
-            }
-            
             // 关于
             item {
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = stringResource(R.string.about),
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
+                BitwardenSectionTitle(stringResource(R.string.about))
             }
             
             item {
@@ -269,7 +253,7 @@ fun BitwardenSettingsScreen(
             
             // 底部间距
             item {
-                Spacer(modifier = Modifier.height(80.dp))
+                Spacer(modifier = Modifier.height(24.dp))
             }
         }
     }
@@ -294,7 +278,7 @@ fun BitwardenSettingsScreen(
                     Text(stringResource(R.string.legacy_ui_logout_account, vaultToLogout!!.email))
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = stringResource(R.string.legacy_ui_bitwarden_logout_hint),
+                        text = stringResource(R.string.legacy_ui_bitwarden_logout_hint) + "\n\n" + stringResource(R.string.bw_send_logout_drafts),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -327,6 +311,15 @@ fun BitwardenSettingsScreen(
         )
     }
     
+    val issueVault = vaults.firstOrNull { it.id == issueVaultId }
+    val visibleReport = issueVaultId?.let { issueReports[it] }
+    if (issueVault != null && visibleReport != null && viewModel.isVaultUnlocked(issueVault.id)) {
+        BitwardenSyncIssuesSheet(account = issueVault.displayName ?: issueVault.email, report = visibleReport,
+            onDismiss = { issueVaultId = null }, onRetry = { viewModel.requestManualSync(issueVault.id) })
+    } else if (issueVaultId != null) {
+        LaunchedEffect(issueVaultId, visibleReport) { issueVaultId = null }
+    }
+
     // 解锁对话框
     if (showUnlockDialog && vaultToUnlock != null) {
         UnlockVaultDialog(
@@ -344,18 +337,27 @@ fun BitwardenSettingsScreen(
     }
 
     if (showNeverLockUnlockDialog) {
-        val vault = activeVault
-        UnlockVaultDialog(
-            email = vault?.email ?: "",
-            onUnlock = { password ->
-                vault?.let { viewModel.unlock(it.id, password) }
-                showNeverLockUnlockDialog = false
-            },
-            onDismiss = {
-                showNeverLockUnlockDialog = false
-                pendingEnableNeverLock = false
-            }
-        )
+        val request = neverLockRequest
+        val vault = vaults.firstOrNull { it.id == request?.first }
+        if (vault != null && request != null) {
+            UnlockVaultDialog(
+                email = vault.email,
+                onUnlock = { password ->
+                    showNeverLockUnlockDialog = false
+                    viewModel.unlock(vault.id, password) { success ->
+                        if (neverLockRequest == request) {
+                            val current = viewModel.activeVault.value
+                            if (success && current != null && current.id == request.first && current.accountKey == vault.accountKey &&
+                                current.email == vault.email && current.serverUrl == vault.serverUrl && current.userId == vault.userId &&
+                                lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED) &&
+                                viewModel.isVaultUnlocked(request.first)) viewModel.isNeverLockEnabled = true
+                            neverLockRequest = null
+                        }
+                    }
+                },
+                onDismiss = { showNeverLockUnlockDialog = false; neverLockRequest = null }
+            )
+        }
     }
 }
 
@@ -372,211 +374,58 @@ fun VaultCard(
     onLock: () -> Unit,
     onUnlock: () -> Unit,
     onSync: () -> Unit,
-    onLogout: () -> Unit
+    onLogout: () -> Unit,
+    onAccount: () -> Unit = {},
+    issueCount: Int? = null,
+    onIssues: () -> Unit = {}
 ) {
-    val context = LocalContext.current
-    var expanded by remember { mutableStateOf(false) }
-    val rotationAngle by animateFloatAsState(
-        targetValue = if (expanded) 180f else 0f,
-        label = "expand_rotation"
-    )
+    var expanded by remember(vault.id) { mutableStateOf(false) }
     val isUnlocked = unlockState == BitwardenViewModel.UnlockState.Unlocked
     val isUnlocking = unlockState == BitwardenViewModel.UnlockState.Unlocking
     val isSyncing = syncStatus?.isRunning == true
-    val lastSyncTime = vault.lastSyncAt ?: syncStatus?.lastSuccessAt ?: 0L
-    val secondaryStatus = when {
+    val lastSyncTime = maxOf(vault.lastSyncAt ?: 0L, syncStatus?.lastSuccessAt ?: 0L)
+    val status = when {
         isSyncing -> stringResource(R.string.legacy_ui_syncing)
         syncStatus?.queuedReason != null -> stringResource(R.string.sync_status_pending_short)
         syncStatus?.blockedReason != null -> formatSyncBlockReason(syncStatus.blockedReason)
+        lastSyncTime > 0 -> stringResource(R.string.legacy_ui_last_sync, formatTime(lastSyncTime))
         else -> null
     }
-    
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = if (isActive) {
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f)
-            )
-        } else {
-            CardDefaults.cardColors()
+    Column(Modifier.fillMaxWidth().animateContentSize().testTag("bitwarden_vault_${vault.id}"),
+        verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Surface(shape = bitwardenGroupShape(last = !expanded),
+            color = if (isActive) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainerHigh) {
+            Row(Modifier.fillMaxWidth().clickable { expanded = !expanded }.padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                if (isUnlocking) CircularProgressIndicator(Modifier.size(24.dp), strokeWidth = 2.dp)
+                else Icon(if (isUnlocked) Icons.Outlined.LockOpen else Icons.Outlined.Lock, null,
+                    tint = MaterialTheme.colorScheme.primary)
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(vault.displayName?.takeIf { it.isNotBlank() } ?: vault.email, style = MaterialTheme.typography.titleMedium)
+                    if (!vault.displayName.isNullOrBlank()) Text(vault.email, style = MaterialTheme.typography.bodyMedium)
+                    Text(vault.serverUrl, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(listOfNotNull(if (isActive) stringResource(R.string.legacy_ui_current) else null,
+                        stringResource(if (isUnlocked) R.string.ime_state_unlocked else R.string.ime_state_locked), status).joinToString(" · "),
+                        style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
+                }
+                Icon(if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                    stringResource(if (expanded) R.string.collapse else R.string.expand))
+            }
         }
-    ) {
-        Column {
-            // 主要内容
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onSelect() }
-                    .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // 状态图标
-                Box(
-                    modifier = Modifier
-                        .size(48.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    if (isUnlocking) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(24.dp),
-                            strokeWidth = 2.dp
-                        )
-                    } else if (isUnlocked) {
-                        Icon(
-                            Icons.Outlined.LockOpen,
-                            contentDescription = stringResource(R.string.ime_state_unlocked),
-                            tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(28.dp)
-                        )
-                    } else {
-                        Icon(
-                            Icons.Outlined.Lock,
-                            contentDescription = stringResource(R.string.ime_state_locked),
-                            tint = MaterialTheme.colorScheme.outline,
-                            modifier = Modifier.size(28.dp)
-                        )
-                    }
-                }
-                
-                Spacer(modifier = Modifier.width(12.dp))
-                
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = vault.email,
-                        style = MaterialTheme.typography.titleMedium,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    
-                    Text(
-                        text = vault.serverUrl,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    
-                    if (secondaryStatus != null) {
-                        Text(
-                            text = secondaryStatus,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    } else if (lastSyncTime > 0) {
-                        Text(
-                            text = stringResource(R.string.legacy_ui_last_sync, formatTime(lastSyncTime)),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-                
-                // 展开按钮
-                IconButton(onClick = { expanded = !expanded }) {
-                    Icon(
-                        Icons.Default.ExpandMore,
-                        contentDescription = if (expanded) stringResource(R.string.collapse) else stringResource(R.string.expand),
-                        modifier = Modifier.rotate(rotationAngle)
-                    )
-                }
-            }
-            
-            // 展开的操作按钮
-            AnimatedVisibility(visible = expanded) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    if (isUnlocked) {
-                        OutlinedButton(
-                            onClick = onLock,
-                            modifier = Modifier
-                                .weight(1f)
-                                .heightIn(min = 52.dp)
-                                .defaultMinSize(minWidth = 0.dp),
-                            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp)
-                        ) {
-                            Icon(Icons.Outlined.Lock, contentDescription = null, modifier = Modifier.size(18.dp))
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text(stringResource(R.string.legacy_ui_lock), maxLines = 1, overflow = TextOverflow.Clip)
-                        }
-                    } else {
-                        Button(
-                            onClick = onUnlock,
-                            enabled = !isUnlocking,
-                            modifier = Modifier
-                                .weight(1f)
-                                .heightIn(min = 52.dp)
-                                .defaultMinSize(minWidth = 0.dp),
-                            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp)
-                        ) {
-                            Icon(Icons.Outlined.LockOpen, contentDescription = null, modifier = Modifier.size(18.dp))
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text(if (isUnlocking) stringResource(R.string.legacy_ui_unlocking) else stringResource(R.string.unlock), maxLines = 1, overflow = TextOverflow.Clip)
-                        }
-                    }
-
-                    if (isUnlocked) {
-                        OutlinedButton(
-                            onClick = {
-                                if (isSyncing) {
-                                    Toast.makeText(context, context.getString(R.string.legacy_ui_sync_wait), Toast.LENGTH_SHORT).show()
-                                }
-                                onSync()
-                            },
-                            modifier = Modifier
-                                .weight(1f)
-                                .heightIn(min = 52.dp)
-                                .defaultMinSize(minWidth = 0.dp),
-                            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp)
-                        ) {
-                            if (isSyncing) {
-                                CircularProgressIndicator(
-                                    modifier = Modifier.size(18.dp),
-                                    strokeWidth = 2.dp
-                                )
-                            } else {
-                                Icon(Icons.Outlined.Sync, contentDescription = null, modifier = Modifier.size(18.dp))
-                            }
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text(stringResource(R.string.legacy_ui_sync), maxLines = 1, overflow = TextOverflow.Clip)
-                        }
-                    } else {
-                        OutlinedButton(
-                            onClick = onSelect,
-                            enabled = !isActive,
-                            modifier = Modifier
-                                .weight(1f)
-                                .heightIn(min = 52.dp)
-                                .defaultMinSize(minWidth = 0.dp),
-                            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp)
-                        ) {
-                            Icon(Icons.Outlined.CheckCircle, contentDescription = null, modifier = Modifier.size(18.dp))
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text(if (isActive) stringResource(R.string.legacy_ui_current) else stringResource(R.string.select), maxLines = 1, overflow = TextOverflow.Clip)
-                        }
-                    }
-                    
-                    // 登出按钮
-                    OutlinedButton(
-                        onClick = onLogout,
-                        colors = ButtonDefaults.outlinedButtonColors(
-                            contentColor = MaterialTheme.colorScheme.error
-                        ),
-                        modifier = Modifier
-                            .weight(1f)
-                            .heightIn(min = 52.dp)
-                            .defaultMinSize(minWidth = 0.dp),
-                        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp)
-                    ) {
-                        Icon(Icons.Outlined.Logout, contentDescription = null, modifier = Modifier.size(18.dp))
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(stringResource(R.string.legacy_ui_logout), maxLines = 1, overflow = TextOverflow.Clip)
-                    }
-                }
-            }
+        if (expanded) {
+            BitwardenSettingRow(stringResource(if (isActive) R.string.legacy_ui_current else R.string.bitwarden_settings_select_account),
+                Icons.Outlined.CheckCircle, first = false, last = false, enabled = !isActive, onClick = onSelect)
+            if (isUnlocked) BitwardenSettingRow(stringResource(if (isSyncing) R.string.legacy_ui_syncing else R.string.legacy_ui_sync),
+                Icons.Outlined.Sync, first = false, last = false, enabled = !isSyncing, onClick = onSync)
+            if (isUnlocked && issueCount != null) BitwardenSettingRow(stringResource(R.string.bitwarden_sync_issues_button, issueCount),
+                Icons.Outlined.ErrorOutline, first = false, last = false, onClick = onIssues)
+            BitwardenSettingRow(stringResource(R.string.bitwarden_account_security), Icons.Outlined.ManageAccounts,
+                first = false, last = false, onClick = onAccount)
+            BitwardenSettingRow(stringResource(if (isUnlocked) R.string.legacy_ui_lock else R.string.unlock),
+                if (isUnlocked) Icons.Outlined.Lock else Icons.Outlined.LockOpen, first = false, last = false,
+                enabled = !isUnlocking, onClick = if (isUnlocked) onLock else onUnlock)
+            BitwardenSettingRow(stringResource(R.string.legacy_ui_logout), Icons.Outlined.Logout,
+                first = false, destructive = true, onClick = onLogout)
         }
     }
 }
@@ -588,6 +437,7 @@ fun VaultCard(
 fun EmptyVaultCard(onAddClick: () -> Unit) {
     Card(
         modifier = Modifier.fillMaxWidth(),
+        shape = bitwardenGroupShape(),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         )
@@ -639,86 +489,34 @@ fun SyncSettingsCard(
     isSyncOnWifiOnly: Boolean,
     onSyncOnWifiOnlyChanged: (Boolean) -> Unit,
     isNeverLockEnabled: Boolean = false,
-    onNeverLockChanged: (Boolean) -> Unit = {}
+    onNeverLockChanged: (Boolean) -> Unit = {},
+    canEnableNeverLock: Boolean = true,
+    pendingCount: Int = 0,
+    failedCount: Int = 0,
+    onOpenSyncQueue: () -> Unit = {}
 ) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = stringResource(R.string.legacy_ui_auto_sync),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                    Text(
-                        text = stringResource(R.string.legacy_ui_auto_sync_hint),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-                Switch(
-                    checked = isAutoSyncEnabled,
-                    onCheckedChange = onAutoSyncChanged
-                )
-            }
-            
-            HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
-            
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = stringResource(R.string.legacy_ui_sync_wifi_only),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                    Text(
-                        text = stringResource(R.string.legacy_ui_sync_wifi_only_hint),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-                Switch(
-                    checked = isSyncOnWifiOnly,
-                    onCheckedChange = onSyncOnWifiOnlyChanged,
-                    enabled = isAutoSyncEnabled
-                )
-            }
-            
-            HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
-            
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = stringResource(R.string.legacy_ui_never_lock),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                    Text(
-                        text = stringResource(R.string.legacy_ui_never_lock_hint),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    if (isNeverLockEnabled) {
-                        Text(
-                            text = stringResource(R.string.legacy_ui_never_lock_warning),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.error
-                        )
-                    }
-                }
-                Switch(
-                    checked = isNeverLockEnabled,
-                    onCheckedChange = onNeverLockChanged
-                )
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        SyncQueueEntryCard(pendingCount, failedCount, onOpenSyncQueue, last = false)
+        BitwardenSettingRow(stringResource(R.string.legacy_ui_auto_sync), Icons.Outlined.Sync,
+            supporting = stringResource(R.string.legacy_ui_auto_sync_hint), first = false, last = false,
+            checked = isAutoSyncEnabled, onCheckedChange = onAutoSyncChanged)
+        BitwardenSettingRow(stringResource(R.string.legacy_ui_sync_wifi_only), Icons.Outlined.Wifi,
+            supporting = stringResource(R.string.legacy_ui_sync_wifi_only_hint), first = false,
+            checked = isSyncOnWifiOnly, onCheckedChange = onSyncOnWifiOnlyChanged, enabled = isAutoSyncEnabled)
+        Spacer(Modifier.height(8.dp))
+        BitwardenSectionTitle(stringResource(R.string.bitwarden_settings_security))
+        BitwardenSettingRow(stringResource(R.string.legacy_ui_never_lock), Icons.Outlined.LockOpen,
+            supporting = stringResource(R.string.legacy_ui_never_lock_hint),
+            checked = isNeverLockEnabled, onCheckedChange = onNeverLockChanged, enabled = isNeverLockEnabled || canEnableNeverLock,
+            modifier = Modifier.testTag("bitwarden_never_lock"))
+        if (isNeverLockEnabled) {
+            Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Icon(Icons.Outlined.Info, null, Modifier.size(18.dp),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.legacy_ui_never_lock_warning),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
     }
@@ -729,7 +527,7 @@ fun SyncSettingsCard(
  */
 @Composable
 fun AboutCard() {
-    Card(modifier = Modifier.fillMaxWidth()) {
+    Card(modifier = Modifier.fillMaxWidth(), shape = bitwardenGroupShape()) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
@@ -870,91 +668,12 @@ private fun formatSyncBlockReason(reason: takagi.ru.monica.bitwarden.sync.SyncBl
  * 同步队列入口卡片
  */
 @Composable
-private fun SyncQueueEntryCard(
-    pendingCount: Int,
-    failedCount: Int
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
-        )
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    Icons.Outlined.Sync,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary
-                )
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = stringResource(R.string.legacy_ui_sync_queue),
-                            style = MaterialTheme.typography.titleSmall
-                        )
-                        
-                        if (pendingCount > 0 || failedCount > 0) {
-                            Text(
-                                text = buildString {
-                                    if (pendingCount > 0) append(stringResource(R.string.legacy_ui_pending_count, pendingCount))
-                                    if (pendingCount > 0 && failedCount > 0) append(" · ")
-                                    if (failedCount > 0) append(stringResource(R.string.legacy_ui_failed_count, failedCount))
-                                },
-                                style = MaterialTheme.typography.labelSmall,
-                                color = if (failedCount > 0) 
-                                    MaterialTheme.colorScheme.error 
-                                else 
-                                    MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        } else {
-                           Text(
-                                text = stringResource(R.string.sync_status_synced_short),
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.primary
-                            ) 
-                        }
-                    }
-
-                    if (pendingCount > 0) {
-                        LinearProgressIndicator(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(4.dp)
-                                .clip(RoundedCornerShape(2.dp)),
-                            color = MaterialTheme.colorScheme.primary,
-                            trackColor = MaterialTheme.colorScheme.surfaceContainerHighest
-                        )
-                    } else if (failedCount > 0) {
-                         LinearProgressIndicator(
-                            progress = { 1f },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(4.dp)
-                                .clip(RoundedCornerShape(2.dp)),
-                            color = MaterialTheme.colorScheme.error,
-                            trackColor = MaterialTheme.colorScheme.surfaceContainerHighest,
-                        )
-                    }
-                }
-            }
-        }
-    }
+internal fun SyncQueueEntryCard(pendingCount: Int, failedCount: Int, onClick: () -> Unit, last: Boolean = true) {
+    val counts = listOfNotNull(
+        if (pendingCount > 0) stringResource(R.string.legacy_ui_pending_count, pendingCount) else null,
+        if (failedCount > 0) stringResource(R.string.legacy_ui_failed_count, failedCount) else null
+    ).joinToString(" · ")
+    BitwardenSettingRow(stringResource(R.string.legacy_ui_sync_queue), Icons.Outlined.SyncProblem,
+        supporting = counts.ifBlank { stringResource(R.string.bitwarden_settings_queue_hint) },
+        onClick = onClick, last = last, modifier = Modifier.testTag("bitwarden_sync_queue_entry"))
 }

@@ -211,10 +211,12 @@ internal fun WalletCustomFields(fields: List<CustomFieldDraft>, onFields: (List<
                     trailingIcon = if (field.isProtected) {{ IconButton(onClick = { reveal = !reveal }) {
                         Icon(if (reveal) Icons.Default.VisibilityOff else Icons.Default.Visibility, stringResource(if (reveal) R.string.hide_password else R.string.show_password))
                     } }} else null)
-                ListItem(headlineContent = { Text(stringResource(R.string.custom_field_sensitive)) },
-                    colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
-                    trailingContent = { Switch(field.isProtected, { hidden -> onFields(fields.map { if (it.id == field.id) it.copy(isProtected = hidden) else it }) }) })
-                Surface(Modifier.fillMaxWidth(), color = MaterialTheme.colorScheme.surfaceContainer) {
+                Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(24.dp), color = MaterialTheme.colorScheme.surfaceContainer) {
+                    ListItem(headlineContent = { Text(stringResource(R.string.custom_field_sensitive)) },
+                        colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
+                        trailingContent = { Switch(field.isProtected, { hidden -> onFields(fields.map { if (it.id == field.id) it.copy(isProtected = hidden) else it }) }) })
+                }
+                Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(24.dp), color = MaterialTheme.colorScheme.surfaceContainer) {
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                     IconButton(enabled = index > 0, onClick = { onFields(fields.toMutableList().apply { add(index - 1, removeAt(index)) }) }) {
                         Icon(Icons.Default.ArrowUpward, stringResource(R.string.move_up))

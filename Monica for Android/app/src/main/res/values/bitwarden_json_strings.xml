@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bw_json_title">Bitwarden JSON</string>
+    <string name="bw_json_encrypted_title">Password-encrypted Bitwarden JSON</string>
+    <string name="bw_json_description">Standard or password-encrypted JSON for logins, notes, cards, identities and SSH keys.</string>
+    <string name="bw_json_boundary">Import into the local vault only. Export from the local vault or one personal Bitwarden account. Attachment files, Send and archived state are not included. Unsupported content blocks the whole transfer; review every reported item.</string>
+    <string name="bw_json_import_hint">Choose a standard or password-encrypted Bitwarden JSON file.</string>
+    <string name="bw_json_file_password">File password</string>
+    <string name="bw_json_check">Check file</string>
+    <string name="bw_json_review">Review JSON import</string>
+    <string name="bw_json_counts">%1$d items · %2$d folders</string>
+    <string name="bw_json_blocked">The whole transfer is blocked. Resolve every item below before trying again.</string>
+    <string name="bw_json_ready">The file can be imported. Confirm to add all items to the local vault.</string>
+    <string name="bw_json_export_success">Exported %1$d items and %2$d folders. Attachment files, Send and archived state are not included.</string>
+    <string name="bw_json_reason_invalid">Invalid or damaged data</string>
+    <string name="bw_json_reason_unknown">Unrecognized field; cannot preserve it</string>
+    <string name="bw_json_reason_type">Unsupported item type</string>
+    <string name="bw_json_reason_value">This value cannot be preserved completely</string>
+    <string name="bw_json_reason_limit">File or processing limit exceeded</string>
+    <string name="bw_json_reason_organization">Organization and collection content is not supported</string>
+    <string name="bw_json_reason_attachments">Attachment files require a separate transfer</string>
+    <string name="bw_json_reason_archived">Archived state cannot be preserved in this format</string>
+    <string name="bw_json_reason_destination">This source or destination is not supported</string>
+    <string name="bw_json_reason_pending">Finish pending changes before exporting the account</string>
+    <string name="bw_json_reason_unavailable">Required source data or key is unavailable</string>
+    <string name="bw_json_item">Item %1$d</string>
+    <string name="bw_json_plain_warning">Unencrypted JSON contains readable passwords and private keys. Store the file securely.</string>
+</resources>

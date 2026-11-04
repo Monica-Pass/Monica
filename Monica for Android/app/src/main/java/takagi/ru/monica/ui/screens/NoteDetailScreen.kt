@@ -204,6 +204,8 @@ fun NoteDetailScreen(
         }
     }
 
+    val archiveAction = takagi.ru.monica.ui.components.rememberBitwardenArchiveAction(
+        if (embeddedAccess == null) noteItem else null) { /* observeNoteById publishes the committed row. */ }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -237,7 +239,7 @@ fun NoteDetailScreen(
                             contentDescription = stringResource(R.string.edit),
                             onClick = { onEditNote(it.id) }
                         )
-                    ),
+                    ) + listOfNotNull(archiveAction),
                     containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                     contentColor = MaterialTheme.colorScheme.onTertiaryContainer
                 )

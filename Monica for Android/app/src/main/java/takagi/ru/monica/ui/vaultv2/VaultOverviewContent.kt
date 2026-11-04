@@ -26,6 +26,7 @@ internal fun VaultOverviewContent(
 	itemsReady: Boolean,
     allItems: List<VaultV2Item>,
     archivedPasswords: List<PasswordEntry>,
+    archivedSecureItems: List<SecureItem> = emptyList(),
     categories: List<Category>,
     keepassDatabases: List<LocalKeePassDatabase>,
     mdbxDatabases: List<LocalMdbxDatabase>,
@@ -127,13 +128,13 @@ internal fun VaultOverviewContent(
     }
     var prepared by remember { mutableStateOf<VaultOverviewPreparedData?>(null) }
     LaunchedEffect(itemsReady, allItems, sources, rankingConfig, usage, passwordUsage,
-        categories, folders, mdbxFolders, archivedPasswords, cachedKeePassGroups) {
+        categories, folders, mdbxFolders, archivedPasswords, archivedSecureItems, cachedKeePassGroups) {
         if (!itemsReady) return@LaunchedEffect
         val usageRecords = usage ?: return@LaunchedEffect
         val passwordRecords = passwordUsage ?: return@LaunchedEffect
         prepared = withContext(Dispatchers.Default) {
             prepareVaultOverview(allItems, sources, rankingConfig, usageRecords, passwordRecords,
-                categories, folders, mdbxFolders, archivedPasswords, cachedKeePassGroups)
+                categories, folders, mdbxFolders, archivedPasswords, cachedKeePassGroups, archivedSecureItems)
         }
     }
     // Scope changes reuse the numeric batch. Publishing a large list must not compare every row on the UI thread.

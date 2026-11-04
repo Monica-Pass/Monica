@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_settings_security">セキュリティ</string>
+    <string name="bitwarden_settings_queue_hint">同期を待つ変更と同期の問題を確認</string>
+    <string name="bitwarden_account_web_settings_hint">マスターパスワード、2段階ログイン、サブスクリプションをウェブで管理</string>
+    <string name="bitwarden_settings_select_account">現在のアカウントに設定</string>
+    <string name="bitwarden_settings_account_management">アカウント管理</string>
+    <string name="bitwarden_queue_help">同期待ちのローカル変更と、直近の同期結果を表示します。リストが空でも、サーバーと同期済みとは限りません。</string>
+    <string name="bitwarden_queue_empty_local">同期待ちのローカル変更はありません。</string>
+    <string name="bitwarden_queue_locked">同期待ちの項目を表示するには、このアカウントのロックを解除してください。</string>
+    <string name="bitwarden_queue_loading_error">同期待ちの項目を読み取れませんでした。このページを開き直して再度お試しください。</string>
+    <string name="bitwarden_queue_awaiting_confirmation">サーバーの確認待ち</string>
+    <string name="bitwarden_queue_idle">実行中の同期タスクはありません</string>
+</resources>

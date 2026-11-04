@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="bw_send_auth_title">Access control</string>
+    <string name="bw_send_auth_none">No verification</string>
+    <string name="bw_send_auth_password">Password</string>
+    <string name="bw_send_auth_email">Email verification</string>
+    <string name="bw_send_auth_email_label">Email address %1$d</string>
+    <string name="bw_send_auth_add_email">Add email address</string>
+    <string name="bw_send_auth_remove_email">Remove email address</string>
+    <string name="bw_send_auth_recipients_notice">Recipient addresses are sent to the server for verification.</string>
+    <string name="bw_send_auth_premium">Email verification requires Premium for this account.</string>
+    <string name="bw_send_auth_unsupported">This server did not accept email verification. Check whether your server supports it and try again.</string>
+    <string name="bw_send_auth_invalid">Check the access method and email addresses.</string>
+    <string name="bw_send_auth_unchanged">Keep current verification</string>
+    <string name="bw_send_auth_password_set">Password set</string>
+    <string name="bw_send_drafts">Send drafts</string>
+    <string name="bw_send_draft_save">Save draft</string>
+    <string name="bw_send_draft_saved">Draft saved on this device.</string>
+    <string name="bw_send_draft_local">Saved only on this device. Resume to submit it manually.</string>
+    <string name="bw_send_draft_resume">Resume</string>
+    <string name="bw_send_draft_discard">Discard draft</string>
+    <string name="bw_send_draft_discard_confirm">Discard this local draft and its saved file? Published Sends are kept.</string>
+    <string name="bw_send_draft_failed">Could not save or read this draft. The existing copy is kept.</string>
+    <string name="bw_send_draft_unavailable">Some drafts could not be opened. They are kept on this device.</string>
+    <string name="bw_send_draft_reconcile">Check previous submission</string>
+    <string name="bw_send_draft_uncertain">The previous submission may have reached the server. Check it before submitting again.</string>
+    <string name="bw_send_draft_not_found">The previous submission could not be confirmed. Check your Sends before discarding this draft.</string>
+    <string name="bw_send_cache_unavailable">Some cached Sends could not be opened. Existing data is kept.</string>
+    <string name="bw_send_draft_empty">No saved drafts</string>
+    <string name="bw_send_draft_missing_file">The saved file is missing. Select it again.</string>
+    <string name="bw_send_logout_drafts">Local Send drafts and their saved files will also be deleted. These drafts cannot be restored by signing in again.</string>
+</resources>

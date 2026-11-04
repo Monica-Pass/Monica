@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_settings_security">Sicherheit</string>
+    <string name="bitwarden_settings_queue_hint">Ausstehende Änderungen und Synchronisierungsprobleme anzeigen</string>
+    <string name="bitwarden_account_web_settings_hint">Master-Passwort, Zwei-Schritt-Anmeldung und Abonnement im Web verwalten</string>
+    <string name="bitwarden_settings_select_account">Als aktuelles Konto festlegen</string>
+    <string name="bitwarden_settings_account_management">Kontoverwaltung</string>
+    <string name="bitwarden_queue_help">Zeigt ausstehende lokale Änderungen und das Ergebnis des letzten Synchronisierungsversuchs. Eine leere Liste bestätigt nicht, dass die Daten mit dem Server synchronisiert sind.</string>
+    <string name="bitwarden_queue_empty_local">Keine ausstehenden lokalen Änderungen.</string>
+    <string name="bitwarden_queue_locked">Entsperren Sie dieses Konto, um ausstehende Elemente anzuzeigen.</string>
+    <string name="bitwarden_queue_loading_error">Ausstehende Elemente konnten nicht gelesen werden. Öffnen Sie diese Seite erneut, um es noch einmal zu versuchen.</string>
+    <string name="bitwarden_queue_awaiting_confirmation">Warten auf Serverbestätigung</string>
+    <string name="bitwarden_queue_idle">Keine Synchronisierung läuft</string>
+</resources>

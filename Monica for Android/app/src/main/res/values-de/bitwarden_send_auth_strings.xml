@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="bw_send_auth_title">Zugriffskontrolle</string>
+    <string name="bw_send_auth_none">Keine Verifizierung</string>
+    <string name="bw_send_auth_password">Passwort</string>
+    <string name="bw_send_auth_email">E-Mail-Verifizierung</string>
+    <string name="bw_send_auth_email_label">E-Mail-Adresse %1$d</string>
+    <string name="bw_send_auth_add_email">E-Mail-Adresse hinzufügen</string>
+    <string name="bw_send_auth_remove_email">E-Mail-Adresse entfernen</string>
+    <string name="bw_send_auth_recipients_notice">Die Empfängeradressen werden zur Verifizierung an den Server gesendet.</string>
+    <string name="bw_send_auth_premium">Die E-Mail-Verifizierung erfordert Premium für dieses Konto.</string>
+    <string name="bw_send_auth_unsupported">Dieser Server hat die E-Mail-Verifizierung nicht akzeptiert. Prüfe die Unterstützung deines Servers und versuche es erneut.</string>
+    <string name="bw_send_auth_invalid">Prüfe die Zugriffsmethode und die E-Mail-Adressen.</string>
+    <string name="bw_send_auth_unchanged">Aktuelle Verifizierung beibehalten</string>
+    <string name="bw_send_auth_password_set">Passwort festgelegt</string>
+    <string name="bw_send_drafts">Send-Entwürfe</string>
+    <string name="bw_send_draft_save">Entwurf speichern</string>
+    <string name="bw_send_draft_saved">Der Entwurf wurde auf diesem Gerät gespeichert.</string>
+    <string name="bw_send_draft_local">Nur auf diesem Gerät gespeichert. Fortsetzen, um manuell zu senden.</string>
+    <string name="bw_send_draft_resume">Fortsetzen</string>
+    <string name="bw_send_draft_discard">Entwurf verwerfen</string>
+    <string name="bw_send_draft_discard_confirm">Diesen lokalen Entwurf und seine gespeicherte Datei verwerfen? Veröffentlichte Sends bleiben erhalten.</string>
+    <string name="bw_send_draft_failed">Dieser Entwurf konnte nicht gespeichert oder gelesen werden. Die vorhandene Kopie bleibt erhalten.</string>
+    <string name="bw_send_draft_unavailable">Einige Entwürfe konnten nicht geöffnet werden. Sie bleiben auf diesem Gerät erhalten.</string>
+    <string name="bw_send_draft_reconcile">Vorherige Übermittlung prüfen</string>
+    <string name="bw_send_draft_uncertain">Die vorherige Übermittlung könnte den Server erreicht haben. Prüfe sie vor dem erneuten Senden.</string>
+    <string name="bw_send_draft_not_found">Die vorherige Übermittlung konnte nicht bestätigt werden. Prüfe deine Sends, bevor du diesen Entwurf verwirfst.</string>
+    <string name="bw_send_cache_unavailable">Einige zwischengespeicherte Sends konnten nicht geöffnet werden. Vorhandene Daten bleiben erhalten.</string>
+    <string name="bw_send_draft_empty">Keine gespeicherten Entwürfe</string>
+    <string name="bw_send_draft_missing_file">Die gespeicherte Datei fehlt. Wähle sie erneut aus.</string>
+    <string name="bw_send_logout_drafts">Lokale Send-Entwürfe und ihre gespeicherten Dateien werden ebenfalls gelöscht. Eine erneute Anmeldung stellt diese Entwürfe nicht wieder her.</string>
+</resources>

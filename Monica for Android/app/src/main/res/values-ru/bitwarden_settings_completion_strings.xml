@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_settings_security">Безопасность</string>
+    <string name="bitwarden_settings_queue_hint">Просмотр ожидающих изменений и проблем синхронизации</string>
+    <string name="bitwarden_account_web_settings_hint">Управление мастер-паролем, двухэтапным входом и подпиской в веб-интерфейсе</string>
+    <string name="bitwarden_settings_select_account">Сделать текущим аккаунтом</string>
+    <string name="bitwarden_settings_account_management">Управление аккаунтом</string>
+    <string name="bitwarden_queue_help">Показывает локальные изменения, ожидающие синхронизации, и результаты последней попытки. Пустой список не означает, что данные синхронизированы с сервером.</string>
+    <string name="bitwarden_queue_empty_local">Нет локальных изменений, ожидающих синхронизации.</string>
+    <string name="bitwarden_queue_locked">Разблокируйте этот аккаунт, чтобы просмотреть ожидающие элементы.</string>
+    <string name="bitwarden_queue_loading_error">Не удалось прочитать ожидающие элементы. Откройте эту страницу заново, чтобы повторить попытку.</string>
+    <string name="bitwarden_queue_awaiting_confirmation">Ожидание подтверждения сервера</string>
+    <string name="bitwarden_queue_idle">Нет выполняющихся задач синхронизации</string>
+</resources>

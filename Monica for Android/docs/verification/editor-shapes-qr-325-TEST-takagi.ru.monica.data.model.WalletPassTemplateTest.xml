@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.data.model.WalletPassTemplateTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-04T10:48:57" hostname="JOYIN" time="0.035">
+  <properties/>
+  <testcase name="searchFindsFlightOriginAndRewardMetadata" classname="takagi.ru.monica.data.model.WalletPassTemplateTest" time="0.011"/>
+  <testcase name="walletPassesAreNeverOfferedAsIdentityDocumentsByAutofill" classname="takagi.ru.monica.data.model.WalletPassTemplateTest" time="0.013"/>
+  <testcase name="allTemplatesRetainUnicodeLeadingZeroesAndFutureFields" classname="takagi.ru.monica.data.model.WalletPassTemplateTest" time="0.002"/>
+  <testcase name="embeddedEditsRetainPassMetadataAndCanClearAField" classname="takagi.ru.monica.data.model.WalletPassTemplateTest" time="0.005"/>
+  <testcase name="encryptedExtensionDecoderPreservesTextAndIgnoresNonTextContainers" classname="takagi.ru.monica.data.model.WalletPassTemplateTest" time="0.002"/>
+  <testcase name="oldDocumentsRemainIdentityDocuments" classname="takagi.ru.monica.data.model.WalletPassTemplateTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

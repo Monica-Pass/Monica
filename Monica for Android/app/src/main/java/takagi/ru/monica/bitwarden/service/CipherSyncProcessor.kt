@@ -173,6 +173,8 @@ class CipherSyncProcessor(
         if (existing.bitwardenLocalModified == true) return false
         if (existing.isDeleted || serverDeletedAt != null) return false
         if (existing.bitwardenFolderId != cipher.folderId) return false
+        if (existing.isArchived != !cipher.archivedDate.isNullOrBlank()) return false
+        if (existing.archivedAt != parseBitwardenArchivedAt(cipher.archivedDate)) return false
         if (!existing.syncStatus.equals("SYNCED", ignoreCase = true)) return false
         return true
     }
@@ -206,6 +208,7 @@ class CipherSyncProcessor(
     private val passkeyDao = database.passkeyDao()
     private val pendingOpDao = database.bitwardenPendingOperationDao()
     private val securityManager = SecurityManager(context)
+    private val passwordHistoryStore by lazy { BitwardenPasswordHistoryStore(context) }
     private val passwordCustomFieldSyncState = BitwardenPasswordCustomFieldSyncState(context)
     private val json = Json {
         ignoreUnknownKeys = true
@@ -229,6 +232,7 @@ class CipherSyncProcessor(
         if (!BitwardenCipherDocument.canProject(cipher)) {
             return CipherSyncResult.Skipped("Unsupported or incomplete cipher format; source retained")
         }
+        val historySession = if (cipher.type == 1) passwordHistoryStore.captureSession(vault.id) else null
         return BitwardenCipherKeyResolver.withCipherKey(cipher, symmetricKey, TAG, organizationKeys) { effectiveKey ->
             // Validate every encrypted field before any projection or source revision is committed.
             validateEncryptedFields(cipher, effectiveKey)
@@ -252,6 +256,14 @@ class CipherSyncProcessor(
                 4 -> syncIdentityCipher(vault, cipher, effectiveKey, serverDeletedAt)
                 5 -> syncSshKeyCipher(vault, cipher, effectiveKey, serverDeletedAt, serverArchivedAt)
                 else -> CipherSyncResult.Skipped("Unknown cipher type: ${cipher.type}")
+            }
+            if (historySession != null && (syncResult is CipherSyncResult.Added || syncResult is CipherSyncResult.Updated ||
+                    syncResult is CipherSyncResult.Skipped && syncResult.reason == SKIP_REMOTE_UNCHANGED)) {
+                passwordEntryDao.getByBitwardenCipherIdInVault(vault.id, cipher.id)?.let { entry ->
+                    if (!entry.loginType.equals(LOGIN_TYPE_SSH_KEY, true)) {
+                        passwordHistoryStore.refresh(entry.id, cipher, effectiveKey, historySession)
+                    }
+                }
             }
             val outcome = mapCipherSyncOutcome(syncResult)
             forensicsCollector?.invoke(
@@ -329,13 +341,14 @@ class CipherSyncProcessor(
         }
 
         val decryptedFields = decryptCustomFields(cipher.fields, symmetricKey)
-        val remoteUserFields = BitwardenPasswordCustomFieldAdapter.extractUserFields(
-            decryptedFields.map { it.toPlainField() }
+        val remoteUserFields = BitwardenLoginUriRules.fromRemote(
+            BitwardenPasswordCustomFieldAdapter.extractUserFields(decryptedFields.map { it.toPlainField() }),
+            login.uris, symmetricKey
         )
         val localUserFields = existing?.let { loadPasswordCustomFields(it.id) }.orEmpty()
         val incomingCustomFieldMerge = if (existing != null && !existing.bitwardenLocalModified) {
             BitwardenPasswordCustomFieldAdapter.mergeIncoming(
-                local = localUserFields,
+                local = BitwardenLoginUriRules.withoutLocalRules(localUserFields),
                 remote = remoteUserFields,
                 sameRevision = hasSameRemoteRevision(existing.bitwardenRevisionDate, cipher.revisionDate)
             )
@@ -947,6 +960,9 @@ class CipherSyncProcessor(
                 bitwardenCipherId = cipher.id,
                 bitwardenFolderId = cipher.folderId,
                 bitwardenRevisionDate = cipher.revisionDate,
+                isArchived = !cipher.archivedDate.isNullOrBlank(),
+                archivedAt = parseBitwardenArchivedAt(cipher.archivedDate),
+                bitwardenArchiveIntent = null,
                 syncStatus = "SYNCED",
                 isDeleted = isServerDeleted,
                 deletedAt = serverDeletedAt
@@ -967,6 +983,9 @@ class CipherSyncProcessor(
                         bitwardenVaultId = vault.id,
                         bitwardenFolderId = cipher.folderId,
                         bitwardenRevisionDate = cipher.revisionDate,
+                isArchived = !cipher.archivedDate.isNullOrBlank(),
+                archivedAt = parseBitwardenArchivedAt(cipher.archivedDate),
+                bitwardenArchiveIntent = null,
                         bitwardenLocalModified = false,
                         syncStatus = "SYNCED"
                     )
@@ -984,6 +1003,9 @@ class CipherSyncProcessor(
                 bitwardenVaultId = vault.id,
                 bitwardenFolderId = cipher.folderId,
                 bitwardenRevisionDate = cipher.revisionDate,
+                isArchived = !cipher.archivedDate.isNullOrBlank(),
+                archivedAt = parseBitwardenArchivedAt(cipher.archivedDate),
+                bitwardenArchiveIntent = null,
                 bitwardenLocalModified = false,
                 syncStatus = "SYNCED"
             )
@@ -1036,6 +1058,9 @@ class CipherSyncProcessor(
                 bitwardenCipherId = cipher.id,
                 bitwardenFolderId = cipher.folderId,
                 bitwardenRevisionDate = cipher.revisionDate,
+                isArchived = !cipher.archivedDate.isNullOrBlank(),
+                archivedAt = parseBitwardenArchivedAt(cipher.archivedDate),
+                bitwardenArchiveIntent = null,
                 syncStatus = "SYNCED",
                 isDeleted = isServerDeleted,
                 deletedAt = serverDeletedAt
@@ -1056,6 +1081,9 @@ class CipherSyncProcessor(
                         bitwardenVaultId = vault.id,
                         bitwardenFolderId = cipher.folderId,
                         bitwardenRevisionDate = cipher.revisionDate,
+                isArchived = !cipher.archivedDate.isNullOrBlank(),
+                archivedAt = parseBitwardenArchivedAt(cipher.archivedDate),
+                bitwardenArchiveIntent = null,
                         bitwardenLocalModified = false,
                         syncStatus = "SYNCED"
                     )
@@ -1073,6 +1101,9 @@ class CipherSyncProcessor(
                 bitwardenVaultId = vault.id,
                 bitwardenFolderId = cipher.folderId,
                 bitwardenRevisionDate = cipher.revisionDate,
+                isArchived = !cipher.archivedDate.isNullOrBlank(),
+                archivedAt = parseBitwardenArchivedAt(cipher.archivedDate),
+                bitwardenArchiveIntent = null,
                 bitwardenLocalModified = false,
                 syncStatus = "SYNCED"
             )
@@ -1171,6 +1202,9 @@ class CipherSyncProcessor(
                 bitwardenCipherId = cipher.id,
                 bitwardenFolderId = cipher.folderId,
                 bitwardenRevisionDate = cipher.revisionDate,
+                isArchived = !cipher.archivedDate.isNullOrBlank(),
+                archivedAt = parseBitwardenArchivedAt(cipher.archivedDate),
+                bitwardenArchiveIntent = null,
                 bitwardenLocalModified = hasLegacyCardFields,
                 syncStatus = if (hasLegacyCardFields) "PENDING" else "SYNCED",
                 isDeleted = isServerDeleted,
@@ -1192,6 +1226,9 @@ class CipherSyncProcessor(
                         bitwardenVaultId = vault.id,
                         bitwardenFolderId = cipher.folderId,
                         bitwardenRevisionDate = cipher.revisionDate,
+                isArchived = !cipher.archivedDate.isNullOrBlank(),
+                archivedAt = parseBitwardenArchivedAt(cipher.archivedDate),
+                bitwardenArchiveIntent = null,
                         bitwardenLocalModified = false,
                         syncStatus = "SYNCED"
                     )
@@ -1209,6 +1246,9 @@ class CipherSyncProcessor(
                 bitwardenVaultId = vault.id,
                 bitwardenFolderId = cipher.folderId,
                 bitwardenRevisionDate = cipher.revisionDate,
+                isArchived = !cipher.archivedDate.isNullOrBlank(),
+                archivedAt = parseBitwardenArchivedAt(cipher.archivedDate),
+                bitwardenArchiveIntent = null,
                 bitwardenLocalModified = hasLegacyCardFields,
                 syncStatus = if (hasLegacyCardFields) "PENDING" else "SYNCED"
             )
@@ -1325,6 +1365,9 @@ class CipherSyncProcessor(
                 bitwardenCipherId = cipher.id,
                 bitwardenFolderId = cipher.folderId,
                 bitwardenRevisionDate = cipher.revisionDate,
+                isArchived = !cipher.archivedDate.isNullOrBlank(),
+                archivedAt = parseBitwardenArchivedAt(cipher.archivedDate),
+                bitwardenArchiveIntent = null,
                 syncStatus = "SYNCED",
                 isDeleted = isServerDeleted,
                 deletedAt = serverDeletedAt
@@ -1345,6 +1388,9 @@ class CipherSyncProcessor(
                         bitwardenVaultId = vault.id,
                         bitwardenFolderId = cipher.folderId,
                         bitwardenRevisionDate = cipher.revisionDate,
+                isArchived = !cipher.archivedDate.isNullOrBlank(),
+                archivedAt = parseBitwardenArchivedAt(cipher.archivedDate),
+                bitwardenArchiveIntent = null,
                         bitwardenLocalModified = false,
                         syncStatus = "SYNCED"
                     )
@@ -1362,6 +1408,9 @@ class CipherSyncProcessor(
                 bitwardenVaultId = vault.id,
                 bitwardenFolderId = cipher.folderId,
                 bitwardenRevisionDate = cipher.revisionDate,
+                isArchived = !cipher.archivedDate.isNullOrBlank(),
+                archivedAt = parseBitwardenArchivedAt(cipher.archivedDate),
+                bitwardenArchiveIntent = null,
                 bitwardenLocalModified = false,
                 syncStatus = "SYNCED"
             )
@@ -1660,14 +1709,7 @@ class CipherSyncProcessor(
         }
         cipher.fields.orEmpty().forEach { compatible(it.name); compatible(it.value) }
         cipher.attachments.orEmpty().forEach { compatible(it.fileName) }
-        (cipher.passwordHistory as? kotlinx.serialization.json.JsonArray)?.forEach { entry ->
-            val history = entry as? kotlinx.serialization.json.JsonObject ?: error("Invalid password history")
-            val password = history["password"] ?: history["Password"]
-            if (password != null && password != kotlinx.serialization.json.JsonNull) {
-                require(password is kotlinx.serialization.json.JsonPrimitive && password.isString) { "Invalid history password" }
-                encrypted(password.content)
-            }
-        }
+        BitwardenPasswordHistory.decode(cipher.passwordHistory, key)
     }
 
     private fun decryptOrPlain(value: String?, key: SymmetricCryptoKey): String? {

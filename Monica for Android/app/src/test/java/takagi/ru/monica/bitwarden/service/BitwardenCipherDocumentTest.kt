@@ -17,6 +17,31 @@ import takagi.ru.monica.bitwarden.api.*
 @org.robolectric.annotation.Config(sdk = [34], manifest = org.robolectric.annotation.Config.NONE)
 class BitwardenCipherDocumentTest {
     private val revision = "2026-11-03T00:00:00Z"
+    @Test fun repeatedIdentityUpdatesNormalizeSerializedAddressAliasesAndKeepOpaqueData() {
+        val original = Json.parseToJsonElement("""{"id":"identity","type":4,"name":"sealed-name","revisionDate":"$revision","identity":{"firstName":"old","FutureIdentity":{"keep":42}}}""").jsonObject
+        val update = CipherUpdateRequest(type = 4, name = "sealed-name", lastKnownRevisionDate = revision,
+            identity = CipherIdentityApiData(firstName = "new", address1 = "sealed-1", address2 = "sealed-2", address3 = "sealed-3"))
+        val first = BitwardenCipherDocument.update(original, update, archiveIntent = JsonNull)
+        val nextRevision = "2026-11-04T00:00:00Z"
+        val ack = JsonObject(first + mapOf("id" to JsonPrimitive("identity"), "revisionDate" to JsonPrimitive(nextRevision)))
+        assertTrue(BitwardenCipherDocument.confirms(first, ack))
+        val second = BitwardenCipherDocument.update(ack, update.copy(lastKnownRevisionDate = nextRevision),
+            archiveIntent = JsonPrimitive("2026-11-04T01:00:00Z"))
+        for (document in listOf(first, second)) {
+            val identity = document.getValue("identity").jsonObject
+            for (i in 1..3) {
+                assertEquals(1, identity.keys.count { it.equals("address$i", ignoreCase = true) })
+                assertEquals(JsonPrimitive("sealed-$i"), identity["address$i"])
+            }
+            assertEquals(original["identity"]!!.jsonObject["FutureIdentity"], identity["FutureIdentity"])
+            BitwardenCipherDocument.decode(JsonObject(document + mapOf("id" to JsonPrimitive("identity"), "revisionDate" to JsonPrimitive(nextRevision))))
+        }
+        val identity = second.getValue("identity").jsonObject
+        val ambiguous = JsonObject(ack + ("identity" to JsonObject(identity + ("Address1" to JsonPrimitive("different")))))
+        reject { BitwardenCipherDocument.decode(ambiguous) }
+        assertFalse(BitwardenCipherDocument.confirms(second, ambiguous))
+    }
+
     @Test fun officialSerializedLegacyDataProjectsAllFiveTypesButNotBlobOrPartialData() {
         for ((type, section) in listOf(1 to "login", 2 to "secureNote", 3 to "card", 4 to "identity", 5 to "sshKey")) {
             val detail = if (type == 2) "{\"type\":0}" else "{}"

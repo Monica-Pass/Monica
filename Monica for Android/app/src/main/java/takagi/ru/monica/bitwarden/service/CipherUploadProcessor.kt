@@ -308,9 +308,14 @@ class CipherUploadProcessor(
             val updateRequest = BitwardenCipherOwnership.preserve(mergedRequest.toUpdateRequest(), baselineCipher).let {
                 BitwardenCipherUploadProtocol.update(it,
                     BitwardenCipherUploadProtocol.userId(vault, vaultApi, accessToken), symmetricKey, baselineCipher.login)
-            }
+            }.let { BitwardenPasswordHistory.prepare(it, baselineCipher, symmetricKey).request }
             val document = BitwardenCipherDocument.update(
-                requireNotNull(baselineCipher.sourceDocument) { "Complete cipher source unavailable" }, updateRequest, symmetricKey)
+                requireNotNull(baselineCipher.sourceDocument) { "Complete cipher source unavailable" }, updateRequest, symmetricKey,
+                archiveIntent = item.bitwardenArchiveIntent?.let { archived ->
+                    if (archived) kotlinx.serialization.json.JsonPrimitive(requireNotNull(item.archivedAt).toInstant().toString())
+                    else kotlinx.serialization.json.JsonNull
+                }, historyIntent = updateRequest.passwordHistory,
+                passwordRevisionDateIntent = updateRequest.login?.passwordRevisionDate)
             val requestPayload = document.toString()
             if (secureItemDao.getItemById(item.id) != item) {
                 return UploadItemResult.Error("Newer local changes are still pending")
@@ -384,6 +389,7 @@ class CipherUploadProcessor(
                 if (latest == item) {
                     secureItemDao.update(item.copy(
                         bitwardenRevisionDate = updatedCipher.revisionDate,
+                        bitwardenArchiveIntent = null,
                         bitwardenLocalModified = cardFaceAttachmentResult.isFailure,
                         syncStatus = if (cardFaceAttachmentResult.isSuccess) "SYNCED" else "FAILED"
                     ))
@@ -706,7 +712,8 @@ class CipherUploadProcessor(
     suspend fun uploadPendingSecureItems(
         vault: BitwardenVault,
         accessToken: String,
-        symmetricKey: SymmetricCryptoKey
+        symmetricKey: SymmetricCryptoKey,
+        issues: BitwardenSyncIssues.Session? = null
     ): BatchUploadResult {
         val pending = secureItemDao.getLocalEntriesPendingUpload(vault.id)
         
@@ -721,7 +728,11 @@ class CipherUploadProcessor(
             val result = uploadSecureItem(vault, item, accessToken, symmetricKey)
             when (result) {
                 is UploadItemResult.Success -> uploaded++
-                is UploadItemResult.Error -> failed++
+                is UploadItemResult.Error -> {
+                    failed++
+                    issues?.record(item.bitwardenCipherId ?: "secure-item:${item.id}", SyncIssueKind.CIPHER,
+                        SyncIssuePhase.CREATE, SyncIssueReason.from(result.message), item.title)
+                }
             }
         }
         
@@ -734,7 +745,8 @@ class CipherUploadProcessor(
     suspend fun uploadModifiedSecureItems(
         vault: BitwardenVault,
         accessToken: String,
-        symmetricKey: SymmetricCryptoKey
+        symmetricKey: SymmetricCryptoKey,
+        issues: BitwardenSyncIssues.Session? = null
     ): BatchUploadResult {
         val modifiedItems = secureItemDao.getLocalModifiedEntries(vault.id)
             .filter { !it.bitwardenCipherId.isNullOrBlank() }
@@ -750,12 +762,17 @@ class CipherUploadProcessor(
             val cipherId = item.bitwardenCipherId
             if (cipherId.isNullOrBlank()) {
                 failed++
+                issues?.record("secure-item:${item.id}", SyncIssueKind.CIPHER, SyncIssuePhase.UPDATE, SyncIssueReason.PENDING_PARENT, item.title)
                 continue
             }
             val result = updateSecureItem(vault, item, cipherId, accessToken, symmetricKey)
             when (result) {
                 is UploadItemResult.Success -> uploaded++
-                is UploadItemResult.Error -> failed++
+                is UploadItemResult.Error -> {
+                    failed++
+                    issues?.record(item.bitwardenCipherId ?: "secure-item:${item.id}", SyncIssueKind.CIPHER,
+                        SyncIssuePhase.UPDATE, SyncIssueReason.from(result.message), item.title)
+                }
             }
         }
 
@@ -768,7 +785,8 @@ class CipherUploadProcessor(
     suspend fun uploadPendingPasskeys(
         vault: BitwardenVault,
         accessToken: String,
-        symmetricKey: SymmetricCryptoKey
+        symmetricKey: SymmetricCryptoKey,
+        issues: BitwardenSyncIssues.Session? = null
     ): BatchUploadResult {
         val pending = passkeyDao.getLocalEntriesPendingUpload(vault.id)
             .filter(::canSyncPasskeyToBitwarden)
@@ -817,7 +835,11 @@ class CipherUploadProcessor(
             val result = uploadPasskey(vault, passkey, accessToken, symmetricKey)
             when (result) {
                 is UploadItemResult.Success -> uploaded++
-                is UploadItemResult.Error -> failed++
+                is UploadItemResult.Error -> {
+                    failed++
+                    issues?.record(passkey.bitwardenCipherId ?: "passkey:${passkey.id}", SyncIssueKind.PASSKEY,
+                        SyncIssuePhase.CREATE, SyncIssueReason.from(result.message), passkey.rpName)
+                }
             }
         }
 
@@ -830,7 +852,8 @@ class CipherUploadProcessor(
     suspend fun uploadModifiedPasskeys(
         vault: BitwardenVault,
         accessToken: String,
-        symmetricKey: SymmetricCryptoKey
+        symmetricKey: SymmetricCryptoKey,
+        issues: BitwardenSyncIssues.Session? = null
     ): BatchUploadResult {
         val candidates = passkeyDao.getByBitwardenVaultId(vault.id)
             .filter { passkey ->
@@ -852,12 +875,17 @@ class CipherUploadProcessor(
             val cipherId = passkey.bitwardenCipherId
             if (cipherId.isNullOrBlank()) {
                 failed++
+                issues?.record("passkey:${passkey.id}", SyncIssueKind.PASSKEY, SyncIssuePhase.UPDATE, SyncIssueReason.PENDING_PARENT, passkey.rpName)
                 continue
             }
             val result = updatePasskey(vault, passkey, cipherId, accessToken, symmetricKey)
             when (result) {
                 is UploadItemResult.Success -> uploaded++
-                is UploadItemResult.Error -> failed++
+                is UploadItemResult.Error -> {
+                    failed++
+                    issues?.record(passkey.bitwardenCipherId ?: "passkey:${passkey.id}", SyncIssueKind.PASSKEY,
+                        SyncIssuePhase.UPDATE, SyncIssueReason.from(result.message), passkey.rpName)
+                }
             }
         }
 

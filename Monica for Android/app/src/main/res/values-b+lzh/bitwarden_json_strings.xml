@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bw_json_title">Bitwarden JSON</string>
+    <string name="bw_json_encrypted_title">密語加密 Bitwarden JSON</string>
+    <string name="bw_json_description">標準或密語加密 JSON，可載登入、筆記、銀行卡、身分及 SSH 金鑰。</string>
+    <string name="bw_json_boundary">匯入惟限本機庫；匯出可取本機庫或單一個人 Bitwarden 帳號。不含附件、Send 及封存狀態。有不可全存之內容，則止全次移轉；請逐項閱其報告。</string>
+    <string name="bw_json_import_hint">請選標準或密語加密之 Bitwarden JSON 檔。</string>
+    <string name="bw_json_file_password">檔案密語</string>
+    <string name="bw_json_check">驗檔</string>
+    <string name="bw_json_review">審閱 JSON 匯入</string>
+    <string name="bw_json_counts">%1$d 項 · %2$d 夾</string>
+    <string name="bw_json_blocked">全次移轉已止。請先處理下列諸項，再試。</string>
+    <string name="bw_json_ready">此檔可匯入。確認後，諸項悉入本機庫。</string>
+    <string name="bw_json_export_success">已匯出 %1$d 項、%2$d 夾。不含附件、Send 及封存狀態。</string>
+    <string name="bw_json_reason_invalid">資料無效或已毀</string>
+    <string name="bw_json_reason_unknown">欄位未識，不能全存</string>
+    <string name="bw_json_reason_type">此類項目未支援</string>
+    <string name="bw_json_reason_value">此值不能全存</string>
+    <string name="bw_json_reason_limit">逾檔案或處理之限</string>
+    <string name="bw_json_reason_organization">組織及集合內容暫未支援</string>
+    <string name="bw_json_reason_attachments">附件須另行移轉</string>
+    <string name="bw_json_reason_archived">此格式不能存封存狀態</string>
+    <string name="bw_json_reason_destination">此來源或目的地未支援</string>
+    <string name="bw_json_reason_pending">請先同步帳號待傳之變更，再匯出</string>
+    <string name="bw_json_reason_unavailable">所需來源資料或金鑰不可用</string>
+    <string name="bw_json_item">第 %1$d 項</string>
+    <string name="bw_json_plain_warning">未加密 JSON 內含可直讀之密語及私鑰。請慎存此檔。</string>
+</resources>

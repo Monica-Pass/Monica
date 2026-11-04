@@ -184,7 +184,7 @@
     <string name="unarchive_action">Przywróć</string>
     <string name="archive_password_confirmation_title">Zarchiwizować ten wpis?</string>
     <string name="archive_password_confirmation_message">Wpis trafi do archiwum. Możesz go później przywrócić.</string>
-    <string name="archive_empty_hint">Archiwum haseł jest puste</string>
+    <string name="archive_empty_hint">Archiwum jest puste</string>
     <string name="archive_item_subtitle_empty">Brak loginu i strony</string>
     <string name="group_mode_menu_title">Grupowanie stosów</string>
     <string name="group_mode_smart">Inteligentne</string>

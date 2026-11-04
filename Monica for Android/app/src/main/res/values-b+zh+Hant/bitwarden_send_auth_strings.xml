@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="bw_send_auth_title">存取控制</string>
+    <string name="bw_send_auth_none">無須驗證</string>
+    <string name="bw_send_auth_password">密碼</string>
+    <string name="bw_send_auth_email">電子郵件驗證</string>
+    <string name="bw_send_auth_email_label">電子郵件地址 %1$d</string>
+    <string name="bw_send_auth_add_email">新增電子郵件地址</string>
+    <string name="bw_send_auth_remove_email">移除電子郵件地址</string>
+    <string name="bw_send_auth_recipients_notice">收件者地址會傳送至伺服器以進行驗證。</string>
+    <string name="bw_send_auth_premium">電子郵件驗證需要目前帳號具備 Premium。</string>
+    <string name="bw_send_auth_unsupported">此伺服器未接受電子郵件驗證。請確認伺服器支援後再試。</string>
+    <string name="bw_send_auth_invalid">請檢查存取方式與電子郵件地址。</string>
+    <string name="bw_send_auth_unchanged">保留目前的驗證方式</string>
+    <string name="bw_send_auth_password_set">已設定密碼</string>
+    <string name="bw_send_drafts">Send 草稿</string>
+    <string name="bw_send_draft_save">儲存草稿</string>
+    <string name="bw_send_draft_saved">草稿已儲存在此裝置。</string>
+    <string name="bw_send_draft_local">僅儲存在此裝置，恢復後由你手動提交。</string>
+    <string name="bw_send_draft_resume">恢復草稿</string>
+    <string name="bw_send_draft_discard">捨棄草稿</string>
+    <string name="bw_send_draft_discard_confirm">捨棄此本機草稿及其已儲存的檔案？已發布的 Send 將保留。</string>
+    <string name="bw_send_draft_failed">無法儲存或讀取此草稿，現有副本已保留。</string>
+    <string name="bw_send_draft_unavailable">部分草稿無法開啟，仍保留在此裝置。</string>
+    <string name="bw_send_draft_reconcile">檢查上次提交</string>
+    <string name="bw_send_draft_uncertain">上次提交可能已送達伺服器，請先檢查再提交。</string>
+    <string name="bw_send_draft_not_found">無法確認上次提交的結果。捨棄此草稿前，請先檢查 Send 清單。</string>
+    <string name="bw_send_cache_unavailable">部分 Send 快取無法開啟，現有資料將保留。</string>
+    <string name="bw_send_draft_empty">沒有已儲存的草稿</string>
+    <string name="bw_send_draft_missing_file">已儲存的檔案遺失，請重新選取。</string>
+    <string name="bw_send_logout_drafts">此帳號的本機 Send 草稿及其已儲存檔案也會刪除。這些草稿無法透過重新登入復原。</string>
+</resources>

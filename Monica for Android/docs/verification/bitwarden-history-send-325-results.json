@@ -1,0 +1,523 @@
+{
+  "date": "2026-11-04",
+  "version": "1.0.325 unreleased",
+  "results": {
+    "main": {
+      "build": {
+        "log": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261104-bitwarden-history-send\\main-verified-build.log",
+        "run": "verified",
+        "edition": "main",
+        "seconds": 183.0520112,
+        "exitCode": 0
+      },
+      "jvm": {
+        "edition": "main",
+        "run": "verified",
+        "suites": [
+          {
+            "name": "BitwardenCipherDocumentTest",
+            "tests": 33,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 5.629,
+            "timestamp": "2026-11-04T09:26:50"
+          },
+          {
+            "name": "BitwardenCipherUploadProtocolTest",
+            "tests": 14,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 0.608,
+            "timestamp": "2026-11-04T09:26:56"
+          },
+          {
+            "name": "BitwardenPasswordHistoryTest",
+            "tests": 18,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 0.757,
+            "timestamp": "2026-11-04T09:26:57"
+          },
+          {
+            "name": "BitwardenLoginUriRulesTest",
+            "tests": 7,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 0.259,
+            "timestamp": "2026-11-04T09:26:56"
+          },
+          {
+            "name": "BitwardenSyncIssuesTest",
+            "tests": 5,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 0.012,
+            "timestamp": "2026-11-04T09:26:58"
+          },
+          {
+            "name": "BitwardenSendEditTest",
+            "tests": 10,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 0.617,
+            "timestamp": "2026-11-04T09:26:57"
+          }
+        ],
+        "totals": {
+          "tests": 87,
+          "skipped": 0,
+          "failures": 0,
+          "errors": 0,
+          "seconds": 7.882
+        }
+      },
+      "device": {
+        "edition": "main",
+        "run": "verified",
+        "expected": 58,
+        "exitCode": 0,
+        "driverSeconds": 193.724,
+        "passed": true,
+        "actual": 58,
+        "packages": [
+          {
+            "package": "takagi.ru.monica",
+            "file": "Monica-Android-x86_64-1.0.325-26110412-26.APK",
+            "sha256": "f8821c40cbe16e773c15894361ae38704eff8d123d94d1c018c6716e4fe4ccba",
+            "seconds": 3.07,
+            "version": "1.0.325-26110412-26",
+            "code": 12
+          },
+          {
+            "package": "takagi.ru.monica.test",
+            "file": "app-debug-androidTest.apk",
+            "sha256": "1c1008fbb55f90eab52f220517648dc88984e10f859691167c338bc416a8a62a",
+            "seconds": 3.31,
+            "version": "",
+            "code": 0
+          }
+        ],
+        "runnerSeconds": 174.591,
+        "completedMethods": [
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#sealedSourcesKeepPendingBaselineAndLatestObservationAndRejectAccountOrEnvelopeSwap",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#wrongWrappingKeyIdReportsIncompleteSyncAndRetainsReadableLocalData",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#freshRemoteRevisionDoesNotReplaceOriginalEditAuthorizationAndConflictKeepsUnknownData",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#unreadableFolderAndSendFieldsReportFailureAndRetainPreviousData",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#serverNormalizingEmptyFieldsAndLegacyPrimaryUriRetiresOnlyConfirmedEdit",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#incompleteLoginAcknowledgmentKeepsPendingArchiveOriginalSourceAndEditUntilRetry",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#noteCardAndIdentityEditsUseSameDocumentLayerAndKeepArchiveAndUnknownSections",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#incompleteSecureItemAcknowledgmentKeepsOriginalSourceAndDirtyState",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#explicitArchiveAndUnarchiveUseExistingPendingIntentAndPreserveUnknownFields",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#loginEditRetainsArchivedStateHistoryAndUnknownDataThroughColdPull",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#revocationBetweenSourceReadAndPutKeepsLocalEditAndDoesNotSendMutation",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#malformedSyncNeverTriggersDeletionAndFailedPutKeepsLocalChanges",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#syncIssuesIdentifyBrokenItemsAndVerifiedTitlesThenClearOnSuccessfulRetry",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#blobPartialAndFutureTypesNeverReplaceAnExistingProjectionOrCreateEmptyEntries",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#newLegacyLoginWithWrappingKeyIdAndPerItemKeyIsPulled",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#sessionRevocationAfterPutCannotPublishAcknowledgmentOrRetirePendingEdit",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#corruptEncryptedFieldsCannotReplaceReadableDataOrAcceptTheirRevision",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#lostCreateRebindsWithoutPostingAgainAndKeepsExplicitHistoryClear",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#syncIssuesIdentifyEachFailedUploadAndKeepPendingEditsUntilRetry",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#nativeHistoryComponentShowsHidesCancelsDeletesAndClearsStoredHistory",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#swappingSealedHistoryPayloadBetweenEntriesIsRejected",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#organizationHistoryUsesCipherVisibilityDefaultsAndStillEnforcesReadOnly",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#accountAndGlobalLockRejectMutationAndCorruptResponseCannotClearPendingState",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#offlineTransitionsRetainOpaqueWireAndRepeatedHiddenOccurrences",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#exactDuplicateDeleteAndClearRemainDirtyUntilAcknowledged",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#currentFieldsRetainRawValuesAndRulesWhileHiddenHistoryRequiresMdk",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#missingCreateHistoryEchoCannotResurrectClearMadeWhilePosting",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#delayedOldCleanRefreshCannotReplaceHistoryOfNewRevision",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#migration81To82RetainsOldSecureItemsAndAddsHistoryWithCascade",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#nativeCreateTransmitsOfflineHistoryAndLateClearRemainsPending",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#importsAllRemoteOccurrencesAsMdkAndRepeatRefreshDoesNotDuplicateRows",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#vaultLockThenUnlockCannotAuthorizeOldUploadOrDelete",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#clearAfterLostPostSurvivesStoreRecreationAndRebinding",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#uncertainCreateRebindMergesEveryLocalHistoryOccurrence",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#dirtyRefreshAndStaleEditorNeverOverwriteHistoryOrPassword",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#atomicOfflinePasswordTransitionsKeepAtoBtoAtoBAndDedupeOnlySameTransition",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#clearAfterPasswordChangeCannotResurrectOldPasswordOnNextUpload",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#unboundHistoryDeletionRetainsOtherOccurrenceAcrossLostPostAndRebind",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#explicitlyHiddenOrganizationHistoryCannotBeImportedOrPrepared",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#lateUploadAcknowledgementPreservesNewerClearAndAdvancesOnlyBaseline",
+          "takagi.ru.monica.bitwarden.BitwardenArchiveUriInstrumentedTest#archiveRejectsStaleItemLockedSessionAndReadOnlySourceWithoutChangingLocalState",
+          "takagi.ru.monica.bitwarden.BitwardenArchiveUriInstrumentedTest#sameRevisionUpgradeReplacesOnlyTheOldLocalUriMetadata",
+          "takagi.ru.monica.bitwarden.BitwardenArchiveUriInstrumentedTest#nativeUriRulesReachTheEditorAndEditedDefaultRetainsDuplicateRowsAndMetadata",
+          "takagi.ru.monica.bitwarden.BitwardenArchiveUriInstrumentedTest#archiveConfirmationCancelAndUnarchiveUseTheProductionActionAndLiveShelf",
+          "takagi.ru.monica.bitwarden.BitwardenArchiveUriInstrumentedTest#secureArchiveAndUnarchiveUseExplicitIntentPreserveAllFieldsAndMoveBetweenLists",
+          "takagi.ru.monica.bitwarden.BitwardenArchiveUriInstrumentedTest#perVaultRelockRejectsAnArchiveWaitingForItsTransaction",
+          "takagi.ru.monica.bitwarden.BitwardenArchiveUriInstrumentedTest#archivedZipRestoresAsAccessibleLocalDataWithoutSyncIntent",
+          "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#nativeTextAndFileEditorsSaveRealRowsWithPasswordRemovalDatePickerAndEnableSwitch",
+          "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#fileEditPreservesIdKeyAndCiphertextRejectsRemoteRevisionsAndReadsBackLostResponse",
+          "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#nativeNewSendUsesSharedContentPickerAndSavesCompleteDraft",
+          "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#textEditRoundTripsExactContentPasswordThreeStatesAndDatesThroughHttpAndRoom",
+          "takagi.ru.monica.bitwarden.BitwardenSyncIssuesUiInstrumentedTest#actualSettingsOpensSearchableAccountIssuesAndLockRevokesDialogAndLateWriter",
+          "takagi.ru.monica.bitwarden.BitwardenSshNativeSyncInstrumentedTest#createsNativeSshAndColdReloadsThenEditsAllMaterialAndCustomFields",
+          "takagi.ru.monica.bitwarden.BitwardenSshNativeSyncInstrumentedTest#serverFailureKeepsNativeSshChangesPendingAndNeverFallsBackToLogin",
+          "takagi.ru.monica.bitwarden.BitwardenSshNativeSyncInstrumentedTest#staleLocalRevisionNeverOverwritesRemoteAndRepeatedPullRetainsOneCompleteConflict",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationSyncTest#importsPersonalAndTwoTeamsWithAllSupportedCipherTypesAndAttachmentMetadata",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationSyncTest#editsUseOrganizationItemKeyAndPreserveCollectionsWhileReadonlyAndHttpFailuresStayPending",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationSyncTest#missingOrganizationKeysPreserveCachedDataAndPersonalSyncThenRecoverWithoutDuplicates"
+        ]
+      },
+      "large": {
+        "edition": "main",
+        "run": "large",
+        "expected": null,
+        "exitCode": 0,
+        "driverSeconds": 14.035,
+        "passed": true,
+        "actual": 1,
+        "packages": [
+          {
+            "package": "takagi.ru.monica",
+            "file": "Monica-Android-x86_64-1.0.325-26110412-25.APK",
+            "sha256": "1f760281b082845c36430f4004d304db79939ad82deeae198b0e42636552b8d8",
+            "seconds": 1.98,
+            "version": "1.0.325-26110412-25",
+            "code": 12
+          },
+          {
+            "package": "takagi.ru.monica.test",
+            "file": "app-debug-androidTest.apk",
+            "sha256": "328cd1ffa128ff324afd2d1cbf1e7f41f6cbbc44609eb079cdcbb9c9fe424123",
+            "seconds": 3.46,
+            "version": "",
+            "code": 0
+          }
+        ]
+      },
+      "sourceFileCount": 3500,
+      "sourceManifestSha256": "ba3ee3c28d4eb77c284de8a758deaf21b143d425bb22ffc096380ac07d43b02d"
+    },
+    "fdroid": {
+      "build": {
+        "seconds": 160.6735679,
+        "run": "verified",
+        "exitCode": 0,
+        "log": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261104-bitwarden-history-send\\fdroid-verified-build.log",
+        "edition": "fdroid"
+      },
+      "jvm": {
+        "edition": "fdroid",
+        "run": "verified",
+        "suites": [
+          {
+            "name": "BitwardenCipherDocumentTest",
+            "tests": 33,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 6.72,
+            "timestamp": "2026-11-04T09:30:01"
+          },
+          {
+            "name": "BitwardenCipherUploadProtocolTest",
+            "tests": 14,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 0.692,
+            "timestamp": "2026-11-04T09:30:08"
+          },
+          {
+            "name": "BitwardenPasswordHistoryTest",
+            "tests": 18,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 0.64,
+            "timestamp": "2026-11-04T09:30:09"
+          },
+          {
+            "name": "BitwardenLoginUriRulesTest",
+            "tests": 7,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 0.269,
+            "timestamp": "2026-11-04T09:30:08"
+          },
+          {
+            "name": "BitwardenSyncIssuesTest",
+            "tests": 5,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 0.012,
+            "timestamp": "2026-11-04T09:30:10"
+          },
+          {
+            "name": "BitwardenSendEditTest",
+            "tests": 10,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 0.721,
+            "timestamp": "2026-11-04T09:30:09"
+          }
+        ],
+        "totals": {
+          "tests": 87,
+          "skipped": 0,
+          "failures": 0,
+          "errors": 0,
+          "seconds": 9.054
+        }
+      },
+      "device": {
+        "edition": "fdroid",
+        "run": "verified",
+        "expected": 58,
+        "exitCode": 0,
+        "driverSeconds": 139.43,
+        "passed": true,
+        "actual": 58,
+        "packages": [
+          {
+            "package": "takagi.ru.monica.fdroid",
+            "file": "Monica-Android-x86_64-1.0.325.apk",
+            "sha256": "b3f3307a6929ba6a28da75c5648e5b2e6d4e96d45792dac99c3c18adf0fbed25",
+            "seconds": 1.56,
+            "version": "1.0.325",
+            "code": 32
+          },
+          {
+            "package": "takagi.ru.monica.fdroid.test",
+            "file": "app-debug-androidTest.apk",
+            "sha256": "b0f0a3176af9135a21d307a3c1dc85283f1790e3540ff65818f76a6fef0d7064",
+            "seconds": 0.88,
+            "version": "",
+            "code": 0
+          }
+        ],
+        "runnerSeconds": 132.314,
+        "completedMethods": [
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#sealedSourcesKeepPendingBaselineAndLatestObservationAndRejectAccountOrEnvelopeSwap",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#wrongWrappingKeyIdReportsIncompleteSyncAndRetainsReadableLocalData",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#freshRemoteRevisionDoesNotReplaceOriginalEditAuthorizationAndConflictKeepsUnknownData",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#unreadableFolderAndSendFieldsReportFailureAndRetainPreviousData",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#serverNormalizingEmptyFieldsAndLegacyPrimaryUriRetiresOnlyConfirmedEdit",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#incompleteLoginAcknowledgmentKeepsPendingArchiveOriginalSourceAndEditUntilRetry",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#noteCardAndIdentityEditsUseSameDocumentLayerAndKeepArchiveAndUnknownSections",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#incompleteSecureItemAcknowledgmentKeepsOriginalSourceAndDirtyState",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#explicitArchiveAndUnarchiveUseExistingPendingIntentAndPreserveUnknownFields",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#loginEditRetainsArchivedStateHistoryAndUnknownDataThroughColdPull",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#revocationBetweenSourceReadAndPutKeepsLocalEditAndDoesNotSendMutation",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#malformedSyncNeverTriggersDeletionAndFailedPutKeepsLocalChanges",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#syncIssuesIdentifyBrokenItemsAndVerifiedTitlesThenClearOnSuccessfulRetry",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#blobPartialAndFutureTypesNeverReplaceAnExistingProjectionOrCreateEmptyEntries",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#newLegacyLoginWithWrappingKeyIdAndPerItemKeyIsPulled",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#sessionRevocationAfterPutCannotPublishAcknowledgmentOrRetirePendingEdit",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#corruptEncryptedFieldsCannotReplaceReadableDataOrAcceptTheirRevision",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#lostCreateRebindsWithoutPostingAgainAndKeepsExplicitHistoryClear",
+          "takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest#syncIssuesIdentifyEachFailedUploadAndKeepPendingEditsUntilRetry",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#nativeHistoryComponentShowsHidesCancelsDeletesAndClearsStoredHistory",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#swappingSealedHistoryPayloadBetweenEntriesIsRejected",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#organizationHistoryUsesCipherVisibilityDefaultsAndStillEnforcesReadOnly",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#accountAndGlobalLockRejectMutationAndCorruptResponseCannotClearPendingState",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#offlineTransitionsRetainOpaqueWireAndRepeatedHiddenOccurrences",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#exactDuplicateDeleteAndClearRemainDirtyUntilAcknowledged",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#currentFieldsRetainRawValuesAndRulesWhileHiddenHistoryRequiresMdk",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#missingCreateHistoryEchoCannotResurrectClearMadeWhilePosting",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#delayedOldCleanRefreshCannotReplaceHistoryOfNewRevision",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#migration81To82RetainsOldSecureItemsAndAddsHistoryWithCascade",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#nativeCreateTransmitsOfflineHistoryAndLateClearRemainsPending",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#importsAllRemoteOccurrencesAsMdkAndRepeatRefreshDoesNotDuplicateRows",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#vaultLockThenUnlockCannotAuthorizeOldUploadOrDelete",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#clearAfterLostPostSurvivesStoreRecreationAndRebinding",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#uncertainCreateRebindMergesEveryLocalHistoryOccurrence",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#dirtyRefreshAndStaleEditorNeverOverwriteHistoryOrPassword",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#atomicOfflinePasswordTransitionsKeepAtoBtoAtoBAndDedupeOnlySameTransition",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#clearAfterPasswordChangeCannotResurrectOldPasswordOnNextUpload",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#unboundHistoryDeletionRetainsOtherOccurrenceAcrossLostPostAndRebind",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#explicitlyHiddenOrganizationHistoryCannotBeImportedOrPrepared",
+          "takagi.ru.monica.bitwarden.BitwardenPasswordHistoryStoreInstrumentedTest#lateUploadAcknowledgementPreservesNewerClearAndAdvancesOnlyBaseline",
+          "takagi.ru.monica.bitwarden.BitwardenArchiveUriInstrumentedTest#archiveRejectsStaleItemLockedSessionAndReadOnlySourceWithoutChangingLocalState",
+          "takagi.ru.monica.bitwarden.BitwardenArchiveUriInstrumentedTest#sameRevisionUpgradeReplacesOnlyTheOldLocalUriMetadata",
+          "takagi.ru.monica.bitwarden.BitwardenArchiveUriInstrumentedTest#nativeUriRulesReachTheEditorAndEditedDefaultRetainsDuplicateRowsAndMetadata",
+          "takagi.ru.monica.bitwarden.BitwardenArchiveUriInstrumentedTest#archiveConfirmationCancelAndUnarchiveUseTheProductionActionAndLiveShelf",
+          "takagi.ru.monica.bitwarden.BitwardenArchiveUriInstrumentedTest#secureArchiveAndUnarchiveUseExplicitIntentPreserveAllFieldsAndMoveBetweenLists",
+          "takagi.ru.monica.bitwarden.BitwardenArchiveUriInstrumentedTest#perVaultRelockRejectsAnArchiveWaitingForItsTransaction",
+          "takagi.ru.monica.bitwarden.BitwardenArchiveUriInstrumentedTest#archivedZipRestoresAsAccessibleLocalDataWithoutSyncIntent",
+          "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#nativeTextAndFileEditorsSaveRealRowsWithPasswordRemovalDatePickerAndEnableSwitch",
+          "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#fileEditPreservesIdKeyAndCiphertextRejectsRemoteRevisionsAndReadsBackLostResponse",
+          "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#nativeNewSendUsesSharedContentPickerAndSavesCompleteDraft",
+          "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#textEditRoundTripsExactContentPasswordThreeStatesAndDatesThroughHttpAndRoom",
+          "takagi.ru.monica.bitwarden.BitwardenSyncIssuesUiInstrumentedTest#actualSettingsOpensSearchableAccountIssuesAndLockRevokesDialogAndLateWriter",
+          "takagi.ru.monica.bitwarden.BitwardenSshNativeSyncInstrumentedTest#createsNativeSshAndColdReloadsThenEditsAllMaterialAndCustomFields",
+          "takagi.ru.monica.bitwarden.BitwardenSshNativeSyncInstrumentedTest#serverFailureKeepsNativeSshChangesPendingAndNeverFallsBackToLogin",
+          "takagi.ru.monica.bitwarden.BitwardenSshNativeSyncInstrumentedTest#staleLocalRevisionNeverOverwritesRemoteAndRepeatedPullRetainsOneCompleteConflict",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationSyncTest#importsPersonalAndTwoTeamsWithAllSupportedCipherTypesAndAttachmentMetadata",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationSyncTest#editsUseOrganizationItemKeyAndPreserveCollectionsWhileReadonlyAndHttpFailuresStayPending",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationSyncTest#missingOrganizationKeysPreserveCachedDataAndPersonalSyncThenRecoverWithoutDuplicates"
+        ]
+      },
+      "large": {
+        "edition": "fdroid",
+        "run": "large",
+        "expected": null,
+        "exitCode": 0,
+        "driverSeconds": 13.704,
+        "passed": true,
+        "actual": 1,
+        "packages": [
+          {
+            "package": "takagi.ru.monica.fdroid",
+            "file": "Monica-Android-x86_64-1.0.325.apk",
+            "sha256": "b3f3307a6929ba6a28da75c5648e5b2e6d4e96d45792dac99c3c18adf0fbed25",
+            "seconds": 1.56,
+            "version": "1.0.325",
+            "code": 32
+          },
+          {
+            "package": "takagi.ru.monica.fdroid.test",
+            "file": "app-debug-androidTest.apk",
+            "sha256": "b0f0a3176af9135a21d307a3c1dc85283f1790e3540ff65818f76a6fef0d7064",
+            "seconds": 0.88,
+            "version": "",
+            "code": 0
+          }
+        ]
+      },
+      "sourceFileCount": 3501,
+      "sourceManifestSha256": "57835b92224635329db03c633982e156aec461c60fcb9941e6cc609465986be7"
+    }
+  },
+  "cleanup": {
+    "removedUser": 13,
+    "restoredUser": 0,
+    "preservedUsers": [
+      0,
+      10,
+      11,
+      12
+    ],
+    "stoppedTaskEmulator": true,
+    "preservedDiskFiles": [
+      "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\config.ini",
+      "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img",
+      "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img.qcow2"
+    ]
+  },
+  "sharedEqualFiles": 90,
+  "intentionalDifferences": [
+    "app/src/main/java/takagi/ru/monica/utils/WebDavHelper.kt"
+  ],
+  "visual": {
+    "reviewed": true,
+    "limitations": [
+      "Test-host system bars excluded from application visual acceptance.",
+      "Main large used build25 with unchanged Send and screenshot source; final build26 passed the same functional method.",
+      "Scrolled content above the fixed toolbar is outside the visible viewport.",
+      "Screenshots show selected component states, not all application navigation."
+    ],
+    "main": {
+      "files": [
+        {
+          "path": "C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica for Android/docs/design/bitwarden-history-send-325/verified/send-management-1c71dcb8-f5b2-42c7-83a3-1c6bff6d7341-new-send-fields.png",
+          "sha256": "9fff8c468c4d061558acd3635eb632f1c24f26ec9da59e2c73cec5f7e6d33f03"
+        },
+        {
+          "path": "C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica for Android/docs/design/bitwarden-history-send-325/verified/send-management-1c71dcb8-f5b2-42c7-83a3-1c6bff6d7341-new-send-options.png",
+          "sha256": "0c2c081fc185ddef9ec895f0a8112b432e6453d37d6c2009483e4d4dd9664505"
+        },
+        {
+          "path": "C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica for Android/docs/design/bitwarden-history-send-325/verified/sync-issues-3922c906-e11b-4042-b955-31245698c43c-actual-issues-sheet.png",
+          "sha256": "ea3628de6c06975e4ede1702c2161636cdfa195baa01bdc12191bba0af7e2aa1"
+        },
+        {
+          "path": "C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica for Android/docs/design/bitwarden-history-send-325/large/send-management-f4ef1a6e-b9b9-4ed5-8764-80efddb371e2-new-send-fields.png",
+          "sha256": "1db0283fb35cc2d52b570fa12933324f60e7f2af48a81fd3a644ff1c71fd3b10"
+        },
+        {
+          "path": "C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica for Android/docs/design/bitwarden-history-send-325/large/send-management-f4ef1a6e-b9b9-4ed5-8764-80efddb371e2-new-send-options.png",
+          "sha256": "1931bfe908b661e227094ba8fe1da58377fe434a557bc6dcba1c9c5678ed63df"
+        }
+      ],
+      "notes": "Normal and 1.5x dark Send content/option text, wrapping and controls reviewed. Save button and Add content label visible. Sync issue sheet shows filtered item title, ID, upload stage and conflict reason with keyboard closed. Main images reviewed before context handoff; F-Droid images reviewed at closeout."
+    },
+    "fdroid": {
+      "files": [
+        {
+          "path": "C:/Users/joyins/Desktop/Monica-all/.codex-worktrees/monica-fdroid-nearby-steam/docs/design/bitwarden-history-send-325/verified/send-management-7598e8a1-9612-4a3c-b067-8fd2bca9539b-new-send-fields.png",
+          "sha256": "bc8979ca209f325a9967a9395ee854640c111c0b4a81feec4a6ff936acc27477"
+        },
+        {
+          "path": "C:/Users/joyins/Desktop/Monica-all/.codex-worktrees/monica-fdroid-nearby-steam/docs/design/bitwarden-history-send-325/verified/send-management-7598e8a1-9612-4a3c-b067-8fd2bca9539b-new-send-options.png",
+          "sha256": "d97cca5e151e359eed9d3aefddae1d1f589ba24967a2d4368085dd6c71372ce1"
+        },
+        {
+          "path": "C:/Users/joyins/Desktop/Monica-all/.codex-worktrees/monica-fdroid-nearby-steam/docs/design/bitwarden-history-send-325/verified/sync-issues-0a753b1d-a05a-4bfd-a121-6c2d51f596f6-actual-issues-sheet.png",
+          "sha256": "7d2680bf8a521802dc54da7110eaff07822a71fb089234af8219cef10bef70b8"
+        },
+        {
+          "path": "C:/Users/joyins/Desktop/Monica-all/.codex-worktrees/monica-fdroid-nearby-steam/docs/design/bitwarden-history-send-325/large/send-management-a0a9007d-cbbe-46c2-b002-a4aa3ed04455-new-send-fields.png",
+          "sha256": "165b5950d2618826ad0656c7defe3193fa4934ba98d0103d339a4a5b7813f074"
+        },
+        {
+          "path": "C:/Users/joyins/Desktop/Monica-all/.codex-worktrees/monica-fdroid-nearby-steam/docs/design/bitwarden-history-send-325/large/send-management-a0a9007d-cbbe-46c2-b002-a4aa3ed04455-new-send-options.png",
+          "sha256": "7ba35ad06503a822b5ab113d9df6561ac6009187850b6242506f07a490aba81a"
+        }
+      ],
+      "notes": "Normal and 1.5x dark Send content/option text, wrapping and controls reviewed. Save button and Add content label visible. Sync issue sheet shows filtered item title, ID, upload stage and conflict reason with keyboard closed. Main images reviewed before context handoff; F-Droid images reviewed at closeout."
+    },
+    "canvas": {
+      "reviewed": true,
+      "stage": "Added during closeout after implementation; not evidence of design-before-code compliance.",
+      "pages": [
+        "Send creation",
+        "Send access options",
+        "Per-item sync failures"
+      ],
+      "rendering": "Each single-screen local Canvas was opened and inspected in top/bottom views. Editor viewport is narrow; these are component sketches, not pixel-identical Android renderings.",
+      "files": [
+        {
+          "path": "C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica for Android/docs/design/bitwarden-history-send-325/canvas-options.json",
+          "sha256": "32a64d2675b4276af5b721f142301b48c46fa5c6b130b34d8d1d34886e41cd2f"
+        },
+        {
+          "path": "C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica for Android/docs/design/bitwarden-history-send-325/canvas-send.json",
+          "sha256": "dd2a0b8c0909a8f2949434531d5516bbdc1152ed4ce14005ced609434fb5c703"
+        },
+        {
+          "path": "C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica for Android/docs/design/bitwarden-history-send-325/canvas-sync.json",
+          "sha256": "772945c5ac59ff2223f4ba22326f1e808bde0da70fed650350c72dfc1e978219"
+        },
+        {
+          "path": "C:/Users/joyins/Desktop/Monica-all/.codex-worktrees/monica-fdroid-nearby-steam/docs/design/bitwarden-history-send-325/canvas-options.json",
+          "sha256": "32a64d2675b4276af5b721f142301b48c46fa5c6b130b34d8d1d34886e41cd2f"
+        },
+        {
+          "path": "C:/Users/joyins/Desktop/Monica-all/.codex-worktrees/monica-fdroid-nearby-steam/docs/design/bitwarden-history-send-325/canvas-send.json",
+          "sha256": "dd2a0b8c0909a8f2949434531d5516bbdc1152ed4ce14005ced609434fb5c703"
+        },
+        {
+          "path": "C:/Users/joyins/Desktop/Monica-all/.codex-worktrees/monica-fdroid-nearby-steam/docs/design/bitwarden-history-send-325/canvas-sync.json",
+          "sha256": "772945c5ac59ff2223f4ba22326f1e808bde0da70fed650350c72dfc1e978219"
+        }
+      ]
+    }
+  },
+  "initialFailures": [
+    {
+      "run": "main-full",
+      "executed": 55,
+      "failures": 7,
+      "runnerSeconds": 205.633,
+      "driverSeconds": 249.417
+    },
+    {
+      "run": "main-final",
+      "executed": 55,
+      "failures": 5,
+      "runnerSeconds": 146.851,
+      "driverSeconds": 151.667
+    }
+  ]
+}

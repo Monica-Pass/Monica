@@ -6,6 +6,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,7 +25,8 @@ enum class SyncTriggerReason {
     APP_RESUME,
     MANUAL,
     PERIODIC,
-    RETRY
+    RETRY,
+    REMOTE_NOTIFICATION
 }
 
 enum class SyncBlockReason {
@@ -78,6 +81,7 @@ data class VaultSyncStatus(
 private data class VaultRuntime(
     var isRunning: Boolean = false,
     var pendingReason: SyncTriggerReason? = null,
+    var pendingIsStillValid: (() -> Boolean)? = null,
     var lastPageEnterAt: Long = 0L,
     var lastAppResumeAt: Long = 0L,
     var lastSuccessAt: Long = 0L,
@@ -103,9 +107,9 @@ internal class BitwardenSyncOrchestrator(
     private val _statusByVault = MutableStateFlow<Map<Long, VaultSyncStatus>>(emptyMap())
     val statusByVault: StateFlow<Map<Long, VaultSyncStatus>> = _statusByVault.asStateFlow()
 
-    fun requestSync(vaultId: Long, reason: SyncTriggerReason, force: Boolean = false): Job {
+    fun requestSync(vaultId: Long, reason: SyncTriggerReason, force: Boolean = false, isStillValid: (() -> Boolean)? = null): Job {
         return scope.launch {
-            processRequest(vaultId = vaultId, reason = reason, force = force)
+            processRequest(vaultId = vaultId, reason = reason, force = force, isStillValid = isStillValid)
         }
     }
 
@@ -113,14 +117,15 @@ internal class BitwardenSyncOrchestrator(
         vaultId: Long,
         reason: SyncTriggerReason,
         delayMs: Long,
-        force: Boolean = false
+        force: Boolean = false,
+        isStillValid: (() -> Boolean)? = null,
     ) {
         if (delayMs <= 0L) {
-            requestSync(vaultId = vaultId, reason = reason, force = force)
+            requestSync(vaultId = vaultId, reason = reason, force = force, isStillValid = isStillValid)
             return
         }
         scope.launch {
-            scheduleDelayedRequest(vaultId = vaultId, reason = reason, delayMs = delayMs, force = force)
+            scheduleDelayedRequest(vaultId = vaultId, reason = reason, delayMs = delayMs, force = force, isStillValid = isStillValid)
         }
     }
 
@@ -137,7 +142,7 @@ internal class BitwardenSyncOrchestrator(
         }
     }
 
-    private suspend fun processRequest(vaultId: Long, reason: SyncTriggerReason, force: Boolean) {
+    private suspend fun processRequest(vaultId: Long, reason: SyncTriggerReason, force: Boolean, isStillValid: (() -> Boolean)?) {
         val taskId = SyncDiagnostics.nextTaskId("bw")
         val target = "bitwarden:$vaultId"
         val trigger = reason.name
@@ -154,18 +159,26 @@ internal class BitwardenSyncOrchestrator(
 
         mutex.withLock {
             val runtime = runtimeOf(vaultId)
+            if (!requestIsCurrent(isStillValid)) {
+                if (!runtime.isRunning && runtime.pendingReason == null) {
+                    updateStatus(vaultId) { it?.copy(queuedReason = null, nextRetryAt = null) }
+                }
+                SyncDiagnostics.skipped(taskId, target, trigger, "request_revoked")
+                return
+            }
 
             if (force) {
                 runtime.delayedRequestJob?.cancel()
                 runtime.delayedRequestJob = null
                 runtime.pendingReason = null
+                runtime.pendingIsStillValid = null
             }
 
             if (reason == SyncTriggerReason.LOCAL_MUTATION && !force) {
                 runtime.mutationDebounceJob?.cancel()
                 runtime.mutationDebounceJob = scope.launch {
                     delay(config.localMutationDebounceMs)
-                    requestSync(vaultId, SyncTriggerReason.LOCAL_MUTATION, force = true)
+                    requestSync(vaultId, SyncTriggerReason.LOCAL_MUTATION, force = true, isStillValid = isStillValid)
                 }
                 setQueued(vaultId, runtime, reason)
                 SyncDiagnostics.queued(
@@ -178,7 +191,7 @@ internal class BitwardenSyncOrchestrator(
             }
 
             if (runtime.isRunning) {
-                runtime.pendingReason = pickHigherPriority(runtime.pendingReason, reason)
+                queueRequest(runtime, reason, isStillValid)
                 setQueued(vaultId, runtime, runtime.pendingReason)
                 SyncDiagnostics.queued(
                     taskId = taskId,
@@ -246,19 +259,34 @@ internal class BitwardenSyncOrchestrator(
 
         if (!runNow) return
 
-        val outcome = try {
+        suspend fun executeCurrent(): SyncExecutionOutcome? = withContext(Dispatchers.IO) {
+            if (!requestIsCurrent(isStillValid)) return@withContext null
+            if (isStillValid == null) return@withContext executeSync(vaultId, silent)
+            coroutineScope {
+                val work = async(BitwardenNotificationSyncLease(isStillValid)) {
+                    if (!requestIsCurrent(isStillValid)) throw CancellationException("Notification request revoked")
+                    executeSync(vaultId, silent)
+                }
+                val guard = launch {
+                    while (work.isActive) {
+                        if (!requestIsCurrent(isStillValid)) { work.cancel(); break }
+                        delay(100)
+                    }
+                }
+                try { work.await() } catch (cancelled: CancellationException) {
+                    if (!requestIsCurrent(isStillValid)) null else throw cancelled
+                } finally { guard.cancel() }
+            }
+        }
+        val outcome: SyncExecutionOutcome? = try {
             // Passive auto reasons share one global lock across vaults.
             // Manual / mutation / forced retries stay free to run immediately.
             if (!force && isPassiveAutoReason(reason)) {
                 passiveAutoSyncMutex.withLock {
-                    withContext(Dispatchers.IO) {
-                        executeSync(vaultId, silent)
-                    }
+                    executeCurrent()
                 }
             } else {
-                withContext(Dispatchers.IO) {
-                    executeSync(vaultId, silent)
-                }
+                executeCurrent()
             }
         } catch (error: CancellationException) {
             SyncExecutionOutcome.RetryableError(error.message ?: strings.get(R.string.legacy_ui_sync_cancelled))
@@ -267,11 +295,19 @@ internal class BitwardenSyncOrchestrator(
         }
 
         var pendingReasonToReplay: SyncTriggerReason? = null
+        var pendingValidityToReplay: (() -> Boolean)? = null
         mutex.withLock {
             val runtime = runtimeOf(vaultId)
             runtime.isRunning = false
 
             when (outcome) {
+                null -> {
+                    runtime.retryJob?.cancel()
+                    runtime.retryJob = null
+                    runtime.retryAttempt = 0
+                    updateStatus(vaultId) { it?.copy(isRunning = false, queuedReason = runtime.pendingReason,
+                        nextRetryAt = null, retryAttempt = 0, lastOutcomeAt = nowProvider()) }
+                }
                 is SyncExecutionOutcome.Success -> {
                     runtime.retryAttempt = 0
                     runtime.lastSuccessAt = nowProvider()
@@ -304,9 +340,9 @@ internal class BitwardenSyncOrchestrator(
                 }
 
                 is SyncExecutionOutcome.RetryableError -> {
-                    if (runtime.retryAttempt < config.retryMaxAttempts) {
+                    if (requestIsCurrent(isStillValid) && runtime.retryAttempt < config.retryMaxAttempts) {
                         runtime.retryAttempt += 1
-                        scheduleRetryLocked(vaultId, runtime, outcome.message)
+                        scheduleRetryLocked(vaultId, runtime, outcome.message, reason, isStillValid)
                     } else {
                         updateStatus(vaultId) { old ->
                             val existing = old ?: VaultSyncStatus()
@@ -338,7 +374,9 @@ internal class BitwardenSyncOrchestrator(
             }
 
             pendingReasonToReplay = runtime.pendingReason
+            pendingValidityToReplay = runtime.pendingIsStillValid
             runtime.pendingReason = null
+            runtime.pendingIsStillValid = null
         }
 
         if (pendingReasonToReplay != null) {
@@ -346,12 +384,14 @@ internal class BitwardenSyncOrchestrator(
             requestSync(
                 vaultId = vaultId,
                 reason = replayReason,
-                force = shouldForceQueuedReplay(replayReason)
+                force = shouldForceQueuedReplay(replayReason),
+                isStillValid = pendingValidityToReplay,
             )
         }
 
         val executionStartedAt = startedAt ?: SyncDiagnostics.now()
         when (outcome) {
+            null -> SyncDiagnostics.skipped(taskId, target, trigger, "request_revoked")
             is SyncExecutionOutcome.Success -> SyncDiagnostics.success(
                 taskId = taskId,
                 target = target,
@@ -393,29 +433,35 @@ internal class BitwardenSyncOrchestrator(
         vaultId: Long,
         reason: SyncTriggerReason,
         delayMs: Long,
-        force: Boolean
+        force: Boolean,
+        isStillValid: (() -> Boolean)?,
     ) {
         mutex.withLock {
+            if (!requestIsCurrent(isStillValid)) return
             val runtime = runtimeOf(vaultId)
-            val effectiveReason = pickHigherPriority(runtime.pendingReason, reason)
-            runtime.pendingReason = effectiveReason
+            queueRequest(runtime, reason, isStillValid)
             runtime.delayedRequestJob?.cancel()
             runtime.delayedRequestJob = scope.launch {
                 delay(delayMs)
                 var reasonToRun: SyncTriggerReason? = null
+                var validityToRun: (() -> Boolean)? = null
                 mutex.withLock {
                     val delayedRuntime = runtimeOf(vaultId)
                     reasonToRun = delayedRuntime.pendingReason
+                    validityToRun = delayedRuntime.pendingIsStillValid
                     delayedRuntime.pendingReason = null
+                    delayedRuntime.pendingIsStillValid = null
                     delayedRuntime.delayedRequestJob = null
                 }
+                if (reasonToRun == null) return@launch
                 requestSync(
                     vaultId = vaultId,
                     reason = reasonToRun ?: reason,
-                    force = force
+                    force = force,
+                    isStillValid = validityToRun,
                 )
             }
-            setQueued(vaultId, runtime, effectiveReason)
+            setQueued(vaultId, runtime, runtime.pendingReason)
         }
     }
 
@@ -461,7 +507,8 @@ internal class BitwardenSyncOrchestrator(
 
             SyncTriggerReason.PAGE_ENTER,
             SyncTriggerReason.APP_RESUME,
-            SyncTriggerReason.PERIODIC -> false
+            SyncTriggerReason.PERIODIC,
+            SyncTriggerReason.REMOTE_NOTIFICATION -> false
         }
     }
 
@@ -508,7 +555,7 @@ internal class BitwardenSyncOrchestrator(
         }
     }
 
-    private fun scheduleRetryLocked(vaultId: Long, runtime: VaultRuntime, message: String) {
+    private fun scheduleRetryLocked(vaultId: Long, runtime: VaultRuntime, message: String, origin: SyncTriggerReason, isStillValid: (() -> Boolean)?) {
         val delayMs = min(
             config.retryMaxDelayMs,
             config.retryBaseDelayMs * (1L shl (runtime.retryAttempt - 1))
@@ -518,7 +565,11 @@ internal class BitwardenSyncOrchestrator(
         runtime.retryJob?.cancel()
         runtime.retryJob = scope.launch {
             delay(delayMs)
-            requestSync(vaultId, SyncTriggerReason.RETRY, force = true)
+            if (origin == SyncTriggerReason.REMOTE_NOTIFICATION) {
+                requestSync(vaultId, origin, isStillValid = isStillValid)
+            } else {
+                requestSync(vaultId, SyncTriggerReason.RETRY, force = true, isStillValid = isStillValid)
+            }
         }
         updateStatus(vaultId) { old ->
             val existing = old ?: VaultSyncStatus()
@@ -532,12 +583,15 @@ internal class BitwardenSyncOrchestrator(
         }
     }
 
-    private fun pickHigherPriority(
-        current: SyncTriggerReason?,
-        incoming: SyncTriggerReason
-    ): SyncTriggerReason {
-        if (current == null) return incoming
-        return if (priorityOf(incoming) >= priorityOf(current)) incoming else current
+    private fun requestIsCurrent(predicate: (() -> Boolean)?): Boolean =
+        predicate == null || runCatching(predicate).getOrDefault(false)
+
+    private fun queueRequest(runtime: VaultRuntime, incoming: SyncTriggerReason, predicate: (() -> Boolean)?) {
+        val current = runtime.pendingReason
+        if (current == null || !requestIsCurrent(runtime.pendingIsStillValid) || priorityOf(incoming) >= priorityOf(current)) {
+            runtime.pendingReason = incoming
+            runtime.pendingIsStillValid = predicate
+        }
     }
 
     private fun priorityOf(reason: SyncTriggerReason): Int = when (reason) {
@@ -547,6 +601,7 @@ internal class BitwardenSyncOrchestrator(
         SyncTriggerReason.APP_RESUME -> 3
         SyncTriggerReason.PAGE_ENTER -> 2
         SyncTriggerReason.PERIODIC -> 1
+        SyncTriggerReason.REMOTE_NOTIFICATION -> 4
     }
 
     private fun updateStatus(

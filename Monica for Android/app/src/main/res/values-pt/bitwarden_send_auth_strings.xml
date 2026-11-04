@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="bw_send_auth_title">Controlo de acesso</string>
+    <string name="bw_send_auth_none">Sem verificação</string>
+    <string name="bw_send_auth_password">Palavra-passe</string>
+    <string name="bw_send_auth_email">Verificação por e-mail</string>
+    <string name="bw_send_auth_email_label">Endereço de e-mail %1$d</string>
+    <string name="bw_send_auth_add_email">Adicionar endereço de e-mail</string>
+    <string name="bw_send_auth_remove_email">Remover endereço de e-mail</string>
+    <string name="bw_send_auth_recipients_notice">Os endereços dos destinatários são enviados para o servidor para verificação.</string>
+    <string name="bw_send_auth_premium">A verificação por e-mail requer Premium nesta conta.</string>
+    <string name="bw_send_auth_unsupported">Este servidor não aceitou a verificação por e-mail. Confirme se a suporta e tente novamente.</string>
+    <string name="bw_send_auth_invalid">Verifique o método de acesso e os endereços de e-mail.</string>
+    <string name="bw_send_auth_unchanged">Manter a verificação atual</string>
+    <string name="bw_send_auth_password_set">Palavra-passe definida</string>
+    <string name="bw_send_drafts">Rascunhos do Send</string>
+    <string name="bw_send_draft_save">Guardar rascunho</string>
+    <string name="bw_send_draft_saved">Rascunho guardado neste dispositivo.</string>
+    <string name="bw_send_draft_local">Guardado apenas neste dispositivo. Retome-o para o enviar manualmente.</string>
+    <string name="bw_send_draft_resume">Retomar</string>
+    <string name="bw_send_draft_discard">Descartar rascunho</string>
+    <string name="bw_send_draft_discard_confirm">Descartar este rascunho local e o ficheiro guardado? Os Sends publicados serão mantidos.</string>
+    <string name="bw_send_draft_failed">Não foi possível guardar ou ler este rascunho. A cópia existente é mantida.</string>
+    <string name="bw_send_draft_unavailable">Não foi possível abrir alguns rascunhos. São mantidos neste dispositivo.</string>
+    <string name="bw_send_draft_reconcile">Verificar o envio anterior</string>
+    <string name="bw_send_draft_uncertain">O envio anterior pode ter chegado ao servidor. Verifique-o antes de voltar a enviar.</string>
+    <string name="bw_send_draft_not_found">Não foi possível confirmar o envio anterior. Verifique os seus Sends antes de descartar este rascunho.</string>
+    <string name="bw_send_cache_unavailable">Não foi possível abrir alguns Sends em cache. Os dados existentes são mantidos.</string>
+    <string name="bw_send_draft_empty">Sem rascunhos guardados</string>
+    <string name="bw_send_draft_missing_file">O ficheiro guardado não foi encontrado. Selecione-o novamente.</string>
+    <string name="bw_send_logout_drafts">Os rascunhos locais do Send e os respetivos ficheiros guardados também serão eliminados. Iniciar sessão novamente não permite recuperar estes rascunhos.</string>
+</resources>

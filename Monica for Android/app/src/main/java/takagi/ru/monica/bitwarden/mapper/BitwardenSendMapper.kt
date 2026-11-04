@@ -13,6 +13,8 @@ import kotlinx.serialization.json.JsonObject
 import takagi.ru.monica.bitwarden.service.BitwardenSendDraft
 import takagi.ru.monica.bitwarden.service.BitwardenSendEdit
 import takagi.ru.monica.bitwarden.service.SendPasswordAction
+import takagi.ru.monica.bitwarden.service.SendAuthAction
+import takagi.ru.monica.bitwarden.service.BitwardenSendAuth
 
 object BitwardenSendMapper {
 
@@ -82,6 +84,8 @@ object BitwardenSendMapper {
                     accessCount = api.accessCount,
                     maxAccessCount = api.maxAccessCount,
                     hasPassword = api.password != null,
+                    authType = api.authType,
+                    recipientEmails = api.emails,
                     disabled = api.disabled,
                     hideEmail = api.hideEmail ?: false,
                     revisionDate = api.revisionDate,
@@ -118,22 +122,26 @@ object BitwardenSendMapper {
         hideEmail: Boolean,
         hiddenText: Boolean,
         deletionMillis: Long,
-        expirationMillis: Long?
+        expirationMillis: Long?,
+        authAction: SendAuthAction = SendAuthAction.KEEP,
+        recipientEmails: List<String> = emptyList(),
+        disabled: Boolean = false
     ): CreateTextSendPayload {
         val keyMaterial = BitwardenCrypto.generateSendKeyMaterial()
         val keyBase64 = Base64.encodeToString(keyMaterial, Base64.NO_WRAP)
         val sendKey = BitwardenCrypto.deriveSendKey(keyMaterial)
 
+        try {
         // Bitwarden Send 协议要求 Key 字段加密原始 16 字节密钥，而不是 Base64 文本。
         val encryptedKey = BitwardenCrypto.encrypt(keyMaterial, vaultKey)
         val encryptedName = BitwardenCrypto.encryptString(title, sendKey)
         val encryptedNotes = notes
-            ?.takeIf { it.isNotBlank() }
+            ?.takeIf { it.isNotEmpty() }
             ?.let { BitwardenCrypto.encryptString(it, sendKey) }
         val encryptedText = BitwardenCrypto.encryptString(text, sendKey)
 
         val passwordHash = password
-            ?.takeIf { it.isNotBlank() }
+            ?.takeIf { it.isNotEmpty() && authAction !in setOf(SendAuthAction.NONE, SendAuthAction.EMAIL) }
             ?.let { BitwardenCrypto.hashSendPassword(it, keyMaterial) }
 
         val request = SendCreateRequest(
@@ -142,7 +150,11 @@ object BitwardenSendMapper {
             name = encryptedName,
             notes = encryptedNotes,
             password = passwordHash,
-            disabled = false,
+            disabled = disabled,
+            authType = (if (authAction == SendAuthAction.KEEP) {
+                if (password.isNullOrEmpty()) SendAuthAction.NONE else SendAuthAction.PASSWORD
+            } else authAction).wireValue,
+            emails = if (authAction == SendAuthAction.EMAIL) BitwardenSendAuth.recipients(recipientEmails).joinToString(",") else null,
             hideEmail = hideEmail,
             deletionDate = Instant.ofEpochMilli(deletionMillis).toString(),
             expirationDate = expirationMillis?.let { Instant.ofEpochMilli(it).toString() },
@@ -162,6 +174,7 @@ object BitwardenSendMapper {
                 keyMaterial = keyMaterial
             )
         )
+        } finally { sendKey.clear(); keyMaterial.fill(0) }
     }
 
     fun buildCreateFileSendPayload(
@@ -175,7 +188,10 @@ object BitwardenSendMapper {
         maxAccessCount: Int?,
         hideEmail: Boolean,
         deletionMillis: Long,
-        expirationMillis: Long?
+        expirationMillis: Long?,
+        authAction: SendAuthAction = SendAuthAction.KEEP,
+        recipientEmails: List<String> = emptyList(),
+        disabled: Boolean = false
     ): CreateFileSendPayload {
         val keyBase64 = Base64.encodeToString(keyMaterial, Base64.NO_WRAP)
         val sendKey = BitwardenCrypto.deriveSendKey(keyMaterial)
@@ -184,10 +200,10 @@ object BitwardenSendMapper {
         val encryptedName = BitwardenCrypto.encryptString(title, sendKey)
         val encryptedFileName = BitwardenCrypto.encryptString(fileName, sendKey)
         val encryptedNotes = notes
-            ?.takeIf { it.isNotBlank() }
+            ?.takeIf { it.isNotEmpty() }
             ?.let { BitwardenCrypto.encryptString(it, sendKey) }
         val passwordHash = password
-            ?.takeIf { it.isNotBlank() }
+            ?.takeIf { it.isNotEmpty() && authAction !in setOf(SendAuthAction.NONE, SendAuthAction.EMAIL) }
             ?.let { BitwardenCrypto.hashSendPassword(it, keyMaterial) }
 
         val request = SendCreateRequest(
@@ -197,7 +213,11 @@ object BitwardenSendMapper {
             name = encryptedName,
             notes = encryptedNotes,
             password = passwordHash,
-            disabled = false,
+            disabled = disabled,
+            authType = (if (authAction == SendAuthAction.KEEP) {
+                if (password.isNullOrEmpty()) SendAuthAction.NONE else SendAuthAction.PASSWORD
+            } else authAction).wireValue,
+            emails = if (authAction == SendAuthAction.EMAIL) BitwardenSendAuth.recipients(recipientEmails).joinToString(",") else null,
             hideEmail = hideEmail,
             deletionDate = Instant.ofEpochMilli(deletionMillis).toString(),
             expirationDate = expirationMillis?.let { Instant.ofEpochMilli(it).toString() },
@@ -220,7 +240,7 @@ object BitwardenSendMapper {
         urlB64Key: String? = null
     ): String {
         val baseUrl = buildSendBaseUrl(serverUrl)
-        val key = urlB64Key?.takeIf { it.isNotBlank() } ?: Base64.encodeToString(
+        val key = urlB64Key?.takeIf { it.isNotEmpty() } ?: Base64.encodeToString(
             keyMaterial,
             Base64.URL_SAFE or Base64.NO_WRAP or Base64.NO_PADDING
         )
@@ -229,11 +249,10 @@ object BitwardenSendMapper {
 
     private fun buildSendBaseUrl(serverUrl: String): String {
         val normalized = serverUrl.trimEnd('/')
-        val lower = normalized.lowercase()
 
         return when {
-            lower.contains("bitwarden.eu") -> "https://send.bitwarden.eu/#/send/"
-            lower.contains("bitwarden.com") -> "https://send.bitwarden.com/#/send/"
+            takagi.ru.monica.bitwarden.api.BitwardenApiFactory.isOfficialEuServer(normalized) -> "https://send.bitwarden.eu/#/send/"
+            takagi.ru.monica.bitwarden.api.BitwardenApiFactory.isOfficialServer(normalized) -> "https://send.bitwarden.com/#/send/"
             else -> "$normalized/#/send/"
         }
     }

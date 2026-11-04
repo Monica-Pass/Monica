@@ -52,7 +52,7 @@ class ClearDataUseCase(
             onProgress(progress)
             val passwordSnapshot = if (selection.passwords) passwords.getAllPasswordEntries().first() else emptyList()
             val types = selection.itemTypes
-            val itemSnapshot = if (types.isNotEmpty()) items.getAllItems().first().filter { it.itemType in types } else emptyList()
+            val itemSnapshot = if (types.isNotEmpty()) items.getAllItemsIncludingArchived().first().filter { it.itemType in types } else emptyList()
             progress = progress.copy(totalEntries = passwordSnapshot.size + itemSnapshot.size)
             onProgress(progress)
 

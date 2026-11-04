@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bw_json_title">JSON Bitwarden</string>
+    <string name="bw_json_encrypted_title">JSON Bitwarden mã hóa bằng mật khẩu</string>
+    <string name="bw_json_description">JSON tiêu chuẩn hoặc mã hóa bằng mật khẩu cho đăng nhập, ghi chú, thẻ, danh tính và khóa SSH.</string>
+    <string name="bw_json_boundary">Chỉ nhập vào kho cục bộ. Xuất từ kho cục bộ hoặc một tài khoản Bitwarden cá nhân. Không bao gồm tệp đính kèm, Send và trạng thái lưu trữ. Nội dung không được hỗ trợ sẽ chặn toàn bộ quá trình chuyển; hãy xem từng mục được báo cáo.</string>
+    <string name="bw_json_import_hint">Chọn tệp JSON Bitwarden tiêu chuẩn hoặc mã hóa bằng mật khẩu.</string>
+    <string name="bw_json_file_password">Mật khẩu tệp</string>
+    <string name="bw_json_check">Kiểm tra tệp</string>
+    <string name="bw_json_review">Xem lại quá trình nhập JSON</string>
+    <string name="bw_json_counts">%1$d mục · %2$d thư mục</string>
+    <string name="bw_json_blocked">Toàn bộ quá trình chuyển đã bị chặn. Hãy xử lý tất cả mục bên dưới trước khi thử lại.</string>
+    <string name="bw_json_ready">Có thể nhập tệp. Xác nhận để thêm tất cả mục vào kho cục bộ.</string>
+    <string name="bw_json_export_success">Đã xuất %1$d mục và %2$d thư mục. Không bao gồm tệp đính kèm, Send và trạng thái lưu trữ.</string>
+    <string name="bw_json_reason_invalid">Dữ liệu không hợp lệ hoặc bị hỏng</string>
+    <string name="bw_json_reason_unknown">Trường không xác định; không thể giữ lại</string>
+    <string name="bw_json_reason_type">Loại mục không được hỗ trợ</string>
+    <string name="bw_json_reason_value">Không thể giữ nguyên đầy đủ giá trị này</string>
+    <string name="bw_json_reason_limit">Vượt quá giới hạn tệp hoặc xử lý</string>
+    <string name="bw_json_reason_organization">Không hỗ trợ nội dung của tổ chức và bộ sưu tập</string>
+    <string name="bw_json_reason_attachments">Tệp đính kèm cần được chuyển riêng</string>
+    <string name="bw_json_reason_archived">Định dạng này không giữ được trạng thái lưu trữ</string>
+    <string name="bw_json_reason_destination">Nguồn hoặc đích này không được hỗ trợ</string>
+    <string name="bw_json_reason_pending">Hoàn tất các thay đổi đang chờ trước khi xuất tài khoản</string>
+    <string name="bw_json_reason_unavailable">Dữ liệu nguồn hoặc khóa cần thiết không khả dụng</string>
+    <string name="bw_json_item">Mục %1$d</string>
+    <string name="bw_json_plain_warning">JSON không mã hóa chứa mật khẩu và khóa riêng có thể đọc được. Hãy lưu tệp ở nơi an toàn.</string>
+</resources>

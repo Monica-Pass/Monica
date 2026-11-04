@@ -159,6 +159,8 @@ private data class NoteBackupEntry(
     val notes: String = "",
     val itemData: String = "",
     val isFavorite: Boolean = false,
+    val isArchived: Boolean = false,
+    val archivedAt: Long? = null,
     val sortOrder: Int = 0,
     val imagePaths: String = "",
     val keepassDatabaseId: Long? = null,
@@ -178,6 +180,8 @@ private data class CardWalletBackupEntry(
     val itemData: String = "",
     val notes: String = "",
     val isFavorite: Boolean = false,
+    val isArchived: Boolean = false,
+    val archivedAt: Long? = null,
     val sortOrder: Int = 0,
     val imagePaths: String = "",
     val keepassDatabaseId: Long? = null,
@@ -224,6 +228,8 @@ private data class TotpBackupEntry(
     val itemData: String = "",
     val notes: String = "",
     val isFavorite: Boolean = false,
+    val isArchived: Boolean = false,
+    val archivedAt: Long? = null,
     val sortOrder: Int = 0,
     val imagePaths: String = "",
     val keepassDatabaseId: Long? = null,
@@ -314,6 +320,8 @@ private data class TrashSecureItemBackupEntry(
     val itemData: String = "",
     val notes: String = "",
     val isFavorite: Boolean = false,
+    val isArchived: Boolean = false,
+    val archivedAt: Long? = null,
     val imagePaths: String = "",
     val createdAt: Long = System.currentTimeMillis(),
     val updatedAt: Long = System.currentTimeMillis(),
@@ -1205,7 +1213,9 @@ class WebDavHelper(
         sortOrder: Int,
         imagePaths: String,
         createdAt: Long,
-        updatedAt: Long
+        updatedAt: Long,
+        isArchived: Boolean = false,
+        archivedAt: Long? = null,
     ): DataExportImportManager.ExportItem {
         return DataExportImportManager.ExportItem(
             // Used only to remap attachments and links. The applier allocates a new local ID.
@@ -1216,6 +1226,8 @@ class WebDavHelper(
             notes = notes,
             isFavorite = isFavorite,
             sortOrder = sortOrder,
+            isArchived = isArchived,
+            archivedAt = archivedAt,
             imagePaths = imagePaths,
             createdAt = createdAt,
             updatedAt = updatedAt,
@@ -2148,6 +2160,8 @@ class WebDavHelper(
                                 itemData = normalizeRestoredTotpItemData(item.itemData, item.title),
                                 notes = item.notes,
                                 isFavorite = item.isFavorite,
+                                isArchived = item.isArchived,
+                                archivedAt = item.archivedAt?.time,
                                 sortOrder = item.sortOrder,
                                 imagePaths = item.imagePaths,
                                 keepassDatabaseId = null,
@@ -2190,6 +2204,8 @@ class WebDavHelper(
                                 itemData = item.itemData,
                                 notes = item.notes,
                                 isFavorite = item.isFavorite,
+                                isArchived = item.isArchived,
+                                archivedAt = item.archivedAt?.time,
                                 sortOrder = item.sortOrder,
                                 imagePaths = item.imagePaths,
                                 keepassDatabaseId = null,
@@ -2253,6 +2269,8 @@ class WebDavHelper(
                                 notes = item.notes,
                                 itemData = item.itemData,
                                 isFavorite = item.isFavorite,
+                                isArchived = item.isArchived,
+                                archivedAt = item.archivedAt?.time,
                                 sortOrder = item.sortOrder,
                                 imagePaths = item.imagePaths,
                                 keepassDatabaseId = null,
@@ -2611,6 +2629,8 @@ class WebDavHelper(
                                         itemData = normalizedItemData,
                                         notes = item.notes,
                                         isFavorite = item.isFavorite,
+                                        isArchived = item.isArchived,
+                                        archivedAt = item.archivedAt?.time,
                                         imagePaths = item.imagePaths,
                                         createdAt = item.createdAt.time,
                                         updatedAt = item.updatedAt.time,
@@ -3456,7 +3476,9 @@ class WebDavHelper(
                                             isFavorite = row.optBoolean("isFavorite"), imagePaths = row.optString("imagePaths"),
                                             createdAt = row.getLong("createdAt"), updatedAt = row.getLong("updatedAt"),
                                             sortOrder = row.optInt("sortOrder"), isDeleted = true,
-                                            deletedAt = row.optLong("deletedAt").takeIf { it > 0L })
+                                            deletedAt = row.optLong("deletedAt").takeIf { it > 0L },
+                                            isArchived = row.optBoolean("isArchived"),
+                                            archivedAt = row.optLong("archivedAt").takeIf { it > 0L })
                                         secureItems += restored
                                     }
                                 }
@@ -3848,6 +3870,8 @@ class WebDavHelper(
                                                             updatedAt = java.util.Date(backup.updatedAt),
                                                             isDeleted = true,
                                                             deletedAt = backup.deletedAt?.let { java.util.Date(it) },
+                                                            isArchived = backup.isArchived,
+                                                            archivedAt = backup.archivedAt?.let { java.util.Date(it) },
                                                             categoryId = backup.categoryId
                                                         )
                                                         secureItemDao.insertItem(item)
@@ -5193,6 +5217,8 @@ class WebDavHelper(
                     imagePaths = stringField("imagePaths"),
                     createdAt = longField("createdAt", System.currentTimeMillis()),
                     updatedAt = longField("updatedAt", System.currentTimeMillis()),
+                    isArchived = booleanField("isArchived"),
+                    archivedAt = longField("archivedAt").takeIf { it > 0L },
                 ),
                 entry["categoryName"]?.jsonPrimitive?.contentOrNull
             )
@@ -5236,6 +5262,8 @@ class WebDavHelper(
                     imagePaths = stringField("imagePaths"),
                     createdAt = longField("createdAt", System.currentTimeMillis()),
                     updatedAt = longField("updatedAt", System.currentTimeMillis()),
+                    isArchived = booleanField("isArchived"),
+                    archivedAt = longField("archivedAt").takeIf { it > 0L },
                 ),
                 entry["categoryName"]?.jsonPrimitive?.contentOrNull
             )
@@ -5271,6 +5299,8 @@ class WebDavHelper(
                     imagePaths = stringField("imagePaths"),
                     createdAt = longField("createdAt", System.currentTimeMillis()),
                     updatedAt = longField("updatedAt", System.currentTimeMillis()),
+                    isArchived = booleanField("isArchived"),
+                    archivedAt = longField("archivedAt").takeIf { it > 0L },
                 ),
                 entry["categoryName"]?.jsonPrimitive?.contentOrNull
             )

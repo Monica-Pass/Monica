@@ -10,6 +10,38 @@ import uniffi.mdbx_ffi.*
 import java.util.UUID
 
 class DatabaseManagerTransferTest {
+    @Test fun keePassSparseAndLegacyDefaultNotesTransferButUnknownEmptyFieldDoesNot() = runBlocking {
+        val fixture = TransferFixture()
+        try {
+            val repo = DatabaseManagerRepository(fixture.context)
+            val source = fixture.keepass()
+            for (variant in listOf("sparse", "legacy", "favorite", "unknown")) {
+                val native = repo.keepass.openNativeBrowser(source.databaseId).getOrThrow()
+                val fields = listOf(KeePassFieldChange("Title", "${fixture.prefix}-$variant"),
+                    KeePassFieldChange("UserName", ""), KeePassFieldChange("Password", "", true), KeePassFieldChange("URL", ""),
+                    KeePassFieldChange("MonicaItemType", "NOTE"), KeePassFieldChange("MonicaItemData", "{\"content\":\"body\"}", true),
+                    KeePassFieldChange("Notes", "body"), KeePassFieldChange("MonicaItemNotes", "", true)) + when (variant) {
+                    "legacy" -> listOf(KeePassFieldChange("MonicaImagePaths", ""), KeePassFieldChange("MonicaIsFavorite", "false"))
+                    "favorite" -> listOf(KeePassFieldChange("MonicaIsFavorite", "true"))
+                    "unknown" -> listOf(KeePassFieldChange("Unknown empty custom field", "", true))
+                    else -> emptyList()
+                }
+                val entry = repo.keepass.createNativeEntry(source.databaseId, native.rootGroup.identity.groupUuid,
+                    fields, native.sourceRevision.sha256).getOrThrow()
+                val target = fixture.mdbx()
+                val result = repo.transfer(DatabaseManagerLocation(source), DatabaseManagerLocation(target), setOf(entry.identity.entryUuid.toString()), true)
+                assertEquals(result.failures.toString(), if (variant == "unknown") 0 else 1, result.completed)
+                val objects = repo.mdbx.nativeBrowser(target.databaseId).objects
+                if (variant == "unknown") assertTrue(objects.isEmpty()) else {
+                    assertEquals(1, objects.size)
+                    val payload = repo.mdbx.nativeObject(target.databaseId, objects.values.single().id).payload
+                    assertEquals(variant == "favorite", org.json.JSONObject(payload).getBoolean("is_favorite"))
+                }
+                assertNotNull(repo.keepass.openNativeBrowser(source.databaseId).getOrThrow().entry(entry.identity))
+            }
+        } finally { fixture.close() }
+    }
+
     @Test fun nativeFavoriteAndCreationDateTransferWithoutARoomProjection() = runBlocking {
         val fixture = TransferFixture()
         try {

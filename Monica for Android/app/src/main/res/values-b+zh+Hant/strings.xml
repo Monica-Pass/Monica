@@ -214,7 +214,7 @@
     <string name="unarchive_action">取消歸檔</string>
     <string name="archive_password_confirmation_title">確認歸檔此條目？</string>
     <string name="archive_password_confirmation_message">歸檔後該條目會移動到“歸檔”列表，之後可隨時還原。</string>
-    <string name="archive_empty_hint">暫無歸檔密碼</string>
+    <string name="archive_empty_hint">暫無歸檔項目</string>
     <string name="archive_item_subtitle_empty">無用戶名稱或網站資料</string>
     <string name="smart_deduplication">智能去重</string>
     <string name="smart_deduplication_desc">在“全部”視圖中合併來自不同來源的重複條目</string>

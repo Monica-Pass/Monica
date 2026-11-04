@@ -1771,6 +1771,9 @@ fun VaultV2Pane(
 	val passwordsReady by passwordViewModel.allPasswordsForUiReady.collectAsState()
 	val archivedPasswordEntries by passwordViewModel.archivedPasswordsForUi.collectAsState()
 	val archivedPasswordsReady by passwordViewModel.archivedPasswordsForUiReady.collectAsState()
+	val archivedSecureItems by remember(context) {
+		takagi.ru.monica.bitwarden.service.BitwardenSecureItemArchiveStore(context).observe()
+	}.collectAsState(initial = emptyList())
 	val categories by passwordViewModel.categories.collectAsState()
 	var showCreateCategoryDialog by remember { mutableStateOf(false) }
 	var selectedFolderKey by remember { mutableStateOf<String?>(null) }
@@ -2189,20 +2192,25 @@ fun VaultV2Pane(
 			sourcePasswordEntries
 		}
 	}
-	val visibleTotpItems = remember(totpItems, showOnlyLocalData, state.isArchiveView) {
-		if (state.isArchiveView) emptyList() else if (showOnlyLocalData) totpItems.filter { it.isVaultV2LocalOnly() } else totpItems
+	val visibleTotpItems = remember(totpItems, archivedSecureItems, showOnlyLocalData, state.isArchiveView) {
+		val source = if (state.isArchiveView) archivedSecureItems.filter { it.itemType == takagi.ru.monica.data.ItemType.TOTP } else totpItems
+		if (showOnlyLocalData) source.filter { it.isVaultV2LocalOnly() } else source
 	}
-	val visibleBankCardItems = remember(bankCardItems, showOnlyLocalData, state.isArchiveView) {
-		if (state.isArchiveView) emptyList() else if (showOnlyLocalData) bankCardItems.filter { it.isVaultV2LocalOnly() } else bankCardItems
+	val visibleBankCardItems = remember(bankCardItems, archivedSecureItems, showOnlyLocalData, state.isArchiveView) {
+		val source = if (state.isArchiveView) archivedSecureItems.filter { it.itemType == takagi.ru.monica.data.ItemType.BANK_CARD } else bankCardItems
+		if (showOnlyLocalData) source.filter { it.isVaultV2LocalOnly() } else source
 	}
-	val visibleDocumentItems = remember(documentItems, showOnlyLocalData, state.isArchiveView) {
-		if (state.isArchiveView) emptyList() else if (showOnlyLocalData) documentItems.filter { it.isVaultV2LocalOnly() } else documentItems
+	val visibleDocumentItems = remember(documentItems, archivedSecureItems, showOnlyLocalData, state.isArchiveView) {
+		val source = if (state.isArchiveView) archivedSecureItems.filter { it.itemType == takagi.ru.monica.data.ItemType.DOCUMENT } else documentItems
+		if (showOnlyLocalData) source.filter { it.isVaultV2LocalOnly() } else source
 	}
-	val visibleNoteItems = remember(noteItems, showOnlyLocalData, state.isArchiveView) {
-		if (state.isArchiveView) emptyList() else if (showOnlyLocalData) noteItems.filter { it.isVaultV2LocalOnly() } else noteItems
+	val visibleNoteItems = remember(noteItems, archivedSecureItems, showOnlyLocalData, state.isArchiveView) {
+		val source = if (state.isArchiveView) archivedSecureItems.filter { it.itemType == takagi.ru.monica.data.ItemType.NOTE } else noteItems
+		if (showOnlyLocalData) source.filter { it.isVaultV2LocalOnly() } else source
 	}
-	val visibleBillingAddressItems = remember(billingAddressItems, showOnlyLocalData, state.isArchiveView) {
-		if (state.isArchiveView) emptyList() else if (showOnlyLocalData) billingAddressItems.filter { it.isVaultV2LocalOnly() } else billingAddressItems
+	val visibleBillingAddressItems = remember(billingAddressItems, archivedSecureItems, showOnlyLocalData, state.isArchiveView) {
+		val source = if (state.isArchiveView) archivedSecureItems.filter { it.itemType == takagi.ru.monica.data.ItemType.BILLING_ADDRESS } else billingAddressItems
+		if (showOnlyLocalData) source.filter { it.isVaultV2LocalOnly() } else source
 	}
 	val visiblePasskeyItems = remember(passkeyItems, showOnlyLocalData, state.isArchiveView) {
 		if (state.isArchiveView) emptyList() else if (showOnlyLocalData) passkeyItems.filter { it.isVaultV2LocalOnly() } else passkeyItems
@@ -2256,7 +2264,7 @@ fun VaultV2Pane(
 	}
 	val displayedContentTypes = remember(quickFilterVisibleTypes, selectedAggregateTypes, state.isArchiveView) {
 		if (state.isArchiveView) {
-			setOf(PasswordPageContentType.PASSWORD)
+			setOf(PasswordPageContentType.PASSWORD, PasswordPageContentType.CARD_WALLET, PasswordPageContentType.NOTE, PasswordPageContentType.AUTHENTICATOR)
 		} else {
 			resolvePasswordPageDisplayedTypes(
 				visibleTypes = quickFilterVisibleTypes,
@@ -3346,7 +3354,7 @@ fun VaultV2Pane(
 		if (showOverview) {
 			VaultOverviewContent(
 				itemsReady = selectedPasswordEntriesReady,
-				allItems = allItems, archivedPasswords = archivedPasswordEntries, categories = categories,
+				allItems = allItems, archivedPasswords = archivedPasswordEntries, archivedSecureItems = archivedSecureItems, categories = categories,
 				keepassDatabases = keepassDatabases, mdbxDatabases = mdbxDatabases, bitwardenVaults = bitwardenVaults,
 				passwordViewModel = passwordViewModel, localKeePassViewModel = localKeePassViewModel,
 				settingsViewModel = settingsViewModel, appSettings = appSettings, securityManager = securityManager,

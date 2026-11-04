@@ -60,7 +60,7 @@ internal fun WalletPassFields(template: WalletPassTemplate,
     issuer: String, onIssuer: (String) -> Unit, expiry: String, onExpiry: (String) -> Unit,
     fields: Map<String, String>, onField: (String, String) -> Unit) {
     TemplateFormSection(stringResource(template.labelRes())) {
-        Column(Modifier.fillMaxWidth().testTag("wallet_pass_fields"), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        Column(Modifier.fillMaxWidth().testTag("wallet_pass_fields"), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             WalletProfileField(issuer, onIssuer, R.string.wallet_pass_issuer)
             WalletProfileField(number, onNumber, if (template == WalletPassTemplate.TRAVEL) R.string.wallet_pass_booking else R.string.wallet_pass_number)
             WalletProfileField(holder, onHolder, if (template == WalletPassTemplate.TRAVEL) R.string.wallet_pass_passenger else R.string.wallet_pass_holder)

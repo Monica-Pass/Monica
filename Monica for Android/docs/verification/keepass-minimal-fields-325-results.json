@@ -1,0 +1,71 @@
+{
+  "main": {
+    "sourceMatches": true,
+    "onlySupplementaryAndroidTestChanged": [
+      "app\\src\\androidTest\\java\\takagi\\ru\\monica\\keepass\\KeePassMinimalFieldsEditorTest.kt",
+      "app\\src\\androidTest\\java\\takagi\\ru\\monica\\keepass\\KeePassMinimalFieldsInstrumentedTest.kt"
+    ],
+    "productionApksUnchanged": true,
+    "jvm": {
+      "tests": 356,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "deviceMethods": 48,
+    "gitDiffCheck": true,
+    "packages": [
+      {
+        "package": "takagi.ru.monica",
+        "file": "Monica-Android-x86_64-1.0.325-26110412-36.APK",
+        "sha256": "b32d056999edbfaf7ee749a09724c70a0ae2f134d2e459bdd3136a2396e81393",
+        "seconds": 1.43,
+        "version": "1.0.325-26110412-36",
+        "code": 12
+      },
+      {
+        "package": "takagi.ru.monica.test",
+        "file": "app-debug-androidTest.apk",
+        "sha256": "14b841ea370a9ca3ea6e2c7c278da8b4b96af4f823d02ea9af3baa1308d8b562",
+        "seconds": 0.77,
+        "version": "",
+        "code": 0
+      }
+    ]
+  },
+  "fdroid": {
+    "sourceMatches": true,
+    "onlySupplementaryAndroidTestChanged": [
+      "app\\src\\androidTest\\java\\takagi\\ru\\monica\\keepass\\KeePassMinimalFieldsEditorTest.kt",
+      "app\\src\\androidTest\\java\\takagi\\ru\\monica\\keepass\\KeePassMinimalFieldsInstrumentedTest.kt"
+    ],
+    "productionApksUnchanged": true,
+    "jvm": {
+      "tests": 356,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "deviceMethods": 48,
+    "gitDiffCheck": true,
+    "packages": [
+      {
+        "package": "takagi.ru.monica.fdroid",
+        "file": "Monica-Android-x86_64-1.0.325.apk",
+        "sha256": "a14cd2c7c9ad3662eddfe17487a3bb8defda3dc3806f929b76b471c425dac9b9",
+        "seconds": 1.4,
+        "version": "1.0.325",
+        "code": 32
+      },
+      {
+        "package": "takagi.ru.monica.fdroid.test",
+        "file": "app-debug-androidTest.apk",
+        "sha256": "e5fc0d675706536466d4a2049addad64b2cf8d4f4faff9ab76849b0b7ffcfc1a",
+        "seconds": 1.18,
+        "version": "",
+        "code": 0
+      }
+    ]
+  },
+  "sharedFiles": 8
+}

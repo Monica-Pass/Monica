@@ -19,6 +19,30 @@ import takagi.ru.monica.attachments.model.Attachment
  */
 @Dao
 interface AttachmentDao {
+    /** Queue metadata only: no path, CEK, payload, URL, or remote attachment key is selected. */
+    @Query("""
+        SELECT 'attachment:' || a.id AS queueKey,
+            COALESCE(NULLIF(p.bitwarden_cipher_id, ''), NULLIF(s.bitwarden_cipher_id, ''),
+                'local:' || COALESCE(p.id, s.id)) || '/attachment:' || a.id AS itemId,
+            a.file_name AS title, 'ATTACHMENT' AS kind, 'CREATE' AS operation, 'PENDING' AS status
+        FROM attachments a
+        LEFT JOIN password_entries p ON a.parent_password_id = p.id AND a.parent_secure_item_id IS NULL
+        LEFT JOIN secure_items s ON a.parent_secure_item_id = s.id AND a.parent_password_id IS NULL
+        WHERE a.id IN (:ids) AND a.source = 'LOCAL' AND a.is_deleted = 0 AND (
+            (p.bitwarden_vault_id = :vaultId AND p.isDeleted = 0 AND p.keepassDatabaseId IS NULL AND p.mdbx_database_id IS NULL)
+            OR (s.bitwarden_vault_id = :vaultId AND s.isDeleted = 0 AND s.keepass_database_id IS NULL AND s.mdbx_database_id IS NULL)
+        )
+        ORDER BY a.id
+    """)
+    fun observeBitwardenPendingMetadata(vaultId: Long, ids: List<Long>): Flow<List<takagi.ru.monica.data.bitwarden.BitwardenSyncQueueRecord>>
+
+    @Query("SELECT COUNT(*) FROM attachments WHERE parent_password_id IN (:ids) AND is_deleted = 0")
+    suspend fun countExportMetadataByPasswords(ids: List<Long>): Int
+
+    @Query("SELECT COUNT(*) FROM attachments WHERE parent_secure_item_id IN (:ids) AND is_deleted = 0")
+    suspend fun countExportMetadataBySecureItems(ids: List<Long>): Int
+
+
 
     @Query("SELECT * FROM attachments WHERE parent_password_id IN (:ids) AND is_deleted = 0 ORDER BY created_at, id")
     suspend fun getActiveByParents(ids: List<Long>): List<Attachment>

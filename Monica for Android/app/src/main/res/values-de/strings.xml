@@ -215,7 +215,7 @@
     <string name="unarchive_action">Archivieren</string>
     <string name="archive_password_confirmation_title">Dieses Element archivieren?</string>
     <string name="archive_password_confirmation_message">Nach der Archivierung wird dieses Element in die Archivierung verschoben. Sie können es später wiederherstellen.</string>
-    <string name="archive_empty_hint">Noch keine archivierten Passwörter</string>
+    <string name="archive_empty_hint">Noch keine archivierten Einträge</string>
     <string name="archive_item_subtitle_empty">Kein Benutzername oder Website</string>
     <string name="group_mode_menu_title">Stapelstil</string>
     <string name="group_mode_smart">Smart (Notizen &gt; Web &gt; App &gt; Titel)</string>

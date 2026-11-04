@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_settings_security">安全</string>
+    <string name="bitwarden_settings_queue_hint">察待同步之項與未成詳情</string>
+    <string name="bitwarden_account_web_settings_hint">主密碼、二步登入及訂閱，皆於網頁管理</string>
+    <string name="bitwarden_settings_select_account">設為現用帳</string>
+    <string name="bitwarden_settings_account_management">帳號管理</string>
+    <string name="bitwarden_queue_help">示本機待同步之更改，及最近同步之果。列空，不謂已與伺服器相合。</string>
+    <string name="bitwarden_queue_empty_local">本機無待同步之更改</string>
+    <string name="bitwarden_queue_locked">解鎖此帳，方可察待同步之項</string>
+    <string name="bitwarden_queue_loading_error">待同步之項不可讀，請重開此頁再試</string>
+    <string name="bitwarden_queue_awaiting_confirmation">待伺服器確認</string>
+    <string name="bitwarden_queue_idle">現無同步之務</string>
+</resources>

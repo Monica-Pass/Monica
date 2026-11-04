@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="bw_send_auth_title">访问控制</string>
+    <string name="bw_send_auth_none">无需验证</string>
+    <string name="bw_send_auth_password">密码</string>
+    <string name="bw_send_auth_email">邮件验证</string>
+    <string name="bw_send_auth_email_label">邮件地址 %1$d</string>
+    <string name="bw_send_auth_add_email">添加邮件地址</string>
+    <string name="bw_send_auth_remove_email">移除邮件地址</string>
+    <string name="bw_send_auth_recipients_notice">收件人地址会发送给服务端用于验证。</string>
+    <string name="bw_send_auth_premium">邮件验证需要当前账号具有 Premium。</string>
+    <string name="bw_send_auth_unsupported">此服务端未接受邮件验证。请确认服务端支持后重试。</string>
+    <string name="bw_send_auth_invalid">请检查访问方式和邮件地址。</string>
+    <string name="bw_send_auth_unchanged">保留当前验证方式</string>
+    <string name="bw_send_auth_password_set">已设置密码</string>
+    <string name="bw_send_drafts">Send 草稿</string>
+    <string name="bw_send_draft_save">保存草稿</string>
+    <string name="bw_send_draft_saved">草稿已保存在本机。</string>
+    <string name="bw_send_draft_local">仅保存在本机，恢复后由你手动提交。</string>
+    <string name="bw_send_draft_resume">恢复草稿</string>
+    <string name="bw_send_draft_discard">放弃草稿</string>
+    <string name="bw_send_draft_discard_confirm">放弃此本地草稿及其已保存的文件？已发布的 Send 会保留。</string>
+    <string name="bw_send_draft_failed">无法保存或读取此草稿，已有副本已保留。</string>
+    <string name="bw_send_draft_unavailable">部分草稿无法打开，仍保留在本机。</string>
+    <string name="bw_send_draft_reconcile">检查上次提交</string>
+    <string name="bw_send_draft_uncertain">上次提交可能已到达服务端，请先检查再提交。</string>
+    <string name="bw_send_draft_not_found">无法确认上次提交的结果。放弃此草稿前，请先检查 Send 列表。</string>
+    <string name="bw_send_cache_unavailable">部分 Send 缓存无法打开，现有数据会保留。</string>
+    <string name="bw_send_draft_empty">没有已保存的草稿</string>
+    <string name="bw_send_draft_missing_file">已保存的文件缺失，请重新选择。</string>
+    <string name="bw_send_logout_drafts">此账号的本地 Send 草稿及其已保存文件也会被删除。这些草稿无法通过重新登录恢复。</string>
+</resources>

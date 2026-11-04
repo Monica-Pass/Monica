@@ -88,7 +88,7 @@ internal class DatabaseExportSnapshotLoader(context: Context) {
         }
         val roomPasswords = (db.passwordEntryDao().getAllPasswordEntriesSync() + db.passwordEntryDao().getDeletedEntriesSync())
             .distinctBy { it.id }.filter(source::contains)
-        val roomItems = (db.secureItemDao().getAllItems().first() + db.secureItemDao().getDeletedItemsSync())
+        val roomItems = (db.secureItemDao().getAllItemsIncludingArchived().first() + db.secureItemDao().getDeletedItemsSync())
             .distinctBy { it.id }.filter(source::contains)
         val roomKeys = db.passkeyDao().getAllPasskeysSync().filter(source::contains)
         val fields = roomPasswords.map { it.id }.chunked(500).flatMap { db.customFieldDao().getFieldsByEntryIds(it) }

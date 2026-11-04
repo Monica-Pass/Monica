@@ -16,6 +16,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -69,6 +73,7 @@ import takagi.ru.monica.utils.OperationLogger
  * 4. 密码条目和文件夹的访问
  * 5. 冲突解决
  */
+@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 class BitwardenViewModel(application: Application) : AndroidViewModel(application) {
     
     companion object {
@@ -83,6 +88,7 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
     // 仓库
     private val strings = AppLocaleStringResolver(application)
     private val repository = BitwardenRepository.getInstance(application)
+    val syncIssueReports = repository.syncIssueReports
     private val accountService = takagi.ru.monica.bitwarden.service.BitwardenAccountService(application)
 
     internal suspend fun startAccountRegistration(server: String, email: String, name: String?, tls: takagi.ru.monica.bitwarden.api.BitwardenTlsConfig?) =
@@ -195,7 +201,7 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
     private val syncOrchestrator = BitwardenSyncOrchestrator(
         strings = strings,
         scope = viewModelScope,
-        isAutoSyncEnabled = { _isAutoSyncEnabled.value },
+        isAutoSyncEnabled = { repository.isAutoSyncEnabled },
         checkNetwork = { evaluateNetworkGate() },
         isVaultUnlocked = { vaultId -> repository.isVaultUnlocked(vaultId) },
         executeSync = { vaultId, silent -> runSync(vaultId = vaultId, silent = silent) }
@@ -221,7 +227,156 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
         initialValue = emptyMap()
     )
     
+
+    private val syncQueueReader by lazy {
+        takagi.ru.monica.bitwarden.sync.BitwardenSyncQueueReader(
+            takagi.ru.monica.data.PasswordDatabase.getDatabase(application), repository, application)
+    }
+    internal val syncQueueByVault = syncQueueReader.observeAll().stateIn(
+        viewModelScope, SharingStarted.WhileSubscribed(0, 0), emptyMap())
+    internal val syncQueueSummary = combine(syncQueueByVault, syncIssueReports, vaults,
+        takagi.ru.monica.security.SessionManager.lockGeneration,
+        takagi.ru.monica.security.SessionManager.isUnlocked) { snapshots, reports, accounts, _, _ ->
+        takagi.ru.monica.bitwarden.sync.summarizeBitwardenQueue(
+            snapshots.values.filter { snapshot -> syncQueueReader.isCurrent(snapshot, accounts.firstOrNull { it.id == snapshot.vaultId }) },
+            reports)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(0, 0),
+        takagi.ru.monica.bitwarden.sync.BitwardenSyncQueueSummary())
+
+    internal fun isSyncQueueCurrent(snapshot: takagi.ru.monica.bitwarden.sync.BitwardenSyncQueueSnapshot): Boolean =
+        syncQueueReader.isCurrent(snapshot, vaults.value.firstOrNull { it.id == snapshot.vaultId })
+
+    private val sendDraftStore = takagi.ru.monica.bitwarden.service.BitwardenSendDraftStore(getApplication())
+    private val _localSendDrafts = MutableStateFlow<List<takagi.ru.monica.bitwarden.service.BitwardenSendDraftStore.Draft>>(emptyList())
+    val localSendDrafts = _localSendDrafts.asStateFlow()
+    private val _localSendDraftsUnavailable = MutableStateFlow(false)
+    val localSendDraftsUnavailable = _localSendDraftsUnavailable.asStateFlow()
+    private var sendDraftReadVersion = 0L
+    private var storedSendSubmissionJob: Job? = null
+
+    fun leaveSendEditorForeground() {
+        storedSendSubmissionJob?.cancel()
+        storedSendSubmissionJob = null
+        sendDraftReadVersion++
+        _localSendDrafts.value = emptyList()
+        if (_sendState.value is SendState.Creating) _sendState.value = SendState.Idle
+    }
+
+    fun refreshLocalSendDrafts() { viewModelScope.launch { readLocalSendDrafts() } }
+
+    private suspend fun readLocalSendDrafts() {
+        val version = ++sendDraftReadVersion
+        val lock = takagi.ru.monica.security.SessionManager.lockGeneration.value
+        if (!takagi.ru.monica.security.SessionManager.isUnlocked.value) {
+            _localSendDrafts.value = emptyList(); _localSendDraftsUnavailable.value = false
+            return
+        }
+        val accounts = repository.getAllVaults().filter { !it.isLocked && repository.isVaultUnlocked(it.id) }
+        val generations = accounts.associate { it.id to repository.getVaultSessionGeneration(it.id) }
+        val drafts = mutableListOf<takagi.ru.monica.bitwarden.service.BitwardenSendDraftStore.Draft>()
+        var unavailable = false
+        for (vault in accounts) {
+            try { sendDraftStore.listDetailed(vault.id).also { drafts += it.drafts; unavailable = unavailable || it.unavailable > 0 } }
+            catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+            catch (_: Exception) { unavailable = true }
+        }
+        val currentAccounts = repository.getAllVaults().associateBy { it.id }
+        if (version != sendDraftReadVersion || !takagi.ru.monica.security.SessionManager.isUnlocked.value ||
+            takagi.ru.monica.security.SessionManager.lockGeneration.value != lock) return
+        val current = drafts.filter { draft ->
+            val vault = currentAccounts[draft.vaultId]
+            vault != null && !vault.isLocked && repository.isVaultUnlocked(vault.id) &&
+                generations[vault.id] == repository.getVaultSessionGeneration(vault.id) &&
+                draft.account == takagi.ru.monica.bitwarden.service.BitwardenSendAccountIdentity.from(vault)
+        }
+        _localSendDrafts.value = current.sortedByDescending { it.updatedAt }
+        _localSendDraftsUnavailable.value = unavailable
+    }
+
+    fun discardLocalSendDraft(saved: takagi.ru.monica.bitwarden.service.BitwardenSendDraftStore.Draft) {
+        viewModelScope.launch {
+            try { sendDraftStore.discard(saved.vaultId, saved.id); readLocalSendDrafts() }
+            catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+            catch (_: Exception) { _events.emit(BitwardenEvent.ShowError(strings.get(R.string.bw_send_draft_failed))) }
+        }
+    }
+
+    /** Reload the encrypted record before every manual attempt; never submit on startup or reconnect. */
+    fun submitStoredSendDraft(selected: takagi.ru.monica.bitwarden.service.BitwardenSendDraftStore.Draft) {
+        if (storedSendSubmissionJob?.isActive == true) return
+        storedSendSubmissionJob = viewModelScope.launch {
+            _sendState.value = SendState.Creating
+            try {
+                val saved = sendDraftStore.load(selected.vaultId, selected.id)
+                val draft = saved.draft
+                if (!saved.submissionUncertain) {
+                    draft.validate(System.currentTimeMillis(), saved.type == BitwardenSend.TYPE_TEXT)
+                    require(saved.accessLimitInput.isNullOrEmpty() || saved.accessLimitInput.toIntOrNull()?.let { it > 0 } == true)
+                }
+                val result = when {
+                    saved.submissionUncertain -> repository.reconcileSendDraft(saved)
+                    saved.original != null -> repository.updateSend(saved.original, draft) {
+                        sendDraftStore.markSubmitting(saved.vaultId, saved.id, it)
+                    }
+                    saved.type == BitwardenSend.TYPE_FILE -> {
+                        val file = requireNotNull(saved.file)
+                        repository.createFileSend(saved.vaultId, draft.title, null, file.name, draft.notes,
+                            draft.password, draft.maxAccessCount, draft.hideEmail, draft.deletionMillis, draft.expirationMillis,
+                            authAction = draft.authAction, recipientEmails = draft.recipientEmails, disabled = draft.disabled,
+                            sourceSize = file.size, source = { sendDraftStore.openFile(saved.vaultId, saved.id) },
+                            beforeRequest = { sendDraftStore.markSubmitting(saved.vaultId, saved.id, it) },
+                            onUploaded = { sendDraftStore.markFileUploadConfirmed(saved.vaultId, saved.id) })
+                    }
+                    else -> repository.createTextSend(saved.vaultId, draft.title, draft.text, draft.notes, draft.password,
+                        draft.maxAccessCount, draft.hideEmail, draft.hiddenText, draft.deletionMillis, draft.expirationMillis,
+                        authAction = draft.authAction, recipientEmails = draft.recipientEmails, disabled = draft.disabled,
+                        beforeRequest = { sendDraftStore.markSubmitting(saved.vaultId, saved.id, it) })
+                }
+                when (result) {
+                    is BitwardenRepository.SendMutationResult.Success -> {
+                        // A lock/account change prevents cleanup and leaves an uncertain draft recoverable.
+                        sendDraftStore.discard(saved.vaultId, saved.id)
+                        refreshSendsAcrossVaults()
+                        if (_activeVault.value?.id == saved.vaultId) _sends.value = repository.getSends(saved.vaultId)
+                        _sendState.value = SendState.Idle
+                        _sendCreateSuccessVersion.value += 1
+                        requestLocalMutationSync(saved.vaultId)
+                        _events.emit(BitwardenEvent.ShowSuccess(strings.get(R.string.send_saved)))
+                    }
+                    is BitwardenRepository.SendMutationResult.Error -> {
+                        if (!result.uncertain) sendDraftStore.markKnownFailure(saved.vaultId, saved.id)
+                        _sendState.value = SendState.Error(result.message)
+                        _events.emit(BitwardenEvent.ShowError(result.message))
+                    }
+                    is BitwardenRepository.SendMutationResult.Deleted -> error("Unexpected Send deletion")
+                }
+                readLocalSendDrafts()
+            } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+            catch (_: Exception) {
+                _sendState.value = if (takagi.ru.monica.security.SessionManager.isUnlocked.value)
+                    SendState.Error(strings.get(R.string.bw_send_draft_failed)) else SendState.Locked
+            }
+        }
+    }
+
+
     init {
+        viewModelScope.launch {
+            repository.getAllVaultsFlow().map { it.map { vault -> vault.id }.sorted() }.distinctUntilChanged()
+                .flatMapLatest { repository.observeSendsForVaults(it) }.collect { rows ->
+                    _sendsAcrossVaults.value = rows
+                    _sends.value = rows.filter { it.vaultId == _activeVault.value?.id }
+                }
+        }
+        viewModelScope.launch {
+            combine(_vaults, _unlockStateByVault, takagi.ru.monica.security.SessionManager.isUnlocked,
+                takagi.ru.monica.security.SessionManager.lockGeneration) { _, _, _, _ -> Unit }
+                .collectLatest {
+                    _localSendDrafts.value = emptyList()
+                    readLocalSendDrafts()
+                }
+        }
+
         // 加载永不锁定设置
         _isNeverLockEnabled.value = repository.isNeverLockEnabled
         _isAutoSyncEnabled.value = repository.isAutoSyncEnabled
@@ -497,8 +652,8 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
         unlock(vaultId, masterPassword)
     }
 
-    fun unlock(vaultId: Long, masterPassword: String) {
-        val vault = resolveVault(vaultId) ?: return
+    fun unlock(vaultId: Long, masterPassword: String, onResult: ((Boolean) -> Unit)? = null) {
+        val vault = resolveVault(vaultId) ?: run { onResult?.invoke(false); return }
         val isActiveVault = _activeVault.value?.id == vaultId
         
         viewModelScope.launch {
@@ -516,6 +671,7 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
                         loadVaultData(vault.id)
                         maybeTriggerSilentAutoSync(vault, trigger = "unlock")
                     }
+                    onResult?.invoke(true)
                     _events.emit(BitwardenEvent.ShowSuccess(strings.get(R.string.legacy_ui_vault_unlocked)))
                 }
                 
@@ -525,6 +681,7 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
                         _unlockState.value = UnlockState.Locked
                         clearActiveVaultContent(sendState = SendState.Locked)
                     }
+                    onResult?.invoke(false)
                     _events.emit(BitwardenEvent.ShowError(result.message))
                 }
             }
@@ -734,6 +891,12 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
     /**
      * 指定 vault 的手动同步请求（用于页面顶部“一键同步”按钮）。
      */
+    internal fun requestNotificationSync(vaultId: Long, isStillValid: () -> Boolean) {
+        if (!isStillValid() || !takagi.ru.monica.security.SessionManager.isUnlocked.value ||
+            !repository.isAutoSyncEnabled || !repository.isVaultUnlocked(vaultId)) return
+        requestSyncWithStartupGrace(vaultId, SyncTriggerReason.REMOTE_NOTIFICATION, isStillValid = isStillValid)
+    }
+
     fun requestManualSync(vaultId: Long) {
         requestSyncWithStartupGrace(
             vaultId = vaultId,
@@ -848,7 +1011,7 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
             trigger = SyncTrigger.MANUAL,
             priority = SyncPriority.MANUAL,
             mode = SyncMode.FOREGROUND,
-            networkPolicy = if (_isSyncOnWifiOnly.value) {
+            networkPolicy = if (repository.isSyncOnWifiOnly) {
                 SyncNetworkPolicy.WIFI_ONLY
             } else {
                 SyncNetworkPolicy.REQUIRED
@@ -919,10 +1082,12 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
                 }
                 fileUri != null -> repository.createFileSend(vault.id, draft.title, fileUri,
                     fileName.orEmpty(), draft.notes, draft.password, draft.maxAccessCount,
-                    draft.hideEmail, draft.deletionMillis, draft.expirationMillis)
+                    draft.hideEmail, draft.deletionMillis, draft.expirationMillis,
+                    authAction = draft.authAction, recipientEmails = draft.recipientEmails, disabled = draft.disabled)
                 else -> repository.createTextSend(vault.id, draft.title, draft.text,
                     draft.notes, draft.password, draft.maxAccessCount, draft.hideEmail,
-                    draft.hiddenText, draft.deletionMillis, draft.expirationMillis)
+                    draft.hiddenText, draft.deletionMillis, draft.expirationMillis,
+                    authAction = draft.authAction, recipientEmails = draft.recipientEmails, disabled = draft.disabled)
             }
             when (result) {
                 is BitwardenRepository.SendMutationResult.Success -> {
@@ -1513,24 +1678,26 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
         vaultId: Long,
         reason: SyncTriggerReason,
         force: Boolean = false,
-        extraDelayMs: Long = 0L
+        extraDelayMs: Long = 0L,
+        isStillValid: (() -> Boolean)? = null,
     ) {
         if (force || reason == SyncTriggerReason.MANUAL) {
-            syncOrchestrator.requestSync(vaultId, reason, force = true)
+            syncOrchestrator.requestSync(vaultId, reason, force = true, isStillValid = isStillValid)
             return
         }
         val elapsed = System.currentTimeMillis() - processStartMs
         val coldStartRemaining = (COLD_START_AUTO_SYNC_GRACE_MS - elapsed).coerceAtLeast(0L)
         val delayMs = coldStartRemaining + extraDelayMs.coerceAtLeast(0L)
         if (delayMs <= 0L) {
-            syncOrchestrator.requestSync(vaultId, reason, force = force)
+            syncOrchestrator.requestSync(vaultId, reason, force = force, isStillValid = isStillValid)
             return
         }
         syncOrchestrator.requestSyncWithDelay(
             vaultId = vaultId,
             reason = reason,
             delayMs = delayMs,
-            force = force
+            force = force,
+            isStillValid = isStillValid,
         )
     }
 
@@ -1543,7 +1710,7 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
         if (!capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)) {
             return NetworkGateResult.NETWORK_UNAVAILABLE
         }
-        if (_isSyncOnWifiOnly.value &&
+        if (repository.isSyncOnWifiOnly &&
             !capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
         ) {
             return NetworkGateResult.WIFI_REQUIRED
@@ -1780,7 +1947,7 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
             trigger = if (silent) SyncTrigger.APP_START else SyncTrigger.MANUAL,
             priority = if (silent) SyncPriority.BACKGROUND else SyncPriority.MANUAL,
             mode = if (silent) SyncMode.SILENT else SyncMode.FOREGROUND,
-            networkPolicy = if (_isSyncOnWifiOnly.value) {
+            networkPolicy = if (repository.isSyncOnWifiOnly) {
                 SyncNetworkPolicy.WIFI_ONLY
             } else {
                 SyncNetworkPolicy.REQUIRED

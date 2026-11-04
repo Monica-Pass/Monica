@@ -66,7 +66,7 @@ internal fun TemplateCredentialFields(draft: TemplateCredentialDraft, onChange: 
         "WIFI" -> if (ssidInIdentity) listOf("password") else listOf("ssid", "password")
         else -> PasswordContentBlocks.editableKeys(PasswordContentBlocks.Kind.valueOf(draft.type)).filter { it != "notes" }
     }
-    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(if (LocalStandaloneTemplateFields.current) 12.dp else 2.dp)) {
         if (draft.type == "WIFI" && ssidInIdentity && onScanWifi != null) FilledTonalButton(
             onClick = onScanWifi, enabled = enabled, modifier = Modifier.fillMaxWidth()) {
             Icon(Icons.Default.QrCodeScanner, null); Spacer(Modifier.width(8.dp)); Text(stringResource(R.string.wifi_scan_qr))
@@ -139,7 +139,7 @@ internal fun TemplateCredentialFields(draft: TemplateCredentialDraft, onChange: 
                         onClick = { onChange(draft.change("security", security.name)); choosing = false }) }
                 }
             }
-            Surface(shape = entryGroupShape(1, 2), color = MaterialTheme.colorScheme.surfaceContainer) {
+            Surface(shape = if (LocalStandaloneTemplateFields.current) androidx.compose.foundation.shape.RoundedCornerShape(24.dp) else entryGroupShape(1, 2), color = MaterialTheme.colorScheme.surfaceContainer) {
             ListItem(headlineContent = { Text(stringResource(R.string.wifi_hidden_network)) },
                 colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainer), trailingContent = {
                 Switch(draft.value("hiddenNetwork") == "true", { onChange(draft.change("hiddenNetwork", it.toString())) }, enabled = enabled)

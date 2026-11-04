@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="bw_send_auth_title">访问之制</string>
+    <string name="bw_send_auth_none">无须验明</string>
+    <string name="bw_send_auth_password">口令</string>
+    <string name="bw_send_auth_email">电邮验明</string>
+    <string name="bw_send_auth_email_label">电邮地址 %1$d</string>
+    <string name="bw_send_auth_add_email">添电邮地址</string>
+    <string name="bw_send_auth_remove_email">去电邮地址</string>
+    <string name="bw_send_auth_recipients_notice">收件地址将传至服务器，以供验明。</string>
+    <string name="bw_send_auth_premium">电邮验明，须此账号有 Premium。</string>
+    <string name="bw_send_auth_unsupported">此服务器未许电邮验明。请核其支持后再试。</string>
+    <string name="bw_send_auth_invalid">请核访问之法及电邮地址。</string>
+    <string name="bw_send_auth_unchanged">仍用原验法</string>
+    <string name="bw_send_auth_password_set">口令已设</string>
+    <string name="bw_send_drafts">Send 草稿</string>
+    <string name="bw_send_draft_save">存草稿</string>
+    <string name="bw_send_draft_saved">草稿已存本机。</string>
+    <string name="bw_send_draft_local">惟存本机；续修后，请自行提交。</string>
+    <string name="bw_send_draft_resume">续修</string>
+    <string name="bw_send_draft_discard">弃草稿</string>
+    <string name="bw_send_draft_discard_confirm">弃此本机草稿及所存文件乎？已发布之 Send 仍留。</string>
+    <string name="bw_send_draft_failed">草稿未能存读，原副本仍留。</string>
+    <string name="bw_send_draft_unavailable">部分草稿未能开启，仍存本机。</string>
+    <string name="bw_send_draft_reconcile">核上次提交</string>
+    <string name="bw_send_draft_uncertain">上次所交或已达服务器，请先核验，再提交。</string>
+    <string name="bw_send_draft_not_found">上次提交之果未明。弃此草稿前，请先核 Send 列表。</string>
+    <string name="bw_send_cache_unavailable">部分 Send 缓存未能开启，原数据仍留。</string>
+    <string name="bw_send_draft_empty">尚无所存草稿</string>
+    <string name="bw_send_draft_missing_file">所存文件已失，请重择。</string>
+    <string name="bw_send_logout_drafts">此帳之本機 Send 草稿及所存檔案亦將刪除，重新登入不能復原。</string>
+</resources>

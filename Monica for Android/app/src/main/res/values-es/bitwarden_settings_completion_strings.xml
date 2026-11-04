@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_settings_security">Seguridad</string>
+    <string name="bitwarden_settings_queue_hint">Ver cambios pendientes y problemas de sincronización</string>
+    <string name="bitwarden_account_web_settings_hint">Gestionar la contraseña maestra, el inicio de sesión en dos pasos y la suscripción en la web</string>
+    <string name="bitwarden_settings_select_account">Establecer como cuenta actual</string>
+    <string name="bitwarden_settings_account_management">Gestión de cuentas</string>
+    <string name="bitwarden_queue_help">Muestra los cambios locales pendientes de sincronizar y los resultados del último intento. Una lista vacía no confirma que los datos estén sincronizados con el servidor.</string>
+    <string name="bitwarden_queue_empty_local">No hay cambios locales pendientes de sincronizar.</string>
+    <string name="bitwarden_queue_locked">Desbloquee esta cuenta para ver los elementos pendientes.</string>
+    <string name="bitwarden_queue_loading_error">No se pudieron leer los elementos pendientes. Vuelva a abrir esta página para reintentarlo.</string>
+    <string name="bitwarden_queue_awaiting_confirmation">Esperando confirmación del servidor</string>
+    <string name="bitwarden_queue_idle">No hay ninguna sincronización en curso</string>
+</resources>

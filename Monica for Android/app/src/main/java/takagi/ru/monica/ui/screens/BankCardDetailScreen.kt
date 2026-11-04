@@ -196,6 +196,8 @@ fun BankCardDetailScreen(
     val cardFaceImageAllowed = attachmentBitwardenVault?.let { vault ->
         BitwardenVaultPremiumStore.isPremium(context, vault.id)
     } ?: true
+    val archiveAction = takagi.ru.monica.ui.components.rememberBitwardenArchiveAction(
+        if (embeddedAccess == null) cardItem else null) { cardItem = it }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -235,7 +237,7 @@ fun BankCardDetailScreen(
                         onClick = { showDeleteDialog = true },
                         tint = MaterialTheme.colorScheme.error
                     )
-                ),
+                ) + listOfNotNull(archiveAction),
                 containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                 contentColor = MaterialTheme.colorScheme.onTertiaryContainer
             )

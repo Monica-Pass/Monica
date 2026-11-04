@@ -8,6 +8,12 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PasswordHistoryDao {
+    @Query("SELECT * FROM password_entries WHERE id = :entryId")
+    fun observeOwningEntry(entryId: Long): Flow<PasswordEntry?>
+
+    @Query("SELECT * FROM password_history_entries WHERE id = :id")
+    suspend fun getById(id: Long): PasswordHistoryEntry?
+
     @Query(
         """
         SELECT * FROM password_history_entries

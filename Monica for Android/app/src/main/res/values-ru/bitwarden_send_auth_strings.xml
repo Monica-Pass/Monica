@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="bw_send_auth_title">Управление доступом</string>
+    <string name="bw_send_auth_none">Без проверки</string>
+    <string name="bw_send_auth_password">Пароль</string>
+    <string name="bw_send_auth_email">Проверка по эл. почте</string>
+    <string name="bw_send_auth_email_label">Адрес эл. почты %1$d</string>
+    <string name="bw_send_auth_add_email">Добавить адрес эл. почты</string>
+    <string name="bw_send_auth_remove_email">Удалить адрес эл. почты</string>
+    <string name="bw_send_auth_recipients_notice">Адреса получателей отправляются на сервер для проверки.</string>
+    <string name="bw_send_auth_premium">Для проверки по эл. почте этой учётной записи нужен Premium.</string>
+    <string name="bw_send_auth_unsupported">Этот сервер не принял проверку по эл. почте. Убедитесь, что он её поддерживает, и повторите попытку.</string>
+    <string name="bw_send_auth_invalid">Проверьте способ доступа и адреса эл. почты.</string>
+    <string name="bw_send_auth_unchanged">Сохранить текущий способ проверки</string>
+    <string name="bw_send_auth_password_set">Пароль задан</string>
+    <string name="bw_send_drafts">Черновики Send</string>
+    <string name="bw_send_draft_save">Сохранить черновик</string>
+    <string name="bw_send_draft_saved">Черновик сохранён на этом устройстве.</string>
+    <string name="bw_send_draft_local">Сохранено только на этом устройстве. Продолжите, чтобы отправить вручную.</string>
+    <string name="bw_send_draft_resume">Продолжить</string>
+    <string name="bw_send_draft_discard">Удалить черновик</string>
+    <string name="bw_send_draft_discard_confirm">Удалить этот локальный черновик и сохранённый файл? Опубликованные Sends будут сохранены.</string>
+    <string name="bw_send_draft_failed">Не удалось сохранить или прочитать черновик. Существующая копия сохранена.</string>
+    <string name="bw_send_draft_unavailable">Не удалось открыть некоторые черновики. Они сохранены на этом устройстве.</string>
+    <string name="bw_send_draft_reconcile">Проверить предыдущую отправку</string>
+    <string name="bw_send_draft_uncertain">Предыдущая отправка могла достичь сервера. Проверьте её перед повторной отправкой.</string>
+    <string name="bw_send_draft_not_found">Не удалось подтвердить предыдущую отправку. Проверьте свои Sends перед удалением черновика.</string>
+    <string name="bw_send_cache_unavailable">Не удалось открыть некоторые Sends в кэше. Существующие данные сохранены.</string>
+    <string name="bw_send_draft_empty">Нет сохранённых черновиков</string>
+    <string name="bw_send_draft_missing_file">Сохранённый файл отсутствует. Выберите его снова.</string>
+    <string name="bw_send_logout_drafts">Локальные черновики Send и сохранённые в них файлы также будут удалены. Повторный вход не восстановит эти черновики.</string>
+</resources>

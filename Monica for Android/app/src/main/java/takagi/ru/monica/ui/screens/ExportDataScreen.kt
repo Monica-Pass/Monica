@@ -1,5 +1,14 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.bitwarden.export.*
+import takagi.ru.monica.security.SessionManager
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.compose.ui.platform.testTag
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -43,6 +52,8 @@ private class PendingDatabaseExport(
     val preferences: BackupPreferences,
     val password: String?,
     val steamIds: Set<Long>,
+    val jsonPermit: BitwardenJsonExportPermit? = null,
+    val jsonRequest: BitwardenJsonExportRequest? = null,
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,6 +64,7 @@ fun ExportDataScreen(
     onExportKdbx: suspend (Uri, String, ImportDestination, TransferProgressReporter) -> Result<String>,
     onLoadSteamMaFileCandidates: suspend (ImportDestination) -> Result<List<SteamMaFileExportCandidate>>,
     onExportSteamMaFile: suspend (Uri, Set<Long>, ImportDestination, TransferProgressReporter) -> Result<String>,
+    onExportBitwardenJson: suspend (Uri, String?, ImportDestination, BitwardenJsonExportPermit, TransferProgressReporter) -> Result<String> = { _, _, _, _, _ -> Result.failure(IllegalStateException("JSON export unavailable")) },
     biometricEnabled: Boolean = false,
 ) {
     val context = LocalContext.current
@@ -85,6 +97,59 @@ fun ExportDataScreen(
     var showSteamIdentity by remember { mutableStateOf(false) }
     var identityPassword by remember { mutableStateOf("") }
     var identityError by remember { mutableStateOf(false) }
+    var showJsonIdentity by remember { mutableStateOf(false) }
+    var jsonPermit by remember { mutableStateOf<BitwardenJsonExportPermit?>(null) }
+    var jsonRequest by remember { mutableStateOf<BitwardenJsonExportRequest?>(null) }
+    var jsonGrantJob by remember { mutableStateOf<Job?>(null) }
+    val jsonLifecycleOwner = LocalLifecycleOwner.current
+    val jsonAlive = remember { java.util.concurrent.atomic.AtomicBoolean(true) }
+    var jsonIssues by remember { mutableStateOf<List<BitwardenJsonIssue>>(emptyList()) }
+    val jsonOption = option == ExportOption.BITWARDEN_JSON || option == ExportOption.BITWARDEN_JSON_ENCRYPTED
+    val jsonUnlocked by SessionManager.isUnlocked.collectAsState()
+    val jsonLockGeneration by SessionManager.lockGeneration.collectAsState()
+    fun currentJson(request: BitwardenJsonExportRequest, foreground: Boolean = true): Boolean {
+        val activeJob = DatabaseExportJobs.state.value
+        val exportJob = activeJob?.takeIf { it.kind == DataTaskKind.EXPORT }
+        val selectedSource = exportJob?.sourceKey ?: sourceKey
+        val selectedFormat = exportJob?.formatKey ?: formatKey
+        return jsonAlive.get() && jsonRequest === request && request.active &&
+            request.source.key == selectedSource && request.option.name == selectedFormat &&
+            activeJob?.status != ExportJobStatus.RUNNING &&
+            SessionManager.isUnlocked.value && SessionManager.lockGeneration.value == request.lockGeneration &&
+            (!foreground || jsonLifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED))
+    }
+    fun cancelJson(preservePicker: Boolean = false) {
+        jsonGrantJob?.cancel(); jsonGrantJob = null
+        jsonIssues = emptyList(); showJsonIdentity = false
+        if (jsonRequest != null || jsonOption) {
+            showPassword = false; password = ""; confirmation = ""; identityPassword = ""
+        }
+        jsonPermit?.clear(); jsonPermit = null
+        val preserve = preservePicker && jsonRequest?.let {
+            it.choosingDocument && pending?.jsonRequest === it && currentJson(it, foreground = false)
+        } == true
+        if (!preserve) {
+            jsonRequest?.revoke(); jsonRequest = null
+            pending?.takeIf { it.jsonRequest != null }?.let { it.jsonPermit?.clear(); pending = null }
+        }
+    }
+    LaunchedEffect(jsonUnlocked, jsonLockGeneration) {
+        if (!jsonUnlocked || jsonRequest?.lockGeneration?.let { it != jsonLockGeneration } == true) cancelJson()
+        else jsonIssues = emptyList()
+    }
+    LaunchedEffect(source.key, option.name) {
+        jsonRequest?.let { if (it.source != source || it.option != option) cancelJson() }
+    }
+    DisposableEffect(jsonLifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_STOP) cancelJson(preservePicker = true)
+        }
+        jsonLifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            jsonLifecycleOwner.lifecycle.removeObserver(observer)
+            jsonAlive.set(false); cancelJson()
+        }
+    }
     val security = remember { SecurityManager(context) }
     val biometric = remember { BiometricHelper(context) }
 
@@ -106,16 +171,35 @@ fun ExportDataScreen(
     }
     val picker = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         val request = pending
+        val jsonAllowed = request?.jsonRequest?.let {
+            currentJson(it, foreground = false) && it.returnDocument()
+        } ?: (request?.jsonPermit == null)
         pending = null
+        if (request?.jsonRequest != null) {
+            if (!jsonAllowed) request.jsonRequest.revoke()
+            if (jsonRequest === request.jsonRequest) jsonRequest = null
+        }
         val uri = result.data?.data
-        if (result.resultCode == android.app.Activity.RESULT_OK && request != null && uri != null) {
+        if (result.resultCode == android.app.Activity.RESULT_OK && request != null && uri != null && jsonAllowed) {
             val started = DatabaseExportJobs.start(context.applicationContext, request.source.key, uri, request.option.name) { progress ->
                 when (request.option) {
                     ExportOption.ZIP_BACKUP -> onExportZip(uri, request.preferences, request.password, request.source, progress)
                     ExportOption.KDBX -> onExportKdbx(uri, checkNotNull(request.password), request.source, progress)
                     ExportOption.STEAM_MAFILE -> onExportSteamMaFile(uri, request.steamIds, request.source, progress)
+                    ExportOption.BITWARDEN_JSON, ExportOption.BITWARDEN_JSON_ENCRYPTED -> {
+                        val generation = SessionManager.lockGeneration.value
+                        onExportBitwardenJson(uri, request.password, request.source, checkNotNull(request.jsonPermit), progress).let { result ->
+                            val error = result.exceptionOrNull()
+                            if (error is BitwardenJsonRejected) withContext(Dispatchers.Main) {
+                                if (sourceKey == request.source.key && formatKey == request.option.name && jsonAlive.get() && jsonLifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED) && SessionManager.isUnlocked.value && SessionManager.lockGeneration.value == generation) jsonIssues = error.issues
+                            }
+                            if (error == null) result else Result.failure(IllegalStateException(context.getString(
+                                if (error is BitwardenJsonRejected) R.string.bw_json_blocked else R.string.bw_json_reason_unavailable)))
+                        }
+                    }
                 }
             }
+            if (!started) request.jsonPermit?.clear()
             if (!started) scope.launch {
                 withContext(Dispatchers.IO) {
                     runCatching {
@@ -126,11 +210,14 @@ fun ExportDataScreen(
                 }
                 snackbar.showSnackbar(context.getString(R.string.transfer_background_start_failed))
             }
-        }
+        } else request?.jsonPermit?.clear()
     }
-    fun chooseLocation(secret: String? = null) {
-        val request = PendingDatabaseExport(source, option, preferences, secret, selectedSteamIds.toSet())
+    fun chooseLocation(secret: String? = null, expectedJson: BitwardenJsonExportRequest? = if (jsonOption) jsonRequest else null) {
+        if (jsonOption && (expectedJson == null || !currentJson(expectedJson) || jsonPermit == null || !expectedJson.chooseDocument())) return
+        val request = PendingDatabaseExport(expectedJson?.source ?: source, expectedJson?.option ?: option,
+            preferences, secret, selectedSteamIds.toSet(), jsonPermit.takeIf { expectedJson != null }, expectedJson)
         pending = request
+        if (expectedJson != null) jsonPermit = null
         var spec = exportDocumentSpec(option, encryptedZip = option == ExportOption.ZIP_BACKUP && secret != null)
         if (option == ExportOption.STEAM_MAFILE && selectedSteamIds.size == 1) {
             spec = ExportDocumentSpec("steam_${System.currentTimeMillis()}.maFile", "application/json")
@@ -141,13 +228,40 @@ fun ExportDataScreen(
                 putExtra(Intent.EXTRA_TITLE, spec.fileName)
             })
         } catch (error: Exception) {
-            pending = null
-            scope.launch { snackbar.showSnackbar(context.getString(R.string.error_launch_export, error.message.orEmpty())) }
+            pending?.jsonPermit?.clear(); pending = null
+            if (expectedJson != null) cancelJson()
+            scope.launch { snackbar.showSnackbar(if (expectedJson != null) context.getString(R.string.bw_json_reason_unavailable) else context.getString(R.string.error_launch_export, error.message.orEmpty())) }
         }
         password = ""; confirmation = ""
     }
+    fun verifiedJson(request: BitwardenJsonExportRequest) {
+        if (!currentJson(request) || !showJsonIdentity || !request.authenticated()) return
+        showJsonIdentity = false; identityPassword = ""
+        jsonGrantJob = scope.launch {
+            var granted: BitwardenJsonExportPermit? = null
+            try {
+                val permit = BitwardenJsonExportPermit.grant(context, request.source, request.lockGeneration)
+                granted = permit
+                currentCoroutineContext().ensureActive()
+                if (!currentJson(request)) return@launch
+                jsonPermit?.clear(); jsonPermit = permit; granted = null
+                if (request.option == ExportOption.BITWARDEN_JSON_ENCRYPTED) {
+                    password = ""; confirmation = ""; passwordError = null; showPassword = true
+                } else chooseLocation(expectedJson = request)
+            } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+            catch (error: Exception) {
+                if (currentJson(request)) { cancelJson(); snackbar.showSnackbar(context.getString(R.string.bw_json_reason_unavailable)) }
+            } finally { granted?.clear() }
+        }
+    }
     fun begin() {
         if (dataJob?.status == ExportJobStatus.RUNNING || pending != null) return
+        if (jsonOption) {
+            if (jsonRequest != null || !SessionManager.isUnlocked.value) return
+            jsonIssues = emptyList(); identityPassword = ""; identityError = false
+            jsonRequest = BitwardenJsonExportRequest(source, option, SessionManager.lockGeneration.value)
+            showJsonIdentity = true; return
+        }
         if (option == ExportOption.STEAM_MAFILE) { showSteamRisk = true; return }
         if (option == ExportOption.KDBX || encrypt) {
             password = ""; confirmation = ""; passwordError = null; showPassword = true
@@ -156,6 +270,8 @@ fun ExportDataScreen(
     val formatTitle = when (option) {
         ExportOption.ZIP_BACKUP -> R.string.transfer_zip_title
         ExportOption.KDBX -> R.string.export_option_kdbx
+        ExportOption.BITWARDEN_JSON -> R.string.bw_json_title
+        ExportOption.BITWARDEN_JSON_ENCRYPTED -> R.string.bw_json_encrypted_title
         ExportOption.STEAM_MAFILE -> R.string.steam_mafile_export_title
     }
     Scaffold(
@@ -169,7 +285,7 @@ fun ExportDataScreen(
                 Button(onClick = { if (exporting) onNavigateBack() else begin() },
                     enabled = exporting || (dataJob?.status != ExportJobStatus.RUNNING && pending == null && (option != ExportOption.ZIP_BACKUP || preferences.hasDatabaseExportContent()) &&
                         (option != ExportOption.STEAM_MAFILE || (!loadingSteam && selectedSteamIds.isNotEmpty()))),
-                    modifier = Modifier.fillMaxWidth().navigationBarsPadding().padding(12.dp).heightIn(min = 56.dp),
+                    modifier = Modifier.testTag("database_export_start").fillMaxWidth().navigationBarsPadding().padding(12.dp).heightIn(min = 56.dp),
                     shape = RoundedCornerShape(28.dp)) {
                     Icon(if (exporting) Icons.Default.ArrowBack else Icons.Default.Upload, null)
                     Spacer(Modifier.width(10.dp))
@@ -185,6 +301,7 @@ fun ExportDataScreen(
             TransferChoiceRow(stringResource(formatTitle), stringResource(when(option) {
                 ExportOption.ZIP_BACKUP -> R.string.transfer_zip_description
                 ExportOption.KDBX -> R.string.transfer_kdbx_description
+                ExportOption.BITWARDEN_JSON, ExportOption.BITWARDEN_JSON_ENCRYPTED -> R.string.bw_json_description
                 ExportOption.STEAM_MAFILE -> R.string.steam_mafile_export_desc
             }), if (option == ExportOption.ZIP_BACKUP) Icons.Default.Archive else Icons.Default.Description,
                 enabled = !exporting && pending == null, onClick = { showFormats = true })
@@ -199,6 +316,12 @@ fun ExportDataScreen(
                     }
                 }
             }
+            if (jsonOption) {
+                Text(stringResource(R.string.bw_json_boundary), Modifier.fillMaxWidth().padding(12.dp))
+                if (option == ExportOption.BITWARDEN_JSON) Text(stringResource(R.string.bw_json_plain_warning),
+                    Modifier.fillMaxWidth().padding(horizontal = 12.dp), color = MaterialTheme.colorScheme.error)
+            }
+            if (jsonIssues.isNotEmpty()) BitwardenJsonIssueList(jsonIssues)
             if (!exporting && option == ExportOption.ZIP_BACKUP) {
                 Text(stringResource(R.string.transfer_contents), style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(start = 4.dp))
@@ -254,18 +377,20 @@ fun ExportDataScreen(
                 TransferChoiceRow(stringResource(when(value) {
                     ExportOption.ZIP_BACKUP -> R.string.transfer_zip_title
                     ExportOption.KDBX -> R.string.export_option_kdbx
-                    ExportOption.STEAM_MAFILE -> R.string.steam_mafile_export_title
-                }), "", Icons.Default.Description, selected = option == value, index = index, count = 3,
+                    ExportOption.BITWARDEN_JSON -> R.string.bw_json_title
+        ExportOption.BITWARDEN_JSON_ENCRYPTED -> R.string.bw_json_encrypted_title
+        ExportOption.STEAM_MAFILE -> R.string.steam_mafile_export_title
+                }), "", Icons.Default.Description, selected = option == value, index = index, count = ExportOption.entries.size,
                     onClick = { formatKey = value.name; DatabaseExportJobs.dismiss(); showFormats = false })
             }
         }
     }
     if (showPassword) ZipEncryptionPasswordDialog(password, confirmation, passwordVisible, passwordError,
-        title = stringResource(if (option == ExportOption.KDBX) R.string.export_option_kdbx else R.string.zip_backup_password_title),
-        description = stringResource(if (option == ExportOption.KDBX) R.string.transfer_kdbx_password_description else R.string.zip_backup_password_desc),
+        title = stringResource(if (option == ExportOption.KDBX) R.string.export_option_kdbx else if (jsonOption) R.string.bw_json_encrypted_title else R.string.zip_backup_password_title),
+        description = stringResource(if (option == ExportOption.KDBX) R.string.transfer_kdbx_password_description else if (jsonOption) R.string.bw_json_file_password else R.string.zip_backup_password_desc),
         onPasswordChange = { password = it; passwordError = null }, onConfirmationChange = { confirmation = it; passwordError = null },
         onPasswordVisibleChange = { passwordVisible = it },
-        onDismiss = { showPassword = false; password = ""; confirmation = "" },
+        onDismiss = { showPassword = false; password = ""; confirmation = ""; if (jsonOption) cancelJson() },
         onConfirm = {
             passwordError = when {
                 password.isEmpty() -> context.getString(R.string.import_data_password_cannot_be_empty)
@@ -274,6 +399,25 @@ fun ExportDataScreen(
             }
             if (passwordError == null) { showPassword = false; chooseLocation(password) }
         })
+    if (showJsonIdentity) {
+    val request = jsonRequest
+    if (request != null) M3IdentityVerifyDialog(
+        savePasswordTextState = false,
+        title = stringResource(R.string.verify_identity), message = stringResource(R.string.bw_json_boundary),
+        passwordValue = identityPassword, onPasswordChange = { identityPassword = it; identityError = false },
+        onDismiss = { cancelJson() },
+        onConfirm = {
+            if (!security.isMasterPasswordSet() || security.verifyMasterPassword(identityPassword)) verifiedJson(request)
+            else identityError = true
+        }, confirmText = stringResource(R.string.start_export),
+        confirmEnabled = !security.isMasterPasswordSet() || identityPassword.isNotBlank(), destructiveConfirm = false,
+        isPasswordError = identityError, passwordErrorText = stringResource(R.string.current_password_incorrect),
+        onBiometricClick = if (context is FragmentActivity && biometricEnabled && biometric.isBiometricAvailable()) ({
+            biometric.authenticate(context, context.getString(R.string.verify_identity), context.getString(R.string.bw_json_title),
+                onSuccess = { verifiedJson(request) }, onError = { if (currentJson(request)) scope.launch { snackbar.showSnackbar(it) } }, onFailed = {})
+        }) else null,
+    )
+    }
     if (showSteamRisk) AlertDialog(onDismissRequest = { showSteamRisk = false },
         title = { Text(stringResource(R.string.steam_mafile_export_confirm_title)) },
         text = { Text(stringResource(R.string.steam_mafile_export_confirm_message, selectedSteamIds.size)) },
@@ -355,6 +499,7 @@ private fun ZipEncryptionPasswordDialog(
                     )
                 }
                 OutlinedTextField(
+                    saveTextState = false,
                     value = password,
                     onValueChange = onPasswordChange,
                     label = { Text(stringResource(R.string.zip_backup_password_label)) },
@@ -383,6 +528,7 @@ private fun ZipEncryptionPasswordDialog(
                     isError = errorMessage != null && password.isEmpty(),
                 )
                 OutlinedTextField(
+                    saveTextState = false,
                     value = confirmation,
                     onValueChange = onConfirmationChange,
                     label = { Text(stringResource(R.string.zip_backup_password_confirm_label)) },

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_sync_issues_title">同步未成之項</string>
+    <string name="bitwarden_sync_issues_button">察同步疑難（%1$d）</string>
+    <string name="bitwarden_sync_issues_help">此為本帳最近同步之果。題可讀則示之；不可讀則以項目 ID 尋之。帳鎖後，詳情即除。</string>
+    <string name="bitwarden_sync_issues_empty">此次諸項同步皆無敗。</string>
+    <string name="bitwarden_sync_issues_running">同步尚行。</string>
+    <string name="bitwarden_sync_issues_no_title">題不可讀</string>
+    <string name="bitwarden_sync_issues_id">項目 ID：%1$s</string>
+    <string name="bitwarden_sync_issues_search">依題或項目 ID 尋之</string>
+    <string name="bitwarden_sync_issues_no_matches">無相合之項</string>
+    <string name="bitwarden_sync_issue_kind_cipher">密庫項目</string>
+    <string name="bitwarden_sync_issue_kind_folder">目錄</string>
+    <string name="bitwarden_sync_issue_kind_send">Send</string>
+    <string name="bitwarden_sync_issue_kind_attachment">附件</string>
+    <string name="bitwarden_sync_issue_kind_passkey">通行密鑰</string>
+    <string name="bitwarden_sync_issue_phase_download">下載</string>
+    <string name="bitwarden_sync_issue_phase_create">上傳新項</string>
+    <string name="bitwarden_sync_issue_phase_update">上傳所改</string>
+    <string name="bitwarden_sync_issue_phase_delete">刪除</string>
+    <string name="bitwarden_sync_issue_phase_restore">恢復</string>
+    <string name="bitwarden_sync_issue_reason_authentication">請解鎖或重登，而後再試。</string>
+    <string name="bitwarden_sync_issue_reason_network">伺服器不可達，請察網路而後再試。</string>
+    <string name="bitwarden_sync_issue_reason_conflict">此項已變，請察衝突而後再試。</string>
+    <string name="bitwarden_sync_issue_reason_unsupported">此項格式未支援，或內容未全。</string>
+    <string name="bitwarden_sync_issue_reason_decryption">此項不可解密或驗證。</string>
+    <string name="bitwarden_sync_issue_reason_rejected">操作未成，本機所改仍留。</string>
+    <string name="bitwarden_sync_issue_reason_attachment">此附件不可傳輸或驗證。</string>
+    <string name="bitwarden_sync_issue_reason_pending_parent">請先上傳所屬之項，察附件可用，而後再試。</string>
+</resources>

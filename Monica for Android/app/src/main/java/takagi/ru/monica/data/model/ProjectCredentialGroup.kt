@@ -49,10 +49,10 @@ object ProjectCredentialGroup {
         return groups.flatMapIndexed { groupIndex, group ->
             require(group.passwords.isNotEmpty() && group.passwords.map { it.id }.distinct().size == group.passwords.size)
             group.passwords.mapIndexed { passwordIndex, password ->
-                val raw = JsonObject(password.metadata?.raw.orEmpty() + buildJsonObject {
+                val raw = JsonObject((password.metadata?.raw.orEmpty() - "note") + buildJsonObject {
                     put("version", 1); put("groupId", group.id); put("passwordId", password.id)
                     put("label", group.label); put("primary", groupIndex == 0)
-                    put("note", group.note)
+                    if (group.note.isNotEmpty()) put("note", group.note)
                     put("groupOrder", groupIndex); put("passwordOrder", passwordIndex)
                 })
                 Row(group.username, password, group.otp, requireNotNull(parse(raw.toString())))

@@ -113,7 +113,7 @@
     <string name="legacy_ui_sync_wifi_only_hint">"Sincronizar automaticamente apenas quando conectado ao Wi-Fi"</string>
     <string name="legacy_ui_never_lock">"Nunca bloquear"</string>
     <string name="legacy_ui_never_lock_hint">"Manter Bitwarden desbloqueado sem digitar a senha novamente"</string>
-    <string name="legacy_ui_never_lock_warning">"⚠️ Use apenas em um ambiente seguro"</string>
+    <string name="legacy_ui_never_lock_warning">"Use apenas em um ambiente seguro"</string>
     <string name="legacy_ui_bitwarden_integration">"Integração Bitwarden"</string>
     <string name="legacy_ui_supported_servers">"Servidores compatíveis:"</string>
     <string name="legacy_ui_bitwarden_servers">"• Servidores oficiais Bitwarden\n• Vaultwarden (servidor próprio)\n• Outros serviços compatíveis com a API Bitwarden"</string>

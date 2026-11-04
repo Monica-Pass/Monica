@@ -215,7 +215,7 @@
     <string name="unarchive_action">보관 취소</string>
     <string name="archive_password_confirmation_title">이 항목을 보관하시겠습니까?</string>
     <string name="archive_password_confirmation_message">보관 후 이 항목은 보관됨으로 이동됩니다. 나중에 복원할 수 있습니다.</string>
-    <string name="archive_empty_hint">아직 보관된 비밀번호 없음</string>
+    <string name="archive_empty_hint">아직 보관된 항목 없음</string>
     <string name="archive_item_subtitle_empty">사용자 이름 또는 웹사이트 없음</string>
     <string name="group_mode_menu_title">스태킹 스타일</string>
     <string name="group_mode_smart">스마트(메모 &gt; 웹 &gt; 앱 &gt; 제목)</string>

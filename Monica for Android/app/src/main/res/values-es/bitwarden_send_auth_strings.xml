@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="bw_send_auth_title">Control de acceso</string>
+    <string name="bw_send_auth_none">Sin verificación</string>
+    <string name="bw_send_auth_password">Contraseña</string>
+    <string name="bw_send_auth_email">Verificación por correo</string>
+    <string name="bw_send_auth_email_label">Dirección de correo %1$d</string>
+    <string name="bw_send_auth_add_email">Añadir dirección de correo</string>
+    <string name="bw_send_auth_remove_email">Quitar dirección de correo</string>
+    <string name="bw_send_auth_recipients_notice">Las direcciones de los destinatarios se envían al servidor para verificarlas.</string>
+    <string name="bw_send_auth_premium">La verificación por correo requiere Premium en esta cuenta.</string>
+    <string name="bw_send_auth_unsupported">Este servidor no aceptó la verificación por correo. Comprueba si la admite e inténtalo de nuevo.</string>
+    <string name="bw_send_auth_invalid">Comprueba el método de acceso y las direcciones de correo.</string>
+    <string name="bw_send_auth_unchanged">Mantener la verificación actual</string>
+    <string name="bw_send_auth_password_set">Contraseña establecida</string>
+    <string name="bw_send_drafts">Borradores de Send</string>
+    <string name="bw_send_draft_save">Guardar borrador</string>
+    <string name="bw_send_draft_saved">Borrador guardado en este dispositivo.</string>
+    <string name="bw_send_draft_local">Guardado solo en este dispositivo. Reanúdalo para enviarlo manualmente.</string>
+    <string name="bw_send_draft_resume">Reanudar</string>
+    <string name="bw_send_draft_discard">Descartar borrador</string>
+    <string name="bw_send_draft_discard_confirm">¿Descartar este borrador local y su archivo guardado? Los Sends publicados se conservarán.</string>
+    <string name="bw_send_draft_failed">No se pudo guardar o leer este borrador. Se conserva la copia existente.</string>
+    <string name="bw_send_draft_unavailable">No se pudieron abrir algunos borradores. Se conservan en este dispositivo.</string>
+    <string name="bw_send_draft_reconcile">Comprobar el envío anterior</string>
+    <string name="bw_send_draft_uncertain">Es posible que el envío anterior haya llegado al servidor. Compruébalo antes de volver a enviarlo.</string>
+    <string name="bw_send_draft_not_found">No se pudo confirmar el envío anterior. Revisa tus Sends antes de descartar este borrador.</string>
+    <string name="bw_send_cache_unavailable">No se pudieron abrir algunos Sends en caché. Se conservan los datos existentes.</string>
+    <string name="bw_send_draft_empty">No hay borradores guardados</string>
+    <string name="bw_send_draft_missing_file">Falta el archivo guardado. Selecciónalo de nuevo.</string>
+    <string name="bw_send_logout_drafts">También se eliminarán los borradores locales de Send y sus archivos guardados. No se pueden recuperar al volver a iniciar sesión.</string>
+</resources>

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="bw_send_auth_title">Kiểm soát truy cập</string>
+    <string name="bw_send_auth_none">Không xác minh</string>
+    <string name="bw_send_auth_password">Mật khẩu</string>
+    <string name="bw_send_auth_email">Xác minh email</string>
+    <string name="bw_send_auth_email_label">Địa chỉ email %1$d</string>
+    <string name="bw_send_auth_add_email">Thêm địa chỉ email</string>
+    <string name="bw_send_auth_remove_email">Xóa địa chỉ email</string>
+    <string name="bw_send_auth_recipients_notice">Địa chỉ người nhận được gửi đến máy chủ để xác minh.</string>
+    <string name="bw_send_auth_premium">Xác minh email yêu cầu Premium cho tài khoản này.</string>
+    <string name="bw_send_auth_unsupported">Máy chủ này không chấp nhận xác minh email. Hãy kiểm tra khả năng hỗ trợ rồi thử lại.</string>
+    <string name="bw_send_auth_invalid">Kiểm tra phương thức truy cập và địa chỉ email.</string>
+    <string name="bw_send_auth_unchanged">Giữ phương thức xác minh hiện tại</string>
+    <string name="bw_send_auth_password_set">Đã đặt mật khẩu</string>
+    <string name="bw_send_drafts">Bản nháp Send</string>
+    <string name="bw_send_draft_save">Lưu bản nháp</string>
+    <string name="bw_send_draft_saved">Đã lưu bản nháp trên thiết bị này.</string>
+    <string name="bw_send_draft_local">Chỉ lưu trên thiết bị này. Mở lại để gửi thủ công.</string>
+    <string name="bw_send_draft_resume">Tiếp tục</string>
+    <string name="bw_send_draft_discard">Bỏ bản nháp</string>
+    <string name="bw_send_draft_discard_confirm">Bỏ bản nháp cục bộ này và tệp đã lưu? Các Send đã xuất bản sẽ được giữ lại.</string>
+    <string name="bw_send_draft_failed">Không thể lưu hoặc đọc bản nháp này. Bản sao hiện có được giữ lại.</string>
+    <string name="bw_send_draft_unavailable">Không thể mở một số bản nháp. Chúng vẫn được giữ trên thiết bị này.</string>
+    <string name="bw_send_draft_reconcile">Kiểm tra lần gửi trước</string>
+    <string name="bw_send_draft_uncertain">Lần gửi trước có thể đã đến máy chủ. Hãy kiểm tra trước khi gửi lại.</string>
+    <string name="bw_send_draft_not_found">Không thể xác nhận lần gửi trước. Kiểm tra các Send trước khi bỏ bản nháp này.</string>
+    <string name="bw_send_cache_unavailable">Không thể mở một số Send trong bộ nhớ đệm. Dữ liệu hiện có được giữ lại.</string>
+    <string name="bw_send_draft_empty">Không có bản nháp đã lưu</string>
+    <string name="bw_send_draft_missing_file">Không tìm thấy tệp đã lưu. Hãy chọn lại.</string>
+    <string name="bw_send_logout_drafts">Các bản nháp Send cục bộ và tệp đã lưu trong đó cũng sẽ bị xóa. Đăng nhập lại không thể khôi phục các bản nháp này.</string>
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_sync_issues_title">Elementy, których nie udało się zsynchronizować</string>
+    <string name="bitwarden_sync_issues_button">Zobacz problemy synchronizacji (%1$d)</string>
+    <string name="bitwarden_sync_issues_help">Ostatnia próba dla tego konta. Tytuły są wyświetlane, jeśli są dostępne; gdy tytułu nie można odczytać, znajdź element po jego identyfikatorze. Szczegóły są usuwane po zablokowaniu konta.</string>
+    <string name="bitwarden_sync_issues_empty">W tej próbie nie wystąpiły błędy elementów.</string>
+    <string name="bitwarden_sync_issues_running">Synchronizacja nadal trwa.</string>
+    <string name="bitwarden_sync_issues_no_title">Tytuł niedostępny</string>
+    <string name="bitwarden_sync_issues_id">ID elementu: %1$s</string>
+    <string name="bitwarden_sync_issues_search">Szukaj tytułu lub ID elementu</string>
+    <string name="bitwarden_sync_issues_no_matches">Brak pasujących elementów</string>
+    <string name="bitwarden_sync_issue_kind_cipher">Element sejfu</string>
+    <string name="bitwarden_sync_issue_kind_folder">Folder</string>
+    <string name="bitwarden_sync_issue_kind_send">Send</string>
+    <string name="bitwarden_sync_issue_kind_attachment">Załącznik</string>
+    <string name="bitwarden_sync_issue_kind_passkey">Klucz dostępu</string>
+    <string name="bitwarden_sync_issue_phase_download">Pobierz</string>
+    <string name="bitwarden_sync_issue_phase_create">Prześlij nowy element</string>
+    <string name="bitwarden_sync_issue_phase_update">Prześlij zmiany</string>
+    <string name="bitwarden_sync_issue_phase_delete">Usuń</string>
+    <string name="bitwarden_sync_issue_phase_restore">Przywróć</string>
+    <string name="bitwarden_sync_issue_reason_authentication">Odblokuj konto lub zaloguj się ponownie, a następnie spróbuj jeszcze raz.</string>
+    <string name="bitwarden_sync_issue_reason_network">Nie można połączyć się z serwerem. Sprawdź połączenie i spróbuj ponownie.</string>
+    <string name="bitwarden_sync_issue_reason_conflict">Ten element został zmieniony. Sprawdź konflikt przed ponowną próbą.</string>
+    <string name="bitwarden_sync_issue_reason_unsupported">Ten element ma nieobsługiwany lub niekompletny format.</string>
+    <string name="bitwarden_sync_issue_reason_decryption">Nie udało się odszyfrować lub zweryfikować tego elementu.</string>
+    <string name="bitwarden_sync_issue_reason_rejected">Nie udało się ukończyć operacji. Lokalne zmiany zostały zachowane.</string>
+    <string name="bitwarden_sync_issue_reason_attachment">Nie udało się przesłać lub zweryfikować załącznika.</string>
+    <string name="bitwarden_sync_issue_reason_pending_parent">Prześlij element, do którego należy załącznik, i sprawdź dostępność załącznika przed ponowną próbą.</string>
+</resources>

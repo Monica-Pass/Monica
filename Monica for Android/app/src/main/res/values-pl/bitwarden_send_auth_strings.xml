@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="bw_send_auth_title">Kontrola dostępu</string>
+    <string name="bw_send_auth_none">Bez weryfikacji</string>
+    <string name="bw_send_auth_password">Hasło</string>
+    <string name="bw_send_auth_email">Weryfikacja e-mail</string>
+    <string name="bw_send_auth_email_label">Adres e-mail %1$d</string>
+    <string name="bw_send_auth_add_email">Dodaj adres e-mail</string>
+    <string name="bw_send_auth_remove_email">Usuń adres e-mail</string>
+    <string name="bw_send_auth_recipients_notice">Adresy odbiorców są wysyłane do serwera w celu weryfikacji.</string>
+    <string name="bw_send_auth_premium">Weryfikacja e-mail wymaga Premium dla tego konta.</string>
+    <string name="bw_send_auth_unsupported">Ten serwer nie zaakceptował weryfikacji e-mail. Sprawdź, czy ją obsługuje, i spróbuj ponownie.</string>
+    <string name="bw_send_auth_invalid">Sprawdź metodę dostępu i adresy e-mail.</string>
+    <string name="bw_send_auth_unchanged">Zachowaj obecną weryfikację</string>
+    <string name="bw_send_auth_password_set">Hasło ustawione</string>
+    <string name="bw_send_drafts">Wersje robocze Send</string>
+    <string name="bw_send_draft_save">Zapisz wersję roboczą</string>
+    <string name="bw_send_draft_saved">Wersja robocza została zapisana na tym urządzeniu.</string>
+    <string name="bw_send_draft_local">Zapisano tylko na tym urządzeniu. Wznów, aby przesłać ręcznie.</string>
+    <string name="bw_send_draft_resume">Wznów</string>
+    <string name="bw_send_draft_discard">Odrzuć wersję roboczą</string>
+    <string name="bw_send_draft_discard_confirm">Odrzucić tę lokalną wersję roboczą i jej zapisany plik? Opublikowane Sends zostaną zachowane.</string>
+    <string name="bw_send_draft_failed">Nie można zapisać lub odczytać tej wersji roboczej. Istniejąca kopia zostaje zachowana.</string>
+    <string name="bw_send_draft_unavailable">Nie można otworzyć niektórych wersji roboczych. Pozostają na tym urządzeniu.</string>
+    <string name="bw_send_draft_reconcile">Sprawdź poprzednie przesłanie</string>
+    <string name="bw_send_draft_uncertain">Poprzednie przesłanie mogło dotrzeć do serwera. Sprawdź je przed ponownym przesłaniem.</string>
+    <string name="bw_send_draft_not_found">Nie można potwierdzić poprzedniego przesłania. Sprawdź swoje Sends przed odrzuceniem tej wersji roboczej.</string>
+    <string name="bw_send_cache_unavailable">Nie można otworzyć niektórych Sendów w pamięci podręcznej. Istniejące dane zostają zachowane.</string>
+    <string name="bw_send_draft_empty">Brak zapisanych wersji roboczych</string>
+    <string name="bw_send_draft_missing_file">Brakuje zapisanego pliku. Wybierz go ponownie.</string>
+    <string name="bw_send_logout_drafts">Lokalne szkice Send i zapisane w nich pliki również zostaną usunięte. Ponowne zalogowanie nie przywróci tych szkiców.</string>
+</resources>

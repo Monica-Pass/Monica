@@ -1,0 +1,554 @@
+{
+  "files": [
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenArchiveUriInstrumentedTest.kt",
+      "main_sha256": "30863d332ac9bd150abfe3249379165428d009cf1c627bd5169ea9680944de71",
+      "fdroid_sha256": "30863d332ac9bd150abfe3249379165428d009cf1c627bd5169ea9680944de71",
+      "same": true
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenCipherDocumentInstrumentedTest.kt",
+      "main_sha256": "01e61d194c1540f17bfdb2c6c05aa56f13b91640ac903b6340af1a4c640030b3",
+      "fdroid_sha256": "01e61d194c1540f17bfdb2c6c05aa56f13b91640ac903b6340af1a4c640030b3",
+      "same": true
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenOrganizationSyncTest.kt",
+      "main_sha256": "0d5f5af81f8d572c4316db775c4de956b44c89e3bafbe1825f591fa769b6500b",
+      "fdroid_sha256": "0d5f5af81f8d572c4316db775c4de956b44c89e3bafbe1825f591fa769b6500b",
+      "same": true
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenPasswordHistoryStoreInstrumentedTest.kt",
+      "main_sha256": "062baa1251a51230c22179dbb18297b1e46193acbc0562155cb2a771b6ac29a0",
+      "fdroid_sha256": "062baa1251a51230c22179dbb18297b1e46193acbc0562155cb2a771b6ac29a0",
+      "same": true
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenScreenshotExportInstrumentedTest.kt",
+      "main_sha256": "e9d4712911b79d754db5580aec3e23b3f0f7920d4896128f44f4d705195f54f7",
+      "fdroid_sha256": "e9d4712911b79d754db5580aec3e23b3f0f7920d4896128f44f4d705195f54f7",
+      "same": true
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenSendManagementInstrumentedTest.kt",
+      "main_sha256": "a1a1f8b273847d3df08be80afcc38dca598d175e8803929e3c9e52b7623b6144",
+      "fdroid_sha256": "a1a1f8b273847d3df08be80afcc38dca598d175e8803929e3c9e52b7623b6144",
+      "same": true
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenSshNativeSyncInstrumentedTest.kt",
+      "main_sha256": "ae7e5995198b8c56867f6edbb1f9eac9101c73c82c81d11da883da96452d2857",
+      "fdroid_sha256": "ae7e5995198b8c56867f6edbb1f9eac9101c73c82c81d11da883da96452d2857",
+      "same": true
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenSyncIssuesUiInstrumentedTest.kt",
+      "main_sha256": "c4629e3c3d32cab9ac15da34943ce360668fa0ec33503337784fb4366fc55b19",
+      "fdroid_sha256": "c4629e3c3d32cab9ac15da34943ce360668fa0ec33503337784fb4366fc55b19",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/BitwardenMutationStateHelper.kt",
+      "main_sha256": "74cbc2111486deaaf4eacca28759b53c51ab1987ab7fc4d4e408f6be5290fd7f",
+      "fdroid_sha256": "74cbc2111486deaaf4eacca28759b53c51ab1987ab7fc4d4e408f6be5290fd7f",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenApi.kt",
+      "main_sha256": "371b925faf2eaf282b3f11b81a82ce7822fdfa93f2f59211fe121a52ca413a30",
+      "fdroid_sha256": "371b925faf2eaf282b3f11b81a82ce7822fdfa93f2f59211fe121a52ca413a30",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/repository/BitwardenRepository.kt",
+      "main_sha256": "2d9b15173b5823d28549d98ef85cd9302b52222d10615e9784729bcb2df5deb4",
+      "fdroid_sha256": "2d9b15173b5823d28549d98ef85cd9302b52222d10615e9784729bcb2df5deb4",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenCipherDocument.kt",
+      "main_sha256": "c656c490853bba285efac2351ee24f4f54565c44701cd9c7ff37774ecaf500c7",
+      "fdroid_sha256": "c656c490853bba285efac2351ee24f4f54565c44701cd9c7ff37774ecaf500c7",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenCipherUploadProtocol.kt",
+      "main_sha256": "8dbd575140d7075225af91d5e7f252351a212601836754745f6f3b0a9dcb6e76",
+      "fdroid_sha256": "8dbd575140d7075225af91d5e7f252351a212601836754745f6f3b0a9dcb6e76",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenLoginUriRules.kt",
+      "main_sha256": "4db722e4dc02b0faf981083973d10cf90f49c80572c99433ff28d4031a5e0468",
+      "fdroid_sha256": "4db722e4dc02b0faf981083973d10cf90f49c80572c99433ff28d4031a5e0468",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenPasswordHistory.kt",
+      "main_sha256": "2b8c9481849dc73283778882847a30f0aca4ba31c79e15c67d9d20674ec50094",
+      "fdroid_sha256": "2b8c9481849dc73283778882847a30f0aca4ba31c79e15c67d9d20674ec50094",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenPasswordHistoryStore.kt",
+      "main_sha256": "b9a49910c43a895cbc0bb410ad8cc3c65dcc1b0fab402b3b0ea8f04ed9822f06",
+      "fdroid_sha256": "b9a49910c43a895cbc0bb410ad8cc3c65dcc1b0fab402b3b0ea8f04ed9822f06",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSecureItemArchiveStore.kt",
+      "main_sha256": "f374fde0b229f4fc35e69c9fb5351558a1e2099b9ea204329da74860eacfff0e",
+      "fdroid_sha256": "f374fde0b229f4fc35e69c9fb5351558a1e2099b9ea204329da74860eacfff0e",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSyncIssues.kt",
+      "main_sha256": "f15b12b3077e381bdd829dd5a66e07cb51d418398f8dd7983346961fe21ccaef",
+      "fdroid_sha256": "f15b12b3077e381bdd829dd5a66e07cb51d418398f8dd7983346961fe21ccaef",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSyncService.kt",
+      "main_sha256": "3ca6a6dd290f13cf9cc3c9f373119eb6d04e72600a2b00266398402dc453bc82",
+      "fdroid_sha256": "3ca6a6dd290f13cf9cc3c9f373119eb6d04e72600a2b00266398402dc453bc82",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/CipherSyncProcessor.kt",
+      "main_sha256": "940047e6273c97708180d1312bc989febe319351226ffda4dcdcd54ad9e4bd00",
+      "fdroid_sha256": "940047e6273c97708180d1312bc989febe319351226ffda4dcdcd54ad9e4bd00",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/CipherUploadProcessor.kt",
+      "main_sha256": "c895ec69b81f373d44ab290d34e30cc6c42b6eefdc844b9d61ade641ed928c67",
+      "fdroid_sha256": "c895ec69b81f373d44ab290d34e30cc6c42b6eefdc844b9d61ade641ed928c67",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenSettingsScreen.kt",
+      "main_sha256": "102651dede8d83eed761695106934f6763bf7859b2ce3010918ec1ca2a4b8efe",
+      "fdroid_sha256": "102651dede8d83eed761695106934f6763bf7859b2ce3010918ec1ca2a4b8efe",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenSyncIssuesSheet.kt",
+      "main_sha256": "505cc0b066b5c3dec6b917a8f17cde13fdc77d4e4d5cf4bcb394f52b70287378",
+      "fdroid_sha256": "505cc0b066b5c3dec6b917a8f17cde13fdc77d4e4d5cf4bcb394f52b70287378",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/viewmodel/BitwardenViewModel.kt",
+      "main_sha256": "dd0689f014b4e1a81f6773c3995b0ff75ae8c2b3f152a881d89d4800e4e8b760",
+      "fdroid_sha256": "dd0689f014b4e1a81f6773c3995b0ff75ae8c2b3f152a881d89d4800e4e8b760",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/credentialexchange/BitwardenImportAttachmentQueue.kt",
+      "main_sha256": "7948d762c686c42459cc8653baff459257f80968579d1ed44768b6b0b697684c",
+      "fdroid_sha256": "7948d762c686c42459cc8653baff459257f80968579d1ed44768b6b0b697684c",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/ClearDataUseCase.kt",
+      "main_sha256": "7563b1c6b5f72785e300d7b6c372f156dee34bf2b9fe9764fa90bf04944126f5",
+      "fdroid_sha256": "7563b1c6b5f72785e300d7b6c372f156dee34bf2b9fe9764fa90bf04944126f5",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/PasswordDatabase.kt",
+      "main_sha256": "1f02d3878d1dfcb39a40466f924d98f7503fbe5f271aedac026513bd41b8e461",
+      "fdroid_sha256": "1f02d3878d1dfcb39a40466f924d98f7503fbe5f271aedac026513bd41b8e461",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/PasswordHistoryDao.kt",
+      "main_sha256": "676f506812f43a52a46e840522a1a06f321c196df7aa36deba79aba0dbb1870d",
+      "fdroid_sha256": "676f506812f43a52a46e840522a1a06f321c196df7aa36deba79aba0dbb1870d",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/SecureItem.kt",
+      "main_sha256": "72130d9b76ebdd84e48df3c7f1665fb21dae3d223d3c0831df15ae7d4a130cef",
+      "fdroid_sha256": "72130d9b76ebdd84e48df3c7f1665fb21dae3d223d3c0831df15ae7d4a130cef",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/SecureItemDao.kt",
+      "main_sha256": "38d521e46567fc5a87e92881cd5f0613221736ceabc24cbf490fc29c2b054db4",
+      "fdroid_sha256": "38d521e46567fc5a87e92881cd5f0613221736ceabc24cbf490fc29c2b054db4",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/bitwarden/BitwardenPasswordHistoryState.kt",
+      "main_sha256": "b3e3cc2738dd2a581b33cea336b724068c3728ccd1e3c69b8036ecb69d6b39ff",
+      "fdroid_sha256": "b3e3cc2738dd2a581b33cea336b724068c3728ccd1e3c69b8036ecb69d6b39ff",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/model/PasswordUrlRules.kt",
+      "main_sha256": "e3bc86b561cce2401af6d27002b3bcf2150845a5097a5dc71bdbdcd65ea02dbc",
+      "fdroid_sha256": "e3bc86b561cce2401af6d27002b3bcf2150845a5097a5dc71bdbdcd65ea02dbc",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/repository/DatabaseManagerRepository.kt",
+      "main_sha256": "f968ad8cb4568f0b25c5021a8bc24df31e48418313d67ac693cd75755bab4a65",
+      "fdroid_sha256": "f968ad8cb4568f0b25c5021a8bc24df31e48418313d67ac693cd75755bab4a65",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/repository/SecureItemRepository.kt",
+      "main_sha256": "c9ff2106ed4da6f41a66827728dab60c0ea978bdc8b2a6f07bd89cd5ee5f44b7",
+      "fdroid_sha256": "c9ff2106ed4da6f41a66827728dab60c0ea978bdc8b2a6f07bd89cd5ee5f44b7",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/transfer/DatabaseArchiveExporter.kt",
+      "main_sha256": "ad5e63f20b872c5200b201b2ae4cabca49619655ff4aba15e6bedc79a57b04ac",
+      "fdroid_sha256": "ad5e63f20b872c5200b201b2ae4cabca49619655ff4aba15e6bedc79a57b04ac",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/transfer/DatabaseExportSnapshot.kt",
+      "main_sha256": "2894cea9dcf4c6bd483f3cd25e48c623277e2e0db8ed376ee5a6eb7b34fb083b",
+      "fdroid_sha256": "2894cea9dcf4c6bd483f3cd25e48c623277e2e0db8ed376ee5a6eb7b34fb083b",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/BitwardenArchiveAction.kt",
+      "main_sha256": "20bc54ef5e34216b80dc47e3edfec759c53dcda516106be6c7b7978da6006518",
+      "fdroid_sha256": "20bc54ef5e34216b80dc47e3edfec759c53dcda516106be6c7b7978da6006518",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/ItemEditorComponents.kt",
+      "main_sha256": "e00736051d4982234d5e1e1bdccdc708257fb7b1345f335f63104c1b754d00a9",
+      "fdroid_sha256": "e00736051d4982234d5e1e1bdccdc708257fb7b1345f335f63104c1b754d00a9",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AddEditPasswordScreen.kt",
+      "main_sha256": "c503443d07208a0eb1b616a2579e43fb4c397290b88c6cae4741dd8a1024d844",
+      "fdroid_sha256": "c503443d07208a0eb1b616a2579e43fb4c397290b88c6cae4741dd8a1024d844",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/BankCardDetailScreen.kt",
+      "main_sha256": "dfb287a7b876710e5cfc86fcaff825252542ea44fa5242cf759ce7334a0fb5f6",
+      "fdroid_sha256": "dfb287a7b876710e5cfc86fcaff825252542ea44fa5242cf759ce7334a0fb5f6",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/DocumentDetailScreen.kt",
+      "main_sha256": "a5af258f447a2721aefab1db301b83611124e1d90b938495f7de7d30be30df48",
+      "fdroid_sha256": "a5af258f447a2721aefab1db301b83611124e1d90b938495f7de7d30be30df48",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/NoteDetailScreen.kt",
+      "main_sha256": "664f3e8112f3f502fb45f75c9d70ad9cc480ca03307f9ae15ab3e7f65a135c4c",
+      "fdroid_sha256": "664f3e8112f3f502fb45f75c9d70ad9cc480ca03307f9ae15ab3e7f65a135c4c",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/PasswordDetailScreen.kt",
+      "main_sha256": "82e83aaf6065f442a3c7c1a6ae8ca6221b2c63ff2552fd46b2639cd0985c7c45",
+      "fdroid_sha256": "82e83aaf6065f442a3c7c1a6ae8ca6221b2c63ff2552fd46b2639cd0985c7c45",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/SendScreen.kt",
+      "main_sha256": "542beb0d2d59860810fbc829f5a5a972b546e530908c8ede7dcb2f81ea1b6e4d",
+      "fdroid_sha256": "542beb0d2d59860810fbc829f5a5a972b546e530908c8ede7dcb2f81ea1b6e4d",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultOverviewContent.kt",
+      "main_sha256": "951dad8238afa87c36efd7e8f9c094cb251a103c971eb22e2f8a690fefb6439d",
+      "fdroid_sha256": "951dad8238afa87c36efd7e8f9c094cb251a103c971eb22e2f8a690fefb6439d",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultOverviewProjection.kt",
+      "main_sha256": "9869187fb7b5cf5fa2a54906aae08f29a0ed1b2f09261b4e7ac9499f475c5d7b",
+      "fdroid_sha256": "9869187fb7b5cf5fa2a54906aae08f29a0ed1b2f09261b4e7ac9499f475c5d7b",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultV2Pane.kt",
+      "main_sha256": "9dec48bfe30707bb4067b592dc57f8612499290f5b3bbcef5dd7d7da78769afd",
+      "fdroid_sha256": "9dec48bfe30707bb4067b592dc57f8612499290f5b3bbcef5dd7d7da78769afd",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/util/DataExportImportManager.kt",
+      "main_sha256": "4feb025e7c0e50c392529375b1dafadc1a269478852d5ddac3ae7062f74f1d5b",
+      "fdroid_sha256": "4feb025e7c0e50c392529375b1dafadc1a269478852d5ddac3ae7062f74f1d5b",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/utils/BackupRestoreApplier.kt",
+      "main_sha256": "e191ac8a353ad62749a5e99b937d70178630298a65c3ea7849ce39680d226a4e",
+      "fdroid_sha256": "e191ac8a353ad62749a5e99b937d70178630298a65c3ea7849ce39680d226a4e",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/utils/WebDavHelper.kt",
+      "main_sha256": "d789330614dc985296729a6065238723663f3f11d29a4bb8537945c3855b5ef3",
+      "fdroid_sha256": "f02895c67b6b07a8982a7f78b72931e9774c93b09d5c0ba22135905285e782ba",
+      "same": false
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/viewmodel/BankCardViewModel.kt",
+      "main_sha256": "273f92e10b52c82a2a53cc89c3a008762146daffbab546ccffed690aab058890",
+      "fdroid_sha256": "273f92e10b52c82a2a53cc89c3a008762146daffbab546ccffed690aab058890",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/viewmodel/DocumentViewModel.kt",
+      "main_sha256": "f3f99d6dc491ecdad9b692decbb4e52da3b9b88431ccb3446629b3f4f9b1df74",
+      "fdroid_sha256": "f3f99d6dc491ecdad9b692decbb4e52da3b9b88431ccb3446629b3f4f9b1df74",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/viewmodel/NoteViewModel.kt",
+      "main_sha256": "ae3cdfd1d5c36af112a243dbb457d4a30e8821048b8db038ee66c6bdce1ebd87",
+      "fdroid_sha256": "ae3cdfd1d5c36af112a243dbb457d4a30e8821048b8db038ee66c6bdce1ebd87",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/viewmodel/PasswordViewModel.kt",
+      "main_sha256": "51d57eec47abc75962ed97d290535716022eacb022916638f22c013edfae6d90",
+      "fdroid_sha256": "51d57eec47abc75962ed97d290535716022eacb022916638f22c013edfae6d90",
+      "same": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/viewmodel/TotpViewModel.kt",
+      "main_sha256": "852dd8c2e384d064d25a7bbbb05a3e3503927bb3580bf8d04caefd6cdbc59605",
+      "fdroid_sha256": "852dd8c2e384d064d25a7bbbb05a3e3503927bb3580bf8d04caefd6cdbc59605",
+      "same": true
+    },
+    {
+      "path": "app/src/main/res/values-b+lzh/bitwarden_sync_issues.xml",
+      "main_sha256": "d7daa843bb640523a9a83abca43f1bc0f06873fce9f180556433d595a612dd0a",
+      "fdroid_sha256": "d7daa843bb640523a9a83abca43f1bc0f06873fce9f180556433d595a612dd0a",
+      "same": true
+    },
+    {
+      "path": "app/src/main/res/values-b+zh+Hant/bitwarden_sync_issues.xml",
+      "main_sha256": "028f081189d3c5552c1ba2fbffb3663a3570e55f50d8974954e5e3e3d6f07e67",
+      "fdroid_sha256": "028f081189d3c5552c1ba2fbffb3663a3570e55f50d8974954e5e3e3d6f07e67",
+      "same": true
+    },
+    {
+      "path": "app/src/main/res/values-de/bitwarden_sync_issues.xml",
+      "main_sha256": "e9a309b913d3570b02e01df43603a8d39497119d513ba7a74c0de55eebcc7969",
+      "fdroid_sha256": "e9a309b913d3570b02e01df43603a8d39497119d513ba7a74c0de55eebcc7969",
+      "same": true
+    },
+    {
+      "path": "app/src/main/res/values-es/bitwarden_sync_issues.xml",
+      "main_sha256": "795fbf5c3fbfae80bc162569d0f372af83c8f481ecc5bf9801fced87ec2bf173",
+      "fdroid_sha256": "795fbf5c3fbfae80bc162569d0f372af83c8f481ecc5bf9801fced87ec2bf173",
+      "same": true
+    },
+    {
+      "path": "app/src/main/res/values-fr/bitwarden_sync_issues.xml",
+      "main_sha256": "806af99cb1b3eb0e63b2566e48b51c6ba986331f09333c352fb233cd5eecbdd2",
+      "fdroid_sha256": "806af99cb1b3eb0e63b2566e48b51c6ba986331f09333c352fb233cd5eecbdd2",
+      "same": true
+    },
+    {
+      "path": "app/src/main/res/values-it/bitwarden_sync_issues.xml",
+      "main_sha256": "4b8d97eb83424fd38df3059dfcba8476fb50d31ae2b7d3c1a2fe1b7fae0a769c",
+      "fdroid_sha256": "4b8d97eb83424fd38df3059dfcba8476fb50d31ae2b7d3c1a2fe1b7fae0a769c",
+      "same": true
+    },
+    {
+      "path": "app/src/main/res/values-ja/bitwarden_sync_issues.xml",
+      "main_sha256": "2d394cd3cdc9ad8c69a4e03b4214c6e4fccbb40d27d38a9cad4ae6354bc5ef73",
+      "fdroid_sha256": "2d394cd3cdc9ad8c69a4e03b4214c6e4fccbb40d27d38a9cad4ae6354bc5ef73",
+      "same": true
+    },
+    {
+      "path": "app/src/main/res/values-ko/bitwarden_sync_issues.xml",
+      "main_sha256": "0ba43c32ce96b962c33858715634daf8bcb1302291dd55363fe68481d915e223",
+      "fdroid_sha256": "0ba43c32ce96b962c33858715634daf8bcb1302291dd55363fe68481d915e223",
+      "same": true
+    },
+    {
+      "path": "app/src/main/res/values-pl/bitwarden_sync_issues.xml",
+      "main_sha256": "963fb84de38f0f321077e3b47fcc1fa9682a45306d553965aa132d1bedf0d99f",
+      "fdroid_sha256": "963fb84de38f0f321077e3b47fcc1fa9682a45306d553965aa132d1bedf0d99f",
+      "same": true
+    },
+    {
+      "path": "app/src/main/res/values-pt-rBR/bitwarden_sync_issues.xml",
+      "main_sha256": "918ae22ba8af4a53836e27a942c83815a39fdbb884558f6b22456908725115bf",
+      "fdroid_sha256": "918ae22ba8af4a53836e27a942c83815a39fdbb884558f6b22456908725115bf",
+      "same": true
+    },
+    {
+      "path": "app/src/main/res/values-pt/bitwarden_sync_issues.xml",
+      "main_sha256": "17ee19c411843c4869a3cc011b9827af17e81d6ca7fb47c4b500bdb8153097de",
+      "fdroid_sha256": "17ee19c411843c4869a3cc011b9827af17e81d6ca7fb47c4b500bdb8153097de",
+      "same": true
+    },
+    {
+      "path": "app/src/main/res/values-ru/bitwarden_sync_issues.xml",
+      "main_sha256": "c38dc4c75adcda42f56f1f10a35daf25be308cb1d6adc8d18c1aa28489bfab61",
+      "fdroid_sha256": "c38dc4c75adcda42f56f1f10a35daf25be308cb1d6adc8d18c1aa28489bfab61",
+      "same": true
+    },
+    {
+      "path": "app/src/main/res/values-vi/bitwarden_sync_issues.xml",
+      "main_sha256": "5ad7aeaae7a732ae1b6797a62774d72caaa5f64007383f62dcef05c8bd2a8d95",
+      "fdroid_sha256": "5ad7aeaae7a732ae1b6797a62774d72caaa5f64007383f62dcef05c8bd2a8d95",
+      "same": true
+    },
+    {
+      "path": "app/src/main/res/values-zh-rCN/bitwarden_sync_issues.xml",
+      "main_sha256": "04801350eea26c0e418b6f7b1f071d3749dbcd613d7529b5fd820e5d3b220d8b",
+      "fdroid_sha256": "04801350eea26c0e418b6f7b1f071d3749dbcd613d7529b5fd820e5d3b220d8b",
+      "same": true
+    },
+    {
+      "path": "app/src/main/res/values-zh-rNY/bitwarden_sync_issues.xml",
+      "main_sha256": "2ae22652db2b16975abb17597a31a3451073978b2327025389921f0a2f806452",
+      "fdroid_sha256": "2ae22652db2b16975abb17597a31a3451073978b2327025389921f0a2f806452",
+      "same": true
+    },
+    {
+      "path": "app/src/main/res/values-zh-rXB/bitwarden_sync_issues.xml",
+      "main_sha256": "04801350eea26c0e418b6f7b1f071d3749dbcd613d7529b5fd820e5d3b220d8b",
+      "fdroid_sha256": "04801350eea26c0e418b6f7b1f071d3749dbcd613d7529b5fd820e5d3b220d8b",
+      "same": true
+    },
+    {
+      "path": "app/src/main/res/values-zh/bitwarden_sync_issues.xml",
+      "main_sha256": "04801350eea26c0e418b6f7b1f071d3749dbcd613d7529b5fd820e5d3b220d8b",
+      "fdroid_sha256": "04801350eea26c0e418b6f7b1f071d3749dbcd613d7529b5fd820e5d3b220d8b",
+      "same": true
+    },
+    {
+      "path": "app/src/main/res/values/bitwarden_sync_issues.xml",
+      "main_sha256": "251b7768f961039d4b9d0bfa63fb9b8e59112341de2c020ca98cf862fd7c9e36",
+      "fdroid_sha256": "251b7768f961039d4b9d0bfa63fb9b8e59112341de2c020ca98cf862fd7c9e36",
+      "same": true
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/bitwarden/service/BitwardenLoginUriRulesTest.kt",
+      "main_sha256": "db654f44fe726fd6379052a3ceee060cc8f16ed2171d78dc3961ec67fbfd7a72",
+      "fdroid_sha256": "db654f44fe726fd6379052a3ceee060cc8f16ed2171d78dc3961ec67fbfd7a72",
+      "same": true
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/bitwarden/service/BitwardenPasswordHistoryTest.kt",
+      "main_sha256": "d8bb0382e306b2a592381c755bfc7514df0d9e30db2a019eb9399dbaa405f550",
+      "fdroid_sha256": "d8bb0382e306b2a592381c755bfc7514df0d9e30db2a019eb9399dbaa405f550",
+      "same": true
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/bitwarden/service/BitwardenSyncIssuesTest.kt",
+      "main_sha256": "2196d01d73aef0c4e5b458c345fbaaf1f107f73dcaeaf3d13d442b7848caa62d",
+      "fdroid_sha256": "2196d01d73aef0c4e5b458c345fbaaf1f107f73dcaeaf3d13d442b7848caa62d",
+      "same": true
+    },
+    {
+      "path": "app\\src\\main\\res\\values-b+lzh\\strings.xml",
+      "main_sha256": "ba7516f87a1a0c8ed0b0c4888f024ae9836c01131f93db0caa3cae19353947b6",
+      "fdroid_sha256": "ba7516f87a1a0c8ed0b0c4888f024ae9836c01131f93db0caa3cae19353947b6",
+      "same": true
+    },
+    {
+      "path": "app\\src\\main\\res\\values-b+zh+Hant\\strings.xml",
+      "main_sha256": "bdff5f1a8d6b0dc9d71997d97891e7f2fc7a2a125e995c89558e9bf81e0f73a9",
+      "fdroid_sha256": "bdff5f1a8d6b0dc9d71997d97891e7f2fc7a2a125e995c89558e9bf81e0f73a9",
+      "same": true
+    },
+    {
+      "path": "app\\src\\main\\res\\values-de\\strings.xml",
+      "main_sha256": "a8ae50d5e69a513739d6dc643ecacf9a8460bcad3d354d0644d5068aeef23c08",
+      "fdroid_sha256": "a8ae50d5e69a513739d6dc643ecacf9a8460bcad3d354d0644d5068aeef23c08",
+      "same": true
+    },
+    {
+      "path": "app\\src\\main\\res\\values-es\\strings.xml",
+      "main_sha256": "b235a64e02443a6ca25d75411e792a84780396bb40899d06aee2f6232c514623",
+      "fdroid_sha256": "b235a64e02443a6ca25d75411e792a84780396bb40899d06aee2f6232c514623",
+      "same": true
+    },
+    {
+      "path": "app\\src\\main\\res\\values-fr\\strings.xml",
+      "main_sha256": "2a59d6bc8d3049799069965f2c200240890eaa545986eac0b6ae859b8f4bf971",
+      "fdroid_sha256": "2a59d6bc8d3049799069965f2c200240890eaa545986eac0b6ae859b8f4bf971",
+      "same": true
+    },
+    {
+      "path": "app\\src\\main\\res\\values-it\\strings.xml",
+      "main_sha256": "cbc74c12f46a7e696d5bebb50aae0c803c03cd33ec56c5d05440642afab628dd",
+      "fdroid_sha256": "cbc74c12f46a7e696d5bebb50aae0c803c03cd33ec56c5d05440642afab628dd",
+      "same": true
+    },
+    {
+      "path": "app\\src\\main\\res\\values-ja\\strings.xml",
+      "main_sha256": "ccff56737eefafc2683dddb5f1ff4f6ddc82c9dcced9c41dd46c6fb782b37656",
+      "fdroid_sha256": "ccff56737eefafc2683dddb5f1ff4f6ddc82c9dcced9c41dd46c6fb782b37656",
+      "same": true
+    },
+    {
+      "path": "app\\src\\main\\res\\values-ko\\strings.xml",
+      "main_sha256": "d64a56e516d759167d5dd45fa91ef5b0a8989aebb1b5c6e9de9aac11037daddc",
+      "fdroid_sha256": "d64a56e516d759167d5dd45fa91ef5b0a8989aebb1b5c6e9de9aac11037daddc",
+      "same": true
+    },
+    {
+      "path": "app\\src\\main\\res\\values-pl\\strings.xml",
+      "main_sha256": "eaa1e097b4c82253a74a8a59d701dc9cbfead4bfb49cc862303e89b2f5394246",
+      "fdroid_sha256": "eaa1e097b4c82253a74a8a59d701dc9cbfead4bfb49cc862303e89b2f5394246",
+      "same": true
+    },
+    {
+      "path": "app\\src\\main\\res\\values-pt-rBR\\strings.xml",
+      "main_sha256": "b75670db9fe2cd086a77d3c5a582adfbd51936eea6680b1dd98ca7a9fb4776a5",
+      "fdroid_sha256": "b75670db9fe2cd086a77d3c5a582adfbd51936eea6680b1dd98ca7a9fb4776a5",
+      "same": true
+    },
+    {
+      "path": "app\\src\\main\\res\\values-pt\\strings.xml",
+      "main_sha256": "043ffae49c7c0e3c5b53fced972e1bc0e4ad9b8d7aa813034b49e6f0c5299731",
+      "fdroid_sha256": "043ffae49c7c0e3c5b53fced972e1bc0e4ad9b8d7aa813034b49e6f0c5299731",
+      "same": true
+    },
+    {
+      "path": "app\\src\\main\\res\\values-ru\\strings.xml",
+      "main_sha256": "8eddd330072bfcb21946891981c500a1f903d7590cc277e6e70abae1ab61293b",
+      "fdroid_sha256": "8eddd330072bfcb21946891981c500a1f903d7590cc277e6e70abae1ab61293b",
+      "same": true
+    },
+    {
+      "path": "app\\src\\main\\res\\values-vi\\strings.xml",
+      "main_sha256": "bc10f7ff1540b55c13485442dc1882d0120e53c5d58668e4294c880a06ccabc7",
+      "fdroid_sha256": "bc10f7ff1540b55c13485442dc1882d0120e53c5d58668e4294c880a06ccabc7",
+      "same": true
+    },
+    {
+      "path": "app\\src\\main\\res\\values-zh\\strings.xml",
+      "main_sha256": "6af333c1f4a5a430502c95d62639c45bf4280579373ede4d87e60b78b2627d1a",
+      "fdroid_sha256": "6af333c1f4a5a430502c95d62639c45bf4280579373ede4d87e60b78b2627d1a",
+      "same": true
+    },
+    {
+      "path": "app\\src\\main\\res\\values\\strings.xml",
+      "main_sha256": "c8e5524ee290e07426367391ebd11a7132eb29b9b45945bb36a8e1490c4baaf5",
+      "fdroid_sha256": "c8e5524ee290e07426367391ebd11a7132eb29b9b45945bb36a8e1490c4baaf5",
+      "same": true
+    }
+  ],
+  "equal": 90,
+  "intentional_differences": [
+    "app/src/main/java/takagi/ru/monica/utils/WebDavHelper.kt"
+  ]
+}

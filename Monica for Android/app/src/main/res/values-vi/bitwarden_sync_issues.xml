@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_sync_issues_title">Các mục không thể đồng bộ</string>
+    <string name="bitwarden_sync_issues_button">Xem sự cố đồng bộ (%1$d)</string>
+    <string name="bitwarden_sync_issues_help">Lần thử gần nhất của tài khoản này. Tiêu đề được hiển thị khi đọc được; nếu không, hãy dùng ID mục để tìm mục đó. Chi tiết này sẽ bị xóa khi tài khoản bị khóa.</string>
+    <string name="bitwarden_sync_issues_empty">Không có mục nào bị lỗi trong lần thử này.</string>
+    <string name="bitwarden_sync_issues_running">Quá trình đồng bộ vẫn đang chạy.</string>
+    <string name="bitwarden_sync_issues_no_title">Không đọc được tiêu đề</string>
+    <string name="bitwarden_sync_issues_id">ID mục: %1$s</string>
+    <string name="bitwarden_sync_issues_search">Tìm tiêu đề hoặc ID mục</string>
+    <string name="bitwarden_sync_issues_no_matches">Không có mục phù hợp</string>
+    <string name="bitwarden_sync_issue_kind_cipher">Mục trong kho</string>
+    <string name="bitwarden_sync_issue_kind_folder">Thư mục</string>
+    <string name="bitwarden_sync_issue_kind_send">Send</string>
+    <string name="bitwarden_sync_issue_kind_attachment">Tệp đính kèm</string>
+    <string name="bitwarden_sync_issue_kind_passkey">Khóa truy cập</string>
+    <string name="bitwarden_sync_issue_phase_download">Tải xuống</string>
+    <string name="bitwarden_sync_issue_phase_create">Tải mục mới lên</string>
+    <string name="bitwarden_sync_issue_phase_update">Tải thay đổi lên</string>
+    <string name="bitwarden_sync_issue_phase_delete">Xóa</string>
+    <string name="bitwarden_sync_issue_phase_restore">Khôi phục</string>
+    <string name="bitwarden_sync_issue_reason_authentication">Hãy mở khóa hoặc đăng nhập lại rồi thử lại.</string>
+    <string name="bitwarden_sync_issue_reason_network">Không thể kết nối với máy chủ. Hãy kiểm tra kết nối rồi thử lại.</string>
+    <string name="bitwarden_sync_issue_reason_conflict">Mục này đã thay đổi. Hãy xem lại xung đột trước khi thử lại.</string>
+    <string name="bitwarden_sync_issue_reason_unsupported">Mục này dùng định dạng không được hỗ trợ hoặc không đầy đủ.</string>
+    <string name="bitwarden_sync_issue_reason_decryption">Không thể giải mã hoặc xác minh mục này.</string>
+    <string name="bitwarden_sync_issue_reason_rejected">Không thể hoàn tất thao tác. Các thay đổi cục bộ vẫn được giữ lại.</string>
+    <string name="bitwarden_sync_issue_reason_attachment">Không thể truyền hoặc xác minh tệp đính kèm.</string>
+    <string name="bitwarden_sync_issue_reason_pending_parent">Hãy tải mục chứa tệp đính kèm lên và kiểm tra xem tệp có sẵn không trước khi thử lại.</string>
+</resources>

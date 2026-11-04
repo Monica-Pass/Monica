@@ -175,6 +175,18 @@ class KeePassAttachmentReconcilerTest {
             }
         }
 
+        // This reconciler fixture has only KeePass owners, with no Bitwarden account bindings.
+        override fun observeBitwardenPendingMetadata(
+            vaultId: Long,
+            ids: List<Long>
+        ): Flow<List<takagi.ru.monica.data.bitwarden.BitwardenSyncQueueRecord>> = flowOf(emptyList())
+
+        override suspend fun countExportMetadataByPasswords(ids: List<Long>): Int =
+            items.count { it.parentPasswordId in ids && !it.isDeleted }
+
+        override suspend fun countExportMetadataBySecureItems(ids: List<Long>): Int =
+            items.count { it.parentSecureItemId in ids && !it.isDeleted }
+
         override fun observeActiveByParent(passwordId: Long): Flow<List<Attachment>> =
             flowOf(items.filter { it.parentPasswordId == passwordId && !it.isDeleted })
 

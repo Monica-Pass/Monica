@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_sync_issues_title">同期できなかった項目</string>
+    <string name="bitwarden_sync_issues_button">同期の問題を確認（%1$d）</string>
+    <string name="bitwarden_sync_issues_help">このアカウントの直近の同期結果です。読み取れるタイトルは表示されます。タイトルを読み取れない項目は、項目 ID で特定できます。アカウントをロックすると、この詳細情報は消去されます。</string>
+    <string name="bitwarden_sync_issues_empty">今回の同期で失敗した項目はありません。</string>
+    <string name="bitwarden_sync_issues_running">同期中です。</string>
+    <string name="bitwarden_sync_issues_no_title">タイトルを読み取れません</string>
+    <string name="bitwarden_sync_issues_id">項目 ID：%1$s</string>
+    <string name="bitwarden_sync_issues_search">タイトルまたは項目 ID を検索</string>
+    <string name="bitwarden_sync_issues_no_matches">一致する項目はありません</string>
+    <string name="bitwarden_sync_issue_kind_cipher">保管庫の項目</string>
+    <string name="bitwarden_sync_issue_kind_folder">フォルダー</string>
+    <string name="bitwarden_sync_issue_kind_send">Send</string>
+    <string name="bitwarden_sync_issue_kind_attachment">添付ファイル</string>
+    <string name="bitwarden_sync_issue_kind_passkey">パスキー</string>
+    <string name="bitwarden_sync_issue_phase_download">ダウンロード</string>
+    <string name="bitwarden_sync_issue_phase_create">新しい項目をアップロード</string>
+    <string name="bitwarden_sync_issue_phase_update">変更をアップロード</string>
+    <string name="bitwarden_sync_issue_phase_delete">削除</string>
+    <string name="bitwarden_sync_issue_phase_restore">復元</string>
+    <string name="bitwarden_sync_issue_reason_authentication">ロックを解除するか、再度ログインしてからお試しください。</string>
+    <string name="bitwarden_sync_issue_reason_network">サーバーに接続できませんでした。接続を確認して再度お試しください。</string>
+    <string name="bitwarden_sync_issue_reason_conflict">この項目は変更されています。競合を確認してから再度お試しください。</string>
+    <string name="bitwarden_sync_issue_reason_unsupported">この項目の形式は未対応、または不完全です。</string>
+    <string name="bitwarden_sync_issue_reason_decryption">この項目を復号または検証できませんでした。</string>
+    <string name="bitwarden_sync_issue_reason_rejected">操作を完了できませんでした。ローカルの変更は保持されています。</string>
+    <string name="bitwarden_sync_issue_reason_attachment">添付ファイルを転送または検証できませんでした。</string>
+    <string name="bitwarden_sync_issue_reason_pending_parent">添付先の項目をアップロードし、添付ファイルが利用可能か確認してから再度お試しください。</string>
+</resources>

@@ -114,15 +114,29 @@ class AttachmentEditorDesignTest {
         } } }
         compose.onNodeWithTag("attachment_remove_draft:0").performScrollTo().performClick()
         compose.runOnIdle { assertEquals(listOf("照片.jpg"), drafts.map { it.fileName }) }
-        compose.onNodeWithTag("attachment_add").performScrollTo().performClick()
         val automation = InstrumentationRegistry.getInstrumentation().uiAutomation
-        val deadline = android.os.SystemClock.uptimeMillis() + 30_000
-        while (automation.rootInActiveWindow?.packageName?.toString()?.endsWith(".documentsui") != true &&
-            android.os.SystemClock.uptimeMillis() < deadline) Thread.sleep(100)
-        assertTrue("File picker did not become active: ${automation.rootInActiveWindow?.packageName}", automation.rootInActiveWindow?.packageName?.toString()?.endsWith(".documentsui") == true)
-        android.os.ParcelFileDescriptor.AutoCloseInputStream(automation.executeShellCommand("input keyevent 4")).use { it.readBytes() }
-        compose.waitForIdle()
-        compose.runOnIdle { assertEquals(listOf("照片.jpg"), drafts.map { it.fileName }) }
+        val originalFlags = automation.serviceInfo.flags
+        automation.serviceInfo = automation.serviceInfo.apply {
+            flags = flags or android.accessibilityservice.AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
+        }
+        fun pickerVisible(): Boolean = automation.rootInActiveWindow?.packageName?.toString()?.endsWith(".documentsui") == true ||
+            automation.windows.any { (it.isActive || it.isFocused) && it.root?.packageName?.toString()?.endsWith(".documentsui") == true }
+        fun pressBack() = android.os.ParcelFileDescriptor.AutoCloseInputStream(
+            automation.executeShellCommand("input keyevent 4")).use { it.readBytes(); Unit }
+        try {
+            compose.onNodeWithTag("attachment_add").performScrollTo().performClick()
+            val deadline = android.os.SystemClock.uptimeMillis() + 30_000
+            while (!pickerVisible() && android.os.SystemClock.uptimeMillis() < deadline) Thread.sleep(100)
+            assertTrue("File picker did not become visible: active=${automation.rootInActiveWindow?.packageName}, " +
+                "windows=${automation.windows.map { Triple(it.isActive, it.isFocused, it.root?.packageName) }}", pickerVisible())
+            pressBack()
+            compose.waitUntil(10_000) { !pickerVisible() && compose.onAllNodesWithTag("attachment_add").fetchSemanticsNodes().isNotEmpty() }
+            compose.waitForIdle()
+            compose.runOnIdle { assertEquals(listOf("照片.jpg"), drafts.map { it.fileName }) }
+        } finally {
+            if (pickerVisible()) pressBack()
+            automation.serviceInfo = automation.serviceInfo.apply { flags = originalFlags }
+        }
         compose.onNodeWithTag("attachment_remove_draft:0").performScrollTo().performClick()
         compose.runOnIdle { assertTrue(drafts.isEmpty()) }
         screenshot("empty-large")

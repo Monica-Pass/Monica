@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_settings_security">Bảo mật</string>
+    <string name="bitwarden_settings_queue_hint">Xem thay đổi đang chờ và sự cố đồng bộ</string>
+    <string name="bitwarden_account_web_settings_hint">Quản lý mật khẩu chính, đăng nhập hai bước và gói đăng ký trên web</string>
+    <string name="bitwarden_settings_select_account">Đặt làm tài khoản hiện tại</string>
+    <string name="bitwarden_settings_account_management">Quản lý tài khoản</string>
+    <string name="bitwarden_queue_help">Hiển thị các thay đổi cục bộ đang chờ đồng bộ và kết quả lần thử gần nhất. Danh sách trống không có nghĩa là dữ liệu đã được đồng bộ với máy chủ.</string>
+    <string name="bitwarden_queue_empty_local">Không có thay đổi cục bộ đang chờ đồng bộ.</string>
+    <string name="bitwarden_queue_locked">Mở khóa tài khoản này để xem các mục đang chờ.</string>
+    <string name="bitwarden_queue_loading_error">Không thể đọc các mục đang chờ. Hãy mở lại trang này để thử lại.</string>
+    <string name="bitwarden_queue_awaiting_confirmation">Đang chờ máy chủ xác nhận</string>
+    <string name="bitwarden_queue_idle">Không có tác vụ đồng bộ đang chạy</string>
+</resources>

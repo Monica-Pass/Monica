@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bw_json_title">Bitwarden JSON</string>
+    <string name="bw_json_encrypted_title">パスワード暗号化 Bitwarden JSON</string>
+    <string name="bw_json_description">ログイン、メモ、カード、個人情報、SSH 鍵用の標準 JSON またはパスワード暗号化 JSON。</string>
+    <string name="bw_json_boundary">インポート先はローカル保管庫のみです。エクスポート元はローカル保管庫または個人の Bitwarden アカウント1つです。添付ファイル、Send、アーカイブ状態は含まれません。保持できない内容がある場合は転送全体を中止します。報告された項目をすべて確認してください。</string>
+    <string name="bw_json_import_hint">標準またはパスワード暗号化された Bitwarden JSON ファイルを選択してください。</string>
+    <string name="bw_json_file_password">ファイルのパスワード</string>
+    <string name="bw_json_check">ファイルを確認</string>
+    <string name="bw_json_review">JSON インポートの確認</string>
+    <string name="bw_json_counts">%1$d 件の項目 · %2$d 個のフォルダー</string>
+    <string name="bw_json_blocked">転送全体を中止しました。以下のすべての項目を解決してから再試行してください。</string>
+    <string name="bw_json_ready">インポートできます。確認するとすべての項目をローカル保管庫に追加します。</string>
+    <string name="bw_json_export_success">%1$d 件の項目と %2$d 個のフォルダーをエクスポートしました。添付ファイル、Send、アーカイブ状態は含まれません。</string>
+    <string name="bw_json_reason_invalid">無効または破損したデータ</string>
+    <string name="bw_json_reason_unknown">不明なフィールドのため保持できません</string>
+    <string name="bw_json_reason_type">未対応の項目の種類</string>
+    <string name="bw_json_reason_value">この値を完全には保持できません</string>
+    <string name="bw_json_reason_limit">ファイルまたは処理の上限を超えています</string>
+    <string name="bw_json_reason_organization">組織とコレクションの内容には未対応です</string>
+    <string name="bw_json_reason_attachments">添付ファイルは別途転送が必要です</string>
+    <string name="bw_json_reason_archived">この形式ではアーカイブ状態を保持できません</string>
+    <string name="bw_json_reason_destination">この転送元または転送先には未対応です</string>
+    <string name="bw_json_reason_pending">アカウントの保留中の変更を完了してからエクスポートしてください</string>
+    <string name="bw_json_reason_unavailable">必要な元データまたは鍵を利用できません</string>
+    <string name="bw_json_item">項目 %1$d</string>
+    <string name="bw_json_plain_warning">暗号化されていない JSON には読み取り可能なパスワードと秘密鍵が含まれます。ファイルを安全に保管してください。</string>
+</resources>

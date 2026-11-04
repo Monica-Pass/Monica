@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_sync_issues_title">Items that could not sync</string>
+    <string name="bitwarden_sync_issues_button">View sync issues (%1$d)</string>
+    <string name="bitwarden_sync_issues_help">Latest attempt for this account. Titles are shown when available; use the item ID to locate an item whose title cannot be read. Details are cleared when this account locks.</string>
+    <string name="bitwarden_sync_issues_empty">No item failures in this attempt.</string>
+    <string name="bitwarden_sync_issues_running">Sync is still running.</string>
+    <string name="bitwarden_sync_issues_no_title">Title unavailable</string>
+    <string name="bitwarden_sync_issues_id">Item ID: %1$s</string>
+    <string name="bitwarden_sync_issues_search">Search title or item ID</string>
+    <string name="bitwarden_sync_issues_no_matches">No matching items</string>
+    <string name="bitwarden_sync_issue_kind_cipher">Vault item</string>
+    <string name="bitwarden_sync_issue_kind_folder">Folder</string>
+    <string name="bitwarden_sync_issue_kind_send">Send</string>
+    <string name="bitwarden_sync_issue_kind_attachment">Attachment</string>
+    <string name="bitwarden_sync_issue_kind_passkey">Passkey</string>
+    <string name="bitwarden_sync_issue_phase_download">Download</string>
+    <string name="bitwarden_sync_issue_phase_create">Upload new item</string>
+    <string name="bitwarden_sync_issue_phase_update">Upload changes</string>
+    <string name="bitwarden_sync_issue_phase_delete">Delete</string>
+    <string name="bitwarden_sync_issue_phase_restore">Restore</string>
+    <string name="bitwarden_sync_issue_reason_authentication">Unlock or sign in again, then retry.</string>
+    <string name="bitwarden_sync_issue_reason_network">Could not reach the server. Check the connection and retry.</string>
+    <string name="bitwarden_sync_issue_reason_conflict">This item changed. Review the conflict before retrying.</string>
+    <string name="bitwarden_sync_issue_reason_unsupported">This item uses an unsupported or incomplete format.</string>
+    <string name="bitwarden_sync_issue_reason_decryption">This item could not be decrypted or verified.</string>
+    <string name="bitwarden_sync_issue_reason_rejected">The operation could not be completed. Local changes are retained.</string>
+    <string name="bitwarden_sync_issue_reason_attachment">The attachment could not be transferred or verified.</string>
+    <string name="bitwarden_sync_issue_reason_pending_parent">Upload the parent item and check attachment availability before retrying.</string>
+</resources>

@@ -39,6 +39,7 @@ data class ImportDestination(val kind: ImportDestinationKind, val databaseId: Lo
         mdbxDatabaseId = mdbxId, mdbxFolderId = null,
         bitwardenVaultId = bitwardenId, bitwardenCipherId = null, bitwardenFolderId = null,
         bitwardenRevisionDate = null, bitwardenLocalModified = bitwardenId != null,
+        bitwardenArchiveIntent = null,
         syncStatus = if (bitwardenId != null) "PENDING" else "NONE",
         categoryId = null,
         replicaGroupId = mdbxId?.let {

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_sync_issues_title">未能同步的项目</string>
+    <string name="bitwarden_sync_issues_button">查看同步问题（%1$d）</string>
+    <string name="bitwarden_sync_issues_help">显示此账号最近一次同步的结果。能读取时会显示标题；标题无法读取时，可用项目 ID 定位。此账号锁定后会清除这些详情。</string>
+    <string name="bitwarden_sync_issues_empty">本次同步没有项目失败喵。</string>
+    <string name="bitwarden_sync_issues_running">仍在同步喵。</string>
+    <string name="bitwarden_sync_issues_no_title">无法读取标题</string>
+    <string name="bitwarden_sync_issues_id">项目 ID：%1$s</string>
+    <string name="bitwarden_sync_issues_search">搜索标题或项目 ID</string>
+    <string name="bitwarden_sync_issues_no_matches">没有匹配的项目</string>
+    <string name="bitwarden_sync_issue_kind_cipher">密码库项目</string>
+    <string name="bitwarden_sync_issue_kind_folder">文件夹</string>
+    <string name="bitwarden_sync_issue_kind_send">Send</string>
+    <string name="bitwarden_sync_issue_kind_attachment">附件</string>
+    <string name="bitwarden_sync_issue_kind_passkey">通行密钥</string>
+    <string name="bitwarden_sync_issue_phase_download">下载</string>
+    <string name="bitwarden_sync_issue_phase_create">上传新项目</string>
+    <string name="bitwarden_sync_issue_phase_update">上传修改</string>
+    <string name="bitwarden_sync_issue_phase_delete">删除</string>
+    <string name="bitwarden_sync_issue_phase_restore">恢复</string>
+    <string name="bitwarden_sync_issue_reason_authentication">请解锁或重新登录后重试。</string>
+    <string name="bitwarden_sync_issue_reason_network">无法连接服务器，请检查网络后重试。</string>
+    <string name="bitwarden_sync_issue_reason_conflict">此项目已更改，请查看冲突后重试。</string>
+    <string name="bitwarden_sync_issue_reason_unsupported">此项目的格式不受支持或内容不完整。</string>
+    <string name="bitwarden_sync_issue_reason_decryption">无法解密或验证此项目。</string>
+    <string name="bitwarden_sync_issue_reason_rejected">未能完成操作，本地修改已保留。</string>
+    <string name="bitwarden_sync_issue_reason_attachment">无法传输或验证此附件。</string>
+    <string name="bitwarden_sync_issue_reason_pending_parent">请先上传所属项目并检查附件是否可用，然后重试。</string>
+</resources>

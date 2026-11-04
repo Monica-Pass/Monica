@@ -184,7 +184,7 @@
     <string name="unarchive_action">"Unarchive"</string>
     <string name="archive_password_confirmation_title">"Archivia questo articolo?"</string>
     <string name="archive_password_confirmation_message">"Dopo l\'archiviazione, questo elemento passerà a Archiviato. È possibile ripristinarlo in un secondo momento."</string>
-    <string name="archive_empty_hint">"Ancora nessuna password archiviata"</string>
+    <string name="archive_empty_hint">Ancora nessun elemento archiviato</string>
     <string name="archive_item_subtitle_empty">"Nessun nome utente o sito web"</string>
     <string name="group_mode_menu_title">"Stile di impilamento"</string>
     <string name="group_mode_smart">"Smart (note &gt; web &gt; app &gt; titolo)"</string>

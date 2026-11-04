@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bw_json_title">Bitwarden JSON</string>
+    <string name="bw_json_encrypted_title">密碼加密的 Bitwarden JSON</string>
+    <string name="bw_json_description">標準或密碼加密 JSON，支援登入、筆記、銀行卡、身分和 SSH 金鑰。</string>
+    <string name="bw_json_boundary">僅可匯入本機保險庫；可從本機庫或單一個人 Bitwarden 帳號匯出。不含附件檔案、Send 和封存狀態。無法完整保留的內容會阻止整次操作，請逐項查看報告。</string>
+    <string name="bw_json_import_hint">選擇標準或密碼加密的 Bitwarden JSON 檔案。</string>
+    <string name="bw_json_file_password">檔案密碼</string>
+    <string name="bw_json_check">檢查檔案</string>
+    <string name="bw_json_review">檢查 JSON 匯入</string>
+    <string name="bw_json_counts">%1$d 個項目 · %2$d 個資料夾</string>
+    <string name="bw_json_blocked">整次操作已阻止。請處理下列所有項目後重試。</string>
+    <string name="bw_json_ready">檔案可匯入。確認後將全部項目加入本機保險庫。</string>
+    <string name="bw_json_export_success">已匯出 %1$d 個項目和 %2$d 個資料夾。不含附件檔案、Send 和封存狀態。</string>
+    <string name="bw_json_reason_invalid">資料無效或已損壞</string>
+    <string name="bw_json_reason_unknown">無法識別此欄位，不能完整保留</string>
+    <string name="bw_json_reason_type">不支援的項目類型</string>
+    <string name="bw_json_reason_value">無法完整保留此值</string>
+    <string name="bw_json_reason_limit">超出檔案或處理限制</string>
+    <string name="bw_json_reason_organization">暫不支援組織和集合內容</string>
+    <string name="bw_json_reason_attachments">附件檔案需要另外移轉</string>
+    <string name="bw_json_reason_archived">此格式無法保留封存狀態</string>
+    <string name="bw_json_reason_destination">不支援此來源或目標</string>
+    <string name="bw_json_reason_pending">請先完成帳號的待同步修改再匯出</string>
+    <string name="bw_json_reason_unavailable">所需來源資料或金鑰無法使用</string>
+    <string name="bw_json_item">第 %1$d 個項目</string>
+    <string name="bw_json_plain_warning">未加密 JSON 含可直接讀取的密碼和私鑰。請妥善保管檔案。</string>
+</resources>

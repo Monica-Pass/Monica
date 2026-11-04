@@ -225,6 +225,7 @@ internal class DatabaseArchiveExporter(context: Context) {
         .put("notes", item.notes).put("isFavorite", item.isFavorite).put("sortOrder", item.sortOrder)
         .put("imagePaths", item.imagePaths).put("createdAt", item.createdAt.time).put("updatedAt", item.updatedAt.time)
         .put("categoryName", snapshot.categories[item.categoryId])
+        .put("isArchived", item.isArchived).put("archivedAt", item.archivedAt?.time)
 
     private fun includes(preferences: BackupPreferences, type: ItemType) = when (type) {
         ItemType.TOTP -> preferences.includeAuthenticators

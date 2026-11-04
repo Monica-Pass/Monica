@@ -113,7 +113,7 @@
     <string name="legacy_ui_sync_wifi_only_hint">Wi-Fi에 연결되었을 때만 자동으로 동기화합니다</string>
     <string name="legacy_ui_never_lock">잠금 안 함</string>
     <string name="legacy_ui_never_lock_hint">비밀번호를 다시 입력하지 않고 Bitwarden 잠금 해제 상태를 유지합니다</string>
-    <string name="legacy_ui_never_lock_warning">⚠️ 안전한 환경에서만 사용하세요</string>
+    <string name="legacy_ui_never_lock_warning">안전한 환경에서만 사용하세요</string>
     <string name="legacy_ui_bitwarden_integration">Bitwarden 연동</string>
     <string name="legacy_ui_supported_servers">지원 서버:</string>
     <string name="legacy_ui_bitwarden_servers">• 공식 Bitwarden 서버\n• Vaultwarden(자체 호스팅)\n• Bitwarden API와 호환되는 기타 서비스</string>

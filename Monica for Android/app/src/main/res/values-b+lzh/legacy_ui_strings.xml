@@ -114,7 +114,7 @@
     <string name="legacy_ui_sync_wifi_only_hint">惟连 Wi-Fi 时，乃自行同步。</string>
     <string name="legacy_ui_never_lock">永不封锁</string>
     <string name="legacy_ui_never_lock_hint">保持 Bitwarden 启封，无须屡入密钥。</string>
-    <string name="legacy_ui_never_lock_warning">⚠️ 所处安全，方可用之。</string>
+    <string name="legacy_ui_never_lock_warning">所处安全，方可用之。</string>
     <string name="legacy_ui_bitwarden_integration">接入 Bitwarden</string>
     <string name="legacy_ui_supported_servers">可用之服务器：</string>
     <string name="legacy_ui_bitwarden_servers">• Bitwarden 官方服务器\n• Vaultwarden（自建）\n• 其余兼容 Bitwarden API 之服务</string>

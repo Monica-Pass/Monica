@@ -80,10 +80,17 @@ class BitwardenSendEditTest {
     }
 
     @Test fun removePasswordDoesNotSubstituteAnEmptyPasswordHash() = withVault { vault ->
-        val after = BitwardenSendMapper.buildUpdatePayload(source(vault), draft().copy(passwordAction = SendPasswordAction.REMOVE), vault)
-        assertEquals(JsonNull, after["password"])
-        // Removal is performed through the dedicated endpoint, not by downgrading this PUT.
-        assertEquals(JsonPrimitive(1), after["authType"])
+        // Cover both the legacy action-only caller and the native editor's explicit NONE choice.
+        for (auth in listOf(SendAuthAction.KEEP, SendAuthAction.NONE)) {
+            val before = source(vault)
+            val after = BitwardenSendMapper.buildUpdatePayload(before,
+                draft().copy(passwordAction = SendPasswordAction.REMOVE, authAction = auth), vault)
+            assertEquals(JsonNull, after["password"])
+            assertNotEquals(BitwardenCrypto.hashSendPassword("", material), BitwardenSendEdit.string(after, "password"))
+            // Removal is performed through the dedicated endpoint, not by downgrading this PUT.
+            assertEquals(JsonPrimitive(1), after["authType"])
+            assertEquals(before["emails"], after["emails"])
+        }
     }
 
     @Test fun emailAndUnknownAuthRemainOpaqueWhenPasswordIsUnchanged() = withVault { vault ->

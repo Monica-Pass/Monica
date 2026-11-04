@@ -270,8 +270,15 @@ fun PasswordDetailScreen(
             customFields = withContext(Dispatchers.IO) { viewModel.getCustomFieldsByEntryIdSync(projectContentOwnerId) }
         }
     }
-    val passwordHistory by viewModel.getPasswordHistoryFlow(passwordId).collectAsState(initial = emptyList())
+    val historyFlow = remember(viewModel, passwordId) { viewModel.getPasswordHistoryFlow(passwordId) }
+    val passwordHistory by historyFlow.collectAsState(initial = emptyList())
     val passwordHistoryVisibility = remember { mutableStateMapOf<Long, Boolean>() }
+    LaunchedEffect(passwordHistory.map { it.id }) {
+        val retained = passwordHistory.map { it.id }.toSet()
+        passwordHistoryVisibility.keys.toList().filterNot { it in retained }.forEach { passwordHistoryVisibility.remove(it) }
+        if (historyItemToDelete?.id !in retained) historyItemToDelete = null
+        if (passwordHistory.isEmpty()) showClearHistoryDialog = false
+    }
     val bitwardenSyncRawHistoryFlow = remember(
         viewModel,
         passwordEntry?.bitwardenVaultId,
@@ -1208,7 +1215,7 @@ fun PasswordDetailScreen(
             onDismiss = { historyItemToDelete = null },
             onConfirm = {
                 passwordHistoryVisibility.remove(historyItem.id)
-                viewModel.deletePasswordHistoryEntry(historyItem.id)
+                viewModel.deletePasswordHistoryEntry(historyItem.id, passwordEntry?.bitwardenVaultId)
                 historyItemToDelete = null
             }
         )
@@ -1222,7 +1229,7 @@ fun PasswordDetailScreen(
             onDismiss = { showClearHistoryDialog = false },
             onConfirm = {
                 passwordHistoryVisibility.clear()
-                viewModel.clearPasswordHistory(passwordId)
+                viewModel.clearPasswordHistory(passwordId, passwordEntry?.bitwardenVaultId)
                 showClearHistoryDialog = false
             }
         )
@@ -1466,7 +1473,7 @@ private fun HistoryPasswordValue(
     onToggleVisibility: () -> Unit,
     context: Context
 ) {
-    val hasReadableValue = value.isNotBlank()
+    val hasReadableValue = value.isNotEmpty()
 
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(
@@ -1543,7 +1550,7 @@ private fun HistoryPasswordValue(
 }
 
 @Composable
-private fun HistoryPasswordConfirmDialog(
+internal fun HistoryPasswordConfirmDialog(
     title: String,
     message: String,
     confirmText: String,

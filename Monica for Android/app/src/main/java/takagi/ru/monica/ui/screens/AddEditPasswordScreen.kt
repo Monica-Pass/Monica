@@ -413,7 +413,7 @@ fun AddEditPasswordScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 private fun PasswordEntryEditor(
     viewModel: PasswordViewModel,
@@ -676,6 +676,8 @@ private fun PasswordEntryEditor(
     var bitwardenVaultId by rememberSaveable { mutableStateOf<Long?>(null) }
     var bitwardenFolderId by rememberSaveable { mutableStateOf<String?>(null) }
     val bitwardenRepository = remember { BitwardenRepository.getInstance(context) }
+    val passwordAttachmentEdits = remember(context) { takagi.ru.monica.attachments.ui.PasswordAttachmentEdits(context) }
+    var originalAttachmentVaultId by remember(passwordId) { mutableStateOf<Long?>(null) }
     val bitwardenVaults by bitwardenRepository.getAllVaultsFlow().collectAsState(initial = emptyList())
     val selectedStorageTargets = remember { mutableStateListOf<StorageTarget>() }
     var existingReplicaTargetKeys by remember { mutableStateOf<Set<String>>(emptySet()) }
@@ -2238,6 +2240,7 @@ private fun PasswordEntryEditor(
                 withContext(Dispatchers.IO) {
                     viewModel.getRawPasswordEntryById(actualId, forEdit = true)
                 }?.let { rawEntry ->
+                    originalAttachmentVaultId = rawEntry.bitwardenVaultId
                     hasOwnershipConflict = viewModel.hasOwnershipConflict(rawEntry)
                     val secretState = withContext(Dispatchers.Default) {
                         viewModel.inspectSecretState(rawEntry)
@@ -2717,7 +2720,7 @@ private fun PasswordEntryEditor(
             )
 
             // 快照自定义字段，并追加“用户名分离”内部转换字段（带标记）
-            val urlFields = if (!isBarcodeMode && templateDraft == null) PasswordUrlRules.put(customFields.toList(), currentUrlRules()) else customFields.toList()
+            val urlFields = if (!isBarcodeMode && templateDraft == null) PasswordUrlRules.put(customFields.toList(), currentUrlRules(), native = bitwardenVaultId != null) else customFields.toList()
             val templateFields = templateDraft?.fields(urlFields) ?: urlFields
             val currentCustomFields = (if (contentMode) EntryContentFields.withOrder(templateFields, requestedContentSections.toList()) else templateFields).toMutableList().apply {
                 removeAll {
@@ -2843,7 +2846,10 @@ private fun PasswordEntryEditor(
                                 } else {
                                     takagi.ru.monica.attachments.model.AttachmentSource.LOCAL
                                 },
-                                keepassContext = draftKeePassContext
+                                keepassContext = draftKeePassContext,
+                                persistAttachment = { uri, acceptSoftLimit ->
+                                    passwordAttachmentEdits.persist(attachmentOwnerId, uri, settings.isPlusActivated, acceptSoftLimit)
+                                }
                             )
                         }
                             check(pendingAttachmentOwners.all { it.second.isEmpty() })
@@ -2983,7 +2989,7 @@ private fun PasswordEntryEditor(
                             creditCardCVV = if (isMultiCredentialMode) metadata.creditCardCVV else creditCardCVV,
                             passkeyBindings = if (!isMultiCredentialMode || index == 0) passkeyBindings else "",
                             sshKeyData = if (!isMultiCredentialMode || index == 0) existingSshKeyData else "",
-                            customFields = PasswordUrlRules.put(credentialFields, currentUrlRules())
+                            customFields = PasswordUrlRules.put(credentialFields, currentUrlRules(), native = bitwardenVaultId != null)
                         )
                     }
                     val editedCredentialSavePlan = if (isEditing) {
@@ -3533,44 +3539,16 @@ private fun PasswordEntryEditor(
                         }
                     }
 
-                    if (contentMode) {
-                        ExtendedFloatingActionButton(
-                            onClick = { if (canSave) handleSave() },
-                            modifier = Modifier.testTag("password_editor_save"),
-                            text = { Text(stringResource(R.string.save)) },
-                            icon = {
-                                if (isSaving) CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.dp)
-                                else Icon(Icons.Default.Save, contentDescription = stringResource(R.string.save))
-                            },
-                            containerColor = if (canSave) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant,
-                        )
-                    } else {
-                    FloatingActionButton(
-                        onClick = handleSave,
-                        containerColor = if (canSave) {
-                            MaterialTheme.colorScheme.primaryContainer
-                        } else {
-                            MaterialTheme.colorScheme.surfaceVariant
+                    ExtendedFloatingActionButton(
+                        onClick = { if (canSave) handleSave() },
+                        modifier = Modifier.testTag("password_editor_save"),
+                        text = { Text(stringResource(R.string.save)) },
+                        icon = {
+                            if (isSaving) CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.dp)
+                            else Icon(Icons.Default.Save, contentDescription = stringResource(R.string.save))
                         },
-                        contentColor = if (canSave) {
-                            MaterialTheme.colorScheme.onPrimaryContainer
-                        } else {
-                            MaterialTheme.colorScheme.onSurfaceVariant
-                        }
-                    ) {
-                        if (isSaving) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.size(22.dp),
-                                strokeWidth = 2.dp
-                            )
-                        } else {
-                            Icon(
-                                imageVector = Icons.Default.Check,
-                                contentDescription = stringResource(R.string.save)
-                            )
-                        }
-                    }
-                    }
+                        containerColor = if (canSave) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant,
+                    )
                 }
             }
         }
@@ -3588,7 +3566,7 @@ private fun PasswordEntryEditor(
                 modifier = Modifier
                     .fillMaxSize()
                     .testTag(if (contentMode) "password_content_editor" else "password_classic_editor")
-                    .padding(horizontal = if (contentMode) 12.dp else 16.dp),
+                    .padding(horizontal = 12.dp),
             verticalArrangement = Arrangement.spacedBy(if (contentMode) 2.dp else 16.dp),
             contentPadding = listContentPadding
         ) {
@@ -3769,23 +3747,7 @@ private fun PasswordEntryEditor(
                         }
                         if (templateLoadFailed) Text(stringResource(R.string.content_block_preserved), color = MaterialTheme.colorScheme.error)
                         if (isBarcodeMode) {
-                            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                                FilledTonalButton(
-                                    onClick = { onScanAuthenticatorQrCode?.invoke() },
-                                    enabled = onScanAuthenticatorQrCode != null,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(64.dp),
-                                    shape = RoundedCornerShape(18.dp)
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.QrCodeScanner,
-                                        contentDescription = null
-                                    )
-                                    Spacer(modifier = Modifier.width(10.dp))
-                                    Text(stringResource(R.string.scan_qr_code))
-                                }
-
+                            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                                 OutlinedTextField(
                                     value = barcodePayload,
                                     onValueChange = { barcodePayload = it },
@@ -3803,6 +3765,7 @@ private fun PasswordEntryEditor(
                                     },
                                     modifier = Modifier
                                         .fillMaxWidth()
+                                        .testTag("barcode_editor_payload")
                                         .heightIn(min = 120.dp),
                                     minLines = 3,
                                     maxLines = 6,
@@ -3810,25 +3773,20 @@ private fun PasswordEntryEditor(
                                         keyboardType = KeyboardType.Text,
                                         imeAction = ImeAction.Default
                                     ),
-                                    shape = RoundedCornerShape(12.dp)
+                                    shape = RoundedCornerShape(24.dp)
                                 )
 
-                                if (barcodePayload.isNotBlank()) {
-                                    ElevatedCard(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        colors = CardDefaults.elevatedCardColors(
-                                            containerColor = MaterialTheme.colorScheme.secondaryContainer
-                                        )
-                                    ) {
-                                        Text(
-                                            text = barcodePayload,
-                                            modifier = Modifier.padding(14.dp),
-                                            style = MaterialTheme.typography.bodySmall,
-                                            color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.78f),
-                                            maxLines = 2,
-                                            overflow = TextOverflow.Ellipsis
-                                        )
-                                    }
+                                FilledTonalButton(
+                                    onClick = { onScanAuthenticatorQrCode?.invoke() },
+                                    enabled = onScanAuthenticatorQrCode != null,
+                                    modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)
+                                        .testTag("barcode_editor_scan"),
+                                    shape = RoundedCornerShape(24.dp),
+                                    contentPadding = PaddingValues(horizontal = 20.dp, vertical = 16.dp),
+                                ) {
+                                    Icon(Icons.Default.QrCodeScanner, contentDescription = null)
+                                    Spacer(Modifier.width(10.dp))
+                                    Text(stringResource(R.string.scan_qr_code))
                                 }
 
                                 PasswordAppBindingButton(
@@ -4393,13 +4351,13 @@ private fun PasswordEntryEditor(
             if (showCredentialEditorContent && shouldShowCategoryAndNotes()) {
                 contentItem(key = "content_notes") {
                     takagi.ru.monica.ui.components.EntryEditorSection(
-                        templateMode = isBarcodeMode,
-                        contentMode = contentMode, section = PasswordContentSection.NOTES,
+                        templateMode = false,
+                        contentMode = true, section = PasswordContentSection.NOTES,
                         summary = credentialScopedNotes.take(100),
                         open = editingContentSection == "NOTES",
                         onOpenChange = { editingContentSection = if (it) "NOTES" else null },
                     ) {
-                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                             val selectedNotePreview = remember(selectedBoundNote) {
                                 selectedBoundNote?.let { note ->
                                     takagi.ru.monica.notes.domain.NoteContentCodec
@@ -4410,6 +4368,10 @@ private fun PasswordEntryEditor(
                                 }.orEmpty()
                             }
 
+                            CompositionLocalProvider(
+                                takagi.ru.monica.ui.components.LocalFilledEntryForm provides true,
+                                takagi.ru.monica.ui.components.LocalStandaloneTemplateFields provides true,
+                            ) {
                             OutlinedTextField(
                                 value = credentialScopedNotes,
                                 onValueChange = { value ->
@@ -4419,16 +4381,19 @@ private fun PasswordEntryEditor(
                                         notes = value
                                     }
                                 },
-                                label = { Text(stringResource(if (contentMode) R.string.password_content_notes else R.string.notes)) },
+                                label = { Text(stringResource(R.string.password_content_notes)) },
                                 leadingIcon = { Icon(Icons.Default.Edit, null) },
                                 modifier = Modifier.fillMaxWidth().testTag("password_content_notes")
-                                    .then(if (contentMode) Modifier.heightIn(min = 160.dp, max = 320.dp) else Modifier.height(88.dp)),
-                                minLines = if (contentMode) 5 else 1,
-                                maxLines = if (contentMode) 12 else 4,
-                                shape = RoundedCornerShape(12.dp)
+                                    .heightIn(min = 160.dp),
+                                minLines = 5,
+                                maxLines = 12,
+                                shape = RoundedCornerShape(24.dp)
                             )
 
-                            HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
+                            }
+
+                            Column(Modifier.fillMaxWidth().testTag("password_note_actions"),
+                                verticalArrangement = Arrangement.spacedBy(12.dp)) {
 
                             Text(
                                 text = stringResource(R.string.embedded_copy_note),
@@ -4436,20 +4401,35 @@ private fun PasswordEntryEditor(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
 
-                            FilledTonalButton(onClick = {
+                            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            FilledTonalButton(modifier = Modifier.testTag("password_note_create"), onClick = {
                                 editingWallet = EmbeddedWalletContent.create(takagi.ru.monica.data.SecureItem(
                                     itemType = takagi.ru.monica.data.ItemType.NOTE, title = "",
                                     itemData = takagi.ru.monica.notes.domain.NoteContentCodec.encode("", isMarkdown = true).first))
-                            }) { Text(stringResource(R.string.add)) }
+                            }, shape = RoundedCornerShape(24.dp)) {
+                                Icon(Icons.Default.Add, null)
+                                Spacer(Modifier.width(8.dp))
+                                Text(stringResource(R.string.add))
+                            }
+                            if (selectedBoundNote == null || copiedContent(EmbeddedWalletContent.Kind.NOTE) != null) {
+                                FilledTonalButton(onClick = { showBoundNotePicker = true },
+                                    shape = RoundedCornerShape(24.dp), modifier = Modifier.testTag("password_note_copy")) {
+                                    Icon(Icons.Default.ContentCopy, null)
+                                    Spacer(Modifier.width(8.dp))
+                                    Text(stringResource(R.string.embedded_copy_note))
+                                }
+                            }
+                            }
                             val embeddedNote = copiedContent(EmbeddedWalletContent.Kind.NOTE)
                             if (embeddedNote != null) {
                                 takagi.ru.monica.ui.components.EmbeddedWalletPreview(embeddedNote) { editingWallet = embeddedNote }
-                                OutlinedButton(onClick = { showBoundNotePicker = true }) { Text(stringResource(R.string.embedded_copy_note)) }
                             } else if (selectedBoundNote != null) {
-                                ElevatedCard(
+                                Card(
                                     modifier = Modifier.fillMaxWidth(),
-                                    colors = CardDefaults.elevatedCardColors(
-                                        containerColor = MaterialTheme.colorScheme.secondaryContainer
+                                    shape = RoundedCornerShape(24.dp),
+                                    colors = CardDefaults.cardColors(
+                                        containerColor = MaterialTheme.colorScheme.surfaceContainer
                                     )
                                 ) {
                                     Column(
@@ -4464,7 +4444,7 @@ private fun PasswordEntryEditor(
                                             Icon(
                                                 imageVector = Icons.Default.Description,
                                                 contentDescription = null,
-                                                tint = MaterialTheme.colorScheme.onSecondaryContainer
+                                                tint = MaterialTheme.colorScheme.primary
                                             )
                                             Column(
                                                 modifier = Modifier.weight(1f),
@@ -4476,20 +4456,21 @@ private fun PasswordEntryEditor(
                                                     },
                                                     style = MaterialTheme.typography.titleMedium,
                                                     fontWeight = FontWeight.Medium,
-                                                    color = MaterialTheme.colorScheme.onSecondaryContainer
+                                                    color = MaterialTheme.colorScheme.onSurface
                                                 )
                                                 if (selectedNotePreview.isNotBlank()) {
                                                     Text(
                                                         text = selectedNotePreview,
                                                         style = MaterialTheme.typography.bodySmall,
-                                                        color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.8f),
+                                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                                                         maxLines = 2,
                                                         overflow = TextOverflow.Ellipsis
                                                     )
                                                 }
                                             }
                                         }
-                                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                            verticalArrangement = Arrangement.spacedBy(8.dp)) {
                                             FilledTonalButton(onClick = { showBoundNotePicker = true }) {
                                                 Text(stringResource(R.string.change_bound_note))
                                             }
@@ -4505,16 +4486,7 @@ private fun PasswordEntryEditor(
                                         }
                                     }
                                 }
-                            } else {
-                                OutlinedButton(
-                                    onClick = { showBoundNotePicker = true },
-                                    modifier = Modifier.fillMaxWidth(),
-                                    shape = RoundedCornerShape(12.dp)
-                                ) {
-                                    Icon(Icons.Default.Link, contentDescription = null)
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(stringResource(R.string.embedded_copy_note))
-                                }
+                            }
                             }
                         }
                     }
@@ -4647,6 +4619,7 @@ private fun PasswordEntryEditor(
                         0
                     }
                     val editsExistingCredential = isEditing && activeCredentialIndex == 0
+                    val attachmentVaultId = if (editsExistingCredential) originalAttachmentVaultId else bitwardenVaultId
                     val editKeePassContext = if (
                         editsExistingCredential &&
                         keepassDatabaseId != null
@@ -4668,12 +4641,23 @@ private fun PasswordEntryEditor(
                     takagi.ru.monica.attachments.ui.AttachmentsEditSection(
                         passwordId = if (editsExistingCredential) passwordId ?: -1L else -1L,
                         isPlusActivated = settings.isPlusActivated,
-                        attachmentSource = if (editKeePassContext != null) {
+                        attachmentSource = if (attachmentVaultId != null) {
+                            takagi.ru.monica.attachments.model.AttachmentSource.BITWARDEN
+                        } else if (editKeePassContext != null) {
                             takagi.ru.monica.attachments.model.AttachmentSource.KEEPASS
                         } else {
                             takagi.ru.monica.attachments.model.AttachmentSource.LOCAL
                         },
                         keepassContext = editKeePassContext,
+                        bitwardenPremium = attachmentVaultId?.let {
+                            takagi.ru.monica.bitwarden.BitwardenVaultPremiumStore.isPremium(context, it)
+                        } ?: true,
+                        persistAttachment = { uri, acceptSoftLimit ->
+                            passwordAttachmentEdits.persist(requireNotNull(passwordId), uri, settings.isPlusActivated, acceptSoftLimit)
+                        },
+                        removeAttachment = { attachmentId ->
+                            passwordAttachmentEdits.remove(requireNotNull(passwordId), attachmentId)
+                        },
                         pendingDrafts = if (editsExistingCredential) {
                             null
                         } else {

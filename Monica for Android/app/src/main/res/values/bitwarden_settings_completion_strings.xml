@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_settings_security">Security</string>
+    <string name="bitwarden_settings_queue_hint">View pending changes and sync issues</string>
+    <string name="bitwarden_account_web_settings_hint">Manage your master password, two-step login and subscription on the web</string>
+    <string name="bitwarden_settings_select_account">Set as current account</string>
+    <string name="bitwarden_settings_account_management">Account management</string>
+    <string name="bitwarden_queue_help">Shows local changes awaiting sync and results from the latest attempt. An empty list does not confirm the server is up to date.</string>
+    <string name="bitwarden_queue_empty_local">No local changes awaiting sync.</string>
+    <string name="bitwarden_queue_locked">Unlock this account to view pending items.</string>
+    <string name="bitwarden_queue_loading_error">Could not read pending items. Reopen this page to try again.</string>
+    <string name="bitwarden_queue_awaiting_confirmation">Waiting for server confirmation</string>
+    <string name="bitwarden_queue_idle">No sync task running</string>
+</resources>

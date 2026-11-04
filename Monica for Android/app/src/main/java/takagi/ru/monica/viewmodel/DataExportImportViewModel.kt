@@ -86,6 +86,31 @@ class DataExportImportViewModel(
     private val strings = AppLocaleStringResolver(context)
     private val exportManager = DataExportImportManager(context)
     private val steamLoginImportService = SteamLoginImportService(strings)
+    private val bitwardenJsonTransfer by lazy { takagi.ru.monica.bitwarden.export.BitwardenJsonTransfer(context) }
+
+    suspend fun previewBitwardenJson(uri: Uri, password: String?): Result<takagi.ru.monica.bitwarden.export.BitwardenJsonPreview> =
+        withContext(Dispatchers.IO) {
+            try { Result.success(bitwardenJsonTransfer.previewImport(uri, password)) }
+            catch (cancelled: CancellationException) { throw cancelled }
+            catch (error: Exception) { Result.failure(error) }
+        }
+
+    suspend fun importBitwardenJson(uri: Uri, password: String?, destination: ImportDestination): Result<Int> =
+        targetedImport { bitwardenJsonTransfer.importLocal(uri, password, destination, importProgressReporter) }
+
+    suspend fun exportBitwardenJson(uri: Uri, password: String?, source: ImportDestination,
+        permit: takagi.ru.monica.bitwarden.export.BitwardenJsonExportPermit,
+        progress: TransferProgressReporter): Result<String> = withContext(Dispatchers.IO) {
+        try {
+            val result = bitwardenJsonTransfer.export(source, uri, password, permit, progress)
+            Result.success(strings.get(R.string.bw_json_export_success, result.items, result.folders))
+        } catch (cancelled: CancellationException) { throw cancelled }
+        catch (error: Exception) {
+            Result.failure(if (error is takagi.ru.monica.bitwarden.export.BitwardenJsonRejected) error
+                else IllegalStateException(strings.get(R.string.bw_json_reason_unavailable), error))
+        }
+    }
+
     private val securityManager by lazy { SecurityManager(context) }
     private val _importProgress = MutableStateFlow<TransferProgress?>(null)
     val importProgress = _importProgress.asStateFlow()

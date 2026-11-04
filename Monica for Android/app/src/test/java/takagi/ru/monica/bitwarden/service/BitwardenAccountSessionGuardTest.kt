@@ -125,4 +125,30 @@ class BitwardenAccountSessionGuardTest {
         assertTrue(credentialsCleared)
         assertNull(BitwardenAuthSessionGate.publish(account, epoch) { "invalid" })
     }
+
+    @Test fun committedRevocationPersistsCredentialRemovalAfterItsCallerIsCancelled() = runBlocking {
+        val account = "cancelled-local-revocation"
+        val oldEpoch = BitwardenAuthSessionGate.begin(account)
+        val runtimeRevoked = CompletableDeferred<Unit>()
+        val continuePersistence = CompletableDeferred<Unit>()
+        var storedToken: String? = "synthetic-old-token"
+        val caller = launch {
+            BitwardenAuthSessionGate.revokeIf(account, { true }) {
+                // Production key removal publishes a generation that cancels the UI caller.
+                runtimeRevoked.complete(Unit)
+                continuePersistence.await()
+                storedToken = null
+            }
+        }
+        runtimeRevoked.await()
+        caller.cancel()
+        continuePersistence.complete(Unit)
+        caller.join()
+        assertTrue(caller.isCancelled)
+        assertNull(storedToken)
+        assertNull(BitwardenAuthSessionGate.publish(account, oldEpoch) { "late old-token success" })
+        val newEpoch = BitwardenAuthSessionGate.begin(account)
+        assertEquals("new login", BitwardenAuthSessionGate.publish(account, newEpoch) { "new login" })
+    }
+
 }

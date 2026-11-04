@@ -1,0 +1,20 @@
+{
+  "main": {
+    "package": "takagi.ru.monica",
+    "code": 12,
+    "version": "1.0.325-26110412-29",
+    "nativeCode": "'x86_64'",
+    "file": "Monica-Android-x86_64-1.0.325-26110412-29.APK",
+    "sha256": "8dc26b423fac88dab5ce2458677e9f969c98bfd1c49e11b40f6e65a578a89eb7",
+    "signatureVerified": true
+  },
+  "fdroid": {
+    "package": "takagi.ru.monica.fdroid",
+    "code": 32,
+    "version": "1.0.325",
+    "nativeCode": "'x86_64'",
+    "file": "Monica-Android-x86_64-1.0.325.apk",
+    "sha256": "1dbaee4728fea7c5ac4bf050841468c34050ae3cfb4b525bf88ba1ad689a738b",
+    "signatureVerified": true
+  }
+}

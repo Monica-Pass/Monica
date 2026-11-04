@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_sync_issues_title">未能同步的項目</string>
+    <string name="bitwarden_sync_issues_button">查看同步問題（%1$d）</string>
+    <string name="bitwarden_sync_issues_help">顯示此帳號最近一次同步的結果。能讀取時會顯示標題；標題無法讀取時，可用項目 ID 定位。此帳號鎖定後會清除這些詳細資料。</string>
+    <string name="bitwarden_sync_issues_empty">本次同步沒有項目失敗。</string>
+    <string name="bitwarden_sync_issues_running">仍在同步。</string>
+    <string name="bitwarden_sync_issues_no_title">無法讀取標題</string>
+    <string name="bitwarden_sync_issues_id">項目 ID：%1$s</string>
+    <string name="bitwarden_sync_issues_search">搜尋標題或項目 ID</string>
+    <string name="bitwarden_sync_issues_no_matches">沒有相符的項目</string>
+    <string name="bitwarden_sync_issue_kind_cipher">密碼庫項目</string>
+    <string name="bitwarden_sync_issue_kind_folder">資料夾</string>
+    <string name="bitwarden_sync_issue_kind_send">Send</string>
+    <string name="bitwarden_sync_issue_kind_attachment">附件</string>
+    <string name="bitwarden_sync_issue_kind_passkey">通行密鑰</string>
+    <string name="bitwarden_sync_issue_phase_download">下載</string>
+    <string name="bitwarden_sync_issue_phase_create">上傳新項目</string>
+    <string name="bitwarden_sync_issue_phase_update">上傳修改</string>
+    <string name="bitwarden_sync_issue_phase_delete">刪除</string>
+    <string name="bitwarden_sync_issue_phase_restore">還原</string>
+    <string name="bitwarden_sync_issue_reason_authentication">請解鎖或重新登入後重試。</string>
+    <string name="bitwarden_sync_issue_reason_network">無法連線至伺服器，請檢查網路後重試。</string>
+    <string name="bitwarden_sync_issue_reason_conflict">此項目已變更，請查看衝突後重試。</string>
+    <string name="bitwarden_sync_issue_reason_unsupported">此項目的格式不受支援或內容不完整。</string>
+    <string name="bitwarden_sync_issue_reason_decryption">無法解密或驗證此項目。</string>
+    <string name="bitwarden_sync_issue_reason_rejected">未能完成操作，本機修改已保留。</string>
+    <string name="bitwarden_sync_issue_reason_attachment">無法傳輸或驗證此附件。</string>
+    <string name="bitwarden_sync_issue_reason_pending_parent">請先上傳所屬項目並檢查附件是否可用，然後重試。</string>
+</resources>

@@ -113,7 +113,7 @@
     <string name="legacy_ui_sync_wifi_only_hint">Wi-Fi 接続時にのみ自動で同期します</string>
     <string name="legacy_ui_never_lock">ロックしない</string>
     <string name="legacy_ui_never_lock_hint">パスワードを再入力せずに Bitwarden のロック解除状態を維持します</string>
-    <string name="legacy_ui_never_lock_warning">⚠️ 安全な環境でのみ使用してください</string>
+    <string name="legacy_ui_never_lock_warning">安全な環境でのみ使用してください</string>
     <string name="legacy_ui_bitwarden_integration">Bitwarden 連携</string>
     <string name="legacy_ui_supported_servers">対応サーバー:</string>
     <string name="legacy_ui_bitwarden_servers">• Bitwarden 公式サーバー\n• Vaultwarden（セルフホスト）\n• Bitwarden API と互換性のあるその他のサービス</string>

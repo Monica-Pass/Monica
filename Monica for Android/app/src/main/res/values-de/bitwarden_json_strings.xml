@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bw_json_title">Bitwarden-JSON</string>
+    <string name="bw_json_encrypted_title">Passwortverschlüsseltes Bitwarden-JSON</string>
+    <string name="bw_json_description">Standard-JSON oder passwortverschlüsseltes JSON für Logins, Notizen, Karten, Identitäten und SSH-Schlüssel.</string>
+    <string name="bw_json_boundary">Import nur in den lokalen Tresor. Export aus dem lokalen Tresor oder einem persönlichen Bitwarden-Konto. Anhangdateien, Send und Archivstatus sind nicht enthalten. Nicht unterstützte Inhalte blockieren die gesamte Übertragung; prüfen Sie alle gemeldeten Einträge.</string>
+    <string name="bw_json_import_hint">Standard-JSON oder passwortverschlüsselte Bitwarden-JSON-Datei auswählen.</string>
+    <string name="bw_json_file_password">Dateipasswort</string>
+    <string name="bw_json_check">Datei prüfen</string>
+    <string name="bw_json_review">JSON-Import prüfen</string>
+    <string name="bw_json_counts">%1$d Einträge · %2$d Ordner</string>
+    <string name="bw_json_blocked">Die gesamte Übertragung ist blockiert. Beheben Sie alle unten aufgeführten Probleme und versuchen Sie es erneut.</string>
+    <string name="bw_json_ready">Die Datei kann importiert werden. Bestätigen Sie, um alle Einträge zum lokalen Tresor hinzuzufügen.</string>
+    <string name="bw_json_export_success">%1$d Einträge und %2$d Ordner exportiert. Anhangdateien, Send und Archivstatus sind nicht enthalten.</string>
+    <string name="bw_json_reason_invalid">Ungültige oder beschädigte Daten</string>
+    <string name="bw_json_reason_unknown">Unbekanntes Feld; kann nicht erhalten werden</string>
+    <string name="bw_json_reason_type">Nicht unterstützter Eintragstyp</string>
+    <string name="bw_json_reason_value">Dieser Wert kann nicht vollständig erhalten werden</string>
+    <string name="bw_json_reason_limit">Datei- oder Verarbeitungsgrenze überschritten</string>
+    <string name="bw_json_reason_organization">Organisations- und Sammlungsinhalte werden nicht unterstützt</string>
+    <string name="bw_json_reason_attachments">Anhangdateien müssen separat übertragen werden</string>
+    <string name="bw_json_reason_archived">Der Archivstatus kann in diesem Format nicht erhalten werden</string>
+    <string name="bw_json_reason_destination">Diese Quelle oder dieses Ziel wird nicht unterstützt</string>
+    <string name="bw_json_reason_pending">Ausstehende Änderungen vor dem Kontoexport abschließen</string>
+    <string name="bw_json_reason_unavailable">Erforderliche Quelldaten oder Schlüssel sind nicht verfügbar</string>
+    <string name="bw_json_item">Eintrag %1$d</string>
+    <string name="bw_json_plain_warning">Unverschlüsseltes JSON enthält lesbare Passwörter und private Schlüssel. Bewahren Sie die Datei sicher auf.</string>
+</resources>

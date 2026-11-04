@@ -990,6 +990,11 @@ fun MonicaContent(
             (currentRoute == Screen.Login.route && !hasRenderedLoginFirstFrame)
         )
 
+    takagi.ru.monica.bitwarden.ui.BitwardenForegroundNotificationEffect(
+        enabled = !shouldRequireAuthentication && !isOnAuthRoute,
+        onSyncRequested = { vaultId, stillValid -> bitwardenViewModel.requestNotificationSync(vaultId, stillValid) }
+    )
+
     LaunchedEffect(shouldRequireAuthentication, currentRoute) {
         if (!shouldRequireAuthentication || currentRoute != Screen.Login.route) {
             hasRenderedLoginFirstFrame = false
@@ -2299,6 +2304,8 @@ fun MonicaContent(
                 initialTitle = pendingSendDraft?.title.orEmpty(),
                 initialText = pendingSendDraft?.text.orEmpty(),
                 initialNotes = pendingSendDraft?.notes.orEmpty(),
+                onSubmitStoredDraft = bitwardenViewModel::submitStoredSendDraft,
+                    onLeaveForeground = bitwardenViewModel::leaveSendEditorForeground,
                 onSaveDraft = { vaultId, draft, uri, fileName ->
                     bitwardenViewModel.saveSendDraft(vaultId, draft, fileUri = uri, fileName = fileName)
                 },
@@ -2800,6 +2807,9 @@ fun MonicaContent(
                 onExportKdbx = { uri, password, source, progress ->
                     dataExportImportViewModel.exportKdbxBackup(uri, password, source, progress)
                 },
+                onExportBitwardenJson = { uri, password, source, permit, progress ->
+                    dataExportImportViewModel.exportBitwardenJson(uri, password, source, permit, progress)
+                },
                 biometricEnabled = settings.biometricEnabled,
                 onLoadSteamMaFileCandidates = { source ->
                     dataExportImportViewModel.loadSteamMaFileExportCandidates(source)
@@ -2857,6 +2867,12 @@ fun MonicaContent(
                 },
                 onImportBitwardenCsv = { uri ->
                     dataExportImportViewModel.importBitwardenCsv(uri, destination = importDestination)
+                },
+                onPreviewBitwardenJson = { uri, password ->
+                    dataExportImportViewModel.previewBitwardenJson(uri, password)
+                },
+                onImportBitwardenJson = { uri, password ->
+                    dataExportImportViewModel.importBitwardenJson(uri, password, importDestination)
                 },
                 onImportBitwardenAuthenticatorCsv = { uri ->
                     dataExportImportViewModel.importBitwardenAuthenticatorCsv(uri, destination = importDestination)
@@ -4287,31 +4303,11 @@ fun MonicaContent(
             popEnterTransition = { easyNotesScreenEnter() },
             popExitTransition = { easyNotesScreenExit() }
         ) {
-            // Legacy queue page placeholder; Bitwarden sync now runs through SyncTaskRunner.
-            var queueItems by remember { mutableStateOf(emptyList<takagi.ru.monica.bitwarden.ui.SyncQueueItem>()) }
-            
-            takagi.ru.monica.bitwarden.ui.SyncQueueScreen(
-                queueItems = queueItems,
-                onNavigateBack = {
-                    navController.popBackStack()
-                },
-                onRetryItem = { item ->
-                    // TODO: 实现重试逻辑
-                },
-                onDeleteItem = { item ->
-                    // TODO: 实现删除逻辑
-                    queueItems = queueItems.filter { it.id != item.id }
-                },
-                onRetryAll = {
-                    // TODO: 实现全部重试逻辑
-                },
-                onClearCompleted = {
-                    // TODO: 实现清除已完成逻辑
-                    queueItems = queueItems.filter { 
-                        it.status != takagi.ru.monica.bitwarden.sync.SyncStatus.SYNCED 
-                    }
-                }
-            )
+            val queueViewModel: takagi.ru.monica.bitwarden.viewmodel.BitwardenViewModel =
+                androidx.lifecycle.viewmodel.compose.viewModel()
+            takagi.ru.monica.bitwarden.ui.BitwardenSyncQueueScreen(queueViewModel) {
+                navController.popBackStack()
+            }
             }
         }
 

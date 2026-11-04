@@ -31,6 +31,9 @@ internal object BitwardenCipherDocument {
         equalSection(request, response, "cipher")
     }.getOrDefault(false)
 
+    internal fun confirmsPasswordHistory(expected: JsonElement?, actual: JsonElement?): Boolean =
+        runCatching { equalSection(expected, actual, "passwordHistory") }.getOrDefault(false)
+
     private fun equalSection(expected: JsonElement?, actual: JsonElement?, section: String): Boolean {
         val schema = when (section) {
             "cipher" -> topNames
@@ -132,12 +135,14 @@ internal object BitwardenCipherDocument {
             else -> false
         }
 
-    fun update(source: JsonObject, request: CipherUpdateRequest, key: SymmetricCryptoKey? = null, archiveIntent: JsonElement? = null): JsonObject {
+    fun update(source: JsonObject, request: CipherUpdateRequest, key: SymmetricCryptoKey? = null, archiveIntent: JsonElement? = null, historyIntent: JsonElement? = null, passwordRevisionDateIntent: String? = null): JsonObject {
         val original = canonical(source)
         val cipher = decode(source)
         require(canProject(cipher)) { "Cipher format is not editable by this client" }
         require(BitwardenCipherRevisionGuard.matches(request.lastKnownRevisionDate, cipher.revisionDate)) { "Cipher baseline changed" }
-        val patch = json.encodeToJsonElement(BitwardenCipherOwnership.preserve(request, cipher)).jsonObject
+        // Typed serializers can use aliases such as Identity.Address1. Normalize them before
+        // merging with the canonical source so a repeated edit cannot create address1/Address1.
+        val patch = canonical(json.encodeToJsonElement(BitwardenCipherOwnership.preserve(request, cipher)).jsonObject)
         val result = (original - responseOnly).toMutableMap()
         patch.forEach { (name, value) ->
             if (name !in preserved) {
@@ -159,11 +164,23 @@ internal object BitwardenCipherDocument {
             if (archiveIntent != JsonNull) java.time.Instant.parse(archiveIntent.jsonPrimitive.content)
             result["archivedDate"] = archiveIntent
         }
+        if (historyIntent != null) {
+            require(historyIntent is JsonArray || historyIntent == JsonNull) { "Invalid password history intent" }
+            requireNotNull(key) { "History mutation requires the item key" }
+            BitwardenPasswordHistory.decode(historyIntent, key)
+            result["passwordHistory"] = historyIntent
+        }
+        if (passwordRevisionDateIntent != null) {
+            java.time.Instant.parse(passwordRevisionDateIntent)
+            require(cipher.type == 1 && result["login"] is JsonObject) { "Password revision requires a login" }
+            result["login"] = JsonObject(result.getValue("login").jsonObject +
+                ("passwordRevisionDate" to JsonPrimitive(passwordRevisionDateIntent)))
+        }
         legacyData(cipher)?.let { oldData ->
             val data = oldData.toMutableMap()
             legacyFields(JsonObject(result), cipher.type).forEach { (name, value) ->
                 // Ordinary editing never rewrites the server's history or its opaque metadata.
-                if (name == "passwordHistory" && oldData.containsKey(name)) return@forEach
+                if (name == "passwordHistory" && historyIntent == null && oldData.containsKey(name)) return@forEach
                 data[name] = when (name) {
                     "fields" -> mergeArray(oldData[name], value, fieldNames, "name", key)
                     "uris" -> mergeArray(oldData[name], value, uriNames, "uri", key)
@@ -274,8 +291,18 @@ internal object BitwardenCipherDocument {
             return listOf(optional(decoded), kind, optional(item["linkedId"]))
         }
         val used = BooleanArray(original.size)
-        val result = replacements.map { replacement ->
-            val index = original.indices.firstOrNull { !used[it] && identityOf(original[it]) == identityOf(replacement) }
+        // Reserve exact matches for every row before resolving a changed URI rule. Otherwise the
+        // first changed row could consume a later unchanged duplicate's opaque metadata.
+        val exactMatches = replacements.map { replacement ->
+            original.indices.firstOrNull { !used[it] && identityOf(original[it]) == identityOf(replacement) }
+                ?.also { used[it] = true }
+        }
+        val result = replacements.mapIndexed { replacementIndex, replacement ->
+            val index = exactMatches[replacementIndex] ?: if (identity == "uri") {
+                val sameUri = original.indices.filter { !used[it] && identityOf(original[it]).first() == identityOf(replacement).first() }
+                require(sameUri.size <= 1) { "Ambiguous URI rule metadata" }
+                sameUri.singleOrNull()
+            } else null
             if (index == null) replacement else {
                 used[index] = true
                 JsonObject(original[index] + replacement)
@@ -284,6 +311,8 @@ internal object BitwardenCipherDocument {
         require(original.indices.none { !used[it] && opaque(original[it]) }) { "Cannot discard unknown array metadata" }
         return if (patch == JsonNull) JsonNull else JsonArray(result)
     }
+
+    internal fun canonicalForExport(source: JsonObject): JsonObject = canonical(source)
 
     private fun canonical(source: JsonObject): JsonObject {
         val result = normalize(source, topNames).toMutableMap()

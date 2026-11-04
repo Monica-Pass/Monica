@@ -22,10 +22,13 @@ fun exportDocumentSpec(
             "monica_backup_${timestamp}.zip"
         }
         ExportOption.KDBX -> "monica_${timestamp}.kdbx"
+        ExportOption.BITWARDEN_JSON -> "bitwarden_${timestamp}.json"
+        ExportOption.BITWARDEN_JSON_ENCRYPTED -> "bitwarden_${timestamp}.encrypted.json"
         ExportOption.STEAM_MAFILE -> "steam_mafiles_${timestamp}.zip"
     }
 
     val mimeType = when {
+        fileName.endsWith(".json") -> "application/json"
         fileName.endsWith(".zip") -> "application/zip"
         fileName.endsWith(".kdbx") -> "application/octet-stream"
         else -> "*/*"

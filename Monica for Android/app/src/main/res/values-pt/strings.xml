@@ -184,7 +184,7 @@
     <string name="unarchive_action">"Desarquivar"</string>
     <string name="archive_password_confirmation_title">"Arquivar este item?"</string>
     <string name="archive_password_confirmation_message">"Após o arquivamento, este item será movido para Arquivados. Poderá restaurá-lo mais tarde."</string>
-    <string name="archive_empty_hint">"Ainda não há palavras-passe arquivadas"</string>
+    <string name="archive_empty_hint">Ainda não há itens arquivados</string>
     <string name="archive_item_subtitle_empty">"Sem nome de utilizador ou site"</string>
     <string name="group_mode_menu_title">"Estilo de empilhamento"</string>
     <string name="group_mode_smart">"Inteligente (notas &gt; web &gt; aplicação &gt; título)"</string>

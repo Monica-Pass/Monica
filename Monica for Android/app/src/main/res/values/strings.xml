@@ -215,7 +215,7 @@
     <string name="unarchive_action">Unarchive</string>
     <string name="archive_password_confirmation_title">Archive this item?</string>
     <string name="archive_password_confirmation_message">After archiving, this item will move to Archived. You can restore it later.</string>
-    <string name="archive_empty_hint">No archived passwords yet</string>
+    <string name="archive_empty_hint">No archived items yet</string>
     <string name="archive_item_subtitle_empty">No username or website</string>
     <string name="group_mode_menu_title">Stacking style</string>
     <string name="group_mode_smart">Smart (notes > web > app > title)</string>

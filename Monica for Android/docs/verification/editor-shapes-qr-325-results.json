@@ -1,0 +1,668 @@
+{
+  "version": "1.0.325 unreleased",
+  "results": {
+    "main": {
+      "build": {
+        "exitCode": 0,
+        "seconds": 135.8230102,
+        "log": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261104-editor-shapes-qr\\main-final-build.log",
+        "edition": "main",
+        "run": "final"
+      },
+      "testRebuild": {
+        "edition": "main",
+        "run": "fixture",
+        "log": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261104-editor-shapes-qr\\main-fixture-build.log",
+        "exitCode": 0,
+        "seconds": 74.975002
+      },
+      "units": {
+        "edition": "main",
+        "run": "final",
+        "suites": [
+          {
+            "name": "data.model.PasswordQrTemplateTest",
+            "tests": 8,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 0.011,
+            "timestamp": "2026-11-04T10:48:57"
+          },
+          {
+            "name": "data.model.PasswordContentBlocksTest",
+            "tests": 6,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 0.213,
+            "timestamp": "2026-11-04T10:48:57"
+          },
+          {
+            "name": "data.model.TemplateCredentialDraftTest",
+            "tests": 9,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 0.07,
+            "timestamp": "2026-11-04T10:48:57"
+          },
+          {
+            "name": "data.model.WalletPassTemplateTest",
+            "tests": 6,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 0.035,
+            "timestamp": "2026-11-04T10:48:57"
+          },
+          {
+            "name": "bitwarden.service.BitwardenSendEditTest",
+            "tests": 10,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 4.779,
+            "timestamp": "2026-11-04T10:48:52"
+          }
+        ],
+        "totals": {
+          "tests": 39,
+          "skipped": 0,
+          "failures": 0,
+          "errors": 0,
+          "seconds": 5.108
+        }
+      },
+      "device": {
+        "edition": "main",
+        "run": "final",
+        "expected": 40,
+        "exitCode": 0,
+        "driverSeconds": 358.631,
+        "passed": false,
+        "actual": null,
+        "packages": [
+          {
+            "package": "takagi.ru.monica",
+            "file": "Monica-Android-x86_64-1.0.325-26110412-29.APK",
+            "sha256": "8dc26b423fac88dab5ce2458677e9f969c98bfd1c49e11b40f6e65a578a89eb7",
+            "seconds": 17.06,
+            "version": "1.0.325-26110412-29",
+            "code": 12
+          },
+          {
+            "package": "takagi.ru.monica.test",
+            "file": "app-debug-androidTest.apk",
+            "sha256": "b3b3933a7fce2a77df5ec652b41d89cd25c8bc99320af5e0ccd2be000aa5381d",
+            "seconds": 3.46,
+            "version": "",
+            "code": 0
+          }
+        ]
+      },
+      "large": {
+        "edition": "main",
+        "run": "large",
+        "expected": null,
+        "exitCode": 0,
+        "driverSeconds": 35.551,
+        "passed": true,
+        "actual": 3,
+        "packages": [
+          {
+            "package": "takagi.ru.monica",
+            "file": "Monica-Android-x86_64-1.0.325-26110412-29.APK",
+            "sha256": "8dc26b423fac88dab5ce2458677e9f969c98bfd1c49e11b40f6e65a578a89eb7",
+            "seconds": 1.38,
+            "version": "1.0.325-26110412-29",
+            "code": 12
+          },
+          {
+            "package": "takagi.ru.monica.test",
+            "file": "app-debug-androidTest.apk",
+            "sha256": "d26174b7a45768434f9186d7ddd34069be4b62a0e16a3c9b82cc55197b85146c",
+            "seconds": 1.78,
+            "version": "",
+            "code": 0
+          }
+        ]
+      },
+      "recheck": {
+        "edition": "main",
+        "run": "recheck-fixed",
+        "expected": null,
+        "exitCode": 0,
+        "driverSeconds": 13.369,
+        "passed": true,
+        "actual": 1,
+        "packages": [
+          {
+            "package": "takagi.ru.monica",
+            "file": "Monica-Android-x86_64-1.0.325-26110412-29.APK",
+            "sha256": "8dc26b423fac88dab5ce2458677e9f969c98bfd1c49e11b40f6e65a578a89eb7",
+            "seconds": 1.38,
+            "version": "1.0.325-26110412-29",
+            "code": 12
+          },
+          {
+            "package": "takagi.ru.monica.test",
+            "file": "app-debug-androidTest.apk",
+            "sha256": "d26174b7a45768434f9186d7ddd34069be4b62a0e16a3c9b82cc55197b85146c",
+            "seconds": 1.78,
+            "version": "",
+            "code": 0
+          }
+        ]
+      },
+      "visualProbes": {
+        "qr-window-probe": {
+          "edition": "main",
+          "run": "qr-window-probe",
+          "expected": null,
+          "exitCode": 0,
+          "driverSeconds": 12.336,
+          "passed": true,
+          "actual": 1,
+          "packages": [
+            {
+              "package": "takagi.ru.monica",
+              "file": "Monica-Android-x86_64-1.0.325-26110412-29.APK",
+              "sha256": "8dc26b423fac88dab5ce2458677e9f969c98bfd1c49e11b40f6e65a578a89eb7",
+              "seconds": 1.38,
+              "version": "1.0.325-26110412-29",
+              "code": 12
+            },
+            {
+              "package": "takagi.ru.monica.test",
+              "file": "app-debug-androidTest.apk",
+              "sha256": "d26174b7a45768434f9186d7ddd34069be4b62a0e16a3c9b82cc55197b85146c",
+              "seconds": 1.78,
+              "version": "",
+              "code": 0
+            }
+          ]
+        }
+      },
+      "finalDistinctPasses": 40,
+      "recheckRunnerSeconds": 8.445,
+      "runnerSeconds": 332.811,
+      "largeRunnerSeconds": 31.262,
+      "methods": [
+        "takagi.ru.monica.ui.components.EditorShapeRegressionTest#filledErrorFieldKeepsLocalizedTextAndErrorSemanticsAt320DpAndLargeFont",
+        "takagi.ru.monica.ui.components.EditorShapeRegressionTest#selectedBorderedSurfaceKeepsItsEdgesInsideTemplateSection",
+        "takagi.ru.monica.ui.components.EditorShapeRegressionTest#filledDisabledFieldKeepsLocalizedSupportingTextAt320DpAndLargeFont",
+        "takagi.ru.monica.ui.components.EditorShapeRegressionTest#filterChipKeepsItsLeadingOutlineInsideTemplateSection",
+        "takagi.ru.monica.credentialexchange.QrEditorShapeDeviceTest#passwordNotesLightNormalKeepsDraftAfterReturning",
+        "takagi.ru.monica.credentialexchange.QrEditorShapeDeviceTest#barcodeLightNormalShowsIndependentPayloadScanAndNotes",
+        "takagi.ru.monica.credentialexchange.QrEditorShapeDeviceTest#scanCallbackPreservesEditorInputAndExistingTrimmedSaveContract",
+        "takagi.ru.monica.credentialexchange.QrEditorShapeDeviceTest#passwordNotesDarkLargeKeepsDraftAfterReturning",
+        "takagi.ru.monica.credentialexchange.QrEditorShapeDeviceTest#literalQrSheetKeepsValuesAndDefersSecretReadAtLargeFont",
+        "takagi.ru.monica.credentialexchange.QrEditorShapeDeviceTest#barcodeLightLargeShowsIndependentPayloadScanAndNotes",
+        "takagi.ru.monica.credentialexchange.QrEditorShapeDeviceTest#barcodeDarkLargeShowsIndependentPayloadScanAndNotes",
+        "takagi.ru.monica.credentialexchange.QrEditorShapeDeviceTest#barcodeDarkNormalShowsIndependentPayloadScanAndNotes",
+        "takagi.ru.monica.ui.PasswordQrTemplateUiTest#missingFieldShowsErrorAndCancelDoesNotSave",
+        "takagi.ru.monica.ui.PasswordQrTemplateUiTest#existingFieldQrRouteSavesTemplateAndResolvesUpdatedPassword",
+        "takagi.ru.monica.ui.EntryContentWindowStabilityTest#addingNotesFromPasswordMenuCreatesOnlyOneEditorWindow",
+        "takagi.ru.monica.ui.EntryContentWindowStabilityTest#noteWindowSurvivesItsCardLeavingTheViewport",
+        "takagi.ru.monica.credentialexchange.TemplateEditorsDeviceTest#wifiEditingPreservesHiddenFieldsAndAdvancedNetworkSettings",
+        "takagi.ru.monica.credentialexchange.TemplateEditorsDeviceTest#storageTargetsRoundTripAndMdbxFilterDefaults",
+        "takagi.ru.monica.credentialexchange.TemplateEditorsDeviceTest#wifiUsesCurrentMdbxAndPersistsPasswordInNativeFile",
+        "takagi.ru.monica.credentialexchange.TemplateEditorsDeviceTest#wifiMenuIncludesAllTypesAndCarriesMultipleTargets",
+        "takagi.ru.monica.credentialexchange.TemplateEditorsDeviceTest#sshUsesInheritedTargetAndExposesCompleteMenuInDarkTheme",
+        "takagi.ru.monica.ui.UnifiedTemplateEditorUiTest#realWalletCardsOpenCompleteBankAndBillingDetails",
+        "takagi.ru.monica.ui.UnifiedTemplateEditorUiTest#apiKeyUsesSharedContentAndPreservesExactSecretWhenReopened",
+        "takagi.ru.monica.ui.UnifiedTemplateEditorUiTest#stackReusesWalletBrowserAndCollapsesWithSystemBack",
+        "takagi.ru.monica.ui.UnifiedTemplateEditorUiTest#embeddedTemplateCancelDoesNotCommitAndUsesCompleteCoreForm",
+        "takagi.ru.monica.ui.UnifiedTemplateEditorUiTest#apiKeyPlainAddressesAndOtpSaveThenEditWithoutDisablingSave",
+        "takagi.ru.monica.ui.UnifiedTemplateEditorUiTest#wifiCreateAndDetailKeepNetworkNameAndExposeActions",
+        "takagi.ru.monica.ui.EntryOptionalFieldsTest#newCardDoesNotOfferDuplicateBrandOrNickname",
+        "takagi.ru.monica.ui.EntryOptionalFieldsTest#existingLegacyValuesRemainEditableAndPinIsProtected",
+        "takagi.ru.monica.ui.WalletContentEditorTest#nameHelpAndPhotoCardsStayReadableWithLargeText",
+        "takagi.ru.monica.ui.WalletContentEditorTest#documentMoveMenuAndRecreationKeepExistingIdentityAndSaveOrder",
+        "takagi.ru.monica.ui.WalletContentEditorTest#smallDarkLargeTextEditorUsesIndependentFieldsAndKeepsEmptyAddedFields",
+        "takagi.ru.monica.ui.WalletContentEditorTest#billingExtrasCollapseAndReopenWithoutMixingNameOrContactValues",
+        "takagi.ru.monica.ui.WalletContentEditorTest#newBankCardCanDragContentsAndReopenWithOrderAndSecretsPreserved",
+        "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#nativeTextAndFileEditorsSaveRealRowsWithPasswordRemovalDatePickerAndEnableSwitch",
+        "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#fileEditPreservesIdKeyAndCiphertextRejectsRemoteRevisionsAndReadsBackLostResponse",
+        "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#nativeNewSendUsesSharedContentPickerAndSavesCompleteDraft",
+        "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#textEditRoundTripsExactContentPasswordThreeStatesAndDatesThroughHttpAndRoom",
+        "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#nativeAccountTypesAndBottomActionsRemainReadableAcrossUiSettings",
+        "takagi.ru.monica.credentialexchange.TemplateEditorsDeviceTest#barcodeCreationRendersGroupedFieldsAndKeepsSaveReachable"
+      ],
+      "package": {
+        "package": "takagi.ru.monica",
+        "code": 12,
+        "version": "1.0.325-26110412-29",
+        "nativeCode": "'x86_64'",
+        "file": "Monica-Android-x86_64-1.0.325-26110412-29.APK",
+        "sha256": "8dc26b423fac88dab5ce2458677e9f969c98bfd1c49e11b40f6e65a578a89eb7",
+        "signatureVerified": true
+      },
+      "sourceCount": 4615
+    },
+    "fdroid": {
+      "build": {
+        "exitCode": 0,
+        "seconds": 271.2715364,
+        "log": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261104-editor-shapes-qr\\fdroid-final-build.log",
+        "edition": "fdroid",
+        "run": "final"
+      },
+      "testRebuild": {
+        "edition": "fdroid",
+        "run": "fixture",
+        "log": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261104-editor-shapes-qr\\fdroid-fixture-build.log",
+        "exitCode": 0,
+        "seconds": 36.5713616
+      },
+      "units": {
+        "edition": "fdroid",
+        "run": "final",
+        "suites": [
+          {
+            "name": "data.model.PasswordQrTemplateTest",
+            "tests": 8,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 0.013,
+            "timestamp": "2026-11-04T10:53:28"
+          },
+          {
+            "name": "data.model.PasswordContentBlocksTest",
+            "tests": 6,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 0.196,
+            "timestamp": "2026-11-04T10:53:28"
+          },
+          {
+            "name": "data.model.TemplateCredentialDraftTest",
+            "tests": 9,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 0.034,
+            "timestamp": "2026-11-04T10:53:28"
+          },
+          {
+            "name": "data.model.WalletPassTemplateTest",
+            "tests": 6,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 0.037,
+            "timestamp": "2026-11-04T10:53:29"
+          },
+          {
+            "name": "bitwarden.service.BitwardenSendEditTest",
+            "tests": 10,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "seconds": 4.73,
+            "timestamp": "2026-11-04T10:53:24"
+          }
+        ],
+        "totals": {
+          "tests": 39,
+          "skipped": 0,
+          "failures": 0,
+          "errors": 0,
+          "seconds": 5.010000000000001
+        }
+      },
+      "device": {
+        "edition": "fdroid",
+        "run": "final",
+        "expected": 40,
+        "exitCode": 0,
+        "driverSeconds": 239.259,
+        "passed": true,
+        "actual": 40,
+        "packages": [
+          {
+            "package": "takagi.ru.monica.fdroid",
+            "file": "Monica-Android-x86_64-1.0.325.apk",
+            "sha256": "1dbaee4728fea7c5ac4bf050841468c34050ae3cfb4b525bf88ba1ad689a738b",
+            "seconds": 1.73,
+            "version": "1.0.325",
+            "code": 32
+          },
+          {
+            "package": "takagi.ru.monica.fdroid.test",
+            "file": "app-debug-androidTest.apk",
+            "sha256": "22e58307f795a5664b94ed13fa7e132d7ada860b8273d922e98e0ee2705761cf",
+            "seconds": 2.05,
+            "version": "",
+            "code": 0
+          }
+        ]
+      },
+      "large": {
+        "edition": "fdroid",
+        "run": "large",
+        "expected": null,
+        "exitCode": 0,
+        "driverSeconds": 37.919,
+        "passed": true,
+        "actual": 3,
+        "packages": [
+          {
+            "package": "takagi.ru.monica.fdroid",
+            "file": "Monica-Android-x86_64-1.0.325.apk",
+            "sha256": "1dbaee4728fea7c5ac4bf050841468c34050ae3cfb4b525bf88ba1ad689a738b",
+            "seconds": 1.73,
+            "version": "1.0.325",
+            "code": 32
+          },
+          {
+            "package": "takagi.ru.monica.fdroid.test",
+            "file": "app-debug-androidTest.apk",
+            "sha256": "22e58307f795a5664b94ed13fa7e132d7ada860b8273d922e98e0ee2705761cf",
+            "seconds": 2.05,
+            "version": "",
+            "code": 0
+          }
+        ]
+      },
+      "recheck": null,
+      "visualProbes": {
+        "qr-window-probe": {
+          "edition": "fdroid",
+          "run": "qr-window-probe",
+          "expected": null,
+          "exitCode": 0,
+          "driverSeconds": 13.456,
+          "passed": true,
+          "actual": 1,
+          "packages": [
+            {
+              "package": "takagi.ru.monica.fdroid",
+              "file": "Monica-Android-x86_64-1.0.325.apk",
+              "sha256": "1dbaee4728fea7c5ac4bf050841468c34050ae3cfb4b525bf88ba1ad689a738b",
+              "seconds": 1.73,
+              "version": "1.0.325",
+              "code": 32
+            },
+            {
+              "package": "takagi.ru.monica.fdroid.test",
+              "file": "app-debug-androidTest.apk",
+              "sha256": "22e58307f795a5664b94ed13fa7e132d7ada860b8273d922e98e0ee2705761cf",
+              "seconds": 2.05,
+              "version": "",
+              "code": 0
+            }
+          ]
+        },
+        "send-window-large-probe": {
+          "edition": "fdroid",
+          "run": "send-window-large-probe",
+          "expected": null,
+          "exitCode": 0,
+          "driverSeconds": 22.846,
+          "passed": true,
+          "actual": 1,
+          "packages": [
+            {
+              "package": "takagi.ru.monica.fdroid",
+              "file": "Monica-Android-x86_64-1.0.325.apk",
+              "sha256": "1dbaee4728fea7c5ac4bf050841468c34050ae3cfb4b525bf88ba1ad689a738b",
+              "seconds": 1.73,
+              "version": "1.0.325",
+              "code": 32
+            },
+            {
+              "package": "takagi.ru.monica.fdroid.test",
+              "file": "app-debug-androidTest.apk",
+              "sha256": "22e58307f795a5664b94ed13fa7e132d7ada860b8273d922e98e0ee2705761cf",
+              "seconds": 2.05,
+              "version": "",
+              "code": 0
+            }
+          ]
+        }
+      },
+      "finalDistinctPasses": 40,
+      "recheckRunnerSeconds": 0,
+      "runnerSeconds": 230.979,
+      "largeRunnerSeconds": 33.006,
+      "methods": [
+        "takagi.ru.monica.ui.components.EditorShapeRegressionTest#filledErrorFieldKeepsLocalizedTextAndErrorSemanticsAt320DpAndLargeFont",
+        "takagi.ru.monica.ui.components.EditorShapeRegressionTest#selectedBorderedSurfaceKeepsItsEdgesInsideTemplateSection",
+        "takagi.ru.monica.ui.components.EditorShapeRegressionTest#filledDisabledFieldKeepsLocalizedSupportingTextAt320DpAndLargeFont",
+        "takagi.ru.monica.ui.components.EditorShapeRegressionTest#filterChipKeepsItsLeadingOutlineInsideTemplateSection",
+        "takagi.ru.monica.credentialexchange.QrEditorShapeDeviceTest#passwordNotesLightNormalKeepsDraftAfterReturning",
+        "takagi.ru.monica.credentialexchange.QrEditorShapeDeviceTest#barcodeLightNormalShowsIndependentPayloadScanAndNotes",
+        "takagi.ru.monica.credentialexchange.QrEditorShapeDeviceTest#scanCallbackPreservesEditorInputAndExistingTrimmedSaveContract",
+        "takagi.ru.monica.credentialexchange.QrEditorShapeDeviceTest#passwordNotesDarkLargeKeepsDraftAfterReturning",
+        "takagi.ru.monica.credentialexchange.QrEditorShapeDeviceTest#literalQrSheetKeepsValuesAndDefersSecretReadAtLargeFont",
+        "takagi.ru.monica.credentialexchange.QrEditorShapeDeviceTest#barcodeLightLargeShowsIndependentPayloadScanAndNotes",
+        "takagi.ru.monica.credentialexchange.QrEditorShapeDeviceTest#barcodeDarkLargeShowsIndependentPayloadScanAndNotes",
+        "takagi.ru.monica.credentialexchange.QrEditorShapeDeviceTest#barcodeDarkNormalShowsIndependentPayloadScanAndNotes",
+        "takagi.ru.monica.ui.PasswordQrTemplateUiTest#missingFieldShowsErrorAndCancelDoesNotSave",
+        "takagi.ru.monica.ui.PasswordQrTemplateUiTest#existingFieldQrRouteSavesTemplateAndResolvesUpdatedPassword",
+        "takagi.ru.monica.ui.EntryContentWindowStabilityTest#addingNotesFromPasswordMenuCreatesOnlyOneEditorWindow",
+        "takagi.ru.monica.ui.EntryContentWindowStabilityTest#noteWindowSurvivesItsCardLeavingTheViewport",
+        "takagi.ru.monica.credentialexchange.TemplateEditorsDeviceTest#wifiEditingPreservesHiddenFieldsAndAdvancedNetworkSettings",
+        "takagi.ru.monica.credentialexchange.TemplateEditorsDeviceTest#barcodeCreationRendersGroupedFieldsAndKeepsSaveReachable",
+        "takagi.ru.monica.credentialexchange.TemplateEditorsDeviceTest#storageTargetsRoundTripAndMdbxFilterDefaults",
+        "takagi.ru.monica.credentialexchange.TemplateEditorsDeviceTest#wifiUsesCurrentMdbxAndPersistsPasswordInNativeFile",
+        "takagi.ru.monica.credentialexchange.TemplateEditorsDeviceTest#wifiMenuIncludesAllTypesAndCarriesMultipleTargets",
+        "takagi.ru.monica.credentialexchange.TemplateEditorsDeviceTest#sshUsesInheritedTargetAndExposesCompleteMenuInDarkTheme",
+        "takagi.ru.monica.ui.UnifiedTemplateEditorUiTest#realWalletCardsOpenCompleteBankAndBillingDetails",
+        "takagi.ru.monica.ui.UnifiedTemplateEditorUiTest#apiKeyUsesSharedContentAndPreservesExactSecretWhenReopened",
+        "takagi.ru.monica.ui.UnifiedTemplateEditorUiTest#stackReusesWalletBrowserAndCollapsesWithSystemBack",
+        "takagi.ru.monica.ui.UnifiedTemplateEditorUiTest#embeddedTemplateCancelDoesNotCommitAndUsesCompleteCoreForm",
+        "takagi.ru.monica.ui.UnifiedTemplateEditorUiTest#apiKeyPlainAddressesAndOtpSaveThenEditWithoutDisablingSave",
+        "takagi.ru.monica.ui.UnifiedTemplateEditorUiTest#wifiCreateAndDetailKeepNetworkNameAndExposeActions",
+        "takagi.ru.monica.ui.EntryOptionalFieldsTest#newCardDoesNotOfferDuplicateBrandOrNickname",
+        "takagi.ru.monica.ui.EntryOptionalFieldsTest#existingLegacyValuesRemainEditableAndPinIsProtected",
+        "takagi.ru.monica.ui.WalletContentEditorTest#nameHelpAndPhotoCardsStayReadableWithLargeText",
+        "takagi.ru.monica.ui.WalletContentEditorTest#documentMoveMenuAndRecreationKeepExistingIdentityAndSaveOrder",
+        "takagi.ru.monica.ui.WalletContentEditorTest#smallDarkLargeTextEditorUsesIndependentFieldsAndKeepsEmptyAddedFields",
+        "takagi.ru.monica.ui.WalletContentEditorTest#billingExtrasCollapseAndReopenWithoutMixingNameOrContactValues",
+        "takagi.ru.monica.ui.WalletContentEditorTest#newBankCardCanDragContentsAndReopenWithOrderAndSecretsPreserved",
+        "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#nativeTextAndFileEditorsSaveRealRowsWithPasswordRemovalDatePickerAndEnableSwitch",
+        "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#fileEditPreservesIdKeyAndCiphertextRejectsRemoteRevisionsAndReadsBackLostResponse",
+        "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#nativeNewSendUsesSharedContentPickerAndSavesCompleteDraft",
+        "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#textEditRoundTripsExactContentPasswordThreeStatesAndDatesThroughHttpAndRoom",
+        "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#nativeAccountTypesAndBottomActionsRemainReadableAcrossUiSettings"
+      ],
+      "package": {
+        "package": "takagi.ru.monica.fdroid",
+        "code": 32,
+        "version": "1.0.325",
+        "nativeCode": "'x86_64'",
+        "file": "Monica-Android-x86_64-1.0.325.apk",
+        "sha256": "1dbaee4728fea7c5ac4bf050841468c34050ae3cfb4b525bf88ba1ad689a738b",
+        "signatureVerified": true
+      },
+      "sourceCount": 4613
+    }
+  },
+  "shared": {
+    "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenSendManagementInstrumentedTest.kt": "aa2f5dd4b2d9ec3acf5f73d5b04a62b00b2cc5ff1d53551095f08c4762d15a79",
+    "app/src/androidTest/java/takagi/ru/monica/credentialexchange/QrEditorShapeDeviceTest.kt": "abd8fcfd4d67bad1bde12d114592b522b9b3947e94b84fc1d8d351ea794303b7",
+    "app/src/androidTest/java/takagi/ru/monica/ui/EntryContentWindowStabilityTest.kt": "67176437d8f79ea11812454f729c04a4a0c5f6302440155079f2d812fa700a19",
+    "app/src/androidTest/java/takagi/ru/monica/ui/WalletContentEditorTest.kt": "4d386a2e254cbe0beb0c2e8bde908ff815ed85920a8973cebae28665b9e772f9",
+    "app/src/androidTest/java/takagi/ru/monica/ui/components/EditorShapeRegressionTest.kt": "b1496a06990b29f119c1824c853f29d8b5eddf58a43d0de70720279fb8035e15",
+    "app/src/main/java/takagi/ru/monica/ui/components/EntryContentPanel.kt": "20b92bcc5f3d6996f4e2e36581861fcd125af2115aa4614a90c7d40d87710831",
+    "app/src/main/java/takagi/ru/monica/ui/components/EntrySupplementalFields.kt": "c1ecd430cc0ab20357bff02734ab7ccb228f1aa33198a6a38d7da5d88cdd1698",
+    "app/src/main/java/takagi/ru/monica/ui/components/OutlinedTextField.kt": "966f9351adfb028e6874516115e8dacecc219a2d433ace7c9300409cea864317",
+    "app/src/main/java/takagi/ru/monica/ui/components/PasswordQrTemplateUi.kt": "251f625663dd807917e10ced20b9a1d9aad5e9e50495b570afd440fcc5fffc8c",
+    "app/src/main/java/takagi/ru/monica/ui/components/TemplateCredentialFields.kt": "70612aa55eb4aa7b3b76a2ac38b8d790b629e60be0753562c7c1d3de49969c21",
+    "app/src/main/java/takagi/ru/monica/ui/components/TemplateFormSection.kt": "698f723f558375804fb4fc9ea912b7527503a953bf8fea6586c69df47f8a9fd5",
+    "app/src/main/java/takagi/ru/monica/ui/components/WalletEditorContent.kt": "6238df72895916d9da297dba8cafc543b569af573555080f3301b9bacd6c5075",
+    "app/src/main/java/takagi/ru/monica/ui/components/WalletPassFields.kt": "a63010bfc320faae33f2cb85dddd35455726c692764c12c38e09be636af5aba7",
+    "app/src/main/java/takagi/ru/monica/ui/screens/AddEditPasswordScreen.kt": "6d5739bb16dff872e51ca96875b730a33914c220ad737014479658b0f886d6b6",
+    "app/src/main/java/takagi/ru/monica/ui/screens/SendScreen.kt": "99e1e1d934c13b0c27e353e5735319daf6d8e572fb1b02261d6b42788f1745bd",
+    "app/src/androidTest/java/takagi/ru/monica/credentialexchange/TemplateEditorsDeviceTest.kt": "47bd62b898c19331fb868e73eac64c8fd44b106962b8b11b16b88b40594ec8d1"
+  },
+  "visual": {
+    "reviewed": true,
+    "reviewDate": "2026-11-04",
+    "scope": "Only actual visible controls; clipped scroll-viewport edges and synthetic host system bars excluded.",
+    "editions": {
+      "main": {
+        "contactSheetsReviewed": 7,
+        "initialScreensReviewed": 38,
+        "excludedBlankScreens": [
+          "qr-template-literal-dark-large-content.png",
+          "qr-template-literal-dark-large-notes.png"
+        ],
+        "acceptedInitialScreens": [
+          "barcode-dark-large-note-actions.png",
+          "barcode-dark-large-notes.png",
+          "barcode-dark-large-payload.png",
+          "barcode-dark-large-scan.png",
+          "barcode-dark-normal-note-actions.png",
+          "barcode-dark-normal-notes.png",
+          "barcode-dark-normal-payload.png",
+          "barcode-dark-normal-scan.png",
+          "barcode-light-large-note-actions.png",
+          "barcode-light-large-notes.png",
+          "barcode-light-large-payload.png",
+          "barcode-light-large-scan.png",
+          "barcode-light-normal-note-actions.png",
+          "barcode-light-normal-notes.png",
+          "barcode-light-normal-payload.png",
+          "barcode-light-normal-scan.png",
+          "password-notes-dark-large-actions.png",
+          "password-notes-dark-large-field.png",
+          "password-notes-light-normal-actions.png",
+          "password-notes-light-normal-field.png",
+          "send-account-dark-large.png",
+          "send-account-light-normal.png",
+          "send-bottom-dark-large.png",
+          "send-bottom-light-normal.png",
+          "send-file-options-dark-large.png",
+          "send-file-options-light-normal.png",
+          "send-new-send-bottom-dark-large.png",
+          "send-new-send-bottom-light-normal.png",
+          "send-new-send-fields-dark-large.png",
+          "send-new-send-fields-light-normal.png",
+          "send-new-send-options-dark-large.png",
+          "send-new-send-options-light-normal.png",
+          "send-text-options-dark-large.png",
+          "send-text-options-light-normal.png",
+          "send-types-dark-large.png",
+          "send-types-light-normal.png"
+        ],
+        "supplementalScreens": [
+          "window-probe/frame-10.png",
+          "template-route/template-editor.png",
+          "template-route/template-error-dark-large-text.png",
+          "final/surface-dark.png",
+          "final/chip-light.png",
+          "final/field-error-large.png",
+          "final/field-disabled-large.png"
+        ],
+        "supplementalSha256": {
+          "window-probe/frame-10.png": "db5dc7aecf3433fc8a2cafb65ddb211a0d1105cc2061609d2281a581a464c615",
+          "template-route/template-editor.png": "915fd5c67e2bd4b60f0b4565808e0c9081783d37d86e495874a08e873b41d11c",
+          "template-route/template-error-dark-large-text.png": "325028aede2fb1c643cad5cbd25c8b747dd89a2c2c6805737d583dcf33cd592a",
+          "final/surface-dark.png": "997821d346e2c19368b45008a5be7d634be8dde0699c1679117d8d24bda7f576",
+          "final/chip-light.png": "8478d45f7a673f53fceddd4190bfc0e329bf1fd6c611bb8d3c97a66d44dd43c8",
+          "final/field-error-large.png": "b5e6ce024cf4292ce9d8e835f7d928c005cef2d74410fcd4793cab2f5aa5c29a",
+          "final/field-disabled-large.png": "9129e0826134c913f1b28b247a687a48ef0580985108568f24bf303818429105"
+        }
+      },
+      "fdroid": {
+        "contactSheetsReviewed": 7,
+        "initialScreensReviewed": 38,
+        "excludedBlankScreens": [
+          "send-new-send-fields-dark-large.png",
+          "send-new-send-options-dark-large.png",
+          "send-new-send-bottom-dark-large.png"
+        ],
+        "acceptedInitialScreens": [
+          "barcode-dark-large-note-actions.png",
+          "barcode-dark-large-notes.png",
+          "barcode-dark-large-payload.png",
+          "barcode-dark-large-scan.png",
+          "barcode-dark-normal-note-actions.png",
+          "barcode-dark-normal-notes.png",
+          "barcode-dark-normal-payload.png",
+          "barcode-dark-normal-scan.png",
+          "barcode-light-large-note-actions.png",
+          "barcode-light-large-notes.png",
+          "barcode-light-large-payload.png",
+          "barcode-light-large-scan.png",
+          "barcode-light-normal-note-actions.png",
+          "barcode-light-normal-notes.png",
+          "barcode-light-normal-payload.png",
+          "barcode-light-normal-scan.png",
+          "password-notes-dark-large-actions.png",
+          "password-notes-dark-large-field.png",
+          "password-notes-light-normal-actions.png",
+          "password-notes-light-normal-field.png",
+          "qr-template-literal-dark-large-content.png",
+          "qr-template-literal-dark-large-notes.png",
+          "send-account-dark-large.png",
+          "send-account-light-normal.png",
+          "send-bottom-dark-large.png",
+          "send-bottom-light-normal.png",
+          "send-file-options-dark-large.png",
+          "send-file-options-light-normal.png",
+          "send-new-send-bottom-light-normal.png",
+          "send-new-send-fields-light-normal.png",
+          "send-new-send-options-light-normal.png",
+          "send-text-options-dark-large.png",
+          "send-text-options-light-normal.png",
+          "send-types-dark-large.png",
+          "send-types-light-normal.png"
+        ],
+        "supplementalScreens": [
+          "window-probe/frame-10.png",
+          "template-route/template-editor.png",
+          "template-route/template-error-dark-large-text.png",
+          "probe/send-new-send-fields-dark-large.png",
+          "probe/send-new-send-options-dark-large.png",
+          "probe/send-new-send-bottom-dark-large.png"
+        ],
+        "supplementalSha256": {
+          "window-probe/frame-10.png": "914b94212aa4b18cf8665f0c87ddd398df712e2a76932dc4711ad5d8b28ad3b3",
+          "template-route/template-editor.png": "0f00d233b5c102aa563966e63e6bb1b1e15c6c293169829e8e77018ee930bb1c",
+          "template-route/template-error-dark-large-text.png": "a9c5446558fe160d1df986c5e2e9fc3243808d43f8591a3b2fa03356424350bc",
+          "probe/send-new-send-fields-dark-large.png": "53c405293c5a7583d635001d6ac567cdf2d7d429d531570f4cb6ff8757e4798c",
+          "probe/send-new-send-options-dark-large.png": "d02e7a7db297d499ee5b628b6ba14004fb916269b5311f9ffc45a79f14e0a189",
+          "probe/send-new-send-bottom-dark-large.png": "28ca49458d203e3d89388a3e8b51e53a3cef2eb5de883737e202540d0ae632ad"
+        }
+      }
+    },
+    "notes": [
+      "All 7 contact pages in each edition visually inspected, with native full-resolution inspection for affected borders/fields and supplements.",
+      "Five blank initial captures explicitly excluded. Repeated same-package methods confirm actual visible windows; original timing cause remains unconfirmed.",
+      "No real-device/OEM or all-page/all-language visual claim."
+    ]
+  },
+  "cleanup": {
+    "removedUser": 14,
+    "restoredUser": 0,
+    "preservedUsers": [
+      0,
+      10,
+      11,
+      12
+    ],
+    "stoppedTaskEmulator": true,
+    "preservedDiskFiles": [
+      "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\config.ini",
+      "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img",
+      "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img.qcow2"
+    ]
+  },
+  "metadata": [
+    {
+      "script": "check-fdroid-release.py",
+      "exitCode": 0
+    },
+    {
+      "script": "test_fdroid_release.py",
+      "exitCode": 0
+    }
+  ]
+}

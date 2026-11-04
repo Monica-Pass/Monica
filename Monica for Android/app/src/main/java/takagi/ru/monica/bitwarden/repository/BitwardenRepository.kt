@@ -13,6 +13,9 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.sync.Mutex
@@ -64,6 +67,12 @@ import takagi.ru.monica.bitwarden.service.BitwardenHistoricalTotpRepairService
 import takagi.ru.monica.bitwarden.service.BitwardenAttachmentMetadataDecoder
 import takagi.ru.monica.bitwarden.service.BitwardenCipherKeyResolver
 import takagi.ru.monica.bitwarden.service.BitwardenSendDraft
+import takagi.ru.monica.bitwarden.service.BitwardenSendAccountIdentity
+import takagi.ru.monica.bitwarden.service.BitwardenSendAuth
+import takagi.ru.monica.bitwarden.service.BitwardenSendSubmission
+import takagi.ru.monica.bitwarden.service.BitwardenSendCache
+import takagi.ru.monica.bitwarden.service.BitwardenSendDraftStore
+import takagi.ru.monica.bitwarden.service.SendAuthAction
 import takagi.ru.monica.bitwarden.service.BitwardenSendEdit
 import takagi.ru.monica.bitwarden.service.SendPasswordAction
 import takagi.ru.monica.bitwarden.service.BitwardenSyncService
@@ -198,7 +207,7 @@ class BitwardenRepository(private val context: Context) {
     private val database = PasswordDatabase.getDatabase(context)
     private val vaultDao = database.bitwardenVaultDao()
     private val folderDao = database.bitwardenFolderDao()
-    private val sendDao = database.bitwardenSendDao()
+    private val sendDao = BitwardenSendCache(context)
     private val conflictDao = database.bitwardenConflictBackupDao()
     private val pendingOpDao = database.bitwardenPendingOperationDao()
     private val rawEntryRecordDao = database.bitwardenSyncRawEntryRecordDao()
@@ -226,7 +235,93 @@ class BitwardenRepository(private val context: Context) {
 
     
     // 内存中的密钥缓存（不持久化）
-    private val symmetricKeyCache = ConcurrentHashMap<Long, SymmetricCryptoKey>()
+    /** Fresh, complete personal-vault JSON snapshot; does not apply server data or mutate ciphers. */
+    internal suspend fun exportPasswordManagerJson(vaultId: Long): takagi.ru.monica.bitwarden.export.BitwardenJsonExport =
+        withContext(Dispatchers.IO) {
+            syncMutexForVault(vaultId).withLock {
+                val appGeneration = takagi.ru.monica.security.SessionManager.lockGeneration.value
+                val generation = getVaultSessionGeneration(vaultId)
+                val vault = requireNotNull(vaultDao.getVaultById(vaultId))
+                val fingerprint = takagi.ru.monica.bitwarden.export.bitwardenJsonAccountFingerprint(vault)
+                val key = requireNotNull(symmetricKeyCache[vaultId])
+                var token = requireNotNull(accessTokenCache[vaultId])
+                fun current() {
+                    check(takagi.ru.monica.security.SessionManager.isUnlocked.value &&
+                        takagi.ru.monica.security.SessionManager.lockGeneration.value == appGeneration &&
+                        isVaultUnlocked(vaultId) && getVaultSessionGeneration(vaultId) == generation &&
+                        symmetricKeyCache[vaultId] === key && accessTokenCache[vaultId] == token) { "Export account session changed" }
+                }
+                suspend fun checkAccount() {
+                    current()
+                    val account = requireNotNull(vaultDao.getVaultById(vaultId))
+                    check(account.isConnected && !account.isLocked && takagi.ru.monica.bitwarden.export.bitwardenJsonAccountFingerprint(account) == fingerprint) { "Export account identity changed" }
+                    val pending = pendingOpDao.observeQueueRecords(vaultId).first().filter { it.kind != "SEND" }
+                    if (pending.isNotEmpty()) throw takagi.ru.monica.bitwarden.export.BitwardenJsonRejected(pending.map {
+                        takagi.ru.monica.bitwarden.export.BitwardenJsonIssue(null, it.title?.take(200), "queue.${it.kind}",
+                            takagi.ru.monica.bitwarden.export.BitwardenJsonIssue.Reason.PENDING_SYNC)
+                    })
+                }
+                checkAccount()
+                if ((vault.accessTokenExpiresAt ?: 0) <= System.currentTimeMillis() + 60_000) {
+                    val oldToken = token
+                    token = requireNotNull(refreshToken(vault, publishIfCurrent = {
+                        takagi.ru.monica.security.SessionManager.isUnlocked.value &&
+                            takagi.ru.monica.security.SessionManager.lockGeneration.value == appGeneration &&
+                            getVaultSessionGeneration(vaultId) == generation && symmetricKeyCache[vaultId] === key &&
+                            accessTokenCache[vaultId] == oldToken &&
+                            vaultDao.getVaultById(vaultId)?.let { takagi.ru.monica.bitwarden.export.bitwardenJsonAccountFingerprint(it) == fingerprint } == true
+                    })) { "Cannot refresh export account" }
+                    check(accessTokenCache.replace(vaultId, oldToken, token))
+                }
+                checkAccount()
+                val response = apiManager.getVaultApi(vault).syncSource("Bearer $token")
+                check(response.isSuccessful) { "Cannot read complete export source (${response.code()})" }
+                val document = takagi.ru.monica.bitwarden.service.BitwardenCipherDocument.read(requireNotNull(response.body()), sync = true)
+                val sync = takagi.ru.monica.bitwarden.service.BitwardenCipherDocument.decodeSync(document)
+                currentCoroutineContext().ensureActive()
+                check(validateBitwardenSessionProfile(vaultId, token, sync.profile)) { "Export account security state changed" }
+                checkAccount()
+                val result = takagi.ru.monica.bitwarden.export.BitwardenJsonSourceExporter.fromSync(sync, key, ::current)
+                checkAccount()
+                result
+            }
+        }
+
+    private val syncIssues = takagi.ru.monica.bitwarden.service.BitwardenSyncIssues()
+    val syncIssueReports = syncIssues.reports
+    private val vaultSessionGenerations = ConcurrentHashMap<Long, kotlinx.coroutines.flow.MutableStateFlow<Long>>()
+
+    fun getVaultSessionGenerationFlow(vaultId: Long): kotlinx.coroutines.flow.StateFlow<Long> =
+        vaultSessionGenerations.getOrPut(vaultId) { kotlinx.coroutines.flow.MutableStateFlow(0L) }
+
+    fun getVaultSessionGeneration(vaultId: Long): Long = getVaultSessionGenerationFlow(vaultId).value
+
+    private fun advanceVaultSession(vaultId: Long) {
+        synchronized(vaultSessionGenerations) {
+            val state = vaultSessionGenerations.getOrPut(vaultId) { kotlinx.coroutines.flow.MutableStateFlow(0L) }
+            state.value = state.value + 1L
+            syncIssues.clear(vaultId)
+        }
+    }
+
+    // All replacements and removals, including test injection, revoke in-flight readers.
+    private val symmetricKeyCache = object : ConcurrentHashMap<Long, SymmetricCryptoKey>() {
+        override fun put(key: Long, value: SymmetricCryptoKey): SymmetricCryptoKey? {
+            advanceVaultSession(key)
+            return super.put(key, value).also { advanceVaultSession(key) }
+        }
+        override fun remove(key: Long): SymmetricCryptoKey? {
+            advanceVaultSession(key)
+            return super.remove(key).also { advanceVaultSession(key) }
+        }
+        override fun clear() {
+            val ids = keys.toList()
+            ids.forEach(::advanceVaultSession)
+            super.clear()
+            ids.forEach(::advanceVaultSession)
+            syncIssues.clearAll()
+        }
+    }
     private val accessTokenCache = ConcurrentHashMap<Long, String>()
 
     private val rememberedTwoFactorStore by lazy {
@@ -291,23 +386,95 @@ class BitwardenRepository(private val context: Context) {
         )
     }
 
+    /** Observe actual preferences across all ViewModel instances, with conservative failure defaults. */
+    internal fun observeNotificationPreferences(): Flow<Pair<Boolean, Boolean>> = callbackFlow {
+        val preferences = securePrefs
+        if (preferences == null) { trySend(false to true); close(); return@callbackFlow }
+        val listener = android.content.SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            if (key == KEY_AUTO_SYNC_ENABLED || key == KEY_SYNC_ON_WIFI_ONLY) {
+                trySend(isAutoSyncEnabled to isSyncOnWifiOnly)
+            }
+        }
+        preferences.registerOnSharedPreferenceChangeListener(listener)
+        trySend(isAutoSyncEnabled to isSyncOnWifiOnly)
+        awaitClose { preferences.unregisterOnSharedPreferenceChangeListener(listener) }
+    }.distinctUntilChanged()
+
+    /** Short-lived, account-bound capability for foreground notifications; never exposes vault keys. */
+    internal suspend fun getNotificationSession(
+        vaultId: Long,
+        forceRefresh: Boolean = false,
+    ): takagi.ru.monica.bitwarden.sync.BitwardenNotificationSession? = withContext(Dispatchers.IO) {
+        syncMutexForVault(vaultId).withLock {
+            val appGeneration = takagi.ru.monica.security.SessionManager.lockGeneration.value
+            val generation = getVaultSessionGeneration(vaultId)
+            val vault = vaultDao.getVaultById(vaultId) ?: return@withLock null
+            val fingerprint = takagi.ru.monica.bitwarden.sync.notificationAccountFingerprint(vault)
+            val userId = vault.userId?.takeIf { it.isNotBlank() } ?: return@withLock null
+            val url = takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocol.hubUrl(vault.serverUrl)
+                ?: return@withLock null
+            var token = accessTokenCache[vaultId] ?: return@withLock null
+            suspend fun current(): Boolean =
+                takagi.ru.monica.security.SessionManager.isUnlocked.value &&
+                    takagi.ru.monica.security.SessionManager.lockGeneration.value == appGeneration &&
+                    generation == getVaultSessionGeneration(vaultId) && isVaultUnlocked(vaultId) &&
+                    isAutoSyncEnabled && vaultDao.getVaultById(vaultId)?.let {
+                        it.syncEnabled && takagi.ru.monica.bitwarden.sync.notificationAccountFingerprint(it) == fingerprint
+                    } == true
+            if (!current()) return@withLock null
+            if (forceRefresh || (vault.accessTokenExpiresAt ?: 0) <= System.currentTimeMillis() + 60_000) {
+                val previous = token
+                token = refreshToken(vault, publishIfCurrent = { current() && accessTokenCache[vaultId] == previous })
+                    ?: return@withLock null
+                currentCoroutineContext().ensureActive()
+                if (!current() || !accessTokenCache.replace(vaultId, previous, token)) return@withLock null
+            }
+            currentCoroutineContext().ensureActive()
+            if (!current()) return@withLock null
+            val expiresAt = vaultDao.getVaultById(vaultId)?.accessTokenExpiresAt ?: return@withLock null
+            takagi.ru.monica.bitwarden.sync.BitwardenNotificationSession(
+                vaultId, generation, appGeneration, fingerprint, userId,
+                context.getSharedPreferences("bitwarden_device", Context.MODE_PRIVATE).getString("device_id", null),
+                url, token, expiresAt, apiManager.getOkHttpClient(vault),
+            )
+        }
+    }
+
+    internal suspend fun isNotificationSessionCurrent(
+        session: takagi.ru.monica.bitwarden.sync.BitwardenNotificationSession,
+    ): Boolean = takagi.ru.monica.security.SessionManager.isUnlocked.value &&
+        takagi.ru.monica.security.SessionManager.lockGeneration.value == session.appGeneration &&
+        getVaultSessionGeneration(session.vaultId) == session.generation && isVaultUnlocked(session.vaultId) &&
+        isAutoSyncEnabled && accessTokenCache[session.vaultId] == session.accessToken &&
+        vaultDao.getVaultById(session.vaultId)?.let {
+            it.syncEnabled && takagi.ru.monica.bitwarden.sync.notificationAccountFingerprint(it) == session.accountFingerprint
+        } == true
+
     /** Account-bound native device list; no encrypted key material is exposed to UI. */
     suspend fun getAccountDevices(vaultId: Long): Result<List<BitwardenAccountDevice>> = withContext(Dispatchers.IO) {
         try {
             val vault = vaultDao.getVaultById(vaultId)
                 ?: return@withContext Result.failure(IllegalStateException(strings.get(R.string.bitwarden_message_vault_missing)))
-            if (!isVaultUnlocked(vaultId)) return@withContext Result.failure(IllegalStateException(strings.get(R.string.legacy_ui_vault_locked)))
+            val generation = getVaultSessionGeneration(vaultId)
+            val appGeneration = takagi.ru.monica.security.SessionManager.lockGeneration.value
+            val fingerprint = vault.accountKey + takagi.ru.monica.bitwarden.sync.notificationAccountFingerprint(vault)
+            suspend fun current(): Boolean = takagi.ru.monica.security.SessionManager.isUnlocked.value &&
+                takagi.ru.monica.security.SessionManager.lockGeneration.value == appGeneration &&
+                generation == getVaultSessionGeneration(vaultId) && isVaultUnlocked(vaultId) &&
+                vaultDao.getVaultById(vaultId)?.let {
+                    !it.isLocked && it.accountKey + takagi.ru.monica.bitwarden.sync.notificationAccountFingerprint(it) == fingerprint
+                } == true
+            if (!current()) return@withContext Result.failure(IllegalStateException(strings.get(R.string.legacy_ui_vault_locked)))
             var token = accessTokenCache[vaultId]
                 ?: return@withContext Result.failure(IllegalStateException(strings.get(R.string.legacy_ui_reauthenticate)))
             if ((vault.accessTokenExpiresAt ?: 0) <= System.currentTimeMillis() + 60_000) {
                 val previous = token
-                val refreshed = refreshToken(vault)
+                val refreshed = refreshToken(vault, publishIfCurrent = { current() && accessTokenCache[vaultId] == previous })
                     ?: return@withContext Result.failure(IllegalStateException(strings.get(R.string.bitwarden_message_token_refresh_failed)))
-                if (accessTokenCache[vaultId] != previous || !isVaultUnlocked(vaultId)) {
+                if (!current() || !accessTokenCache.replace(vaultId, previous, refreshed)) {
                     return@withContext Result.failure(IllegalStateException(strings.get(R.string.legacy_ui_reauthenticate)))
                 }
                 token = refreshed
-                accessTokenCache[vaultId] = refreshed
             }
             val api = apiManager.getVaultApi(vault)
             val profileResponse = api.profile("Bearer $token")
@@ -315,14 +482,14 @@ class BitwardenRepository(private val context: Context) {
             if (!profileResponse.isSuccessful || profile == null) {
                 return@withContext Result.failure(IllegalStateException(strings.get(R.string.bitwarden_account_request_failed, profileResponse.code())))
             }
-            if (!validateBitwardenSessionProfile(vaultId, token, profile)) {
+            if (!current() || !validateBitwardenSessionProfile(vaultId, token, profile)) {
                 return@withContext Result.failure(IllegalStateException(strings.get(R.string.legacy_ui_reauthenticate)))
             }
             val response = api.getAccountDevices("Bearer $token")
             if (!response.isSuccessful) return@withContext Result.failure(IllegalStateException(
                 strings.get(R.string.bitwarden_account_request_failed, response.code())))
             currentCoroutineContext().ensureActive()
-            if (accessTokenCache[vaultId] != token || !isVaultUnlocked(vaultId)) {
+            if (accessTokenCache[vaultId] != token || !current()) {
                 return@withContext Result.failure(IllegalStateException(strings.get(R.string.legacy_ui_reauthenticate)))
             }
             val devices = response.body()?.data ?: return@withContext Result.failure(IllegalStateException(
@@ -959,6 +1126,7 @@ class BitwardenRepository(private val context: Context) {
             symmetricKeyCache.remove(vaultId)
             accessTokenCache.remove(vaultId)
             clearVaultSyncMutex(vaultId)
+            BitwardenSendDraftStore(context).discardVaultAfterRevocation(vaultId)
 
             database.withTransaction {
                 clearVaultLocalReferences(vaultId)
@@ -1011,6 +1179,8 @@ class BitwardenRepository(private val context: Context) {
     )
     suspend fun sync(vaultId: Long): SyncResult = withContext(Dispatchers.IO) {
         syncMutexForVault(vaultId).withLock {
+            var issueSession: takagi.ru.monica.bitwarden.service.BitwardenSyncIssues.Session? = null
+            var issueFailure: takagi.ru.monica.bitwarden.service.SyncIssueReason? = null
             try {
                 val vault = vaultDao.getVaultById(vaultId) ?: return@withLock SyncResult.Error(strings.get(R.string.bitwarden_message_vault_missing))
 
@@ -1018,8 +1188,14 @@ class BitwardenRepository(private val context: Context) {
                     return@withLock SyncResult.Error(strings.get(R.string.legacy_ui_vault_locked))
                 }
 
+                val syncGeneration = getVaultSessionGeneration(vaultId)
                 val symmetricKey = symmetricKeyCache[vaultId] ?: return@withLock SyncResult.Error(strings.get(R.string.bitwarden_message_key_unavailable))
                 var accessToken = accessTokenCache[vaultId] ?: return@withLock SyncResult.Error(strings.get(R.string.bitwarden_message_token_unavailable))
+
+                fun currentIssueSession() = isVaultUnlocked(vaultId) &&
+                    symmetricKeyCache[vaultId] === symmetricKey && getVaultSessionGeneration(vaultId) == syncGeneration
+                issueSession = syncIssues.begin(vaultId, isCurrent = ::currentIssueSession)
+                if (!currentIssueSession()) return@withLock SyncResult.Error(strings.get(R.string.legacy_ui_vault_locked))
 
                 // 检查 Token 是否需要刷新
                 val expiresAt = vault.accessTokenExpiresAt ?: 0
@@ -1029,6 +1205,7 @@ class BitwardenRepository(private val context: Context) {
                         accessToken = refreshResult
                         accessTokenCache[vaultId] = accessToken
                     } else {
+                        issueFailure = takagi.ru.monica.bitwarden.service.SyncIssueReason.AUTHENTICATION
                         return@withLock SyncResult.Error(strings.get(R.string.bitwarden_message_token_refresh_failed))
                     }
                 }
@@ -1036,17 +1213,19 @@ class BitwardenRepository(private val context: Context) {
                 val preflight = apiManager.getVaultApi(vault).profile("Bearer $accessToken")
                 val profile = preflight.body()
                 if (!preflight.isSuccessful || profile == null) {
+                    issueFailure = takagi.ru.monica.bitwarden.service.SyncIssueReason.from(preflight.code().toString())
                     return@withLock SyncResult.Error("Cannot verify the account session; local changes retained")
                 }
                 if (!validateBitwardenSessionProfile(vaultId, accessToken, profile)) {
+                    issueFailure = takagi.ru.monica.bitwarden.service.SyncIssueReason.AUTHENTICATION
                     return@withLock SyncResult.Error("The account session changed; sign in again")
                 }
 
                 // 1. 先处理本地待删除操作（delete）
-                val processedDeleteCount = syncService.processPendingOperations(vault, accessToken, symmetricKey)
+                val processedDeleteCount = syncService.processPendingOperations(vault, accessToken, symmetricKey, issueSession)
 
                 // 2. 再上传本地创建的条目到服务器（create）
-                val uploadResult = syncService.uploadLocalEntries(vault, accessToken, symmetricKey)
+                val uploadResult = syncService.uploadLocalEntries(vault, accessToken, symmetricKey, issueSession)
                 val uploadedCount = when (uploadResult) {
                     is takagi.ru.monica.bitwarden.service.UploadResult.Success -> uploadResult.uploaded
                     else -> 0
@@ -1057,7 +1236,7 @@ class BitwardenRepository(private val context: Context) {
                 }
 
                 // 3. 上传本地已修改的条目到服务器（update）
-                val modifiedUploadResult = syncService.uploadModifiedEntries(vault, accessToken, symmetricKey)
+                val modifiedUploadResult = syncService.uploadModifiedEntries(vault, accessToken, symmetricKey, issueSession)
                 val modifiedUploadedCount = when (modifiedUploadResult) {
                     is takagi.ru.monica.bitwarden.service.UploadResult.Success -> modifiedUploadResult.uploaded
                     else -> 0
@@ -1068,7 +1247,7 @@ class BitwardenRepository(private val context: Context) {
                 }
 
                 // 4. 执行同步（pull）
-                val result = syncService.fullSync(vault, accessToken, symmetricKey)
+                val result = syncService.fullSync(vault, accessToken, symmetricKey, issueSession)
 
                 // 更新最后同步时间
                 securePrefs?.edit()?.putLong(KEY_LAST_SYNC_TIME, System.currentTimeMillis())?.apply()
@@ -1109,6 +1288,7 @@ class BitwardenRepository(private val context: Context) {
                         )
                     }
                     is ServiceSyncResult.Error -> {
+                        issueFailure = takagi.ru.monica.bitwarden.service.SyncIssueReason.from(result.message)
                         SyncResult.Error(result.message)
                     }
                     is ServiceSyncResult.EmptyVaultBlocked -> {
@@ -1121,8 +1301,12 @@ class BitwardenRepository(private val context: Context) {
                     }
                 }
             } catch (e: Exception) {
+                if (e is kotlinx.coroutines.CancellationException) throw e
+                issueFailure = takagi.ru.monica.bitwarden.service.SyncIssueReason.from(e.javaClass.simpleName + " " + e.message)
                 Log.e(TAG, "同步异常", e)
                 SyncResult.Error(e.message ?: strings.get(R.string.bitwarden_message_sync_failed))
+            } finally {
+                issueSession?.finish(issueFailure)
             }
         }
     }
@@ -1142,6 +1326,7 @@ class BitwardenRepository(private val context: Context) {
             throw IllegalStateException(strings.get(R.string.bitwarden_message_vault_missing))
         }
 
+        val cacheClearStartedAt = System.currentTimeMillis()
         val riskSummary = collectVaultCacheRiskSummary(vaultId)
         val protectedCipherIds = collectProtectedCipherIds(vaultId)
         val keepIds = if (protectedCipherIds.isEmpty()) {
@@ -1154,10 +1339,12 @@ class BitwardenRepository(private val context: Context) {
         val secureBefore = secureItemDao.getBitwardenEntriesCount(vaultId)
         val passkeyBefore = passkeyDao.getByBitwardenVaultId(vaultId).size
         val folderBefore = folderDao.getFoldersByVault(vaultId).size
-        val sendBefore = sendDao.getSendsByVault(vaultId).size
+        val sendBefore = sendDao.count(vaultId)
         val conflictBefore = conflictDao.getUnresolvedConflictsByVault(vaultId).size
         val pendingBefore = pendingOpDao.getRunnableOperationsByVault(vaultId).size
 
+        // Own transaction: a session change rolls back Send deletion without losing protected rows.
+        if (mode == CacheClearMode.SAFE_ONLY_SYNCED) sendDao.clearSyncedCache(vaultId, cacheClearStartedAt)
         database.withTransaction {
             when (mode) {
                 CacheClearMode.SAFE_ONLY_SYNCED -> {
@@ -1165,7 +1352,6 @@ class BitwardenRepository(private val context: Context) {
                     secureItemDao.deleteBitwardenEntriesNotIn(vaultId, keepIds)
                     passkeyDao.deleteBitwardenEntriesNotIn(vaultId, keepIds)
                     folderDao.deleteByVault(vaultId)
-                    sendDao.deleteByVault(vaultId)
                 }
 
                 CacheClearMode.FULL_FORCE -> {
@@ -1178,7 +1364,7 @@ class BitwardenRepository(private val context: Context) {
         val secureAfter = secureItemDao.getBitwardenEntriesCount(vaultId)
         val passkeyAfter = passkeyDao.getByBitwardenVaultId(vaultId).size
         val folderAfter = folderDao.getFoldersByVault(vaultId).size
-        val sendAfter = sendDao.getSendsByVault(vaultId).size
+        val sendAfter = sendDao.count(vaultId)
         val conflictAfter = conflictDao.getUnresolvedConflictsByVault(vaultId).size
         val pendingAfter = pendingOpDao.getRunnableOperationsByVault(vaultId).size
 
@@ -1283,7 +1469,10 @@ class BitwardenRepository(private val context: Context) {
     /**
      * 刷新访问令牌
      */
-    private suspend fun refreshToken(vault: BitwardenVault): String? {
+    private suspend fun refreshToken(
+        vault: BitwardenVault,
+        publishIfCurrent: (suspend () -> Boolean)? = null,
+    ): String? {
         val refreshToken = vault.encryptedRefreshToken?.let { decryptFromStorage(it) } ?: return null
         
         return try {
@@ -1305,13 +1494,20 @@ class BitwardenRepository(private val context: Context) {
                 val encryptedRefreshToken = refreshResult.refreshToken?.let { encryptForStorage(it) }
                 val expiresAt = System.currentTimeMillis() + (refreshResult.expiresIn * 1000L)
                 
-                vaultDao.updateAccessToken(vault.id, encryptedAccessToken, expiresAt)
-                encryptedRefreshToken?.let { 
-                    vaultDao.updateRefreshToken(vault.id, it)
+                suspend fun publish(): String {
+                    vaultDao.updateAccessToken(vault.id, encryptedAccessToken, expiresAt)
+                    encryptedRefreshToken?.let { vaultDao.updateRefreshToken(vault.id, it) }
+                    return refreshResult.accessToken
                 }
-                
-                refreshResult.accessToken
+                if (publishIfCurrent == null) publish() else {
+                    BitwardenAuthSessionGate.inspect(authenticationScope(vault.serverUrl, vault.email)) {
+                        currentCoroutineContext().ensureActive()
+                        if (publishIfCurrent()) publish() else null
+                    }
+                }
             }
+        } catch (cancelled: CancellationException) {
+            throw cancelled
         } catch (e: Exception) {
             Log.e(TAG, "Token 刷新失败", e)
             null
@@ -1514,7 +1710,7 @@ class BitwardenRepository(private val context: Context) {
                         }
                     } else {
                         val localPasswords = passwordEntryDao.getAllPasswordEntriesSync() + passwordEntryDao.getDeletedEntriesSync()
-                        val localItems = secureItemDao.getAllItems().first() + secureItemDao.getDeletedItemsSync()
+                        val localItems = secureItemDao.getAllItemsIncludingArchived().first() + secureItemDao.getDeletedItemsSync()
                         check(localPasswords.none { it.bitwardenVaultId == vaultId && it.bitwardenFolderId in names && it.bitwardenLocalModified } &&
                             localItems.none { it.bitwardenVaultId == vaultId && it.bitwardenFolderId in names && it.bitwardenLocalModified } &&
                             passkeyDao.getByBitwardenVaultId(vaultId).none { it.bitwardenFolderId in names && it.syncStatus == "PENDING" } &&
@@ -1755,6 +1951,8 @@ class BitwardenRepository(private val context: Context) {
         }
     }
 
+    fun observeSendsForVaults(vaultIds: List<Long>) = sendDao.getSendsByVaultsFlow(vaultIds)
+
     suspend fun getSends(vaultId: Long): List<BitwardenSend> = withContext(Dispatchers.IO) {
         sendDao.getSendsByVault(vaultId)
     }
@@ -1789,278 +1987,243 @@ class BitwardenRepository(private val context: Context) {
         }
     }
 
-    suspend fun createTextSend(
-        vaultId: Long,
-        title: String,
-        text: String,
-        notes: String?,
-        password: String?,
-        maxAccessCount: Int?,
-        hideEmail: Boolean,
-        hiddenText: Boolean,
-        deletionMillis: Long,
-        expirationMillis: Long?
-    ): SendMutationResult = withContext(Dispatchers.IO) {
-        try {
-            if (title.isBlank()) return@withContext SendMutationResult.Error(strings.get(R.string.error_title_required))
-            if (text.isBlank()) return@withContext SendMutationResult.Error(strings.get(R.string.bitwarden_message_send_text_required))
+    private val sendJson = kotlinx.serialization.json.Json { ignoreUnknownKeys = true; encodeDefaults = true }
 
-            val vault = vaultDao.getVaultById(vaultId)
-                ?: return@withContext SendMutationResult.Error(strings.get(R.string.bitwarden_message_vault_missing))
-
-            if (!isVaultUnlocked(vaultId)) {
-                return@withContext SendMutationResult.Error(strings.get(R.string.legacy_ui_vault_locked))
-            }
-
-            val symmetricKey = symmetricKeyCache[vaultId]
-                ?: return@withContext SendMutationResult.Error(strings.get(R.string.bitwarden_message_key_unavailable))
-            var accessToken = accessTokenCache[vaultId]
-                ?: return@withContext SendMutationResult.Error(strings.get(R.string.bitwarden_message_token_unavailable))
-
-            val expiresAt = vault.accessTokenExpiresAt ?: 0
-            if (expiresAt <= System.currentTimeMillis() + 60000) {
-                val refreshed = refreshToken(vault)
-                if (refreshed != null) {
-                    accessToken = refreshed
-                    accessTokenCache[vaultId] = refreshed
-                } else {
-                    return@withContext SendMutationResult.Error(strings.get(R.string.bitwarden_message_token_refresh_failed))
-                }
-            }
-
-            val payload = BitwardenSendMapper.buildCreateTextSendPayload(
-                serverUrl = vault.serverUrl,
-                vaultKey = symmetricKey,
-                title = title,
-                text = text,
-                notes = notes,
-                password = password,
-                maxAccessCount = maxAccessCount,
-                hideEmail = hideEmail,
-                hiddenText = hiddenText,
-                deletionMillis = deletionMillis,
-                expirationMillis = expirationMillis
-            )
-
-            val vaultApi = apiManager.getVaultApi(vault)
-            val response = vaultApi.createSend(
-                authorization = "Bearer $accessToken",
-                send = payload.request
-            )
-
-            if (!response.isSuccessful) {
-                return@withContext SendMutationResult.Error(
-                    strings.get(R.string.bitwarden_message_send_create_http, response.code(), response.message())
-                )
-            }
-
-            val body = response.body()
-                ?: return@withContext SendMutationResult.Error(strings.get(R.string.bitwarden_message_send_missing))
-            val mapped = BitwardenSendMapper.mapApiToEntity(
-                vaultId = vault.id,
-                serverUrl = vault.serverUrl,
-                api = body,
-                vaultKey = symmetricKey
-            ) ?: return@withContext SendMutationResult.Error(strings.get(R.string.bitwarden_message_send_decrypt_failed))
-
-            val existing = sendDao.getBySendId(vault.id, mapped.bitwardenSendId)
-            val now = System.currentTimeMillis()
-            val entity = if (existing == null) {
-                // 本地刚创建，服务器侧的 sync 列表可能还没反映出来。标记 dirty 让 sync
-                // 不要把这条新 Send 当作"服务器已删除"误删。下次 sync 收到该 send 时清零。
-                mapped.copy(
-                    createdAt = now,
-                    updatedAt = now,
-                    lastSyncedAt = now,
-                    isDirty = true
-                )
-            } else {
-                mapped.copy(
-                    id = existing.id,
-                    createdAt = existing.createdAt,
-                    updatedAt = now,
-                    lastSyncedAt = now,
-                    isDirty = true
-                )
-            }
-            sendDao.upsert(entity)
-
-            SendMutationResult.Success(entity)
-        } catch (e: Exception) {
-            Log.e(TAG, "创建 Send 失败", e)
-            SendMutationResult.Error(e.message ?: strings.get(R.string.bitwarden_message_send_create_failed))
+    private inner class SendSession(val vault: BitwardenVault, val key: SymmetricCryptoKey,
+        val generation: Long, val lock: Long, val token: String,
+        val api: takagi.ru.monica.bitwarden.api.BitwardenVaultApi) {
+        fun locallyCurrent() = takagi.ru.monica.security.SessionManager.isUnlocked.value &&
+            takagi.ru.monica.security.SessionManager.lockGeneration.value == lock &&
+            getVaultSessionGeneration(vault.id) == generation && isVaultUnlocked(vault.id) &&
+            symmetricKeyCache[vault.id] === key
+        suspend fun current() {
+            check(locallyCurrent())
+            val actual = requireNotNull(vaultDao.getVaultById(vault.id))
+            check(!actual.isLocked && BitwardenSendAccountIdentity.from(actual) == BitwardenSendAccountIdentity.from(vault))
         }
+    }
+
+    private suspend fun sendSession(vaultId: Long): SendSession {
+        val vault = requireNotNull(vaultDao.getVaultById(vaultId))
+        val key = requireNotNull(symmetricKeyCache[vaultId])
+        val generation = getVaultSessionGeneration(vaultId)
+        val lock = takagi.ru.monica.security.SessionManager.lockGeneration.value
+        val token = requireNotNull(accessTokenCache[vaultId])
+        val api = BitwardenApiFactory.createVaultApi(vault.apiUrl, apiManager.getOkHttpClient(vault).newBuilder()
+            .retryOnConnectionFailure(false).followRedirects(false).followSslRedirects(false).build())
+        val session = SendSession(vault, key, generation, lock, token, api)
+        session.current()
+        if ((vault.accessTokenExpiresAt ?: 0) > System.currentTimeMillis() + 60_000L) return session
+        val refreshed = requireNotNull(refreshToken(vault, publishIfCurrent = { session.current(); true }))
+        session.current()
+        return SendSession(vault, key, generation, lock, refreshed, api)
+    }
+
+    private fun sendRequestDocument(request: takagi.ru.monica.bitwarden.api.SendCreateRequest) =
+        sendJson.encodeToJsonElement(takagi.ru.monica.bitwarden.api.SendCreateRequest.serializer(), request) as kotlinx.serialization.json.JsonObject
+
+    private suspend fun fetchSendDocument(session: SendSession, id: String): kotlinx.serialization.json.JsonObject {
+        session.current()
+        val response = session.api.getSendDocument("Bearer ${session.token}", id)
+        check(response.isSuccessful)
+        return requireNotNull(response.body()).also {
+            check(BitwardenSendEdit.string(it, "id") == id)
+            session.current()
+        }
+    }
+
+    private suspend fun retainSend(session: SendSession, document: kotlinx.serialization.json.JsonObject,
+        dirty: Boolean): BitwardenSend {
+        session.current()
+        val api = sendJson.decodeFromString<takagi.ru.monica.bitwarden.api.SendApiResponse>(document.toString())
+        val mapped = requireNotNull(BitwardenSendMapper.mapApiToEntity(session.vault.id, session.vault.serverUrl, api, session.key))
+        val previous = sendDao.identity(session.vault.id, mapped.bitwardenSendId)
+        val now = System.currentTimeMillis()
+        val saved = mapped.copy(id = previous?.id ?: 0, createdAt = previous?.createdAt ?: now,
+            updatedAt = now, lastSyncedAt = now, isDirty = dirty)
+        session.current()
+        val inserted = sendDao.upsert(saved)
+        session.current()
+        return if (saved.id == 0L) saved.copy(id = inserted) else saved
+    }
+
+    /** Deletes only the exact newly allocated request after fresh ownership/key verification. */
+    private suspend fun removeUnconfirmedSend(session: SendSession, id: String, encryptedKey: String): Boolean = try {
+        session.current()
+        val current = session.api.getSendDocument("Bearer ${session.token}", id)
+        session.current()
+        if (current.code() == 404) true else {
+            check(current.isSuccessful && BitwardenSendEdit.string(requireNotNull(current.body()), "key") == encryptedKey)
+            val deleted = session.api.deleteSend("Bearer ${session.token}", id)
+            session.current()
+            deleted.isSuccessful || deleted.code() == 404
+        }
+    } catch (cancelled: CancellationException) { throw cancelled }
+    catch (_: Exception) { false }
+
+    suspend fun createTextSend(
+        vaultId: Long, title: String, text: String, notes: String?, password: String?,
+        maxAccessCount: Int?, hideEmail: Boolean, hiddenText: Boolean,
+        deletionMillis: Long, expirationMillis: Long?,
+        authAction: SendAuthAction = SendAuthAction.KEEP, recipientEmails: List<String> = emptyList(),
+        disabled: Boolean = false,
+        beforeRequest: (suspend (kotlinx.serialization.json.JsonObject) -> Unit)? = null,
+    ): SendMutationResult = withContext(Dispatchers.IO) {
+        var started = false
+        try {
+            val draft = BitwardenSendDraft(title, text, notes,
+                passwordAction = if (password.isNullOrEmpty()) SendPasswordAction.KEEP else SendPasswordAction.REPLACE,
+                password = password, maxAccessCount = maxAccessCount, hideEmail = hideEmail,
+                hiddenText = hiddenText, disabled = disabled, deletionMillis = deletionMillis,
+                expirationMillis = expirationMillis, authAction = authAction, recipientEmails = recipientEmails)
+            draft.validate(System.currentTimeMillis(), true)
+            val desiredAuth = BitwardenSendAuth.requested(draft, true)
+            require(desiredAuth != SendAuthAction.PASSWORD || !password.isNullOrEmpty())
+            val session = sendSession(vaultId)
+            if (desiredAuth == SendAuthAction.EMAIL && !isFileSendAllowed(session.vault))
+                return@withContext SendMutationResult.Error(strings.get(R.string.bw_send_auth_premium))
+            val payload = BitwardenSendMapper.buildCreateTextSendPayload(session.vault.serverUrl, session.key,
+                title, text, notes, password, maxAccessCount, hideEmail, hiddenText, deletionMillis,
+                expirationMillis, authAction, recipientEmails, disabled)
+            val prepared = sendRequestDocument(payload.request)
+            beforeRequest?.invoke(prepared)
+            session.current()
+            started = true
+            val response = session.api.createSend("Bearer ${session.token}", payload.request)
+            session.current()
+            if (!response.isSuccessful) return@withContext SendMutationResult.Error(
+                strings.get(if (desiredAuth == SendAuthAction.EMAIL) R.string.bw_send_auth_unsupported else R.string.bitwarden_message_send_create_failed),
+                uncertain = response.code() !in 400..499 || response.code() in setOf(408, 409, 425, 429))
+            val body = requireNotNull(response.body())
+            check(body.id.isNotBlank() && body.key == payload.request.key)
+            val actual = fetchSendDocument(session, body.id)
+            if (!BitwardenSendSubmission.matches(prepared, actual)) {
+                val removed = removeUnconfirmedSend(session, body.id, payload.request.key)
+                return@withContext SendMutationResult.Error(strings.get(
+                    if (desiredAuth == SendAuthAction.EMAIL) R.string.bw_send_auth_unsupported else R.string.bitwarden_message_send_create_failed), uncertain = !removed)
+            }
+            SendMutationResult.Success(retainSend(session, actual, dirty = true))
+        } catch (cancelled: CancellationException) { throw cancelled }
+        catch (_: Exception) { SendMutationResult.Error(strings.get(R.string.bitwarden_message_send_create_failed), uncertain = started) }
     }
 
     suspend fun createFileSend(
-        vaultId: Long,
-        title: String,
-        fileUri: Uri,
-        fileName: String,
-        notes: String?,
-        password: String?,
-        maxAccessCount: Int?,
-        hideEmail: Boolean,
-        deletionMillis: Long,
-        expirationMillis: Long?
+        vaultId: Long, title: String, fileUri: Uri?, fileName: String, notes: String?, password: String?,
+        maxAccessCount: Int?, hideEmail: Boolean, deletionMillis: Long, expirationMillis: Long?,
+        authAction: SendAuthAction = SendAuthAction.KEEP, recipientEmails: List<String> = emptyList(),
+        disabled: Boolean = false, sourceSize: Long? = null,
+        source: (suspend () -> InputStream)? = null,
+        beforeRequest: (suspend (kotlinx.serialization.json.JsonObject) -> Unit)? = null,
+        onUploaded: (suspend () -> Unit)? = null,
     ): SendMutationResult = withContext(Dispatchers.IO) {
+        var started = false
+        var session: SendSession? = null
+        var createdId: String? = null
+        var encryptedKey: String? = null
         var encryptedTmp: File? = null
-        var sendKeyToClear: SymmetricCryptoKey? = null
+        var sendKey: SymmetricCryptoKey? = null
+        val keyMaterial = BitwardenCrypto.generateSendKeyMaterial()
         try {
-            if (title.isBlank()) return@withContext SendMutationResult.Error(strings.get(R.string.error_title_required))
-            if (fileName.isBlank()) return@withContext SendMutationResult.Error(strings.get(R.string.bitwarden_message_filename_required))
-
-            val vault = vaultDao.getVaultById(vaultId)
-                ?: return@withContext SendMutationResult.Error(strings.get(R.string.bitwarden_message_vault_missing))
-
-            if (!isFileSendAllowed(vault)) {
-                return@withContext SendMutationResult.Error(strings.get(R.string.bitwarden_message_send_premium))
+            val draft = BitwardenSendDraft(title, "", notes,
+                passwordAction = if (password.isNullOrEmpty()) SendPasswordAction.KEEP else SendPasswordAction.REPLACE,
+                password = password, maxAccessCount = maxAccessCount, hideEmail = hideEmail, disabled = disabled,
+                deletionMillis = deletionMillis, expirationMillis = expirationMillis,
+                authAction = authAction, recipientEmails = recipientEmails)
+            draft.validate(System.currentTimeMillis(), false)
+            require(fileName.isNotBlank())
+            val desiredAuth = BitwardenSendAuth.requested(draft, true)
+            require(desiredAuth != SendAuthAction.PASSWORD || !password.isNullOrEmpty())
+            val access = sendSession(vaultId)
+            session = access
+            if (!isFileSendAllowed(access.vault)) return@withContext SendMutationResult.Error(strings.get(R.string.bitwarden_message_send_premium))
+            val metadata = if (source == null) AttachmentUriMetadata.resolve(context, requireNotNull(fileUri), fileName) else null
+            val size = sourceSize ?: metadata?.sizeBytes ?: -1L
+            require(size <= AttachmentSizeValidator.HARD_LIMIT_BYTES)
+            val actualName = metadata?.fileName ?: fileName
+            val cipherFile = File.createTempFile("bw_send_", ".bin", context.cacheDir)
+            encryptedTmp = cipherFile
+            val key = BitwardenCrypto.deriveSendKey(keyMaterial)
+            sendKey = key
+            val input = source?.invoke() ?: requireNotNull(context.contentResolver.openInputStream(requireNotNull(fileUri)))
+            input.use { encryptSendFileData(it, cipherFile, key) { check(access.locallyCurrent()) } }
+            access.current()
+            require(cipherFile.length() <= AttachmentSizeValidator.HARD_LIMIT_BYTES - SEND_UPLOAD_REQUEST_HEADROOM_BYTES)
+            val payload = BitwardenSendMapper.buildCreateFileSendPayload(access.key, keyMaterial, title, actualName,
+                cipherFile.length(), notes, password, maxAccessCount, hideEmail, deletionMillis, expirationMillis,
+                authAction, recipientEmails, disabled)
+            payload.sendKey.clear()
+            encryptedKey = payload.request.key
+            val prepared = sendRequestDocument(payload.request)
+            beforeRequest?.invoke(prepared)
+            access.current()
+            started = true
+            val response = access.api.createFileSend("Bearer ${access.token}", payload.request)
+            access.current()
+            if (!response.isSuccessful) return@withContext SendMutationResult.Error(strings.get(
+                if (desiredAuth == SendAuthAction.EMAIL) R.string.bw_send_auth_unsupported else R.string.bitwarden_message_file_send_create_failed),
+                uncertain = response.code() !in 400..499 || response.code() in setOf(408, 409, 425, 429))
+            val upload = requireNotNull(response.body())
+            val body = requireNotNull(upload.sendResponse)
+            check(body.id.isNotBlank() && body.key == payload.request.key)
+            createdId = body.id
+            val beforeUpload = fetchSendDocument(access, body.id)
+            if (!BitwardenSendSubmission.matches(prepared, beforeUpload)) {
+                val removed = removeUnconfirmedSend(access, body.id, payload.request.key)
+                return@withContext SendMutationResult.Error(strings.get(
+                    if (desiredAuth == SendAuthAction.EMAIL) R.string.bw_send_auth_unsupported else R.string.bitwarden_message_file_send_create_failed), uncertain = !removed)
             }
-
-            if (!isVaultUnlocked(vaultId)) {
-                return@withContext SendMutationResult.Error(strings.get(R.string.legacy_ui_vault_locked))
-            }
-
-            val symmetricKey = symmetricKeyCache[vaultId]
-                ?: return@withContext SendMutationResult.Error(strings.get(R.string.bitwarden_message_key_unavailable))
-            var accessToken = accessTokenCache[vaultId]
-                ?: return@withContext SendMutationResult.Error(strings.get(R.string.bitwarden_message_token_unavailable))
-
-            val expiresAt = vault.accessTokenExpiresAt ?: 0
-            if (expiresAt <= System.currentTimeMillis() + 60000) {
-                val refreshed = refreshToken(vault)
-                if (refreshed != null) {
-                    accessToken = refreshed
-                    accessTokenCache[vaultId] = refreshed
-                } else {
-                    return@withContext SendMutationResult.Error(strings.get(R.string.bitwarden_message_token_refresh_failed))
-                }
-            }
-
-            val metadata = AttachmentUriMetadata.resolve(context, fileUri, fileName)
-            if (metadata.sizeBytes > AttachmentSizeValidator.HARD_LIMIT_BYTES) {
-                return@withContext SendMutationResult.Error(strings.get(R.string.bitwarden_message_file_too_large))
-            }
-            encryptedTmp = File.createTempFile("bw_send_", ".bin", context.cacheDir)
-            val keyMaterial = BitwardenCrypto.generateSendKeyMaterial()
-            val sendKey = BitwardenCrypto.deriveSendKey(keyMaterial)
-            sendKeyToClear = sendKey
-            try {
-                context.contentResolver.openInputStream(fileUri)?.use { input ->
-                    encryptSendFileData(input, encryptedTmp, sendKey)
-                } ?: return@withContext SendMutationResult.Error(strings.get(R.string.bitwarden_message_file_unreadable))
-
-                val encryptedFileLength = encryptedTmp.length()
-                val maxRequestFileBytes = AttachmentSizeValidator.HARD_LIMIT_BYTES - SEND_UPLOAD_REQUEST_HEADROOM_BYTES
-                if (encryptedFileLength > maxRequestFileBytes) {
-                    return@withContext SendMutationResult.Error(
-                        strings.get(
-                            R.string.bitwarden_message_encrypted_size_limit,
-                            formatBytes(metadata.sizeBytes),
-                            formatBytes(encryptedFileLength)
-                        )
-                    )
-                }
-
-                val payload = BitwardenSendMapper.buildCreateFileSendPayload(
-                    vaultKey = symmetricKey,
-                    keyMaterial = keyMaterial,
-                    title = title,
-                    fileName = metadata.fileName,
-                    encryptedFileLength = encryptedFileLength,
-                    notes = notes,
-                    password = password,
-                    maxAccessCount = maxAccessCount,
-                    hideEmail = hideEmail,
-                    deletionMillis = deletionMillis,
-                    expirationMillis = expirationMillis
-                )
-                payload.sendKey.clear()
-                sendKeyToClear = null
-
-                val vaultApi = apiManager.getVaultApi(vault)
-                val createResponse = vaultApi.createFileSend(
-                    authorization = "Bearer $accessToken",
-                    send = payload.request
-                )
-                if (!createResponse.isSuccessful) {
-                    return@withContext SendMutationResult.Error(
-                        strings.get(R.string.bitwarden_message_file_send_create_http, createResponse.code(), createResponse.message())
-                    )
-                }
-
-                val uploadData = createResponse.body()
-                    ?: return@withContext SendMutationResult.Error(strings.get(R.string.bitwarden_message_upload_data_missing))
-                val sendResponse = uploadData.sendResponse
-                    ?: return@withContext SendMutationResult.Error(strings.get(R.string.bitwarden_message_send_missing))
-                val fileId = sendResponse.file?.id
-                    ?: return@withContext SendMutationResult.Error(strings.get(R.string.bitwarden_message_file_id_missing))
-
-                try {
-                    uploadSendFile(
-                        vault = vault,
-                        accessToken = accessToken,
-                        sendId = sendResponse.id,
-                        fileId = fileId,
-                        encryptedFileName = payload.encryptedFileName,
-                        encryptedFile = encryptedTmp,
-                        fileUploadType = uploadData.fileUploadType,
-                        uploadUrl = uploadData.url
-                    )
-                } catch (e: Exception) {
-                    when (val rollbackResult = deleteSend(vault.id, sendResponse.id)) {
-                        is SendMutationResult.Deleted -> Unit
-                        is SendMutationResult.Error -> {
-                            Log.w(TAG, "文件 Send 上传失败后回滚删除失败: ${rollbackResult.message}")
-                            sendDao.deleteBySendId(vault.id, sendResponse.id)
-                        }
-                        else -> {
-                            sendDao.deleteBySendId(vault.id, sendResponse.id)
-                        }
-                    }
-                    throw e
-                }
-
-                val mapped = BitwardenSendMapper.mapApiToEntity(
-                    vaultId = vault.id,
-                    serverUrl = vault.serverUrl,
-                    api = sendResponse,
-                    vaultKey = symmetricKey
-                ) ?: return@withContext SendMutationResult.Error(strings.get(R.string.bitwarden_message_send_decrypt_failed))
-
-                val existing = sendDao.getBySendId(vault.id, mapped.bitwardenSendId)
-                val now = System.currentTimeMillis()
-                val entity = if (existing == null) {
-                    // 同 createTextSend：本地刚创建，标记 dirty 防止下一次 sync 误删。
-                    mapped.copy(
-                        createdAt = now,
-                        updatedAt = now,
-                        lastSyncedAt = now,
-                        isDirty = true
-                    )
-                } else {
-                    mapped.copy(
-                        id = existing.id,
-                        createdAt = existing.createdAt,
-                        updatedAt = now,
-                        lastSyncedAt = now,
-                        isDirty = true
-                    )
-                }
-                sendDao.upsert(entity)
-
-                SendMutationResult.Success(entity)
-            } finally {
-                keyMaterial.fill(0)
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "创建文件 Send 失败", e)
-            SendMutationResult.Error(e.message ?: strings.get(R.string.bitwarden_message_file_send_create_failed))
-        } finally {
-            sendKeyToClear?.clear()
-            encryptedTmp?.delete()
-        }
+            access.current()
+            uploadSendFile(access.vault, access.token, body.id, requireNotNull(body.file?.id),
+                payload.encryptedFileName, cipherFile, upload.fileUploadType, upload.url)
+            access.current()
+            onUploaded?.invoke()
+            val actual = fetchSendDocument(access, body.id)
+            check(BitwardenSendSubmission.matches(prepared, actual))
+            SendMutationResult.Success(retainSend(access, actual, dirty = true))
+        } catch (cancelled: CancellationException) { throw cancelled }
+        catch (_: Exception) {
+            val removed = if (session != null && createdId != null && encryptedKey != null)
+                removeUnconfirmedSend(session, createdId, encryptedKey) else false
+            SendMutationResult.Error(strings.get(R.string.bitwarden_message_file_send_create_failed), uncertain = started && !removed)
+        } finally { sendKey?.clear(); keyMaterial.fill(0); encryptedTmp?.delete() }
     }
+
+    suspend fun reconcileSendDraft(saved: BitwardenSendDraftStore.Draft): SendMutationResult = withContext(Dispatchers.IO) {
+        try {
+            val session = sendSession(saved.vaultId)
+            check(saved.account == BitwardenSendAccountIdentity.from(session.vault))
+            val prepared = requireNotNull(saved.preparedRequest)
+            check(saved.submissionUncertain && saved.submittedKey == BitwardenSendEdit.string(prepared, "key"))
+            val original = saved.original
+            val actual = if (original == null) {
+                val response = session.api.sync("Bearer ${session.token}", excludeDomains = true)
+                session.current()
+                check(response.isSuccessful)
+                val snapshot = requireNotNull(response.body())
+                check(snapshot.profile.id == session.vault.userId &&
+                    takagi.ru.monica.bitwarden.BitwardenVaultIdentity.canonicalizeEmail(snapshot.profile.email) == saved.account.canonicalEmail)
+                val rows = snapshot.sends.orEmpty().map {
+                    sendJson.encodeToJsonElement(takagi.ru.monica.bitwarden.api.SendApiResponse.serializer(), it) as kotlinx.serialization.json.JsonObject
+                }
+                val candidate = requireNotNull(BitwardenSendSubmission.uniqueCandidate(prepared, rows))
+                fetchSendDocument(session, requireNotNull(BitwardenSendEdit.string(candidate, "id")))
+            } else {
+                check(original.vaultId == saved.vaultId)
+                fetchSendDocument(session, original.bitwardenSendId)
+            }
+            check(BitwardenSendSubmission.matches(prepared, actual, original?.hasPassword,
+                passwordRemoved = original?.hasPassword == true && saved.draft.passwordAction == SendPasswordAction.REMOVE))
+            check(saved.type != BitwardenSend.TYPE_FILE || original != null || saved.fileUploadConfirmed)
+            val mapped = requireNotNull(BitwardenSendMapper.mapApiToEntity(session.vault.id, session.vault.serverUrl,
+                sendJson.decodeFromString<takagi.ru.monica.bitwarden.api.SendApiResponse>(actual.toString()), session.key))
+            check(if (original != null && BitwardenSendAuth.requested(saved.draft, false) == SendAuthAction.KEEP)
+                mapped.hasPassword == original.hasPassword else BitwardenSendAuth.matches(mapped, saved.draft, original))
+            session.current()
+            SendMutationResult.Success(retainSend(session, actual, dirty = original == null))
+        } catch (cancelled: CancellationException) { throw cancelled }
+        catch (_: Exception) { SendMutationResult.Error(strings.get(R.string.bw_send_draft_not_found), uncertain = true) }
+    }
+
 
     private fun isFileSendAllowed(vault: BitwardenVault): Boolean {
         // 与官方 Bitwarden 客户端一致：文件 Send 需要 Premium 账户。
@@ -2085,7 +2248,8 @@ class BitwardenRepository(private val context: Context) {
     private fun encryptSendFileData(
         source: InputStream,
         target: File,
-        sendKey: SymmetricCryptoKey
+        sendKey: SymmetricCryptoKey,
+        checkCurrent: () -> Unit = {}
     ) {
         val macOffset = 1L + 16L
         val iv = ByteArray(16).also { SecureRandom().nextBytes(it) }
@@ -2107,9 +2271,14 @@ class BitwardenRepository(private val context: Context) {
             output.write(ByteArray(32))
 
             val buffer = ByteArray(16 * 1024)
+            var consumed = 0L
             while (true) {
+                checkCurrent()
                 val read = source.read(buffer)
-                if (read <= 0) break
+                if (read == -1) break
+                if (read == 0) continue
+                consumed += read
+                check(consumed <= AttachmentSizeValidator.HARD_LIMIT_BYTES)
                 val encryptedChunk = cipher.update(buffer, 0, read)
                 if (encryptedChunk != null && encryptedChunk.isNotEmpty()) {
                     output.write(encryptedChunk)
@@ -2117,6 +2286,8 @@ class BitwardenRepository(private val context: Context) {
                 }
             }
 
+            buffer.fill(0)
+            checkCurrent()
             val finalChunk = cipher.doFinal()
             if (finalChunk.isNotEmpty()) {
                 output.write(finalChunk)
@@ -2202,68 +2373,44 @@ class BitwardenRepository(private val context: Context) {
         }
     }
 
-    suspend fun updateSend(existing: BitwardenSend, draft: BitwardenSendDraft): SendMutationResult =
+    suspend fun updateSend(existing: BitwardenSend, draft: BitwardenSendDraft,
+        beforeRequest: (suspend (kotlinx.serialization.json.JsonObject) -> Unit)? = null): SendMutationResult =
         withContext(Dispatchers.IO) {
             syncMutexForVault(existing.vaultId).withLock {
-                val vault = vaultDao.getVaultById(existing.vaultId)
-                    ?: return@withLock SendMutationResult.Error(strings.get(R.string.bitwarden_message_vault_missing))
-                val sessionKey = symmetricKeyCache[vault.id]
-                    ?: return@withLock SendMutationResult.Error(strings.get(R.string.legacy_ui_vault_locked))
-                fun active() = isVaultUnlocked(vault.id) && symmetricKeyCache[vault.id] === sessionKey
-                val json = kotlinx.serialization.json.Json { ignoreUnknownKeys = true }
-                val vaultApi = BitwardenApiFactory.createVaultApi(
-                    baseUrl = vault.apiUrl,
-                    okHttpClient = apiManager.getOkHttpClient(vault).newBuilder()
-                        .retryOnConnectionFailure(false).followRedirects(false).followSslRedirects(false).build()
-                )
-                var token = accessTokenCache[vault.id]
-                    ?: return@withLock SendMutationResult.Error(strings.get(R.string.bitwarden_message_token_unavailable))
+                var attempted = false
                 try {
-                    try { draft.validate(System.currentTimeMillis(), existing.isTextType) }
-                    catch (_: IllegalArgumentException) {
-                        return@withLock SendMutationResult.Error(strings.get(R.string.send_edit_invalid))
-                    }
-                    if ((vault.accessTokenExpiresAt ?: 0) <= System.currentTimeMillis() + 60_000L) {
-                        token = refreshToken(vault)
-                            ?: return@withLock SendMutationResult.Error(strings.get(R.string.bitwarden_message_token_refresh_failed))
-                        if (!active()) return@withLock SendMutationResult.Error(strings.get(R.string.legacy_ui_vault_locked))
-                        accessTokenCache[vault.id] = token
-                    }
-                    suspend fun fetch(): kotlinx.serialization.json.JsonObject {
-                        check(active())
-                        val response = vaultApi.getSendDocument("Bearer $token", existing.bitwardenSendId)
-                        check(response.isSuccessful)
-                        val document = requireNotNull(response.body())
-                        require(BitwardenSendEdit.string(document, "id") == existing.bitwardenSendId)
-                        check(active())
-                        return document
+                    draft.validate(System.currentTimeMillis(), existing.isTextType)
+                    val session = sendSession(existing.vaultId)
+                    val desiredAuth = BitwardenSendAuth.requested(draft, creating = false)
+                    if (desiredAuth == SendAuthAction.EMAIL) {
+                        if (existing.hasPassword) return@withLock SendMutationResult.Error(strings.get(R.string.send_edit_unsupported_auth))
+                        if (!isFileSendAllowed(session.vault)) return@withLock SendMutationResult.Error(strings.get(R.string.bw_send_auth_premium))
                     }
                     fun map(document: kotlinx.serialization.json.JsonObject): BitwardenSend {
-                        val api = json.decodeFromString<takagi.ru.monica.bitwarden.api.SendApiResponse>(document.toString())
-                        return requireNotNull(BitwardenSendMapper.mapApiToEntity(vault.id, vault.serverUrl, api, sessionKey))
+                        val api = sendJson.decodeFromString<takagi.ru.monica.bitwarden.api.SendApiResponse>(document.toString())
+                        return requireNotNull(BitwardenSendMapper.mapApiToEntity(session.vault.id, session.vault.serverUrl, api, session.key))
                     }
-                    val baseline = fetch()
+                    val baseline = fetchSendDocument(session, existing.bitwardenSendId)
                     val remote = map(baseline)
                     if (remote.revisionDate != existing.revisionDate || remote.keyBase64 != existing.keyBase64 ||
                         remote.type != existing.type || remote.accessId != existing.accessId) {
                         return@withLock SendMutationResult.Error(strings.get(R.string.send_edit_conflict))
                     }
-                    val auth = BitwardenSendEdit.string(baseline, "authType")
-                    if (draft.passwordAction != SendPasswordAction.KEEP && auth != null && auth !in setOf("1", "2")) {
-                        return@withLock SendMutationResult.Error(strings.get(R.string.send_edit_unsupported_auth))
-                    }
-                    val request = BitwardenSendMapper.buildUpdatePayload(baseline, draft, sessionKey)
-                    // Send has no documented conditional version endpoint. Recheck before the one PUT,
-                    // then verify its result; do not retry a stale replacement on failure.
-                    if (!BitwardenSendEdit.sameBaseline(baseline, fetch())) {
+                    val request = BitwardenSendMapper.buildUpdatePayload(baseline, draft, session.key)
+                    if (!BitwardenSendEdit.sameBaseline(baseline, fetchSendDocument(session, existing.bitwardenSendId))) {
                         return@withLock SendMutationResult.Error(strings.get(R.string.send_edit_conflict))
                     }
-                    check(active())
+                    beforeRequest?.invoke(request)
+                    session.current()
+                    attempted = true
                     try {
-                        val response = vaultApi.updateSendDocument("Bearer $token", existing.bitwardenSendId, request)
-                        if (!response.isSuccessful) return@withLock SendMutationResult.Error(strings.get(R.string.send_edit_failed))
-                    } catch (_: IOException) { /* A committed write may have lost its response. Read once. */ }
-                    var actual = fetch()
+                        val response = session.api.updateSendDocument("Bearer ${session.token}", existing.bitwardenSendId, request)
+                        session.current()
+                        if (!response.isSuccessful) return@withLock SendMutationResult.Error(strings.get(
+                            if (desiredAuth == SendAuthAction.EMAIL) R.string.bw_send_auth_unsupported else R.string.send_edit_failed),
+                            uncertain = response.code() !in 400..499 || response.code() in setOf(408, 409, 425, 429))
+                    } catch (_: IOException) { /* One readback can confirm a committed write with a lost response. */ }
+                    var actual = fetchSendDocument(session, existing.bitwardenSendId)
                     var updated = map(actual)
                     fun settingsMatch(value: BitwardenSend) = value.name == draft.title && value.notes == draft.notes.orEmpty() &&
                         (!value.isTextType || (value.textContent == draft.text && value.isTextHidden == draft.hiddenText)) &&
@@ -2273,32 +2420,25 @@ class BitwardenRepository(private val context: Context) {
                         value.expirationDate?.let { Instant.parse(it).toEpochMilli() } == draft.expirationMillis &&
                         value.keyBase64 == existing.keyBase64 && value.type == existing.type && value.accessId == existing.accessId &&
                         BitwardenSendEdit.field(actual, "file") == BitwardenSendEdit.field(baseline, "file")
-                    if (!settingsMatch(updated)) return@withLock SendMutationResult.Error(strings.get(R.string.send_edit_failed))
+                    if (!settingsMatch(updated)) return@withLock SendMutationResult.Error(strings.get(R.string.send_edit_failed), uncertain = true)
                     if (draft.passwordAction == SendPasswordAction.REMOVE && updated.hasPassword) {
-                        check(active())
+                        session.current()
                         try {
-                            val response = vaultApi.removeSendPassword("Bearer $token", existing.bitwardenSendId)
-                            if (!response.isSuccessful) {
-                                if (active()) sendDao.upsert(updated.copy(id = existing.id, createdAt = existing.createdAt))
-                                return@withLock SendMutationResult.Error(strings.get(R.string.send_edit_failed))
-                            }
-                        } catch (_: IOException) { /* Verify a potentially committed removal. */ }
-                        actual = fetch()
+                            val response = session.api.removeSendPassword("Bearer ${session.token}", existing.bitwardenSendId)
+                            session.current()
+                            if (!response.isSuccessful) return@withLock SendMutationResult.Error(strings.get(R.string.send_edit_failed), uncertain = true)
+                        } catch (_: IOException) { /* Read the potentially committed removal once. */ }
+                        actual = fetchSendDocument(session, existing.bitwardenSendId)
                         updated = map(actual)
                     }
-                    if (!settingsMatch(updated) ||
-                        (draft.passwordAction == SendPasswordAction.REMOVE && updated.hasPassword) ||
-                        (draft.passwordAction == SendPasswordAction.REPLACE && !updated.hasPassword)) {
-                        return@withLock SendMutationResult.Error(strings.get(R.string.send_edit_failed))
+                    if (!settingsMatch(updated) || !BitwardenSendAuth.matches(updated, draft, remote)) {
+                        return@withLock SendMutationResult.Error(strings.get(
+                            if (desiredAuth == SendAuthAction.EMAIL) R.string.bw_send_auth_unsupported else R.string.send_edit_failed), uncertain = true)
                     }
-                    check(active())
-                    val saved = updated.copy(id = existing.id, createdAt = existing.createdAt, isDirty = false)
-                    sendDao.upsert(saved)
-                    SendMutationResult.Success(saved)
+                    session.current()
+                    SendMutationResult.Success(retainSend(session, actual, dirty = false))
                 } catch (cancelled: CancellationException) { throw cancelled }
-                catch (_: Exception) {
-                    SendMutationResult.Error(strings.get(if (active()) R.string.send_edit_failed else R.string.legacy_ui_vault_locked))
-                }
+                catch (_: Exception) { SendMutationResult.Error(strings.get(R.string.send_edit_failed), uncertain = attempted) }
             }
         }
 
@@ -2536,7 +2676,7 @@ class BitwardenRepository(private val context: Context) {
     sealed class SendMutationResult {
         data class Success(val send: BitwardenSend) : SendMutationResult()
         data class Deleted(val sendId: String) : SendMutationResult()
-        data class Error(val message: String) : SendMutationResult()
+        data class Error(val message: String, val uncertain: Boolean = false) : SendMutationResult()
     }
     
     sealed class RepositoryLoginResult {

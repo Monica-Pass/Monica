@@ -70,6 +70,14 @@ data class SecureItem(
     @ColumnInfo(defaultValue = "NULL")
     val deletedAt: Date? = null,         // 删除时间（用于自动清空）
 
+    @ColumnInfo(defaultValue = "0")
+    val isArchived: Boolean = false,
+    @ColumnInfo(defaultValue = "NULL")
+    val archivedAt: Date? = null,
+    // Null preserves the source; only the archive action creates a mutation intent.
+    @ColumnInfo(name = "bitwarden_archive_intent", defaultValue = "NULL")
+    val bitwardenArchiveIntent: Boolean? = null,
+
     @ColumnInfo(name = "replica_group_id", defaultValue = "NULL")
     val replicaGroupId: String? = null,
     

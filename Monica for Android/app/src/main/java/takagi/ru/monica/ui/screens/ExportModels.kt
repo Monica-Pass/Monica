@@ -6,5 +6,7 @@ package takagi.ru.monica.ui.screens
 enum class ExportOption {
     ZIP_BACKUP,
     KDBX,
-    STEAM_MAFILE
+    STEAM_MAFILE,
+    BITWARDEN_JSON,
+    BITWARDEN_JSON_ENCRYPTED
 }

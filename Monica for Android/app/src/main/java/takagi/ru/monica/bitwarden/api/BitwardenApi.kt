@@ -968,7 +968,13 @@ data class SendApiResponse(
     val disabled: Boolean = false,
     @JsonNames("hideEmail")
     @SerialName("HideEmail")
-    val hideEmail: Boolean? = null
+    val hideEmail: Boolean? = null,
+    @JsonNames("authType")
+    @SerialName("AuthType")
+    val authType: Int? = null,
+    @JsonNames("emails")
+    @SerialName("Emails")
+    val emails: String? = null
 )
 
 @Serializable
@@ -1058,7 +1064,9 @@ data class CipherCreateRequest(
     val archivedDate: String? = null,
     @JsonNames("EncryptedFor", "encryptedFor")
     @SerialName("encryptedFor")
-    val encryptedFor: String? = null
+    val encryptedFor: String? = null,
+    @SerialName("passwordHistory")
+    val passwordHistory: kotlinx.serialization.json.JsonElement? = null
 )
 
 @Serializable
@@ -1250,7 +1258,11 @@ data class SendCreateRequest(
     @SerialName("text")
     val text: SendTextCreateRequest? = null,
     @SerialName("file")
-    val file: SendFileCreateRequest? = null
+    val file: SendFileCreateRequest? = null,
+    @SerialName("authType")
+    val authType: Int? = null,
+    @SerialName("emails")
+    val emails: String? = null
 )
 
 @Serializable

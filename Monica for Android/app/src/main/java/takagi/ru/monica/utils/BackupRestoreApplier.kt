@@ -537,6 +537,8 @@ object BackupRestoreApplier {
                         imagePaths = exportItem.imagePaths,
                         isDeleted = exportItem.isDeleted,
                         deletedAt = exportItem.deletedAt?.let { java.util.Date(it) },
+                        isArchived = exportItem.isArchived,
+                        archivedAt = exportItem.archivedAt?.let { java.util.Date(it) },
                         createdAt = java.util.Date(exportItem.createdAt),
                         updatedAt = java.util.Date(exportItem.updatedAt),
                         categoryId = exportItem.categoryId

@@ -215,7 +215,7 @@
     <string name="unarchive_action">Desarchivar</string>
     <string name="archive_password_confirmation_title">¿Archivar este elemento?</string>
     <string name="archive_password_confirmation_message">Después de archivar, este elemento pasará a Archivado. Puedes restaurarlo más tarde.</string>
-    <string name="archive_empty_hint">Aún no hay contraseñas archivadas</string>
+    <string name="archive_empty_hint">Aún no hay elementos archivados</string>
     <string name="archive_item_subtitle_empty">Sin nombre de usuario ni sitio web</string>
     <string name="group_mode_menu_title">Estilo de apilamiento</string>
     <string name="group_mode_smart">Inteligente (notas &gt; web &gt; aplicación &gt; título)</string>

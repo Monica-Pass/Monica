@@ -61,6 +61,8 @@ class DataExportImportManager(private val context: Context) {
         val sortOrder: Int = 0,
         val isDeleted: Boolean = false,
         val deletedAt: Long? = null,
+        val isArchived: Boolean = false,
+        val archivedAt: Long? = null,
     )
 
     data class ImportedCustomField(

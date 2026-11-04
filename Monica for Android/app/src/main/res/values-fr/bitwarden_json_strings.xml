@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bw_json_title">JSON Bitwarden</string>
+    <string name="bw_json_encrypted_title">JSON Bitwarden chiffré par mot de passe</string>
+    <string name="bw_json_description">JSON standard ou chiffré par mot de passe pour les identifiants, notes, cartes, identités et clés SSH.</string>
+    <string name="bw_json_boundary">Importation dans le coffre local uniquement. Exportation du coffre local ou d’un compte personnel Bitwarden. Les fichiers joints, Send et l’état archivé sont exclus. Tout contenu non pris en charge bloque le transfert entier ; examinez chaque élément signalé.</string>
+    <string name="bw_json_import_hint">Choisissez un fichier JSON Bitwarden standard ou chiffré par mot de passe.</string>
+    <string name="bw_json_file_password">Mot de passe du fichier</string>
+    <string name="bw_json_check">Vérifier le fichier</string>
+    <string name="bw_json_review">Vérifier l’importation JSON</string>
+    <string name="bw_json_counts">%1$d éléments · %2$d dossiers</string>
+    <string name="bw_json_blocked">Le transfert entier est bloqué. Résolvez tous les éléments ci-dessous avant de réessayer.</string>
+    <string name="bw_json_ready">Le fichier peut être importé. Confirmez pour ajouter tous les éléments au coffre local.</string>
+    <string name="bw_json_export_success">%1$d éléments et %2$d dossiers exportés. Les fichiers joints, Send et l’état archivé sont exclus.</string>
+    <string name="bw_json_reason_invalid">Données invalides ou endommagées</string>
+    <string name="bw_json_reason_unknown">Champ inconnu ; impossible de le conserver</string>
+    <string name="bw_json_reason_type">Type d’élément non pris en charge</string>
+    <string name="bw_json_reason_value">Cette valeur ne peut pas être conservée intégralement</string>
+    <string name="bw_json_reason_limit">Limite de taille ou de traitement dépassée</string>
+    <string name="bw_json_reason_organization">Le contenu des organisations et des collections n’est pas pris en charge</string>
+    <string name="bw_json_reason_attachments">Les fichiers joints nécessitent un transfert séparé</string>
+    <string name="bw_json_reason_archived">Ce format ne peut pas conserver l’état archivé</string>
+    <string name="bw_json_reason_destination">Cette source ou destination n’est pas prise en charge</string>
+    <string name="bw_json_reason_pending">Terminez les modifications en attente avant d’exporter le compte</string>
+    <string name="bw_json_reason_unavailable">Les données source ou la clé requises sont indisponibles</string>
+    <string name="bw_json_item">Élément %1$d</string>
+    <string name="bw_json_plain_warning">Le JSON non chiffré contient des mots de passe et des clés privées lisibles. Conservez le fichier en lieu sûr.</string>
+</resources>

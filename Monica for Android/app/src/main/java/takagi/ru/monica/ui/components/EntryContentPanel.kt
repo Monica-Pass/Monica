@@ -17,13 +17,20 @@ import androidx.compose.ui.semantics.customActions
 import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.layout.LocalPinnableContainer
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.window.DialogWindowProvider
+import androidx.core.view.WindowCompat
 import takagi.ru.monica.R
 
 data class EntryContentActions(val moveUp: (() -> Unit)? = null, val moveDown: (() -> Unit)? = null,
@@ -40,6 +47,9 @@ fun EntryContentPanel(
     onOpenChange: (Boolean) -> Unit,
     content: @Composable ColumnScope.() -> Unit,
 ) {
+    val editorDensity = LocalDensity.current
+    val editorConfiguration = LocalConfiguration.current
+    val editorResources = LocalResources.current
     val actions = LocalEntryContentActions.current?.invoke(section)
     val drag = LocalContentDrag.current
     val upLabel = stringResource(R.string.move_up)
@@ -92,6 +102,19 @@ fun EntryContentPanel(
         dismissButton = { TextButton(onClick = { confirmRemoval = false }) { Text(stringResource(R.string.cancel)) } })
     if (open) Dialog(onDismissRequest = { onOpenChange(false) },
         properties = DialogProperties(usePlatformDefaultWidth = false, decorFitsSystemWindows = false)) {
+        // A new Android window otherwise replaces the editor's density and resource locals.
+        CompositionLocalProvider(LocalDensity provides editorDensity,
+            LocalConfiguration provides editorConfiguration, LocalResources provides editorResources) {
+        val view = LocalView.current
+        val lightSurface = MaterialTheme.colorScheme.surface.luminance() > 0.5f
+        SideEffect {
+            (view.parent as? DialogWindowProvider)?.window?.let { window ->
+                WindowCompat.getInsetsController(window, view).apply {
+                    isAppearanceLightStatusBars = lightSurface
+                    isAppearanceLightNavigationBars = lightSurface
+                }
+            }
+        }
         Scaffold(modifier = Modifier.fillMaxSize().testTag("content_detail_${section.name}"),
             topBar = { TopAppBar(title = {
                 Text(stringResource(section.title), maxLines = if (section == PasswordContentSection.ATTACHMENTS) 1 else Int.MAX_VALUE,
@@ -109,6 +132,7 @@ fun EntryContentPanel(
             Column(Modifier.fillMaxSize().padding(padding).consumeWindowInsets(padding).imePadding()
                 .verticalScroll(rememberScrollState()).testTag("content_detail_scroll").padding(if (section == PasswordContentSection.ATTACHMENTS) 12.dp else 16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp), content = content)
+        }
         }
     }
 }

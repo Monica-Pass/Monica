@@ -434,7 +434,8 @@ class AttachmentFacade(
         owner: AttachmentOwner,
         targetContext: BitwardenContext,
         fileNames: Set<String>,
-        attachmentIds: Set<Long>? = null
+        attachmentIds: Set<Long>? = null,
+        beforePublish: (suspend () -> Unit)? = null
     ): Int = withContext(Dispatchers.IO) {
         if (fileNames.isEmpty()) return@withContext 0
         if (!targetContext.isOnline) throw AttachmentError.Offline
@@ -473,6 +474,10 @@ class AttachmentFacade(
         val replaced = mutableListOf<Pair<Attachment, Attachment>>()
         try {
             uploaded.forEach { (source, remote) ->
+                beforePublish?.invoke()
+                check(repository.getById(source.id) == source) {
+                    "Attachment changed while its upload was in flight"
+                }
                 val replacement = remote.copy(
                     id = source.id,
                     parentPasswordId = owner.passwordId,

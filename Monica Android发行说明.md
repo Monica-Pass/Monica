@@ -4,6 +4,24 @@
 
 ## 中文
 
+- 减少 KeePass 原始库中的多余 Monica 字段：保存时省略默认状态、无关联的空字段和空账号备注属性，便笺等项目不再写入空图片路径或默认收藏值。保留账号堆叠、实际备注、关联标识、用户自定义字段、REF 引用、保护位及原文件历史；只处理明确保存的项目，不批量清理旧库。
+
+- 重新设计 Bitwarden 设置与账号页，统一圆角分组和大字号布局；同步队列显示实际待处理条目、附件及失败明细。
+- 密码编辑器支持保存、补传和删除 Bitwarden 附件；上传失败保留本地文件和待处理状态。
+- 应用处于前台且密码库解锁时，可接收服务器变更通知并同步；后台或锁定后停止监听。
+- Send 支持服务端允许的邮箱验证，以及加密保存、恢复和手动提交文本／文件草稿；提交结果不确定时先核对服务器，避免重复创建。退出账号会在确认后移除该账号的本机草稿。
+- Send 本机缓存改为加密保存，解锁后迁移可读取的旧记录；普通缓存清理保留未同步或无法确认的内容。
+- 修复 Send 草稿重新读取时修改时间变化的问题，保持列表顺序稳定，并兼容缺少时间戳的旧草稿。
+- 支持 Bitwarden 普通及密码加密 JSON：导入到 Monica 本地，或从本地／已解锁的 Bitwarden 个人库导出；不能保留的字段会逐项提示并停止整批操作。JSON 不含附件文件、Send 或归档状态。
+
+- 修复编辑页卡片、标签和输入区四角／边框被分区裁剪的问题，统一独立圆角、间距及操作区；重新设计新建二维码、密码二维码和备注界面，改善 Send 账号、日期及开关布局。
+- 修复备注与二维码编辑弹窗的字号／语言继承和浅色状态栏对比，支持大字号内容滚动及底部操作避让。
+
+- 同步失败时可按账号查看具体项目，按标题或条目 ID 搜索，并显示失败阶段与原因；账号锁定后清除本次明细。
+- 支持查看、删除和清空 Bitwarden 密码历史，记录密码及隐藏字段变更；离线修改、丢失回执和锁定后到达的结果保留正确的历史操作意图。
+- 支持 Bitwarden 笔记、银行卡和身份条目归档／取消归档，以及逐网址编辑原生匹配规则，保留重复网址各自的规则与未知内容。
+- Send 新建与编辑页统一使用现有条目编辑组件，通过“添加内容”展开备注和访问选项。
+
 - 修复官方 Bitwarden 序列化传统条目数据被误判而无法显示的问题；编辑时同时更新序列化数据，保留未知字段和密码历史。
 
 - 修复同步字段读取失败后被替换为空值的问题；登录、笔记、银行卡、身份和 SSH 条目在写入前校验密文，文件夹及 Send 读取失败时保留原数据并提示同步不完整。
@@ -22,6 +40,24 @@
 - 加强同步修订冲突处理及账号安全状态变化后的重新认证，保留较新的本地修改。
 
 ## English
+
+- Reduced redundant Monica fields in original KeePass vaults: saves omit default state, empty optional links and empty credential-note properties; secure items omit empty image paths and default favorite values. Account stacking, real notes, linkage identities, user fields, REF expressions, protection flags and native history are preserved. Only explicitly saved entries are affected; existing vaults are not bulk-cleaned.
+
+- Redesigned Bitwarden settings and account pages with consistent rounded groups and large-text layouts; the sync queue now shows actual pending items, attachments and issue details.
+- Password editors can save, retry and remove Bitwarden attachments; failed uploads retain local files and pending work.
+- Server change notifications can trigger sync while the app is foregrounded and the vault is unlocked; listening stops in the background or when locked.
+- Added server-supported Send email verification and encrypted text/file drafts with restore and manual submission. Uncertain submissions are reconciled before another create attempt. Confirmed account logout removes that account's local drafts.
+- The local Send cache is encrypted, with readable legacy rows migrated after unlocking; ordinary cache clearing preserves pending or unreadable content.
+- Fixed draft timestamps changing when read again, keeping Send draft order stable and supporting older drafts without a saved timestamp.
+- Added plain and password-encrypted Bitwarden JSON import to Monica local storage, and export from local storage or unlocked personal Bitwarden vaults. Unsupported fields are reported before the whole operation is stopped. JSON excludes attachment files, Sends and archive state.
+
+- Fixed clipped card, chip and field corners in editors, with consistent individual shapes, spacing and actions; redesigned QR creation, password QR and notes, and refined Send accounts, dates and switches.
+- Fixed font-scale and language inheritance in notes and QR editor windows, improved light status-bar contrast, and kept large-text content and bottom actions reachable.
+
+- Added per-account sync issue details, searchable by title or item ID, with the failed stage and reason. Locking the account clears these details.
+- Added Bitwarden password history viewing, deletion and clearing, including password and hidden-field changes. Offline edits, lost responses and results arriving after a lock retain the intended history changes.
+- Added archive/unarchive for Bitwarden notes, cards and identities, plus native match-rule editing for each URL, preserving duplicate URLs and their separate rules and unknown content.
+- Unified Send creation and editing with the existing item editor, using Add content for notes and access options.
 
 - Fixed official Bitwarden serialized legacy item data being incorrectly rejected during sync; edits update the serialized data while retaining unknown fields and password history.
 

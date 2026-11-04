@@ -184,7 +184,7 @@
     <string name="unarchive_action">Désarchiver</string>
     <string name="archive_password_confirmation_title">Archiver cet élément ?</string>
     <string name="archive_password_confirmation_message">L’élément sera archivé. Vous pourrez le restaurer.</string>
-    <string name="archive_empty_hint">Aucun mot de passe archivé</string>
+    <string name="archive_empty_hint">Aucun élément archivé</string>
     <string name="archive_item_subtitle_empty">Sans identifiant ni site</string>
     <string name="group_mode_menu_title">Regroupement</string>
     <string name="group_mode_smart">Auto : note, site, appli, titre</string>

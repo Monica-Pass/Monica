@@ -185,7 +185,7 @@
     <string name="unarchive_action">撤归藏</string>
     <string name="archive_password_confirmation_title">欲归藏此项乎？</string>
     <string name="archive_password_confirmation_message">归藏后，此项将移入“归藏”，日后可复之。</string>
-    <string name="archive_empty_hint">尚无归藏之密钥</string>
+    <string name="archive_empty_hint">尚无归藏之项</string>
     <string name="archive_item_subtitle_empty">无名亦无网站</string>
     <string name="group_mode_menu_title">成叠之法</string>
     <string name="group_mode_smart">择优（附记 &gt; 网站 &gt; 应用 &gt; 题名）</string>

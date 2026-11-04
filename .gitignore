@@ -112,6 +112,20 @@ Monica for Android/app/src/test/java/takagi/ru/monica/bitwarden/service/*
 Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/*
 !Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenOrganizationSyncTest.kt
 !Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenCipherDocumentInstrumentedTest.kt
+!Monica for Android/app/src/test/java/takagi/ru/monica/bitwarden/sync/
+Monica for Android/app/src/test/java/takagi/ru/monica/bitwarden/sync/*
+!Monica for Android/app/src/test/java/takagi/ru/monica/bitwarden/sync/BitwardenSyncQueueTest.kt
+!Monica for Android/app/src/test/java/takagi/ru/monica/bitwarden/sync/BitwardenNotificationProtocolTest.kt
+!Monica for Android/app/src/test/java/takagi/ru/monica/bitwarden/sync/BitwardenNotificationConnectionTest.kt
+!Monica for Android/app/src/test/java/takagi/ru/monica/bitwarden/sync/BitwardenNotificationTestFrames.kt
+!Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenSettingsDesignTest.kt
+!Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenNeverLockSettingsInstrumentedTest.kt
+!Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenSyncQueueInstrumentedTest.kt
+!Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenNotificationInstrumentedTest.kt
+!Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenNotificationEffectInstrumentedTest.kt
+!Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/sync/
+Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/sync/*
+!Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/sync/BitwardenNotificationTestFrames.kt
 fdroiddata/
 CLI-WeChat-Bridge-main/
 
@@ -160,3 +174,24 @@ fdroid/
 !Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenSendManagementInstrumentedTest.kt
 !Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenSshNativeSyncInstrumentedTest.kt
 !Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenScreenshotExportInstrumentedTest.kt
+
+# Native Bitwarden history, URI and sync issue regression coverage
+!Monica for Android/app/src/test/java/takagi/ru/monica/bitwarden/service/BitwardenSyncIssuesTest.kt
+!Monica for Android/app/src/test/java/takagi/ru/monica/bitwarden/service/BitwardenPasswordHistoryTest.kt
+!Monica for Android/app/src/test/java/takagi/ru/monica/bitwarden/service/BitwardenLoginUriRulesTest.kt
+!Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenArchiveUriInstrumentedTest.kt
+!Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenPasswordHistoryStoreInstrumentedTest.kt
+!Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenSyncIssuesUiInstrumentedTest.kt
+!Monica for Android/app/src/main/java/takagi/ru/monica/data/bitwarden/
+!Monica for Android/app/src/main/java/takagi/ru/monica/data/bitwarden/BitwardenPasswordHistoryState.kt
+
+# Settings completion, protected Send drafts and strict JSON exchange regression coverage
+!Monica for Android/app/src/test/java/takagi/ru/monica/bitwarden/service/BitwardenSendAuthTest.kt
+!Monica for Android/app/src/test/java/takagi/ru/monica/bitwarden/service/BitwardenSendSubmissionTest.kt
+!Monica for Android/app/src/test/java/takagi/ru/monica/bitwarden/export/
+Monica for Android/app/src/test/java/takagi/ru/monica/bitwarden/export/*
+!Monica for Android/app/src/test/java/takagi/ru/monica/bitwarden/export/BitwardenJsonCodecTest.kt
+!Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenSendDraftsInstrumentedTest.kt
+!Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/export/
+Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/export/*
+!Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/export/BitwardenJsonTransferInstrumentedTest.kt

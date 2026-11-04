@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_settings_security">安全</string>
+    <string name="bitwarden_settings_queue_hint">查看待同步项目与失败明细</string>
+    <string name="bitwarden_account_web_settings_hint">主密码、两步登录及订阅在网页管理</string>
+    <string name="bitwarden_settings_select_account">设为当前账号</string>
+    <string name="bitwarden_settings_account_management">账号管理</string>
+    <string name="bitwarden_queue_help">显示等待同步的本地更改和最近一次同步结果。列表为空不代表已与服务器同步。</string>
+    <string name="bitwarden_queue_empty_local">没有等待同步的本地更改</string>
+    <string name="bitwarden_queue_locked">解锁此账号后查看待同步项目</string>
+    <string name="bitwarden_queue_loading_error">无法读取待同步项目，请重新打开此页面重试</string>
+    <string name="bitwarden_queue_awaiting_confirmation">等待服务器确认</string>
+    <string name="bitwarden_queue_idle">当前没有同步任务</string>
+</resources>

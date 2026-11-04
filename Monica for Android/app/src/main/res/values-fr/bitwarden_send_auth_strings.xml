@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="bw_send_auth_title">Contrôle d’accès</string>
+    <string name="bw_send_auth_none">Aucune vérification</string>
+    <string name="bw_send_auth_password">Mot de passe</string>
+    <string name="bw_send_auth_email">Vérification par e-mail</string>
+    <string name="bw_send_auth_email_label">Adresse e-mail %1$d</string>
+    <string name="bw_send_auth_add_email">Ajouter une adresse e-mail</string>
+    <string name="bw_send_auth_remove_email">Retirer une adresse e-mail</string>
+    <string name="bw_send_auth_recipients_notice">Les adresses des destinataires sont envoyées au serveur pour vérification.</string>
+    <string name="bw_send_auth_premium">La vérification par e-mail nécessite Premium pour ce compte.</string>
+    <string name="bw_send_auth_unsupported">Ce serveur n’a pas accepté la vérification par e-mail. Vérifiez sa prise en charge et réessayez.</string>
+    <string name="bw_send_auth_invalid">Vérifiez le mode d’accès et les adresses e-mail.</string>
+    <string name="bw_send_auth_unchanged">Conserver la vérification actuelle</string>
+    <string name="bw_send_auth_password_set">Mot de passe défini</string>
+    <string name="bw_send_drafts">Brouillons Send</string>
+    <string name="bw_send_draft_save">Enregistrer le brouillon</string>
+    <string name="bw_send_draft_saved">Brouillon enregistré sur cet appareil.</string>
+    <string name="bw_send_draft_local">Enregistré uniquement sur cet appareil. Reprenez-le pour l’envoyer manuellement.</string>
+    <string name="bw_send_draft_resume">Reprendre</string>
+    <string name="bw_send_draft_discard">Abandonner le brouillon</string>
+    <string name="bw_send_draft_discard_confirm">Abandonner ce brouillon local et son fichier enregistré ? Les Sends publiés seront conservés.</string>
+    <string name="bw_send_draft_failed">Impossible d’enregistrer ou de lire ce brouillon. La copie existante est conservée.</string>
+    <string name="bw_send_draft_unavailable">Certains brouillons n’ont pas pu être ouverts. Ils sont conservés sur cet appareil.</string>
+    <string name="bw_send_draft_reconcile">Vérifier l’envoi précédent</string>
+    <string name="bw_send_draft_uncertain">L’envoi précédent a peut-être atteint le serveur. Vérifiez-le avant de renvoyer.</string>
+    <string name="bw_send_draft_not_found">L’envoi précédent n’a pas pu être confirmé. Vérifiez vos Sends avant d’abandonner ce brouillon.</string>
+    <string name="bw_send_cache_unavailable">Certains Sends en cache n’ont pas pu être ouverts. Les données existantes sont conservées.</string>
+    <string name="bw_send_draft_empty">Aucun brouillon enregistré</string>
+    <string name="bw_send_draft_missing_file">Le fichier enregistré est introuvable. Sélectionnez-le à nouveau.</string>
+    <string name="bw_send_logout_drafts">Les brouillons Send locaux et leurs fichiers enregistrés seront également supprimés. Une nouvelle connexion ne permet pas de les restaurer.</string>
+</resources>

@@ -67,7 +67,7 @@ internal class DatabaseManagerRepository(context: Context, databaseOverride: Pas
                 val nodes = folders.map { node("folder:${it.id}", null, it.name, true) } +
                     db.passwordEntryDao().getAllPasswordEntriesSync().filter { source.contains(it) && !it.isDeleted }.map {
                         node("password:${it.id}", parent(it.categoryId), it.title, false, it.loginType.lowercase())
-                    } + db.secureItemDao().getAllItems().first().filter { source.contains(it) && !it.isDeleted }.map {
+                    } + db.secureItemDao().getAllItemsIncludingArchived().first().filter { source.contains(it) && !it.isDeleted }.map {
                         node("item:${it.id}", parent(it.categoryId), it.title, false, it.itemType.name.lowercase())
                     } + db.passkeyDao().getAllPasskeysSync().filter(source::contains).map {
                         node("passkey:${it.id}", parent(it.categoryId), it.userDisplayName.ifBlank { it.rpName }, false, "passkey")
@@ -259,7 +259,7 @@ internal class DatabaseManagerRepository(context: Context, databaseOverride: Pas
                 db.passwordEntryDao().getAllPasswordEntriesSync().filter { ImportDestination.Local.contains(it) && it.categoryId == category.id }.forEach {
                     db.passwordEntryDao().updatePasswordEntry(it.copy(isDeleted = true, deletedAt = java.util.Date()))
                 }
-                db.secureItemDao().getAllItems().first().filter { ImportDestination.Local.contains(it) && it.categoryId == category.id }.forEach {
+                db.secureItemDao().getAllItemsIncludingArchived().first().filter { ImportDestination.Local.contains(it) && it.categoryId == category.id }.forEach {
                     db.secureItemDao().updateItem(it.copy(isDeleted = true, deletedAt = java.util.Date()))
                 }
                 // Keep the category while its recoverable items are in trash.

@@ -245,7 +245,7 @@
     <string name="unarchive_action">取消归档</string>
     <string name="archive_password_confirmation_title">确认归档此条目？</string>
     <string name="archive_password_confirmation_message">归档后该条目会移动到“归档”列表，之后可随时恢复。</string>
-    <string name="archive_empty_hint">暂无归档密码</string>
+    <string name="archive_empty_hint">暂无归档项目</string>
     <string name="archive_item_subtitle_empty">无用户名或网站信息</string>
     <string name="smart_deduplication">智能去重</string>
     <string name="smart_deduplication_desc">在“全部”视图中合并来自不同来源的重复条目</string>

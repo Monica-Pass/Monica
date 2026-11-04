@@ -2125,7 +2125,7 @@
     <string name="unarchive_action">アーカイブを解除する</string>
     <string name="archive_password_confirmation_title">このアイテムをアーカイブしますか?</string>
     <string name="archive_password_confirmation_message">アーカイブ後、このアイテムはアーカイブ済みに移動します。後で復元できます。</string>
-    <string name="archive_empty_hint">アーカイブされたパスワードはまだありません</string>
+    <string name="archive_empty_hint">アーカイブされた項目はまだありません</string>
     <string name="archive_item_subtitle_empty">ユーザー名もウェブサイトもありません</string>
     <string name="group_mode_menu_title">スタッキングスタイル</string>
     <string name="group_mode_smart">スマート (ノート &gt; ウェブ &gt; アプリ &gt; タイトル)</string>

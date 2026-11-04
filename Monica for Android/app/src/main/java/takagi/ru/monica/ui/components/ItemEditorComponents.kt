@@ -52,6 +52,7 @@ internal fun ItemEditorIdentity(
     title: String, onTitleChange: (String) -> Unit, label: String,
     icon: ImageVector, showIcon: Boolean = true, onIconClick: (() -> Unit)? = null,
     iconContent: (@Composable () -> Unit)? = null,
+    enabled: Boolean = true,
 ) {
     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -66,7 +67,7 @@ internal fun ItemEditorIdentity(
         }
         CompositionLocalProvider(LocalFilledEntryForm provides true, LocalTemplateFieldShape provides false,
             LocalStandaloneTemplateFields provides false) {
-            OutlinedTextField(title, onTitleChange, label = { Text(label) }, singleLine = true,
+            OutlinedTextField(title, onTitleChange, label = { Text(label) }, singleLine = true, enabled = enabled,
                 modifier = Modifier.weight(1f).testTag("item_editor_title"), shape = RoundedCornerShape(24.dp))
         }
     }

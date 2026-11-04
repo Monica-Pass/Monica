@@ -2147,7 +2147,7 @@
     <string name="unarchive_action">Hủy lưu trữ</string>
     <string name="archive_password_confirmation_title">Lưu trữ mục này?</string>
     <string name="archive_password_confirmation_message">Sau khi lưu trữ, mục này sẽ chuyển sang Đã lưu trữ. Bạn có thể khôi phục nó sau.</string>
-    <string name="archive_empty_hint">Chưa có mật khẩu được lưu trữ</string>
+    <string name="archive_empty_hint">Chưa có mục được lưu trữ</string>
     <string name="archive_item_subtitle_empty">Không có tên người dùng hoặc trang web</string>
     <string name="group_mode_menu_title">Kiểu xếp chồng</string>
     <string name="group_mode_smart">Thông minh (ghi chú &gt; web &gt; ứng dụng &gt; tiêu đề)</string>

@@ -108,7 +108,11 @@ class EntryContentWindowStabilityTest {
             }
             val editor = compose.onNodeWithTag("password_content_editor")
             editor.performScrollToNode(hasTestTag("password_content_add"))
+            bringAboveSave(compose.onNodeWithTag("password_content_add"), editor)
             compose.onNodeWithTag("password_content_add").performClick()
+            compose.waitUntil(5000) {
+                compose.onAllNodesWithTag("password_content_choose_NOTES").fetchSemanticsNodes().isNotEmpty()
+            }
             compose.onNodeWithTag("password_content_choose_NOTES").performScrollTo()
             compose.runOnIdle {
                 ignored.addAll(WindowInspector.getGlobalWindowViews())
@@ -124,6 +128,7 @@ class EntryContentWindowStabilityTest {
             compose.onNodeWithTag("password_content_notes").performTextReplacement("draft survives opening")
             compose.onNodeWithTag("content_detail_back").performClick()
             editor.performScrollToNode(hasTestTag("content_panel_NOTES"))
+            bringAboveSave(compose.onNodeWithTag("content_panel_NOTES"), editor)
             compose.onNodeWithTag("content_panel_NOTES").performClick()
             compose.onNodeWithTag("password_content_notes").assertTextContains("draft survives opening")
         } finally {
@@ -136,5 +141,16 @@ class EntryContentWindowStabilityTest {
             model.viewModelScope.cancel()
             db.close()
         }
+    }
+
+    private fun bringAboveSave(target: SemanticsNodeInteraction, editor: SemanticsNodeInteraction) {
+        // ScrollTo only makes a lazy item intersect the viewport; it may still sit beneath Save.
+        compose.bringAboveFloatingActions(target, editor)
+        target.assertIsDisplayed()
+        val bounds = target.fetchSemanticsNode().boundsInRoot
+        val save = compose.onNodeWithTag("password_editor_save").fetchSemanticsNode().boundsInRoot
+        assertFalse("Real touch must reach the content control, not the floating Save button",
+            minOf(bounds.right, save.right) > maxOf(bounds.left, save.left) &&
+                minOf(bounds.bottom, save.bottom) > maxOf(bounds.top, save.top))
     }
 }

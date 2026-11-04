@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_sync_issues_title">동기화하지 못한 항목</string>
+    <string name="bitwarden_sync_issues_button">동기화 문제 보기 (%1$d)</string>
+    <string name="bitwarden_sync_issues_help">이 계정의 최근 동기화 결과입니다. 읽을 수 있는 제목은 표시됩니다. 제목을 읽을 수 없으면 항목 ID로 찾을 수 있습니다. 계정을 잠그면 이 상세 정보가 지워집니다.</string>
+    <string name="bitwarden_sync_issues_empty">이번 동기화에서 실패한 항목이 없습니다.</string>
+    <string name="bitwarden_sync_issues_running">동기화가 진행 중입니다.</string>
+    <string name="bitwarden_sync_issues_no_title">제목을 읽을 수 없음</string>
+    <string name="bitwarden_sync_issues_id">항목 ID: %1$s</string>
+    <string name="bitwarden_sync_issues_search">제목 또는 항목 ID 검색</string>
+    <string name="bitwarden_sync_issues_no_matches">일치하는 항목이 없습니다</string>
+    <string name="bitwarden_sync_issue_kind_cipher">보관함 항목</string>
+    <string name="bitwarden_sync_issue_kind_folder">폴더</string>
+    <string name="bitwarden_sync_issue_kind_send">Send</string>
+    <string name="bitwarden_sync_issue_kind_attachment">첨부 파일</string>
+    <string name="bitwarden_sync_issue_kind_passkey">패스키</string>
+    <string name="bitwarden_sync_issue_phase_download">다운로드</string>
+    <string name="bitwarden_sync_issue_phase_create">새 항목 업로드</string>
+    <string name="bitwarden_sync_issue_phase_update">변경 사항 업로드</string>
+    <string name="bitwarden_sync_issue_phase_delete">삭제</string>
+    <string name="bitwarden_sync_issue_phase_restore">복원</string>
+    <string name="bitwarden_sync_issue_reason_authentication">잠금을 해제하거나 다시 로그인한 후 재시도하세요.</string>
+    <string name="bitwarden_sync_issue_reason_network">서버에 연결할 수 없습니다. 연결을 확인하고 다시 시도하세요.</string>
+    <string name="bitwarden_sync_issue_reason_conflict">이 항목이 변경되었습니다. 충돌을 확인한 후 다시 시도하세요.</string>
+    <string name="bitwarden_sync_issue_reason_unsupported">이 항목의 형식이 지원되지 않거나 불완전합니다.</string>
+    <string name="bitwarden_sync_issue_reason_decryption">이 항목을 복호화하거나 검증하지 못했습니다.</string>
+    <string name="bitwarden_sync_issue_reason_rejected">작업을 완료하지 못했습니다. 로컬 변경 사항은 유지됩니다.</string>
+    <string name="bitwarden_sync_issue_reason_attachment">첨부 파일을 전송하거나 검증하지 못했습니다.</string>
+    <string name="bitwarden_sync_issue_reason_pending_parent">첨부 파일이 속한 항목을 업로드하고 첨부 파일을 사용할 수 있는지 확인한 후 다시 시도하세요.</string>
+</resources>

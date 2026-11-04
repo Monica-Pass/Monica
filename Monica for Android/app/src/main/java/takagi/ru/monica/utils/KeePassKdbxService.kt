@@ -2251,19 +2251,31 @@ class KeePassKdbxService(
         // A transient presentation ID must never replace the original file's compatibility ID.
         original?.nativeEntry?.fields?.get(FIELD_MONICA_LOCAL_ID)?.let { values[FIELD_MONICA_LOCAL_ID] = it }
         if (original == null) values.remove(FIELD_MONICA_LOCAL_ID)
-        values["MonicaIsFavorite"] = EntryValue.Plain(row.isFavorite.toString())
-        values["MonicaIsArchived"] = EntryValue.Plain(row.isArchived.toString())
-        values["MonicaSortOrder"] = EntryValue.Plain(row.sortOrder.toString())
-        values["MonicaIsGroupCover"] = EntryValue.Plain(row.isGroupCover.toString())
-        values["MonicaCategoryId"] = EntryValue.Plain(row.categoryId?.toString().orEmpty())
-        values["MonicaSsoRefEntryUuid"] = EntryValue.Plain(ssoRefUuid?.toString().orEmpty())
-        values["MonicaBoundNoteUuid"] = EntryValue.Plain(boundNoteUuid?.toString().orEmpty())
+        // These exact UI fields have defined missing-value defaults. Do not apply this
+        // policy to user fields, standard KeePass fields, or content/stacking metadata.
+        fun optional(name: String, value: String?, default: String = "") {
+            val text = value.orEmpty()
+            val absent = text.isEmpty() || text == default
+            val previous = original?.field(name)
+            val keepReference = absent && previous != null && previous.rawValue.contains("{REF:", ignoreCase = true) &&
+                (previous.displayValue.equals(text, ignoreCase = true) || previous.displayValue.contains("{REF:", ignoreCase = true))
+            if (keepReference) values[name] = requireNotNull(previous).nativeValue
+            else if (absent) values.remove(name)
+            else values[name] = EntryValue.Plain(text)
+        }
+        optional("MonicaIsFavorite", row.isFavorite.toString(), "false")
+        optional("MonicaIsArchived", row.isArchived.toString(), "false")
+        optional("MonicaSortOrder", row.sortOrder.toString(), "0")
+        optional("MonicaIsGroupCover", row.isGroupCover.toString(), "false")
+        optional("MonicaCategoryId", row.categoryId?.toString())
+        optional("MonicaSsoRefEntryUuid", ssoRefUuid)
+        optional("MonicaBoundNoteUuid", boundNoteUuid)
         listOf("MonicaBoundNoteId" to row.boundNoteId?.toString(), "MonicaPasskeyBindings" to row.passkeyBindings).forEach { (name, value) ->
-            values[name] = EntryValue.Plain(value.orEmpty())
+            optional(name, value)
         }
         listOf("MonicaPasswordGroupId" to row.passwordGroupId, "MonicaReplicaGroupId" to row.replicaGroupId,
             "MonicaCustomIconType" to row.customIconType, "MonicaCustomIconValue" to row.customIconValue).forEach { (name, value) ->
-            values[name] = EntryValue.Plain(value.orEmpty())
+            optional(name, value, if (name == "MonicaCustomIconType") "NONE" else "")
         }
         return values.map { (name, value) ->
             val previous = original?.field(name)
@@ -5342,7 +5354,9 @@ class KeePassKdbxService(
         return buildSecureItemEntryFieldPatch(item, existingEntry).applyTo(existingEntry)
     }
 
-    private fun buildSecureItemEntryFieldPatch(item: SecureItem, existingEntry: Entry? = null): KeePassEntryFieldPatch {
+    private fun buildSecureItemEntryFieldPatch(
+        item: SecureItem, existingEntry: Entry? = null, resolutionContext: KeePassEntryResolutionContext? = null
+    ): KeePassEntryFieldPatch {
         if (item.itemType == ItemType.TOTP && existingEntry != null &&
             !getFieldValue(existingEntry, FIELD_MONICA_ITEM_TYPE).equals("TOTP", ignoreCase = true)) {
             // A native login can also carry OTP and passkey credentials. Editing its OTP is
@@ -5358,7 +5372,19 @@ class KeePassKdbxService(
                 removeFieldNames = existingEntry.fields.keys.filter(KeePassTotpCodec::isOtpField) + fields.map { it.first }
             )
         }
-        val replacementFields = preserveExistingLoginFields(buildSecureItemFields(item), existingEntry)
+        val builtFields = buildSecureItemFields(item).toMutableMap()
+        // Keep unchanged/unresolved references, but allow an explicit clear of a
+        // resolved true/nonempty value to remove the field.
+        listOf(FIELD_MONICA_IMAGE_PATHS, FIELD_MONICA_IS_FAVORITE).forEach { name ->
+            val requested = if (name == FIELD_MONICA_IS_FAVORITE) item.isFavorite.toString() else item.imagePaths
+            val previous = existingEntry?.let { getFieldValue(it, name, resolutionContext) }
+            existingEntry?.fields?.get(name)?.takeIf {
+                name !in builtFields && it.content.contains("{REF:", ignoreCase = true) &&
+                    (previous.equals(requested, ignoreCase = name == FIELD_MONICA_IS_FAVORITE) ||
+                        previous?.contains("{REF:", ignoreCase = true) == true)
+            }?.let { builtFields[name] = it }
+        }
+        val replacementFields = preserveExistingLoginFields(EntryFields.of(*builtFields.toList().toTypedArray()), existingEntry)
         val removeManagedField = if (item.itemType == ItemType.TOTP) {
             { name: String ->
                 KeePassFieldRegistry.isSecureItemOverlayField(name) ||
@@ -5508,10 +5534,10 @@ class KeePassKdbxService(
             "Password" to EntryValue.Encrypted(EncryptedValue.fromString("")),
             "URL" to EntryValue.Plain(""),
             "Notes" to EntryValue.Plain(noteForExternal),
-            FIELD_MONICA_ITEM_TYPE to EntryValue.Plain(item.itemType.name),
-            FIELD_MONICA_IMAGE_PATHS to EntryValue.Plain(item.imagePaths),
-            FIELD_MONICA_IS_FAVORITE to EntryValue.Plain(item.isFavorite.toString())
+            FIELD_MONICA_ITEM_TYPE to EntryValue.Plain(item.itemType.name)
         )
+        if (item.imagePaths.isNotEmpty()) pairs += FIELD_MONICA_IMAGE_PATHS to EntryValue.Plain(item.imagePaths)
+        if (item.isFavorite) pairs += FIELD_MONICA_IS_FAVORITE to EntryValue.Plain("true")
         if (item.itemType == ItemType.NOTE) {
             // Standard Notes exposes the body to other clients; retain the separate Monica notes too.
             pairs += FIELD_MONICA_ITEM_NOTES to EntryValue.Encrypted(EncryptedValue.fromString(item.notes))
@@ -5700,7 +5726,7 @@ class KeePassKdbxService(
         val resolvedDatabaseId = requireNotNull(databaseId) {
             "Foreground KeePass secure-item update requires a database id"
         }
-        val fieldPatch = buildSecureItemEntryFieldPatch(item, matchedContext.entry)
+        val fieldPatch = buildSecureItemEntryFieldPatch(item, matchedContext.entry, resolutionContext)
         val matchedEntry = matchedContext.entry
         val photoPreview = KeePassSecureItemPhotoAttachments.synchronize(
             database = keePassDatabase,

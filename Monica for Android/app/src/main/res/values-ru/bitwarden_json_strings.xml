@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bw_json_title">JSON Bitwarden</string>
+    <string name="bw_json_encrypted_title">JSON Bitwarden, зашифрованный паролем</string>
+    <string name="bw_json_description">Обычный или зашифрованный паролем JSON для логинов, заметок, карт, личных данных и ключей SSH.</string>
+    <string name="bw_json_boundary">Импорт только в локальное хранилище. Экспорт из локального хранилища или одной личной учётной записи Bitwarden. Файлы вложений, Send и статус архивации не включаются. Неподдерживаемое содержимое блокирует весь перенос; проверьте каждый указанный элемент.</string>
+    <string name="bw_json_import_hint">Выберите обычный или зашифрованный паролем файл JSON Bitwarden.</string>
+    <string name="bw_json_file_password">Пароль файла</string>
+    <string name="bw_json_check">Проверить файл</string>
+    <string name="bw_json_review">Проверка импорта JSON</string>
+    <string name="bw_json_counts">Элементов: %1$d · Папок: %2$d</string>
+    <string name="bw_json_blocked">Весь перенос заблокирован. Исправьте все указанные ниже проблемы и повторите попытку.</string>
+    <string name="bw_json_ready">Файл можно импортировать. Подтвердите добавление всех элементов в локальное хранилище.</string>
+    <string name="bw_json_export_success">Экспортировано элементов: %1$d, папок: %2$d. Файлы вложений, Send и статус архивации не включаются.</string>
+    <string name="bw_json_reason_invalid">Недопустимые или повреждённые данные</string>
+    <string name="bw_json_reason_unknown">Неизвестное поле; невозможно сохранить</string>
+    <string name="bw_json_reason_type">Неподдерживаемый тип элемента</string>
+    <string name="bw_json_reason_value">Невозможно полностью сохранить это значение</string>
+    <string name="bw_json_reason_limit">Превышен лимит файла или обработки</string>
+    <string name="bw_json_reason_organization">Содержимое организаций и коллекций не поддерживается</string>
+    <string name="bw_json_reason_attachments">Файлы вложений нужно переносить отдельно</string>
+    <string name="bw_json_reason_archived">Этот формат не сохраняет статус архивации</string>
+    <string name="bw_json_reason_destination">Этот источник или получатель не поддерживается</string>
+    <string name="bw_json_reason_pending">Завершите ожидающие изменения перед экспортом учётной записи</string>
+    <string name="bw_json_reason_unavailable">Нужные исходные данные или ключ недоступны</string>
+    <string name="bw_json_item">Элемент %1$d</string>
+    <string name="bw_json_plain_warning">Незашифрованный JSON содержит читаемые пароли и закрытые ключи. Храните файл в безопасном месте.</string>
+</resources>

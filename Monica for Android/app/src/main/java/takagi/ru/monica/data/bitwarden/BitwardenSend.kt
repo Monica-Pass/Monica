@@ -1,11 +1,13 @@
 package takagi.ru.monica.data.bitwarden
 
+import kotlinx.serialization.Serializable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
+@Serializable
 @Entity(
     tableName = "bitwarden_sends",
     indices = [
@@ -108,7 +110,19 @@ data class BitwardenSend(
      * 在服务器侧确认收到后清零。
      */
     @ColumnInfo(name = "is_dirty", defaultValue = "0")
-    val isDirty: Boolean = false
+    val isDirty: Boolean = false,
+
+    @ColumnInfo(name = "auth_type")
+    val authType: Int? = null,
+
+    @ColumnInfo(name = "recipient_emails")
+    val recipientEmails: String? = null,
+
+    @ColumnInfo(name = "encrypted_cache")
+    val encryptedCache: String? = null,
+
+    @ColumnInfo(name = "cache_version", defaultValue = "0")
+    val cacheVersion: Int = 0
 ) {
     companion object {
         const val TYPE_TEXT = 0

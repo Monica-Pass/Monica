@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bw_json_title">JSON Bitwarden</string>
+    <string name="bw_json_encrypted_title">JSON Bitwarden szyfrowany hasłem</string>
+    <string name="bw_json_description">Standardowy JSON lub JSON szyfrowany hasłem dla loginów, notatek, kart, tożsamości i kluczy SSH.</string>
+    <string name="bw_json_boundary">Import tylko do lokalnego sejfu. Eksport z lokalnego sejfu lub jednego osobistego konta Bitwarden. Pliki załączników, Send i stan archiwizacji nie są uwzględniane. Nieobsługiwana zawartość blokuje cały transfer; sprawdź każdy zgłoszony element.</string>
+    <string name="bw_json_import_hint">Wybierz standardowy lub szyfrowany hasłem plik JSON Bitwarden.</string>
+    <string name="bw_json_file_password">Hasło pliku</string>
+    <string name="bw_json_check">Sprawdź plik</string>
+    <string name="bw_json_review">Sprawdź import JSON</string>
+    <string name="bw_json_counts">Elementy: %1$d · Foldery: %2$d</string>
+    <string name="bw_json_blocked">Cały transfer został zablokowany. Rozwiąż wszystkie poniższe problemy przed ponowną próbą.</string>
+    <string name="bw_json_ready">Plik można zaimportować. Potwierdź, aby dodać wszystkie elementy do lokalnego sejfu.</string>
+    <string name="bw_json_export_success">Wyeksportowano %1$d elementów i %2$d folderów. Pliki załączników, Send i stan archiwizacji nie są uwzględniane.</string>
+    <string name="bw_json_reason_invalid">Nieprawidłowe lub uszkodzone dane</string>
+    <string name="bw_json_reason_unknown">Nieznane pole; nie można go zachować</string>
+    <string name="bw_json_reason_type">Nieobsługiwany typ elementu</string>
+    <string name="bw_json_reason_value">Nie można w pełni zachować tej wartości</string>
+    <string name="bw_json_reason_limit">Przekroczono limit pliku lub przetwarzania</string>
+    <string name="bw_json_reason_organization">Zawartość organizacji i kolekcji nie jest obsługiwana</string>
+    <string name="bw_json_reason_attachments">Pliki załączników wymagają osobnego transferu</string>
+    <string name="bw_json_reason_archived">Ten format nie zachowuje stanu archiwizacji</string>
+    <string name="bw_json_reason_destination">To źródło lub miejsce docelowe nie jest obsługiwane</string>
+    <string name="bw_json_reason_pending">Dokończ oczekujące zmiany przed eksportem konta</string>
+    <string name="bw_json_reason_unavailable">Wymagane dane źródłowe lub klucz są niedostępne</string>
+    <string name="bw_json_item">Element %1$d</string>
+    <string name="bw_json_plain_warning">Nieszyfrowany JSON zawiera czytelne hasła i klucze prywatne. Przechowuj plik bezpiecznie.</string>
+</resources>

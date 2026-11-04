@@ -74,6 +74,7 @@ class BitwardenOrganizationSyncTest {
             assertEquals(listOf("collection-a", "collection-b"), uploaded.collectionIds)
             assertEquals(remote.getValue("team-login").key, uploaded.key)
             assertEquals("updated-team-password", BitwardenCrypto.decryptToString(requireNotNull(uploaded.login?.password), itemKey))
+            assertEquals(listOf("team-password"), BitwardenPasswordHistory.decode(uploaded.passwordHistory, itemKey).map { it.password })
             assertNotNull(runCatching { BitwardenCrypto.decryptToString(requireNotNull(uploaded.login?.password), userKey) }.exceptionOrNull())
             assertEquals("Updated team note", BitwardenCrypto.decryptToString(updates.getValue("note").name, orgKey))
 
@@ -113,11 +114,21 @@ class BitwardenOrganizationSyncTest {
 
     private suspend fun scenario(block: suspend Fixture.() -> Unit) {
         val unlocked = SessionManager.isUnlocked.value
+        val mdkCache = SecurityManager::class.java.getDeclaredField("processCachedMdk").apply { isAccessible = true }
+        val originalMdk = mdkCache.get(null)
+        val syntheticMdk = ByteArray(32).also { java.security.SecureRandom().nextBytes(it) }
+        mdkCache.set(null, syntheticMdk)
         SessionManager.markUnlocked()
-        MockWebServer().use { server ->
-            val fixture = Fixture(server)
-            try { fixture.initialize(); fixture.block() }
-            finally { fixture.close(); if (!unlocked) SessionManager.markLocked() }
+        try {
+            MockWebServer().use { server ->
+                val fixture = Fixture(server)
+                try { fixture.initialize(); fixture.block() }
+                finally { fixture.close() }
+            }
+        } finally {
+            if (!unlocked) SessionManager.markLocked()
+            mdkCache.set(null, originalMdk)
+            syntheticMdk.fill(0)
         }
     }
 
@@ -137,6 +148,10 @@ class BitwardenOrganizationSyncTest {
         private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
         lateinit var vault: BitwardenVault
         lateinit var profile: ProfileResponse
+        private val repository by lazy { takagi.ru.monica.bitwarden.repository.BitwardenRepository.getInstance(context) }
+        @Suppress("UNCHECKED_CAST")
+        private fun <T> cache(name: String): MutableMap<Long, T> =
+            repository.javaClass.getDeclaredField(name).apply { isAccessible = true }.get(repository) as MutableMap<Long, T>
         fun api() = BitwardenApiFactory.createVaultApi(vault.apiUrl)
 
         suspend fun initialize() {
@@ -145,6 +160,10 @@ class BitwardenOrganizationSyncTest {
             val id = db.bitwardenVaultDao().insert(BitwardenVault(email = "$uuid@example.invalid", userId = uuid, accountKey = uuid,
                 serverUrl = endpoint, identityUrl = endpoint, apiUrl = endpoint))
             vault = requireNotNull(db.bitwardenVaultDao().getVaultById(id))
+            // Imported login history requires the same authenticated MDK and vault session as production.
+            cache<SymmetricCryptoKey>("symmetricKeyCache")[id] = userKey
+            cache<String>("accessTokenCache")[id] = token
+            assertTrue(security.encryptData("synthetic-history-session-check").startsWith("MDK|"))
             val rsa = KeyPairGenerator.getInstance("RSA").apply { initialize(2048) }.generateKeyPair()
             fun org(id: String, key: SymmetricCryptoKey, type: Int): OrganizationResponse {
                 val digest = if (type == 3) "SHA-256" else "SHA-1"
@@ -198,7 +217,8 @@ class BitwardenOrganizationSyncTest {
                         }
                         updates[id] = update
                         val next = source.copy(name = update.name, notes = update.notes, login = update.login,
-                            card = update.card, identity = update.identity, fields = update.fields, revisionDate = revision2)
+                            card = update.card, identity = update.identity, fields = update.fields,
+                            passwordHistory = update.passwordHistory, revisionDate = revision2)
                         remote[id] = next
                         return ok(next)
                     }
@@ -210,6 +230,8 @@ class BitwardenOrganizationSyncTest {
         suspend fun sync() = service.fullSync(vault, token, userKey)
         suspend fun close() {
             if (::vault.isInitialized) {
+                cache<SymmetricCryptoKey>("symmetricKeyCache").remove(vault.id)
+                cache<String>("accessTokenCache").remove(vault.id)
                 db.passwordEntryDao().deleteAllByBitwardenVaultId(vault.id)
                 db.secureItemDao().deleteAllByBitwardenVaultId(vault.id)
                 db.passkeyDao().deleteAllByBitwardenVaultId(vault.id)

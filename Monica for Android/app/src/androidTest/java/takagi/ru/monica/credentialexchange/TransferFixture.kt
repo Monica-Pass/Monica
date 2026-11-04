@@ -119,11 +119,13 @@ internal class TransferFixture {
 
     suspend fun bitwarden(unlocked: Boolean = true): ImportDestination {
         val email = "${UUID.randomUUID()}@example.invalid"
+        val remoteUserId = UUID.randomUUID().toString()
+        remote.registerAccount(remoteUserId, email)
         fun stored(value: String) = Base64.getEncoder().encodeToString(value.toByteArray())
         fun storedBytes(value: ByteArray) = stored(Base64.getEncoder().encodeToString(value))
         val master = BitwardenCrypto.deriveMasterKeyPbkdf2(unlockPassword, email, 100)
         val endpoint = server.url("/").toString()
-        val id = db.bitwardenVaultDao().insert(BitwardenVault(email = email, canonicalEmail = email,
+        val id = db.bitwardenVaultDao().insert(BitwardenVault(email = email, canonicalEmail = email, userId = remoteUserId,
             accountKey = "$prefix-${UUID.randomUUID()}", serverUrl = endpoint, identityUrl = endpoint, apiUrl = endpoint,
             encryptedMasterKey = storedBytes(master), encryptedEncKey = storedBytes(vaultKey.encKey),
             encryptedMacKey = storedBytes(vaultKey.macKey), encryptedAccessToken = stored(accessToken),
@@ -211,6 +213,13 @@ internal class TransferFixture {
     class Remote : Dispatcher() {
         val created = mutableListOf<JSONObject>()
         val folders = mutableListOf<JSONObject>()
+        private val profiles = linkedMapOf<String, JSONObject>()
+        val profileReads = java.util.concurrent.atomic.AtomicInteger()
+        fun registerAccount(userId: String, email: String) = synchronized(created) {
+            check(UUID.fromString(userId).toString() == userId)
+            profiles[userId] = JSONObject().put("id", userId).put("email", email)
+        }
+        private fun currentProfile(): JSONObject = JSONObject(requireNotNull(profiles.values.firstOrNull()).toString())
         @Volatile var rejectFolderRenameId: String? = null
         val attachmentCreates = mutableListOf<JSONObject>()
         val attachmentUploads = mutableMapOf<String, ByteArray>()
@@ -218,9 +227,14 @@ internal class TransferFixture {
         @Volatile var rejectAttachments = false
         override fun dispatch(request: RecordedRequest): MockResponse = synchronized(created) {
             when {
+                request.method == "GET" && request.path == "/accounts/profile" -> {
+                    profileReads.incrementAndGet()
+                    check(request.getHeader("Authorization") == "Bearer synthetic-transfer-test-token")
+                    MockResponse().setBody(currentProfile().toString())
+                }
                 request.method == "GET" && request.path.orEmpty().startsWith("/sync") -> MockResponse().setBody(
                     JSONObject().put("ciphers", JSONArray(created.map { JSONObject(it.toString()) })).put("folders", JSONArray(folders.map { JSONObject(it.toString()) }))
-                        .put("profile", JSONObject().put("id", "synthetic").put("email", "fixture@example.invalid")).toString())
+                        .put("profile", currentProfile()).toString())
                 request.method == "POST" && request.path == "/folders" -> {
                     val folder = JSONObject(request.body.readUtf8()).put("id", UUID.randomUUID().toString()).put("revisionDate", "2026-10-21T00:00:00Z")
                     folders += folder
@@ -238,6 +252,8 @@ internal class TransferFixture {
                 request.method == "POST" && request.path == "/ciphers" -> {
                     val cipher = JSONObject(request.body.readUtf8()).put("id", UUID.randomUUID().toString())
                         .put("revisionDate", "2026-09-16T00:00:00.000Z").put("creationDate", "2026-09-16T00:00:00.000Z")
+                    val encryptedFor = cipher.optString("encryptedFor")
+                    check(profiles.containsKey(encryptedFor)) { "Parent request must bind a registered authenticated UUID" }
                     created += cipher
                     MockResponse().setBody(cipher.toString())
                 }

@@ -113,7 +113,7 @@
     <string name="legacy_ui_sync_wifi_only_hint">Nur bei bestehender WLAN-Verbindung automatisch synchronisieren</string>
     <string name="legacy_ui_never_lock">Nie sperren</string>
     <string name="legacy_ui_never_lock_hint">Bitwarden ohne erneute Passworteingabe entsperrt lassen</string>
-    <string name="legacy_ui_never_lock_warning">⚠️ Nur in einer sicheren Umgebung verwenden</string>
+    <string name="legacy_ui_never_lock_warning">Nur in einer sicheren Umgebung verwenden</string>
     <string name="legacy_ui_bitwarden_integration">Bitwarden-Integration</string>
     <string name="legacy_ui_supported_servers">Unterstützte Server:</string>
     <string name="legacy_ui_bitwarden_servers">• Offizielle Bitwarden-Server\n• Vaultwarden (selbst gehostet)\n• Weitere mit der Bitwarden-API kompatible Dienste</string>

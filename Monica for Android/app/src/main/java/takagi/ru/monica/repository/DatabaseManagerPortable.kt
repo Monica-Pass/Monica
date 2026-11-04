@@ -122,7 +122,10 @@ internal suspend fun managerTransferPortable(repo: DatabaseManagerRepository, so
     }
     if (item != null && source.database.keepassId != null) {
         val native = repo.keepass.openNativeBrowser(source.database.databaseId).getOrThrow().entries.single { it.identity.entryUuid.toString() == row.id }
-        val portableFields = repo.kdbx.portableSecureItemFields(item)
+        // Older writers emitted these literal defaults; missing fields now carry the
+        // same meaning. Every other native field still requires an exact match.
+        val portableFields = mapOf("MonicaImagePaths" to "", "MonicaIsFavorite" to "false") +
+            repo.kdbx.portableSecureItemFields(item)
         check(native.fields.all { it.name == "MonicaSecureItemId" || portableFields[it.name] == it.rawValue }) {
             "This entry has native fields that cannot be transferred losslessly. Choose a KeePass destination."
         }

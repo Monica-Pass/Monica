@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_settings_security">Bezpieczeństwo</string>
+    <string name="bitwarden_settings_queue_hint">Zobacz oczekujące zmiany i problemy synchronizacji</string>
+    <string name="bitwarden_account_web_settings_hint">Zarządzaj hasłem głównym, logowaniem dwuetapowym i subskrypcją w witrynie internetowej</string>
+    <string name="bitwarden_settings_select_account">Ustaw jako bieżące konto</string>
+    <string name="bitwarden_settings_account_management">Zarządzanie kontem</string>
+    <string name="bitwarden_queue_help">Pokazuje lokalne zmiany oczekujące na synchronizację i wyniki ostatniej próby. Pusta lista nie potwierdza, że dane są zsynchronizowane z serwerem.</string>
+    <string name="bitwarden_queue_empty_local">Brak lokalnych zmian oczekujących na synchronizację.</string>
+    <string name="bitwarden_queue_locked">Odblokuj to konto, aby zobaczyć oczekujące elementy.</string>
+    <string name="bitwarden_queue_loading_error">Nie udało się odczytać oczekujących elementów. Otwórz tę stronę ponownie, aby spróbować jeszcze raz.</string>
+    <string name="bitwarden_queue_awaiting_confirmation">Oczekiwanie na potwierdzenie serwera</string>
+    <string name="bitwarden_queue_idle">Brak uruchomionego zadania synchronizacji</string>
+</resources>

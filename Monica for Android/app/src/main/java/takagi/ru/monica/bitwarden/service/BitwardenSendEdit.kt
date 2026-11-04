@@ -1,14 +1,17 @@
 package takagi.ru.monica.bitwarden.service
 
 import java.time.Instant
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonPrimitive
 
+@Serializable
 enum class SendPasswordAction { KEEP, REPLACE, REMOVE }
 
+@Serializable
 data class BitwardenSendDraft(
     val title: String,
     val text: String,
@@ -20,9 +23,12 @@ data class BitwardenSendDraft(
     val hiddenText: Boolean = false,
     val disabled: Boolean = false,
     val deletionMillis: Long,
-    val expirationMillis: Long? = null
+    val expirationMillis: Long? = null,
+    val authAction: SendAuthAction = SendAuthAction.KEEP,
+    val recipientEmails: List<String> = emptyList()
 ) {
     fun validate(now: Long, isText: Boolean) {
+        BitwardenSendAuth.validate(this)
         require(title.isNotBlank()) { "Send title is required" }
         require(!isText || text.isNotEmpty()) { "Send text is required" }
         require(maxAccessCount == null || maxAccessCount > 0) { "Invalid Send access limit" }
@@ -50,9 +56,20 @@ internal object BitwardenSendEdit {
         set("name", JsonPrimitive(name))
         set("notes", notes?.let(::JsonPrimitive) ?: JsonNull)
         set("password", passwordHash?.let(::JsonPrimitive) ?: JsonNull)
-        if (draft.passwordAction == SendPasswordAction.REPLACE) {
-            set("authType", JsonPrimitive(1))
-            set("emails", JsonNull)
+        // Removing a password uses the dedicated endpoint after this settings PUT is verified.
+        // Keep the current auth fields here so the PUT cannot prematurely remove protection.
+        val updateAuth = if (draft.passwordAction == SendPasswordAction.REMOVE) SendAuthAction.KEEP
+            else BitwardenSendAuth.requested(draft, creating = false)
+        when (val auth = updateAuth) {
+            SendAuthAction.KEEP -> Unit
+            SendAuthAction.EMAIL -> {
+                set("authType", JsonPrimitive(0))
+                set("emails", JsonPrimitive(BitwardenSendAuth.recipients(draft.recipientEmails).joinToString(",")))
+            }
+            else -> {
+                set("authType", JsonPrimitive(requireNotNull(auth.wireValue)))
+                set("emails", JsonNull)
+            }
         }
         set("maxAccessCount", draft.maxAccessCount?.let(::JsonPrimitive) ?: JsonNull)
         set("hideEmail", JsonPrimitive(draft.hideEmail))

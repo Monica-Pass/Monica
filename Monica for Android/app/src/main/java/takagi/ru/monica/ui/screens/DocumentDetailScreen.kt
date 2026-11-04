@@ -193,6 +193,8 @@ fun DocumentDetailScreen(
     val cardFaceImageAllowed = attachmentBitwardenVault?.let {
         BitwardenVaultPremiumStore.isPremium(context, it.id)
     } ?: true
+    val archiveAction = takagi.ru.monica.ui.components.rememberBitwardenArchiveAction(
+        if (embeddedAccess == null) documentItem else null) { documentItem = it }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -229,7 +231,7 @@ fun DocumentDetailScreen(
                         onClick = { showDeleteDialog = true },
                         tint = MaterialTheme.colorScheme.error
                     )
-                ),
+                ) + listOfNotNull(archiveAction),
                 containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                 contentColor = MaterialTheme.colorScheme.onTertiaryContainer
             )

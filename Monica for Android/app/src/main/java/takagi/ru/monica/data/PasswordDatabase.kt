@@ -38,6 +38,7 @@ import takagi.ru.monica.keepass.KeePassPendingChangeDao
         BitwardenPendingOperation::class,
         BitwardenSyncRawEntryRecord::class,
         BitwardenCipherSource::class,
+        BitwardenPasswordHistoryState::class,
         // 附件（可挂在 PasswordEntry 或 SecureItem 上，跨来源统一元数据）
         Attachment::class,
         // MDBX 数据库格式
@@ -47,7 +48,7 @@ import takagi.ru.monica.keepass.KeePassPendingChangeDao
         // KeePass entry-level pending changes
         KeePassPendingChange::class
     ],
-    version = 81,
+    version = 83,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -79,6 +80,7 @@ abstract class PasswordDatabase : RoomDatabase() {
     abstract fun bitwardenPendingOperationDao(): BitwardenPendingOperationDao
     abstract fun bitwardenSyncRawEntryRecordDao(): BitwardenSyncRawEntryRecordDao
     abstract fun bitwardenCipherSourceDao(): BitwardenCipherSourceDao
+    abstract fun bitwardenPasswordHistoryStateDao(): BitwardenPasswordHistoryStateDao
 
     // KeePass 增量变更队列
     abstract fun keepassPendingChangeDao(): KeePassPendingChangeDao
@@ -90,6 +92,33 @@ abstract class PasswordDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: PasswordDatabase? = null
         
+        internal val MIGRATION_82_83 = object : androidx.room.migration.Migration(82, 83) {
+            override fun migrate(database: androidx.sqlite.db.SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE bitwarden_sends ADD COLUMN auth_type INTEGER")
+                database.execSQL("ALTER TABLE bitwarden_sends ADD COLUMN recipient_emails TEXT")
+                database.execSQL("ALTER TABLE bitwarden_sends ADD COLUMN encrypted_cache TEXT")
+                database.execSQL("ALTER TABLE bitwarden_sends ADD COLUMN cache_version INTEGER NOT NULL DEFAULT 0")
+                // Encrypt existing cache rows only after authorized app and vault unlock.
+            }
+        }
+
+        internal val MIGRATION_81_82 = object : androidx.room.migration.Migration(81, 82) {
+            override fun migrate(database: androidx.sqlite.db.SupportSQLiteDatabase) {
+                database.execSQL("""
+                    CREATE TABLE IF NOT EXISTS bitwarden_password_history_states (
+                        entry_id INTEGER NOT NULL PRIMARY KEY, vault_id INTEGER NOT NULL, cipher_id TEXT NOT NULL,
+                        server_revision TEXT NOT NULL, payload_mdk TEXT NOT NULL, local_version INTEGER NOT NULL,
+                        ack_version INTEGER NOT NULL,
+                        FOREIGN KEY(entry_id) REFERENCES password_entries(id) ON DELETE CASCADE
+                    )
+                """.trimIndent())
+                database.execSQL("CREATE INDEX IF NOT EXISTS index_bitwarden_password_history_states_vault_id_cipher_id ON bitwarden_password_history_states(vault_id,cipher_id)")
+                database.execSQL("ALTER TABLE secure_items ADD COLUMN isArchived INTEGER NOT NULL DEFAULT 0")
+                database.execSQL("ALTER TABLE secure_items ADD COLUMN archivedAt INTEGER DEFAULT NULL")
+                database.execSQL("ALTER TABLE secure_items ADD COLUMN bitwarden_archive_intent INTEGER DEFAULT NULL")
+            }
+        }
+
         private val MIGRATION_80_81 = object : androidx.room.migration.Migration(80, 81) {
             override fun migrate(database: androidx.sqlite.db.SupportSQLiteDatabase) {
                 database.execSQL("""
@@ -2469,7 +2498,9 @@ abstract class PasswordDatabase : RoomDatabase() {
                         MIGRATION_77_78,   // Monica-owned KeePass key-file copies
                         MIGRATION_78_79,   // Explicit multi-password project identity
                         MIGRATION_79_80,   // Preserve explicit WebAuthn backup flags
-                        MIGRATION_80_81    // Complete encrypted Bitwarden source documents
+                        MIGRATION_80_81,   // Complete encrypted Bitwarden source documents
+                        MIGRATION_81_82,   // Native Bitwarden history and all-type archive
+                        MIGRATION_82_83    // Authenticated encrypted Send cache
                     )
                     // 启用多进程失效通知：IME 跑在 :ime 独立进程，主进程需要
                     // 感知 IME 进程对数据库的修改（例如最近填充时间戳等）。

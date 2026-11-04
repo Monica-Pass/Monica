@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bw_json_title">Bitwarden JSON</string>
+    <string name="bw_json_encrypted_title">비밀번호로 암호화한 Bitwarden JSON</string>
+    <string name="bw_json_description">로그인, 메모, 카드, 신원 정보 및 SSH 키용 표준 JSON 또는 비밀번호 암호화 JSON입니다.</string>
+    <string name="bw_json_boundary">로컬 보관함으로만 가져올 수 있습니다. 로컬 보관함 또는 개인 Bitwarden 계정 하나에서 내보낼 수 있습니다. 첨부 파일, Send 및 보관 상태는 포함되지 않습니다. 지원하지 않는 내용이 있으면 전체 전송이 차단됩니다. 보고된 항목을 모두 확인하세요.</string>
+    <string name="bw_json_import_hint">표준 또는 비밀번호로 암호화한 Bitwarden JSON 파일을 선택하세요.</string>
+    <string name="bw_json_file_password">파일 비밀번호</string>
+    <string name="bw_json_check">파일 확인</string>
+    <string name="bw_json_review">JSON 가져오기 검토</string>
+    <string name="bw_json_counts">항목 %1$d개 · 폴더 %2$d개</string>
+    <string name="bw_json_blocked">전체 전송이 차단되었습니다. 아래 항목을 모두 해결한 후 다시 시도하세요.</string>
+    <string name="bw_json_ready">파일을 가져올 수 있습니다. 확인하면 모든 항목을 로컬 보관함에 추가합니다.</string>
+    <string name="bw_json_export_success">항목 %1$d개와 폴더 %2$d개를 내보냈습니다. 첨부 파일, Send 및 보관 상태는 포함되지 않습니다.</string>
+    <string name="bw_json_reason_invalid">잘못되었거나 손상된 데이터</string>
+    <string name="bw_json_reason_unknown">알 수 없는 필드이므로 보존할 수 없습니다</string>
+    <string name="bw_json_reason_type">지원하지 않는 항목 유형</string>
+    <string name="bw_json_reason_value">이 값을 완전히 보존할 수 없습니다</string>
+    <string name="bw_json_reason_limit">파일 또는 처리 한도를 초과했습니다</string>
+    <string name="bw_json_reason_organization">조직 및 컬렉션 내용은 지원하지 않습니다</string>
+    <string name="bw_json_reason_attachments">첨부 파일은 별도로 전송해야 합니다</string>
+    <string name="bw_json_reason_archived">이 형식은 보관 상태를 보존할 수 없습니다</string>
+    <string name="bw_json_reason_destination">지원하지 않는 원본 또는 대상입니다</string>
+    <string name="bw_json_reason_pending">계정의 보류 중인 변경을 완료한 후 내보내세요</string>
+    <string name="bw_json_reason_unavailable">필요한 원본 데이터 또는 키를 사용할 수 없습니다</string>
+    <string name="bw_json_item">항목 %1$d</string>
+    <string name="bw_json_plain_warning">암호화되지 않은 JSON에는 읽을 수 있는 비밀번호와 개인 키가 포함됩니다. 파일을 안전하게 보관하세요.</string>
+</resources>
