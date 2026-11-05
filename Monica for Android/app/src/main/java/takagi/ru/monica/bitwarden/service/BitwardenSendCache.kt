@@ -58,7 +58,7 @@ class BitwardenSendCache(context: Context) : BitwardenSendDao {
 
     private fun seal(send: BitwardenSend, session: Session): BitwardenSend {
         require(send.vaultId == session.vault.id && send.bitwardenSendId.isNotBlank())
-        require(BitwardenSendScope.shareMatches(send, session.vault.serverUrl))
+        require(BitwardenSendScope.shareMatches(send, session.vault.serverUrl, bitwardenSendUrlPrefix(session.vault)))
         val content = send.copy(id = 0, encryptedCache = null, cacheVersion = 0)
         val encoded = json.encodeToString(Envelope(account = BitwardenSendAccountIdentity.from(session.vault),
             vaultId = send.vaultId, sendId = send.bitwardenSendId, send = content))
@@ -76,14 +76,14 @@ class BitwardenSendCache(context: Context) : BitwardenSendDao {
         check(envelope.version == 1 && envelope.account == BitwardenSendAccountIdentity.from(session.vault) && envelope.vaultId == row.vaultId &&
             envelope.sendId == row.bitwardenSendId && envelope.send.vaultId == row.vaultId &&
             envelope.send.bitwardenSendId == row.bitwardenSendId &&
-            BitwardenSendScope.shareMatches(envelope.send, session.vault.serverUrl))
+            BitwardenSendScope.shareMatches(envelope.send, session.vault.serverUrl, bitwardenSendUrlPrefix(session.vault)))
         return envelope.send.copy(id = row.id, createdAt = row.createdAt, updatedAt = row.updatedAt,
             lastSyncedAt = row.lastSyncedAt, isDirty = row.isDirty, encryptedCache = null, cacheVersion = 0)
     }
 
     private fun recognizedLegacy(row: BitwardenSend, session: Session): Boolean = runCatching {
         row.cacheVersion == 0 && row.encryptedCache == null && row.bitwardenSendId.isNotBlank() &&
-            row.name.isNotBlank() && BitwardenSendScope.shareMatches(row, session.vault.serverUrl) &&
+            row.name.isNotBlank() && BitwardenSendScope.shareMatches(row, session.vault.serverUrl, bitwardenSendUrlPrefix(session.vault)) &&
             (row.isTextType && row.textContent != null || row.isFileType && !row.fileName.isNullOrBlank())
     }.getOrDefault(false)
 
@@ -175,6 +175,88 @@ class BitwardenSendCache(context: Context) : BitwardenSendDao {
             raw.getBySendId(send.vaultId, send.bitwardenSendId)?.let { verifyExisting(it, session) }
             raw.upsert(stored).also { current(session) }
         }
+    }
+
+    /** Prepared outside the account gate; only a current remote sync may replace an older configuration's cache. */
+    internal suspend fun upsertCaptured(send: BitwardenSend, expectedVault: BitwardenVault,
+        requireCurrent: () -> Unit, withPublication: suspend (suspend () -> Unit) -> Unit): Long = withContext(Dispatchers.IO) {
+        requireCurrent()
+        val access = session(send.vaultId)
+        requireCapturedOwner(access.vault, expectedVault)
+        val previous = raw.getBySendId(send.vaultId, send.bitwardenSendId)
+        previous?.let { verifyRemoteReplacement(it, access) }
+        val replacement = seal(send.copy(id = previous?.id ?: 0L), access)
+        current(access)
+        requireCurrent()
+        var result = 0L
+        withPublication {
+            database.withTransaction {
+                current(access)
+                requireCurrent()
+                check(raw.getBySendId(send.vaultId, send.bitwardenSendId) == previous) { "Send changed before publication" }
+                result = raw.upsert(replacement)
+                current(access)
+                requireCurrent()
+            }
+        }
+        result
+    }
+
+    internal suspend fun deleteNotInCaptured(vault: BitwardenVault, keepIds: List<String>, syncStartedAtMs: Long,
+        requireCurrent: () -> Unit, withPublication: suspend (suspend () -> Unit) -> Unit) = withContext(Dispatchers.IO) {
+        requireCurrent()
+        val access = session(vault.id)
+        requireCapturedOwner(access.vault, vault)
+        val candidates = raw.getSendsByVault(vault.id).filter {
+            it.bitwardenSendId !in keepIds && !it.isDirty && it.createdAt < syncStartedAtMs
+        }.filter { row ->
+            try { verifyRemoteReplacement(row, access); true }
+            catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+            catch (_: Exception) { current(access); requireCurrent(); false }
+        }
+        current(access)
+        requireCurrent()
+        withPublication {
+            database.withTransaction {
+                current(access)
+                requireCurrent()
+                candidates.forEach { row ->
+                    // A local edit or a newer sync always wins over the captured deletion candidates.
+                    if (raw.getBySendId(vault.id, row.bitwardenSendId) == row) raw.delete(row)
+                }
+                current(access)
+                requireCurrent()
+            }
+        }
+    }
+
+    private fun requireCapturedOwner(actual: BitwardenVault, expected: BitwardenVault) {
+        require(actual.id == expected.id && actual.canonicalEmail == expected.canonicalEmail &&
+            (expected.userId == null || actual.userId == expected.userId))
+        val current = BitwardenSendAccountIdentity.from(actual)
+        // Profile sync can promote a previously unknown user ID without changing the captured transport lease.
+        require(current.copy(accountKey = expected.accountKey, userId = expected.userId) ==
+            BitwardenSendAccountIdentity.from(expected))
+    }
+
+    private fun verifyRemoteReplacement(row: BitwardenSend, access: Session) {
+        if (row.cacheVersion == 0) { verifyExisting(row, access); return }
+        check(row.cacheVersion == 1 && row.encryptedCache?.startsWith("MDK|") == true)
+        val envelope = json.decodeFromString<Envelope>(security.decryptData(requireNotNull(row.encryptedCache)))
+        val old = envelope.account
+        val latest = BitwardenSendAccountIdentity.from(access.vault)
+        check(envelope.version == 1 && envelope.vaultId == row.vaultId && envelope.sendId == row.bitwardenSendId &&
+            envelope.send.vaultId == row.vaultId && envelope.send.bitwardenSendId == row.bitwardenSendId &&
+            takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolver.validateEndpoint(old.serverUrl,
+                takagi.ru.monica.bitwarden.api.BitwardenEnvironmentField.BASE).value ==
+                takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolver.validateEndpoint(latest.serverUrl,
+                    takagi.ru.monica.bitwarden.api.BitwardenEnvironmentField.BASE).value &&
+            old.canonicalEmail == latest.canonicalEmail &&
+            (old.userId == null || old.userId == latest.userId))
+        val oldVault = BitwardenVault(id = row.vaultId, email = old.canonicalEmail, serverUrl = old.serverUrl,
+            apiUrl = old.apiUrl, identityUrl = old.identityUrl, environmentPreset = old.environmentPreset,
+            webVaultUrl = old.webVaultUrl, notificationsUrl = old.notificationsUrl)
+        check(BitwardenSendScope.shareMatches(envelope.send, old.serverUrl, bitwardenSendUrlPrefix(oldVault)))
     }
     override suspend fun upsertAll(sends: List<BitwardenSend>) {
         // Prepare each encrypted replacement before one atomic batch write.

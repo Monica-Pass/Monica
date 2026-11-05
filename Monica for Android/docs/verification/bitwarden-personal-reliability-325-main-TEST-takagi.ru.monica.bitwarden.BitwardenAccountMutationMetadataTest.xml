@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.BitwardenAccountMutationMetadataTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-05T02:02:32" hostname="JOYIN" time="0.009">
+  <properties/>
+  <testcase name="foreignAccountStampAndEmailAreRejected" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationMetadataTest" time="0.007"/>
+  <testcase name="alternateUnlockSaltIsNeverSilentlyReplacedByEmail" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationMetadataTest" time="0.001"/>
+  <testcase name="absentHintDiffersFromExplicitClear" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationMetadataTest" time="0.0"/>
+  <testcase name="nonStringHintCannotBeInterpretedAsUserText" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationMetadataTest" time="0.0"/>
+  <testcase name="organizationAndUnknownKeysCannotBypassTheirPolicies" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationMetadataTest" time="0.0"/>
+  <testcase name="duplicateCasingCannotReplaceAccountIdentity" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationMetadataTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

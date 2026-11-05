@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-11-05T02:07:21" hostname="JOYIN" time="0.084">
+  <properties/>
+  <testcase name="staleEditorCannotReplaceAnAlreadyRegisteredAuthentication" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.034"/>
+  <testcase name="lateLoginCompletionCannotPublishAfterLogout" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.008"/>
+  <testcase name="rememberedTokenIsIsolatedBetweenServersAndAccounts" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.002"/>
+  <testcase name="changedStampIsComparedExactly" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.001"/>
+  <testcase name="staleTokenCannotRevokeTheNewlyAuthenticatedSession" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.014"/>
+  <testcase name="unavailableSealedStoreDoesNotClaimRememberWasSaved" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.001"/>
+  <testcase name="tokenContentsAreOpaqueAndNotTrimmedOrLoggedIntoKeys" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.001"/>
+  <testcase name="committedRevocationPersistsCredentialRemovalAfterItsCallerIsCancelled" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.01"/>
+  <testcase name="missingOrOversizedResponseCannotKeepAnOldRememberedToken" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.001"/>
+  <testcase name="clearingOneAccountDoesNotClearAnotherRememberedAccount" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.001"/>
+  <testcase name="revokingAnotherAccountDoesNotCancelThisLogin" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.005"/>
+  <testcase name="firstStampObservationIsNotAChangedSession" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.0"/>
+  <testcase name="choiceDefaultsToNoRememberAndRemovesPreviousToken" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.0"/>
+  <testcase name="scopeUsesFramingRatherThanAmbiguousSeparators" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.001"/>
+  <testcase name="missingRemoteStampStopsApprovalWithoutPretendingItChanged" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.0"/>
+  <testcase name="replacingAnAttemptPublishesOnlyTheLatestAuthentication" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

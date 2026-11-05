@@ -176,6 +176,8 @@ class KeePassAttachmentReconcilerTest {
         }
 
         // This reconciler fixture has only KeePass owners, with no Bitwarden account bindings.
+        override fun resetRetiredBitwardenDownloads(vaultId: Long): Int = 0
+
         override fun observeBitwardenPendingMetadata(
             vaultId: Long,
             ids: List<Long>

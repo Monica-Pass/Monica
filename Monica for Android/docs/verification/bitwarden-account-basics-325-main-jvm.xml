@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites tests="62" failures="0" errors="0" skipped="0">
+  <testsuite name="takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-04T17:53:07" hostname="JOYIN" time="0.211">
+    <properties />
+    <testcase name="rejectsShortOrDuplicatedProtocolWordList" classname="takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest" time="0.04" />
+    <testcase name="rejectsMalformedOrMissingIdentityInsteadOfGeneratingANewOne" classname="takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest" time="0.003" />
+    <testcase name="packagedWordListMatchesEffOrderIncludingHyphenatedWords" classname="takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest" time="0.01" />
+    <testcase name="matchesOfficialSdkAccountFingerprintVector" classname="takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest" time="0.021" />
+    <testcase name="differentAccountAndDifferentPublicKeyHaveDifferentPhrases" classname="takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest" time="0.136" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-04T17:53:08" hostname="JOYIN" time="5.159">
+    <properties />
+    <testcase name="unsupportedKeyTypeAndShortRsaCannotCreateAnIdentity" classname="takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest" time="3.954" />
+    <testcase name="revokedCaptureCannotPublishAfterExpensiveKeyParsing" classname="takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest" time="0.157" />
+    <testcase name="bindsPublicIdentityToServerEmailUserIdAndSecurityStamp" classname="takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest" time="0.084" />
+    <testcase name="omittedProfileKeyPreservesOfflineIdentityButExplicitClearRemovesIt" classname="takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest" time="0.319" />
+    <testcase name="failedStorageDoesNotKeepAnOlderIdentity" classname="takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest" time="0.157" />
+    <testcase name="wrongWrappingKeyOrCorruptCacheCannotReturnAPublicIdentity" classname="takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest" time="0.12" />
+    <testcase name="malformedAuthenticatedPrivateKeyClearsOlderIdentity" classname="takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest" time="0.128" />
+    <testcase name="storesOnlySealedPublicIdentityAndReadsItAfterStoreRecreation" classname="takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest" time="0.239" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-04T17:53:13" hostname="JOYIN" time="1.941">
+    <properties />
+    <testcase name="deniedOrUnknownTeamEditPermissionAndDeletedSourcesRejectUpdates" classname="takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest" time="0.201" />
+    <testcase name="resolvesOrganizationThenItemKeyAndWipesOwnedKeys" classname="takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest" time="0.141" />
+    <testcase name="remoteOrganizationResolutionUsesAuthenticatedProfileAndDoesNotPersistKeys" classname="takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest" time="0.697" />
+    <testcase name="missingWrongAndTamperedKeysNeverFallBackToPersonalVault" classname="takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest" time="0.052" />
+    <testcase name="teamUpdatesPreserveOwnershipItemKeyCollectionsAndPasskeys" classname="takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest" time="0.211" />
+    <testcase name="parsesBothOfficialAndVaultwardenProfileCasing" classname="takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest" time="0.347" />
+    <testcase name="decryptsSha256AndLegacySha1OrganizationEnvelopes" classname="takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest" time="0.158" />
+    <testcase name="malformedOrganizationDoesNotHideAnotherReadableOrganization" classname="takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest" time="0.133" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-04T17:53:15" hostname="JOYIN" time="0.007">
+    <properties />
+    <testcase name="selfHostedVerificationIsBoundToTheExactPort" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest" time="0.002" />
+    <testcase name="rejectsDuplicatedVerificationParametersAndOversizedTokens" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest" time="0.002" />
+    <testcase name="normalizesEmailWithoutChangingTheToken" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest" time="0.001" />
+    <testcase name="pastedLinkCannotSelectAnotherServerOrAccount" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest" time="0.001" />
+    <testcase name="rejectsMissingLocalPartAndMultipleOrWhitespaceEmails" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest" time="0.0" />
+    <testcase name="acceptsOfficialFragmentVerificationLinkBoundToTheAccount" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest" time="0.0" />
+    <testcase name="webSettingsKeepTheAccountServerWithoutTransmittingCredentials" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest" time="0.001" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-11-04T17:53:15" hostname="JOYIN" time="0.075">
+    <properties />
+    <testcase name="lateLoginCompletionCannotPublishAfterLogout" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.024" />
+    <testcase name="rememberedTokenIsIsolatedBetweenServersAndAccounts" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.004" />
+    <testcase name="changedStampIsComparedExactly" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.002" />
+    <testcase name="staleTokenCannotRevokeTheNewlyAuthenticatedSession" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.013" />
+    <testcase name="unavailableSealedStoreDoesNotClaimRememberWasSaved" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.001" />
+    <testcase name="tokenContentsAreOpaqueAndNotTrimmedOrLoggedIntoKeys" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.001" />
+    <testcase name="committedRevocationPersistsCredentialRemovalAfterItsCallerIsCancelled" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.017" />
+    <testcase name="missingOrOversizedResponseCannotKeepAnOldRememberedToken" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.002" />
+    <testcase name="clearingOneAccountDoesNotClearAnotherRememberedAccount" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.001" />
+    <testcase name="revokingAnotherAccountDoesNotCancelThisLogin" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.004" />
+    <testcase name="firstStampObservationIsNotAChangedSession" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.0" />
+    <testcase name="choiceDefaultsToNoRememberAndRemovesPreviousToken" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.001" />
+    <testcase name="scopeUsesFramingRatherThanAmbiguousSeparators" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.0" />
+    <testcase name="missingRemoteStampStopsApprovalWithoutPretendingItChanged" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.0" />
+    <testcase name="replacingAnAttemptPublishesOnlyTheLatestAuthentication" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest" time="0.005" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-04T17:53:15" hostname="JOYIN" time="3.434">
+    <properties />
+    <testcase name="postsOnlyOfficialNewDeviceFieldsWithoutAuthorizationOrAnOrdinaryEmailRequest" classname="takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest" time="3.081" />
+    <testcase name="unsupportedServersNeverFallBackAndNeverExposeTheirBody" classname="takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest" time="0.073" />
+    <testcase name="rateLimitRetainsOnlyDelayAndFailureCategory" classname="takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest" time="0.056" />
+    <testcase name="cancellationPropagatesWithoutAReplacementRequest" classname="takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest" time="0.088" />
+    <testcase name="genericFailureNeverEchoesCredentials" classname="takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest" time="0.055" />
+    <testcase name="retryAfterAcceptsNumericAndHttpDateWithoutOverflow" classname="takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest" time="0.044" />
+    <testcase name="ordinaryEmailChallengeCannotCallNewDeviceResend" classname="takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest" time="0.037" />
+    <system-out />
+    <system-err>Nov 05, 2026 1:53:19 AM okhttp3.mockwebserver.MockWebServer$SocketHandler handle
+WARNING: MockWebServer[59101] connection from /127.0.0.1 didn't make a request
+</system-err>
+  </testsuite>
+  <testsuite name="takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-04T17:53:19" hostname="JOYIN" time="0.01">
+    <properties />
+    <testcase name="malformedLengthsDeepObjectsAndDuplicateIdentityAreRejected" classname="takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest" time="0.003" />
+    <testcase name="tokenRotationAndSyncTimestampsDoNotChangeConnectionIdentityButTlsDoes" classname="takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest" time="0.003" />
+    <testcase name="fragmentedAndBatchedFramesAreReadExactlyOnce" classname="takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest" time="0.001" />
+    <testcase name="officialAndSelfHostedEndpointsKeepRegionAndSubpathWithoutUsingEvents" classname="takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest" time="0.002" />
+    <testcase name="accountTypeAndDeviceAreCheckedBeforeScheduling" classname="takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest" time="0.0" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-04T17:53:19" hostname="JOYIN" time="0.113">
+    <properties />
+    <testcase name="rateLimitExtendsCooldownAndSurvivesChallengeReplacement" classname="takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest" time="0.051" />
+    <testcase name="sessionRevokedBeforeDispatchSendsNothing" classname="takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest" time="0.005" />
+    <testcase name="bindingDoesNotSendAndConcurrentOrRapidClicksAreIgnored" classname="takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest" time="0.021" />
+    <testcase name="unsupportedServerDisablesResendAfterCooldown" classname="takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest" time="0.005" />
+    <testcase name="cancelledRequestCannotPublishLateSuccessIntoReplacementSession" classname="takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest" time="0.011" />
+    <testcase name="sessionRevokedDuringNetworkCannotPublishSuccess" classname="takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest" time="0.005" />
+    <testcase name="backgroundOrLockInvalidationRevokesAnUncooperativeFailure" classname="takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest" time="0.015" />
+    <system-out />
+    <system-err />
+  </testsuite>
+</testsuites>

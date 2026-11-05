@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolverTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-11-05T02:07:05" hostname="JOYIN" time="0.013">
+  <properties/>
+  <testcase name="selfHostedCaseSensitivePathsAndIpPortsArePreserved" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolverTest" time="0.002"/>
+  <testcase name="invalidRevisionIsAValidationErrorAndNonEndpointFieldIsProgrammerError" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolverTest" time="0.001"/>
+  <testcase name="legacyRowsPreserveActualOverridesAndDeriveMissingOnCustomBase" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolverTest" time="0.001"/>
+  <testcase name="blankOverridesInheritButInvalidExplicitOverridesNeverFallback" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolverTest" time="0.001"/>
+  <testcase name="fingerprintIncludesExplicitWebProvenanceAndTlsMetadata" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolverTest" time="0.001"/>
+  <testcase name="fingerprintIgnoresCallerRevisionAndHeaderOrderButIncludesValues" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolverTest" time="0.001"/>
+  <testcase name="everyExplicitServiceIsUsedWithoutDoubleSuffixes" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolverTest" time="0.0"/>
+  <testcase name="invalidLegacyOverridesAndOfficialLookalikePathsDoNotFallBack" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolverTest" time="0.001"/>
+  <testcase name="explicitOfficialLookingCustomUrlsAreNeverReclassified" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolverTest" time="0.001"/>
+  <testcase name="discoveryEndpointValidationRequiresHttpsAndKeepsSafeEncodedPaths" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolverTest" time="0.0"/>
+  <testcase name="sourceCollectionsCannotModifyAnExistingEnvironmentOrErrors" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolverTest" time="0.002"/>
+  <testcase name="stringificationDoesNotExposeSecretInputsOrFingerprint" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolverTest" time="0.0"/>
+  <testcase name="endpointsRejectRawFormsBeforeLenientUrlNormalization" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolverTest" time="0.001"/>
+  <testcase name="officialPresetsKeepMonicaDefaultsAndNoReferer" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolverTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

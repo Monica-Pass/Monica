@@ -1,0 +1,45 @@
+Bitwarden account basics 325 — pinned protocol facts
+Date: 2026-11-05
+Status: protocol/source evidence only; final runtime aggregation pending
+
+AUTH_A03 official source:
+  Bitwarden Android 4ecfcd31cf76477893fb81ced9e6a49e214b1ead
+  UnauthenticatedAccountsApi: POST /accounts/resend-new-device-otp
+  ResendNewDeviceOtpRequestJson: Email, MasterPasswordHash
+  Monica API base routing for self-hosted: /api/accounts/resend-new-device-otp
+  Ordinary Email 2FA remains separate: /two-factor/send-email-login
+  Existing OTP submission remains identity connect/token form field newDeviceOtp.
+  No automatic send, access-token Authorization header or fallback to Email 2FA.
+  HTTP 404/405: unavailable; HTTP 429: sanitized rate-limit outcome.
+
+Vaultwarden boundary:
+  Revision 82fc47e83e39c5d09e85a6f259c8ab51166735d1
+  Full src search returned no resend-new-device-otp, newDeviceOtp or new_device_otp.
+  This does not claim support or absence in all future versions.
+  No live server email delivery was verified in this batch.
+
+AUTH_A12 fingerprint reference:
+  Bitwarden SDK 8aa7955dd1cb1623f6a29e533ba78b35363236c8
+  Keyguard 7ffcffd76390301747cd010735e8397a4f6083a5
+  Public SDK user ID: a09726a0-9590-49d1-a5f5-afe300b6a515
+  Independently computed reference: turban-deftly-anime-chatroom-unselfish
+  Derivation: HMAC-SHA256(SPKI, UTF8(userId) || 0x01), no extra Extract.
+  Interpret the block as unsigned big-endian; take five radix-7776 remainders.
+  Word-list order and canonical hyphenated copy string are protocol inputs.
+  Display-only break opportunities must not enter copied canonical text.
+
+EFF word-list source:
+  https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt
+  7776 unique words; dice-number column omitted, exact words/order retained.
+  Production raw bytes use LF.
+  SHA256 6d557f0693958fb5e650b68b5bee585eb82cf4da32965505c789e924743bc522
+  Attribution: docs/licenses/eff-fingerprint-wordlist.md
+  No SDK/Keyguard implementation source was copied.
+
+Evidence layers:
+  Resend service JVM: exact local HTTP protocol, errors, cancellation and Retry-After.
+  Resend controller JVM: deliberate NonCancellable late completions and replacement.
+  Native: real Activity lifecycle, UI actions and synthetic server/session fixtures.
+  Native UI-idle after releasing a response is not independent proof of an
+  uncooperative request's completed late return; use the JVM evidence for that claim.
+  Real accounts/email, hardware, OEM, SSO/Key Connector and R8 are outside this batch.

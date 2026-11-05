@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_new_device_resend">인증 이메일 다시 보내기</string>
+    <string name="bitwarden_new_device_resend_sent">인증 이메일을 요청했습니다. 받은편지함을 확인하세요.</string>
+    <string name="bitwarden_new_device_resend_failed">인증 이메일을 요청하지 못했습니다. 다시 시도하세요.</string>
+    <string name="bitwarden_new_device_resend_unavailable">이 서버는 새 기기 인증 이메일 재전송을 지원하지 않습니다.</string>
+    <string name="bitwarden_new_device_resend_wait">%1$d초 후에 다시 시도하세요.</string>
+    <string name="bitwarden_new_device_resend_rate_limited">요청이 너무 많습니다. 잠시 후 다시 시도하세요.</string>
+    <string name="bitwarden_account_fingerprint">계정 지문 문구</string>
+    <string name="bitwarden_account_fingerprint_hint">다른 신뢰할 수 있는 경로로 이 문구를 비교하여 계정 신원을 확인하세요.</string>
+    <string name="bitwarden_account_fingerprint_unavailable">이 계정을 동기화하여 신원 키를 불러온 후 다시 시도하세요.</string>
+    <string name="bitwarden_account_fingerprint_copy">문구 복사</string>
+</resources>

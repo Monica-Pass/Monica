@@ -1,0 +1,1172 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "capturedAtUtc": "2026-11-04T18:03:32.203409+00:00",
+  "scope": "Account-basics batch only; not whole Bitwarden completion, release or live-email acceptance",
+  "sourceFreeze": {
+    "path": "<task>/source-freeze.json",
+    "sha256": "90aad80facf484d627e81a848317cd1e28c6d03e6bf76abcf5964bfc60d24406",
+    "capturedAtUtc": "2026-11-04T17:50:27.012380+00:00"
+  },
+  "editions": {
+    "main": {
+      "status": "PASS",
+      "build": {
+        "edition": "main",
+        "run": "frame-full",
+        "seconds": 174.4752409,
+        "receipt": "<task>/main-frame-full-build.json",
+        "receiptSha256": "5c7d7c41d4c83fadaefe6e6640a68023ac0f5d5f858be8bd8903b5cac093b669",
+        "log": "<task>/main-frame-full-build.log",
+        "logSha256": "bba781f29a1cc1c504e5c11660821993fab0a588fbe36e30c29c49d467aba8b3"
+      },
+      "jvm": {
+        "status": "PASS",
+        "directory": "<task>/raw/main-frame-full-jvm",
+        "provenance": "<task>/raw/main-frame-full-jvm/build-provenance.json",
+        "uniqueMethods": 62,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "suiteSeconds": 10.95,
+        "suites": [
+          {
+            "name": "takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "seconds": 0.211,
+            "file": "<task>/raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest.xml",
+            "sha256": "6428bb5fbbe180907111cb7892d5e5721b9780a22d1c0b9e78e180fb29233ea3"
+          },
+          {
+            "name": "takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest",
+            "tests": 8,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "seconds": 5.159,
+            "file": "<task>/raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest.xml",
+            "sha256": "43f42e83542c5c50141725adcdb51720ce8435d841b0992dff5ef720f974d893"
+          },
+          {
+            "name": "takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest",
+            "tests": 8,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "seconds": 1.941,
+            "file": "<task>/raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest.xml",
+            "sha256": "0904314ae39a9952db1881b99b5b6e45fa623db4e1acc3c59022a5d22fa9fd56"
+          },
+          {
+            "name": "takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "seconds": 0.007,
+            "file": "<task>/raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest.xml",
+            "sha256": "bd37778f675dbcf4e7bf3ccff8966d532b9b8a6b8fbf83f00173a44d84d3feae"
+          },
+          {
+            "name": "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest",
+            "tests": 15,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "seconds": 0.075,
+            "file": "<task>/raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest.xml",
+            "sha256": "5795dfaf57e15a12d56004dbf4f70b77d6fb82fdf6cba7a212d55a11bde09d89"
+          },
+          {
+            "name": "takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "seconds": 3.434,
+            "file": "<task>/raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest.xml",
+            "sha256": "e32ac66297314a3d0cf59091e78cdbdf4bab63ae8ea1875f487a6c3c7548db05"
+          },
+          {
+            "name": "takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "seconds": 0.01,
+            "file": "<task>/raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest.xml",
+            "sha256": "f3c2d727a6f8c8f48fb1125bdd2ccc2b0d205907461973aa35a2977784edd7e6"
+          },
+          {
+            "name": "takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "seconds": 0.113,
+            "file": "<task>/raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest.xml",
+            "sha256": "e96b4d18dcc78bdb0569b640689a398daf0889240405172168c4406cf523f7d7"
+          }
+        ],
+        "methods": [
+          "takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest#differentAccountAndDifferentPublicKeyHaveDifferentPhrases",
+          "takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest#matchesOfficialSdkAccountFingerprintVector",
+          "takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest#packagedWordListMatchesEffOrderIncludingHyphenatedWords",
+          "takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest#rejectsMalformedOrMissingIdentityInsteadOfGeneratingANewOne",
+          "takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest#rejectsShortOrDuplicatedProtocolWordList",
+          "takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest#bindsPublicIdentityToServerEmailUserIdAndSecurityStamp",
+          "takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest#failedStorageDoesNotKeepAnOlderIdentity",
+          "takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest#malformedAuthenticatedPrivateKeyClearsOlderIdentity",
+          "takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest#omittedProfileKeyPreservesOfflineIdentityButExplicitClearRemovesIt",
+          "takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest#revokedCaptureCannotPublishAfterExpensiveKeyParsing",
+          "takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest#storesOnlySealedPublicIdentityAndReadsItAfterStoreRecreation",
+          "takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest#unsupportedKeyTypeAndShortRsaCannotCreateAnIdentity",
+          "takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest#wrongWrappingKeyOrCorruptCacheCannotReturnAPublicIdentity",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest#decryptsSha256AndLegacySha1OrganizationEnvelopes",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest#deniedOrUnknownTeamEditPermissionAndDeletedSourcesRejectUpdates",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest#malformedOrganizationDoesNotHideAnotherReadableOrganization",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest#missingWrongAndTamperedKeysNeverFallBackToPersonalVault",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest#parsesBothOfficialAndVaultwardenProfileCasing",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest#remoteOrganizationResolutionUsesAuthenticatedProfileAndDoesNotPersistKeys",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest#resolvesOrganizationThenItemKeyAndWipesOwnedKeys",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest#teamUpdatesPreserveOwnershipItemKeyCollectionsAndPasskeys",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest#acceptsOfficialFragmentVerificationLinkBoundToTheAccount",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest#normalizesEmailWithoutChangingTheToken",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest#pastedLinkCannotSelectAnotherServerOrAccount",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest#rejectsDuplicatedVerificationParametersAndOversizedTokens",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest#rejectsMissingLocalPartAndMultipleOrWhitespaceEmails",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest#selfHostedVerificationIsBoundToTheExactPort",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest#webSettingsKeepTheAccountServerWithoutTransmittingCredentials",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#changedStampIsComparedExactly",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#choiceDefaultsToNoRememberAndRemovesPreviousToken",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#clearingOneAccountDoesNotClearAnotherRememberedAccount",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#committedRevocationPersistsCredentialRemovalAfterItsCallerIsCancelled",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#firstStampObservationIsNotAChangedSession",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#lateLoginCompletionCannotPublishAfterLogout",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#missingOrOversizedResponseCannotKeepAnOldRememberedToken",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#missingRemoteStampStopsApprovalWithoutPretendingItChanged",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#rememberedTokenIsIsolatedBetweenServersAndAccounts",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#replacingAnAttemptPublishesOnlyTheLatestAuthentication",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#revokingAnotherAccountDoesNotCancelThisLogin",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#scopeUsesFramingRatherThanAmbiguousSeparators",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#staleTokenCannotRevokeTheNewlyAuthenticatedSession",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#tokenContentsAreOpaqueAndNotTrimmedOrLoggedIntoKeys",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#unavailableSealedStoreDoesNotClaimRememberWasSaved",
+          "takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest#cancellationPropagatesWithoutAReplacementRequest",
+          "takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest#genericFailureNeverEchoesCredentials",
+          "takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest#ordinaryEmailChallengeCannotCallNewDeviceResend",
+          "takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest#postsOnlyOfficialNewDeviceFieldsWithoutAuthorizationOrAnOrdinaryEmailRequest",
+          "takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest#rateLimitRetainsOnlyDelayAndFailureCategory",
+          "takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest#retryAfterAcceptsNumericAndHttpDateWithoutOverflow",
+          "takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest#unsupportedServersNeverFallBackAndNeverExposeTheirBody",
+          "takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest#accountTypeAndDeviceAreCheckedBeforeScheduling",
+          "takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest#fragmentedAndBatchedFramesAreReadExactlyOnce",
+          "takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest#malformedLengthsDeepObjectsAndDuplicateIdentityAreRejected",
+          "takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest#officialAndSelfHostedEndpointsKeepRegionAndSubpathWithoutUsingEvents",
+          "takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest#tokenRotationAndSyncTimestampsDoNotChangeConnectionIdentityButTlsDoes",
+          "takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest#backgroundOrLockInvalidationRevokesAnUncooperativeFailure",
+          "takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest#bindingDoesNotSendAndConcurrentOrRapidClicksAreIgnored",
+          "takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest#cancelledRequestCannotPublishLateSuccessIntoReplacementSession",
+          "takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest#rateLimitExtendsCooldownAndSurvivesChallengeReplacement",
+          "takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest#sessionRevokedBeforeDispatchSendsNothing",
+          "takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest#sessionRevokedDuringNetworkCannotPublishSuccess",
+          "takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest#unsupportedServerDisablesResendAfterCooldown"
+        ]
+      },
+      "native": {
+        "status": "PASS",
+        "run": "frame-native",
+        "receipt": "<task>/main-frame-native-device.json",
+        "raw": "<task>/main-frame-native-device.txt",
+        "uniqueMethods": 28,
+        "failedMethods": 0,
+        "skippedMethods": 0,
+        "runnerSeconds": 113.665,
+        "driverSeconds": 119.733,
+        "serial": "emulator-5556",
+        "userId": 13,
+        "methods": [
+          "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#lateAccountDeviceResponseCannotReappearAfterLock",
+          "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativeAccountDeviceListValidatesProfileAndRevokesChangedStampBeforeLoadingDevices",
+          "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativeDeviceListClearsOnLockAndReloadsAfterReturningToForeground",
+          "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativePasswordHintRequestSendsOnlyEmailAndKeepsLoginAvailable",
+          "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativeRegistrationUsesVerifiedEmailAndDoesNotCreateAPartialLocalVault",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#applicationLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#changedAccountBindingAndAuthenticatedStampRejectTheCachedIdentity",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#largeFontPhraseWrapsWithoutOverflowAndBackgroundRevokesTheSheet",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#lateProfileCannotDeleteOrReplaceIdentityAfterLockAndSameTokenUnlock",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#malformedProfilePrivateKeyRemovesOldIdentityAndCannotCopyTheOldPhrase",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#missingProfilePrivateKeyShowsLocalizedErrorAndDisablesCopy",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#nativeProfileCachesOnlySealedPublicIdentityAndCopiesTheProtocolPhrase",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#offlineGetterReadsSealedIdentityAfterRepositoryRecreation",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#vaultLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintSessionInstrumentedTest#firstFullSyncPublishesProfileIdStampAndImmediatelyReadableFingerprint",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintSessionInstrumentedTest#lateChangedStampPreflightCannotRevokeSameTokenRestoredSession",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintSessionInstrumentedTest#lateFullSyncIdentityAndChangedStampCannotReplaceOrRevokeRestoredSession",
+          "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#explicitCancelDuringResendClosesChallengeAndSuppressesLateStatus",
+          "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#globalLockClearsChallengeAndLateResendCannotRestoreIt",
+          "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#largePortugueseNewDeviceResendAndStatusWrapWithoutTextOverflow",
+          "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#mailboxBackgroundCancelsLateResendButPreservesOriginalOtpChallengeAndCooldown",
+          "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#nativeRateLimitShowsSanitizedMessageAndServerCooldown",
+          "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#nativeResendUsesCurrentProofOnlyAfterClickAndKeepsNewDeviceOtpSubmission",
+          "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#nativeUnsupportedServerShowsTruthfulFailureWithoutOrdinaryEmailFallback",
+          "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#ordinaryEmailTwoFactorRetainsItsSeparateSendControl",
+          "takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest#checkedNativeRememberIsSealedReusedAsProviderFiveAndRejectedOnlyOnceBeforeFallback",
+          "takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest#leavingDuringMfaAndLogoutDuringRememberedLoginPreventLatePublication",
+          "takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest#uncheckedNativeRememberSendsZeroAndNeverPersistsTheReturnedToken"
+        ],
+        "packages": [
+          {
+            "package": "takagi.ru.monica",
+            "file": "Monica-Android-x86_64-1.0.325-26110512-05.APK",
+            "sha256": "fa3e13f0181d16334442b0edd7f893b9c7cd33da76d45bda408d801c04daa0de",
+            "seconds": 1.81,
+            "version": "1.0.325-26110512-05",
+            "code": 12
+          },
+          {
+            "package": "takagi.ru.monica.test",
+            "file": "app-debug-androidTest.apk",
+            "sha256": "2a2832ca748d55328f73a50d6f93baceadd78f9c2e8af9de79e89b047fa25056",
+            "seconds": 2.27,
+            "version": "",
+            "code": 0
+          }
+        ]
+      },
+      "artifacts": {
+        "status": "PASS",
+        "installedReceipt": "<task>/main-installed.json",
+        "resourceReport": "<task>/main-frame-full-built-resources.json",
+        "resourceValues": 180,
+        "apks": [
+          {
+            "package": "takagi.ru.monica",
+            "path": "<main-android>/app/build/outputs/apk/debug/Monica-Android-x86_64-1.0.325-26110512-05.APK",
+            "sha256": "fa3e13f0181d16334442b0edd7f893b9c7cd33da76d45bda408d801c04daa0de",
+            "version": "1.0.325-26110512-05",
+            "code": 12
+          },
+          {
+            "package": "takagi.ru.monica.test",
+            "path": "<main-android>/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk",
+            "sha256": "2a2832ca748d55328f73a50d6f93baceadd78f9c2e8af9de79e89b047fa25056",
+            "version": "",
+            "code": 0
+          }
+        ],
+        "wordlist": {
+          "member": "res/raw/bitwarden_fingerprint_words.txt",
+          "sourceSha256": "6d557f0693958fb5e650b68b5bee585eb82cf4da32965505c789e924743bc522",
+          "apkMemberSha256": "6d557f0693958fb5e650b68b5bee585eb82cf4da32965505c789e924743bc522",
+          "words": 7776,
+          "exactBytesMatch": true
+        }
+      }
+    },
+    "fdroid": {
+      "status": "PASS",
+      "build": {
+        "edition": "fdroid",
+        "run": "frame-verified",
+        "seconds": 48.2616029,
+        "receipt": "<task>/fdroid-frame-verified-build.json",
+        "receiptSha256": "4b4c82d5ed392ece766c4fd16c8280d2a4ec00279f545a1ebe253fc053ad3a2f",
+        "log": "<task>/fdroid-frame-verified-build.log",
+        "logSha256": "03a0f7e1c362d53ec10c69985559632845434980878d4f9a01d2a090a61a5b73"
+      },
+      "jvm": {
+        "status": "PASS",
+        "directory": "<task>/raw/fdroid-frame-verified-jvm",
+        "provenance": "<task>/raw/fdroid-frame-verified-jvm/build-provenance.json",
+        "uniqueMethods": 62,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "suiteSeconds": 10.636000000000001,
+        "suites": [
+          {
+            "name": "takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "seconds": 0.2,
+            "file": "<task>/raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest.xml",
+            "sha256": "3858e955d9a95521149b787b8968adc5548529f57a343200bc2c7f4c738aec79"
+          },
+          {
+            "name": "takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest",
+            "tests": 8,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "seconds": 5.206,
+            "file": "<task>/raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest.xml",
+            "sha256": "fcdf217dfd998eeb2b2ac442ade7578fff0fd58e9af6a4fb303672a1379ee778"
+          },
+          {
+            "name": "takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest",
+            "tests": 8,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "seconds": 1.204,
+            "file": "<task>/raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest.xml",
+            "sha256": "6c1744da9bc3ae872b2fa02377b8cbd669347e49c206b286553b757e1fd15167"
+          },
+          {
+            "name": "takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "seconds": 0.008,
+            "file": "<task>/raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest.xml",
+            "sha256": "32639c2579c4cd7d8462fe668c75cf18e6dc275c8b7c7d8770f5b9ad1041920a"
+          },
+          {
+            "name": "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest",
+            "tests": 15,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "seconds": 0.068,
+            "file": "<task>/raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest.xml",
+            "sha256": "1fdac530b4ee01278ebdab673d57b9a770acf9432bb32c84c5feb3799d79b791"
+          },
+          {
+            "name": "takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "seconds": 3.843,
+            "file": "<task>/raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest.xml",
+            "sha256": "e21f3f3b6a70aab6b5a08a07b2d8f3c0f8284996f29a9feb43c4bebcc69303a8"
+          },
+          {
+            "name": "takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "seconds": 0.013,
+            "file": "<task>/raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest.xml",
+            "sha256": "68af00d2dfb3292e4bd24d8fe8fd049df8e417503d328c9601e009a7f3244369"
+          },
+          {
+            "name": "takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "seconds": 0.094,
+            "file": "<task>/raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest.xml",
+            "sha256": "67433a6f34bb54256aaa6ca890effff97c80c9b2ceacc941c6cc028ccc49ea25"
+          }
+        ],
+        "methods": [
+          "takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest#differentAccountAndDifferentPublicKeyHaveDifferentPhrases",
+          "takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest#matchesOfficialSdkAccountFingerprintVector",
+          "takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest#packagedWordListMatchesEffOrderIncludingHyphenatedWords",
+          "takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest#rejectsMalformedOrMissingIdentityInsteadOfGeneratingANewOne",
+          "takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest#rejectsShortOrDuplicatedProtocolWordList",
+          "takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest#bindsPublicIdentityToServerEmailUserIdAndSecurityStamp",
+          "takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest#failedStorageDoesNotKeepAnOlderIdentity",
+          "takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest#malformedAuthenticatedPrivateKeyClearsOlderIdentity",
+          "takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest#omittedProfileKeyPreservesOfflineIdentityButExplicitClearRemovesIt",
+          "takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest#revokedCaptureCannotPublishAfterExpensiveKeyParsing",
+          "takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest#storesOnlySealedPublicIdentityAndReadsItAfterStoreRecreation",
+          "takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest#unsupportedKeyTypeAndShortRsaCannotCreateAnIdentity",
+          "takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest#wrongWrappingKeyOrCorruptCacheCannotReturnAPublicIdentity",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest#decryptsSha256AndLegacySha1OrganizationEnvelopes",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest#deniedOrUnknownTeamEditPermissionAndDeletedSourcesRejectUpdates",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest#malformedOrganizationDoesNotHideAnotherReadableOrganization",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest#missingWrongAndTamperedKeysNeverFallBackToPersonalVault",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest#parsesBothOfficialAndVaultwardenProfileCasing",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest#remoteOrganizationResolutionUsesAuthenticatedProfileAndDoesNotPersistKeys",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest#resolvesOrganizationThenItemKeyAndWipesOwnedKeys",
+          "takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest#teamUpdatesPreserveOwnershipItemKeyCollectionsAndPasskeys",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest#acceptsOfficialFragmentVerificationLinkBoundToTheAccount",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest#normalizesEmailWithoutChangingTheToken",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest#pastedLinkCannotSelectAnotherServerOrAccount",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest#rejectsDuplicatedVerificationParametersAndOversizedTokens",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest#rejectsMissingLocalPartAndMultipleOrWhitespaceEmails",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest#selfHostedVerificationIsBoundToTheExactPort",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest#webSettingsKeepTheAccountServerWithoutTransmittingCredentials",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#changedStampIsComparedExactly",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#choiceDefaultsToNoRememberAndRemovesPreviousToken",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#clearingOneAccountDoesNotClearAnotherRememberedAccount",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#committedRevocationPersistsCredentialRemovalAfterItsCallerIsCancelled",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#firstStampObservationIsNotAChangedSession",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#lateLoginCompletionCannotPublishAfterLogout",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#missingOrOversizedResponseCannotKeepAnOldRememberedToken",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#missingRemoteStampStopsApprovalWithoutPretendingItChanged",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#rememberedTokenIsIsolatedBetweenServersAndAccounts",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#replacingAnAttemptPublishesOnlyTheLatestAuthentication",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#revokingAnotherAccountDoesNotCancelThisLogin",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#scopeUsesFramingRatherThanAmbiguousSeparators",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#staleTokenCannotRevokeTheNewlyAuthenticatedSession",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#tokenContentsAreOpaqueAndNotTrimmedOrLoggedIntoKeys",
+          "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest#unavailableSealedStoreDoesNotClaimRememberWasSaved",
+          "takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest#cancellationPropagatesWithoutAReplacementRequest",
+          "takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest#genericFailureNeverEchoesCredentials",
+          "takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest#ordinaryEmailChallengeCannotCallNewDeviceResend",
+          "takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest#postsOnlyOfficialNewDeviceFieldsWithoutAuthorizationOrAnOrdinaryEmailRequest",
+          "takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest#rateLimitRetainsOnlyDelayAndFailureCategory",
+          "takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest#retryAfterAcceptsNumericAndHttpDateWithoutOverflow",
+          "takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest#unsupportedServersNeverFallBackAndNeverExposeTheirBody",
+          "takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest#accountTypeAndDeviceAreCheckedBeforeScheduling",
+          "takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest#fragmentedAndBatchedFramesAreReadExactlyOnce",
+          "takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest#malformedLengthsDeepObjectsAndDuplicateIdentityAreRejected",
+          "takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest#officialAndSelfHostedEndpointsKeepRegionAndSubpathWithoutUsingEvents",
+          "takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest#tokenRotationAndSyncTimestampsDoNotChangeConnectionIdentityButTlsDoes",
+          "takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest#backgroundOrLockInvalidationRevokesAnUncooperativeFailure",
+          "takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest#bindingDoesNotSendAndConcurrentOrRapidClicksAreIgnored",
+          "takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest#cancelledRequestCannotPublishLateSuccessIntoReplacementSession",
+          "takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest#rateLimitExtendsCooldownAndSurvivesChallengeReplacement",
+          "takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest#sessionRevokedBeforeDispatchSendsNothing",
+          "takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest#sessionRevokedDuringNetworkCannotPublishSuccess",
+          "takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest#unsupportedServerDisablesResendAfterCooldown"
+        ]
+      },
+      "native": {
+        "status": "PASS",
+        "run": "frame-native",
+        "receipt": "<task>/fdroid-frame-native-device.json",
+        "raw": "<task>/fdroid-frame-native-device.txt",
+        "uniqueMethods": 28,
+        "failedMethods": 0,
+        "skippedMethods": 0,
+        "runnerSeconds": 117.652,
+        "driverSeconds": 123.092,
+        "serial": "emulator-5556",
+        "userId": 13,
+        "methods": [
+          "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#lateAccountDeviceResponseCannotReappearAfterLock",
+          "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativeAccountDeviceListValidatesProfileAndRevokesChangedStampBeforeLoadingDevices",
+          "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativeDeviceListClearsOnLockAndReloadsAfterReturningToForeground",
+          "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativePasswordHintRequestSendsOnlyEmailAndKeepsLoginAvailable",
+          "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativeRegistrationUsesVerifiedEmailAndDoesNotCreateAPartialLocalVault",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#applicationLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#changedAccountBindingAndAuthenticatedStampRejectTheCachedIdentity",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#largeFontPhraseWrapsWithoutOverflowAndBackgroundRevokesTheSheet",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#lateProfileCannotDeleteOrReplaceIdentityAfterLockAndSameTokenUnlock",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#malformedProfilePrivateKeyRemovesOldIdentityAndCannotCopyTheOldPhrase",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#missingProfilePrivateKeyShowsLocalizedErrorAndDisablesCopy",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#nativeProfileCachesOnlySealedPublicIdentityAndCopiesTheProtocolPhrase",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#offlineGetterReadsSealedIdentityAfterRepositoryRecreation",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#vaultLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintSessionInstrumentedTest#firstFullSyncPublishesProfileIdStampAndImmediatelyReadableFingerprint",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintSessionInstrumentedTest#lateChangedStampPreflightCannotRevokeSameTokenRestoredSession",
+          "takagi.ru.monica.bitwarden.BitwardenFingerprintSessionInstrumentedTest#lateFullSyncIdentityAndChangedStampCannotReplaceOrRevokeRestoredSession",
+          "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#explicitCancelDuringResendClosesChallengeAndSuppressesLateStatus",
+          "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#globalLockClearsChallengeAndLateResendCannotRestoreIt",
+          "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#largePortugueseNewDeviceResendAndStatusWrapWithoutTextOverflow",
+          "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#mailboxBackgroundCancelsLateResendButPreservesOriginalOtpChallengeAndCooldown",
+          "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#nativeRateLimitShowsSanitizedMessageAndServerCooldown",
+          "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#nativeResendUsesCurrentProofOnlyAfterClickAndKeepsNewDeviceOtpSubmission",
+          "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#nativeUnsupportedServerShowsTruthfulFailureWithoutOrdinaryEmailFallback",
+          "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#ordinaryEmailTwoFactorRetainsItsSeparateSendControl",
+          "takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest#checkedNativeRememberIsSealedReusedAsProviderFiveAndRejectedOnlyOnceBeforeFallback",
+          "takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest#leavingDuringMfaAndLogoutDuringRememberedLoginPreventLatePublication",
+          "takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest#uncheckedNativeRememberSendsZeroAndNeverPersistsTheReturnedToken"
+        ],
+        "packages": [
+          {
+            "package": "takagi.ru.monica.fdroid",
+            "file": "Monica-Android-x86_64-1.0.325.apk",
+            "sha256": "8913e31da9191186213f5ac9e3abcf28d54ce2121e376ae9f78d1feb3acbe9e6",
+            "seconds": 1.78,
+            "version": "1.0.325",
+            "code": 32
+          },
+          {
+            "package": "takagi.ru.monica.fdroid.test",
+            "file": "app-debug-androidTest.apk",
+            "sha256": "2027d64d4f975065ef16af2c4306b370e10653cfab1de059c467d1eac123a284",
+            "seconds": 1.31,
+            "version": "",
+            "code": 0
+          }
+        ]
+      },
+      "artifacts": {
+        "status": "PASS",
+        "installedReceipt": "<task>/fdroid-installed.json",
+        "resourceReport": "<task>/fdroid-frame-verified-built-resources.json",
+        "resourceValues": 180,
+        "apks": [
+          {
+            "package": "takagi.ru.monica.fdroid",
+            "path": "<fdroid>/app/build/outputs/apk/debug/Monica-Android-x86_64-1.0.325.apk",
+            "sha256": "8913e31da9191186213f5ac9e3abcf28d54ce2121e376ae9f78d1feb3acbe9e6",
+            "version": "1.0.325",
+            "code": 32
+          },
+          {
+            "package": "takagi.ru.monica.fdroid.test",
+            "path": "<fdroid>/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk",
+            "sha256": "2027d64d4f975065ef16af2c4306b370e10653cfab1de059c467d1eac123a284",
+            "version": "",
+            "code": 0
+          }
+        ],
+        "wordlist": {
+          "member": "res/raw/bitwarden_fingerprint_words.txt",
+          "sourceSha256": "6d557f0693958fb5e650b68b5bee585eb82cf4da32965505c789e924743bc522",
+          "apkMemberSha256": "6d557f0693958fb5e650b68b5bee585eb82cf4da32965505c789e924743bc522",
+          "words": 7776,
+          "exactBytesMatch": true
+        }
+      }
+    }
+  },
+  "distinctMethodsAcrossEditionCopies": {
+    "jvm": 62,
+    "native": 28,
+    "historicalRerunsAdded": 0
+  },
+  "historicalFailuresPreserved": [
+    {
+      "edition": "main",
+      "run": "first-units",
+      "kind": "jvm",
+      "tests": 61,
+      "failures": 4,
+      "errors": 0,
+      "skipped": 0,
+      "sourceDirectory": "<task>/raw/first-units-results",
+      "includedInFinalUniqueCounts": false
+    },
+    {
+      "edition": "main",
+      "run": "diagnose-units",
+      "kind": "jvm",
+      "tests": 61,
+      "failures": 4,
+      "errors": 0,
+      "skipped": 0,
+      "sourceDirectory": "<task>/raw/diagnose-units-results",
+      "includedInFinalUniqueCounts": false
+    },
+    {
+      "edition": "main",
+      "run": "first-native",
+      "kind": "native",
+      "uniqueMethods": 28,
+      "failures": 3,
+      "failedMethods": [
+        "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#largeFontPhraseWrapsWithoutOverflowAndBackgroundRevokesTheSheet",
+        "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#applicationLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback",
+        "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#largePortugueseNewDeviceResendAndStatusWrapWithoutTextOverflow"
+      ],
+      "receipt": "<task>/main-first-native-device.json",
+      "raw": "<task>/main-first-native-device.txt",
+      "includedInFinalUniqueCounts": false
+    },
+    {
+      "edition": "main",
+      "run": "native-fixes",
+      "kind": "native",
+      "uniqueMethods": 28,
+      "failures": 1,
+      "failedMethods": [
+        "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#largeFontPhraseWrapsWithoutOverflowAndBackgroundRevokesTheSheet"
+      ],
+      "receipt": "<task>/main-native-fixes-device.json",
+      "raw": "<task>/main-native-fixes-device.txt",
+      "includedInFinalUniqueCounts": false
+    }
+  ],
+  "excludedHistoricalPasses": [
+    {
+      "edition": "main",
+      "run": "readable",
+      "kind": "native",
+      "status": "PASS_ON_PREVIOUS_INSTALLED_APKS",
+      "uniqueMethods": 28,
+      "passedMethods": 28,
+      "failedMethods": 0,
+      "skippedMethods": 0,
+      "receipt": "<task>/main-readable-device.json",
+      "raw": "<task>/main-readable-device.txt",
+      "packages": [
+        {
+          "package": "takagi.ru.monica",
+          "file": "Monica-Android-x86_64-1.0.325-26110512-03.APK",
+          "sha256": "02bb2ea6fa705ab97c89da0c688d5b70a2954dfb5a75320fecd1e2978f64ee97",
+          "version": "1.0.325-26110512-03",
+          "code": 12
+        },
+        {
+          "package": "takagi.ru.monica.test",
+          "file": "app-debug-androidTest.apk",
+          "sha256": "0b0315215178f8e69d56d9c460073579db4a6ec371cf3789018ea112bbc00651",
+          "version": "",
+          "code": 0
+        }
+      ],
+      "excluded": true,
+      "includedInFinalUniqueCounts": false,
+      "excludedReason": "The preceding seq04 install failed during ADB reauthorization; the shell continued and this run used the old seq03 installed receipt. Its 28 passes do not verify the final readable-full APKs.",
+      "artifactMismatchWithFinal": {
+        "takagi.ru.monica": {
+          "historicalSha256": "02bb2ea6fa705ab97c89da0c688d5b70a2954dfb5a75320fecd1e2978f64ee97",
+          "finalSha256": "fa3e13f0181d16334442b0edd7f893b9c7cd33da76d45bda408d801c04daa0de"
+        },
+        "takagi.ru.monica.test": {
+          "historicalSha256": "0b0315215178f8e69d56d9c460073579db4a6ec371cf3789018ea112bbc00651",
+          "finalSha256": "2a2832ca748d55328f73a50d6f93baceadd78f9c2e8af9de79e89b047fa25056"
+        }
+      }
+    }
+  ],
+  "historicalVisualRunsPreserved": [
+    {
+      "edition": "main",
+      "run": "readable-installed",
+      "kind": "native",
+      "status": "PASS_ON_PREVIOUS_TEST_APK",
+      "uniqueMethods": 28,
+      "passedMethods": 28,
+      "failedMethods": 0,
+      "skippedMethods": 0,
+      "outcomes": [
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#offlineGetterReadsSealedIdentityAfterRepositoryRecreation",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#nativeProfileCachesOnlySealedPublicIdentityAndCopiesTheProtocolPhrase",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#largeFontPhraseWrapsWithoutOverflowAndBackgroundRevokesTheSheet",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#missingProfilePrivateKeyShowsLocalizedErrorAndDisablesCopy",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#changedAccountBindingAndAuthenticatedStampRejectTheCachedIdentity",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#vaultLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#applicationLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#lateProfileCannotDeleteOrReplaceIdentityAfterLockAndSameTokenUnlock",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#malformedProfilePrivateKeyRemovesOldIdentityAndCannotCopyTheOldPhrase",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#ordinaryEmailTwoFactorRetainsItsSeparateSendControl",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#largePortugueseNewDeviceResendAndStatusWrapWithoutTextOverflow",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#mailboxBackgroundCancelsLateResendButPreservesOriginalOtpChallengeAndCooldown",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#explicitCancelDuringResendClosesChallengeAndSuppressesLateStatus",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#nativeResendUsesCurrentProofOnlyAfterClickAndKeepsNewDeviceOtpSubmission",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#nativeUnsupportedServerShowsTruthfulFailureWithoutOrdinaryEmailFallback",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#globalLockClearsChallengeAndLateResendCannotRestoreIt",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#nativeRateLimitShowsSanitizedMessageAndServerCooldown",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativeDeviceListClearsOnLockAndReloadsAfterReturningToForeground",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativeAccountDeviceListValidatesProfileAndRevokesChangedStampBeforeLoadingDevices",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#lateAccountDeviceResponseCannotReappearAfterLock",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativeRegistrationUsesVerifiedEmailAndDoesNotCreateAPartialLocalVault",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativePasswordHintRequestSendsOnlyEmailAndKeepsLoginAvailable",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest#uncheckedNativeRememberSendsZeroAndNeverPersistsTheReturnedToken",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest#checkedNativeRememberIsSealedReusedAsProviderFiveAndRejectedOnlyOnceBeforeFallback",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest#leavingDuringMfaAndLogoutDuringRememberedLoginPreventLatePublication",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintSessionInstrumentedTest#lateFullSyncIdentityAndChangedStampCannotReplaceOrRevokeRestoredSession",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintSessionInstrumentedTest#firstFullSyncPublishesProfileIdStampAndImmediatelyReadableFingerprint",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintSessionInstrumentedTest#lateChangedStampPreflightCannotRevokeSameTokenRestoredSession",
+          "statusCode": 0
+        }
+      ],
+      "driverSeconds": 116.859,
+      "receipt": "<task>/main-readable-installed-device.json",
+      "raw": "<task>/main-readable-installed-device.txt",
+      "packages": [
+        {
+          "package": "takagi.ru.monica",
+          "file": "Monica-Android-x86_64-1.0.325-26110512-04.APK",
+          "sha256": "2038d1b0fb4903c6bb787349a6e07d3c36f13cf08780751878f3edd8cebeec76",
+          "version": "1.0.325-26110512-04",
+          "code": 12
+        },
+        {
+          "package": "takagi.ru.monica.test",
+          "file": "app-debug-androidTest.apk",
+          "sha256": "ca26ecd9847f512f6f78be5819844a1ef695a86b59a9a8e68942d0a1512e9a11",
+          "version": "",
+          "code": 0
+        }
+      ],
+      "excluded": true,
+      "includedInFinalUniqueCounts": false,
+      "uniqueMethodsAddedToFinal": 0,
+      "excludedReason": "Prior readable-full candidate; root observed blank English large-font and missing-identity captures despite 28 passing methods. Revised test APK requires separate final verification.",
+      "visualObservationSource": "root screenshot review; not inferred from runner pass"
+    },
+    {
+      "edition": "fdroid",
+      "run": "final-native",
+      "kind": "native",
+      "status": "PASS_ON_PREVIOUS_TEST_APK",
+      "uniqueMethods": 28,
+      "passedMethods": 28,
+      "failedMethods": 0,
+      "skippedMethods": 0,
+      "outcomes": [
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#offlineGetterReadsSealedIdentityAfterRepositoryRecreation",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#nativeProfileCachesOnlySealedPublicIdentityAndCopiesTheProtocolPhrase",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#largeFontPhraseWrapsWithoutOverflowAndBackgroundRevokesTheSheet",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#missingProfilePrivateKeyShowsLocalizedErrorAndDisablesCopy",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#changedAccountBindingAndAuthenticatedStampRejectTheCachedIdentity",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#vaultLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#applicationLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#lateProfileCannotDeleteOrReplaceIdentityAfterLockAndSameTokenUnlock",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#malformedProfilePrivateKeyRemovesOldIdentityAndCannotCopyTheOldPhrase",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#ordinaryEmailTwoFactorRetainsItsSeparateSendControl",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#largePortugueseNewDeviceResendAndStatusWrapWithoutTextOverflow",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#mailboxBackgroundCancelsLateResendButPreservesOriginalOtpChallengeAndCooldown",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#explicitCancelDuringResendClosesChallengeAndSuppressesLateStatus",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#nativeResendUsesCurrentProofOnlyAfterClickAndKeepsNewDeviceOtpSubmission",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#nativeUnsupportedServerShowsTruthfulFailureWithoutOrdinaryEmailFallback",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#globalLockClearsChallengeAndLateResendCannotRestoreIt",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#nativeRateLimitShowsSanitizedMessageAndServerCooldown",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativeDeviceListClearsOnLockAndReloadsAfterReturningToForeground",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativeAccountDeviceListValidatesProfileAndRevokesChangedStampBeforeLoadingDevices",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#lateAccountDeviceResponseCannotReappearAfterLock",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativeRegistrationUsesVerifiedEmailAndDoesNotCreateAPartialLocalVault",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativePasswordHintRequestSendsOnlyEmailAndKeepsLoginAvailable",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest#uncheckedNativeRememberSendsZeroAndNeverPersistsTheReturnedToken",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest#checkedNativeRememberIsSealedReusedAsProviderFiveAndRejectedOnlyOnceBeforeFallback",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest#leavingDuringMfaAndLogoutDuringRememberedLoginPreventLatePublication",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintSessionInstrumentedTest#lateFullSyncIdentityAndChangedStampCannotReplaceOrRevokeRestoredSession",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintSessionInstrumentedTest#firstFullSyncPublishesProfileIdStampAndImmediatelyReadableFingerprint",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintSessionInstrumentedTest#lateChangedStampPreflightCannotRevokeSameTokenRestoredSession",
+          "statusCode": 0
+        }
+      ],
+      "driverSeconds": 113.026,
+      "receipt": "<task>/fdroid-final-native-device.json",
+      "raw": "<task>/fdroid-final-native-device.txt",
+      "packages": [
+        {
+          "package": "takagi.ru.monica.fdroid",
+          "file": "Monica-Android-x86_64-1.0.325.apk",
+          "sha256": "8913e31da9191186213f5ac9e3abcf28d54ce2121e376ae9f78d1feb3acbe9e6",
+          "version": "1.0.325",
+          "code": 32
+        },
+        {
+          "package": "takagi.ru.monica.fdroid.test",
+          "file": "app-debug-androidTest.apk",
+          "sha256": "ecd3213b254633c8451be67d4306c3cb38ed5ef41ceacada6b89592886ee97e1",
+          "version": "",
+          "code": 0
+        }
+      ],
+      "excluded": true,
+      "includedInFinalUniqueCounts": false,
+      "uniqueMethodsAddedToFinal": 0,
+      "excludedReason": "Prior readable-full candidate; root observed normal corresponding captures, but the later shared test-scheduler revision requires separate final verification.",
+      "visualObservationSource": "root screenshot review; not inferred from runner pass"
+    },
+    {
+      "edition": "main",
+      "run": "visual-isolated-large",
+      "kind": "native",
+      "status": "FAIL_ON_PREVIOUS_TEST_APK",
+      "uniqueMethods": 1,
+      "passedMethods": 0,
+      "failedMethods": 1,
+      "skippedMethods": 0,
+      "outcomes": [
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#largeFontPhraseWrapsWithoutOverflowAndBackgroundRevokesTheSheet",
+          "statusCode": -2
+        }
+      ],
+      "driverSeconds": 66.728,
+      "receipt": "<task>/main-visual-isolated-large-device.json",
+      "raw": "<task>/main-visual-isolated-large-device.txt",
+      "packages": [
+        {
+          "package": "takagi.ru.monica",
+          "file": "Monica-Android-x86_64-1.0.325-26110512-04.APK",
+          "sha256": "2038d1b0fb4903c6bb787349a6e07d3c36f13cf08780751878f3edd8cebeec76",
+          "version": "1.0.325-26110512-04",
+          "code": 12
+        },
+        {
+          "package": "takagi.ru.monica.test",
+          "file": "app-debug-androidTest.apk",
+          "sha256": "ca26ecd9847f512f6f78be5819844a1ef695a86b59a9a8e68942d0a1512e9a11",
+          "version": "",
+          "code": 0
+        }
+      ],
+      "excluded": true,
+      "includedInFinalUniqueCounts": false,
+      "uniqueMethodsAddedToFinal": 0,
+      "excludedReason": "Same seq04 APK isolated large-font run failed with Compose measurement reentry; retain the failure and earlier blank-frame observation.",
+      "visualObservationSource": "root screenshot review; not inferred from runner pass"
+    },
+    {
+      "edition": "main",
+      "run": "visual-isolated-missing",
+      "kind": "native",
+      "status": "PASS_ON_PREVIOUS_TEST_APK",
+      "uniqueMethods": 1,
+      "passedMethods": 1,
+      "failedMethods": 0,
+      "skippedMethods": 0,
+      "outcomes": [
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest#missingProfilePrivateKeyShowsLocalizedErrorAndDisablesCopy",
+          "statusCode": 0
+        }
+      ],
+      "driverSeconds": 10.615,
+      "receipt": "<task>/main-visual-isolated-missing-device.json",
+      "raw": "<task>/main-visual-isolated-missing-device.txt",
+      "packages": [
+        {
+          "package": "takagi.ru.monica",
+          "file": "Monica-Android-x86_64-1.0.325-26110512-04.APK",
+          "sha256": "2038d1b0fb4903c6bb787349a6e07d3c36f13cf08780751878f3edd8cebeec76",
+          "version": "1.0.325-26110512-04",
+          "code": 12
+        },
+        {
+          "package": "takagi.ru.monica.test",
+          "file": "app-debug-androidTest.apk",
+          "sha256": "ca26ecd9847f512f6f78be5819844a1ef695a86b59a9a8e68942d0a1512e9a11",
+          "version": "",
+          "code": 0
+        }
+      ],
+      "excluded": true,
+      "includedInFinalUniqueCounts": false,
+      "uniqueMethodsAddedToFinal": 0,
+      "excludedReason": "Same seq04 APK isolated missing-identity run passed with a normal recapture according to root review; this does not erase the prior blank capture or measurement failure.",
+      "visualObservationSource": "root screenshot review; not inferred from runner pass"
+    }
+  ],
+  "inputSha256": {
+    "<task>/aggregate_results.py": "f7390c97582dbe37eb9c3440e24cb6bc66fe009b05e7f8f5059ca17e3a93cbbe",
+    "<task>/device-methods.json": "288bc1b65392cf359cc504e85676b0790797ae85ea73b12cd24b62a5684b8645",
+    "<task>/fdroid-final-native-device.json": "e6eac8a619036d4f067369ede47bd7fd3ce689ca5b893c302da391f3f9dc3f6b",
+    "<task>/fdroid-final-native-device.txt": "989ab00923cd4075d505a31bb04cd7ef97ddfd11ebc0e197cc30299b9cf7b2b0",
+    "<task>/fdroid-frame-native-device.json": "76358da54719108b0d53dfa8bee4da93b4b8fca206c657b9575166007cacc1e1",
+    "<task>/fdroid-frame-native-device.txt": "607fa002fa56bc6c55764ef9f8d3feb1bf9f59f3c9feaf5cf611607b620569a0",
+    "<task>/fdroid-frame-verified-build.json": "4b4c82d5ed392ece766c4fd16c8280d2a4ec00279f545a1ebe253fc053ad3a2f",
+    "<task>/fdroid-frame-verified-build.log": "03a0f7e1c362d53ec10c69985559632845434980878d4f9a01d2a090a61a5b73",
+    "<task>/fdroid-frame-verified-built-resources.json": "3fa99d37f613b5fa27080645946d0691fe6f6ffa7b4b5487ca17ceebd712fb36",
+    "<task>/fdroid-installed.json": "bb48680ad8199be6b94fdee0b00d72f7a53467eb7efd15124f92bbe3e41ca5b4",
+    "<task>/main-first-native-device.json": "a0c6d40576bdf28c41ff7b9cdf0650d82b33041a1971376d90c5361b8214bcbf",
+    "<task>/main-first-native-device.txt": "7653b6e8168f82ad8a2ecf725f1de0402178d43f62fd125b44ff486400cf9920",
+    "<task>/main-frame-full-build.json": "5c7d7c41d4c83fadaefe6e6640a68023ac0f5d5f858be8bd8903b5cac093b669",
+    "<task>/main-frame-full-build.log": "bba781f29a1cc1c504e5c11660821993fab0a588fbe36e30c29c49d467aba8b3",
+    "<task>/main-frame-full-built-resources.json": "6ca877555a2a48e7f959e5b0c6c8441d1f1e6125471e4b3cb84950a44d455760",
+    "<task>/main-frame-native-device.json": "5aab9ad9061ac5e50a87049ff0b3c6988df9f74309d364983b679c107b70ec1c",
+    "<task>/main-frame-native-device.txt": "b72f99ac13f90d379e09709f6c19bc7434e7c5c6e32c41994f81bf33c5faa94c",
+    "<task>/main-installed.json": "cfd2fa136962f578d7ffc59725b6e4d5e4749aa92953ee89ac884503c4365777",
+    "<task>/main-native-fixes-device.json": "cc0d926494f41f7857cb829dddc1167f0d967e374b38fb9ac197c96e2db09974",
+    "<task>/main-native-fixes-device.txt": "bf7232bed2bb32ae94bddf1039f4f68cab7ad123fa6e0cb889c36043641a3b6d",
+    "<task>/main-readable-device.json": "32fbfe368a5d0146a73b7137f81b6bd37cdad406f9650cd1eb5d82ce609b8d12",
+    "<task>/main-readable-device.txt": "d10c26b0b5f9b1e7a152ed6926fa7bf8b479064e6bfdc11fad5f897b56041048",
+    "<task>/main-readable-installed-device.json": "82bbd94fbd9b2a344e64316c45313b9928d98514dee47c400e83915c34b5755f",
+    "<task>/main-readable-installed-device.txt": "39734e7df104f540bf89c7dcf000017b10c36020f511ee7cb18499232f9e2f91",
+    "<task>/main-visual-isolated-large-device.json": "51e33b0a3038c456dcd74e455949c1f99240b53f6e28d649368239165626db41",
+    "<task>/main-visual-isolated-large-device.txt": "d6a3f7c3da257e274d905fad4900deb2548b02dbf7fdfacd1da4237ccb14ffc4",
+    "<task>/main-visual-isolated-missing-device.json": "a9e02ed2ee1bc81ab3af6b939f994e843bfe3c608b1d894f4d8ec336ad61b0e2",
+    "<task>/main-visual-isolated-missing-device.txt": "24ca4278060f122c7d3bd4a04e288caa918af1d33521353339425cdd38a5de5e",
+    "<task>/raw/diagnose-units-results/TEST-takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest.xml": "0de6dbaa9d66f5220d887c2de132deedd5d88954d1360491a4ca5f94c36cb3a5",
+    "<task>/raw/diagnose-units-results/TEST-takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest.xml": "ffdc6641e399d8202edf95d5dd3d0a5bebaa879c687cbd4e9ad4a915691c0b94",
+    "<task>/raw/diagnose-units-results/TEST-takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest.xml": "94b6d841bdba3064a39b221e9e4c6c40402635d75272dca0f16618751274bfcd",
+    "<task>/raw/diagnose-units-results/TEST-takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest.xml": "d57a93c7025413cec8c66b243d0ea5e726f532c3061759eecbe1a03a45c5721b",
+    "<task>/raw/diagnose-units-results/TEST-takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest.xml": "f57b89c4aae72c974b368668392d4e6c5df857a436368f1803417b17d38049b9",
+    "<task>/raw/diagnose-units-results/TEST-takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest.xml": "de9ed09782d514bf8cb1b449e66ef3637316c346796dd4e3eaddf2dafdc68cc2",
+    "<task>/raw/diagnose-units-results/TEST-takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest.xml": "328eb1426dde2a031b8693cece0b5cf75afea8f5514f14d2851c009d154a37e6",
+    "<task>/raw/diagnose-units-results/TEST-takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest.xml": "4d07edaadaf362936bbaf2bd28e97ba19233bb9a3f50cc963c5a251a0c500285",
+    "<task>/raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest.xml": "3858e955d9a95521149b787b8968adc5548529f57a343200bc2c7f4c738aec79",
+    "<task>/raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest.xml": "fcdf217dfd998eeb2b2ac442ade7578fff0fd58e9af6a4fb303672a1379ee778",
+    "<task>/raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest.xml": "6c1744da9bc3ae872b2fa02377b8cbd669347e49c206b286553b757e1fd15167",
+    "<task>/raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest.xml": "32639c2579c4cd7d8462fe668c75cf18e6dc275c8b7c7d8770f5b9ad1041920a",
+    "<task>/raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest.xml": "1fdac530b4ee01278ebdab673d57b9a770acf9432bb32c84c5feb3799d79b791",
+    "<task>/raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest.xml": "e21f3f3b6a70aab6b5a08a07b2d8f3c0f8284996f29a9feb43c4bebcc69303a8",
+    "<task>/raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest.xml": "68af00d2dfb3292e4bd24d8fe8fd049df8e417503d328c9601e009a7f3244369",
+    "<task>/raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest.xml": "67433a6f34bb54256aaa6ca890effff97c80c9b2ceacc941c6cc028ccc49ea25",
+    "<task>/raw/fdroid-frame-verified-jvm/build-provenance.json": "72cb00dad2966db74429e199434fe3199027d98f15b5854c438269a7c2441462",
+    "<task>/raw/first-units-results/TEST-takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest.xml": "193642eb6b0bd6c46a6a9b36ff4a1b536cef674dfa27f55e699ebac89e93eae2",
+    "<task>/raw/first-units-results/TEST-takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest.xml": "c564210994a8c5cdf063995693d1cb476c54c5582a82dc006c7b34e4d013a481",
+    "<task>/raw/first-units-results/TEST-takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest.xml": "78bb7e0c1fab85b63fb088bcc36c9793aa8d1dba2357c0e331e6a60d7a918194",
+    "<task>/raw/first-units-results/TEST-takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest.xml": "edff9ad6039f3b462f21c8573786eeb6fd89cd8203db9b0779d93a9b761e9555",
+    "<task>/raw/first-units-results/TEST-takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest.xml": "976385ff7826133fdfac0dad71f121ac4e00b2a937c1bf0ff3e1e96ed683123c",
+    "<task>/raw/first-units-results/TEST-takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest.xml": "cb9d8439ab3d7dea1f13ba00b274ac4e83193d54801f03103ef08a0e2a06059f",
+    "<task>/raw/first-units-results/TEST-takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest.xml": "7caff5b944e90e4714a9f06678ce0a1cbb0248040ee815768438c434505d52c5",
+    "<task>/raw/first-units-results/TEST-takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest.xml": "a754838fd6e60267cadb02e60248c1dd594dc8f69c67edbbccbc33cf66734188",
+    "<task>/raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest.xml": "6428bb5fbbe180907111cb7892d5e5721b9780a22d1c0b9e78e180fb29233ea3",
+    "<task>/raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest.xml": "43f42e83542c5c50141725adcdb51720ce8435d841b0992dff5ef720f974d893",
+    "<task>/raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest.xml": "0904314ae39a9952db1881b99b5b6e45fa623db4e1acc3c59022a5d22fa9fd56",
+    "<task>/raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest.xml": "bd37778f675dbcf4e7bf3ccff8966d532b9b8a6b8fbf83f00173a44d84d3feae",
+    "<task>/raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest.xml": "5795dfaf57e15a12d56004dbf4f70b77d6fb82fdf6cba7a212d55a11bde09d89",
+    "<task>/raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest.xml": "e32ac66297314a3d0cf59091e78cdbdf4bab63ae8ea1875f487a6c3c7548db05",
+    "<task>/raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest.xml": "f3c2d727a6f8c8f48fb1125bdd2ccc2b0d205907461973aa35a2977784edd7e6",
+    "<task>/raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest.xml": "e96b4d18dcc78bdb0569b640689a398daf0889240405172168c4406cf523f7d7",
+    "<task>/raw/main-frame-full-jvm/build-provenance.json": "1193adc30e9cd8893110a66e320574d5096a4577f8717c5eccf292ab6db3b2c1",
+    "<task>/source-freeze.json": "90aad80facf484d627e81a848317cd1e28c6d03e6bf76abcf5964bfc60d24406",
+    "<fdroid>/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "2027d64d4f975065ef16af2c4306b370e10653cfab1de059c467d1eac123a284",
+    "<fdroid>/app/build/outputs/apk/androidTest/debug/output-metadata.json": "bb4a0ec7d4d084e141201428cf6260f7636a6ee713c3362b7e925fa47adfccae",
+    "<fdroid>/app/build/outputs/apk/debug/Monica-Android-x86_64-1.0.325.apk": "8913e31da9191186213f5ac9e3abcf28d54ce2121e376ae9f78d1feb3acbe9e6",
+    "<fdroid>/app/build/outputs/apk/debug/output-metadata.json": "c217584bd8e629f8cbedaa8ba9f7cd206d20505c16fab803de54df5eea5462fa",
+    "<fdroid>/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenFingerprintInstrumentedTest.kt": "a6f5541a1a4b5f59caf8a1b66912a60b43e6884e43e8c577a29388e099c8dca6",
+    "<fdroid>/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenFingerprintSessionInstrumentedTest.kt": "176eebc61be469fe914422b7446e884b61b15d8483c2ed04eb51bb53671cdd0b",
+    "<fdroid>/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenNewDeviceOtpResendInstrumentedTest.kt": "a92abea050f243e3d00b5487e4cfdda00b224c4a8fc03580552473191c7a3aa0",
+    "<fdroid>/app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenApi.kt": "411fd99d7af2bc48ded70ccd5ff341306d52b55cbe46dfd82c6fb83956e4fdc2",
+    "<fdroid>/app/src/main/java/takagi/ru/monica/bitwarden/crypto/BitwardenAccountFingerprint.kt": "c6774c383e9732e8251afc247a757fade99cb508fa8a94d09673cd0269863a22",
+    "<fdroid>/app/src/main/java/takagi/ru/monica/bitwarden/repository/BitwardenRepository.kt": "81a5b4764b366dddea400586fb539f183493af68e968cc7a3d896a2c6f8b8abf",
+    "<fdroid>/app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAccountIdentityStore.kt": "3c782f2ccd62a315461729e6b2731038f5178dc9e9ef858d1886d6e87945bf27",
+    "<fdroid>/app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAuthService.kt": "1ea651b18f27db5078883ba8f57fe9946d084b444b34e9fd4c67429aec6a6e50",
+    "<fdroid>/app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSyncService.kt": "ba550d2a00d713bed982cd861b9788973099d576a6c76f87ef6f46918e928cd1",
+    "<fdroid>/app/src/main/java/takagi/ru/monica/bitwarden/service/NewDeviceOtpResendFailure.kt": "fa5be81bf2e06244005bf66f1beee90f3974b9fc68505b897ec144ea0150c89f",
+    "<fdroid>/app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenAccountScreen.kt": "65c0cb33b72339062fb906195b6a9e353596ef29863ac5336fec06a3160a5e25",
+    "<fdroid>/app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenFingerprintSheet.kt": "1522232daf6e19b60cb042606b10dbaa62b4d8feccbec71c39ca829dd1b08347",
+    "<fdroid>/app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenLoginScreen.kt": "cb9a587b612506774f1643b83bc545d1e00fb8868e8c39ed11e4d9feec247d0d",
+    "<fdroid>/app/src/main/java/takagi/ru/monica/bitwarden/viewmodel/BitwardenViewModel.kt": "81290f61d620e11b88d8b52f458592078c61de12f442f9783fd7fbb9b7729c54",
+    "<fdroid>/app/src/main/java/takagi/ru/monica/bitwarden/viewmodel/NewDeviceOtpResendController.kt": "87ad4600832d02e4a6159ad8efac0a89d0a44980f7462523b6a9f1bc6f52625c",
+    "<fdroid>/app/src/main/res/raw/bitwarden_fingerprint_words.txt": "6d557f0693958fb5e650b68b5bee585eb82cf4da32965505c789e924743bc522",
+    "<fdroid>/app/src/main/res/values-b+lzh/bitwarden_account_basics.xml": "e38683f8976ea9574b0f5be1b3e4f4f3762cb987649d638f99bcd06ba4c7e61e",
+    "<fdroid>/app/src/main/res/values-b+zh+Hant/bitwarden_account_basics.xml": "bb66aa0c39bae601ea72b90b07f4ecc83e6a92ac588fe56c7b1c4de00cf8ec45",
+    "<fdroid>/app/src/main/res/values-de/bitwarden_account_basics.xml": "2ce65266a47f225cb99b3144d162b4c9e6359b7541e0a7ffb5941c470154187e",
+    "<fdroid>/app/src/main/res/values-es/bitwarden_account_basics.xml": "a1ea958ed3862ee785397ee6ebcf705cf981d09a28e8b31720cbd4327e45e2ab",
+    "<fdroid>/app/src/main/res/values-fr/bitwarden_account_basics.xml": "bc039a8cae3d048b65d22583cbf4035ed543a4f973c0561ef3a01e3e8385177b",
+    "<fdroid>/app/src/main/res/values-it/bitwarden_account_basics.xml": "faffa57a9d580c33817626ffc74b7684df347c664dc416dbe3a79b27593b2b01",
+    "<fdroid>/app/src/main/res/values-ja/bitwarden_account_basics.xml": "9a1a4fae7a5a58a4e11e0c159a5c874cce6323fd7e008ceb14f478f40281b070",
+    "<fdroid>/app/src/main/res/values-ko/bitwarden_account_basics.xml": "4f33bf34ac7b9e336c269d0469bc15cfaabb039f9f008f3bc863bd35b63c6509",
+    "<fdroid>/app/src/main/res/values-pl/bitwarden_account_basics.xml": "2ec8435ca927395f43654e6f012c15ad9a5e59451d28219fcc28da6eefcd3042",
+    "<fdroid>/app/src/main/res/values-pt-rBR/bitwarden_account_basics.xml": "e1cac02cc2d7b3d42be42607c37448a47968b476c592f4a05cde09e1448708c0",
+    "<fdroid>/app/src/main/res/values-pt/bitwarden_account_basics.xml": "38950b3e068348db063e9e6cf9119136be5a1eabb635fe3cbf5fb90437f7c11d",
+    "<fdroid>/app/src/main/res/values-ru/bitwarden_account_basics.xml": "2437dfb9f5718307392f48e460eec1b567e0fb3842eddeeda070f4f601e99ef2",
+    "<fdroid>/app/src/main/res/values-vi/bitwarden_account_basics.xml": "d5be54be427fa895f4e7c1b9dc41cec1c9fcdc7ecc2d9189553e4334ea19de1e",
+    "<fdroid>/app/src/main/res/values-zh-rCN/bitwarden_account_basics.xml": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+    "<fdroid>/app/src/main/res/values-zh-rNY/bitwarden_account_basics.xml": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+    "<fdroid>/app/src/main/res/values-zh-rXB/bitwarden_account_basics.xml": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+    "<fdroid>/app/src/main/res/values-zh/bitwarden_account_basics.xml": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+    "<fdroid>/app/src/main/res/values/bitwarden_account_basics.xml": "cf5f9723a941d0f71bf26210429176fcc90b9224b65cc8c300638a1a6d762c20",
+    "<fdroid>/app/src/test/java/takagi/ru/monica/bitwarden/BitwardenAccountFingerprintTest.kt": "38df5723b14d552452f7ba85ba5101a1c74b2c934ff81e3e481428e3d9f926fa",
+    "<fdroid>/app/src/test/java/takagi/ru/monica/bitwarden/BitwardenAccountIdentityStoreTest.kt": "db03264adef3a2b5c9c24a0ee87c5e64622245e404711fb4646f800129e73b92",
+    "<fdroid>/app/src/test/java/takagi/ru/monica/bitwarden/service/BitwardenNewDeviceOtpResendTest.kt": "a354997e3cf6d83744543beb832e60c7748d5b38277a420cbc70be7b9eb00f5b",
+    "<fdroid>/app/src/test/java/takagi/ru/monica/bitwarden/viewmodel/NewDeviceOtpResendControllerTest.kt": "7a3f85aaebfda215421cfb738d80f8c06be9d6d5cfaaba8d4e087a37a1114e28",
+    "<fdroid>/docs/licenses/eff-fingerprint-wordlist.md": "dd883c9f2407f7ed212dd8820b99b92b29ab635ffc3fcc7cc2e53f85ff03b0a0",
+    "<main-repository>/.gitignore": "c7ad4f99edad04d066b1e29fb3b99b80f59c1bfadf48fe06fad28007e00ee4fd",
+    "<main-android>/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "2a2832ca748d55328f73a50d6f93baceadd78f9c2e8af9de79e89b047fa25056",
+    "<main-android>/app/build/outputs/apk/androidTest/debug/output-metadata.json": "189e5eb173bae0fc3b332185ec77d24f787e17e15573509585a30826e4a8e637",
+    "<main-android>/app/build/outputs/apk/debug/Monica-Android-x86_64-1.0.325-26110512-05.APK": "fa3e13f0181d16334442b0edd7f893b9c7cd33da76d45bda408d801c04daa0de",
+    "<main-android>/app/build/outputs/apk/debug/output-metadata.json": "6b91196cf71dde900924c2ed6539bbc950949ada731d1f9661f5c4db4fcec24f",
+    "<main-android>/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenFingerprintInstrumentedTest.kt": "a6f5541a1a4b5f59caf8a1b66912a60b43e6884e43e8c577a29388e099c8dca6",
+    "<main-android>/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenFingerprintSessionInstrumentedTest.kt": "176eebc61be469fe914422b7446e884b61b15d8483c2ed04eb51bb53671cdd0b",
+    "<main-android>/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenNewDeviceOtpResendInstrumentedTest.kt": "a92abea050f243e3d00b5487e4cfdda00b224c4a8fc03580552473191c7a3aa0",
+    "<main-android>/app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenApi.kt": "411fd99d7af2bc48ded70ccd5ff341306d52b55cbe46dfd82c6fb83956e4fdc2",
+    "<main-android>/app/src/main/java/takagi/ru/monica/bitwarden/crypto/BitwardenAccountFingerprint.kt": "c6774c383e9732e8251afc247a757fade99cb508fa8a94d09673cd0269863a22",
+    "<main-android>/app/src/main/java/takagi/ru/monica/bitwarden/repository/BitwardenRepository.kt": "5925de20888717016f0e73599ed7dc56d4628994b4f96e8af24b28b49474b379",
+    "<main-android>/app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAccountIdentityStore.kt": "3c782f2ccd62a315461729e6b2731038f5178dc9e9ef858d1886d6e87945bf27",
+    "<main-android>/app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAuthService.kt": "1ea651b18f27db5078883ba8f57fe9946d084b444b34e9fd4c67429aec6a6e50",
+    "<main-android>/app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSyncService.kt": "ba550d2a00d713bed982cd861b9788973099d576a6c76f87ef6f46918e928cd1",
+    "<main-android>/app/src/main/java/takagi/ru/monica/bitwarden/service/NewDeviceOtpResendFailure.kt": "fa5be81bf2e06244005bf66f1beee90f3974b9fc68505b897ec144ea0150c89f",
+    "<main-android>/app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenAccountScreen.kt": "65c0cb33b72339062fb906195b6a9e353596ef29863ac5336fec06a3160a5e25",
+    "<main-android>/app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenFingerprintSheet.kt": "1522232daf6e19b60cb042606b10dbaa62b4d8feccbec71c39ca829dd1b08347",
+    "<main-android>/app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenLoginScreen.kt": "cb9a587b612506774f1643b83bc545d1e00fb8868e8c39ed11e4d9feec247d0d",
+    "<main-android>/app/src/main/java/takagi/ru/monica/bitwarden/viewmodel/BitwardenViewModel.kt": "81290f61d620e11b88d8b52f458592078c61de12f442f9783fd7fbb9b7729c54",
+    "<main-android>/app/src/main/java/takagi/ru/monica/bitwarden/viewmodel/NewDeviceOtpResendController.kt": "87ad4600832d02e4a6159ad8efac0a89d0a44980f7462523b6a9f1bc6f52625c",
+    "<main-android>/app/src/main/res/raw/bitwarden_fingerprint_words.txt": "6d557f0693958fb5e650b68b5bee585eb82cf4da32965505c789e924743bc522",
+    "<main-android>/app/src/main/res/values-b+lzh/bitwarden_account_basics.xml": "e38683f8976ea9574b0f5be1b3e4f4f3762cb987649d638f99bcd06ba4c7e61e",
+    "<main-android>/app/src/main/res/values-b+zh+Hant/bitwarden_account_basics.xml": "bb66aa0c39bae601ea72b90b07f4ecc83e6a92ac588fe56c7b1c4de00cf8ec45",
+    "<main-android>/app/src/main/res/values-de/bitwarden_account_basics.xml": "2ce65266a47f225cb99b3144d162b4c9e6359b7541e0a7ffb5941c470154187e",
+    "<main-android>/app/src/main/res/values-es/bitwarden_account_basics.xml": "a1ea958ed3862ee785397ee6ebcf705cf981d09a28e8b31720cbd4327e45e2ab",
+    "<main-android>/app/src/main/res/values-fr/bitwarden_account_basics.xml": "bc039a8cae3d048b65d22583cbf4035ed543a4f973c0561ef3a01e3e8385177b",
+    "<main-android>/app/src/main/res/values-it/bitwarden_account_basics.xml": "faffa57a9d580c33817626ffc74b7684df347c664dc416dbe3a79b27593b2b01",
+    "<main-android>/app/src/main/res/values-ja/bitwarden_account_basics.xml": "9a1a4fae7a5a58a4e11e0c159a5c874cce6323fd7e008ceb14f478f40281b070",
+    "<main-android>/app/src/main/res/values-ko/bitwarden_account_basics.xml": "4f33bf34ac7b9e336c269d0469bc15cfaabb039f9f008f3bc863bd35b63c6509",
+    "<main-android>/app/src/main/res/values-pl/bitwarden_account_basics.xml": "2ec8435ca927395f43654e6f012c15ad9a5e59451d28219fcc28da6eefcd3042",
+    "<main-android>/app/src/main/res/values-pt-rBR/bitwarden_account_basics.xml": "e1cac02cc2d7b3d42be42607c37448a47968b476c592f4a05cde09e1448708c0",
+    "<main-android>/app/src/main/res/values-pt/bitwarden_account_basics.xml": "38950b3e068348db063e9e6cf9119136be5a1eabb635fe3cbf5fb90437f7c11d",
+    "<main-android>/app/src/main/res/values-ru/bitwarden_account_basics.xml": "2437dfb9f5718307392f48e460eec1b567e0fb3842eddeeda070f4f601e99ef2",
+    "<main-android>/app/src/main/res/values-vi/bitwarden_account_basics.xml": "d5be54be427fa895f4e7c1b9dc41cec1c9fcdc7ecc2d9189553e4334ea19de1e",
+    "<main-android>/app/src/main/res/values-zh-rCN/bitwarden_account_basics.xml": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+    "<main-android>/app/src/main/res/values-zh-rNY/bitwarden_account_basics.xml": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+    "<main-android>/app/src/main/res/values-zh-rXB/bitwarden_account_basics.xml": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+    "<main-android>/app/src/main/res/values-zh/bitwarden_account_basics.xml": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+    "<main-android>/app/src/main/res/values/bitwarden_account_basics.xml": "cf5f9723a941d0f71bf26210429176fcc90b9224b65cc8c300638a1a6d762c20",
+    "<main-android>/app/src/test/java/takagi/ru/monica/bitwarden/BitwardenAccountFingerprintTest.kt": "38df5723b14d552452f7ba85ba5101a1c74b2c934ff81e3e481428e3d9f926fa",
+    "<main-android>/app/src/test/java/takagi/ru/monica/bitwarden/BitwardenAccountIdentityStoreTest.kt": "db03264adef3a2b5c9c24a0ee87c5e64622245e404711fb4646f800129e73b92",
+    "<main-android>/app/src/test/java/takagi/ru/monica/bitwarden/service/BitwardenNewDeviceOtpResendTest.kt": "a354997e3cf6d83744543beb832e60c7748d5b38277a420cbc70be7b9eb00f5b",
+    "<main-android>/app/src/test/java/takagi/ru/monica/bitwarden/viewmodel/NewDeviceOtpResendControllerTest.kt": "7a3f85aaebfda215421cfb738d80f8c06be9d6d5cfaaba8d4e087a37a1114e28",
+    "<main-android>/docs/licenses/eff-fingerprint-wordlist.md": "dd883c9f2407f7ed212dd8820b99b92b29ab635ffc3fcc7cc2e53f85ff03b0a0"
+  },
+  "allInputsStableDuringAggregation": true,
+  "publication": {
+    "originalRawSha256": "cc71464978ce89a2dfc3d4e574d623d0b3972f362b66c1535f396bd2218fe144",
+    "pathLegend": {
+      "<task>": "local account-basics task directory; raw originals retained locally",
+      "<main-android>": "ordinary Android project root",
+      "<main-repository>": "ordinary repository root",
+      "<fdroid>": "canonical F-Droid repository root",
+      "<workspace>": "local workspace root"
+    },
+    "portableCopyOnly": true,
+    "imagesAndApksIncluded": false
+  }
+}

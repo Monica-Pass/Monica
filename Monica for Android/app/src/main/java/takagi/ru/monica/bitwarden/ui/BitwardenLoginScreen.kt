@@ -2,7 +2,6 @@ package takagi.ru.monica.bitwarden.ui
 
 import androidx.compose.ui.res.stringResource
 import takagi.ru.monica.R
-import androidx.annotation.StringRes
 import androidx.compose.ui.platform.LocalContext
 import takagi.ru.monica.bitwarden.service.BitwardenTwoFactorPolicy
 import androidx.compose.ui.platform.testTag
@@ -11,9 +10,6 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
@@ -24,7 +20,6 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -36,20 +31,22 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import takagi.ru.monica.bitwarden.api.BitwardenApiFactory
-import takagi.ru.monica.bitwarden.api.BitwardenTlsConfig
+import takagi.ru.monica.bitwarden.api.BitwardenEnvironmentDraft
+import takagi.ru.monica.bitwarden.api.BitwardenEnvironmentPreset
+import takagi.ru.monica.security.SessionManager
+import takagi.ru.monica.bitwarden.repository.BitwardenRepository
 import takagi.ru.monica.bitwarden.service.BitwardenAuthService
 import takagi.ru.monica.bitwarden.viewmodel.BitwardenViewModel
+import takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendOutcome
+import takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendState
 import takagi.ru.monica.ui.components.OutlinedTextField
 import takagi.ru.monica.ui.components.rememberBringIntoViewOnFocusModifier
 import takagi.ru.monica.viewmodel.ParsedTotpItem
 import takagi.ru.monica.util.TotpGenerator
-
-private enum class BitwardenServerPreset(@StringRes val label: Int) {
-    US(R.string.legacy_ui_bitwarden_server_us),
-    EU(R.string.legacy_ui_bitwarden_server_eu),
-    SELF_HOSTED(R.string.legacy_ui_bitwarden_server_self_hosted)
-}
 
 /**
  * Bitwarden 登录界面
@@ -65,34 +62,32 @@ fun BitwardenLoginScreen(
     viewModel: BitwardenViewModel,
     onNavigateBack: () -> Unit,
     onLoginSuccess: () -> Unit,
-    totpSuggestions: List<ParsedTotpItem> = emptyList()
+    totpSuggestions: List<ParsedTotpItem> = emptyList(),
+    initialEnvironmentDraft: BitwardenEnvironmentDraft? = null,
+    initialEmail: String = "",
+    existingAccount: Boolean = false,
+    openServerConfigurationOnStart: Boolean = false,
+    reauthentication: BitwardenRepository.ReauthenticationContext? = null,
 ) {
     val loginState by viewModel.loginState.collectAsState()
-    DisposableEffect(viewModel) {
-        onDispose { viewModel.resetLoginState(cancelInFlight = true) }
-    }
     val sendingEmail by viewModel.sendingTwoFactorEmail.collectAsState()
+    val newDeviceResend by viewModel.newDeviceOtpResend.collectAsState()
     val focusManager = LocalFocusManager.current
     val context = LocalContext.current
     
-    // 表单状态
-    var serverUrl by rememberSaveable { mutableStateOf("") }
-    var selectedServerPresetName by rememberSaveable { mutableStateOf(BitwardenServerPreset.US.name) }
-    var serverMenuExpanded by remember { mutableStateOf(false) }
-    var email by rememberSaveable { mutableStateOf("") }
-    var masterPassword by rememberSaveable { mutableStateOf("") }
-    var showPassword by rememberSaveable { mutableStateOf(false) }
-    var showAdvancedTls by rememberSaveable { mutableStateOf(false) }
-    var tlsCertificateAlias by rememberSaveable { mutableStateOf("") }
-    var tlsCaCertificatePem by rememberSaveable { mutableStateOf("") }
-    var tlsMtlsEnabled by rememberSaveable { mutableStateOf(false) }
-    var tlsClientCertPkcs12Base64 by rememberSaveable { mutableStateOf("") }
-    var tlsClientCertPassword by rememberSaveable { mutableStateOf("") }
-    var showClientCertPassword by rememberSaveable { mutableStateOf(false) }
-    val selectedServerPreset = runCatching {
-        BitwardenServerPreset.valueOf(selectedServerPresetName)
-    }.getOrElse { BitwardenServerPreset.US }
-    
+    // Credentials and connection drafts never enter saved instance state.
+    var environmentDraft by remember { mutableStateOf(initialEnvironmentDraft ?: BitwardenEnvironmentDraft(BitwardenEnvironmentPreset.US)) }
+    var email by remember { mutableStateOf(initialEmail) }
+    var masterPassword by remember { mutableStateOf("") }
+    var showPassword by remember { mutableStateOf(false) }
+    var showServerConfiguration by remember { mutableStateOf(openServerConfigurationOnStart) }
+    var authenticationInProgress by remember { mutableStateOf(false) }
+    val currentNavigateBack by rememberUpdatedState(onNavigateBack)
+    val currentLoginSuccess by rememberUpdatedState(onLoginSuccess)
+    val appLockGeneration by SessionManager.lockGeneration.collectAsState()
+    var observedAppLockGeneration by remember { mutableLongStateOf(SessionManager.lockGeneration.value) }
+    var authenticationAppGeneration by remember { mutableLongStateOf(SessionManager.lockGeneration.value) }
+
     // 两步验证状态
     var showTwoFactorDialog by remember { mutableStateOf(false) }
     var showRegistration by remember { mutableStateOf(false) }
@@ -110,45 +105,93 @@ fun BitwardenLoginScreen(
     var captchaSiteKey by remember { mutableStateOf<String?>(null) }
     var showCaptchaWebView by remember { mutableStateOf(false) }
 
-    fun resolveServerUrlForLogin(): String? {
-        return when (selectedServerPreset) {
-            BitwardenServerPreset.US -> BitwardenApiFactory.OFFICIAL_VAULT_URL
-            BitwardenServerPreset.EU -> BitwardenApiFactory.OFFICIAL_EU_VAULT_URL
-            BitwardenServerPreset.SELF_HOSTED -> serverUrl.trim().takeIf { it.isNotBlank() }
+    fun resetPendingAuthentication(clearPassword: Boolean = false) {
+        authenticationInProgress = false
+        viewModel.resetLoginState(cancelInFlight = true)
+        showTwoFactorDialog = false; showTotpPicker = false
+        showCaptchaDialog = false; showCaptchaWebView = false
+        twoFactorCode = ""; captchaResponse = ""; captchaSiteKey = null
+        rememberTwoFactor = false; availableTwoFactorMethods = emptyList(); twoFactorStatusMessage = null
+        if (clearPassword) { masterPassword = ""; showPassword = false }
+    }
+    fun discardSensitiveDraft() {
+        resetPendingAuthentication(clearPassword = true)
+        showRegistration = false; showPasswordHint = false; showServerConfiguration = false
+        val previous = environmentDraft
+        environmentDraft = BitwardenEnvironmentDraft(previous.preset, previous.baseUrl, previous.webUrl,
+            previous.apiUrl, previous.identityUrl, previous.notificationsUrl)
+    }
+    fun pauseSensitiveInputs() {
+        masterPassword = ""; showPassword = false; twoFactorCode = ""; captchaResponse = ""
+        showTotpPicker = false; showCaptchaWebView = false; showCaptchaDialog = false
+        // Keep an already formed challenge and its captured environment only in process memory.
+        // VM resets an in-flight authentication on pause; the Idle observer below then closes it.
+        showTwoFactorDialog = availableTwoFactorMethods.isNotEmpty()
+    }
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val discardCurrentDraft by rememberUpdatedState<() -> Unit>({ discardSensitiveDraft() })
+    val pauseCurrentInputs by rememberUpdatedState<() -> Unit>({ pauseSensitiveInputs() })
+    DisposableEffect(lifecycleOwner, viewModel) {
+        viewModel.setLoginForeground(lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED))
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_STOP) {
+                viewModel.setNewDeviceResendForeground(false)
+                viewModel.setLoginForeground(false)
+                pauseCurrentInputs()
+            } else if (event == Lifecycle.Event.ON_START) {
+                viewModel.setLoginForeground(true)
+                viewModel.setNewDeviceResendForeground(true)
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer); viewModel.setLoginForeground(false); discardCurrentDraft() }
+    }
+    LaunchedEffect(appLockGeneration) {
+        if (appLockGeneration != observedAppLockGeneration) {
+            discardSensitiveDraft()
+            observedAppLockGeneration = appLockGeneration
+            if (existingAccount) currentNavigateBack()
         }
     }
-
-    fun buildTlsConfigForLogin(): BitwardenTlsConfig? {
-        if (selectedServerPreset != BitwardenServerPreset.SELF_HOSTED) {
-            return null
+    LaunchedEffect(loginState) {
+        if (loginState is BitwardenViewModel.LoginState.Idle &&
+            availableTwoFactorMethods.isNotEmpty()) {
+            resetPendingAuthentication(clearPassword = true)
         }
-        val config = BitwardenTlsConfig(
-            certificateAlias = tlsCertificateAlias.trim().takeIf { it.isNotBlank() },
-            caCertificatePem = tlsCaCertificatePem.trim().takeIf { it.isNotBlank() },
-            mtlsEnabled = tlsMtlsEnabled,
-            clientCertPkcs12Base64 = tlsClientCertPkcs12Base64.trim().takeIf { it.isNotBlank() },
-            clientCertPassword = tlsClientCertPassword.takeIf { it.isNotBlank() }
-        )
-        return if (config.isEmpty()) null else config
+    }
+    fun resolveServerUrlForLogin(): String? = when (environmentDraft.preset) {
+        BitwardenEnvironmentPreset.US -> BitwardenApiFactory.OFFICIAL_VAULT_URL
+        BitwardenEnvironmentPreset.EU -> BitwardenApiFactory.OFFICIAL_EU_VAULT_URL
+        BitwardenEnvironmentPreset.CUSTOM -> environmentDraft.baseUrl.takeIf { it.isNotBlank() }
     }
 
+    fun loginContextCurrent(): Boolean {
+        val current = SessionManager.isUnlocked.value && lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) &&
+            (reauthentication == null || viewModel.isReauthenticationCurrent(reauthentication))
+        if (!current) resetPendingAuthentication(clearPassword = true)
+        return current
+    }
     fun submitPrimaryLogin(captcha: String? = null) {
         rememberTwoFactor = false
         val normalizedEmail = email.trim()
         val resolvedServerUrl = resolveServerUrlForLogin()
         if (normalizedEmail.isBlank() || masterPassword.isBlank()) return
-        if (selectedServerPreset == BitwardenServerPreset.SELF_HOSTED && resolvedServerUrl.isNullOrBlank()) return
+        if (resolvedServerUrl.isNullOrBlank()) return
+        if (!loginContextCurrent()) return
+        authenticationInProgress = true
+        authenticationAppGeneration = SessionManager.lockGeneration.value
         viewModel.login(
             resolvedServerUrl,
             normalizedEmail,
             masterPassword,
             captchaResponse = captcha,
-            tlsConfig = buildTlsConfigForLogin()
+            environmentDraft = environmentDraft,
+            reauthentication = reauthentication,
         )
     }
 
     fun submitTwoFactorLogin(captcha: String? = null) {
-        if (twoFactorCode.isBlank()) return
+        if (!loginContextCurrent() || twoFactorCode.isBlank()) return
         showTwoFactorDialog = true
         viewModel.loginWithTwoFactor(
             twoFactorCode = twoFactorCode,
@@ -159,11 +202,14 @@ fun BitwardenLoginScreen(
     }
     
     // 监听事件
-    LaunchedEffect(Unit) {
+    LaunchedEffect(viewModel) {
         viewModel.events.collect { event ->
+            if (!authenticationInProgress || !lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) ||
+                SessionManager.lockGeneration.value != authenticationAppGeneration) return@collect
             when (event) {
                 is BitwardenViewModel.BitwardenEvent.ShowTwoFactorDialog -> {
                     availableTwoFactorMethods = event.methods
+                    if (BitwardenAuthService.TWO_FACTOR_EMAIL_NEW_DEVICE in event.methods) masterPassword = ""
                     selectedTwoFactorMethod = event.methods.singleOrNull() ?: -1
                     twoFactorStatusMessage = null
                     showTwoFactorDialog = true
@@ -172,7 +218,8 @@ fun BitwardenLoginScreen(
                     showTwoFactorDialog = false
                     twoFactorCode = ""
                     rememberTwoFactor = false
-                    onLoginSuccess()
+                    authenticationInProgress = false
+                    currentLoginSuccess()
                 }
                 is BitwardenViewModel.BitwardenEvent.ShowCaptchaDialog -> {
                     captchaForTwoFactor = event.forTwoFactor
@@ -197,7 +244,7 @@ fun BitwardenLoginScreen(
             TopAppBar(
                 title = { Text(stringResource(R.string.legacy_ui_bitwarden_login)) },
                 navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
+                    IconButton(onClick = { discardSensitiveDraft(); currentNavigateBack() }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.back))
                     }
                 }
@@ -248,7 +295,9 @@ fun BitwardenLoginScreen(
                 // 邮箱输入
                 OutlinedTextField(
                     value = email,
-                    onValueChange = { email = it.trim() },
+                    onValueChange = { if (!existingAccount && email != it) { resetPendingAuthentication(clearPassword = true); email = it } },
+                    enabled = !existingAccount,
+                    saveTextState = false,
                     label = { Text(stringResource(R.string.legacy_ui_email_address)) },
                     leadingIcon = {
                         Icon(Icons.Outlined.Email, contentDescription = null)
@@ -261,7 +310,7 @@ fun BitwardenLoginScreen(
                         onNext = { focusManager.moveFocus(FocusDirection.Down) }
                     ),
                     singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().testTag("bitwarden_login_email")
                 )
                 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -269,7 +318,8 @@ fun BitwardenLoginScreen(
                 // 主密码输入
                 OutlinedTextField(
                     value = masterPassword,
-                    onValueChange = { masterPassword = it },
+                    onValueChange = { resetPendingAuthentication(); masterPassword = it },
+                    saveTextState = false,
                     label = { Text(stringResource(R.string.master_password)) },
                     leadingIcon = {
                         Icon(Icons.Outlined.Lock, contentDescription = null)
@@ -296,191 +346,23 @@ fun BitwardenLoginScreen(
                         }
                     ),
                     singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().testTag("bitwarden_login_password")
                 )
                 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                ExposedDropdownMenuBox(
-                    expanded = serverMenuExpanded,
-                    onExpandedChange = { serverMenuExpanded = !serverMenuExpanded },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    OutlinedTextField(
-                        value = stringResource(selectedServerPreset.label),
-                        onValueChange = {},
-                        readOnly = true,
-                        label = { Text(stringResource(R.string.legacy_ui_server)) },
-                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = serverMenuExpanded) },
-                        modifier = Modifier
-                            .menuAnchor()
-                            .fillMaxWidth()
-                    )
-                    ExposedDropdownMenu(
-                        expanded = serverMenuExpanded,
-                        onDismissRequest = { serverMenuExpanded = false }
-                    ) {
-                        BitwardenServerPreset.entries.forEach { preset ->
-                            DropdownMenuItem(
-                                text = { Text(stringResource(preset.label)) },
-                                onClick = {
-                                    selectedServerPresetName = preset.name
-                                    serverMenuExpanded = false
-                                }
-                            )
-                        }
-                    }
+                BitwardenSettingRow(
+                    title = stringResource(R.string.bitwarden_server_title), icon = Icons.Outlined.Cloud,
+                    supporting = resolveServerUrlForLogin().orEmpty(),
+                    onClick = { resetPendingAuthentication(clearPassword = true); showServerConfiguration = true },
+                    modifier = Modifier.testTag("bitwarden_server_configure"),
+                )
+                if (existingAccount) {
+                    Text(stringResource(R.string.bitwarden_server_reauthenticate_hint),
+                        style = MaterialTheme.typography.bodySmall, modifier = Modifier.fillMaxWidth().padding(top = 8.dp))
                 }
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                OutlinedButton(
-                    onClick = { showAdvancedTls = !showAdvancedTls },
-                    enabled = selectedServerPreset == BitwardenServerPreset.SELF_HOSTED,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Icon(Icons.Outlined.Security, contentDescription = null)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(if (showAdvancedTls) stringResource(R.string.legacy_ui_tls_collapse) else stringResource(R.string.legacy_ui_tls_settings))
-                }
-
-                if (selectedServerPreset != BitwardenServerPreset.SELF_HOSTED) {
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = stringResource(R.string.legacy_ui_tls_self_hosted_hint),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-
-                AnimatedVisibility(
-                    visible = selectedServerPreset == BitwardenServerPreset.SELF_HOSTED,
-                    enter = fadeIn(),
-                    exit = fadeOut()
-                ) {
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        Spacer(modifier = Modifier.height(8.dp))
-                        OutlinedTextField(
-                            value = serverUrl,
-                            onValueChange = { serverUrl = it.trim() },
-                            label = { Text(stringResource(R.string.legacy_ui_self_hosted_url)) },
-                            placeholder = { Text("https://vault.example.com") },
-                            leadingIcon = {
-                                Icon(Icons.Outlined.Cloud, contentDescription = null)
-                            },
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Uri,
-                                imeAction = ImeAction.Next
-                            ),
-                            singleLine = true,
-                            modifier = Modifier.fillMaxWidth()
-                        )
-
-                        AnimatedVisibility(
-                            visible = showAdvancedTls,
-                            enter = fadeIn(),
-                            exit = fadeOut()
-                        ) {
-                            Card(
-                                colors = CardDefaults.cardColors(
-                                    containerColor = MaterialTheme.colorScheme.surfaceVariant
-                                ),
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(12.dp)
-                                ) {
-                                    Text(
-                                        text = stringResource(R.string.legacy_ui_tls_advanced),
-                                        style = MaterialTheme.typography.titleSmall
-                                    )
-                                    Spacer(modifier = Modifier.height(4.dp))
-                                    Text(
-                                        text = stringResource(R.string.legacy_ui_tls_default_hint),
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                                    )
-                                    Spacer(modifier = Modifier.height(12.dp))
-
-                                    OutlinedTextField(
-                                        value = tlsCertificateAlias,
-                                        onValueChange = { tlsCertificateAlias = it },
-                                        label = { Text(stringResource(R.string.legacy_ui_tls_certificate_alias)) },
-                                        singleLine = true,
-                                        modifier = Modifier.fillMaxWidth()
-                                    )
-
-                                    Spacer(modifier = Modifier.height(8.dp))
-
-                                    OutlinedTextField(
-                                        value = tlsCaCertificatePem,
-                                        onValueChange = { tlsCaCertificatePem = it },
-                                        label = { Text(stringResource(R.string.legacy_ui_tls_ca_pem)) },
-                                        placeholder = { Text("-----BEGIN CERTIFICATE-----") },
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .heightIn(min = 96.dp)
-                                    )
-
-                                    Spacer(modifier = Modifier.height(8.dp))
-
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Checkbox(
-                                            checked = tlsMtlsEnabled,
-                                            onCheckedChange = { tlsMtlsEnabled = it }
-                                        )
-                                        Text(stringResource(R.string.legacy_ui_tls_enable_mtls))
-                                    }
-
-                                    AnimatedVisibility(visible = tlsMtlsEnabled) {
-                                        Column(modifier = Modifier.fillMaxWidth()) {
-                                            OutlinedTextField(
-                                                value = tlsClientCertPkcs12Base64,
-                                                onValueChange = { tlsClientCertPkcs12Base64 = it },
-                                                label = { Text(stringResource(R.string.legacy_ui_tls_client_certificate)) },
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .heightIn(min = 96.dp)
-                                            )
-
-                                            Spacer(modifier = Modifier.height(8.dp))
-
-                                            OutlinedTextField(
-                                                value = tlsClientCertPassword,
-                                                onValueChange = { tlsClientCertPassword = it },
-                                                label = { Text(stringResource(R.string.legacy_ui_tls_client_password)) },
-                                                trailingIcon = {
-                                                    IconButton(onClick = { showClientCertPassword = !showClientCertPassword }) {
-                                                        Icon(
-                                                            if (showClientCertPassword) Icons.Outlined.VisibilityOff else Icons.Outlined.Visibility,
-                                                            contentDescription = if (showClientCertPassword) stringResource(R.string.hide_password) else stringResource(R.string.show_password)
-                                                        )
-                                                    }
-                                                },
-                                                visualTransformation = if (showClientCertPassword) {
-                                                    VisualTransformation.None
-                                                } else {
-                                                    PasswordVisualTransformation()
-                                                },
-                                                singleLine = true,
-                                                modifier = Modifier.fillMaxWidth()
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                
                 Spacer(modifier = Modifier.height(24.dp))
-                
+
                 // 登录按钮
                 Button(
                     onClick = {
@@ -490,10 +372,11 @@ fun BitwardenLoginScreen(
                     enabled = loginState !is BitwardenViewModel.LoginState.Loading 
                             && email.trim().isNotBlank() 
                             && masterPassword.isNotBlank()
-                            && (selectedServerPreset != BitwardenServerPreset.SELF_HOSTED || serverUrl.trim().isNotBlank()),
+                            && resolveServerUrlForLogin() != null,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(50.dp)
+                        .heightIn(min = 52.dp)
+                        .testTag("bitwarden_login_submit")
                 ) {
                     if (loginState is BitwardenViewModel.LoginState.Loading) {
                         CircularProgressIndicator(
@@ -508,12 +391,12 @@ fun BitwardenLoginScreen(
                     }
                 }
                 
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    TextButton(onClick = { showRegistration = true }, enabled = loginState !is BitwardenViewModel.LoginState.Loading && resolveServerUrlForLogin() != null,
+                if (!existingAccount) Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    TextButton(onClick = { resetPendingAuthentication(clearPassword = true); showRegistration = true }, enabled = loginState !is BitwardenViewModel.LoginState.Loading && resolveServerUrlForLogin() != null,
                         modifier = Modifier.weight(1f).testTag("bitwarden_create_account")) {
                         Text(stringResource(R.string.bitwarden_account_create))
                     }
-                    TextButton(onClick = { showPasswordHint = true }, enabled = loginState !is BitwardenViewModel.LoginState.Loading && resolveServerUrlForLogin() != null,
+                    TextButton(onClick = { resetPendingAuthentication(clearPassword = true); showPasswordHint = true }, enabled = loginState !is BitwardenViewModel.LoginState.Loading && resolveServerUrlForLogin() != null,
                         modifier = Modifier.weight(1f).testTag("bitwarden_request_password_hint")) {
                         Text(stringResource(R.string.bitwarden_account_request_hint))
                     }
@@ -587,13 +470,21 @@ fun BitwardenLoginScreen(
     }
     
     // 两步验证对话框
-    if (showRegistration) {
-        BitwardenRegistrationDialog(viewModel, resolveServerUrlForLogin().orEmpty(), email, buildTlsConfigForLogin(),
-            onRegistered = { email = it; showRegistration = false }, onDismiss = { showRegistration = false })
+    if (showServerConfiguration) {
+        BitwardenServerConfigurationDialog(environmentDraft, email, baseLocked = existingAccount,
+            onApply = { candidate ->
+                resetPendingAuthentication(clearPassword = true)
+                environmentDraft = candidate
+                showServerConfiguration = false
+            }, onDismiss = { showServerConfiguration = false })
     }
-    if (showPasswordHint) {
-        BitwardenPasswordHintDialog(viewModel, resolveServerUrlForLogin().orEmpty(), email, buildTlsConfigForLogin(),
-            onDismiss = { showPasswordHint = false })
+    if (showRegistration && !existingAccount) {
+        BitwardenRegistrationDialog(viewModel, environmentDraft, email,
+            onRegistered = { resetPendingAuthentication(clearPassword = true); email = it; showRegistration = false },
+            onDismiss = { showRegistration = false })
+    }
+    if (showPasswordHint && !existingAccount) {
+        BitwardenPasswordHintDialog(viewModel, environmentDraft, email, onDismiss = { showPasswordHint = false })
     }
     if (showTwoFactorDialog && !showTotpPicker) {
         TwoFactorDialog(
@@ -613,19 +504,25 @@ fun BitwardenLoginScreen(
             } else null,
             statusMessage = twoFactorStatusMessage,
             onSendEmailCode = {
-                twoFactorStatusMessage = context.getString(R.string.legacy_ui_email_code_requesting)
-                viewModel.sendTwoFactorEmailLogin()
+                if (loginContextCurrent()) {
+                    twoFactorStatusMessage = context.getString(R.string.legacy_ui_email_code_requesting)
+                    viewModel.sendTwoFactorEmailLogin()
+                }
             },
             busy = loginState is BitwardenViewModel.LoginState.Loading,
             sendingEmail = sendingEmail,
+            newDeviceResendState = newDeviceResend,
+            onResendNewDeviceOtp = {
+                if (loginContextCurrent()) {
+                    twoFactorStatusMessage = null
+                    viewModel.resendNewDeviceOtp()
+                }
+            },
             onConfirm = {
                 submitTwoFactorLogin()
             },
             onDismiss = {
-                showTwoFactorDialog = false
-                twoFactorCode = ""
-                rememberTwoFactor = false
-                viewModel.resetLoginState()
+                resetPendingAuthentication(clearPassword = true)
             }
         )
     }
@@ -633,8 +530,7 @@ fun BitwardenLoginScreen(
     if (showCaptchaDialog) {
         AlertDialog(
             onDismissRequest = {
-                showCaptchaDialog = false
-                captchaResponse = ""
+                resetPendingAuthentication(clearPassword = true)
             },
             icon = {
                 Icon(
@@ -660,6 +556,7 @@ fun BitwardenLoginScreen(
                     }
                     Spacer(modifier = Modifier.height(12.dp))
                     OutlinedTextField(
+                        saveTextState = false,
                         value = captchaResponse,
                         onValueChange = { captchaResponse = it },
                         label = { Text(stringResource(R.string.legacy_ui_captcha_response)) },
@@ -704,8 +601,7 @@ fun BitwardenLoginScreen(
             dismissButton = {
                 TextButton(
                     onClick = {
-                        showCaptchaDialog = false
-                        captchaResponse = ""
+                        resetPendingAuthentication(clearPassword = true)
                     }
                 ) {
                     Text(stringResource(R.string.cancel))
@@ -757,6 +653,22 @@ private fun CaptchaWebViewDialog(
     onError: (String) -> Unit,
     onDismiss: () -> Unit
 ) {
+    val mainHandler = remember { android.os.Handler(android.os.Looper.getMainLooper()) }
+    val active = remember { java.util.concurrent.atomic.AtomicBoolean(true) }
+    val appGeneration = remember { SessionManager.lockGeneration.value }
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    val currentToken by rememberUpdatedState(onToken)
+    val currentError by rememberUpdatedState(onError)
+    fun deliver(action: () -> Unit) {
+        mainHandler.post {
+            if (active.get() && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) &&
+                SessionManager.isUnlocked.value && SessionManager.lockGeneration.value == appGeneration) action()
+        }
+    }
+    DisposableEffect(Unit) {
+        onDispose { active.set(false); mainHandler.removeCallbacksAndMessages(null) }
+    }
+    val encodedSiteKey = android.text.TextUtils.htmlEncode(siteKey)
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.legacy_ui_captcha_verification)) },
@@ -774,15 +686,15 @@ private fun CaptchaWebViewDialog(
                             fun onToken(token: String?) {
                                 val value = token?.trim().orEmpty()
                                 if (value.isNotBlank()) {
-                                    onToken(value)
+                                    deliver { currentToken(value) }
                                 } else {
-                                    onError(context.getString(R.string.legacy_ui_captcha_empty_token))
+                                    deliver { currentError(context.getString(R.string.legacy_ui_captcha_empty_token)) }
                                 }
                             }
 
                             @JavascriptInterface
                             fun onError(error: String?) {
-                                onError(error ?: context.getString(R.string.legacy_ui_captcha_unknown_error))
+                                deliver { currentError(error ?: context.getString(R.string.legacy_ui_captcha_unknown_error)) }
                             }
                         }
 
@@ -802,7 +714,7 @@ private fun CaptchaWebViewDialog(
                                 </head>
                                 <body style="margin:0;padding:16px;font-family:sans-serif;">
                                   <div class="h-captcha"
-                                       data-sitekey="$siteKey"
+                                       data-sitekey="$encodedSiteKey"
                                        data-callback="onCaptchaSuccess"
                                        data-error-callback="onCaptchaError"></div>
                                   <script>
@@ -825,7 +737,13 @@ private fun CaptchaWebViewDialog(
                                 null
                             )
                         }
-                    }
+                    },
+                    onRelease = { webView ->
+                        active.set(false)
+                        webView.stopLoading()
+                        webView.removeJavascriptInterface("CaptchaBridge")
+                        webView.destroy()
+                    },
                 )
             }
         },
@@ -857,12 +775,16 @@ fun TwoFactorDialog(
     sendingEmail: Boolean = false,
     rememberTwoFactor: Boolean = false,
     onRememberTwoFactorChange: (Boolean) -> Unit = {},
+    newDeviceResendState: NewDeviceOtpResendState = NewDeviceOtpResendState(),
+    onResendNewDeviceOtp: (() -> Unit)? = null,
 ) {
     val choosing = selectedMethod !in availableMethods
     val supported = !choosing && BitwardenTwoFactorPolicy.supportsCode(selectedMethod)
-    val working = busy || sendingEmail
+    val sendingNewDeviceEmail = selectedMethod == BitwardenAuthService.TWO_FACTOR_EMAIL_NEW_DEVICE && newDeviceResendState.sending
+    val working = busy || sendingEmail || sendingNewDeviceEmail
+    val canDismiss = !busy && !sendingEmail
     AlertDialog(
-        onDismissRequest = { if (!working) onDismiss() },
+        onDismissRequest = { if (canDismiss) onDismiss() },
         modifier = Modifier.heightIn(max = (androidx.compose.ui.platform.LocalConfiguration.current.screenHeightDp * .85f).dp)
             .testTag("bitwarden_two_factor_dialog"),
         title = { Text(if (choosing) stringResource(R.string.bitwarden_choose_method) else getTwoFactorMethodName(selectedMethod)) },
@@ -924,6 +846,7 @@ fun TwoFactorDialog(
                     if (!statusMessage.isNullOrBlank()) Text(statusMessage, style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant)
                     if (supported) OutlinedTextField(
+                        saveTextState = false,
                         value = code, onValueChange = onCodeChange, enabled = !working,
                         label = { Text(getTwoFactorFieldLabel(selectedMethod)) },
                         keyboardOptions = KeyboardOptions(
@@ -931,6 +854,31 @@ fun TwoFactorDialog(
                             imeAction = ImeAction.Done),
                         keyboardActions = KeyboardActions(onDone = { if (!working && code.isNotBlank()) onConfirm() }),
                         singleLine = true, modifier = Modifier.fillMaxWidth().testTag("bitwarden_two_factor_code"))
+                    if (selectedMethod == BitwardenAuthService.TWO_FACTOR_EMAIL_NEW_DEVICE && onResendNewDeviceOtp != null) {
+                        FilledTonalButton(onClick = onResendNewDeviceOtp, enabled = !working && newDeviceResendState.canResend,
+                            modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp).testTag("bitwarden_new_device_resend")) {
+                            if (sendingNewDeviceEmail) CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
+                            else Icon(Icons.Outlined.Email, null, Modifier.size(18.dp))
+                            Spacer(Modifier.width(8.dp))
+                            Text(stringResource(if (sendingNewDeviceEmail) R.string.legacy_ui_email_code_requesting
+                                else R.string.bitwarden_new_device_resend), Modifier.weight(1f), textAlign = TextAlign.Center)
+                        }
+                        val resendMessage = when (newDeviceResendState.outcome) {
+                            NewDeviceOtpResendOutcome.NONE -> null
+                            NewDeviceOtpResendOutcome.SENT -> stringResource(R.string.bitwarden_new_device_resend_sent)
+                            NewDeviceOtpResendOutcome.FAILED -> stringResource(R.string.bitwarden_new_device_resend_failed)
+                            NewDeviceOtpResendOutcome.UNAVAILABLE -> stringResource(R.string.bitwarden_new_device_resend_unavailable)
+                            NewDeviceOtpResendOutcome.RATE_LIMITED -> stringResource(R.string.bitwarden_new_device_resend_rate_limited)
+                        }
+                        if (resendMessage != null) Text(resendMessage, style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.testTag("bitwarden_new_device_resend_status"))
+                        if (newDeviceResendState.remainingSeconds > 0 && !sendingNewDeviceEmail &&
+                            newDeviceResendState.outcome != NewDeviceOtpResendOutcome.UNAVAILABLE) {
+                            Text(stringResource(R.string.bitwarden_new_device_resend_wait, newDeviceResendState.remainingSeconds),
+                                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.testTag("bitwarden_new_device_resend_wait"))
+                        }
+                    }
                     if (supported && selectedMethod != BitwardenAuthService.TWO_FACTOR_EMAIL_NEW_DEVICE) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Checkbox(checked = rememberTwoFactor, onCheckedChange = onRememberTwoFactorChange,
@@ -946,7 +894,8 @@ fun TwoFactorDialog(
             if (!choosing && supported) Button(onClick = onConfirm, enabled = !working && code.isNotBlank(),
                 modifier = Modifier.testTag("bitwarden_two_factor_submit")) { Text(stringResource(R.string.legacy_ui_verify)) }
         },
-        dismissButton = { TextButton(onClick = onDismiss, enabled = !working) { Text(stringResource(R.string.cancel)) } },
+        dismissButton = { TextButton(onClick = onDismiss, enabled = canDismiss,
+            modifier = Modifier.testTag("bitwarden_two_factor_cancel")) { Text(stringResource(R.string.cancel)) } },
     )
 }
 

@@ -18,6 +18,7 @@ import kotlin.random.Random
 internal fun notificationAccountFingerprint(vault: BitwardenVault): String {
     val digest = MessageDigest.getInstance("SHA-256")
     listOf(vault.id.toString(), vault.userId, vault.email, vault.serverUrl, vault.identityUrl, vault.apiUrl,
+        vault.environmentPreset, vault.webVaultUrl, vault.notificationsUrl, vault.transportRevision, vault.transportSecretRef,
         vault.tlsCertificateAlias, vault.tlsCaCertificatePem, vault.tlsMtlsEnabled.toString(),
         vault.tlsClientCertPkcs12Base64, vault.tlsEncryptedClientCertPassword).forEach {
         val bytes = it.orEmpty().toByteArray(Charsets.UTF_8)

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_new_device_resend">Gửi lại email xác minh</string>
+    <string name="bitwarden_new_device_resend_sent">Đã yêu cầu email xác minh. Hãy kiểm tra hộp thư đến.</string>
+    <string name="bitwarden_new_device_resend_failed">Không thể yêu cầu email xác minh. Vui lòng thử lại.</string>
+    <string name="bitwarden_new_device_resend_unavailable">Máy chủ này không hỗ trợ gửi lại email xác minh thiết bị mới.</string>
+    <string name="bitwarden_new_device_resend_wait">Thử lại sau %1$d giây.</string>
+    <string name="bitwarden_new_device_resend_rate_limited">Có quá nhiều yêu cầu. Vui lòng chờ trước khi thử lại.</string>
+    <string name="bitwarden_account_fingerprint">Cụm từ dấu vân tay tài khoản</string>
+    <string name="bitwarden_account_fingerprint_hint">So sánh cụm từ này qua một kênh đáng tin cậy khác để giúp xác minh danh tính tài khoản của bạn.</string>
+    <string name="bitwarden_account_fingerprint_unavailable">Đồng bộ tài khoản này để tải khóa danh tính, rồi thử lại.</string>
+    <string name="bitwarden_account_fingerprint_copy">Sao chép cụm từ</string>
+</resources>

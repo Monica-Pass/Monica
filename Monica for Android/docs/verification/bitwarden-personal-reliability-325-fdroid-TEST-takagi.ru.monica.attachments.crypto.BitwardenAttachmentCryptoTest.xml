@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.attachments.crypto.BitwardenAttachmentCryptoTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-11-05T02:06:44" hostname="JOYIN" time="0.257">
+  <properties/>
+  <testcase name="readsOfficialBinaryAttachmentFormat" classname="takagi.ru.monica.attachments.crypto.BitwardenAttachmentCryptoTest" time="0.063"/>
+  <testcase name="doesNotDowngradeToUnauthenticatedCbc" classname="takagi.ru.monica.attachments.crypto.BitwardenAttachmentCryptoTest" time="0.015"/>
+  <testcase name="rejectsOversizedCiphertextBeforeReadingIt" classname="takagi.ru.monica.attachments.crypto.BitwardenAttachmentCryptoTest" time="0.012"/>
+  <testcase name="corruptedIvMacOrCiphertextNeverReleasesPlaintext" classname="takagi.ru.monica.attachments.crypto.BitwardenAttachmentCryptoTest" time="0.023"/>
+  <testcase name="readsEmptyAndMultiChunkOfficialAttachments" classname="takagi.ru.monica.attachments.crypto.BitwardenAttachmentCryptoTest" time="0.055"/>
+  <testcase name="uploadsAreReadableUsingOfficialBinaryLayout" classname="takagi.ru.monica.attachments.crypto.BitwardenAttachmentCryptoTest" time="0.005"/>
+  <testcase name="malformedExplicitAttachmentKeyNeverFallsBackToCipherKey" classname="takagi.ru.monica.attachments.crypto.BitwardenAttachmentCryptoTest" time="0.024"/>
+  <testcase name="truncatedAndMalformedAttachmentsNeverReleasePlaintext" classname="takagi.ru.monica.attachments.crypto.BitwardenAttachmentCryptoTest" time="0.03"/>
+  <testcase name="oldMonicaUploadsRemainReadableEvenWhenIvLooksLikeATypeByte" classname="takagi.ru.monica.attachments.crypto.BitwardenAttachmentCryptoTest" time="0.02"/>
+  <testcase name="wrongAttachmentKeyDoesNotReleasePlaintext" classname="takagi.ru.monica.attachments.crypto.BitwardenAttachmentCryptoTest" time="0.006"/>
+  <testcase name="missingLegacyAttachmentKeyUsesOwnedCopyOfCipherKey" classname="takagi.ru.monica.attachments.crypto.BitwardenAttachmentCryptoTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

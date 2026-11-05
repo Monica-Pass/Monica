@@ -23,6 +23,8 @@ import takagi.ru.monica.bitwarden.crypto.BitwardenCrypto
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [34], application = Application::class)
 class BitwardenAccountRegistrationTest {
+    @org.junit.Before fun unlockMainSession() { takagi.ru.monica.security.SessionManager.markUnlocked() }
+    @org.junit.After fun lockMainSession() { takagi.ru.monica.security.SessionManager.markLocked() }
     private val json = Json { ignoreUnknownKeys = true }
     private val email = "synthetic@example.test"
     private val password = "Synthetic registration 42! unique"
@@ -114,6 +116,65 @@ class BitwardenAccountRegistrationTest {
             assertEquals("/api/accounts/password-hint", request.path)
             assertEquals(setOf("email"), json.parseToJsonElement(request.body.readUtf8()).jsonObject.keys)
             assertNull(request.getHeader("Authorization"))
+        }
+    }
+
+    @Test fun independentIdentityWebAndApiUseTheCapturedEnvironment() = runBlocking {
+        MockWebServer().use { base -> MockWebServer().use { identity -> MockWebServer().use { api ->
+            val environment = requireNotNull(takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolver.resolve(
+                takagi.ru.monica.bitwarden.api.BitwardenEnvironmentDraft(
+                    takagi.ru.monica.bitwarden.api.BitwardenEnvironmentPreset.CUSTOM,
+                    base.url("/Base/").toString(), webUrl = "https://web.example.test/Team/",
+                    identityUrl = identity.url("/Identity/").toString(), apiUrl = api.url("/Api/").toString(),
+                    headers = listOf(takagi.ru.monica.bitwarden.api.BitwardenHeaderDraft("X-Proxy-Secret", " synthetic secret "))),
+                java.util.UUID.randomUUID().toString()).value)
+            identity.enqueue(MockResponse().setBody("{}"))
+            identity.enqueue(MockResponse().setResponseCode(204))
+            val client = service()
+            val ticket = client.startRegistration(environment, email, null).getOrThrow()
+            assertSame(environment, ticket.environment)
+            assertTrue(client.verifyRegistration(ticket, base.url("/?token=invalid").toString()).isFailure)
+            assertTrue(client.verifyRegistration(ticket, "https://web.example.test/Other/?token=invalid").isFailure)
+            client.verifyRegistration(ticket, "https://web.example.test/Team/#/register?token=synthetic").getOrThrow()
+            assertEquals(0, base.requestCount)
+            assertEquals("/Identity/accounts/register/send-verification-email", identity.takeRequest().path)
+            val verify = identity.takeRequest()
+            assertEquals("/Identity/accounts/register/verification-email-clicked", verify.path)
+            assertEquals("synthetic secret", verify.getHeader("X-Proxy-Secret"))
+            assertNull(verify.getHeader("Authorization"))
+            api.enqueue(MockResponse().setResponseCode(204))
+            val hintEnvironment = requireNotNull(takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolver.resolve(
+                takagi.ru.monica.bitwarden.api.BitwardenEnvironmentDraft(
+                    takagi.ru.monica.bitwarden.api.BitwardenEnvironmentPreset.CUSTOM, base.url("/Base/").toString(),
+                    apiUrl = api.url("/Api/").toString()), java.util.UUID.randomUUID().toString()).value)
+            client.requestPasswordHint(hintEnvironment, email).getOrThrow()
+            assertEquals("/Api/accounts/password-hint", api.takeRequest().path)
+            client.retire(environment)
+            assertTrue(client.verifyRegistration(ticket, "synthetic").isFailure)
+            assertEquals(2, identity.requestCount)
+        } } }
+    }
+
+    @Test fun mainLockAndRetiredEnvironmentPreventRegistrationReuse() = runBlocking {
+        MockWebServer().use { server ->
+            server.enqueue(MockResponse().setBody("{}"))
+            val client = service()
+            val ticket = client.startRegistration(server.url("/").toString(), email, null, null).getOrThrow()
+            takagi.ru.monica.security.SessionManager.markLocked()
+            takagi.ru.monica.security.SessionManager.markUnlocked()
+            assertTrue(client.verifyRegistration(ticket, "synthetic-token").isFailure)
+            assertEquals(1, server.requestCount)
+            client.retireAll()
+        }
+    }
+
+    @Test fun serverEchoIsNeverReturnedAsRegistrationError() = runBlocking {
+        MockWebServer().use { server ->
+            server.enqueue(MockResponse().setResponseCode(403).setBody("{\"message\":\"synthetic-proxy-secret\"}"))
+            val failure = service().startRegistration(server.url("/").toString(), email, null, null).exceptionOrNull()
+            assertNotNull(failure)
+            assertFalse(failure.toString().contains("synthetic-proxy-secret"))
+            assertNull(failure!!.cause)
         }
     }
 

@@ -60,6 +60,23 @@ data class BitwardenVault(
     @ColumnInfo(name = "events_url")
     val eventsUrl: String? = null,
 
+    // Explicit transport settings. Null/empty values preserve legacy resolution until a save.
+    @ColumnInfo(name = "environment_preset")
+    val environmentPreset: String? = null,
+
+    @ColumnInfo(name = "web_vault_url")
+    val webVaultUrl: String? = null,
+
+    @ColumnInfo(name = "notifications_url")
+    val notificationsUrl: String? = null,
+
+    @ColumnInfo(name = "transport_revision", defaultValue = "''")
+    val transportRevision: String = "",
+
+    // Reference only. Proxy headers and new TLS secrets live in protected preferences.
+    @ColumnInfo(name = "transport_secret_ref")
+    val transportSecretRef: String? = null,
+
     // === TLS / 证书配置（仅用于自托管）===
     @ColumnInfo(name = "tls_certificate_alias")
     val tlsCertificateAlias: String? = null,

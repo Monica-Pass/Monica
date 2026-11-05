@@ -15,6 +15,9 @@ import retrofit2.http.*
  *       或自托管服务的 /identity 路径
  */
 interface BitwardenIdentityApi {
+    @POST("accounts/prelogin")
+    suspend fun preLoginDocument(@Body request: PreLoginRequest): Response<kotlinx.serialization.json.JsonObject>
+
     @POST("accounts/register/send-verification-email")
     suspend fun sendRegistrationVerification(@Body request: BitwardenRegistrationStartRequest): Response<BitwardenRegistrationStartResponse>
 
@@ -132,6 +135,25 @@ interface BitwardenIdentityApi {
  *       或自托管服务的 /api 路径
  */
 interface BitwardenVaultApi {
+    @GET("accounts/profile")
+    suspend fun profileDocument(@Header("Authorization") authorization: String): Response<kotlinx.serialization.json.JsonObject>
+
+    @PUT("accounts/profile")
+    suspend fun updateAccountProfile(@Header("Authorization") authorization: String,
+        @Body request: kotlinx.serialization.json.JsonObject): Response<okhttp3.ResponseBody>
+
+    @POST("accounts/password")
+    suspend fun changeAccountPassword(@Header("Authorization") authorization: String,
+        @Body request: kotlinx.serialization.json.JsonObject): Response<okhttp3.ResponseBody>
+
+    @POST("accounts/kdf")
+    suspend fun changeAccountKdf(@Header("Authorization") authorization: String,
+        @Body request: kotlinx.serialization.json.JsonObject): Response<okhttp3.ResponseBody>
+
+    @HTTP(method = "DELETE", path = "accounts", hasBody = true)
+    suspend fun deleteAccount(@Header("Authorization") authorization: String,
+        @Body request: kotlinx.serialization.json.JsonObject): Response<okhttp3.ResponseBody>
+
     @POST("accounts/register")
     suspend fun registerLegacyAccount(@Body request: kotlinx.serialization.json.JsonObject): Response<Unit>
 
@@ -149,6 +171,11 @@ interface BitwardenVaultApi {
     @POST("two-factor/send-email-login")
     suspend fun sendTwoFactorEmailLogin(
         @Body request: SendEmailLoginRequest
+    ): Response<Unit>
+
+    @POST("accounts/resend-new-device-otp")
+    suspend fun resendNewDeviceOtp(
+        @Body request: ResendNewDeviceOtpRequest
     ): Response<Unit>
 
     /**
@@ -446,6 +473,12 @@ data class SendEmailLoginRequest(
     val email: String,
     @SerialName("masterPasswordHash")
     val masterPasswordHash: String
+)
+
+@Serializable
+data class ResendNewDeviceOtpRequest(
+    @SerialName("Email") val email: String,
+    @SerialName("MasterPasswordHash") val masterPasswordHash: String
 )
 
 /**
@@ -1167,7 +1200,7 @@ data class AttachmentUploadResponse(
     /** 0 = Direct Multipart，1 = Azure Blob PUT。 */
     @JsonNames("fileUploadType")
     @SerialName("fileUploadType")
-    val fileUploadType: Int = 0,
+    val fileUploadType: Int? = null,
     /** Azure 下的预签名 URL，或 Direct 模式下服务器回显的占位 URL。 */
     @JsonNames("url")
     @SerialName("url")

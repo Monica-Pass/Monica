@@ -48,6 +48,15 @@ class BitwardenAccountInputPolicyTest {
         rejects { BitwardenAccountInputPolicy.verificationToken("https://example.test/?token=t", custom, email) }
     }
 
+    @Test fun verificationLinkIsBoundToWebPathBeforeNormalization() {
+        val web = "https://example.test:8443/Team/Web/"
+        assertEquals("t", BitwardenAccountInputPolicy.verificationToken("${web}#/register?token=t", web, email))
+        listOf("/Team/WebSibling/", "/team/Web/", "/other/", "/Team/Web/../other/",
+            "/Team/Web/%2e%2e/other/", "/Team/Web%2Fother/").forEach { path ->
+            rejects { BitwardenAccountInputPolicy.verificationToken("https://example.test:8443${path}?token=t", web, email) }
+        }
+    }
+
     @Test fun webSettingsKeepTheAccountServerWithoutTransmittingCredentials() {
         assertEquals("$server/#/settings", BitwardenAccountNavigation.webSettingsUrl(server + "/"))
         assertEquals("https://example.test/base/#/settings", BitwardenAccountNavigation.webSettingsUrl("https://example.test/base"))

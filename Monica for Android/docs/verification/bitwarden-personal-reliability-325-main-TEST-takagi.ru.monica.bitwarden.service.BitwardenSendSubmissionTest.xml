@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.service.BitwardenSendSubmissionTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-05T02:02:55" hostname="JOYIN" time="0.007">
+  <properties/>
+  <testcase name="equivalentDateEncodingIsAcceptedButChangedLimitIsNot" classname="takagi.ru.monica.bitwarden.service.BitwardenSendSubmissionTest" time="0.004"/>
+  <testcase name="explicitRemovalReconcilesOnlyPasswordFreeFinalStateWithTheExactPreparedContent" classname="takagi.ru.monica.bitwarden.service.BitwardenSendSubmissionTest" time="0.001"/>
+  <testcase name="ambiguousExactKeysNeverConfirmEvenWhenOnePayloadMatches" classname="takagi.ru.monica.bitwarden.service.BitwardenSendSubmissionTest" time="0.0"/>
+  <testcase name="missingIdentityAndMalformedFieldsDoNotCrashOrConfirm" classname="takagi.ru.monica.bitwarden.service.BitwardenSendSubmissionTest" time="0.001"/>
+  <testcase name="onlyExactPreparedKeyAndContentCanReconcile" classname="takagi.ru.monica.bitwarden.service.BitwardenSendSubmissionTest" time="0.0"/>
+  <testcase name="emailAuthIgnoredByServerCannotConfirmProtectedSend" classname="takagi.ru.monica.bitwarden.service.BitwardenSendSubmissionTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

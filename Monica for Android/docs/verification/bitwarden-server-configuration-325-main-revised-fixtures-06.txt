@@ -1,0 +1,288 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest:
+INSTRUMENTATION_STATUS: test=dismissAndLockDiscardButBackgroundOnlyCancelsLateDiscovery
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=dismissAndLockDiscardButBackgroundOnlyCancelsLateDiscovery
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=editsRealServiceFieldsAndPreservesHeaderAndCertificatePasswordSpaces
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=editsRealServiceFieldsAndPreservesHeaderAndCertificatePasswordSpaces
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=enabledMtlsRejectsMissingAndUnreadablePrivateKeyWithoutApplying
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=enabledMtlsRejectsMissingAndUnreadablePrivateKeyWithoutApplying
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest:
+INSTRUMENTATION_STATUS: test=registrationTicketRetainsExplicitIdentityAndHeaderThroughEmailVerification
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stack=org.junit.ComparisonFailure: expected:<[]> but was:<[unsubmitted-partial-token]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest.registrationTicketRetainsExplicitIdentityAndHeaderThroughEmailVerification(BitwardenServerLoginUiInstrumentedTest.kt:238)
+
+INSTRUMENTATION_STATUS: stream=
+Error in registrationTicketRetainsExplicitIdentityAndHeaderThroughEmailVerification(takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest):
+org.junit.ComparisonFailure: expected:<[]> but was:<[unsubmitted-partial-token]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest.registrationTicketRetainsExplicitIdentityAndHeaderThroughEmailVerification(BitwardenServerLoginUiInstrumentedTest.kt:238)
+
+INSTRUMENTATION_STATUS: test=registrationTicketRetainsExplicitIdentityAndHeaderThroughEmailVerification
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=emailEditAndBackgroundClearPasswordButKeepCapturedConnectionUntilGlobalLock
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stack=org.junit.ComparisonFailure: expected:<[]> but was:<[••••••••••••••••••••••••••••••••]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest.emailEditAndBackgroundClearPasswordButKeepCapturedConnectionUntilGlobalLock(BitwardenServerLoginUiInstrumentedTest.kt:304)
+
+INSTRUMENTATION_STATUS: stream=
+Error in emailEditAndBackgroundClearPasswordButKeepCapturedConnectionUntilGlobalLock(takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest):
+org.junit.ComparisonFailure: expected:<[]> but was:<[••••••••••••••••••••••••••••••••]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest.emailEditAndBackgroundClearPasswordButKeepCapturedConnectionUntilGlobalLock(BitwardenServerLoginUiInstrumentedTest.kt:304)
+
+INSTRUMENTATION_STATUS: test=emailEditAndBackgroundClearPasswordButKeepCapturedConnectionUntilGlobalLock
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=primaryAndMfaRequestsUseTheCapturedExplicitIdentityAndProxyHeader
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stack=org.junit.ComparisonFailure: expected:<[]> but was:<[12]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest.primaryAndMfaRequestsUseTheCapturedExplicitIdentityAndProxyHeader(BitwardenServerLoginUiInstrumentedTest.kt:109)
+
+INSTRUMENTATION_STATUS: stream=
+Error in primaryAndMfaRequestsUseTheCapturedExplicitIdentityAndProxyHeader(takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest):
+org.junit.ComparisonFailure: expected:<[]> but was:<[12]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest.primaryAndMfaRequestsUseTheCapturedExplicitIdentityAndProxyHeader(BitwardenServerLoginUiInstrumentedTest.kt:109)
+
+INSTRUMENTATION_STATUS: test=primaryAndMfaRequestsUseTheCapturedExplicitIdentityAndProxyHeader
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest:
+INSTRUMENTATION_STATUS: test=checkedNativeRememberIsSealedReusedAsProviderFiveAndRejectedOnlyOnceBeforeFallback
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=checkedNativeRememberIsSealedReusedAsProviderFiveAndRejectedOnlyOnceBeforeFallback
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=leavingDuringMfaAndLogoutDuringRememberedLoginPreventLatePublication
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=leavingDuringMfaAndLogoutDuringRememberedLoginPreventLatePublication
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest:
+INSTRUMENTATION_STATUS: test=encryptedFileDraftSurvivesSourceRemovalAndRejectsChangedAccountOrLock
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=encryptedFileDraftSurvivesSourceRemovalAndRejectsChangedAccountOrLock
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=safeCacheClearPreservesDirtyInvalidCorruptLockedRowsAndLocalDrafts
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=safeCacheClearPreservesDirtyInvalidCorruptLockedRowsAndLocalDrafts
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenNotificationInstrumentedTest:
+INSTRUMENTATION_STATUS: test=disabledAutoSyncAndDeniedNetworkDoNotConnectAndUnauthorizedHubDoesNotPull
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=disabledAutoSyncAndDeniedNetworkDoNotConnectAndUnauthorizedHubDoesNotPull
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockAndForegroundCancellationRejectLateEventsAndRetainExistingRecords
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockAndForegroundCancellationRejectLateEventsAndRetainExistingRecords
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationInstrumentedTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=twoAccountsOnlyApplyTheirAuthenticatedRemoteEventsAndReconnectCatchesUp
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationInstrumentedTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=twoAccountsOnlyApplyTheirAuthenticatedRemoteEventsAndReconnectCatchesUp
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationEffectInstrumentedTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenNotificationEffectInstrumentedTest:
+INSTRUMENTATION_STATUS: test=actualEffectStopsOnCreatedRejectsLateEventsAndCatchesUpOnResumed
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationEffectInstrumentedTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=actualEffectStopsOnCreatedRejectsLateEventsAndCatchesUpOnResumed
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationEffectInstrumentedTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=anotherSettingsViewModelClosesAndRestartsActualEffectWithoutUpdatingRootFlow
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationEffectInstrumentedTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=anotherSettingsViewModelClosesAndRestartsActualEffectWithoutUpdatingRootFlow
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationEffectInstrumentedTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=leavingActualEffectDuringStartupGraceRevokesDelayedSyncUntilNewForegroundSession
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationEffectInstrumentedTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=leavingActualEffectDuringStartupGraceRevokesDelayedSyncUntilNewForegroundSession
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 104.453
+There were 3 failures:
+1) registrationTicketRetainsExplicitIdentityAndHeaderThroughEmailVerification(takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest)
+org.junit.ComparisonFailure: expected:<[]> but was:<[unsubmitted-partial-token]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest.registrationTicketRetainsExplicitIdentityAndHeaderThroughEmailVerification(BitwardenServerLoginUiInstrumentedTest.kt:238)
+2) emailEditAndBackgroundClearPasswordButKeepCapturedConnectionUntilGlobalLock(takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest)
+org.junit.ComparisonFailure: expected:<[]> but was:<[••••••••••••••••••••••••••••••••]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest.emailEditAndBackgroundClearPasswordButKeepCapturedConnectionUntilGlobalLock(BitwardenServerLoginUiInstrumentedTest.kt:304)
+3) primaryAndMfaRequestsUseTheCapturedExplicitIdentityAndProxyHeader(takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest)
+org.junit.ComparisonFailure: expected:<[]> but was:<[12]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest.primaryAndMfaRequestsUseTheCapturedExplicitIdentityAndProxyHeader(BitwardenServerLoginUiInstrumentedTest.kt:109)
+
+FAILURES!!!
+Tests run: 16,  Failures: 3
+
+
+INSTRUMENTATION_CODE: -1

@@ -1,0 +1,2005 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest:
+INSTRUMENTATION_STATUS: test=changedEndpointMustVerifyTheKnownProfileBeforeReplacingProtectedConfiguration
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=changedEndpointMustVerifyTheKnownProfileBeforeReplacingProtectedConfiguration
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=validReauthenticationUpdatesSameVaultAcrossItsOwnPublicationGeneration
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=validReauthenticationUpdatesSameVaultAcrossItsOwnPublicationGeneration
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=expiredReauthenticationContextRejectsLoginBeforeAnyHttp
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=expiredReauthenticationContextRejectsLoginBeforeAnyHttp
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=delayedPrimaryLoginCannotPublishAcrossGlobalLockAndUnlock
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=delayedPrimaryLoginCannotPublishAcrossGlobalLockAndUnlock
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=fullSyncIdentityPromotionAndReloginKeepTheSameProtectedVault
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=fullSyncIdentityPromotionAndReloginKeepTheSameProtectedVault
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=forceLockAfterReauthenticationMfaRejectsContinuationBeforeAnyHttp
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=forceLockAfterReauthenticationMfaRejectsContinuationBeforeAnyHttp
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=changedFingerprintAndMissingProtectedReferenceFailBeforeAnyHttp
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=changedFingerprintAndMissingProtectedReferenceFailBeforeAnyHttp
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=recoveredKeyWaitingAtPublicationCannotCrossGlobalLockGeneration
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=recoveredKeyWaitingAtPublicationCannotCrossGlobalLockGeneration
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=delayedCandidateProfileCannotReplaceAccountAfterForceLock
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=delayedCandidateProfileCannotReplaceAccountAfterForceLock
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedProtectedReadbackPreservesExistingAccountAndLeavesNewReservationInert
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedProtectedReadbackPreservesExistingAccountAndLeavesNewReservationInert
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=delayedRefreshCannotOverwriteAReopenedSessionWithTheSameOldToken
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=delayedRefreshCannotOverwriteAReopenedSessionWithTheSameOldToken
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportMigrationInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenTransportMigrationInstrumentedTest:
+INSTRUMENTATION_STATUS: test=migratedRowsSupportExplicitConfigurationWithoutChangingOtherLegacyRowsOrNewRowDefaults
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportMigrationInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=migratedRowsSupportExplicitConfigurationWithoutChangingOtherLegacyRowsOrNewRowDefaults
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportMigrationInstrumentedTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=migration83To84AddsFiveColumnsAndPreservesLegacyUrlsTlsIdentityAndIndices
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportMigrationInstrumentedTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=migration83To84AddsFiveColumnsAndPreservesLegacyUrlsTlsIdentityAndIndices
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest:
+INSTRUMENTATION_STATUS: test=largeTextKeepsRealDialogControlsReadableInEnglishChinesePortugueseAndRtl
+INSTRUMENTATION_STATUS_CODE: 1
+s_glBindAttribLocation: bind attrib 0 name position
+s_glBindAttribLocation: bind attrib 1 name localCoord
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=largeTextKeepsRealDialogControlsReadableInEnglishChinesePortugueseAndRtl
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=existingAccountCannotRetargetBaseOrDiscoverButCanEditServiceOverride
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=existingAccountCannotRetargetBaseOrDiscoverButCanEditServiceOverride
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=discoveryQueriesOnlyDomainAndRequiresExplicitCrossDomainSelection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=discoveryQueriesOnlyDomainAndRequiresExplicitCrossDomainSelection
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=capturedCandidateActionCannotRetargetAfterEmailOrBaseLockChanges
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=capturedCandidateActionCannotRetargetAfterEmailOrBaseLockChanges
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=dismissAndLockDiscardButBackgroundOnlyCancelsLateDiscovery
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=dismissAndLockDiscardButBackgroundOnlyCancelsLateDiscovery
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=editsRealServiceFieldsAndPreservesHeaderAndCertificatePasswordSpaces
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=editsRealServiceFieldsAndPreservesHeaderAndCertificatePasswordSpaces
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=enabledMtlsRejectsMissingAndUnreadablePrivateKeyWithoutApplying
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=enabledMtlsRejectsMissingAndUnreadablePrivateKeyWithoutApplying
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=reservedHeadersControlCharactersAndInvalidServiceUrlCannotApply
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=reservedHeadersControlCharactersAndInvalidServiceUrlCannotApply
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=resetPresetAndBaseChangesRemovePreviousOverridesHeadersAndTls
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=resetPresetAndBaseChangesRemovePreviousOverridesHeadersAndTls
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cancelledAndEditedSearchesRejectNonCooperativeLateDnsResults
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cancelledAndEditedSearchesRejectNonCooperativeLateDnsResults
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest:
+INSTRUMENTATION_STATUS: test=tamperedModernZipCannotPublishOrFallBackToLegacyTransport
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture$initialize$1.invokeSuspend(Unknown Source:14)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+INSTRUMENTATION_STATUS: stream=
+Error in tamperedModernZipCannotPublishOrFallBackToLegacyTransport(takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest):
+java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture$initialize$1.invokeSuspend(Unknown Source:14)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+INSTRUMENTATION_STATUS: test=tamperedModernZipCannotPublishOrFallBackToLegacyTransport
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=manualSelectionBetweenRestoreAndFinishPreventsLateAutomaticSelection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture$initialize$1.invokeSuspend(Unknown Source:14)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+INSTRUMENTATION_STATUS: stream=
+Error in manualSelectionBetweenRestoreAndFinishPreventsLateAutomaticSelection(takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest):
+java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture$initialize$1.invokeSuspend(Unknown Source:14)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+INSTRUMENTATION_STATUS: test=manualSelectionBetweenRestoreAndFinishPreventsLateAutomaticSelection
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest
+INSTRUMENTATION_STATUS: current=26
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=legacyZipUsesItsRealCustomBaseAndNeverAllocatesTheSourceDeviceId
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest
+INSTRUMENTATION_STATUS: current=26
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$withFixture$2.invokeSuspend(BitwardenTransportBackupInstrumentedTest.kt:214)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+INSTRUMENTATION_STATUS: stream=
+Error in legacyZipUsesItsRealCustomBaseAndNeverAllocatesTheSourceDeviceId(takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest):
+java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$withFixture$2.invokeSuspend(BitwardenTransportBackupInstrumentedTest.kt:214)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+INSTRUMENTATION_STATUS: test=legacyZipUsesItsRealCustomBaseAndNeverAllocatesTheSourceDeviceId
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest
+INSTRUMENTATION_STATUS: current=27
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=secondRestoredAccountMarkedDefaultWinsTheBatchPreference
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest
+INSTRUMENTATION_STATUS: current=27
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture$initialize$1.invokeSuspend(Unknown Source:14)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+INSTRUMENTATION_STATUS: stream=
+Error in secondRestoredAccountMarkedDefaultWinsTheBatchPreference(takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest):
+java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture$initialize$1.invokeSuspend(Unknown Source:14)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+INSTRUMENTATION_STATUS: test=secondRestoredAccountMarkedDefaultWinsTheBatchPreference
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest
+INSTRUMENTATION_STATUS: current=28
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=encryptedZipRoundTripRestoresLockedAccountWithFreshLocalBinding
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest
+INSTRUMENTATION_STATUS: current=28
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$withFixture$2.invokeSuspend(BitwardenTransportBackupInstrumentedTest.kt:214)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+INSTRUMENTATION_STATUS: stream=
+Error in encryptedZipRoundTripRestoresLockedAccountWithFreshLocalBinding(takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest):
+java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$withFixture$2.invokeSuspend(BitwardenTransportBackupInstrumentedTest.kt:214)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+INSTRUMENTATION_STATUS: test=encryptedZipRoundTripRestoresLockedAccountWithFreshLocalBinding
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest
+INSTRUMENTATION_STATUS: current=29
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=restoringExistingAccountPreservesNewerConfigurationRecordsAndQueueButLocksRuntime
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest
+INSTRUMENTATION_STATUS: current=29
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture$initialize$1.invokeSuspend(Unknown Source:14)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+INSTRUMENTATION_STATUS: stream=
+Error in restoringExistingAccountPreservesNewerConfigurationRecordsAndQueueButLocksRuntime(takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest):
+java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture$initialize$1.invokeSuspend(Unknown Source:14)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+INSTRUMENTATION_STATUS: test=restoringExistingAccountPreservesNewerConfigurationRecordsAndQueueButLocksRuntime
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest
+INSTRUMENTATION_STATUS: current=30
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=batchPreservesDifferentPreexistingDefaultAndActiveSelections
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest
+INSTRUMENTATION_STATUS: current=30
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$withFixture$2.invokeSuspend(BitwardenTransportBackupInstrumentedTest.kt:214)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+INSTRUMENTATION_STATUS: stream=
+Error in batchPreservesDifferentPreexistingDefaultAndActiveSelections(takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest):
+java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$withFixture$2.invokeSuspend(BitwardenTransportBackupInstrumentedTest.kt:214)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+INSTRUMENTATION_STATUS: test=batchPreservesDifferentPreexistingDefaultAndActiveSelections
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest
+INSTRUMENTATION_STATUS: current=31
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=batchWithoutPreferredAccountChoosesItsFirstSuccessfulNewAccount
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest
+INSTRUMENTATION_STATUS: current=31
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture$initialize$1.invokeSuspend(Unknown Source:14)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+INSTRUMENTATION_STATUS: stream=
+Error in batchWithoutPreferredAccountChoosesItsFirstSuccessfulNewAccount(takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest):
+java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture$initialize$1.invokeSuspend(Unknown Source:14)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+INSTRUMENTATION_STATUS: test=batchWithoutPreferredAccountChoosesItsFirstSuccessfulNewAccount
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=32
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest:
+INSTRUMENTATION_STATUS: test=retirementAfterCacheWriteDeletesOnlyNewBlob
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=32
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=retirementAfterCacheWriteDeletesOnlyNewBlob
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=33
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=retirementAfterMetadataStopsBeforeKeyOrSignedTransfer
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=33
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=retirementAfterMetadataStopsBeforeKeyOrSignedTransfer
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=34
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=migrationPublicationRetirementPreservesLocalSourceAndSkipsOldDelete
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=34
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=migrationPublicationRetirementPreservesLocalSourceAndSkipsOldDelete
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=35
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=metadataInvalidationCommitsBeforeRemovingUnreferencedEncryptedCache
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=35
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=metadataInvalidationCommitsBeforeRemovingUnreferencedEncryptedCache
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=36
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=retiredDownloadResetTouchesOnlyActiveTransfersInTheSelectedVault
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=36
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=retiredDownloadResetTouchesOnlyActiveTransfersInTheSelectedVault
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=37
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=retirementAtBodyEndPreventsLocalCacheInstallation
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=37
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=retirementAtBodyEndPreventsLocalCacheInstallation
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=38
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=absentRemoteListSkipsButExplicitEmptyListDeletesAfterCommit
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=38
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=absentRemoteListSkipsButExplicitEmptyListDeletesAfterCommit
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=39
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=reconciliationRollbackRestoresMetadataAndNeverDeletesReferencedBlob
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=39
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=reconciliationRollbackRestoresMetadataAndNeverDeletesReferencedBlob
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=40
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=metadataInvalidationPreservesCacheReferencedByAnotherOwner
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=40
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=metadataInvalidationPreservesCacheReferencedByAnotherOwner
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=41
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=retiredRemoveCannotIssueRemoteDelete
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=41
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=retiredRemoveCannotIssueRemoteDelete
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=42
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=freshSignedDownloadUsesSelectedClientAndPreservesBytes
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=42
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=freshSignedDownloadUsesSelectedClientAndPreservesBytes
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=43
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=reconciliationRejectsChangedSnapshotWithoutOverwritingNewDownload
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=43
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=reconciliationRejectsChangedSnapshotWithoutOverwritingNewDownload
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=44
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=retirementAfterUploadMetadataPreventsPutAndDirectMultipart
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=44
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=retirementAfterUploadMetadataPreventsPutAndDirectMultipart
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=45
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=downloadPublicationRetirementRollsBackRoomAndKeepsOldCache
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=45
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=downloadPublicationRetirementRollsBackRoomAndKeepsOldCache
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=46
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=azureUploadSelectsOriginalUrlAndSendsEncryptedBytesWithoutBearer
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=46
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=azureUploadSelectsOriginalUrlAndSendsEncryptedBytesWithoutBearer
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=47
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cachedSignedFallbackUsesSameSelectorWithoutAccountBearer
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=47
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cachedSignedFallbackUsesSameSelectorWithoutAccountBearer
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=48
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=rejectedReconciliationKeepsOriginalMetadataAndEncryptedBytes
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=48
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=rejectedReconciliationKeepsOriginalMetadataAndEncryptedBytes
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=49
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=selectorSeesUnsafeOriginalPathBeforeAnySignedConnection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=49
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=selectorSeesUnsafeOriginalPathBeforeAnySignedConnection
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=50
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=retirementInKeyProviderClearsOwnedKeyBeforeTransfer
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest
+INSTRUMENTATION_STATUS: current=50
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=retirementInKeyProviderClearsOwnedKeyBeforeTransfer
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=51
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest:
+INSTRUMENTATION_STATUS: test=registrationTicketRetainsExplicitIdentityAndHeaderThroughEmailVerification
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=51
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=registrationTicketRetainsExplicitIdentityAndHeaderThroughEmailVerification
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=52
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=emailEditAndBackgroundClearPasswordButKeepCapturedConnectionUntilGlobalLock
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=52
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=emailEditAndBackgroundClearPasswordButKeepCapturedConnectionUntilGlobalLock
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=53
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=passwordHintUsesExplicitApiAndCannotPublishCancelledBackgroundResult
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=53
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=passwordHintUsesExplicitApiAndCannotPublishCancelledBackgroundResult
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=54
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=backgroundDuringActiveMfaClearsChallengeKeysAndRejectsLateTokenResult
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=54
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=backgroundDuringActiveMfaClearsChallengeKeysAndRejectsLateTokenResult
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=55
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=primaryAndMfaRequestsUseTheCapturedExplicitIdentityAndProxyHeader
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=55
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=primaryAndMfaRequestsUseTheCapturedExplicitIdentityAndProxyHeader
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest
+INSTRUMENTATION_STATUS: current=56
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest:
+INSTRUMENTATION_STATUS: test=sendCapturedBeforeTransportChangeCannotPublishUnderNewConfiguration
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest
+INSTRUMENTATION_STATUS: current=56
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=sendCapturedBeforeTransportChangeCannotPublishUnderNewConfiguration
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest
+INSTRUMENTATION_STATUS: current=57
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=currentFullSyncPublishesFoldersAndReadableEncryptedSend
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest
+INSTRUMENTATION_STATUS: current=57
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=currentFullSyncPublishesFoldersAndReadableEncryptedSend
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest
+INSTRUMENTATION_STATUS: current=58
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sendUpsertRetirementRestoresOriginalEncryptedEnvelope
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest
+INSTRUMENTATION_STATUS: current=58
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=sendUpsertRetirementRestoresOriginalEncryptedEnvelope
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest
+INSTRUMENTATION_STATUS: current=59
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=capturedSendCleanupPreservesDirtyNewAndUnreadableRows
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest
+INSTRUMENTATION_STATUS: current=59
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=capturedSendCleanupPreservesDirtyNewAndUnreadableRows
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest
+INSTRUMENTATION_STATUS: current=60
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=folderMutationRetirementRollsBackAndDoesNotContinueIntoCleanup
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest
+INSTRUMENTATION_STATUS: current=60
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=folderMutationRetirementRollsBackAndDoesNotContinueIntoCleanup
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest
+INSTRUMENTATION_STATUS: current=61
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sendCleanupRetirementRestoresOriginalEncryptedEnvelope
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest
+INSTRUMENTATION_STATUS: current=61
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=sendCleanupRetirementRestoresOriginalEncryptedEnvelope
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest
+INSTRUMENTATION_STATUS: current=62
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=revokedFolderPublicationCannotInsertOrReportSuccess
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest
+INSTRUMENTATION_STATUS: current=62
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=revokedFolderPublicationCannotInsertOrReportSuccess
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest
+INSTRUMENTATION_STATUS: current=63
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cleanupRetirementRollsBackFolderAndCipherDeletesTogether
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest
+INSTRUMENTATION_STATUS: current=63
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cleanupRetirementRollsBackFolderAndCipherDeletesTogether
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=64
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest:
+INSTRUMENTATION_STATUS: test=nativeDeviceListClearsOnLockAndReloadsAfterReturningToForeground
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=64
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeDeviceListClearsOnLockAndReloadsAfterReturningToForeground
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=65
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeAccountDeviceListValidatesProfileAndRevokesChangedStampBeforeLoadingDevices
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=65
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeAccountDeviceListValidatesProfileAndRevokesChangedStampBeforeLoadingDevices
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=66
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=existingServerConfigurationLocksBeforeReauthenticationAndCancelPreservesSavedEndpoints
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=66
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=existingServerConfigurationLocksBeforeReauthenticationAndCancelPreservesSavedEndpoints
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=67
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lateAccountDeviceResponseCannotReappearAfterLock
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=67
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lateAccountDeviceResponseCannotReappearAfterLock
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=68
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=capturedExistingAccountSubmitCannotStartNetworkAfterASecondVaultLock
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=68
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=capturedExistingAccountSubmitCannotStartNetworkAfterASecondVaultLock
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=69
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeRegistrationUsesVerifiedEmailAndDoesNotCreateAPartialLocalVault
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=69
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeRegistrationUsesVerifiedEmailAndDoesNotCreateAPartialLocalVault
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=70
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativePasswordHintRequestSendsOnlyEmailAndKeepsLoginAvailable
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=70
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativePasswordHintRequestSendsOnlyEmailAndKeepsLoginAvailable
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentTransferTest
+INSTRUMENTATION_STATUS: current=71
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.attachments.BitwardenAttachmentTransferTest:
+INSTRUMENTATION_STATUS: test=officialAttachmentCanBePreviewedAndCopiedWithoutChangingTheSource
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentTransferTest
+INSTRUMENTATION_STATUS: current=71
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=officialAttachmentCanBePreviewedAndCopiedWithoutChangingTheSource
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentTransferTest
+INSTRUMENTATION_STATUS: current=72
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cancellationReturnsDownloadToPendingInsteadOfLeavingItStuck
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentTransferTest
+INSTRUMENTATION_STATUS: current=72
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cancellationReturnsDownloadToPendingInsteadOfLeavingItStuck
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentTransferTest
+INSTRUMENTATION_STATUS: current=73
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=corruptedSecondAttachmentRollsBackPartialCopiesAndPreservesTheSource
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentTransferTest
+INSTRUMENTATION_STATUS: current=73
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=corruptedSecondAttachmentRollsBackPartialCopiesAndPreservesTheSource
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentTransferTest
+INSTRUMENTATION_STATUS: current=74
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=successfulMoveKeepsAttachmentBytesBeforeQueuingSourceDeletion
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentTransferTest
+INSTRUMENTATION_STATUS: current=74
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=successfulMoveKeepsAttachmentBytesBeforeQueuingSourceDeletion
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentTransferTest
+INSTRUMENTATION_STATUS: current=75
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedMoveRemovesTheIncompleteLocalCopyAndKeepsTheRemoteSource
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.attachments.BitwardenAttachmentTransferTest
+INSTRUMENTATION_STATUS: current=75
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedMoveRemovesTheIncompleteLocalCopyAndKeepsTheRemoteSource
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest
+INSTRUMENTATION_STATUS: current=76
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest:
+INSTRUMENTATION_STATUS: test=uncheckedNativeRememberSendsZeroAndNeverPersistsTheReturnedToken
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest
+INSTRUMENTATION_STATUS: current=76
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=uncheckedNativeRememberSendsZeroAndNeverPersistsTheReturnedToken
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest
+INSTRUMENTATION_STATUS: current=77
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=checkedNativeRememberIsSealedReusedAsProviderFiveAndRejectedOnlyOnceBeforeFallback
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest
+INSTRUMENTATION_STATUS: current=77
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=checkedNativeRememberIsSealedReusedAsProviderFiveAndRejectedOnlyOnceBeforeFallback
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest
+INSTRUMENTATION_STATUS: current=78
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=leavingDuringMfaAndLogoutDuringRememberedLoginPreventLatePublication
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest
+INSTRUMENTATION_STATUS: current=78
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=leavingDuringMfaAndLogoutDuringRememberedLoginPreventLatePublication
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=79
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest:
+INSTRUMENTATION_STATUS: test=ordinaryEmailTwoFactorRetainsItsSeparateSendControl
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=79
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=ordinaryEmailTwoFactorRetainsItsSeparateSendControl
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=80
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=largePortugueseNewDeviceResendAndStatusWrapWithoutTextOverflow
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=80
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=largePortugueseNewDeviceResendAndStatusWrapWithoutTextOverflow
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=81
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=mailboxBackgroundCancelsLateResendButPreservesOriginalOtpChallengeAndCooldown
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=81
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=mailboxBackgroundCancelsLateResendButPreservesOriginalOtpChallengeAndCooldown
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=82
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=explicitCancelDuringResendClosesChallengeAndSuppressesLateStatus
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=82
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=explicitCancelDuringResendClosesChallengeAndSuppressesLateStatus
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=83
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeResendUsesCurrentProofOnlyAfterClickAndKeepsNewDeviceOtpSubmission
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=83
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeResendUsesCurrentProofOnlyAfterClickAndKeepsNewDeviceOtpSubmission
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=84
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeUnsupportedServerShowsTruthfulFailureWithoutOrdinaryEmailFallback
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=84
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeUnsupportedServerShowsTruthfulFailureWithoutOrdinaryEmailFallback
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=85
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=globalLockClearsChallengeAndLateResendCannotRestoreIt
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=85
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=globalLockClearsChallengeAndLateResendCannotRestoreIt
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=86
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeRateLimitShowsSanitizedMessageAndServerCooldown
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=86
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeRateLimitShowsSanitizedMessageAndServerCooldown
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest
+INSTRUMENTATION_STATUS: current=87
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest:
+INSTRUMENTATION_STATUS: test=configOptInKeepsSelectedDatabaseRecordsSeparate
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest
+INSTRUMENTATION_STATUS: current=87
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=configOptInKeepsSelectedDatabaseRecordsSeparate
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest
+INSTRUMENTATION_STATUS: current=88
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=encryptedConnectionBackupRestoresBitwardenLockedWithoutWebDavSetup
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest
+INSTRUMENTATION_STATUS: current=88
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=encryptedConnectionBackupRestoresBitwardenLockedWithoutWebDavSetup
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest
+INSTRUMENTATION_STATUS: current=89
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=encryptedConfigOnlyRoundTripHonorsKeepAndRestoreChoices
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest
+INSTRUMENTATION_STATUS: current=89
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=encryptedConfigOnlyRoundTripHonorsKeepAndRestoreChoices
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest
+INSTRUMENTATION_STATUS: current=90
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=webDavCredentialsRestoreOnlyWithOptInAndNeverReplaceExistingConnection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest
+INSTRUMENTATION_STATUS: current=90
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=webDavCredentialsRestoreOnlyWithOptInAndNeverReplaceExistingConnection
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest
+INSTRUMENTATION_STATUS: current=91
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=configOptInRequiresEncryptionAndDefaultArchiveHasNoSettings
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest
+INSTRUMENTATION_STATUS: current=91
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=configOptInRequiresEncryptionAndDefaultArchiveHasNoSettings
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest
+INSTRUMENTATION_STATUS: current=92
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest:
+INSTRUMENTATION_STATUS: test=nativeTextAndFileEditorsSaveRealRowsWithPasswordRemovalDatePickerAndEnableSwitch
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest
+INSTRUMENTATION_STATUS: current=92
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeTextAndFileEditorsSaveRealRowsWithPasswordRemovalDatePickerAndEnableSwitch
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest
+INSTRUMENTATION_STATUS: current=93
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=fileEditPreservesIdKeyAndCiphertextRejectsRemoteRevisionsAndReadsBackLostResponse
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest
+INSTRUMENTATION_STATUS: current=93
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=fileEditPreservesIdKeyAndCiphertextRejectsRemoteRevisionsAndReadsBackLostResponse
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest
+INSTRUMENTATION_STATUS: current=94
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeNewSendUsesSharedContentPickerAndSavesCompleteDraft
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest
+INSTRUMENTATION_STATUS: current=94
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeNewSendUsesSharedContentPickerAndSavesCompleteDraft
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest
+INSTRUMENTATION_STATUS: current=95
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=textEditRoundTripsExactContentPasswordThreeStatesAndDatesThroughHttpAndRoom
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest
+INSTRUMENTATION_STATUS: current=95
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=textEditRoundTripsExactContentPasswordThreeStatesAndDatesThroughHttpAndRoom
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest
+INSTRUMENTATION_STATUS: current=96
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeAccountTypesAndBottomActionsRemainReadableAcrossUiSettings
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest
+INSTRUMENTATION_STATUS: current=96
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeAccountTypesAndBottomActionsRemainReadableAcrossUiSettings
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=97
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest:
+INSTRUMENTATION_STATUS: test=nativeEmailDraftResumesEditsAndSubmitsThroughViewModel
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=97
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeEmailDraftResumesEditsAndSubmitsThroughViewModel
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=98
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=fileServerIgnoringEmailNeverReceivesPayload
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=98
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=fileServerIgnoringEmailNeverReceivesPayload
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=99
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lostCreateResponseReconcilesByOneExactKeyWithoutAnotherPost
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=99
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lostCreateResponseReconcilesByOneExactKeyWithoutAnotherPost
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=100
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=explicitLogoutDeletesOnlyOwnedDraftFilesIncludingCorruptMetadata
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=100
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=explicitLogoutDeletesOnlyOwnedDraftFilesIncludingCorruptMetadata
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=101
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=encryptedFileDraftSurvivesSourceRemovalAndRejectsChangedAccountOrLock
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=101
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=encryptedFileDraftSurvivesSourceRemovalAndRejectsChangedAccountOrLock
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=102
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=actualSendPageOpensThemedDraftDialogAndResumesStoredContent
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=102
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=actualSendPageOpensThemedDraftDialogAndResumesStoredContent
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=103
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=activeCacheFlowClearsOnSameIdEndpointChangeAndCanResume
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=103
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=activeCacheFlowClearsOnSameIdEndpointChangeAndCanResume
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=104
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=fileEmailAuthIsVerifiedBeforeUploadAndRecoveredBytesReachServer
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=104
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=fileEmailAuthIsVerifiedBeforeUploadAndRecoveredBytesReachServer
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=105
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=ambiguousExactKeysKeepUncertainDraftAndBlockEditing
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=105
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=ambiguousExactKeysKeepUncertainDraftAndBlockEditing
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=106
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=emailCreateIsReadBackAndCurrentRoomRowContainsOnlyProtectedContent
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=106
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=emailCreateIsReadBackAndCurrentRoomRowContainsOnlyProtectedContent
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=107
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=ignoredEmailModeNeverFallsBackAndLocalDraftSurvives
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=107
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=ignoredEmailModeNeverFallsBackAndLocalDraftSurvives
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=108
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeEditorSavesIncompleteDraftAndExplicitDiscardKeepsRemoteSend
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=108
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeEditorSavesIncompleteDraftAndExplicitDiscardKeepsRemoteSend
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=109
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=legacyMigrationValidatesShareIdentityAndPreservesCorruptRows
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=109
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=legacyMigrationValidatesShareIdentityAndPreservesCorruptRows
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=110
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=safeCacheClearPreservesDirtyInvalidCorruptLockedRowsAndLocalDrafts
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=110
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=safeCacheClearPreservesDirtyInvalidCorruptLockedRowsAndLocalDrafts
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=111
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nonPremiumEmailKeepsDraftWithoutMakingRequest
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=111
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nonPremiumEmailKeepsDraftWithoutMakingRequest
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=112
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=legacyDraftWithoutTimestampUsesStableOwnedMetadataTimeWithoutRewriting
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest
+INSTRUMENTATION_STATUS: current=112
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=legacyDraftWithoutTimestampUsesStableOwnedMetadataTimeWithoutRewriting
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationInstrumentedTest
+INSTRUMENTATION_STATUS: current=113
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenNotificationInstrumentedTest:
+INSTRUMENTATION_STATUS: test=disabledAutoSyncAndDeniedNetworkDoNotConnectAndUnauthorizedHubDoesNotPull
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationInstrumentedTest
+INSTRUMENTATION_STATUS: current=113
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=disabledAutoSyncAndDeniedNetworkDoNotConnectAndUnauthorizedHubDoesNotPull
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationInstrumentedTest
+INSTRUMENTATION_STATUS: current=114
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockAndForegroundCancellationRejectLateEventsAndRetainExistingRecords
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationInstrumentedTest
+INSTRUMENTATION_STATUS: current=114
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockAndForegroundCancellationRejectLateEventsAndRetainExistingRecords
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationInstrumentedTest
+INSTRUMENTATION_STATUS: current=115
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=twoAccountsOnlyApplyTheirAuthenticatedRemoteEventsAndReconnectCatchesUp
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationInstrumentedTest
+INSTRUMENTATION_STATUS: current=115
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=twoAccountsOnlyApplyTheirAuthenticatedRemoteEventsAndReconnectCatchesUp
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationEffectInstrumentedTest
+INSTRUMENTATION_STATUS: current=116
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenNotificationEffectInstrumentedTest:
+INSTRUMENTATION_STATUS: test=actualEffectStopsOnCreatedRejectsLateEventsAndCatchesUpOnResumed
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationEffectInstrumentedTest
+INSTRUMENTATION_STATUS: current=116
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=actualEffectStopsOnCreatedRejectsLateEventsAndCatchesUpOnResumed
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationEffectInstrumentedTest
+INSTRUMENTATION_STATUS: current=117
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=anotherSettingsViewModelClosesAndRestartsActualEffectWithoutUpdatingRootFlow
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationEffectInstrumentedTest
+INSTRUMENTATION_STATUS: current=117
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=anotherSettingsViewModelClosesAndRestartsActualEffectWithoutUpdatingRootFlow
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationEffectInstrumentedTest
+INSTRUMENTATION_STATUS: current=118
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=leavingActualEffectDuringStartupGraceRevokesDelayedSyncUntilNewForegroundSession
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNotificationEffectInstrumentedTest
+INSTRUMENTATION_STATUS: current=118
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=leavingActualEffectDuringStartupGraceRevokesDelayedSyncUntilNewForegroundSession
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest
+INSTRUMENTATION_STATUS: current=119
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest:
+INSTRUMENTATION_STATUS: test=outlinedSecretClearsWhenInputAndExternalResetShareOneFrame
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest
+INSTRUMENTATION_STATUS: current=119
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=outlinedSecretClearsWhenInputAndExternalResetShareOneFrame
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest
+INSTRUMENTATION_STATUS: current=120
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=filledSecretClearsWhenInputAndExternalResetShareOneFrame
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest
+INSTRUMENTATION_STATUS: current=120
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=120
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=filledSecretClearsWhenInputAndExternalResetShareOneFrame
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 350.743
+There were 8 failures:
+1) tamperedModernZipCannotPublishOrFallBackToLegacyTransport(takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest)
+java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture$initialize$1.invokeSuspend(Unknown Source:14)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+2) manualSelectionBetweenRestoreAndFinishPreventsLateAutomaticSelection(takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest)
+java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture$initialize$1.invokeSuspend(Unknown Source:14)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+3) legacyZipUsesItsRealCustomBaseAndNeverAllocatesTheSourceDeviceId(takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest)
+java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$withFixture$2.invokeSuspend(BitwardenTransportBackupInstrumentedTest.kt:214)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+4) secondRestoredAccountMarkedDefaultWinsTheBatchPreference(takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest)
+java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture$initialize$1.invokeSuspend(Unknown Source:14)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+5) encryptedZipRoundTripRestoresLockedAccountWithFreshLocalBinding(takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest)
+java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$withFixture$2.invokeSuspend(BitwardenTransportBackupInstrumentedTest.kt:214)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+6) restoringExistingAccountPreservesNewerConfigurationRecordsAndQueueButLocksRuntime(takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest)
+java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture$initialize$1.invokeSuspend(Unknown Source:14)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+7) batchPreservesDifferentPreexistingDefaultAndActiveSelections(takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest)
+java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$withFixture$2.invokeSuspend(BitwardenTransportBackupInstrumentedTest.kt:214)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+8) batchWithoutPreferredAccountChoosesItsFirstSuccessfulNewAccount(takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest)
+java.lang.IllegalStateException: Run ZIP configuration tests only in an empty dedicated synthetic Android user
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture.initialize(BitwardenTransportBackupInstrumentedTest.kt:239)
+	at takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest$Fixture$initialize$1.invokeSuspend(Unknown Source:14)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+FAILURES!!!
+Tests run: 120,  Failures: 8
+
+
+INSTRUMENTATION_CODE: -1

@@ -27,6 +27,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import takagi.ru.monica.R
 import takagi.ru.monica.bitwarden.api.BitwardenTlsConfig
+import takagi.ru.monica.bitwarden.api.BitwardenEnvironment
+import takagi.ru.monica.bitwarden.api.BitwardenEnvironmentDraft
+import takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolver
+import takagi.ru.monica.bitwarden.api.BitwardenLegacyEnvironmentSnapshot
+import takagi.ru.monica.bitwarden.api.toDraft
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.isActive
 import takagi.ru.monica.bitwarden.cache.BitwardenOfflineSecretCache
 import takagi.ru.monica.bitwarden.repository.BitwardenRepository
 import takagi.ru.monica.bitwarden.service.LoginResult
@@ -103,6 +111,14 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
     internal suspend fun requestAccountPasswordHint(server: String, email: String, tls: takagi.ru.monica.bitwarden.api.BitwardenTlsConfig?) =
         accountService.requestPasswordHint(server, email, tls)
 
+    internal suspend fun startAccountRegistration(environment: BitwardenEnvironment, email: String, name: String?) =
+        accountService.startRegistration(environment, email, name)
+
+    internal suspend fun requestAccountPasswordHint(environment: BitwardenEnvironment, email: String) =
+        accountService.requestPasswordHint(environment, email)
+
+    internal fun retireAccountOperationEnvironment(environment: BitwardenEnvironment) = accountService.retire(environment)
+
     suspend fun getAccountDevices(vaultId: Long) = repository.getAccountDevices(vaultId)
     private val securityManager = SecurityManager(application.applicationContext)
     private val bitwardenOfflineSecretCache = BitwardenOfflineSecretCache(
@@ -114,10 +130,21 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
     // 两步验证临时状态
     private var twoFactorState: LoginResult.TwoFactorRequired? = null
     private var authenticationJob: Job? = null
+    private val newDeviceResendController = NewDeviceOtpResendController(viewModelScope)
+    val newDeviceOtpResend = newDeviceResendController.state
+    private var newDeviceResendSession: Any? = null
+    private var pendingNewDeviceLockGeneration: Long? = null
+    private var newDeviceResendForeground = true
     private val _sendingTwoFactorEmail = MutableStateFlow(false)
     val sendingTwoFactorEmail = _sendingTwoFactorEmail.asStateFlow()
-    private var pendingServerUrl: String? = null
-    private var pendingTlsConfig: BitwardenTlsConfig? = null
+    private var pendingEnvironment: BitwardenEnvironment? = null
+    private var pendingAuthenticationEmail: String? = null
+    private var pendingAuthenticationLockGeneration: Long? = null
+    private var pendingReauthentication: BitwardenRepository.ReauthenticationContext? = null
+    private var loginForeground = true
+    private var authenticationRevision = 0L
+    private var emailResendJob: Job? = null
+    private var emailResendRevision = 0L
     private val processStartMs = System.currentTimeMillis()
     private var silentPostSyncRefreshJob: Job? = null
     private val silentCacheWarmJobs = mutableMapOf<Long, Job>()
@@ -362,6 +389,18 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
 
     init {
         viewModelScope.launch {
+            var previousGeneration = takagi.ru.monica.security.SessionManager.lockGeneration.value
+            combine(takagi.ru.monica.security.SessionManager.isUnlocked,
+                takagi.ru.monica.security.SessionManager.lockGeneration) { unlocked, generation -> unlocked to generation }
+                .collect { (unlocked, generation) ->
+                    if (!unlocked || generation != previousGeneration) accountService.retireAll()
+                    previousGeneration = generation
+                    pendingAuthenticationLockGeneration?.let { expected ->
+                        if (!unlocked || generation != expected) resetLoginState(cancelInFlight = true)
+                    }
+                }
+        }
+        viewModelScope.launch {
             repository.getAllVaultsFlow().map { it.map { vault -> vault.id }.sorted() }.distinctUntilChanged()
                 .flatMapLatest { repository.observeSendsForVaults(it) }.collect { rows ->
                     _sendsAcrossVaults.value = rows
@@ -396,12 +435,50 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     override fun onCleared() {
+        accountService.retireAll()
+        resetLoginState(cancelInFlight = true)
         pageAutoSyncScheduler.cancelPending()
         BitwardenMutationSyncBridge.unregister(this)
         super.onCleared()
     }
     
     // ==================== 公开方法 ====================
+
+    fun isReauthenticationCurrent(context: BitwardenRepository.ReauthenticationContext): Boolean =
+        repository.isReauthenticationCurrent(context)
+
+    private fun authenticationContextCurrent(
+        reauthentication: BitwardenRepository.ReauthenticationContext? = pendingReauthentication,
+        appGeneration: Long? = pendingAuthenticationLockGeneration,
+        requireForeground: Boolean = true,
+    ): Boolean = (!requireForeground || loginForeground) &&
+        takagi.ru.monica.security.SessionManager.isUnlocked.value &&
+        (appGeneration == null || appGeneration == takagi.ru.monica.security.SessionManager.lockGeneration.value) &&
+        (reauthentication == null || isReauthenticationCurrent(reauthentication))
+
+    private fun cancelEmailResend() {
+        emailResendRevision++
+        emailResendJob?.cancel()
+        emailResendJob = null
+        _sendingTwoFactorEmail.value = false
+    }
+
+    /** A formed challenge survives a mailbox visit; an active authentication must start over. */
+    fun setLoginForeground(foreground: Boolean) {
+        loginForeground = foreground
+        if (!foreground) {
+            cancelEmailResend()
+            setNewDeviceResendForeground(false)
+            if (authenticationJob?.isActive == true || _loginState.value is LoginState.Loading ||
+                !authenticationContextCurrent(requireForeground = false)) {
+                resetLoginState(cancelInFlight = true)
+            }
+        } else if (!authenticationContextCurrent()) {
+            resetLoginState(cancelInFlight = true)
+        } else {
+            setNewDeviceResendForeground(true)
+        }
+    }
     
     /**
      * 加载 Vault 列表
@@ -470,8 +547,22 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
         email: String,
         masterPassword: String,
         captchaResponse: String? = null,
-        tlsConfig: BitwardenTlsConfig? = null
+        tlsConfig: BitwardenTlsConfig? = null,
+        environmentDraft: BitwardenEnvironmentDraft? = null,
+        reauthentication: BitwardenRepository.ReauthenticationContext? = null,
     ) {
+        val capturedReauthentication = if (captchaResponse != null) {
+            if (reauthentication != null && reauthentication != pendingReauthentication) {
+                resetLoginState(cancelInFlight = true)
+                return
+            }
+            pendingReauthentication
+        } else reauthentication
+        if (!authenticationContextCurrent(capturedReauthentication,
+                if (captchaResponse != null) pendingAuthenticationLockGeneration else null)) {
+            resetLoginState(cancelInFlight = true)
+            return
+        }
         if (email.isBlank() || masterPassword.isBlank()) {
             viewModelScope.launch {
                 _events.emit(BitwardenEvent.ShowError(strings.get(R.string.legacy_ui_bitwarden_credentials_required)))
@@ -479,20 +570,68 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
             return
         }
         
-        authenticationJob?.cancel()
+        val retryDraft = if (captchaResponse != null) {
+            val captured = pendingEnvironment
+            if (captured == null || pendingAuthenticationEmail != email.trim()) {
+                resetLoginState(cancelInFlight = true)
+                _loginState.value = LoginState.Error(strings.get(R.string.legacy_ui_reauthenticate))
+                return
+            }
+            captured.toDraft()
+        } else environmentDraft
+        resetLoginState(cancelInFlight = true)
+        val attemptRevision = authenticationRevision
+        val loginLockGeneration = takagi.ru.monica.security.SessionManager.lockGeneration.value
+        pendingReauthentication = capturedReauthentication
+        pendingAuthenticationLockGeneration = loginLockGeneration
         authenticationJob = viewModelScope.launch {
             _loginState.value = LoginState.Loading
-            
+            val environment = withContext(Dispatchers.IO) {
+                val revision = java.util.UUID.randomUUID().toString()
+                if (retryDraft != null) BitwardenEnvironmentResolver.resolve(retryDraft, revision).value
+                else BitwardenEnvironmentResolver.resolveLegacy(BitwardenLegacyEnvironmentSnapshot(
+                    serverUrl?.takeIf { it.isNotBlank() } ?: takagi.ru.monica.bitwarden.api.BitwardenApiFactory.OFFICIAL_VAULT_URL,
+                    tls = tlsConfig ?: BitwardenTlsConfig()), revision).value
+            }
+            currentCoroutineContext().ensureActive()
+            if (attemptRevision != authenticationRevision) return@launch
+            if (!authenticationContextCurrent(capturedReauthentication, loginLockGeneration)) {
+                resetLoginState(cancelInFlight = true)
+                return@launch
+            }
+            if (environment == null) {
+                _loginState.value = LoginState.Error(strings.get(R.string.bitwarden_account_operation_failed))
+                return@launch
+            }
+            pendingEnvironment = environment
+            pendingAuthenticationEmail = email.trim()
             val result = repository.login(
                 serverUrl = serverUrl?.takeIf { it.isNotBlank() },
                 email = email,
                 masterPassword = masterPassword,
                 captchaResponse = captchaResponse,
-                tlsConfig = tlsConfig
+                environment = environment,
+                reauthentication = capturedReauthentication,
             )
+            if (!currentCoroutineContext().isActive || !loginForeground || attemptRevision != authenticationRevision ||
+                takagi.ru.monica.security.SessionManager.lockGeneration.value != loginLockGeneration ||
+                !takagi.ru.monica.security.SessionManager.isUnlocked.value) {
+                if (result is BitwardenRepository.RepositoryLoginResult.TwoFactorRequired) result.state.clear()
+                return@launch
+            }
+            if (result !is BitwardenRepository.RepositoryLoginResult.Success &&
+                !authenticationContextCurrent(capturedReauthentication, loginLockGeneration)) {
+                if (result is BitwardenRepository.RepositoryLoginResult.TwoFactorRequired) result.state.clear()
+                resetLoginState(cancelInFlight = true)
+                return@launch
+            }
             
             when (result) {
                 is BitwardenRepository.RepositoryLoginResult.Success -> {
+                    pendingEnvironment = null
+                    pendingAuthenticationEmail = null
+                    pendingAuthenticationLockGeneration = null
+                    pendingReauthentication = null
                     _loginState.value = LoginState.Success(result.vault)
                     _activeVault.value = result.vault
                     setUnlockState(result.vault.id, UnlockState.Unlocked)
@@ -506,9 +645,16 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
                 }
                 
                 is BitwardenRepository.RepositoryLoginResult.TwoFactorRequired -> {
+                    if (takagi.ru.monica.bitwarden.service.BitwardenAuthService.TWO_FACTOR_EMAIL_NEW_DEVICE in result.providers &&
+                        (!takagi.ru.monica.security.SessionManager.isUnlocked.value ||
+                            takagi.ru.monica.security.SessionManager.lockGeneration.value != loginLockGeneration)) {
+                        result.state.clear()
+                        _loginState.value = LoginState.Idle
+                        return@launch
+                    }
                     twoFactorState = result.state
-                    pendingServerUrl = serverUrl
-                    pendingTlsConfig = tlsConfig
+                    bindNewDeviceResend(result.state)
+                    pendingEnvironment = result.state.environment ?: environment
                     _loginState.value = LoginState.TwoFactorRequired(result.providers)
                     _events.emit(BitwardenEvent.ShowTwoFactorDialog(result.providers))
                 }
@@ -547,6 +693,11 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
         captchaResponse: String? = null,
         remember: Boolean = false
     ) {
+        if (!authenticationContextCurrent()) {
+            resetLoginState(cancelInFlight = true)
+            return
+        }
+        if (authenticationJob?.isActive == true || _loginState.value is LoginState.Loading) return
         val state = twoFactorState ?: run {
             viewModelScope.launch {
                 _events.emit(BitwardenEvent.ShowError(strings.get(R.string.legacy_ui_two_factor_state_lost)))
@@ -554,25 +705,48 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
             return
         }
         
-        authenticationJob?.cancel()
+        newDeviceResendController.bind(newDeviceResendSession)
+        cancelEmailResend()
+        val attemptRevision = authenticationRevision
+        val appGeneration = pendingAuthenticationLockGeneration
+        val capturedReauthentication = pendingReauthentication
         authenticationJob = viewModelScope.launch {
+            if (!authenticationContextCurrent(capturedReauthentication, appGeneration)) {
+                resetLoginState(cancelInFlight = true)
+                return@launch
+            }
             _loginState.value = LoginState.Loading
             
             val result = repository.loginWithTwoFactor(
                 twoFactorState = state,
                 twoFactorCode = twoFactorCode,
                 twoFactorProvider = twoFactorMethod,
-                serverUrl = pendingServerUrl,
+                serverUrl = state.environment?.base?.toString(),
                 captchaResponse = captchaResponse,
-                tlsConfig = pendingTlsConfig,
+                tlsConfig = state.environment?.tls,
                 remember = remember
             )
             
+            if (!currentCoroutineContext().isActive || !loginForeground || attemptRevision != authenticationRevision || twoFactorState !== state ||
+                !takagi.ru.monica.security.SessionManager.isUnlocked.value ||
+                appGeneration != takagi.ru.monica.security.SessionManager.lockGeneration.value) {
+                if (result is BitwardenRepository.RepositoryLoginResult.TwoFactorRequired) result.state.clear()
+                return@launch
+            }
+            if (result !is BitwardenRepository.RepositoryLoginResult.Success &&
+                !authenticationContextCurrent(capturedReauthentication, appGeneration)) {
+                if (result is BitwardenRepository.RepositoryLoginResult.TwoFactorRequired) result.state.clear()
+                resetLoginState(cancelInFlight = true)
+                return@launch
+            }
             when (result) {
                 is BitwardenRepository.RepositoryLoginResult.Success -> {
+                    bindNewDeviceResend(null)
                     twoFactorState = null
-                    pendingServerUrl = null
-                    pendingTlsConfig = null
+                    pendingEnvironment = null
+                    pendingAuthenticationEmail = null
+                    pendingAuthenticationLockGeneration = null
+                    pendingReauthentication = null
                     _loginState.value = LoginState.Success(result.vault)
                     _activeVault.value = result.vault
                     setUnlockState(result.vault.id, UnlockState.Unlocked)
@@ -586,6 +760,7 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
                 is BitwardenRepository.RepositoryLoginResult.TwoFactorRequired -> {
                     _loginState.value = LoginState.TwoFactorRequired(result.providers)
                     twoFactorState = result.state
+                    bindNewDeviceResend(result.state)
                     _events.emit(BitwardenEvent.ShowTwoFactorDialog(result.providers))
                     _events.emit(BitwardenEvent.ShowError(strings.get(R.string.legacy_ui_verification_code_incorrect)))
                 }
@@ -615,7 +790,55 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+    private fun bindNewDeviceResend(state: LoginResult.TwoFactorRequired?) {
+        val newDevice = state?.providers?.contains(takagi.ru.monica.bitwarden.service.BitwardenAuthService.TWO_FACTOR_EMAIL_NEW_DEVICE) == true
+        newDeviceResendSession = if (newDevice && newDeviceResendForeground) Any() else null
+        pendingNewDeviceLockGeneration = if (newDevice) takagi.ru.monica.security.SessionManager.lockGeneration.value else null
+        newDeviceResendController.bind(newDeviceResendSession)
+    }
+
+    fun resendNewDeviceOtp() {
+        if (!authenticationContextCurrent()) {
+            resetLoginState(cancelInFlight = true)
+            return
+        }
+        val state = twoFactorState ?: return
+        val session = newDeviceResendSession ?: return
+        val lockGeneration = pendingNewDeviceLockGeneration ?: return
+        if (_loginState.value is LoginState.Loading) return
+        val serverUrl = state.environment?.base?.toString()
+        val tlsConfig = state.environment?.tls
+        newDeviceResendController.request(session, stillValid = {
+            twoFactorState === state && newDeviceResendSession === session && newDeviceResendForeground &&
+                authenticationContextCurrent() &&
+                takagi.ru.monica.security.SessionManager.isUnlocked.value &&
+                takagi.ru.monica.security.SessionManager.lockGeneration.value == lockGeneration
+        }) {
+            repository.resendNewDeviceOtp(state, serverUrl, tlsConfig)
+        }
+    }
+
+    /** Reading the mailbox keeps the original challenge, but revokes the outgoing resend and its UI result. */
+    fun setNewDeviceResendForeground(foreground: Boolean) {
+        newDeviceResendForeground = foreground
+        newDeviceResendSession = null
+        newDeviceResendController.bind(null)
+        val expectedLock = pendingNewDeviceLockGeneration ?: return
+        if (!takagi.ru.monica.security.SessionManager.isUnlocked.value ||
+            takagi.ru.monica.security.SessionManager.lockGeneration.value != expectedLock) {
+            resetLoginState(cancelInFlight = true)
+        } else if (foreground) {
+            newDeviceResendSession = Any()
+            newDeviceResendController.bind(newDeviceResendSession)
+        }
+    }
+
     fun sendTwoFactorEmailLogin() {
+        if (!authenticationContextCurrent()) {
+            resetLoginState(cancelInFlight = true)
+            return
+        }
+        if (authenticationJob?.isActive == true || _loginState.value is LoginState.Loading) return
         val state = twoFactorState ?: run {
             viewModelScope.launch {
                 _events.emit(BitwardenEvent.ShowError(strings.get(R.string.legacy_ui_two_factor_state_lost)))
@@ -625,22 +848,31 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
 
         if (_sendingTwoFactorEmail.value) return
         _sendingTwoFactorEmail.value = true
-        viewModelScope.launch {
+        val attemptRevision = authenticationRevision
+        val resendRevision = ++emailResendRevision
+        emailResendJob = viewModelScope.launch {
             try {
-            val result = repository.sendTwoFactorEmailLogin(
-                twoFactorState = state,
-                serverUrl = pendingServerUrl,
-                tlsConfig = pendingTlsConfig
-            )
-            result.fold(
-                onSuccess = {
-                    _events.emit(BitwardenEvent.ShowSuccess(strings.get(R.string.legacy_ui_email_code_sent)))
-                },
-                onFailure = { error ->
-                    _events.emit(BitwardenEvent.ShowError(strings.get(R.string.legacy_ui_email_code_send_failed, repository.describeLoginError(error))))
-                }
-            )
-            } finally { _sendingTwoFactorEmail.value = false }
+                if (!authenticationContextCurrent() || resendRevision != emailResendRevision || twoFactorState !== state) return@launch
+                val result = repository.sendTwoFactorEmailLogin(
+                    twoFactorState = state,
+                    serverUrl = state.environment?.base?.toString(),
+                    tlsConfig = state.environment?.tls
+                )
+                currentCoroutineContext().ensureActive()
+                if (attemptRevision != authenticationRevision || resendRevision != emailResendRevision ||
+                    twoFactorState !== state || !authenticationContextCurrent()) return@launch
+                result.fold(
+                    onSuccess = {
+                        _events.emit(BitwardenEvent.ShowSuccess(strings.get(R.string.legacy_ui_email_code_sent)))
+                    },
+                    onFailure = { error ->
+                        _events.emit(BitwardenEvent.ShowError(strings.get(R.string.legacy_ui_email_code_send_failed, repository.describeLoginError(error))))
+                    }
+                )
+            } finally {
+                if (attemptRevision == authenticationRevision && resendRevision == emailResendRevision &&
+                    twoFactorState === state) _sendingTwoFactorEmail.value = false
+            }
         }
     }
     
@@ -1362,12 +1594,19 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
      */
     fun resetLoginState(cancelInFlight: Boolean = false) {
         if (_loginState.value is LoginState.Loading && !cancelInFlight) return
+        authenticationRevision++
+        pendingEnvironment?.let(repository::retireAuthenticationEnvironment)
+        twoFactorState?.environment?.takeIf { it !== pendingEnvironment }?.let(repository::retireAuthenticationEnvironment)
+        cancelEmailResend()
+        bindNewDeviceResend(null)
         authenticationJob?.cancel()
         authenticationJob = null
         twoFactorState?.clear()
         twoFactorState = null
-        pendingServerUrl = null
-        pendingTlsConfig = null
+        pendingEnvironment = null
+        pendingAuthenticationEmail = null
+        pendingAuthenticationLockGeneration = null
+        pendingReauthentication = null
         _loginState.value = LoginState.Idle
     }
     

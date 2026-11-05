@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_server_reauthenticate_hint">欲改連線之設，須復登入。主址與郵址不易；若取消，舊設仍存，帳戶猶鎖。</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.attachments.executor.BitwardenAttachmentReconcilerTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-05T02:06:44" hostname="JOYIN" time="0.008">
+  <properties/>
+  <testcase name="missingDecodedFileNameDoesNotDiscardUsableCache" classname="takagi.ru.monica.attachments.executor.BitwardenAttachmentReconcilerTest" time="0.001"/>
+  <testcase name="changedAttachmentKeyInvalidatesCachedBytes" classname="takagi.ru.monica.attachments.executor.BitwardenAttachmentReconcilerTest" time="0.006"/>
+  <testcase name="ciphertextSizeDifferenceDoesNotInvalidatePlaintextCache" classname="takagi.ru.monica.attachments.executor.BitwardenAttachmentReconcilerTest" time="0.001"/>
+  <testcase name="refreshedDownloadUrlKeepsCachedBytes" classname="takagi.ru.monica.attachments.executor.BitwardenAttachmentReconcilerTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

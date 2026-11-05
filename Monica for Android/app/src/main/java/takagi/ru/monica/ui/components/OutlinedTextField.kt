@@ -13,7 +13,7 @@ import androidx.compose.material3.OutlinedTextField as MaterialOutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -74,17 +74,20 @@ fun OutlinedTextField(
     }
     var fieldValue by textState
 
-    LaunchedEffect(value) {
-        if (value != fieldValue.text) {
-            val start = fieldValue.selection.start.coerceIn(0, value.length)
-            val end = fieldValue.selection.end.coerceIn(0, value.length)
-            fieldValue = TextFieldValue(text = value, selection = TextRange(start, end))
-        }
+    // An input and an external reset can happen before the next frame, returning value
+    // to the previous effect key. Always render the authoritative value, even then.
+    val displayedValue = if (value == fieldValue.text) fieldValue else TextFieldValue(
+        text = value,
+        selection = TextRange(fieldValue.selection.start.coerceIn(0, value.length),
+            fieldValue.selection.end.coerceIn(0, value.length)),
+    )
+    SideEffect {
+        if (fieldValue != displayedValue) fieldValue = displayedValue
     }
 
     if (LocalFilledEntryForm.current) {
     androidx.compose.material3.TextField(
-        value = fieldValue,
+        value = displayedValue,
         onValueChange = { newValue ->
             val previousText = fieldValue.text
             fieldValue = newValue
@@ -126,7 +129,7 @@ fun OutlinedTextField(
     )
     } else {
     MaterialOutlinedTextField(
-        value = fieldValue,
+        value = displayedValue,
         onValueChange = { newValue ->
             val previousText = fieldValue.text
             fieldValue = newValue

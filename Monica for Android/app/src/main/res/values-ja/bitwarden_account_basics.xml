@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_new_device_resend">確認メールを再送信</string>
+    <string name="bitwarden_new_device_resend_sent">確認メールをリクエストしました。受信トレイを確認してください。</string>
+    <string name="bitwarden_new_device_resend_failed">確認メールをリクエストできませんでした。もう一度お試しください。</string>
+    <string name="bitwarden_new_device_resend_unavailable">このサーバーは、新しいデバイスの確認メールの再送信に対応していません。</string>
+    <string name="bitwarden_new_device_resend_wait">%1$d 秒後にもう一度お試しください。</string>
+    <string name="bitwarden_new_device_resend_rate_limited">リクエストが多すぎます。しばらく待ってからもう一度お試しください。</string>
+    <string name="bitwarden_account_fingerprint">アカウントのフィンガープリントフレーズ</string>
+    <string name="bitwarden_account_fingerprint_hint">別の信頼できる経路でこのフレーズを照合し、アカウントの識別情報の確認に役立ててください。</string>
+    <string name="bitwarden_account_fingerprint_unavailable">このアカウントを同期して識別キーを読み込んでから、もう一度お試しください。</string>
+    <string name="bitwarden_account_fingerprint_copy">フレーズをコピー</string>
+</resources>

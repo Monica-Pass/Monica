@@ -1,0 +1,818 @@
+[
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/attachments/BitwardenAttachmentEnvironmentInstrumentedTest.kt",
+    "mainSha256": "24c232739cfbaa3d038dd27ebb0af53c03564b1aa560713b3fd58a22a9e04cad",
+    "fdroidSha256": "24c232739cfbaa3d038dd27ebb0af53c03564b1aa560713b3fd58a22a9e04cad",
+    "identical": true
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenAccountUiInstrumentedTest.kt",
+    "mainSha256": "9f6004724a40755db216a9f5c8da7d1f1badc5169cad66935de579677353f779",
+    "fdroidSha256": "9f6004724a40755db216a9f5c8da7d1f1badc5169cad66935de579677353f779",
+    "identical": true
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenFingerprintInstrumentedTest.kt",
+    "mainSha256": "a6f5541a1a4b5f59caf8a1b66912a60b43e6884e43e8c577a29388e099c8dca6",
+    "fdroidSha256": "a6f5541a1a4b5f59caf8a1b66912a60b43e6884e43e8c577a29388e099c8dca6",
+    "identical": true
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenFingerprintSessionInstrumentedTest.kt",
+    "mainSha256": "176eebc61be469fe914422b7446e884b61b15d8483c2ed04eb51bb53671cdd0b",
+    "fdroidSha256": "176eebc61be469fe914422b7446e884b61b15d8483c2ed04eb51bb53671cdd0b",
+    "identical": true
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenNewDeviceOtpResendInstrumentedTest.kt",
+    "mainSha256": "61df3d04a585c2d912eb8a0648302c46ee3eadbcb11f2df3e4e49f106864159b",
+    "fdroidSha256": "61df3d04a585c2d912eb8a0648302c46ee3eadbcb11f2df3e4e49f106864159b",
+    "identical": true
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenNotificationInstrumentedTest.kt",
+    "mainSha256": "698341fa2ac7edd418edea22178e2002127bbe54e2d689317e2228e533c86e25",
+    "fdroidSha256": "698341fa2ac7edd418edea22178e2002127bbe54e2d689317e2228e533c86e25",
+    "identical": true
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenRememberedMfaInstrumentedTest.kt",
+    "mainSha256": "665d48b438bb1da934ea8d946dadc4ec331bb3ca32aa499f2e36eb21c611b040",
+    "fdroidSha256": "665d48b438bb1da934ea8d946dadc4ec331bb3ca32aa499f2e36eb21c611b040",
+    "identical": true
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenSendDraftsInstrumentedTest.kt",
+    "mainSha256": "cf96f85b9e40a54a5fcdd1a8b01731c2f7ede2fa18a51a9ca385eaf05fa2b81e",
+    "fdroidSha256": "cf96f85b9e40a54a5fcdd1a8b01731c2f7ede2fa18a51a9ca385eaf05fa2b81e",
+    "identical": true
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenSensitiveInputResetInstrumentedTest.kt",
+    "mainSha256": "33d2b55a9c240e2c654e48488be1c30bef4a3779ab5c478aa0ffd8543054db28",
+    "fdroidSha256": "33d2b55a9c240e2c654e48488be1c30bef4a3779ab5c478aa0ffd8543054db28",
+    "identical": true
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenServerConfigurationUiInstrumentedTest.kt",
+    "mainSha256": "a6da1a957d8b2c76b5ec7bef2ab9761047cd2c36108c39ecec893ea67103a4ab",
+    "fdroidSha256": "a6da1a957d8b2c76b5ec7bef2ab9761047cd2c36108c39ecec893ea67103a4ab",
+    "identical": true
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenServerLoginUiInstrumentedTest.kt",
+    "mainSha256": "543db055311352fa107957bef0db46d37ccff6e060aec7ef8ecf8beacea509a6",
+    "fdroidSha256": "543db055311352fa107957bef0db46d37ccff6e060aec7ef8ecf8beacea509a6",
+    "identical": true
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenSyncPublicationInstrumentedTest.kt",
+    "mainSha256": "2967b2d9736f416b8221342987b35a2750528cc7ba342eb9a40bcef2fd7aa9a2",
+    "fdroidSha256": "2967b2d9736f416b8221342987b35a2750528cc7ba342eb9a40bcef2fd7aa9a2",
+    "identical": true
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenTransportAuthInstrumentedTest.kt",
+    "mainSha256": "d8ab3f26c1c26044ab731354a99567edf7dfb0166da548d1cac7cf02c66d0ff3",
+    "fdroidSha256": "d8ab3f26c1c26044ab731354a99567edf7dfb0166da548d1cac7cf02c66d0ff3",
+    "identical": true
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenTransportBackupInstrumentedTest.kt",
+    "mainSha256": "3a8fee9f09fae568a38b45951ab3da830ed6f5f2bf267494ce8126a79a0f4990",
+    "fdroidSha256": "3a8fee9f09fae568a38b45951ab3da830ed6f5f2bf267494ce8126a79a0f4990",
+    "identical": true
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenTransportMigrationInstrumentedTest.kt",
+    "mainSha256": "bf7923f4c841b850bb59abc64a4f4abf86467ac82c0dfbd3cfbff06b7435bf17",
+    "fdroidSha256": "bf7923f4c841b850bb59abc64a4f4abf86467ac82c0dfbd3cfbff06b7435bf17",
+    "identical": true
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/localization/LocalizedBitwardenUiInstrumentedTest.kt",
+    "mainSha256": "5f5871d2693871f8476468a81dbcf20de7ffcbf99a234bfc05acc1399ccc07fa",
+    "fdroidSha256": "5f5871d2693871f8476468a81dbcf20de7ffcbf99a234bfc05acc1399ccc07fa",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/attachments/EmbeddedWalletCopyService.kt",
+    "mainSha256": "ac4b4cc2b4afc742b5c1e141334eb0093badd43e0fa4965253c8b9b4ab5da288",
+    "fdroidSha256": "ac4b4cc2b4afc742b5c1e141334eb0093badd43e0fa4965253c8b9b4ab5da288",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/attachments/data/AttachmentDao.kt",
+    "mainSha256": "10b228f47c70e36e0c9fa0aa908f9ae1d1105aedf725ce5dd07b68a05b8d1915",
+    "fdroidSha256": "10b228f47c70e36e0c9fa0aa908f9ae1d1105aedf725ce5dd07b68a05b8d1915",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/attachments/executor/BitwardenAttachmentExecutor.kt",
+    "mainSha256": "8d89e1f63497f14ae8144fbea94e70c603b79d5840284738d18287fa33cc5ab6",
+    "fdroidSha256": "8d89e1f63497f14ae8144fbea94e70c603b79d5840284738d18287fa33cc5ab6",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/attachments/executor/BitwardenAttachmentReconciler.kt",
+    "mainSha256": "3c624f03a37c8a09adbc74821ce07825cd699df3e10872290de6c3e372ef8c63",
+    "fdroidSha256": "3c624f03a37c8a09adbc74821ce07825cd699df3e10872290de6c3e372ef8c63",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/attachments/facade/AttachmentFacade.kt",
+    "mainSha256": "2d2478061087b887ce5020122f55e8de9c486519c2f1f05fa04aa988455cc35f",
+    "fdroidSha256": "2d2478061087b887ce5020122f55e8de9c486519c2f1f05fa04aa988455cc35f",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenApi.kt",
+    "mainSha256": "411fd99d7af2bc48ded70ccd5ff341306d52b55cbe46dfd82c6fb83956e4fdc2",
+    "fdroidSha256": "411fd99d7af2bc48ded70ccd5ff341306d52b55cbe46dfd82c6fb83956e4fdc2",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenApiFactory.kt",
+    "mainSha256": "f399cdf47708082649b5aa5681adb42f5b4254d82559641acfc5d011f2f8da51",
+    "fdroidSha256": "f399cdf47708082649b5aa5681adb42f5b4254d82559641acfc5d011f2f8da51",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenEnvironment.kt",
+    "mainSha256": "cbb7745ee64ea2d782938f052bdce36d08be11274336cd7e6299b7dccbb3ea6b",
+    "fdroidSha256": "cbb7745ee64ea2d782938f052bdce36d08be11274336cd7e6299b7dccbb3ea6b",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenEnvironmentResolver.kt",
+    "mainSha256": "7045ae43c930a2a766aae10b8a7b3ff9ed839fb91f3141c0e78f7523d5af8b04",
+    "fdroidSha256": "7045ae43c930a2a766aae10b8a7b3ff9ed839fb91f3141c0e78f7523d5af8b04",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenTransportBackup.kt",
+    "mainSha256": "aa3d338128ea876b466e0a9e604b19c8679d5c633428af24aa3087038b31212c",
+    "fdroidSha256": "aa3d338128ea876b466e0a9e604b19c8679d5c633428af24aa3087038b31212c",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenTransportPolicy.kt",
+    "mainSha256": "3be44e126cf4a79e839eed61970e8db4d245e47f3892e87f435f730cb154ecb7",
+    "fdroidSha256": "3be44e126cf4a79e839eed61970e8db4d245e47f3892e87f435f730cb154ecb7",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenTransportSecretStore.kt",
+    "mainSha256": "7e3d4e359f4f59e5e4cc382484ffdb00be87efff48c9fb4b6ada096a4ef464f1",
+    "fdroidSha256": "7e3d4e359f4f59e5e4cc382484ffdb00be87efff48c9fb4b6ada096a4ef464f1",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenVaultEnvironmentStore.kt",
+    "mainSha256": "6ea6555eddfe01f4b7496eda440c121b9940e7fc42b5e852c57cbca402bc0d4b",
+    "fdroidSha256": "6ea6555eddfe01f4b7496eda440c121b9940e7fc42b5e852c57cbca402bc0d4b",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/crypto/BitwardenAccountFingerprint.kt",
+    "mainSha256": "c6774c383e9732e8251afc247a757fade99cb508fa8a94d09673cd0269863a22",
+    "fdroidSha256": "c6774c383e9732e8251afc247a757fade99cb508fa8a94d09673cd0269863a22",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/discovery/AndroidBitwardenDnsTxtResolver.kt",
+    "mainSha256": "5f8c64b8be27a5db85eeb4be248e2b204fec3655fffea6e0c5022878f607e28e",
+    "fdroidSha256": "5f8c64b8be27a5db85eeb4be248e2b204fec3655fffea6e0c5022878f607e28e",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/discovery/BitwardenDnsTxtParser.kt",
+    "mainSha256": "2d8ceb4a1418a12a0cbc5c9b408fe993a51c2bf226357f8dae6cbaea58cf8b01",
+    "fdroidSha256": "2d8ceb4a1418a12a0cbc5c9b408fe993a51c2bf226357f8dae6cbaea58cf8b01",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/discovery/BitwardenServerDiscovery.kt",
+    "mainSha256": "afe72400ca100806feff81f06e3804d358ec601a8cc405d144a9f5139c7d6b25",
+    "fdroidSha256": "afe72400ca100806feff81f06e3804d358ec601a8cc405d144a9f5139c7d6b25",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/mapper/BitwardenSendMapper.kt",
+    "mainSha256": "0eb7ba4ca8b53bb64e3d05109566839c312367270b1645123782b247ec460b5e",
+    "fdroidSha256": "0eb7ba4ca8b53bb64e3d05109566839c312367270b1645123782b247ec460b5e",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/repository/BitwardenRepository.kt",
+    "mainSha256": "5298081c735291da7fe1dbc6eff94f0005efd36b7d70c95d3a09b68abe5f07e6",
+    "fdroidSha256": "5298081c735291da7fe1dbc6eff94f0005efd36b7d70c95d3a09b68abe5f07e6",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAccountIdentityStore.kt",
+    "mainSha256": "3c782f2ccd62a315461729e6b2731038f5178dc9e9ef858d1886d6e87945bf27",
+    "fdroidSha256": "3c782f2ccd62a315461729e6b2731038f5178dc9e9ef858d1886d6e87945bf27",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAccountService.kt",
+    "mainSha256": "04a25d9293202b725eff563dbbd0a219a0d5cb20d3f14f8384419376e7eeab64",
+    "fdroidSha256": "04a25d9293202b725eff563dbbd0a219a0d5cb20d3f14f8384419376e7eeab64",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAccountSessionGuard.kt",
+    "mainSha256": "0e9dc56380bfa440961d3de01d62c24052b9e099e7e1ada4ba22942465981fcf",
+    "fdroidSha256": "0e9dc56380bfa440961d3de01d62c24052b9e099e7e1ada4ba22942465981fcf",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAuthRedaction.kt",
+    "mainSha256": "4cda3ca6b9dbdfb75eab3c1f0a89c486c87363877a5cd66d973896cb114666e8",
+    "fdroidSha256": "4cda3ca6b9dbdfb75eab3c1f0a89c486c87363877a5cd66d973896cb114666e8",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAuthService.kt",
+    "mainSha256": "9579dccf34c96112113da6fbe30c2b713d81141a60fb07d1aad87c5fe5de7a29",
+    "fdroidSha256": "9579dccf34c96112113da6fbe30c2b713d81141a60fb07d1aad87c5fe5de7a29",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenHistoricalTotpRepairService.kt",
+    "mainSha256": "4831de68c43c7f8e493da1eec4af14247f7f0c24a47976589554b7238a213e5f",
+    "fdroidSha256": "4831de68c43c7f8e493da1eec4af14247f7f0c24a47976589554b7238a213e5f",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSendCache.kt",
+    "mainSha256": "ca693aca7fd9b507639526838c250b801603e8de598e59a5d877c2ea5a2a1908",
+    "fdroidSha256": "ca693aca7fd9b507639526838c250b801603e8de598e59a5d877c2ea5a2a1908",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSendScope.kt",
+    "mainSha256": "56d16434f1f9879b40395871399d8081d3ca916d9e69cdcbe70261c9b72c7918",
+    "fdroidSha256": "56d16434f1f9879b40395871399d8081d3ca916d9e69cdcbe70261c9b72c7918",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSyncService.kt",
+    "mainSha256": "7240859b1a6c2dcfb72fdffa4cab0b63439f633dfbc3bbb5471967c7d2247826",
+    "fdroidSha256": "7240859b1a6c2dcfb72fdffa4cab0b63439f633dfbc3bbb5471967c7d2247826",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/CipherUploadProcessor.kt",
+    "mainSha256": "d6ea5056a273fd60a009896b629391145404c3e65b9c256527a47c007fbf424a",
+    "fdroidSha256": "d6ea5056a273fd60a009896b629391145404c3e65b9c256527a47c007fbf424a",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/NewDeviceOtpResendFailure.kt",
+    "mainSha256": "fa5be81bf2e06244005bf66f1beee90f3974b9fc68505b897ec144ea0150c89f",
+    "fdroidSha256": "fa5be81bf2e06244005bf66f1beee90f3974b9fc68505b897ec144ea0150c89f",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/sync/BitwardenForegroundNotifications.kt",
+    "mainSha256": "0573bc6a03a1bd6cf7d22a9cb24f822b798fc4a28e079b74395acad7398b3281",
+    "fdroidSha256": "0573bc6a03a1bd6cf7d22a9cb24f822b798fc4a28e079b74395acad7398b3281",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenAccountDialogs.kt",
+    "mainSha256": "ebc3f246a9e30cd2600756031d975c4bb18ee9518785150cf881492fb9db3110",
+    "fdroidSha256": "ebc3f246a9e30cd2600756031d975c4bb18ee9518785150cf881492fb9db3110",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenAccountScreen.kt",
+    "mainSha256": "b3656ebbefe12c5d2d512e74c161d29a738c13726dd07e4ebfcf1a7744139ac5",
+    "fdroidSha256": "b3656ebbefe12c5d2d512e74c161d29a738c13726dd07e4ebfcf1a7744139ac5",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenFingerprintSheet.kt",
+    "mainSha256": "1522232daf6e19b60cb042606b10dbaa62b4d8feccbec71c39ca829dd1b08347",
+    "fdroidSha256": "1522232daf6e19b60cb042606b10dbaa62b4d8feccbec71c39ca829dd1b08347",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenLoginScreen.kt",
+    "mainSha256": "ec15226717d8c8df2c1ec0f4eadab762376bc6eaf4fe2a0b2ec475eba2ff8339",
+    "fdroidSha256": "ec15226717d8c8df2c1ec0f4eadab762376bc6eaf4fe2a0b2ec475eba2ff8339",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenServerConfigurationDialog.kt",
+    "mainSha256": "39b393f09abeb5bbb248e4f5cc8c7031a59d08504652f9a19390862d40021339",
+    "fdroidSha256": "39b393f09abeb5bbb248e4f5cc8c7031a59d08504652f9a19390862d40021339",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/viewmodel/BitwardenViewModel.kt",
+    "mainSha256": "776f55b8085afa5acfc7ebabb7967b81ba462fbca8eea8555a668c342add2d33",
+    "fdroidSha256": "776f55b8085afa5acfc7ebabb7967b81ba462fbca8eea8555a668c342add2d33",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/viewmodel/NewDeviceOtpResendController.kt",
+    "mainSha256": "87ad4600832d02e4a6159ad8efac0a89d0a44980f7462523b6a9f1bc6f52625c",
+    "fdroidSha256": "87ad4600832d02e4a6159ad8efac0a89d0a44980f7462523b6a9f1bc6f52625c",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/data/PasswordDatabase.kt",
+    "mainSha256": "13ba621f82307e91bf0e2547796c6f61929b09fa1280f546d74fe5f3e5ab8208",
+    "fdroidSha256": "13ba621f82307e91bf0e2547796c6f61929b09fa1280f546d74fe5f3e5ab8208",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/data/bitwarden/BitwardenDao.kt",
+    "mainSha256": "b3139b561d4d0b7cc904a70ee91c2a5dc047ecf0633f90602587ffa279d8a424",
+    "fdroidSha256": "b3139b561d4d0b7cc904a70ee91c2a5dc047ecf0633f90602587ffa279d8a424",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/data/bitwarden/BitwardenTransportState.kt",
+    "mainSha256": "8d9b395e6a4837f8acd7452a702efb1377d8e58be32b818aed1eab71894d7fbd",
+    "fdroidSha256": "8d9b395e6a4837f8acd7452a702efb1377d8e58be32b818aed1eab71894d7fbd",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/data/bitwarden/BitwardenVault.kt",
+    "mainSha256": "89dab3f1fe3013083234763431eca2e9e2e38ec2c213d38e3696f7b68761abe9",
+    "fdroidSha256": "89dab3f1fe3013083234763431eca2e9e2e38ec2c213d38e3696f7b68761abe9",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/security/SessionManager.kt",
+    "mainSha256": "645160fc1ad1e1be4f4e6b297942a883bf505e98915bb4d388f3e1029b0f8c36",
+    "fdroidSha256": "645160fc1ad1e1be4f4e6b297942a883bf505e98915bb4d388f3e1029b0f8c36",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/steam/data/SteamBitwardenAccountStore.kt",
+    "mainSha256": "3dc9139fe8f814e64cefba7e606bcede898a7d337b83a46370d95b5d6786b403",
+    "fdroidSha256": "3dc9139fe8f814e64cefba7e606bcede898a7d337b83a46370d95b5d6786b403",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/ui/components/OutlinedTextField.kt",
+    "mainSha256": "4db0cd4bd90e42e283ef40ad433f80cb6c0f8f26d5c802d5572b9c2bcac033dc",
+    "fdroidSha256": "4db0cd4bd90e42e283ef40ad433f80cb6c0f8f26d5c802d5572b9c2bcac033dc",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/utils/WebDavHelper.kt",
+    "mainSha256": "162dc312bc38559d6f13e5f9955463669d1917d01bd574ff9623177fc18ad56a",
+    "fdroidSha256": "0fc90f6b5cde10e73b169ae76d494f16756c61c9340435f879256ce9e836ff61",
+    "identical": false
+  },
+  {
+    "path": "app/src/main/res/raw/bitwarden_fingerprint_words.txt",
+    "mainSha256": "6d557f0693958fb5e650b68b5bee585eb82cf4da32965505c789e924743bc522",
+    "fdroidSha256": "6d557f0693958fb5e650b68b5bee585eb82cf4da32965505c789e924743bc522",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-b+lzh/bitwarden_account_basics.xml",
+    "mainSha256": "e38683f8976ea9574b0f5be1b3e4f4f3762cb987649d638f99bcd06ba4c7e61e",
+    "fdroidSha256": "e38683f8976ea9574b0f5be1b3e4f4f3762cb987649d638f99bcd06ba4c7e61e",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-b+lzh/strings_bitwarden_server.xml",
+    "mainSha256": "9d81b34434ee4b77b64121430ec82fc994bde19274bf0a1324a633bc65ea9149",
+    "fdroidSha256": "9d81b34434ee4b77b64121430ec82fc994bde19274bf0a1324a633bc65ea9149",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-b+lzh/strings_bitwarden_server_account.xml",
+    "mainSha256": "4e74c31c060ec3331efb2499b751697d7e373918789b02bda2017079bba4fa1f",
+    "fdroidSha256": "4e74c31c060ec3331efb2499b751697d7e373918789b02bda2017079bba4fa1f",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-b+zh+Hant/bitwarden_account_basics.xml",
+    "mainSha256": "bb66aa0c39bae601ea72b90b07f4ecc83e6a92ac588fe56c7b1c4de00cf8ec45",
+    "fdroidSha256": "bb66aa0c39bae601ea72b90b07f4ecc83e6a92ac588fe56c7b1c4de00cf8ec45",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-b+zh+Hant/strings_bitwarden_server.xml",
+    "mainSha256": "a0b6ed4f33ba98917879253e62975b4e4433fbe4c2b6e104768124f4238d6b38",
+    "fdroidSha256": "a0b6ed4f33ba98917879253e62975b4e4433fbe4c2b6e104768124f4238d6b38",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-b+zh+Hant/strings_bitwarden_server_account.xml",
+    "mainSha256": "65ef0ca621603b53e8fc548a18ac82bf92fafba5116a654ce93f9e2c2e38a205",
+    "fdroidSha256": "65ef0ca621603b53e8fc548a18ac82bf92fafba5116a654ce93f9e2c2e38a205",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-de/bitwarden_account_basics.xml",
+    "mainSha256": "2ce65266a47f225cb99b3144d162b4c9e6359b7541e0a7ffb5941c470154187e",
+    "fdroidSha256": "2ce65266a47f225cb99b3144d162b4c9e6359b7541e0a7ffb5941c470154187e",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-de/strings_bitwarden_server.xml",
+    "mainSha256": "f81fe65aad8867ae8d9b55ac7b87cd31f0c1d4e92e5824926fe064a00fd5e558",
+    "fdroidSha256": "f81fe65aad8867ae8d9b55ac7b87cd31f0c1d4e92e5824926fe064a00fd5e558",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-de/strings_bitwarden_server_account.xml",
+    "mainSha256": "97c304d4b79cc8d133fe1b77afc5300b39f291fa143e549c167ecd5c050538a5",
+    "fdroidSha256": "97c304d4b79cc8d133fe1b77afc5300b39f291fa143e549c167ecd5c050538a5",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-es/bitwarden_account_basics.xml",
+    "mainSha256": "a1ea958ed3862ee785397ee6ebcf705cf981d09a28e8b31720cbd4327e45e2ab",
+    "fdroidSha256": "a1ea958ed3862ee785397ee6ebcf705cf981d09a28e8b31720cbd4327e45e2ab",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-es/strings_bitwarden_server.xml",
+    "mainSha256": "067d81aac0431d5a95dc0629a40612257cb90d9b69818cb86c2a09ed19e22fa0",
+    "fdroidSha256": "067d81aac0431d5a95dc0629a40612257cb90d9b69818cb86c2a09ed19e22fa0",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-es/strings_bitwarden_server_account.xml",
+    "mainSha256": "2f62b5a650a9c97ace21d7afd4c717a22a04d9c07a3bde4e1e9de19a5d133d08",
+    "fdroidSha256": "2f62b5a650a9c97ace21d7afd4c717a22a04d9c07a3bde4e1e9de19a5d133d08",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-fr/bitwarden_account_basics.xml",
+    "mainSha256": "bc039a8cae3d048b65d22583cbf4035ed543a4f973c0561ef3a01e3e8385177b",
+    "fdroidSha256": "bc039a8cae3d048b65d22583cbf4035ed543a4f973c0561ef3a01e3e8385177b",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-fr/strings_bitwarden_server.xml",
+    "mainSha256": "2a0fbaa6a16413d064213e2476f8710f652089754e01e04aa2b6cde2d1ad8987",
+    "fdroidSha256": "2a0fbaa6a16413d064213e2476f8710f652089754e01e04aa2b6cde2d1ad8987",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-fr/strings_bitwarden_server_account.xml",
+    "mainSha256": "61ec7226d0a6747ceff039bc4fb9334814d2bea03bd4a469abc40e9217a71023",
+    "fdroidSha256": "61ec7226d0a6747ceff039bc4fb9334814d2bea03bd4a469abc40e9217a71023",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-it/bitwarden_account_basics.xml",
+    "mainSha256": "faffa57a9d580c33817626ffc74b7684df347c664dc416dbe3a79b27593b2b01",
+    "fdroidSha256": "faffa57a9d580c33817626ffc74b7684df347c664dc416dbe3a79b27593b2b01",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-it/strings_bitwarden_server.xml",
+    "mainSha256": "ca6c1a231d3309f8edfec8318c57914c53fa804db02b782d5139c5035c1b6da9",
+    "fdroidSha256": "ca6c1a231d3309f8edfec8318c57914c53fa804db02b782d5139c5035c1b6da9",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-it/strings_bitwarden_server_account.xml",
+    "mainSha256": "38a98fb3d94a1908074d0e50a428e0d6aa42a341ce873f3d53e955ab79c2c170",
+    "fdroidSha256": "38a98fb3d94a1908074d0e50a428e0d6aa42a341ce873f3d53e955ab79c2c170",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-ja/bitwarden_account_basics.xml",
+    "mainSha256": "9a1a4fae7a5a58a4e11e0c159a5c874cce6323fd7e008ceb14f478f40281b070",
+    "fdroidSha256": "9a1a4fae7a5a58a4e11e0c159a5c874cce6323fd7e008ceb14f478f40281b070",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-ja/strings_bitwarden_server.xml",
+    "mainSha256": "a576f3991939e6270cffd8a1bc4d72cf70b095f942e1a544ca95d8348dea8d49",
+    "fdroidSha256": "a576f3991939e6270cffd8a1bc4d72cf70b095f942e1a544ca95d8348dea8d49",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-ja/strings_bitwarden_server_account.xml",
+    "mainSha256": "b53c0555481410d74b1ba75ea6f5f579b5cb0aca0bfe8920ea634915d0e00e5e",
+    "fdroidSha256": "b53c0555481410d74b1ba75ea6f5f579b5cb0aca0bfe8920ea634915d0e00e5e",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-ko/bitwarden_account_basics.xml",
+    "mainSha256": "4f33bf34ac7b9e336c269d0469bc15cfaabb039f9f008f3bc863bd35b63c6509",
+    "fdroidSha256": "4f33bf34ac7b9e336c269d0469bc15cfaabb039f9f008f3bc863bd35b63c6509",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-ko/strings_bitwarden_server.xml",
+    "mainSha256": "7847ac9e7332364943169ba37e35b9090cdc02def808d0ddfd1f1ab0087cc046",
+    "fdroidSha256": "7847ac9e7332364943169ba37e35b9090cdc02def808d0ddfd1f1ab0087cc046",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-ko/strings_bitwarden_server_account.xml",
+    "mainSha256": "ac26698b58f101fed271f666da75d923b361065e799216d8404c4bedc78884ff",
+    "fdroidSha256": "ac26698b58f101fed271f666da75d923b361065e799216d8404c4bedc78884ff",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-pl/bitwarden_account_basics.xml",
+    "mainSha256": "2ec8435ca927395f43654e6f012c15ad9a5e59451d28219fcc28da6eefcd3042",
+    "fdroidSha256": "2ec8435ca927395f43654e6f012c15ad9a5e59451d28219fcc28da6eefcd3042",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-pl/strings_bitwarden_server.xml",
+    "mainSha256": "7b2070b7ab1cc7b7949fa5c53777566f685c6af278c88ca829a6c372326661b9",
+    "fdroidSha256": "7b2070b7ab1cc7b7949fa5c53777566f685c6af278c88ca829a6c372326661b9",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-pl/strings_bitwarden_server_account.xml",
+    "mainSha256": "7ae5972f78ce112c2e6e855fc7b0a4d7f24aa475d30998dd79c0ac9beb32fc6c",
+    "fdroidSha256": "7ae5972f78ce112c2e6e855fc7b0a4d7f24aa475d30998dd79c0ac9beb32fc6c",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-pt-rBR/bitwarden_account_basics.xml",
+    "mainSha256": "e1cac02cc2d7b3d42be42607c37448a47968b476c592f4a05cde09e1448708c0",
+    "fdroidSha256": "e1cac02cc2d7b3d42be42607c37448a47968b476c592f4a05cde09e1448708c0",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-pt-rBR/strings_bitwarden_server.xml",
+    "mainSha256": "6d5e97927725adffe7f7785622cb5f0b9b1651073b548628ea53896cbbb50e1e",
+    "fdroidSha256": "6d5e97927725adffe7f7785622cb5f0b9b1651073b548628ea53896cbbb50e1e",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-pt-rBR/strings_bitwarden_server_account.xml",
+    "mainSha256": "7c46ecf990c741ec22e28c6ac11435c0825d56a7ad72f6689632482ad0f911a3",
+    "fdroidSha256": "7c46ecf990c741ec22e28c6ac11435c0825d56a7ad72f6689632482ad0f911a3",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-pt/bitwarden_account_basics.xml",
+    "mainSha256": "38950b3e068348db063e9e6cf9119136be5a1eabb635fe3cbf5fb90437f7c11d",
+    "fdroidSha256": "38950b3e068348db063e9e6cf9119136be5a1eabb635fe3cbf5fb90437f7c11d",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-pt/strings_bitwarden_server.xml",
+    "mainSha256": "f35c2c082f1bcdc183e9ac29ce25731aed75d0351ce2a564d70530734944f216",
+    "fdroidSha256": "f35c2c082f1bcdc183e9ac29ce25731aed75d0351ce2a564d70530734944f216",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-pt/strings_bitwarden_server_account.xml",
+    "mainSha256": "142a1b8a944c798176f33b941a434703534c2d0277c61cd2f6444d89da15fb5d",
+    "fdroidSha256": "142a1b8a944c798176f33b941a434703534c2d0277c61cd2f6444d89da15fb5d",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-ru/bitwarden_account_basics.xml",
+    "mainSha256": "2437dfb9f5718307392f48e460eec1b567e0fb3842eddeeda070f4f601e99ef2",
+    "fdroidSha256": "2437dfb9f5718307392f48e460eec1b567e0fb3842eddeeda070f4f601e99ef2",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-ru/strings_bitwarden_server.xml",
+    "mainSha256": "7d0dda676892fbbdbbabb977ee6521cbbe8dd1aa7aedd555d8a90f9099e8b705",
+    "fdroidSha256": "7d0dda676892fbbdbbabb977ee6521cbbe8dd1aa7aedd555d8a90f9099e8b705",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-ru/strings_bitwarden_server_account.xml",
+    "mainSha256": "b6ea0c74924231de7adea9207b7583b39d47074e998db7ce39740f05bf7a5840",
+    "fdroidSha256": "b6ea0c74924231de7adea9207b7583b39d47074e998db7ce39740f05bf7a5840",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-vi/bitwarden_account_basics.xml",
+    "mainSha256": "d5be54be427fa895f4e7c1b9dc41cec1c9fcdc7ecc2d9189553e4334ea19de1e",
+    "fdroidSha256": "d5be54be427fa895f4e7c1b9dc41cec1c9fcdc7ecc2d9189553e4334ea19de1e",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-vi/strings_bitwarden_server.xml",
+    "mainSha256": "f50122f04032f3d24519e7447d1b3fe40baef2cf0ee7f30e6252ab1f2ad46bb5",
+    "fdroidSha256": "f50122f04032f3d24519e7447d1b3fe40baef2cf0ee7f30e6252ab1f2ad46bb5",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-vi/strings_bitwarden_server_account.xml",
+    "mainSha256": "5300585ed9c7ee852a24d412665d1fd62673b01bf22243539eecbec0e6dd585f",
+    "fdroidSha256": "5300585ed9c7ee852a24d412665d1fd62673b01bf22243539eecbec0e6dd585f",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-zh-rCN/bitwarden_account_basics.xml",
+    "mainSha256": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+    "fdroidSha256": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-zh-rCN/strings_bitwarden_server.xml",
+    "mainSha256": "c3383bf70b6b0f6a89aecaf93a03b3d0c0982ed9d8ec696678a51583cd57765c",
+    "fdroidSha256": "c3383bf70b6b0f6a89aecaf93a03b3d0c0982ed9d8ec696678a51583cd57765c",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-zh-rCN/strings_bitwarden_server_account.xml",
+    "mainSha256": "5eef37a0b94a96ea17e81f6749cf3c4bedba7b50c74847c89afe2ed0806e5298",
+    "fdroidSha256": "5eef37a0b94a96ea17e81f6749cf3c4bedba7b50c74847c89afe2ed0806e5298",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-zh-rNY/bitwarden_account_basics.xml",
+    "mainSha256": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+    "fdroidSha256": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-zh-rNY/strings_bitwarden_server.xml",
+    "mainSha256": "c3383bf70b6b0f6a89aecaf93a03b3d0c0982ed9d8ec696678a51583cd57765c",
+    "fdroidSha256": "c3383bf70b6b0f6a89aecaf93a03b3d0c0982ed9d8ec696678a51583cd57765c",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-zh-rNY/strings_bitwarden_server_account.xml",
+    "mainSha256": "5eef37a0b94a96ea17e81f6749cf3c4bedba7b50c74847c89afe2ed0806e5298",
+    "fdroidSha256": "5eef37a0b94a96ea17e81f6749cf3c4bedba7b50c74847c89afe2ed0806e5298",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-zh-rXB/bitwarden_account_basics.xml",
+    "mainSha256": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+    "fdroidSha256": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-zh-rXB/strings_bitwarden_server.xml",
+    "mainSha256": "c3383bf70b6b0f6a89aecaf93a03b3d0c0982ed9d8ec696678a51583cd57765c",
+    "fdroidSha256": "c3383bf70b6b0f6a89aecaf93a03b3d0c0982ed9d8ec696678a51583cd57765c",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-zh-rXB/strings_bitwarden_server_account.xml",
+    "mainSha256": "5eef37a0b94a96ea17e81f6749cf3c4bedba7b50c74847c89afe2ed0806e5298",
+    "fdroidSha256": "5eef37a0b94a96ea17e81f6749cf3c4bedba7b50c74847c89afe2ed0806e5298",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-zh/bitwarden_account_basics.xml",
+    "mainSha256": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+    "fdroidSha256": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-zh/strings_bitwarden_server.xml",
+    "mainSha256": "c3383bf70b6b0f6a89aecaf93a03b3d0c0982ed9d8ec696678a51583cd57765c",
+    "fdroidSha256": "c3383bf70b6b0f6a89aecaf93a03b3d0c0982ed9d8ec696678a51583cd57765c",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values-zh/strings_bitwarden_server_account.xml",
+    "mainSha256": "5eef37a0b94a96ea17e81f6749cf3c4bedba7b50c74847c89afe2ed0806e5298",
+    "fdroidSha256": "5eef37a0b94a96ea17e81f6749cf3c4bedba7b50c74847c89afe2ed0806e5298",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values/bitwarden_account_basics.xml",
+    "mainSha256": "cf5f9723a941d0f71bf26210429176fcc90b9224b65cc8c300638a1a6d762c20",
+    "fdroidSha256": "cf5f9723a941d0f71bf26210429176fcc90b9224b65cc8c300638a1a6d762c20",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values/strings_bitwarden_server.xml",
+    "mainSha256": "4ffd6509f0c43c21e0dbd2e1ac6a825a563d0def9d4a9b249a16e387674b48e6",
+    "fdroidSha256": "4ffd6509f0c43c21e0dbd2e1ac6a825a563d0def9d4a9b249a16e387674b48e6",
+    "identical": true
+  },
+  {
+    "path": "app/src/main/res/values/strings_bitwarden_server_account.xml",
+    "mainSha256": "52a3b5989a5f8c3937c5ae6808b8cba6146ee050e29f2a4757b8795bc5a34b36",
+    "fdroidSha256": "52a3b5989a5f8c3937c5ae6808b8cba6146ee050e29f2a4757b8795bc5a34b36",
+    "identical": true
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/attachments/executor/KeePassAttachmentReconcilerTest.kt",
+    "mainSha256": "312911246558eb679cb489962221ae9a9b88847ed3ebf5ac4861112382974578",
+    "fdroidSha256": "312911246558eb679cb489962221ae9a9b88847ed3ebf5ac4861112382974578",
+    "identical": true
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/bitwarden/BitwardenAccountFingerprintTest.kt",
+    "mainSha256": "38df5723b14d552452f7ba85ba5101a1c74b2c934ff81e3e481428e3d9f926fa",
+    "fdroidSha256": "38df5723b14d552452f7ba85ba5101a1c74b2c934ff81e3e481428e3d9f926fa",
+    "identical": true
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/bitwarden/BitwardenAccountIdentityStoreTest.kt",
+    "mainSha256": "db03264adef3a2b5c9c24a0ee87c5e64622245e404711fb4646f800129e73b92",
+    "fdroidSha256": "db03264adef3a2b5c9c24a0ee87c5e64622245e404711fb4646f800129e73b92",
+    "identical": true
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/bitwarden/BitwardenTransportBackupTest.kt",
+    "mainSha256": "5ae7214bd9f42f3aba04f9cf01e2e3c7e3c3134ef0b550dabdb04a3a32356595",
+    "fdroidSha256": "5ae7214bd9f42f3aba04f9cf01e2e3c7e3c3134ef0b550dabdb04a3a32356595",
+    "identical": true
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/bitwarden/BitwardenTransportClientTest.kt",
+    "mainSha256": "9aff73b6171c7b994d45ac05c9584675c610b6f2bd1e299f5af35966e2a32232",
+    "fdroidSha256": "9aff73b6171c7b994d45ac05c9584675c610b6f2bd1e299f5af35966e2a32232",
+    "identical": true
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/bitwarden/BitwardenTransportSecretStoreTest.kt",
+    "mainSha256": "ea01ff919440ae43c3e247808cd6255a98b338eef2aa73ab46ab05606564cf8e",
+    "fdroidSha256": "ea01ff919440ae43c3e247808cd6255a98b338eef2aa73ab46ab05606564cf8e",
+    "identical": true
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/bitwarden/BitwardenVaultEnvironmentStoreTest.kt",
+    "mainSha256": "d13101540e9a49b9dce2430b75ad58c69165fa971dbfc1a2d36ac1c6339ac838",
+    "fdroidSha256": "d13101540e9a49b9dce2430b75ad58c69165fa971dbfc1a2d36ac1c6339ac838",
+    "identical": true
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/bitwarden/api/BitwardenEnvironmentResolverTest.kt",
+    "mainSha256": "ecf7675ddf849f3a4bc8cbe56f9dc2686ffdfc7a2527886820088d46bd944e06",
+    "fdroidSha256": "ecf7675ddf849f3a4bc8cbe56f9dc2686ffdfc7a2527886820088d46bd944e06",
+    "identical": true
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/bitwarden/api/BitwardenEnvironmentTlsTest.kt",
+    "mainSha256": "cc672e31b136091a4fc00e981b0aff00b1a30b52327a0ecec4dd5c8fda816e03",
+    "fdroidSha256": "cc672e31b136091a4fc00e981b0aff00b1a30b52327a0ecec4dd5c8fda816e03",
+    "identical": true
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/bitwarden/api/BitwardenTransportPolicyTest.kt",
+    "mainSha256": "b624e9aa49900427260edadbb84072d1d89f5f37f34a23dd83b5501eb6ae88b8",
+    "fdroidSha256": "b624e9aa49900427260edadbb84072d1d89f5f37f34a23dd83b5501eb6ae88b8",
+    "identical": true
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/bitwarden/api/BitwardenTransportTlsHandshakeTest.kt",
+    "mainSha256": "00724aab1647850331b8bdc0d054a50c9f0c43d1a2b12a90f5ec678250562774",
+    "fdroidSha256": "00724aab1647850331b8bdc0d054a50c9f0c43d1a2b12a90f5ec678250562774",
+    "identical": true
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/bitwarden/discovery/BitwardenDnsTxtParserTest.kt",
+    "mainSha256": "1e52b0fa50e402319ac24f4a14d1fe1c7b4eaacb010739342a1937918087da26",
+    "fdroidSha256": "1e52b0fa50e402319ac24f4a14d1fe1c7b4eaacb010739342a1937918087da26",
+    "identical": true
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/bitwarden/discovery/BitwardenServerDiscoveryTest.kt",
+    "mainSha256": "65b73b70ac825216a388009b999baf9eb13c565f3ba8d7fff786d999e54b0093",
+    "fdroidSha256": "65b73b70ac825216a388009b999baf9eb13c565f3ba8d7fff786d999e54b0093",
+    "identical": true
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/bitwarden/service/BitwardenAccountInputPolicyTest.kt",
+    "mainSha256": "273af3762372662b84f1623ec38ae32daf29a1b7d9801a88de8f923422bc5ade",
+    "fdroidSha256": "273af3762372662b84f1623ec38ae32daf29a1b7d9801a88de8f923422bc5ade",
+    "identical": true
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/bitwarden/service/BitwardenAccountRegistrationTest.kt",
+    "mainSha256": "902936713bd4a188cf9d429d40303e7550da2703048324e5ebae054419715937",
+    "fdroidSha256": "902936713bd4a188cf9d429d40303e7550da2703048324e5ebae054419715937",
+    "identical": true
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/bitwarden/service/BitwardenAccountSessionGuardTest.kt",
+    "mainSha256": "0934fa9198bf68a3991dc8e2dcea86e575477aca9e43af095d1b987a64d76914",
+    "fdroidSha256": "0934fa9198bf68a3991dc8e2dcea86e575477aca9e43af095d1b987a64d76914",
+    "identical": true
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/bitwarden/service/BitwardenAuthRedactionTest.kt",
+    "mainSha256": "a5170bd8d8937eaa11a2a56d76719126c444a02814482173c318b36184379a31",
+    "fdroidSha256": "a5170bd8d8937eaa11a2a56d76719126c444a02814482173c318b36184379a31",
+    "identical": true
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/bitwarden/service/BitwardenNewDeviceOtpResendTest.kt",
+    "mainSha256": "a354997e3cf6d83744543beb832e60c7748d5b38277a420cbc70be7b9eb00f5b",
+    "fdroidSha256": "a354997e3cf6d83744543beb832e60c7748d5b38277a420cbc70be7b9eb00f5b",
+    "identical": true
+  },
+  {
+    "path": "app/src/test/java/takagi/ru/monica/bitwarden/viewmodel/NewDeviceOtpResendControllerTest.kt",
+    "mainSha256": "7a3f85aaebfda215421cfb738d80f8c06be9d6d5cfaaba8d4e087a37a1114e28",
+    "fdroidSha256": "7a3f85aaebfda215421cfb738d80f8c06be9d6d5cfaaba8d4e087a37a1114e28",
+    "identical": true
+  }
+]

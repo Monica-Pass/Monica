@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.BitwardenAccountMutationCryptoTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-05T02:02:27" hostname="JOYIN" time="4.805">
+  <properties/>
+  <testcase name="weakNewKdfIsRejectedWithoutChangingOldLoginSupport" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationCryptoTest" time="3.641"/>
+  <testcase name="passwordChangeRewrapsTheSameKeyAndPreservesExactPasswordBytes" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationCryptoTest" time="0.076"/>
+  <testcase name="deleteAndHintDoNotGenerateReplacementUserKeys" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationCryptoTest" time="0.064"/>
+  <testcase name="wrongPasswordAndDifferentUserKeyFailBeforeRequestCreation" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationCryptoTest" time="0.08"/>
+  <testcase name="missingHintRequiresExplicitReplacementAndClearingWritesNull" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationCryptoTest" time="0.053"/>
+  <testcase name="newKdfUsesItsOwnEndpointAndKeepsCipherKeyUnchanged" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationCryptoTest" time="0.89"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

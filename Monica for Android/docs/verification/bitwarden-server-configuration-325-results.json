@@ -1,0 +1,1136 @@
+{
+  "status": "PASS",
+  "version": "1.0.325",
+  "sourcePairs": 136,
+  "identicalPairs": 135,
+  "editions": {
+    "main": {
+      "buildSeconds": 228.0782553,
+      "jvmRun": "input-reset-green",
+      "jvmTests": 183,
+      "nativeMethods": 120,
+      "nativeDriverSeconds": 347.427,
+      "nativeRunnerSeconds": 342.94,
+      "nativeOutcomes": [
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#changedEndpointMustVerifyTheKnownProfileBeforeReplacingProtectedConfiguration",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#validReauthenticationUpdatesSameVaultAcrossItsOwnPublicationGeneration",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#expiredReauthenticationContextRejectsLoginBeforeAnyHttp",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#delayedPrimaryLoginCannotPublishAcrossGlobalLockAndUnlock",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#fullSyncIdentityPromotionAndReloginKeepTheSameProtectedVault",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#forceLockAfterReauthenticationMfaRejectsContinuationBeforeAnyHttp",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#changedFingerprintAndMissingProtectedReferenceFailBeforeAnyHttp",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#recoveredKeyWaitingAtPublicationCannotCrossGlobalLockGeneration",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#delayedCandidateProfileCannotReplaceAccountAfterForceLock",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#failedProtectedReadbackPreservesExistingAccountAndLeavesNewReservationInert",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#delayedRefreshCannotOverwriteAReopenedSessionWithTheSameOldToken",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportMigrationInstrumentedTest#migratedRowsSupportExplicitConfigurationWithoutChangingOtherLegacyRowsOrNewRowDefaults",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportMigrationInstrumentedTest#migration83To84AddsFiveColumnsAndPreservesLegacyUrlsTlsIdentityAndIndices",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest#largeTextKeepsRealDialogControlsReadableInEnglishChinesePortugueseAndRtl",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest#existingAccountCannotRetargetBaseOrDiscoverButCanEditServiceOverride",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest#discoveryQueriesOnlyDomainAndRequiresExplicitCrossDomainSelection",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest#capturedCandidateActionCannotRetargetAfterEmailOrBaseLockChanges",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest#dismissAndLockDiscardButBackgroundOnlyCancelsLateDiscovery",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest#editsRealServiceFieldsAndPreservesHeaderAndCertificatePasswordSpaces",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest#enabledMtlsRejectsMissingAndUnreadablePrivateKeyWithoutApplying",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest#reservedHeadersControlCharactersAndInvalidServiceUrlCannotApply",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest#resetPresetAndBaseChangesRemovePreviousOverridesHeadersAndTls",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest#cancelledAndEditedSearchesRejectNonCooperativeLateDnsResults",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest#tamperedModernZipCannotPublishOrFallBackToLegacyTransport",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest#manualSelectionBetweenRestoreAndFinishPreventsLateAutomaticSelection",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest#legacyZipUsesItsRealCustomBaseAndNeverAllocatesTheSourceDeviceId",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest#secondRestoredAccountMarkedDefaultWinsTheBatchPreference",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest#encryptedZipRoundTripRestoresLockedAccountWithFreshLocalBinding",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest#restoringExistingAccountPreservesNewerConfigurationRecordsAndQueueButLocksRuntime",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest#batchPreservesDifferentPreexistingDefaultAndActiveSelections",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest#batchWithoutPreferredAccountChoosesItsFirstSuccessfulNewAccount",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#retirementAfterCacheWriteDeletesOnlyNewBlob",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#retirementAfterMetadataStopsBeforeKeyOrSignedTransfer",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#migrationPublicationRetirementPreservesLocalSourceAndSkipsOldDelete",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#metadataInvalidationCommitsBeforeRemovingUnreferencedEncryptedCache",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#retiredDownloadResetTouchesOnlyActiveTransfersInTheSelectedVault",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#retirementAtBodyEndPreventsLocalCacheInstallation",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#absentRemoteListSkipsButExplicitEmptyListDeletesAfterCommit",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#reconciliationRollbackRestoresMetadataAndNeverDeletesReferencedBlob",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#metadataInvalidationPreservesCacheReferencedByAnotherOwner",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#retiredRemoveCannotIssueRemoteDelete",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#freshSignedDownloadUsesSelectedClientAndPreservesBytes",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#reconciliationRejectsChangedSnapshotWithoutOverwritingNewDownload",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#retirementAfterUploadMetadataPreventsPutAndDirectMultipart",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#downloadPublicationRetirementRollsBackRoomAndKeepsOldCache",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#azureUploadSelectsOriginalUrlAndSendsEncryptedBytesWithoutBearer",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#cachedSignedFallbackUsesSameSelectorWithoutAccountBearer",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#rejectedReconciliationKeepsOriginalMetadataAndEncryptedBytes",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#selectorSeesUnsafeOriginalPathBeforeAnySignedConnection",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#retirementInKeyProviderClearsOwnedKeyBeforeTransfer",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest#registrationTicketRetainsExplicitIdentityAndHeaderThroughEmailVerification",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest#emailEditAndBackgroundClearPasswordButKeepCapturedConnectionUntilGlobalLock",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest#passwordHintUsesExplicitApiAndCannotPublishCancelledBackgroundResult",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest#backgroundDuringActiveMfaClearsChallengeKeysAndRejectsLateTokenResult",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest#primaryAndMfaRequestsUseTheCapturedExplicitIdentityAndProxyHeader",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest#sendCapturedBeforeTransportChangeCannotPublishUnderNewConfiguration",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest#currentFullSyncPublishesFoldersAndReadableEncryptedSend",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest#sendUpsertRetirementRestoresOriginalEncryptedEnvelope",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest#capturedSendCleanupPreservesDirtyNewAndUnreadableRows",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest#folderMutationRetirementRollsBackAndDoesNotContinueIntoCleanup",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest#sendCleanupRetirementRestoresOriginalEncryptedEnvelope",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest#revokedFolderPublicationCannotInsertOrReportSuccess",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest#cleanupRetirementRollsBackFolderAndCipherDeletesTogether",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativeDeviceListClearsOnLockAndReloadsAfterReturningToForeground",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativeAccountDeviceListValidatesProfileAndRevokesChangedStampBeforeLoadingDevices",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#existingServerConfigurationLocksBeforeReauthenticationAndCancelPreservesSavedEndpoints",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#lateAccountDeviceResponseCannotReappearAfterLock",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#capturedExistingAccountSubmitCannotStartNetworkAfterASecondVaultLock",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativeRegistrationUsesVerifiedEmailAndDoesNotCreateAPartialLocalVault",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativePasswordHintRequestSendsOnlyEmailAndKeepsLoginAvailable",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentTransferTest#officialAttachmentCanBePreviewedAndCopiedWithoutChangingTheSource",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentTransferTest#cancellationReturnsDownloadToPendingInsteadOfLeavingItStuck",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentTransferTest#corruptedSecondAttachmentRollsBackPartialCopiesAndPreservesTheSource",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentTransferTest#successfulMoveKeepsAttachmentBytesBeforeQueuingSourceDeletion",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentTransferTest#failedMoveRemovesTheIncompleteLocalCopyAndKeepsTheRemoteSource",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest#uncheckedNativeRememberSendsZeroAndNeverPersistsTheReturnedToken",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest#checkedNativeRememberIsSealedReusedAsProviderFiveAndRejectedOnlyOnceBeforeFallback",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest#leavingDuringMfaAndLogoutDuringRememberedLoginPreventLatePublication",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#ordinaryEmailTwoFactorRetainsItsSeparateSendControl",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#largePortugueseNewDeviceResendAndStatusWrapWithoutTextOverflow",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#mailboxBackgroundCancelsLateResendButPreservesOriginalOtpChallengeAndCooldown",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#explicitCancelDuringResendClosesChallengeAndSuppressesLateStatus",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#nativeResendUsesCurrentProofOnlyAfterClickAndKeepsNewDeviceOtpSubmission",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#nativeUnsupportedServerShowsTruthfulFailureWithoutOrdinaryEmailFallback",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#globalLockClearsChallengeAndLateResendCannotRestoreIt",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#nativeRateLimitShowsSanitizedMessageAndServerCooldown",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest#configOptInKeepsSelectedDatabaseRecordsSeparate",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest#encryptedConnectionBackupRestoresBitwardenLockedWithoutWebDavSetup",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest#encryptedConfigOnlyRoundTripHonorsKeepAndRestoreChoices",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest#webDavCredentialsRestoreOnlyWithOptInAndNeverReplaceExistingConnection",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest#configOptInRequiresEncryptionAndDefaultArchiveHasNoSettings",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#nativeTextAndFileEditorsSaveRealRowsWithPasswordRemovalDatePickerAndEnableSwitch",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#fileEditPreservesIdKeyAndCiphertextRejectsRemoteRevisionsAndReadsBackLostResponse",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#nativeNewSendUsesSharedContentPickerAndSavesCompleteDraft",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#textEditRoundTripsExactContentPasswordThreeStatesAndDatesThroughHttpAndRoom",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#nativeAccountTypesAndBottomActionsRemainReadableAcrossUiSettings",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#nativeEmailDraftResumesEditsAndSubmitsThroughViewModel",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#fileServerIgnoringEmailNeverReceivesPayload",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#lostCreateResponseReconcilesByOneExactKeyWithoutAnotherPost",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#explicitLogoutDeletesOnlyOwnedDraftFilesIncludingCorruptMetadata",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#encryptedFileDraftSurvivesSourceRemovalAndRejectsChangedAccountOrLock",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#actualSendPageOpensThemedDraftDialogAndResumesStoredContent",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#activeCacheFlowClearsOnSameIdEndpointChangeAndCanResume",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#fileEmailAuthIsVerifiedBeforeUploadAndRecoveredBytesReachServer",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#ambiguousExactKeysKeepUncertainDraftAndBlockEditing",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#emailCreateIsReadBackAndCurrentRoomRowContainsOnlyProtectedContent",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#ignoredEmailModeNeverFallsBackAndLocalDraftSurvives",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#nativeEditorSavesIncompleteDraftAndExplicitDiscardKeepsRemoteSend",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#legacyMigrationValidatesShareIdentityAndPreservesCorruptRows",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#safeCacheClearPreservesDirtyInvalidCorruptLockedRowsAndLocalDrafts",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#nonPremiumEmailKeepsDraftWithoutMakingRequest",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#legacyDraftWithoutTimestampUsesStableOwnedMetadataTimeWithoutRewriting",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNotificationInstrumentedTest#disabledAutoSyncAndDeniedNetworkDoNotConnectAndUnauthorizedHubDoesNotPull",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNotificationInstrumentedTest#lockAndForegroundCancellationRejectLateEventsAndRetainExistingRecords",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNotificationInstrumentedTest#twoAccountsOnlyApplyTheirAuthenticatedRemoteEventsAndReconnectCatchesUp",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNotificationEffectInstrumentedTest#actualEffectStopsOnCreatedRejectsLateEventsAndCatchesUpOnResumed",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNotificationEffectInstrumentedTest#anotherSettingsViewModelClosesAndRestartsActualEffectWithoutUpdatingRootFlow",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNotificationEffectInstrumentedTest#leavingActualEffectDuringStartupGraceRevokesDelayedSyncUntilNewForegroundSession",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest#outlinedSecretClearsWhenInputAndExternalResetShareOneFrame",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest#filledSecretClearsWhenInputAndExternalResetShareOneFrame",
+          "statusCode": 0
+        }
+      ],
+      "compiledValues": 954,
+      "packages": [
+        {
+          "package": "takagi.ru.monica",
+          "file": "Monica-Android-x86_64-1.0.325-26110512-13.APK",
+          "sha256": "6dbbed5b7e021497829247ed4885b3c7dbc3d28f3bed619011a3587d07e2e95e",
+          "seconds": 2.2,
+          "version": "1.0.325-26110512-13",
+          "code": 12
+        },
+        {
+          "package": "takagi.ru.monica.test",
+          "file": "app-debug-androidTest.apk",
+          "sha256": "ef2afab2b50d61c1b7aa0ec202b5cff64c6de780afd3ab0b71c93bbb3a415cbb",
+          "seconds": 1.43,
+          "version": "",
+          "code": 0
+        }
+      ],
+      "visual": {
+        "reviewed": true,
+        "statusIconsReadable": true,
+        "count": 8,
+        "scope": "Native light theme at1.5fontscale: Chinese, English, Portuguese-BR and synthetic RTL; overview and headers. Scroll viewport clipping is intentional, controls were scrolled and asserted in native tests.",
+        "screenshots": [
+          {
+            "name": "bitwarden-server-chinese-headers.png",
+            "sha256": "fecc994d8d084960344656e21dd04e47497892440304a59d2c7517b899fbc152"
+          },
+          {
+            "name": "bitwarden-server-chinese-overview.png",
+            "sha256": "69c457ff6ccd4843a683d8d1393af8e359f0c067dbe0b2379520913338e91a28"
+          },
+          {
+            "name": "bitwarden-server-english-headers.png",
+            "sha256": "477b6eb3d32f881eaae9d9a92e152e5a916ceaa4bdf5ea0500a729573179fe47"
+          },
+          {
+            "name": "bitwarden-server-english-overview.png",
+            "sha256": "afbdd52cc33e3d9cc0d21991d146015bee57c6ecabc1e63160b0d60dadb29807"
+          },
+          {
+            "name": "bitwarden-server-english-rtl-headers.png",
+            "sha256": "bf25950585845cfdb08f374d45076f7ba64d059984ef320e3ab379d78db1323d"
+          },
+          {
+            "name": "bitwarden-server-english-rtl-overview.png",
+            "sha256": "043ff185ce42d67a7c31f5c01216b7bd642cd0c88ef5370189b69f3d23616b7f"
+          },
+          {
+            "name": "bitwarden-server-portuguese-br-headers.png",
+            "sha256": "a51f1e91902f55ee299621c622af01b361910fff1aa8cd5f0680ea31e3814672"
+          },
+          {
+            "name": "bitwarden-server-portuguese-br-overview.png",
+            "sha256": "818f22687f7a4414869e4ae81c150cf8a18a50389c92818577004bde52417d56"
+          }
+        ],
+        "darkThemeReviewed": false
+      }
+    },
+    "fdroid": {
+      "buildSeconds": 374.8737449,
+      "jvmRun": "final-green",
+      "jvmTests": 183,
+      "nativeMethods": 120,
+      "nativeDriverSeconds": 358.771,
+      "nativeRunnerSeconds": 353.688,
+      "nativeOutcomes": [
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#changedEndpointMustVerifyTheKnownProfileBeforeReplacingProtectedConfiguration",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#validReauthenticationUpdatesSameVaultAcrossItsOwnPublicationGeneration",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#expiredReauthenticationContextRejectsLoginBeforeAnyHttp",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#delayedPrimaryLoginCannotPublishAcrossGlobalLockAndUnlock",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#fullSyncIdentityPromotionAndReloginKeepTheSameProtectedVault",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#forceLockAfterReauthenticationMfaRejectsContinuationBeforeAnyHttp",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#changedFingerprintAndMissingProtectedReferenceFailBeforeAnyHttp",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#recoveredKeyWaitingAtPublicationCannotCrossGlobalLockGeneration",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#delayedCandidateProfileCannotReplaceAccountAfterForceLock",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#failedProtectedReadbackPreservesExistingAccountAndLeavesNewReservationInert",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportAuthInstrumentedTest#delayedRefreshCannotOverwriteAReopenedSessionWithTheSameOldToken",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportMigrationInstrumentedTest#migratedRowsSupportExplicitConfigurationWithoutChangingOtherLegacyRowsOrNewRowDefaults",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportMigrationInstrumentedTest#migration83To84AddsFiveColumnsAndPreservesLegacyUrlsTlsIdentityAndIndices",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest#largeTextKeepsRealDialogControlsReadableInEnglishChinesePortugueseAndRtl",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest#existingAccountCannotRetargetBaseOrDiscoverButCanEditServiceOverride",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest#discoveryQueriesOnlyDomainAndRequiresExplicitCrossDomainSelection",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest#capturedCandidateActionCannotRetargetAfterEmailOrBaseLockChanges",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest#dismissAndLockDiscardButBackgroundOnlyCancelsLateDiscovery",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest#editsRealServiceFieldsAndPreservesHeaderAndCertificatePasswordSpaces",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest#enabledMtlsRejectsMissingAndUnreadablePrivateKeyWithoutApplying",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest#reservedHeadersControlCharactersAndInvalidServiceUrlCannotApply",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest#resetPresetAndBaseChangesRemovePreviousOverridesHeadersAndTls",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerConfigurationUiInstrumentedTest#cancelledAndEditedSearchesRejectNonCooperativeLateDnsResults",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest#tamperedModernZipCannotPublishOrFallBackToLegacyTransport",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest#manualSelectionBetweenRestoreAndFinishPreventsLateAutomaticSelection",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest#legacyZipUsesItsRealCustomBaseAndNeverAllocatesTheSourceDeviceId",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest#secondRestoredAccountMarkedDefaultWinsTheBatchPreference",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest#encryptedZipRoundTripRestoresLockedAccountWithFreshLocalBinding",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest#restoringExistingAccountPreservesNewerConfigurationRecordsAndQueueButLocksRuntime",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest#batchPreservesDifferentPreexistingDefaultAndActiveSelections",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenTransportBackupInstrumentedTest#batchWithoutPreferredAccountChoosesItsFirstSuccessfulNewAccount",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#retirementAfterCacheWriteDeletesOnlyNewBlob",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#retirementAfterMetadataStopsBeforeKeyOrSignedTransfer",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#migrationPublicationRetirementPreservesLocalSourceAndSkipsOldDelete",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#metadataInvalidationCommitsBeforeRemovingUnreferencedEncryptedCache",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#retiredDownloadResetTouchesOnlyActiveTransfersInTheSelectedVault",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#retirementAtBodyEndPreventsLocalCacheInstallation",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#absentRemoteListSkipsButExplicitEmptyListDeletesAfterCommit",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#reconciliationRollbackRestoresMetadataAndNeverDeletesReferencedBlob",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#metadataInvalidationPreservesCacheReferencedByAnotherOwner",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#retiredRemoveCannotIssueRemoteDelete",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#freshSignedDownloadUsesSelectedClientAndPreservesBytes",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#reconciliationRejectsChangedSnapshotWithoutOverwritingNewDownload",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#retirementAfterUploadMetadataPreventsPutAndDirectMultipart",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#downloadPublicationRetirementRollsBackRoomAndKeepsOldCache",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#azureUploadSelectsOriginalUrlAndSendsEncryptedBytesWithoutBearer",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#cachedSignedFallbackUsesSameSelectorWithoutAccountBearer",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#rejectedReconciliationKeepsOriginalMetadataAndEncryptedBytes",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#selectorSeesUnsafeOriginalPathBeforeAnySignedConnection",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentEnvironmentInstrumentedTest#retirementInKeyProviderClearsOwnedKeyBeforeTransfer",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest#registrationTicketRetainsExplicitIdentityAndHeaderThroughEmailVerification",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest#emailEditAndBackgroundClearPasswordButKeepCapturedConnectionUntilGlobalLock",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest#passwordHintUsesExplicitApiAndCannotPublishCancelledBackgroundResult",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest#backgroundDuringActiveMfaClearsChallengeKeysAndRejectsLateTokenResult",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenServerLoginUiInstrumentedTest#primaryAndMfaRequestsUseTheCapturedExplicitIdentityAndProxyHeader",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest#sendCapturedBeforeTransportChangeCannotPublishUnderNewConfiguration",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest#currentFullSyncPublishesFoldersAndReadableEncryptedSend",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest#sendUpsertRetirementRestoresOriginalEncryptedEnvelope",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest#capturedSendCleanupPreservesDirtyNewAndUnreadableRows",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest#folderMutationRetirementRollsBackAndDoesNotContinueIntoCleanup",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest#sendCleanupRetirementRestoresOriginalEncryptedEnvelope",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest#revokedFolderPublicationCannotInsertOrReportSuccess",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSyncPublicationInstrumentedTest#cleanupRetirementRollsBackFolderAndCipherDeletesTogether",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativeDeviceListClearsOnLockAndReloadsAfterReturningToForeground",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativeAccountDeviceListValidatesProfileAndRevokesChangedStampBeforeLoadingDevices",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#existingServerConfigurationLocksBeforeReauthenticationAndCancelPreservesSavedEndpoints",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#lateAccountDeviceResponseCannotReappearAfterLock",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#capturedExistingAccountSubmitCannotStartNetworkAfterASecondVaultLock",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativeRegistrationUsesVerifiedEmailAndDoesNotCreateAPartialLocalVault",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest#nativePasswordHintRequestSendsOnlyEmailAndKeepsLoginAvailable",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentTransferTest#officialAttachmentCanBePreviewedAndCopiedWithoutChangingTheSource",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentTransferTest#cancellationReturnsDownloadToPendingInsteadOfLeavingItStuck",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentTransferTest#corruptedSecondAttachmentRollsBackPartialCopiesAndPreservesTheSource",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentTransferTest#successfulMoveKeepsAttachmentBytesBeforeQueuingSourceDeletion",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.attachments.BitwardenAttachmentTransferTest#failedMoveRemovesTheIncompleteLocalCopyAndKeepsTheRemoteSource",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest#uncheckedNativeRememberSendsZeroAndNeverPersistsTheReturnedToken",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest#checkedNativeRememberIsSealedReusedAsProviderFiveAndRejectedOnlyOnceBeforeFallback",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest#leavingDuringMfaAndLogoutDuringRememberedLoginPreventLatePublication",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#ordinaryEmailTwoFactorRetainsItsSeparateSendControl",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#largePortugueseNewDeviceResendAndStatusWrapWithoutTextOverflow",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#mailboxBackgroundCancelsLateResendButPreservesOriginalOtpChallengeAndCooldown",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#explicitCancelDuringResendClosesChallengeAndSuppressesLateStatus",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#nativeResendUsesCurrentProofOnlyAfterClickAndKeepsNewDeviceOtpSubmission",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#nativeUnsupportedServerShowsTruthfulFailureWithoutOrdinaryEmailFallback",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#globalLockClearsChallengeAndLateResendCannotRestoreIt",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest#nativeRateLimitShowsSanitizedMessageAndServerCooldown",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest#configOptInKeepsSelectedDatabaseRecordsSeparate",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest#encryptedConnectionBackupRestoresBitwardenLockedWithoutWebDavSetup",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest#encryptedConfigOnlyRoundTripHonorsKeepAndRestoreChoices",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest#webDavCredentialsRestoreOnlyWithOptInAndNeverReplaceExistingConnection",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest#configOptInRequiresEncryptionAndDefaultArchiveHasNoSettings",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#nativeTextAndFileEditorsSaveRealRowsWithPasswordRemovalDatePickerAndEnableSwitch",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#fileEditPreservesIdKeyAndCiphertextRejectsRemoteRevisionsAndReadsBackLostResponse",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#nativeNewSendUsesSharedContentPickerAndSavesCompleteDraft",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#textEditRoundTripsExactContentPasswordThreeStatesAndDatesThroughHttpAndRoom",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendManagementInstrumentedTest#nativeAccountTypesAndBottomActionsRemainReadableAcrossUiSettings",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#nativeEmailDraftResumesEditsAndSubmitsThroughViewModel",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#fileServerIgnoringEmailNeverReceivesPayload",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#lostCreateResponseReconcilesByOneExactKeyWithoutAnotherPost",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#explicitLogoutDeletesOnlyOwnedDraftFilesIncludingCorruptMetadata",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#encryptedFileDraftSurvivesSourceRemovalAndRejectsChangedAccountOrLock",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#actualSendPageOpensThemedDraftDialogAndResumesStoredContent",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#activeCacheFlowClearsOnSameIdEndpointChangeAndCanResume",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#fileEmailAuthIsVerifiedBeforeUploadAndRecoveredBytesReachServer",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#ambiguousExactKeysKeepUncertainDraftAndBlockEditing",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#emailCreateIsReadBackAndCurrentRoomRowContainsOnlyProtectedContent",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#ignoredEmailModeNeverFallsBackAndLocalDraftSurvives",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#nativeEditorSavesIncompleteDraftAndExplicitDiscardKeepsRemoteSend",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#legacyMigrationValidatesShareIdentityAndPreservesCorruptRows",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#safeCacheClearPreservesDirtyInvalidCorruptLockedRowsAndLocalDrafts",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#nonPremiumEmailKeepsDraftWithoutMakingRequest",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSendDraftsInstrumentedTest#legacyDraftWithoutTimestampUsesStableOwnedMetadataTimeWithoutRewriting",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNotificationInstrumentedTest#disabledAutoSyncAndDeniedNetworkDoNotConnectAndUnauthorizedHubDoesNotPull",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNotificationInstrumentedTest#lockAndForegroundCancellationRejectLateEventsAndRetainExistingRecords",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNotificationInstrumentedTest#twoAccountsOnlyApplyTheirAuthenticatedRemoteEventsAndReconnectCatchesUp",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNotificationEffectInstrumentedTest#actualEffectStopsOnCreatedRejectsLateEventsAndCatchesUpOnResumed",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNotificationEffectInstrumentedTest#anotherSettingsViewModelClosesAndRestartsActualEffectWithoutUpdatingRootFlow",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenNotificationEffectInstrumentedTest#leavingActualEffectDuringStartupGraceRevokesDelayedSyncUntilNewForegroundSession",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest#outlinedSecretClearsWhenInputAndExternalResetShareOneFrame",
+          "statusCode": 0
+        },
+        {
+          "method": "takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest#filledSecretClearsWhenInputAndExternalResetShareOneFrame",
+          "statusCode": 0
+        }
+      ],
+      "compiledValues": 954,
+      "packages": [
+        {
+          "package": "takagi.ru.monica.fdroid",
+          "file": "Monica-Android-x86_64-1.0.325.apk",
+          "sha256": "254d41dca34226cfa1331e1fbe29f4927025194b426af941bf08b9d9dbfb56cf",
+          "seconds": 1.46,
+          "version": "1.0.325",
+          "code": 32
+        },
+        {
+          "package": "takagi.ru.monica.fdroid.test",
+          "file": "app-debug-androidTest.apk",
+          "sha256": "d7a4727a11d62c50b1007d00c6ce9054f87c2dc5f8c9b4fb1b2a92578e72e00a",
+          "seconds": 1.08,
+          "version": "",
+          "code": 0
+        }
+      ],
+      "visual": {
+        "reviewed": true,
+        "statusIconsReadable": true,
+        "count": 8,
+        "scope": "Native light theme at 1.5 font scale: Chinese, English, Portuguese-BR and synthetic RTL; overview and headers. Reviewed all eight captures in the contact sheet; grouped corners and bottom actions are readable. Scroll viewport clipping is intentional; controls were scrolled and asserted in native tests.",
+        "screenshots": [
+          {
+            "name": "bitwarden-server-chinese-headers.png",
+            "sha256": "ff9cd5f38a8f7de301cde626a0346a0c418192a066470e7b24d30eb27e60c5bc"
+          },
+          {
+            "name": "bitwarden-server-chinese-overview.png",
+            "sha256": "9520eb7154daa46cccf1d002daf3d0215e31dbbafe8d40c81f4923021e6da95e"
+          },
+          {
+            "name": "bitwarden-server-english-headers.png",
+            "sha256": "db59ff6dcec616672786573ae62c8ecbac57c2e63a6849067b686289a7a9624d"
+          },
+          {
+            "name": "bitwarden-server-english-overview.png",
+            "sha256": "18cffef4f3a81289f3870bb588f90a73d04d399ab14f6ac3acbecfc7230fb187"
+          },
+          {
+            "name": "bitwarden-server-english-rtl-headers.png",
+            "sha256": "edc0cabc2561dfb0503c52324309ad49efc4b6cac43f08d6cc0e66d543e89c94"
+          },
+          {
+            "name": "bitwarden-server-english-rtl-overview.png",
+            "sha256": "b20d54d964512e42829c6df41708dc61c6e27d17733590e1ab66f0300fa1dbd9"
+          },
+          {
+            "name": "bitwarden-server-portuguese-br-headers.png",
+            "sha256": "9c222ac3ccc16800c48a548d6026c37a8c6d272644534773ce82d0a6ccf0d0eb"
+          },
+          {
+            "name": "bitwarden-server-portuguese-br-overview.png",
+            "sha256": "3f5c495e5d0140cd9f633d237749406558b2e239b4b34a2f88d979202a1bd4c4"
+          }
+        ],
+        "darkThemeReviewed": false
+      }
+    }
+  },
+  "cleanup": {
+    "removedUser": 14,
+    "removedUserName": "Monica_BitwardenTransport325_Test",
+    "restoredUser": 0,
+    "preservedUsers": {
+      "0": "Owner",
+      "10": "Monica",
+      "11": "Monica_Recovery316",
+      "12": "Monica_Recovery316_Retest"
+    },
+    "stoppedTaskEmulator": true,
+    "preservedDiskFiles": [
+      "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\config.ini",
+      "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img",
+      "C:\\Users\\joyins\\.android\\avd\\Monica_Issue136_API_32.ini",
+      "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img.qcow2"
+    ],
+    "deletedHostFiles": false
+  },
+  "diagnosis": "See accompanying Markdown; initial failed runs retained.",
+  "notVerified": [
+    "Real public DNS",
+    "Real reverse-proxy and certificate deployment",
+    "Physical/OEM and lower-API devices",
+    "Android hardware KeyChain mTLS",
+    "R8 release",
+    "External browser credential propagation"
+  ]
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.BitwardenTransportClientTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-05T02:02:41" hostname="JOYIN" time="0.379">
+  <properties/>
+  <testcase name="foreignTransfersHaveSeparatePoolAndRejectExplicitCredentialOrPlainHttp" classname="takagi.ru.monica.bitwarden.BitwardenTransportClientTest" time="0.146"/>
+  <testcase name="retiringOneAccountLeavesAnotherPoolAndRequestUsable" classname="takagi.ru.monica.bitwarden.BitwardenTransportClientTest" time="0.055"/>
+  <testcase name="retiredAttemptCannotDispatchExistingApiOrObtainANewOne" classname="takagi.ru.monica.bitwarden.BitwardenTransportClientTest" time="0.083"/>
+  <testcase name="redirectsReturnToCallerWithoutASecondRequest" classname="takagi.ru.monica.bitwarden.BitwardenTransportClientTest" time="0.019"/>
+  <testcase name="independentWebDoesNotAuthorizeNativeHeadersAndLookalikePathCannotConnect" classname="takagi.ru.monica.bitwarden.BitwardenTransportClientTest" time="0.009"/>
+  <testcase name="independentIdentityAndApiUseLiteralServiceBasesAndProxyHeaders" classname="takagi.ru.monica.bitwarden.BitwardenTransportClientTest" time="0.058"/>
+  <testcase name="leaseIsCheckedWhenCallExecutesRatherThanWhenClientWasBuilt" classname="takagi.ru.monica.bitwarden.BitwardenTransportClientTest" time="0.009"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

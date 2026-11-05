@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentTlsTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-05T02:07:05" hostname="JOYIN" time="1.106">
+  <properties/>
+  <testcase name="enabledMtlsCannotSilentlyUseNoCertificateOrCertificateOnlyContainer" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentTlsTest" time="0.282"/>
+  <testcase name="pkcs12SpaceOnlyPasswordIsPreservedAndWrongPasswordReturnsOnlyCodes" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentTlsTest" time="0.085"/>
+  <testcase name="everyRepeatedPemBlockIsValidatedWithExplicitProvidersWithoutChangingGlobalOrder" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentTlsTest" time="0.039"/>
+  <testcase name="certificateInputBudgetsApplyBeforeParsingOversizedData" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentTlsTest" time="0.04"/>
+  <testcase name="lineWrappedPkcs12AndMultiplePemCertificatesAreAccepted" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentTlsTest" time="0.082"/>
+  <testcase name="validCaAndPrivateKeyPkcs12AreValidatedWithoutChangingEmptyPassword" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentTlsTest" time="0.104"/>
+  <testcase name="badPemAndInvalidPkcs12NeverFallBackToSystemDefaults" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentTlsTest" time="0.004"/>
+  <testcase name="corruptPemBlocksAndInterBlockJunkAreRejectedByEveryExplicitProvider" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentTlsTest" time="0.104"/>
+  <testcase name="togglingMtlsChangesFingerprintWithoutDiscardingRetainedCertificate" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentTlsTest" time="0.171"/>
+  <testcase name="mtlsRequiresEveryNativeEndpointHttpsButWebOnlyIsNotACertificateScope" classname="takagi.ru.monica.bitwarden.api.BitwardenEnvironmentTlsTest" time="0.194"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

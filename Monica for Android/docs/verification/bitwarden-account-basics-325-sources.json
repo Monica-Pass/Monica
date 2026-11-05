@@ -1,0 +1,986 @@
+{
+  "schema_version": 1,
+  "captured_at_utc": "2026-11-04T17:50:27.012380+00:00",
+  "batch": "account-basics AUTH_A03 and AUTH_A12; source freeze only",
+  "validation_status": "source checks passed",
+  "runtime_results": "pending root final verification; this script executes no build or device tests",
+  "repositories": {
+    "main": {
+      "root": "<main-repository>",
+      "head": "908138d2ea253b9c1e27432577b7e4b48cab4a8e",
+      "application_prefix": "Monica for Android/"
+    },
+    "fdroid": {
+      "root": "<fdroid>",
+      "head": "51e042eadb9d41d609ad7c3d961965a236ffaac9",
+      "application_prefix": ""
+    }
+  },
+  "scope": {
+    "paired_relative_files": 39,
+    "byte_identical_shared_files": 38,
+    "edition_specific_paired_files": 1,
+    "main_only_files": 1,
+    "main_file_count": 40,
+    "fdroid_file_count": 39,
+    "excluded_status_only_baseline_files_per_edition": 5,
+    "excluded_baseline_semantic_diff_empty": true,
+    "tracked_content_change_allowlist_checked": true
+  },
+  "files": [
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenFingerprintInstrumentedTest.kt",
+      "category": "android_test",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenFingerprintInstrumentedTest.kt",
+          "bytes": 39369,
+          "sha256": "a6f5541a1a4b5f59caf8a1b66912a60b43e6884e43e8c577a29388e099c8dca6",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenFingerprintInstrumentedTest.kt",
+          "bytes": 39369,
+          "sha256": "a6f5541a1a4b5f59caf8a1b66912a60b43e6884e43e8c577a29388e099c8dca6",
+          "git_ignored": false
+        }
+      },
+      "declared_test_methods": [
+        "nativeProfileCachesOnlySealedPublicIdentityAndCopiesTheProtocolPhrase",
+        "offlineGetterReadsSealedIdentityAfterRepositoryRecreation",
+        "applicationLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback",
+        "vaultLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback",
+        "changedAccountBindingAndAuthenticatedStampRejectTheCachedIdentity",
+        "missingProfilePrivateKeyShowsLocalizedErrorAndDisablesCopy",
+        "lateProfileCannotDeleteOrReplaceIdentityAfterLockAndSameTokenUnlock",
+        "malformedProfilePrivateKeyRemovesOldIdentityAndCannotCopyTheOldPhrase",
+        "largeFontPhraseWrapsWithoutOverflowAndBackgroundRevokesTheSheet"
+      ]
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenFingerprintSessionInstrumentedTest.kt",
+      "category": "android_test",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenFingerprintSessionInstrumentedTest.kt",
+          "bytes": 16164,
+          "sha256": "176eebc61be469fe914422b7446e884b61b15d8483c2ed04eb51bb53671cdd0b",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenFingerprintSessionInstrumentedTest.kt",
+          "bytes": 16164,
+          "sha256": "176eebc61be469fe914422b7446e884b61b15d8483c2ed04eb51bb53671cdd0b",
+          "git_ignored": false
+        }
+      },
+      "declared_test_methods": [
+        "firstFullSyncPublishesProfileIdStampAndImmediatelyReadableFingerprint",
+        "lateChangedStampPreflightCannotRevokeSameTokenRestoredSession",
+        "lateFullSyncIdentityAndChangedStampCannotReplaceOrRevokeRestoredSession"
+      ]
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenNewDeviceOtpResendInstrumentedTest.kt",
+      "category": "android_test",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenNewDeviceOtpResendInstrumentedTest.kt",
+          "bytes": 19108,
+          "sha256": "a92abea050f243e3d00b5487e4cfdda00b224c4a8fc03580552473191c7a3aa0",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenNewDeviceOtpResendInstrumentedTest.kt",
+          "bytes": 19108,
+          "sha256": "a92abea050f243e3d00b5487e4cfdda00b224c4a8fc03580552473191c7a3aa0",
+          "git_ignored": false
+        }
+      },
+      "declared_test_methods": [
+        "nativeResendUsesCurrentProofOnlyAfterClickAndKeepsNewDeviceOtpSubmission",
+        "nativeRateLimitShowsSanitizedMessageAndServerCooldown",
+        "nativeUnsupportedServerShowsTruthfulFailureWithoutOrdinaryEmailFallback",
+        "mailboxBackgroundCancelsLateResendButPreservesOriginalOtpChallengeAndCooldown",
+        "explicitCancelDuringResendClosesChallengeAndSuppressesLateStatus",
+        "globalLockClearsChallengeAndLateResendCannotRestoreIt",
+        "largePortugueseNewDeviceResendAndStatusWrapWithoutTextOverflow",
+        "ordinaryEmailTwoFactorRetainsItsSeparateSendControl"
+      ]
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenApi.kt",
+      "category": "production",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenApi.kt",
+          "bytes": 42000,
+          "sha256": "411fd99d7af2bc48ded70ccd5ff341306d52b55cbe46dfd82c6fb83956e4fdc2",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenApi.kt",
+          "bytes": 42000,
+          "sha256": "411fd99d7af2bc48ded70ccd5ff341306d52b55cbe46dfd82c6fb83956e4fdc2",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/crypto/BitwardenAccountFingerprint.kt",
+      "category": "production",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/java/takagi/ru/monica/bitwarden/crypto/BitwardenAccountFingerprint.kt",
+          "bytes": 3007,
+          "sha256": "c6774c383e9732e8251afc247a757fade99cb508fa8a94d09673cd0269863a22",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/java/takagi/ru/monica/bitwarden/crypto/BitwardenAccountFingerprint.kt",
+          "bytes": 3007,
+          "sha256": "c6774c383e9732e8251afc247a757fade99cb508fa8a94d09673cd0269863a22",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/repository/BitwardenRepository.kt",
+      "category": "production",
+      "shared_bytes_equal": false,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/java/takagi/ru/monica/bitwarden/repository/BitwardenRepository.kt",
+          "bytes": 151449,
+          "sha256": "5925de20888717016f0e73599ed7dc56d4628994b4f96e8af24b28b49474b379",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/java/takagi/ru/monica/bitwarden/repository/BitwardenRepository.kt",
+          "bytes": 151449,
+          "sha256": "81a5b4764b366dddea400586fb539f183493af68e968cc7a3d896a2c6f8b8abf",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAccountIdentityStore.kt",
+      "category": "production",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAccountIdentityStore.kt",
+          "bytes": 2927,
+          "sha256": "3c782f2ccd62a315461729e6b2731038f5178dc9e9ef858d1886d6e87945bf27",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAccountIdentityStore.kt",
+          "bytes": 2927,
+          "sha256": "3c782f2ccd62a315461729e6b2731038f5178dc9e9ef858d1886d6e87945bf27",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAuthService.kt",
+      "category": "production",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAuthService.kt",
+          "bytes": 68672,
+          "sha256": "1ea651b18f27db5078883ba8f57fe9946d084b444b34e9fd4c67429aec6a6e50",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenAuthService.kt",
+          "bytes": 68672,
+          "sha256": "1ea651b18f27db5078883ba8f57fe9946d084b444b34e9fd4c67429aec6a6e50",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSyncService.kt",
+      "category": "production",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSyncService.kt",
+          "bytes": 122584,
+          "sha256": "ba550d2a00d713bed982cd861b9788973099d576a6c76f87ef6f46918e928cd1",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenSyncService.kt",
+          "bytes": 122584,
+          "sha256": "ba550d2a00d713bed982cd861b9788973099d576a6c76f87ef6f46918e928cd1",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/NewDeviceOtpResendFailure.kt",
+      "category": "production",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/java/takagi/ru/monica/bitwarden/service/NewDeviceOtpResendFailure.kt",
+          "bytes": 1137,
+          "sha256": "fa5be81bf2e06244005bf66f1beee90f3974b9fc68505b897ec144ea0150c89f",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/java/takagi/ru/monica/bitwarden/service/NewDeviceOtpResendFailure.kt",
+          "bytes": 1137,
+          "sha256": "fa5be81bf2e06244005bf66f1beee90f3974b9fc68505b897ec144ea0150c89f",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenAccountScreen.kt",
+      "category": "production",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenAccountScreen.kt",
+          "bytes": 13282,
+          "sha256": "65c0cb33b72339062fb906195b6a9e353596ef29863ac5336fec06a3160a5e25",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenAccountScreen.kt",
+          "bytes": 13282,
+          "sha256": "65c0cb33b72339062fb906195b6a9e353596ef29863ac5336fec06a3160a5e25",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenFingerprintSheet.kt",
+      "category": "production",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenFingerprintSheet.kt",
+          "bytes": 3088,
+          "sha256": "1522232daf6e19b60cb042606b10dbaa62b4d8feccbec71c39ca829dd1b08347",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenFingerprintSheet.kt",
+          "bytes": 3088,
+          "sha256": "1522232daf6e19b60cb042606b10dbaa62b4d8feccbec71c39ca829dd1b08347",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenLoginScreen.kt",
+      "category": "production",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenLoginScreen.kt",
+          "bytes": 55847,
+          "sha256": "cb9a587b612506774f1643b83bc545d1e00fb8868e8c39ed11e4d9feec247d0d",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenLoginScreen.kt",
+          "bytes": 55847,
+          "sha256": "cb9a587b612506774f1643b83bc545d1e00fb8868e8c39ed11e4d9feec247d0d",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/viewmodel/BitwardenViewModel.kt",
+      "category": "production",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/java/takagi/ru/monica/bitwarden/viewmodel/BitwardenViewModel.kt",
+          "bytes": 95869,
+          "sha256": "81290f61d620e11b88d8b52f458592078c61de12f442f9783fd7fbb9b7729c54",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/java/takagi/ru/monica/bitwarden/viewmodel/BitwardenViewModel.kt",
+          "bytes": 95869,
+          "sha256": "81290f61d620e11b88d8b52f458592078c61de12f442f9783fd7fbb9b7729c54",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/viewmodel/NewDeviceOtpResendController.kt",
+      "category": "production",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/java/takagi/ru/monica/bitwarden/viewmodel/NewDeviceOtpResendController.kt",
+          "bytes": 4531,
+          "sha256": "87ad4600832d02e4a6159ad8efac0a89d0a44980f7462523b6a9f1bc6f52625c",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/java/takagi/ru/monica/bitwarden/viewmodel/NewDeviceOtpResendController.kt",
+          "bytes": 4531,
+          "sha256": "87ad4600832d02e4a6159ad8efac0a89d0a44980f7462523b6a9f1bc6f52625c",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/res/raw/bitwarden_fingerprint_words.txt",
+      "category": "protocol_wordlist",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/res/raw/bitwarden_fingerprint_words.txt",
+          "bytes": 62144,
+          "sha256": "6d557f0693958fb5e650b68b5bee585eb82cf4da32965505c789e924743bc522",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/res/raw/bitwarden_fingerprint_words.txt",
+          "bytes": 62144,
+          "sha256": "6d557f0693958fb5e650b68b5bee585eb82cf4da32965505c789e924743bc522",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/res/values-b+lzh/bitwarden_account_basics.xml",
+      "category": "localized_resource",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/res/values-b+lzh/bitwarden_account_basics.xml",
+          "bytes": 1076,
+          "sha256": "e38683f8976ea9574b0f5be1b3e4f4f3762cb987649d638f99bcd06ba4c7e61e",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/res/values-b+lzh/bitwarden_account_basics.xml",
+          "bytes": 1076,
+          "sha256": "e38683f8976ea9574b0f5be1b3e4f4f3762cb987649d638f99bcd06ba4c7e61e",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/res/values-b+zh+Hant/bitwarden_account_basics.xml",
+      "category": "localized_resource",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/res/values-b+zh+Hant/bitwarden_account_basics.xml",
+          "bytes": 1145,
+          "sha256": "bb66aa0c39bae601ea72b90b07f4ecc83e6a92ac588fe56c7b1c4de00cf8ec45",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/res/values-b+zh+Hant/bitwarden_account_basics.xml",
+          "bytes": 1145,
+          "sha256": "bb66aa0c39bae601ea72b90b07f4ecc83e6a92ac588fe56c7b1c4de00cf8ec45",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/res/values-de/bitwarden_account_basics.xml",
+      "category": "localized_resource",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/res/values-de/bitwarden_account_basics.xml",
+          "bytes": 1341,
+          "sha256": "2ce65266a47f225cb99b3144d162b4c9e6359b7541e0a7ffb5941c470154187e",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/res/values-de/bitwarden_account_basics.xml",
+          "bytes": 1341,
+          "sha256": "2ce65266a47f225cb99b3144d162b4c9e6359b7541e0a7ffb5941c470154187e",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/res/values-es/bitwarden_account_basics.xml",
+      "category": "localized_resource",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/res/values-es/bitwarden_account_basics.xml",
+          "bytes": 1306,
+          "sha256": "a1ea958ed3862ee785397ee6ebcf705cf981d09a28e8b31720cbd4327e45e2ab",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/res/values-es/bitwarden_account_basics.xml",
+          "bytes": 1306,
+          "sha256": "a1ea958ed3862ee785397ee6ebcf705cf981d09a28e8b31720cbd4327e45e2ab",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/res/values-fr/bitwarden_account_basics.xml",
+      "category": "localized_resource",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/res/values-fr/bitwarden_account_basics.xml",
+          "bytes": 1285,
+          "sha256": "bc039a8cae3d048b65d22583cbf4035ed543a4f973c0561ef3a01e3e8385177b",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/res/values-fr/bitwarden_account_basics.xml",
+          "bytes": 1285,
+          "sha256": "bc039a8cae3d048b65d22583cbf4035ed543a4f973c0561ef3a01e3e8385177b",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/res/values-it/bitwarden_account_basics.xml",
+      "category": "localized_resource",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/res/values-it/bitwarden_account_basics.xml",
+          "bytes": 1256,
+          "sha256": "faffa57a9d580c33817626ffc74b7684df347c664dc416dbe3a79b27593b2b01",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/res/values-it/bitwarden_account_basics.xml",
+          "bytes": 1256,
+          "sha256": "faffa57a9d580c33817626ffc74b7684df347c664dc416dbe3a79b27593b2b01",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/res/values-ja/bitwarden_account_basics.xml",
+      "category": "localized_resource",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/res/values-ja/bitwarden_account_basics.xml",
+          "bytes": 1513,
+          "sha256": "9a1a4fae7a5a58a4e11e0c159a5c874cce6323fd7e008ceb14f478f40281b070",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/res/values-ja/bitwarden_account_basics.xml",
+          "bytes": 1513,
+          "sha256": "9a1a4fae7a5a58a4e11e0c159a5c874cce6323fd7e008ceb14f478f40281b070",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/res/values-ko/bitwarden_account_basics.xml",
+      "category": "localized_resource",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/res/values-ko/bitwarden_account_basics.xml",
+          "bytes": 1296,
+          "sha256": "4f33bf34ac7b9e336c269d0469bc15cfaabb039f9f008f3bc863bd35b63c6509",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/res/values-ko/bitwarden_account_basics.xml",
+          "bytes": 1296,
+          "sha256": "4f33bf34ac7b9e336c269d0469bc15cfaabb039f9f008f3bc863bd35b63c6509",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/res/values-pl/bitwarden_account_basics.xml",
+      "category": "localized_resource",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/res/values-pl/bitwarden_account_basics.xml",
+          "bytes": 1302,
+          "sha256": "2ec8435ca927395f43654e6f012c15ad9a5e59451d28219fcc28da6eefcd3042",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/res/values-pl/bitwarden_account_basics.xml",
+          "bytes": 1302,
+          "sha256": "2ec8435ca927395f43654e6f012c15ad9a5e59451d28219fcc28da6eefcd3042",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/res/values-pt-rBR/bitwarden_account_basics.xml",
+      "category": "localized_resource",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/res/values-pt-rBR/bitwarden_account_basics.xml",
+          "bytes": 1286,
+          "sha256": "e1cac02cc2d7b3d42be42607c37448a47968b476c592f4a05cde09e1448708c0",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/res/values-pt-rBR/bitwarden_account_basics.xml",
+          "bytes": 1286,
+          "sha256": "e1cac02cc2d7b3d42be42607c37448a47968b476c592f4a05cde09e1448708c0",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/res/values-pt/bitwarden_account_basics.xml",
+      "category": "localized_resource",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/res/values-pt/bitwarden_account_basics.xml",
+          "bytes": 1310,
+          "sha256": "38950b3e068348db063e9e6cf9119136be5a1eabb635fe3cbf5fb90437f7c11d",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/res/values-pt/bitwarden_account_basics.xml",
+          "bytes": 1310,
+          "sha256": "38950b3e068348db063e9e6cf9119136be5a1eabb635fe3cbf5fb90437f7c11d",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/res/values-ru/bitwarden_account_basics.xml",
+      "category": "localized_resource",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/res/values-ru/bitwarden_account_basics.xml",
+          "bytes": 1810,
+          "sha256": "2437dfb9f5718307392f48e460eec1b567e0fb3842eddeeda070f4f601e99ef2",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/res/values-ru/bitwarden_account_basics.xml",
+          "bytes": 1810,
+          "sha256": "2437dfb9f5718307392f48e460eec1b567e0fb3842eddeeda070f4f601e99ef2",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/res/values-vi/bitwarden_account_basics.xml",
+      "category": "localized_resource",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/res/values-vi/bitwarden_account_basics.xml",
+          "bytes": 1313,
+          "sha256": "d5be54be427fa895f4e7c1b9dc41cec1c9fcdc7ecc2d9189553e4334ea19de1e",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/res/values-vi/bitwarden_account_basics.xml",
+          "bytes": 1313,
+          "sha256": "d5be54be427fa895f4e7c1b9dc41cec1c9fcdc7ecc2d9189553e4334ea19de1e",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/res/values-zh-rCN/bitwarden_account_basics.xml",
+      "category": "localized_resource",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/res/values-zh-rCN/bitwarden_account_basics.xml",
+          "bytes": 1139,
+          "sha256": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/res/values-zh-rCN/bitwarden_account_basics.xml",
+          "bytes": 1139,
+          "sha256": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/res/values-zh-rNY/bitwarden_account_basics.xml",
+      "category": "localized_resource",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/res/values-zh-rNY/bitwarden_account_basics.xml",
+          "bytes": 1139,
+          "sha256": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/res/values-zh-rNY/bitwarden_account_basics.xml",
+          "bytes": 1139,
+          "sha256": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/res/values-zh-rXB/bitwarden_account_basics.xml",
+      "category": "localized_resource",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/res/values-zh-rXB/bitwarden_account_basics.xml",
+          "bytes": 1139,
+          "sha256": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/res/values-zh-rXB/bitwarden_account_basics.xml",
+          "bytes": 1139,
+          "sha256": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/res/values-zh/bitwarden_account_basics.xml",
+      "category": "localized_resource",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/res/values-zh/bitwarden_account_basics.xml",
+          "bytes": 1139,
+          "sha256": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/res/values-zh/bitwarden_account_basics.xml",
+          "bytes": 1139,
+          "sha256": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/main/res/values/bitwarden_account_basics.xml",
+      "category": "localized_resource",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/main/res/values/bitwarden_account_basics.xml",
+          "bytes": 1166,
+          "sha256": "cf5f9723a941d0f71bf26210429176fcc90b9224b65cc8c300638a1a6d762c20",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/main/res/values/bitwarden_account_basics.xml",
+          "bytes": 1166,
+          "sha256": "cf5f9723a941d0f71bf26210429176fcc90b9224b65cc8c300638a1a6d762c20",
+          "git_ignored": false
+        }
+      }
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/bitwarden/BitwardenAccountFingerprintTest.kt",
+      "category": "jvm_test",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/test/java/takagi/ru/monica/bitwarden/BitwardenAccountFingerprintTest.kt",
+          "bytes": 3131,
+          "sha256": "38df5723b14d552452f7ba85ba5101a1c74b2c934ff81e3e481428e3d9f926fa",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/test/java/takagi/ru/monica/bitwarden/BitwardenAccountFingerprintTest.kt",
+          "bytes": 3131,
+          "sha256": "38df5723b14d552452f7ba85ba5101a1c74b2c934ff81e3e481428e3d9f926fa",
+          "git_ignored": false
+        }
+      },
+      "declared_test_methods": [
+        "matchesOfficialSdkAccountFingerprintVector",
+        "packagedWordListMatchesEffOrderIncludingHyphenatedWords",
+        "differentAccountAndDifferentPublicKeyHaveDifferentPhrases",
+        "rejectsMalformedOrMissingIdentityInsteadOfGeneratingANewOne",
+        "rejectsShortOrDuplicatedProtocolWordList"
+      ]
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/bitwarden/BitwardenAccountIdentityStoreTest.kt",
+      "category": "jvm_test",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/test/java/takagi/ru/monica/bitwarden/BitwardenAccountIdentityStoreTest.kt",
+          "bytes": 5559,
+          "sha256": "db03264adef3a2b5c9c24a0ee87c5e64622245e404711fb4646f800129e73b92",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/test/java/takagi/ru/monica/bitwarden/BitwardenAccountIdentityStoreTest.kt",
+          "bytes": 5559,
+          "sha256": "db03264adef3a2b5c9c24a0ee87c5e64622245e404711fb4646f800129e73b92",
+          "git_ignored": false
+        }
+      },
+      "declared_test_methods": [
+        "storesOnlySealedPublicIdentityAndReadsItAfterStoreRecreation",
+        "bindsPublicIdentityToServerEmailUserIdAndSecurityStamp",
+        "wrongWrappingKeyOrCorruptCacheCannotReturnAPublicIdentity",
+        "revokedCaptureCannotPublishAfterExpensiveKeyParsing",
+        "malformedAuthenticatedPrivateKeyClearsOlderIdentity",
+        "unsupportedKeyTypeAndShortRsaCannotCreateAnIdentity",
+        "omittedProfileKeyPreservesOfflineIdentityButExplicitClearRemovesIt",
+        "failedStorageDoesNotKeepAnOlderIdentity"
+      ]
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/bitwarden/service/BitwardenNewDeviceOtpResendTest.kt",
+      "category": "jvm_test",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/test/java/takagi/ru/monica/bitwarden/service/BitwardenNewDeviceOtpResendTest.kt",
+          "bytes": 6395,
+          "sha256": "a354997e3cf6d83744543beb832e60c7748d5b38277a420cbc70be7b9eb00f5b",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/test/java/takagi/ru/monica/bitwarden/service/BitwardenNewDeviceOtpResendTest.kt",
+          "bytes": 6395,
+          "sha256": "a354997e3cf6d83744543beb832e60c7748d5b38277a420cbc70be7b9eb00f5b",
+          "git_ignored": false
+        }
+      },
+      "declared_test_methods": [
+        "postsOnlyOfficialNewDeviceFieldsWithoutAuthorizationOrAnOrdinaryEmailRequest",
+        "ordinaryEmailChallengeCannotCallNewDeviceResend",
+        "unsupportedServersNeverFallBackAndNeverExposeTheirBody",
+        "rateLimitRetainsOnlyDelayAndFailureCategory",
+        "genericFailureNeverEchoesCredentials",
+        "cancellationPropagatesWithoutAReplacementRequest",
+        "retryAfterAcceptsNumericAndHttpDateWithoutOverflow"
+      ]
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/bitwarden/viewmodel/NewDeviceOtpResendControllerTest.kt",
+      "category": "jvm_test",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/app/src/test/java/takagi/ru/monica/bitwarden/viewmodel/NewDeviceOtpResendControllerTest.kt",
+          "bytes": 6805,
+          "sha256": "7a3f85aaebfda215421cfb738d80f8c06be9d6d5cfaaba8d4e087a37a1114e28",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "app/src/test/java/takagi/ru/monica/bitwarden/viewmodel/NewDeviceOtpResendControllerTest.kt",
+          "bytes": 6805,
+          "sha256": "7a3f85aaebfda215421cfb738d80f8c06be9d6d5cfaaba8d4e087a37a1114e28",
+          "git_ignored": false
+        }
+      },
+      "declared_test_methods": [
+        "bindingDoesNotSendAndConcurrentOrRapidClicksAreIgnored",
+        "rateLimitExtendsCooldownAndSurvivesChallengeReplacement",
+        "cancelledRequestCannotPublishLateSuccessIntoReplacementSession",
+        "backgroundOrLockInvalidationRevokesAnUncooperativeFailure",
+        "sessionRevokedBeforeDispatchSendsNothing",
+        "sessionRevokedDuringNetworkCannotPublishSuccess",
+        "unsupportedServerDisablesResendAfterCooldown"
+      ]
+    },
+    {
+      "path": "docs/licenses/eff-fingerprint-wordlist.md",
+      "category": "wordlist_attribution",
+      "shared_bytes_equal": true,
+      "editions": {
+        "main": {
+          "repo_path": "Monica for Android/docs/licenses/eff-fingerprint-wordlist.md",
+          "bytes": 653,
+          "sha256": "dd883c9f2407f7ed212dd8820b99b92b29ab635ffc3fcc7cc2e53f85ff03b0a0",
+          "git_ignored": false
+        },
+        "fdroid": {
+          "repo_path": "docs/licenses/eff-fingerprint-wordlist.md",
+          "bytes": 653,
+          "sha256": "dd883c9f2407f7ed212dd8820b99b92b29ab635ffc3fcc7cc2e53f85ff03b0a0",
+          "git_ignored": false
+        }
+      }
+    }
+  ],
+  "main_only": [
+    {
+      "repo_path": ".gitignore",
+      "bytes": 9198,
+      "sha256": "c7ad4f99edad04d066b1e29fb3b99b80f59c1bfadf48fe06fad28007e00ee4fd"
+    }
+  ],
+  "repository_comparison": {
+    "path": "app/src/main/java/takagi/ru/monica/bitwarden/repository/BitwardenRepository.kt",
+    "full_file_identity_not_required": true,
+    "batch_edit_lines_equal": true,
+    "batch_edit_lines_sha256": "aa7011917270f40bd0b6985516074de477a0da6c89f9982168efe17de12e3097",
+    "added_lines": 104,
+    "removed_lines": 10,
+    "preexisting_edition_edit_lines_preserved": true,
+    "preexisting_edition_edit_lines_sha256": "ab1f35aa2bba22cc4d4c634737bc22ec564fafa04ee093c1e67f990288dadcab",
+    "method": "Compare ordered +/- content lines from baseline to current and main to FD, excluding hunk coordinates and normalizing line endings for comparison only; source SHA256 covers raw bytes."
+  },
+  "resources": {
+    "configurations": [
+      {
+        "configuration": "values-b+lzh",
+        "key_count": 10,
+        "sha256": "e38683f8976ea9574b0f5be1b3e4f4f3762cb987649d638f99bcd06ba4c7e61e"
+      },
+      {
+        "configuration": "values-b+zh+Hant",
+        "key_count": 10,
+        "sha256": "bb66aa0c39bae601ea72b90b07f4ecc83e6a92ac588fe56c7b1c4de00cf8ec45"
+      },
+      {
+        "configuration": "values-de",
+        "key_count": 10,
+        "sha256": "2ce65266a47f225cb99b3144d162b4c9e6359b7541e0a7ffb5941c470154187e"
+      },
+      {
+        "configuration": "values-es",
+        "key_count": 10,
+        "sha256": "a1ea958ed3862ee785397ee6ebcf705cf981d09a28e8b31720cbd4327e45e2ab"
+      },
+      {
+        "configuration": "values-fr",
+        "key_count": 10,
+        "sha256": "bc039a8cae3d048b65d22583cbf4035ed543a4f973c0561ef3a01e3e8385177b"
+      },
+      {
+        "configuration": "values-it",
+        "key_count": 10,
+        "sha256": "faffa57a9d580c33817626ffc74b7684df347c664dc416dbe3a79b27593b2b01"
+      },
+      {
+        "configuration": "values-ja",
+        "key_count": 10,
+        "sha256": "9a1a4fae7a5a58a4e11e0c159a5c874cce6323fd7e008ceb14f478f40281b070"
+      },
+      {
+        "configuration": "values-ko",
+        "key_count": 10,
+        "sha256": "4f33bf34ac7b9e336c269d0469bc15cfaabb039f9f008f3bc863bd35b63c6509"
+      },
+      {
+        "configuration": "values-pl",
+        "key_count": 10,
+        "sha256": "2ec8435ca927395f43654e6f012c15ad9a5e59451d28219fcc28da6eefcd3042"
+      },
+      {
+        "configuration": "values-pt-rBR",
+        "key_count": 10,
+        "sha256": "e1cac02cc2d7b3d42be42607c37448a47968b476c592f4a05cde09e1448708c0"
+      },
+      {
+        "configuration": "values-pt",
+        "key_count": 10,
+        "sha256": "38950b3e068348db063e9e6cf9119136be5a1eabb635fe3cbf5fb90437f7c11d"
+      },
+      {
+        "configuration": "values-ru",
+        "key_count": 10,
+        "sha256": "2437dfb9f5718307392f48e460eec1b567e0fb3842eddeeda070f4f601e99ef2"
+      },
+      {
+        "configuration": "values-vi",
+        "key_count": 10,
+        "sha256": "d5be54be427fa895f4e7c1b9dc41cec1c9fcdc7ecc2d9189553e4334ea19de1e"
+      },
+      {
+        "configuration": "values-zh-rCN",
+        "key_count": 10,
+        "sha256": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046"
+      },
+      {
+        "configuration": "values-zh-rNY",
+        "key_count": 10,
+        "sha256": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046"
+      },
+      {
+        "configuration": "values-zh-rXB",
+        "key_count": 10,
+        "sha256": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046"
+      },
+      {
+        "configuration": "values-zh",
+        "key_count": 10,
+        "sha256": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046"
+      },
+      {
+        "configuration": "values",
+        "key_count": 10,
+        "sha256": "cf5f9723a941d0f71bf26210429176fcc90b9224b65cc8c300638a1a6d762c20"
+      }
+    ],
+    "configuration_count": 18,
+    "keys_per_configuration": 10,
+    "values_per_edition": 180,
+    "values_both_editions": 360,
+    "xml_unique_keys_placeholders_checked": true
+  },
+  "wordlist": {
+    "word_count": 7776,
+    "unique_word_count": 7776,
+    "sha256": "6d557f0693958fb5e650b68b5bee585eb82cf4da32965505c789e924743bc522",
+    "lf_only": true,
+    "reference_file_sha256": "ccdd44fb9987392a03992867338d2ef9b1d64415911a7281932b1765108f1080",
+    "reference": {
+      "userId": "a09726a0-9590-49d1-a5f5-afe300b6a515",
+      "publicKey": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuyYs8W7NWf0Zv35Ueco93730dtRKi4Jhc6Snar+86drE+ruSfaCWMcbgsAoAj2Pm6KAzaJrTIVCqBERQ23OncpzjfcGAeyf+v3w/gSw/EjihMJ4AG5ICY4hLFYcGdgwa+7is+TVO0i6PEWjKQa3l2+mQo2XY7pg2ngHDMssV4gxSqq+qoBX3+FBhewCYdOV+3cebwsAzz7HwoFTxKViwNW8crbHonhZPhZgfIAzEkzo5MvzQg5azhLKW6vuPfaOQFC5HqPykVnh8OPzO0uzUi3+97CguAu4N2CgwVYXltZuw2fGamdVw3kjbxQPbOE1tL0j7gyTwYKkfUl2m8gMh1QIDAQAB",
+      "phrase": "turban-deftly-anime-chatroom-unselfish",
+      "effVerified": true,
+      "wordlistSha256": "6d557f0693958fb5e650b68b5bee585eb82cf4da32965505c789e924743bc522",
+      "sdkSha": "8aa7955dd1cb1623f6a29e533ba78b35363236c8"
+    }
+  },
+  "git_ignored_paths": {
+    "main": [],
+    "fdroid": []
+  },
+  "supporting_selection_inputs": {
+    "tests.gradle": {
+      "sha256": "e161a48d62d64501afc1a32e25f5541888406eb54e2e98cd1d1d74a7a4baf590",
+      "role": "selection only; no execution claim"
+    },
+    "device-methods.json": {
+      "sha256": "288bc1b65392cf359cc504e85676b0790797ae85ea73b12cd24b62a5684b8645",
+      "role": "selection only; no execution claim"
+    }
+  },
+  "source_stable_during_capture": true,
+  "publication": {
+    "sourceFreezeRecordedBeforeRuntimeAcceptance": true,
+    "finalRuntimeEvidence": "bitwarden-account-basics-325-results.json",
+    "originalRawSha256": "90aad80facf484d627e81a848317cd1e28c6d03e6bf76abcf5964bfc60d24406"
+  }
+}

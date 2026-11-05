@@ -1,0 +1,108 @@
+{
+  "status": "PASS",
+  "reviewedBy": "root",
+  "reviewedAt": "2026-11-04T18:01:08.152425+00:00",
+  "scope": "Actual final screenshots of fingerprint Chinese/English1.5/Portuguese missing identity; resend success/rate-limit/Portuguese1.6. No all-theme/device claim.",
+  "historicalRejectedCapture": "main/readable-installed white English and missing-identity screenshots are retained and excluded. Main isolated-large failed in old Compose test dispatcher; the new frame-native fixture checks focused dialog frame commit and rejects uniform captures.",
+  "editions": {
+    "main": {
+      "run": "frame-native",
+      "reviewedCount": 6,
+      "reviewed": [
+        {
+          "fileName": "bitwarden-fingerprint-chinese-copy.png",
+          "sha256": "51184287ad792d2717efb08e89109e3f97b37bf76cda04cd817dadfc0632e623",
+          "bytes": 167444,
+          "deviceMtime": 1793814898
+        },
+        {
+          "fileName": "bitwarden-fingerprint-english-large-wrapped.png",
+          "sha256": "57e43ad80821c1556c44839e8305b4ba81b9737c9a21eb54a9684d17406c664e",
+          "bytes": 171254,
+          "deviceMtime": 1793814903
+        },
+        {
+          "fileName": "bitwarden-fingerprint-missing-key-portuguese.png",
+          "sha256": "27ae27712f0c2b08f4a8e6d1d432d5f10f09b7dc52551e250ba9a775d1277d5d",
+          "bytes": 180053,
+          "deviceMtime": 1793814910
+        },
+        {
+          "fileName": "new-device-otp-portuguese-large.png",
+          "sha256": "db1320bb40e872a88a6796d340a0af2fd464393a33735f1076bec173bc685b9f",
+          "bytes": 141810,
+          "deviceMtime": 1793814928
+        },
+        {
+          "fileName": "new-device-otp-rate-limit.png",
+          "sha256": "e194c3ae7f111d37248cd990a6c06e3bed00b19e35e628f1fe5ef39c0ce236ea",
+          "bytes": 131481,
+          "deviceMtime": 1793814960
+        },
+        {
+          "fileName": "new-device-otp-sent.png",
+          "sha256": "14e540051a5766fd270fb402e8dd7ba0c48a6627808fe23710e235c9e67ee1f0",
+          "bytes": 135937,
+          "deviceMtime": 1793814944
+        }
+      ],
+      "notes": "Full phrase and actions visible; word boundary wraps; Portuguese resend body is scrolled, with fixed title/footer. Other scroll positions validated by native tests."
+    },
+    "fdroid": {
+      "run": "frame-native",
+      "reviewedCount": 6,
+      "reviewed": [
+        {
+          "fileName": "bitwarden-fingerprint-chinese-copy.png",
+          "sha256": "0b9cd89b100de42ca00459d1b47e58680ecb4bd6b3dbd8bbb79ec20947d4bb6f",
+          "bytes": 167422,
+          "deviceMtime": 1793815093
+        },
+        {
+          "fileName": "bitwarden-fingerprint-english-large-wrapped.png",
+          "sha256": "0adda7d14e57628b1829bd96485a44fea92b5e6972a6086045964dfd10484d16",
+          "bytes": 172052,
+          "deviceMtime": 1793815098
+        },
+        {
+          "fileName": "bitwarden-fingerprint-missing-key-portuguese.png",
+          "sha256": "0de4b6c72c4c9e9921107d1dbabb32633aff48904159d229f76c0b1a85411443",
+          "bytes": 179775,
+          "deviceMtime": 1793815102
+        },
+        {
+          "fileName": "new-device-otp-portuguese-large.png",
+          "sha256": "a682742b1243522d5853196e53b9b79d502ff85c07e708d44b49241b89445cfd",
+          "bytes": 142610,
+          "deviceMtime": 1793815122
+        },
+        {
+          "fileName": "new-device-otp-rate-limit.png",
+          "sha256": "cd931a9e21d60c16471fe47af161c5ccf351054a585f88dbcc7990097c1cb42c",
+          "bytes": 130347,
+          "deviceMtime": 1793815161
+        },
+        {
+          "fileName": "new-device-otp-sent.png",
+          "sha256": "eb692e3c0dd2932cf5a27c05dfa25dd1b6446d82d705c0c5c0eef30b1920197d",
+          "bytes": 135652,
+          "deviceMtime": 1793815143
+        }
+      ],
+      "notes": "Full phrase and actions visible; word boundary wraps; Portuguese resend body is scrolled, with fixed title/footer. Other scroll positions validated by native tests."
+    }
+  },
+  "imagesIncluded": false,
+  "windowDiagnostics": {
+    "main": {
+      "count": 7,
+      "evidenceComplete": true,
+      "file": "bitwarden-account-basics-325-main-window-diagnostics.json"
+    },
+    "fdroid": {
+      "count": 7,
+      "evidenceComplete": true,
+      "file": "bitwarden-account-basics-325-fdroid-window-diagnostics.json"
+    }
+  }
+}

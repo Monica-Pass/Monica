@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.BitwardenTransportBackupTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-05T02:02:33" hostname="JOYIN" time="8.558">
+  <properties/>
+  <testcase name="oversizedOrEmptyEncryptedMaterialIsRejectedBeforeDecryption" classname="takagi.ru.monica.bitwarden.BitwardenTransportBackupTest" time="2.441"/>
+  <testcase name="everyEditedDestinationOrPresetIsRejectedAgainstTheEncryptedFingerprint" classname="takagi.ru.monica.bitwarden.BitwardenTransportBackupTest" time="0.97"/>
+  <testcase name="noPasswordWrongPasswordAndDamagedCiphertextNeverUseTheLegacyFallback" classname="takagi.ru.monica.bitwarden.BitwardenTransportBackupTest" time="0.812"/>
+  <testcase name="restoredPayloadGetsANewDeviceBindingAndAnEmptyPayloadStaysAuthoritative" classname="takagi.ru.monica.bitwarden.BitwardenTransportBackupTest" time="0.479"/>
+  <testcase name="unsupportedVersionsAndMalformedSealedSchemasAreRejected" classname="takagi.ru.monica.bitwarden.BitwardenTransportBackupTest" time="1.332"/>
+  <testcase name="encryptedRoundTripPreservesActualImportedTlsAndAllEndpointsWithoutLocalBindings" classname="takagi.ru.monica.bitwarden.BitwardenTransportBackupTest" time="0.687"/>
+  <testcase name="decryptedTlsAndFingerprintAreRevalidatedBeforeAnyRepositoryPublication" classname="takagi.ru.monica.bitwarden.BitwardenTransportBackupTest" time="0.882"/>
+  <testcase name="portableSecretCannotBeMovedToAnotherAccountOrUserIdentity" classname="takagi.ru.monica.bitwarden.BitwardenTransportBackupTest" time="0.586"/>
+  <testcase name="encryptionRequiresANonemptyPasswordButPreservesWhitespacePasswordsExactly" classname="takagi.ru.monica.bitwarden.BitwardenTransportBackupTest" time="0.343"/>
+  <testcase name="legacyCustomUrlsArePreservedOrDerivedFromTheirOwnBaseWithoutUsFallback" classname="takagi.ru.monica.bitwarden.BitwardenTransportBackupTest" time="0.025"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

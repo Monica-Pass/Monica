@@ -1,0 +1,1313 @@
+{
+  "scope": "Actual APK account-basics strings only; not runtime acceptance",
+  "sharedBytesMatch": true,
+  "aapt2": "D:/AndroidSDK/build-tools/36.0.0/aapt2.exe",
+  "editions": {
+    "fdroid": {
+      "edition": "fdroid",
+      "status": "PASS",
+      "build": {
+        "receipt": "<task>/fdroid-frame-verified-build.json",
+        "receiptSha256": "4b4c82d5ed392ece766c4fd16c8280d2a4ec00279f545a1ebe253fc053ad3a2f",
+        "log": "<task>/fdroid-frame-verified-build.log",
+        "logSha256": "03a0f7e1c362d53ec10c69985559632845434980878d4f9a01d2a090a61a5b73",
+        "edition": "fdroid",
+        "run": "frame-verified"
+      },
+      "apk": "<fdroid>/app/build/outputs/apk/debug/Monica-Android-x86_64-1.0.325.apk",
+      "apkSha256": "8913e31da9191186213f5ac9e3abcf28d54ce2121e376ae9f78d1feb3acbe9e6",
+      "package": "takagi.ru.monica.fdroid",
+      "versionName": "1.0.325",
+      "versionCode": 32,
+      "abis": [
+        "x86_64"
+      ],
+      "keys": 10,
+      "configurations": 18,
+      "checkedValues": 180,
+      "sourceSha256": {
+        "values/bitwarden_account_basics.xml": "cf5f9723a941d0f71bf26210429176fcc90b9224b65cc8c300638a1a6d762c20",
+        "values-b+lzh/bitwarden_account_basics.xml": "e38683f8976ea9574b0f5be1b3e4f4f3762cb987649d638f99bcd06ba4c7e61e",
+        "values-b+zh+Hant/bitwarden_account_basics.xml": "bb66aa0c39bae601ea72b90b07f4ecc83e6a92ac588fe56c7b1c4de00cf8ec45",
+        "values-de/bitwarden_account_basics.xml": "2ce65266a47f225cb99b3144d162b4c9e6359b7541e0a7ffb5941c470154187e",
+        "values-es/bitwarden_account_basics.xml": "a1ea958ed3862ee785397ee6ebcf705cf981d09a28e8b31720cbd4327e45e2ab",
+        "values-fr/bitwarden_account_basics.xml": "bc039a8cae3d048b65d22583cbf4035ed543a4f973c0561ef3a01e3e8385177b",
+        "values-it/bitwarden_account_basics.xml": "faffa57a9d580c33817626ffc74b7684df347c664dc416dbe3a79b27593b2b01",
+        "values-ja/bitwarden_account_basics.xml": "9a1a4fae7a5a58a4e11e0c159a5c874cce6323fd7e008ceb14f478f40281b070",
+        "values-ko/bitwarden_account_basics.xml": "4f33bf34ac7b9e336c269d0469bc15cfaabb039f9f008f3bc863bd35b63c6509",
+        "values-pl/bitwarden_account_basics.xml": "2ec8435ca927395f43654e6f012c15ad9a5e59451d28219fcc28da6eefcd3042",
+        "values-pt/bitwarden_account_basics.xml": "38950b3e068348db063e9e6cf9119136be5a1eabb635fe3cbf5fb90437f7c11d",
+        "values-pt-rBR/bitwarden_account_basics.xml": "e1cac02cc2d7b3d42be42607c37448a47968b476c592f4a05cde09e1448708c0",
+        "values-ru/bitwarden_account_basics.xml": "2437dfb9f5718307392f48e460eec1b567e0fb3842eddeeda070f4f601e99ef2",
+        "values-vi/bitwarden_account_basics.xml": "d5be54be427fa895f4e7c1b9dc41cec1c9fcdc7ecc2d9189553e4334ea19de1e",
+        "values-zh/bitwarden_account_basics.xml": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+        "values-zh-rCN/bitwarden_account_basics.xml": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+        "values-zh-rNY/bitwarden_account_basics.xml": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046",
+        "values-zh-rXB/bitwarden_account_basics.xml": "da742417f15bcc5832f2f587ad0d4e7a815966bf567ded95263227865cf1c046"
+      },
+      "comparisons": [
+        {
+          "config": "values",
+          "name": "bitwarden_new_device_resend",
+          "expected": "Resend verification email",
+          "actual": "Resend verification email",
+          "matches": true
+        },
+        {
+          "config": "values",
+          "name": "bitwarden_new_device_resend_sent",
+          "expected": "Verification email requested. Check your inbox.",
+          "actual": "Verification email requested. Check your inbox.",
+          "matches": true
+        },
+        {
+          "config": "values",
+          "name": "bitwarden_new_device_resend_failed",
+          "expected": "Could not request a verification email. Try again.",
+          "actual": "Could not request a verification email. Try again.",
+          "matches": true
+        },
+        {
+          "config": "values",
+          "name": "bitwarden_new_device_resend_unavailable",
+          "expected": "This server does not support resending new-device verification emails.",
+          "actual": "This server does not support resending new-device verification emails.",
+          "matches": true
+        },
+        {
+          "config": "values",
+          "name": "bitwarden_new_device_resend_wait",
+          "expected": "Try again in %1$d seconds.",
+          "actual": "Try again in %1$d seconds.",
+          "matches": true
+        },
+        {
+          "config": "values",
+          "name": "bitwarden_new_device_resend_rate_limited",
+          "expected": "Too many requests. Wait before trying again.",
+          "actual": "Too many requests. Wait before trying again.",
+          "matches": true
+        },
+        {
+          "config": "values",
+          "name": "bitwarden_account_fingerprint",
+          "expected": "Account fingerprint phrase",
+          "actual": "Account fingerprint phrase",
+          "matches": true
+        },
+        {
+          "config": "values",
+          "name": "bitwarden_account_fingerprint_hint",
+          "expected": "Compare this phrase through another trusted channel to help verify your account identity.",
+          "actual": "Compare this phrase through another trusted channel to help verify your account identity.",
+          "matches": true
+        },
+        {
+          "config": "values",
+          "name": "bitwarden_account_fingerprint_unavailable",
+          "expected": "Sync this account to load its identity key, then try again.",
+          "actual": "Sync this account to load its identity key, then try again.",
+          "matches": true
+        },
+        {
+          "config": "values",
+          "name": "bitwarden_account_fingerprint_copy",
+          "expected": "Copy phrase",
+          "actual": "Copy phrase",
+          "matches": true
+        },
+        {
+          "config": "values-b+lzh",
+          "name": "bitwarden_new_device_resend",
+          "expected": "重寄驗證郵件",
+          "actual": "重寄驗證郵件",
+          "matches": true
+        },
+        {
+          "config": "values-b+lzh",
+          "name": "bitwarden_new_device_resend_sent",
+          "expected": "已請寄驗證郵件，請察收件匣。",
+          "actual": "已請寄驗證郵件，請察收件匣。",
+          "matches": true
+        },
+        {
+          "config": "values-b+lzh",
+          "name": "bitwarden_new_device_resend_failed",
+          "expected": "未能請寄驗證郵件，請重試。",
+          "actual": "未能請寄驗證郵件，請重試。",
+          "matches": true
+        },
+        {
+          "config": "values-b+lzh",
+          "name": "bitwarden_new_device_resend_unavailable",
+          "expected": "此伺服器不支援重寄新機驗證郵件。",
+          "actual": "此伺服器不支援重寄新機驗證郵件。",
+          "matches": true
+        },
+        {
+          "config": "values-b+lzh",
+          "name": "bitwarden_new_device_resend_wait",
+          "expected": "請俟 %1$d 秒再試。",
+          "actual": "請俟 %1$d 秒再試。",
+          "matches": true
+        },
+        {
+          "config": "values-b+lzh",
+          "name": "bitwarden_new_device_resend_rate_limited",
+          "expected": "請求過繁，請稍候再試。",
+          "actual": "請求過繁，請稍候再試。",
+          "matches": true
+        },
+        {
+          "config": "values-b+lzh",
+          "name": "bitwarden_account_fingerprint",
+          "expected": "帳號指紋短語",
+          "actual": "帳號指紋短語",
+          "matches": true
+        },
+        {
+          "config": "values-b+lzh",
+          "name": "bitwarden_account_fingerprint_hint",
+          "expected": "請循另一可信之途比對此短語，以助驗明帳號身分。",
+          "actual": "請循另一可信之途比對此短語，以助驗明帳號身分。",
+          "matches": true
+        },
+        {
+          "config": "values-b+lzh",
+          "name": "bitwarden_account_fingerprint_unavailable",
+          "expected": "請先同步此帳號，載入身分密鑰，再試。",
+          "actual": "請先同步此帳號，載入身分密鑰，再試。",
+          "matches": true
+        },
+        {
+          "config": "values-b+lzh",
+          "name": "bitwarden_account_fingerprint_copy",
+          "expected": "複製短語",
+          "actual": "複製短語",
+          "matches": true
+        },
+        {
+          "config": "values-b+zh+Hant",
+          "name": "bitwarden_new_device_resend",
+          "expected": "重新傳送驗證郵件",
+          "actual": "重新傳送驗證郵件",
+          "matches": true
+        },
+        {
+          "config": "values-b+zh+Hant",
+          "name": "bitwarden_new_device_resend_sent",
+          "expected": "已要求傳送驗證郵件，請查看收件匣。",
+          "actual": "已要求傳送驗證郵件，請查看收件匣。",
+          "matches": true
+        },
+        {
+          "config": "values-b+zh+Hant",
+          "name": "bitwarden_new_device_resend_failed",
+          "expected": "無法要求傳送驗證郵件，請再試一次。",
+          "actual": "無法要求傳送驗證郵件，請再試一次。",
+          "matches": true
+        },
+        {
+          "config": "values-b+zh+Hant",
+          "name": "bitwarden_new_device_resend_unavailable",
+          "expected": "此伺服器不支援重新傳送新裝置驗證郵件。",
+          "actual": "此伺服器不支援重新傳送新裝置驗證郵件。",
+          "matches": true
+        },
+        {
+          "config": "values-b+zh+Hant",
+          "name": "bitwarden_new_device_resend_wait",
+          "expected": "請在 %1$d 秒後再試。",
+          "actual": "請在 %1$d 秒後再試。",
+          "matches": true
+        },
+        {
+          "config": "values-b+zh+Hant",
+          "name": "bitwarden_new_device_resend_rate_limited",
+          "expected": "要求過於頻繁，請稍後再試。",
+          "actual": "要求過於頻繁，請稍後再試。",
+          "matches": true
+        },
+        {
+          "config": "values-b+zh+Hant",
+          "name": "bitwarden_account_fingerprint",
+          "expected": "帳號指紋短語",
+          "actual": "帳號指紋短語",
+          "matches": true
+        },
+        {
+          "config": "values-b+zh+Hant",
+          "name": "bitwarden_account_fingerprint_hint",
+          "expected": "請透過另一個可信管道比對這段短語，以協助核實你的帳號身分。",
+          "actual": "請透過另一個可信管道比對這段短語，以協助核實你的帳號身分。",
+          "matches": true
+        },
+        {
+          "config": "values-b+zh+Hant",
+          "name": "bitwarden_account_fingerprint_unavailable",
+          "expected": "請先同步此帳號以載入身分金鑰，再試一次。",
+          "actual": "請先同步此帳號以載入身分金鑰，再試一次。",
+          "matches": true
+        },
+        {
+          "config": "values-b+zh+Hant",
+          "name": "bitwarden_account_fingerprint_copy",
+          "expected": "複製短語",
+          "actual": "複製短語",
+          "matches": true
+        },
+        {
+          "config": "values-de",
+          "name": "bitwarden_new_device_resend",
+          "expected": "Bestätigungs-E-Mail erneut senden",
+          "actual": "Bestätigungs-E-Mail erneut senden",
+          "matches": true
+        },
+        {
+          "config": "values-de",
+          "name": "bitwarden_new_device_resend_sent",
+          "expected": "Bestätigungs-E-Mail angefordert. Prüfe deinen Posteingang.",
+          "actual": "Bestätigungs-E-Mail angefordert. Prüfe deinen Posteingang.",
+          "matches": true
+        },
+        {
+          "config": "values-de",
+          "name": "bitwarden_new_device_resend_failed",
+          "expected": "Die Bestätigungs-E-Mail konnte nicht angefordert werden. Versuche es erneut.",
+          "actual": "Die Bestätigungs-E-Mail konnte nicht angefordert werden. Versuche es erneut.",
+          "matches": true
+        },
+        {
+          "config": "values-de",
+          "name": "bitwarden_new_device_resend_unavailable",
+          "expected": "Dieser Server unterstützt das erneute Senden von Bestätigungs-E-Mails für neue Geräte nicht.",
+          "actual": "Dieser Server unterstützt das erneute Senden von Bestätigungs-E-Mails für neue Geräte nicht.",
+          "matches": true
+        },
+        {
+          "config": "values-de",
+          "name": "bitwarden_new_device_resend_wait",
+          "expected": "Versuche es in %1$d Sekunden erneut.",
+          "actual": "Versuche es in %1$d Sekunden erneut.",
+          "matches": true
+        },
+        {
+          "config": "values-de",
+          "name": "bitwarden_new_device_resend_rate_limited",
+          "expected": "Zu viele Anfragen. Warte, bevor du es erneut versuchst.",
+          "actual": "Zu viele Anfragen. Warte, bevor du es erneut versuchst.",
+          "matches": true
+        },
+        {
+          "config": "values-de",
+          "name": "bitwarden_account_fingerprint",
+          "expected": "Fingerabdruck-Phrase des Kontos",
+          "actual": "Fingerabdruck-Phrase des Kontos",
+          "matches": true
+        },
+        {
+          "config": "values-de",
+          "name": "bitwarden_account_fingerprint_hint",
+          "expected": "Vergleiche diese Phrase über einen anderen vertrauenswürdigen Kanal, um die Identität deines Kontos zu überprüfen.",
+          "actual": "Vergleiche diese Phrase über einen anderen vertrauenswürdigen Kanal, um die Identität deines Kontos zu überprüfen.",
+          "matches": true
+        },
+        {
+          "config": "values-de",
+          "name": "bitwarden_account_fingerprint_unavailable",
+          "expected": "Synchronisiere dieses Konto, um seinen Identitätsschlüssel zu laden, und versuche es dann erneut.",
+          "actual": "Synchronisiere dieses Konto, um seinen Identitätsschlüssel zu laden, und versuche es dann erneut.",
+          "matches": true
+        },
+        {
+          "config": "values-de",
+          "name": "bitwarden_account_fingerprint_copy",
+          "expected": "Phrase kopieren",
+          "actual": "Phrase kopieren",
+          "matches": true
+        },
+        {
+          "config": "values-es",
+          "name": "bitwarden_new_device_resend",
+          "expected": "Reenviar correo de verificación",
+          "actual": "Reenviar correo de verificación",
+          "matches": true
+        },
+        {
+          "config": "values-es",
+          "name": "bitwarden_new_device_resend_sent",
+          "expected": "Se ha solicitado el correo de verificación. Revisa tu bandeja de entrada.",
+          "actual": "Se ha solicitado el correo de verificación. Revisa tu bandeja de entrada.",
+          "matches": true
+        },
+        {
+          "config": "values-es",
+          "name": "bitwarden_new_device_resend_failed",
+          "expected": "No se pudo solicitar un correo de verificación. Inténtalo de nuevo.",
+          "actual": "No se pudo solicitar un correo de verificación. Inténtalo de nuevo.",
+          "matches": true
+        },
+        {
+          "config": "values-es",
+          "name": "bitwarden_new_device_resend_unavailable",
+          "expected": "Este servidor no permite reenviar correos de verificación de dispositivos nuevos.",
+          "actual": "Este servidor no permite reenviar correos de verificación de dispositivos nuevos.",
+          "matches": true
+        },
+        {
+          "config": "values-es",
+          "name": "bitwarden_new_device_resend_wait",
+          "expected": "Inténtalo de nuevo en %1$d segundos.",
+          "actual": "Inténtalo de nuevo en %1$d segundos.",
+          "matches": true
+        },
+        {
+          "config": "values-es",
+          "name": "bitwarden_new_device_resend_rate_limited",
+          "expected": "Demasiadas solicitudes. Espera antes de volver a intentarlo.",
+          "actual": "Demasiadas solicitudes. Espera antes de volver a intentarlo.",
+          "matches": true
+        },
+        {
+          "config": "values-es",
+          "name": "bitwarden_account_fingerprint",
+          "expected": "Frase de huella digital de la cuenta",
+          "actual": "Frase de huella digital de la cuenta",
+          "matches": true
+        },
+        {
+          "config": "values-es",
+          "name": "bitwarden_account_fingerprint_hint",
+          "expected": "Compara esta frase a través de otro canal de confianza para ayudar a verificar la identidad de tu cuenta.",
+          "actual": "Compara esta frase a través de otro canal de confianza para ayudar a verificar la identidad de tu cuenta.",
+          "matches": true
+        },
+        {
+          "config": "values-es",
+          "name": "bitwarden_account_fingerprint_unavailable",
+          "expected": "Sincroniza esta cuenta para cargar su clave de identidad y vuelve a intentarlo.",
+          "actual": "Sincroniza esta cuenta para cargar su clave de identidad y vuelve a intentarlo.",
+          "matches": true
+        },
+        {
+          "config": "values-es",
+          "name": "bitwarden_account_fingerprint_copy",
+          "expected": "Copiar frase",
+          "actual": "Copiar frase",
+          "matches": true
+        },
+        {
+          "config": "values-fr",
+          "name": "bitwarden_new_device_resend",
+          "expected": "Renvoyer l'e-mail de vérification",
+          "actual": "Renvoyer l'e-mail de vérification",
+          "matches": true
+        },
+        {
+          "config": "values-fr",
+          "name": "bitwarden_new_device_resend_sent",
+          "expected": "E-mail de vérification demandé. Consultez votre boîte de réception.",
+          "actual": "E-mail de vérification demandé. Consultez votre boîte de réception.",
+          "matches": true
+        },
+        {
+          "config": "values-fr",
+          "name": "bitwarden_new_device_resend_failed",
+          "expected": "Impossible de demander un e-mail de vérification. Réessayez.",
+          "actual": "Impossible de demander un e-mail de vérification. Réessayez.",
+          "matches": true
+        },
+        {
+          "config": "values-fr",
+          "name": "bitwarden_new_device_resend_unavailable",
+          "expected": "Ce serveur ne permet pas de renvoyer les e-mails de vérification des nouveaux appareils.",
+          "actual": "Ce serveur ne permet pas de renvoyer les e-mails de vérification des nouveaux appareils.",
+          "matches": true
+        },
+        {
+          "config": "values-fr",
+          "name": "bitwarden_new_device_resend_wait",
+          "expected": "Réessayez dans %1$d secondes.",
+          "actual": "Réessayez dans %1$d secondes.",
+          "matches": true
+        },
+        {
+          "config": "values-fr",
+          "name": "bitwarden_new_device_resend_rate_limited",
+          "expected": "Trop de demandes. Patientez avant de réessayer.",
+          "actual": "Trop de demandes. Patientez avant de réessayer.",
+          "matches": true
+        },
+        {
+          "config": "values-fr",
+          "name": "bitwarden_account_fingerprint",
+          "expected": "Phrase d'empreinte du compte",
+          "actual": "Phrase d'empreinte du compte",
+          "matches": true
+        },
+        {
+          "config": "values-fr",
+          "name": "bitwarden_account_fingerprint_hint",
+          "expected": "Comparez cette phrase via un autre canal de confiance pour vous aider à vérifier l'identité de votre compte.",
+          "actual": "Comparez cette phrase via un autre canal de confiance pour vous aider à vérifier l'identité de votre compte.",
+          "matches": true
+        },
+        {
+          "config": "values-fr",
+          "name": "bitwarden_account_fingerprint_unavailable",
+          "expected": "Synchronisez ce compte pour charger sa clé d'identité, puis réessayez.",
+          "actual": "Synchronisez ce compte pour charger sa clé d'identité, puis réessayez.",
+          "matches": true
+        },
+        {
+          "config": "values-fr",
+          "name": "bitwarden_account_fingerprint_copy",
+          "expected": "Copier la phrase",
+          "actual": "Copier la phrase",
+          "matches": true
+        },
+        {
+          "config": "values-it",
+          "name": "bitwarden_new_device_resend",
+          "expected": "Invia di nuovo l'email di verifica",
+          "actual": "Invia di nuovo l'email di verifica",
+          "matches": true
+        },
+        {
+          "config": "values-it",
+          "name": "bitwarden_new_device_resend_sent",
+          "expected": "Email di verifica richiesta. Controlla la posta in arrivo.",
+          "actual": "Email di verifica richiesta. Controlla la posta in arrivo.",
+          "matches": true
+        },
+        {
+          "config": "values-it",
+          "name": "bitwarden_new_device_resend_failed",
+          "expected": "Impossibile richiedere un'email di verifica. Riprova.",
+          "actual": "Impossibile richiedere un'email di verifica. Riprova.",
+          "matches": true
+        },
+        {
+          "config": "values-it",
+          "name": "bitwarden_new_device_resend_unavailable",
+          "expected": "Questo server non supporta il reinvio delle email di verifica dei nuovi dispositivi.",
+          "actual": "Questo server non supporta il reinvio delle email di verifica dei nuovi dispositivi.",
+          "matches": true
+        },
+        {
+          "config": "values-it",
+          "name": "bitwarden_new_device_resend_wait",
+          "expected": "Riprova tra %1$d secondi.",
+          "actual": "Riprova tra %1$d secondi.",
+          "matches": true
+        },
+        {
+          "config": "values-it",
+          "name": "bitwarden_new_device_resend_rate_limited",
+          "expected": "Troppe richieste. Attendi prima di riprovare.",
+          "actual": "Troppe richieste. Attendi prima di riprovare.",
+          "matches": true
+        },
+        {
+          "config": "values-it",
+          "name": "bitwarden_account_fingerprint",
+          "expected": "Frase di impronta digitale dell'account",
+          "actual": "Frase di impronta digitale dell'account",
+          "matches": true
+        },
+        {
+          "config": "values-it",
+          "name": "bitwarden_account_fingerprint_hint",
+          "expected": "Confronta questa frase tramite un altro canale affidabile per verificare l'identità del tuo account.",
+          "actual": "Confronta questa frase tramite un altro canale affidabile per verificare l'identità del tuo account.",
+          "matches": true
+        },
+        {
+          "config": "values-it",
+          "name": "bitwarden_account_fingerprint_unavailable",
+          "expected": "Sincronizza questo account per caricare la sua chiave di identità, quindi riprova.",
+          "actual": "Sincronizza questo account per caricare la sua chiave di identità, quindi riprova.",
+          "matches": true
+        },
+        {
+          "config": "values-it",
+          "name": "bitwarden_account_fingerprint_copy",
+          "expected": "Copia frase",
+          "actual": "Copia frase",
+          "matches": true
+        },
+        {
+          "config": "values-ja",
+          "name": "bitwarden_new_device_resend",
+          "expected": "確認メールを再送信",
+          "actual": "確認メールを再送信",
+          "matches": true
+        },
+        {
+          "config": "values-ja",
+          "name": "bitwarden_new_device_resend_sent",
+          "expected": "確認メールをリクエストしました。受信トレイを確認してください。",
+          "actual": "確認メールをリクエストしました。受信トレイを確認してください。",
+          "matches": true
+        },
+        {
+          "config": "values-ja",
+          "name": "bitwarden_new_device_resend_failed",
+          "expected": "確認メールをリクエストできませんでした。もう一度お試しください。",
+          "actual": "確認メールをリクエストできませんでした。もう一度お試しください。",
+          "matches": true
+        },
+        {
+          "config": "values-ja",
+          "name": "bitwarden_new_device_resend_unavailable",
+          "expected": "このサーバーは、新しいデバイスの確認メールの再送信に対応していません。",
+          "actual": "このサーバーは、新しいデバイスの確認メールの再送信に対応していません。",
+          "matches": true
+        },
+        {
+          "config": "values-ja",
+          "name": "bitwarden_new_device_resend_wait",
+          "expected": "%1$d 秒後にもう一度お試しください。",
+          "actual": "%1$d 秒後にもう一度お試しください。",
+          "matches": true
+        },
+        {
+          "config": "values-ja",
+          "name": "bitwarden_new_device_resend_rate_limited",
+          "expected": "リクエストが多すぎます。しばらく待ってからもう一度お試しください。",
+          "actual": "リクエストが多すぎます。しばらく待ってからもう一度お試しください。",
+          "matches": true
+        },
+        {
+          "config": "values-ja",
+          "name": "bitwarden_account_fingerprint",
+          "expected": "アカウントのフィンガープリントフレーズ",
+          "actual": "アカウントのフィンガープリントフレーズ",
+          "matches": true
+        },
+        {
+          "config": "values-ja",
+          "name": "bitwarden_account_fingerprint_hint",
+          "expected": "別の信頼できる経路でこのフレーズを照合し、アカウントの識別情報の確認に役立ててください。",
+          "actual": "別の信頼できる経路でこのフレーズを照合し、アカウントの識別情報の確認に役立ててください。",
+          "matches": true
+        },
+        {
+          "config": "values-ja",
+          "name": "bitwarden_account_fingerprint_unavailable",
+          "expected": "このアカウントを同期して識別キーを読み込んでから、もう一度お試しください。",
+          "actual": "このアカウントを同期して識別キーを読み込んでから、もう一度お試しください。",
+          "matches": true
+        },
+        {
+          "config": "values-ja",
+          "name": "bitwarden_account_fingerprint_copy",
+          "expected": "フレーズをコピー",
+          "actual": "フレーズをコピー",
+          "matches": true
+        },
+        {
+          "config": "values-ko",
+          "name": "bitwarden_new_device_resend",
+          "expected": "인증 이메일 다시 보내기",
+          "actual": "인증 이메일 다시 보내기",
+          "matches": true
+        },
+        {
+          "config": "values-ko",
+          "name": "bitwarden_new_device_resend_sent",
+          "expected": "인증 이메일을 요청했습니다. 받은편지함을 확인하세요.",
+          "actual": "인증 이메일을 요청했습니다. 받은편지함을 확인하세요.",
+          "matches": true
+        },
+        {
+          "config": "values-ko",
+          "name": "bitwarden_new_device_resend_failed",
+          "expected": "인증 이메일을 요청하지 못했습니다. 다시 시도하세요.",
+          "actual": "인증 이메일을 요청하지 못했습니다. 다시 시도하세요.",
+          "matches": true
+        },
+        {
+          "config": "values-ko",
+          "name": "bitwarden_new_device_resend_unavailable",
+          "expected": "이 서버는 새 기기 인증 이메일 재전송을 지원하지 않습니다.",
+          "actual": "이 서버는 새 기기 인증 이메일 재전송을 지원하지 않습니다.",
+          "matches": true
+        },
+        {
+          "config": "values-ko",
+          "name": "bitwarden_new_device_resend_wait",
+          "expected": "%1$d초 후에 다시 시도하세요.",
+          "actual": "%1$d초 후에 다시 시도하세요.",
+          "matches": true
+        },
+        {
+          "config": "values-ko",
+          "name": "bitwarden_new_device_resend_rate_limited",
+          "expected": "요청이 너무 많습니다. 잠시 후 다시 시도하세요.",
+          "actual": "요청이 너무 많습니다. 잠시 후 다시 시도하세요.",
+          "matches": true
+        },
+        {
+          "config": "values-ko",
+          "name": "bitwarden_account_fingerprint",
+          "expected": "계정 지문 문구",
+          "actual": "계정 지문 문구",
+          "matches": true
+        },
+        {
+          "config": "values-ko",
+          "name": "bitwarden_account_fingerprint_hint",
+          "expected": "다른 신뢰할 수 있는 경로로 이 문구를 비교하여 계정 신원을 확인하세요.",
+          "actual": "다른 신뢰할 수 있는 경로로 이 문구를 비교하여 계정 신원을 확인하세요.",
+          "matches": true
+        },
+        {
+          "config": "values-ko",
+          "name": "bitwarden_account_fingerprint_unavailable",
+          "expected": "이 계정을 동기화하여 신원 키를 불러온 후 다시 시도하세요.",
+          "actual": "이 계정을 동기화하여 신원 키를 불러온 후 다시 시도하세요.",
+          "matches": true
+        },
+        {
+          "config": "values-ko",
+          "name": "bitwarden_account_fingerprint_copy",
+          "expected": "문구 복사",
+          "actual": "문구 복사",
+          "matches": true
+        },
+        {
+          "config": "values-pl",
+          "name": "bitwarden_new_device_resend",
+          "expected": "Wyślij ponownie e-mail weryfikacyjny",
+          "actual": "Wyślij ponownie e-mail weryfikacyjny",
+          "matches": true
+        },
+        {
+          "config": "values-pl",
+          "name": "bitwarden_new_device_resend_sent",
+          "expected": "Poproszono o e-mail weryfikacyjny. Sprawdź skrzynkę odbiorczą.",
+          "actual": "Poproszono o e-mail weryfikacyjny. Sprawdź skrzynkę odbiorczą.",
+          "matches": true
+        },
+        {
+          "config": "values-pl",
+          "name": "bitwarden_new_device_resend_failed",
+          "expected": "Nie udało się poprosić o e-mail weryfikacyjny. Spróbuj ponownie.",
+          "actual": "Nie udało się poprosić o e-mail weryfikacyjny. Spróbuj ponownie.",
+          "matches": true
+        },
+        {
+          "config": "values-pl",
+          "name": "bitwarden_new_device_resend_unavailable",
+          "expected": "Ten serwer nie obsługuje ponownego wysyłania e-maili weryfikacyjnych dla nowych urządzeń.",
+          "actual": "Ten serwer nie obsługuje ponownego wysyłania e-maili weryfikacyjnych dla nowych urządzeń.",
+          "matches": true
+        },
+        {
+          "config": "values-pl",
+          "name": "bitwarden_new_device_resend_wait",
+          "expected": "Spróbuj ponownie za %1$d sekund.",
+          "actual": "Spróbuj ponownie za %1$d sekund.",
+          "matches": true
+        },
+        {
+          "config": "values-pl",
+          "name": "bitwarden_new_device_resend_rate_limited",
+          "expected": "Zbyt wiele żądań. Poczekaj przed kolejną próbą.",
+          "actual": "Zbyt wiele żądań. Poczekaj przed kolejną próbą.",
+          "matches": true
+        },
+        {
+          "config": "values-pl",
+          "name": "bitwarden_account_fingerprint",
+          "expected": "Fraza odcisku konta",
+          "actual": "Fraza odcisku konta",
+          "matches": true
+        },
+        {
+          "config": "values-pl",
+          "name": "bitwarden_account_fingerprint_hint",
+          "expected": "Porównaj tę frazę za pośrednictwem innego zaufanego kanału, aby pomóc zweryfikować tożsamość konta.",
+          "actual": "Porównaj tę frazę za pośrednictwem innego zaufanego kanału, aby pomóc zweryfikować tożsamość konta.",
+          "matches": true
+        },
+        {
+          "config": "values-pl",
+          "name": "bitwarden_account_fingerprint_unavailable",
+          "expected": "Zsynchronizuj to konto, aby wczytać jego klucz tożsamości, a następnie spróbuj ponownie.",
+          "actual": "Zsynchronizuj to konto, aby wczytać jego klucz tożsamości, a następnie spróbuj ponownie.",
+          "matches": true
+        },
+        {
+          "config": "values-pl",
+          "name": "bitwarden_account_fingerprint_copy",
+          "expected": "Kopiuj frazę",
+          "actual": "Kopiuj frazę",
+          "matches": true
+        },
+        {
+          "config": "values-pt",
+          "name": "bitwarden_new_device_resend",
+          "expected": "Reenviar email de verificação",
+          "actual": "Reenviar email de verificação",
+          "matches": true
+        },
+        {
+          "config": "values-pt",
+          "name": "bitwarden_new_device_resend_sent",
+          "expected": "Foi pedido um email de verificação. Verifique a sua caixa de entrada.",
+          "actual": "Foi pedido um email de verificação. Verifique a sua caixa de entrada.",
+          "matches": true
+        },
+        {
+          "config": "values-pt",
+          "name": "bitwarden_new_device_resend_failed",
+          "expected": "Não foi possível pedir um email de verificação. Tente novamente.",
+          "actual": "Não foi possível pedir um email de verificação. Tente novamente.",
+          "matches": true
+        },
+        {
+          "config": "values-pt",
+          "name": "bitwarden_new_device_resend_unavailable",
+          "expected": "Este servidor não suporta o reenvio de emails de verificação de novos dispositivos.",
+          "actual": "Este servidor não suporta o reenvio de emails de verificação de novos dispositivos.",
+          "matches": true
+        },
+        {
+          "config": "values-pt",
+          "name": "bitwarden_new_device_resend_wait",
+          "expected": "Tente novamente dentro de %1$d segundos.",
+          "actual": "Tente novamente dentro de %1$d segundos.",
+          "matches": true
+        },
+        {
+          "config": "values-pt",
+          "name": "bitwarden_new_device_resend_rate_limited",
+          "expected": "Demasiados pedidos. Aguarde antes de tentar novamente.",
+          "actual": "Demasiados pedidos. Aguarde antes de tentar novamente.",
+          "matches": true
+        },
+        {
+          "config": "values-pt",
+          "name": "bitwarden_account_fingerprint",
+          "expected": "Frase de impressão digital da conta",
+          "actual": "Frase de impressão digital da conta",
+          "matches": true
+        },
+        {
+          "config": "values-pt",
+          "name": "bitwarden_account_fingerprint_hint",
+          "expected": "Compare esta frase através de outro canal de confiança para ajudar a verificar a identidade da sua conta.",
+          "actual": "Compare esta frase através de outro canal de confiança para ajudar a verificar a identidade da sua conta.",
+          "matches": true
+        },
+        {
+          "config": "values-pt",
+          "name": "bitwarden_account_fingerprint_unavailable",
+          "expected": "Sincronize esta conta para carregar a respetiva chave de identidade e tente novamente.",
+          "actual": "Sincronize esta conta para carregar a respetiva chave de identidade e tente novamente.",
+          "matches": true
+        },
+        {
+          "config": "values-pt",
+          "name": "bitwarden_account_fingerprint_copy",
+          "expected": "Copiar frase",
+          "actual": "Copiar frase",
+          "matches": true
+        },
+        {
+          "config": "values-pt-rBR",
+          "name": "bitwarden_new_device_resend",
+          "expected": "Reenviar email de verificação",
+          "actual": "Reenviar email de verificação",
+          "matches": true
+        },
+        {
+          "config": "values-pt-rBR",
+          "name": "bitwarden_new_device_resend_sent",
+          "expected": "O email de verificação foi solicitado. Verifique sua caixa de entrada.",
+          "actual": "O email de verificação foi solicitado. Verifique sua caixa de entrada.",
+          "matches": true
+        },
+        {
+          "config": "values-pt-rBR",
+          "name": "bitwarden_new_device_resend_failed",
+          "expected": "Não foi possível solicitar um email de verificação. Tente novamente.",
+          "actual": "Não foi possível solicitar um email de verificação. Tente novamente.",
+          "matches": true
+        },
+        {
+          "config": "values-pt-rBR",
+          "name": "bitwarden_new_device_resend_unavailable",
+          "expected": "Este servidor não permite reenviar emails de verificação de novos dispositivos.",
+          "actual": "Este servidor não permite reenviar emails de verificação de novos dispositivos.",
+          "matches": true
+        },
+        {
+          "config": "values-pt-rBR",
+          "name": "bitwarden_new_device_resend_wait",
+          "expected": "Tente novamente em %1$d segundos.",
+          "actual": "Tente novamente em %1$d segundos.",
+          "matches": true
+        },
+        {
+          "config": "values-pt-rBR",
+          "name": "bitwarden_new_device_resend_rate_limited",
+          "expected": "Muitas solicitações. Aguarde antes de tentar novamente.",
+          "actual": "Muitas solicitações. Aguarde antes de tentar novamente.",
+          "matches": true
+        },
+        {
+          "config": "values-pt-rBR",
+          "name": "bitwarden_account_fingerprint",
+          "expected": "Frase de impressão digital da conta",
+          "actual": "Frase de impressão digital da conta",
+          "matches": true
+        },
+        {
+          "config": "values-pt-rBR",
+          "name": "bitwarden_account_fingerprint_hint",
+          "expected": "Compare esta frase por outro canal confiável para ajudar a verificar a identidade da sua conta.",
+          "actual": "Compare esta frase por outro canal confiável para ajudar a verificar a identidade da sua conta.",
+          "matches": true
+        },
+        {
+          "config": "values-pt-rBR",
+          "name": "bitwarden_account_fingerprint_unavailable",
+          "expected": "Sincronize esta conta para carregar a chave de identidade e tente novamente.",
+          "actual": "Sincronize esta conta para carregar a chave de identidade e tente novamente.",
+          "matches": true
+        },
+        {
+          "config": "values-pt-rBR",
+          "name": "bitwarden_account_fingerprint_copy",
+          "expected": "Copiar frase",
+          "actual": "Copiar frase",
+          "matches": true
+        },
+        {
+          "config": "values-ru",
+          "name": "bitwarden_new_device_resend",
+          "expected": "Повторно отправить письмо с подтверждением",
+          "actual": "Повторно отправить письмо с подтверждением",
+          "matches": true
+        },
+        {
+          "config": "values-ru",
+          "name": "bitwarden_new_device_resend_sent",
+          "expected": "Письмо с подтверждением запрошено. Проверьте входящие.",
+          "actual": "Письмо с подтверждением запрошено. Проверьте входящие.",
+          "matches": true
+        },
+        {
+          "config": "values-ru",
+          "name": "bitwarden_new_device_resend_failed",
+          "expected": "Не удалось запросить письмо с подтверждением. Попробуйте ещё раз.",
+          "actual": "Не удалось запросить письмо с подтверждением. Попробуйте ещё раз.",
+          "matches": true
+        },
+        {
+          "config": "values-ru",
+          "name": "bitwarden_new_device_resend_unavailable",
+          "expected": "Этот сервер не поддерживает повторную отправку писем для подтверждения новых устройств.",
+          "actual": "Этот сервер не поддерживает повторную отправку писем для подтверждения новых устройств.",
+          "matches": true
+        },
+        {
+          "config": "values-ru",
+          "name": "bitwarden_new_device_resend_wait",
+          "expected": "Повторите попытку через %1$d сек.",
+          "actual": "Повторите попытку через %1$d сек.",
+          "matches": true
+        },
+        {
+          "config": "values-ru",
+          "name": "bitwarden_new_device_resend_rate_limited",
+          "expected": "Слишком много запросов. Подождите перед следующей попыткой.",
+          "actual": "Слишком много запросов. Подождите перед следующей попыткой.",
+          "matches": true
+        },
+        {
+          "config": "values-ru",
+          "name": "bitwarden_account_fingerprint",
+          "expected": "Фраза отпечатка учётной записи",
+          "actual": "Фраза отпечатка учётной записи",
+          "matches": true
+        },
+        {
+          "config": "values-ru",
+          "name": "bitwarden_account_fingerprint_hint",
+          "expected": "Сравните эту фразу через другой доверенный канал, чтобы проверить идентичность вашей учётной записи.",
+          "actual": "Сравните эту фразу через другой доверенный канал, чтобы проверить идентичность вашей учётной записи.",
+          "matches": true
+        },
+        {
+          "config": "values-ru",
+          "name": "bitwarden_account_fingerprint_unavailable",
+          "expected": "Синхронизируйте эту учётную запись, чтобы загрузить её ключ идентификации, затем повторите попытку.",
+          "actual": "Синхронизируйте эту учётную запись, чтобы загрузить её ключ идентификации, затем повторите попытку.",
+          "matches": true
+        },
+        {
+          "config": "values-ru",
+          "name": "bitwarden_account_fingerprint_copy",
+          "expected": "Скопировать фразу",
+          "actual": "Скопировать фразу",
+          "matches": true
+        },
+        {
+          "config": "values-vi",
+          "name": "bitwarden_new_device_resend",
+          "expected": "Gửi lại email xác minh",
+          "actual": "Gửi lại email xác minh",
+          "matches": true
+        },
+        {
+          "config": "values-vi",
+          "name": "bitwarden_new_device_resend_sent",
+          "expected": "Đã yêu cầu email xác minh. Hãy kiểm tra hộp thư đến.",
+          "actual": "Đã yêu cầu email xác minh. Hãy kiểm tra hộp thư đến.",
+          "matches": true
+        },
+        {
+          "config": "values-vi",
+          "name": "bitwarden_new_device_resend_failed",
+          "expected": "Không thể yêu cầu email xác minh. Vui lòng thử lại.",
+          "actual": "Không thể yêu cầu email xác minh. Vui lòng thử lại.",
+          "matches": true
+        },
+        {
+          "config": "values-vi",
+          "name": "bitwarden_new_device_resend_unavailable",
+          "expected": "Máy chủ này không hỗ trợ gửi lại email xác minh thiết bị mới.",
+          "actual": "Máy chủ này không hỗ trợ gửi lại email xác minh thiết bị mới.",
+          "matches": true
+        },
+        {
+          "config": "values-vi",
+          "name": "bitwarden_new_device_resend_wait",
+          "expected": "Thử lại sau %1$d giây.",
+          "actual": "Thử lại sau %1$d giây.",
+          "matches": true
+        },
+        {
+          "config": "values-vi",
+          "name": "bitwarden_new_device_resend_rate_limited",
+          "expected": "Có quá nhiều yêu cầu. Vui lòng chờ trước khi thử lại.",
+          "actual": "Có quá nhiều yêu cầu. Vui lòng chờ trước khi thử lại.",
+          "matches": true
+        },
+        {
+          "config": "values-vi",
+          "name": "bitwarden_account_fingerprint",
+          "expected": "Cụm từ dấu vân tay tài khoản",
+          "actual": "Cụm từ dấu vân tay tài khoản",
+          "matches": true
+        },
+        {
+          "config": "values-vi",
+          "name": "bitwarden_account_fingerprint_hint",
+          "expected": "So sánh cụm từ này qua một kênh đáng tin cậy khác để giúp xác minh danh tính tài khoản của bạn.",
+          "actual": "So sánh cụm từ này qua một kênh đáng tin cậy khác để giúp xác minh danh tính tài khoản của bạn.",
+          "matches": true
+        },
+        {
+          "config": "values-vi",
+          "name": "bitwarden_account_fingerprint_unavailable",
+          "expected": "Đồng bộ tài khoản này để tải khóa danh tính, rồi thử lại.",
+          "actual": "Đồng bộ tài khoản này để tải khóa danh tính, rồi thử lại.",
+          "matches": true
+        },
+        {
+          "config": "values-vi",
+          "name": "bitwarden_account_fingerprint_copy",
+          "expected": "Sao chép cụm từ",
+          "actual": "Sao chép cụm từ",
+          "matches": true
+        },
+        {
+          "config": "values-zh",
+          "name": "bitwarden_new_device_resend",
+          "expected": "重新发送验证邮件",
+          "actual": "重新发送验证邮件",
+          "matches": true
+        },
+        {
+          "config": "values-zh",
+          "name": "bitwarden_new_device_resend_sent",
+          "expected": "已请求发送验证邮件，请查看收件箱。",
+          "actual": "已请求发送验证邮件，请查看收件箱。",
+          "matches": true
+        },
+        {
+          "config": "values-zh",
+          "name": "bitwarden_new_device_resend_failed",
+          "expected": "无法请求发送验证邮件，请重试。",
+          "actual": "无法请求发送验证邮件，请重试。",
+          "matches": true
+        },
+        {
+          "config": "values-zh",
+          "name": "bitwarden_new_device_resend_unavailable",
+          "expected": "此服务器不支持重新发送新设备验证邮件。",
+          "actual": "此服务器不支持重新发送新设备验证邮件。",
+          "matches": true
+        },
+        {
+          "config": "values-zh",
+          "name": "bitwarden_new_device_resend_wait",
+          "expected": "请在 %1$d 秒后重试。",
+          "actual": "请在 %1$d 秒后重试。",
+          "matches": true
+        },
+        {
+          "config": "values-zh",
+          "name": "bitwarden_new_device_resend_rate_limited",
+          "expected": "请求过于频繁，请稍后重试。",
+          "actual": "请求过于频繁，请稍后重试。",
+          "matches": true
+        },
+        {
+          "config": "values-zh",
+          "name": "bitwarden_account_fingerprint",
+          "expected": "账号指纹短语",
+          "actual": "账号指纹短语",
+          "matches": true
+        },
+        {
+          "config": "values-zh",
+          "name": "bitwarden_account_fingerprint_hint",
+          "expected": "请通过另一种可信渠道比对这段短语，以帮助核验你的账号身份。",
+          "actual": "请通过另一种可信渠道比对这段短语，以帮助核验你的账号身份。",
+          "matches": true
+        },
+        {
+          "config": "values-zh",
+          "name": "bitwarden_account_fingerprint_unavailable",
+          "expected": "请先同步此账号以加载身份密钥，然后重试。",
+          "actual": "请先同步此账号以加载身份密钥，然后重试。",
+          "matches": true
+        },
+        {
+          "config": "values-zh",
+          "name": "bitwarden_account_fingerprint_copy",
+          "expected": "复制短语",
+          "actual": "复制短语",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rCN",
+          "name": "bitwarden_new_device_resend",
+          "expected": "重新发送验证邮件",
+          "actual": "重新发送验证邮件",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rCN",
+          "name": "bitwarden_new_device_resend_sent",
+          "expected": "已请求发送验证邮件，请查看收件箱。",
+          "actual": "已请求发送验证邮件，请查看收件箱。",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rCN",
+          "name": "bitwarden_new_device_resend_failed",
+          "expected": "无法请求发送验证邮件，请重试。",
+          "actual": "无法请求发送验证邮件，请重试。",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rCN",
+          "name": "bitwarden_new_device_resend_unavailable",
+          "expected": "此服务器不支持重新发送新设备验证邮件。",
+          "actual": "此服务器不支持重新发送新设备验证邮件。",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rCN",
+          "name": "bitwarden_new_device_resend_wait",
+          "expected": "请在 %1$d 秒后重试。",
+          "actual": "请在 %1$d 秒后重试。",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rCN",
+          "name": "bitwarden_new_device_resend_rate_limited",
+          "expected": "请求过于频繁，请稍后重试。",
+          "actual": "请求过于频繁，请稍后重试。",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rCN",
+          "name": "bitwarden_account_fingerprint",
+          "expected": "账号指纹短语",
+          "actual": "账号指纹短语",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rCN",
+          "name": "bitwarden_account_fingerprint_hint",
+          "expected": "请通过另一种可信渠道比对这段短语，以帮助核验你的账号身份。",
+          "actual": "请通过另一种可信渠道比对这段短语，以帮助核验你的账号身份。",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rCN",
+          "name": "bitwarden_account_fingerprint_unavailable",
+          "expected": "请先同步此账号以加载身份密钥，然后重试。",
+          "actual": "请先同步此账号以加载身份密钥，然后重试。",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rCN",
+          "name": "bitwarden_account_fingerprint_copy",
+          "expected": "复制短语",
+          "actual": "复制短语",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rNY",
+          "name": "bitwarden_new_device_resend",
+          "expected": "重新发送验证邮件",
+          "actual": "重新发送验证邮件",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rNY",
+          "name": "bitwarden_new_device_resend_sent",
+          "expected": "已请求发送验证邮件，请查看收件箱。",
+          "actual": "已请求发送验证邮件，请查看收件箱。",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rNY",
+          "name": "bitwarden_new_device_resend_failed",
+          "expected": "无法请求发送验证邮件，请重试。",
+          "actual": "无法请求发送验证邮件，请重试。",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rNY",
+          "name": "bitwarden_new_device_resend_unavailable",
+          "expected": "此服务器不支持重新发送新设备验证邮件。",
+          "actual": "此服务器不支持重新发送新设备验证邮件。",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rNY",
+          "name": "bitwarden_new_device_resend_wait",
+          "expected": "请在 %1$d 秒后重试。",
+          "actual": "请在 %1$d 秒后重试。",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rNY",
+          "name": "bitwarden_new_device_resend_rate_limited",
+          "expected": "请求过于频繁，请稍后重试。",
+          "actual": "请求过于频繁，请稍后重试。",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rNY",
+          "name": "bitwarden_account_fingerprint",
+          "expected": "账号指纹短语",
+          "actual": "账号指纹短语",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rNY",
+          "name": "bitwarden_account_fingerprint_hint",
+          "expected": "请通过另一种可信渠道比对这段短语，以帮助核验你的账号身份。",
+          "actual": "请通过另一种可信渠道比对这段短语，以帮助核验你的账号身份。",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rNY",
+          "name": "bitwarden_account_fingerprint_unavailable",
+          "expected": "请先同步此账号以加载身份密钥，然后重试。",
+          "actual": "请先同步此账号以加载身份密钥，然后重试。",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rNY",
+          "name": "bitwarden_account_fingerprint_copy",
+          "expected": "复制短语",
+          "actual": "复制短语",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rXB",
+          "name": "bitwarden_new_device_resend",
+          "expected": "重新发送验证邮件",
+          "actual": "重新发送验证邮件",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rXB",
+          "name": "bitwarden_new_device_resend_sent",
+          "expected": "已请求发送验证邮件，请查看收件箱。",
+          "actual": "已请求发送验证邮件，请查看收件箱。",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rXB",
+          "name": "bitwarden_new_device_resend_failed",
+          "expected": "无法请求发送验证邮件，请重试。",
+          "actual": "无法请求发送验证邮件，请重试。",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rXB",
+          "name": "bitwarden_new_device_resend_unavailable",
+          "expected": "此服务器不支持重新发送新设备验证邮件。",
+          "actual": "此服务器不支持重新发送新设备验证邮件。",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rXB",
+          "name": "bitwarden_new_device_resend_wait",
+          "expected": "请在 %1$d 秒后重试。",
+          "actual": "请在 %1$d 秒后重试。",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rXB",
+          "name": "bitwarden_new_device_resend_rate_limited",
+          "expected": "请求过于频繁，请稍后重试。",
+          "actual": "请求过于频繁，请稍后重试。",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rXB",
+          "name": "bitwarden_account_fingerprint",
+          "expected": "账号指纹短语",
+          "actual": "账号指纹短语",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rXB",
+          "name": "bitwarden_account_fingerprint_hint",
+          "expected": "请通过另一种可信渠道比对这段短语，以帮助核验你的账号身份。",
+          "actual": "请通过另一种可信渠道比对这段短语，以帮助核验你的账号身份。",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rXB",
+          "name": "bitwarden_account_fingerprint_unavailable",
+          "expected": "请先同步此账号以加载身份密钥，然后重试。",
+          "actual": "请先同步此账号以加载身份密钥，然后重试。",
+          "matches": true
+        },
+        {
+          "config": "values-zh-rXB",
+          "name": "bitwarden_account_fingerprint_copy",
+          "expected": "复制短语",
+          "actual": "复制短语",
+          "matches": true
+        }
+      ],
+      "errors": []
+    }
+  }
+}

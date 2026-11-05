@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_server_reauthenticate_hint">接続設定を変更するには、再ログインが必要です。サーバーの基本アドレスとメールアドレスは変更できません。キャンセルすると保存済みの設定が維持され、アカウントはロックされたままになります。</string>
+</resources>

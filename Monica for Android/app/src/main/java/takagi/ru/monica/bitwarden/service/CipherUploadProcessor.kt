@@ -53,11 +53,12 @@ import java.security.MessageDigest
 class CipherUploadProcessor(
     private val context: Context,
     private val apiManager: BitwardenApiManager = BitwardenApiManager(),
-    private val sessionIsActive: ((Long, SymmetricCryptoKey) -> Boolean)? = null
+    private val sessionIsActive: ((Long, SymmetricCryptoKey) -> Boolean)? = null,
+    private val transportIsActive: ((BitwardenVault) -> Boolean)? = null
 ) {
     private val cipherSourceStore = BitwardenCipherSourceStore(context)
-    private fun requireActive(vaultId: Long, key: SymmetricCryptoKey) {
-        check(sessionIsActive?.invoke(vaultId, key) != false) { "Vault session changed; local data retained" }
+    private fun requireActive(vault: BitwardenVault, key: SymmetricCryptoKey) {
+        check(sessionIsActive?.invoke(vault.id, key) != false && transportIsActive?.invoke(vault) != false) { "Vault session changed; local data retained" }
     }
 
     companion object {
@@ -320,7 +321,7 @@ class CipherUploadProcessor(
             if (secureItemDao.getItemById(item.id) != item) {
                 return UploadItemResult.Error("Newer local changes are still pending")
             }
-            requireActive(vault.id, userKey)
+            requireActive(vault, userKey)
             val response = vaultApi.updateCipherSource(
                 authorization = "Bearer $accessToken",
                 cipherId = cipherId,
@@ -384,7 +385,7 @@ class CipherUploadProcessor(
                 vaultKey = userKey
             )
             database.withTransaction {
-                requireActive(vault.id, userKey)
+                requireActive(vault, userKey)
                 val latest = secureItemDao.getItemById(item.id)
                 if (latest == item) {
                     secureItemDao.update(item.copy(
@@ -486,7 +487,21 @@ class CipherUploadProcessor(
                     accessToken = accessToken,
                     cipherId = cipher.id,
                     wrappingKey = effectiveKey,
-                    isOnline = true
+                    isOnline = true,
+                    clientForUrl = { raw -> requireActive(vault, vaultKey); apiManager.getTransferClient(vault, raw) },
+                    requireCurrent = { requireActive(vault, vaultKey) },
+                    withPublication = { action ->
+                        val scope = BitwardenRememberedTwoFactorStore.scope(
+                            takagi.ru.monica.bitwarden.BitwardenVaultIdentity.normalizeServerUrl(vault.serverUrl),
+                            takagi.ru.monica.bitwarden.BitwardenVaultIdentity.canonicalizeEmail(vault.email))
+                        BitwardenAuthSessionGate.inspect(scope) {
+                            PasswordDatabase.getDatabase(context).withTransaction {
+                                requireActive(vault, vaultKey)
+                                action()
+                                requireActive(vault, vaultKey)
+                            }
+                        }
+                    },
                 )
                 if (hasPendingLocalImage) {
                     facade.promoteLocalAttachmentsToBitwarden(
@@ -641,7 +656,7 @@ class CipherUploadProcessor(
             }
             if (!canSyncPasskeyToBitwarden(passkey)) return@withLock fail("Passkey cannot be synced to Bitwarden")
             val api = BitwardenApiFactory.createVaultApi(
-                baseUrl = vault.apiUrl,
+                baseUrl = apiManager.environment(vault).api.toString(),
                 okHttpClient = apiManager.getOkHttpClient(vault).newBuilder()
                     .retryOnConnectionFailure(false).followRedirects(false).followSslRedirects(false).build()
             )

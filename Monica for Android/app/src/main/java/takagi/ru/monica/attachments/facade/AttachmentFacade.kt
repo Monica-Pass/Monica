@@ -11,6 +11,8 @@ import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import takagi.ru.monica.attachments.executor.BitwardenAttachmentExecutor
 import takagi.ru.monica.attachments.executor.BitwardenAttachmentReconciler
+import takagi.ru.monica.attachments.executor.BitwardenAttachmentRecoveryStore
+import takagi.ru.monica.attachments.executor.BitwardenAttachmentMutationGate
 import takagi.ru.monica.attachments.executor.KeePassAttachmentExecutor
 import takagi.ru.monica.attachments.executor.LocalAttachmentExecutor
 import takagi.ru.monica.attachments.model.Attachment
@@ -64,15 +66,26 @@ class AttachmentFacade(
     /** 用于 `openForPreview` 发出的 FileProvider authority，需与 manifest 中注册的 authority 一致。 */
     private val fileProviderAuthority: String
 ) {
+    private val attachmentRecovery by lazy { BitwardenAttachmentRecoveryStore(context) }
 
     suspend fun reconcileBitwardenAttachments(
         owner: AttachmentOwner,
-        remoteAttachments: List<CipherAttachmentApiData>?
+        remoteAttachments: List<CipherAttachmentApiData>?,
+        bitwardenContext: BitwardenContext? = null,
     ): BitwardenAttachmentReconciler.Report = withContext(Dispatchers.IO) {
+        BitwardenAttachmentMutationGate.withLock(context) {
+        val pendingIds = bitwardenContext?.recoveryBinding?.invoke(owner)?.let {
+            // This facade also accepts already-decoded metadata. Wrapped keys remain encrypted.
+            attachmentRecovery.protectedRemoteIds(it, remoteAttachments.orEmpty(), namesAreDecoded = true)
+        }.orEmpty()
         BitwardenAttachmentReconciler(
             repository = repository,
             storage = storage
-        ).reconcile(owner, remoteAttachments)
+        ).reconcile(owner, remoteAttachments,
+            requireCurrent = bitwardenContext?.requireCurrent ?: {},
+            withPublication = bitwardenContext?.withPublication,
+            pendingUploadIds = pendingIds)
+        }
     }
 
     /**
@@ -130,7 +143,13 @@ class AttachmentFacade(
         val wrappingKey: SymmetricCryptoKey,
         val isOnline: Boolean,
         /** Returns an owned current cipher key; evaluated off the UI thread when bytes are needed. */
-        val wrappingKeyProvider: (suspend () -> SymmetricCryptoKey)? = null
+        val wrappingKeyProvider: (suspend () -> SymmetricCryptoKey)? = null,
+        val clientForUrl: (String) -> OkHttpClient = { httpClient },
+        val requireCurrent: () -> Unit = {},
+        /** Short checked Room publication; never hold it across network or file transfers. */
+        val withPublication: suspend (suspend () -> Unit) -> Unit = { it() },
+        /** Repository supplies the account/transport/cipher scope; Facade supplies the actual owner. */
+        val recoveryBinding: ((AttachmentOwner) -> BitwardenAttachmentRecoveryStore.Binding)? = null,
     )
 
     data class KeePassContext(
@@ -221,6 +240,16 @@ class AttachmentFacade(
                 }
             }
 
+            if (request.source == AttachmentSource.BITWARDEN && request.bitwardenContext?.recoveryBinding != null) {
+                if (!request.bitwardenPremium) throw AttachmentError.PremiumRequired
+                val bw = requireNotNull(request.bitwardenContext)
+                return@withContext BitwardenAttachmentMutationGate.withLock(context) {
+                    bw.requireCurrent()
+                    val staged = localExecutor.writeFromUri(request.owner, request.uri, meta.fileName)
+                    stageAndUploadRecoverable(staged, bw)
+                }
+            }
+
             // 3. 按 source 分派
             val attachment = when (request.source) {
                 AttachmentSource.LOCAL -> localExecutor.writeFromUri(
@@ -232,6 +261,7 @@ class AttachmentFacade(
                     if (!request.bitwardenPremium) throw AttachmentError.PremiumRequired
                     val bw = request.bitwardenContext ?: throw AttachmentError.IoError
                     if (!bw.isOnline) throw AttachmentError.Offline
+                    bw.requireCurrent()
                     val resolver = context.applicationContext.contentResolver
                     val input = resolver.openInputStream(request.uri) ?: throw AttachmentError.IoError
                     input.use { stream ->
@@ -247,7 +277,10 @@ class AttachmentFacade(
                                 accessToken = bw.accessToken,
                                 cipherId = bw.cipherId,
                                 wrappingKey = bw.wrappingKey,
-                                wrappingKeyProvider = bw.wrappingKeyProvider
+                                wrappingKeyProvider = bw.wrappingKeyProvider,
+                                clientForUrl = bw.clientForUrl,
+                                requireCurrent = bw.requireCurrent,
+                                withPublication = bw.withPublication
                             )
                         )
                     }
@@ -269,8 +302,9 @@ class AttachmentFacade(
             // 4. 持久化（executor 返回的 Attachment 已经是完整记录，Room 只负责 insert）
             var id: Long? = null
             try {
-                val insertedId = repository.insert(attachment)
-                id = insertedId
+                val insertedId = publishBitwarden(request.bitwardenContext.takeIf {
+                    attachment.sourceEnum == AttachmentSource.BITWARDEN
+                }) { repository.insert(attachment).also { id = it } }
                 attachment.copy(id = insertedId).also { saved ->
                     AttachmentLogger.logOk(
                         event = AttachmentLogger.Event.UPLOAD,
@@ -286,9 +320,22 @@ class AttachmentFacade(
                     mirrorAttachmentToMdbx(saved)
                 }
             } catch (error: Throwable) {
-                id?.let { repository.deleteById(it) }
-                if (attachment.sourceEnum == AttachmentSource.LOCAL) {
-                    attachment.localPath?.let { storage.delete(it) }
+                withContext(NonCancellable) {
+                    val bw = request.bitwardenContext.takeIf { attachment.sourceEnum == AttachmentSource.BITWARDEN }
+                    runCatching {
+                        publishBitwarden(bw) {
+                            id?.let { insertedId ->
+                                if (repository.getById(insertedId)?.localPath == attachment.localPath) {
+                                    repository.deleteById(insertedId)
+                                }
+                            }
+                        }
+                    }
+                    if (attachment.sourceEnum == AttachmentSource.BITWARDEN && bw != null) {
+                        rollbackBitwardenAttachmentUploads(listOf(attachment), bw)
+                    } else if (attachment.sourceEnum == AttachmentSource.LOCAL) {
+                        attachment.localPath?.let { storage.delete(it) }
+                    }
                 }
                 throw error
             }
@@ -334,6 +381,18 @@ class AttachmentFacade(
                     throw AttachmentError.TooLarge(validation.softLimitBytes, validation.actualBytes)
             }
 
+            if (request.source == AttachmentSource.BITWARDEN && request.bitwardenContext?.recoveryBinding != null) {
+                if (!request.bitwardenPremium) throw AttachmentError.PremiumRequired
+                val bw = requireNotNull(request.bitwardenContext)
+                return@withContext BitwardenAttachmentMutationGate.withLock(context) {
+                    bw.requireCurrent()
+                    val staged = request.openStream().use {
+                        localExecutor.writeFromStream(request.owner, request.fileName, request.mimeType, it)
+                    }
+                    stageAndUploadRecoverable(staged, bw)
+                }
+            }
+
             val attachment = when (request.source) {
                 AttachmentSource.LOCAL -> request.openStream().use { stream ->
                     localExecutor.writeFromStream(request.owner, request.fileName, request.mimeType, stream)
@@ -342,6 +401,7 @@ class AttachmentFacade(
                     if (!request.bitwardenPremium) throw AttachmentError.PremiumRequired
                     val bw = request.bitwardenContext ?: throw AttachmentError.IoError
                     if (!bw.isOnline) throw AttachmentError.Offline
+                    bw.requireCurrent()
                     request.openStream().use { stream ->
                         bitwardenExecutor.upload(
                             owner = request.owner,
@@ -355,7 +415,10 @@ class AttachmentFacade(
                                 accessToken = bw.accessToken,
                                 cipherId = bw.cipherId,
                                 wrappingKey = bw.wrappingKey,
-                                wrappingKeyProvider = bw.wrappingKeyProvider
+                                wrappingKeyProvider = bw.wrappingKeyProvider,
+                                clientForUrl = bw.clientForUrl,
+                                requireCurrent = bw.requireCurrent,
+                                withPublication = bw.withPublication
                             )
                         )
                     }
@@ -377,8 +440,9 @@ class AttachmentFacade(
 
             var insertedId: Long? = null
             try {
-                val savedId = repository.insert(attachment)
-                insertedId = savedId
+                val savedId = publishBitwarden(request.bitwardenContext.takeIf {
+                    attachment.sourceEnum == AttachmentSource.BITWARDEN
+                }) { repository.insert(attachment).also { insertedId = it } }
                 attachment.copy(id = savedId).also { saved ->
                     AttachmentLogger.logOk(
                         event = AttachmentLogger.Event.UPLOAD,
@@ -393,34 +457,34 @@ class AttachmentFacade(
                     mirrorAttachmentToMdbx(saved)
                 }
             } catch (error: Throwable) {
-                insertedId?.let { repository.deleteById(it) }
-                when (attachment.sourceEnum) {
-                    AttachmentSource.LOCAL -> Unit
-                    AttachmentSource.BITWARDEN -> {
-                        val bw = request.bitwardenContext
-                        val remoteId = attachment.bitwardenAttachmentId
-                        if (bw != null && !remoteId.isNullOrBlank()) {
-                            runCatching {
-                                bitwardenExecutor.remove(
-                                    vaultApi = bw.vaultApi,
-                                    accessToken = bw.accessToken,
-                                    cipherId = bw.cipherId,
-                                    bitwardenAttachmentId = remoteId
-                                )
+                withContext(NonCancellable) {
+                    runCatching {
+                        publishBitwarden(request.bitwardenContext.takeIf { attachment.sourceEnum == AttachmentSource.BITWARDEN }) {
+                            insertedId?.let { id ->
+                                if (repository.getById(id)?.localPath == attachment.localPath) repository.deleteById(id)
                             }
                         }
                     }
-                    AttachmentSource.KEEPASS -> {
-                        val kp = request.keepassContext
-                        val ref = attachment.keepassBinaryRef
-                        if (kp != null && !ref.isNullOrBlank()) {
-                            runCatching {
-                                keepassExecutor.remove(kp.databaseId, kp.entryUuid, ref, request.owner)
+                    when (attachment.sourceEnum) {
+                        AttachmentSource.LOCAL -> Unit
+                        AttachmentSource.BITWARDEN -> {
+                            val bw = request.bitwardenContext
+                            if (bw != null) rollbackBitwardenAttachmentUploads(listOf(attachment), bw)
+                        }
+                        AttachmentSource.KEEPASS -> {
+                            val kp = request.keepassContext
+                            val ref = attachment.keepassBinaryRef
+                            if (kp != null && !ref.isNullOrBlank()) {
+                                runCatching {
+                                    keepassExecutor.remove(kp.databaseId, kp.entryUuid, ref, request.owner)
+                                }
                             }
                         }
+                    }
+                    if (attachment.sourceEnum != AttachmentSource.BITWARDEN) {
+                        attachment.localPath?.let { path -> runCatching { storage.delete(path) } }
                     }
                 }
-                attachment.localPath?.let { path -> runCatching { storage.delete(path) } }
                 throw error
             }
         }
@@ -438,7 +502,13 @@ class AttachmentFacade(
         beforePublish: (suspend () -> Unit)? = null
     ): Int = withContext(Dispatchers.IO) {
         if (fileNames.isEmpty()) return@withContext 0
+        if (targetContext.recoveryBinding != null) return@withContext BitwardenAttachmentMutationGate.withLock(context) {
+            val sources = repository.listByOwnerAndSource(owner, AttachmentSource.LOCAL)
+                .filter { !it.isDeleted && it.fileName in fileNames && (attachmentIds == null || it.id in attachmentIds) }
+            promoteRecoverableSources(sources, targetContext, beforePublish)
+        }
         if (!targetContext.isOnline) throw AttachmentError.Offline
+        targetContext.requireCurrent()
         val sources = repository
             .listByOwnerAndSource(owner, AttachmentSource.LOCAL)
             .filter { it.fileName in fileNames && (attachmentIds == null || it.id in attachmentIds) }
@@ -447,6 +517,7 @@ class AttachmentFacade(
         val uploaded = mutableListOf<Pair<Attachment, Attachment>>()
         try {
             sources.forEach { source ->
+                targetContext.requireCurrent()
                 val remote = localExecutor.openDecrypted(source).use { plainStream ->
                     bitwardenExecutor.upload(
                         owner = owner,
@@ -460,7 +531,10 @@ class AttachmentFacade(
                             accessToken = targetContext.accessToken,
                             cipherId = targetContext.cipherId,
                             wrappingKey = targetContext.wrappingKey,
-                            wrappingKeyProvider = targetContext.wrappingKeyProvider
+                            wrappingKeyProvider = targetContext.wrappingKeyProvider,
+                            clientForUrl = targetContext.clientForUrl,
+                            requireCurrent = targetContext.requireCurrent,
+                            withPublication = targetContext.withPublication
                         )
                     )
                 }
@@ -475,9 +549,6 @@ class AttachmentFacade(
         try {
             uploaded.forEach { (source, remote) ->
                 beforePublish?.invoke()
-                check(repository.getById(source.id) == source) {
-                    "Attachment changed while its upload was in flight"
-                }
                 val replacement = remote.copy(
                     id = source.id,
                     parentPasswordId = owner.passwordId,
@@ -487,13 +558,24 @@ class AttachmentFacade(
                     isDeleted = false,
                     deletedAt = null
                 )
-                check(repository.update(replacement) == 1) {
-                    "Bitwarden attachment metadata update failed"
+                publishBitwarden(targetContext) {
+                    check(repository.getById(source.id) == source) {
+                        "Attachment changed while its upload was in flight"
+                    }
+                    check(repository.update(replacement) == 1) {
+                        "Bitwarden attachment metadata update failed"
+                    }
                 }
                 replaced += source to replacement
             }
         } catch (error: Throwable) {
-            replaced.asReversed().forEach { (source, _) -> runCatching { repository.update(source) } }
+            withContext(NonCancellable) {
+                replaced.asReversed().forEach { (source, replacement) -> runCatching {
+                    publishBitwarden(targetContext) {
+                        if (repository.getById(source.id)?.localPath == replacement.localPath) repository.update(source)
+                    }
+                } }
+            }
             rollbackBitwardenAttachmentUploads(uploaded.map { it.second }, targetContext)
             throw error
         }
@@ -519,68 +601,86 @@ class AttachmentFacade(
         keepassContext: KeePassContext? = null
     ): Attachment = withContext(Dispatchers.IO) {
         val existing = repository.getById(attachmentId) ?: throw AttachmentError.IoError
+        val bw = bitwardenContext.takeIf { existing.sourceEnum == AttachmentSource.BITWARDEN }
         if (existing.downloadStateEnum == AttachmentDownloadState.DOWNLOADED &&
             existing.localPath != null && storage.exists(existing.localPath)
         ) {
+            bw?.requireCurrent()
             return@withContext existing
         }
-        repository.markDownloadState(attachmentId, AttachmentDownloadState.DOWNLOADING)
-        val refreshed: Attachment = try {
-            when (existing.sourceEnum) {
-                AttachmentSource.LOCAL -> existing.copy(
-                    downloadState = AttachmentDownloadState.DOWNLOADED.name
-                )
+        if (existing.sourceEnum == AttachmentSource.BITWARDEN && bw == null) {
+            throw AttachmentError.BitwardenLocked
+        }
+        var downloading: Attachment? = null
+        var staged: Attachment? = null
+        try {
+            publishBitwarden(bw) {
+                check(repository.getById(attachmentId) == existing) { "Attachment changed before download" }
+                repository.markDownloadState(attachmentId, AttachmentDownloadState.DOWNLOADING)
+                downloading = repository.getById(attachmentId)
+            }
+            val refreshed = when (existing.sourceEnum) {
+                AttachmentSource.LOCAL -> existing.copy(downloadState = AttachmentDownloadState.DOWNLOADED.name)
                 AttachmentSource.BITWARDEN -> {
-                    val bw = bitwardenContext ?: throw AttachmentError.BitwardenLocked
-                    if (!bw.isOnline) throw AttachmentError.Offline
-                    val remote = CipherAttachmentApiData(
-                        id = existing.bitwardenAttachmentId ?: throw AttachmentError.CryptoError,
-                        fileName = existing.fileName,
-                        size = existing.sizeBytes.toString(),
-                        sizeName = null,
-                        key = existing.bitwardenFileKeyEnc,
-                        url = existing.bitwardenUrl
-                    )
+                    val active = requireNotNull(bw)
+                    if (!active.isOnline) throw AttachmentError.Offline
                     bitwardenExecutor.download(
                         existing = existing,
-                        remote = remote,
-                        vaultApi = bw.vaultApi,
-                        httpClient = bw.httpClient,
-                        accessToken = bw.accessToken,
-                        cipherId = bw.cipherId,
-                        wrappingKey = bw.wrappingKey,
-                        wrappingKeyProvider = bw.wrappingKeyProvider
+                        remote = CipherAttachmentApiData(
+                            id = existing.bitwardenAttachmentId ?: throw AttachmentError.CryptoError,
+                            fileName = existing.fileName,
+                            size = existing.sizeBytes.toString(),
+                            sizeName = null,
+                            key = existing.bitwardenFileKeyEnc,
+                            url = existing.bitwardenUrl
+                        ),
+                        vaultApi = active.vaultApi,
+                        httpClient = active.httpClient,
+                        accessToken = active.accessToken,
+                        cipherId = active.cipherId,
+                        wrappingKey = active.wrappingKey,
+                        wrappingKeyProvider = active.wrappingKeyProvider,
+                        clientForUrl = active.clientForUrl,
+                        requireCurrent = active.requireCurrent
                     )
                 }
                 AttachmentSource.KEEPASS -> {
                     val kp = keepassContext ?: throw AttachmentError.IoError
-                    keepassExecutor.download(
-                        existing = existing,
-                        databaseId = kp.databaseId,
-                        entryUuid = kp.entryUuid
-                    )
+                    keepassExecutor.download(existing, kp.databaseId, kp.entryUuid)
                 }
             }
-        } catch (e: CancellationException) {
-            withContext(NonCancellable) {
-                repository.markDownloadState(attachmentId, AttachmentDownloadState.PENDING)
+            staged = refreshed.takeIf { it.localPath != existing.localPath }
+            publishBitwarden(bw) {
+                check(repository.getById(attachmentId) == downloading) { "Attachment changed during download" }
+                check(repository.update(refreshed) == 1) { "Attachment download metadata update failed" }
+                repository.getById(attachmentId) ?: throw AttachmentError.IoError
             }
-            throw e
-        } catch (e: Exception) {
-            repository.markDownloadState(attachmentId, AttachmentDownloadState.FAILED)
-            val failure = normalizeAttachmentFailure(e)
+        } catch (error: Exception) {
+            withContext(NonCancellable) {
+                staged?.localPath?.let { cleanupUnreferencedBlob(it) }
+                runCatching {
+                    publishBitwarden(bw) {
+                        if (downloading != null && repository.getById(attachmentId) == downloading) {
+                            repository.markDownloadState(
+                                attachmentId,
+                                if (error is CancellationException) AttachmentDownloadState.PENDING
+                                else AttachmentDownloadState.FAILED
+                            )
+                        }
+                    }
+                }
+            }
+            val failure = normalizeAttachmentFailure(error)
             AttachmentLogger.logFailure(
                 event = AttachmentLogger.Event.DOWNLOAD,
                 attachmentId = attachmentId,
                 source = existing.sourceEnum,
                 error = failure,
                 httpStatus = (failure as? AttachmentError.NetworkError)?.httpStatus,
-                extras = mapOf("causeClass" to e.javaClass.simpleName)
+                extras = mapOf("causeClass" to error.javaClass.simpleName)
             )
             throw failure
         }
-        repository.update(refreshed)
-        refreshed.copy(id = attachmentId)
     }
 
     /** Streams the complete attachment for backups; preview byte-array limits do not apply. */
@@ -753,16 +853,23 @@ class AttachmentFacade(
             AttachmentSource.BITWARDEN -> {
                 val bw = bitwardenContext ?: throw AttachmentError.IoError
                 if (!bw.isOnline) throw AttachmentError.Offline
+                bw.requireCurrent()
                 val attachmentRemoteId = existing.bitwardenAttachmentId
                 if (!attachmentRemoteId.isNullOrBlank()) {
                     bitwardenExecutor.remove(
                         vaultApi = bw.vaultApi,
                         accessToken = bw.accessToken,
                         cipherId = bw.cipherId,
-                        bitwardenAttachmentId = attachmentRemoteId
+                        bitwardenAttachmentId = attachmentRemoteId,
+                        requireCurrent = bw.requireCurrent
                     )
                 }
+                publishBitwarden(bw) {
+                    check(repository.getById(attachmentId) == existing) { "Attachment changed during deletion" }
+                    repository.deleteById(attachmentId)
+                }
                 existing.localPath?.let { storage.delete(it) }
+                return@withContext
             }
             AttachmentSource.KEEPASS -> {
                 val kp = keepassContext ?: throw AttachmentError.IoError
@@ -791,10 +898,14 @@ class AttachmentFacade(
         if (existing.downloadStateEnum == AttachmentDownloadState.DOWNLOADED &&
             existing.localPath != null && storage.exists(existing.localPath)
         ) {
+            bitwardenContext.takeIf { existing.sourceEnum == AttachmentSource.BITWARDEN }?.requireCurrent()
             return existing
         }
         // 把状态先从 FAILED 归位到 PENDING，然后走 ensureDownloaded
-        repository.markDownloadState(attachmentId, AttachmentDownloadState.PENDING)
+        publishBitwarden(bitwardenContext.takeIf { existing.sourceEnum == AttachmentSource.BITWARDEN }) {
+            check(repository.getById(attachmentId) == existing) { "Attachment changed before retry" }
+            repository.markDownloadState(attachmentId, AttachmentDownloadState.PENDING)
+        }
         return ensureDownloaded(attachmentId, bitwardenContext, keepassContext)
     }
 
@@ -824,11 +935,11 @@ class AttachmentFacade(
                                 vaultApi = bw.vaultApi,
                                 accessToken = bw.accessToken,
                                 cipherId = bw.cipherId,
-                                bitwardenAttachmentId = remoteId
+                                bitwardenAttachmentId = remoteId,
+                                requireCurrent = bw.requireCurrent
                             )
                         }
                     }
-                    item.localPath?.let { storage.delete(it) }
                 }
                 AttachmentSource.KEEPASS -> {
                     val kp = keepassContext
@@ -846,7 +957,15 @@ class AttachmentFacade(
                 }
             }
         }
-        repository.purgeByPassword(passwordId)
+        publishBitwarden(bitwardenContext.takeIf { items.any { it.sourceEnum == AttachmentSource.BITWARDEN } }) {
+            check(repository.listByPassword(passwordId, includeDeleted = true) == items) {
+                "Attachments changed during purge"
+            }
+            repository.purgeByPassword(passwordId)
+        }
+        items.filter { it.sourceEnum == AttachmentSource.BITWARDEN }.forEach { item ->
+            item.localPath?.let { cleanupUnreferencedBlob(it) }
+        }
     }
 
     suspend fun softDeleteByPassword(passwordId: Long) {
@@ -898,9 +1017,11 @@ class AttachmentFacade(
         }
         if (sources.isEmpty()) return@withContext 0
 
-        val created = mutableListOf<Attachment>()
+        val created = mutableListOf<Pair<Attachment, BitwardenContext?>>()
         try {
             sources.forEach { source ->
+                val sourceBw = sourceBitwardenContext.takeIf { source.sourceEnum == AttachmentSource.BITWARDEN }
+                sourceBw?.requireCurrent()
                 val ready = ensureLocalCacheForTransfer(
                     attachment = source,
                     sourceBitwardenContext = sourceBitwardenContext,
@@ -909,10 +1030,17 @@ class AttachmentFacade(
                 val plainStream = localExecutor.openDecrypted(ready)
                 val blob = plainStream.use { storage.writeEncrypted(it) }
                 val wrapped = try {
-                    keyVault.wrap(blob.cek)
+                    sourceBw?.requireCurrent()
+                    try {
+                        keyVault.wrap(blob.cek)
+                    } catch (e: CancellationException) {
+                        throw e
+                    } catch (e: Exception) {
+                        throw AttachmentError.CryptoError
+                    }
                 } catch (e: Throwable) {
-                    runCatching { storage.delete(blob.relativePath) }
-                    throw AttachmentError.CryptoError
+                    withContext(NonCancellable) { runCatching { cleanupUnreferencedBlob(blob.relativePath) } }
+                    throw e
                 } finally {
                     blob.cek.fill(0)
                 }
@@ -937,26 +1065,38 @@ class AttachmentFacade(
                     deletedAt = null
                 )
                 val insertedId = try {
-                    repository.insert(cloned)
+                    publishBitwarden(sourceBw) {
+                        check(repository.getById(ready.id) == ready) { "Source attachment changed during copying" }
+                        repository.insert(cloned)
+                    }
                 } catch (error: Throwable) {
-                    storage.delete(blob.relativePath)
+                    withContext(NonCancellable) { cleanupUnreferencedBlob(blob.relativePath) }
                     throw error
                 }
                 val saved = cloned.copy(id = insertedId)
                 try {
                     mirrorAttachmentToMdbx(saved, requireSuccess = true)
                 } catch (error: Throwable) {
-                    repository.deleteById(insertedId)
-                    storage.delete(blob.relativePath)
+                    withContext(NonCancellable) {
+                        runCatching { publishBitwarden(sourceBw) { repository.deleteById(insertedId) } }
+                        cleanupUnreferencedBlob(blob.relativePath)
+                    }
                     throw error
                 }
-                created += saved
+                created += saved to sourceBw
             }
         } catch (error: Throwable) {
-            created.asReversed().forEach { cloned ->
-                runCatching { mirrorAttachmentDeleteToMdbx(cloned) }
-                runCatching { repository.deleteById(cloned.id) }
-                cloned.localPath?.let { path -> runCatching { storage.delete(path) } }
+            withContext(NonCancellable) {
+                created.asReversed().forEach { (cloned, sourceBw) ->
+                    runCatching {
+                        sourceBw?.requireCurrent()
+                        mirrorAttachmentDeleteToMdbx(cloned)
+                        publishBitwarden(sourceBw) {
+                            if (repository.getById(cloned.id)?.localPath == cloned.localPath) repository.deleteById(cloned.id)
+                        }
+                    }
+                    cloned.localPath?.let { path -> runCatching { cleanupUnreferencedBlob(path) } }
+                }
             }
             AttachmentLogger.logFailure(
                 event = AttachmentLogger.Event.CLONE,
@@ -987,7 +1127,28 @@ class AttachmentFacade(
         sourceKeepassContext: KeePassContext? = null
     ): Int = withContext(Dispatchers.IO) {
         if (sourcePasswordId <= 0L || targetPasswordId <= 0L) return@withContext 0
+        if (targetContext.recoveryBinding != null) return@withContext BitwardenAttachmentMutationGate.withLock(context) {
+            val targetOwner = AttachmentOwner.password(targetPasswordId)
+            val originals = repository.listByPassword(sourcePasswordId)
+            var copied = 0
+            for (original in originals) {
+                targetContext.requireCurrent()
+                val ready = ensureLocalCacheForTransfer(original, sourceBitwardenContext, sourceKeepassContext)
+                sourceBitwardenContext.takeIf { original.sourceEnum == AttachmentSource.BITWARDEN }?.requireCurrent()
+                if (sourcePasswordId == targetPasswordId && ready.sourceEnum == AttachmentSource.LOCAL) {
+                    copied += promoteRecoverableSources(listOf(ready), targetContext, null)
+                } else {
+                    val staged = localExecutor.openDecrypted(ready).use {
+                        localExecutor.writeFromStream(targetOwner, ready.fileName, ready.mimeType, it)
+                    }
+                    stageAndUploadRecoverable(staged, targetContext)
+                    copied++
+                }
+            }
+            copied
+        }
         if (!targetContext.isOnline) throw AttachmentError.Offline
+        targetContext.requireCurrent()
         val sources = repository.listByPassword(sourcePasswordId)
         if (sources.isEmpty()) return@withContext 0
 
@@ -1001,6 +1162,8 @@ class AttachmentFacade(
         val uploaded = mutableListOf<Pair<Attachment, Attachment>>()
         try {
             readySources.forEach { source ->
+                targetContext.requireCurrent()
+                sourceBitwardenContext.takeIf { source.sourceEnum == AttachmentSource.BITWARDEN }?.requireCurrent()
                 val targetAttachment = localExecutor.openDecrypted(source).use { plainStream ->
                     bitwardenExecutor.upload(
                         parentPasswordId = targetPasswordId,
@@ -1014,7 +1177,10 @@ class AttachmentFacade(
                             accessToken = targetContext.accessToken,
                             cipherId = targetContext.cipherId,
                             wrappingKey = targetContext.wrappingKey,
-                            wrappingKeyProvider = targetContext.wrappingKeyProvider
+                            wrappingKeyProvider = targetContext.wrappingKeyProvider,
+                            clientForUrl = targetContext.clientForUrl,
+                            requireCurrent = targetContext.requireCurrent,
+                            withPublication = targetContext.withPublication
                         )
                     )
                 }
@@ -1038,23 +1204,29 @@ class AttachmentFacade(
                     isDeleted = false,
                     deletedAt = null
                 )
-                if (replacingSource) {
-                    check(repository.update(metadata) == 1) { "Bitwarden attachment metadata update failed" }
-                } else {
-                    val insertedId = repository.insert(metadata)
-                    check(insertedId > 0L) { "Bitwarden attachment metadata insert failed" }
+                val saved = publishBitwarden(targetContext) {
+                    sourceBitwardenContext.takeIf { source.sourceEnum == AttachmentSource.BITWARDEN }?.requireCurrent()
+                    check(repository.getById(source.id) == source) { "Source attachment changed during upload" }
+                    if (replacingSource) {
+                        check(repository.update(metadata) == 1) { "Bitwarden attachment metadata update failed" }
+                        metadata
+                    } else {
+                        val insertedId = repository.insert(metadata)
+                        check(insertedId > 0L) { "Bitwarden attachment metadata insert failed" }
+                        metadata.copy(id = insertedId)
+                    }
                 }
-                persisted += source to metadata
+                persisted += source to saved
             }
         } catch (error: Throwable) {
-            persisted.asReversed().forEach { (source, metadata) ->
-                if (sourcePasswordId == targetPasswordId) {
-                    runCatching { repository.update(source) }
-                } else {
-                    val remoteId = metadata.bitwardenAttachmentId
-                    if (!remoteId.isNullOrBlank()) {
-                        repository.getByBitwardenAttachmentId(remoteId)?.let { stored ->
-                            runCatching { repository.deleteById(stored.id) }
+            withContext(NonCancellable) {
+                persisted.asReversed().forEach { (source, metadata) ->
+                    runCatching {
+                        publishBitwarden(targetContext) {
+                            if (repository.getById(metadata.id)?.localPath == metadata.localPath) {
+                                if (sourcePasswordId == targetPasswordId) repository.update(source)
+                                else repository.deleteById(metadata.id)
+                            }
                         }
                     }
                 }
@@ -1327,10 +1499,13 @@ class AttachmentFacade(
         sourceBitwardenContext: BitwardenContext?,
         sourceKeepassContext: KeePassContext?
     ): Attachment {
+        val bw = sourceBitwardenContext.takeIf { attachment.sourceEnum == AttachmentSource.BITWARDEN }
+        bw?.requireCurrent()
         if (!attachment.localPath.isNullOrBlank() &&
             !attachment.wrappedCek.isNullOrBlank() &&
             storage.exists(attachment.localPath)
         ) {
+            bw?.requireCurrent()
             return attachment
         }
 
@@ -1351,25 +1526,168 @@ class AttachmentFacade(
         ) {
             throw AttachmentError.IoError
         }
+        bw?.requireCurrent()
         return downloaded
+    }
+
+    private fun BitwardenContext.uploadContext(owner: AttachmentOwner, localId: Long? = null) =
+        BitwardenAttachmentExecutor.UploadContext(vaultApi, httpClient, accessToken, cipherId, wrappingKey,
+            wrappingKeyProvider, clientForUrl, requireCurrent, withPublication,
+            recoveryBinding = recoveryBinding?.invoke(owner), localAttachmentId = localId)
+
+    private suspend fun requireRecoveryOwner(binding: BitwardenAttachmentRecoveryStore.Binding) {
+        when (binding.ownerKind) {
+            AttachmentOwner.Kind.PASSWORD.name -> {
+                val row = passwordEntryDao?.getPasswordEntryById(binding.ownerId) ?: throw AttachmentError.InvalidRemoteData
+                check(!row.isDeleted && row.bitwardenVaultId == binding.vaultId && row.bitwardenCipherId == binding.cipherId &&
+                    row.keepassDatabaseId == null && row.mdbxDatabaseId == null) { "Attachment owner changed" }
+            }
+            AttachmentOwner.Kind.SECURE_ITEM.name -> {
+                val row = secureItemDao?.getItemById(binding.ownerId) ?: throw AttachmentError.InvalidRemoteData
+                check(!row.isDeleted && row.bitwardenVaultId == binding.vaultId && row.bitwardenCipherId == binding.cipherId &&
+                    row.keepassDatabaseId == null && row.mdbxDatabaseId == null) { "Attachment owner changed" }
+            }
+            else -> throw AttachmentError.InvalidRemoteData
+        }
+    }
+
+    /** The mutation gate is already held. Persist an identifiable LOCAL intent before any HTTP. */
+    private suspend fun stageAndUploadRecoverable(staged: Attachment, bw: BitwardenContext): Attachment {
+        val owner = requireNotNull(staged.owner)
+        val binding = requireNotNull(bw.recoveryBinding).invoke(owner)
+        bw.requireCurrent()
+        requireRecoveryOwner(binding)
+        val savedId = publishBitwarden(bw) {
+            requireRecoveryOwner(binding)
+            repository.insert(staged)
+        }
+        val saved = requireNotNull(repository.getById(savedId))
+        // Failure here deliberately leaves the LOCAL row/file visible; no allocation has occurred.
+        takagi.ru.monica.credentialexchange.BitwardenImportAttachmentQueue(context)
+            .enqueueAttachment(binding.vaultId, saved.id)
+        promoteRecoverableSources(listOf(saved), bw, null)
+        return requireNotNull(repository.getById(saved.id))
+    }
+
+    /** Each committed file is adopted independently; a later file failure never rolls it back. */
+    private suspend fun promoteRecoverableSources(
+        sources: List<Attachment>, bw: BitwardenContext, beforePublish: (suspend () -> Unit)?,
+    ): Int {
+        if (!bw.isOnline) throw AttachmentError.Offline
+        var completed = 0
+        for (source in sources) {
+            val owner = requireNotNull(source.owner)
+            val binding = requireNotNull(bw.recoveryBinding).invoke(owner)
+            bw.requireCurrent()
+            requireRecoveryOwner(binding)
+            check(repository.getById(source.id) == source && !source.isDeleted && source.sourceEnum == AttachmentSource.LOCAL)
+            // PREPARED/uncertain records for this exact local ID are reused by the executor.
+            val remote = localExecutor.openDecrypted(source).use {
+                bitwardenExecutor.upload(owner, source.fileName, source.mimeType, it, source.sizeBytes,
+                    bw.uploadContext(owner, source.id))
+            }
+            val replacement = remote.copy(id = source.id, createdAt = source.createdAt)
+            beforePublish?.invoke()
+            publishBitwarden(bw) {
+                requireRecoveryOwner(binding)
+                check(repository.getById(source.id) == source) { "Attachment changed while upload was in flight" }
+                check(repository.update(replacement) == 1) { "Attachment publication failed" }
+            }
+            // If lock/cancellation interrupts after Room commit, preserve both files and journal.
+            // Queue recovery later confirms the exact committed row; it never rolls it back.
+            markRecoveryPublished(replacement, bw)
+            completed++
+            source.localPath?.takeIf { it != replacement.localPath }?.let { cleanupUnreferencedBlob(it) }
+        }
+        return completed
+    }
+
+    private suspend fun markRecoveryPublished(attachment: Attachment, bw: BitwardenContext) {
+        val owner = requireNotNull(attachment.owner)
+        val binding = bw.recoveryBinding?.invoke(owner) ?: return
+        val current = repository.getById(attachment.id) ?: throw AttachmentError.InvalidRemoteData
+        bw.requireCurrent()
+        requireRecoveryOwner(binding)
+        check(current.owner == owner && current.sourceEnum == AttachmentSource.BITWARDEN &&
+            current.bitwardenAttachmentId == attachment.bitwardenAttachmentId && current.bitwardenFileKeyEnc == attachment.bitwardenFileKeyEnc &&
+            current.sha256Hex == attachment.sha256Hex && current.localPath == attachment.localPath)
+        val remoteId = requireNotNull(current.bitwardenAttachmentId)
+        val records = attachmentRecovery.list(binding).filter { it.remoteId == remoteId }
+        val record = records.singleOrNull() ?: throw AttachmentError.InvalidRemoteData
+        // A sync placeholder is not an upload receipt, even if it names our reserved ID.
+        check(record.phase in setOf(BitwardenAttachmentRecoveryStore.Phase.UPLOADED, BitwardenAttachmentRecoveryStore.Phase.ADOPTED) &&
+            record.localAttachmentId == current.id && record.requestKey == current.bitwardenFileKeyEnc &&
+            record.plainSha256 == current.sha256Hex && record.plainSize == current.sizeBytes)
+        attachmentRecovery.markPublished(binding, remoteId, current.id, bw.requireCurrent)
+    }
+
+    suspend fun acknowledgePublishedAttachmentRecovery(attachmentId: Long, bw: BitwardenContext) =
+        BitwardenAttachmentMutationGate.withLock(context) {
+            val row = repository.getById(attachmentId) ?: throw AttachmentError.InvalidRemoteData
+            markRecoveryPublished(row, bw)
+        }
+
+    suspend fun cleanupAttachmentRecovery(owner: AttachmentOwner, operationId: String, bw: BitwardenContext): Boolean =
+        BitwardenAttachmentMutationGate.withLock(context) {
+            check(passwordEntryDao != null && secureItemDao != null) { "Attachment reference checking unavailable" }
+            bitwardenExecutor.cleanupRecovery(operationId, bw.uploadContext(owner)) { record ->
+                if (attachmentRecovery.isPublished(record.binding, requireNotNull(record.remoteId))) true
+                else {
+                    val owners = listOfNotNull(
+                        passwordEntryDao?.getByBitwardenCipherIdInVault(record.binding.vaultId, record.binding.cipherId)
+                            ?.let { AttachmentOwner.password(it.id) },
+                        secureItemDao?.getByBitwardenCipherIdInVault(record.binding.vaultId, record.binding.cipherId)
+                            ?.let { AttachmentOwner.secureItem(it.id) })
+                    owners.any { candidate -> repository.list(candidate, includeDeleted = true).any {
+                        it.sourceEnum == AttachmentSource.BITWARDEN && it.bitwardenAttachmentId == record.remoteId
+                    } }
+                }
+            }
+        }
+
+    private suspend fun <T> publishBitwarden(
+        bw: BitwardenContext?,
+        action: suspend () -> T
+    ): T {
+        if (bw == null) return action()
+        var result: Result<T>? = null
+        bw.withPublication {
+            bw.requireCurrent()
+            result = Result.success(action())
+            bw.requireCurrent()
+        }
+        return checkNotNull(result) { "Attachment publication was not executed" }.getOrThrow()
+    }
+
+    private suspend fun cleanupUnreferencedBlob(path: String) {
+        // The same operation may have committed before cancellation reached its caller.
+        if (path !in repository.allReferencedLocalPaths()) storage.delete(path)
     }
 
     private suspend fun rollbackBitwardenAttachmentUploads(
         uploaded: List<Attachment>,
         targetContext: BitwardenContext
-    ) {
+    ) = withContext(NonCancellable) {
+        // Durable operations own their recovery. A generic exception cannot revoke uploaded or
+        // already adopted remote content, nor authorize discarding their local encrypted files.
+        if (targetContext.recoveryBinding != null) return@withContext
         uploaded.asReversed().forEach { attachment ->
+            val referenced = attachment.bitwardenAttachmentId?.let {
+                repository.getByBitwardenAttachmentId(it)
+            }
+            if (referenced != null) return@forEach
             attachment.bitwardenAttachmentId?.takeIf(String::isNotBlank)?.let { remoteId ->
                 runCatching {
                     bitwardenExecutor.remove(
                         vaultApi = targetContext.vaultApi,
                         accessToken = targetContext.accessToken,
                         cipherId = targetContext.cipherId,
-                        bitwardenAttachmentId = remoteId
+                        bitwardenAttachmentId = remoteId,
+                        requireCurrent = targetContext.requireCurrent
                     )
                 }
             }
-            attachment.localPath?.let { path -> runCatching { storage.delete(path) } }
+            attachment.localPath?.let { path -> runCatching { cleanupUnreferencedBlob(path) } }
         }
     }
 

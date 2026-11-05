@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.service.BitwardenSendReceiverTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-05T02:07:27" hostname="JOYIN" time="0.305">
+  <properties/>
+  <testcase name="emailRequiresExplicitRequestHasCooldownAndPreservesMaskedRejections" classname="takagi.ru.monica.bitwarden.service.BitwardenSendReceiverTest" time="0.032"/>
+  <testcase name="closeRevokesAnUncooperativeLateResponseAndCannotRestoreSecretState" classname="takagi.ru.monica.bitwarden.service.BitwardenSendReceiverTest" time="0.008"/>
+  <testcase name="fileSaveUsesOneCountedAuthorizationAndWritesOnlyVerifiedOriginalBytes" classname="takagi.ru.monica.bitwarden.service.BitwardenSendReceiverTest" time="0.022"/>
+  <testcase name="refusesUnauthenticatedDowngradesExtraFieldsAndInvalidUtf8" classname="takagi.ru.monica.bitwarden.service.BitwardenSendReceiverTest" time="0.002"/>
+  <testcase name="derivesUpstreamSendKeyAndExactPasswordBytesAgainstIndependentKnownVectors" classname="takagi.ru.monica.bitwarden.service.BitwardenSendReceiverTest" time="0.074"/>
+  <testcase name="malformedOrAmbiguousLinksCannotBecomeCredentialDestinations" classname="takagi.ru.monica.bitwarden.service.BitwardenSendReceiverTest" time="0.001"/>
+  <testcase name="authenticatesWholeFileAndPaddingBeforeOpeningExternalOutput" classname="takagi.ru.monica.bitwarden.service.BitwardenSendReceiverTest" time="0.011"/>
+  <testcase name="acceptsBothCloudFormsAndRetainsCustomDeploymentPrefix" classname="takagi.ru.monica.bitwarden.service.BitwardenSendReceiverTest" time="0.001"/>
+  <testcase name="expiryAndOwnerRevocationBlockRequestsWithoutAnAccountOrRefreshFallback" classname="takagi.ru.monica.bitwarden.service.BitwardenSendReceiverTest" time="0.004"/>
+  <testcase name="passwordsAreRequestedOnlyAfterTypedChallengeAndNoAccessIsAutomaticallyReplayed" classname="takagi.ru.monica.bitwarden.service.BitwardenSendReceiverTest" time="0.15"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,383 @@
+{
+  "tests": 183,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "edition": "fdroid",
+  "run": "final-green",
+  "suites": [
+    {
+      "name": "takagi.ru.monica.attachments.crypto.BitwardenAttachmentCryptoTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "3663f51697decc1ba0f783d068c013fd5c1fb46b67e5b7cd080bed4bd8718792",
+      "methods": [
+        "readsOfficialBinaryAttachmentFormat",
+        "doesNotDowngradeToUnauthenticatedCbc",
+        "rejectsOversizedCiphertextBeforeReadingIt",
+        "corruptedIvMacOrCiphertextNeverReleasesPlaintext",
+        "readsEmptyAndMultiChunkOfficialAttachments",
+        "uploadsAreReadableUsingOfficialBinaryLayout",
+        "malformedExplicitAttachmentKeyNeverFallsBackToCipherKey",
+        "truncatedAndMalformedAttachmentsNeverReleasePlaintext",
+        "oldMonicaUploadsRemainReadableEvenWhenIvLooksLikeATypeByte",
+        "wrongAttachmentKeyDoesNotReleasePlaintext",
+        "missingLegacyAttachmentKeyUsesOwnedCopyOfCipherKey"
+      ]
+    },
+    {
+      "name": "takagi.ru.monica.attachments.executor.BitwardenAttachmentDownloadMetadataTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "25b2a393ea7f0b58a09018f946c973d9a0570c3708816c7232ad38b4a6c985d6",
+      "methods": [
+        "freshAttachmentKeyTakesPriorityAcrossDevices",
+        "freshDownloadUrlReplacesTheCachedSyncUrl",
+        "attachmentMetadataAcceptsBothServerPropertyConventions",
+        "cachedDownloadUrlRemainsACompatibilityFallback"
+      ]
+    },
+    {
+      "name": "takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolverTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "673596fae1eb13fe9b115a9abfe6295514a21093764ac512270d0eee8eaedd64",
+      "methods": [
+        "selfHostedCaseSensitivePathsAndIpPortsArePreserved",
+        "invalidRevisionIsAValidationErrorAndNonEndpointFieldIsProgrammerError",
+        "legacyRowsPreserveActualOverridesAndDeriveMissingOnCustomBase",
+        "blankOverridesInheritButInvalidExplicitOverridesNeverFallback",
+        "fingerprintIncludesExplicitWebProvenanceAndTlsMetadata",
+        "fingerprintIgnoresCallerRevisionAndHeaderOrderButIncludesValues",
+        "everyExplicitServiceIsUsedWithoutDoubleSuffixes",
+        "invalidLegacyOverridesAndOfficialLookalikePathsDoNotFallBack",
+        "explicitOfficialLookingCustomUrlsAreNeverReclassified",
+        "discoveryEndpointValidationRequiresHttpsAndKeepsSafeEncodedPaths",
+        "sourceCollectionsCannotModifyAnExistingEnvironmentOrErrors",
+        "stringificationDoesNotExposeSecretInputsOrFingerprint",
+        "endpointsRejectRawFormsBeforeLenientUrlNormalization",
+        "officialPresetsKeepMonicaDefaultsAndNoReferer"
+      ]
+    },
+    {
+      "name": "takagi.ru.monica.bitwarden.api.BitwardenEnvironmentTlsTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "ebb6de7373e062efd91a53be1f0f6cf80046740cf90520d2c4e8181377c6af40",
+      "methods": [
+        "enabledMtlsCannotSilentlyUseNoCertificateOrCertificateOnlyContainer",
+        "pkcs12SpaceOnlyPasswordIsPreservedAndWrongPasswordReturnsOnlyCodes",
+        "everyRepeatedPemBlockIsValidatedWithExplicitProvidersWithoutChangingGlobalOrder",
+        "certificateInputBudgetsApplyBeforeParsingOversizedData",
+        "lineWrappedPkcs12AndMultiplePemCertificatesAreAccepted",
+        "validCaAndPrivateKeyPkcs12AreValidatedWithoutChangingEmptyPassword",
+        "badPemAndInvalidPkcs12NeverFallBackToSystemDefaults",
+        "corruptPemBlocksAndInterBlockJunkAreRejectedByEveryExplicitProvider",
+        "togglingMtlsChangesFingerprintWithoutDiscardingRetainedCertificate",
+        "mtlsRequiresEveryNativeEndpointHttpsButWebOnlyIsNotACertificateScope"
+      ]
+    },
+    {
+      "name": "takagi.ru.monica.bitwarden.api.BitwardenTransportPolicyTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "720c2fce47d63c92063eb951103bf23109e0009eb2431a000af662a020e831e1",
+      "methods": [
+        "protocolAndRetrofitHeadersAreReservedCaseInsensitively",
+        "duplicateErrorsUseOriginalRowAndSpacesAreNotTrimmedFromValues",
+        "notificationsFieldIsALiteralServiceBaseAndWebDoesNotChangeReferer",
+        "headerLimitsAndInjectionChecksPreventInvalidPublication",
+        "explicitHttpWorksOnlyForItsConfiguredAccountScope",
+        "exactNativeScopesPermitQueriesButRejectOtherOriginsPathsAndWebOnly",
+        "foreignSignedHttpsSelectsPlainClientAndPreservesTheQuery",
+        "normalizationCannotRestoreAccountCredentialsToAnAmbiguousRawTransferPath",
+        "credentialedMalformedAndFragmentTransfersAreRejectedWithSafeCodes"
+      ]
+    },
+    {
+      "name": "takagi.ru.monica.bitwarden.api.BitwardenTransportTlsHandshakeTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "701c1b26350683c410430f553c0ac406be160d25eb2ce16da4693d52a603eade",
+      "methods": [
+        "trustedCertificateForAnotherHostnameStillCannotDeliverHttp",
+        "customCaAugmentsTheDefaultTrustBranchWithActualRequestsToBothServers",
+        "foreignSignedClientUsesSeparatePoolAndSendsNoAccountCertificateOrHeaders",
+        "allowedMtlsOriginReceivesTheSyntheticClientCertificateAndExactHttpBytes",
+        "outOfScopeOriginWebAndLookalikePathsAreRejectedBeforeServerTlsCreation",
+        "foreignClientCannotReuseCustomCaEvenAfterTheAccountClientTrustedThatServer",
+        "redirectsDoNotSendAnotherHttpRequestOrHandshakeTheForeignTarget"
+      ]
+    },
+    {
+      "name": "takagi.ru.monica.bitwarden.BitwardenTransportBackupTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "3ed0c35cf09ed868b5cbc0e188b331b073af79c84afa4a120326892ed17b9e6e",
+      "methods": [
+        "oversizedOrEmptyEncryptedMaterialIsRejectedBeforeDecryption",
+        "everyEditedDestinationOrPresetIsRejectedAgainstTheEncryptedFingerprint",
+        "noPasswordWrongPasswordAndDamagedCiphertextNeverUseTheLegacyFallback",
+        "restoredPayloadGetsANewDeviceBindingAndAnEmptyPayloadStaysAuthoritative",
+        "unsupportedVersionsAndMalformedSealedSchemasAreRejected",
+        "encryptedRoundTripPreservesActualImportedTlsAndAllEndpointsWithoutLocalBindings",
+        "decryptedTlsAndFingerprintAreRevalidatedBeforeAnyRepositoryPublication",
+        "portableSecretCannotBeMovedToAnotherAccountOrUserIdentity",
+        "encryptionRequiresANonemptyPasswordButPreservesWhitespacePasswordsExactly",
+        "legacyCustomUrlsArePreservedOrDerivedFromTheirOwnBaseWithoutUsFallback"
+      ]
+    },
+    {
+      "name": "takagi.ru.monica.bitwarden.BitwardenTransportClientTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "e07fbafea52957b7fdbb6d25380f2201e5ecaee926d1f016954859c3519b28e1",
+      "methods": [
+        "foreignTransfersHaveSeparatePoolAndRejectExplicitCredentialOrPlainHttp",
+        "retiringOneAccountLeavesAnotherPoolAndRequestUsable",
+        "retiredAttemptCannotDispatchExistingApiOrObtainANewOne",
+        "redirectsReturnToCallerWithoutASecondRequest",
+        "independentWebDoesNotAuthorizeNativeHeadersAndLookalikePathCannotConnect",
+        "independentIdentityAndApiUseLiteralServiceBasesAndProxyHeaders",
+        "leaseIsCheckedWhenCallExecutesRatherThanWhenClientWasBuilt"
+      ]
+    },
+    {
+      "name": "takagi.ru.monica.bitwarden.BitwardenTransportSecretStoreTest",
+      "tests": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "14e28260b7b7fef644f88856edab591e7bec6b2571f9d51c33f92c7c0aa89026",
+      "methods": [
+        "retirementDeletesOnlyVerifiedUnreferencedEntryAndMissingEntryIsIdempotent",
+        "changedVaultBaseRevisionOrCopiedReferenceCannotOpenAnotherBinding",
+        "exposedContainersAreRedactedAndLoadedHeaderCollectionCannotBeChanged",
+        "persistedBindingSurvivesAccountKeyPromotionWithoutSerializingMutableAccountIdentity",
+        "readWriteAndRemoveProviderExceptionsNeverExposeProviderMessageOrCause",
+        "cancellationFromProtectedProvidersPropagatesWithoutBeingReclassified",
+        "stageVerifiesProtectedReadbackAndRecreatedAdapterPreservesExactHeaderAndTlsValues",
+        "retirementCannotDeleteMismatchedOrCorruptEntriesEvenWhenUnreferenced",
+        "retirementRejectsLiveReferencesBeforeReadingOrRemovingAnEntry",
+        "decodedReservedOrInjectedHeadersAreCorruptRatherThanAnUnprotectedFallback",
+        "invalidExternalBindingsAreRejectedBeforeLookingUpProtectedEntries",
+        "freshEmptyPayloadIsAuthoritativeAndDoesNotRevivePriorHeadersOrTls",
+        "missingOrAlteredReadbackCannotPublishAStagedBindingOrDeleteTheWrittenEntry",
+        "ignoredRemovalFailsReadbackAndNeverRemovesOtherConfiguration",
+        "providerFailureAfterWriteRetainsEntryAndReturnsOnlyTypedRedactedFailure",
+        "absentMalformedUnknownVersionAndOversizedPayloadsFailClosed",
+        "invalidBindingAndCollidingReferenceNeverWriteOrRemoveProtectedValues"
+      ]
+    },
+    {
+      "name": "takagi.ru.monica.bitwarden.BitwardenVaultEnvironmentStoreTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "4840b3d9fd26b496d02e8718d56ba8ba909fcd1e9d84955d9364efe89504e3ac",
+      "methods": [
+        "partialNewColumnsAndChangedDestinationsFailClosedBeforeAReplacementEnvironmentIsReturned",
+        "legacyResolutionDoesNotUseProtectedStoreAndKeepsRevisionAcrossAccountKeyPromotion",
+        "legacyEndpointChangeGetsFreshRevisionWhileOtherVaultAndEquivalentReadRemainStable",
+        "missingCorruptOrUnavailableProtectedEntryNeverReconnectsUsingLegacySettings",
+        "protectedEmptyTlsOverridesInvalidLegacyTlsWithoutWritingOrFallingBack"
+      ]
+    },
+    {
+      "name": "takagi.ru.monica.bitwarden.discovery.BitwardenDnsTxtParserTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "91fd599d57ffbc992d3a90d5e0a3f9f6b2bbc601229670cfbe13c582305fc55c",
+      "methods": [
+        "rejectsSelfForwardHeaderAndUnparsedDataCompressionTargets",
+        "validatesNegativeSoaAndEdnsResponseCodesAndOptions",
+        "enforcesPacketRecordTxtAndAggregateTextBudgets",
+        "joinsStringsWithinEachRecordButNeverAcrossRecords",
+        "acceptsEightAliasHopsButRejectsNine",
+        "checksRecordClassNameLengthsAndCnameRdataBoundary",
+        "recordsAreDefensivelyCopiedAndStringificationDoesNotPrintTxt",
+        "distinguishesNodataNxdomainAndServerFailure",
+        "rejectsQuestionMismatchTypeClassAndMultipleQuestions",
+        "rejectsAmbiguousCnameTargetsAndCoexistingTxt",
+        "checksEveryTruncationAndRejectsTrailingBytes",
+        "joinsUtf8BytesBeforeDecodingAndRejectsMalformedEncoding",
+        "rejectsQueriesOpcodesTruncationAndReservedFlag",
+        "acceptsBackwardCompressionAndCaseInsensitiveQuestion",
+        "ignoresAuthorityAndAdditionalTxtForCandidateSelection",
+        "followsOnlyTheRequestedValidatedCnameChain"
+      ]
+    },
+    {
+      "name": "takagi.ru.monica.bitwarden.discovery.BitwardenServerDiscoveryTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "5a79ca00d18d7014f540f830e84a7d1f575fc918989c5f0a99ef482304e2dc3c",
+      "methods": [
+        "keepsOneSuccessfulLabelAndReportsTheOtherFailureHonestly",
+        "invalidEmailOrDomainNeverTriggersResolver",
+        "totalDeadlineCancelsBothParallelQueriesAfterFourSeconds",
+        "deduplicatesCanonicalUrlsWhileKeepingBothSourcesAndEightCandidateLimit",
+        "deadlineRetainsCompletedLabelAndMarksOnlyPendingLabelTimedOut",
+        "usesPslAndNeverTreatsNullDomainAsSameOwnership",
+        "distinguishesUnsupportedNoRecordsAndInvalidCandidates",
+        "boundsInjectedResolverResponsesAndRedactsResultStringification",
+        "usesSharedHttpsEndpointPolicyAndPreservesPortsPathsAndIpCandidates",
+        "callerCancellationPropagatesAndDoesNotPublishAnEmptySuccess",
+        "onlyExplicitInvocationQueriesTwoNamesWithoutTheEmailLocalPart"
+      ]
+    },
+    {
+      "name": "takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "51b235a95c890750a5cef2e0a015693d01f87b33a98ee91c8b9f9d7f605ec0dc",
+      "methods": [
+        "selfHostedVerificationIsBoundToTheExactPort",
+        "rejectsDuplicatedVerificationParametersAndOversizedTokens",
+        "normalizesEmailWithoutChangingTheToken",
+        "pastedLinkCannotSelectAnotherServerOrAccount",
+        "rejectsMissingLocalPartAndMultipleOrWhitespaceEmails",
+        "verificationLinkIsBoundToWebPathBeforeNormalization",
+        "acceptsOfficialFragmentVerificationLinkBoundToTheAccount",
+        "webSettingsKeepTheAccountServerWithoutTransmittingCredentials"
+      ]
+    },
+    {
+      "name": "takagi.ru.monica.bitwarden.service.BitwardenAccountRegistrationTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "3640694fe828be56eea208c9db761a24db99dfe9ba4f89d65f5c0f0e988cba82",
+      "methods": [
+        "modernRegistrationVerifiesEmailAndSendsDecryptableFreshKeys",
+        "serverEchoIsNeverReturnedAsRegistrationError",
+        "passwordHintUsesApiEndpointAndSendsNoCredentials",
+        "legacyFallbackRequiresMissingModernEndpoint",
+        "mainLockAndRetiredEnvironmentPreventRegistrationReuse",
+        "independentIdentityWebAndApiUseTheCapturedEnvironment",
+        "deviceListDoesNotExposeEncryptedAccountKeyMaterial",
+        "unverifiedOrMismatchedRegistrationDoesNotSendAnAccountRequest",
+        "registrationDisabledErrorNeverFallsBackToLegacy"
+      ]
+    },
+    {
+      "name": "takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "d83c350f8759a85640b734a7f66547a67a00748dbe4ca778acec6bf8f742f735",
+      "methods": [
+        "staleEditorCannotReplaceAnAlreadyRegisteredAuthentication",
+        "lateLoginCompletionCannotPublishAfterLogout",
+        "rememberedTokenIsIsolatedBetweenServersAndAccounts",
+        "changedStampIsComparedExactly",
+        "staleTokenCannotRevokeTheNewlyAuthenticatedSession",
+        "unavailableSealedStoreDoesNotClaimRememberWasSaved",
+        "tokenContentsAreOpaqueAndNotTrimmedOrLoggedIntoKeys",
+        "committedRevocationPersistsCredentialRemovalAfterItsCallerIsCancelled",
+        "missingOrOversizedResponseCannotKeepAnOldRememberedToken",
+        "clearingOneAccountDoesNotClearAnotherRememberedAccount",
+        "revokingAnotherAccountDoesNotCancelThisLogin",
+        "firstStampObservationIsNotAChangedSession",
+        "choiceDefaultsToNoRememberAndRemovesPreviousToken",
+        "scopeUsesFramingRatherThanAmbiguousSeparators",
+        "missingRemoteStampStopsApprovalWithoutPretendingItChanged",
+        "replacingAnAttemptPublishesOnlyTheLatestAuthentication"
+      ]
+    },
+    {
+      "name": "takagi.ru.monica.bitwarden.service.BitwardenAuthRedactionTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "90c364c286fd268abc4c023c4ac0afb5901643daa6418965a4827cc9f9dbf26c",
+      "methods": [
+        "cancellationRemainsCancellation",
+        "actualTwoFactorNewDeviceAndEmailFailuresNeverReturnServerText",
+        "actualPreloginAndRefreshFailuresExcludeReasonPhraseAndBody",
+        "actualCaptchaKeepsChallengeStateButUsesLocalMessage",
+        "actualLoginRetryNeverReturnsOrLogsServerEchoes",
+        "transportClassificationSurvivesWithoutRawCausesOrMessages",
+        "serverEchoesMapToFixedCategoriesAndExistingLocalizedMessages",
+        "diagnosticsRejectInjectedLabelsAndRetainOnlyBoundedStatus"
+      ]
+    },
+    {
+      "name": "takagi.ru.monica.bitwarden.service.BitwardenSendAuthTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "c050a501e7a12d3634b87f55d5e1919f28207ff0c8c131bed5b0986c80befcea",
+      "methods": [
+        "unknownAuthenticationSurvivesKeepPatchIncludingOpaqueFields",
+        "emailInputIsBoundedAndNormalizedWithoutSilentlyDroppingRecipients",
+        "legacyMissingAuthTypeNeedsPasswordEvidenceForKnownModes",
+        "explicitEmailAndNoneCannotAccidentallyCarryPasswordReplacement",
+        "emailReadbackRequiresExplicitModeRecipientsAndNoPassword"
+      ]
+    },
+    {
+      "name": "takagi.ru.monica.bitwarden.service.BitwardenSendEditTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "c3d66c25ee45a2885285fb4569f8e98e6d13ec44dae50873b566d67fca40f0a3",
+      "methods": [
+        "concurrentRemoteChangesIncludingOpaqueFieldsRejectBaseline",
+        "passwordReplacementHashesExactSpacesWithOriginalMaterial",
+        "fileEditRetainsAttachmentKeyIdAndOpaqueFields",
+        "upperCaseResponseDoesNotLeaveDuplicateChangedFields",
+        "invalidDatesLimitsAndEmptyReplacementAreRejected",
+        "keepPasswordSendsNullAndPreservesAuthentication",
+        "removePasswordDoesNotSubstituteAnEmptyPasswordHash",
+        "emailAndUnknownAuthRemainOpaqueWhenPasswordIsUnchanged",
+        "datesAreIndependentAndNoExpirySerializesNull",
+        "editedTextUsesOriginalKeyAndPreservesWhitespace"
+      ]
+    },
+    {
+      "name": "takagi.ru.monica.bitwarden.service.BitwardenSendSubmissionTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "sha256": "af1c95e0918a8f22e31978311a3889b28d8d5879e035a60558394324f12bc553",
+      "methods": [
+        "equivalentDateEncodingIsAcceptedButChangedLimitIsNot",
+        "explicitRemovalReconcilesOnlyPasswordFreeFinalStateWithTheExactPreparedContent",
+        "ambiguousExactKeysNeverConfirmEvenWhenOnePayloadMatches",
+        "missingIdentityAndMalformedFieldsDoNotCrashOrConfirm",
+        "onlyExactPreparedKeyAndContentCanReconcile",
+        "emailAuthIgnoredByServerCannotConfirmProtectedSend"
+      ]
+    }
+  ]
+}

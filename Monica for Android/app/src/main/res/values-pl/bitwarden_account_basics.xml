@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_new_device_resend">Wyślij ponownie e-mail weryfikacyjny</string>
+    <string name="bitwarden_new_device_resend_sent">Poproszono o e-mail weryfikacyjny. Sprawdź skrzynkę odbiorczą.</string>
+    <string name="bitwarden_new_device_resend_failed">Nie udało się poprosić o e-mail weryfikacyjny. Spróbuj ponownie.</string>
+    <string name="bitwarden_new_device_resend_unavailable">Ten serwer nie obsługuje ponownego wysyłania e-maili weryfikacyjnych dla nowych urządzeń.</string>
+    <string name="bitwarden_new_device_resend_wait">Spróbuj ponownie za %1$d sekund.</string>
+    <string name="bitwarden_new_device_resend_rate_limited">Zbyt wiele żądań. Poczekaj przed kolejną próbą.</string>
+    <string name="bitwarden_account_fingerprint">Fraza odcisku konta</string>
+    <string name="bitwarden_account_fingerprint_hint">Porównaj tę frazę za pośrednictwem innego zaufanego kanału, aby pomóc zweryfikować tożsamość konta.</string>
+    <string name="bitwarden_account_fingerprint_unavailable">Zsynchronizuj to konto, aby wczytać jego klucz tożsamości, a następnie spróbuj ponownie.</string>
+    <string name="bitwarden_account_fingerprint_copy">Kopiuj frazę</string>
+</resources>

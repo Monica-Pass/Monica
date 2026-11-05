@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_new_device_resend">Resend verification email</string>
+    <string name="bitwarden_new_device_resend_sent">Verification email requested. Check your inbox.</string>
+    <string name="bitwarden_new_device_resend_failed">Could not request a verification email. Try again.</string>
+    <string name="bitwarden_new_device_resend_unavailable">This server does not support resending new-device verification emails.</string>
+    <string name="bitwarden_new_device_resend_wait">Try again in %1$d seconds.</string>
+    <string name="bitwarden_new_device_resend_rate_limited">Too many requests. Wait before trying again.</string>
+    <string name="bitwarden_account_fingerprint">Account fingerprint phrase</string>
+    <string name="bitwarden_account_fingerprint_hint">Compare this phrase through another trusted channel to help verify your account identity.</string>
+    <string name="bitwarden_account_fingerprint_unavailable">Sync this account to load its identity key, then try again.</string>
+    <string name="bitwarden_account_fingerprint_copy">Copy phrase</string>
+</resources>

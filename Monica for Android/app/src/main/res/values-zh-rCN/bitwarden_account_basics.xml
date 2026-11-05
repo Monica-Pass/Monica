@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_new_device_resend">重新发送验证邮件</string>
+    <string name="bitwarden_new_device_resend_sent">已请求发送验证邮件，请查看收件箱。</string>
+    <string name="bitwarden_new_device_resend_failed">无法请求发送验证邮件，请重试。</string>
+    <string name="bitwarden_new_device_resend_unavailable">此服务器不支持重新发送新设备验证邮件。</string>
+    <string name="bitwarden_new_device_resend_wait">请在 %1$d 秒后重试。</string>
+    <string name="bitwarden_new_device_resend_rate_limited">请求过于频繁，请稍后重试。</string>
+    <string name="bitwarden_account_fingerprint">账号指纹短语</string>
+    <string name="bitwarden_account_fingerprint_hint">请通过另一种可信渠道比对这段短语，以帮助核验你的账号身份。</string>
+    <string name="bitwarden_account_fingerprint_unavailable">请先同步此账号以加载身份密钥，然后重试。</string>
+    <string name="bitwarden_account_fingerprint_copy">复制短语</string>
+</resources>

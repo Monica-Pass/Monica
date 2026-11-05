@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.BitwardenAccountMutationTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-11-05T02:02:32" hostname="JOYIN" time="0.192">
+  <properties/>
+  <testcase name="recoveryRequiresOriginalServerIdentityTransportAndBothUserKeyHalves" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationTest" time="0.004"/>
+  <testcase name="failedReceiptCommitKeepsDurableSendingMarkerAndLocalData" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationTest" time="0.106"/>
+  <testcase name="nonStringHintCannotConfirmItsMatchingTextRepresentation" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationTest" time="0.0"/>
+  <testcase name="genericHttpErrorsAndLostResponsesRetainUncertainIntentWithoutRetry" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationTest" time="0.017"/>
+  <testcase name="durableReadbackPrecedesFreezeAndDispatchAndRestoresWithoutRequestProof" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationTest" time="0.011"/>
+  <testcase name="cancellationAfterDispatchRecordsUncertaintyAfterCallerStops" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationTest" time="0.018"/>
+  <testcase name="confirmedServerDeletionRetainsArchiveAndNeverRemovesLocalVaultOrQueue" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationTest" time="0.006"/>
+  <testcase name="relocatedIntentAndChangedBindingOrOperationCannotAdvanceOrRemoveOriginal" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationTest" time="0.002"/>
+  <testcase name="unreadableIntentAndReadFailureBlockNewIntentRatherThanLookingAbsent" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationTest" time="0.001"/>
+  <testcase name="onlyProvenPreMutationRejectionCanReleaseItsOwnJournal" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationTest" time="0.007"/>
+  <testcase name="hintReadbackRequiresOriginalIdentityNameAndExplicitNullOrExactString" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationTest" time="0.001"/>
+  <testcase name="cancellationAtEitherGenerationGuardPreventsDispatchAndKeepsAnyStagedIntent" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationTest" time="0.005"/>
+  <testcase name="failedCommitLostWriteAndUnreadableReadbackCannotDispatch" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationTest" time="0.006"/>
+  <testcase name="profileSuccessWithoutVerifiedExactReadbackRemainsUncertain" classname="takagi.ru.monica.bitwarden.BitwardenAccountMutationTest" time="0.006"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

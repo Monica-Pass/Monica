@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_new_device_resend">Bestätigungs-E-Mail erneut senden</string>
+    <string name="bitwarden_new_device_resend_sent">Bestätigungs-E-Mail angefordert. Prüfe deinen Posteingang.</string>
+    <string name="bitwarden_new_device_resend_failed">Die Bestätigungs-E-Mail konnte nicht angefordert werden. Versuche es erneut.</string>
+    <string name="bitwarden_new_device_resend_unavailable">Dieser Server unterstützt das erneute Senden von Bestätigungs-E-Mails für neue Geräte nicht.</string>
+    <string name="bitwarden_new_device_resend_wait">Versuche es in %1$d Sekunden erneut.</string>
+    <string name="bitwarden_new_device_resend_rate_limited">Zu viele Anfragen. Warte, bevor du es erneut versuchst.</string>
+    <string name="bitwarden_account_fingerprint">Fingerabdruck-Phrase des Kontos</string>
+    <string name="bitwarden_account_fingerprint_hint">Vergleiche diese Phrase über einen anderen vertrauenswürdigen Kanal, um die Identität deines Kontos zu überprüfen.</string>
+    <string name="bitwarden_account_fingerprint_unavailable">Synchronisiere dieses Konto, um seinen Identitätsschlüssel zu laden, und versuche es dann erneut.</string>
+    <string name="bitwarden_account_fingerprint_copy">Phrase kopieren</string>
+</resources>

@@ -1,0 +1,22 @@
+{
+  "removedUser": 13,
+  "restoredUser": 0,
+  "preservedUserIds": [
+    0,
+    10,
+    11,
+    12
+  ],
+  "stoppedTaskEmulator": true,
+  "stoppedSerial": "emulator-5556",
+  "unrelatedEmulator5554Operated": false,
+  "unrelatedEmulatorStatementSource": "root cleanup confirmation",
+  "preservedDiskFileNames": [
+    "config.ini",
+    "userdata-qemu.img",
+    "Monica_Issue136_API_32.ini",
+    "userdata-qemu.img.qcow2"
+  ],
+  "deletedHostFiles": false,
+  "originalRawSha256": "acc30033d9c96e8d53e32d65b8c59a1b60c0c6c2b25bade5456780fb3d8685fe"
+}

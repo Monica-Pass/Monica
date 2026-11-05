@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.*
-import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
 import androidx.lifecycle.ViewModelStore
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -36,12 +36,17 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.RecordedRequest
 import org.junit.After
+import org.junit.Before
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import takagi.ru.monica.security.SessionManager
 import takagi.ru.monica.R
 import takagi.ru.monica.bitwarden.crypto.BitwardenCrypto
+import takagi.ru.monica.bitwarden.api.BitwardenEnvironmentDraft
+import takagi.ru.monica.bitwarden.api.BitwardenEnvironmentPreset
+import takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolver
 import takagi.ru.monica.bitwarden.crypto.BitwardenCrypto.SymmetricCryptoKey
 import takagi.ru.monica.bitwarden.repository.BitwardenRepository
 import takagi.ru.monica.bitwarden.service.BitwardenRememberedTwoFactorStore
@@ -65,7 +70,15 @@ class BitwardenRememberedMfaInstrumentedTest {
     private val models = ViewModelStore()
     private var loginVisible by mutableStateOf(true)
 
-    @After fun clearModels() { compose.runOnIdle { models.clear() } }
+    private var originalAppUnlocked = false
+    @Before fun authorizeSyntheticSession() {
+        originalAppUnlocked = SessionManager.isUnlocked.value
+        compose.runOnUiThread { SessionManager.markUnlocked() }
+    }
+    @After fun clearModels() { compose.runOnUiThread {
+        models.clear()
+        if (originalAppUnlocked) SessionManager.markUnlocked() else SessionManager.markLocked()
+    } }
 
     @Test fun uncheckedNativeRememberSendsZeroAndNeverPersistsTheReturnedToken() {
         scenario { fixture ->
@@ -184,10 +197,11 @@ class BitwardenRememberedMfaInstrumentedTest {
                 } }
             }
         }
-        compose.onNodeWithText(localized.getString(R.string.legacy_ui_bitwarden_server_us)).performScrollTo().performClick()
-        compose.onNodeWithText(localized.getString(R.string.legacy_ui_bitwarden_server_self_hosted)).performClick()
-        compose.onNode(hasSetTextAction() and hasText(localized.getString(R.string.legacy_ui_self_hosted_url)))
-            .performScrollTo().performTextInput(fixture.endpoint)
+        compose.onNodeWithTag("bitwarden_server_configure").performScrollTo().performClick()
+        compose.onNodeWithText(localized.getString(R.string.legacy_ui_bitwarden_server_self_hosted)).performScrollTo().performClick()
+        compose.onNodeWithTag("bitwarden_server_base").performScrollTo().performTextReplacement(fixture.endpoint)
+        compose.onNodeWithTag("bitwarden_server_apply").performClick()
+        compose.waitUntil(20_000) { compose.onAllNodesWithTag("bitwarden_server_configuration").fetchSemanticsNodes().isEmpty() }
         compose.onNode(hasSetTextAction() and hasText(localized.getString(R.string.legacy_ui_email_address)))
             .performScrollTo().performTextInput(fixture.email)
         compose.onNode(hasSetTextAction() and hasText(localized.getString(R.string.master_password)))
@@ -235,7 +249,10 @@ class BitwardenRememberedMfaInstrumentedTest {
         suspend fun initialize() {
             endpoint = server.url("/").toString().trimEnd('/')
             val canonicalServer = BitwardenVaultIdentity.normalizeServerUrl(endpoint)
-            rememberedKey = "remembered_two_factor_v1_" + BitwardenRememberedTwoFactorStore.scope(canonicalServer, email)
+            val environment = requireNotNull(BitwardenEnvironmentResolver.resolve(
+                BitwardenEnvironmentDraft(BitwardenEnvironmentPreset.CUSTOM, endpoint), UUID.randomUUID().toString()).value)
+            rememberedKey = "remembered_two_factor_v1_" + BitwardenRememberedTwoFactorStore.scope(canonicalServer, email) +
+                ":transport-v2:" + environment.fingerprint
             val master = BitwardenCrypto.deriveMasterKeyPbkdf2(password, email, 600_000)
             val stretched = BitwardenCrypto.stretchMasterKey(master)
             try {
@@ -297,7 +314,8 @@ class BitwardenRememberedMfaInstrumentedTest {
             if (vaultId != 0L) {
                 val row = database.bitwardenVaultDao().getVaultById(vaultId)
                 if (row != null) {
-                    check(row.email == email && row.serverUrl == BitwardenVaultIdentity.normalizeServerUrl(endpoint))
+                    check(row.email == email && BitwardenVaultIdentity.normalizeServerUrl(row.serverUrl) ==
+                        BitwardenVaultIdentity.normalizeServerUrl(endpoint))
                     repository.logout(vaultId)
                 }
             }

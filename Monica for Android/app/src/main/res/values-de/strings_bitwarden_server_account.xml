@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_server_reauthenticate_hint">Nach Änderungen an den Verbindungseinstellungen ist eine erneute Anmeldung erforderlich. Server und E-Mail-Adresse bleiben unverändert. Beim Abbrechen bleibt die gespeicherte Konfiguration erhalten; das Konto bleibt gesperrt.</string>
+</resources>

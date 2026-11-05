@@ -18,7 +18,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.test.*
-import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
 import androidx.compose.ui.unit.Density
 import androidx.lifecycle.ViewModelStore
 import androidx.test.platform.app.InstrumentationRegistry
@@ -107,10 +107,10 @@ class LocalizedBitwardenUiInstrumentedTest(private val language: Language) {
         screenshot("settings")
         compose.onNodeWithContentDescription(localized.getString(R.string.legacy_ui_add_vault)).performClick()
         compose.onNodeWithText(localized.getString(R.string.legacy_ui_bitwarden_login)).assertIsDisplayed()
-        compose.onNodeWithText(localized.getString(R.string.legacy_ui_bitwarden_server_us)).performClick()
-        compose.onNodeWithText(localized.getString(R.string.legacy_ui_bitwarden_server_self_hosted)).performClick()
-        compose.onNodeWithText(localized.getString(R.string.legacy_ui_tls_settings)).performScrollTo().performClick()
-        compose.onNodeWithText(localized.getString(R.string.legacy_ui_tls_ca_pem)).performScrollTo().assertIsDisplayed()
+        compose.onNodeWithTag("bitwarden_server_configure").performScrollTo().performClick()
+        compose.onNodeWithText(localized.getString(R.string.legacy_ui_bitwarden_server_self_hosted)).performScrollTo().performClick()
+        compose.onNodeWithText(localized.getString(R.string.bitwarden_server_certificates)).performScrollTo().performClick()
+        compose.onNodeWithTag("bitwarden_server_ca").performScrollTo().assertIsDisplayed()
         screenshot("self-hosted")
     }
 

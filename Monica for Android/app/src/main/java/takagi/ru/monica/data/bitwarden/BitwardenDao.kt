@@ -23,6 +23,19 @@ interface BitwardenVaultDao {
     
     @Query("SELECT * FROM bitwarden_vaults WHERE id = :id")
     suspend fun getVaultById(id: Long): BitwardenVault?
+
+    /** Small transport stamp for a pre-connection IO-thread check; contains no tokens or TLS material. */
+    @Query("SELECT id, server_url, api_url, identity_url, environment_preset, web_vault_url, notifications_url, transport_revision, transport_secret_ref, is_locked, is_connected FROM bitwarden_vaults WHERE id = :id")
+    fun getTransportState(id: Long): BitwardenTransportState?
+
+    @Query("SELECT * FROM bitwarden_vaults WHERE id = :id")
+    fun getVaultForTransportPublication(id: Long): BitwardenVault?
+
+    @Query("SELECT id FROM bitwarden_vaults WHERE is_default = 1 LIMIT 1")
+    fun getDefaultVaultIdForPublication(): Long?
+
+    @Update
+    fun publishTransport(vault: BitwardenVault)
     
     @Query("SELECT * FROM bitwarden_vaults WHERE id = :id")
     fun getVaultByIdFlow(id: Long): Flow<BitwardenVault?>

@@ -1,0 +1,345 @@
+{
+  "edition": "fdroid",
+  "run": "final-01",
+  "userId": 13,
+  "readOnly": true,
+  "samples": [
+    {
+      "epoch": 1793845440.793305,
+      "focus": [
+        "mCurrentFocus=Window{3306860 u13 takagi.ru.monica.fdroid/androidx.activity.ComponentActivity}",
+        "mFocusedApp=ActivityRecord{7860e64 u13 takagi.ru.monica.fdroid/androidx.activity.ComponentActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845441.4495118,
+      "focus": [
+        "mCurrentFocus=Window{3306860 u13 takagi.ru.monica.fdroid/androidx.activity.ComponentActivity}",
+        "mFocusedApp=ActivityRecord{7860e64 u13 takagi.ru.monica.fdroid/androidx.activity.ComponentActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845442.0569804,
+      "focus": [
+        "mCurrentFocus=Window{3306860 u13 takagi.ru.monica.fdroid/androidx.activity.ComponentActivity}",
+        "mFocusedApp=ActivityRecord{7860e64 u13 takagi.ru.monica.fdroid/androidx.activity.ComponentActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845442.683939,
+      "focus": [
+        "mCurrentFocus=null",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845443.3057897,
+      "focus": [
+        "mCurrentFocus=null",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845443.9809296,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845444.7458165,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845445.5394986,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845446.1510494,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845446.7279537,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845447.2893813,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845447.8532891,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845448.418349,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845448.9959683,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845449.5558214,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845450.1194541,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845450.6857932,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845451.2446692,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845451.8044043,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845452.366003,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845452.9365437,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845453.503138,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845454.0651426,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845454.62565,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845455.1936307,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845455.7492785,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845456.3114302,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845456.8713496,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845457.4338303,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845457.992423,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845458.5518112,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845459.107768,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845459.6637843,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845460.3050234,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845460.8643467,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845461.4253347,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845461.9947689,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845462.733295,
+      "focus": [
+        "mCurrentFocus=Window{3a70bdb u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity}",
+        "mFocusedApp=ActivityRecord{e7b7413 u13 com.google.android.documentsui/com.android.documentsui.picker.PickActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845463.419487,
+      "focus": [
+        "mCurrentFocus=Window{18deda7 u13 takagi.ru.monica.fdroid/androidx.activity.ComponentActivity}",
+        "mFocusedApp=ActivityRecord{f198824 u13 takagi.ru.monica.fdroid/androidx.activity.ComponentActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845464.119255,
+      "focus": [
+        "mCurrentFocus=Window{925f8e4 u13 takagi.ru.monica.fdroid/androidx.activity.ComponentActivity}",
+        "mFocusedApp=ActivityRecord{f198824 u13 takagi.ru.monica.fdroid/androidx.activity.ComponentActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845464.7971988,
+      "focus": [
+        "mCurrentFocus=Window{925f8e4 u13 takagi.ru.monica.fdroid/androidx.activity.ComponentActivity}",
+        "mFocusedApp=ActivityRecord{f198824 u13 takagi.ru.monica.fdroid/androidx.activity.ComponentActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845465.4542148,
+      "focus": [
+        "mCurrentFocus=Window{925f8e4 u13 takagi.ru.monica.fdroid/androidx.activity.ComponentActivity}",
+        "mFocusedApp=ActivityRecord{f198824 u13 takagi.ru.monica.fdroid/androidx.activity.ComponentActivity t1300733}"
+      ]
+    },
+    {
+      "epoch": 1793845466.1833203,
+      "focus": [
+        "mCurrentFocus=Window{706f90f u13 com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity}",
+        "mFocusedApp=ActivityRecord{f1101d3 u13 com.google.android.apps.nexuslauncher/.NexusLauncherActivity t1300004}"
+      ]
+    },
+    {
+      "epoch": 1793845466.7738054,
+      "focus": [
+        "mCurrentFocus=Window{706f90f u13 com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity}",
+        "mFocusedApp=ActivityRecord{f1101d3 u13 com.google.android.apps.nexuslauncher/.NexusLauncherActivity t1300004}"
+      ]
+    },
+    {
+      "epoch": 1793845467.371619,
+      "focus": [
+        "mCurrentFocus=Window{706f90f u13 com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity}",
+        "mFocusedApp=ActivityRecord{f1101d3 u13 com.google.android.apps.nexuslauncher/.NexusLauncherActivity t1300004}"
+      ]
+    },
+    {
+      "epoch": 1793845467.9515631,
+      "focus": [
+        "mCurrentFocus=Window{706f90f u13 com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity}",
+        "mFocusedApp=ActivityRecord{f1101d3 u13 com.google.android.apps.nexuslauncher/.NexusLauncherActivity t1300004}"
+      ]
+    },
+    {
+      "epoch": 1793845468.5170465,
+      "focus": [
+        "mCurrentFocus=Window{706f90f u13 com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity}",
+        "mFocusedApp=ActivityRecord{f1101d3 u13 com.google.android.apps.nexuslauncher/.NexusLauncherActivity t1300004}"
+      ]
+    },
+    {
+      "epoch": 1793845469.118074,
+      "focus": [
+        "mCurrentFocus=Window{706f90f u13 com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity}",
+        "mFocusedApp=ActivityRecord{f1101d3 u13 com.google.android.apps.nexuslauncher/.NexusLauncherActivity t1300004}"
+      ]
+    }
+  ],
+  "documentsUiFocused": true
+}

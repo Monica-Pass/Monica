@@ -46,7 +46,7 @@ internal class EmbeddedWalletCopyService(context: Context) {
             val snapshot = repository.fetchAttachmentCipherSnapshot(vault,
                 requireNotNull(item.bitwardenCipherId?.takeIf(String::isNotBlank)))
             val fetched = requireNotNull(snapshot)
-            try { facade.reconcileBitwardenAttachments(owner, fetched.attachments) }
+            try { facade.reconcileBitwardenAttachments(owner, fetched.attachments, fetched.context) }
             catch (error: Throwable) { fetched.context.wrappingKey.clear(); throw error }
             fetched.context
         }

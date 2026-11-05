@@ -11,9 +11,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.test.*
-import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
 import androidx.lifecycle.ViewModelStore
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -34,6 +35,7 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.RecordedRequest
 import org.junit.After
+import org.junit.Before
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
@@ -62,7 +64,15 @@ class BitwardenAccountUiInstrumentedTest {
     private val models = ViewModelStore()
     private val json = Json { ignoreUnknownKeys = true }
 
-    @After fun clearModels() { compose.runOnIdle { models.clear() } }
+    private var originalAppUnlocked = false
+    @Before fun authorizeSyntheticSession() {
+        originalAppUnlocked = SessionManager.isUnlocked.value
+        compose.runOnUiThread { SessionManager.markUnlocked() }
+    }
+    @After fun clearModels() { compose.runOnUiThread {
+        models.clear()
+        if (originalAppUnlocked) SessionManager.markUnlocked() else SessionManager.markLocked()
+    } }
 
     @Test fun nativeRegistrationUsesVerifiedEmailAndDoesNotCreateAPartialLocalVault() {
         MockWebServer().use { server ->
@@ -227,6 +237,81 @@ class BitwardenAccountUiInstrumentedTest {
         }
     }
 
+    @Test fun existingServerConfigurationLocksBeforeReauthenticationAndCancelPreservesSavedEndpoints() {
+        MockWebServer().use { server ->
+            val fixture = DeviceFixture(server)
+            try {
+                runBlocking { fixture.initialize() }
+                val original = requireNotNull(runBlocking { fixture.database.bitwardenVaultDao().getVaultById(fixture.vaultId) })
+                val viewModel = model()
+                show { BitwardenAccountScreen(viewModel, fixture.vaultId) {} }
+                waitForTag("bitwarden_account_device_owned-device")
+                compose.onNode(hasScrollToNodeAction()).performScrollToNode(hasTestTag("bitwarden_account_server_configuration"))
+                compose.onNodeWithTag("bitwarden_account_server_configuration").performClick()
+                waitForTag("bitwarden_server_configuration")
+                assertFalse("Editing must revoke the previous unlocked account", fixture.repository.isVaultUnlocked(fixture.vaultId))
+                compose.onNodeWithTag("bitwarden_server_base").performScrollTo().assertIsNotEnabled()
+                compose.onNodeWithText(localized.getString(R.string.bitwarden_server_endpoints)).performScrollTo().performClick()
+                compose.onNodeWithTag("bitwarden_server_api").performScrollTo().performTextReplacement(server.url("/Candidate/").toString())
+                compose.onNodeWithTag("bitwarden_server_apply").performClick()
+                compose.onNodeWithTag("bitwarden_server_apply").performClick()
+                compose.waitUntil(20_000) { compose.onAllNodesWithTag("bitwarden_server_configuration").fetchSemanticsNodes().isEmpty() }
+                compose.onNodeWithTag("bitwarden_login_email").performScrollTo().assertIsNotEnabled().assertTextContains(original.email)
+                compose.onNodeWithTag("bitwarden_login_password").performScrollTo().performTextInput("synthetic unsubmitted password")
+                compose.onNodeWithContentDescription(localized.getString(R.string.back)).performClick()
+                waitForTag("bitwarden_account_screen")
+                val unchanged = requireNotNull(runBlocking { fixture.database.bitwardenVaultDao().getVaultById(fixture.vaultId) })
+                assertTrue(unchanged.isLocked)
+                assertEquals(original.serverUrl, unchanged.serverUrl)
+                assertEquals(original.apiUrl, unchanged.apiUrl)
+                assertEquals(original.identityUrl, unchanged.identityUrl)
+                assertEquals(original.notificationsUrl, unchanged.notificationsUrl)
+                assertEquals(original.webVaultUrl, unchanged.webVaultUrl)
+                assertEquals(original.environmentPreset, unchanged.environmentPreset)
+                assertEquals(original.transportRevision, unchanged.transportRevision)
+                assertEquals(original.transportSecretRef, unchanged.transportSecretRef)
+                assertEquals("No login is submitted merely by editing or cancelling", listOf("/api/accounts/profile", "/api/devices"), fixture.paths.toList())
+            } finally {
+                compose.runOnIdle { models.clear() }
+                runBlocking { fixture.close() }
+            }
+        }
+    }
+
+    @Test fun capturedExistingAccountSubmitCannotStartNetworkAfterASecondVaultLock() {
+        MockWebServer().use { server ->
+            val fixture = DeviceFixture(server)
+            try {
+                runBlocking { fixture.initialize() }
+                val viewModel = model()
+                show { BitwardenAccountScreen(viewModel, fixture.vaultId) {} }
+                waitForTag("bitwarden_account_device_owned-device")
+                compose.onNode(hasScrollToNodeAction()).performScrollToNode(hasTestTag("bitwarden_account_server_configuration"))
+                compose.onNodeWithTag("bitwarden_account_server_configuration").performClick()
+                waitForTag("bitwarden_server_configuration")
+                compose.onNodeWithTag("bitwarden_server_apply").performClick()
+                compose.waitUntil(20_000) { compose.onAllNodesWithTag("bitwarden_server_configuration").fetchSemanticsNodes().isEmpty() }
+                compose.onNodeWithTag("bitwarden_login_password").performScrollTo().performTextInput("Synthetic stale login password")
+                val capturedSubmit = requireNotNull(compose.onNodeWithTag("bitwarden_login_submit").performScrollTo()
+                    .assertIsEnabled().fetchSemanticsNode().config[SemanticsActions.OnClick].action)
+                val requestCount = server.requestCount
+                compose.runOnUiThread {
+                    // One main-thread turn prevents Compose's asynchronous effect from hiding
+                    // the missing dispatch guard. The production callback itself must reject it.
+                    runBlocking { fixture.repository.forceLock(fixture.vaultId) }
+                    capturedSubmit()
+                }
+                waitForTag("bitwarden_account_screen")
+                assertEquals("A revoked edit callback must not issue prelogin or token HTTP", requestCount, server.requestCount)
+                assertTrue(viewModel.loginState.value is BitwardenViewModel.LoginState.Idle)
+                assertFalse(fixture.repository.isVaultUnlocked(fixture.vaultId))
+            } finally {
+                compose.runOnIdle { models.clear() }
+                runBlocking { fixture.close() }
+            }
+        }
+    }
+
     private fun model(): BitwardenViewModel = BitwardenViewModel(compose.activity.application).also {
         models.put("auth-native-${UUID.randomUUID()}", it)
     }
@@ -234,10 +319,11 @@ class BitwardenAccountUiInstrumentedTest {
     private fun showLogin(server: MockWebServer, email: String) {
         val model = model()
         show { BitwardenLoginScreen(model, {}, {}) }
-        compose.onNodeWithText(localized.getString(R.string.legacy_ui_bitwarden_server_us)).performScrollTo().performClick()
-        compose.onNodeWithText(localized.getString(R.string.legacy_ui_bitwarden_server_self_hosted)).performClick()
-        compose.onNode(hasSetTextAction() and hasText(localized.getString(R.string.legacy_ui_self_hosted_url)))
-            .performScrollTo().performTextInput(server.url("/").toString())
+        compose.onNodeWithTag("bitwarden_server_configure").performScrollTo().performClick()
+        compose.onNodeWithText(localized.getString(R.string.legacy_ui_bitwarden_server_self_hosted)).performScrollTo().performClick()
+        compose.onNodeWithTag("bitwarden_server_base").performScrollTo().performTextReplacement(server.url("/").toString())
+        compose.onNodeWithTag("bitwarden_server_apply").performClick()
+        compose.waitUntil(20_000) { compose.onAllNodesWithTag("bitwarden_server_configuration").fetchSemanticsNodes().isEmpty() }
         compose.onNode(hasSetTextAction() and hasText(localized.getString(R.string.legacy_ui_email_address)))
             .performScrollTo().performTextInput(email)
     }

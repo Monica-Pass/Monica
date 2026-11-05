@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.service.BitwardenAccountRegistrationTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-11-05T02:02:49" hostname="JOYIN" time="2.594">
+  <properties/>
+  <testcase name="modernRegistrationVerifiesEmailAndSendsDecryptableFreshKeys" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountRegistrationTest" time="1.189"/>
+  <testcase name="serverEchoIsNeverReturnedAsRegistrationError" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountRegistrationTest" time="0.425"/>
+  <testcase name="passwordHintUsesApiEndpointAndSendsNoCredentials" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountRegistrationTest" time="0.055"/>
+  <testcase name="legacyFallbackRequiresMissingModernEndpoint" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountRegistrationTest" time="0.688"/>
+  <testcase name="mainLockAndRetiredEnvironmentPreventRegistrationReuse" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountRegistrationTest" time="0.052"/>
+  <testcase name="independentIdentityWebAndApiUseTheCapturedEnvironment" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountRegistrationTest" time="0.073"/>
+  <testcase name="deviceListDoesNotExposeEncryptedAccountKeyMaterial" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountRegistrationTest" time="0.034"/>
+  <testcase name="unverifiedOrMismatchedRegistrationDoesNotSendAnAccountRequest" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountRegistrationTest" time="0.031"/>
+  <testcase name="registrationDisabledErrorNeverFallsBackToLegacy" classname="takagi.ru.monica.bitwarden.service.BitwardenAccountRegistrationTest" time="0.046"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

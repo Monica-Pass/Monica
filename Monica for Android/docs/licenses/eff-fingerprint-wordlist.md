@@ -1,0 +1,3 @@
+# EFF long word list
+
+The account fingerprint word list in `app/src/main/res/raw/bitwarden_fingerprint_words.txt` is EFF’s Long Wordlist (7,776 words), by the Electronic Frontier Foundation. Source: https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt ; background and attribution: https://www.eff.org/dice . The original dice-number column is omitted; order and words are unchanged. Used for compatibility with Bitwarden account fingerprint phrases. EFF website content is licensed under Creative Commons Attribution 3.0 US unless otherwise noted: https://www.eff.org/copyright . No Bitwarden SDK or Keyguard implementation code is copied.

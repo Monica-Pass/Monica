@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_server_reauthenticate_hint">Thay đổi cài đặt kết nối yêu cầu đăng nhập lại. Máy chủ và email được giữ nguyên. Hủy sẽ giữ cấu hình đã lưu; tài khoản vẫn bị khóa.</string>
+</resources>

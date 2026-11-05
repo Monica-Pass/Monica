@@ -1,0 +1,377 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "scope": "Account basics AUTH_A03/AUTH_A12 only",
+  "originalFinalResultsSha256": "cc71464978ce89a2dfc3d4e574d623d0b3972f362b66c1535f396bd2218fe144",
+  "publicationCountExcludingThisManifest": 27,
+  "sameBytesInBothEditions": true,
+  "originalRawFilesModified": false,
+  "imagesOrApksIncluded": false,
+  "files": [
+    {
+      "file": "bitwarden-account-basics-325-cleanup.json",
+      "sha256": "5dbe8ae110327bc910d280271b119150d4d90f734ae870a3b98e965f14ea4277",
+      "bytes": 542,
+      "transformation": "Text-only cleanup receipt; preserve user IDs and disk filenames, omit host paths and user names",
+      "rawSources": [
+        {
+          "file": "cleanup.json",
+          "sha256": "acc30033d9c96e8d53e32d65b8c59a1b60c0c6c2b25bade5456780fb3d8685fe"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-fdroid-build.txt",
+      "sha256": "e021e669c769f663008deaa60d38ab31c07c1e2c573105dc98f05d6769ed3a89",
+      "bytes": 7268,
+      "transformation": "UTF-8 LF without BOM; trailing whitespace and terminal blank lines normalized",
+      "rawSources": [
+        {
+          "file": "fdroid-frame-verified-build.log",
+          "sha256": "03a0f7e1c362d53ec10c69985559632845434980878d4f9a01d2a090a61a5b73"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-fdroid-frame-cached-build.txt",
+      "sha256": "f091037a02a2a71e0038a77d769c90e71c763eef7e43c09dbac1ac47706e1a2b",
+      "bytes": 7213,
+      "transformation": "UTF-8 LF without BOM; trailing whitespace and terminal blank lines normalized",
+      "rawSources": [
+        {
+          "file": "fdroid-frame-full-build.log",
+          "sha256": "f0068cf554cf6136e10298682bdc1b76d3ad8881f7ac29a0a6a746c5d5a9a70a"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-fdroid-jvm.xml",
+      "sha256": "92e998b2a65a4c8687c9fb5bd3a5e6c91abb7aca5dc5002a2decfb79d789860c",
+      "bytes": 12724,
+      "transformation": "Combine eight original passing testsuite elements into one testsuites document; counts/methods/assertions unchanged; raw XML hashes retained",
+      "rawSources": [
+        {
+          "file": "raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest.xml",
+          "sha256": "3858e955d9a95521149b787b8968adc5548529f57a343200bc2c7f4c738aec79"
+        },
+        {
+          "file": "raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest.xml",
+          "sha256": "fcdf217dfd998eeb2b2ac442ade7578fff0fd58e9af6a4fb303672a1379ee778"
+        },
+        {
+          "file": "raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest.xml",
+          "sha256": "6c1744da9bc3ae872b2fa02377b8cbd669347e49c206b286553b757e1fd15167"
+        },
+        {
+          "file": "raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest.xml",
+          "sha256": "32639c2579c4cd7d8462fe668c75cf18e6dc275c8b7c7d8770f5b9ad1041920a"
+        },
+        {
+          "file": "raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest.xml",
+          "sha256": "1fdac530b4ee01278ebdab673d57b9a770acf9432bb32c84c5feb3799d79b791"
+        },
+        {
+          "file": "raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest.xml",
+          "sha256": "e21f3f3b6a70aab6b5a08a07b2d8f3c0f8284996f29a9feb43c4bebcc69303a8"
+        },
+        {
+          "file": "raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest.xml",
+          "sha256": "68af00d2dfb3292e4bd24d8fe8fd049df8e417503d328c9601e009a7f3244369"
+        },
+        {
+          "file": "raw/fdroid-frame-verified-jvm/TEST-takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest.xml",
+          "sha256": "67433a6f34bb54256aaa6ca890effff97c80c9b2ceacc941c6cc028ccc49ea25"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-fdroid-native.txt",
+      "sha256": "25ca7d41c23d511f5a312473317ee431e466fe3403288710373fcedbf3b44d75",
+      "bytes": 21340,
+      "transformation": "UTF-8 LF without BOM; trailing whitespace and terminal blank lines normalized",
+      "rawSources": [
+        {
+          "file": "fdroid-frame-native-device.txt",
+          "sha256": "607fa002fa56bc6c55764ef9f8d3feb1bf9f59f3c9feaf5cf611607b620569a0"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-fdroid-readable-candidate.txt",
+      "sha256": "0e25ba770792eb32aec85e6597737b9ad50510484d571a9368246ffe7511ac5b",
+      "bytes": 21340,
+      "transformation": "Existing normalized historical text or pinned protocol note; retained unchanged",
+      "rawSources": [
+        {
+          "file": "fdroid-final-native-device.txt",
+          "sha256": "989ab00923cd4075d505a31bb04cd7ef97ddfd11ebc0e197cc30299b9cf7b2b0"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-fdroid-resources.json",
+      "sha256": "dd484f1873e70df12d3fcf20280db9378567f39e8a6a0733cecc9838acc1daff",
+      "bytes": 57035,
+      "transformation": "Portable JSON: preserve evidence values and hashes; replace host absolute workspace roots with documented symbolic roots",
+      "rawSources": [
+        {
+          "file": "fdroid-frame-verified-built-resources.json",
+          "sha256": "3fa99d37f613b5fa27080645946d0691fe6f6ffa7b4b5487ca17ceebd712fb36"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-fdroid-window-diagnostics.json",
+      "sha256": "e6f3091dbcb987bb3da75ea314a6ffd69dd679b2606f1eea3bf8d6194e2340e1",
+      "bytes": 31410,
+      "transformation": "Portable JSON: preserve evidence values and hashes; replace host absolute workspace roots with documented symbolic roots",
+      "rawSources": [
+        {
+          "file": "fdroid-frame-native-window-diagnostics.json",
+          "sha256": "e138ac20d4ccda920f4c1869e1f4d10b3064460102cda0dcd4567b6526b454c7"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-history.json",
+      "sha256": "cce60b67d5f8adee13a7e603e1dea1ac22b801f8099bb3e8f9079dedbb224a83",
+      "bytes": 7021,
+      "transformation": "Historical evidence index; all historical outcomes remain excluded from final unique counts; final acceptance references separate result",
+      "rawSources": []
+    },
+    {
+      "file": "bitwarden-account-basics-325-main-build.txt",
+      "sha256": "d152cd8b30f6e7cf4144776bde8d226f5a1a4b8f7047fd6c2d966e28f1976563",
+      "bytes": 8226,
+      "transformation": "UTF-8 LF without BOM; trailing whitespace and terminal blank lines normalized",
+      "rawSources": [
+        {
+          "file": "main-frame-full-build.log",
+          "sha256": "bba781f29a1cc1c504e5c11660821993fab0a588fbe36e30c29c49d467aba8b3"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-main-diagnose-units-build.txt",
+      "sha256": "4c113a2ed72b715026daabb4cc1364ead597317b289535d99a1715efcc42cfc0",
+      "bytes": 6560,
+      "transformation": "Existing normalized historical text or pinned protocol note; retained unchanged",
+      "rawSources": [
+        {
+          "file": "main-diagnose-units-build.log",
+          "sha256": "3927ef9ec775d1410292ba0ec9ceb233c9f3ef7bd0b38c9d5d98a598795299bd"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-main-first-native.txt",
+      "sha256": "b6fca471446b03bb5c68d3f3774f46ec277a843e6700758f4599b1386fa5b767",
+      "bytes": 31716,
+      "transformation": "Existing normalized historical text or pinned protocol note; retained unchanged",
+      "rawSources": [
+        {
+          "file": "main-first-native-device.txt",
+          "sha256": "7653b6e8168f82ad8a2ecf725f1de0402178d43f62fd125b44ff486400cf9920"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-main-first-units-build.txt",
+      "sha256": "aa760ce0868b732d302061eb93a7223b674610d137d8a803c9cbe6b124466a8b",
+      "bytes": 73576,
+      "transformation": "Existing normalized historical text or pinned protocol note; retained unchanged",
+      "rawSources": [
+        {
+          "file": "main-first-units-build.log",
+          "sha256": "5cd70c9cc4abfbbb62753e659d6eede1e3e46a256cd6cd9c60a93a02406be27b"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-main-jvm.xml",
+      "sha256": "124b6b859873abc4f7948600b71f2ae89e9a68de96ab672e63b66bcfe1942a72",
+      "bytes": 12730,
+      "transformation": "Combine eight original passing testsuite elements into one testsuites document; counts/methods/assertions unchanged; raw XML hashes retained",
+      "rawSources": [
+        {
+          "file": "raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.BitwardenAccountFingerprintTest.xml",
+          "sha256": "6428bb5fbbe180907111cb7892d5e5721b9780a22d1c0b9e78e180fb29233ea3"
+        },
+        {
+          "file": "raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.BitwardenAccountIdentityStoreTest.xml",
+          "sha256": "43f42e83542c5c50141725adcdb51720ce8435d841b0992dff5ef720f974d893"
+        },
+        {
+          "file": "raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest.xml",
+          "sha256": "0904314ae39a9952db1881b99b5b6e45fa623db4e1acc3c59022a5d22fa9fd56"
+        },
+        {
+          "file": "raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.service.BitwardenAccountInputPolicyTest.xml",
+          "sha256": "bd37778f675dbcf4e7bf3ccff8966d532b9b8a6b8fbf83f00173a44d84d3feae"
+        },
+        {
+          "file": "raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.service.BitwardenAccountSessionGuardTest.xml",
+          "sha256": "5795dfaf57e15a12d56004dbf4f70b77d6fb82fdf6cba7a212d55a11bde09d89"
+        },
+        {
+          "file": "raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.service.BitwardenNewDeviceOtpResendTest.xml",
+          "sha256": "e32ac66297314a3d0cf59091e78cdbdf4bab63ae8ea1875f487a6c3c7548db05"
+        },
+        {
+          "file": "raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.sync.BitwardenNotificationProtocolTest.xml",
+          "sha256": "f3c2d727a6f8c8f48fb1125bdd2ccc2b0d205907461973aa35a2977784edd7e6"
+        },
+        {
+          "file": "raw/main-frame-full-jvm/TEST-takagi.ru.monica.bitwarden.viewmodel.NewDeviceOtpResendControllerTest.xml",
+          "sha256": "e96b4d18dcc78bdb0569b640689a398daf0889240405172168c4406cf523f7d7"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-main-native-fixes.txt",
+      "sha256": "79e345df98fd82f3c64da54d4b115474279e25e2ed914ea55522881f50eebd77",
+      "bytes": 26634,
+      "transformation": "Existing normalized historical text or pinned protocol note; retained unchanged",
+      "rawSources": [
+        {
+          "file": "main-native-fixes-device.txt",
+          "sha256": "bf7232bed2bb32ae94bddf1039f4f68cab7ad123fa6e0cb889c36043641a3b6d"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-main-native.txt",
+      "sha256": "a182d80f854e2479fffe0d17cc5dc5bbe3bfdf77a811d1c1a96ac30ce24265f8",
+      "bytes": 21340,
+      "transformation": "UTF-8 LF without BOM; trailing whitespace and terminal blank lines normalized",
+      "rawSources": [
+        {
+          "file": "main-frame-native-device.txt",
+          "sha256": "b72f99ac13f90d379e09709f6c19bc7434e7c5c6e32c41994f81bf33c5faa94c"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-main-readable-candidate.txt",
+      "sha256": "3a2b8186ac0bea86cfb587a66a492f22f330f252d5908dcdca1d1267842c9aac",
+      "bytes": 21340,
+      "transformation": "Existing normalized historical text or pinned protocol note; retained unchanged",
+      "rawSources": [
+        {
+          "file": "main-readable-installed-device.txt",
+          "sha256": "39734e7df104f540bf89c7dcf000017b10c36020f511ee7cb18499232f9e2f91"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-main-readable-old-apk.txt",
+      "sha256": "d0428e55f3b9d0743994c037e3abba73554bb690e2c2a287ba10bf8848f1aa78",
+      "bytes": 21340,
+      "transformation": "Existing normalized historical text or pinned protocol note; retained unchanged",
+      "rawSources": [
+        {
+          "file": "main-readable-device.txt",
+          "sha256": "d10c26b0b5f9b1e7a152ed6926fa7bf8b479064e6bfdc11fad5f897b56041048"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-main-resources.json",
+      "sha256": "ed32bc2a20387a4ca9109a8c00a21848d2d6349d34ad387f635a41deaa6e966a",
+      "bytes": 57036,
+      "transformation": "Portable JSON: preserve evidence values and hashes; replace host absolute workspace roots with documented symbolic roots",
+      "rawSources": [
+        {
+          "file": "main-frame-full-built-resources.json",
+          "sha256": "6ca877555a2a48e7f959e5b0c6c8441d1f1e6125471e4b3cb84950a44d455760"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-main-visual-isolated-large.txt",
+      "sha256": "01156325e14334248754e9dd36306e9987ce93efdb90c0d0af429f6d7299d764",
+      "bytes": 18385,
+      "transformation": "Existing normalized historical text or pinned protocol note; retained unchanged",
+      "rawSources": [
+        {
+          "file": "main-visual-isolated-large-device.txt",
+          "sha256": "d6a3f7c3da257e274d905fad4900deb2548b02dbf7fdfacd1da4237ccb14ffc4"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-main-visual-isolated-missing.txt",
+      "sha256": "da2cf16bfaf4995db365f6629c6fb23052461f5c77bdd31801b8f89604a71b93",
+      "bytes": 977,
+      "transformation": "Existing normalized historical text or pinned protocol note; retained unchanged",
+      "rawSources": [
+        {
+          "file": "main-visual-isolated-missing-device.txt",
+          "sha256": "24ca4278060f122c7d3bd4a04e288caa918af1d33521353339425cdd38a5de5e"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-main-window-diagnostics.json",
+      "sha256": "d7435459bdadb676ca714dfaa0ca40aabeb38f51fdd4a39d1606e0b28ce4824f",
+      "bytes": 31126,
+      "transformation": "Portable JSON: preserve evidence values and hashes; replace host absolute workspace roots with documented symbolic roots",
+      "rawSources": [
+        {
+          "file": "main-frame-native-window-diagnostics.json",
+          "sha256": "0de61b6132a3f561ac014b75c37c2032bd4d8d5c469c42d961c53acc2bc41d34"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-protocol.txt",
+      "sha256": "9ee8ad53b0738cca373b4fe2d2fadea9ff0fc7d9ce3f12925b3c4a3026138948",
+      "bytes": 2499,
+      "transformation": "Existing normalized historical text or pinned protocol note; retained unchanged",
+      "rawSources": []
+    },
+    {
+      "file": "bitwarden-account-basics-325-results.json",
+      "sha256": "2704706742eddf668aa0d6f77863f1d525bb4d7e858a790939e512d6a9290dc8",
+      "bytes": 82772,
+      "transformation": "Portable JSON: preserve evidence values and hashes; replace host absolute workspace roots with documented symbolic roots",
+      "rawSources": [
+        {
+          "file": "final-results.json",
+          "sha256": "cc71464978ce89a2dfc3d4e574d623d0b3972f362b66c1535f396bd2218fe144"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-sources.json",
+      "sha256": "92988666a91295728e08ca034fce03ff897cb1991631a732b61189d831a653f6",
+      "bytes": 39793,
+      "transformation": "Portable JSON: preserve evidence values and hashes; replace host absolute workspace roots with documented symbolic roots",
+      "rawSources": [
+        {
+          "file": "source-freeze.json",
+          "sha256": "90aad80facf484d627e81a848317cd1e28c6d03e6bf76abcf5964bfc60d24406"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325-visual-review.json",
+      "sha256": "84275f10e7b9caae910e90adf342a42741851093ff91649e0933ddb402525224",
+      "bytes": 4314,
+      "transformation": "Text-only visual review receipt; image hashes retained, absolute image paths omitted; no image files included",
+      "rawSources": [
+        {
+          "file": "visual-review.json",
+          "sha256": "b7da4ab6d07926837a85abb975089c81969874baaad22c9772c889bd968a5f7c"
+        }
+      ]
+    },
+    {
+      "file": "bitwarden-account-basics-325.md",
+      "sha256": "4f2dbd0c74fa9b5b16990e598ec467460fdbf6a72359b9de23c20b621b060c8b",
+      "bytes": 13402,
+      "transformation": "Final verification narrative based on accepted aggregate, visual review and cleanup receipts; historical failures retained",
+      "rawSources": []
+    }
+  ]
+}

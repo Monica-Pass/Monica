@@ -128,6 +128,7 @@ object SessionManager {
         persistedStateEditor()?.apply()
     }
 
+    @Synchronized
     private fun restorePersistedState() {
         prefs?.let { stored ->
             val persistedUnlocked = stored.getBoolean(KEY_UNLOCKED, false)
@@ -147,6 +148,7 @@ object SessionManager {
         }
     }
 
+    @Synchronized
     fun markUnlocked() {
         takagi.ru.monica.passkey.PasskeyPortabilityCache.shared.clear()
         unlockElapsedTimestamp = SystemClock.elapsedRealtime()
@@ -161,6 +163,7 @@ object SessionManager {
         )
     }
 
+    @Synchronized
     fun markLocked(clearSecondarySession: Boolean = true) {
         takagi.ru.monica.passkey.PasskeyPortabilityCache.shared.clear()
         _isUnlocked.value = false
@@ -176,6 +179,13 @@ object SessionManager {
         }
         _lockGeneration.update { it + 1 }
         android.util.Log.d(TAG, "Session locked, PID=$processId")
+    }
+
+    /** Short non-suspending publication only; callers prepare network/crypto work beforehand. */
+    @Synchronized
+    internal fun <T> publishAtGeneration(expectedGeneration: Long, action: () -> T): T? {
+        if (!_isUnlocked.value || _lockGeneration.value != expectedGeneration) return null
+        return action()
     }
 
     fun updateAutoLockTimeout(minutes: Int) {

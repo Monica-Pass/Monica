@@ -3,6 +3,7 @@ package takagi.ru.monica.bitwarden.service
 import android.content.Context
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -83,8 +84,12 @@ class BitwardenHistoricalTotpRepairService(
     suspend fun repairHistoricalTotp(
         vault: BitwardenVault,
         accessToken: String,
-        symmetricKey: SymmetricCryptoKey
+        symmetricKey: SymmetricCryptoKey,
+        requireCurrent: () -> Unit = {},
+        withPublication: (suspend (suspend () -> Unit) -> Unit)? = null,
     ): BitwardenHistoricalTotpRepairResult = withContext(Dispatchers.IO) {
+        val lease = RepairLease(requireCurrent, withPublication)
+        lease.requireCurrent()
         val now = Date()
         val vaultApi = apiManager.getVaultApi(vault)
 
@@ -97,7 +102,7 @@ class BitwardenHistoricalTotpRepairService(
         val secureItems = secureItemDao.getByBitwardenVaultId(vault.id)
             .filter { it.itemType == ItemType.TOTP && !it.isDeleted && !it.bitwardenCipherId.isNullOrBlank() }
         secureItems.forEach { item ->
-            when (val outcome = repairStandaloneTotpItem(item, vaultApi, accessToken, symmetricKey, now)) {
+            when (val outcome = repairStandaloneTotpItem(item, vaultApi, accessToken, symmetricKey, now, lease)) {
                 is RepairOutcome.Repaired -> {
                     if (outcome.localChanged) normalizedTotpItems += 1
                     if (outcome.queuedForSync) queuedTotpItemsForSync += 1
@@ -109,7 +114,7 @@ class BitwardenHistoricalTotpRepairService(
         val passwordEntries = passwordEntryDao.getByBitwardenVaultId(vault.id)
             .filter { !it.isDeleted && !it.bitwardenCipherId.isNullOrBlank() && it.bitwardenCipherType == 1 }
         passwordEntries.forEach { entry ->
-            when (val outcome = repairBoundPasswordTotp(entry, vaultApi, accessToken, symmetricKey, now)) {
+            when (val outcome = repairBoundPasswordTotp(entry, vaultApi, accessToken, symmetricKey, now, lease)) {
                 is RepairOutcome.Repaired -> {
                     if (outcome.localChanged) normalizedPasswords += 1
                     if (outcome.queuedForSync) queuedPasswordsForSync += 1
@@ -118,6 +123,7 @@ class BitwardenHistoricalTotpRepairService(
             }
         }
 
+        lease.requireCurrent()
         BitwardenHistoricalTotpRepairResult(
             normalizedTotpItems = normalizedTotpItems,
             queuedTotpItemsForSync = queuedTotpItemsForSync,
@@ -132,17 +138,19 @@ class BitwardenHistoricalTotpRepairService(
         vaultApi: BitwardenVaultApi,
         accessToken: String,
         symmetricKey: SymmetricCryptoKey,
-        now: Date
+        now: Date,
+        lease: RepairLease,
     ): RepairOutcome {
-        val remoteCipherId = item.bitwardenCipherId ?: return repairStandaloneTotpItemFromLocal(item, now)
-        val remote = fetchRemoteTotpContext(vaultApi, accessToken, remoteCipherId, symmetricKey)
-            ?: return repairStandaloneTotpItemFromLocal(item, now)
+        lease.requireCurrent()
+        val remoteCipherId = item.bitwardenCipherId ?: return repairStandaloneTotpItemFromLocal(item, now, lease)
+        val remote = fetchRemoteTotpContext(vaultApi, accessToken, remoteCipherId, symmetricKey, lease)
+            ?: return repairStandaloneTotpItemFromLocal(item, now, lease)
 
         val normalizedData = TotpDataResolver.fromAuthenticatorKey(
             rawKey = remote.totpRaw,
             fallbackIssuer = remote.displayName,
             fallbackAccountName = remote.username
-        ) ?: return repairStandaloneTotpItemFromLocal(item, now)
+        ) ?: return repairStandaloneTotpItemFromLocal(item, now, lease)
 
         val normalizedItemDataPlain = json.encodeToString(normalizedData)
         val normalizedItemData = encodeStoredSensitiveValueForRewrite(item.itemData, normalizedItemDataPlain)
@@ -158,9 +166,13 @@ class BitwardenHistoricalTotpRepairService(
             shouldQueueRemoteRewrite = shouldQueueRemoteRewrite
         )
         if (updatedItem != item) {
-            secureItemDao.update(updatedItem)
+            lease.publish {
+                check(secureItemDao.getItemById(item.id) == item) { "TOTP item changed during repair" }
+                secureItemDao.update(updatedItem)
+            }
         }
 
+        lease.requireCurrent()
         return RepairOutcome.Repaired(
             localChanged = normalizedItemData != item.itemData,
             queuedForSync = shouldQueueRemoteRewrite
@@ -172,17 +184,19 @@ class BitwardenHistoricalTotpRepairService(
         vaultApi: BitwardenVaultApi,
         accessToken: String,
         symmetricKey: SymmetricCryptoKey,
-        now: Date
+        now: Date,
+        lease: RepairLease,
     ): RepairOutcome {
-        val remoteCipherId = entry.bitwardenCipherId ?: return repairBoundPasswordTotpFromLocal(entry, now)
-        val remote = fetchRemoteTotpContext(vaultApi, accessToken, remoteCipherId, symmetricKey)
-            ?: return repairBoundPasswordTotpFromLocal(entry, now)
+        lease.requireCurrent()
+        val remoteCipherId = entry.bitwardenCipherId ?: return repairBoundPasswordTotpFromLocal(entry, now, lease)
+        val remote = fetchRemoteTotpContext(vaultApi, accessToken, remoteCipherId, symmetricKey, lease)
+            ?: return repairBoundPasswordTotpFromLocal(entry, now, lease)
 
         val normalizedTotp = TotpDataResolver.fromAuthenticatorKey(
             rawKey = remote.totpRaw,
             fallbackIssuer = remote.website.takeIf { it.isNotBlank() } ?: remote.displayName,
             fallbackAccountName = remote.username
-        ) ?: return repairBoundPasswordTotpFromLocal(entry, now)
+        ) ?: return repairBoundPasswordTotpFromLocal(entry, now, lease)
 
         val normalizedPayloadPlain = TotpDataResolver.toBitwardenPayload(remote.displayName, normalizedTotp)
         val normalizedPayload = encodeStoredSensitiveValueForRewrite(entry.authenticatorKey, normalizedPayloadPlain)
@@ -197,9 +211,13 @@ class BitwardenHistoricalTotpRepairService(
             shouldQueueRemoteRewrite = shouldQueueRemoteRewrite
         )
         if (updatedEntry != entry) {
-            passwordEntryDao.update(updatedEntry)
+            lease.publish {
+                check(passwordEntryDao.getPasswordEntryById(entry.id) == entry) { "Password changed during TOTP repair" }
+                passwordEntryDao.update(updatedEntry)
+            }
         }
 
+        lease.requireCurrent()
         return RepairOutcome.Repaired(
             localChanged = normalizedPayload != entry.authenticatorKey,
             queuedForSync = shouldQueueRemoteRewrite
@@ -208,8 +226,10 @@ class BitwardenHistoricalTotpRepairService(
 
     private suspend fun repairStandaloneTotpItemFromLocal(
         item: SecureItem,
-        now: Date
+        now: Date,
+        lease: RepairLease,
     ): RepairOutcome {
+        lease.requireCurrent()
         val normalizedData = TotpDataResolver.parseStoredItemData(
             itemData = item.itemData,
             fallbackIssuer = item.title,
@@ -232,9 +252,13 @@ class BitwardenHistoricalTotpRepairService(
             shouldQueueRemoteRewrite = shouldQueueRemoteRewrite
         )
         if (updatedItem != item) {
-            secureItemDao.update(updatedItem)
+            lease.publish {
+                check(secureItemDao.getItemById(item.id) == item) { "TOTP item changed during repair" }
+                secureItemDao.update(updatedItem)
+            }
         }
 
+        lease.requireCurrent()
         return RepairOutcome.Repaired(
             localChanged = normalizedItemData != item.itemData,
             queuedForSync = shouldQueueRemoteRewrite
@@ -243,8 +267,10 @@ class BitwardenHistoricalTotpRepairService(
 
     private suspend fun repairBoundPasswordTotpFromLocal(
         entry: PasswordEntry,
-        now: Date
+        now: Date,
+        lease: RepairLease,
     ): RepairOutcome {
+        lease.requireCurrent()
         if (entry.authenticatorKey.isBlank()) {
             return RepairOutcome.Skipped
         }
@@ -271,9 +297,13 @@ class BitwardenHistoricalTotpRepairService(
             shouldQueueRemoteRewrite = shouldQueueRemoteRewrite
         )
         if (updatedEntry != entry) {
-            passwordEntryDao.update(updatedEntry)
+            lease.publish {
+                check(passwordEntryDao.getPasswordEntryById(entry.id) == entry) { "Password changed during TOTP repair" }
+                passwordEntryDao.update(updatedEntry)
+            }
         }
 
+        lease.requireCurrent()
         return RepairOutcome.Repaired(
             localChanged = normalizedPayload != entry.authenticatorKey,
             queuedForSync = shouldQueueRemoteRewrite
@@ -284,19 +314,23 @@ class BitwardenHistoricalTotpRepairService(
         vaultApi: BitwardenVaultApi,
         accessToken: String,
         cipherId: String,
-        symmetricKey: SymmetricCryptoKey
+        symmetricKey: SymmetricCryptoKey,
+        lease: RepairLease,
     ): RemoteTotpContext? {
-        val response = runCatching {
-            vaultApi.getCipher(
-                authorization = "Bearer $accessToken",
-                cipherId = cipherId
-            )
-        }.getOrElse { error ->
-            Log.w(TAG, "Failed to fetch cipher $cipherId for TOTP repair: ${error.message}")
+        lease.requireCurrent()
+        val response = try {
+            vaultApi.getCipher(authorization = "Bearer $accessToken", cipherId = cipherId)
+        } catch (cancelled: CancellationException) {
+            throw cancelled
+        } catch (error: Exception) {
+            lease.requireCurrent()
+            Log.w(TAG, "TOTP repair fetch failed; kind=${classifyBitwardenLoginError(error)?.name ?: "UNKNOWN"}")
             return null
         }
+        lease.requireCurrent()
         if (!response.isSuccessful) {
-            Log.w(TAG, "Skipping TOTP repair for cipher $cipherId: getCipher ${response.code()}")
+            response.errorBody()?.close()
+            Log.w(TAG, "TOTP repair fetch rejected; HTTP=${response.code()}")
             return null
         }
 
@@ -307,6 +341,7 @@ class BitwardenHistoricalTotpRepairService(
             return null
         }
 
+        lease.requireCurrent()
         return RemoteTotpContext(
             displayName = decryptString(cipher.name, symmetricKey).orEmpty().ifBlank { "Authenticator" },
             username = decryptString(login.username, symmetricKey).orEmpty(),
@@ -342,6 +377,20 @@ class BitwardenHistoricalTotpRepairService(
             BitwardenCrypto.decryptToString(encrypted, key)
         } catch (_: Exception) {
             null
+        }
+    }
+
+    private class RepairLease(
+        val requireCurrent: () -> Unit,
+        val withPublication: (suspend (suspend () -> Unit) -> Unit)?,
+    ) {
+        suspend fun publish(action: suspend () -> Unit) {
+            val checked: suspend () -> Unit = {
+                requireCurrent()
+                action()
+                requireCurrent()
+            }
+            if (withPublication == null) checked() else withPublication.invoke(checked)
         }
     }
 

@@ -1,0 +1,505 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest:
+INSTRUMENTATION_STATUS: test=offlineGetterReadsSealedIdentityAfterRepositoryRecreation
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=offlineGetterReadsSealedIdentityAfterRepositoryRecreation
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeProfileCachesOnlySealedPublicIdentityAndCopiesTheProtocolPhrase
+INSTRUMENTATION_STATUS_CODE: 1
+s_glBindAttribLocation: bind attrib 0 name position
+s_glBindAttribLocation: bind attrib 1 name localCoord
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeProfileCachesOnlySealedPublicIdentityAndCopiesTheProtocolPhrase
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=largeFontPhraseWrapsWithoutOverflowAndBackgroundRevokesTheSheet
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Actual text reports visual overflow at 742 x 84
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertFalse(Assert.java:65)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.assertTextFits(BitwardenFingerprintInstrumentedTest.kt:364)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.largeFontPhraseWrapsWithoutOverflowAndBackgroundRevokesTheSheet$lambda$24(BitwardenFingerprintInstrumentedTest.kt:256)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.$r8$lambda$7WP62ZpZ6jFqLpbo7Vy7E_XvZeI(Unknown Source:0)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest$$ExternalSyntheticLambda4.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.withFixture(BitwardenFingerprintInstrumentedTest.kt:277)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.withFixture$default(BitwardenFingerprintInstrumentedTest.kt:272)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.largeFontPhraseWrapsWithoutOverflowAndBackgroundRevokesTheSheet(BitwardenFingerprintInstrumentedTest.kt:246)
+
+INSTRUMENTATION_STATUS: stream=
+Error in largeFontPhraseWrapsWithoutOverflowAndBackgroundRevokesTheSheet(takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest):
+java.lang.AssertionError: Actual text reports visual overflow at 742 x 84
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertFalse(Assert.java:65)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.assertTextFits(BitwardenFingerprintInstrumentedTest.kt:364)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.largeFontPhraseWrapsWithoutOverflowAndBackgroundRevokesTheSheet$lambda$24(BitwardenFingerprintInstrumentedTest.kt:256)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.$r8$lambda$7WP62ZpZ6jFqLpbo7Vy7E_XvZeI(Unknown Source:0)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest$$ExternalSyntheticLambda4.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.withFixture(BitwardenFingerprintInstrumentedTest.kt:277)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.withFixture$default(BitwardenFingerprintInstrumentedTest.kt:272)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.largeFontPhraseWrapsWithoutOverflowAndBackgroundRevokesTheSheet(BitwardenFingerprintInstrumentedTest.kt:246)
+
+INSTRUMENTATION_STATUS: test=largeFontPhraseWrapsWithoutOverflowAndBackgroundRevokesTheSheet
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=missingProfilePrivateKeyShowsLocalizedErrorAndDisablesCopy
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=missingProfilePrivateKeyShowsLocalizedErrorAndDisablesCopy
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=changedAccountBindingAndAuthenticatedStampRejectTheCachedIdentity
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=changedAccountBindingAndAuthenticatedStampRejectTheCachedIdentity
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=vaultLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=vaultLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=applicationLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stack=org.junit.ComparisonFailure: expected:<[synthetic clipboard stays unchanged]> but was:<[deviation-snorkel-hypnotist-outline-cardiac]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.applicationLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback$lambda$6(BitwardenFingerprintInstrumentedTest.kt:125)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.$r8$lambda$-1uVNweixY4OfH2MCFJ7NM_IFdQ(Unknown Source:0)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest$$ExternalSyntheticLambda3.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.withFixture(BitwardenFingerprintInstrumentedTest.kt:277)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.withFixture$default(BitwardenFingerprintInstrumentedTest.kt:272)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.applicationLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback(BitwardenFingerprintInstrumentedTest.kt:110)
+
+INSTRUMENTATION_STATUS: stream=
+Error in applicationLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback(takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest):
+org.junit.ComparisonFailure: expected:<[synthetic clipboard stays unchanged]> but was:<[deviation-snorkel-hypnotist-outline-cardiac]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.applicationLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback$lambda$6(BitwardenFingerprintInstrumentedTest.kt:125)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.$r8$lambda$-1uVNweixY4OfH2MCFJ7NM_IFdQ(Unknown Source:0)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest$$ExternalSyntheticLambda3.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.withFixture(BitwardenFingerprintInstrumentedTest.kt:277)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.withFixture$default(BitwardenFingerprintInstrumentedTest.kt:272)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.applicationLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback(BitwardenFingerprintInstrumentedTest.kt:110)
+
+INSTRUMENTATION_STATUS: test=applicationLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lateProfileCannotDeleteOrReplaceIdentityAfterLockAndSameTokenUnlock
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lateProfileCannotDeleteOrReplaceIdentityAfterLockAndSameTokenUnlock
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=malformedProfilePrivateKeyRemovesOldIdentityAndCannotCopyTheOldPhrase
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=malformedProfilePrivateKeyRemovesOldIdentityAndCannotCopyTheOldPhrase
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest:
+INSTRUMENTATION_STATUS: test=ordinaryEmailTwoFactorRetainsItsSeparateSendControl
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=ordinaryEmailTwoFactorRetainsItsSeparateSendControl
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=largePortugueseNewDeviceResendAndStatusWrapWithoutTextOverflow
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Action performScrollTo() failed.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Reenviar email de verificação' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:80)
+	at takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest.largePortugueseNewDeviceResendAndStatusWrapWithoutTextOverflow(BitwardenNewDeviceOtpResendInstrumentedTest.kt:191)
+
+INSTRUMENTATION_STATUS: stream=
+Error in largePortugueseNewDeviceResendAndStatusWrapWithoutTextOverflow(takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest):
+java.lang.AssertionError: Action performScrollTo() failed.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Reenviar email de verificação' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:80)
+	at takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest.largePortugueseNewDeviceResendAndStatusWrapWithoutTextOverflow(BitwardenNewDeviceOtpResendInstrumentedTest.kt:191)
+
+INSTRUMENTATION_STATUS: test=largePortugueseNewDeviceResendAndStatusWrapWithoutTextOverflow
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=mailboxBackgroundCancelsLateResendButPreservesOriginalOtpChallengeAndCooldown
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=mailboxBackgroundCancelsLateResendButPreservesOriginalOtpChallengeAndCooldown
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=explicitCancelDuringResendClosesChallengeAndSuppressesLateStatus
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=explicitCancelDuringResendClosesChallengeAndSuppressesLateStatus
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeResendUsesCurrentProofOnlyAfterClickAndKeepsNewDeviceOtpSubmission
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeResendUsesCurrentProofOnlyAfterClickAndKeepsNewDeviceOtpSubmission
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeUnsupportedServerShowsTruthfulFailureWithoutOrdinaryEmailFallback
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeUnsupportedServerShowsTruthfulFailureWithoutOrdinaryEmailFallback
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=globalLockClearsChallengeAndLateResendCannotRestoreIt
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=globalLockClearsChallengeAndLateResendCannotRestoreIt
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeRateLimitShowsSanitizedMessageAndServerCooldown
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeRateLimitShowsSanitizedMessageAndServerCooldown
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest:
+INSTRUMENTATION_STATUS: test=nativeDeviceListClearsOnLockAndReloadsAfterReturningToForeground
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeDeviceListClearsOnLockAndReloadsAfterReturningToForeground
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeAccountDeviceListValidatesProfileAndRevokesChangedStampBeforeLoadingDevices
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeAccountDeviceListValidatesProfileAndRevokesChangedStampBeforeLoadingDevices
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lateAccountDeviceResponseCannotReappearAfterLock
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lateAccountDeviceResponseCannotReappearAfterLock
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeRegistrationUsesVerifiedEmailAndDoesNotCreateAPartialLocalVault
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeRegistrationUsesVerifiedEmailAndDoesNotCreateAPartialLocalVault
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativePasswordHintRequestSendsOnlyEmailAndKeepsLoginAvailable
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativePasswordHintRequestSendsOnlyEmailAndKeepsLoginAvailable
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest:
+INSTRUMENTATION_STATUS: test=uncheckedNativeRememberSendsZeroAndNeverPersistsTheReturnedToken
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=uncheckedNativeRememberSendsZeroAndNeverPersistsTheReturnedToken
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=checkedNativeRememberIsSealedReusedAsProviderFiveAndRejectedOnlyOnceBeforeFallback
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=checkedNativeRememberIsSealedReusedAsProviderFiveAndRejectedOnlyOnceBeforeFallback
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=leavingDuringMfaAndLogoutDuringRememberedLoginPreventLatePublication
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenRememberedMfaInstrumentedTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=leavingDuringMfaAndLogoutDuringRememberedLoginPreventLatePublication
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintSessionInstrumentedTest
+INSTRUMENTATION_STATUS: current=26
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenFingerprintSessionInstrumentedTest:
+INSTRUMENTATION_STATUS: test=lateFullSyncIdentityAndChangedStampCannotReplaceOrRevokeRestoredSession
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintSessionInstrumentedTest
+INSTRUMENTATION_STATUS: current=26
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lateFullSyncIdentityAndChangedStampCannotReplaceOrRevokeRestoredSession
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintSessionInstrumentedTest
+INSTRUMENTATION_STATUS: current=27
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=firstFullSyncPublishesProfileIdStampAndImmediatelyReadableFingerprint
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintSessionInstrumentedTest
+INSTRUMENTATION_STATUS: current=27
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=firstFullSyncPublishesProfileIdStampAndImmediatelyReadableFingerprint
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintSessionInstrumentedTest
+INSTRUMENTATION_STATUS: current=28
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lateChangedStampPreflightCannotRevokeSameTokenRestoredSession
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenFingerprintSessionInstrumentedTest
+INSTRUMENTATION_STATUS: current=28
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=28
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lateChangedStampPreflightCannotRevokeSameTokenRestoredSession
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 111.567
+There were 3 failures:
+1) largeFontPhraseWrapsWithoutOverflowAndBackgroundRevokesTheSheet(takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest)
+java.lang.AssertionError: Actual text reports visual overflow at 742 x 84
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertFalse(Assert.java:65)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.assertTextFits(BitwardenFingerprintInstrumentedTest.kt:364)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.largeFontPhraseWrapsWithoutOverflowAndBackgroundRevokesTheSheet$lambda$24(BitwardenFingerprintInstrumentedTest.kt:256)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.$r8$lambda$7WP62ZpZ6jFqLpbo7Vy7E_XvZeI(Unknown Source:0)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest$$ExternalSyntheticLambda4.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.withFixture(BitwardenFingerprintInstrumentedTest.kt:277)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.withFixture$default(BitwardenFingerprintInstrumentedTest.kt:272)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.largeFontPhraseWrapsWithoutOverflowAndBackgroundRevokesTheSheet(BitwardenFingerprintInstrumentedTest.kt:246)
+2) applicationLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback(takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest)
+org.junit.ComparisonFailure: expected:<[synthetic clipboard stays unchanged]> but was:<[deviation-snorkel-hypnotist-outline-cardiac]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.applicationLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback$lambda$6(BitwardenFingerprintInstrumentedTest.kt:125)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.$r8$lambda$-1uVNweixY4OfH2MCFJ7NM_IFdQ(Unknown Source:0)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest$$ExternalSyntheticLambda3.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.withFixture(BitwardenFingerprintInstrumentedTest.kt:277)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.withFixture$default(BitwardenFingerprintInstrumentedTest.kt:272)
+	at takagi.ru.monica.bitwarden.BitwardenFingerprintInstrumentedTest.applicationLockClosesSheetAndRejectsAnAlreadyCapturedCopyCallback(BitwardenFingerprintInstrumentedTest.kt:110)
+3) largePortugueseNewDeviceResendAndStatusWrapWithoutTextOverflow(takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest)
+java.lang.AssertionError: Action performScrollTo() failed.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (Text + InputText + EditableText contains 'Reenviar email de verificação' (ignoreCase: false))
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:80)
+	at takagi.ru.monica.bitwarden.BitwardenNewDeviceOtpResendInstrumentedTest.largePortugueseNewDeviceResendAndStatusWrapWithoutTextOverflow(BitwardenNewDeviceOtpResendInstrumentedTest.kt:191)
+
+FAILURES!!!
+Tests run: 28,  Failures: 3
+
+
+INSTRUMENTATION_CODE: -1

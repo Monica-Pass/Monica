@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.api.BitwardenTransportPolicyTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-11-05T02:02:45" hostname="JOYIN" time="0.003">
+  <properties/>
+  <testcase name="protocolAndRetrofitHeadersAreReservedCaseInsensitively" classname="takagi.ru.monica.bitwarden.api.BitwardenTransportPolicyTest" time="0.001"/>
+  <testcase name="duplicateErrorsUseOriginalRowAndSpacesAreNotTrimmedFromValues" classname="takagi.ru.monica.bitwarden.api.BitwardenTransportPolicyTest" time="0.0"/>
+  <testcase name="notificationsFieldIsALiteralServiceBaseAndWebDoesNotChangeReferer" classname="takagi.ru.monica.bitwarden.api.BitwardenTransportPolicyTest" time="0.0"/>
+  <testcase name="headerLimitsAndInjectionChecksPreventInvalidPublication" classname="takagi.ru.monica.bitwarden.api.BitwardenTransportPolicyTest" time="0.001"/>
+  <testcase name="explicitHttpWorksOnlyForItsConfiguredAccountScope" classname="takagi.ru.monica.bitwarden.api.BitwardenTransportPolicyTest" time="0.0"/>
+  <testcase name="exactNativeScopesPermitQueriesButRejectOtherOriginsPathsAndWebOnly" classname="takagi.ru.monica.bitwarden.api.BitwardenTransportPolicyTest" time="0.001"/>
+  <testcase name="foreignSignedHttpsSelectsPlainClientAndPreservesTheQuery" classname="takagi.ru.monica.bitwarden.api.BitwardenTransportPolicyTest" time="0.0"/>
+  <testcase name="normalizationCannotRestoreAccountCredentialsToAnAmbiguousRawTransferPath" classname="takagi.ru.monica.bitwarden.api.BitwardenTransportPolicyTest" time="0.0"/>
+  <testcase name="credentialedMalformedAndFragmentTransfersAreRejectedWithSafeCodes" classname="takagi.ru.monica.bitwarden.api.BitwardenTransportPolicyTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

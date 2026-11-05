@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.api.BitwardenTransportTlsHandshakeTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-05T02:02:45" hostname="JOYIN" time="3.201">
+  <properties/>
+  <testcase name="trustedCertificateForAnotherHostnameStillCannotDeliverHttp" classname="takagi.ru.monica.bitwarden.api.BitwardenTransportTlsHandshakeTest" time="0.883"/>
+  <testcase name="customCaAugmentsTheDefaultTrustBranchWithActualRequestsToBothServers" classname="takagi.ru.monica.bitwarden.api.BitwardenTransportTlsHandshakeTest" time="0.316"/>
+  <testcase name="foreignSignedClientUsesSeparatePoolAndSendsNoAccountCertificateOrHeaders" classname="takagi.ru.monica.bitwarden.api.BitwardenTransportTlsHandshakeTest" time="0.281"/>
+  <testcase name="allowedMtlsOriginReceivesTheSyntheticClientCertificateAndExactHttpBytes" classname="takagi.ru.monica.bitwarden.api.BitwardenTransportTlsHandshakeTest" time="0.149"/>
+  <testcase name="outOfScopeOriginWebAndLookalikePathsAreRejectedBeforeServerTlsCreation" classname="takagi.ru.monica.bitwarden.api.BitwardenTransportTlsHandshakeTest" time="0.748"/>
+  <testcase name="foreignClientCannotReuseCustomCaEvenAfterTheAccountClientTrustedThatServer" classname="takagi.ru.monica.bitwarden.api.BitwardenTransportTlsHandshakeTest" time="0.36"/>
+  <testcase name="redirectsDoNotSendAnotherHttpRequestOrHandshakeTheForeignTarget" classname="takagi.ru.monica.bitwarden.api.BitwardenTransportTlsHandshakeTest" time="0.464"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Nov 05, 2026 10:02:46 AM okhttp3.mockwebserver.MockWebServer$SocketHandler handle
+WARNING: MockWebServer[61865] connection from /127.0.0.1 didn't make a request
+]]></system-err>
+</testsuite>

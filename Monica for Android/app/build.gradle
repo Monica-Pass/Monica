@@ -380,6 +380,7 @@ dependencies {
     testImplementation 'net.java.dev.jna:jna:5.17.0@jar'
     testImplementation libs.kotlin.coroutines.test
     testImplementation 'com.squareup.okhttp3:mockwebserver:4.12.0'
+    testImplementation 'org.bouncycastle:bcpkix-jdk18on:1.78.1'
     androidTestImplementation libs.androidx.junit
     androidTestImplementation 'com.squareup.okhttp3:mockwebserver:4.12.0'
     androidTestImplementation libs.androidx.espresso.core

@@ -158,7 +158,8 @@ class SteamBitwardenAccountStore(
         val reconcileResult = runCatching {
             attachmentFacade.reconcileBitwardenAttachments(
                 owner = AttachmentOwner.password(entry.id),
-                remoteAttachments = snapshot.attachments
+                remoteAttachments = snapshot.attachments,
+                bitwardenContext = snapshot.context,
             )
         }
         if (reconcileResult.isFailure) {
@@ -392,7 +393,8 @@ class SteamBitwardenAccountStore(
             ?: throw IllegalStateException("Bitwarden attachment cipher could not be verified")
         attachmentFacade.reconcileBitwardenAttachments(
             owner = AttachmentOwner.password(syncedEntry.id),
-            remoteAttachments = snapshot.attachments
+            remoteAttachments = snapshot.attachments,
+            bitwardenContext = snapshot.context,
         )
         val context = snapshot.context
         val oldAttachments = attachmentFacade.listByPassword(syncedEntry.id)

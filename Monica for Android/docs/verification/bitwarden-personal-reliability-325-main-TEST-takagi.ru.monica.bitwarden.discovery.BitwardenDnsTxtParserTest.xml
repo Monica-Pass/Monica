@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.discovery.BitwardenDnsTxtParserTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-11-05T02:02:49" hostname="JOYIN" time="0.011">
+  <properties/>
+  <testcase name="rejectsSelfForwardHeaderAndUnparsedDataCompressionTargets" classname="takagi.ru.monica.bitwarden.discovery.BitwardenDnsTxtParserTest" time="0.003"/>
+  <testcase name="validatesNegativeSoaAndEdnsResponseCodesAndOptions" classname="takagi.ru.monica.bitwarden.discovery.BitwardenDnsTxtParserTest" time="0.001"/>
+  <testcase name="enforcesPacketRecordTxtAndAggregateTextBudgets" classname="takagi.ru.monica.bitwarden.discovery.BitwardenDnsTxtParserTest" time="0.001"/>
+  <testcase name="joinsStringsWithinEachRecordButNeverAcrossRecords" classname="takagi.ru.monica.bitwarden.discovery.BitwardenDnsTxtParserTest" time="0.0"/>
+  <testcase name="acceptsEightAliasHopsButRejectsNine" classname="takagi.ru.monica.bitwarden.discovery.BitwardenDnsTxtParserTest" time="0.001"/>
+  <testcase name="checksRecordClassNameLengthsAndCnameRdataBoundary" classname="takagi.ru.monica.bitwarden.discovery.BitwardenDnsTxtParserTest" time="0.0"/>
+  <testcase name="recordsAreDefensivelyCopiedAndStringificationDoesNotPrintTxt" classname="takagi.ru.monica.bitwarden.discovery.BitwardenDnsTxtParserTest" time="0.0"/>
+  <testcase name="distinguishesNodataNxdomainAndServerFailure" classname="takagi.ru.monica.bitwarden.discovery.BitwardenDnsTxtParserTest" time="0.0"/>
+  <testcase name="rejectsQuestionMismatchTypeClassAndMultipleQuestions" classname="takagi.ru.monica.bitwarden.discovery.BitwardenDnsTxtParserTest" time="0.001"/>
+  <testcase name="rejectsAmbiguousCnameTargetsAndCoexistingTxt" classname="takagi.ru.monica.bitwarden.discovery.BitwardenDnsTxtParserTest" time="0.0"/>
+  <testcase name="checksEveryTruncationAndRejectsTrailingBytes" classname="takagi.ru.monica.bitwarden.discovery.BitwardenDnsTxtParserTest" time="0.002"/>
+  <testcase name="joinsUtf8BytesBeforeDecodingAndRejectsMalformedEncoding" classname="takagi.ru.monica.bitwarden.discovery.BitwardenDnsTxtParserTest" time="0.002"/>
+  <testcase name="rejectsQueriesOpcodesTruncationAndReservedFlag" classname="takagi.ru.monica.bitwarden.discovery.BitwardenDnsTxtParserTest" time="0.0"/>
+  <testcase name="acceptsBackwardCompressionAndCaseInsensitiveQuestion" classname="takagi.ru.monica.bitwarden.discovery.BitwardenDnsTxtParserTest" time="0.0"/>
+  <testcase name="ignoresAuthorityAndAdditionalTxtForCandidateSelection" classname="takagi.ru.monica.bitwarden.discovery.BitwardenDnsTxtParserTest" time="0.0"/>
+  <testcase name="followsOnlyTheRequestedValidatedCnameChain" classname="takagi.ru.monica.bitwarden.discovery.BitwardenDnsTxtParserTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.service.BitwardenAuthRedactionTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-05T02:02:52" hostname="JOYIN" time="2.124">
+  <properties/>
+  <testcase name="cancellationRemainsCancellation" classname="takagi.ru.monica.bitwarden.service.BitwardenAuthRedactionTest" time="0.022"/>
+  <testcase name="actualTwoFactorNewDeviceAndEmailFailuresNeverReturnServerText" classname="takagi.ru.monica.bitwarden.service.BitwardenAuthRedactionTest" time="0.24"/>
+  <testcase name="actualPreloginAndRefreshFailuresExcludeReasonPhraseAndBody" classname="takagi.ru.monica.bitwarden.service.BitwardenAuthRedactionTest" time="0.05"/>
+  <testcase name="actualCaptchaKeepsChallengeStateButUsesLocalMessage" classname="takagi.ru.monica.bitwarden.service.BitwardenAuthRedactionTest" time="0.089"/>
+  <testcase name="actualLoginRetryNeverReturnsOrLogsServerEchoes" classname="takagi.ru.monica.bitwarden.service.BitwardenAuthRedactionTest" time="0.064"/>
+  <testcase name="transportClassificationSurvivesWithoutRawCausesOrMessages" classname="takagi.ru.monica.bitwarden.service.BitwardenAuthRedactionTest" time="0.029"/>
+  <testcase name="serverEchoesMapToFixedCategoriesAndExistingLocalizedMessages" classname="takagi.ru.monica.bitwarden.service.BitwardenAuthRedactionTest" time="1.609"/>
+  <testcase name="diagnosticsRejectInjectedLabelsAndRetainOnlyBoundedStatus" classname="takagi.ru.monica.bitwarden.service.BitwardenAuthRedactionTest" time="0.021"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

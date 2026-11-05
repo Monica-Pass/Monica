@@ -191,7 +191,7 @@ class BitwardenNotificationInstrumentedTest {
             val key = SymmetricCryptoKey(ByteArray(32) { label.length.toByte() }, ByteArray(32) { 79 })
             val base = server.url("/$label").toString()
             val value = BitwardenVault(email = "$user@example.invalid", userId = user, accountKey = user,
-                serverUrl = base, apiUrl = "$base/api/", identityUrl = "$base/identity/", isLocked = false,
+                serverUrl = base, apiUrl = "$base/api/", identityUrl = "$base/identity/", isLocked = false, isConnected = true,
                 accessTokenExpiresAt = System.currentTimeMillis() + 300_000)
             val vault = value.copy(id = database.bitwardenVaultDao().insert(value))
             val account = Account(label, user, "synthetic-$user", key, vault)

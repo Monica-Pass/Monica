@@ -1,0 +1,77 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest:
+INSTRUMENTATION_STATUS: test=outlinedSecretClearsWhenInputAndExternalResetShareOneFrame
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=org.junit.ComparisonFailure: expected:<[]> but was:<[Synthetic unsent secret]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest.reset(BitwardenSensitiveInputResetInstrumentedTest.kt:51)
+	at takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest.outlinedSecretClearsWhenInputAndExternalResetShareOneFrame(BitwardenSensitiveInputResetInstrumentedTest.kt:26)
+
+INSTRUMENTATION_STATUS: stream=
+Error in outlinedSecretClearsWhenInputAndExternalResetShareOneFrame(takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest):
+org.junit.ComparisonFailure: expected:<[]> but was:<[Synthetic unsent secret]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest.reset(BitwardenSensitiveInputResetInstrumentedTest.kt:51)
+	at takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest.outlinedSecretClearsWhenInputAndExternalResetShareOneFrame(BitwardenSensitiveInputResetInstrumentedTest.kt:26)
+
+INSTRUMENTATION_STATUS: test=outlinedSecretClearsWhenInputAndExternalResetShareOneFrame
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=filledSecretClearsWhenInputAndExternalResetShareOneFrame
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=org.junit.ComparisonFailure: expected:<[]> but was:<[Synthetic unsent secret]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest.reset(BitwardenSensitiveInputResetInstrumentedTest.kt:51)
+	at takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest.filledSecretClearsWhenInputAndExternalResetShareOneFrame(BitwardenSensitiveInputResetInstrumentedTest.kt:27)
+
+INSTRUMENTATION_STATUS: stream=
+Error in filledSecretClearsWhenInputAndExternalResetShareOneFrame(takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest):
+org.junit.ComparisonFailure: expected:<[]> but was:<[Synthetic unsent secret]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest.reset(BitwardenSensitiveInputResetInstrumentedTest.kt:51)
+	at takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest.filledSecretClearsWhenInputAndExternalResetShareOneFrame(BitwardenSensitiveInputResetInstrumentedTest.kt:27)
+
+INSTRUMENTATION_STATUS: test=filledSecretClearsWhenInputAndExternalResetShareOneFrame
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 3.848
+There were 2 failures:
+1) outlinedSecretClearsWhenInputAndExternalResetShareOneFrame(takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest)
+org.junit.ComparisonFailure: expected:<[]> but was:<[Synthetic unsent secret]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest.reset(BitwardenSensitiveInputResetInstrumentedTest.kt:51)
+	at takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest.outlinedSecretClearsWhenInputAndExternalResetShareOneFrame(BitwardenSensitiveInputResetInstrumentedTest.kt:26)
+2) filledSecretClearsWhenInputAndExternalResetShareOneFrame(takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest)
+org.junit.ComparisonFailure: expected:<[]> but was:<[Synthetic unsent secret]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest.reset(BitwardenSensitiveInputResetInstrumentedTest.kt:51)
+	at takagi.ru.monica.bitwarden.BitwardenSensitiveInputResetInstrumentedTest.filledSecretClearsWhenInputAndExternalResetShareOneFrame(BitwardenSensitiveInputResetInstrumentedTest.kt:27)
+
+FAILURES!!!
+Tests run: 2,  Failures: 2
+
+
+INSTRUMENTATION_CODE: -1

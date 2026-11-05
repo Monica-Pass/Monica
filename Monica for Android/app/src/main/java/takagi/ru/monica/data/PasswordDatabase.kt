@@ -48,7 +48,7 @@ import takagi.ru.monica.keepass.KeePassPendingChangeDao
         // KeePass entry-level pending changes
         KeePassPendingChange::class
     ],
-    version = 83,
+    version = 84,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -92,6 +92,17 @@ abstract class PasswordDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: PasswordDatabase? = null
         
+        internal val MIGRATION_83_84 = object : androidx.room.migration.Migration(83, 84) {
+            override fun migrate(database: androidx.sqlite.db.SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE bitwarden_vaults ADD COLUMN environment_preset TEXT")
+                database.execSQL("ALTER TABLE bitwarden_vaults ADD COLUMN web_vault_url TEXT")
+                database.execSQL("ALTER TABLE bitwarden_vaults ADD COLUMN notifications_url TEXT")
+                database.execSQL("ALTER TABLE bitwarden_vaults ADD COLUMN transport_revision TEXT NOT NULL DEFAULT ''")
+                database.execSQL("ALTER TABLE bitwarden_vaults ADD COLUMN transport_secret_ref TEXT")
+                // No authentication or secret-store access during migration. Existing rows remain intact.
+            }
+        }
+
         internal val MIGRATION_82_83 = object : androidx.room.migration.Migration(82, 83) {
             override fun migrate(database: androidx.sqlite.db.SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE bitwarden_sends ADD COLUMN auth_type INTEGER")
@@ -2500,7 +2511,8 @@ abstract class PasswordDatabase : RoomDatabase() {
                         MIGRATION_79_80,   // Preserve explicit WebAuthn backup flags
                         MIGRATION_80_81,   // Complete encrypted Bitwarden source documents
                         MIGRATION_81_82,   // Native Bitwarden history and all-type archive
-                        MIGRATION_82_83    // Authenticated encrypted Send cache
+                        MIGRATION_82_83,   // Authenticated encrypted Send cache
+                        MIGRATION_83_84    // Protected account transport configuration
                     )
                     // 启用多进程失效通知：IME 跑在 :ime 独立进程，主进程需要
                     // 感知 IME 进程对数据库的修改（例如最近填充时间戳等）。

@@ -19,6 +19,16 @@ import takagi.ru.monica.attachments.model.Attachment
  */
 @Dao
 interface AttachmentDao {
+    /** Retiring a vault revokes its in-flight downloads; unrelated/local blobs and metadata stay intact. */
+    @Query("""
+        UPDATE attachments SET download_state = 'PENDING'
+        WHERE source = 'BITWARDEN' AND download_state = 'DOWNLOADING' AND (
+            parent_password_id IN (SELECT id FROM password_entries WHERE bitwarden_vault_id = :vaultId)
+            OR parent_secure_item_id IN (SELECT id FROM secure_items WHERE bitwarden_vault_id = :vaultId)
+        )
+    """)
+    fun resetRetiredBitwardenDownloads(vaultId: Long): Int
+
     /** Queue metadata only: no path, CEK, payload, URL, or remote attachment key is selected. */
     @Query("""
         SELECT 'attachment:' || a.id AS queueKey,

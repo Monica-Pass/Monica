@@ -1,0 +1,62 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountManagementUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenAccountManagementUiInstrumentedTest:
+INSTRUMENTATION_STATUS: test=largeFontMenuAndDestructiveReviewWrapWithoutClippingOrLosingControls
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAccountManagementUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Large-font text must wrap instead of clipping. Node 11:
+text=Close; size=147 x 83; paragraph=952.0x83.0; constraints=Constraints(minWidth = 0, maxWidth = 952, minHeight = 0, maxHeight = 1764); lines=1; maxLines=2147483647; widthOverflow=true; heightOverflow=false
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.bitwarden.BitwardenAccountManagementUiInstrumentedTest.assertTextLayoutsFit(BitwardenAccountManagementUiInstrumentedTest.kt:348)
+	at takagi.ru.monica.bitwarden.BitwardenAccountManagementUiInstrumentedTest.largeFontMenuAndDestructiveReviewWrapWithoutClippingOrLosingControls(BitwardenAccountManagementUiInstrumentedTest.kt:230)
+
+INSTRUMENTATION_STATUS: stream=
+Error in largeFontMenuAndDestructiveReviewWrapWithoutClippingOrLosingControls(takagi.ru.monica.bitwarden.BitwardenAccountManagementUiInstrumentedTest):
+java.lang.AssertionError: Large-font text must wrap instead of clipping. Node 11:
+text=Close; size=147 x 83; paragraph=952.0x83.0; constraints=Constraints(minWidth = 0, maxWidth = 952, minHeight = 0, maxHeight = 1764); lines=1; maxLines=2147483647; widthOverflow=true; heightOverflow=false
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.bitwarden.BitwardenAccountManagementUiInstrumentedTest.assertTextLayoutsFit(BitwardenAccountManagementUiInstrumentedTest.kt:348)
+	at takagi.ru.monica.bitwarden.BitwardenAccountManagementUiInstrumentedTest.largeFontMenuAndDestructiveReviewWrapWithoutClippingOrLosingControls(BitwardenAccountManagementUiInstrumentedTest.kt:230)
+
+INSTRUMENTATION_STATUS: test=largeFontMenuAndDestructiveReviewWrapWithoutClippingOrLosingControls
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendReceiverUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenSendReceiverUiInstrumentedTest:
+INSTRUMENTATION_STATUS: test=cancellingTheActualDocumentPickerClearsTheFileSessionBeforeAnyDownloadAuthorization
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendReceiverUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cancellingTheActualDocumentPickerClearsTheFileSessionBeforeAnyDownloadAuthorization
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 11.336
+There was 1 failure:
+1) largeFontMenuAndDestructiveReviewWrapWithoutClippingOrLosingControls(takagi.ru.monica.bitwarden.BitwardenAccountManagementUiInstrumentedTest)
+java.lang.AssertionError: Large-font text must wrap instead of clipping. Node 11:
+text=Close; size=147 x 83; paragraph=952.0x83.0; constraints=Constraints(minWidth = 0, maxWidth = 952, minHeight = 0, maxHeight = 1764); lines=1; maxLines=2147483647; widthOverflow=true; heightOverflow=false
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.bitwarden.BitwardenAccountManagementUiInstrumentedTest.assertTextLayoutsFit(BitwardenAccountManagementUiInstrumentedTest.kt:348)
+	at takagi.ru.monica.bitwarden.BitwardenAccountManagementUiInstrumentedTest.largeFontMenuAndDestructiveReviewWrapWithoutClippingOrLosingControls(BitwardenAccountManagementUiInstrumentedTest.kt:230)
+
+FAILURES!!!
+Tests run: 2,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

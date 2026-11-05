@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_new_device_resend">Повторно отправить письмо с подтверждением</string>
+    <string name="bitwarden_new_device_resend_sent">Письмо с подтверждением запрошено. Проверьте входящие.</string>
+    <string name="bitwarden_new_device_resend_failed">Не удалось запросить письмо с подтверждением. Попробуйте ещё раз.</string>
+    <string name="bitwarden_new_device_resend_unavailable">Этот сервер не поддерживает повторную отправку писем для подтверждения новых устройств.</string>
+    <string name="bitwarden_new_device_resend_wait">Повторите попытку через %1$d сек.</string>
+    <string name="bitwarden_new_device_resend_rate_limited">Слишком много запросов. Подождите перед следующей попыткой.</string>
+    <string name="bitwarden_account_fingerprint">Фраза отпечатка учётной записи</string>
+    <string name="bitwarden_account_fingerprint_hint">Сравните эту фразу через другой доверенный канал, чтобы проверить идентичность вашей учётной записи.</string>
+    <string name="bitwarden_account_fingerprint_unavailable">Синхронизируйте эту учётную запись, чтобы загрузить её ключ идентификации, затем повторите попытку.</string>
+    <string name="bitwarden_account_fingerprint_copy">Скопировать фразу</string>
+</resources>

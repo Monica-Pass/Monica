@@ -52,7 +52,8 @@ object BitwardenSendMapper {
         vaultId: Long,
         serverUrl: String,
         api: SendApiResponse,
-        vaultKey: SymmetricCryptoKey
+        vaultKey: SymmetricCryptoKey,
+        environment: takagi.ru.monica.bitwarden.api.BitwardenEnvironment? = null,
     ): BitwardenSend? {
         return try {
             val encryptedKeyBytes = BitwardenCrypto.decrypt(api.key, vaultKey)
@@ -95,7 +96,8 @@ object BitwardenSendMapper {
                         serverUrl = serverUrl,
                         accessId = api.accessId,
                         keyMaterial = keyMaterial,
-                        urlB64Key = api.urlB64Key
+                        urlB64Key = api.urlB64Key,
+                        environment = environment
                     ),
                     lastSyncedAt = now,
                     createdAt = now,
@@ -125,7 +127,8 @@ object BitwardenSendMapper {
         expirationMillis: Long?,
         authAction: SendAuthAction = SendAuthAction.KEEP,
         recipientEmails: List<String> = emptyList(),
-        disabled: Boolean = false
+        disabled: Boolean = false,
+        environment: takagi.ru.monica.bitwarden.api.BitwardenEnvironment? = null,
     ): CreateTextSendPayload {
         val keyMaterial = BitwardenCrypto.generateSendKeyMaterial()
         val keyBase64 = Base64.encodeToString(keyMaterial, Base64.NO_WRAP)
@@ -171,7 +174,8 @@ object BitwardenSendMapper {
             shareUrl = buildShareUrl(
                 serverUrl = serverUrl,
                 accessId = "",
-                keyMaterial = keyMaterial
+                keyMaterial = keyMaterial,
+                environment = environment
             )
         )
         } finally { sendKey.clear(); keyMaterial.fill(0) }
@@ -237,9 +241,11 @@ object BitwardenSendMapper {
         serverUrl: String,
         accessId: String,
         keyMaterial: ByteArray,
-        urlB64Key: String? = null
+        urlB64Key: String? = null,
+        environment: takagi.ru.monica.bitwarden.api.BitwardenEnvironment? = null,
     ): String {
-        val baseUrl = buildSendBaseUrl(serverUrl)
+        val baseUrl = environment?.let(takagi.ru.monica.bitwarden.api.BitwardenTransportPolicy::sendUrlPrefix)
+            ?: buildSendBaseUrl(serverUrl)
         val key = urlB64Key?.takeIf { it.isNotEmpty() } ?: Base64.encodeToString(
             keyMaterial,
             Base64.URL_SAFE or Base64.NO_WRAP or Base64.NO_PADDING
@@ -248,13 +254,10 @@ object BitwardenSendMapper {
     }
 
     private fun buildSendBaseUrl(serverUrl: String): String {
-        val normalized = serverUrl.trimEnd('/')
-
-        return when {
-            takagi.ru.monica.bitwarden.api.BitwardenApiFactory.isOfficialEuServer(normalized) -> "https://send.bitwarden.eu/#/send/"
-            takagi.ru.monica.bitwarden.api.BitwardenApiFactory.isOfficialServer(normalized) -> "https://send.bitwarden.com/#/send/"
-            else -> "$normalized/#/send/"
-        }
+        val environment = requireNotNull(takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolver.resolveLegacy(
+            takagi.ru.monica.bitwarden.api.BitwardenLegacyEnvironmentSnapshot(serverUrl),
+            "00000000-0000-0000-0000-000000000000").value)
+        return takagi.ru.monica.bitwarden.api.BitwardenTransportPolicy.sendUrlPrefix(environment)
     }
 
     private fun decryptString(value: String?, key: SymmetricCryptoKey): String? {

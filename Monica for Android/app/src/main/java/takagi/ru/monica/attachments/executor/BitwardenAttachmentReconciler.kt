@@ -1,5 +1,8 @@
 package takagi.ru.monica.attachments.executor
 
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
+
 import takagi.ru.monica.attachments.model.Attachment
 import takagi.ru.monica.attachments.model.AttachmentDownloadState
 import takagi.ru.monica.attachments.model.AttachmentOwner
@@ -101,13 +104,21 @@ class BitwardenAttachmentReconciler private constructor(
 
     suspend fun reconcile(
         passwordId: Long,
-        remoteAttachments: List<CipherAttachmentApiData>?
-    ): Report = reconcile(AttachmentOwner.password(passwordId), remoteAttachments)
+        remoteAttachments: List<CipherAttachmentApiData>?,
+        requireCurrent: () -> Unit = {},
+        pendingUploadIds: Set<String> = emptySet(),
+        withPublication: (suspend (suspend () -> Unit) -> Unit)? = null,
+    ): Report = reconcile(AttachmentOwner.password(passwordId), remoteAttachments, requireCurrent, pendingUploadIds, withPublication)
 
     suspend fun reconcile(
         owner: AttachmentOwner,
-        remoteAttachments: List<CipherAttachmentApiData>?
+        remoteAttachments: List<CipherAttachmentApiData>?,
+        requireCurrent: () -> Unit = {},
+        pendingUploadIds: Set<String> = emptySet(),
+        withPublication: (suspend (suspend () -> Unit) -> Unit)? = null,
     ): Report {
+        currentCoroutineContext().ensureActive()
+        requireCurrent()
         if (remoteAttachments == null) return Report(skipped = 1)
 
         // Resolve heavy storage/database dependencies only for an actual
@@ -122,53 +133,61 @@ class BitwardenAttachmentReconciler private constructor(
             id to attach
         }.toMap()
 
-        var inserted = 0
-        var removed = 0
-        var updated = 0
-
-        for ((attachmentId, localAttach) in localById) {
-            if (attachmentId !in remoteById) {
-                localAttach.localPath?.let { storage.delete(it) }
-                repository.deleteById(localAttach.id)
-                removed++
-            }
-        }
-
         val now = System.currentTimeMillis()
-        for ((attachmentId, remote) in remoteById) {
-            val localAttach = localById[attachmentId]
-            if (localAttach == null) {
-                repository.insert(
-                    Attachment(
-                        id = 0,
-                        parentPasswordId = owner.passwordId,
-                        parentSecureItemId = owner.secureItemId,
-                        source = AttachmentSource.BITWARDEN.name,
-                        fileName = remote.fileName ?: DEFAULT_FILE_NAME,
-                        mimeType = guessMimeType(remote.fileName),
-                        sizeBytes = 0L,
-                        bitwardenAttachmentId = attachmentId,
-                        bitwardenUrl = remote.url,
-                        bitwardenFileKeyEnc = remote.key,
-                        downloadState = AttachmentDownloadState.PENDING.name,
-                        createdAt = now,
-                        updatedAt = now
-                    )
-                )
-                inserted++
-            } else {
-                val update = planBitwardenAttachmentMetadataUpdate(localAttach, remote, now)
-                if (update != null) {
-                    if (update.invalidateCache) {
-                        localAttach.localPath?.let { storage.delete(it) }
-                    }
-                    repository.update(update.attachment)
-                    updated++
-                }
+        val removals = localById.filterKeys { it !in remoteById }.values.toList()
+        val updates = remoteById.mapNotNull { (id, remote) ->
+            localById[id]?.let { original ->
+                planBitwardenAttachmentMetadataUpdate(original, remote, now)?.let { original to it }
             }
         }
+        // Allocation can publish metadata before the server has received any file bytes.
+        // The durable uploader adopts these IDs only after its byte receipt/reconciliation.
+        val inserts = remoteById.filterKeys { it !in localById && it !in pendingUploadIds }.values.map { remote ->
+            Attachment(
+                id = 0,
+                parentPasswordId = owner.passwordId,
+                parentSecureItemId = owner.secureItemId,
+                source = AttachmentSource.BITWARDEN.name,
+                fileName = remote.fileName ?: DEFAULT_FILE_NAME,
+                mimeType = guessMimeType(remote.fileName),
+                sizeBytes = 0L,
+                bitwardenAttachmentId = remote.id,
+                bitwardenUrl = remote.url,
+                bitwardenFileKeyEnc = remote.key,
+                downloadState = AttachmentDownloadState.PENDING.name,
+                createdAt = now,
+                updatedAt = now
+            )
+        }
+        val cleanupPaths = (removals.mapNotNull { it.localPath } +
+            updates.filter { it.second.invalidateCache }.mapNotNull { it.first.localPath }).toSet()
+        val publish: suspend () -> Unit = {
+            currentCoroutineContext().ensureActive()
+            requireCurrent()
+            check(repository.listByOwnerAndSource(owner, AttachmentSource.BITWARDEN).associateBy { it.id } ==
+                local.associateBy { it.id }) { "Attachment metadata changed during reconciliation" }
+            removals.forEach { check(repository.deleteById(it.id) == 1) { "Attachment deletion was not applied" } }
+            inserts.forEach { repository.insert(it) }
+            updates.forEach { (_, update) ->
+                check(repository.update(update.attachment) == 1) { "Attachment metadata update was not applied" }
+            }
+            currentCoroutineContext().ensureActive()
+            requireCurrent()
+        }
+        // Production callers supply a short checked Room transaction. Files are not part of it.
+        if (withPublication == null) publish() else withPublication.invoke(publish)
 
-        return Report(inserted = inserted, removed = removed, updated = updated)
+        for (path in cleanupPaths) {
+            currentCoroutineContext().ensureActive()
+            requireCurrent()
+            if (path !in repository.allReferencedLocalPaths()) {
+                requireCurrent()
+                storage.delete(path)
+            }
+        }
+        currentCoroutineContext().ensureActive()
+        requireCurrent()
+        return Report(inserted = inserts.size, removed = removals.size, updated = updates.size)
     }
 
     private fun guessMimeType(fileName: String?): String {

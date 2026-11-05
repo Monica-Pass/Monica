@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bitwarden_new_device_resend">Renvoyer l\'e-mail de vérification</string>
+    <string name="bitwarden_new_device_resend_sent">E-mail de vérification demandé. Consultez votre boîte de réception.</string>
+    <string name="bitwarden_new_device_resend_failed">Impossible de demander un e-mail de vérification. Réessayez.</string>
+    <string name="bitwarden_new_device_resend_unavailable">Ce serveur ne permet pas de renvoyer les e-mails de vérification des nouveaux appareils.</string>
+    <string name="bitwarden_new_device_resend_wait">Réessayez dans %1$d secondes.</string>
+    <string name="bitwarden_new_device_resend_rate_limited">Trop de demandes. Patientez avant de réessayer.</string>
+    <string name="bitwarden_account_fingerprint">Phrase d\'empreinte du compte</string>
+    <string name="bitwarden_account_fingerprint_hint">Comparez cette phrase via un autre canal de confiance pour vous aider à vérifier l\'identité de votre compte.</string>
+    <string name="bitwarden_account_fingerprint_unavailable">Synchronisez ce compte pour charger sa clé d\'identité, puis réessayez.</string>
+    <string name="bitwarden_account_fingerprint_copy">Copier la phrase</string>
+</resources>

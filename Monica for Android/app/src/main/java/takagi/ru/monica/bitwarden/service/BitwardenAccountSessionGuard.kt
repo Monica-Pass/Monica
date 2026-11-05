@@ -15,6 +15,7 @@ internal class BitwardenRememberedTwoFactorStore(
     private val readSealed: (String) -> String?,
     private val writeSealed: (String, String) -> Boolean,
     private val removeSealed: (String) -> Boolean,
+    private val listSealedKeys: () -> Set<String> = { emptySet() },
 ) {
     fun read(scope: String): String? = readSealed(PREFIX + scope)
         ?.takeIf { it.isNotBlank() && it.length <= MAX_TOKEN_LENGTH }
@@ -27,6 +28,14 @@ internal class BitwardenRememberedTwoFactorStore(
         }
 
     fun clear(scope: String): Boolean = removeSealed(PREFIX + scope)
+
+    fun clearAccount(scope: String): Boolean {
+        var success = clear(scope)
+        listSealedKeys().filter { it.startsWith(PREFIX + scope + ":transport-v2:") }.forEach {
+            success = removeSealed(it) && success
+        }
+        return success
+    }
 
     companion object {
         private const val PREFIX = "remembered_two_factor_v1_"
@@ -63,6 +72,19 @@ internal object BitwardenAuthSessionGate {
     suspend fun begin(scope: String): Long {
         val state = states.getOrPut(scope) { State() }
         return state.mutex.withLock { ++state.epoch }
+    }
+
+    suspend fun beginIf(scope: String, predicate: suspend () -> Boolean, register: (Long) -> Unit): Long? {
+        val state = states.getOrPut(scope) { State() }
+        return state.mutex.withLock {
+            currentCoroutineContext().ensureActive()
+            if (!predicate()) null else (++state.epoch).also(register)
+        }
+    }
+
+    suspend fun epoch(scope: String): Long {
+        val state = states.getOrPut(scope) { State() }
+        return state.mutex.withLock { state.epoch }
     }
 
     suspend fun <T> publish(scope: String, expectedEpoch: Long, action: suspend () -> T): T? {

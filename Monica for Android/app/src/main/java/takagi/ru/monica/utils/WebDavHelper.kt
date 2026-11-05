@@ -17,6 +17,8 @@ import kotlinx.serialization.Serializable
 
 import takagi.ru.monica.R
 import takagi.ru.monica.autofill_ng.AutofillPreferences
+import takagi.ru.monica.bitwarden.api.BitwardenTransportBackup
+import takagi.ru.monica.bitwarden.api.BitwardenTransportBackupCodec
 import takagi.ru.monica.data.PasswordDatabase
 import takagi.ru.monica.data.PasswordEntry
 import takagi.ru.monica.data.PasswordHistoryEntry
@@ -515,6 +517,7 @@ private data class BitwardenVaultBackupEntry(
     val identityUrl: String = "",
     val apiUrl: String = "",
     val eventsUrl: String? = null,
+    val transport: BitwardenTransportBackup? = null,
     val encryptedAccessToken: String? = null,
     val encryptedRefreshToken: String? = null,
     val accessTokenExpiresAt: Long? = null,
@@ -1006,7 +1009,7 @@ class WebDavHelper(
                 .bitwardenVaultDao()
                 .getAllVaults()
 
-            if (backupEncryptPassword == null) {
+            if (backupEncryptPassword.isNullOrEmpty()) {
                 warnings.add(strings.get(R.string.backup_credentials_skipped))
                 credentialsSkipped = true
             }
@@ -1023,35 +1026,40 @@ class WebDavHelper(
             } else {
                 ""
             }
-            val bitwardenVaultBackups = bitwardenVaults.map { vault ->
-                BitwardenVaultBackupEntry(
-                    id = vault.id,
-                    email = vault.email,
-                    userId = vault.userId,
-                    displayName = vault.displayName,
-                    serverUrl = vault.serverUrl,
-                    identityUrl = vault.identityUrl,
-                    apiUrl = vault.apiUrl,
-                    eventsUrl = vault.eventsUrl,
-                    encryptedAccessToken = encryptSensitiveBackupValue(vault.encryptedAccessToken, backupEncryptPassword),
-                    encryptedRefreshToken = encryptSensitiveBackupValue(vault.encryptedRefreshToken, backupEncryptPassword),
-                    accessTokenExpiresAt = vault.accessTokenExpiresAt,
-                    encryptedMasterKey = encryptSensitiveBackupValue(vault.encryptedMasterKey, backupEncryptPassword),
-                    encryptedEncKey = encryptSensitiveBackupValue(vault.encryptedEncKey, backupEncryptPassword),
-                    encryptedMacKey = encryptSensitiveBackupValue(vault.encryptedMacKey, backupEncryptPassword),
-                    kdfType = vault.kdfType,
-                    kdfIterations = vault.kdfIterations,
-                    kdfMemory = vault.kdfMemory,
-                    kdfParallelism = vault.kdfParallelism,
-                    lastSyncAt = vault.lastSyncAt,
-                    lastFullSyncAt = vault.lastFullSyncAt,
-                    revisionDate = vault.revisionDate,
-                    isDefault = vault.isDefault,
-                    isConnected = vault.isConnected,
-                    syncEnabled = vault.syncEnabled,
-                    createdAt = vault.createdAt,
-                    updatedAt = vault.updatedAt,
-                )
+            val bitwardenRepository = takagi.ru.monica.bitwarden.repository.BitwardenRepository.getInstance(context)
+            // A partial unencrypted connection record cannot carry the required transport policy.
+            // Keep the existing skipped-credentials warning and omit Bitwarden configuration entirely.
+            val bitwardenVaultBackups = if (backupEncryptPassword.isNullOrEmpty()) emptyList() else bitwardenVaults.map { vault ->
+                bitwardenRepository.withVaultTransportForBackup(vault.id) { current, environment ->
+                    BitwardenVaultBackupEntry(
+                        email = current.email,
+                        userId = current.userId,
+                        displayName = current.displayName,
+                        serverUrl = environment.base.toString(),
+                        identityUrl = environment.identity.toString(),
+                        apiUrl = environment.api.toString(),
+                        eventsUrl = current.eventsUrl,
+                        transport = BitwardenTransportBackupCodec.seal(current, environment, backupEncryptPassword, strings),
+                        encryptedAccessToken = encryptSensitiveBackupValue(current.encryptedAccessToken, backupEncryptPassword),
+                        encryptedRefreshToken = encryptSensitiveBackupValue(current.encryptedRefreshToken, backupEncryptPassword),
+                        accessTokenExpiresAt = current.accessTokenExpiresAt,
+                        encryptedMasterKey = encryptSensitiveBackupValue(current.encryptedMasterKey, backupEncryptPassword),
+                        encryptedEncKey = encryptSensitiveBackupValue(current.encryptedEncKey, backupEncryptPassword),
+                        encryptedMacKey = encryptSensitiveBackupValue(current.encryptedMacKey, backupEncryptPassword),
+                        kdfType = current.kdfType,
+                        kdfIterations = current.kdfIterations,
+                        kdfMemory = current.kdfMemory,
+                        kdfParallelism = current.kdfParallelism,
+                        lastSyncAt = current.lastSyncAt,
+                        lastFullSyncAt = current.lastFullSyncAt,
+                        revisionDate = current.revisionDate,
+                        isDefault = current.isDefault,
+                        isConnected = current.isConnected,
+                        syncEnabled = current.syncEnabled,
+                        createdAt = current.createdAt,
+                        updatedAt = current.updatedAt,
+                    )
+                }
             }
 
             val json = Json { prettyPrint = false }
@@ -1146,6 +1154,8 @@ class WebDavHelper(
                 "WebDavHelper",
                 "Backup connection config (server: $serverUrl, blockedFields=${blockedFieldSignatures.size}, saveBlockedTargets=${saveBlockedTargets.size}, blacklistPackages=${autofillBlacklistPackages.size}, bitwardenVaults=${bitwardenVaultBackups.size})",
             )
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             android.util.Log.w("WebDavHelper", "Failed to backup connection config: ${e.message}")
             warnings.add(strings.get(R.string.backup_report_backup_failed, strings.get(R.string.backup_component_connections), e.message ?: strings.get(R.string.import_data_unknown_error)))
@@ -4122,13 +4132,15 @@ class WebDavHelper(
                                         val restoredCount = restoreBitwardenVaultBackups(
                                             bitwardenVaultsBackup.vaults,
                                             resolvedDecryptPassword,
+                                            warnings,
                                         )
                                         if (restoredCount > 0) {
                                             warnings.add(strings.get(R.string.backup_bitwarden_restored_locked, restoredCount))
                                         }
-                                    } catch (e: Exception) {
-                                        android.util.Log.w("WebDavHelper", "Failed to restore Bitwarden vaults: ${e.message}")
-                                        warnings.add(strings.get(R.string.backup_report_restore_failed, "Bitwarden", e.message ?: strings.get(R.string.import_data_unknown_error)))
+                                    } catch (cancelled: CancellationException) { throw cancelled }
+                                    catch (_: Exception) {
+                                        android.util.Log.w("WebDavHelper", "Failed to restore Bitwarden configuration")
+                                        warnings.add(strings.get(R.string.backup_report_restore_failed, "Bitwarden", strings.get(R.string.import_data_unknown_error)))
                                     }
                                 }
                                 normalizedEntryName == "monica_config/page_adjustment_settings.json" -> {
@@ -4384,6 +4396,7 @@ class WebDavHelper(
                                         val restoredBitwardenVaultCount = restoreBitwardenVaultBackups(
                                             monicaConfigBackup.bitwardenVaults,
                                             resolvedDecryptPassword,
+                                            warnings,
                                         )
                                         if (restoredBitwardenVaultCount > 0) {
                                             warnings.add(strings.get(R.string.backup_bitwarden_restored_locked, restoredBitwardenVaultCount))
@@ -4425,9 +4438,10 @@ class WebDavHelper(
                                             android.util.Log.d("WebDavHelper", "WebDAV already configured, skipping legacy Monica connection restore")
                                             warnings.add(strings.get(R.string.backup_webdav_config_skipped))
                                         }
-                                    } catch (e: Exception) {
-                                        android.util.Log.w("WebDavHelper", "Failed to restore legacy Monica config: ${e.message}")
-                                        warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.backup_component_settings), e.message ?: strings.get(R.string.import_data_unknown_error)))
+                                    } catch (cancelled: CancellationException) { throw cancelled }
+                                    catch (_: Exception) {
+                                        android.util.Log.w("WebDavHelper", "Failed to restore legacy Monica configuration")
+                                        warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.backup_component_settings), strings.get(R.string.import_data_unknown_error)))
                                     }
                                 }
                                 // ✅ 恢复 WebDAV 连接配置（新文件与旧版 webdav_config.json 均兼容）
@@ -6253,15 +6267,15 @@ class WebDavHelper(
     private suspend fun restoreBitwardenVaultBackups(
         backups: List<BitwardenVaultBackupEntry>,
         decryptPassword: String?,
+        warnings: MutableList<String>,
     ): Int {
         if (backups.isEmpty()) return 0
 
-        val database = PasswordDatabase.getDatabase(context)
-        val vaultDao = database.bitwardenVaultDao()
         val bitwardenRepository = takagi.ru.monica.bitwarden.repository.BitwardenRepository.getInstance(context)
+        val appGeneration = takagi.ru.monica.security.SessionManager.lockGeneration.value
+        val selection = bitwardenRepository.beginVaultConfigurationRestoreSelection(appGeneration)
+        var preferredNewId: Long? = null
         var restoredCount = 0
-        var firstRestoredId: Long? = null
-        var defaultVaultId: Long? = null
 
         backups.forEach { backup ->
             val displayEmail = backup.email.trim()
@@ -6272,26 +6286,16 @@ class WebDavHelper(
             try {
                 val canonicalEmail = takagi.ru.monica.bitwarden.BitwardenVaultIdentity
                     .canonicalizeEmail(displayEmail)
-                val serverUrl = backup.serverUrl.trim().ifEmpty { "https://vault.bitwarden.com" }
+                val environment = backup.transport?.let {
+                    BitwardenTransportBackupCodec.open(it, backup.serverUrl, backup.apiUrl, backup.identityUrl,
+                        displayEmail, backup.userId, decryptPassword, strings)
+                } ?: BitwardenTransportBackupCodec.legacyEnvironment(backup.serverUrl, backup.apiUrl, backup.identityUrl)
+                val serverUrl = environment.base.toString()
                 val accountKey = takagi.ru.monica.bitwarden.BitwardenVaultIdentity.buildAccountKey(
                     serverUrl = serverUrl,
                     userId = backup.userId,
                     canonicalEmail = canonicalEmail
                 )
-                val existingVault = vaultDao.getVaultByAccountKey(accountKey)
-                    ?: vaultDao.getVaultByServerAndCanonicalEmail(serverUrl, canonicalEmail)
-                val backupId = backup.id.takeIf { it > 0 }
-                val conflictingVault = backupId
-                    ?.let { candidateId -> vaultDao.getVaultById(candidateId) }
-                    ?.takeIf { candidateVault ->
-                        candidateVault.id != existingVault?.id &&
-                            candidateVault.accountKey != accountKey
-                    }
-                val targetId = when {
-                    existingVault != null -> existingVault.id
-                    conflictingVault == null -> backupId ?: 0L
-                    else -> 0L
-                }
                 val defaultKdfIterations = when (backup.kdfType) {
                     takagi.ru.monica.data.bitwarden.BitwardenVault.KDF_TYPE_ARGON2ID ->
                         takagi.ru.monica.data.bitwarden.BitwardenVault.DEFAULT_ARGON2_ITERATIONS
@@ -6299,15 +6303,16 @@ class WebDavHelper(
                 }
                 val now = System.currentTimeMillis()
                 val restoredVault = takagi.ru.monica.data.bitwarden.BitwardenVault(
-                    id = targetId,
+                    // Source-device IDs are never allocation authority on this device.
+                    id = 0,
                     email = displayEmail,
                     canonicalEmail = canonicalEmail,
                     userId = backup.userId?.trim()?.ifBlank { null },
                     accountKey = accountKey,
                     displayName = backup.displayName?.trim()?.ifBlank { null },
                     serverUrl = serverUrl,
-                    identityUrl = backup.identityUrl.trim().ifEmpty { "https://identity.bitwarden.com" },
-                    apiUrl = backup.apiUrl.trim().ifEmpty { "https://api.bitwarden.com" },
+                    identityUrl = environment.identity.toString(),
+                    apiUrl = environment.api.toString(),
                     eventsUrl = backup.eventsUrl?.trim()?.ifBlank { null },
                     encryptedAccessToken = decryptSensitiveBackupValue(backup.encryptedAccessToken, decryptPassword),
                     encryptedRefreshToken = decryptSensitiveBackupValue(backup.encryptedRefreshToken, decryptPassword),
@@ -6322,48 +6327,34 @@ class WebDavHelper(
                     lastSyncAt = backup.lastSyncAt,
                     lastFullSyncAt = backup.lastFullSyncAt,
                     revisionDate = backup.revisionDate?.trim()?.ifBlank { null },
-                    isDefault = false,
+                    isDefault = backup.isDefault,
                     isLocked = true,
                     isConnected = backup.isConnected,
                     syncEnabled = backup.syncEnabled,
-                    createdAt = backup.createdAt.takeIf { it > 0 } ?: existingVault?.createdAt ?: now,
+                    createdAt = backup.createdAt.takeIf { it > 0 } ?: now,
                     updatedAt = now,
                 )
 
-                val restoredId = if (existingVault != null) {
-                    vaultDao.update(restoredVault.copy(id = existingVault.id, createdAt = existingVault.createdAt))
-                    existingVault.id
-                } else {
-                    vaultDao.insert(
-                        if (targetId > 0) {
-                            restoredVault
-                        } else {
-                            restoredVault.copy(id = 0)
-                        }
-                    )
-                }
-
-                bitwardenRepository.forceLock(restoredId)
-                if (firstRestoredId == null) {
-                    firstRestoredId = restoredId
-                }
-                if (backup.isDefault) {
-                    defaultVaultId = restoredId
-                }
-                restoredCount++
-            } catch (e: Exception) {
-                android.util.Log.w(
-                    "WebDavHelper",
-                    "Failed to restore Bitwarden vault ${displayEmail}: ${e.message}"
+                // The repository rechecks duplicates under its publication gate. Existing accounts,
+                // records, queues, default and active selections remain intact; only missing accounts
+                // receive a fresh local ID and protected reference. No restored account is unlocked.
+                val restoredId = bitwardenRepository.restoreVaultConfigurationFromBackup(
+                    restoredVault, environment.takeIf { backup.transport != null }, appGeneration, selection,
                 )
+                if (restoredId != null) {
+                    if (backup.isDefault && preferredNewId == null) preferredNewId = restoredId
+                    restoredCount++
+                }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                android.util.Log.w("WebDavHelper", "Bitwarden configuration restore rejected; existing state retained")
+                warnings.add(strings.get(R.string.backup_report_restore_failed, "Bitwarden",
+                    strings.get(R.string.import_data_unknown_error)))
             }
         }
 
-        when {
-            defaultVaultId != null -> vaultDao.setAsDefault(defaultVaultId!!)
-            firstRestoredId != null && vaultDao.getDefaultVault() == null -> vaultDao.setAsDefault(firstRestoredId!!)
-        }
-
+        bitwardenRepository.finishVaultConfigurationRestoreSelection(selection, preferredNewId)
         return restoredCount
     }
 }

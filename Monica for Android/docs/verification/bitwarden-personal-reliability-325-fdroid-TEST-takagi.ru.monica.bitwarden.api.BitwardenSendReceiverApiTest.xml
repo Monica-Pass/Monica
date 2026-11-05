@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.api.BitwardenSendReceiverApiTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-05T02:07:06" hostname="JOYIN" time="3.164">
+  <properties/>
+  <testcase name="serviceUnavailableRetryAfterZeroNeverReplaysGrantOrCountedPosts" classname="takagi.ru.monica.bitwarden.api.BitwardenSendReceiverApiTest" time="0.662"/>
+  <testcase name="tokenUsesLiteralPrefixedIdentityAndDoesNotRetainSetCookie" classname="takagi.ru.monica.bitwarden.api.BitwardenSendReceiverApiTest" time="0.355"/>
+  <testcase name="rejectsCredentialRedirectsAndNeverRetriesAnUncertainCountedRequest" classname="takagi.ru.monica.bitwarden.api.BitwardenSendReceiverApiTest" time="0.486"/>
+  <testcase name="foreignSignedStorageGetsNoSendBearerAndBytesAreNotTransformed" classname="takagi.ru.monica.bitwarden.api.BitwardenSendReceiverApiTest" time="0.254"/>
+  <testcase name="rejectsInconsistentFileReceiptsAndCancellationClosesTheLiveDownload" classname="takagi.ru.monica.bitwarden.api.BitwardenSendReceiverApiTest" time="1.238"/>
+  <testcase name="emailGrantCarriesOnlyTheExplicitStageAndPreservesAntiEnumerationCode" classname="takagi.ru.monica.bitwarden.api.BitwardenSendReceiverApiTest" time="0.168"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[11月 05, 2026 10:07:09 上午 okhttp3.internal.platform.Platform log
+信息: Http2Connection.Listener failure for MockWebServer 127.0.0.1
+java.io.IOException: closed
+	at okhttp3.internal.http2.Http2Writer.flush(Http2Writer.kt:119)
+	at okhttp3.internal.http2.Http2Connection.flush(Http2Connection.kt:408)
+	at okhttp3.internal.http2.Http2Stream$FramingSink.close(Http2Stream.kt:624)
+	at okio.RealBufferedSink.close(RealBufferedSink.kt:287)
+	at kotlin.io.CloseableKt.closeFinally(Closeable.kt:46)
+	at okhttp3.mockwebserver.MockWebServer$Http2SocketHandler.writeResponse(MockWebServer.kt:1096)
+	at okhttp3.mockwebserver.MockWebServer$Http2SocketHandler.onStream(MockWebServer.kt:977)
+	at okhttp3.internal.http2.Http2Connection$ReaderRunnable$headers$lambda$2$$inlined$execute$default$1.runOnce(TaskQueue.kt:220)
+	at okhttp3.internal.concurrent.TaskRunner.runTask(TaskRunner.kt:116)
+	at okhttp3.internal.concurrent.TaskRunner.access$runTask(TaskRunner.kt:42)
+	at okhttp3.internal.concurrent.TaskRunner$runnable$1.run(TaskRunner.kt:65)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.base/java.lang.Thread.run(Unknown Source)
+
+]]></system-err>
+</testsuite>

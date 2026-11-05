@@ -1,0 +1,120 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.9/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+WARNING: We recommend using a newer Android Gradle plugin to use compileSdk = 36
+
+This Android Gradle plugin (8.7.3) was tested up to compileSdk = 35.
+
+You are strongly encouraged to update your project to use a newer
+Android Gradle plugin that has been tested with compileSdk = 36.
+
+If you are already using the latest version of the Android Gradle plugin,
+you may need to wait until a newer version with support for compileSdk = 36 is available.
+
+For more information refer to the compatibility table:
+https://d.android.com/r/tools/api-level-support
+
+To suppress this warning, add/update
+    android.suppressUnsupportedCompileSdk=36
+to this project's gradle.properties.
+> Task :kotpass:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :kotpass:compileKotlin UP-TO-DATE
+> Task :kotpass:compileJava NO-SOURCE
+> Task :kotpass:processResources NO-SOURCE
+> Task :kotpass:classes UP-TO-DATE
+> Task :kotpass:jar UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:compileDebugAidl UP-TO-DATE
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:generateDebugBuildConfig
+> Task :mdbx-engine:preBuild UP-TO-DATE
+> Task :mdbx-engine:preDebugBuild UP-TO-DATE
+> Task :mdbx-engine:writeDebugAarMetadata UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :mdbx-engine:generateDebugResValues UP-TO-DATE
+> Task :mdbx-engine:generateDebugResources UP-TO-DATE
+> Task :mdbx-engine:packageDebugResources UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :mdbx-engine:extractDeepLinksDebug UP-TO-DATE
+> Task :mdbx-engine:processDebugManifest UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :mdbx-engine:compileDebugLibraryResources UP-TO-DATE
+> Task :mdbx-engine:parseDebugLocalResources UP-TO-DATE
+> Task :mdbx-engine:generateDebugRFile UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :mdbx-engine:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :mdbx-engine:compileDebugKotlin UP-TO-DATE
+> Task :mdbx-engine:javaPreCompileDebug UP-TO-DATE
+> Task :mdbx-engine:compileDebugJavaWithJavac NO-SOURCE
+> Task :mdbx-engine:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :app:kspDebugKotlin
+
+> Task :app:compileDebugKotlin
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/security/RuntimeDiagnostics.kt:41:63 'val id: Long' is deprecated. Deprecated in Java.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:516:48 'val Icons.Filled.ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:1760:48 'val Icons.Filled.Note: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.Note.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2095:57 'val Icons.Filled.ArrowBack: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowBack.
+w: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt:2287:21 'fun Divider(modifier: Modifier = ..., thickness: Dp = ..., color: Color = ...): Unit' is deprecated. Renamed to HorizontalDivider.
+
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:compileDebugJavaWithJavac
+> Task :app:bundleDebugClassesToRuntimeJar
+> Task :app:bundleDebugClassesToCompileJar
+> Task :app:kspDebugUnitTestKotlin
+> Task :app:compileDebugUnitTestKotlin
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :app:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :app:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :app:mergeDebugShaders UP-TO-DATE
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :mdbx-engine:mergeDebugShaders UP-TO-DATE
+> Task :mdbx-engine:compileDebugShaders NO-SOURCE
+> Task :mdbx-engine:generateDebugAssets UP-TO-DATE
+> Task :mdbx-engine:packageDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:packageDebugUnitTestForUnitTest UP-TO-DATE
+> Task :app:generateDebugUnitTestConfig UP-TO-DATE
+> Task :app:processDebugJavaRes UP-TO-DATE
+> Task :app:processDebugUnitTestJavaRes UP-TO-DATE
+> Task :mdbx-engine:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :mdbx-engine:processDebugJavaRes UP-TO-DATE
+
+> Task :app:testDebugUnitTest
+
+BitwardenAccountIdentityStoreTest > bindsPublicIdentityToServerEmailUserIdAndSecurityStamp FAILED
+    java.lang.AssertionError at BitwardenAccountIdentityStoreTest.kt:49
+
+BitwardenAccountIdentityStoreTest > omittedProfileKeyPreservesOfflineIdentityButExplicitClearRemovesIt FAILED
+    java.lang.AssertionError at BitwardenAccountIdentityStoreTest.kt:80
+
+BitwardenAccountIdentityStoreTest > wrongWrappingKeyOrCorruptCacheCannotReturnAPublicIdentity FAILED
+    java.util.NoSuchElementException at BitwardenAccountIdentityStoreTest.kt:55
+
+BitwardenAccountIdentityStoreTest > storesOnlySealedPublicIdentityAndReadsItAfterStoreRecreation FAILED
+    java.lang.IllegalArgumentException at BitwardenAccountIdentityStoreTest.kt:32
+
+61 tests completed, 4 failed
+
+> Task :app:testDebugUnitTest FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:testDebugUnitTest'.
+> There were failing tests. See the report at: file:///C:/Users/joyins/Desktop/Monica-all/Monica-main/Monica%20for%20Android/app/build/reports/tests/testDebugUnitTest/index.html
+
+* Try:
+> Run with --scan to get full insights.
+
+BUILD FAILED in 1m 54s
+49 actionable tasks: 9 executed, 40 up-to-date

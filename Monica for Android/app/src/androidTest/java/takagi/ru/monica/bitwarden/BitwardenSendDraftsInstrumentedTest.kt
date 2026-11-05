@@ -296,7 +296,11 @@ class BitwardenSendDraftsInstrumentedTest {
         finally { transfer.db.bitwardenVaultDao().update(original) }
         val input = store.openFile(vaultId, saved.id)
         try { SessionManager.markLocked(); assertTrue(runCatching { input.read() }.isFailure) }
-        finally { input.close(); ensureMdk() }
+        finally {
+            input.close(); ensureMdk()
+            repository.unlock(vaultId, "Synthetic transfer fixture password")
+            check(repository.isVaultUnlocked(vaultId))
+        }
         assertArrayEquals(bytes, store.openFile(vaultId, saved.id).use { it.readBytes() })
     } }
 
@@ -361,7 +365,11 @@ class BitwardenSendDraftsInstrumentedTest {
         try {
             assertEquals(0, repository.clearVaultLocalCache(vaultId, BitwardenRepository.CacheClearMode.SAFE_ONLY_SYNCED).sendClearedCount)
             snapshots.forEach { (id, row) -> assertEquals(row, raw.getBySendId(vaultId, id)) }
-        } finally { ensureMdk() }
+        } finally {
+            ensureMdk()
+            repository.unlock(vaultId, "Synthetic transfer fixture password")
+            check(repository.isVaultUnlocked(vaultId))
+        }
         assertEquals(saved, store.load(vaultId, saved.id))
     } }
 

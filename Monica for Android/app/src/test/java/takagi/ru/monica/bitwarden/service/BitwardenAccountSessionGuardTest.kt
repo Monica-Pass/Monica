@@ -6,6 +6,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -106,6 +107,19 @@ class BitwardenAccountSessionGuardTest {
         val currentEpoch = BitwardenAuthSessionGate.begin(account)
         assertNull(BitwardenAuthSessionGate.publish(account, oldEpoch) { "old" })
         assertEquals("current", BitwardenAuthSessionGate.publish(account, currentEpoch) { "current" })
+    }
+
+    @Test fun staleEditorCannotReplaceAnAlreadyRegisteredAuthentication() = runBlocking {
+        val account = "stale-editor-login"
+        val current = BitwardenAuthSessionGate.begin(account)
+        var registered = false
+        assertNull(BitwardenAuthSessionGate.beginIf(account, { false }) { registered = true })
+        assertFalse(registered)
+        assertEquals("current", BitwardenAuthSessionGate.publish(account, current) { "current" })
+        val replacement = BitwardenAuthSessionGate.beginIf(account, { true }) { registered = true }
+        assertTrue(registered)
+        assertNotNull(replacement)
+        assertNull(BitwardenAuthSessionGate.publish(account, current) { "obsolete" })
     }
 
     @Test fun revokingAnotherAccountDoesNotCancelThisLogin() = runBlocking {

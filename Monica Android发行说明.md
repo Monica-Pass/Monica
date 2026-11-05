@@ -4,6 +4,15 @@
 
 ## 中文
 
+- Bitwarden 个人账号新增原生密码提示、主密码和 KDF 修改，以及服务器账号删除确认。修改主密码/KDF 保留原密码库密钥；结果不确定时暂停联网并保留本机数据，重新登录核验后恢复。确认删除服务器账号后仍保留本机副本，移除本机副本需另行操作。
+- 统一 Bitwarden 登录失效处理：收到明确的 401 后协调刷新并仅重试一次；写入丢失回执或服务器错误时不自动重复提交。附件补传保存原密文及精确上传意图，重启后核对并继续，保留待处理附件，避免重复分配。
+- 新增原生 Send 接收：粘贴文本/文件链接，支持服务器提供的访问密码和邮箱验证码，下载前校验内容。自托管地址需确认；应用锁定或退出页面清除接收会话，访问结果不确定时需手动重试。
+
+- 完善 Bitwarden 自托管配置：支持独立 Web/API/身份验证/通知地址、按账号限定的请求头、自定义证书及主动 DNS TXT 发现，并可通过加密的 Monica 配置备份恢复；更改已有账号配置需重新认证，保留原数据和待同步编辑。
+- 修复快速切到后台时密码、验证码及注册验证输入未及时清空的问题，保留光标和选区行为；改善服务器配置页大字号布局与状态栏图标对比。
+
+- Bitwarden 新设备邮件验证支持手动重发、等待倒计时及限流提示；服务器未提供此接口时明确提示不支持。账号页新增指纹短语查看与复制，按官方算法生成，离线使用已验证的身份资料；账号或应用锁定、切换与离开前台后关闭显示并撤销旧操作。
+
 - 减少 KeePass 原始库中的多余 Monica 字段：保存时省略默认状态、无关联的空字段和空账号备注属性，便笺等项目不再写入空图片路径或默认收藏值。保留账号堆叠、实际备注、关联标识、用户自定义字段、REF 引用、保护位及原文件历史；只处理明确保存的项目，不批量清理旧库。
 
 - 重新设计 Bitwarden 设置与账号页，统一圆角分组和大字号布局；同步队列显示实际待处理条目、附件及失败明细。
@@ -40,6 +49,15 @@
 - 加强同步修订冲突处理及账号安全状态变化后的重新认证，保留较新的本地修改。
 
 ## English
+
+- Added native personal Bitwarden password-hint, master-password and KDF changes, plus server-account deletion confirmation. Password/KDF changes retain the existing vault key. Uncertain outcomes pause account traffic and preserve local data until verified sign-in; confirmed server deletion retains a local copy that requires a separate removal action.
+- Unified expired-session handling: coordinate refresh and retry once after a verified 401. Lost write responses and server errors are not automatically replayed. Attachment recovery keeps the original ciphertext and exact upload intent across restarts, reconciles uncertain allocation, and preserves pending files.
+- Added native text/file Send reception from a pasted link, with server-supported passwords and email codes and verified file downloads. Self-hosted targets require confirmation; locking or leaving clears the receiver session, and uncertain access requires an explicit retry.
+
+- Expand Bitwarden self-hosted configuration with separate Web/API/Identity/Notifications URLs, account-scoped headers, custom certificates, explicit DNS TXT discovery and encrypted Monica configuration backup. Existing-account changes require reauthentication and preserve data and pending edits.
+- Fix password, OTP and registration verification input surviving a rapid background transition while preserving cursor and selection behavior; improve large-text server configuration and status-bar icon contrast.
+
+- Bitwarden new-device email verification now supports manual resend, cooldown and rate-limit feedback, with an explicit message when the server lacks the endpoint. Account settings adds the official fingerprint phrase with copy and offline access to verified identity material; locking, account changes and leaving the foreground close the sheet and revoke old actions.
 
 - Reduced redundant Monica fields in original KeePass vaults: saves omit default state, empty optional links and empty credential-note properties; secure items omit empty image paths and default favorite values. Account stacking, real notes, linkage identities, user fields, REF expressions, protection flags and native history are preserved. Only explicitly saved entries are affected; existing vaults are not bulk-cleaned.
 

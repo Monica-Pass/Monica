@@ -1,0 +1,900 @@
+{
+  "edition": "main",
+  "run": "frame-native",
+  "serial": "emulator-5556",
+  "userId": 13,
+  "deviceStartedEpoch": 1793814880,
+  "deviceFinishedEpoch": 1793814999,
+  "destination": "<task>/raw/main-frame-native-window-diagnostics",
+  "inputs": {
+    "runSha256": "5aab9ad9061ac5e50a87049ff0b3c6988df9f74309d364983b679c107b70ec1c",
+    "capturesSha256": "1ac4082350883ad0c8aab92ec0331c5ca33cdb1e9e43a02d33dadab9508e6342"
+  },
+  "count": 7,
+  "evidenceComplete": true,
+  "visualReviewPerformed": false,
+  "records": [
+    {
+      "stem": "bitwarden-fingerprint-chinese-copy",
+      "pngPath": "<main-android>/docs/design/bitwarden-account-basics-325/main-frame-native/bitwarden-fingerprint-chinese-copy.png",
+      "pngSha256": "51184287ad792d2717efb08e89109e3f97b37bf76cda04cd817dadfc0632e623",
+      "source": "files/bitwarden-fingerprint-chinese-copy-window.txt",
+      "path": "<task>/raw/main-frame-native-window-diagnostics/bitwarden-fingerprint-chinese-copy-window.txt",
+      "sha256": "bf561dd2f7a05edda2a0a851783ba077121dd30f08827d33ca5351a1b47ceeff",
+      "bytes": 1667,
+      "deviceMtime": 1793814898,
+      "complete": true,
+      "frameCommitted": true,
+      "foreground": true,
+      "foregroundAfterCapture": true,
+      "sampledColors": 62,
+      "captureSize": {
+        "width": 1080,
+        "height": 2100
+      },
+      "stages": {
+        "before-focus": {
+          "uptime": 5185097,
+          "thread": "main",
+          "lifecycle": "RESUMED",
+          "roots": [
+            {
+              "root": "0",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "1",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "false",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            },
+            {
+              "root": "1",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "2",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "true",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            }
+          ]
+        },
+        "after-frame": {
+          "uptime": 5185125,
+          "thread": "main",
+          "lifecycle": "RESUMED",
+          "roots": [
+            {
+              "root": "0",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "1",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "false",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            },
+            {
+              "root": "1",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "2",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "true",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            }
+          ]
+        },
+        "capture-finished": {
+          "uptime": 5185863,
+          "thread": "main",
+          "lifecycle": "RESUMED",
+          "roots": [
+            {
+              "root": "0",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "1",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "false",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            },
+            {
+              "root": "1",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "2",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "true",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stem": "bitwarden-fingerprint-english-large-before-layout",
+      "pngPath": "<main-android>/docs/design/bitwarden-account-basics-325/main-frame-native/bitwarden-fingerprint-english-large-before-layout.png",
+      "pngSha256": "57e43ad80821c1556c44839e8305b4ba81b9737c9a21eb54a9684d17406c664e",
+      "source": "files/bitwarden-fingerprint-english-large-before-layout-window.txt",
+      "path": "<task>/raw/main-frame-native-window-diagnostics/bitwarden-fingerprint-english-large-before-layout-window.txt",
+      "sha256": "d62bac17a9331a778ab9170f4bb9ea28bc01067ee2bb97bba198e4a001b82a77",
+      "bytes": 1667,
+      "deviceMtime": 1793814902,
+      "complete": true,
+      "frameCommitted": true,
+      "foreground": true,
+      "foregroundAfterCapture": true,
+      "sampledColors": 63,
+      "captureSize": {
+        "width": 1080,
+        "height": 2100
+      },
+      "stages": {
+        "before-focus": {
+          "uptime": 5190122,
+          "thread": "main",
+          "lifecycle": "RESUMED",
+          "roots": [
+            {
+              "root": "0",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "1",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "false",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            },
+            {
+              "root": "1",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "2",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "true",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            }
+          ]
+        },
+        "after-frame": {
+          "uptime": 5190146,
+          "thread": "main",
+          "lifecycle": "RESUMED",
+          "roots": [
+            {
+              "root": "0",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "1",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "false",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            },
+            {
+              "root": "1",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "2",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "true",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            }
+          ]
+        },
+        "capture-finished": {
+          "uptime": 5190267,
+          "thread": "main",
+          "lifecycle": "RESUMED",
+          "roots": [
+            {
+              "root": "0",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "1",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "false",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            },
+            {
+              "root": "1",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "2",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "true",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stem": "bitwarden-fingerprint-english-large-text-bitwarden_account_fingerprint",
+      "pngPath": "<main-android>/docs/design/bitwarden-account-basics-325/main-frame-native/bitwarden-fingerprint-english-large-text-bitwarden_account_fingerprint.png",
+      "pngSha256": "57e43ad80821c1556c44839e8305b4ba81b9737c9a21eb54a9684d17406c664e",
+      "source": "files/bitwarden-fingerprint-english-large-text-bitwarden_account_fingerprint-window.txt",
+      "path": "<task>/raw/main-frame-native-window-diagnostics/bitwarden-fingerprint-english-large-text-bitwarden_account_fingerprint-window.txt",
+      "sha256": "e2316d69a4e997471594c44c4ee11281c26ae80ecc3f0ef4b8cf207f03927d74",
+      "bytes": 1667,
+      "deviceMtime": 1793814903,
+      "complete": true,
+      "frameCommitted": true,
+      "foreground": true,
+      "foregroundAfterCapture": true,
+      "sampledColors": 63,
+      "captureSize": {
+        "width": 1080,
+        "height": 2100
+      },
+      "stages": {
+        "before-focus": {
+          "uptime": 5190372,
+          "thread": "main",
+          "lifecycle": "RESUMED",
+          "roots": [
+            {
+              "root": "0",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "1",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "false",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            },
+            {
+              "root": "1",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "2",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "true",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            }
+          ]
+        },
+        "after-frame": {
+          "uptime": 5190398,
+          "thread": "main",
+          "lifecycle": "RESUMED",
+          "roots": [
+            {
+              "root": "0",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "1",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "false",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            },
+            {
+              "root": "1",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "2",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "true",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            }
+          ]
+        },
+        "capture-finished": {
+          "uptime": 5190503,
+          "thread": "main",
+          "lifecycle": "RESUMED",
+          "roots": [
+            {
+              "root": "0",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "1",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "false",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            },
+            {
+              "root": "1",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "2",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "true",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stem": "bitwarden-fingerprint-english-large-text-bitwarden_account_fingerprint_copy",
+      "pngPath": "<main-android>/docs/design/bitwarden-account-basics-325/main-frame-native/bitwarden-fingerprint-english-large-text-bitwarden_account_fingerprint_copy.png",
+      "pngSha256": "57e43ad80821c1556c44839e8305b4ba81b9737c9a21eb54a9684d17406c664e",
+      "source": "files/bitwarden-fingerprint-english-large-text-bitwarden_account_fingerprint_copy-window.txt",
+      "path": "<task>/raw/main-frame-native-window-diagnostics/bitwarden-fingerprint-english-large-text-bitwarden_account_fingerprint_copy-window.txt",
+      "sha256": "3a50d8d5d6907c0262b40db077c7151fc4134dfef1edfe2f8add77e9993dd408",
+      "bytes": 1667,
+      "deviceMtime": 1793814903,
+      "complete": true,
+      "frameCommitted": true,
+      "foreground": true,
+      "foregroundAfterCapture": true,
+      "sampledColors": 63,
+      "captureSize": {
+        "width": 1080,
+        "height": 2100
+      },
+      "stages": {
+        "before-focus": {
+          "uptime": 5190838,
+          "thread": "main",
+          "lifecycle": "RESUMED",
+          "roots": [
+            {
+              "root": "0",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "1",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "false",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            },
+            {
+              "root": "1",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "2",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "true",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            }
+          ]
+        },
+        "after-frame": {
+          "uptime": 5190863,
+          "thread": "main",
+          "lifecycle": "RESUMED",
+          "roots": [
+            {
+              "root": "0",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "1",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "false",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            },
+            {
+              "root": "1",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "2",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "true",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            }
+          ]
+        },
+        "capture-finished": {
+          "uptime": 5190964,
+          "thread": "main",
+          "lifecycle": "RESUMED",
+          "roots": [
+            {
+              "root": "0",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "1",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "false",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            },
+            {
+              "root": "1",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "2",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "true",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stem": "bitwarden-fingerprint-english-large-text-bitwarden_account_fingerprint_hint",
+      "pngPath": "<main-android>/docs/design/bitwarden-account-basics-325/main-frame-native/bitwarden-fingerprint-english-large-text-bitwarden_account_fingerprint_hint.png",
+      "pngSha256": "57e43ad80821c1556c44839e8305b4ba81b9737c9a21eb54a9684d17406c664e",
+      "source": "files/bitwarden-fingerprint-english-large-text-bitwarden_account_fingerprint_hint-window.txt",
+      "path": "<task>/raw/main-frame-native-window-diagnostics/bitwarden-fingerprint-english-large-text-bitwarden_account_fingerprint_hint-window.txt",
+      "sha256": "5bffb58e9341dce65c81f604a8c203bf4942eb0bb839da5d30b38b37273314ea",
+      "bytes": 1667,
+      "deviceMtime": 1793814903,
+      "complete": true,
+      "frameCommitted": true,
+      "foreground": true,
+      "foregroundAfterCapture": true,
+      "sampledColors": 63,
+      "captureSize": {
+        "width": 1080,
+        "height": 2100
+      },
+      "stages": {
+        "before-focus": {
+          "uptime": 5190605,
+          "thread": "main",
+          "lifecycle": "RESUMED",
+          "roots": [
+            {
+              "root": "0",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "1",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "false",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            },
+            {
+              "root": "1",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "2",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "true",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            }
+          ]
+        },
+        "after-frame": {
+          "uptime": 5190629,
+          "thread": "main",
+          "lifecycle": "RESUMED",
+          "roots": [
+            {
+              "root": "0",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "1",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "false",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            },
+            {
+              "root": "1",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "2",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "true",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            }
+          ]
+        },
+        "capture-finished": {
+          "uptime": 5190738,
+          "thread": "main",
+          "lifecycle": "RESUMED",
+          "roots": [
+            {
+              "root": "0",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "1",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "false",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            },
+            {
+              "root": "1",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "2",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "true",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stem": "bitwarden-fingerprint-english-large-wrapped",
+      "pngPath": "<main-android>/docs/design/bitwarden-account-basics-325/main-frame-native/bitwarden-fingerprint-english-large-wrapped.png",
+      "pngSha256": "57e43ad80821c1556c44839e8305b4ba81b9737c9a21eb54a9684d17406c664e",
+      "source": "files/bitwarden-fingerprint-english-large-wrapped-window.txt",
+      "path": "<task>/raw/main-frame-native-window-diagnostics/bitwarden-fingerprint-english-large-wrapped-window.txt",
+      "sha256": "e4bc773992daf47aef4518d66f8fd1bee5c6e0e67a7d050a5816cf46439ce189",
+      "bytes": 1667,
+      "deviceMtime": 1793814903,
+      "complete": true,
+      "frameCommitted": true,
+      "foreground": true,
+      "foregroundAfterCapture": true,
+      "sampledColors": 63,
+      "captureSize": {
+        "width": 1080,
+        "height": 2100
+      },
+      "stages": {
+        "before-focus": {
+          "uptime": 5191055,
+          "thread": "main",
+          "lifecycle": "RESUMED",
+          "roots": [
+            {
+              "root": "0",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "1",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "false",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            },
+            {
+              "root": "1",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "2",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "true",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            }
+          ]
+        },
+        "after-frame": {
+          "uptime": 5191081,
+          "thread": "main",
+          "lifecycle": "RESUMED",
+          "roots": [
+            {
+              "root": "0",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "1",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "false",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            },
+            {
+              "root": "1",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "2",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "true",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            }
+          ]
+        },
+        "capture-finished": {
+          "uptime": 5191184,
+          "thread": "main",
+          "lifecycle": "RESUMED",
+          "roots": [
+            {
+              "root": "0",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "1",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "false",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            },
+            {
+              "root": "1",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "2",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "true",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "stem": "bitwarden-fingerprint-missing-key-portuguese",
+      "pngPath": "<main-android>/docs/design/bitwarden-account-basics-325/main-frame-native/bitwarden-fingerprint-missing-key-portuguese.png",
+      "pngSha256": "27ae27712f0c2b08f4a8e6d1d432d5f10f09b7dc52551e250ba9a775d1277d5d",
+      "source": "files/bitwarden-fingerprint-missing-key-portuguese-window.txt",
+      "path": "<task>/raw/main-frame-native-window-diagnostics/bitwarden-fingerprint-missing-key-portuguese-window.txt",
+      "sha256": "97aae0b8333a36ce39cfad8ca0fe79f7d4d0013e7d49ae2ea16eb19222f5abd8",
+      "bytes": 1667,
+      "deviceMtime": 1793814910,
+      "complete": true,
+      "frameCommitted": true,
+      "foreground": true,
+      "foregroundAfterCapture": true,
+      "sampledColors": 70,
+      "captureSize": {
+        "width": 1080,
+        "height": 2100
+      },
+      "stages": {
+        "before-focus": {
+          "uptime": 5197146,
+          "thread": "main",
+          "lifecycle": "RESUMED",
+          "roots": [
+            {
+              "root": "0",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "1",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "false",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            },
+            {
+              "root": "1",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "2",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "true",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            }
+          ]
+        },
+        "after-frame": {
+          "uptime": 5197181,
+          "thread": "main",
+          "lifecycle": "RESUMED",
+          "roots": [
+            {
+              "root": "0",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "1",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "false",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            },
+            {
+              "root": "1",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "2",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "true",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            }
+          ]
+        },
+        "capture-finished": {
+          "uptime": 5197397,
+          "thread": "main",
+          "lifecycle": "RESUMED",
+          "roots": [
+            {
+              "root": "0",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "1",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "false",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            },
+            {
+              "root": "1",
+              "class": "com.android.internal.policy.DecorView",
+              "title": "takagi.ru.monica/androidx.activity.ComponentActivity",
+              "type": "2",
+              "attached": "true",
+              "shown": "true",
+              "visibility": "0",
+              "focus": "true",
+              "hardware": "true",
+              "size": "1080x2100",
+              "alpha": "1.0",
+              "flags": "-2122252032"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

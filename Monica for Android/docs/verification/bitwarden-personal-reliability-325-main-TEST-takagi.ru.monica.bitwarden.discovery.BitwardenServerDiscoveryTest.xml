@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.discovery.BitwardenServerDiscoveryTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-11-05T02:02:49" hostname="JOYIN" time="0.139">
+  <properties/>
+  <testcase name="keepsOneSuccessfulLabelAndReportsTheOtherFailureHonestly" classname="takagi.ru.monica.bitwarden.discovery.BitwardenServerDiscoveryTest" time="0.07"/>
+  <testcase name="invalidEmailOrDomainNeverTriggersResolver" classname="takagi.ru.monica.bitwarden.discovery.BitwardenServerDiscoveryTest" time="0.003"/>
+  <testcase name="totalDeadlineCancelsBothParallelQueriesAfterFourSeconds" classname="takagi.ru.monica.bitwarden.discovery.BitwardenServerDiscoveryTest" time="0.006"/>
+  <testcase name="deduplicatesCanonicalUrlsWhileKeepingBothSourcesAndEightCandidateLimit" classname="takagi.ru.monica.bitwarden.discovery.BitwardenServerDiscoveryTest" time="0.005"/>
+  <testcase name="deadlineRetainsCompletedLabelAndMarksOnlyPendingLabelTimedOut" classname="takagi.ru.monica.bitwarden.discovery.BitwardenServerDiscoveryTest" time="0.005"/>
+  <testcase name="usesPslAndNeverTreatsNullDomainAsSameOwnership" classname="takagi.ru.monica.bitwarden.discovery.BitwardenServerDiscoveryTest" time="0.005"/>
+  <testcase name="distinguishesUnsupportedNoRecordsAndInvalidCandidates" classname="takagi.ru.monica.bitwarden.discovery.BitwardenServerDiscoveryTest" time="0.008"/>
+  <testcase name="boundsInjectedResolverResponsesAndRedactsResultStringification" classname="takagi.ru.monica.bitwarden.discovery.BitwardenServerDiscoveryTest" time="0.006"/>
+  <testcase name="usesSharedHttpsEndpointPolicyAndPreservesPortsPathsAndIpCandidates" classname="takagi.ru.monica.bitwarden.discovery.BitwardenServerDiscoveryTest" time="0.003"/>
+  <testcase name="callerCancellationPropagatesAndDoesNotPublishAnEmptySuccess" classname="takagi.ru.monica.bitwarden.discovery.BitwardenServerDiscoveryTest" time="0.006"/>
+  <testcase name="onlyExplicitInvocationQueriesTwoNamesWithoutTheEmailLocalPart" classname="takagi.ru.monica.bitwarden.discovery.BitwardenServerDiscoveryTest" time="0.022"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

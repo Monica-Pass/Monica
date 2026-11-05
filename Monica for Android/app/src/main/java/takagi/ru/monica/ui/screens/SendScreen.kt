@@ -215,6 +215,8 @@ fun SendScreen(
     var deletingSend by remember { mutableStateOf<BitwardenSend?>(null) }
     var editingSend by remember { mutableStateOf<BitwardenSend?>(null) }
     var showLocalDrafts by remember { mutableStateOf(false) }
+    var showReceiver by remember { mutableStateOf(false) }
+    if (showReceiver) takagi.ru.monica.bitwarden.ui.BitwardenSendReceiverDialog(onDismiss = { showReceiver = false })
     var resumingDraft by remember { mutableStateOf<BitwardenSendDraftStore.Draft?>(null) }
     val localDrafts by bitwardenViewModel.localSendDrafts.collectAsState()
     val draftsUnavailable by bitwardenViewModel.localSendDraftsUnavailable.collectAsState()
@@ -374,6 +376,10 @@ fun SendScreen(
                     .fillMaxSize()
                     .padding(horizontal = 16.dp)
             ) {
+                Button(onClick = { showReceiver = true }, enabled = appUnlocked,
+                    modifier = Modifier.fillMaxWidth().testTag("send_open_receiver")) {
+                    Text(stringResource(R.string.bitwarden_receiver_entry))
+                }
                 OutlinedButton(onClick = { bitwardenViewModel.refreshLocalSendDrafts(); showLocalDrafts = true },
                     enabled = appUnlocked && anyVaultUnlocked,
                     modifier = Modifier.fillMaxWidth().testTag("send_open_drafts")) {
