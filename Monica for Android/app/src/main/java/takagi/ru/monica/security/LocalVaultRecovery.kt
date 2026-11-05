@@ -142,7 +142,7 @@ internal class LocalVaultRecovery(private val context: Context) {
 
     /** A newer credential transaction must not fall back to an older password verifier. */
     fun validate(prefs: SharedPreferences) = synchronized(lock) {
-        (prefs as? MirroredPreferences)?.checkActive()
+        (PreparedSecureStore.unwrap(prefs) as? MirroredPreferences)?.checkActive()
         if (!exists(envelope)) return@synchronized
         val doc = try { readEnvelope() } catch (_: Exception) { return@synchronized }
         val generation = prefs.getString(GENERATION, null)
@@ -161,7 +161,8 @@ internal class LocalVaultRecovery(private val context: Context) {
     /** Called only with a verified password and a valid MDK; atomically replaces old recovery credentials. */
     fun enroll(prefs: SharedPreferences, password: String, updates: Map<String, *>) = synchronized(lock) {
         validate(prefs)
-        val raw = (prefs as? MirroredPreferences)?.delegate ?: prefs
+        val unwrapped = PreparedSecureStore.unwrap(prefs)
+        val raw = (unwrapped as? MirroredPreferences)?.delegate ?: unwrapped
         val values = raw.all.toMutableMap().apply { putAll(updates) }
         val current = runCatching { readEnvelope() }.getOrNull()
         val currentKey = raw.getString(KEY, null)?.let { runCatching { decode(it) }.getOrNull() }
@@ -248,6 +249,7 @@ internal class LocalVaultRecovery(private val context: Context) {
                     "Recovery source changed; try again"
                 }
                 write(selector, JSONObject().put("id", id))
+                PreparedSecureStore.invalidate()
             }
             SecurityManager.clearRuntimeUnlockCache()
             SessionManager.markLocked()

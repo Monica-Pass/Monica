@@ -1,5 +1,7 @@
 package takagi.ru.monica.ime
 
+import takagi.ru.monica.security.launchWithSecureStorage
+
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -36,6 +38,10 @@ class ImeUnlockActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        launchWithSecureStorage { onSecureCreate(savedInstanceState) }
+    }
+
+    private fun onSecureCreate(savedInstanceState: Bundle?) {
 
         window?.setBackgroundDrawableResource(android.R.color.transparent)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -136,7 +142,7 @@ class ImeUnlockActivity : AppCompatActivity() {
                 unsupportedCharacterError = getString(R.string.error_password_contains_unsupported_characters),
                 minLengthError = getString(R.string.error_password_too_short),
                 incorrectError = getString(R.string.ime_unlock_error),
-                verifyPassword = { input -> securityManager.unlockVaultWithPassword(input) },
+                verifyPassword = { input, attempt -> securityManager.unlockVaultWithPassword(input, attempt) },
                 onSuccess = {
                     securityManager.markSecondaryVaultAuthenticated(startupAutoLockMinutes)
                     publishResult(success = true, errorMessage = null)

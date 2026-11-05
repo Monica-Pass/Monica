@@ -1,0 +1,217 @@
+{
+  "date": "2026-11-06",
+  "scope": "Existing MuMu clone1, Android15/API35/x86_64; system Keystore to third-party OMK ba6f300",
+  "packages": {
+    "com.artemchep.keyguard": {
+      "uid": "package:com.artemchep.keyguard uid:1310062",
+      "apkSha256": "11e7578a2f5fc12d28d8b9897dd555c01a4d47e92e956e89f5c53f2f3893f628",
+      "version": [
+        "3.7.0\r"
+      ]
+    },
+    "takagi.ru.monica": {
+      "uid": "package:takagi.ru.monica uid:1310058\r\npackage:takagi.ru.monica.test uid:1310059",
+      "apkSha256": "1ecaae702471c98905d824f5b4e177bcf151965adac9c506129ac8d14f9bc18a",
+      "version": [
+        "1.0.325-26110512-28\r"
+      ]
+    },
+    "takagi.ru.monica.test": {
+      "uid": "package:takagi.ru.monica.test uid:1310059",
+      "apkSha256": "03197c28d05b069fe07a3a7b81c2125c778303b6a87cf6574f44d17aba89f7e2",
+      "version": [
+        "null\r"
+      ]
+    }
+  },
+  "keyguardOfflineBaseline": {
+    "coldPid": "20460",
+    "onlinePid": "10559",
+    "reverseEmpty": true,
+    "appPasswordUnlock": true,
+    "recordPasswordMatched": true
+  },
+  "keyguardAfterOmk": {
+    "firstPid": "26147",
+    "secondPid": "27363",
+    "uid": 1310062,
+    "routeGetKeyEntryOmk": true,
+    "bothColdStartsShowCreateVault": true,
+    "originalPasswordUnlockEntryAvailable": false,
+    "didNotCreateReplacementVault": true,
+    "reverseEmpty": true,
+    "probeFailure": "uiautomator PID26165 SIGSEGV in Shutdown thread after valid XML; not Keyguard PID26147. Further probe-free cold observation required."
+  },
+  "keyguardProbeFreeObservation": {
+    "pid": "31900",
+    "samePidAfter10Seconds": true,
+    "startResult": "Starting: Intent { cmp=com.artemchep.keyguard/.android.MainActivity }\r\nStatus: ok\r\nLaunchState: COLD\r\nActivity: com.artemchep.keyguard/.android.MainActivity\r\nTotalTime: 265\r\nWaitTime: 269\r\nComplete",
+    "noFatalOrAnrInWindow": true,
+    "observationSeconds": 10,
+    "reverseEmpty": true
+  },
+  "monica": {
+    "phase": "cold_restart_write_verified",
+    "usedConfirmedRecovery": true,
+    "reopenProcessId": 28381,
+    "coldProcessId": 32405,
+    "rowId": 1,
+    "newRowId": 2,
+    "coldRowId": 3,
+    "baselineMainLoginVerified": true
+  },
+  "monicaRunners": [
+    {
+      "run_id": "monica-omk-cold-20261105T184906Z-985a324a",
+      "method": "verifyAfterColdRestart",
+      "status": "passed",
+      "elapsed_seconds": 12.673,
+      "runnerSeconds": 6.242
+    },
+    {
+      "run_id": "monica-omk-recovery-20261105T184701Z-0391e074",
+      "method": "reopenOriginalVault",
+      "status": "passed",
+      "elapsed_seconds": 17.679,
+      "runnerSeconds": 10.957
+    },
+    {
+      "run_id": "monica-system-baseline-20261105T184423Z-b17986a4",
+      "method": "seedOriginalVault",
+      "status": "passed",
+      "elapsed_seconds": 18.512,
+      "runnerSeconds": 12.088
+    }
+  ],
+  "routeCounts": {
+    "1310062:System": 18,
+    "1310058:System": 24,
+    "1310062:Omk": 20,
+    "1310058:Omk": 36
+  },
+  "databaseV2Bytes": 352256,
+  "databaseV2Unchanged": true,
+  "conclusion": "Keyguard returned to vault setup after resetting security stores; Monica confirmed recovery retained readable original records.",
+  "limitations": [
+    "No proof every OMK variant avoids crashes; no physical TEE, Android16, OEM or real account verification.",
+    "Keyguard database bytes survived; this does not prove permanent data loss. No replacement vault, relogin or resync was performed.",
+    "UI XML captures succeeded but uiautomator later SIGSEGVed during shutdown; separate probe-free cold start was stable for 10 seconds.",
+    "Screenshots black, not visual acceptance. Monica used pre-existing 325-26110512-28 APK, not the new page-motion build.",
+    "Monica login/recovery UI was real; synthetic record reads/writes were asserted by the existing DAO fixture."
+  ],
+  "cleanup": {
+    "steps": [
+      {
+        "name": "verifiedPrivateArchives",
+        "value": true
+      },
+      {
+        "name": "restoreScopeReply",
+        "value": "ok"
+      },
+      {
+        "name": "scopeRestored",
+        "value": [
+          "takagi.ru.monica@10",
+          "takagi.ru.monica.fdroid@10",
+          "takagi.ru.monica@11",
+          "takagi.ru.monica.fdroid@11"
+        ]
+      },
+      {
+        "name": "reverseMappingsEmpty",
+        "value": true
+      },
+      {
+        "name": "verifiedPrivateArchives",
+        "value": true
+      },
+      {
+        "name": "scopeRestored",
+        "value": [
+          "takagi.ru.monica@10",
+          "takagi.ru.monica.fdroid@10",
+          "takagi.ru.monica@11",
+          "takagi.ru.monica.fdroid@11"
+        ]
+      },
+      {
+        "name": "reverseMappingsEmpty",
+        "value": true
+      },
+      {
+        "name": "stopOwnedUser",
+        "value": ""
+      },
+      {
+        "name": "removeOwnedUser",
+        "value": "Success: removed user"
+      },
+      {
+        "name": "preservedUsers",
+        "value": "Users:\r\n\tUserInfo{0:Owner:4c13} running\r\n\tUserInfo{10:Monica_RealOMK325_StockToModule:1030}\r\n\tUserInfo{11:Monica_RealOMK325_KeyChange:1030}\r\n\tUserInfo{12:Monica_RealOMK325_FinalStock:1030}"
+      },
+      {
+        "name": "moduleEnabledStatesPreserved",
+        "value": true
+      },
+      {
+        "name": "unroot",
+        "value": "restarting adbd as non root"
+      },
+      {
+        "name": "shellUid",
+        "value": 2000
+      },
+      {
+        "name": "instancesAfter",
+        "value": {
+          "0": {
+            "android_version": "15.0",
+            "created_timestamp": 1793811814685479,
+            "disk_size_bytes": 4603587715,
+            "error_code": 0,
+            "hyperv_enabled": true,
+            "index": "0",
+            "info_source": "local",
+            "is_android_started": false,
+            "is_main": false,
+            "is_process_started": false,
+            "name": "Android Device"
+          },
+          "1": {
+            "android_version": "15.0",
+            "created_timestamp": 1793856063204935,
+            "disk_size_bytes": 6105177324,
+            "error_code": 0,
+            "hyperv_enabled": true,
+            "index": "1",
+            "info_source": "local",
+            "is_android_started": false,
+            "is_main": false,
+            "is_process_started": false,
+            "name": "Monica OMK 325 Test"
+          }
+        }
+      },
+      {
+        "name": "ownAdbServerStopped",
+        "value": true
+      },
+      {
+        "name": "onlyOwnedServerStopped",
+        "value": 52621
+      },
+      {
+        "name": "dataPreserved",
+        "value": {
+          "serverData": true,
+          "coldCloneBackup": true,
+          "cloneData": true
+        }
+      }
+    ],
+    "complete": true
+  },
+  "actions": "No production Keystore changes, commit, push, tag, release or APK delivery."
+}

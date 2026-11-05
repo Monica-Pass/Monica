@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-06",
+  "version": "1.0.325 unreleased",
+  "builds": {
+    "main": "13m 21s",
+    "fd": "13m 4s + x86 packaging 44s"
+  },
+  "devices": {
+    "main": {
+      "passed": 33,
+      "runnerSeconds": 313.958
+    },
+    "fd": {
+      "passed": 33,
+      "runnerSeconds": 176.179
+    }
+  },
+  "sharedPaths": 8,
+  "cleanup": {
+    "ownGuestRemoved": true,
+    "originalUsersPreserved": true,
+    "remainingUsers": "Users:\r\n\tUserInfo{0:Owner:c13} running\r\n\tUserInfo{10:Monica:410}\r\n\tUserInfo{11:Monica_Recovery316:410}\r\n\tUserInfo{12:Monica_Recovery316_Retest:410}",
+    "shellUid": "2000",
+    "stopResult": "OK: killing emulator, bye bye\r\r\nOK",
+    "emulatorStopped": true,
+    "avdIniPreserved": true,
+    "avdDataPreserved": true
+  },
+  "limitations": [
+    "Synthetic API32/x86_64 Debug component tests; no physical/OEM or new R8 validation.",
+    "Window exit may briefly display the last rendered surface; no outgoing Compose content or delayed cleanup."
+  ],
+  "actions": "No commit, push, release or APK delivery."
+}

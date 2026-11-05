@@ -15,7 +15,7 @@ import java.util.Base64
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [28], application = Application::class,
-    shadows = [DeviceVaultProviderTest.SecureStoreShadow::class, DeviceVaultProviderTest.SecurityShadow::class])
+    shadows = [DeviceVaultProviderTest.SecureStoreShadow::class, DeviceVaultProviderTest.PreparedStoreShadow::class, DeviceVaultProviderTest.SecurityShadow::class])
 class DevicePasskeyShapeTest {
     @Test fun spki_and_cose_encodings_of_one_key_both_validate() {
         for (algorithm in listOf(-7, -257, -37, -8)) {

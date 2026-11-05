@@ -399,6 +399,49 @@ interface PasswordEntryDao {
     /**
      * 更新绑定的验证器密钥
      */
+    @Query("SELECT * FROM password_entries WHERE keepassDatabaseId IS NULL AND mdbx_database_id IS NULL AND bitwarden_vault_id IS NULL AND isDeleted = 0 AND isArchived = 0 AND (id = :boundId OR password_group_id = :groupId OR replica_group_id = :groupId) ORDER BY id")
+    suspend fun getLocalAuthenticatorAccountCandidates(boundId: Long, groupId: String?): List<PasswordEntry>
+
+    @Query("SELECT * FROM custom_fields WHERE entry_id IN (:entryIds) AND title = 'monica.content.credential' ORDER BY entry_id, id")
+    suspend fun getAuthenticatorAccountMetadata(entryIds: List<Long>): List<CustomField>
+
+    @Query("SELECT * FROM secure_items WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND isDeleted = 0 AND isArchived = 0 AND itemType = 'TOTP'")
+    suspend fun getActiveAuthenticatorBindings(): List<SecureItem>
+
+    /** Keep a local account's duplicated OTP fields consistent under concurrent Room writes. */
+    @Transaction
+    suspend fun clearLocalAccountAuthenticator(
+        boundId: Long,
+        matchesKey: (String) -> Boolean,
+        retainsBinding: (SecureItem, Set<Long>) -> Boolean
+    ): Boolean {
+        val bound = getPasswordEntryById(boundId) ?: return false
+        if (!bound.isLocalOnlyEntry() || bound.isDeleted || bound.isArchived) return false
+        // A stale delete must not clear a subsequently replaced binding.
+        if (!matchesKey(bound.authenticatorKey)) return true
+        val candidates = getLocalAuthenticatorAccountCandidates(boundId, bound.explicitPasswordGroupId())
+            .filter { it.passwordProjectKey() == bound.passwordProjectKey() }
+        val fields = getAuthenticatorAccountMetadata(candidates.map { it.id })
+            .groupBy { it.entryId }.mapValues { (_, values) -> values.map(CustomFieldDraft::fromCustomField) }
+        // Use the editor's explicit account metadata, never title/username/OTP similarity.
+        // OTP differences alone are permitted here so deleting a residual binding can
+        // finish a previous partial deletion; other unreadable/conflicting metadata stays protected.
+        val groups = runCatching {
+            takagi.ru.monica.data.model.ProjectCredentialGroup.restore(
+                candidates.map { it.copy(password = "", authenticatorKey = "") }, fields)
+        }.getOrNull() ?: return false
+        val accountIds = groups.singleOrNull { group -> group.passwords.any { it.originalEntryId == boundId } }
+            ?.passwords?.mapNotNull { it.originalEntryId }?.toSet() ?: return false
+        if (getActiveAuthenticatorBindings().any { retainsBinding(it, accountIds) }) return true
+        // Resolve every key before the first write. An unreadable sibling rolls back the
+        // operation instead of leaving a second partial account behind.
+        val matching = candidates.filter { it.id in accountIds && matchesKey(it.authenticatorKey) }
+        val updatedAt = java.util.Date()
+        matching.forEach { updatePasswordEntry(it.copy(authenticatorKey = "", updatedAt = updatedAt)) }
+        return true
+    }
+
+
     @Query("UPDATE password_entries SET authenticatorKey = :authenticatorKey WHERE id = :id")
     suspend fun updateAuthenticatorKey(id: Long, authenticatorKey: String)
 

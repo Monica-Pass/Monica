@@ -1,0 +1,32 @@
+[
+  {
+    "name": "takagi.ru.monica.bitwarden.service.BitwardenPasswordHistoryTest",
+    "tests": "18",
+    "skipped": "0",
+    "failures": "0",
+    "errors": "0",
+    "timestamp": "2026-11-05T17:31:10",
+    "hostname": "JOYIN",
+    "time": "7.238"
+  },
+  {
+    "name": "takagi.ru.monica.data.model.ProjectCredentialGroupTest",
+    "tests": "8",
+    "skipped": "0",
+    "failures": "0",
+    "errors": "0",
+    "timestamp": "2026-11-05T17:31:18",
+    "hostname": "JOYIN",
+    "time": "0.086"
+  },
+  {
+    "name": "takagi.ru.monica.viewmodel.PasswordCredentialSavePlannerTest",
+    "tests": "8",
+    "skipped": "0",
+    "failures": "0",
+    "errors": "0",
+    "timestamp": "2026-11-05T17:31:20",
+    "hostname": "JOYIN",
+    "time": "0.012"
+  }
+]

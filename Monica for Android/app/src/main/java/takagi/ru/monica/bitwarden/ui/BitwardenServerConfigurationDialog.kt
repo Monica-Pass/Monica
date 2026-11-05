@@ -1,5 +1,8 @@
 package takagi.ru.monica.bitwarden.ui
 
+import takagi.ru.monica.ui.navigation.MonicaPageContent
+import takagi.ru.monica.ui.navigation.MonicaPageDialogMotion
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -137,6 +140,8 @@ internal fun BitwardenServerConfigurationDialog(
                 }
             }
         }
+        MonicaPageDialogMotion()
+        MonicaPageContent(pageKey = editor.page, animateInitial = true, animate = editor.active, modifier = Modifier.fillMaxSize()) {
         Surface(Modifier.fillMaxSize().testTag("bitwarden_server_configuration"), color = MaterialTheme.colorScheme.surface) {
             Scaffold(
                 modifier = Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().imePadding(),
@@ -293,6 +298,7 @@ internal fun BitwardenServerConfigurationDialog(
                     }
                 }
             }
+        }
         }
     }
 }

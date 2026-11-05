@@ -19,7 +19,7 @@ import java.security.MessageDigest
 import java.util.UUID
 
 @RunWith(RobolectricTestRunner::class)
-@Config(sdk = [28], application = Application::class, shadows = [DeviceVaultProviderTest.SecureStoreShadow::class, DeviceVaultProviderTest.SecurityShadow::class])
+@Config(sdk = [28], application = Application::class, shadows = [DeviceVaultProviderTest.SecureStoreShadow::class, DeviceVaultProviderTest.PreparedStoreShadow::class, DeviceVaultProviderTest.SecurityShadow::class])
 class DeviceMetadataAssetsTest {
     private fun descriptor(bytes: ByteArray, identity: String) = JSONObject()
         .put("id", MessageDigest.getInstance("SHA-256").digest(bytes).joinToString("") { "%02x".format(it) })

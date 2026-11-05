@@ -1,5 +1,7 @@
 package takagi.ru.monica.passkey
 
+import takagi.ru.monica.security.launchWithSecureStorage
+
 import android.content.Context
 import takagi.ru.monica.utils.LocaleHelper
 import takagi.ru.monica.utils.StartupLanguageCache
@@ -110,6 +112,10 @@ class PasskeyAuthActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        launchWithSecureStorage { onSecureCreate(savedInstanceState) }
+    }
+
+    private fun onSecureCreate(savedInstanceState: Bundle?) {
         
         onBackPressedDispatcher.addCallback(this) { cancelAuthentication() }
         Log.i(TAG, "PasskeyAuthActivity onCreate")

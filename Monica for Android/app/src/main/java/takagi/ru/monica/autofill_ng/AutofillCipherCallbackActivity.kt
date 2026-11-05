@@ -1,5 +1,7 @@
 package takagi.ru.monica.autofill_ng
 
+import takagi.ru.monica.security.launchWithSecureStorage
+
 import takagi.ru.monica.autofill_ng.auth.AutofillGrantContext
 import takagi.ru.monica.autofill_ng.auth.AutofillSessionGrants
 import takagi.ru.monica.utils.LocaleHelper
@@ -105,6 +107,10 @@ class AutofillCipherCallbackActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        launchWithSecureStorage { onSecureCreate(savedInstanceState) }
+    }
+
+    private fun onSecureCreate(savedInstanceState: Bundle?) {
         overridePendingTransition(0, 0)
         setContentView(R.layout.activity_transparent)
         callbackArgs = resolveArgsFromIntent(intent)
@@ -144,20 +150,21 @@ class AutofillCipherCallbackActivity : AppCompatActivity() {
 
     private fun startAuthentication() {
         lifecycleScope.launch {
+            val generation = SecurityManager.dataReadGeneration.value
             val settings = settingsManager.settingsFlow.first()
             if (DeveloperVerificationPolicy.bypassesIdentityVerification(settings)) {
                 securityManager.unlockVaultForDeveloperBypass(settings.autoLockMinutes)
-                completeCipherAutofill()
+                completeCipherAutofill(generation = generation)
                 return@launch
             }
             if (settings.autofillKeepUnlocked && AutofillSessionGrants.isGranted(grantContext())) {
-                completeCipherAutofill()
+                completeCipherAutofill(generation = generation)
                 return@launch
             }
             setContent {
                 takagi.ru.monica.autofill_ng.auth.AutofillDeviceVerification(
-                    onSuccess = {
-                        lifecycleScope.launch { completeCipherAutofill(authenticationVerified = true) }
+                    onSuccess = { verifiedGeneration ->
+                        lifecycleScope.launch { completeCipherAutofill(authenticationVerified = true, generation = verifiedGeneration) }
                     },
                     onCancel = { cancelAndFinish("authentication_cancelled") },
                 )
@@ -175,8 +182,10 @@ class AutofillCipherCallbackActivity : AppCompatActivity() {
         return true
     }
 
-    private suspend fun completeCipherAutofill(authenticationVerified: Boolean = false) {
+    private suspend fun completeCipherAutofill(authenticationVerified: Boolean = false,
+        generation: Long = SecurityManager.dataReadGeneration.value) {
         if (resultPublished || rejectBlockedRequest()) return
+        if (!securityManager.isDataReadCurrent(generation)) { cancelAndFinish("authentication_revoked"); return }
         val callbackArgs = callbackArgs ?: run {
             cancelAndFinish("missing_args")
             return
@@ -196,12 +205,16 @@ class AutofillCipherCallbackActivity : AppCompatActivity() {
             return
         }
         if (resultPublished || isFinishing || isDestroyed || rejectBlockedRequest()) return
-        val accountValue = AccountFillPolicy.resolveAccountIdentifier(passwordEntry, securityManager)
-        val decryptedPassword = AutofillSecretResolver.decryptPasswordOrNull(
+        val credentials = takagi.ru.monica.security.BoundedSecureDataRead.read(securityManager, generation) {
+            val account = AccountFillPolicy.resolveAccountIdentifier(passwordEntry, securityManager)
+            ensureActive()
+            account to AutofillSecretResolver.decryptPasswordOrNull(
             securityManager = securityManager,
             encryptedOrPlain = passwordEntry.password,
             logTag = TAG,
         )
+        } ?: run { cancelAndFinish("credential_read_unavailable"); return }
+        val (accountValue, decryptedPassword) = credentials
         val resolvedTargets = resolveAutofillTargets(callbackArgs)
         if (resolvedTargets.ids.isEmpty()) {
             cancelAndFinish("missing_autofill_ids")
@@ -257,6 +270,7 @@ class AutofillCipherCallbackActivity : AppCompatActivity() {
 
         if (authenticationVerified) {
             val settings = settingsManager.settingsFlow.first()
+            if (!securityManager.isDataReadCurrent(generation)) { cancelAndFinish("authentication_revoked"); return }
             AutofillSessionGrants.grant(grantContext(),
                 enabled = settings.autofillKeepUnlocked && settings.autofillAuthRequired)
         }
@@ -277,6 +291,13 @@ class AutofillCipherCallbackActivity : AppCompatActivity() {
             )
         )
 
+        if (!securityManager.isDataReadCurrent(generation) || isFinishing || isDestroyed ||
+            !lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED) ||
+            getSystemService(android.os.PowerManager::class.java)?.isInteractive != true ||
+            getSystemService(android.app.KeyguardManager::class.java)?.isKeyguardLocked != false) {
+            cancelAndFinish("credential_read_revoked")
+            return
+        }
         setResult(
             Activity.RESULT_OK,
             Intent().apply {

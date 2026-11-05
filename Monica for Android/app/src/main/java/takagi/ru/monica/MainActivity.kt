@@ -4284,7 +4284,13 @@ fun MonicaContent(
             )
         }
         
-        composable("bitwarden/account/{vaultId}") { backStackEntry ->
+        composable(
+            route = "bitwarden/account/{vaultId}",
+            enterTransition = { easyNotesScreenEnter() },
+            exitTransition = { easyNotesScreenExit() },
+            popEnterTransition = { easyNotesScreenEnter() },
+            popExitTransition = { easyNotesScreenExit() }
+        ) { backStackEntry ->
             val vaultId = backStackEntry.arguments?.getString("vaultId")?.toLongOrNull()
             if (vaultId != null) {
                 val accountViewModel: takagi.ru.monica.bitwarden.viewmodel.BitwardenViewModel =

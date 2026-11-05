@@ -1,0 +1,154 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest:
+INSTRUMENTATION_STATUS: test=otherReadersCannotSeeNewRecordBeforeItsFieldsAreSaved
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<[kept]> but was:<[]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest$otherReadersCannotSeeNewRecordBeforeItsFieldsAreSaved$1$1.invokeSuspend(BitwardenCredentialCreateAtomicityTest.kt:106)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:46)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest.otherReadersCannotSeeNewRecordBeforeItsFieldsAreSaved(BitwardenCredentialCreateAtomicityTest.kt:83)
+
+INSTRUMENTATION_STATUS: stream=
+Error in otherReadersCannotSeeNewRecordBeforeItsFieldsAreSaved(takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest):
+java.lang.AssertionError: expected:<[kept]> but was:<[]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest$otherReadersCannotSeeNewRecordBeforeItsFieldsAreSaved$1$1.invokeSuspend(BitwardenCredentialCreateAtomicityTest.kt:106)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:46)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest.otherReadersCannotSeeNewRecordBeforeItsFieldsAreSaved(BitwardenCredentialCreateAtomicityTest.kt:83)
+
+INSTRUMENTATION_STATUS: test=otherReadersCannotSeeNewRecordBeforeItsFieldsAreSaved
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockAfterInsertAndRepeatedSaveCannotLeaveOrphanRecords
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failed saves must not leave three new passwords
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest$lockAfterInsertAndRepeatedSaveCannotLeaveOrphanRecords$1$1.invokeSuspend(BitwardenCredentialCreateAtomicityTest.kt:78)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest.lockAfterInsertAndRepeatedSaveCannotLeaveOrphanRecords(BitwardenCredentialCreateAtomicityTest.kt:60)
+
+INSTRUMENTATION_STATUS: stream=
+Error in lockAfterInsertAndRepeatedSaveCannotLeaveOrphanRecords(takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest):
+java.lang.AssertionError: Failed saves must not leave three new passwords
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest$lockAfterInsertAndRepeatedSaveCannotLeaveOrphanRecords$1$1.invokeSuspend(BitwardenCredentialCreateAtomicityTest.kt:78)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest.lockAfterInsertAndRepeatedSaveCannotLeaveOrphanRecords(BitwardenCredentialCreateAtomicityTest.kt:60)
+
+INSTRUMENTATION_STATUS: test=lockAfterInsertAndRepeatedSaveCannotLeaveOrphanRecords
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=emptyUsernameAndPasswordReportSuccessAndStoreOneCompleteRecord
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=3
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=emptyUsernameAndPasswordReportSuccessAndStoreOneCompleteRecord
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 17.312
+There were 2 failures:
+1) otherReadersCannotSeeNewRecordBeforeItsFieldsAreSaved(takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest)
+java.lang.AssertionError: expected:<[kept]> but was:<[]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest$otherReadersCannotSeeNewRecordBeforeItsFieldsAreSaved$1$1.invokeSuspend(BitwardenCredentialCreateAtomicityTest.kt:106)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:46)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest.otherReadersCannotSeeNewRecordBeforeItsFieldsAreSaved(BitwardenCredentialCreateAtomicityTest.kt:83)
+2) lockAfterInsertAndRepeatedSaveCannotLeaveOrphanRecords(takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest)
+java.lang.AssertionError: Failed saves must not leave three new passwords
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest$lockAfterInsertAndRepeatedSaveCannotLeaveOrphanRecords$1$1.invokeSuspend(BitwardenCredentialCreateAtomicityTest.kt:78)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest.lockAfterInsertAndRepeatedSaveCannotLeaveOrphanRecords(BitwardenCredentialCreateAtomicityTest.kt:60)
+
+FAILURES!!!
+Tests run: 3,  Failures: 2
+
+
+INSTRUMENTATION_CODE: -1

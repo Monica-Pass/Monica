@@ -25,7 +25,7 @@ import java.util.UUID
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [28], application = Application::class,
-    shadows = [DeviceVaultProviderTest.SecureStoreShadow::class, DeviceVaultProviderTest.SecurityShadow::class])
+    shadows = [DeviceVaultProviderTest.SecureStoreShadow::class, DeviceVaultProviderTest.PreparedStoreShadow::class, DeviceVaultProviderTest.SecurityShadow::class])
 @OptIn(ExperimentalCoroutinesApi::class)
 class DeviceSelectedDatabaseTest {
     @Test fun local_default_ignores_other_vaults_and_selected_target_is_isolated() = runBlocking { withTimeout(90_000) {

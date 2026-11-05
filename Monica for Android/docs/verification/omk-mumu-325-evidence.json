@@ -1,0 +1,420 @@
+{
+  "date": "2026-11-05",
+  "scope": "Read-only takeover audit of the original MuMu experiment; no repeated device tests.",
+  "raw_runs": 30,
+  "verified_recorded_file_hashes": 777,
+  "final_runner_and_log_boundary_checks": 20,
+  "shared_source_sha256": {
+    "app/src/main/java/takagi/ru/monica/security/SecurePreferencesStore.kt": "6431050dcee544ce46a9d9dbbeca050311ddce0100b19333e4ad723f11a6483e",
+    "app/src/androidTest/java/takagi/ru/monica/security/MuMuOmkModuleFixtureTest.kt": "956391092df5fa0a0f7d8c59a0dc36203e0eb3c5ee5823ab2d4f18ea32a569b3",
+    "app/src/androidTest/java/takagi/ru/monica/security/SecureStartupHandoffInstrumentedTest.kt": "a6e5500f4c399860633fd90b1e794e5f4aa64bf1536adc825fe20e1b1f404ae3"
+  },
+  "module_build": {
+    "path": "E:\\Monica-codex-tests\\omk-20261105\\OhMyKeymint\\target\\OhMyKeymint-1.3.5-1-ba6f300-x86_64-release.zip",
+    "sha256": "ffa31a01ba2feff28f9a1d0adadcc22b4d8191525bed4743b630f99eec753ec2",
+    "binaries": {
+      "libs/x86_64/keymint": {
+        "machine": 62,
+        "sha256": "ec702acd2731275a26fb13b84a18b7bed85d463be1110ddcf3d45f820f0826e3"
+      },
+      "libs/x86_64/inject": {
+        "machine": 62,
+        "sha256": "030be58f6b91f54e25d5ae736f61c7536a04fbe0ac63300ed57175d4923bb29c"
+      },
+      "libs/x86_64/soterta-svc": {
+        "machine": 62,
+        "sha256": "04df0e6fce976c8aebcf1f335039322714cb54ee06566971ced62a27b94f2538"
+      },
+      "zygisk/x86_64.so": {
+        "machine": 62,
+        "sha256": "9bbf3c583edaf6a1fa0917a84d3a08e75b83419811d2389ed512cc44837355d3"
+      }
+    }
+  },
+  "module_activation": {
+    "module": "[\n  {\n    \"id\": \"oh_my_keymint\",\n    \"name\": \"Oh My Keymint\",\n    \"update\": \"false\",\n    \"remove\": \"false\",\n    \"web\": \"true\",\n    \"action\": \"false\",\n    \"description\": \"Custom keystore implementation for Android Keystore Spoofer\",\n    \"version\": \"1.3.5 (1-ba6f300-release)\",\n    \"mount\": \"false\",\n    \"enabled\": \"true\",\n    \"versionCode\": \"1\",\n    \"author\": \"James Clef,ITxiao6666\",\n    \"updateJson\": \"https://raw.githubusercontent.com/ITxiao6666/OhMyKeymint/changelog/update.json\"\n  }\n]",
+    "tee": "normal",
+    "payload": "512 libcd0afa04c0ca996468a92c4cc3f25929.so",
+    "scope": "# With `[filter].enabled = true`, caller UID and resolved packages select OMK.\n# Targets: package (all users), package@user_id, or uid:full_android_uid.\n# Matching one shared-UID package selects the entire UID.\n# Filter deny settings still apply to every package resolved for the UID.\n\nversion = 1\n\n\nscoop = [\n  \"takagi.ru.monica@10\",\n  \"takagi.ru.monica.fdroid@10\",\n  \"takagi.ru.monica@11\",\n  \"takagi.ru.monica.fdroid@11\"\n]\n\n[main]\nenabled = true\nlog_level = \"debug\"\n# Optional delay before challenged OMK generation, 0..250 ms; 0 disables it.\nattestation_generation_delay_ms = 0\n# Optional delay before two-way OMK createOperation calls, 0..250 ms; 0 disables it.\noperation_start_delay_ms = 0\n\n[filter]\nenabled = true\ndeny_packages = []\nblock_android_package = true\nallow_unknown_package = false\n\n[intercept]\nget_security_level = true\nget_key_entry = true\nupdate_subcomponent = true\nlist_entries = true\ndelete_key = true\ngrant = true\nungrant = true\nget_number_of_entries = true\nlist_entries_batched = true\nget_supplementary_attestation_info = true",
+    "recoveredKeyMetadata": "1110058|monica_recovered_key_4209fcf8-4708-4864-a4be-de9bcbf4906c|1\n1110060|monica_recovered_key_9b373b5c-2cc4-480a-9cae-9c813d3ef15f|1"
+  },
+  "final_baseline_backends": {
+    "stock": "1210058|_androidx_security_master_key_|1\n1210058|monica_data_key_v2_compat|1\n1210060|_androidx_security_master_key_|1\n1210060|monica_data_key_v2_compat|1\n",
+    "omk": "1110058|_androidx_security_master_key_|1\n1110058|monica_data_key_v2_compat|1\n1110060|_androidx_security_master_key_|1\n1110060|monica_data_key_v2_compat|1\n"
+  },
+  "reinstalled_backend": {
+    "newRootWrappingSeed": true,
+    "newConfigSha256": "f2dc160f37d3b93c596bc40e54cf650e562a9984f6a8ec7d0ad9025c11cb3ada",
+    "syntheticAppKeysInitiallyAbsent": true,
+    "backendProbe": "normal",
+    "managerUninstallReinstall": true
+  },
+  "root_seed_failure_preservation": {
+    "takagi.ru.monica": {
+      "originalPreferencesPreserved": true,
+      "originalEnvelopePreserved": true,
+      "prefsSha256": "34547d2cd783926756232dfb6b4c834116153162b893ef70dc5b88e906de64fb",
+      "envelopeSha256": "60e8b70229b4565fbdfd6f503a47617859b09cb43c1b899aa25b1e2a9c4e5e41",
+      "phase": "seeded"
+    },
+    "takagi.ru.monica.fdroid": {
+      "originalPreferencesPreserved": true,
+      "originalEnvelopePreserved": true,
+      "prefsSha256": "2466c437de495a7aa9759ec458dee57fdb141ff5200bf7e2dd8c2eeb5a205f76",
+      "envelopeSha256": "a4d52f5acff66c5b9461758bc95f66b3d2d6be4aa1c363837cb3e4f19277332e",
+      "phase": "seeded"
+    }
+  },
+  "scenario_order": [
+    "Final user12 stock baseline: aliases present in stock SQLite and absent in OMK.",
+    "Enable package@12 with the OMK scoop API; recover and cold-reopen both editions before root rotation.",
+    "Change only root_kek_seed for the existing OMK-created user11 vaults; backend startup fails.",
+    "KernelSU uninstall, reboot and reinstall; new root seed and empty user11 key metadata verified.",
+    "Recover and cold-reopen user11 on both editions. Reinstall restores scoop users10/11; user12 was not re-tested after this second transition."
+  ],
+  "runner_artifacts": [
+    {
+      "run_id": "fdroid-final-stock-seed-20261105T061740Z-7f459e58",
+      "final_phase": true,
+      "status": "passed",
+      "files": {
+        "result.json": "1a1b301bb0b2e350617d040980c31a9c2e8e7be8a5ffd8574f24304d8b73c54e",
+        "instrumentation.stdout.txt": "5eaa37346eb68f221dba0491eb13035acebacd4d0dc1dfc85111d6d031b7eff6",
+        "logcat.stdout.txt": "03399381a703b4b94507752741ea48159dc4b690de4c92c0fd10acb2bc67fd98"
+      }
+    },
+    {
+      "run_id": "fdroid-final-stock-to-omk-cold-20261105T061948Z-c5c81ff1",
+      "final_phase": true,
+      "status": "passed",
+      "files": {
+        "result.json": "cce03f70e2810ee7a726d540b7f76bf6616f8bb4e0213cfec6ad6a90bdb38697",
+        "instrumentation.stdout.txt": "0af953133b2c81cf265acf87082adc00a95b28c3d67a1879d8c3f7d1a92a00d0",
+        "logcat.stdout.txt": "b35ee1bf3cece53b2701af077fa9cae1c573cd8e7108f6df22e1a4b6ac68ce3b"
+      }
+    },
+    {
+      "run_id": "fdroid-final-stock-to-omk-reopen-20261105T061930Z-521af144",
+      "final_phase": true,
+      "status": "passed",
+      "files": {
+        "result.json": "36ac57537050e2fb812f3dfe3444f982431e3a0b5ed7a123b81a0b36529c559d",
+        "instrumentation.stdout.txt": "9823307df47dd66c952b2c60a3b370f28989c8557c9da1b501be807199d89002",
+        "logcat.stdout.txt": "0d436ec03791d989c6554c137f9706bad6b3b7c87312def14bbbb35155c0b26b"
+      }
+    },
+    {
+      "run_id": "fdroid-handoff-fixed-1-20261105T061644Z-56af8500",
+      "final_phase": true,
+      "status": "passed",
+      "files": {
+        "result.json": "4169e7e4f31f6c414b68ea69a1d2777ecf562b8cbd6c5a34780adb29cefbc473",
+        "instrumentation.stdout.txt": "6805bf609a4fb56f317cf7c911bf4805a07bb47fc43127fe7723d7e7d6991f47",
+        "logcat.stdout.txt": "9cac236c1c4c69383573fb5f45ec7adb07959a0272a139a05f6d93be714e6eaf"
+      }
+    },
+    {
+      "run_id": "fdroid-handoff-fixed-2-20261105T061656Z-98d9fdbd",
+      "final_phase": true,
+      "status": "passed",
+      "files": {
+        "result.json": "c48489d6cdd3ec8ae45dae3616e76130606c448aa6f1b3c18c2a2d1a58ea4d07",
+        "instrumentation.stdout.txt": "7ee43d0b270818d5a9fb84900d91769cbd14f87f4536a627f53b5fc6ecf1d175",
+        "logcat.stdout.txt": "6bf56a1181eb3ab6d68bb71efd9a739d951cedb8c685286aed1cecc1929da58b"
+      }
+    },
+    {
+      "run_id": "fdroid-handoff-fixed-3-20261105T061704Z-c2fbc656",
+      "final_phase": true,
+      "status": "passed",
+      "files": {
+        "result.json": "c19a2a3dbb923e148f8ff6124245340f06c6fc74a8622408a971b102ae3965fe",
+        "instrumentation.stdout.txt": "fef11b83a8f82f1db4c095136cafb407a924755b5be8a8a1c92d9c73fb6b18e4",
+        "logcat.stdout.txt": "811c678a4c7c6c4cca743d40a2830a216df7506225c886947d88fbf3ace88eba"
+      }
+    },
+    {
+      "run_id": "fdroid-handoff-fixed-4-20261105T061712Z-171b724f",
+      "final_phase": true,
+      "status": "passed",
+      "files": {
+        "result.json": "54e07b1f21706386f3b0cc5555620458e49dea3bf8abc66460fa5de86b97d740",
+        "instrumentation.stdout.txt": "50825f16695f6cb4e648d3d44ccc48824eda5f83c4c09584d9044766e4c45fef",
+        "logcat.stdout.txt": "0f4c9db6a312feb020dcbea645ade970bc9c30582f26209ce340a450f544e630"
+      }
+    },
+    {
+      "run_id": "fdroid-omk-reinstalled-cold-20261105T062958Z-501bcb9b",
+      "final_phase": true,
+      "status": "passed",
+      "files": {
+        "result.json": "5dd30417db87f7a246e1cd4f8677e389ed3d539cabca9521643652d8bccde207",
+        "instrumentation.stdout.txt": "cf849fe12990053c885c9dfc438ea623b0fc756cb999e073d2ef0f207a2cbb1b",
+        "logcat.stdout.txt": "ee49041cdf81b60fea3ae0da603d41cb17e03570dbb871426cf43ffd47b09d33"
+      }
+    },
+    {
+      "run_id": "fdroid-omk-reinstalled-reopen-20261105T062939Z-5b0cbc5d",
+      "final_phase": true,
+      "status": "passed",
+      "files": {
+        "result.json": "37a7fe9ea7d47d52c4c10965c79ec56e690a6f4ec7b91ffb312b12663f09f702",
+        "instrumentation.stdout.txt": "550fac90575fe8fe208c7fd241ebe11e39416276415f1445dfcd09b17404b064",
+        "logcat.stdout.txt": "c3ab77d4899095c179fb2a22e7618f3a6cf4b64f1329dee1c4baa09086a928a6"
+      }
+    },
+    {
+      "run_id": "fdroid-omk-seed-fixed-20261105T061721Z-bcc5114b",
+      "final_phase": true,
+      "status": "passed",
+      "files": {
+        "result.json": "66a26a8abe787e33999346e8e487074df9e6877e1a3f9d739847e93bf96708c6",
+        "instrumentation.stdout.txt": "af15f676e2a207bfe5a55556ba774929da0b75aaa4fa4fe4b6a0c6142fc71e51",
+        "logcat.stdout.txt": "d9281a06063bed34bcb77e58f7b0799a5c37af00d0fcd2644297b9f72d5e931f"
+      }
+    },
+    {
+      "run_id": "fdroid-stock-seed-20261105T054355Z-589f75a3",
+      "final_phase": false,
+      "status": "passed",
+      "files": {
+        "result.json": "e5f754a2f4e0523a7f1feae6af43423878be8f03908e1edde099781f74c8ae21",
+        "instrumentation.stdout.txt": "c570824ace71575a226cbccd0a711dab464cf6b07b05d26c1aa77c146a3ac95d",
+        "logcat.stdout.txt": "78ccf2f731dc58fce3d312d701c0407ae64de853176b3aa1cf5549037437f98f"
+      }
+    },
+    {
+      "run_id": "fdroid-stock-to-omk-cold-20261105T055559Z-4936df5f",
+      "final_phase": false,
+      "status": "driver_error",
+      "files": {
+        "result.json": "61b2fae099d08c3e769e52f7805a1266b8f9e465fbf9f0728e5af8d96035ba8a",
+        "instrumentation.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "logcat.stdout.txt": "b5ebbd3e8daac60d2f0c0b5cbd53a4cd5e62cdd934399fab37a09d0758c0e50b"
+      }
+    },
+    {
+      "run_id": "fdroid-stock-to-omk-cold-retry-20261105T055855Z-d9045b25",
+      "final_phase": false,
+      "status": "passed",
+      "files": {
+        "result.json": "93fef40ededf2d861af69c32fb940f889bcefce3ffb832dd9c0fbab6cdaa1195",
+        "instrumentation.stdout.txt": "d0ed23a0c41aaf827de813095d7f4c6715abfe59c807d917bb27b49992f91eaf",
+        "logcat.stdout.txt": "fc344870a2db468819829b4e8a57573e764071e6bd2c9d0603e3ba5b828d3945"
+      }
+    },
+    {
+      "run_id": "fdroid-stock-to-omk-reopen-20261105T055540Z-1d5db8b9",
+      "final_phase": false,
+      "status": "passed",
+      "files": {
+        "result.json": "d31e92cae0474de91b0bdefb349eeaf3ba3b0c88dab73d87eadf54c126b3a788",
+        "instrumentation.stdout.txt": "a934d779b013f36c297a48472c2e0f38f55a8ba1a93865b48434a912b1424fd8",
+        "logcat.stdout.txt": "a9140d560bebe7ed166ab1cd9cc8092e2f379dc5a1656bd4b664dc0bd49aff82"
+      }
+    },
+    {
+      "run_id": "main-final-stock-seed-20261105T061542Z-2f5494a7",
+      "final_phase": true,
+      "status": "passed",
+      "files": {
+        "result.json": "92b7dc07ceb3120ad205ac8ddf82fb78ff9e9c507dc456cd4235a662bdab4949",
+        "instrumentation.stdout.txt": "309febb3761c960b3ccad21d5a8034001e584594b72b1f0c81bd9a27320b3678",
+        "logcat.stdout.txt": "8977098bd7e13e0a035f6e753f3418b3080cbc7e5b2a2c70a6e4eb791e6a4ed5"
+      }
+    },
+    {
+      "run_id": "main-final-stock-to-omk-cold-20261105T061916Z-c2ce1f93",
+      "final_phase": true,
+      "status": "passed",
+      "files": {
+        "result.json": "263b0b2bdf96b4318efaf3d3a94c3a6ff6661e4bbb5ffe6922b6ef626f9dc2e9",
+        "instrumentation.stdout.txt": "5471f88915d0e1b37eafcb7d21a8f479f5371b3ad877e759eb65e678024dcd31",
+        "logcat.stdout.txt": "2b05214f41e8963019032ffcfc5724266a84033846c540663a92f9d04224cf01"
+      }
+    },
+    {
+      "run_id": "main-final-stock-to-omk-reopen-20261105T061855Z-56888606",
+      "final_phase": true,
+      "status": "passed",
+      "files": {
+        "result.json": "472560ff9f83a4dfadde8a50cc93fbc7442f424f03b7934e86bc753c89a40056",
+        "instrumentation.stdout.txt": "d76405077111bad12329ddc9cb6302421fee2222eda03d17a81f597816075d27",
+        "logcat.stdout.txt": "34204f6cf4cc2cdafb8ba18d6d7c8135581b057a67721c042afc09683e48c3ab"
+      }
+    },
+    {
+      "run_id": "main-handoff-fixed-1-20261105T061441Z-1858710e",
+      "final_phase": true,
+      "status": "passed",
+      "files": {
+        "result.json": "a2531fe096cdf289a190821ae7ae60e6674867a135d790e6d534efa3c75399d0",
+        "instrumentation.stdout.txt": "ef906dd4262c933cc947991ea55bdfc5164380ad2e007a30c408c03491bc5b5b",
+        "logcat.stdout.txt": "a6816bfe08ff8ba70880c593f1123519d8ad239794ff187ec7b372bc61d059a8"
+      }
+    },
+    {
+      "run_id": "main-handoff-fixed-2-20261105T061454Z-527f6bf5",
+      "final_phase": true,
+      "status": "passed",
+      "files": {
+        "result.json": "9ff5cad3048b4ba0159e9c0ff9bb796a18cbd700707f94e41c0532152a7fa250",
+        "instrumentation.stdout.txt": "1c5d78cc5d76049dad660c85e57f926fc4476f97f4716c03ba814774cffbc5e7",
+        "logcat.stdout.txt": "c8e885b76a73de47f43855391f5c4284982b1ba2c006d9dfc629a49dc95a816e"
+      }
+    },
+    {
+      "run_id": "main-handoff-fixed-3-20261105T061503Z-e6664495",
+      "final_phase": true,
+      "status": "passed",
+      "files": {
+        "result.json": "248a1ec871713e67dee4793213d12e66359021e9f064260255f6c88b48ca1d85",
+        "instrumentation.stdout.txt": "67af1ac16b93cf0dddb7ebd16a3012d25ffad7a83621e017575a296731f17507",
+        "logcat.stdout.txt": "7fd4499beb4c29a20096a7e7073455df6237979e9102e23a66b32e512e4960b1"
+      }
+    },
+    {
+      "run_id": "main-handoff-fixed-4-20261105T061512Z-773910a8",
+      "final_phase": true,
+      "status": "passed",
+      "files": {
+        "result.json": "b08ad0489d3610c6507a6f4289906d0291a1774cf4f7817c520287525c4e2d58",
+        "instrumentation.stdout.txt": "801e231caf7f5fe79dba16a17ef5f109d1605ac087e8ec138ac19ad47b3b7bc7",
+        "logcat.stdout.txt": "62d1fc750c79450ca9303e86ba7319085add4cdfe44700313e7f3ff33e9c0502"
+      }
+    },
+    {
+      "run_id": "main-handoff-old-negative-20261105T061328Z-4264c3fa",
+      "final_phase": false,
+      "status": "failed_or_environment_error",
+      "files": {
+        "result.json": "87f2b77bb3fd2185e501e5951376c81e15d8ac13a485d475e5d3444833d0bdfc",
+        "instrumentation.stdout.txt": "21914c560f954c71c0b942dc6d2c34e195aed92817db207ca3bd853c0c86a4a5",
+        "logcat.stdout.txt": "23894e3aab3b26a3407044d6bddd664f1ada3959d9eabd477cc50d352a711901"
+      }
+    },
+    {
+      "run_id": "main-omk-reinstalled-cold-20261105T062924Z-b977a048",
+      "final_phase": true,
+      "status": "passed",
+      "files": {
+        "result.json": "512d0cf9983263928fa3fa0eced35b31b7a661f9d89b793c96c32e151d2d2c86",
+        "instrumentation.stdout.txt": "e8849a8c4f66898291e6af6c19477c5f706610d47a77fdb35e33498c3e3f98e2",
+        "logcat.stdout.txt": "77c2340df6ba7813820a1556e52febe8f3c877c596c55138996b4349a0905278"
+      }
+    },
+    {
+      "run_id": "main-omk-reinstalled-reopen-20261105T062904Z-5f9c0d30",
+      "final_phase": true,
+      "status": "passed",
+      "files": {
+        "result.json": "9cb4e822539220058231ad9b84892809de471b2643e674dc907d188731baa15f",
+        "instrumentation.stdout.txt": "6605b0151f74b1359002086f545cf79e28009da1ff2c46359555f261da8961c0",
+        "logcat.stdout.txt": "7af3f4a7f414aa0ce31166be880cda7702b7f262441ae0b52961673acaedfad4"
+      }
+    },
+    {
+      "run_id": "main-omk-seed-20261105T055911Z-04d69108",
+      "final_phase": false,
+      "status": "driver_error",
+      "files": {
+        "result.json": "0d94f2c3e8dbcdd1b65ca233185cae45b95440be8631032738e734917d5d6fe7",
+        "instrumentation.stdout.txt": "d58b6d48a339d4dbc1be37157956df2afbffe9878b6db41557d3c353aec663e1",
+        "logcat.stdout.txt": "00ecf1a694dfe3c391177af8d4621791436bb74bbd10caf0da28cf599336544a"
+      }
+    },
+    {
+      "run_id": "main-omk-seed-resume-fixed-20261105T061523Z-5dc0a493",
+      "final_phase": true,
+      "status": "passed",
+      "files": {
+        "result.json": "5a3304fc81238d34084f1e3676d78e43331e02ee887f26a5dda38ca4eb498d51",
+        "instrumentation.stdout.txt": "f61957aef3d7db6461dbe93057aef7c188365a208acc28951ce8a3302a28a06c",
+        "logcat.stdout.txt": "5de4139740ffb2f8225615657291f85523a72a2a8bd403aae842c6c755217221"
+      }
+    },
+    {
+      "run_id": "main-root-key-change-reopen-20261105T062223Z-8ac5b7d6",
+      "final_phase": false,
+      "status": "failed_or_environment_error",
+      "files": {
+        "result.json": "b2478f6a19a3208f792d39111313d9174713def892bccfb2e1eebd1558a221af",
+        "instrumentation.stdout.txt": "b3b3fd61e7106d0215820f122f8bb9f4c98141e085fd6264e8d3e188fdb0b805",
+        "logcat.stdout.txt": "5abd293c26be64884e13d4cc97f3925842da39d7e611634acdd05d3d7e4e9acc"
+      }
+    },
+    {
+      "run_id": "main-stock-seed-20261105T054218Z-d4f4cf72",
+      "final_phase": false,
+      "status": "passed",
+      "files": {
+        "result.json": "36b02bd9762971b39140b05b6f79cbb6c4e07b58ede0593a6ba367718c852a3a",
+        "instrumentation.stdout.txt": "9fd3174bcdb87eeef703e42faa4eb11c74f2b60f8c35fe518b0c29f8e00bd8bc",
+        "logcat.stdout.txt": "711c9f65d87dd84516165c78a46798587a340126aa19dcb49a1e28b55bd40074"
+      }
+    },
+    {
+      "run_id": "main-stock-to-omk-cold-20261105T055526Z-316dc96f",
+      "final_phase": false,
+      "status": "passed",
+      "files": {
+        "result.json": "96026ad28bbd54cc4d4de2e345b8261c7c154abcac9e53124ce1ba5ae4e10f27",
+        "instrumentation.stdout.txt": "0e391b324d428d96cd159b9c6a8700ca7266530e8e4fc9bed4d5ce7b3dbb2a1d",
+        "logcat.stdout.txt": "d5f6029705e9f2e383632c9a189a577aa54e22d59b05890098c3428b37078751"
+      }
+    },
+    {
+      "run_id": "main-stock-to-omk-reopen-20261105T055441Z-d70fa5ca",
+      "final_phase": false,
+      "status": "passed",
+      "files": {
+        "result.json": "316307bb44da191d3b861cb54ef3167daee898a21bf3d790c051035a750f680e",
+        "instrumentation.stdout.txt": "36b11dcaa7ec25c24fede4e98d7ec885bc8c198920619facb62ca927be67f2e9",
+        "logcat.stdout.txt": "83c08c0c3813e158e1a969b633ef53b346636e14f730ee78ea3e7cb3a6b9c597"
+      }
+    }
+  ],
+  "source_artifacts": [
+    {
+      "path": "raw/module-install.txt",
+      "sha256": "251cacbdb92327ffa4d2a749e161381fdd85a54e48b1a0bef3af6568388f0e14"
+    },
+    {
+      "path": "raw/module-first-boot-status.txt",
+      "sha256": "e02910f4a9e334322f9da787abc5e589a0c1db6e1b46280e267a16e3492e66fe"
+    },
+    {
+      "path": "raw/final-injector.log",
+      "sha256": "9434fea11d01a6f26d344d7e0c85cb87a9625d3d5580a9f33b78c0a03d0f1bb7"
+    },
+    {
+      "path": "raw/root-rotation-keymint.log",
+      "sha256": "4cac7804d6f213459c536d302399e4bab3871449804cbd96c2420c3d14998512"
+    },
+    {
+      "path": "raw/after-rotation-status-recheck.txt",
+      "sha256": "4fb72b01ce3eaac31e01756fa63036b2f55468ce246692fe4aa6c495b22b580e"
+    },
+    {
+      "path": "raw/module-uninstalled-boot.txt",
+      "sha256": "498244af182277987ce9886b5e1027c0653443c00e86034ee8f3e9ded39cb991"
+    },
+    {
+      "path": "raw/main-handoff-fix-build-02.log",
+      "sha256": "d7b7834b717cfc18693a270e358bd77cd32a6ba5e005f0e832189ad5316e2565"
+    },
+    {
+      "path": "raw/fdroid-handoff-fix-build-01.log",
+      "sha256": "7fc9efc57c3094bf4b452e333a822a8f450529fdcafe1f045e35c64c0d6bb92b"
+    }
+  ],
+  "final_stock_route_excerpts": [
+    "fdroid-final-stock-to-omk-reopen-20261105T061930Z-521af144\n11-05 14:19:34.117   508   508 I OhMyKeymint: inject::hook::rewrite::request: event=route method=GetKeyEntry uid=1210060 pid=59108 route=Omk",
+    "main-final-stock-to-omk-reopen-20261105T061855Z-56888606\n11-05 14:19:01.410   508 19877 I OhMyKeymint: inject::hook::rewrite::request: event=route method=GetKeyEntry uid=1210058 pid=57785 route=Omk"
+  ],
+  "takeover_metadata_check": {
+    "passed": true,
+    "script_tests": 6,
+    "raw_sha256": "7bc6442a66f4c2dbba63b08a6c4b45c274a99084f9c22d9d28b3968f09287986"
+  }
+}

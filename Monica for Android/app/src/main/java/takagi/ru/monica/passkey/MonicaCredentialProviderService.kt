@@ -144,9 +144,12 @@ class MonicaCredentialProviderService : CredentialProviderService() {
         callback: OutcomeReceiver<BeginGetCredentialResponse, GetCredentialException>
     ) {
         Log.i(TAG, "onBeginGetCredentialRequest")
-        
-        serviceScope.launch {
+        if (cancellationSignal.isCanceled) return
+        val completed = java.util.concurrent.atomic.AtomicBoolean(false)
+        val job = serviceScope.launch {
             try {
+                val startup = takagi.ru.monica.security.SecureStorageStartup.prepareForEntry(applicationContext, 4_000)
+                if (startup is takagi.ru.monica.security.SecureStartupResult.Blocked) throw startup.failure
                 val credentialEntries = mutableListOf<CredentialEntry>()
                 
                 for (option in request.beginGetCredentialOptions) {
@@ -172,13 +175,18 @@ class MonicaCredentialProviderService : CredentialProviderService() {
                     .setCredentialEntries(credentialEntries)
                     .build()
                 
-                callback.onResult(response)
+                if (!cancellationSignal.isCanceled && completed.compareAndSet(false, true)) callback.onResult(response)
                 
+            } catch (cancelled: kotlinx.coroutines.CancellationException) {
+                throw cancelled
             } catch (e: Exception) {
-                Log.e(TAG, "Error in onBeginGetCredentialRequest", e)
-                callback.onError(GetCredentialUnknownException(e.message))
+                Log.w(TAG, "Credential request failed: ${e.javaClass.simpleName}")
+                if (!cancellationSignal.isCanceled && completed.compareAndSet(false, true)) {
+                    callback.onError(GetCredentialUnknownException(strings.get(R.string.secure_startup_description)))
+                }
             }
         }
+        cancellationSignal.setOnCancelListener { completed.set(true); job.cancel() }
     }
     
     /**

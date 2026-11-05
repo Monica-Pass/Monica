@@ -29,7 +29,7 @@ class ProjectCredentialStorageTest {
     }
 
     @Test fun bitwardenFreshDownloadPreservesEachAccountPasswordAndGroup() = runBlocking {
-        scenario { viewModel ->
+        withSyntheticMdk { scenario { viewModel ->
             val destination = bitwarden()
             val groups = listOf(ProjectCredentialGroup.Group(username = "personal", note = "Personal note", passwords = listOf(ProjectCredentialGroup.Password(value = "personal-secret"))),
                 ProjectCredentialGroup.Group(username = "work", note = "Work note\nSecond line", passwords = listOf(ProjectCredentialGroup.Password(value = "work-secret-1"), ProjectCredentialGroup.Password(value = "work-secret-2"))))
@@ -58,7 +58,18 @@ class ProjectCredentialStorageTest {
             assertEquals(groups.map { it.username }, restored.map { it.username })
             assertEquals(groups.map { it.note }, restored.map { it.note })
             assertEquals(groups.flatMap { it.passwords.map { pwd -> pwd.value } }, restored.flatMap { it.passwords.map { pwd -> pwd.value } })
-        }
+        } }
+    }
+
+    private suspend fun withSyntheticMdk(block: suspend () -> Unit) {
+        // Password history now requires MDK encryption, including on a fresh test user.
+        // Keep this fixture independent of the user's persisted master-password setup.
+        val field = takagi.ru.monica.security.SecurityManager::class.java
+            .getDeclaredField("processCachedMdk").apply { isAccessible = true }
+        val previous = field.get(null)
+        val synthetic = ByteArray(32) { (it + 27).toByte() }
+        field.set(null, synthetic)
+        try { block() } finally { field.set(null, previous); synthetic.fill(0) }
     }
 
     @Test fun failedSecondDestinationRollsBackEditsAndKeepsOriginalRows() = runBlocking {

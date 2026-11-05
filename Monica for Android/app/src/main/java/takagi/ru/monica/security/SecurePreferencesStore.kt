@@ -160,29 +160,35 @@ internal object SecureStorageStartup {
         val trace = RuntimeDiagnostics.beginStartup()
         var work: StartupWork? = null
         var accepted = false
+        var ownsTurn = false
         try {
             val result = withTimeoutOrNull(timeoutMillis) {
-                retryMutex.withLock {
+                // Keep the turn until publication and slot release have both completed.
+                // A queued caller must not mistake an accepted result for a stalled worker.
+                retryMutex.lock()
+                ownsTurn = true
+                run {
                     ensureActive()
                     val started = synchronized(workLock) {
-                        if (running != null) return@withLock blocked("SECURE_OPERATION_IN_PROGRESS")
+                        if (running != null) return@run blocked("SECURE_OPERATION_IN_PROGRESS")
                         attempted = true
                         readiness.value = false
+                        PreparedSecureStore.invalidate()
                         StartupWork(context.applicationContext).also { running = it; work = it }
                     }
                     trace.stage(RuntimeDiagnostics.Stage.QUEUED)
                     executor.execute {
                         trace.run {
-                            try {
+                            val completion = try {
                                 trace.stage(RuntimeDiagnostics.Stage.STARTUP_CHECK)
-                                started.result.complete(checkWithRetry(started.guard))
+                                Result.success(checkWithRetry(started.guard))
                             } catch (cancelled: CancellationException) {
-                                started.result.completeExceptionally(cancelled)
+                                Result.failure(cancelled)
                             } catch (error: Exception) {
                                 val failure = SecureStorageUnavailableException(SecurePreferencesStore.MONICA,
                                     "UNREADABLE_SECURE_STORAGE", error, SecureStoragePhase.STARTUP_CHECK)
                                 trace.failure(failure, 1)
-                                started.result.complete(SecureStartupResult.Blocked(failure))
+                                Result.success(SecureStartupResult.Blocked(failure))
                             } finally {
                                 val callerReleased = synchronized(workLock) {
                                     started.finished = true
@@ -191,6 +197,8 @@ internal object SecureStorageStartup {
                                 }
                                 trace.event("secure_worker_exit", "caller_released=$callerReleased")
                             }
+                            // Native work has exited before its caller can publish and release.
+                            completion.fold(started.result::complete, started.result::completeExceptionally)
                         }
                     }
                     val checked = started.result.await()
@@ -205,6 +213,11 @@ internal object SecureStorageStartup {
             // Publish only after the timeout scope has accepted the result. A timeout racing a
             // completed worker must not return Blocked with maintenance already enabled.
             if (work != null) synchronized(workLock) {
+                if (result is SecureStartupResult.Ready) {
+                    try { result.manager.acceptPreparedStore() }
+                    catch (cancelled: CancellationException) { throw cancelled }
+                    catch (_: Exception) { return blocked("SECURE_STORAGE_CHANGED") }
+                }
                 readiness.value = result is SecureStartupResult.Ready
                 accepted = true
             }
@@ -229,7 +242,22 @@ internal object SecureStorageStartup {
                     if (it.finished && running === it) running = null
                 }
             }
+            if (ownsTurn) retryMutex.unlock()
         }
+    }
+
+    /** Secondary entries share the accepted store, but never inherit an authentication grant. */
+    suspend fun prepareForEntry(context: Context, timeoutMillis: Long = 15_000): SecureStartupResult {
+        if (context.getSystemService(android.os.UserManager::class.java)?.isUserUnlocked == false) {
+            return blocked("USER_STORAGE_LOCKED")
+        }
+        val prepared = PreparedSecureStore.cached(context)
+        if (prepared != null) {
+            return try { SecureStartupResult.Ready(SecurityManager.fromPrepared(context, prepared)) }
+            catch (cancelled: CancellationException) { throw cancelled }
+            catch (_: Exception) { prepareWithRetry(context, timeoutMillis) }
+        }
+        return prepareWithRetry(context, timeoutMillis)
     }
 
     private fun blocked(reason: String) = SecureStartupResult.Blocked(SecureStorageUnavailableException(
@@ -290,7 +318,7 @@ internal object SecureStorageStartup {
                 RuntimeDiagnostics.stage(RuntimeDiagnostics.Stage.PREFLIGHT)
                 SecurePreferencesStore.preflight(context, SecurePreferencesStore.BITWARDEN)
             }
-            val manager = SecurityManager(context)
+            val manager = SecurityManager.openFresh(context)
             SecureStartupResult.Ready(manager)
         } catch (cancelled: CancellationException) {
             throw cancelled

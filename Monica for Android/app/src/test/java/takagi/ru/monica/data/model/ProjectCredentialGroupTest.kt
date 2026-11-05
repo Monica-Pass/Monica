@@ -4,8 +4,58 @@ import kotlinx.serialization.json.*
 import org.junit.Assert.*
 import org.junit.Test
 import takagi.ru.monica.data.PasswordEntry
+import takagi.ru.monica.data.CustomFieldDraft
 
 class ProjectCredentialGroupTest {
+    @Test fun identicalMetadataCopiesRestoreAndSaveWithoutLosingUnknownFieldsOrProtection() {
+        val rows = ProjectCredentialGroup.rows(listOf(ProjectCredentialGroup.Group(username = "synthetic",
+            passwords = listOf(ProjectCredentialGroup.Password(value = "one"), ProjectCredentialGroup.Password(value = "two")))))
+        val entries = rows.mapIndexed { i, row -> PasswordEntry(id = i + 1L, title = "Fixture", website = "",
+            username = row.username, password = row.password.value) }
+        val fields = rows.mapIndexed { i, row ->
+            val raw = JsonObject(row.metadata.raw + ("extension" to buildJsonObject { put("large", 9007199254740993L) }))
+            i + 1L to listOf(CustomFieldDraft(title = ProjectCredentialGroup.FIELD, value = raw.toString()),
+                CustomFieldDraft(title = ProjectCredentialGroup.FIELD, value = JsonObject(raw.entries.reversed().associate { it.toPair() }).toString(), isProtected = true),
+                CustomFieldDraft(title = "User field", value = "first"), CustomFieldDraft(title = "User field", value = "second"))
+        }.toMap()
+        val restored = ProjectCredentialGroup.restoreForEditing(entries, fields)
+        assertEquals(listOf("one", "two"), restored.single().passwords.map { it.value })
+        ProjectCredentialGroup.rows(restored).forEachIndexed { i, row ->
+            val saved = ProjectCredentialGroup.put(fields.getValue(i + 1L), row.metadata)
+            assertEquals(1, saved.count { it.title == ProjectCredentialGroup.FIELD })
+            assertTrue(saved.single { it.title == ProjectCredentialGroup.FIELD }.isProtected)
+            assertEquals(listOf("first", "second"), saved.filter { it.title == "User field" }.map { it.value })
+            assertEquals(ProjectCredentialGroup.read(fields.getValue(i + 1L))?.raw, ProjectCredentialGroup.read(saved)?.raw)
+            assertEquals(rows[i].metadata.passwordId, ProjectCredentialGroup.read(saved)?.passwordId)
+        }
+    }
+
+    @Test fun conflictingDamagedAndUnsupportedCopiesRemainUnreadableWithoutMutation() {
+        val metadata = ProjectCredentialGroup.rows(listOf(ProjectCredentialGroup.Group())).single().metadata
+        val field = CustomFieldDraft(title = ProjectCredentialGroup.FIELD, value = metadata.raw.toString())
+        val variants = listOf("{broken", JsonObject(metadata.raw + ("version" to JsonPrimitive(2))).toString(),
+            JsonObject(metadata.raw + ("extension" to JsonPrimitive("different"))).toString(),
+            JsonObject(metadata.raw + ("label" to JsonPrimitive("different"))).toString())
+        for (value in variants) for (reverse in listOf(false, true)) {
+            val fields = listOf(field, field.copy(value = value)).let { if (reverse) it.reversed() else it }
+            val before = fields.toList()
+            assertNull(ProjectCredentialGroup.read(fields))
+            assertThrows(IllegalArgumentException::class.java) { ProjectCredentialGroup.put(fields, metadata) }
+            assertEquals(before, fields)
+        }
+    }
+
+    @Test fun repeatedOrderKeepsAdditionalAccountTokensAndStrongestProtection() {
+        val token = ProjectCredentialGroup.token(java.util.UUID.randomUUID().toString())
+        val fields = listOf(CustomFieldDraft(title = EntryContentFields.ORDER, value = token),
+            CustomFieldDraft(title = EntryContentFields.ORDER, value = token, isProtected = true),
+            CustomFieldDraft(title = "ordinary", value = "same"), CustomFieldDraft(title = "ordinary", value = "same"))
+        val saved = EntryContentFields.withOrder(fields, emptyList())
+        assertEquals(listOf(token), EntryContentFields.order(saved))
+        assertEquals(1, saved.count { it.title == EntryContentFields.ORDER })
+        assertTrue(saved.single { it.title == EntryContentFields.ORDER }.isProtected)
+        assertEquals(2, saved.count { it.title == "ordinary" })
+    }
     @Test fun notesBelongToTheAccountAndSurvivePasswordRemovalAndLegacyMetadata() {
         val groups = listOf(ProjectCredentialGroup.Group(username = "personal", note = "Personal note\nSecond line"),
             ProjectCredentialGroup.Group(username = "work", note = "Work note",

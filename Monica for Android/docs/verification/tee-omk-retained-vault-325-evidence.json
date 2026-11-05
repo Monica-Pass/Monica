@@ -1,0 +1,205 @@
+{
+  "source_freeze": [
+    {
+      "path": "app/src/main/java/takagi/ru/monica/security/BoundedSecureDataRead.kt",
+      "sha256": {
+        "main": "e8853b97659341a9f7ef3b31caf48b71935c8f20bb79f3c221296310731fe9df",
+        "fdroid": "e8853b97659341a9f7ef3b31caf48b71935c8f20bb79f3c221296310731fe9df"
+      },
+      "identical": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/security/SecurityManager.kt",
+      "sha256": {
+        "main": "5b634598cd84b8928c35fe8cfb14126d32103d90e1a19442461c6669f9ffffd3",
+        "fdroid": "5b634598cd84b8928c35fe8cfb14126d32103d90e1a19442461c6669f9ffffd3"
+      },
+      "identical": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/security/SecurePreferencesStore.kt",
+      "sha256": {
+        "main": "6431050dcee544ce46a9d9dbbeca050311ddce0100b19333e4ad723f11a6483e",
+        "fdroid": "6431050dcee544ce46a9d9dbbeca050311ddce0100b19333e4ad723f11a6483e"
+      },
+      "identical": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/PasswordDialogAuthScreen.kt",
+      "sha256": {
+        "main": "162cb92a5f14e08352dc3696a2cda4ff32aff9454b36b2511cef0a535dd7d34e",
+        "fdroid": "162cb92a5f14e08352dc3696a2cda4ff32aff9454b36b2511cef0a535dd7d34e"
+      },
+      "identical": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ime/ImeUnlockActivity.kt",
+      "sha256": {
+        "main": "f86d67979be0cc32670d5c81e9aadc139387b6563297a070cc823b18863bd0f6",
+        "fdroid": "f86d67979be0cc32670d5c81e9aadc139387b6563297a070cc823b18863bd0f6"
+      },
+      "identical": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillUnlockActivity.kt",
+      "sha256": {
+        "main": "528bd2473168fb285e9c60e0439b0d17365c542026b0dee798802d36cb20c81f",
+        "fdroid": "528bd2473168fb285e9c60e0439b0d17365c542026b0dee798802d36cb20c81f"
+      },
+      "identical": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillAuthenticationActivity.kt",
+      "sha256": {
+        "main": "88acb097c8cdae9302f7d5195266b49126b98b75ae47c41002837e26661973c0",
+        "fdroid": "88acb097c8cdae9302f7d5195266b49126b98b75ae47c41002837e26661973c0"
+      },
+      "identical": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillSaveTransparentActivity.kt",
+      "sha256": {
+        "main": "9d2100c3dd6a1828c280a72c6eac95d617d60a693a6c9ad9a848a2d622ca950d",
+        "fdroid": "9d2100c3dd6a1828c280a72c6eac95d617d60a693a6c9ad9a848a2d622ca950d"
+      },
+      "identical": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/auth/AutofillDeviceVerification.kt",
+      "sha256": {
+        "main": "98c45dfae53f3f517685d129c9353aa4b1a45e1fd303ecc46321d2199b606977",
+        "fdroid": "98c45dfae53f3f517685d129c9353aa4b1a45e1fd303ecc46321d2199b606977"
+      },
+      "identical": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPickerActivityV2.kt",
+      "sha256": {
+        "main": "a059a3d85ef0bcad9b934565e434819ba635467a93058e7d2e6701588e1a49a7",
+        "fdroid": "a059a3d85ef0bcad9b934565e434819ba635467a93058e7d2e6701588e1a49a7"
+      },
+      "identical": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/ui/InlinePasswordDetailContent.kt",
+      "sha256": {
+        "main": "0a858b2b662c28e11d4829fa1cdf2c9e96cf2a9b1e2c462f50a9492654f5d92b",
+        "fdroid": "0a858b2b662c28e11d4829fa1cdf2c9e96cf2a9b1e2c462f50a9492654f5d92b"
+      },
+      "identical": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillCipherCallbackActivity.kt",
+      "sha256": {
+        "main": "54a919453c030b7df08e9fca05492b5e535530189e8aca0bd0c985f4aee48f72",
+        "fdroid": "54a919453c030b7df08e9fca05492b5e535530189e8aca0bd0c985f4aee48f72"
+      },
+      "identical": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AddEditPasswordScreen.kt",
+      "sha256": {
+        "main": "d4fe8107f40430a6515c39ccdbca7246e00e19a0d7554d8ede52c89e828b22a8",
+        "fdroid": "d4fe8107f40430a6515c39ccdbca7246e00e19a0d7554d8ede52c89e828b22a8"
+      },
+      "identical": true
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/security/KeystoreDataFailureInstrumentedTest.kt",
+      "sha256": {
+        "main": "7e3cfc7de794b199256cf7a02e3924e3b5fa5e0c524eb067d1605b02edf6cbb5",
+        "fdroid": "7e3cfc7de794b199256cf7a02e3924e3b5fa5e0c524eb067d1605b02edf6cbb5"
+      },
+      "identical": true
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/security/MasterPasswordFallbackUiTest.kt",
+      "sha256": {
+        "main": "c339936d1cee0a373fa338a02f0773d37795c3518e22d28081bc8434185ac6e1",
+        "fdroid": "c339936d1cee0a373fa338a02f0773d37795c3518e22d28081bc8434185ac6e1"
+      },
+      "identical": true
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/security/MuMuRecoveredEntryFixtureTest.kt",
+      "sha256": {
+        "main": "d4e088ccdefa18f972cc5e7d2dde19609812e66560b1e0a2f1ed619d0221bc21",
+        "fdroid": "d4e088ccdefa18f972cc5e7d2dde19609812e66560b1e0a2f1ed619d0221bc21"
+      },
+      "identical": true
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/security/BoundedSecureDataReadInstrumentedTest.kt",
+      "sha256": {
+        "main": "84699bca46b060ed9a96c76132dcd857d4fb64f5d1ca13424f7717616bb6f286",
+        "fdroid": "84699bca46b060ed9a96c76132dcd857d4fb64f5d1ca13424f7717616bb6f286"
+      },
+      "identical": true
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/autofill_ng/ui/InlinePasswordDetailResponsivenessTest.kt",
+      "sha256": {
+        "main": "781862058fcc7d5ade4004eabeea04ba876a6ce048c6ae007cab799313cdee80",
+        "fdroid": "781862058fcc7d5ade4004eabeea04ba876a6ce048c6ae007cab799313cdee80"
+      },
+      "identical": true
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/security/BiometricUnlockRegressionGuardTest.kt",
+      "sha256": {
+        "main": "ccc90c13878d2342ca65d08317fca5f9ee32b391416252af89cf2b0454cd4814",
+        "fdroid": "ccc90c13878d2342ca65d08317fca5f9ee32b391416252af89cf2b0454cd4814"
+      },
+      "identical": true
+    }
+  ],
+  "installed_packages": [
+    {
+      "edition": "main",
+      "package": "takagi.ru.monica",
+      "local_path": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.325-26110512-28.APK",
+      "installed_path": "/data/app/~~Gf6bI_tm5lzTCycreu5G5g==/takagi.ru.monica-tYc9Ly91J3X9FMlyIQOV7g==/base.apk",
+      "user": 14,
+      "bytes": 90171365,
+      "sha256": "1ecaae702471c98905d824f5b4e177bcf151965adac9c506129ac8d14f9bc18a",
+      "matched": true
+    },
+    {
+      "edition": "main",
+      "package": "takagi.ru.monica.test",
+      "local_path": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk",
+      "installed_path": "/data/app/~~11IrmstIUcUiEk5ceT1Ogw==/takagi.ru.monica.test-qbiKpNPcaHUJCrBOiBj1KQ==/base.apk",
+      "user": 14,
+      "bytes": 9259157,
+      "sha256": "03197c28d05b069fe07a3a7b81c2125c778303b6a87cf6574f44d17aba89f7e2",
+      "matched": true
+    },
+    {
+      "edition": "fdroid",
+      "package": "takagi.ru.monica.fdroid",
+      "local_path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-worktrees\\monica-fdroid-nearby-steam\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.325.apk",
+      "installed_path": "/data/app/~~1fw5g_7xiPN8_s9_5s6aIg==/takagi.ru.monica.fdroid-Pvde1wNjwifQGGPSNQFiRQ==/base.apk",
+      "user": 14,
+      "bytes": 94878892,
+      "sha256": "f6937fcce95b1a6524005e9a82b975381dab095c7ef5fb28cb2cedc74660e184",
+      "matched": true
+    },
+    {
+      "edition": "fdroid",
+      "package": "takagi.ru.monica.fdroid.test",
+      "local_path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-worktrees\\monica-fdroid-nearby-steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk",
+      "installed_path": "/data/app/~~ToLjKLkXvtUjkGdDoLcbvg==/takagi.ru.monica.fdroid.test-6ce1WEa6eu_X0ha2E_ABlQ==/base.apk",
+      "user": 14,
+      "bytes": 9151080,
+      "sha256": "9efe0fa397ad1a2465b2648fa0e55a59093835d77942fd6da8704b8b7457fda6",
+      "matched": true
+    }
+  ],
+  "raw_manifest_files_verified": 3560,
+  "module": {
+    "teesimulator_zip_sha256": "cf41c9a3d160e705b60d377b87e633b941e20c89bdafa3fe6cd7c79d9ee77569",
+    "aes_hmac_forward_to_system_hal": true,
+    "omk_build": "ba6f300 native x86_64 local build"
+  },
+  "metadata_check": "FD32 metadata and six script tests passed; no release action"
+}

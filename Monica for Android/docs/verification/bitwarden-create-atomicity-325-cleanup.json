@@ -1,0 +1,31 @@
+{
+  "ownGuestRemoved": true,
+  "originalUsersPreserved": true,
+  "originalUserIds": [
+    0,
+    10,
+    11,
+    12
+  ],
+  "emulatorStopped": true,
+  "currentUser": "0",
+  "shellUid": 2000,
+  "preservedFiles": [
+    {
+      "path": "C:\\Users\\joyins\\.android\\avd\\Monica_Issue136_API_32.ini",
+      "bytes": 109
+    },
+    {
+      "path": "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\config.ini",
+      "bytes": 3908
+    },
+    {
+      "path": "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img",
+      "bytes": 12884901888
+    },
+    {
+      "path": "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img.qcow2",
+      "bytes": 22116892672
+    }
+  ]
+}

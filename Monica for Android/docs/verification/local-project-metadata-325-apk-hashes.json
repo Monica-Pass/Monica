@@ -1,0 +1,30 @@
+[
+  {
+    "edition": "main",
+    "file": "Monica-Android-x86_64-1.0.325-26110512-30.APK",
+    "sha256": "e16d98f8a88ccf923ca715bba9a635209238ada1ab018bd1054afca47c64c07b",
+    "version": "1.0.325-26110512-30",
+    "code": 12
+  },
+  {
+    "edition": "main",
+    "file": "app-debug-androidTest.apk",
+    "sha256": "0c39a9b2ea456aea684e99db2ff19ec34ad908d62d84e076996ba562fec332ad",
+    "version": "1.0.325-26110512-30",
+    "code": 12
+  },
+  {
+    "edition": "fd",
+    "file": "Monica-Android-x86_64-1.0.325.apk",
+    "sha256": "7fe937049562e36722d523be7f9ee7fb5917e77c26d54f966da38f692a5e0fd9",
+    "version": "1.0.325",
+    "code": 32
+  },
+  {
+    "edition": "fd",
+    "file": "app-debug-androidTest.apk",
+    "sha256": "0a0a4ef5818f82b2c75e119f98bd8984ce657bfebe28e5ab3521eb0c83fee905",
+    "version": "1.0.325",
+    "code": 32
+  }
+]

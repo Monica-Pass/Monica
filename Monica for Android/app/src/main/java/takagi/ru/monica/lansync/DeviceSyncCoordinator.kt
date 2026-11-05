@@ -56,7 +56,7 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
     private var presence: DeviceSyncPresence = ForegroundDeviceSyncPresence(app)
     private var discoverPeers: (JSONObject) -> JSONObject = RustLanSync::request
     private val security by lazy { SecurityManager(app) }
-    private val store by lazy { DeviceSyncPreferenceStore(app, security) }
+    private val store by lazy { DeviceSyncPreferenceStore(app, { security }) }
     private val dataProvider = lazy { DevicePasswordSyncProvider(app, security, store).also { provider -> provider.onProgress = { updateProgress(it) } } }
     private val data by dataProvider
     private val root = File(app.cacheDir, "device-sync/${UUID.randomUUID()}")

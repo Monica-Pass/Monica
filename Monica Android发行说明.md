@@ -4,6 +4,20 @@
 
 ## 中文
 
+- 统一 Bitwarden 账号安全、服务器配置、账号管理和 Send 接收的页面过渡，补齐进入、返回与内部步骤切换的短缩放效果；关闭或锁定仍立即清理敏感内容。
+
+- 修复 Bitwarden 新建登录在字段保存失败后仍留下记录、重试产生重复项目的问题：记录与字段一起提交或回滚，同步只读取完整记录；允许用户名和密码留空。
+
+- 修复旧本地项目因重复账号字段而无法保存的问题：兼容内容完全一致的副本，保存时整理并保留原密码、账号标识、未知字段及保护设置；冲突内容仍阻止覆盖。兼容旧账号仅部分密码保留验证器的情况，未修改验证器时保留各条原值。
+
+- 修复 OneDrive／WebDAV 备份遗漏部分旧本地笔记或显示 0 项的问题：统计与备份共用本地归属判断，包含归档笔记，排除外部库记录及回收站；保留原记录。
+
+- 修复删除本地多密码账号的绑定验证器后无法再次保存的问题：按账号标识同步清除对应验证器字段，保留其他有效绑定、独立账号、不同密钥及原密码。旧残留仅在明确删除对应验证器时清理，不自动改写。
+
+- 自动填充详情和密码验证改为有界后台读取；取消、锁定或替换请求后拒绝旧凭据结果，密码验证仅在前台请求仍有效时发布解锁密钥。编辑器的自定义字段和模板准备移到后台。
+
+- 改善系统密钥服务异常时的启动与恢复：输入法、自动填充、凭据导出和后台调度共用受控入口，避免重复同步读取及未捕获异常；保留原密文和配置，支持已有主密码保护材料的确认恢复。锁定后拒绝迟到的密钥结果，常用账号迁移遇到不可读字段时保留原值。直接依赖已永久丢失硬件密钥的旧内容仍需要原密钥或备份。 修复并发启动检查交接时误报“操作进行中”的问题，保留超时及取消后的数据保护。
+
 - Bitwarden 个人账号新增原生密码提示、主密码和 KDF 修改，以及服务器账号删除确认。修改主密码/KDF 保留原密码库密钥；结果不确定时暂停联网并保留本机数据，重新登录核验后恢复。确认删除服务器账号后仍保留本机副本，移除本机副本需另行操作。
 - 统一 Bitwarden 登录失效处理：收到明确的 401 后协调刷新并仅重试一次；写入丢失回执或服务器错误时不自动重复提交。附件补传保存原密文及精确上传意图，重启后核对并继续，保留待处理附件，避免重复分配。
 - 新增原生 Send 接收：粘贴文本/文件链接，支持服务器提供的访问密码和邮箱验证码，下载前校验内容。自托管地址需确认；应用锁定或退出页面清除接收会话，访问结果不确定时需手动重试。
@@ -49,6 +63,20 @@
 - 加强同步修订冲突处理及账号安全状态变化后的重新认证，保留较新的本地修改。
 
 ## English
+
+- Align Bitwarden account security, server configuration, account management and Send receiver page transitions with Monica, including opening, returning and switching steps. Closing or locking still clears sensitive content immediately.
+
+- Fix Bitwarden login creation leaving a record after field saving fails, causing duplicates on retry. Commit or roll back the record and fields together so sync reads complete records; empty usernames and passwords remain supported.
+
+- Fix saving older local projects with identical duplicate account metadata. Saving consolidates matching copies while retaining passwords, account identities, unknown fields and protection settings; conflicting copies remain blocked. Legacy partial OTP bindings remain intact unless the authenticator is explicitly edited.
+
+- Fix OneDrive/WebDAV backup counts and selection for legacy local notes. Counts and backup contents use the same local ownership rules, include archived notes, and exclude external-vault records and trash; original records are preserved.
+
+- Fix saving local multi-password accounts after deleting a bound authenticator. Clear matching OTP fields within the explicit account together, retaining other live bindings, independent accounts, different keys and original passwords. Previously retained OTP fields are cleared only by an explicit matching deletion.
+
+- Autofill details and password verification now use bounded background reads. Cancelled, locked or replaced requests reject stale credential results; password verification publishes the unlock key only while its foreground request remains valid. Custom-field and template preparation in the editor runs in the background.
+
+- Improved startup and recovery when Android key services fail: bounded entry handling for the keyboard, autofill, credential export and background scheduling; existing ciphertext and settings are retained, with confirmed recovery using available password-protected material. Late key results cannot undo a lock, and unreadable common-account fields remain unchanged during migration. Legacy content tied only to permanently lost hardware keys still needs its original keys or a backup. Fixed concurrent startup checks incorrectly reporting an operation in progress during handoff, while retaining timeout and cancellation protections.
 
 - Added native personal Bitwarden password-hint, master-password and KDF changes, plus server-account deletion confirmation. Password/KDF changes retain the existing vault key. Uncertain outcomes pause account traffic and preserve local data until verified sign-in; confirmed server deletion retains a local copy that requires a separate removal action.
 - Unified expired-session handling: coordinate refresh and retry once after a verified 401. Lost write responses and server errors are not automatically replayed. Attachment recovery keeps the original ciphertext and exact upload intent across restarts, reconciles uncertain allocation, and preserves pending files.

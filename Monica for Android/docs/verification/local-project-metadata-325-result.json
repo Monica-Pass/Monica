@@ -1,0 +1,54 @@
+{
+  "status": "complete",
+  "date": "2026-11-06",
+  "version": "1.0.325 unreleased",
+  "cause": "Identical credential metadata copies rejected by singleOrNull",
+  "builds": {
+    "main": {
+      "build": "14m 37s",
+      "jvmTests": 20
+    },
+    "fd": {
+      "build": "15m 9s",
+      "jvmTests": 20
+    }
+  },
+  "ordinaryDevice": {
+    "initialTests": 17,
+    "initialFailures": 1,
+    "initialSeconds": 143.482,
+    "fixtureOnlyRecheckTests": 1,
+    "recheckSeconds": 11.296,
+    "distinctMethodsWithPassingResult": 17,
+    "initialBatchAllPassed": false
+  },
+  "fdroidDevice": {
+    "tests": 17,
+    "failures": 0,
+    "seconds": 87.458
+  },
+  "ordinaryTestOnlyRebuildSeconds": 216,
+  "sharedPaths": 8,
+  "newEditorMethodsPerEdition": 4,
+  "metadataCheck": "passed",
+  "releaseScriptTests": 6,
+  "cleanup": {
+    "removedOwnedUser": 14,
+    "preservedUsers": [
+      0,
+      10,
+      11,
+      12
+    ],
+    "foregroundUserRestored": 0,
+    "ownedPublicAvdStopped": true,
+    "configurationAndDataDisksPreserved": true
+  },
+  "limitations": [
+    "Synthetic API32/x86_64/Debug; user API36/real vault not tested",
+    "No new R8 build; preceding release build predates this fix",
+    "Duplicate producer in the original user history remains unproven",
+    "Initial ordinary test APK was replaced by the fixture rebuild, not archived separately"
+  ],
+  "gitActions": "No commit, push, tag, release or APK delivery"
+}

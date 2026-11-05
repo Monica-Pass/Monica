@@ -14,12 +14,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.fragment.app.FragmentActivity
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import takagi.ru.monica.R
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.ui.components.MonicaPasswordDialogAuthScreen
@@ -29,7 +31,7 @@ import takagi.ru.monica.utils.SettingsManager
 /** Fresh strong biometric or Monica master-password verification, never the device screen lock. */
 @Composable
 internal fun AutofillDeviceVerification(
-    onSuccess: () -> Unit,
+    onSuccess: (Long) -> Unit,
     onCancel: () -> Unit,
 ) {
     val context = LocalContext.current
@@ -41,6 +43,9 @@ internal fun AutofillDeviceVerification(
     val security = remember { lazy { SecurityManager(context.applicationContext) } }
     val settingsManager = remember { SettingsManager(context.applicationContext) }
     val helper = remember(context) { BiometricAuthHelper(context) }
+    val verificationScope = rememberCoroutineScope()
+    // A lock revokes this verification request, including a result awaiting the UI callback.
+    val authorizationGeneration = remember { SecurityManager.dataReadGeneration.value }
     var showPassword by rememberSaveable { mutableStateOf(false) }
 
     fun cancelOnce(message: CharSequence? = null) {
@@ -55,11 +60,11 @@ internal fun AutofillDeviceVerification(
         keyguard?.isKeyguardLocked == false
 
     fun verified() {
-        if (!canComplete()) {
+        if (!canComplete() || !security.value.isDataReadCurrent(authorizationGeneration)) {
             cancelOnce()
             return
         }
-        if (finished.compareAndSet(false, true)) success.value()
+        if (finished.compareAndSet(false, true)) success.value(authorizationGeneration)
     }
 
     fun useMasterPassword() {
@@ -93,12 +98,17 @@ internal fun AutofillDeviceVerification(
                     description = context.getString(R.string.autofill_device_auth_description),
                     negativeButtonText = context.getString(R.string.use_password),
                     onSuccess = {
-                        if (!canComplete()) cancelOnce()
-                        else if (runCatching {
-                            security.value.isVaultRuntimeUnlocked() || security.value.unlockVaultWithBiometric()
-                        }.getOrDefault(false)) verified()
-                        // Preserve the existing password recovery path for older key wrappers.
-                        else useMasterPassword()
+                        verificationScope.launch {
+                            if (!canComplete()) { cancelOnce(); return@launch }
+                            val manager = runCatching { security.value }.getOrNull()
+                                ?: run { cancelOnce(); return@launch }
+                            val unlocked = takagi.ru.monica.security.BoundedSecureDataRead.read(manager, authorizationGeneration) {
+                                manager.isVaultRuntimeUnlocked() || manager.unlockVaultWithBiometric()
+                            } == true
+                            if (unlocked) verified()
+                            // Preserve the existing password path for older key wrappers.
+                            else useMasterPassword()
+                        }
                     },
                     onError = { code, _ ->
                         if (code == BiometricPrompt.ERROR_CANCELED) cancelOnce()
@@ -125,9 +135,11 @@ internal fun AutofillDeviceVerification(
             unsupportedCharacterError = context.getString(R.string.error_password_contains_unsupported_characters),
             minLengthError = context.getString(R.string.error_password_too_short),
             incorrectError = context.getString(R.string.password_incorrect),
-            verifyPassword = { input ->
+            verifyPassword = { input, attempt ->
                 canComplete() && runCatching {
-                    security.value.isMasterPasswordSet() && security.value.unlockVaultWithPassword(input)
+                    security.value.isDataReadCurrent(authorizationGeneration) &&
+                        security.value.isMasterPasswordSet() && security.value.unlockVaultWithPassword(input, attempt) &&
+                        security.value.isDataReadCurrent(authorizationGeneration)
                 }.getOrDefault(false)
             },
             onSuccess = { verified() },

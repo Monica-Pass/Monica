@@ -5665,6 +5665,30 @@ class PasswordViewModel internal constructor(
         skipCategoryBinding: Boolean,
         embeddedContentSave: takagi.ru.monica.data.model.DeferredEmbeddedContentSave? = null
     ): Long? {
+        val vaultId = requestedEntry.bitwardenVaultId
+        if (originalIds.isEmpty() && vaultId != null && requestedEntry.keepassDatabaseId == null &&
+            requestedEntry.mdbxDatabaseId == null) {
+            // A failed field save used to lose the inserted ID before the caller could
+            // track it for rollback. Sync could also observe that incomplete row.
+            return requireNotNull(bitwardenPasswordHistoryStore).commitLocalCreate(vaultId) {
+                requireNotNull(saveGroupedPasswordContents(originalIds, requestedEntry, passwords,
+                    requestedCustomFields, skipCategoryBinding, embeddedContentSave)) {
+                    "Incomplete Bitwarden local create"
+                }
+            }
+        }
+        return saveGroupedPasswordContents(originalIds, requestedEntry, passwords,
+            requestedCustomFields, skipCategoryBinding, embeddedContentSave)
+    }
+
+    private suspend fun saveGroupedPasswordContents(
+        originalIds: List<Long>,
+        requestedEntry: PasswordEntry,
+        passwords: List<String>,
+        requestedCustomFields: List<CustomFieldDraft>,
+        skipCategoryBinding: Boolean,
+        embeddedContentSave: takagi.ru.monica.data.model.DeferredEmbeddedContentSave?
+    ): Long? {
         val nativeDatabaseId = requestedEntry.keepassDatabaseId
         val originalsAreNative = originalIds.isNotEmpty() && originalIds.all { takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(it) }
         val nativeCreation = originalIds.isEmpty() && synchronized(nativeKeePassReaders) { nativeDatabaseId in nativeKeePassReaders }

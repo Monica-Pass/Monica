@@ -1,0 +1,79 @@
+{
+  "status": "complete",
+  "version": "1.0.325 unreleased",
+  "date": "2026-11-05",
+  "scope": "Local explicit-account authenticator deletion; no automatic data repair or native KeePass changes",
+  "negative": {
+    "tests": 3,
+    "passed": 1,
+    "failed": 2,
+    "seconds": 83.509,
+    "log": "delete-baseline-device.txt",
+    "productionUnchanged": true
+  },
+  "ordinary": {
+    "buildSeconds": 924,
+    "x86SupplementSeconds": 57,
+    "jvmTests": 18,
+    "deviceTests": 21,
+    "deviceSeconds": 91.527,
+    "failures": 0,
+    "skipped": 0
+  },
+  "fdroid": {
+    "buildSeconds": 1042,
+    "jvmTests": 18,
+    "deviceTests": 21,
+    "deviceSeconds": 80.217,
+    "failures": 0,
+    "skipped": 0
+  },
+  "metadataCheck": "passed",
+  "releaseScriptTests": 6,
+  "sourceFiles": 5,
+  "sourceHashes": "final-source-hashes.json",
+  "apkHashes": [
+    {
+      "file": "Monica-Android-x86_64-1.0.325-26110512-29.APK",
+      "edition": "ordinary",
+      "sha256": "E420B7B3CAA92AFF54E08DEB3FD46F97AD83592E54B9202B061C6FD32C3BF8CC"
+    },
+    {
+      "file": "app-debug-androidTest.apk",
+      "edition": "ordinary",
+      "sha256": "491304E23FB8FEA281267BED984795F675F1E0756114B0844054E34261049831"
+    },
+    {
+      "file": "Monica-Android-x86_64-1.0.325.apk",
+      "edition": "fdroid",
+      "sha256": "0D61CDEB2242053888602CF85352FDC7BDF309806F477F2088A6E6CB7CDF8DFA"
+    },
+    {
+      "file": "app-debug-androidTest.apk",
+      "edition": "fdroid",
+      "sha256": "1BD9C73A9D5364A764158E4EF8119BDD76A645F71D389ACFB9188485FA80370C"
+    }
+  ],
+  "cleanup": {
+    "foregroundUserRestored": 0,
+    "removedOwnedUser": 14,
+    "ownedUserName": "Monica_LocalProject325_Test",
+    "preservedUsers": [
+      0,
+      10,
+      11,
+      12
+    ],
+    "stoppedOwnedEmulator": "emulator-5556",
+    "unrelatedMumu": "emulator-5554 remains online",
+    "publicAvdConfigurationAndData": "preserved"
+  },
+  "limitations": [
+    "Synthetic data, API32/x86_64/Debug",
+    "User API36 and original old22 build not reproduced directly",
+    "No original user KDBX inspected or modified; native KeePass deletion unchanged",
+    "No R8 or physical device/OEM validation"
+  ],
+  "gitActions": "No commit, push, tag, release or APK delivery",
+  "report": "local-account-otp-delete-325.md"
+}

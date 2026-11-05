@@ -1,5 +1,7 @@
 package takagi.ru.monica.autofill_ng
 
+import takagi.ru.monica.security.launchWithSecureStorage
+
 import takagi.ru.monica.utils.AppLocaleStringResolver
 
 import takagi.ru.monica.data.passwordProjectKey
@@ -152,8 +154,6 @@ import java.util.concurrent.atomic.AtomicBoolean
  */
 class AutofillPickerActivityV2 : BaseMonicaActivity() {
     private val passwordAutofillInFlight = AtomicBoolean(false)
-    private var passwordAutofillPreparationKey: Long? = null
-    private var passwordAutofillPreparation: Deferred<PasswordAutofillPreparation>? = null
     
     companion object {
         private const val EXTRA_ARGS = "extra_args"
@@ -411,6 +411,10 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState) // BaseMonicaActivity 已调用 enableEdgeToEdge()
+        launchWithSecureStorage { onSecureCreate(savedInstanceState) }
+    }
+
+    private fun onSecureCreate(savedInstanceState: Bundle?) {
         AutofillLogger.initialize(applicationContext)
         val launchedFromAutofillFramework = !args.autofillIds.isNullOrEmpty()
         if (!launchedFromAutofillFramework && shouldSuppressDuplicateLaunch(args)) {
@@ -510,6 +514,7 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
         val grantContext = AutofillGrantContext(
             args.applicationId.orEmpty(), args.webDomain, args.interactionIdentifier, args.fieldSignatureKey,
         )
+        val initialReadGeneration = SecurityManager.dataReadGeneration.value
         val grantActive = startupSettings.autofillKeepUnlocked && AutofillSessionGrants.isGranted(grantContext)
         val canOpenPicker = developerBypass || grantActive
         
@@ -548,6 +553,7 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
                     keepassDatabases = keepassDatabases,
                     generatorPreferences = generatorPreferences,
                     canSkipVerification = canOpenPicker,
+                    initialReadGeneration = initialReadGeneration,
                     // Opening the vault picker always verifies identity, including
                     // when quick suggestion verification is disabled in settings.
                     requireAuthentication = DeveloperVerificationPolicy.requiresIdentityVerification(settings) && !grantActive,
@@ -555,24 +561,22 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
                     isManualMode = isManualMode,
                     showTargetContextInManualMode = imeMode,
                     manualModeReason = manualModeReason,
-                    onPrepareAutofill = ::prewarmPasswordAutofill,
-                    onAutofill = { password, forceAddUri ->
-                        handleAutofill(password, forceAddUri)
-                    },
-                    onAccessibilityFill = ::handleAccessibilityFill,
+                    onAutofillRequested = ::handleAutofill,
+                    onAccessibilityFillRequested = ::handleAccessibilityFill,
                     onAutofillBankCard = ::handleBankCardAutofill,
                     onAutofillDocument = ::handleDocumentAutofill,
                     onAutofillBillingAddress = ::handleBillingAddressAutofill,
                     onFillGeneratedPassword = ::handleGeneratedPasswordFill,
                     onCopy = ::copyToClipboard,
+                    canPublishCredentials = ::canPublishCredentials,
                     onClose = {
                         setResult(Activity.RESULT_CANCELED)
                         finish()
                     },
                     onMarkAsNonAutofill = { markCurrentFieldAsNonAutofill() },
-                    onSmartCopy = { password, usernameFirst ->
-                        handleSmartCopy(password, usernameFirst)
-                    }
+                    onSmartCopy = { password, usernameFirst, generation ->
+                        handleSmartCopy(password, usernameFirst, generation, securityManager)
+                    },
                 )
             }
         }
@@ -609,6 +613,8 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
         }
     }
 
+    private var requestRevoked = false
+
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         val newArgs = readArgs(intent)
@@ -618,6 +624,7 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
             imeMode == intent.getBooleanExtra(EXTRA_IME_MODE, false)
         setIntent(intent)
         if (!sameTarget) {
+            requestRevoked = true
             // Lazy args and prewarmed fill maps belong to the old field IDs. A new
             // request must get a fresh UI and fresh authentication/selection state.
             lifecycleScope.coroutineContext[kotlinx.coroutines.Job]?.children?.forEach { it.cancel() }
@@ -638,14 +645,18 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
         )
     }
     
-    private fun handleSmartCopy(password: PasswordEntry, usernameFirst: Boolean) {
-        val securityManager = SecurityManager(applicationContext)
-        val accountValue = AccountFillPolicy.resolveAccountIdentifier(password, securityManager)
-        val decryptedPassword = AutofillSecretResolver.decryptPasswordOrNull(
+    private suspend fun handleSmartCopy(password: PasswordEntry, usernameFirst: Boolean, generation: Long, securityManager: SecurityManager) {
+        val values = takagi.ru.monica.security.BoundedSecureDataRead.read(securityManager, generation) {
+            val account = AccountFillPolicy.resolveAccountIdentifier(password, securityManager)
+            ensureActive()
+            account to AutofillSecretResolver.decryptPasswordOrNull(
             securityManager = securityManager,
             encryptedOrPlain = password.password,
             logTag = "AutofillPickerV2",
         )
+        } ?: return
+        if (!securityManager.isDataReadCurrent(generation) || !canPublishCredentials()) return
+        val (accountValue, decryptedPassword) = values
         if (decryptedPassword.isNullOrBlank()) {
             android.util.Log.w("AutofillPickerV2", "Smart copy skipped: password decryption unavailable")
             android.widget.Toast.makeText(
@@ -715,33 +726,7 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
         
 
     
-    private fun prewarmPasswordAutofill(password: PasswordEntry) {
-        val currentPreparation = passwordAutofillPreparation
-        if (
-            passwordAutofillPreparationKey == password.id &&
-            currentPreparation != null &&
-            !currentPreparation.isCancelled
-        ) {
-            return
-        }
-        passwordAutofillPreparationKey = password.id
-        passwordAutofillPreparation = lifecycleScope.async {
-            preparePasswordAutofill(password)
-        }
-    }
-
-    private suspend fun awaitPasswordAutofillPreparation(
-        password: PasswordEntry
-    ): PasswordAutofillPreparation {
-        val currentPreparation = passwordAutofillPreparation
-        if (passwordAutofillPreparationKey == password.id && currentPreparation != null) {
-            return runCatching { currentPreparation.await() }
-                .getOrElse { preparePasswordAutofill(password) }
-        }
-        return preparePasswordAutofill(password)
-    }
-
-    private fun handleAccessibilityFill(password: PasswordEntry) {
+    private fun handleAccessibilityFill(password: PasswordEntry, generation: Long) {
         if (!MonicaAccessibilityService.isCredentialFillAvailable(applicationContext)) {
             android.widget.Toast.makeText(this, R.string.autofill_accessibility_setup_message,
                 android.widget.Toast.LENGTH_LONG).show()
@@ -751,11 +736,13 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
         lifecycleScope.launch {
             try {
                 // This explicit action is independent of framework IDs and manual-mode routing.
-                val credentials = withContext(Dispatchers.Default) {
-                    val security = SecurityManager(applicationContext)
-                    AccountFillPolicy.resolveAccountIdentifier(password, security) to
-                        AutofillSecretResolver.decryptPasswordOrNull(security, password.password, "AutofillPickerV2")
-                }
+                val manager = SecurityManager(applicationContext)
+                val credentials = takagi.ru.monica.security.BoundedSecureDataRead.read(manager, generation) {
+                    val account = AccountFillPolicy.resolveAccountIdentifier(password, manager)
+                    ensureActive()
+                    account to AutofillSecretResolver.decryptPasswordOrNull(manager, password.password, "AutofillPickerV2")
+                } ?: return@launch
+                if (!manager.isDataReadCurrent(generation) || !canPublishCredentials()) return@launch
                 if (credentials.second.isNullOrBlank()) {
                     android.widget.Toast.makeText(this@AutofillPickerActivityV2,
                         R.string.autofill_copy_password_unavailable, android.widget.Toast.LENGTH_SHORT).show()
@@ -778,7 +765,7 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
         }
     }
 
-    private fun handleAutofill(password: PasswordEntry, forceAddUri: Boolean) {
+    private fun handleAutofill(password: PasswordEntry, forceAddUri: Boolean, generation: Long) {
         if (!passwordAutofillInFlight.compareAndSet(false, true)) {
             AutofillLogger.d("PICKER", "Ignore duplicate password autofill tap while result is in flight")
             return
@@ -786,7 +773,9 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
 
         lifecycleScope.launch {
             try {
-                when (val preparation = awaitPasswordAutofillPreparation(password)) {
+                val preparation = preparePasswordAutofill(password, generation)
+                if (!SecurityManager(applicationContext).isDataReadCurrent(generation) || !canPublishCredentials()) return@launch
+                when (preparation) {
                     is PasswordAutofillPreparation.Cancel -> {
                         android.util.Log.w("AutofillPickerV2", preparation.logMessage)
                         setResult(Activity.RESULT_CANCELED)
@@ -875,6 +864,7 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
                     }
                 }
             } catch (e: Exception) {
+                if (e is kotlinx.coroutines.CancellationException) throw e
                 android.util.Log.e("AutofillPickerV2", "Password autofill failed", e)
                 AutofillLogger.e("PICKER", "Password autofill failed", e)
                 setResult(Activity.RESULT_CANCELED)
@@ -888,11 +878,14 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
     }
 
     private suspend fun preparePasswordAutofill(
-        password: PasswordEntry
-    ): PasswordAutofillPreparation = withContext(Dispatchers.Default) {
+        password: PasswordEntry,
+        generation: Long,
+    ): PasswordAutofillPreparation {
         val securityManager = SecurityManager(applicationContext)
+        return takagi.ru.monica.security.BoundedSecureDataRead.read<PasswordAutofillPreparation>(securityManager, generation) {
         val accountValue = AccountFillPolicy.resolveAccountIdentifier(password, securityManager)
         val fillEmailWithAccount = AccountFillPolicy.shouldFillEmailWithAccount(applicationContext)
+        ensureActive()
         val decryptedPassword = AutofillSecretResolver.decryptPasswordOrNull(
             securityManager = securityManager,
             encryptedOrPlain = password.password,
@@ -901,13 +894,13 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
         val hints = args.autofillHints
         val hasPasswordTarget = hints?.any(AutofillPasswordRolePolicy::isStoredPasswordHint) == true
         if ((isManualMode || hasPasswordTarget) && decryptedPassword.isNullOrBlank()) {
-            return@withContext PasswordAutofillPreparation.Cancel(
+            return@read PasswordAutofillPreparation.Cancel(
                 logMessage = "Autofill canceled: password decryption unavailable"
             )
         }
 
         if (isManualMode) {
-            return@withContext PasswordAutofillPreparation.Manual(
+            return@read PasswordAutofillPreparation.Manual(
                 accountValue = accountValue,
                 passwordValue = decryptedPassword.orEmpty()
             )
@@ -915,7 +908,7 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
 
         val autofillIds = args.autofillIds
         if (autofillIds.isNullOrEmpty()) {
-            return@withContext PasswordAutofillPreparation.Cancel(
+            return@read PasswordAutofillPreparation.Cancel(
                 logMessage = "Autofill canceled: no AutofillId target"
             )
         }
@@ -924,7 +917,9 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
         val normalizedHints = hints.orEmpty().map { it.trim().lowercase() }
         val hasOtpHint = normalizedHints.any { isOtpHint(it) }
         val selectedOtpCode = if (hasOtpHint) {
-            generateOtpCodeForPassword(password)
+            // This bridge runs only on the dedicated bounded worker. It retains the slot
+            // while the existing suspend DAO/OTP path completes, including native key reads.
+            runBlocking { generateOtpCodeForPassword(password) }
         } else {
             null
         }
@@ -976,7 +971,7 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
         }
 
         if (filledCount == 0) {
-            return@withContext PasswordAutofillPreparation.Cancel(
+            return@read PasswordAutofillPreparation.Cancel(
                 logMessage = "No credential value resolved after controlled fallback"
             )
         }
@@ -993,6 +988,7 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
             unmatchedHintPreview = unmatchedHintPreview,
             usedFallback = usedFallback
         )
+        } ?: PasswordAutofillPreparation.Cancel("Credential read unavailable")
     }
 
     private fun handleGeneratedPasswordFill(generatedPassword: String) {
@@ -1634,7 +1630,13 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
     /**
      * 复制内容到剪贴板
      */
+    private fun canPublishCredentials(): Boolean = !requestRevoked && !isFinishing && !isDestroyed &&
+        lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED) &&
+        getSystemService(android.os.PowerManager::class.java)?.isInteractive == true &&
+        getSystemService(android.app.KeyguardManager::class.java)?.isKeyguardLocked == false
+
     private fun copyToClipboard(label: String, text: String, isSensitive: Boolean = false) {
+        if (!canPublishCredentials()) return
         try {
             ClipboardUtils.copyToClipboard(
                 context = this,
@@ -1669,22 +1671,23 @@ private fun AutofillPickerContent(
     keepassDatabases: List<LocalKeePassDatabase>,
     generatorPreferences: GeneratorPreferences? = null,
     canSkipVerification: Boolean = false,
+    initialReadGeneration: Long,
     requireAuthentication: Boolean = true,
     iconCardsEnabled: Boolean = false,
     isManualMode: Boolean = false,
     showTargetContextInManualMode: Boolean = false,
     manualModeReason: String = "unknown",
-    onPrepareAutofill: (PasswordEntry) -> Unit,
-    onAutofill: (PasswordEntry, Boolean) -> Unit,
-    onAccessibilityFill: (PasswordEntry) -> Unit,
+    onAutofillRequested: (PasswordEntry, Boolean, Long) -> Unit,
+    onAccessibilityFillRequested: (PasswordEntry, Long) -> Unit,
     onAutofillBankCard: (SecureItem) -> Unit,
     onAutofillDocument: (SecureItem) -> Unit,
     onAutofillBillingAddress: (SecureItem) -> Unit,
     onFillGeneratedPassword: (String) -> Unit,
     onCopy: (String, String, Boolean) -> Unit,
+    canPublishCredentials: () -> Boolean,
     onClose: () -> Unit,
     onMarkAsNonAutofill: () -> Unit,
-    onSmartCopy: (PasswordEntry, Boolean) -> Unit
+    onSmartCopy: suspend (PasswordEntry, Boolean, Long) -> Unit
 ) {
     // 导航状态: "list", "detail", "add"
     var currentScreen by remember { mutableStateOf("list") }
@@ -1838,6 +1841,27 @@ private fun AutofillPickerContent(
         !args.autofillIds.isNullOrEmpty() &&
         requestProfile.wantsBillingAddresses
 
+    val currentReadGeneration by SecurityManager.dataReadGeneration.collectAsState()
+    var authorizationGeneration by remember(canSkipVerification, requireAuthentication) {
+        mutableStateOf(initialReadGeneration)
+    }
+    var isAuthenticated by remember(canSkipVerification, requireAuthentication) {
+        mutableStateOf(canSkipVerification && !requireAuthentication)
+    }
+    var copyJob by remember { mutableStateOf<kotlinx.coroutines.Job?>(null) }
+    fun authorizedForRead() = isAuthenticated && securityManager.isDataReadCurrent(authorizationGeneration)
+    val onAutofill: (PasswordEntry, Boolean) -> Unit = { password, saveUri ->
+        if (authorizedForRead()) onAutofillRequested(password, saveUri, authorizationGeneration)
+    }
+    val onAccessibilityFill: (PasswordEntry) -> Unit = { password ->
+        if (authorizedForRead()) onAccessibilityFillRequested(password, authorizationGeneration)
+    }
+    // A lock revokes this picker request. Returning to its list must not mint a new authorization.
+    if (isAuthenticated && currentReadGeneration != authorizationGeneration) {
+        LaunchedEffect(Unit) { copyJob?.cancel(); onClose() }
+        return
+    }
+
     var showAccessibilitySetup by remember { mutableStateOf(false) }
     val requestAccessibilityFill: (PasswordEntry) -> Unit = { password ->
         if (MonicaAccessibilityService.isCredentialFillAvailable(context)) onAccessibilityFill(password)
@@ -1858,60 +1882,71 @@ private fun AutofillPickerContent(
         )
     }
     val handlePasswordAction: (PasswordItemAction) -> Unit = { action ->
+        copyJob?.cancel()
         when (action) {
             is PasswordItemAction.Autofill -> onAutofill(action.password, false)
             is PasswordItemAction.AccessibilityFill -> requestAccessibilityFill(action.password)
             is PasswordItemAction.AutofillAndSaveUri -> onAutofill(action.password, true)
             is PasswordItemAction.ViewDetails -> {
-                onPrepareAutofill(action.password)
                 selectedPassword = action.password
                 currentScreen = "detail"
             }
             is PasswordItemAction.CopyUsername -> {
-                val accountValue = AccountFillPolicy.resolveAccountIdentifier(action.password, securityManager)
-                if (accountValue.isNotBlank()) {
-                    onCopy(autofillUsernameLabel, accountValue, false)
-                } else {
-                    android.widget.Toast.makeText(
-                        context,
-                        autofillCopyAccountUnavailable,
-                        android.widget.Toast.LENGTH_SHORT
-                    ).show()
+                if (authorizedForRead()) {
+                    val generation = authorizationGeneration
+                    copyJob?.cancel()
+                    copyJob = coroutineScope.launch {
+                        val account = takagi.ru.monica.security.BoundedSecureDataRead.read(securityManager, generation) {
+                            AccountFillPolicy.resolveAccountIdentifier(action.password, securityManager)
+                        }
+                        if (!securityManager.isDataReadCurrent(generation)) return@launch
+                        if (!account.isNullOrBlank()) onCopy(autofillUsernameLabel, account, false)
+                        else android.widget.Toast.makeText(context, autofillCopyAccountUnavailable, android.widget.Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
             is PasswordItemAction.CopyPassword -> {
-                val decryptedPassword = AutofillSecretResolver.decryptPasswordOrNull(
-                    securityManager = securityManager,
-                    encryptedOrPlain = action.password.password,
-                    logTag = "AutofillPickerV2",
-                )
-                if (!decryptedPassword.isNullOrBlank()) {
-                    onCopy(autofillPasswordLabel, decryptedPassword, true)
-                } else {
-                    android.widget.Toast.makeText(
-                        context,
-                        autofillCopyPasswordUnavailable,
-                        android.widget.Toast.LENGTH_SHORT
-                    ).show()
+                if (authorizedForRead()) {
+                    val generation = authorizationGeneration
+                    copyJob?.cancel()
+                    copyJob = coroutineScope.launch {
+                        val value = takagi.ru.monica.security.BoundedSecureDataRead.read(securityManager, generation) {
+                            AutofillSecretResolver.decryptPasswordOrNull(securityManager, action.password.password, "AutofillPickerV2").orEmpty()
+                        }
+                        if (!securityManager.isDataReadCurrent(generation)) return@launch
+                        if (!value.isNullOrBlank()) onCopy(autofillPasswordLabel, value, true)
+                        else android.widget.Toast.makeText(context, autofillCopyPasswordUnavailable, android.widget.Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
-            is PasswordItemAction.SmartCopyUsernameFirst -> onSmartCopy(action.password, true)
-            is PasswordItemAction.SmartCopyPasswordFirst -> onSmartCopy(action.password, false)
+            is PasswordItemAction.SmartCopyUsernameFirst -> {
+                if (authorizedForRead()) {
+                    val generation = authorizationGeneration
+                    copyJob?.cancel()
+                    copyJob = coroutineScope.launch { onSmartCopy(action.password, true, generation) }
+                }
+            }
+            is PasswordItemAction.SmartCopyPasswordFirst -> {
+                if (authorizedForRead()) {
+                    val generation = authorizationGeneration
+                    copyJob?.cancel()
+                    copyJob = coroutineScope.launch { onSmartCopy(action.password, false, generation) }
+                }
+            }
             is PasswordItemAction.FillUsername -> onAutofill(action.password, false)
             is PasswordItemAction.FillPassword -> onAutofill(action.password, false)
             is PasswordItemAction.FillTotp -> onAutofill(action.password, false)
         }
     }
 
-    var isAuthenticated by remember(canSkipVerification, requireAuthentication) {
-        mutableStateOf(canSkipVerification && !requireAuthentication)
-    }
 
     if (!isAuthenticated) {
         takagi.ru.monica.autofill_ng.auth.AutofillDeviceVerification(
-            onSuccess = {
+            onSuccess = { verifiedGeneration ->
                 coroutineScope.launch {
                     val latest = takagi.ru.monica.utils.SettingsManager(context).settingsFlow.first()
+                    if (!securityManager.isDataReadCurrent(verifiedGeneration)) return@launch
+                    authorizationGeneration = verifiedGeneration
                     AutofillSessionGrants.grant(AutofillGrantContext(
                         args.applicationId.orEmpty(), args.webDomain,
                         args.interactionIdentifier, args.fieldSignatureKey,
@@ -2922,7 +2957,6 @@ private fun AutofillPickerContent(
                                                     credentialLabel = credentialNumbers[password.id]?.let { stringResource(R.string.project_credential_password_number, it) },
                                                     iconCardsEnabled = iconCardsEnabled,
                                                     showSmartCopyOptions = hasNotificationPermission,
-                                                    onPrepareAutofill = onPrepareAutofill,
                                                     onAction = handlePasswordAction
                                                 )
                                             }
@@ -2980,7 +3014,6 @@ private fun AutofillPickerContent(
                                                 showDropdownMenu = true,
                                                 iconCardsEnabled = iconCardsEnabled,
                                                 showSmartCopyOptions = hasNotificationPermission,
-                                                onPrepareAutofill = onPrepareAutofill,
                                                 onAction = handlePasswordAction
                                             )
                                         }
@@ -3134,6 +3167,8 @@ private fun AutofillPickerContent(
                 InlinePasswordDetailContent(
                     password = password,
                     securityManager = securityManager,
+                    authorizationGeneration = authorizationGeneration,
+                    canPublishCredentials = canPublishCredentials,
                     onAutofill = { onAutofill(password, false) },
                     onAutofillAndSaveUri = { onAutofill(password, true) },
                     onAccessibilityFill = { requestAccessibilityFill(password) },

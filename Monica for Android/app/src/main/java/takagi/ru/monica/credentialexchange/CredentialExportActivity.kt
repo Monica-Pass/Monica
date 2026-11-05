@@ -41,6 +41,7 @@ import takagi.ru.monica.R
 import takagi.ru.monica.data.AppSettings
 import takagi.ru.monica.data.ThemeMode
 import takagi.ru.monica.security.SecurityManager
+import takagi.ru.monica.security.launchWithSecureStorage
 import takagi.ru.monica.ui.components.M3IdentityVerifyDialog
 import takagi.ru.monica.ui.theme.MonicaTheme
 import takagi.ru.monica.utils.LocaleHelper
@@ -79,6 +80,10 @@ class CredentialExportActivity : FragmentActivity() {
             return
         }
         request = incoming
+        launchWithSecureStorage { showExport(incoming, receiver) }
+    }
+
+    private fun showExport(incoming: ProviderImportCredentialsRequest, receiver: String) {
         setContent {
             val settings by remember { SettingsManager(this) }.settingsFlow.collectAsState(initial = AppSettings())
             val dark = when (settings.themeMode) {

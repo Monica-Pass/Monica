@@ -1,0 +1,18 @@
+{
+  "app/src/main/java/takagi/ru/monica/viewmodel/PasswordViewModel.kt": {
+    "main": "37c6c8758638119b9efa8ebd8d05d040ec01595c58087ae188a5189cca96e1af",
+    "fd": "37c6c8758638119b9efa8ebd8d05d040ec01595c58087ae188a5189cca96e1af"
+  },
+  "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenPasswordHistoryStore.kt": {
+    "main": "9cca1613302aa11c597c163f534a49aefadfe09d635c7cdbcf589aad92947496",
+    "fd": "9cca1613302aa11c597c163f534a49aefadfe09d635c7cdbcf589aad92947496"
+  },
+  "app/src/androidTest/java/takagi/ru/monica/credentialexchange/BitwardenCredentialCreateAtomicityTest.kt": {
+    "main": "b86aa0ae4b0501dbe854afafaad7a0072159278d034f9b8ac3b008eec13ab805",
+    "fd": "b86aa0ae4b0501dbe854afafaad7a0072159278d034f9b8ac3b008eec13ab805"
+  },
+  "app/src/androidTest/java/takagi/ru/monica/credentialexchange/BitwardenCredentialCreateUiTest.kt": {
+    "main": "08e4dc454f3b974c32ec0025fa112725ae62fd53f7f0d080eef3c39446b5658a",
+    "fd": "08e4dc454f3b974c32ec0025fa112725ae62fd53f7f0d080eef3c39446b5658a"
+  }
+}

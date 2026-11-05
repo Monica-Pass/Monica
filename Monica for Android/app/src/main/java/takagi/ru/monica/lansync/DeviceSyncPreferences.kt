@@ -59,8 +59,14 @@ internal object DeviceSyncCadence {
         force || (changed && elapsedMillis >= (if (intervalSeconds == 0) 2L else intervalSeconds.toLong()) * 1000)
 }
 
-internal class DeviceSyncPreferenceStore(context: Context, private val security: SecurityManager,
+internal class DeviceSyncPreferenceStore(context: Context, securityProvider: () -> SecurityManager,
     preferenceName: String = "monica-device-sync") {
+    constructor(context: Context, security: SecurityManager, preferenceName: String = "monica-device-sync") :
+        this(context, { security }, preferenceName)
+
+    // Status publication also runs while locked, including cold input-method processes.
+    // Reading its non-secret scheduling flags must not open the encrypted vault.
+    private val security by lazy(securityProvider)
     private val preferences = context.applicationContext.getSharedPreferences(preferenceName, Context.MODE_PRIVATE)
     private var selectionToken: String? = null
     private var selection: Long? = null

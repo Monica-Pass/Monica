@@ -16,6 +16,19 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.activity.compose.BackHandler
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import takagi.ru.monica.R
+import takagi.ru.monica.security.BoundedSecureDataRead
+import takagi.ru.monica.security.SecurityManager
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -53,8 +66,8 @@ fun MonicaPasswordDialogAuthScreen(
     unsupportedCharacterError: String,
     minLengthError: String,
     incorrectError: String,
-    verifyPassword: (String) -> Boolean,
-    onSuccess: () -> Unit,
+    verifyPassword: (String, SecurityManager.PasswordVerificationAttempt) -> Boolean,
+    onSuccess: (Long) -> Unit,
     onCancel: () -> Unit,
     appName: String
 ) {
@@ -113,8 +126,8 @@ private fun MonicaPasswordDialogAuthCard(
     unsupportedCharacterError: String,
     minLengthError: String,
     incorrectError: String,
-    verifyPassword: (String) -> Boolean,
-    onSuccess: () -> Unit,
+    verifyPassword: (String, SecurityManager.PasswordVerificationAttempt) -> Boolean,
+    onSuccess: (Long) -> Unit,
     onCancel: () -> Unit
 ) {
     var password by remember { mutableStateOf("") }
@@ -122,6 +135,46 @@ private fun MonicaPasswordDialogAuthCard(
     var errorMessage by rememberSaveable { mutableStateOf<String?>(null) }
     val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
+    val context = LocalContext.current
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    val scope = rememberCoroutineScope()
+    val verify = rememberUpdatedState(verifyPassword)
+    val success = rememberUpdatedState(onSuccess)
+    val cancel = rememberUpdatedState(onCancel)
+    var attempt by remember { mutableStateOf<SecurityManager.PasswordVerificationAttempt?>(null) }
+    var verificationJob by remember { mutableStateOf<Job?>(null) }
+    var busy by remember { mutableStateOf(false) }
+    var ended by remember { mutableStateOf(false) }
+
+    fun revokePending() {
+        attempt?.cancel()
+        attempt = null
+        verificationJob?.cancel()
+        verificationJob = null
+        busy = false
+        password = ""
+        passwordVisible = false
+    }
+
+    fun cancelDialog() {
+        if (ended) return
+        ended = true
+        revokePending()
+        cancel.value()
+    }
+
+    BackHandler { cancelDialog() }
+    DisposableEffect(lifecycle) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_STOP) cancelDialog()
+        }
+        lifecycle.addObserver(observer)
+        onDispose {
+            lifecycle.removeObserver(observer)
+            ended = true
+            revokePending()
+        }
+    }
 
     LaunchedEffect(Unit) {
         kotlinx.coroutines.delay(100)
@@ -170,6 +223,8 @@ private fun MonicaPasswordDialogAuthCard(
 
             MasterPasswordTextField(
                 value = password,
+                enabled = !busy && !ended,
+                saveTextState = false,
                 onValueChange = { input ->
                     password = input
                     errorMessage = null
@@ -201,18 +256,50 @@ private fun MonicaPasswordDialogAuthCard(
 
             Button(
                 onClick = {
-                    when {
-                        MasterPasswordPolicy.isEmpty(password) -> errorMessage = emptyError
-                        // Verify existing passwords as stored; creation policy must not lock out older users.
-                        !verifyPassword(password) -> errorMessage = incorrectError
-                        else -> {
+                    if (!busy && !ended) {
+                        if (MasterPasswordPolicy.isEmpty(password)) {
+                            errorMessage = emptyError
+                        } else {
+                            // Existing passwords retain their original length/character policy.
+                            val submitted = password
+                            val submittedVerifier = verify.value
+                            password = ""
+                            passwordVisible = false
                             keyboardController?.hide()
-                            onSuccess()
+                            val pending = SecurityManager.PasswordVerificationAttempt()
+                            attempt = pending
+                            busy = true
+                            verificationJob = scope.launch {
+                                try {
+                                    val verified = BoundedSecureDataRead.readChecked(isCurrent = pending::isCurrent) {
+                                        submittedVerifier(submitted, pending)
+                                    }
+                                    if (ended || attempt !== pending) return@launch
+                                    val foreground = lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) &&
+                                        context.getSystemService(android.os.PowerManager::class.java)?.isInteractive == true &&
+                                        context.getSystemService(android.app.KeyguardManager::class.java)?.isKeyguardLocked == false
+                                    if (verified == true && foreground && pending.commit()) {
+                                        busy = false
+                                        attempt = null
+                                        ended = true
+                                        success.value(pending.generation)
+                                    } else {
+                                        errorMessage = if (verified == false && pending.isCurrent()) incorrectError
+                                            else context.getString(R.string.secure_startup_title)
+                                    }
+                                } finally {
+                                    pending.cancel()
+                                    if (attempt === pending) {
+                                        attempt = null
+                                        busy = false
+                                    }
+                                }
+                            }
                         }
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = password.isNotEmpty(),
+                enabled = password.isNotEmpty() && !busy && !ended,
                 shape = RoundedCornerShape(28.dp)
             ) {
                 Text(text = confirmText, modifier = Modifier.padding(vertical = 4.dp))
@@ -221,7 +308,7 @@ private fun MonicaPasswordDialogAuthCard(
             Spacer(modifier = Modifier.height(8.dp))
 
             TextButton(
-                onClick = onCancel,
+                onClick = { cancelDialog() },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(28.dp)
             ) {

@@ -26,8 +26,25 @@ interface SecureItemDao {
     @Query("SELECT * FROM secure_items WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND isDeleted = 0 ORDER BY updatedAt DESC")
     fun getAllItemsIncludingArchived(): Flow<List<SecureItem>>
 
-    @Query("SELECT * FROM secure_items WHERE isDeleted = 0 AND itemType != 'PASSWORD' AND bitwarden_vault_id IS NULL AND keepass_database_id IS NULL AND mdbx_database_id IS NULL ORDER BY id")
-    suspend fun getLocalItemsIncludingArchived(): List<SecureItem>
+    @Query("""
+        SELECT id, itemType, keepass_database_id, keepass_entry_uuid, keepass_group_uuid,
+               keepass_group_path, bitwarden_vault_id, bitwarden_cipher_id,
+               bitwarden_revision_date, bitwarden_folder_id, bitwarden_local_modified,
+               sync_status, mdbx_database_id
+        FROM secure_items
+        WHERE isDeleted = 0 AND itemType != 'PASSWORD'
+          AND (:itemType IS NULL OR itemType = :itemType)
+        ORDER BY id
+    """)
+    suspend fun getBackupItemMetadata(itemType: ItemType? = null): List<SecureItemBackupMetadata>
+
+    /** Keep selection and payload reads in one snapshot; archived local rows are backed up too. */
+    @Transaction
+    suspend fun getLocalItemsIncludingArchived(): List<SecureItem> {
+        val ids = getBackupItemMetadata().filter { it.isLocalOnlyItem() }.map { it.id }
+        // Stay below SQLite's bind limit even on older Android versions.
+        return ids.chunked(900).flatMap { getItemsByIds(it) }.sortedBy { it.id }
+    }
 
     @Query("SELECT * FROM secure_items WHERE isDeleted = 0 AND isArchived = 1 AND keepass_database_id IS NULL AND mdbx_database_id IS NULL ORDER BY archivedAt DESC, updatedAt DESC")
     fun getArchivedItems(): Flow<List<SecureItem>>
@@ -246,18 +263,9 @@ interface SecureItemDao {
     """)
     suspend fun getActiveLocalItemsByTypeSync(itemType: ItemType): List<SecureItem>
 
-    /**
-     * 获取本地安全项数量（排除 Bitwarden、KeePass 和 MDBX 的数据）
-     */
-    @Query("""
-        SELECT COUNT(*) FROM secure_items
-        WHERE itemType = :itemType
-          AND isDeleted = 0 AND isArchived = 0
-          AND bitwarden_vault_id IS NULL
-          AND keepass_database_id IS NULL
-          AND mdbx_database_id IS NULL
-    """)
-    suspend fun getLocalItemCountByType(itemType: ItemType): Int
+    /** Same local ownership and archive/deletion scope as the actual backup input. */
+    suspend fun getLocalItemCountByType(itemType: ItemType): Int =
+        getBackupItemMetadata(itemType).count { it.isLocalOnlyItem() }
 
     /**
      * 获取本地已删除项目数量（排除 Bitwarden、KeePass 和 MDBX 的数据）

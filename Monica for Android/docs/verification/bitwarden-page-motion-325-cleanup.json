@@ -1,0 +1,10 @@
+{
+  "ownGuestRemoved": true,
+  "originalUsersPreserved": true,
+  "remainingUsers": "Users:\r\n\tUserInfo{0:Owner:c13} running\r\n\tUserInfo{10:Monica:410}\r\n\tUserInfo{11:Monica_Recovery316:410}\r\n\tUserInfo{12:Monica_Recovery316_Retest:410}",
+  "shellUid": "2000",
+  "stopResult": "OK: killing emulator, bye bye\r\r\nOK",
+  "emulatorStopped": true,
+  "avdIniPreserved": true,
+  "avdDataPreserved": true
+}

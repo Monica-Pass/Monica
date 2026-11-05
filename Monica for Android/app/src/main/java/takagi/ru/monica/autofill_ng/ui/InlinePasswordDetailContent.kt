@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
 import takagi.ru.monica.data.PasswordEntry
 import takagi.ru.monica.security.SecurityManager
+import takagi.ru.monica.security.BoundedSecureDataRead
 import takagi.ru.monica.utils.ClipboardUtils
 
 /**
@@ -36,32 +37,34 @@ fun InlinePasswordDetailContent(
     onAutofill: () -> Unit,
     onAutofillAndSaveUri: () -> Unit,
     onBack: () -> Unit,
+    authorizationGeneration: Long,
+    canPublishCredentials: () -> Boolean,
     modifier: Modifier = Modifier,
     onAccessibilityFill: (() -> Unit)? = null,
 ) {
     val context = LocalContext.current
-    var passwordVisible by remember { mutableStateOf(false) }
-    
-    // 解密数据
-    val decryptedUsername = remember(password) {
-        try {
-            if (password.username.contains("==") && password.username.length > 20) {
-                securityManager.decryptData(password.username)
-            } else {
-                password.username
+    var passwordVisible by remember(password, authorizationGeneration) { mutableStateOf(false) }
+    val currentGeneration by SecurityManager.dataReadGeneration.collectAsState()
+    var secrets by remember(password, securityManager, authorizationGeneration) { mutableStateOf<Pair<String, String>?>(null) }
+    var loading by remember(password, securityManager, authorizationGeneration) { mutableStateOf(true) }
+    LaunchedEffect(password, securityManager, authorizationGeneration, currentGeneration) {
+        secrets = null
+        loading = true
+        if (currentGeneration == authorizationGeneration) {
+            secrets = BoundedSecureDataRead.read(securityManager, authorizationGeneration) {
+                val username = if (password.username.contains("==") && password.username.length > 20) {
+                    securityManager.decryptData(password.username)
+                } else password.username
+                ensureActive()
+                username to securityManager.decryptData(password.password)
             }
-        } catch (e: Exception) {
-            password.username
         }
+        loading = false
     }
-    
-    val decryptedPassword = remember(password) {
-        try {
-            securityManager.decryptData(password.password)
-        } catch (e: Exception) {
-            "********"
-        }
-    }
+    val readable = currentGeneration == authorizationGeneration && secrets != null
+    val decryptedUsername = if (readable) secrets!!.first else ""
+    val decryptedPassword = if (readable) secrets!!.second else ""
+    fun canUseSecrets() = readable && canPublishCredentials() && securityManager.isDataReadCurrent(authorizationGeneration)
     
     Column(
         modifier = modifier
@@ -140,7 +143,7 @@ fun InlinePasswordDetailContent(
             label = stringResource(R.string.autofill_username),
             value = decryptedUsername,
             icon = Icons.Outlined.Person,
-            onCopy = { copyToClipboard(context, context.getString(R.string.autofill_username), decryptedUsername) }
+            onCopy = if (readable) ({ if (canUseSecrets()) copyToClipboard(context, context.getString(R.string.autofill_username), decryptedUsername) }) else null
         )
         
         // 密码字段
@@ -150,9 +153,12 @@ fun InlinePasswordDetailContent(
             icon = Icons.Outlined.Lock,
             isPassword = true,
             passwordVisible = passwordVisible,
-            onToggleVisibility = { passwordVisible = !passwordVisible },
-            onCopy = { copyToClipboard(context, context.getString(R.string.autofill_password), decryptedPassword) }
+            onToggleVisibility = if (readable) ({ if (canUseSecrets()) passwordVisible = !passwordVisible }) else null,
+            onCopy = if (readable) ({ if (canUseSecrets()) copyToClipboard(context, context.getString(R.string.autofill_password), decryptedPassword) }) else null
         )
+        if (!readable) {
+            Text(stringResource(if (loading) R.string.loading else R.string.bitwarden_sync_issue_reason_decryption))
+        }
         
         // 网站字段
         if (password.website.isNotEmpty()) {
@@ -160,7 +166,7 @@ fun InlinePasswordDetailContent(
                 label = stringResource(R.string.autofill_website_app),
                 value = password.website,
                 icon = Icons.Outlined.Language,
-                onCopy = { copyToClipboard(context, context.getString(R.string.autofill_website_app), password.website) }
+                onCopy = if (readable) ({ if (canUseSecrets()) copyToClipboard(context, context.getString(R.string.autofill_website_app), password.website) }) else null
             )
         }
         
@@ -181,7 +187,7 @@ fun InlinePasswordDetailContent(
                 value = password.notes,
                 icon = Icons.Outlined.Notes,
                 allowMultilineValue = true,
-                onCopy = { copyToClipboard(context, context.getString(R.string.notes), password.notes) }
+                onCopy = if (readable) ({ if (canUseSecrets()) copyToClipboard(context, context.getString(R.string.notes), password.notes) }) else null
             )
         }
         
@@ -193,7 +199,8 @@ fun InlinePasswordDetailContent(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Button(
-                onClick = onAutofill,
+                onClick = { if (canUseSecrets()) onAutofill() },
+                enabled = readable,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Icon(Icons.Outlined.AutoAwesome, contentDescription = null)
@@ -202,14 +209,15 @@ fun InlinePasswordDetailContent(
             }
             
             if (onAccessibilityFill != null) {
-                FilledTonalButton(onClick = onAccessibilityFill, modifier = Modifier.fillMaxWidth()) {
+                FilledTonalButton(onClick = { if (canUseSecrets()) onAccessibilityFill() }, enabled = readable, modifier = Modifier.fillMaxWidth()) {
                     Icon(Icons.Outlined.AccessibilityNew, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(stringResource(R.string.autofill_accessibility_fill))
                 }
             }
             OutlinedButton(
-                onClick = onAutofillAndSaveUri,
+                onClick = { if (canUseSecrets()) onAutofillAndSaveUri() },
+                enabled = readable,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Icon(Icons.Outlined.Save, contentDescription = null)

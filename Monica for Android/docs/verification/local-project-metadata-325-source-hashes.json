@@ -1,0 +1,34 @@
+{
+  "app/src/main/java/takagi/ru/monica/data/model/ProjectCredentialGroup.kt": {
+    "main": "59b2279fa1b6fc49b0cb213e22b5f39ee5be713e20276fc84394e386fb4bb62b",
+    "fd": "59b2279fa1b6fc49b0cb213e22b5f39ee5be713e20276fc84394e386fb4bb62b"
+  },
+  "app/src/main/java/takagi/ru/monica/data/model/EntryContentFields.kt": {
+    "main": "3e7bc7f74c322d4c3f6aeec340b6a71e1ecfdd432553780d25ca978719078ddf",
+    "fd": "3e7bc7f74c322d4c3f6aeec340b6a71e1ecfdd432553780d25ca978719078ddf"
+  },
+  "app/src/main/java/takagi/ru/monica/security/RuntimeDiagnostics.kt": {
+    "main": "0c14271cd35e47bc52be7ef1a426e5d38b1f88e5a022c3eb9c9f5fb296c97726",
+    "fd": "0c14271cd35e47bc52be7ef1a426e5d38b1f88e5a022c3eb9c9f5fb296c97726"
+  },
+  "app/src/main/java/takagi/ru/monica/ui/screens/AddEditPasswordScreen.kt": {
+    "main": "71836f0040981beb10be36338d27a93887b661445278a1be6a2bcd0a57c96e80",
+    "fd": "71836f0040981beb10be36338d27a93887b661445278a1be6a2bcd0a57c96e80"
+  },
+  "app/src/test/java/takagi/ru/monica/data/model/ProjectCredentialGroupTest.kt": {
+    "main": "4572e4b5ea097e7ebd8392c6f12316e09e0620ceed82f51b62ce742b9e6979da",
+    "fd": "4572e4b5ea097e7ebd8392c6f12316e09e0620ceed82f51b62ce742b9e6979da"
+  },
+  "app/src/test/java/takagi/ru/monica/data/model/ProjectCredentialLegacyOtpTest.kt": {
+    "main": "b9084f2c18edee9ba948bf7d92704265215843bb9511b197513123a4cbe57841",
+    "fd": "b9084f2c18edee9ba948bf7d92704265215843bb9511b197513123a4cbe57841"
+  },
+  "app/src/androidTest/java/takagi/ru/monica/ui/ProjectCredentialEditorTest.kt": {
+    "main": "c3ab6659ba8809e589e5ca0456787cfeaf4c8113aa69c4111c9821110638203e",
+    "fd": "c3ab6659ba8809e589e5ca0456787cfeaf4c8113aa69c4111c9821110638203e"
+  },
+  "app/src/androidTest/java/takagi/ru/monica/credentialexchange/ProjectCredentialStorageTest.kt": {
+    "main": "bd3c2060432ff7e2fce6a87aa10ac576a2ac950af65080d4f020459019142dd0",
+    "fd": "bd3c2060432ff7e2fce6a87aa10ac576a2ac950af65080d4f020459019142dd0"
+  }
+}

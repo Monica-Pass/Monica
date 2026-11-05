@@ -35,7 +35,7 @@ import java.util.UUID
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [28], application = Application::class,
-    shadows = [DeviceVaultProviderTest.SecureStoreShadow::class, DeviceVaultProviderTest.SecurityShadow::class])
+    shadows = [DeviceVaultProviderTest.SecureStoreShadow::class, DeviceVaultProviderTest.PreparedStoreShadow::class, DeviceVaultProviderTest.SecurityShadow::class])
 @OptIn(ExperimentalCoroutinesApi::class)
 class DeviceManualSyncTest {
     @Test fun cancellation_interrupts_a_snapshot_wait_and_does_not_replay_a_queued_sync() = runBlocking {

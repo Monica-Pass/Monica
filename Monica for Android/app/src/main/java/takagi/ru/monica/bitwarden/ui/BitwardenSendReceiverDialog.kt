@@ -1,5 +1,8 @@
 package takagi.ru.monica.bitwarden.ui
 
+import takagi.ru.monica.ui.navigation.MonicaPageContent
+import takagi.ru.monica.ui.navigation.MonicaPageDialogMotion
+
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -300,6 +303,13 @@ internal fun BitwardenSendReceiverDialog(
                 }
             }
         }
+        MonicaPageDialogMotion()
+        val pagePhase: Any = when {
+            concealed -> "concealed"
+            ui.parsedLink != null -> "target"
+            else -> ui.model::class
+        }
+        MonicaPageContent(pageKey = pagePhase, animateInitial = true, animate = !concealed, modifier = Modifier.fillMaxSize()) {
         Surface(Modifier.fillMaxSize().testTag("bitwarden_receiver_dialog").pointerInput(ui) {
             awaitPointerEventScope {
                 while (true) {
@@ -441,6 +451,7 @@ internal fun BitwardenSendReceiverDialog(
             }
         }
         }
+    }
     }
 }
 

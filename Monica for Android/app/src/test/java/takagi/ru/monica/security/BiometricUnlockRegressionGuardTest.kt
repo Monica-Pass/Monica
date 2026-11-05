@@ -28,43 +28,19 @@ class BiometricUnlockRegressionGuardTest {
     }
 
     @Test
-    fun mdkWrapperRebuildHandlesInvalidatedAndUnrecoverableKeystoreKeys() {
-        val source = projectFile(
-            "app/src/main/java/takagi/ru/monica/security/SecurityManager.kt"
-        ).readSourceText()
+    fun invalidatedAndUnrecoverableKeysRetainOriginalWrappers() {
+        val source = projectFile("app/src/main/java/takagi/ru/monica/security/SecurityManager.kt").readSourceText()
         val persistBody = source.substringAfter("private fun persistKeystoreWrappedMdk(mdk: ByteArray): Boolean {")
             .substringBefore("private fun persistCompatKeystoreWrappedMdk")
         val ensureBody = source.substringAfter("private fun ensureMdkInitializedWithPassword(")
             .substringBefore("private fun ensureMdkKeystoreWrapper()")
-
-        assertTrue(
-            "Wrapper rebuild must recover from biometric enrollment invalidating the secure key.",
-            persistBody.contains("KeyPermanentlyInvalidatedException")
-        )
-        assertTrue(
-            "Wrapper rebuild must recover from AndroidKeyStore returning an unrecoverable stale key.",
-            persistBody.contains("UnrecoverableKeyException")
-        )
-        assertTrue(
-            "Invalid secure aliases must be deleted so a fresh wrapper can be persisted.",
-            persistBody.contains("deleteSecureKeyAlias(KEY_ALIAS_DATA)")
-        )
-        assertTrue(
-            "Missing wrapper aliases must force a wrapper rebuild after password unlock.",
-            ensureBody.contains("hasKeystoreBlob = false")
-        )
-        assertTrue(
-            "Password unlock must refresh the keystore wrapper even when an old blob exists.",
-            ensureBody.contains("compatibility wrapper refresh after password unlock")
-        )
-        assertTrue(
-            "Password unlock recovery must not accidentally write a fresh auth-bound wrapper on devices with active biometric auth windows.",
-            ensureBody.contains("persistCompatKeystoreWrappedMdk(actualMdk)")
-        )
-        assertTrue(
-            "Password unlock must clear stale MDK auth cooldown after rebuilding key material.",
-            ensureBody.contains("mdkAuthUnavailableUntilMillis = 0L")
-        )
+        assertTrue(persistBody.contains("KeyPermanentlyInvalidatedException"))
+        assertTrue(persistBody.contains("UnrecoverableKeyException"))
+        assertFalse("A failed key read is not authority to delete the original alias", persistBody.contains("deleteSecureKeyAlias("))
+        assertFalse("An existing unreadable wrapper must remain available for recovery", ensureBody.contains("hasKeystoreBlob = false"))
+        assertTrue("Password auth may only add a missing compatibility wrapper under the original policy",
+            ensureBody.contains("if (!hasKeystoreBlob) persistCompatKeystoreWrappedMdk(actualMdk, allowInitialKeyCreation = initialEnrollment)"))
+        assertTrue(ensureBody.contains("mdkAuthUnavailableUntilMillis = 0L"))
     }
 
     @Test
@@ -105,14 +81,10 @@ class BiometricUnlockRegressionGuardTest {
             "MDK recovery should also ignore empty runtime cache before falling back to the keystore wrapper.",
             getOrCreateBody.contains("cached.isNotEmpty()")
         )
-        assertTrue(
-            "Correct-password unlock must repair historical empty password-wrapped MDK blobs.",
-            ensureBody.contains("password-wrapped MDK is empty; attempting recovery")
-        )
-        assertTrue(
-            "Recovered or freshly generated MDK must be written back to the password blob.",
-            ensureBody.contains("shouldRewritePasswordBlob = true")
-        )
+        assertTrue("Damaged password-wrapped MDK material must be rejected rather than replaced",
+            ensureBody.contains("check(actualMdk.size == 32)"))
+        assertFalse("Authentication must not rewrite an unreadable existing password wrapper",
+            ensureBody.contains("shouldRewritePasswordBlob = true"))
     }
 
     @Test
@@ -803,28 +775,32 @@ class BiometricUnlockRegressionGuardTest {
         )
         assertTrue(
             "Password editor load must move entry lookup, sibling scan, secret inspection, and custom fields off the main thread.",
-            addEditPasswordScreenSource.contains("withContext(Dispatchers.IO) {\n                    viewModel.getRawPasswordEntryById(actualId)") &&
+            addEditPasswordScreenSource.contains("withContext(Dispatchers.IO) {\n                    viewModel.getRawPasswordEntryById(actualId, forEdit = true)") &&
                 addEditPasswordScreenSource.contains("withContext(Dispatchers.Default) {\n                        viewModel.inspectSecretState(rawEntry)") &&
                 addEditPasswordScreenSource.contains("withContext(Dispatchers.IO) {\n                            viewModel.getRawActivePasswordEntries()") &&
-                addEditPasswordScreenSource.contains("withContext(Dispatchers.IO) {\n                            viewModel.getCustomFieldsByEntryIdSync(actualId)")
+                addEditPasswordScreenSource.substringAfter("templateDraft = withContext(Dispatchers.IO) {")
+                    .substringBefore("} catch").let { block ->
+                        block.contains("TemplateCredentialDraft.load(entry,") &&
+                            block.contains("viewModel.getCustomFieldsByEntryIdSync(actualId).map(CustomFieldDraft::fromCustomField)")
+                    }
         )
         assertTrue(
             "Card-wallet editors must parse encrypted itemData on a background dispatcher before filling form state.",
             addEditBankCardScreenSource.contains("withContext(Dispatchers.Default) {\n                    viewModel.parseCardData(item.itemData)") &&
-                addEditDocumentScreenSource.contains("withContext(Dispatchers.Default) {\n                    viewModel.parseDocumentData(item.itemData)")
+                addEditDocumentScreenSource.contains("withContext(Dispatchers.Default) {\n                    embeddedEditor?.data ?: viewModel.parseDocumentData(item.itemData)")
         )
         assertTrue(
             "Card-wallet editors must not show a blank edit form before encrypted fields have been parsed.",
             addEditBankCardScreenSource.contains("val isExistingCardReady = cardId == null || hasLoadedExistingCardFields") &&
-                addEditBankCardScreenSource.contains("val canSave = isExistingCardReady && cardNumber.isNotBlank() && !isSaving") &&
+                addEditBankCardScreenSource.contains("val canSave = isExistingCardReady && (cardNumber.isNotBlank() || embeddedDraft != null) && !isSaving") &&
                 addEditBankCardScreenSource.contains("if (!isExistingCardReady)") &&
                 addEditBankCardScreenSource.contains("BankCardEditLoadingPlaceholder(") &&
-                addEditBankCardScreenSource.contains("withContext(Dispatchers.IO) {\n                viewModel.getCardById(cardId)") &&
-                addEditDocumentScreenSource.contains("val isExistingDocumentReady = documentId == null || hasLoadedExistingDocumentFields") &&
-                addEditDocumentScreenSource.contains("val canSave = isExistingDocumentReady && documentNumber.isNotBlank() && !isSaving") &&
+                addEditBankCardScreenSource.substringAfter("withContext(Dispatchers.IO) {").substringBefore("}?.let").contains("viewModel.getCardById(requireNotNull(cardId))") &&
+                addEditDocumentScreenSource.contains("val isExistingDocumentReady = (documentId == null && embeddedDraft == null) || hasLoadedExistingDocumentFields") &&
+                addEditDocumentScreenSource.contains("val canSave = isExistingDocumentReady && hasRequiredContent && !isSaving") &&
                 addEditDocumentScreenSource.contains("if (!isExistingDocumentReady)") &&
                 addEditDocumentScreenSource.contains("DocumentEditLoadingPlaceholder(") &&
-                addEditDocumentScreenSource.contains("withContext(Dispatchers.IO) {\n                viewModel.getDocumentById(documentId)")
+                addEditDocumentScreenSource.substringAfter("withContext(Dispatchers.IO) {").substringBefore("}?.let").contains("documentId?.let { viewModel.getDocumentById(it) }")
         )
         assertTrue(
             "Card-wallet add/edit screens must not subscribe to full card/document replica lists while creating a new item.",
@@ -857,7 +833,9 @@ class BiometricUnlockRegressionGuardTest {
         val listItemSource = projectFile(
             "app/src/main/java/takagi/ru/monica/autofill_ng/ui/PasswordListItem.kt"
         ).readSourceText()
-        val handleBody = pickerSource.substringAfter("private fun handleAutofill(password: PasswordEntry, forceAddUri: Boolean) {")
+        val handleSignature = "private fun handleAutofill(password: PasswordEntry, forceAddUri: Boolean, generation: Long) {"
+        assertTrue("The guard must locate the actual handler", pickerSource.contains(handleSignature))
+        val handleBody = pickerSource.substringAfter(handleSignature)
             .substringBefore("private suspend fun preparePasswordAutofill(")
         val prepareBody = pickerSource.substringAfter("private suspend fun preparePasswordAutofill(")
             .substringBefore("private fun handleGeneratedPasswordFill(")
@@ -873,19 +851,17 @@ class BiometricUnlockRegressionGuardTest {
             "Autofill button confirmation must not block on preference or database IO before returning to the target app.",
             handleBody.contains("runBlocking")
         )
-        assertTrue(
-            "Password autofill result preparation should happen on a background dispatcher and be warmed when the menu opens.",
-            prepareBody.contains("withContext(Dispatchers.Default)") &&
+        assertTrue("Password reads retain a native worker slot and the original authorization generation",
+            prepareBody.contains("BoundedSecureDataRead.read<PasswordAutofillPreparation>(securityManager, generation)") &&
                 prepareBody.contains("AutofillSecretResolver.decryptPasswordOrNull") &&
-                pickerSource.contains("private fun prewarmPasswordAutofill(password: PasswordEntry)") &&
-                pickerSource.contains("passwordAutofillPreparation = lifecycleScope.async") &&
-                pickerSource.contains("onPrepareAutofill = ::prewarmPasswordAutofill") &&
-                listItemSource.contains("onPrepareAutofill?.invoke(password)")
-        )
+                handleBody.contains("isDataReadCurrent(generation)") && handleBody.contains("canPublishCredentials()"))
+        assertFalse("Stale ID-only plaintext prewarming must not return", pickerSource.contains("private fun prewarmPasswordAutofill("))
         assertTrue(
             "OTP copy/notification side effects should use suspending IO reads instead of runBlocking on the selection path.",
-            otpActionBody.contains("withContext(Dispatchers.IO)") &&
-                !otpActionBody.contains("runBlocking")
+            otpActionBody.contains("AutofillOtpActions(applicationContext).process(password)") &&
+                !otpActionBody.contains("runBlocking") &&
+                projectFile("app/src/main/java/takagi/ru/monica/autofill_ng/AutofillOtpActions.kt").readSourceText()
+                    .let { it.contains("withContext(Dispatchers.IO)") && !it.contains("runBlocking") }
         )
         assertTrue(
             "Autofill picker initial load should use the password-list M3E loading indicator and move first database reads off the main thread.",

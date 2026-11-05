@@ -797,6 +797,12 @@ class PasswordRepository(
     /**
      * 更新绑定的验证器密钥
      */
+    suspend fun clearLocalAccountAuthenticator(
+        boundId: Long,
+        matchesKey: (String) -> Boolean,
+        retainsBinding: (takagi.ru.monica.data.SecureItem, Set<Long>) -> Boolean
+    ): Boolean = passwordEntryDao.clearLocalAccountAuthenticator(boundId, matchesKey, retainsBinding)
+
     suspend fun updateAuthenticatorKey(id: Long, authenticatorKey: String) {
         val existing = passwordEntryDao.getPasswordEntryById(id) ?: return
         updatePasswordEntry(

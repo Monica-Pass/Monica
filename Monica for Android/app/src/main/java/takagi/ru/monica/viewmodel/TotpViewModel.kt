@@ -1857,7 +1857,31 @@ class TotpViewModel internal constructor(
             if (totpData?.boundPasswordId != null && totpData.secret.isNotBlank()) {
                 val boundId = totpData.boundPasswordId
                 val password = passwordRepository.getPasswordEntryById(boundId)
-                if (password != null) {
+                if (password?.isLocalOnlyEntry() == true) {
+                    val itemKey = buildTotpIdentityKey(totpData)
+                    val resolved = try {
+                        withContext(Dispatchers.Default) {
+                            passwordRepository.clearLocalAccountAuthenticator(
+                                boundId = boundId,
+                                matchesKey = { buildTotpIdentityKeyFromRawKey(it) == itemKey },
+                                retainsBinding = { candidate, accountIds ->
+                                    candidate.id != item.id && candidate.id !in deletingItemIds &&
+                                        parseStoredTotpData(candidate)?.let { data ->
+                                            data.boundPasswordId in accountIds && buildTotpIdentityKey(data) == itemKey
+                                        } == true
+                                }
+                            )
+                        }
+                    } catch (cancelled: kotlinx.coroutines.CancellationException) {
+                        throw cancelled
+                    } catch (_: Exception) {
+                        false
+                    }
+                    if (!resolved) {
+                        Log.w("TotpViewModel", "Cannot resolve local authenticator account; original data preserved")
+                        return@launch
+                    }
+                } else if (password != null) {
                     val passwordKey = buildTotpIdentityKeyFromRawKey(password.authenticatorKey)
                     val itemKey = buildTotpIdentityKey(totpData)
                     val hasEquivalentBoundItem = repository.getItemsByType(ItemType.TOTP)

@@ -71,10 +71,17 @@ class NotificationValidatorService : Service() {
         settingsManager = SettingsManager(this)
         val database = PasswordDatabase.getDatabase(this)
         secureItemRepository = SecureItemRepository(database.secureItemDao())
-        securityManager = SecurityManager(this)
         createNotificationChannel()
         startPlaceholderNotification()
-        startObserving()
+        serviceScope.launch {
+            when (val startup = takagi.ru.monica.security.SecureStorageStartup.prepareForEntry(applicationContext)) {
+                is takagi.ru.monica.security.SecureStartupResult.Ready -> {
+                    securityManager = startup.manager
+                    startObserving()
+                }
+                is takagi.ru.monica.security.SecureStartupResult.Blocked -> stopSelf()
+            }
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

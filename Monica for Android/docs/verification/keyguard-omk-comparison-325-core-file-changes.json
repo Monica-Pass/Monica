@@ -1,0 +1,134 @@
+[
+  {
+    "path": "com.artemchep.keyguard/databases/database_exposed",
+    "status": "unchanged",
+    "before": {
+      "path": "com.artemchep.keyguard/databases/database_exposed",
+      "size": 65536,
+      "sha256": "b357ed04e773c45333b7a650a08d88b4c21d3023064e655cf4fcf7daa42d1749"
+    },
+    "after": {
+      "path": "com.artemchep.keyguard/databases/database_exposed",
+      "size": 65536,
+      "sha256": "b357ed04e773c45333b7a650a08d88b4c21d3023064e655cf4fcf7daa42d1749"
+    }
+  },
+  {
+    "path": "com.artemchep.keyguard/databases/database_v2",
+    "status": "unchanged",
+    "before": {
+      "path": "com.artemchep.keyguard/databases/database_v2",
+      "size": 352256,
+      "sha256": "f713da82dbe7adc4d800fba77c1c4570702e03b6aa43cb915729aeb8682cdaae"
+    },
+    "after": {
+      "path": "com.artemchep.keyguard/databases/database_v2",
+      "size": 352256,
+      "sha256": "f713da82dbe7adc4d800fba77c1c4570702e03b6aa43cb915729aeb8682cdaae"
+    }
+  },
+  {
+    "path": "com.artemchep.keyguard/datastore/device_id.preferences_pb",
+    "status": "unchanged",
+    "before": {
+      "path": "com.artemchep.keyguard/datastore/device_id.preferences_pb",
+      "size": 53,
+      "sha256": "5ab4b4180e3e839735f0bb59996820ba8e26e20e1ad22774b4b159aad6fec338"
+    },
+    "after": {
+      "path": "com.artemchep.keyguard/datastore/device_id.preferences_pb",
+      "size": 53,
+      "sha256": "5ab4b4180e3e839735f0bb59996820ba8e26e20e1ad22774b4b159aad6fec338"
+    }
+  },
+  {
+    "path": "com.artemchep.keyguard/datastore/fingerprint.preferences_pb",
+    "status": "removed",
+    "before": {
+      "path": "com.artemchep.keyguard/datastore/fingerprint.preferences_pb",
+      "size": 276,
+      "sha256": "8f6883b17be4b81a1cd7211b177330a327876035bbc56d91928011525430e9f4"
+    },
+    "after": null
+  },
+  {
+    "path": "com.artemchep.keyguard/datastore/master_key.preferences_pb",
+    "status": "changed",
+    "before": {
+      "path": "com.artemchep.keyguard/datastore/master_key.preferences_pb",
+      "size": 69,
+      "sha256": "28200321b6e5835e74d0e5d01ac7b7b29674364862b6cea450952576fd5cc12b"
+    },
+    "after": {
+      "path": "com.artemchep.keyguard/datastore/master_key.preferences_pb",
+      "size": 69,
+      "sha256": "cdb3d07b33e6ec49b5cd700011363967178d0fcf89c8d57b71d73bd5c4bba80c"
+    }
+  },
+  {
+    "path": "com.artemchep.keyguard/datastore/nav_stack.preferences_pb",
+    "status": "removed",
+    "before": {
+      "path": "com.artemchep.keyguard/datastore/nav_stack.preferences_pb",
+      "size": 95,
+      "sha256": "c2aa29d8a6b8134cd28fe7a79de44b2ff36749d5a75ed643dcf7428650cfd949"
+    },
+    "after": null
+  },
+  {
+    "path": "com.artemchep.keyguard/datastore/session_metadata.preferences_pb",
+    "status": "unchanged",
+    "before": {
+      "path": "com.artemchep.keyguard/datastore/session_metadata.preferences_pb",
+      "size": 40,
+      "sha256": "ffe5606181925cb24c80d0deeb3490ca436f398d6e31b20cbc6d26062a32e0b0"
+    },
+    "after": {
+      "path": "com.artemchep.keyguard/datastore/session_metadata.preferences_pb",
+      "size": 40,
+      "sha256": "ffe5606181925cb24c80d0deeb3490ca436f398d6e31b20cbc6d26062a32e0b0"
+    }
+  },
+  {
+    "path": "com.artemchep.keyguard/datastore/settings.preferences_pb",
+    "status": "changed",
+    "before": {
+      "path": "com.artemchep.keyguard/datastore/settings.preferences_pb",
+      "size": 1185,
+      "sha256": "399815cb08db4fbb581b9a3fd356073a9e6ccd9402574212db9e9111de0d8912"
+    },
+    "after": {
+      "path": "com.artemchep.keyguard/datastore/settings.preferences_pb",
+      "size": 236,
+      "sha256": "bc5fe3de1211eda7702a80945ba097928fcaa4c6302f1c581c95742540b3b2f6"
+    }
+  },
+  {
+    "path": "com.artemchep.keyguard/datastore/ui_state.preferences_pb",
+    "status": "unchanged",
+    "before": {
+      "path": "com.artemchep.keyguard/datastore/ui_state.preferences_pb",
+      "size": 225,
+      "sha256": "8e6a7644a4b551450dc607598a88a9de15d43d3f6278c33a519ceb1747aba76c"
+    },
+    "after": {
+      "path": "com.artemchep.keyguard/datastore/ui_state.preferences_pb",
+      "size": 225,
+      "sha256": "8e6a7644a4b551450dc607598a88a9de15d43d3f6278c33a519ceb1747aba76c"
+    }
+  },
+  {
+    "path": "com.artemchep.keyguard/shared_prefs/__androidx_security_crypto_encrypted_file_pref__.xml",
+    "status": "changed",
+    "before": {
+      "path": "com.artemchep.keyguard/shared_prefs/__androidx_security_crypto_encrypted_file_pref__.xml",
+      "size": 638,
+      "sha256": "81c3bd461b39e65843111d66e669f7e21d5eddaf0dfd892557ecfadfa7f541ca"
+    },
+    "after": {
+      "path": "com.artemchep.keyguard/shared_prefs/__androidx_security_crypto_encrypted_file_pref__.xml",
+      "size": 630,
+      "sha256": "a205d08ae9f2c524bc1fd6660b6d87b9d18a03124f33fbab4124f756473e3c8f"
+    }
+  }
+]

@@ -1,5 +1,7 @@
 package takagi.ru.monica.autofill_ng
 
+import takagi.ru.monica.security.launchWithSecureStorage
+
 import takagi.ru.monica.utils.LocaleHelper
 import takagi.ru.monica.utils.StartupLanguageCache
 import android.app.Activity
@@ -53,6 +55,10 @@ class AutofillUnlockActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        launchWithSecureStorage { onSecureCreate(savedInstanceState) }
+    }
+
+    private fun onSecureCreate(savedInstanceState: Bundle?) {
         overridePendingTransition(0, 0)
         setContentView(R.layout.activity_transparent)
 
@@ -68,14 +74,15 @@ class AutofillUnlockActivity : AppCompatActivity() {
             securityManager = SecurityManager(applicationContext)
             settingsManager = SettingsManager(applicationContext)
             biometricAuthHelper = BiometricAuthHelper(this@AutofillUnlockActivity)
+            val generation = SecurityManager.dataReadGeneration.value
             val settings = settingsManager.settingsFlow.first()
             if (DeveloperVerificationPolicy.bypassesIdentityVerification(settings)) {
                 securityManager.unlockVaultForDeveloperBypass(settings.autoLockMinutes)
-                completeUnlock(authenticationVerified = false)
+                completeUnlock(authenticationVerified = false, generation = generation)
             } else if (settings.autofillKeepUnlocked && AutofillSessionGrants.isGranted(pendingRequest.grantContext)) {
-                completeUnlock(authenticationVerified = false)
+                completeUnlock(authenticationVerified = false, generation = generation)
             } else if (!settings.autofillAuthRequired) {
-                completeUnlock(authenticationVerified = false)
+                completeUnlock(authenticationVerified = false, generation = generation)
             } else if (settings.biometricEnabled && biometricAuthHelper.isBiometricAvailable()) {
                 showBiometricPrompt()
             } else {
@@ -86,6 +93,7 @@ class AutofillUnlockActivity : AppCompatActivity() {
 
     private fun showBiometricPrompt() {
         if (biometricPromptShown || resultPublished || isFinishing || isDestroyed) return
+        val generation = SecurityManager.dataReadGeneration.value
         biometricPromptShown = true
         AutofillLogger.i("AUTH", "Showing response-level autofill biometric prompt")
 
@@ -97,11 +105,12 @@ class AutofillUnlockActivity : AppCompatActivity() {
                 description = getString(R.string.autofill_auth_description),
                 negativeButtonText = getString(R.string.use_password),
                 onSuccess = {
-                    if (securityManager.unlockVaultWithBiometric()) {
-                        lifecycleScope.launch { completeUnlock(authenticationVerified = true) }
-                    } else {
-                        AutofillLogger.w("AUTH", "Biometric verified but vault key is unavailable")
-                        showPasswordAuthentication()
+                    lifecycleScope.launch {
+                        val unlocked = takagi.ru.monica.security.BoundedSecureDataRead.read(securityManager, generation) {
+                            securityManager.unlockVaultWithBiometric()
+                        } == true
+                        if (unlocked) completeUnlock(authenticationVerified = true, generation = generation)
+                        else showPasswordAuthentication()
                     }
                 },
                 onError = { code, message ->
@@ -136,17 +145,18 @@ class AutofillUnlockActivity : AppCompatActivity() {
                 unsupportedCharacterError = getString(R.string.error_password_contains_unsupported_characters),
                 minLengthError = getString(R.string.error_password_too_short),
                 incorrectError = getString(R.string.password_incorrect),
-                verifyPassword = { input -> securityManager.unlockVaultWithPassword(input) },
-                onSuccess = {
-                    lifecycleScope.launch { completeUnlock(authenticationVerified = true) }
+                verifyPassword = { input, attempt -> securityManager.unlockVaultWithPassword(input, attempt) },
+                onSuccess = { generation ->
+                    lifecycleScope.launch { completeUnlock(authenticationVerified = true, generation = generation) }
                 },
                 onCancel = { cancelAndFinish("authentication_cancelled") },
             )
         }
     }
 
-    private suspend fun completeUnlock(authenticationVerified: Boolean) {
+    private suspend fun completeUnlock(authenticationVerified: Boolean, generation: Long) {
         if (resultPublished) return
+        if (!securityManager.isDataReadCurrent(generation)) { cancelAndFinish("authentication_revoked"); return }
         val pendingRequest = AutofillUnlockRequests.consume(requestToken) ?: run {
             cancelAndFinish("missing_or_consumed_request")
             return
@@ -162,7 +172,10 @@ class AutofillUnlockActivity : AppCompatActivity() {
                 val byId = passwordRepository.getAllPasswordEntries().first().filterNot { it.isKeyCredential() }.associateBy { it.id }
                 passwordIdsInOrder.mapNotNull(byId::get)
             }
-            val postFillOtpPasswordIds = AutofillOtpActions(applicationContext).eligiblePasswordIds(passwords)
+            takagi.ru.monica.security.BoundedSecureDataRead.read(securityManager, generation) {
+            val postFillOtpPasswordIds = kotlinx.coroutines.runBlocking {
+                    AutofillOtpActions(applicationContext).eligiblePasswordIds(passwords)
+                }
             val filledData = FilledDataBuilderNg(
                 context = applicationContext,
                 securityManager = securityManager,
@@ -170,7 +183,9 @@ class AutofillUnlockActivity : AppCompatActivity() {
                 request = pendingRequest.request,
                 passwords = passwords,
                 requireAuthentication = false,
+                checkCancelled = { ensureActive() },
             )
+            ensureActive()
             FillResponseBuilderNg(applicationContext).build(
                 request = pendingRequest.request,
                 filledData = filledData,
@@ -179,8 +194,10 @@ class AutofillUnlockActivity : AppCompatActivity() {
                 matchedPasswords = passwords,
                 postFillOtpPasswordIds = postFillOtpPasswordIds,
             )
-                ?.let { response -> response to passwords.size }
+                ?.let { response -> response to passwords.size } ?: error("No unlocked autofill response")
+            } ?: error("Autofill response preparation unavailable")
         }.onFailure { error ->
+            if (error is kotlinx.coroutines.CancellationException) throw error
             AutofillLogger.e("AUTH", "Unable to build unlocked autofill response", error)
         }.getOrNull() ?: run {
             AutofillSessionGrants.clear()
@@ -192,10 +209,12 @@ class AutofillUnlockActivity : AppCompatActivity() {
 
         if (authenticationVerified) {
             val settings = settingsManager.settingsFlow.first()
+            if (!canPublishResponse(generation)) { cancelAndFinish("authentication_revoked"); return }
             AutofillSessionGrants.grant(pendingRequest.grantContext,
                 enabled = settings.autofillKeepUnlocked && settings.autofillAuthRequired)
         }
 
+        if (!canPublishResponse(generation)) { cancelAndFinish("authentication_revoked"); return }
         resultPublished = true
         setResult(
             Activity.RESULT_OK,
@@ -214,6 +233,13 @@ class AutofillUnlockActivity : AppCompatActivity() {
         )
         finishWithoutAnimation()
     }
+
+    private fun canPublishResponse(generation: Long): Boolean =
+        !resultPublished && !isFinishing && !isDestroyed &&
+            lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED) &&
+            getSystemService(android.os.PowerManager::class.java)?.isInteractive == true &&
+            getSystemService(android.app.KeyguardManager::class.java)?.isKeyguardLocked == false &&
+            securityManager.isDataReadCurrent(generation)
 
     private suspend fun rejectBlockedRequest(
         request: AutofillRequest.Fillable,

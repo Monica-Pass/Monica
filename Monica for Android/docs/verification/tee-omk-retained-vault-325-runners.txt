@@ -1,0 +1,155 @@
+fdroid-actual-transition-recovery-01-20261105T074715Z-3bfcef60 | recoverRetainedVaultAfterActualTransition | passed | runner=10.935s driver=17.662s
+fdroid-auth-final-01-1-20261105T092705Z-b3395485 | existingPasswordIsVerifiedWithoutApplyingNewPasswordLengthRules | passed | runner=6.821s driver=16.324s
+fdroid-auth-final-01-2-20261105T092721Z-9381fe0a | cancellingDoesNotVerifyOrAuthorize | passed | runner=5.648s driver=14.57s
+fdroid-auth-final-01-3-20261105T092736Z-ada6e398 | slowPasswordVerificationKeepsMainResponsive | passed | runner=5.742s driver=13.877s
+fdroid-auth-final-01-4-20261105T092750Z-e872645c | cancellingPendingVerificationRejectsItsLateSuccess | passed | runner=7.217s driver=15.823s
+fdroid-auth-final-02-1-20261105T101316Z-8dabc47a | existingPasswordIsVerifiedWithoutApplyingNewPasswordLengthRules | passed | runner=6.701s driver=14.849s
+fdroid-auth-final-02-2-20261105T101331Z-7e00fd4f | cancellingDoesNotVerifyOrAuthorize | passed | runner=5.201s driver=13.577s
+fdroid-auth-final-02-3-20261105T101344Z-22c63145 | slowPasswordVerificationKeepsMainResponsive | passed | runner=5.64s driver=13.678s
+fdroid-auth-final-02-4-20261105T101358Z-0b36dfdd | cancellingPendingVerificationRejectsItsLateSuccess | passed | runner=5.812s driver=13.798s
+fdroid-autofill-entry-02-20261105T090817Z-52e81f8e | recoveredSystemAutofillSelectsTheOriginalRecord | failed_or_environment_error | runner=31.481s driver=39.686s
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected retained-vault entry control was not visible within 25 seconds
+fdroid-core-final-01-BoundedSecureDataReadInstrumentedTest-1-20261105T093015Z-e5a9616b | timedOutReadRetainsNativeSlotUntilWorkerReallyExits | passed | runner=0.788s driver=9.104s
+fdroid-core-final-01-BoundedSecureDataReadInstrumentedTest-2-20261105T093024Z-a26b021c | cancelledWaitingRequestNeverRunsAfterPriorNativeCallReturns | passed | runner=0.46s driver=8.883s
+fdroid-core-final-01-KeystoreDataFailureInstrumentedTest-1-20261105T093033Z-bab82233 | passwordAttemptPublishesOnlyAfterAcceptedCommit | passed | runner=4.644s driver=12.874s
+fdroid-core-final-01-KeystoreDataFailureInstrumentedTest-2-20261105T093046Z-656336ba | cancelledStagedPasswordAttemptCannotEraseNewAuthentication | passed | runner=5.431s driver=13.68s
+fdroid-core-final-01-KeystoreDataFailureInstrumentedTest-3-20261105T093100Z-012ea3f7 | lockRevokesStagedPasswordAndEmptyAttemptsCannotAuthorize | passed | runner=4.945s driver=13.084s
+fdroid-core-final-01-KeystoreDataFailureInstrumentedTest-4-20261105T093113Z-218b2b90 | deletedC2AliasRejectsOriginalCiphertextWithoutCreatingKeyOrChangingFiles | passed | runner=0.923s driver=9.083s
+fdroid-core-final-01-KeystoreDataFailureInstrumentedTest-5-20261105T093122Z-039f3f72 | replacedC2AliasRejectsOriginalCiphertextWithoutChangingFilesOrReplacementKey | passed | runner=1.187s driver=9.279s
+fdroid-core-final-01-KeystoreDataFailureInstrumentedTest-6-20261105T093132Z-c237af30 | lockAfterReadingMdkWrapperRejectsLateDecryptWithoutRestoringRuntimeKey | passed | runner=4.759s driver=13.826s
+fdroid-core-final-01-KeystoreDataFailureInstrumentedTest-7-20261105T093146Z-fc1b2eed | lockAfterReadingPasswordMdkRejectsLateUnlockWithoutRestoringRuntimeKey | passed | runner=6.183s driver=14.488s
+fdroid-core-final-01-SecureStoreReuseInstrumentedTest-1-20261105T093200Z-f071ed31 | coldUiConstructorRefusesToOpenProviderSynchronously | passed | runner=0.008s driver=8.011s
+fdroid-core-final-01-SecureStoreReuseInstrumentedTest-2-20261105T093208Z-ac0e0286 | selectorChangeRevokesCachedReadsAndRuntimeUnlockWithoutOpeningNewStore | passed | runner=0.526s driver=8.637s
+fdroid-core-final-01-SecureStoreReuseInstrumentedTest-3-20261105T093217Z-011b9ea3 | warmUiManagersDoNotReopenProvider | passed | runner=0.477s driver=8.432s
+fdroid-core-final-02-BoundedSecureDataReadInstrumentedTest-1-20261105T101104Z-52a0e773 | timedOutReadRetainsNativeSlotUntilWorkerReallyExits | passed | runner=0.79s driver=9.634s
+fdroid-core-final-02-BoundedSecureDataReadInstrumentedTest-2-20261105T101114Z-bfe18376 | cancelledWaitingRequestNeverRunsAfterPriorNativeCallReturns | passed | runner=0.437s driver=8.686s
+fdroid-core-final-02-KeystoreDataFailureInstrumentedTest-1-20261105T101122Z-113680b5 | passwordAttemptPublishesOnlyAfterAcceptedCommit | passed | runner=4.584s driver=12.774s
+fdroid-core-final-02-KeystoreDataFailureInstrumentedTest-2-20261105T101135Z-6edf5bf1 | cancelledStagedPasswordAttemptCannotEraseNewAuthentication | passed | runner=5.268s driver=13.458s
+fdroid-core-final-02-KeystoreDataFailureInstrumentedTest-3-20261105T101149Z-6ae02c00 | lockRevokesStagedPasswordAndEmptyAttemptsCannotAuthorize | passed | runner=4.812s driver=12.891s
+fdroid-core-final-02-KeystoreDataFailureInstrumentedTest-4-20261105T101202Z-25ddbe19 | deletedC2AliasRejectsOriginalCiphertextWithoutCreatingKeyOrChangingFiles | passed | runner=0.96s driver=9.17s
+fdroid-core-final-02-KeystoreDataFailureInstrumentedTest-5-20261105T101211Z-933e7752 | replacedC2AliasRejectsOriginalCiphertextWithoutChangingFilesOrReplacementKey | passed | runner=1.189s driver=9.412s
+fdroid-core-final-02-KeystoreDataFailureInstrumentedTest-6-20261105T101220Z-0d5ef26e | lockAfterReadingMdkWrapperRejectsLateDecryptWithoutRestoringRuntimeKey | passed | runner=5.41s driver=13.909s
+fdroid-core-final-02-KeystoreDataFailureInstrumentedTest-7-20261105T101234Z-190f4f5d | lockAfterReadingPasswordMdkRejectsLateUnlockWithoutRestoringRuntimeKey | passed | runner=6.394s driver=14.525s
+fdroid-core-final-02-SecureStoreReuseInstrumentedTest-1-20261105T101249Z-facc557b | coldUiConstructorRefusesToOpenProviderSynchronously | passed | runner=0.008s driver=8.858s
+fdroid-core-final-02-SecureStoreReuseInstrumentedTest-2-20261105T101258Z-9665fa6f | selectorChangeRevokesCachedReadsAndRuntimeUnlockWithoutOpeningNewStore | passed | runner=0.487s driver=8.646s
+fdroid-core-final-02-SecureStoreReuseInstrumentedTest-3-20261105T101307Z-7be36c1e | warmUiManagersDoNotReopenProvider | passed | runner=0.479s driver=8.606s
+fdroid-detail-final-01-1-20261105T093328Z-ba91f1e8 | slowLegacyReadKeepsMainResponsiveAndDisplaysOriginalSecret | passed | runner=1.615s driver=10.281s
+fdroid-detail-final-01-2-20261105T093339Z-32eacbd9 | lockDuringLegacyReadDiscardsLatePlaintext | passed | runner=1.918s driver=10.27s
+fdroid-detail-final-01-3-20261105T093349Z-41148747 | changedRecordDuringLegacyReadDiscardsOldPlaintext | passed | runner=1.291s driver=9.527s
+fdroid-detail-final-01-4-20261105T093359Z-6e9584d7 | displayedSecretIsClearedWhenRuntimeKeysAreRevoked | passed | runner=1.373s driver=9.672s
+fdroid-detail-final-01-5-20261105T093409Z-20f47f32 | lockThenUnlockDuringLegacyReadCannotPublishOldResult | passed | runner=1.423s driver=9.545s
+fdroid-detail-final-02-1-20261105T101412Z-d1c96bc1 | slowLegacyReadKeepsMainResponsiveAndDisplaysOriginalSecret | passed | runner=1.144s driver=8.901s
+fdroid-detail-final-02-2-20261105T101421Z-32f2f066 | lockDuringLegacyReadDiscardsLatePlaintext | passed | runner=1.056s driver=8.742s
+fdroid-detail-final-02-3-20261105T101430Z-1dc175b8 | changedRecordDuringLegacyReadDiscardsOldPlaintext | passed | runner=1.108s driver=8.907s
+fdroid-detail-final-02-4-20261105T101439Z-8b3797f9 | displayedSecretIsClearedWhenRuntimeKeysAreRevoked | passed | runner=1.212s driver=9.083s
+fdroid-detail-final-02-5-20261105T101448Z-4d88ebe4 | lockThenUnlockDuringLegacyReadCannotPublishOldResult | passed | runner=1.103s driver=8.867s
+fdroid-detail-fixed-01-20261105T084511Z-3535c025 | slowLegacyReadKeepsMainResponsiveAndDisplaysOriginalSecret | passed | runner=2.806s driver=13.931s
+fdroid-detail-fixed-02-20261105T084802Z-099e0bc9 | lockDuringLegacyReadDiscardsLatePlaintext | passed | runner=1.649s driver=10.834s
+fdroid-detail-fixed-03-20261105T084813Z-d12455c7 | changedRecordDuringLegacyReadDiscardsOldPlaintext | passed | runner=1.374s driver=10.188s
+fdroid-detail-fixed-04-20261105T084824Z-91cb8249 | displayedSecretIsClearedWhenRuntimeKeysAreRevoked | passed | runner=1.784s driver=10.606s
+fdroid-detail-fixed-05-20261105T084835Z-2715e9e8 | lockThenUnlockDuringLegacyReadCannotPublishOldResult | passed | runner=1.499s driver=10.672s
+fdroid-detail-negative-01-20261105T074922Z-8d4378e3 | slowLegacyReadKeepsMainResponsiveAndDisplaysOriginalSecret | failed_or_environment_error | runner=15.85s driver=22.239s
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: The actual detail must reach the legacy key provider
+fdroid-detail-negative-02-20261105T075628Z-78d85347 | slowLegacyReadKeepsMainResponsiveAndDisplaysOriginalSecret | failed_or_environment_error | runner=1.951s driver=8.335s
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Main-thread heartbeat blocked by detail decryption
+fdroid-detail-negative-03-20261105T080009Z-355961ad | slowLegacyReadKeepsMainResponsiveAndDisplaysOriginalSecret | failed_or_environment_error | runner=1.723s driver=7.951s
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Main-thread heartbeat blocked by detail decryption
+fdroid-entries-final-04-1-20261105T101733Z-690e89df | recoveredRealKeyboardFillsOriginalRecord | passed | runner=37.013s driver=46.478s
+fdroid-entries-final-04-2-20261105T101819Z-0c4620b0 | recoveredMainEditsOriginalEntryAndKeepsItsPassword | passed | runner=9.743s driver=17.872s
+fdroid-entries-final-04-3-20261105T101837Z-6fbea4af | recoveredSystemAutofillSelectsTheOriginalRecord | passed | runner=15.642s driver=23.513s
+fdroid-entries-final-04-4-20261105T101901Z-c1756043 | recoveredColdImeEntryAuthenticatesWithOriginalPassword | passed | runner=9.658s driver=17.497s
+fdroid-entries-final-06-1-20261105T104412Z-54159c28 | recoveredRealKeyboardFillsOriginalRecord | passed | runner=36.726s driver=46.485s
+fdroid-entry-final-01-1-20261105T093506Z-7093e27b | recoveredSystemAutofillSelectsTheOriginalRecord | failed_or_environment_error | runner=36.86s driver=44.841s
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected retained-vault entry control was not visible within 25 seconds
+fdroid-entry-final-01-2-20261105T093551Z-0481ba74 | recoveredRealKeyboardFillsOriginalRecord | failed_or_environment_error | runner=35.431s driver=43.183s
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected retained-vault entry control was not visible within 25 seconds
+fdroid-entry-final-01-3-20261105T093634Z-14bce356 | recoveredMainEditsOriginalEntryAndKeepsItsPassword | failed_or_environment_error | runner=22.383s driver=30.297s
+INSTRUMENTATION_STATUS: stack=androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 15000 ms
+fdroid-entry-final-01-4-20261105T093705Z-9346f39b | recoveredColdImeEntryAuthenticatesWithOriginalPassword | passed | runner=9.581s driver=17.353s
+fdroid-entry-final-02-1-20261105T094412Z-0e7e9d63 | recoveredSystemAutofillSelectsTheOriginalRecord | passed | runner=16.481s driver=24.713s
+fdroid-entry-final-02-2-20261105T094437Z-7786d962 | recoveredRealKeyboardFillsOriginalRecord | failed_or_environment_error | runner=39.409s driver=47.985s
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected retained-vault entry control was not visible within 25 seconds
+fdroid-entry-final-02-3-20261105T094525Z-ce95708a | recoveredMainEditsOriginalEntryAndKeepsItsPassword | failed_or_environment_error | runner=23.365s driver=31.902s
+INSTRUMENTATION_STATUS: stack=androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 15000 ms
+fdroid-main-entry-01-20261105T080017Z-6434fdb0 | recoveredMainEditsOriginalEntryAndKeepsItsPassword | passed | runner=10.037s driver=16.426s
+fdroid-main-final-03-20261105T100621Z-3373dab5 | recoveredMainEditsOriginalEntryAndKeepsItsPassword | passed | runner=10.198s driver=18.719s
+fdroid-password-negative-01-20261105T085937Z-1738cab4 | slowPasswordVerificationKeepsMainResponsive | failed_or_environment_error | runner=2.168s driver=11.067s
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Password confirmation blocked the main looper
+fdroid-real-keyboard-01-20261105T091029Z-bd4b5d59 | recoveredRealKeyboardFillsOriginalRecord | failed_or_environment_error | runner=32.088s driver=41.514s
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected retained-vault entry control was not visible within 25 seconds
+fdroid-real-keyboard-03-20261105T100035Z-845a215d | recoveredRealKeyboardFillsOriginalRecord | failed_or_environment_error | runner=46.661s driver=54.928s
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected retained-vault entry control was not visible within 25 seconds
+fdroid-real-keyboard-04-20261105T100841Z-10f54147 | recoveredRealKeyboardFillsOriginalRecord | failed_or_environment_error | runner=45.257s driver=53.378s
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected retained-vault entry control was not visible within 25 seconds
+fdroid-real-tee-to-omk-cold-20261105T071302Z-742aeefd | verifyAfterColdRestart | OMK disabled; excluded from actual module-switch passes | runner=6.298s driver=13.001s
+fdroid-real-tee-to-omk-reopen-20261105T071248Z-0b726284 | reopenOriginalVault | OMK disabled; excluded from actual module-switch passes | runner=6.878s driver=13.707s
+fdroid-tee-A-seed-user13-20261105T070340Z-dcc6cb71 | seedOriginalVault | passed | runner=11.334s driver=20.304s
+fdroid-tee-A-seed-user14-20261105T070421Z-b5b91f01 | seedOriginalVault | passed | runner=12.159s driver=21.088s
+fdroid-tee-keybox-B-cold-20261105T070730Z-22160cdf | verifyAfterColdRestart | passed | runner=5.774s driver=12.165s
+fdroid-tee-keybox-B-reopen-20261105T070718Z-c481e503 | reopenOriginalVault | passed | runner=5.713s driver=12.385s
+main-actual-transition-recovery-01-20261105T073553Z-0160715f | recoverRetainedVaultAfterActualTransition | passed | runner=13.0s driver=21.346s
+main-auth-final-01-1-20261105T095434Z-aa692183 | existingPasswordIsVerifiedWithoutApplyingNewPasswordLengthRules | passed | runner=5.926s driver=13.897s
+main-auth-final-01-2-20261105T095448Z-c15ddb75 | cancellingDoesNotVerifyOrAuthorize | passed | runner=5.233s driver=13.411s
+main-auth-final-01-3-20261105T095502Z-c8d83dcc | slowPasswordVerificationKeepsMainResponsive | passed | runner=5.845s driver=14.399s
+main-auth-final-01-4-20261105T095516Z-17a49e20 | cancellingPendingVerificationRejectsItsLateSuccess | passed | runner=6.816s driver=15.26s
+main-auth-final-02-1-20261105T102407Z-d3d5de96 | existingPasswordIsVerifiedWithoutApplyingNewPasswordLengthRules | passed | runner=5.59s driver=13.553s
+main-auth-final-02-2-20261105T102421Z-f6808396 | cancellingDoesNotVerifyOrAuthorize | passed | runner=4.359s driver=12.292s
+main-auth-final-02-3-20261105T102433Z-86fd42f7 | slowPasswordVerificationKeepsMainResponsive | passed | runner=4.858s driver=13.297s
+main-auth-final-02-4-20261105T102446Z-4adb8a45 | cancellingPendingVerificationRejectsItsLateSuccess | passed | runner=5.289s driver=13.113s
+main-autofill-entry-01-20261105T075444Z-6fa13edb | recoveredSystemAutofillSelectsTheOriginalRecord | failed_or_environment_error | runner=4.262s driver=10.908s
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Check failed.
+main-core-final-01-BoundedSecureDataReadInstrumentedTest-1-20261105T095232Z-0406694e | timedOutReadRetainsNativeSlotUntilWorkerReallyExits | passed | runner=0.813s driver=9.306s
+main-core-final-01-BoundedSecureDataReadInstrumentedTest-2-20261105T095241Z-c845e680 | cancelledWaitingRequestNeverRunsAfterPriorNativeCallReturns | passed | runner=0.428s driver=8.666s
+main-core-final-01-KeystoreDataFailureInstrumentedTest-1-20261105T095250Z-cb76ddc8 | passwordAttemptPublishesOnlyAfterAcceptedCommit | passed | runner=3.971s driver=11.975s
+main-core-final-01-KeystoreDataFailureInstrumentedTest-2-20261105T095302Z-158aad16 | cancelledStagedPasswordAttemptCannotEraseNewAuthentication | passed | runner=4.454s driver=12.278s
+main-core-final-01-KeystoreDataFailureInstrumentedTest-3-20261105T095314Z-bf4e8425 | lockRevokesStagedPasswordAndEmptyAttemptsCannotAuthorize | passed | runner=4.212s driver=12.089s
+main-core-final-01-KeystoreDataFailureInstrumentedTest-4-20261105T095326Z-fb4f5856 | deletedC2AliasRejectsOriginalCiphertextWithoutCreatingKeyOrChangingFiles | passed | runner=0.906s driver=8.752s
+main-core-final-01-KeystoreDataFailureInstrumentedTest-5-20261105T095335Z-cc7a603c | replacedC2AliasRejectsOriginalCiphertextWithoutChangingFilesOrReplacementKey | passed | runner=1.15s driver=8.981s
+main-core-final-01-KeystoreDataFailureInstrumentedTest-6-20261105T095344Z-f28e28ca | lockAfterReadingMdkWrapperRejectsLateDecryptWithoutRestoringRuntimeKey | passed | runner=4.01s driver=11.859s
+main-core-final-01-KeystoreDataFailureInstrumentedTest-7-20261105T095356Z-03597280 | lockAfterReadingPasswordMdkRejectsLateUnlockWithoutRestoringRuntimeKey | passed | runner=5.132s driver=13.006s
+main-core-final-01-SecureStoreReuseInstrumentedTest-1-20261105T095409Z-a1d9a3de | coldUiConstructorRefusesToOpenProviderSynchronously | passed | runner=0.008s driver=7.86s
+main-core-final-01-SecureStoreReuseInstrumentedTest-2-20261105T095417Z-7814aeb7 | selectorChangeRevokesCachedReadsAndRuntimeUnlockWithoutOpeningNewStore | passed | runner=0.479s driver=8.365s
+main-core-final-01-SecureStoreReuseInstrumentedTest-3-20261105T095426Z-e12318bf | warmUiManagersDoNotReopenProvider | passed | runner=0.477s driver=8.338s
+main-core-final-02-BoundedSecureDataReadInstrumentedTest-1-20261105T102200Z-440ffb00 | timedOutReadRetainsNativeSlotUntilWorkerReallyExits | passed | runner=0.793s driver=8.868s
+main-core-final-02-BoundedSecureDataReadInstrumentedTest-2-20261105T102209Z-48213ab9 | cancelledWaitingRequestNeverRunsAfterPriorNativeCallReturns | passed | runner=0.46s driver=8.347s
+main-core-final-02-KeystoreDataFailureInstrumentedTest-1-20261105T102217Z-eff035c1 | passwordAttemptPublishesOnlyAfterAcceptedCommit | passed | runner=4.106s driver=11.982s
+main-core-final-02-KeystoreDataFailureInstrumentedTest-2-20261105T102229Z-84381e4c | cancelledStagedPasswordAttemptCannotEraseNewAuthentication | passed | runner=4.752s driver=12.812s
+main-core-final-02-KeystoreDataFailureInstrumentedTest-3-20261105T102242Z-95450f2e | lockRevokesStagedPasswordAndEmptyAttemptsCannotAuthorize | passed | runner=4.469s driver=12.511s
+main-core-final-02-KeystoreDataFailureInstrumentedTest-4-20261105T102255Z-b831a24c | deletedC2AliasRejectsOriginalCiphertextWithoutCreatingKeyOrChangingFiles | passed | runner=0.952s driver=10.131s
+main-core-final-02-KeystoreDataFailureInstrumentedTest-5-20261105T102305Z-95bda4c0 | replacedC2AliasRejectsOriginalCiphertextWithoutChangingFilesOrReplacementKey | passed | runner=1.207s driver=10.339s
+main-core-final-02-KeystoreDataFailureInstrumentedTest-6-20261105T102315Z-ac050373 | lockAfterReadingMdkWrapperRejectsLateDecryptWithoutRestoringRuntimeKey | passed | runner=4.317s driver=12.365s
+main-core-final-02-KeystoreDataFailureInstrumentedTest-7-20261105T102328Z-493e3c59 | lockAfterReadingPasswordMdkRejectsLateUnlockWithoutRestoringRuntimeKey | passed | runner=5.11s driver=12.851s
+main-core-final-02-SecureStoreReuseInstrumentedTest-1-20261105T102341Z-5bba3111 | coldUiConstructorRefusesToOpenProviderSynchronously | passed | runner=0.008s driver=8.012s
+main-core-final-02-SecureStoreReuseInstrumentedTest-2-20261105T102349Z-57433b4b | selectorChangeRevokesCachedReadsAndRuntimeUnlockWithoutOpeningNewStore | passed | runner=0.48s driver=8.422s
+main-core-final-02-SecureStoreReuseInstrumentedTest-3-20261105T102357Z-ebf14fb4 | warmUiManagersDoNotReopenProvider | passed | runner=0.48s driver=9.502s
+main-detail-final-01-1-20261105T095532Z-a6388882 | slowLegacyReadKeepsMainResponsiveAndDisplaysOriginalSecret | passed | runner=1.523s driver=10.121s
+main-detail-final-01-2-20261105T095542Z-6db7885f | lockDuringLegacyReadDiscardsLatePlaintext | passed | runner=1.432s driver=10.608s
+main-detail-final-01-3-20261105T095553Z-165313a8 | changedRecordDuringLegacyReadDiscardsOldPlaintext | passed | runner=1.435s driver=11.322s
+main-detail-final-01-4-20261105T095604Z-521e6d46 | displayedSecretIsClearedWhenRuntimeKeysAreRevoked | passed | runner=1.371s driver=9.889s
+main-detail-final-01-5-20261105T095615Z-28997880 | lockThenUnlockDuringLegacyReadCannotPublishOldResult | passed | runner=1.468s driver=10.751s
+main-detail-final-02-1-20261105T102500Z-75b45065 | slowLegacyReadKeepsMainResponsiveAndDisplaysOriginalSecret | passed | runner=1.167s driver=9.087s
+main-detail-final-02-2-20261105T102509Z-b07793f3 | lockDuringLegacyReadDiscardsLatePlaintext | passed | runner=1.045s driver=9.072s
+main-detail-final-02-3-20261105T102518Z-dc65600a | changedRecordDuringLegacyReadDiscardsOldPlaintext | passed | runner=1.156s driver=9.208s
+main-detail-final-02-4-20261105T102528Z-c894778f | displayedSecretIsClearedWhenRuntimeKeysAreRevoked | passed | runner=1.239s driver=9.244s
+main-detail-final-02-5-20261105T102537Z-d665297e | lockThenUnlockDuringLegacyReadCannotPublishOldResult | passed | runner=1.051s driver=8.957s
+main-entries-final-04-1-20261105T102546Z-dfc6c3de | recoveredRealKeyboardFillsOriginalRecord | failed_or_environment_error | runner=8.461s driver=16.314s
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: IME must belong to the retained vault user, never its parent
+main-entries-final-04-2-20261105T102603Z-f2a999dd | recoveredMainEditsOriginalEntryAndKeepsItsPassword | passed | runner=9.704s driver=17.566s
+main-entries-final-04-3-20261105T102620Z-9f2e3ebc | recoveredSystemAutofillSelectsTheOriginalRecord | passed | runner=15.491s driver=24.73s
+main-entries-final-04-4-20261105T102645Z-6d7ae57c | recoveredColdImeEntryAuthenticatesWithOriginalPassword | passed | runner=9.616s driver=18.761s
+main-entries-final-05-1-20261105T103704Z-b438aa34 | recoveredRealKeyboardFillsOriginalRecord | failed_or_environment_error | runner=18.488s driver=26.751s
+INSTRUMENTATION_STATUS: stack=kotlinx.coroutines.TimeoutCancellationException: Timed out waiting for 10000 ms
+main-entries-final-06-1-20261105T104237Z-59a9f8f9 | recoveredRealKeyboardFillsOriginalRecord | passed | runner=36.29s driver=44.41s
+main-ime-entry-01-20261105T071616Z-399025e7 | recoveredColdImeEntryAuthenticatesWithOriginalPassword | failed_or_environment_error | runner=0.084s driver=8.831s
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Check failed.
+main-ime-entry-02-20261105T073809Z-b880c6ea | recoveredColdImeEntryAuthenticatesWithOriginalPassword | passed | runner=10.658s driver=18.361s
+main-main-entry-01-20261105T073940Z-edfc9f2c | recoveredMainEditsOriginalEntryAndKeepsItsPassword | failed_or_environment_error | runner=32.807s driver=39.737s
+INSTRUMENTATION_STATUS: stack=androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 25000 ms
+main-main-entry-02-20261105T074408Z-1d0c9afb | recoveredMainEditsOriginalEntryAndKeepsItsPassword | failed_or_environment_error | runner=32.087s driver=38.724s
+INSTRUMENTATION_STATUS: stack=androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 25000 ms
+main-real-tee-to-omk-cold-20261105T071234Z-d3c901c3 | verifyAfterColdRestart | OMK disabled; excluded from actual module-switch passes | runner=6.186s driver=13.046s
+main-real-tee-to-omk-reopen-20261105T071220Z-1df0cff4 | reopenOriginalVault | OMK disabled; excluded from actual module-switch passes | runner=7.324s driver=14.138s
+main-tee-A-seed-user13-20261105T070317Z-cda0fedb | seedOriginalVault | passed | runner=12.766s driver=22.797s
+main-tee-A-seed-user14-20261105T070400Z-8fcea98b | seedOriginalVault | passed | runner=11.779s driver=20.418s
+main-tee-keybox-B-cold-20261105T070703Z-8d85673d | verifyAfterColdRestart | passed | runner=6.352s driver=15.15s
+main-tee-keybox-B-reopen-20261105T070647Z-eb66e5a0 | reopenOriginalVault | passed | runner=6.392s driver=15.691s

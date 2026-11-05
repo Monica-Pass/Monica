@@ -1,0 +1,30 @@
+[
+  {
+    "name": "takagi.ru.monica.data.model.ProjectCredentialGroupTest",
+    "tests": "5",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.util.TotpDataResolverTest",
+    "tests": "8",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.viewmodel.PasswordTotpCrossDatabaseBindingGuardTest",
+    "tests": "4",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.viewmodel.TotpPasswordBindingRegressionGuardTest",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  }
+]

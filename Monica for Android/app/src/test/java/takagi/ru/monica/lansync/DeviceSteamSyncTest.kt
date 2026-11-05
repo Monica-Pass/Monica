@@ -30,7 +30,7 @@ import java.util.UUID
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [28], application = Application::class, shadows = [
-    DeviceVaultProviderTest.SecureStoreShadow::class, DeviceVaultProviderTest.SecurityShadow::class
+    DeviceVaultProviderTest.SecureStoreShadow::class, DeviceVaultProviderTest.PreparedStoreShadow::class, DeviceVaultProviderTest.SecurityShadow::class
 ])
 @OptIn(ExperimentalCoroutinesApi::class)
 class DeviceSteamSyncTest {

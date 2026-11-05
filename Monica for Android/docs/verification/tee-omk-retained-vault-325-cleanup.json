@@ -1,0 +1,220 @@
+{
+  "date": "2026-11-05T10:48:08.665348+00:00",
+  "clone_index": 1,
+  "original_index": 0,
+  "steps": [
+    {
+      "name": "instances_before",
+      "value": {
+        "0": {
+          "adb_host_ip": "127.0.0.1",
+          "adb_port": 16384,
+          "android_version": "15.0",
+          "created_timestamp": 1793811814685479,
+          "disk_size_bytes": 4603587950,
+          "error_code": 0,
+          "hyperv_enabled": true,
+          "index": "0",
+          "info_source": "rpc",
+          "is_android_started": true,
+          "is_main": false,
+          "is_process_started": true,
+          "launch_err_code": 0,
+          "launch_err_msg": "",
+          "launch_time": 19555517,
+          "main_wnd": "035C1AE6",
+          "name": "Android Device",
+          "pid": 20936,
+          "player_state": "start_finished",
+          "render_wnd": "06C10910",
+          "vt_enabled": true
+        },
+        "1": {
+          "adb_host_ip": "127.0.0.1",
+          "adb_port": 16416,
+          "android_version": "15.0",
+          "created_timestamp": 1793856063204935,
+          "disk_size_bytes": 5450865016,
+          "error_code": 0,
+          "hyperv_enabled": true,
+          "index": "1",
+          "info_source": "rpc",
+          "is_android_started": true,
+          "is_main": false,
+          "is_process_started": true,
+          "launch_err_code": 0,
+          "launch_err_msg": "",
+          "launch_time": 14231799,
+          "main_wnd": "01BF1060",
+          "name": "Monica OMK 325 Test",
+          "pid": 144984,
+          "player_state": "start_finished",
+          "render_wnd": "00A40410",
+          "vt_enabled": true
+        }
+      }
+    },
+    {
+      "name": "verified_owned_users_before_removal",
+      "value": "Users:\r\n\tUserInfo{0:Owner:4c13} running\r\n\tUserInfo{10:Monica_RealOMK325_StockToModule:1030}\r\n\tUserInfo{11:Monica_RealOMK325_KeyChange:1030}\r\n\tUserInfo{12:Monica_RealOMK325_FinalStock:1030} running\r\n\tUserInfo{13:Monica_Tee325_KeyboxOnly:1030}\r\n\tUserInfo{14:Monica_Tee325_TeeToOmk:1030} running"
+    },
+    {
+      "name": "omk_scope_restored",
+      "value": [
+        "takagi.ru.monica@10",
+        "takagi.ru.monica.fdroid@10",
+        "takagi.ru.monica@11",
+        "takagi.ru.monica.fdroid@11"
+      ]
+    },
+    {
+      "name": "stop_user_13",
+      "value": ""
+    },
+    {
+      "name": "remove_user_13",
+      "value": "Success: removed user"
+    },
+    {
+      "name": "stop_user_14",
+      "value": ""
+    },
+    {
+      "name": "remove_user_14",
+      "value": "Success: removed user"
+    },
+    {
+      "name": "users_after",
+      "value": "Users:\r\n\tUserInfo{0:Owner:4c13} running\r\n\tUserInfo{10:Monica_RealOMK325_StockToModule:1030}\r\n\tUserInfo{11:Monica_RealOMK325_KeyChange:1030}\r\n\tUserInfo{12:Monica_RealOMK325_FinalStock:1030} running"
+    },
+    {
+      "name": "retained_module_status",
+      "value": [
+        {
+          "id": "teesim",
+          "enabled": "false"
+        },
+        {
+          "id": "oh_my_keymint",
+          "enabled": "true"
+        }
+      ]
+    },
+    {
+      "name": "unroot_request",
+      "value": "restarting adbd as non root"
+    },
+    {
+      "name": "clone_shell_uid",
+      "value": 2000
+    },
+    {
+      "name": "shutdown_owned_clone",
+      "value": "{\n  \"errcode\": 0,\n  \"errmsg\": \"\"\n}"
+    },
+    {
+      "name": "instances_after",
+      "value": {
+        "0": {
+          "adb_host_ip": "127.0.0.1",
+          "adb_port": 16384,
+          "android_version": "15.0",
+          "created_timestamp": 1793811814685479,
+          "disk_size_bytes": 4603587950,
+          "error_code": 0,
+          "hyperv_enabled": true,
+          "index": "0",
+          "info_source": "rpc",
+          "is_android_started": true,
+          "is_main": false,
+          "is_process_started": true,
+          "launch_err_code": 0,
+          "launch_err_msg": "",
+          "launch_time": 19561987,
+          "main_wnd": "035C1AE6",
+          "name": "Android Device",
+          "pid": 20936,
+          "player_state": "start_finished",
+          "render_wnd": "06C10910",
+          "vt_enabled": true
+        },
+        "1": {
+          "android_version": "15.0",
+          "created_timestamp": 1793856063204935,
+          "disk_size_bytes": 5896509253,
+          "error_code": 0,
+          "hyperv_enabled": true,
+          "index": "1",
+          "info_source": "rpc",
+          "is_android_started": false,
+          "is_main": false,
+          "is_process_started": false,
+          "name": "Monica OMK 325 Test"
+        }
+      }
+    }
+  ],
+  "clone_name": "Monica OMK 325 Test",
+  "clone_stopped": true,
+  "original_running": true,
+  "retained_users": [
+    0,
+    10,
+    11,
+    12
+  ],
+  "removed_owned_users": [
+    13,
+    14
+  ],
+  "foreground_user_before_shutdown": 0,
+  "clone_shell_uid_before_shutdown": 2000,
+  "private_backups": [
+    {
+      "name": "before-tee-module-switch.tar",
+      "bytes": 25986096,
+      "sha256": "94b998fb8be832be531e14fe809ac69a6f96f8dbff03e1afe2da63c2425f85e0"
+    },
+    {
+      "name": "tee-before-omk.tar",
+      "bytes": 521776,
+      "sha256": "0821f6622d860521944bfd79dad6f87adcbee0b35e565b2a31a9d3d04a093dd7"
+    },
+    {
+      "name": "takagi.ru.monica-before-actual-transition.tar",
+      "bytes": 23552,
+      "sha256": "c39d1824df75c78786e914d20d77cf4a96a2c363e56681cc1871d1ce20bad848"
+    },
+    {
+      "name": "takagi.ru.monica.fdroid-before-actual-transition.tar",
+      "bytes": 21504,
+      "sha256": "d7c04b1c5307e93e4e3b220aa8226a38dfb7bb2e71a153935d7ff08ec5292fe4"
+    },
+    {
+      "name": "final-owned-users13-14-and-key-material.tar",
+      "bytes": 14018560,
+      "sha256": "99c2688bb703137b6565c286791b07f5b4fa3b34bdba4266dd96a326acb0e89a"
+    }
+  ],
+  "omk_scope": [
+    "takagi.ru.monica@10",
+    "takagi.ru.monica.fdroid@10",
+    "takagi.ru.monica@11",
+    "takagi.ru.monica.fdroid@11"
+  ],
+  "clone_files_preserved": [
+    {
+      "path": "E:\\Program Files\\Netease\\MuMuPlayer\\vms\\MuMuPlayerGlobal-15.0-1\\data.vdi",
+      "bytes": 5880035840
+    },
+    {
+      "path": "E:\\Program Files\\Netease\\MuMuPlayer\\vms\\MuMuPlayerGlobal-15.0-1\\MuMuPlayerGlobal-15.0-1.nemu",
+      "bytes": 5885
+    }
+  ],
+  "owned_adb_server_port": 15039,
+  "owned_adb_server_stopped": true,
+  "global_adb5037_listener_unchanged": true,
+  "public_avd_touched": false,
+  "no_commit_push_tag_release_or_apk_delivery": true
+}

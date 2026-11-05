@@ -1,0 +1,114 @@
+{
+  "steps": [
+    {
+      "name": "verifiedPrivateArchives",
+      "value": true
+    },
+    {
+      "name": "restoreScopeReply",
+      "value": "ok"
+    },
+    {
+      "name": "scopeRestored",
+      "value": [
+        "takagi.ru.monica@10",
+        "takagi.ru.monica.fdroid@10",
+        "takagi.ru.monica@11",
+        "takagi.ru.monica.fdroid@11"
+      ]
+    },
+    {
+      "name": "reverseMappingsEmpty",
+      "value": true
+    },
+    {
+      "name": "verifiedPrivateArchives",
+      "value": true
+    },
+    {
+      "name": "scopeRestored",
+      "value": [
+        "takagi.ru.monica@10",
+        "takagi.ru.monica.fdroid@10",
+        "takagi.ru.monica@11",
+        "takagi.ru.monica.fdroid@11"
+      ]
+    },
+    {
+      "name": "reverseMappingsEmpty",
+      "value": true
+    },
+    {
+      "name": "stopOwnedUser",
+      "value": ""
+    },
+    {
+      "name": "removeOwnedUser",
+      "value": "Success: removed user"
+    },
+    {
+      "name": "preservedUsers",
+      "value": "Users:\r\n\tUserInfo{0:Owner:4c13} running\r\n\tUserInfo{10:Monica_RealOMK325_StockToModule:1030}\r\n\tUserInfo{11:Monica_RealOMK325_KeyChange:1030}\r\n\tUserInfo{12:Monica_RealOMK325_FinalStock:1030}"
+    },
+    {
+      "name": "moduleEnabledStatesPreserved",
+      "value": true
+    },
+    {
+      "name": "unroot",
+      "value": "restarting adbd as non root"
+    },
+    {
+      "name": "shellUid",
+      "value": 2000
+    },
+    {
+      "name": "instancesAfter",
+      "value": {
+        "0": {
+          "android_version": "15.0",
+          "created_timestamp": 1793811814685479,
+          "disk_size_bytes": 4603587715,
+          "error_code": 0,
+          "hyperv_enabled": true,
+          "index": "0",
+          "info_source": "local",
+          "is_android_started": false,
+          "is_main": false,
+          "is_process_started": false,
+          "name": "Android Device"
+        },
+        "1": {
+          "android_version": "15.0",
+          "created_timestamp": 1793856063204935,
+          "disk_size_bytes": 6105177324,
+          "error_code": 0,
+          "hyperv_enabled": true,
+          "index": "1",
+          "info_source": "local",
+          "is_android_started": false,
+          "is_main": false,
+          "is_process_started": false,
+          "name": "Monica OMK 325 Test"
+        }
+      }
+    },
+    {
+      "name": "ownAdbServerStopped",
+      "value": true
+    },
+    {
+      "name": "onlyOwnedServerStopped",
+      "value": 52621
+    },
+    {
+      "name": "dataPreserved",
+      "value": {
+        "serverData": true,
+        "coldCloneBackup": true,
+        "cloneData": true
+      }
+    }
+  ],
+  "complete": true
+}

@@ -221,6 +221,10 @@ class MonicaAutofillServiceNg : AutofillService() {
             try {
                 var timedOut = true
                 val response = withTimeoutOrNull(4_500L) {
+                    val startup = takagi.ru.monica.security.SecureStorageStartup.prepareForEntry(applicationContext, 3_000)
+                    if (startup is takagi.ru.monica.security.SecureStartupResult.Blocked) {
+                        throw startup.failure
+                    }
                     withContext(Dispatchers.Default) {
                         processFillRequest(request, cancellationSignal, requestId)
                     }.also { timedOut = false }

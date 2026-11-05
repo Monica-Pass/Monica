@@ -29,7 +29,7 @@ import java.util.UUID
 /** Executes Android's native export path against the actual host vault engine. */
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [28], application = Application::class,
-    shadows = [DeviceVaultProviderTest.SecureStoreShadow::class, DeviceVaultProviderTest.SecurityShadow::class])
+    shadows = [DeviceVaultProviderTest.SecureStoreShadow::class, DeviceVaultProviderTest.PreparedStoreShadow::class, DeviceVaultProviderTest.SecurityShadow::class])
 class DeviceNativePasskeyPreparationTest {
     companion object {
         @JvmStatic @BeforeClass fun hostEngine() {

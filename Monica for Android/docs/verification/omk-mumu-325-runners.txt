@@ -1,0 +1,961 @@
+RUN fdroid-final-stock-seed-20261105T061740Z-7f459e58
+STATUS passed
+FINAL_PHASE True
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.MuMuOmkModuleFixtureTest:
+INSTRUMENTATION_STATUS: test=seedOriginalVault
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=seedOriginalVault
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 9.848
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN fdroid-final-stock-to-omk-cold-20261105T061948Z-c5c81ff1
+STATUS passed
+FINAL_PHASE True
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.MuMuOmkModuleFixtureTest:
+INSTRUMENTATION_STATUS: test=verifyAfterColdRestart
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=verifyAfterColdRestart
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 5.978
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN fdroid-final-stock-to-omk-reopen-20261105T061930Z-521af144
+STATUS passed
+FINAL_PHASE True
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.MuMuOmkModuleFixtureTest:
+INSTRUMENTATION_STATUS: test=reopenOriginalVault
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=reopenOriginalVault
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 10.402
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN fdroid-handoff-fixed-1-20261105T061644Z-56af8500
+STATUS passed
+FINAL_PHASE True
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest:
+INSTRUMENTATION_STATUS: test=queuedHealthyStartupDoesNotObserveCompletedWorkerAsInProgress
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=queuedHealthyStartupDoesNotObserveCompletedWorkerAsInProgress
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 3.082
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN fdroid-handoff-fixed-2-20261105T061656Z-98d9fdbd
+STATUS passed
+FINAL_PHASE True
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.SecureStartupInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.SecureStartupInstrumentedTest:
+INSTRUMENTATION_STATUS: test=providerDeadlineReturnsBlockedBeforeTheReadReturns
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.SecureStartupInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=providerDeadlineReturnsBlockedBeforeTheReadReturns
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 0.287
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN fdroid-handoff-fixed-3-20261105T061704Z-c2fbc656
+STATUS passed
+FINAL_PHASE True
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.SecureStartupInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.SecureStartupInstrumentedTest:
+INSTRUMENTATION_STATUS: test=cancellingStartupReleasesUiWaitButRetainsTheSingleProviderSlot
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.SecureStartupInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cancellingStartupReleasesUiWaitButRetainsTheSingleProviderSlot
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 0.1
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN fdroid-handoff-fixed-4-20261105T061712Z-171b724f
+STATUS passed
+FINAL_PHASE True
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.SecureStartupInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.SecureStartupInstrumentedTest:
+INSTRUMENTATION_STATUS: test=maintenanceDoesNotRetryBlockedStorageWithoutExplicitStartup
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.SecureStartupInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=maintenanceDoesNotRetryBlockedStorageWithoutExplicitStartup
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 1.162
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN fdroid-omk-reinstalled-cold-20261105T062958Z-501bcb9b
+STATUS passed
+FINAL_PHASE True
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.MuMuOmkModuleFixtureTest:
+INSTRUMENTATION_STATUS: test=verifyAfterColdRestart
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=verifyAfterColdRestart
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 5.957
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN fdroid-omk-reinstalled-reopen-20261105T062939Z-5b0cbc5d
+STATUS passed
+FINAL_PHASE True
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.MuMuOmkModuleFixtureTest:
+INSTRUMENTATION_STATUS: test=reopenOriginalVault
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=reopenOriginalVault
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 10.455
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN fdroid-omk-seed-fixed-20261105T061721Z-bcc5114b
+STATUS passed
+FINAL_PHASE True
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.MuMuOmkModuleFixtureTest:
+INSTRUMENTATION_STATUS: test=seedOriginalVault
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=seedOriginalVault
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 11.059
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN fdroid-stock-seed-20261105T054355Z-589f75a3
+STATUS passed
+FINAL_PHASE False
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.MuMuOmkModuleFixtureTest:
+INSTRUMENTATION_STATUS: test=seedOriginalVault
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=seedOriginalVault
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 11.151
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN fdroid-stock-to-omk-cold-20261105T055559Z-4936df5f
+STATUS driver_error
+FINAL_PHASE False
+
+
+
+DRIVER REASONS ["RuntimeError: Logcat did not capture boundary BEGIN_fdroid-stock-to-omk-cold-20261105T055559Z-4936df5f"]
+
+RUN fdroid-stock-to-omk-cold-retry-20261105T055855Z-d9045b25
+STATUS passed
+FINAL_PHASE False
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.MuMuOmkModuleFixtureTest:
+INSTRUMENTATION_STATUS: test=verifyAfterColdRestart
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=verifyAfterColdRestart
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 6.575
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN fdroid-stock-to-omk-reopen-20261105T055540Z-1d5db8b9
+STATUS passed
+FINAL_PHASE False
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.MuMuOmkModuleFixtureTest:
+INSTRUMENTATION_STATUS: test=reopenOriginalVault
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=reopenOriginalVault
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 10.559
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN main-final-stock-seed-20261105T061542Z-2f5494a7
+STATUS passed
+FINAL_PHASE True
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.MuMuOmkModuleFixtureTest:
+INSTRUMENTATION_STATUS: test=seedOriginalVault
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=seedOriginalVault
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 10.883
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN main-final-stock-to-omk-cold-20261105T061916Z-c2ce1f93
+STATUS passed
+FINAL_PHASE True
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.MuMuOmkModuleFixtureTest:
+INSTRUMENTATION_STATUS: test=verifyAfterColdRestart
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=verifyAfterColdRestart
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 6.04
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN main-final-stock-to-omk-reopen-20261105T061855Z-56888606
+STATUS passed
+FINAL_PHASE True
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.MuMuOmkModuleFixtureTest:
+INSTRUMENTATION_STATUS: test=reopenOriginalVault
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=reopenOriginalVault
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 10.471
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN main-handoff-fixed-1-20261105T061441Z-1858710e
+STATUS passed
+FINAL_PHASE True
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest:
+INSTRUMENTATION_STATUS: test=queuedHealthyStartupDoesNotObserveCompletedWorkerAsInProgress
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=queuedHealthyStartupDoesNotObserveCompletedWorkerAsInProgress
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 3.136
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN main-handoff-fixed-2-20261105T061454Z-527f6bf5
+STATUS passed
+FINAL_PHASE True
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.SecureStartupInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.SecureStartupInstrumentedTest:
+INSTRUMENTATION_STATUS: test=providerDeadlineReturnsBlockedBeforeTheReadReturns
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.SecureStartupInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=providerDeadlineReturnsBlockedBeforeTheReadReturns
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 0.315
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN main-handoff-fixed-3-20261105T061503Z-e6664495
+STATUS passed
+FINAL_PHASE True
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.SecureStartupInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.SecureStartupInstrumentedTest:
+INSTRUMENTATION_STATUS: test=cancellingStartupReleasesUiWaitButRetainsTheSingleProviderSlot
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.SecureStartupInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cancellingStartupReleasesUiWaitButRetainsTheSingleProviderSlot
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 0.171
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN main-handoff-fixed-4-20261105T061512Z-773910a8
+STATUS passed
+FINAL_PHASE True
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.SecureStartupInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.SecureStartupInstrumentedTest:
+INSTRUMENTATION_STATUS: test=maintenanceDoesNotRetryBlockedStorageWithoutExplicitStartup
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.SecureStartupInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=maintenanceDoesNotRetryBlockedStorageWithoutExplicitStartup
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 1.247
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN main-handoff-old-negative-20261105T061328Z-4264c3fa
+STATUS failed_or_environment_error
+FINAL_PHASE False
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest:
+INSTRUMENTATION_STATUS: test=queuedHealthyStartupDoesNotObserveCompletedWorkerAsInProgress
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Queued caller should be READY; blocked reason=SECURE_OPERATION_IN_PROGRESS
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest.assertReady(SecureStartupHandoffInstrumentedTest.kt:90)
+	at takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest.access$assertReady(SecureStartupHandoffInstrumentedTest.kt:24)
+	at takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest$queuedHealthyStartupDoesNotObserveCompletedWorkerAsInProgress$1.invokeSuspend(SecureStartupHandoffInstrumentedTest.kt:73)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:46)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest.queuedHealthyStartupDoesNotObserveCompletedWorkerAsInProgress(SecureStartupHandoffInstrumentedTest.kt:25)
+
+INSTRUMENTATION_STATUS: stream=
+Error in queuedHealthyStartupDoesNotObserveCompletedWorkerAsInProgress(takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest):
+java.lang.AssertionError: Queued caller should be READY; blocked reason=SECURE_OPERATION_IN_PROGRESS
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest.assertReady(SecureStartupHandoffInstrumentedTest.kt:90)
+	at takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest.access$assertReady(SecureStartupHandoffInstrumentedTest.kt:24)
+	at takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest$queuedHealthyStartupDoesNotObserveCompletedWorkerAsInProgress$1.invokeSuspend(SecureStartupHandoffInstrumentedTest.kt:73)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:46)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest.queuedHealthyStartupDoesNotObserveCompletedWorkerAsInProgress(SecureStartupHandoffInstrumentedTest.kt:25)
+
+INSTRUMENTATION_STATUS: test=queuedHealthyStartupDoesNotObserveCompletedWorkerAsInProgress
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 3.112
+There was 1 failure:
+1) queuedHealthyStartupDoesNotObserveCompletedWorkerAsInProgress(takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest)
+java.lang.AssertionError: Queued caller should be READY; blocked reason=SECURE_OPERATION_IN_PROGRESS
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest.assertReady(SecureStartupHandoffInstrumentedTest.kt:90)
+	at takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest.access$assertReady(SecureStartupHandoffInstrumentedTest.kt:24)
+	at takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest$queuedHealthyStartupDoesNotObserveCompletedWorkerAsInProgress$1.invokeSuspend(SecureStartupHandoffInstrumentedTest.kt:73)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:46)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.security.SecureStartupHandoffInstrumentedTest.queuedHealthyStartupDoesNotObserveCompletedWorkerAsInProgress(SecureStartupHandoffInstrumentedTest.kt:25)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1
+
+
+DRIVER REASONS ["Missing or ambiguous OK (1 test) summary", "Expected exactly one started/passed method; status codes were ['1', '-2']", "Runner output contains a failure marker: INSTRUMENTATION_STATUS: stack="]
+
+RUN main-omk-reinstalled-cold-20261105T062924Z-b977a048
+STATUS passed
+FINAL_PHASE True
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.MuMuOmkModuleFixtureTest:
+INSTRUMENTATION_STATUS: test=verifyAfterColdRestart
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=verifyAfterColdRestart
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 6.192
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN main-omk-reinstalled-reopen-20261105T062904Z-5f9c0d30
+STATUS passed
+FINAL_PHASE True
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.MuMuOmkModuleFixtureTest:
+INSTRUMENTATION_STATUS: test=reopenOriginalVault
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=reopenOriginalVault
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 11.094
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN main-omk-seed-20261105T055911Z-04d69108
+STATUS driver_error
+FINAL_PHASE False
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.MuMuOmkModuleFixtureTest:
+INSTRUMENTATION_STATUS: test=seedOriginalVault
+INSTRUMENTATION_STATUS_CODE: 1
+
+
+DRIVER REASONS ["RuntimeError: Logcat exited before the run was fully captured"]
+
+RUN main-omk-seed-resume-fixed-20261105T061523Z-5dc0a493
+STATUS passed
+FINAL_PHASE True
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.MuMuOmkModuleFixtureTest:
+INSTRUMENTATION_STATUS: test=resumeInterruptedSeed
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=resumeInterruptedSeed
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 10.771
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN main-root-key-change-reopen-20261105T062223Z-8ac5b7d6
+STATUS failed_or_environment_error
+FINAL_PHASE False
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.MuMuOmkModuleFixtureTest:
+INSTRUMENTATION_STATUS: test=reopenOriginalVault
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 25000 ms
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:887)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:482)
+	at takagi.ru.monica.security.MuMuOmkModuleFixtureTest$reopenOriginalVault$1.invokeSuspend(MuMuOmkModuleFixtureTest.kt:205)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTaskKt.resume(DispatchedTask.kt:221)
+	at kotlinx.coroutines.DispatchedTaskKt.dispatch(DispatchedTask.kt:154)
+	at kotlinx.coroutines.CancellableContinuationImpl.dispatchResume(CancellableContinuationImpl.kt:470)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core(CancellableContinuationImpl.kt:504)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core$default(CancellableContinuationImpl.kt:493)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeUndispatched(CancellableContinuationImpl.kt:596)
+	at kotlinx.coroutines.EventLoopImplBase$DelayedResumeTask.run(EventLoop.common.kt:497)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.security.MuMuOmkModuleFixtureTest.reopenOriginalVault(MuMuOmkModuleFixtureTest.kt:172)
+
+INSTRUMENTATION_STATUS: stream=
+Error in reopenOriginalVault(takagi.ru.monica.security.MuMuOmkModuleFixtureTest):
+androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 25000 ms
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:887)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:482)
+	at takagi.ru.monica.security.MuMuOmkModuleFixtureTest$reopenOriginalVault$1.invokeSuspend(MuMuOmkModuleFixtureTest.kt:205)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTaskKt.resume(DispatchedTask.kt:221)
+	at kotlinx.coroutines.DispatchedTaskKt.dispatch(DispatchedTask.kt:154)
+	at kotlinx.coroutines.CancellableContinuationImpl.dispatchResume(CancellableContinuationImpl.kt:470)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core(CancellableContinuationImpl.kt:504)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core$default(CancellableContinuationImpl.kt:493)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeUndispatched(CancellableContinuationImpl.kt:596)
+	at kotlinx.coroutines.EventLoopImplBase$DelayedResumeTask.run(EventLoop.common.kt:497)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.security.MuMuOmkModuleFixtureTest.reopenOriginalVault(MuMuOmkModuleFixtureTest.kt:172)
+
+INSTRUMENTATION_STATUS: test=reopenOriginalVault
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 30.365
+There was 1 failure:
+1) reopenOriginalVault(takagi.ru.monica.security.MuMuOmkModuleFixtureTest)
+androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 25000 ms
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:887)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:482)
+	at takagi.ru.monica.security.MuMuOmkModuleFixtureTest$reopenOriginalVault$1.invokeSuspend(MuMuOmkModuleFixtureTest.kt:205)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTaskKt.resume(DispatchedTask.kt:221)
+	at kotlinx.coroutines.DispatchedTaskKt.dispatch(DispatchedTask.kt:154)
+	at kotlinx.coroutines.CancellableContinuationImpl.dispatchResume(CancellableContinuationImpl.kt:470)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core(CancellableContinuationImpl.kt:504)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeImpl$kotlinx_coroutines_core$default(CancellableContinuationImpl.kt:493)
+	at kotlinx.coroutines.CancellableContinuationImpl.resumeUndispatched(CancellableContinuationImpl.kt:596)
+	at kotlinx.coroutines.EventLoopImplBase$DelayedResumeTask.run(EventLoop.common.kt:497)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.security.MuMuOmkModuleFixtureTest.reopenOriginalVault(MuMuOmkModuleFixtureTest.kt:172)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1
+
+
+DRIVER REASONS ["Missing or ambiguous OK (1 test) summary", "Expected exactly one started/passed method; status codes were ['1', '-2']", "Runner output contains a failure marker: INSTRUMENTATION_STATUS: stack="]
+
+RUN main-stock-seed-20261105T054218Z-d4f4cf72
+STATUS passed
+FINAL_PHASE False
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.MuMuOmkModuleFixtureTest:
+INSTRUMENTATION_STATUS: test=seedOriginalVault
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=seedOriginalVault
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 10.667
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN main-stock-to-omk-cold-20261105T055526Z-316dc96f
+STATUS passed
+FINAL_PHASE False
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.MuMuOmkModuleFixtureTest:
+INSTRUMENTATION_STATUS: test=verifyAfterColdRestart
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=verifyAfterColdRestart
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 6.111
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN main-stock-to-omk-reopen-20261105T055441Z-d70fa5ca
+STATUS passed
+FINAL_PHASE False
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.MuMuOmkModuleFixtureTest:
+INSTRUMENTATION_STATUS: test=reopenOriginalVault
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.MuMuOmkModuleFixtureTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=reopenOriginalVault
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 10.673
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1

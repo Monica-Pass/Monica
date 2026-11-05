@@ -1,0 +1,27 @@
+[
+  {
+    "path": "app/src/main/java/takagi/ru/monica/data/PasswordEntryDao.kt",
+    "sha256": "61AE050F1C63E09577023208A4DB06CADB11F72F1F5CFCA6C7AAD09AD43BA0B0",
+    "editionsMatch": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/repository/PasswordRepository.kt",
+    "sha256": "B8A1D229AA426412BBAD7B274AB53AD8E0C7BC484A6581A9C2AFB16EC10576E3",
+    "editionsMatch": true
+  },
+  {
+    "path": "app/src/main/java/takagi/ru/monica/viewmodel/TotpViewModel.kt",
+    "sha256": "BCA0C221E46F0F5877601519852CADC55285B787470485D0FB204CFEE970110E",
+    "editionsMatch": true
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/ui/ProjectCredentialEditorTest.kt",
+    "sha256": "D89D13E88F9E14DC186E3894A2E3CC10F9164F5364FAEF64B3C2E26D0EF07E28",
+    "editionsMatch": true
+  },
+  {
+    "path": "app/src/androidTest/java/takagi/ru/monica/viewmodel/LocalAccountTotpDeletionTest.kt",
+    "sha256": "088D59FA56C5490B1EEAC9B6F1512F116503FA0418A213CB9FE3A6C8AF6F79BA",
+    "editionsMatch": true
+  }
+]

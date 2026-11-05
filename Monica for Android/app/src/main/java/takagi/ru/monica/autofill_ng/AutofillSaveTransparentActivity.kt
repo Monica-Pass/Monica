@@ -1,5 +1,7 @@
 package takagi.ru.monica.autofill_ng
 
+import takagi.ru.monica.security.launchWithSecureStorage
+
 import takagi.ru.monica.utils.AppLocaleStringResolver
 
 import android.content.Context
@@ -108,6 +110,10 @@ class AutofillSaveTransparentActivity : androidx.fragment.app.FragmentActivity()
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        launchWithSecureStorage { onSecureCreate(savedInstanceState) }
+    }
+
+    private fun onSecureCreate(savedInstanceState: Bundle?) {
         saveRequestId = intent.getStringExtra(AutofillSaveLaunch.EXTRA_REQUEST_ID).orEmpty()
         takagi.ru.monica.autofill_ng.core.AutofillLogger.initialize(applicationContext)
         recordSaveEvent(AutofillSaveDiagnostics.Event.ACTIVITY_CREATED)
@@ -197,7 +203,7 @@ class AutofillSaveTransparentActivity : androidx.fragment.app.FragmentActivity()
                     cancelText = getString(R.string.cancel), emptyError = getString(R.string.current_password_required),
                     unsupportedCharacterError = getString(R.string.error_password_contains_unsupported_characters),
                     minLengthError = getString(R.string.error_password_too_short), incorrectError = getString(R.string.password_incorrect),
-                    verifyPassword = { securityManager.unlockVaultWithPassword(it) },
+                    verifyPassword = { input, attempt -> securityManager.unlockVaultWithPassword(input, attempt) },
                     onSuccess = { authorized = true }, onCancel = { closeSave(AutofillSaveDiagnostics.Event.AUTH_CANCELED) },
                 )
                 return@setContent

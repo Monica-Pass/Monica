@@ -1,0 +1,18 @@
+JUnit version 4.13.2
+..E..E.......
+Time: 0.296
+There were 2 failures:
+1) identicalMetadataCopiesRestoreAndSaveWithoutLosingUnknownFieldsOrProtection(takagi.ru.monica.data.model.ProjectCredentialGroupTest)
+takagi.ru.monica.data.model.ProjectCredentialGroup$RestoreException: UNSUPPORTED_METADATA
+	at takagi.ru.monica.data.model.ProjectCredentialGroup.restore(ProjectCredentialGroup.kt:91)
+	at takagi.ru.monica.data.model.ProjectCredentialGroup.restoreForEditing(ProjectCredentialGroup.kt:80)
+	at takagi.ru.monica.data.model.ProjectCredentialGroupTest.identicalMetadataCopiesRestoreAndSaveWithoutLosingUnknownFieldsOrProtection(ProjectCredentialGroupTest.kt:21)
+2) repeatedOrderKeepsAdditionalAccountTokensAndStrongestProtection(takagi.ru.monica.data.model.ProjectCredentialGroupTest)
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.data.model.ProjectCredentialGroupTest.repeatedOrderKeepsAdditionalAccountTokensAndStrongestProtection(ProjectCredentialGroupTest.kt:56)
+
+FAILURES!!!
+Tests run: 11,  Failures: 2

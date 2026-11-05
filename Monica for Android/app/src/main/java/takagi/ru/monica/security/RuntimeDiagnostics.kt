@@ -23,6 +23,7 @@ internal object RuntimeDiagnostics {
     private val sequence = AtomicLong()
     private val current = ThreadLocal<StartupDiagnosticTrace>()
     private val lastDataFailure = AtomicLongArray(DataFormat.entries.size)
+    private val lastCredentialFailure = AtomicLong()
 
     enum class Stage {
         WAIT_TURN, QUEUED, STARTUP_CHECK, ACTIVE_STORE, PREFLIGHT, MASTER_KEY,
@@ -30,6 +31,7 @@ internal object RuntimeDiagnostics {
     }
     enum class Outcome { READY, BLOCKED, TIMEOUT, CANCELLED }
     enum class DataFormat { MDK, V2, C2 }
+    enum class CredentialLoadStage { NATIVE_BASELINE, RESTORE }
 
     fun install() {
         if (!installed.compareAndSet(false, true)) return
@@ -94,6 +96,19 @@ internal object RuntimeDiagnostics {
         if (!lastDataFailure.compareAndSet(format.ordinal, previous, now)) return
         output(Log.WARN, "event=data_read_failure format=${format.name}")
         SafeExceptionDiagnostic.lines(error).forEach { output(Log.WARN, "event=data_read_detail format=${format.name} $it") }
+    } }
+
+    fun credentialLoadFailure(stage: CredentialLoadStage, error: Exception? = null) { runCatching {
+        val now = SystemClock.elapsedRealtime()
+        val previous = lastCredentialFailure.get()
+        if (previous != 0L && now - previous < 5_000L) return
+        if (!lastCredentialFailure.compareAndSet(previous, now)) return
+        val reason = (error as? takagi.ru.monica.data.model.ProjectCredentialGroup.RestoreException)?.reason?.name
+            ?: "UNCLASSIFIED"
+        output(Log.WARN, "event=credential_load_failure stage=${stage.name} reason=$reason")
+        error?.let { SafeExceptionDiagnostic.lines(it).forEach { line ->
+            output(Log.WARN, "event=credential_load_detail stage=${stage.name} $line")
+        } }
     } }
 
     private fun output(priority: Int, fields: String, persist: Boolean = true) {

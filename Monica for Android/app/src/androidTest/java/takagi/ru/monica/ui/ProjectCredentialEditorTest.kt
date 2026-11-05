@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.flow.first
@@ -33,6 +34,8 @@ import takagi.ru.monica.ui.screens.*
 import takagi.ru.monica.utils.AppLocaleStringResolver
 import takagi.ru.monica.viewmodel.PasswordViewModel
 import java.io.File
+import kotlinx.serialization.json.*
+import takagi.ru.monica.data.model.EntryContentFields
 
 class ProjectCredentialEditorTest {
     @get:Rule val compose = createComposeRule()
@@ -41,6 +44,7 @@ class ProjectCredentialEditorTest {
     private lateinit var model: PasswordViewModel
     private lateinit var security: SecurityManager
     private var editId by mutableStateOf<Long?>(null)
+    private var editorEpoch by mutableStateOf(0)
     private var savedId: Long? = null
     private var detail by mutableStateOf(false)
     private var previousContent = false
@@ -75,7 +79,7 @@ class ProjectCredentialEditorTest {
     private fun showSimpleEditor() {
         compose.setContent {
             CompositionLocalProvider(LocalUiSecurityManager provides security) {
-                MaterialTheme { key(editId) {
+                MaterialTheme { key(editId, editorEpoch) {
                     AddEditPasswordScreen(model, passwordId = editId, initialStorageExplicit = true,
                         initialDraft = if (editId == null) AddEditPasswordInitialDraft(title = "Credential note",
                             username = "demo", password = "synthetic-password") else null,
@@ -147,6 +151,238 @@ class ProjectCredentialEditorTest {
         val updated = runBlocking { model.getCustomFieldsByEntryIdSync(id) }.map(CustomFieldDraft::fromCustomField)
         assertEquals("", ProjectCredentialGroup.read(updated)?.note)
     }
+    @Test fun localPrimaryPasswordsSaveReopenAndEditSecondWithoutOtp() {
+        checkLocalPrimaryPasswordRoundTrip(withCredentialNote = false)
+    }
+
+    @Test fun repeatedLocalMetadataSavesUnchangedThenEditsAndReopens() = checkRepeatedMetadata(null)
+    @Test fun repeatedLocalMetadataRetainsLegacyOtpOnlyOnFirstRow() = checkRepeatedMetadata(0)
+    @Test fun repeatedLocalMetadataRetainsLegacyOtpOnlyOnSecondRow() = checkRepeatedMetadata(1)
+
+    @Test fun conflictingMetadataCopiesBlockSaveAndKeepOriginalRows() {
+        val row = ProjectCredentialGroup.rows(listOf(ProjectCredentialGroup.Group(username = "synthetic"))).single()
+        val originalFields = listOf(CustomFieldDraft(title = ProjectCredentialGroup.FIELD, value = row.metadata.raw.toString()),
+            CustomFieldDraft(title = ProjectCredentialGroup.FIELD,
+                value = JsonObject(row.metadata.raw + ("extension" to JsonPrimitive("conflict"))).toString()))
+        val id = runBlocking {
+            db.passwordEntryDao().insertPasswordEntry(PasswordEntry(title = "Conflict fixture", username = "synthetic",
+                password = security.encryptData("unchanged"), website = "")).also {
+                CustomFieldRepository(db.customFieldDao()).saveFieldsForEntry(it, originalFields)
+            }
+        }
+        val before = runBlocking { db.passwordEntryDao().getAllPasswordEntriesSync() }
+        val fieldsBefore = runBlocking { model.getCustomFieldsByEntryIdSync(id) }
+        editId = id
+        showSimpleEditor()
+        scroll(hasTestTag("password_editor_value_0")).assertTextContains("unchanged")
+        compose.onNodeWithTag("password_editor_save").performClick()
+        compose.waitForIdle()
+        assertNull(savedId)
+        assertEquals(before, runBlocking { db.passwordEntryDao().getAllPasswordEntriesSync() })
+        assertEquals(fieldsBefore, runBlocking { model.getCustomFieldsByEntryIdSync(id) })
+    }
+
+    private fun checkRepeatedMetadata(otpIndex: Int?) {
+        val project = java.util.UUID.randomUUID().toString()
+        val orderToken = ProjectCredentialGroup.token(java.util.UUID.randomUUID().toString())
+        val values = ProjectCredentialGroup.rows(listOf(ProjectCredentialGroup.Group(username = "synthetic-user",
+            note = "Account note", passwords = listOf(ProjectCredentialGroup.Password(value = "first-before"),
+                ProjectCredentialGroup.Password(value = "second-before")))))
+        val otp = "JBSWY3DPEHPK3PXP"
+        val ids = runBlocking { values.mapIndexed { index, row ->
+            val id = db.passwordEntryDao().insertPasswordEntry(PasswordEntry(title = "Repeated metadata fixture",
+                username = row.username, password = security.encryptData(row.password.value), website = "",
+                notes = "Page note", passwordGroupId = project, replicaGroupId = project,
+                authenticatorKey = if (otpIndex == index) security.encryptData(otp) else ""))
+            val raw = JsonObject(row.metadata.forProject(project).raw + ("extension" to JsonPrimitive(9007199254740993L)))
+            CustomFieldRepository(db.customFieldDao()).saveFieldsForEntry(id, listOf(
+                CustomFieldDraft(title = EntryContentFields.ORDER, value = orderToken),
+                CustomFieldDraft(title = EntryContentFields.ORDER, value = orderToken, isProtected = true),
+                CustomFieldDraft(title = ProjectCredentialGroup.FIELD, value = raw.toString()),
+                CustomFieldDraft(title = ProjectCredentialGroup.FIELD, value = raw.toString(), isProtected = true),
+                CustomFieldDraft(title = "Repeated user field", value = "first"),
+                CustomFieldDraft(title = "Repeated user field", value = "second", isProtected = true)))
+            id
+        } }
+        editId = ids.first()
+        showSimpleEditor()
+        scroll(hasTestTag("password_editor_value_1")).assertTextContains("second-before")
+        save()
+        fun assertStored(second: String) {
+            val stored = runBlocking { db.passwordEntryDao().getAllPasswordEntriesSync() }.sortedBy { it.id }
+            assertEquals(ids, stored.map { it.id })
+            assertEquals(listOf("first-before", second), stored.map { security.decryptData(it.password) })
+            assertEquals(listOf(0, 1).map { if (it == otpIndex) otp else "" }, stored.map {
+                security.decryptDataIfMonicaCiphertext(it.authenticatorKey) })
+            assertTrue(stored.all { it.passwordGroupId == project && it.username == "synthetic-user" && it.notes == "Page note" })
+            runBlocking { ids.forEachIndexed { index, id ->
+                val fields = model.getCustomFieldsByEntryIdSync(id).map(CustomFieldDraft::fromCustomField)
+                assertEquals(1, fields.count { it.title == ProjectCredentialGroup.FIELD })
+                assertEquals(1, fields.count { it.title == EntryContentFields.ORDER })
+                assertTrue(fields.single { it.title == ProjectCredentialGroup.FIELD }.isProtected)
+                assertTrue(fields.single { it.title == EntryContentFields.ORDER }.isProtected)
+                assertTrue(orderToken in EntryContentFields.order(fields))
+                assertEquals(listOf("first", "second"), fields.filter { it.title == "Repeated user field" }.map { it.value })
+                val metadata = requireNotNull(ProjectCredentialGroup.read(fields))
+                assertEquals(values[index].metadata.passwordId, metadata.passwordId)
+                assertEquals(values[index].metadata.groupId, metadata.groupId)
+                assertEquals("Account note", metadata.note)
+                assertEquals(JsonPrimitive(9007199254740993L), metadata.raw["extension"])
+            } }
+        }
+        assertStored("second-before")
+        compose.runOnIdle { editorEpoch++; savedId = null }
+        scroll(hasTestTag("password_editor_value_1")).performTextReplacement("second-after")
+        save()
+        assertStored("second-after")
+        compose.runOnIdle { editorEpoch++; savedId = null }
+        scroll(hasTestTag("password_editor_value_1")).assertTextContains("second-after")
+        save()
+        assertStored("second-after")
+    }
+
+    @Test fun localPrimaryPasswordsWithMetadataSaveReopenAndEditSecondWithoutOtp() {
+        checkLocalPrimaryPasswordRoundTrip(withCredentialNote = true)
+    }
+
+    private fun checkLocalPrimaryPasswordRoundTrip(withCredentialNote: Boolean) {
+        showSimpleEditor()
+        if (withCredentialNote) {
+            scroll(hasTestTag("password_editor_credential_note")).performTextReplacement("Synthetic account note")
+        }
+        scroll(hasTestTag("password_editor_add_password")).performClick()
+        scroll(hasTestTag("password_editor_value_1")).performTextReplacement("second-before")
+        save()
+        val primaryId = requireNotNull(savedId)
+        val before = runBlocking { db.passwordEntryDao().getAllPasswordEntries().first() }.sortedBy { it.id }
+        assertEquals(2, before.size)
+        assertTrue(before.all { it.isLocalOnlyEntry() })
+        assertEquals(listOf("synthetic-password", "second-before"), before.map { security.decryptData(it.password) })
+        val metadataBefore = runBlocking { model.getCustomFieldsByEntryIds(before.map { it.id }) }
+        assertEquals(withCredentialNote, metadataBefore.values.flatten().any { it.title == ProjectCredentialGroup.FIELD })
+        compose.runOnIdle { editId = primaryId; savedId = null }
+        scroll(hasTestTag("password_editor_value_1")).performTextReplacement("second-after")
+        save()
+        val after = runBlocking { db.passwordEntryDao().getAllPasswordEntries().first() }.sortedBy { it.id }
+        assertEquals(before.map { it.id }, after.map { it.id })
+        assertEquals(before.map { it.passwordGroupId }, after.map { it.passwordGroupId })
+        assertEquals(before.map { it.username }, after.map { it.username })
+        assertEquals(listOf("synthetic-password", "second-after"), after.map { security.decryptData(it.password) })
+        if (withCredentialNote) {
+            val metadataAfter = runBlocking { model.getCustomFieldsByEntryIds(after.map { it.id }) }
+            assertEquals(metadataBefore.mapValues { (_, fields) -> fields.map { kotlinx.serialization.json.Json.parseToJsonElement(it.value) } },
+                metadataAfter.mapValues { (_, fields) -> fields.map { kotlinx.serialization.json.Json.parseToJsonElement(it.value) } })
+        }
+    }
+
+    @Test fun legacyLocalProjectWithoutMetadataSavesWithoutEdits() {
+        checkLegacyLocalProjectSave(withMetadata = false)
+    }
+
+    @Test fun legacyV1LocalProjectWithoutOptionalMetadataSavesWithoutEdits() {
+        checkLegacyLocalProjectSave(withMetadata = true)
+    }
+
+    private fun checkLegacyLocalProjectSave(withMetadata: Boolean) {
+        val legacyProjectId = java.util.UUID.randomUUID().toString()
+        val groups = listOf(ProjectCredentialGroup.Group(username = "legacy-demo", passwords = listOf(
+            ProjectCredentialGroup.Password(value = "legacy-first"),
+            ProjectCredentialGroup.Password(value = "legacy-second"))))
+        val values = ProjectCredentialGroup.rows(groups)
+        val ids = runBlocking {
+            values.map { row ->
+                val id = db.passwordEntryDao().insertPasswordEntry(PasswordEntry(
+                    title = "Synthetic legacy local project", username = row.username,
+                    password = security.encryptData(row.password.value), website = "",
+                    replicaGroupId = legacyProjectId))
+                if (withMetadata) {
+                    val oldJson = kotlinx.serialization.json.JsonObject(row.metadata.raw - "projectId" - "note")
+                    CustomFieldRepository(db.customFieldDao()).saveFieldsForEntry(id,
+                        listOf(CustomFieldDraft(title = ProjectCredentialGroup.FIELD, value = oldJson.toString())))
+                }
+                id
+            }
+        }
+        editId = ids.first()
+        showSimpleEditor()
+        scroll(hasTestTag("password_editor_value_1")).assertExists()
+        save()
+        val after = runBlocking { db.passwordEntryDao().getAllPasswordEntries().first() }.sortedBy { it.id }
+        assertEquals(ids, after.map { it.id })
+        assertTrue(after.all { it.isLocalOnlyEntry() && it.username == "legacy-demo" })
+        assertTrue(after.all { it.title == "Synthetic legacy local project" && it.authenticatorKey.isEmpty() })
+        assertEquals(listOf("legacy-first", "legacy-second"), after.map { security.decryptData(it.password) })
+        if (withMetadata) {
+            val fields = runBlocking { model.getCustomFieldsByEntryIds(ids) }
+            assertEquals(values.map { it.metadata.passwordId }, ids.map { id ->
+                requireNotNull(ProjectCredentialGroup.read(fields.getValue(id).map(CustomFieldDraft::fromCustomField))).passwordId
+            })
+        }
+    }
+
+    @Test fun deletingStoredAuthenticatorThenSavingLocalMultiPasswordAccountKeepsBothPasswords() {
+        checkDeleteAuthenticatorThenSave(virtual = false)
+    }
+
+    @Test fun deletingVirtualAuthenticatorThenSavingLocalMultiPasswordAccountKeepsBothPasswords() {
+        checkDeleteAuthenticatorThenSave(virtual = true)
+    }
+
+    private fun checkDeleteAuthenticatorThenSave(virtual: Boolean) {
+        showSimpleEditor()
+        scroll(hasTestTag("password_editor_credential_note")).performTextReplacement("Account note")
+        scroll(hasTestTag("password_editor_add_password")).performClick()
+        scroll(hasTestTag("password_editor_value_1")).performTextReplacement("second-password")
+        scroll(hasTestTag("password_otp_secret")).performTextReplacement("JBSWY3DPEHPK3PXP")
+        save()
+        val primaryId = requireNotNull(savedId)
+        val passwords = PasswordRepository(db.passwordEntryDao())
+        val items = SecureItemRepository(db.secureItemDao())
+        val before = runBlocking { db.passwordEntryDao().getAllPasswordEntriesSync() }.sortedBy { it.id }
+        assertEquals(2, before.size)
+        assertTrue(before.all { it.authenticatorKey.isNotEmpty() })
+        val otp = requireNotNull(takagi.ru.monica.util.TotpDataResolver.fromAuthenticatorKey(
+            security.decryptDataIfMonicaCiphertext(before.first().authenticatorKey))).copy(boundPasswordId = primaryId)
+        val totpModel = takagi.ru.monica.viewmodel.TotpViewModel(items, passwords,
+            securityManager = security, strings = AppLocaleStringResolver(context))
+        try {
+            val target = runBlocking {
+                if (virtual) {
+                    kotlinx.coroutines.withTimeout(10000) { totpModel.allParsedTotpItems.first {
+                        it.any { value -> value.item.id == -primaryId }
+                    } }.first { it.item.id == -primaryId }.item
+                } else {
+                    val id = items.insertItem(SecureItem(title = "Bound account OTP", itemType = ItemType.TOTP,
+                        itemData = security.encryptDataLegacyCompat(kotlinx.serialization.json.Json.encodeToString(
+                            takagi.ru.monica.data.model.TotpData.serializer(), otp))))
+                    requireNotNull(items.getItemById(id))
+                }
+            }
+            totpModel.deleteTotpItem(target)
+            runBlocking {
+                kotlinx.coroutines.withTimeout(10000) {
+                    if (virtual) passwords.getAllPasswordEntries().first { rows ->
+                        rows.first { it.id == primaryId }.authenticatorKey.isEmpty()
+                    } else db.secureItemDao().getItemsByType(ItemType.TOTP).first { it.isEmpty() }
+                }
+            }
+            compose.runOnIdle { editId = primaryId; savedId = null }
+            scroll(hasTestTag("password_editor_value_1")).assertExists()
+            // Exercise the actual editor save guard, not a seeded metadata conflict.
+            save()
+            val after = runBlocking { db.passwordEntryDao().getAllPasswordEntriesSync() }.sortedBy { it.id }
+            assertEquals(before.map { it.id }, after.map { it.id })
+            assertEquals(before.map { security.decryptData(it.password) }, after.map { security.decryptData(it.password) })
+            assertTrue("Deleting an account OTP must not leave a sibling OTP behind", after.all { it.authenticatorKey.isEmpty() })
+            assertEquals("Account note", ProjectCredentialGroup.read(runBlocking {
+                model.getCustomFieldsByEntryIdSync(primaryId)
+            }.map(CustomFieldDraft::fromCustomField))?.note)
+        } finally {
+            runBlocking { totpModel.viewModelScope.coroutineContext[kotlinx.coroutines.Job]?.cancelAndJoin() }
+        }
+    }
+
+
     @Test fun primaryAddPasswordExpandsOverAnimationFrames() {
         showSimpleEditor()
         scroll(hasTestTag("password_editor_add_password"))

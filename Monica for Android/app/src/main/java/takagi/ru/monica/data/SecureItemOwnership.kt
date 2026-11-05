@@ -24,7 +24,26 @@ sealed class SecureItemOwnership {
     ) : SecureItemOwnership()
 }
 
-fun SecureItem.resolveOwnership(): SecureItemOwnership {
+fun SecureItem.resolveOwnership(): SecureItemOwnership = resolveSecureItemOwnership(
+    keepassDatabaseId, keepassEntryUuid, keepassGroupUuid, keepassGroupPath,
+    bitwardenVaultId, bitwardenCipherId, bitwardenRevisionDate, bitwardenFolderId,
+    bitwardenLocalModified, syncStatus, mdbxDatabaseId
+)
+
+/** Shared by full records and the content-free backup metadata projection. */
+internal fun resolveSecureItemOwnership(
+    keepassDatabaseId: Long?,
+    keepassEntryUuid: String?,
+    keepassGroupUuid: String?,
+    keepassGroupPath: String?,
+    bitwardenVaultId: Long?,
+    bitwardenCipherId: String?,
+    bitwardenRevisionDate: String?,
+    bitwardenFolderId: String?,
+    bitwardenLocalModified: Boolean,
+    syncStatus: String,
+    mdbxDatabaseId: Long?
+): SecureItemOwnership {
     val hasKeePassBinding = keepassDatabaseId != null
     val hasBitwardenBinding = bitwardenVaultId != null || !bitwardenCipherId.isNullOrBlank()
     val hasMdbxBinding = mdbxDatabaseId != null

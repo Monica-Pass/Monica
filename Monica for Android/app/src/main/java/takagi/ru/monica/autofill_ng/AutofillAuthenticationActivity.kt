@@ -1,5 +1,7 @@
 package takagi.ru.monica.autofill_ng
 
+import takagi.ru.monica.security.launchWithSecureStorage
+
 import android.content.Context
 import takagi.ru.monica.utils.LocaleHelper
 import takagi.ru.monica.utils.StartupLanguageCache
@@ -109,6 +111,10 @@ class AutofillAuthenticationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        launchWithSecureStorage { onSecureCreate(savedInstanceState) }
+    }
+
+    private fun onSecureCreate(savedInstanceState: Bundle?) {
         
         Log.d(TAG, "AutofillAuthenticationActivity created")
         
@@ -223,7 +229,7 @@ class AutofillAuthenticationActivity : AppCompatActivity() {
                 unsupportedCharacterError = getString(R.string.error_password_contains_unsupported_characters),
                 minLengthError = getString(R.string.error_password_too_short),
                 incorrectError = getString(R.string.password_incorrect),
-                verifyPassword = { input -> securityManager.verifyMasterPassword(input) },
+                verifyPassword = { input, attempt -> securityManager.verifyMasterPassword(input, attempt) },
                 onSuccess = { onAuthenticationSuccess() },
                 onCancel = { onAuthenticationCancelled() }
             )

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.utils.LocalNoteBackupSelectionTest" tests="7" skipped="0" failures="1" errors="0" timestamp="2026-11-05T13:16:14" hostname="JOYIN" time="8.743">
+  <properties/>
+  <testcase name="supportedLegacyLocalNotesReachTheCloudArchiveInput" classname="takagi.ru.monica.utils.LocalNoteBackupSelectionTest" time="7.946"/>
+  <testcase name="supportedLegacyLocalNotesVisibleInNotePageAreCountedForBackup" classname="takagi.ru.monica.utils.LocalNoteBackupSelectionTest" time="0.108"/>
+  <testcase name="ordinaryLocalNotesStillCountAndReachBackup" classname="takagi.ru.monica.utils.LocalNoteBackupSelectionTest" time="0.091"/>
+  <testcase name="ownershipBoundariesAgreeWithNoteScopeAndArchivePolicy" classname="takagi.ru.monica.utils.LocalNoteBackupSelectionTest" time="0.122">
+    <failure message="java.lang.AssertionError: expected:&lt;[1, 2, 3, 4]&gt; but was:&lt;[1, 2, 3, 4, 5, 12, 16]&gt;" type="java.lang.AssertionError">java.lang.AssertionError: expected:&lt;[1, 2, 3, 4]&gt; but was:&lt;[1, 2, 3, 4, 5, 12, 16]&gt;
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.utils.LocalNoteBackupSelectionTest$ownershipBoundariesAgreeWithNoteScopeAndArchivePolicy$1.invokeSuspend(LocalNoteBackupSelectionTest.kt:106)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source)
+	at takagi.ru.monica.utils.LocalNoteBackupSelectionTest.ownershipBoundariesAgreeWithNoteScopeAndArchivePolicy(LocalNoteBackupSelectionTest.kt:80)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.robolectric.RobolectricTestRunner$HelperTestRunner$1.evaluate(RobolectricTestRunner.java:524)
+	at org.robolectric.internal.SandboxTestRunner.executeInSandbox(SandboxTestRunner.java:494)
+	at org.robolectric.internal.SandboxTestRunner.access$900(SandboxTestRunner.java:67)
+	at org.robolectric.internal.SandboxTestRunner$7.evaluate(SandboxTestRunner.java:442)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at org.robolectric.internal.SandboxTestRunner.access$600(SandboxTestRunner.java:67)
+	at org.robolectric.internal.SandboxTestRunner$6.evaluate(SandboxTestRunner.java:333)
+	at org.robolectric.internal.SandboxTestRunner$3.evaluate(SandboxTestRunner.java:233)
+	at org.robolectric.internal.SandboxTestRunner$5.lambda$evaluate$0(SandboxTestRunner.java:317)
+	at org.robolectric.internal.bytecode.Sandbox.lambda$runOnMainThread$0(Sandbox.java:101)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+</failure>
+  </testcase>
+  <testcase name="moreThanOneThousandLocalNotesAreSelectedWithoutSqlBindOverflow" classname="takagi.ru.monica.utils.LocalNoteBackupSelectionTest" time="0.302"/>
+  <testcase name="realCipherBindingWithoutVaultIdIsNotCountedAsLocal" classname="takagi.ru.monica.utils.LocalNoteBackupSelectionTest" time="0.085"/>
+  <testcase name="backupCountsIncludeArchivedButExcludeTrashAndOtherTypes" classname="takagi.ru.monica.utils.LocalNoteBackupSelectionTest" time="0.088"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[[Robolectric] WARN: Android SDK 36 requires Java 21 (have Java 17). Tests won't be run on SDK 36 unless explicitly requested.
+]]></system-err>
+</testsuite>

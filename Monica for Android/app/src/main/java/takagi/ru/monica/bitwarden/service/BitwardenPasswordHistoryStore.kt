@@ -93,6 +93,10 @@ internal class BitwardenPasswordHistoryStore(
         result
     }
 
+    /** Keep a pending local login invisible to sync until its fields are committed too. */
+    suspend fun <T> commitLocalCreate(vaultId: Long, create: suspend () -> T): T =
+        authorizedTransaction(vaultId) { create() }
+
     /** A new remote ID does not exist yet, so freeze the exact encrypted local row list instead. */
     suspend fun prepareCreate(entry: PasswordEntry, request: CipherCreateRequest, key: SymmetricCryptoKey): CreatePlan = authorizedTransaction(entry.bitwardenVaultId) {
         check(entry.bitwardenCipherId.isNullOrEmpty() && entry.bitwardenVaultId != null && request.type == 1)

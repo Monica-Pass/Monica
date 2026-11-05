@@ -1,0 +1,42 @@
+[
+  {
+    "Class": "takagi.ru.monica.data.model.StorageTargetOwnershipTest",
+    "Tests": 2,
+    "Failures": 0,
+    "Errors": 0,
+    "Skipped": 0,
+    "Seconds": 0.019
+  },
+  {
+    "Class": "takagi.ru.monica.notes.domain.NoteScopeIndexTest",
+    "Tests": 2,
+    "Failures": 0,
+    "Errors": 0,
+    "Skipped": 0,
+    "Seconds": 0.146
+  },
+  {
+    "Class": "takagi.ru.monica.sync.BackgroundSyncOwnershipTest",
+    "Tests": 2,
+    "Failures": 0,
+    "Errors": 0,
+    "Skipped": 0,
+    "Seconds": 0.379
+  },
+  {
+    "Class": "takagi.ru.monica.utils.BackupContentPolicyTest",
+    "Tests": 5,
+    "Failures": 0,
+    "Errors": 0,
+    "Skipped": 0,
+    "Seconds": 0.015
+  },
+  {
+    "Class": "takagi.ru.monica.utils.LocalNoteBackupSelectionTest",
+    "Tests": 7,
+    "Failures": 0,
+    "Errors": 0,
+    "Skipped": 0,
+    "Seconds": 8.35
+  }
+]

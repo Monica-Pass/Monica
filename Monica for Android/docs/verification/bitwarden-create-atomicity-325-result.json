@@ -1,0 +1,90 @@
+{
+  "date": "2026-11-06",
+  "status": "complete",
+  "version": "1.0.325 unreleased",
+  "baseline": {
+    "methods": 3,
+    "passed": 1,
+    "expectedFailures": 2,
+    "runnerSeconds": 17.312
+  },
+  "builds": {
+    "main": {
+      "build": "3m 45s",
+      "jvmTests": 34
+    },
+    "fd": {
+      "build": "13m 45s",
+      "jvmTests": 34
+    }
+  },
+  "mainTestOnlyRebuild": "3m",
+  "devices": {
+    "main": {
+      "edition": "main",
+      "user": 13,
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "emulator-5556",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "13",
+        "-w",
+        "-r",
+        "-e",
+        "class",
+        "takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest,takagi.ru.monica.credentialexchange.BitwardenCredentialCreateUiTest,takagi.ru.monica.credentialexchange.ProjectCredentialStorageTest",
+        "takagi.ru.monica.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "elapsedSeconds": 90.52,
+      "exitCode": 0,
+      "runnerSuccess": true,
+      "methods": 11,
+      "runnerSeconds": 77.652
+    },
+    "fd": {
+      "edition": "fd",
+      "user": 13,
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "emulator-5556",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "13",
+        "-w",
+        "-r",
+        "-e",
+        "class",
+        "takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest,takagi.ru.monica.credentialexchange.BitwardenCredentialCreateUiTest,takagi.ru.monica.credentialexchange.ProjectCredentialStorageTest",
+        "takagi.ru.monica.fdroid.test/androidx.test.runner.AndroidJUnitRunner"
+      ],
+      "elapsedSeconds": 34.139,
+      "exitCode": 0,
+      "runnerSuccess": true,
+      "methods": 11,
+      "runnerSeconds": 29.493
+    }
+  },
+  "initialMainDevice": {
+    "passed": 10,
+    "methods": 11,
+    "runnerSeconds": 144.803,
+    "failure": "Test re-unlocked the global session but not the Bitwarden vault; fixed fixture reauthenticates before every injected failure."
+  },
+  "sharedPaths": 4,
+  "metadataCheck": "passed",
+  "releaseScriptTests": 6,
+  "limitations": [
+    "Original user exception not available; injected lock is not proof of their exact trigger.",
+    "Synthetic API32/x86_64 and Debug only; no new R8 or physical device verification.",
+    "Does not certify atomicity across extra account groups, all attachment operations or multiple remote destinations.",
+    "Baseline APK hashes retained without a separate APK archive; first fixed test APK was not separately archived or hashed before fixture rebuild."
+  ],
+  "actions": "No user account operations, duplicate deletion, commit, push, tag, release or APK delivery."
+}

@@ -1,0 +1,34 @@
+{
+  "app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenAccountScreen.kt": {
+    "main": "60e198390da4d9006fe7bc531c82bc8a72d88881b7f51cfdfd61b84d21d98865",
+    "fd": "60e198390da4d9006fe7bc531c82bc8a72d88881b7f51cfdfd61b84d21d98865"
+  },
+  "app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenServerConfigurationDialog.kt": {
+    "main": "288aa1ea21db592c153a2a97d7e3bccb1507557ce4e713a6151ce9e5d38a772b",
+    "fd": "288aa1ea21db592c153a2a97d7e3bccb1507557ce4e713a6151ce9e5d38a772b"
+  },
+  "app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenAccountManagementDialog.kt": {
+    "main": "4a2084741dd01b5b6147bd226300a5a68dbbbd91d0a76fd9eb6dde68dcc2df9c",
+    "fd": "4a2084741dd01b5b6147bd226300a5a68dbbbd91d0a76fd9eb6dde68dcc2df9c"
+  },
+  "app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenSendReceiverDialog.kt": {
+    "main": "aa874ef5578b8977238e88f66cfa2e06fb76021f379504c554e2c7e4055466c1",
+    "fd": "aa874ef5578b8977238e88f66cfa2e06fb76021f379504c554e2c7e4055466c1"
+  },
+  "app/src/main/java/takagi/ru/monica/ui/navigation/MonicaPageContent.kt": {
+    "main": "6c84c94c8701004cdb4a2a8155a6c345f9899a88858f8415b753ddb2606acafc",
+    "fd": "6c84c94c8701004cdb4a2a8155a6c345f9899a88858f8415b753ddb2606acafc"
+  },
+  "app/src/main/res/anim/monica_page_dialog_exit.xml": {
+    "main": "9ed2d46abb98114db57eb043be3965778c24dad204bdcdf51d994c4004e3a93d",
+    "fd": "9ed2d46abb98114db57eb043be3965778c24dad204bdcdf51d994c4004e3a93d"
+  },
+  "app/src/main/res/values/page_dialog_motion.xml": {
+    "main": "376a391ef6e88c465276cca42fd9c726590343e32ea835be53a4cc102762feb5",
+    "fd": "376a391ef6e88c465276cca42fd9c726590343e32ea835be53a4cc102762feb5"
+  },
+  "app/src/androidTest/java/takagi/ru/monica/ui/MonicaPageContentTest.kt": {
+    "main": "063c4530b65fd1d182eecee2b5f83197a99cbc8f302fabaad67cec96b7143273",
+    "fd": "063c4530b65fd1d182eecee2b5f83197a99cbc8f302fabaad67cec96b7143273"
+  }
+}

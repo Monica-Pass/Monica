@@ -32,7 +32,13 @@ data class SecurityQuestionsBackupSnapshot(
 /**
  * Security manager for encryption and master password handling
  */
-class SecurityManager(private val context: Context) {
+class SecurityManager private constructor(
+    private val context: Context,
+    private val secureStore: SecurePreferencesStore.Opened,
+) {
+    constructor(context: Context) : this(context, PreparedSecureStore.open(context))
+
+    internal fun acceptPreparedStore() = PreparedSecureStore.accept(context, secureStore)
 
     enum class VaultAccessState {
         ACCESSIBLE,
@@ -71,7 +77,6 @@ class SecurityManager(private val context: Context) {
         SecurityDiagLogger.append("D/$logTag $message")
     }
     
-    private val secureStore = SecurePreferencesStore.open(context, SecurePreferencesStore.MONICA)
     private val masterKey = secureStore.masterKey
 
     // Secure Data Key Alias and Prefix
@@ -86,6 +91,11 @@ class SecurityManager(private val context: Context) {
     private val localRecovery = LocalVaultRecovery(context)
     
     companion object {
+        internal fun openFresh(context: Context) = SecurityManager(context, PreparedSecureStore.fresh(context))
+        internal fun fromPrepared(context: Context, store: SecurePreferencesStore.Opened): SecurityManager {
+            PreparedSecureStore.unwrap(store.preferences)
+            return SecurityManager(context, store)
+        }
         private const val MASTER_PASSWORD_HASH_KEY = "master_password_hash"
         private const val MASTER_PASSWORD_SALT_KEY = "master_password_salt"
         private const val BIOMETRIC_ENABLED_KEY = "biometric_enabled"
@@ -117,6 +127,10 @@ class SecurityManager(private val context: Context) {
 
         @Volatile
         private var processCachedMdk: ByteArray? = null
+        private val runtimeKeyLock = Any()
+        private val runtimeKeyGeneration = java.util.concurrent.atomic.AtomicLong()
+        private val dataReadGenerationState = kotlinx.coroutines.flow.MutableStateFlow(0L)
+        internal val dataReadGeneration: kotlinx.coroutines.flow.StateFlow<Long> = dataReadGenerationState
         @Volatile
         private var cachedCompatDataKey: SecretKey? = null
 
@@ -125,13 +139,62 @@ class SecurityManager(private val context: Context) {
         fun hasRuntimeUnlockCache(): Boolean = processCachedMdk?.isNotEmpty() == true
 
         fun clearRuntimeUnlockCache() {
-            processCachedMdk = null
-            cachedCompatDataKey = null
+            synchronized(runtimeKeyLock) {
+                val generation = runtimeKeyGeneration.incrementAndGet()
+                processCachedMdk = null
+                cachedCompatDataKey = null
+                dataReadGenerationState.value = generation
+            }
             takagi.ru.monica.autofill_ng.auth.AutofillSessionGrants.clear()
             takagi.ru.monica.repository.Mdbx2NativeReadSessions.clear()
         }
     }
     
+    /** One password submission; cancelled work may finish IO but cannot unlock the process. */
+    class PasswordVerificationAttempt internal constructor() {
+        internal val generation = runtimeKeyGeneration.get()
+        private var active = true
+        private var candidate: ByteArray? = null
+        private var manager: SecurityManager? = null
+
+        internal fun isCurrent(): Boolean = synchronized(runtimeKeyLock) {
+            active && runtimeKeyGeneration.get() == generation
+        }
+
+        internal fun stage(owner: SecurityManager, mdk: ByteArray) {
+            check(owner.isDataReadCurrent(generation)) { "Password verification was revoked" }
+            synchronized(runtimeKeyLock) {
+                check(active && runtimeKeyGeneration.get() == generation) { "Password verification was revoked" }
+                candidate?.fill(0)
+                candidate = mdk.copyOf()
+                manager = owner
+            }
+        }
+
+        internal fun commit(): Boolean {
+            val owner = synchronized(runtimeKeyLock) { manager } ?: return false
+            if (!owner.isDataReadCurrent(generation)) { cancel(); return false }
+            return synchronized(runtimeKeyLock) {
+                if (!active || runtimeKeyGeneration.get() != generation || candidate == null) {
+                    cancel()
+                    return@synchronized false
+                }
+                processCachedMdk = candidate
+                candidate = null
+                manager = null
+                active = false
+                true
+            }
+        }
+
+        internal fun cancel() = synchronized(runtimeKeyLock) {
+            active = false
+            candidate?.fill(0)
+            candidate = null
+            manager = null
+        }
+    }
+
     /**
      * Hash the master password using PBKDF2
      */
@@ -155,7 +218,9 @@ class SecurityManager(private val context: Context) {
     /**
      * Verify the master password.
      */
-    fun verifyMasterPassword(inputPassword: String): Boolean {
+    fun verifyMasterPassword(inputPassword: String, attempt: PasswordVerificationAttempt? = null): Boolean {
+        val generation = attempt?.generation ?: runtimeKeyGeneration.get()
+        if (attempt?.isCurrent() == false) return false
         android.util.Log.d("SecurityManager", "Performing normal password verification")
         val storedHash = sharedPreferences.getString(MASTER_PASSWORD_HASH_KEY, null) ?: return false
         val storedSalt = sharedPreferences.getString(MASTER_PASSWORD_SALT_KEY, null)?.let { saltStr ->
@@ -167,7 +232,7 @@ class SecurityManager(private val context: Context) {
         android.util.Log.d("SecurityManager", "Password verification result: $result")
         if (result) {
             try {
-                ensureMdkInitializedWithPassword(inputPassword)
+                ensureMdkInitializedWithPassword(inputPassword, generation = generation, attempt = attempt)
             } catch (e: Exception) {
                 android.util.Log.w("SecurityManager", "MDK init failed: ${e.javaClass.simpleName}")
                 return false
@@ -176,7 +241,9 @@ class SecurityManager(private val context: Context) {
         return result
     }
 
-    fun unlockVaultWithPassword(inputPassword: String): Boolean {
+    fun unlockVaultWithPassword(inputPassword: String, attempt: PasswordVerificationAttempt? = null): Boolean {
+        val generation = attempt?.generation ?: runtimeKeyGeneration.get()
+        if (attempt?.isCurrent() == false) return false
         if (!isMasterPasswordSet()) {
             return true
         }
@@ -194,7 +261,7 @@ class SecurityManager(private val context: Context) {
                 return false
             }
 
-            ensureMdkInitializedWithPassword(inputPassword)
+            ensureMdkInitializedWithPassword(inputPassword, generation = generation, attempt = attempt)
             true
         } catch (e: Exception) {
             android.util.Log.w("SecurityManager", "Vault password unlock failed: ${e.javaClass.simpleName}")
@@ -222,6 +289,10 @@ class SecurityManager(private val context: Context) {
     }
 
     fun isVaultRuntimeUnlocked(): Boolean {
+        if (runCatching { PreparedSecureStore.unwrap(sharedPreferences) }.isFailure) {
+            clearRuntimeUnlockCache()
+            return false
+        }
         return hasRuntimeUnlockCache()
     }
 
@@ -843,9 +914,15 @@ class SecurityManager(private val context: Context) {
                 ?: throw UnrecoverableKeyException("Existing data key unavailable")
         }
         if (!compat) return read(KEY_ALIAS_DATA)
+        val generation = runtimeKeyGeneration.get()
         cachedCompatDataKey?.let { return it }
         return synchronized(compatDataKeyLock) {
-            cachedCompatDataKey ?: read(KEY_ALIAS_DATA_COMPAT).also { cachedCompatDataKey = it }
+            cachedCompatDataKey ?: read(KEY_ALIAS_DATA_COMPAT).also { key ->
+                synchronized(runtimeKeyLock) {
+                    check(runtimeKeyGeneration.get() == generation) { "Vault locked during key read" }
+                    cachedCompatDataKey = key
+                }
+            }
         }
     }
 
@@ -987,7 +1064,12 @@ class SecurityManager(private val context: Context) {
         return cipher.doFinal(enc)
     }
 
-    private fun ensureMdkInitializedWithPassword(password: String, forceUpdate: Boolean = false) {
+    private fun ensureMdkInitializedWithPassword(
+        password: String,
+        forceUpdate: Boolean = false,
+        generation: Long = runtimeKeyGeneration.get(),
+        attempt: PasswordVerificationAttempt? = null,
+    ) {
         localRecovery.validate(sharedPreferences)
         val initialEnrollment = !isMasterPasswordSet() && !sharedPreferences.getBoolean(MDK_READY_KEY, false)
         val hasPasswordBlob = sharedPreferences.contains(MDK_PASSWORD_BLOB_KEY)
@@ -1005,6 +1087,7 @@ class SecurityManager(private val context: Context) {
         }
         // Missing or damaged key material is never permission to generate a replacement.
         check(actualMdk.size == 32) { "Existing vault key unavailable" }
+        check(runtimeKeyGeneration.get() == generation) { "Vault locked during password authentication" }
         val values = mutableMapOf<String, Any>()
         if (!sharedPreferences.contains("legacy_master_key_description_v1")) {
             values["legacy_master_key_description_v1"] = masterKey.toString()
@@ -1028,7 +1111,6 @@ class SecurityManager(private val context: Context) {
             localRecovery.validate(sharedPreferences)
             android.util.Log.w(logTag, "Local recovery enrollment deferred; original password wrapper retained")
         }
-        processCachedMdk = actualMdk
         // Failure to restore biometric convenience must not replace the password-recoverable MDK.
         // Password authentication unlocks the existing MDK. It is not permission to
         // replace a missing device key or overwrite an unreadable convenience wrapper.
@@ -1037,6 +1119,14 @@ class SecurityManager(private val context: Context) {
         mdkAuthUnavailableUntilMillis = 0L
         hasLoggedMdkAuthExpiredWarning = false
         hasLoggedMdkFallbackEncryption = false
+        // KDF, recovery enrollment and device-key wrapping may outlive a cancelled UI request.
+        // A concurrent lock must win over the password operation's late runtime publication.
+        if (attempt != null) {
+            try { attempt.stage(this, actualMdk) } finally { actualMdk.fill(0) }
+        } else synchronized(runtimeKeyLock) {
+            check(runtimeKeyGeneration.get() == generation) { "Vault locked during password authentication" }
+            processCachedMdk = actualMdk
+        }
     }
 
     private fun ensureMdkKeystoreWrapper() {
@@ -1088,6 +1178,8 @@ class SecurityManager(private val context: Context) {
     }
 
     private fun getMdkForCrypto(): ByteArray? {
+        PreparedSecureStore.unwrap(sharedPreferences)
+        val generation = runtimeKeyGeneration.get()
         processCachedMdk?.let { cached ->
             if (cached.isNotEmpty()) {
                 return cached
@@ -1115,7 +1207,14 @@ class SecurityManager(private val context: Context) {
             cipher.init(Cipher.DECRYPT_MODE, ksKey, spec)
             val mdk = cipher.doFinal(enc)
             check(mdk.size == 32) { "Existing vault key unavailable" }
-            processCachedMdk = mdk
+            PreparedSecureStore.unwrap(sharedPreferences)
+            synchronized(runtimeKeyLock) {
+                if (runtimeKeyGeneration.get() != generation) {
+                    mdk.fill(0)
+                    return null
+                }
+                processCachedMdk = mdk
+            }
             mdkWrapperUnavailable = false
             mdkAuthUnavailableUntilMillis = 0L
             hasLoggedMdkAuthExpiredWarning = false
@@ -1276,9 +1375,20 @@ class SecurityManager(private val context: Context) {
         return DATA_PREFIX_COMPAT + android.util.Base64.encodeToString(combined, android.util.Base64.NO_WRAP)
     }
     
+    /** Validates an existing caller authorization; capturing a generation never authenticates. */
+    internal fun isDataReadCurrent(generation: Long): Boolean = runCatching {
+        PreparedSecureStore.unwrap(sharedPreferences)
+        runtimeKeyGeneration.get() == generation
+    }.getOrDefault(false)
+
     fun decryptData(encryptedData: String): String {
+        PreparedSecureStore.unwrap(sharedPreferences)
+        val generation = runtimeKeyGeneration.get()
         try {
-            return decryptDataWithoutDiagnostic(encryptedData)
+            val result = decryptDataWithoutDiagnostic(encryptedData)
+            PreparedSecureStore.unwrap(sharedPreferences)
+            check(runtimeKeyGeneration.get() == generation) { "Vault changed during data read" }
+            return result
         } catch (error: Exception) {
             val format = when {
                 encryptedData.startsWith(DATA_PREFIX_MDK) -> RuntimeDiagnostics.DataFormat.MDK

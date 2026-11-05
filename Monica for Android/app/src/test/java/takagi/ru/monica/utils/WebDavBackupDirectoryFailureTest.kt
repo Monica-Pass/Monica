@@ -27,7 +27,7 @@ import takagi.ru.monica.webdav.WebDavGateway
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [28], application = Application::class, shadows = [
-    DeviceVaultProviderTest.SecureStoreShadow::class,
+    DeviceVaultProviderTest.SecureStoreShadow::class, DeviceVaultProviderTest.PreparedStoreShadow::class,
     DeviceVaultProviderTest.SecurityShadow::class
 ])
 class WebDavBackupDirectoryFailureTest {

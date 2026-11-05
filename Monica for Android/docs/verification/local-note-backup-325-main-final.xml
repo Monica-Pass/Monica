@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.utils.LocalNoteBackupSelectionTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-05T13:19:27" hostname="JOYIN" time="8.8">
+  <properties/>
+  <testcase name="supportedLegacyLocalNotesReachTheCloudArchiveInput" classname="takagi.ru.monica.utils.LocalNoteBackupSelectionTest" time="8.144"/>
+  <testcase name="supportedLegacyLocalNotesVisibleInNotePageAreCountedForBackup" classname="takagi.ru.monica.utils.LocalNoteBackupSelectionTest" time="0.1"/>
+  <testcase name="ownershipBoundariesAgreeWithNoteScopeAndRemainEligibleForArchive" classname="takagi.ru.monica.utils.LocalNoteBackupSelectionTest" time="0.115"/>
+  <testcase name="ordinaryLocalNotesStillCountAndReachBackup" classname="takagi.ru.monica.utils.LocalNoteBackupSelectionTest" time="0.066"/>
+  <testcase name="moreThanOneThousandLocalNotesAreSelectedWithoutSqlBindOverflow" classname="takagi.ru.monica.utils.LocalNoteBackupSelectionTest" time="0.234"/>
+  <testcase name="realCipherBindingWithoutVaultIdIsNotCountedAsLocal" classname="takagi.ru.monica.utils.LocalNoteBackupSelectionTest" time="0.069"/>
+  <testcase name="backupCountsIncludeArchivedButExcludeTrashAndOtherTypes" classname="takagi.ru.monica.utils.LocalNoteBackupSelectionTest" time="0.071"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[[Robolectric] WARN: Android SDK 36 requires Java 21 (have Java 17). Tests won't be run on SDK 36 unless explicitly requested.
+]]></system-err>
+</testsuite>

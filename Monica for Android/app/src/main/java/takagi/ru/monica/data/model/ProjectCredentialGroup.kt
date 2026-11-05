@@ -8,6 +8,8 @@ import takagi.ru.monica.data.PasswordEntry
 /** Metadata only. Passwords and OTP use PasswordEntry's existing encrypted storage. */
 object ProjectCredentialGroup {
     const val FIELD = "monica.content.credential"
+    enum class RestoreFailure { UNSUPPORTED_METADATA, DUPLICATE_PASSWORD_ID, USERNAME_CONFLICT, OTP_CONFLICT, NOTE_CONFLICT }
+    class RestoreException(val reason: RestoreFailure) : IllegalArgumentException(reason.name)
     fun token(id: String) = "CREDENTIAL:$id"
     data class Metadata(val raw: JsonObject) {
         val projectId get() = raw["projectId"]?.jsonPrimitive?.contentOrNull
@@ -24,10 +26,19 @@ object ProjectCredentialGroup {
         val originalEntryId: Long? = null, val metadata: Metadata? = null)
     data class Group(val id: String = UUID.randomUUID().toString(), val label: String = "",
         val username: String = "", val passwords: List<Password> = listOf(Password()), val otp: String = "",
-        val note: String = "")
+        val note: String = "",
+        // Editor-only baseline; never written into credential metadata.
+        internal val loadedOtp: String? = null,
+        internal val originalOtpByPasswordId: Map<String, String> = emptyMap())
     data class Row(val username: String, val password: Password, val otp: String, val metadata: Metadata)
 
-    fun read(fields: List<CustomFieldDraft>): Metadata? = fields.singleOrNull { it.title == FIELD }?.value?.let(::parse)
+    fun read(fields: List<CustomFieldDraft>): Metadata? {
+        val copies = fields.filter { it.title == FIELD }
+        val first = copies.firstOrNull()?.value?.let(::parse) ?: return null
+        // Older rows can contain repeated system fields. Accept only complete agreement,
+        // including unknown properties; never pick a winner from conflicting copies.
+        return first.takeIf { copies.drop(1).all { parse(it.value)?.raw == first.raw } }
+    }
     fun parse(value: String): Metadata? = runCatching {
         val raw = Json.parseToJsonElement(value).jsonObject
         require(raw["version"]?.jsonPrimitive?.int == 1)
@@ -55,7 +66,10 @@ object ProjectCredentialGroup {
                     if (group.note.isNotEmpty()) put("note", group.note)
                     put("groupOrder", groupIndex); put("passwordOrder", passwordIndex)
                 })
-                Row(group.username, password, group.otp, requireNotNull(parse(raw.toString())))
+                val otp = if (group.loadedOtp != null && group.otp == group.loadedOtp) {
+                    group.originalOtpByPasswordId[password.id] ?: group.otp
+                } else group.otp
+                Row(group.username, password, otp, requireNotNull(parse(raw.toString())))
             }
         }
     }
@@ -63,35 +77,51 @@ object ProjectCredentialGroup {
     fun put(fields: List<CustomFieldDraft>, metadata: Metadata): List<CustomFieldDraft> {
         val existing = fields.filter { it.title == FIELD }
         require(existing.isEmpty() || read(fields) != null) { "Unreadable credential metadata must be preserved" }
-        return fields.filterNot { it.title == FIELD } + (existing.firstOrNull()?.copy(value = metadata.raw.toString())
+        return EntryContentFields.collapseIdenticalOrderCopies(fields.filterNot { it.title == FIELD }) + (existing.firstOrNull()?.copy(
+            value = metadata.raw.toString(), isProtected = existing.any { it.isProtected })
             ?: CustomFieldDraft(title = FIELD, value = metadata.raw.toString()))
     }
 
     /** Entries already belong to the same explicit project. No username/title inference. */
-    fun restore(entries: List<PasswordEntry>, fields: Map<Long, List<CustomFieldDraft>>): List<Group> {
+    fun restoreForEditing(entries: List<PasswordEntry>, fields: Map<Long, List<CustomFieldDraft>>): List<Group> =
+        restore(entries, fields, preservePartialLocalOtp = true)
+
+    fun restore(entries: List<PasswordEntry>, fields: Map<Long, List<CustomFieldDraft>>): List<Group> =
+        restore(entries, fields, preservePartialLocalOtp = false)
+
+    private fun restore(entries: List<PasswordEntry>, fields: Map<Long, List<CustomFieldDraft>>,
+        preservePartialLocalOtp: Boolean): List<Group> {
         if (entries.isEmpty()) return emptyList()
         val metadata = entries.associate { entry ->
             val entryFields = fields[entry.id].orEmpty()
-            require(entryFields.none { it.title == FIELD } || read(entryFields) != null) { "Unsupported credential metadata" }
+            if (entryFields.any { it.title == FIELD } && read(entryFields) == null)
+                throw RestoreException(RestoreFailure.UNSUPPORTED_METADATA)
             entry.id to read(entryFields)
         }
         val identities = metadata.values.filterNotNull().map { it.passwordId }
-        require(identities.distinct().size == identities.size) { "Duplicate credential identities" }
+        if (identities.distinct().size != identities.size) throw RestoreException(RestoreFailure.DUPLICATE_PASSWORD_ID)
         val legacyGroup = metadata.values.filterNotNull().firstOrNull { it.primary }?.groupId ?: UUID.randomUUID().toString()
         return entries.groupBy { metadata[it.id]?.groupId ?: legacyGroup }.values
             .sortedWith(compareBy<List<PasswordEntry>> { group -> metadata[group.first().id]?.groupOrder ?: 0 }.thenBy { it.minOf { row -> row.id } })
             .map { group ->
                 val ordered = group.sortedWith(compareBy<PasswordEntry> { metadata[it.id]?.passwordOrder ?: 0 }.thenBy { it.id })
                 val first = ordered.first(); val meta = metadata[first.id]
-                require(ordered.all { it.username == first.username && it.authenticatorKey == first.authenticatorKey }) {
-                    "Conflicting account fields must not be overwritten"
-                }
-                require(ordered.all { metadata[it.id]?.note.orEmpty() == meta?.note.orEmpty() }) {
-                    "Conflicting credential notes must not be overwritten"
-                }
+                if (ordered.any { it.username != first.username }) throw RestoreException(RestoreFailure.USERNAME_CONFLICT)
+                val otpValues = ordered.map { it.authenticatorKey }.distinct()
+                val partialOtp = otpValues.size == 2 && "" in otpValues
+                val retainPartialOtp = preservePartialLocalOtp && partialOtp &&
+                    ordered.all { it.isLocalOnlyEntry() && metadata[it.id] != null }
+                if (otpValues.size > 1 && !retainPartialOtp) throw RestoreException(RestoreFailure.OTP_CONFLICT)
+                if (ordered.any { metadata[it.id]?.note.orEmpty() != meta?.note.orEmpty() })
+                    throw RestoreException(RestoreFailure.NOTE_CONFLICT)
+                val otp = if (retainPartialOtp) otpValues.single { it.isNotEmpty() } else first.authenticatorKey
                 Group(meta?.groupId ?: legacyGroup, meta?.label.orEmpty(), first.username,
                     ordered.map { row -> Password(metadata[row.id]?.passwordId ?: UUID.randomUUID().toString(), row.password, row.id, metadata[row.id]) },
-                    first.authenticatorKey, meta?.note.orEmpty())
+                    otp, meta?.note.orEmpty(),
+                    loadedOtp = otp.takeIf { retainPartialOtp },
+                    originalOtpByPasswordId = if (retainPartialOtp) ordered.associate {
+                        requireNotNull(metadata[it.id]).passwordId to it.authenticatorKey
+                    } else emptyMap())
             }
     }
 }

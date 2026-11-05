@@ -1,0 +1,70 @@
+raw/module-install.txt
+- KernelSU version: 32525 (kernel) + 32525 (ksud)
+- Installing Oh My Keymint 1.3.5 (247-e9a7a98-release)
+! Unsupported platform: x64
+
+raw/module-first-boot-status.txt
+uid=0(root) gid=0(root) groups=0(root),1004(input),1007(log),1011(adb),1015(sdcard_rw),1028(sdcard_r),1078(ext_data_rw),1079(ext_obb_rw),3001(net_bt_admin),3002(net_bt),3003(inet),3006(net_bw_stats),3009(readproc),3011(uhid),3012(readtracefs) context=u:r:su:s0
+[
+  {
+    "updateJson": "https://raw.githubusercontent.com/ITxiao6666/OhMyKeymint/changelog/update.json",
+    "web": "true",
+    "versionCode": "1",
+    "mount": "false",
+    "author": "James Clef,ITxiao6666",
+    "action": "false",
+    "id": "oh_my_keymint",
+    "remove": "false",
+    "description": "Custom keystore implementation for Android Keystore Spoofer",
+    "version": "1.3.5 (1-ba6f300-release)",
+    "name": "Oh My Keymint",
+    "enabled": "true",
+    "update": "false"
+  }
+]
+keystore       508     1   10950092  12572 binder_ioctl_write_read 0 S keystore2
+keystore       845   838   10789152   9336 hrtimer_nanosleep   0 S keymint
+system         865   845   10772612   2144 unix_stream_read_generic 0 S keymint
+root           871   865   10847892   3304 hrtimer_nanosleep   0 S inject
+root           872   865   10765836   3156 futex_wait          0 S inject
+total 68
+drwxrwx--- 2 keystore keystore  4096 2026-11-05 13:50 .
+drwxrwx--- 4 keystore keystore  4096 2026-11-05 13:50 ..
+-rw-rw---- 1 keystore keystore 31275 2026-11-05 13:50 injector.log
+-rw-rw---- 1 keystore keystore 10184 2026-11-05 13:50 injector.log.1
+-rw-rw---- 1 keystore keystore 14276 2026-11-05 13:50 keymint.log
+508 libd14f782353706d104fb5607c3a7122f1.so
+normal
+
+raw/final-injector.log
+2026-11-05 06:29:09 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1110058 pid=3693 route=Omk
+2026-11-05 06:29:43 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1110060 pid=5359 route=Omk
+
+raw/root-rotation-keymint.log
+2026-11-05 06:22:53 UTC [WARN] kmr_ta - failing DeviceGetKeyCharacteristics request with error Error { location: Some(ErrorLocation { file: "common\\src\\keyblob.rs", line: 468 }), kind: Hal(InvalidKeyBlob, "failed to decrypt keyblob: Error { location: Some(ErrorLocation { file: \"boringssl\\\\src\\\\aes.rs\", line: 276 }), kind: Hal(VerificationFailed, \"failed to finalize: ErrorStack([])\") }") }
+2026-11-05 06:22:53 UTC [WARN] kmr_ta - failing DeviceUpgradeKey request with error Error { location: Some(ErrorLocation { file: "common\\src\\keyblob.rs", line: 468 }), kind: Hal(InvalidKeyBlob, "failed to decrypt keyblob: Error { location: Some(ErrorLocation { file: \"boringssl\\\\src\\\\aes.rs\", line: 276 }), kind: Hal(VerificationFailed, \"failed to finalize: ErrorStack([])\") }") }
+2026-11-05 06:22:53 UTC [ERROR] keymint - fatal startup error: failed to initialize boot-level key cache: src\keymaster\super_key.rs:308 get_level_zero_key failed: src\keymaster\boot_key.rs:169 lookup_or_generate_key failed: src\keymaster\keymint_device.rs:399 upgrading invalid boot-level keyblob: Error::Km(ErrorCode(-33))
+
+raw/after-rotation-status-recheck.txt
+keystore       510     1   10873960  11520 binder_ioctl_write_read 0 S keystore2
+failed to obtain the OMK TEE security level: failed to connect OMK RPC socket: Errno(-111)
+
+raw/module-uninstalled-boot.txt
+[]
+ls: /data/adb/modules/oh_my_keymint: No such file or directory
+ls: /data/misc/keystore/omk: No such file or directory
+
+raw/main-handoff-fix-build-02.log
+BUILD SUCCESSFUL in 2m 44s
+89 actionable tasks: 11 executed, 78 up-to-date
+
+raw/fdroid-handoff-fix-build-01.log
+BUILD SUCCESSFUL in 2m 29s
+90 actionable tasks: 11 executed, 79 up-to-date
+
+Final stock-to-OMK user12 routing, from each retained run logcat:
+fdroid-final-stock-to-omk-reopen-20261105T061930Z-521af144
+11-05 14:19:34.117   508   508 I OhMyKeymint: inject::hook::rewrite::request: event=route method=GetKeyEntry uid=1210060 pid=59108 route=Omk
+
+main-final-stock-to-omk-reopen-20261105T061855Z-56888606
+11-05 14:19:01.410   508 19877 I OhMyKeymint: inject::hook::rewrite::request: event=route method=GetKeyEntry uid=1210058 pid=57785 route=Omk

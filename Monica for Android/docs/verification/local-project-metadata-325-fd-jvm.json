@@ -1,0 +1,42 @@
+[
+  {
+    "name": "takagi.ru.monica.data.model.ProjectCredentialGroupTest",
+    "tests": "8",
+    "skipped": "0",
+    "failures": "0",
+    "errors": "0",
+    "timestamp": "2026-11-05T16:08:46",
+    "hostname": "JOYIN",
+    "time": "0.335"
+  },
+  {
+    "name": "takagi.ru.monica.data.model.ProjectCredentialLegacyOtpTest",
+    "tests": "3",
+    "skipped": "0",
+    "failures": "0",
+    "errors": "0",
+    "timestamp": "2026-11-05T16:08:47",
+    "hostname": "JOYIN",
+    "time": "0.092"
+  },
+  {
+    "name": "takagi.ru.monica.viewmodel.PasswordCredentialSavePlannerTest",
+    "tests": "8",
+    "skipped": "0",
+    "failures": "0",
+    "errors": "0",
+    "timestamp": "2026-11-05T16:08:52",
+    "hostname": "JOYIN",
+    "time": "0.064"
+  },
+  {
+    "name": "takagi.ru.monica.viewmodel.TotpPasswordBindingRegressionGuardTest",
+    "tests": "1",
+    "skipped": "0",
+    "failures": "0",
+    "errors": "0",
+    "timestamp": "2026-11-05T16:08:52",
+    "hostname": "JOYIN",
+    "time": "0.119"
+  }
+]

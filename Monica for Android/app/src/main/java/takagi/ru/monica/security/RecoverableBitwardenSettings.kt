@@ -26,7 +26,9 @@ internal object RecoverableBitwardenSettings {
             // Without verified Monica recovery there is no authority to replace this store.
             throw error
         }
-        mirror(prefs, security)
+        // Startup may read safe defaults before the recovered vault is authenticated.
+        // Keep its original recovery envelope until a normal password/biometric unlock.
+        if (active == null || security.isVaultRuntimeUnlocked()) mirror(prefs, security)
         object : SharedPreferences by prefs {
             override fun edit(): SharedPreferences.Editor {
                 val editor = prefs.edit()
@@ -35,7 +37,7 @@ internal object RecoverableBitwardenSettings {
                         if (recovery.activeStore() != active) return@synchronized false
                         try {
                             val success = editor.commit()
-                            if (success) mirror(prefs, security)
+                            if (success && (active == null || security.isVaultRuntimeUnlocked())) mirror(prefs, security)
                             success
                         } catch (_: Exception) { false }
                     }

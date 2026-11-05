@@ -1,0 +1,57 @@
+{
+  "date": "2026-11-05",
+  "clone_index": 1,
+  "clone_name": "Monica OMK 325 Test",
+  "clone_stopped": true,
+  "clone_data_and_synthetic_users_preserved": true,
+  "original_index": 0,
+  "original_running": true,
+  "original_shell_uid": 2000,
+  "original_users": [
+    0
+  ],
+  "original_monica_packages": [],
+  "public_avd_touched": false,
+  "private_backups_preserved": true,
+  "owned_adb_server_port": 15038,
+  "owned_adb_server_stopped": true,
+  "no_commit_push_tag_release_or_apk_delivery": true,
+  "mumu_info": {
+    "0": {
+      "adb_host_ip": "127.0.0.1",
+      "adb_port": 16384,
+      "android_version": "15.0",
+      "created_timestamp": 1793811814685479,
+      "disk_size_bytes": 4564780176,
+      "error_code": 0,
+      "hyperv_enabled": true,
+      "index": "0",
+      "info_source": "rpc",
+      "is_android_started": true,
+      "is_main": false,
+      "is_process_started": true,
+      "launch_err_code": 0,
+      "launch_err_msg": "",
+      "launch_time": 4907510,
+      "main_wnd": "035C1AE6",
+      "name": "Android Device",
+      "pid": 20936,
+      "player_state": "start_finished",
+      "render_wnd": "06C10910",
+      "vt_enabled": true
+    },
+    "1": {
+      "android_version": "15.0",
+      "created_timestamp": 1793856063204935,
+      "disk_size_bytes": 5226469024,
+      "error_code": 0,
+      "hyperv_enabled": true,
+      "index": "1",
+      "info_source": "rpc",
+      "is_android_started": false,
+      "is_main": false,
+      "is_process_started": false,
+      "name": "Monica OMK 325 Test"
+    }
+  }
+}

@@ -1,5 +1,8 @@
 package takagi.ru.monica.bitwarden.ui
 
+import takagi.ru.monica.ui.navigation.MonicaPageContent
+import takagi.ru.monica.ui.navigation.MonicaPageDialogMotion
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -266,6 +269,9 @@ internal fun BitwardenAccountManagementDialogContent(
                 }
             }
         }
+        MonicaPageDialogMotion()
+        MonicaPageContent(pageKey = Triple(draft.screen, draft.reviewing, info?.state),
+            animateInitial = true, animate = activeSession && resumed, modifier = Modifier.fillMaxSize()) {
         Surface(modifier = Modifier.fillMaxSize().testTag("bitwarden_management_dialog"), color = MaterialTheme.colorScheme.surface) {
             Column(Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().imePadding()) {
                 Row(Modifier.fillMaxWidth().padding(start = 20.dp, end = 8.dp, top = 8.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -352,6 +358,7 @@ internal fun BitwardenAccountManagementDialogContent(
             }
         }
         }
+    }
     }
 }
 

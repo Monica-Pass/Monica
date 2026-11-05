@@ -12,6 +12,15 @@ import takagi.ru.monica.workers.AutoBackupWorker
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicLong
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.launch
+import takagi.ru.monica.security.SecureStartupResult
+import takagi.ru.monica.security.SecureStorageStartup
 
 /**
  * 数据改动后延迟触发 WebDAV 备份。
@@ -24,6 +33,9 @@ class ChangeTriggeredBackupScheduler(private val context: Context) {
 
     private val workManager = WorkManager.getInstance(context)
     private val lastEnqueueUptime = AtomicLong(0L)
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    private val checking = AtomicBoolean(false)
+    @Volatile private var observing = false
 
     private val observer = object : InvalidationTracker.Observer(OBSERVED_TABLES) {
         override fun onInvalidated(tables: Set<String>) {
@@ -35,18 +47,37 @@ class ChangeTriggeredBackupScheduler(private val context: Context) {
      * 开始监听。重复调用是安全的，Room 会忽略已注册的同一 observer 实例。
      */
     fun start() {
+        observing = true
         val database = PasswordDatabase.getDatabase(context)
         database.invalidationTracker.addObserver(observer)
     }
 
     fun stop() {
+        observing = false
+        scope.coroutineContext.cancelChildren()
         val database = PasswordDatabase.getDatabase(context)
         database.invalidationTracker.removeObserver(observer)
     }
 
     private fun onDataChanged() {
-        if (isSuppressed()) return
+        if (!observing || isSuppressed() || !checking.compareAndSet(false, true)) return
+        // Room observers are not coroutine exception boundaries. Never open Keystore or let a
+        // provider failure escape on the invalidation thread, even when backup is disabled.
+        scope.launch {
+            try {
+                if (!SecureStorageStartup.readyForMaintenance) return@launch
+                if (SecureStorageStartup.prepareForEntry(context) !is SecureStartupResult.Ready) return@launch
+                if (!observing || isSuppressed()) return@launch
+                checkAndEnqueue()
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (error: Exception) {
+                android.util.Log.w(TAG, "Backup scheduling deferred: ${error.javaClass.simpleName}")
+            }
+        }.invokeOnCompletion { checking.set(false) }
+    }
 
+    private suspend fun checkAndEnqueue() {
         val helper = WebDavHelper(context)
         if (!helper.isConfigured()) return
 
@@ -60,14 +91,16 @@ class ChangeTriggeredBackupScheduler(private val context: Context) {
         if (previous != 0L && now - previous < ENQUEUE_THROTTLE_MS) return
         if (!lastEnqueueUptime.compareAndSet(previous, now)) return
 
-        enqueue(config)
+        val lastBackup = helper.getLastBackupTime()
+        kotlinx.coroutines.currentCoroutineContext().ensureActive()
+        if (observing && !isSuppressed()) enqueue(config, lastBackup)
     }
 
     /**
      * 用 [ExistingWorkPolicy.REPLACE] 配合 initialDelay 实现静默期：新的改动会替换掉
      * 上一个待执行任务，计时随之重置，因此只有真正停止改动之后才会上传。
      */
-    private fun enqueue(config: WebDavHelper.ChangeTriggeredBackupConfig) {
+    private fun enqueue(config: WebDavHelper.ChangeTriggeredBackupConfig, lastBackupTime: Long) {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .setRequiresBatteryNotLow(true)
@@ -81,7 +114,7 @@ class ChangeTriggeredBackupScheduler(private val context: Context) {
             .setInitialDelay(
                 ChangeTriggeredBackupTiming.requiredDelayMillis(
                     nowMillis = System.currentTimeMillis(),
-                    lastBackupTimeMillis = WebDavHelper(context).getLastBackupTime(),
+                    lastBackupTimeMillis = lastBackupTime,
                     quietMinutes = config.quietMinutes,
                     minIntervalMinutes = config.minIntervalMinutes
                 ),

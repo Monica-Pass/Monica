@@ -15,7 +15,7 @@ import java.util.UUID
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [28], application = Application::class,
-    shadows = [DeviceVaultProviderTest.SecureStoreShadow::class, DeviceVaultProviderTest.SecurityShadow::class])
+    shadows = [DeviceVaultProviderTest.SecureStoreShadow::class, DeviceVaultProviderTest.PreparedStoreShadow::class, DeviceVaultProviderTest.SecurityShadow::class])
 class DeviceSyncModeTest {
     @Test fun protected_preferences_keep_direction_and_existing_pairing_on_reload() {
         val context = RuntimeEnvironment.getApplication()

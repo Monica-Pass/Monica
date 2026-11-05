@@ -98,9 +98,11 @@ open class MonicaInputMethodService : InputMethodService() {
     private var vaultGeneration = 0L
     private var totpSourceCache: List<SecureItem>? = null
     private var cardWalletSourceCache: List<SecureItem>? = null
-    private val walletFillRepository by lazy {
-        takagi.ru.monica.autofill_ng.WalletAutofillRepository(database, securityManager::decryptDataIfMonicaCiphertext)
-    }
+    private var walletFillRepositoryCache: takagi.ru.monica.autofill_ng.WalletAutofillRepository? = null
+    private val walletFillRepository: takagi.ru.monica.autofill_ng.WalletAutofillRepository
+        get() = walletFillRepositoryCache ?: takagi.ru.monica.autofill_ng.WalletAutofillRepository(
+            database, securityManager::decryptDataIfMonicaCiphertext
+        ).also { walletFillRepositoryCache = it }
     private val loadedVaultPanels = mutableMapOf<MonicaImePanel, ImeVaultPresentation>()
     private var pendingUnlockPanel: MonicaImePanel? = null
     private var pendingClearedInputText: String? = null
@@ -160,7 +162,6 @@ open class MonicaInputMethodService : InputMethodService() {
     override fun onCreate() {
         super.onCreate()
         lifecycleOwner.onCreate()
-        securityManager = SecurityManager(applicationContext)
         settingsManager = SettingsManager(applicationContext)
         autofillPreferences = AutofillPreferences(applicationContext)
         database = PasswordDatabase.getDatabase(applicationContext)
@@ -625,6 +626,17 @@ open class MonicaInputMethodService : InputMethodService() {
     }
 
     private suspend fun refreshVaultEntries(force: Boolean = false) {
+        when (val startup = takagi.ru.monica.security.SecureStorageStartup.prepareForEntry(applicationContext)) {
+            is takagi.ru.monica.security.SecureStartupResult.Ready -> securityManager = startup.manager
+            is takagi.ru.monica.security.SecureStartupResult.Blocked -> {
+                invalidateVaultSourceCache()
+                uiState.update { it.copy(unlocked = false, entries = emptyList(),
+                    authenticatorEntries = emptyList(), cardWalletEntries = emptyList(),
+                    databaseOptions = emptyList(), isAutofillLoading = false,
+                    errorMessage = strings.get(takagi.ru.monica.R.string.secure_startup_description)) }
+                return
+            }
+        }
         val settings = settingsManager.settingsFlow.first()
         val isUnlocked = updateUnlockState(settings)
         if (!isUnlocked) {
@@ -828,6 +840,7 @@ open class MonicaInputMethodService : InputMethodService() {
     }
 
     private fun updateUnlockState(settings: AppSettings): Boolean {
+        if (!::securityManager.isInitialized) return false
         val unlocked = if (DeveloperVerificationPolicy.bypassesIdentityVerification(settings)) {
             securityManager.unlockVaultForDeveloperBypass(settings.autoLockMinutes)
         } else {
@@ -1493,7 +1506,8 @@ open class MonicaInputMethodService : InputMethodService() {
         vaultSourceCache = null
         totpSourceCache = null
         cardWalletSourceCache = null
-        walletFillRepository.clear()
+        walletFillRepositoryCache?.clear()
+        walletFillRepositoryCache = null
         loadedVaultPanels.clear()
     }
 

@@ -1,0 +1,65 @@
+{
+  "Status": "complete",
+  "Version": "1.0.325 unreleased",
+  "OrdinaryVersionCode": 12,
+  "FdroidVersionCode": 32,
+  "Baseline": {
+    "Errors": 0,
+    "Tests": 4,
+    "Build": "2m15s",
+    "Failures": 3,
+    "Skipped": 0,
+    "RunnerSeconds": 8.17
+  },
+  "Ordinary": {
+    "DeviceFailures": 0,
+    "FinalJvmBuild": "2m15s",
+    "JvmFailures": 0,
+    "DeviceMethods": 2,
+    "BuildHistory": [
+      "12m51s: main APK built; new test compilation failed",
+      "5m48s: both APKs built; 17/18 JVM passed",
+      "2m15s: final 18/18 JVM passed"
+    ],
+    "DeviceRunnerSeconds": 14.281,
+    "JvmTests": 18,
+    "JvmSkipped": 0
+  },
+  "Fdroid": {
+    "DeviceMethods": 2,
+    "JvmSkipped": 0,
+    "JvmFailures": 0,
+    "DeviceFailures": 0,
+    "DeviceRunnerSeconds": 24.088,
+    "JvmTests": 18,
+    "Build": "15m44s; main/test APK and all selected JVM tasks succeeded"
+  },
+  "SharedSourceAndTestPaths": 5,
+  "FdroidMetadataPassed": true,
+  "ReleaseScriptTests": 6,
+  "Cleanup": {
+    "OwnedGuestRemoved": 13,
+    "AvdConfigAndDataDisksPreserved": true,
+    "RestoredUser": 0,
+    "UnrelatedMuMu5554Preserved": true,
+    "OwnedAvdStopped": true,
+    "PreservedUsers": [
+      0,
+      10,
+      11,
+      12
+    ]
+  },
+  "Limitations": [
+    "Reporter exact record shape and reopen behavior unconfirmed",
+    "No real cloud account or network upload",
+    "No physical device, R8 or visual settings-page acceptance",
+    "Archive readback only; no destination database restore application",
+    "Separate stale UI count possibility not reproduced or fixed"
+  ],
+  "Committed": false,
+  "Pushed": false,
+  "Tagged": false,
+  "Released": false,
+  "ApkDelivered": false
+}

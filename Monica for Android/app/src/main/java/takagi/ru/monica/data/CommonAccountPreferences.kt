@@ -199,10 +199,12 @@ class CommonAccountPreferences(
                 return@edit
             }
 
-            val username = readProtectedPreference(preferences[KEY_DEFAULT_USERNAME]).trim()
-            val email = readProtectedPreference(preferences[KEY_DEFAULT_EMAIL]).trim()
-            val phone = readProtectedPreference(preferences[KEY_DEFAULT_PHONE]).trim()
-            val currentTemplates = decodeTemplates(readProtectedPreference(preferences[KEY_TEMPLATES_JSON])).toMutableList()
+            // A locked or unreadable source is not an empty legacy account. In particular,
+            // never clear the old fields or mark migration complete after a failed decrypt.
+            val username = (readProtectedPreferenceOrNull(preferences[KEY_DEFAULT_USERNAME]) ?: return@edit).trim()
+            val email = (readProtectedPreferenceOrNull(preferences[KEY_DEFAULT_EMAIL]) ?: return@edit).trim()
+            val phone = (readProtectedPreferenceOrNull(preferences[KEY_DEFAULT_PHONE]) ?: return@edit).trim()
+            val currentTemplates = decodeTemplates(readProtectedPreferenceOrNull(preferences[KEY_TEMPLATES_JSON]) ?: return@edit).toMutableList()
 
             fun hasTemplate(type: String, content: String): Boolean {
                 val normalizedType = type.trim().lowercase()
@@ -240,7 +242,10 @@ class CommonAccountPreferences(
                 )
             }
 
-            preferences[KEY_TEMPLATES_JSON] = protectedPreferenceValue(encodeTemplates(currentTemplates))
+            val encrypted = try { protectedPreferenceValue(encodeTemplates(currentTemplates)) }
+            catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+            catch (_: Exception) { return@edit }
+            preferences[KEY_TEMPLATES_JSON] = encrypted
             preferences[KEY_DEFAULT_USERNAME] = ""
             preferences[KEY_DEFAULT_EMAIL] = ""
             preferences[KEY_DEFAULT_PHONE] = ""
@@ -269,20 +274,28 @@ class CommonAccountPreferences(
                         encrypted
                     }.getOrNull() ?: return@forEach
                     preferences[key] = replacement
-                } else preferences[key] = protectedPreferenceValue(raw)
+                } else {
+                    val encrypted = try { protectedPreferenceValue(raw) }
+                    catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+                    catch (_: Exception) { return@forEach }
+                    preferences[key] = encrypted
+                }
             }
         }
     }
 
-    private fun readProtectedPreference(raw: String?): String {
+    private fun readProtectedPreference(raw: String?): String = readProtectedPreferenceOrNull(raw).orEmpty()
+
+    private fun readProtectedPreferenceOrNull(raw: String?): String? {
         if (raw.isNullOrBlank()) return ""
-        return runCatching {
+        return try {
             if (securityManager.looksLikeMonicaCiphertext(raw)) {
                 securityManager.decryptData(raw)
             } else {
                 raw
             }
-        }.getOrDefault("")
+        } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+        catch (_: Exception) { null }
     }
 
     private fun protectedPreferenceValue(value: String): String {

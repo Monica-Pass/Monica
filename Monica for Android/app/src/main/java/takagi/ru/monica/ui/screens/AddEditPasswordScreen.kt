@@ -2319,8 +2319,10 @@ private fun PasswordEntryEditor(
                     preservedWifiMetadata = entry.wifiMetadata
                     if (secretState is SecretValueState.Unreadable || secretState is SecretValueState.Hidden) templateLoadFailed = true
                     try {
-                        templateDraft = takagi.ru.monica.data.model.TemplateCredentialDraft.load(entry,
-                            viewModel.getCustomFieldsByEntryIdSync(actualId).map(CustomFieldDraft::fromCustomField))
+                        templateDraft = withContext(Dispatchers.IO) {
+                            takagi.ru.monica.data.model.TemplateCredentialDraft.load(entry,
+                                viewModel.getCustomFieldsByEntryIdSync(actualId).map(CustomFieldDraft::fromCustomField))
+                        }
                     } catch (cancelled: CancellationException) { throw cancelled
                     } catch (_: Exception) { templateLoadFailed = true }
                     
@@ -2362,25 +2364,38 @@ private fun PasswordEntryEditor(
                         allProjectOriginalIds = siblings.map { it.id }
                         if (!viewModel.prepareNativeEditorSiblings(actualId, allProjectOriginalIds)) {
                             projectCredentialLoadFailed = true
+                            takagi.ru.monica.security.RuntimeDiagnostics.credentialLoadFailure(
+                                takagi.ru.monica.security.RuntimeDiagnostics.CredentialLoadStage.NATIVE_BASELINE)
                         }
                         val projectFields = withContext(Dispatchers.IO) {
                             viewModel.getCustomFieldsByEntryIds(siblings.map { it.id }).mapValues { (_, fields) -> fields.map(CustomFieldDraft::fromCustomField) }
                         }
                         hasProjectCredentialMetadata = projectFields.values.any { fields -> fields.any { it.title == ProjectCredentialGroup.FIELD } }
                         val restoredGroups = if (hasProjectCredentialMetadata) try {
-                            ProjectCredentialGroup.restore(siblings.map { sibling ->
+                            withContext(Dispatchers.IO) { ProjectCredentialGroup.restoreForEditing(siblings.map { sibling ->
                                 val state = viewModel.inspectSecretState(sibling)
                                 check(state is SecretValueState.Available || state == SecretValueState.Empty)
                                 sibling.copy(password = state.plainValueOrEmpty(), authenticatorKey = securityManager.decryptDataIfMonicaCiphertext(sibling.authenticatorKey),
                                     username = if (autofillPasswordUpdate != null) takagi.ru.monica.autofill_ng.AutofillSecretResolver.decryptPasswordOrNull(securityManager, sibling.username) ?: sibling.username else sibling.username)
-                            }, projectFields)
-                        } catch (_: Exception) { projectCredentialLoadFailed = true; emptyList() } else emptyList()
+                            }, projectFields) }
+                        } catch (cancelled: CancellationException) { throw cancelled
+                        } catch (error: Exception) {
+                            projectCredentialLoadFailed = true
+                            takagi.ru.monica.security.RuntimeDiagnostics.credentialLoadFailure(
+                                takagi.ru.monica.security.RuntimeDiagnostics.CredentialLoadStage.RESTORE, error)
+                            emptyList()
+                        } else emptyList()
                         if (restoredGroups.isNotEmpty()) {
                             primaryProjectGroup = restoredGroups.first()
                             extraCredentialGroups.clear(); extraCredentialGroups.addAll(restoredGroups.drop(1))
                             username = primaryProjectGroup.username
                             credentialUsernames.clear(); credentialUsernames.add(username)
                             applyAuthenticatorInput(primaryProjectGroup.otp)
+                            // Loading is not a user edit. Preserve the original payload representation,
+                            // including sparse legacy rows, until the OTP control is actually changed.
+                            authenticatorPayloadOverride = primaryProjectGroup.otp.takeIf { it.isNotEmpty() }
+                            originalAuthenticatorKey = primaryProjectGroup.otp
+                            authenticatorEditedByUser = false
                         }
                         val primarySiblings = if (restoredGroups.isNotEmpty()) siblings.filter { sibling ->
                             primaryProjectGroup.passwords.any { it.originalEntryId == sibling.id }

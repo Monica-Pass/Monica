@@ -1,0 +1,441 @@
+{
+  "date": "2026-11-05",
+  "device": "MuMu clone1, Android15/API35, native x86_64, KernelSU32525",
+  "final_invocations": 20,
+  "distinct_final_methods": {
+    "ordinary": 8,
+    "fdroid": 7
+  },
+  "final_apks": {
+    "ordinary": "bb63c33960500c224c4d0ebdb08730110bf7babfe288d4d317e27f4cf32ad152",
+    "fdroid": "c210d3c5957cb7f966c0efa806ac2dc1d2fa2870174240d52bf473149d323d2f"
+  },
+  "shared_source_sha256": {
+    "app/src/main/java/takagi/ru/monica/security/SecurePreferencesStore.kt": "6431050dcee544ce46a9d9dbbeca050311ddce0100b19333e4ad723f11a6483e",
+    "app/src/androidTest/java/takagi/ru/monica/security/MuMuOmkModuleFixtureTest.kt": "956391092df5fa0a0f7d8c59a0dc36203e0eb3c5ee5823ab2d4f18ea32a569b3",
+    "app/src/androidTest/java/takagi/ru/monica/security/SecureStartupHandoffInstrumentedTest.kt": "a6e5500f4c399860633fd90b1e794e5f4aa64bf1536adc825fe20e1b1f404ae3"
+  },
+  "module": {
+    "source": "ITxiao6666/OhMyKeymint ba6f300",
+    "kind": "local x86_64 full module build",
+    "archive_sha256": "ffa31a01ba2feff28f9a1d0adadcc22b4d8191525bed4743b630f99eec753ec2",
+    "official_arm64_release_validated": false
+  },
+  "root_seed_only": "FAILED: OMK own boot_level_key cannot be decrypted; daemon exits and RPC is unavailable. Monica source prefs/envelope remained unchanged. Not a successful recovery test.",
+  "records": [
+    {
+      "run_id": "fdroid-final-stock-seed-20261105T061740Z-7f459e58",
+      "package": "takagi.ru.monica.fdroid",
+      "user": 12,
+      "method": "seedOriginalVault",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 17.773,
+      "label": "fdroid-final-stock-seed",
+      "final_phase": true,
+      "runner_seconds": 9.848
+    },
+    {
+      "run_id": "fdroid-final-stock-to-omk-cold-20261105T061948Z-c5c81ff1",
+      "package": "takagi.ru.monica.fdroid",
+      "user": 12,
+      "method": "verifyAfterColdRestart",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 13.933,
+      "label": "fdroid-final-stock-to-omk-cold",
+      "final_phase": true,
+      "runner_seconds": 5.978
+    },
+    {
+      "run_id": "fdroid-final-stock-to-omk-reopen-20261105T061930Z-521af144",
+      "package": "takagi.ru.monica.fdroid",
+      "user": 12,
+      "method": "reopenOriginalVault",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 18.279,
+      "label": "fdroid-final-stock-to-omk-reopen",
+      "final_phase": true,
+      "runner_seconds": 10.402
+    },
+    {
+      "run_id": "fdroid-handoff-fixed-1-20261105T061644Z-56af8500",
+      "package": "takagi.ru.monica.fdroid",
+      "user": 12,
+      "method": "queuedHealthyStartupDoesNotObserveCompletedWorkerAsInProgress",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 11.626,
+      "label": "fdroid-handoff-fixed-1",
+      "final_phase": true,
+      "runner_seconds": 3.082
+    },
+    {
+      "run_id": "fdroid-handoff-fixed-2-20261105T061656Z-98d9fdbd",
+      "package": "takagi.ru.monica.fdroid",
+      "user": 12,
+      "method": "providerDeadlineReturnsBlockedBeforeTheReadReturns",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 8.252,
+      "label": "fdroid-handoff-fixed-2",
+      "final_phase": true,
+      "runner_seconds": 0.287
+    },
+    {
+      "run_id": "fdroid-handoff-fixed-3-20261105T061704Z-c2fbc656",
+      "package": "takagi.ru.monica.fdroid",
+      "user": 12,
+      "method": "cancellingStartupReleasesUiWaitButRetainsTheSingleProviderSlot",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 7.937,
+      "label": "fdroid-handoff-fixed-3",
+      "final_phase": true,
+      "runner_seconds": 0.1
+    },
+    {
+      "run_id": "fdroid-handoff-fixed-4-20261105T061712Z-171b724f",
+      "package": "takagi.ru.monica.fdroid",
+      "user": 12,
+      "method": "maintenanceDoesNotRetryBlockedStorageWithoutExplicitStartup",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 8.929,
+      "label": "fdroid-handoff-fixed-4",
+      "final_phase": true,
+      "runner_seconds": 1.162
+    },
+    {
+      "run_id": "fdroid-omk-reinstalled-cold-20261105T062958Z-501bcb9b",
+      "package": "takagi.ru.monica.fdroid",
+      "user": 11,
+      "method": "verifyAfterColdRestart",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 15.388,
+      "label": "fdroid-omk-reinstalled-cold",
+      "final_phase": true,
+      "runner_seconds": 5.957
+    },
+    {
+      "run_id": "fdroid-omk-reinstalled-reopen-20261105T062939Z-5b0cbc5d",
+      "package": "takagi.ru.monica.fdroid",
+      "user": 11,
+      "method": "reopenOriginalVault",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 18.742,
+      "label": "fdroid-omk-reinstalled-reopen",
+      "final_phase": true,
+      "runner_seconds": 10.455
+    },
+    {
+      "run_id": "fdroid-omk-seed-fixed-20261105T061721Z-bcc5114b",
+      "package": "takagi.ru.monica.fdroid",
+      "user": 11,
+      "method": "seedOriginalVault",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 18.976,
+      "label": "fdroid-omk-seed-fixed",
+      "final_phase": true,
+      "runner_seconds": 11.059
+    },
+    {
+      "run_id": "fdroid-stock-seed-20261105T054355Z-589f75a3",
+      "package": "takagi.ru.monica.fdroid",
+      "user": 10,
+      "method": "seedOriginalVault",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 19.674,
+      "label": "fdroid-stock-seed",
+      "final_phase": false,
+      "runner_seconds": 11.151
+    },
+    {
+      "run_id": "fdroid-stock-to-omk-cold-20261105T055559Z-4936df5f",
+      "package": "takagi.ru.monica.fdroid",
+      "user": 10,
+      "method": "verifyAfterColdRestart",
+      "status": "driver_error",
+      "reasons": [
+        "RuntimeError: Logcat did not capture boundary BEGIN_fdroid-stock-to-omk-cold-20261105T055559Z-4936df5f"
+      ],
+      "elapsed_seconds": 10.425,
+      "label": "fdroid-stock-to-omk-cold",
+      "final_phase": false,
+      "runner_seconds": null
+    },
+    {
+      "run_id": "fdroid-stock-to-omk-cold-retry-20261105T055855Z-d9045b25",
+      "package": "takagi.ru.monica.fdroid",
+      "user": 10,
+      "method": "verifyAfterColdRestart",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 16.028,
+      "label": "fdroid-stock-to-omk-cold-retry",
+      "final_phase": false,
+      "runner_seconds": 6.575
+    },
+    {
+      "run_id": "fdroid-stock-to-omk-reopen-20261105T055540Z-1d5db8b9",
+      "package": "takagi.ru.monica.fdroid",
+      "user": 10,
+      "method": "reopenOriginalVault",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 18.642,
+      "label": "fdroid-stock-to-omk-reopen",
+      "final_phase": false,
+      "runner_seconds": 10.559
+    },
+    {
+      "run_id": "main-final-stock-seed-20261105T061542Z-2f5494a7",
+      "package": "takagi.ru.monica",
+      "user": 12,
+      "method": "seedOriginalVault",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 19.731,
+      "label": "main-final-stock-seed",
+      "final_phase": true,
+      "runner_seconds": 10.883
+    },
+    {
+      "run_id": "main-final-stock-to-omk-cold-20261105T061916Z-c2ce1f93",
+      "package": "takagi.ru.monica",
+      "user": 12,
+      "method": "verifyAfterColdRestart",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 14.084,
+      "label": "main-final-stock-to-omk-cold",
+      "final_phase": true,
+      "runner_seconds": 6.04
+    },
+    {
+      "run_id": "main-final-stock-to-omk-reopen-20261105T061855Z-56888606",
+      "package": "takagi.ru.monica",
+      "user": 12,
+      "method": "reopenOriginalVault",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 20.111,
+      "label": "main-final-stock-to-omk-reopen",
+      "final_phase": true,
+      "runner_seconds": 10.471
+    },
+    {
+      "run_id": "main-handoff-fixed-1-20261105T061441Z-1858710e",
+      "package": "takagi.ru.monica",
+      "user": 12,
+      "method": "queuedHealthyStartupDoesNotObserveCompletedWorkerAsInProgress",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 12.703,
+      "label": "main-handoff-fixed-1",
+      "final_phase": true,
+      "runner_seconds": 3.136
+    },
+    {
+      "run_id": "main-handoff-fixed-2-20261105T061454Z-527f6bf5",
+      "package": "takagi.ru.monica",
+      "user": 12,
+      "method": "providerDeadlineReturnsBlockedBeforeTheReadReturns",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 9.065,
+      "label": "main-handoff-fixed-2",
+      "final_phase": true,
+      "runner_seconds": 0.315
+    },
+    {
+      "run_id": "main-handoff-fixed-3-20261105T061503Z-e6664495",
+      "package": "takagi.ru.monica",
+      "user": 12,
+      "method": "cancellingStartupReleasesUiWaitButRetainsTheSingleProviderSlot",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 9.268,
+      "label": "main-handoff-fixed-3",
+      "final_phase": true,
+      "runner_seconds": 0.171
+    },
+    {
+      "run_id": "main-handoff-fixed-4-20261105T061512Z-773910a8",
+      "package": "takagi.ru.monica",
+      "user": 12,
+      "method": "maintenanceDoesNotRetryBlockedStorageWithoutExplicitStartup",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 10.219,
+      "label": "main-handoff-fixed-4",
+      "final_phase": true,
+      "runner_seconds": 1.247
+    },
+    {
+      "run_id": "main-handoff-old-negative-20261105T061328Z-4264c3fa",
+      "package": "takagi.ru.monica",
+      "user": 12,
+      "method": "queuedHealthyStartupDoesNotObserveCompletedWorkerAsInProgress",
+      "status": "failed_or_environment_error",
+      "reasons": [
+        "Missing or ambiguous OK (1 test) summary",
+        "Expected exactly one started/passed method; status codes were ['1', '-2']",
+        "Runner output contains a failure marker: INSTRUMENTATION_STATUS: stack="
+      ],
+      "elapsed_seconds": 10.601,
+      "label": "main-handoff-old-negative",
+      "final_phase": false,
+      "runner_seconds": 3.112
+    },
+    {
+      "run_id": "main-omk-reinstalled-cold-20261105T062924Z-b977a048",
+      "package": "takagi.ru.monica",
+      "user": 11,
+      "method": "verifyAfterColdRestart",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 14.579,
+      "label": "main-omk-reinstalled-cold",
+      "final_phase": true,
+      "runner_seconds": 6.192
+    },
+    {
+      "run_id": "main-omk-reinstalled-reopen-20261105T062904Z-5f9c0d30",
+      "package": "takagi.ru.monica",
+      "user": 11,
+      "method": "reopenOriginalVault",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 20.182,
+      "label": "main-omk-reinstalled-reopen",
+      "final_phase": true,
+      "runner_seconds": 11.094
+    },
+    {
+      "run_id": "main-omk-seed-20261105T055911Z-04d69108",
+      "package": "takagi.ru.monica",
+      "user": 11,
+      "method": "seedOriginalVault",
+      "status": "driver_error",
+      "reasons": [
+        "RuntimeError: Logcat exited before the run was fully captured"
+      ],
+      "elapsed_seconds": 12.834,
+      "label": "main-omk-seed",
+      "final_phase": false,
+      "runner_seconds": null
+    },
+    {
+      "run_id": "main-omk-seed-resume-fixed-20261105T061523Z-5dc0a493",
+      "package": "takagi.ru.monica",
+      "user": 11,
+      "method": "resumeInterruptedSeed",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 19.733,
+      "label": "main-omk-seed-resume-fixed",
+      "final_phase": true,
+      "runner_seconds": 10.771
+    },
+    {
+      "run_id": "main-root-key-change-reopen-20261105T062223Z-8ac5b7d6",
+      "package": "takagi.ru.monica",
+      "user": 11,
+      "method": "reopenOriginalVault",
+      "status": "failed_or_environment_error",
+      "reasons": [
+        "Missing or ambiguous OK (1 test) summary",
+        "Expected exactly one started/passed method; status codes were ['1', '-2']",
+        "Runner output contains a failure marker: INSTRUMENTATION_STATUS: stack="
+      ],
+      "elapsed_seconds": 40.678,
+      "label": "main-root-key-change-reopen",
+      "final_phase": false,
+      "runner_seconds": 30.365
+    },
+    {
+      "run_id": "main-stock-seed-20261105T054218Z-d4f4cf72",
+      "package": "takagi.ru.monica",
+      "user": 10,
+      "method": "seedOriginalVault",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 19.477,
+      "label": "main-stock-seed",
+      "final_phase": false,
+      "runner_seconds": 10.667
+    },
+    {
+      "run_id": "main-stock-to-omk-cold-20261105T055526Z-316dc96f",
+      "package": "takagi.ru.monica",
+      "user": 10,
+      "method": "verifyAfterColdRestart",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 14.189,
+      "label": "main-stock-to-omk-cold",
+      "final_phase": false,
+      "runner_seconds": 6.111
+    },
+    {
+      "run_id": "main-stock-to-omk-reopen-20261105T055441Z-d70fa5ca",
+      "package": "takagi.ru.monica",
+      "user": 10,
+      "method": "reopenOriginalVault",
+      "status": "passed",
+      "reasons": [],
+      "elapsed_seconds": 19.206,
+      "label": "main-stock-to-omk-reopen",
+      "final_phase": false,
+      "runner_seconds": 10.673
+    }
+  ],
+  "vault_outcomes": {
+    "11:takagi.ru.monica": {
+      "phase": "cold_restart_write_verified",
+      "baselineMainLoginVerified": true,
+      "usedConfirmedRecovery": true,
+      "rowId": 1,
+      "newRowId": 2,
+      "coldRowId": 3,
+      "reopenProcessId": 3693,
+      "coldProcessId": 4744
+    },
+    "11:takagi.ru.monica.fdroid": {
+      "phase": "cold_restart_write_verified",
+      "baselineMainLoginVerified": true,
+      "usedConfirmedRecovery": true,
+      "rowId": 1,
+      "newRowId": 2,
+      "coldRowId": 3,
+      "reopenProcessId": 5359,
+      "coldProcessId": 6167
+    },
+    "12:takagi.ru.monica": {
+      "phase": "cold_restart_write_verified",
+      "baselineMainLoginVerified": true,
+      "usedConfirmedRecovery": true,
+      "rowId": 1,
+      "newRowId": 2,
+      "coldRowId": 3,
+      "reopenProcessId": 57785,
+      "coldProcessId": 58520
+    },
+    "12:takagi.ru.monica.fdroid": {
+      "phase": "cold_restart_write_verified",
+      "baselineMainLoginVerified": true,
+      "usedConfirmedRecovery": true,
+      "rowId": 1,
+      "newRowId": 2,
+      "coldRowId": 3,
+      "reopenProcessId": 59108,
+      "coldProcessId": 59834
+    }
+  }
+}

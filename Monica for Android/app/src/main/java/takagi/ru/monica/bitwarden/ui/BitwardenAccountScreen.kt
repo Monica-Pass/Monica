@@ -1,5 +1,7 @@
 package takagi.ru.monica.bitwarden.ui
 
+import takagi.ru.monica.ui.navigation.MonicaPageContent
+
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.layout.*
@@ -217,6 +219,7 @@ fun BitwardenAccountScreen(viewModel: BitwardenViewModel, vaultId: Long, onNavig
                 }
             })
     }
+    MonicaPageContent(pageKey = editing?.lockedGeneration, modifier = Modifier.fillMaxSize()) {
     if (editing != null) {
         key(editing) {
             BitwardenLoginScreen(viewModel,
@@ -226,8 +229,7 @@ fun BitwardenAccountScreen(viewModel: BitwardenViewModel, vaultId: Long, onNavig
                 existingAccount = true, openServerConfigurationOnStart = editing.editConfiguration,
                 reauthentication = BitwardenRepository.ReauthenticationContext(vaultId, editing.lockedGeneration, editing.appGeneration))
         }
-        return
-    }
+    } else {
     Scaffold(topBar = {
         TopAppBar(title = { Text(stringResource(R.string.bitwarden_account_security)) },
             navigationIcon = { IconButton(onClick = onNavigateBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back)) } },
@@ -260,6 +262,8 @@ fun BitwardenAccountScreen(viewModel: BitwardenViewModel, vaultId: Long, onNavig
                 }
             }
         )
+    }
+    }
     }
 }
 

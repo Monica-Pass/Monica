@@ -1,0 +1,31 @@
+2026-11-05 18:37:57 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310062 pid=10559 route=System
+2026-11-05 18:37:57 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310062 pid=10559 route=System
+2026-11-05 18:37:57 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310062 pid=10559 route=System
+2026-11-05 18:43:04 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310062 pid=20460 route=System
+2026-11-05 18:43:19 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310062 pid=20460 route=System
+2026-11-05 18:43:19 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310062 pid=20460 route=System
+2026-11-05 18:44:26 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310058 pid=23111 route=System
+2026-11-05 18:44:26 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310058 pid=23111 route=System
+2026-11-05 18:44:26 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310058 pid=23111 route=System
+2026-11-05 18:44:31 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310058 pid=23111 route=System
+2026-11-05 18:44:31 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310058 pid=23111 route=System
+2026-11-05 18:44:31 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310058 pid=23111 route=System
+2026-11-05 18:45:58 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310062 pid=26147 route=Omk
+2026-11-05 18:45:58 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310062 pid=26147 route=Omk
+2026-11-05 18:45:58 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310062 pid=26147 route=Omk
+2026-11-05 18:48:55 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310062 pid=31900 route=Omk
+2026-11-05 18:48:56 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310062 pid=31900 route=Omk
+2026-11-05 18:48:56 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310062 pid=31900 route=Omk
+2026-11-05 18:47:03 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310058 pid=28381 route=Omk
+2026-11-05 18:47:05 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310058 pid=28381 route=Omk
+2026-11-05 18:47:09 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310058 pid=28381 route=Omk
+2026-11-05 18:49:11 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310058 pid=32405 route=Omk
+2026-11-05 18:49:13 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310058 pid=32405 route=Omk
+2026-11-05 18:49:13 UTC [INFO] inject::hook::rewrite::request - event=route method=GetKeyEntry uid=1310058 pid=32405 route=Omk
+
+11-06 02:45:58.163 26147 26183 W SecureStorage: stage=artifact_inventory undecryptable inventory=SecureStorageArtifactInventory(ciphertextStores=[master_key, nav_stack, settings, fingerprint], keysetPresent=true, masterKeyPresent=false)
+11-06 02:45:58.298 26165 26165 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+11-06 02:45:58.419 26147 26186 I SecureStorage: state=ready
+11-06 02:45:58.591 26147 26187 D GenerateMasterKeyUseCaseImpl: Generated a master key v0 in 1.022061ms
+11-06 02:46:00.737 26165 26165 F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x7f8045478d80 in tid 26165 (Shutdown thread), pid 26165 (Shutdown thread)
+11-06 02:46:00.793 26390 26390 F DEBUG   : pid: 26165, tid: 26165, name: Shutdown thread  >>> uiautomator <<<

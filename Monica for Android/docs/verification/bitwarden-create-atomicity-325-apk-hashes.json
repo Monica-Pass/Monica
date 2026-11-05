@@ -1,0 +1,30 @@
+[
+  {
+    "edition": "main",
+    "file": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.325-26110612-02.APK",
+    "sha256": "31a597a6a5fac0067ab6524817b23cf4b86ec439c001351c1bdac1105e7008e3",
+    "version": "1.0.325-26110612-01",
+    "code": 12
+  },
+  {
+    "edition": "main",
+    "file": "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk",
+    "sha256": "71c669f713ee6f8bf984b38618db505bc6aee06232e17f47f7256d810510c438",
+    "version": "1.0.325-26110612-01",
+    "code": 12
+  },
+  {
+    "edition": "fd",
+    "file": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-worktrees\\monica-fdroid-nearby-steam\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.325.apk",
+    "sha256": "49f072fbdd25115c7d74354c359c18b1fb139e77661582a6b049bd49001ada7e",
+    "version": "1.0.325",
+    "code": 32
+  },
+  {
+    "edition": "fd",
+    "file": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-worktrees\\monica-fdroid-nearby-steam\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk",
+    "sha256": "fc7ec9fb976838418b054145b1958e5529dc8b8999822469203eaed88fd15d0b",
+    "version": "1.0.325",
+    "code": 32
+  }
+]

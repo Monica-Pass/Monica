@@ -31,6 +31,7 @@ import takagi.ru.monica.data.*
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.security.SessionManager
 import takagi.ru.monica.security.SecurePreferencesStore
+import takagi.ru.monica.security.PreparedSecureStore
 import java.io.File
 import java.util.Base64
 import java.util.UUID
@@ -40,7 +41,7 @@ import javax.crypto.spec.SecretKeySpec
 
 /** Uses real Room and the shared Rust JNI replica, with a deterministic OS-key substitute. */
 @RunWith(RobolectricTestRunner::class)
-@Config(sdk = [28], application = Application::class, shadows = [DeviceVaultProviderTest.SecureStoreShadow::class, DeviceVaultProviderTest.SecurityShadow::class])
+@Config(sdk = [28], application = Application::class, shadows = [DeviceVaultProviderTest.SecureStoreShadow::class, DeviceVaultProviderTest.PreparedStoreShadow::class, DeviceVaultProviderTest.SecurityShadow::class])
 @OptIn(ExperimentalCoroutinesApi::class)
 class DeviceVaultProviderTest {
     companion object {
@@ -627,6 +628,12 @@ class DeviceVaultProviderTest {
                     ClassParameter.from(String::class.java,"fixture-master"), ClassParameter.from(Any::class.java,null)),
                     context.getSharedPreferences("fixture-$name",Context.MODE_PRIVATE))
         }
+    }
+    /** Protocol fixtures substitute prepared storage; device tests exercise the real startup gate. */
+    @Implements(value=PreparedSecureStore::class,isInAndroidSdk=false)
+    class PreparedStoreShadow {
+        @Implementation fun open(context: Context): SecurePreferencesStore.Opened =
+            SecureStoreShadow.open(context, SecurePreferencesStore.MONICA, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
     }
     @Implements(value=SecurityManager::class,isInAndroidSdk=false)
     class SecurityShadow {
