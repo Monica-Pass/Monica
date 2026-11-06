@@ -1,0 +1,78 @@
+11-07 03:37:08.912  4961  5035 I TestRunner: started: localMoveAndCopyExcludeMdbxMirrorsButKeepEmptyAndLinkedFolders(takagi.ru.monica.ui.components.MoveFolderScopeTest)
+11-07 03:37:08.943  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@502398a in: PRE_ON_CREATE
+11-07 03:37:08.947  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@502398a in: CREATED
+11-07 03:37:08.948  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@502398a in: STARTED
+11-07 03:37:08.950  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@502398a in: RESUMED
+11-07 03:37:08.959 CONFIG LANDSCAPE
+11-07 03:37:08.983  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@502398a in: PAUSED
+11-07 03:37:08.984  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@502398a in: STOPPED
+11-07 03:37:08.985  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@502398a in: DESTROYED
+11-07 03:37:08.994  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@b9544ea in: PRE_ON_CREATE
+11-07 03:37:08.998  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@b9544ea in: CREATED
+11-07 03:37:08.999  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@b9544ea in: STARTED
+11-07 03:37:09.006  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@b9544ea in: RESUMED
+11-07 03:37:09.208 CONFIG PORTRAIT
+11-07 03:37:09.399  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@b9544ea in: PAUSED
+11-07 03:37:09.401  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@b9544ea in: STOPPED
+11-07 03:37:09.427  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@b9544ea in: DESTROYED
+11-07 03:37:09.432  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@1f6e411 in: PRE_ON_CREATE
+11-07 03:37:09.433  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@1f6e411 in: CREATED
+11-07 03:37:09.434  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@1f6e411 in: STARTED
+11-07 03:37:09.434  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@1f6e411 in: RESUMED
+11-07 03:37:10.502  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@1f6e411 in: PAUSED
+11-07 03:37:10.576  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@1f6e411 in: STOPPED
+11-07 03:37:10.577  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@1f6e411 in: DESTROYED
+11-07 03:37:10.580  4961  5035 E TestRunner: failed: localMoveAndCopyExcludeMdbxMirrorsButKeepEmptyAndLinkedFolders(takagi.ru.monica.ui.components.MoveFolderScopeTest)
+11-07 03:37:10.583  4961  5035 I TestRunner: finished: localMoveAndCopyExcludeMdbxMirrorsButKeepEmptyAndLinkedFolders(takagi.ru.monica.ui.components.MoveFolderScopeTest)
+11-07 03:37:10.584  4961  5035 I TestRunner: started: pendingKeePassConfirmationRechecksConflictAndCannotBeReplayed(takagi.ru.monica.ui.components.MoveFolderScopeTest)
+11-07 03:37:10.613 CONFIG LANDSCAPE
+11-07 03:37:10.641  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@54ae79d in: PRE_ON_CREATE
+11-07 03:37:10.642  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@54ae79d in: CREATED
+11-07 03:37:10.644  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@54ae79d in: STARTED
+11-07 03:37:10.646  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@54ae79d in: RESUMED
+11-07 03:37:10.650  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@54ae79d in: PAUSED
+11-07 03:37:10.650  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@54ae79d in: STOPPED
+11-07 03:37:10.651  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@54ae79d in: DESTROYED
+11-07 03:37:10.656  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@41a543c in: PRE_ON_CREATE
+11-07 03:37:10.657  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@41a543c in: CREATED
+11-07 03:37:10.657  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@41a543c in: STARTED
+11-07 03:37:10.658  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@41a543c in: RESUMED
+11-07 03:37:10.923 CONFIG PORTRAIT
+11-07 03:37:11.062  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@41a543c in: PAUSED
+11-07 03:37:11.063  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@41a543c in: STOPPED
+11-07 03:37:11.080  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@41a543c in: DESTROYED
+11-07 03:37:11.084  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@c573e96 in: PRE_ON_CREATE
+11-07 03:37:11.085  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@c573e96 in: CREATED
+11-07 03:37:11.086  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@c573e96 in: STARTED
+11-07 03:37:11.086  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@c573e96 in: RESUMED
+11-07 03:37:12.149  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@c573e96 in: PAUSED
+11-07 03:37:12.195  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@c573e96 in: STOPPED
+11-07 03:37:12.195  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@c573e96 in: DESTROYED
+11-07 03:37:12.199  4961  5035 E TestRunner: failed: pendingKeePassConfirmationRechecksConflictAndCannotBeReplayed(takagi.ru.monica.ui.components.MoveFolderScopeTest)
+11-07 03:37:12.199  4961  5035 I TestRunner: finished: pendingKeePassConfirmationRechecksConflictAndCannotBeReplayed(takagi.ru.monica.ui.components.MoveFolderScopeTest)
+11-07 03:37:15.635  4961  5035 I TestRunner: started: changingSourceRevokesPendingConfirmationEvenAfterReselectingSameFolder(takagi.ru.monica.ui.components.MoveFolderScopeTest)
+11-07 03:37:15.665  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@4919376 in: PRE_ON_CREATE
+11-07 03:37:15.668  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@4919376 in: CREATED
+11-07 03:37:15.668  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@4919376 in: STARTED
+11-07 03:37:15.670  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@4919376 in: RESUMED
+11-07 03:37:15.674 CONFIG LANDSCAPE
+11-07 03:37:15.703  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@4919376 in: PAUSED
+11-07 03:37:15.706  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@4919376 in: STOPPED
+11-07 03:37:15.706  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@4919376 in: DESTROYED
+11-07 03:37:15.713  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@a3f7357 in: PRE_ON_CREATE
+11-07 03:37:15.715  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@a3f7357 in: CREATED
+11-07 03:37:15.716  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@a3f7357 in: STARTED
+11-07 03:37:15.717  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@a3f7357 in: RESUMED
+11-07 03:37:15.925 CONFIG PORTRAIT
+11-07 03:37:16.069  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@a3f7357 in: PAUSED
+11-07 03:37:16.071  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@a3f7357 in: STOPPED
+11-07 03:37:16.089  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@a3f7357 in: DESTROYED
+11-07 03:37:16.093  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@f13c81f in: PRE_ON_CREATE
+11-07 03:37:16.095  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@f13c81f in: CREATED
+11-07 03:37:16.095  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@f13c81f in: STARTED
+11-07 03:37:16.096  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@f13c81f in: RESUMED
+11-07 03:37:17.164  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@f13c81f in: PAUSED
+11-07 03:37:17.210  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@f13c81f in: STOPPED
+11-07 03:37:17.211  4961  4961 D LifecycleMonitor: Lifecycle status change: androidx.activity.ComponentActivity@f13c81f in: DESTROYED
+11-07 03:37:17.220  4961  5035 E TestRunner: failed: changingSourceRevokesPendingConfirmationEvenAfterReselectingSameFolder(takagi.ru.monica.ui.components.MoveFolderScopeTest)
+11-07 03:37:17.221  4961  5035 I TestRunner: finished: changingSourceRevokesPendingConfirmationEvenAfterReselectingSameFolder(takagi.ru.monica.ui.components.MoveFolderScopeTest)

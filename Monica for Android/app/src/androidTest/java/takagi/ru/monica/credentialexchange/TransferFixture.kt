@@ -218,6 +218,7 @@ internal class TransferFixture {
         fun registerAccount(userId: String, email: String) = synchronized(created) {
             check(UUID.fromString(userId).toString() == userId)
             profiles[userId] = JSONObject().put("id", userId).put("email", email)
+                .put("securityStamp", "synthetic-transfer-$userId")
         }
         private fun currentProfile(): JSONObject = JSONObject(requireNotNull(profiles.values.firstOrNull()).toString())
         @Volatile var rejectFolderRenameId: String? = null

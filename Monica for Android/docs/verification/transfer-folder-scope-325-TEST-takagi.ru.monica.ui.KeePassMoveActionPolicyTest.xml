@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.ui.KeePassMoveActionPolicyTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-06T19:00:21" hostname="JOYIN" time="0.004">
+  <properties/>
+  <testcase name="still protects unsupported destructive targets" classname="takagi.ru.monica.ui.KeePassMoveActionPolicyTest" time="0.003"/>
+  <testcase name="copy requests are never rewritten" classname="takagi.ru.monica.ui.KeePassMoveActionPolicyTest" time="0.0"/>
+  <testcase name="keeps move for a different KeePass database" classname="takagi.ru.monica.ui.KeePassMoveActionPolicyTest" time="0.0"/>
+  <testcase name="keeps move when reorganizing into Monica or MDBX" classname="takagi.ru.monica.ui.KeePassMoveActionPolicyTest" time="0.0"/>
+  <testcase name="keeps move for another group in the same KeePass database" classname="takagi.ru.monica.ui.KeePassMoveActionPolicyTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

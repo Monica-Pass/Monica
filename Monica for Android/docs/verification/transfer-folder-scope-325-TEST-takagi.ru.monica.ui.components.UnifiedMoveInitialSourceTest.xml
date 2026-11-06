@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.ui.components.UnifiedMoveInitialSourceTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-06T19:00:21" hostname="JOYIN" time="0.006">
+  <properties/>
+  <testcase name="KeePass filters use their owning database" classname="takagi.ru.monica.ui.components.UnifiedMoveInitialSourceTest" time="0.005"/>
+  <testcase name="global filters fall back to Monica" classname="takagi.ru.monica.ui.components.UnifiedMoveInitialSourceTest" time="0.0"/>
+  <testcase name="missing source falls back to Monica and can resolve after loading" classname="takagi.ru.monica.ui.components.UnifiedMoveInitialSourceTest" time="0.0"/>
+  <testcase name="local filters use Monica as the initial database" classname="takagi.ru.monica.ui.components.UnifiedMoveInitialSourceTest" time="0.0"/>
+  <testcase name="Bitwarden filters use their owning vault" classname="takagi.ru.monica.ui.components.UnifiedMoveInitialSourceTest" time="0.0"/>
+  <testcase name="MDBX filters use their owning database" classname="takagi.ru.monica.ui.components.UnifiedMoveInitialSourceTest" time="0.001"/>
+  <testcase name="available source keeps the requested database selected" classname="takagi.ru.monica.ui.components.UnifiedMoveInitialSourceTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

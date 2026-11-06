@@ -1,0 +1,185 @@
+{
+  "sharedFileSha256": {
+    "app/src/main/java/takagi/ru/monica/ui/components/UnifiedMoveToCategoryBottomSheet.kt": "129166274dbaffb13cfe3126551d6359ca43e4119fc0be2f1e5fd8b2e86a71be",
+    "app/src/androidTest/java/takagi/ru/monica/ui/components/MoveFolderScopeTest.kt": "2caf9e7c1efe7ed91a078adaef123f913de684c7d01d6e9dfdca05618a409339",
+    "app/src/androidTest/java/takagi/ru/monica/credentialexchange/TransferFixture.kt": "fbe016e7c3992c18d98fae5ba480dd4cae0c42cf9c68400007c50610340121d2",
+    "app/src/androidTest/java/takagi/ru/monica/repository/BitwardenFolderTransferInstrumentedTest.kt": "e8df7c5989ce4d0112ef0c612c03234e81d80e23a9a23b01249f38dcb244cb9b"
+  },
+  "builds": {
+    "main": {
+      "edition": "main",
+      "exitCode": 0,
+      "seconds": 624.634,
+      "inputsUnchanged": true,
+      "jvm": {
+        "tests": 65,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "apks": {
+        "Monica-Android-x86_64-1.0.325-26110712-23.APK": "056ce1ac623019959d5b19415d868f638a04539d8ccce0a0397f46a9b9b3c912",
+        "app-debug-androidTest.apk": "2ca50693bd0f23c570842badd57aa2a543fefdf1f94239e54e35a7cdfc415f53"
+      }
+    },
+    "fd": {
+      "edition": "fd",
+      "exitCode": 0,
+      "seconds": 695.059,
+      "inputsUnchanged": true,
+      "jvm": {
+        "tests": 65,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "apks": {
+        "Monica-Android-x86_64-1.0.325.apk": "14bd756ba04c28f4d90985e9faf8311f4cd26566df8f2761a8fb0067b50ac657",
+        "app-debug-androidTest.apk": "3d7e78527a910c8f625995aa29f17d7a43772543ad7bcc88131d658aeb0bbebf"
+      }
+    }
+  },
+  "finalTestBuilds": {
+    "main": {
+      "edition": "main",
+      "exitCode": 0,
+      "seconds": 131.82,
+      "inputsUnchanged": true,
+      "testBuildOnly": true,
+      "apks": {
+        "Monica-Android-x86_64-1.0.325-26110712-23.APK": "056ce1ac623019959d5b19415d868f638a04539d8ccce0a0397f46a9b9b3c912",
+        "app-debug-androidTest.apk": "67ebcf69b89c7c75fd12b2a00d3000287b29f3f26c9cb80abab3a28f3b038f20"
+      }
+    },
+    "fd": {
+      "edition": "fd",
+      "exitCode": 0,
+      "seconds": 133.376,
+      "inputsUnchanged": true,
+      "testBuildOnly": true,
+      "apks": {
+        "Monica-Android-x86_64-1.0.325.apk": "14bd756ba04c28f4d90985e9faf8311f4cd26566df8f2761a8fb0067b50ac657",
+        "app-debug-androidTest.apk": "07f57ee58b0e0295fa975d0076cacbca9a560161b267ebf74934f064019c8997"
+      }
+    }
+  },
+  "devices": {
+    "main": {
+      "picker": {
+        "edition": "main",
+        "group": "picker",
+        "seconds": 17.413,
+        "exitCode": 0,
+        "runnerSuccess": true,
+        "passedCount": 13
+      },
+      "regression": {
+        "edition": "main",
+        "group": "regression",
+        "seconds": 19.632,
+        "exitCode": 0,
+        "runnerSuccess": true,
+        "passedCount": 22
+      }
+    },
+    "fd": {
+      "picker": {
+        "edition": "fd",
+        "group": "picker",
+        "seconds": 16.091,
+        "exitCode": 0,
+        "runnerSuccess": true,
+        "passedCount": 13
+      },
+      "regression": {
+        "edition": "fd",
+        "group": "regression",
+        "seconds": 16.489,
+        "exitCode": 0,
+        "runnerSuccess": true,
+        "passedCount": 22
+      }
+    }
+  },
+  "initialPortraitBatches": {
+    "main": {
+      "passed": 11,
+      "failed": {
+        "takagi.ru.monica.ui.components.MoveFolderScopeTest#pendingKeePassConfirmationRechecksConflictAndCannotBeReplayed": "java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs",
+        "takagi.ru.monica.ui.components.MoveFolderScopeTest#noAllowedSourceDoesNotFallBackToLocalFolders": "java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs"
+      },
+      "fullyPassed": false
+    },
+    "fd": {
+      "passed": 9,
+      "failed": {
+        "takagi.ru.monica.ui.components.MoveFolderScopeTest#localMoveAndCopyExcludeMdbxMirrorsButKeepEmptyAndLinkedFolders": "java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs",
+        "takagi.ru.monica.ui.components.MoveFolderScopeTest#pendingKeePassConfirmationRechecksConflictAndCannotBeReplayed": "java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs",
+        "takagi.ru.monica.ui.components.MoveFolderScopeTest#noAllowedSourceDoesNotFallBackToLocalFolders": "java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs",
+        "takagi.ru.monica.ui.components.MoveFolderScopeTest#bitwardenSwitchDoesNotAssignPreviousFolderToDelayedVault": "java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs"
+      },
+      "fullyPassed": false
+    }
+  },
+  "readinessOnlyMain": {
+    "edition": "main",
+    "group": "picker",
+    "seconds": 20.136,
+    "exitCode": 0,
+    "runnerSuccess": false,
+    "passedCount": null
+  },
+  "finalUiLifecycle": {
+    "main": {
+      "activityCreates": 13,
+      "activityDestroyed": 13,
+      "configurationChanges": 1,
+      "pid": "8237",
+      "allPassed": true,
+      "configurationChangesAfterFirstActivityCreate": 0
+    },
+    "fd": {
+      "activityCreates": 13,
+      "activityDestroyed": 13,
+      "configurationChanges": 0,
+      "pid": "10023",
+      "allPassed": true,
+      "configurationChangesAfterFirstActivityCreate": 0
+    }
+  },
+  "storageTestApks": {
+    "main": {
+      "Monica-Android-x86_64-1.0.325-26110712-23.APK": "056ce1ac623019959d5b19415d868f638a04539d8ccce0a0397f46a9b9b3c912",
+      "app-debug-androidTest.apk": "94d1ca933d1caa7a51bbeb19969ce5cf1325ca4c36791e98c7dc29b2cccb0447"
+    },
+    "fd": {
+      "Monica-Android-x86_64-1.0.325.apk": "14bd756ba04c28f4d90985e9faf8311f4cd26566df8f2761a8fb0067b50ac657",
+      "app-debug-androidTest.apk": "581e5880a1830d32aaf24882777b2df63a81eb7319496b68be815fd8c6f1acc2"
+    }
+  },
+  "baseline": {
+    "methods": 8,
+    "passed": 1,
+    "failed": 7,
+    "productionFailures": 6,
+    "frameworkFailures": 1,
+    "bitwardenIndependentRun": "same old APKs; one expected old-source assertion failure"
+  },
+  "interruptedBuild": "main01 deliberately stopped at 173.871s for callback review correction; not a product failure",
+  "cleanup": {
+    "restoredOriginalUser": 0,
+    "removedOnlyOwnTestUser": 13,
+    "restoredUserRotation": "free",
+    "restoredFixedRotation": "default",
+    "ownEmulatorAndAdbStopped": true,
+    "originalUsersAndVirtualDisksPreserved": true
+  },
+  "scope": "Synthetic MuMu API35 x86_64 Debug only; actual Compose sheet callbacks plus separate storage regressions; no user database, OEM or R8 validation",
+  "fixedPackageFirstRun": {
+    "picker": "12/13; count 2 before scrolling found0",
+    "regression": "21/22; synthetic Bitwarden profile missing required securityStamp"
+  },
+  "readinessCorrection": "Only tests wait for the actual modal confirm node with the default bounded timeout before assertions; no production change or assertion removed. Readiness alone failed3; logs proved rotation and Activity recreation. Fixed device orientation for final UI batches; no claim of app rotation restoration.",
+  "imagesCommitted": false,
+  "releaseOrTagCreated": false
+}

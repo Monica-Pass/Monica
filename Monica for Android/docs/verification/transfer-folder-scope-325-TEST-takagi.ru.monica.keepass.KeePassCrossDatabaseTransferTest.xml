@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.keepass.KeePassCrossDatabaseTransferTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-06T19:00:19" hostname="JOYIN" time="0.018">
+  <properties/>
+  <testcase name="bindPasswordKeepsExistingKeePassUuidWhenTargetDatabaseMatches" classname="takagi.ru.monica.keepass.KeePassCrossDatabaseTransferTest" time="0.001"/>
+  <testcase name="nativeMoveProjectionUsesPersistedTargetUuidWithoutRewritingKdbx" classname="takagi.ru.monica.keepass.KeePassCrossDatabaseTransferTest" time="0.008"/>
+  <testcase name="nativePasswordMoveRoutingFallsBackForProjectionOnlyEntries" classname="takagi.ru.monica.keepass.KeePassCrossDatabaseTransferTest" time="0.001"/>
+  <testcase name="nativePasswordMoveRoutingUsesRawEntryForSameAndCrossDatabaseMoves" classname="takagi.ru.monica.keepass.KeePassCrossDatabaseTransferTest" time="0.001"/>
+  <testcase name="forcedPasswordTargetUuidIsStableForRetriesAndGroupAware" classname="takagi.ru.monica.keepass.KeePassCrossDatabaseTransferTest" time="0.0"/>
+  <testcase name="secureItemTargetUuidIsStableAndTypeAwareForRetries" classname="takagi.ru.monica.keepass.KeePassCrossDatabaseTransferTest" time="0.007"/>
+  <testcase name="secureItemTargetUuidReusesExistingUuidForSameDatabase" classname="takagi.ru.monica.keepass.KeePassCrossDatabaseTransferTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

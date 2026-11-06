@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.bitwarden.service.BitwardenFolderTransferTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-06T19:00:18" hostname="JOYIN" time="0.068">
+  <properties/>
+  <testcase name="copyAtSameLocationAllocatesIndependentFolderNames" classname="takagi.ru.monica.bitwarden.service.BitwardenFolderTransferTest" time="0.033"/>
+  <testcase name="encryptedCopyRetainsUnknownFieldsAndItemKeyWithNewFolderIdentity" classname="takagi.ru.monica.bitwarden.service.BitwardenFolderTransferTest" time="0.033"/>
+  <testcase name="attachmentsPasskeysAndOrganizationKeysCannotBeSilentlyCopied" classname="takagi.ru.monica.bitwarden.service.BitwardenFolderTransferTest" time="0.0"/>
+  <testcase name="movePlansWholeTreeWithoutSimilarlyNamedSiblings" classname="takagi.ru.monica.bitwarden.service.BitwardenFolderTransferTest" time="0.0"/>
+  <testcase name="staleCyclicAndUnchangedMoveTargetsAreRejected" classname="takagi.ru.monica.bitwarden.service.BitwardenFolderTransferTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

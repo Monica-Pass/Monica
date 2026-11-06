@@ -4,6 +4,8 @@
 
 ## 中文
 
+- 修复移动/复制目标中混入其他数据库文件夹的问题：Monica 分类与主列表采用相同的归属范围，切库后等待目标库的文件夹加载；已消失的目标和过期确认不能继续执行。保留有效空分类、同名分类及原数据库内容。
+
 - 此版本已移除整个去重引擎，包括单数据库分析与清理、跨数据库去重合并及相关入口。现有数据库和记录保持不变；列表显示去重、导入导出、备份恢复及同步功能保留。
 
 - 改善 KeePass 切库显示：移除简化标题预览，加载时暂时保留上一库的实际列表组件，包括卡片、账号、图标、筛选、文件夹及滚动位置；目标库和列表准备好后才替换并恢复操作。仅保留前台的一份上一列表，锁定或离开前台时清除，不作为保存、同步或合并的数据来源；切换期间屏蔽点击、长按、滑动及迟到回调。加载、锁定与读取失败状态保持一致的紧凑尺寸，点击整条可解锁或重试。
@@ -68,6 +70,8 @@
 - 加强同步修订冲突处理及账号安全状态变化后的重新认证，保留较新的本地修改。
 
 ## English
+
+- Fix move/copy destinations showing folders from other databases. Monica categories use the same ownership scope as the main list, and switching databases waits for that database’s folders. Missing targets and stale confirmations cannot proceed. Preserve valid empty and same-name categories and existing database contents.
 
 - This version removes the entire dedup engine, including single-database analysis and cleanup, cross-database deduplication and merge, and their entry points. Existing databases and records remain unchanged; list display deduplication, import/export, backup/restore and sync remain available.
 

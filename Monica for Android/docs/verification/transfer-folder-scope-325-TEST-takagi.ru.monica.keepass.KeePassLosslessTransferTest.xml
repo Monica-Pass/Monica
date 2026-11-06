@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.keepass.KeePassLosslessTransferTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-06T19:00:19" hostname="JOYIN" time="1.045">
+  <properties/>
+  <testcase name="target first transfer leaves source untouched when target verification fails" classname="takagi.ru.monica.keepass.KeePassLosslessTransferTest" time="0.058"/>
+  <testcase name="copies complete native entry with binary and custom icon payloads" classname="takagi.ru.monica.keepass.KeePassLosslessTransferTest" time="0.05"/>
+  <testcase name="same database relocation preserves native entry without deletion tombstone" classname="takagi.ru.monica.keepass.KeePassLosslessTransferTest" time="0.003"/>
+  <testcase name="inserted native payload remains equal after KDBX encode decode round trip" classname="takagi.ru.monica.keepass.KeePassLosslessTransferTest" time="0.915"/>
+  <testcase name="target first transfer verifies durable target before removing source" classname="takagi.ru.monica.keepass.KeePassLosslessTransferTest" time="0.003"/>
+  <testcase name="target first transfer leaves source untouched when target persistence fails" classname="takagi.ru.monica.keepass.KeePassLosslessTransferTest" time="0.005"/>
+  <testcase name="rejects target UUID collision with different native content" classname="takagi.ru.monica.keepass.KeePassLosslessTransferTest" time="0.004"/>
+  <testcase name="source remains intact until explicit removal after target insertion" classname="takagi.ru.monica.keepass.KeePassLosslessTransferTest" time="0.007"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

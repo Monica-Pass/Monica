@@ -1,0 +1,68 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MoveFolderScopeTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.components.MoveFolderScopeTest:
+INSTRUMENTATION_STATUS: test=bitwardenSwitchDoesNotAssignPreviousFolderToDelayedVault
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.MoveFolderScopeTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failed: assertDoesNotExist.
+Reason: Did not expect any node but found '1' node that satisfies: (Text + InputText + EditableText contains 'Only source A' (ignoreCase: false))
+Node found:
+Node #101 at (l=42.0, t=773.0, r=1052.0, b=899.0)px
+IsContainer = 'true'
+Shape = 'RectangleShape'
+Text = '[Only source A, fixture2@example.invalid]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.assertDoesNotExist(SemanticsNodeInteraction.kt:101)
+	at takagi.ru.monica.ui.components.MoveFolderScopeTest.delayedSwitch(MoveFolderScopeTest.kt:168)
+	at takagi.ru.monica.ui.components.MoveFolderScopeTest.bitwardenSwitchDoesNotAssignPreviousFolderToDelayedVault(MoveFolderScopeTest.kt:141)
+
+INSTRUMENTATION_STATUS: stream=
+Error in bitwardenSwitchDoesNotAssignPreviousFolderToDelayedVault(takagi.ru.monica.ui.components.MoveFolderScopeTest):
+java.lang.AssertionError: Failed: assertDoesNotExist.
+Reason: Did not expect any node but found '1' node that satisfies: (Text + InputText + EditableText contains 'Only source A' (ignoreCase: false))
+Node found:
+Node #101 at (l=42.0, t=773.0, r=1052.0, b=899.0)px
+IsContainer = 'true'
+Shape = 'RectangleShape'
+Text = '[Only source A, fixture2@example.invalid]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.assertDoesNotExist(SemanticsNodeInteraction.kt:101)
+	at takagi.ru.monica.ui.components.MoveFolderScopeTest.delayedSwitch(MoveFolderScopeTest.kt:168)
+	at takagi.ru.monica.ui.components.MoveFolderScopeTest.bitwardenSwitchDoesNotAssignPreviousFolderToDelayedVault(MoveFolderScopeTest.kt:141)
+
+INSTRUMENTATION_STATUS: test=bitwardenSwitchDoesNotAssignPreviousFolderToDelayedVault
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 1.506
+There was 1 failure:
+1) bitwardenSwitchDoesNotAssignPreviousFolderToDelayedVault(takagi.ru.monica.ui.components.MoveFolderScopeTest)
+java.lang.AssertionError: Failed: assertDoesNotExist.
+Reason: Did not expect any node but found '1' node that satisfies: (Text + InputText + EditableText contains 'Only source A' (ignoreCase: false))
+Node found:
+Node #101 at (l=42.0, t=773.0, r=1052.0, b=899.0)px
+IsContainer = 'true'
+Shape = 'RectangleShape'
+Text = '[Only source A, fixture2@example.invalid]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.assertDoesNotExist(SemanticsNodeInteraction.kt:101)
+	at takagi.ru.monica.ui.components.MoveFolderScopeTest.delayedSwitch(MoveFolderScopeTest.kt:168)
+	at takagi.ru.monica.ui.components.MoveFolderScopeTest.bitwardenSwitchDoesNotAssignPreviousFolderToDelayedVault(MoveFolderScopeTest.kt:141)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

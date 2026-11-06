@@ -14,6 +14,23 @@ import takagi.ru.monica.credentialexchange.*
 import java.util.UUID
 
 class BitwardenFolderTransferInstrumentedTest {
+    @Before fun unlockSyntheticLocalVaultForHistorySync() {
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val security = takagi.ru.monica.security.SecurityManager(instrumentation.targetContext)
+        val password = InstrumentationRegistry.getArguments().getString("testMasterPassword")
+            ?: "Synthetic Bitwarden settings fixture 325!"
+        if (!security.isMasterPasswordSet()) check(security.setMasterPassword(password))
+        check(security.unlockVaultWithPassword(password)) {
+            "Existing test vault password differs; refusing to reset its data"
+        }
+        check(security.isVaultRuntimeUnlocked()) { "Synthetic fixture MDK was not loaded" }
+        instrumentation.runOnMainSync { takagi.ru.monica.security.SessionManager.markUnlocked() }
+        val probe = security.encryptData("synthetic-history-session")
+        check(probe.startsWith("MDK|") && security.decryptData(probe) == "synthetic-history-session") {
+            "Synthetic history fixture requires authenticated MDK encryption"
+        }
+    }
+
     /** Explicit recovery only: never sweep pre-existing fixture databases on the shared AVD. */
     @Before fun recoverExplicitlyOwnedFailedFixtures() = runBlocking {
         val prefixes = InstrumentationRegistry.getArguments().getString("folderFixtureCleanupPrefixes")
@@ -72,6 +89,8 @@ class BitwardenFolderTransferInstrumentedTest {
             synchronized(f.remote.created) { f.remote.created += source }
             val target = ExternalFolderTarget.Bitwarden(vault.databaseId, work.bitwardenFolderId, "Work")
             service.transfer(target, DatabaseManagerLocation(vault), true)
+            val refreshedVault = f.db.bitwardenVaultDao().getVaultById(vault.databaseId)!!
+            assertEquals("synthetic-transfer-${refreshedVault.userId}", refreshedVault.revisionDate)
             val copied = synchronized(f.remote.created) { f.remote.created.single { it.getString("id") != source.getString("id") } }
             assertEquals(secret, copied.getJSONObject("login").getString("password"))
             assertEquals("opaque-encrypted-value", copied.getJSONObject("futureEncryptedField").getString("blob"))

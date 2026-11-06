@@ -42,6 +42,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.key
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -60,6 +63,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import takagi.ru.monica.R
 import takagi.ru.monica.data.Category
+import takagi.ru.monica.data.isMonicaLocalCategory
 import takagi.ru.monica.data.KeePassOperationBlockReason
 import takagi.ru.monica.data.KeePassStorageLocation
 import takagi.ru.monica.data.writeOperationAvailability
@@ -162,6 +166,13 @@ fun UnifiedMoveToCategoryBottomSheet(
     val blockedKeePassOperation = remember { mutableStateOf<KeePassUnavailableMoveState?>(null) }
     val selectedTarget = remember { mutableStateOf<UnifiedMoveCategoryTarget?>(null) }
     val selectedTargetLabel = remember { mutableStateOf<String?>(null) }
+    val pendingConfirmation = remember { mutableStateOf<Any?>(null) }
+    DisposableEffect(Unit) {
+        onDispose { pendingConfirmation.value = null }
+    }
+    LaunchedEffect(allowMove, allowCopy) {
+        pendingConfirmation.value = null
+    }
     LaunchedEffect(allowMove) {
         if (!allowMove && selectedAction.value == UnifiedMoveAction.MOVE) {
             selectedAction.value = UnifiedMoveAction.COPY
@@ -194,7 +205,7 @@ fun UnifiedMoveToCategoryBottomSheet(
         }
     }
 
-    val localKeePassDatabases = keepassDatabases
+    val currentKeePassDatabases by rememberUpdatedState(keepassDatabases)
     val monicaCategoryNodes = remember(categories) { buildMonicaCategoryNodes(categories) }
     val categoryNoneLabel = stringResource(R.string.category_none)
     val bitwardenRootLabel = stringResource(R.string.folder_no_folder_root)
@@ -266,6 +277,7 @@ fun UnifiedMoveToCategoryBottomSheet(
         target: UnifiedMoveCategoryTarget,
         label: String
     ) {
+        pendingConfirmation.value = null
         selectedTarget.value = target
         selectedTargetLabel.value = label
     }
@@ -305,28 +317,6 @@ fun UnifiedMoveToCategoryBottomSheet(
             )
         }
     }
-    fun confirmSelectedTarget() {
-        val target = selectedTarget.value ?: return
-        val keepassDatabaseId = when (target) {
-            is UnifiedMoveCategoryTarget.KeePassDatabaseTarget -> target.databaseId
-            is UnifiedMoveCategoryTarget.KeePassGroupTarget -> target.databaseId
-            else -> null
-        }
-        if (keepassDatabaseId != null) {
-            val database = localKeePassDatabases.firstOrNull { it.id == keepassDatabaseId }
-            val availability = database?.writeOperationAvailability()
-            if (database == null || availability?.canOperate != true) {
-                blockedKeePassOperation.value = KeePassUnavailableMoveState(
-                    databaseName = database?.name ?: keepassRootLabel,
-                    reason = availability?.reason ?: KeePassOperationBlockReason.NEEDS_REFRESH
-                )
-                return
-            }
-        }
-        val action = selectedAction.value
-        val proceed = { onTargetSelected(target, action) }
-        onBeforeTargetSelected?.invoke(target, action, proceed) ?: proceed()
-    }
 
     val activeSource = sources.firstOrNull { it.key == activeSourceKey.value }
         ?: sources.firstOrNull()
@@ -335,27 +325,33 @@ fun UnifiedMoveToCategoryBottomSheet(
     LaunchedEffect(activeMdbxDatabaseId) {
         activeMdbxDatabaseId?.let(refreshMdbxFolders)
     }
-    val bitwardenFolders by remember(activeSource.key, showBitwardenFolderTargets) {
-        if (activeSource is MovePickerSource.BitwardenVaultSource && showBitwardenFolderTargets) {
-            getBitwardenFolders(activeSource.vault.id)
-        } else {
-            flowOf(emptyList())
-        }
-    }.collectAsState(initial = emptyList())
-    val keepassGroups by remember(activeSource.key, showBitwardenFolderTargets) {
-        if (activeSource is MovePickerSource.KeePassDatabase) {
-            getKeePassGroups(activeSource.database.id)
-        } else {
-            flowOf(emptyList())
-        }
-    }.collectAsState(initial = emptyList())
-    val mdbxFolders by remember(activeSource.key, showBitwardenFolderTargets) {
-        if (activeSource is MovePickerSource.MdbxDatabase) {
-            getMdbxFolders(activeSource.database.id)
-        } else {
-            flowOf(emptyList())
-        }
-    }.collectAsState(initial = emptyList())
+    val bitwardenFolders by key(activeSource.key, showBitwardenFolderTargets) {
+        remember {
+            if (activeSource is MovePickerSource.BitwardenVaultSource && showBitwardenFolderTargets) {
+                getBitwardenFolders(activeSource.vault.id)
+            } else {
+                flowOf(emptyList())
+            }
+        }.collectAsState(initial = emptyList())
+    }
+    val keepassGroups by key(activeSource.key, showBitwardenFolderTargets) {
+        remember {
+            if (activeSource is MovePickerSource.KeePassDatabase) {
+                getKeePassGroups(activeSource.database.id)
+            } else {
+                flowOf(emptyList())
+            }
+        }.collectAsState(initial = emptyList())
+    }
+    val mdbxFolders by key(activeSource.key, showBitwardenFolderTargets) {
+        remember {
+            if (activeSource is MovePickerSource.MdbxDatabase) {
+                getMdbxFolders(activeSource.database.id)
+            } else {
+                flowOf(emptyList())
+            }
+        }.collectAsState(initial = emptyList())
+    }
     val keepassGroupNodes = remember(keepassGroups) { buildKeePassGroupNodes(keepassGroups) }
     val mdbxFolderNodes = remember(mdbxFolders) { buildMdbxFolderNodes(mdbxFolders) }
 
@@ -484,7 +480,67 @@ fun UnifiedMoveToCategoryBottomSheet(
         }
     }
 
-    val activeTargets = buildTargetsForSource(activeSource)
+    val activeTargets = if (activeSource.key in sourceKeys) {
+        buildTargetsForSource(activeSource)
+    } else {
+        emptyList()
+    }
+    val availableTargets = activeTargets.mapTo(mutableSetOf()) { it.target }
+    val currentAvailableTargets by rememberUpdatedState(availableTargets)
+    val currentAllowedActions by rememberUpdatedState(allowMove to allowCopy)
+    LaunchedEffect(availableTargets) {
+        if (selectedTarget.value !in availableTargets) {
+            pendingConfirmation.value = null
+            selectedTarget.value = null
+            selectedTargetLabel.value = null
+        }
+    }
+
+    fun canConfirmTarget(target: UnifiedMoveCategoryTarget): Boolean {
+        if (target !in currentAvailableTargets) return false
+        val keepassDatabaseId = when (target) {
+            is UnifiedMoveCategoryTarget.KeePassDatabaseTarget -> target.databaseId
+            is UnifiedMoveCategoryTarget.KeePassGroupTarget -> target.databaseId
+            else -> null
+        }
+        if (keepassDatabaseId != null) {
+            val database = currentKeePassDatabases.firstOrNull { it.id == keepassDatabaseId }
+            val availability = database?.writeOperationAvailability()
+            if (database == null || availability?.canOperate != true) {
+                blockedKeePassOperation.value = KeePassUnavailableMoveState(
+                    databaseName = database?.name ?: keepassRootLabel,
+                    reason = availability?.reason ?: KeePassOperationBlockReason.NEEDS_REFRESH
+                )
+                return false
+            }
+        }
+        return true
+    }
+
+    fun confirmSelectedTarget() {
+        val target = selectedTarget.value ?: return
+        if (!canConfirmTarget(target)) return
+        val action = selectedAction.value
+        val confirmedOnTargetSelected = onTargetSelected
+        if (action == UnifiedMoveAction.MOVE && !currentAllowedActions.first ||
+            action == UnifiedMoveAction.COPY && !currentAllowedActions.second
+        ) return
+        val request = Any()
+        pendingConfirmation.value = request
+        val proceed = {
+            // A dismissed sheet, replaced selection or stale preflight must never resume a transfer.
+            if (pendingConfirmation.value === request) {
+                pendingConfirmation.value = null
+                if (selectedTarget.value == target && selectedAction.value == action &&
+                    (if (action == UnifiedMoveAction.MOVE) currentAllowedActions.first else currentAllowedActions.second) &&
+                    canConfirmTarget(target)
+                ) {
+                    confirmedOnTargetSelected(target, action)
+                }
+            }
+        }
+        onBeforeTargetSelected?.invoke(target, action, proceed) ?: proceed()
+    }
 
     blockedKeePassOperation.value?.let { blocked ->
         val reason = keepassBlockReasonLabel(blocked.reason)
@@ -509,7 +565,7 @@ fun UnifiedMoveToCategoryBottomSheet(
     }
 
     MonicaModalBottomSheet(
-        onDismissRequest = onDismiss,
+        onDismissRequest = { pendingConfirmation.value = null; onDismiss() },
         sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
         containerColor = MaterialTheme.colorScheme.surfaceContainerLow
     ) {
@@ -547,14 +603,20 @@ fun UnifiedMoveToCategoryBottomSheet(
                     if (allowMove) {
                         FilterChip(
                             selected = selectedAction.value == UnifiedMoveAction.MOVE,
-                            onClick = { selectedAction.value = UnifiedMoveAction.MOVE },
+                            onClick = {
+                                pendingConfirmation.value = null
+                                selectedAction.value = UnifiedMoveAction.MOVE
+                            },
                             label = { Text(text = stringResource(R.string.move)) }
                         )
                     }
                     FilterChip(
                         modifier = Modifier.testTag("transfer_action_copy"),
                         selected = selectedAction.value == UnifiedMoveAction.COPY,
-                        onClick = { selectedAction.value = UnifiedMoveAction.COPY },
+                        onClick = {
+                            pendingConfirmation.value = null
+                            selectedAction.value = UnifiedMoveAction.COPY
+                        },
                         label = { Text(text = stringResource(R.string.copy)) }
                     )
                 }
@@ -649,7 +711,7 @@ fun UnifiedMoveToCategoryBottomSheet(
                     )
                     FilledTonalButton(
                         onClick = ::confirmSelectedTarget,
-                        enabled = selectedTarget.value != null,
+                        enabled = selectedTarget.value in availableTargets,
                         modifier = Modifier.testTag("transfer_confirm").fillMaxWidth()
                     ) {
                         Icon(Icons.Default.Check, contentDescription = null)
@@ -765,6 +827,7 @@ private data class MdbxFolderNode(
 
 private fun buildMonicaCategoryNodes(categories: List<Category>): List<MonicaCategoryNode> {
     return categories
+        .filter(Category::isMonicaLocalCategory)
         .sortedBy { it.name.lowercase() }
         .map { category ->
             val segments = splitPathSegments(category.name)
