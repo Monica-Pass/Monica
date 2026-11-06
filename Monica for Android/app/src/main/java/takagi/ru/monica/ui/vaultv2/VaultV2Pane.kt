@@ -1,5 +1,7 @@
 package takagi.ru.monica.ui.vaultv2
 
+import takagi.ru.monica.ui.password.*
+
 import takagi.ru.monica.utils.AppLocaleStringResolver
 
 import takagi.ru.monica.ui.screens.NativeTokenListUi
@@ -21,6 +23,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.gestures.stopScroll
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -70,6 +73,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.runtime.key
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -1787,12 +1791,12 @@ fun VaultV2Pane(
 			showCreateCategoryDialog = true
 		}
 	}
-	val totpItems by totpViewModel.allTotpItems.collectAsState()
-	val bankCardItems by bankCardViewModel.allCards.collectAsState()
-	val documentItems by documentViewModel.allDocuments.collectAsState()
-	val billingAddressItems by billingAddressViewModel.allBillingAddresses.collectAsState()
-	val noteItems by noteViewModel.allNotes.collectAsState()
-	val passkeyItems by passkeyViewModel.allPasskeys.collectAsState()
+	val sharedTotpItems by totpViewModel.allTotpItems.collectAsState()
+	val sharedBankCardItems by bankCardViewModel.allCards.collectAsState()
+	val sharedDocumentItems by documentViewModel.allDocuments.collectAsState()
+	val sharedBillingAddressItems by billingAddressViewModel.allBillingAddresses.collectAsState()
+	val sharedNoteItems by noteViewModel.allNotes.collectAsState()
+	val sharedPasskeyItems by passkeyViewModel.allPasskeys.collectAsState()
 
 	fun transferCategoryFolder(
 		category: takagi.ru.monica.data.Category,
@@ -1825,7 +1829,7 @@ fun VaultV2Pane(
 					categories = categories,
 					passwords = passwordEntries,
 					secureItems = passwordViewModel.getAllActiveSecureItemsAwait(),
-					passkeys = passkeyItems,
+					passkeys = sharedPasskeyItems,
 					keepassDatabases = keepassDatabases,
 					mdbxDatabases = mdbxDatabases,
 					bitwardenVaults = bitwardenVaults,
@@ -1953,7 +1957,7 @@ fun VaultV2Pane(
 		?.let { takagi.ru.monica.keepass.KeePassPasswordNativeScope.from(it) }
 	if (!showOverview && !state.isArchiveView && nativeKeePassScope != null) {
 		DisposableEffect(nativeKeePassScope.databaseId) {
-			val nativeRead = passwordViewModel.holdNativeKeePassRead(nativeKeePassScope.databaseId)
+			val nativeRead = passwordViewModel.holdNativeKeePassRead(nativeKeePassScope.databaseId, refresh = false)
 			val lockVersion = localKeePassViewModel.nativeLockVersions.value[nativeKeePassScope.databaseId] ?: 0L
 			onDispose {
 				nativeRead.close()
@@ -2033,7 +2037,30 @@ fun VaultV2Pane(
 			else -> null
 		}
 	}
-    val keePassFileActions = rememberKeePassFileActions(selectedKeePassDatabaseId, passwordViewModel) {
+    val nativeListRead = rememberKeePassListRead(selectedKeePassDatabaseId.takeUnless { showOverview || state.isArchiveView }, passwordViewModel, localKeePassViewModel)
+    val listSnapshot = nativeListRead.snapshot
+    val nativeListPasswords = remember(listSnapshot) {
+        listSnapshot?.rows.orEmpty().filterNot { it.isArchived || it.isDeleted }
+            .map { if (it.password.isEmpty()) it else it.copy(password = "") }
+    }
+    val useNativeList = selectedKeePassDatabaseId != null && !showOverview && !state.isArchiveView
+    fun nativeItems(type: takagi.ru.monica.data.ItemType) = listSnapshot?.secureItems.orEmpty().filter { it.itemType == type }
+    val totpItems = if (useNativeList) nativeItems(takagi.ru.monica.data.ItemType.TOTP) else sharedTotpItems
+    val bankCardItems = if (useNativeList) nativeItems(takagi.ru.monica.data.ItemType.BANK_CARD) else sharedBankCardItems
+    val documentItems = if (useNativeList) nativeItems(takagi.ru.monica.data.ItemType.DOCUMENT) else sharedDocumentItems
+    val billingAddressItems = if (useNativeList) nativeItems(takagi.ru.monica.data.ItemType.BILLING_ADDRESS) else sharedBillingAddressItems
+    val noteItems = if (useNativeList) nativeItems(takagi.ru.monica.data.ItemType.NOTE) else sharedNoteItems
+    val passkeyItems = if (useNativeList) listSnapshot?.passkeys.orEmpty() else sharedPasskeyItems
+    LaunchedEffect(storageSelection, nativeListRead.locked, nativeListRead.visible) {
+        if (!useNativeList) return@LaunchedEffect
+        selectedKeys.clear()
+        selectedFolderKey = null
+        folderActionRow = null
+        showFolderActionDialog = false
+        showFolderMoveSheet = false
+        showFolderDeleteConfirmDialog = false
+    }
+    val baseKeePassFileActions = rememberKeePassFileActions(selectedKeePassDatabaseId, passwordViewModel) {
         selectedKeePassDatabaseId?.let { localKeePassViewModel.refreshGroups(it); passwordViewModel.refreshKeePassOverviewAfterNativeRead(it) }
     }
 	val selectedMdbxDatabaseId = remember(storageSelection) {
@@ -2183,8 +2210,8 @@ fun VaultV2Pane(
 		mdbxFolders = selectedMdbxFolders,
 	)
 
-	val sourcePasswordEntries = if (state.isArchiveView) archivedPasswordEntries else passwordEntries
-	val selectedPasswordEntriesReady = if (state.isArchiveView) archivedPasswordsReady else passwordsReady
+	val sourcePasswordEntries = if (useNativeList) nativeListPasswords else if (state.isArchiveView) archivedPasswordEntries else passwordEntries
+	val selectedPasswordEntriesReady = if (useNativeList) listSnapshot != null else if (state.isArchiveView) archivedPasswordsReady else passwordsReady
 	val visiblePasswordEntries = remember(sourcePasswordEntries, showOnlyLocalData) {
 		if (showOnlyLocalData) {
 			sourcePasswordEntries.filter { it.isVaultV2LocalOnly() }
@@ -2231,7 +2258,7 @@ fun VaultV2Pane(
 		if (showOverview) flowOf(emptyList())
 		else selectedKeePassDatabaseId?.let(localKeePassViewModel::getGroups) ?: flowOf(emptyList())
 	}
-	val selectedKeePassGroups by selectedKeePassGroupsFlow.collectAsState(initial = emptyList())
+	val selectedKeePassGroups = key(selectedKeePassDatabaseId) { selectedKeePassGroupsFlow.collectAsState(initial = emptyList()).value }
 	val quickFilterVisibleTypes = remember {
 		resolvePasswordPageVisibleTypes(
 			aggregateEnabled = true,
@@ -2734,7 +2761,6 @@ fun VaultV2Pane(
 	}
 
 	var isAutoScrollingToTop by remember { mutableStateOf(false) }
-	var lastHandledScrollToTopRequestKey by rememberSaveable { mutableStateOf(0) }
 	var lastHandledFastScrollRequestKey by remember {
 		mutableStateOf(fastScrollRequestKey)
 	}
@@ -3085,6 +3111,17 @@ fun VaultV2Pane(
 		if (showOverview) emptyList() else buildVaultV2SortedSections(filteredItems, appSettings.vaultListSort)
 			.map { (title, items) -> title.ifEmpty { unknownSortDate } to items }
 	}
+    val listTransition = rememberKeePassListTransition(
+        nativeListRead,
+        keepassDatabases.firstOrNull { it.id == selectedKeePassDatabaseId }?.name.orEmpty(),
+        ready = computedListStateAsync.hasComputed && displayListStateAsync.hasComputed &&
+            displayedListState == displayListStateAsync.value && pendingDisplayListState == null,
+    )
+    val allVaultLoadingState = takagi.ru.monica.ui.password.rememberAllVaultLoadingState(
+        enabled = !state.isArchiveView && categoryMenuFilter is CategoryFilter.All,
+        listPreparing = !computedListStateAsync.hasComputed || !displayListStateAsync.hasComputed,
+    )
+    val keePassFileActions = baseKeePassFileActions?.withListTransition(listTransition, nativeListRead)
 	val showQuickFiltersInList = !state.isArchiveView && (hasVisibleQuickFilters || nativeTokens.visible)
 	val showCategoryQuickFiltersInList =
 		!state.isArchiveView && !useHierarchicalLayout && categoryMenuQuickFolderShortcuts.isNotEmpty()
@@ -3212,27 +3249,17 @@ fun VaultV2Pane(
 		}
 	}
 
-	LaunchedEffect(state.scrollToTopRequestKey) {
-		if (showOverview) {
-			if (state.scrollToTopRequestKey > lastHandledScrollToTopRequestKey) overviewListState.animateScrollToItem(0)
-			lastHandledScrollToTopRequestKey = state.scrollToTopRequestKey
-			return@LaunchedEffect
-		}
-		if (state.scrollToTopRequestKey > lastHandledScrollToTopRequestKey) {
-			isAutoScrollingToTop = true
-			try {
-				runCatching {
-					listState.animateScrollToItem(0)
-				}
-				listState.scrollToItem(0)
-			} finally {
-				isAutoScrollingToTop = false
-				lastHandledScrollToTopRequestKey = state.scrollToTopRequestKey
-			}
-		}
-	}
+	VaultV2ScrollToTopEffect(
+		requestKey = state.scrollToTopRequestKey,
+		showOverview = showOverview,
+		waitingForList = listTransition != null,
+		listState = listState,
+		overviewListState = overviewListState,
+		onScrollingChange = { isAutoScrollingToTop = it },
+	)
 
-	LaunchedEffect(listState) {
+	LaunchedEffect(listState, listTransition != null) {
+        if (listTransition != null) return@LaunchedEffect
 		snapshotFlow {
 			listState.firstVisibleItemIndex to listState.firstVisibleItemScrollOffset
 		}
@@ -3245,9 +3272,11 @@ fun VaultV2Pane(
 	LaunchedEffect(
 		storageSelection,
 		pendingFolderScrollRestore,
+        listTransition != null,
 		folderRows.size,
 		sectionedItems,
 	) {
+        if (listTransition != null) return@LaunchedEffect
 		val restore = pendingFolderScrollRestore ?: return@LaunchedEffect
 		pendingFolderScrollRestore = null
 		runCatching {
@@ -3260,7 +3289,8 @@ fun VaultV2Pane(
 		}
 	}
 
-	LaunchedEffect(fastScrollRequestKey, sectionLayouts, filteredItems.size) {
+	LaunchedEffect(fastScrollRequestKey, sectionLayouts, filteredItems.size, listTransition != null) {
+        if (listTransition != null) return@LaunchedEffect
 		if (fastScrollRequestKey <= lastHandledFastScrollRequestKey) {
 			return@LaunchedEffect
 		}
@@ -3296,7 +3326,8 @@ fun VaultV2Pane(
 		}
 	}
 
-	LaunchedEffect(listState, sectionLayouts, filteredItems.size) {
+	LaunchedEffect(listState, sectionLayouts, filteredItems.size, listTransition != null) {
+        if (listTransition != null) return@LaunchedEffect
 		snapshotFlow {
 			if (filteredItems.size <= 1 || sectionLayouts.isEmpty()) {
 				0f
@@ -3314,7 +3345,8 @@ fun VaultV2Pane(
 			}
 	}
 
-	LaunchedEffect(listState, sectionLayouts, filteredItems.size) {
+	LaunchedEffect(listState, sectionLayouts, filteredItems.size, listTransition != null) {
+        if (listTransition != null) return@LaunchedEffect
 		snapshotFlow {
 			if (filteredItems.isEmpty() || sectionLayouts.isEmpty()) {
 				null
@@ -3800,6 +3832,7 @@ fun VaultV2Pane(
 					transferState = quickStatusTransferState,
 					deleteState = quickStatusDeleteState,
 					onNavigateFilter = navigateCategoryFilter,
+					allVaultLoadingState = allVaultLoadingState,
 					keePassFileActions = keePassFileActions,
 				)
 			}
@@ -3828,14 +3861,17 @@ fun VaultV2Pane(
 				modifier = Modifier
 					.weight(1f)
 					.fillMaxWidth()
-					.then(listInteractionModifier),
+					.then(if (listTransition == null) listInteractionModifier else Modifier),
 			) {
 			PullSearchHint(
 				currentOffset = pullAction.currentOffset,
 				triggerDistance = pullSearchTriggerDistance,
 				modifier = Modifier.offset { IntOffset(0, -contentPullOffset) },
 			)
+
 			VaultV2List(
+                listRead = nativeListRead,
+                listTransition = listTransition,
                 nativeTokens = nativeTokens,
 				hasVisibleQuickFilters = showQuickFiltersInList || nativeTokens.visible,
 				hasVisibleCategoryQuickFilters = showCategoryQuickFiltersInList,
@@ -3916,7 +3952,7 @@ fun VaultV2Pane(
 					}
 				},
 			)
-			ExpressiveLazyListScrollbar(
+			if (listTransition == null || listTransition.visible && !listTransition.locked && listTransition.previousSource != null) ExpressiveLazyListScrollbar(
 				listState = listState,
 				modifier = Modifier
 					.align(Alignment.CenterEnd)
@@ -3929,6 +3965,7 @@ fun VaultV2Pane(
 					)?.trim()
 				},
 				onInteractionChange = state::updateFastScrollbarInteraction,
+                interactionEnabled = listTransition == null,
 			)
 		}
 		}
@@ -4698,7 +4735,9 @@ fun VaultV2Pane(
 
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
-private fun VaultV2List(
+internal fun VaultV2List(
+    listRead: KeePassListRead? = null,
+    listTransition: KeePassListTransition? = null,
     nativeTokens: NativeTokenListUi? = null,
 	hasVisibleQuickFilters: Boolean,
 	hasVisibleCategoryQuickFilters: Boolean,
@@ -4726,9 +4765,16 @@ private fun VaultV2List(
 	modifier: Modifier = Modifier,
 	onOpenItem: (VaultV2Item) -> Unit,
 ) {
+    val displayedSelectedKeys = selectedKeys.toSet()
+    KeePassRetainedList(listRead, listTransition, content = object : KeePassListContent {
+        @Composable override fun Render() {
+            val canInteract = LocalKeePassListInteraction.current
+            val interactionEnabled = canInteract()
+            LaunchedEffect(interactionEnabled) { if (!interactionEnabled) listState.stopScroll() }
 	val categoryQuickFilterScrollState = rememberScrollState()
 
 	LazyColumn(
+        userScrollEnabled = interactionEnabled,
 		state = listState,
 		modifier = modifier,
 		contentPadding = PaddingValues(start = 12.dp, end = 28.dp, top = 8.dp, bottom = 96.dp),
@@ -4756,7 +4802,7 @@ private fun VaultV2List(
 							params = PasswordQuickFolderChipRowParams(
 								currentFilter = currentFilter,
 								quickFolderShortcuts = categoryQuickFilterShortcuts,
-								onSelectFilter = onNavigateFilter,
+								onSelectFilter = { if (canInteract()) onNavigateFilter(it) },
 							),
 							scrollState = categoryQuickFilterScrollState,
 						)
@@ -4775,8 +4821,8 @@ private fun VaultV2List(
 		) { index, folderRow ->
 			VaultV2FolderRow(
 				row = folderRow,
-				onClick = { onOpenFolder(folderRow.targetFilter) },
-				onLongClick = { onLongClickFolder(folderRow) },
+				onClick = { if (canInteract()) onOpenFolder(folderRow.targetFilter) },
+				onLongClick = { if (canInteract()) onLongClickFolder(folderRow) },
 				selected = selectedFolderKey == folderRow.key,
 				shape = GroupedItemDefaults.shape(index, folderRows.size),
 			)
@@ -4843,11 +4889,12 @@ private fun VaultV2List(
 				contentType = { _, item -> item.type },
 			) { index, item ->
 
-				val selected = item.key in selectedKeys
+				val selected = item.key in displayedSelectedKeys
 				val cardShape = GroupedItemDefaults.shape(index, itemsInSection.size)
 				SwipeActions(
-					onSwipeLeft = { onRequestDeleteItems(listOf(item)) },
-					onSwipeRight = {
+					onSwipeLeft = { if (canInteract()) onRequestDeleteItems(listOf(item)) },
+					onSwipeRight = callback@ {
+                            if (!canInteract()) return@callback
 						if (selected) {
 							selectedKeys.remove(item.key)
 						} else {
@@ -4868,7 +4915,8 @@ private fun VaultV2List(
 						securityManager = securityManager,
 						selected = selected,
 						cardShape = cardShape,
-						onClick = {
+						onClick = callback@ {
+                            if (!canInteract()) return@callback
 							if (selectedKeys.isNotEmpty()) {
 								if (selected) {
 									selectedKeys.remove(item.key)
@@ -4879,7 +4927,8 @@ private fun VaultV2List(
 								onOpenItem(item)
 							}
 						},
-						onLongClick = {
+						onLongClick = callback@ {
+                            if (!canInteract()) return@callback
 							if (selected) {
 								selectedKeys.remove(item.key)
 							} else {
@@ -4891,6 +4940,8 @@ private fun VaultV2List(
 			}
 		}
 	}
+        }
+    })
 }
 
 @Composable
@@ -4905,13 +4956,14 @@ internal fun VaultV2QuickStatusBar(
 	deleteState: PasswordBatchDeleteGlobalProgressState?,
 	onNavigateFilter: (CategoryFilter) -> Unit,
 	keePassFileActions: takagi.ru.monica.ui.password.KeePassFileActions?,
+	allVaultLoadingState: takagi.ru.monica.ui.password.AllVaultLoadingState? = null,
 ) {
-	if (keePassFileActions != null && !keePassFileActions.available) return
+	if (keePassFileActions != null && !keePassFileActions.available && keePassFileActions.listTransition == null) return
 	Box(Modifier.fillMaxWidth().animateContentSize(
 		animationSpec = tween(260, easing = FastOutSlowInEasing),
 		alignment = Alignment.TopStart
 	)) {
-		if (transferState != null || deleteState != null || keePassFileActions?.showStatus == true) {
+		if (allVaultLoadingState != null || transferState != null || deleteState != null || keePassFileActions?.showStatus == true || keePassFileActions?.listTransition != null) {
 			PasswordQuickFolderBreadcrumbBanner(
 				breadcrumbs = breadcrumbs,
 				currentFilter = currentFilter,
@@ -4919,6 +4971,7 @@ internal fun VaultV2QuickStatusBar(
 				mdbxSyncState = mdbxSyncState,
 				transferState = transferState,
 				deleteState = deleteState,
+				allVaultLoadingState = allVaultLoadingState,
 				animateHeight = false,
 				keePassFileActions = keePassFileActions,
 			)

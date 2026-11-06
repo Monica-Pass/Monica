@@ -100,6 +100,7 @@ fun ExpressiveLazyListScrollbar(
     modifier: Modifier = Modifier,
     labelForIndex: (Int) -> String? = { null },
     onInteractionChange: (Boolean) -> Unit = {},
+    interactionEnabled: Boolean = true,
 ) {
     val canScroll by remember(listState) {
         derivedStateOf { listState.canScrollBackward || listState.canScrollForward }
@@ -123,6 +124,15 @@ fun ExpressiveLazyListScrollbar(
     var hasSyncedDisplayedProgress by remember(listState) { mutableStateOf(false) }
     val interactionCallback by rememberUpdatedState(onInteractionChange)
     val currentLabelForIndex by rememberUpdatedState(labelForIndex)
+    val currentInteractionEnabled by rememberUpdatedState(interactionEnabled)
+    LaunchedEffect(interactionEnabled) {
+        if (!interactionEnabled) {
+            pendingTarget = null
+            isPressed = false
+            isDragging = false
+            retainedLabel = null
+        }
+    }
 
     LaunchedEffect(isPressed, isDragging) {
         interactionCallback(isPressed || isDragging)
@@ -161,7 +171,8 @@ fun ExpressiveLazyListScrollbar(
         label = "vaultScrollbarLabelScale",
     )
 
-    LaunchedEffect(listState) {
+    LaunchedEffect(listState, interactionEnabled) {
+        if (!interactionEnabled) return@LaunchedEffect
         snapshotFlow { pendingTarget }
             .filterNotNull()
             .collect {
@@ -169,7 +180,7 @@ fun ExpressiveLazyListScrollbar(
                 withFrameNanos { }
                 val target = pendingTarget ?: return@collect
                 pendingTarget = null
-                listState.requestScrollToItem(target.index, target.offset)
+                if (currentInteractionEnabled) listState.requestScrollToItem(target.index, target.offset)
             }
     }
 
@@ -226,7 +237,8 @@ fun ExpressiveLazyListScrollbar(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .pointerInput(Unit) {
+                .pointerInput(interactionEnabled) {
+                    if (!interactionEnabled) return@pointerInput
                     detectTapGestures(
                         onPress = {
                             isPressed = true
@@ -238,7 +250,8 @@ fun ExpressiveLazyListScrollbar(
                         },
                     )
                 }
-                .pointerInput(listState, heightPx, handleHeightPx) {
+                .pointerInput(listState, heightPx, handleHeightPx, interactionEnabled) {
+                    if (!interactionEnabled) return@pointerInput
                     var grabOffset = handleHeightPx / 2f
                     var dragAxis: ExpressiveScrollbarDragAxis? = null
                     detectDragGestures(

@@ -5,6 +5,9 @@ import takagi.ru.monica.ui.screens.NativeTokenFilterChip
 import takagi.ru.monica.ui.screens.rememberNativeTokenList
 
 
+import androidx.compose.foundation.gestures.stopScroll
+import androidx.compose.runtime.LaunchedEffect
+import takagi.ru.monica.ui.password.LocalKeePassListInteraction
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -95,9 +98,13 @@ internal fun PasswordListScrollableContent(
     emptyStateMessage: PasswordListEmptyStateMessage,
     renderPasswordRows: LazyListScope.() -> Unit
 ) {
+    val canInteract = LocalKeePassListInteraction.current
+    val interactionEnabled = canInteract()
+    LaunchedEffect(interactionEnabled) { if (!interactionEnabled) listState.stopScroll() }
     val categoryQuickFilterScrollState = rememberScrollState()
 
     LazyColumn(
+        userScrollEnabled = interactionEnabled,
         state = listState,
         modifier = modifier,
         contentPadding = PaddingValues(horizontal = 16.dp)

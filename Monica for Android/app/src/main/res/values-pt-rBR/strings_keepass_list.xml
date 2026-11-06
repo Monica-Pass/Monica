@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_list_loading">Carregando…</string>
+    <string name="kp_list_preview">Lista anterior: %1$s</string>
+    <string name="kp_list_locked">Bloqueado</string>
+    <string name="kp_list_failed">Falha ao carregar</string>
+    <string name="kp_list_unlock">Desbloquear</string>
+    <string name="kp_list_unlock_help">Verifique sua senha mestra do Monica para abrir este banco de dados com as credenciais salvas.</string>
+    <string name="kp_list_auth_failed">A verificação falhou ou excedeu o tempo limite. Tente novamente.</string>
+    <string name="kp_list_loading_databases">Carregando… · %1$d bases</string>
+</resources>

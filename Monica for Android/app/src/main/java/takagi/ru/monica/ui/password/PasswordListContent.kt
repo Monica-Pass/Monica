@@ -2,7 +2,7 @@ package takagi.ru.monica.ui
 
 import takagi.ru.monica.utils.AppLocaleStringResolver
 
-import takagi.ru.monica.ui.password.KeePassFileActions
+import takagi.ru.monica.ui.password.*
 import takagi.ru.monica.ui.password.rememberKeePassFileActions
 import takagi.ru.monica.ui.screens.NativeTokenListUi
 import takagi.ru.monica.ui.screens.NativeTokenFilterChip
@@ -350,7 +350,7 @@ fun PasswordListContent(
     val nativeScope = takagi.ru.monica.keepass.KeePassPasswordNativeScope.from(nativeFilter)
     if (nativeScope != null) {
         DisposableEffect(nativeScope.databaseId) {
-            val nativeRead = viewModel.holdNativeKeePassRead(nativeScope.databaseId)
+            val nativeRead = viewModel.holdNativeKeePassRead(nativeScope.databaseId, refresh = false)
             val lockVersion = localKeePassViewModel.nativeLockVersions.value[nativeScope.databaseId] ?: 0L
             onDispose {
                 nativeRead.close()
@@ -362,7 +362,18 @@ fun PasswordListContent(
         }
     }
     val coroutineScope = rememberCoroutineScope()
-    val passwordEntries by viewModel.passwordEntries.collectAsState()
+    val sharedPasswordEntries by viewModel.passwordEntries.collectAsState()
+    val nativeListRead = rememberKeePassListRead(nativeScope?.databaseId, viewModel, localKeePassViewModel)
+    val nativeSearch by viewModel.searchQuery.collectAsState()
+    val nativeRows = key(nativeListRead.snapshot, nativeScope, nativeSearch) {
+        produceState<List<PasswordEntry>?>(null) {
+            val snapshot = nativeListRead.snapshot
+            if (snapshot != null && nativeScope != null) value = withContext(Dispatchers.Default) {
+                viewModel.filterNativeListRows(snapshot.rows, nativeScope, nativeSearch)
+            }
+        }.value
+    }
+    val passwordEntries = if (nativeScope != null) nativeRows.orEmpty() else sharedPasswordEntries
     val passwordEntriesReady by viewModel.passwordEntriesReady.collectAsState()
     val allPasswords by viewModel.allPasswordsForUi.collectAsState()
     val allPasswordsReady by viewModel.allPasswordsForUiReady.collectAsState()
@@ -395,6 +406,8 @@ fun PasswordListContent(
         localCategoryIdsInScope = localCategoryIdsInScope,
         appSettings = appSettings,
         retainedState = aggregateRetainedStateViewModel.retainedState,
+        useNativeSource = nativeScope != null,
+        nativeSnapshot = nativeListRead.snapshot,
     )
     val fastScrollRequestKey by viewModel.fastScrollRequestKey.collectAsState()
     val quickStatusTransferState by PasswordBatchTransferProgressTracker.progress.collectAsState()
@@ -432,7 +445,7 @@ fun PasswordListContent(
         is CategoryFilter.KeePassDatabaseUncategorized -> filter.databaseId
         else -> null
     }
-    val keePassFileActions = rememberKeePassFileActions(selectedKeePassDatabaseId, viewModel) {
+    val baseKeePassFileActions = rememberKeePassFileActions(selectedKeePassDatabaseId, viewModel) {
         selectedKeePassDatabaseId?.let { localKeePassViewModel.refreshGroups(it); viewModel.refreshKeePassOverviewAfterNativeRead(it) }
     }
     val selectedMdbxDatabaseId = when (val filter = currentFilter) {
@@ -507,7 +520,7 @@ fun PasswordListContent(
             localKeePassViewModel.getGroups(databaseId)
         } ?: kotlinx.coroutines.flow.flowOf(emptyList())
     }
-    val keepassGroupsForSelectedDb by keepassGroupsForSelectedDbFlow.collectAsState(initial = emptyList())
+    val keepassGroupsForSelectedDb = key(selectedKeePassDatabaseId) { keepassGroupsForSelectedDbFlow.collectAsState(initial = emptyList()).value }
     val isKeePassDatabaseView = selectedKeePassDatabaseId != null
     val selectedKeePassDatabase = remember(selectedKeePassDatabaseId, keepassDatabases) {
         selectedKeePassDatabaseId?.let { databaseId ->
@@ -701,6 +714,18 @@ fun PasswordListContent(
     var passwordError by remember { mutableStateOf(false) }
     
     
+    LaunchedEffect(currentFilter, nativeListRead.locked, nativeListRead.visible) {
+        if (nativeScope == null) return@LaunchedEffect
+        isSelectionMode = false
+        selectedItemKeys = emptySet()
+        swipeSelectionAnchorKey = null
+        showBatchDeleteDialog = false
+        showMoveToCategoryDialog = false
+        showManualStackConfirmDialog = false
+        showDetailDialog = false
+        selectedPasswordForDetail = null
+        passwordInput = ""
+    }
     val context = androidx.compose.ui.platform.LocalContext.current
     val activity = context as? FragmentActivity
     val biometricHelper = remember { BiometricHelper(context) }
@@ -1592,12 +1617,23 @@ fun PasswordListContent(
     ) {
         effectiveCategoryQuickFilterShortcuts.isNotEmpty()
     }
+    val listTransition = rememberKeePassListTransition(
+        nativeListRead,
+        selectedKeePassDatabase?.name.orEmpty(),
+        ready = nativeRows != null && aggregateUiState.isReady && hasGroupedPasswordsReadyForCurrentInputs && isPasswordPageListModelReady,
+    )
+    val allVaultLoadingState = takagi.ru.monica.ui.password.rememberAllVaultLoadingState(
+        enabled = isAllView,
+        listPreparing = shouldGateInitialPasswordFirstFrame || !aggregateUiState.isReady ||
+            !hasGroupedPasswordsReadyForCurrentInputs || !isPasswordPageListModelReady,
+    )
+    val keePassFileActions = baseKeePassFileActions?.withListTransition(listTransition, nativeListRead)
     val hasQuickStatusProgress =
         quickStatusTransferState != null ||
             quickStatusDeleteState != null ||
             quickStatusBitwardenSyncState != null
     val showPinnedQuickFolderPathBanner =
-        quickStatusBannerEnabled &&
+        listTransition != null || allVaultLoadingState != null || quickStatusBannerEnabled &&
             (effectiveQuickFolderBreadcrumbs.isNotEmpty() || hasQuickStatusProgress || keePassFileActions?.showStatus == true)
     val hasScrollableHeaderContent = remember(
         hasVisibleQuickFilters,
@@ -1661,8 +1697,9 @@ fun PasswordListContent(
         // A request recomposes this call via fastScrollRequestKey. Ordinary list
         // scrolling must not subscribe the whole page to progress feedback.
         fastScrollProgress = viewModel.fastScrollProgress.value,
+        waitingForList = listTransition != null,
         allowScrollPositionPersistence =
-            isPasswordPageListModelReady &&
+            listTransition == null && isPasswordPageListModelReady &&
                 hasVisibleListItems &&
                 !shouldGateInitialPasswordFirstFrame,
         onBackToTopVisibilityChange = onBackToTopVisibilityChange
@@ -1670,7 +1707,8 @@ fun PasswordListContent(
     var lastHandledFilterForScrollReset by remember {
         mutableStateOf<CategoryFilter?>(null)
     }
-    LaunchedEffect(currentFilter, usesLazyColumn) {
+    LaunchedEffect(currentFilter, usesLazyColumn, listTransition != null) {
+        if (listTransition != null) return@LaunchedEffect
         val previousFilter = lastHandledFilterForScrollReset
         if (previousFilter == null) {
             lastHandledFilterForScrollReset = currentFilter
@@ -1926,6 +1964,7 @@ fun PasswordListContent(
             },
             quickStatusBitwardenSyncState = quickStatusBitwardenSyncState,
             quickStatusKeePassSyncState = quickStatusKeePassSyncState,
+            allVaultLoadingState = allVaultLoadingState,
             keePassFileActions = keePassFileActions,
             currentFilter = currentFilter,
             onNavigateFilter = viewModel::setCategoryFilter,
@@ -2213,6 +2252,7 @@ private fun PasswordListMainPaneHost(
     onShowQuickStatusDeleteDialog: () -> Unit,
     quickStatusBitwardenSyncState: QuickStatusBitwardenSyncState?,
     quickStatusKeePassSyncState: QuickStatusKeePassSyncState?,
+    allVaultLoadingState: takagi.ru.monica.ui.password.AllVaultLoadingState?,
     keePassFileActions: KeePassFileActions?,
     currentFilter: CategoryFilter,
     onNavigateFilter: (CategoryFilter) -> Unit,
@@ -2315,6 +2355,7 @@ private fun PasswordListMainPaneHost(
         },
         quickStatusBitwardenSyncState = quickStatusBitwardenSyncState,
         quickStatusKeePassSyncState = quickStatusKeePassSyncState,
+        allVaultLoadingState = allVaultLoadingState,
         keePassFileActions = keePassFileActions,
         currentFilter = currentFilter,
         onNavigateFilter = onNavigateFilter,
@@ -2366,8 +2407,9 @@ private fun PasswordListMainPaneHost(
         categoryQuickFilterShortcuts = categoryQuickFilterShortcuts,
         quickFolderShortcuts = quickFolderShortcuts,
         quickFolderStyle = quickFolderStyle,
-        renderPasswordRows = {
+        renderPasswordRows = { canInteract ->
             passwordPageListRows(
+                canInteract = canInteract,
                 passwordPageListItems = passwordPageListItems,
                 effectiveStackCardMode = effectiveStackCardMode,
                 expandedGroups = expandedGroups,

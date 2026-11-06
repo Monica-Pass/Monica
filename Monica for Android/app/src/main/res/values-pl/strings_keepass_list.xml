@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_list_loading">Wczytywanie…</string>
+    <string name="kp_list_preview">Poprzednia lista: %1$s</string>
+    <string name="kp_list_locked">Zablokowana</string>
+    <string name="kp_list_failed">Błąd wczytywania</string>
+    <string name="kp_list_unlock">Odblokuj</string>
+    <string name="kp_list_unlock_help">Potwierdź hasło główne Monica, aby otworzyć tę bazę danych za pomocą zapisanych danych uwierzytelniających.</string>
+    <string name="kp_list_auth_failed">Weryfikacja nie powiodła się lub przekroczono limit czasu. Spróbuj ponownie.</string>
+    <string name="kp_list_loading_databases">Wczytywanie… · %1$d baz</string>
+</resources>

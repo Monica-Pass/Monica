@@ -1,5 +1,9 @@
 package takagi.ru.monica.ui
 
+import takagi.ru.monica.ui.password.AllVaultLoadingState
+import takagi.ru.monica.ui.password.AllVaultLoadingStatus
+import takagi.ru.monica.ui.password.KeePassListContent
+import takagi.ru.monica.ui.password.KeePassRetainedList
 import takagi.ru.monica.ui.password.KeePassFileActions
 
 import takagi.ru.monica.ui.screens.NativeTokenListUi
@@ -57,6 +61,7 @@ internal fun PasswordListMainPane(
     quickStatusBitwardenSyncState: QuickStatusBitwardenSyncState? = null,
     quickStatusKeePassSyncState: QuickStatusKeePassSyncState? = null,
     keePassFileActions: KeePassFileActions? = null,
+    allVaultLoadingState: AllVaultLoadingState? = null,
     currentFilter: CategoryFilter,
     onNavigateFilter: (CategoryFilter) -> Unit,
     shouldGateInitialPasswordFirstFrame: Boolean,
@@ -107,13 +112,13 @@ internal fun PasswordListMainPane(
     categoryQuickFilterShortcuts: List<PasswordQuickFolderShortcut>,
     quickFolderShortcuts: List<PasswordQuickFolderShortcut>,
     quickFolderStyle: PasswordListQuickFolderStyle,
-    renderPasswordRows: LazyListScope.() -> Unit
+    renderPasswordRows: LazyListScope.(() -> Boolean) -> Unit
 ) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .clickable(
-                enabled = canCollapseExpandedGroups,
+                enabled = canCollapseExpandedGroups && keePassFileActions?.listTransition == null,
                 interactionSource = outsideTapInteractionSource,
                 indication = null
             ) {
@@ -135,12 +140,18 @@ internal fun PasswordListMainPane(
                     onDeleteStatusClick = onQuickStatusDeleteClick,
                     bitwardenSyncState = quickStatusBitwardenSyncState,
                     keePassSyncState = quickStatusKeePassSyncState,
+                    allVaultLoadingState = allVaultLoadingState,
                     keePassFileActions = keePassFileActions
                 )
             }
 
             Box(Modifier.weight(1f).fillMaxWidth()) {
-                PullSearchHint(currentOffset = pullAction.currentOffset, triggerDistance = triggerDistance)
+                val transition = keePassFileActions?.listTransition
+                if (transition == null) PullSearchHint(currentOffset = pullAction.currentOffset, triggerDistance = triggerDistance)
+                KeePassRetainedList(keePassFileActions?.listRead, transition,
+                    content = object : KeePassListContent {
+                        @Composable override fun Render() {
+                            val canInteract = takagi.ru.monica.ui.password.LocalKeePassListInteraction.current
                 if (shouldGateInitialPasswordFirstFrame && searchQuery.isEmpty()) {
                     Box(
                         modifier = Modifier
@@ -194,49 +205,51 @@ internal fun PasswordListMainPane(
                         configuredQuickFilterItems = configuredQuickFilterItems,
                         aggregateUiState = aggregateUiState,
                         quickFilterFavorite = quickFilterFavorite,
-                        onQuickFilterFavoriteChange = onQuickFilterFavoriteChange,
+                        onQuickFilterFavoriteChange = { value -> if (canInteract()) onQuickFilterFavoriteChange(value) },
                         quickFilter2fa = quickFilter2fa,
-                        onQuickFilter2faChange = onQuickFilter2faChange,
+                        onQuickFilter2faChange = { value -> if (canInteract()) onQuickFilter2faChange(value) },
                         quickFilterNotes = quickFilterNotes,
-                        onQuickFilterNotesChange = onQuickFilterNotesChange,
+                        onQuickFilterNotesChange = { value -> if (canInteract()) onQuickFilterNotesChange(value) },
                         quickFilterPasskey = quickFilterPasskey,
-                        onQuickFilterPasskeyChange = onQuickFilterPasskeyChange,
+                        onQuickFilterPasskeyChange = { value -> if (canInteract()) onQuickFilterPasskeyChange(value) },
                         quickFilterBoundNote = quickFilterBoundNote,
-                        onQuickFilterBoundNoteChange = onQuickFilterBoundNoteChange,
+                        onQuickFilterBoundNoteChange = { value -> if (canInteract()) onQuickFilterBoundNoteChange(value) },
                         quickFilterAttachments = quickFilterAttachments,
-                        onQuickFilterAttachmentsChange = onQuickFilterAttachmentsChange,
+                        onQuickFilterAttachmentsChange = { value -> if (canInteract()) onQuickFilterAttachmentsChange(value) },
                         quickFilterUncategorized = quickFilterUncategorized,
-                        onQuickFilterUncategorizedChange = onQuickFilterUncategorizedChange,
+                        onQuickFilterUncategorizedChange = { value -> if (canInteract()) onQuickFilterUncategorizedChange(value) },
                         quickFilterLocalOnly = quickFilterLocalOnly,
-                        onQuickFilterLocalOnlyChange = onQuickFilterLocalOnlyChange,
+                        onQuickFilterLocalOnlyChange = { value -> if (canInteract()) onQuickFilterLocalOnlyChange(value) },
                         quickFilterManualStackOnly = quickFilterManualStackOnly,
-                        onQuickFilterManualStackOnlyChange = onQuickFilterManualStackOnlyChange,
+                        onQuickFilterManualStackOnlyChange = { value -> if (canInteract()) onQuickFilterManualStackOnlyChange(value) },
                         quickFilterNeverStack = quickFilterNeverStack,
-                        onQuickFilterNeverStackChange = onQuickFilterNeverStackChange,
+                        onQuickFilterNeverStackChange = { value -> if (canInteract()) onQuickFilterNeverStackChange(value) },
                         quickFilterUnstacked = quickFilterUnstacked,
-                        onQuickFilterUnstackedChange = onQuickFilterUnstackedChange,
+                        onQuickFilterUnstackedChange = { value -> if (canInteract()) onQuickFilterUnstackedChange(value) },
                         quickFilterWifi = quickFilterWifi,
-                        onQuickFilterWifiChange = onQuickFilterWifiChange,
+                        onQuickFilterWifiChange = { value -> if (canInteract()) onQuickFilterWifiChange(value) },
                         wifiQuickFilterVisible = wifiQuickFilterVisible,
                         quickFilterSshKey = quickFilterSshKey,
-                        onQuickFilterSshKeyChange = onQuickFilterSshKeyChange,
+                        onQuickFilterSshKeyChange = { value -> if (canInteract()) onQuickFilterSshKeyChange(value) },
                         sshKeyQuickFilterVisible = sshKeyQuickFilterVisible,
                         quickFilterBarcode = quickFilterBarcode,
-                        onQuickFilterBarcodeChange = onQuickFilterBarcodeChange,
+                        onQuickFilterBarcodeChange = { value -> if (canInteract()) onQuickFilterBarcodeChange(value) },
                         barcodeQuickFilterVisible = barcodeQuickFilterVisible,
-                        onToggleAggregateType = onToggleAggregateType,
+                        onToggleAggregateType = onToggleAggregateType?.let { action -> { value -> if (canInteract()) action(value) } },
                         categoryQuickFilterShortcuts = categoryQuickFilterShortcuts,
                         quickFolderShortcuts = quickFolderShortcuts,
                         quickFolderStyle = quickFolderStyle,
                         currentFilter = currentFilter,
-                        onNavigateFilter = onNavigateFilter,
+                        onNavigateFilter = { value -> if (canInteract()) onNavigateFilter(value) },
                         hasVisibleListItems = hasVisibleListItems,
                         showEmptyState = showEmptyState,
                         searchQuery = searchQuery,
                         emptyStateMessage = emptyStateMessage,
-                        renderPasswordRows = renderPasswordRows
+                        renderPasswordRows = { renderPasswordRows(canInteract) }
                     )
                 }
+                        }
+                    })
             }
         }
     }

@@ -126,7 +126,8 @@ internal data class PasswordListAggregateUiState(
     val documentViewModel: DocumentViewModel?,
     val billingAddressViewModel: BillingAddressViewModel?,
     val noteViewModel: NoteViewModel?,
-    val passkeyViewModel: PasskeyViewModel?
+    val passkeyViewModel: PasskeyViewModel?,
+    val isReady: Boolean = true,
 )
 
 internal data class PasswordGroupingConfig(
@@ -552,6 +553,8 @@ internal fun rememberPasswordAggregateUiState(
     localCategoryIdsInScope: Set<Long>,
     appSettings: AppSettings,
     retainedState: PasswordAggregateRetainedState,
+    useNativeSource: Boolean = false,
+    nativeSnapshot: takagi.ru.monica.keepass.KeePassMonicaPasswordStore.Snapshot? = null,
 ): PasswordListAggregateUiState {
     val emptySecureItems = remember { emptyList<SecureItem>() }
     val emptyPasskeys = remember { emptyList<PasskeyEntry>() }
@@ -573,12 +576,12 @@ internal fun rememberPasswordAggregateUiState(
     val aggregatePasskeysState =
         aggregateConfig?.passkeyViewModel?.allPasskeys?.collectAsState()
             ?: remember { mutableStateOf(emptyPasskeys) }
-    val aggregateTotpItems by aggregateTotpItemsState
-    val aggregateBankCards by aggregateBankCardsState
-    val aggregateDocuments by aggregateDocumentsState
-    val aggregateBillingAddresses by aggregateBillingAddressesState
-    val aggregateNotes by aggregateNotesState
-    val aggregatePasskeys by aggregatePasskeysState
+    val aggregateTotpItems = if (useNativeSource) nativeSnapshot?.secureItems.orEmpty().filter { it.itemType == takagi.ru.monica.data.ItemType.TOTP } else aggregateTotpItemsState.value
+    val aggregateBankCards = if (useNativeSource) nativeSnapshot?.secureItems.orEmpty().filter { it.itemType == takagi.ru.monica.data.ItemType.BANK_CARD } else aggregateBankCardsState.value
+    val aggregateDocuments = if (useNativeSource) nativeSnapshot?.secureItems.orEmpty().filter { it.itemType == takagi.ru.monica.data.ItemType.DOCUMENT } else aggregateDocumentsState.value
+    val aggregateBillingAddresses = if (useNativeSource) nativeSnapshot?.secureItems.orEmpty().filter { it.itemType == takagi.ru.monica.data.ItemType.BILLING_ADDRESS } else aggregateBillingAddressesState.value
+    val aggregateNotes = if (useNativeSource) nativeSnapshot?.secureItems.orEmpty().filter { it.itemType == takagi.ru.monica.data.ItemType.NOTE } else aggregateNotesState.value
+    val aggregatePasskeys = if (useNativeSource) nativeSnapshot?.passkeys.orEmpty() else aggregatePasskeysState.value
     val aggregateVisibleContentTypes = remember(
         aggregateConfig?.visibleContentTypes,
         aggregateBankCards,
@@ -692,7 +695,10 @@ internal fun rememberPasswordAggregateUiState(
     val aggregateSnapshotGeneration = remember(retainedState, aggregateSnapshotKey) {
         retainedState.currentGeneration()
     }
+    val nativeComputationKey = if (useNativeSource) nativeSnapshot to aggregateSnapshotKey else null
+    var nativeComputed by remember(nativeComputationKey) { mutableStateOf(false) }
     val aggregateAllVisibleItemsAsync = rememberPasswordAggregateAsyncItems(
+        nativeComputationKey,
         aggregateBankCards,
         aggregateDocuments,
         aggregateBillingAddresses,
@@ -703,9 +709,10 @@ internal fun rememberPasswordAggregateUiState(
         currentFilter,
         localCategoryIdsInScope,
         aggregateDisplayedContentTypes,
-        stateKey = aggregateSnapshotKey,
-        initialValue = aggregateSnapshotSeed.items,
+        stateKey = nativeComputationKey ?: aggregateSnapshotKey,
+        initialValue = if (useNativeSource) emptyList() else aggregateSnapshotSeed.items,
         onComputed = { items ->
+            nativeComputed = true
             retainedState.updateIfCurrent(
                 expectedGeneration = aggregateSnapshotGeneration,
                 key = aggregateSnapshotKey,
@@ -781,7 +788,8 @@ internal fun rememberPasswordAggregateUiState(
         documentViewModel = aggregateConfig?.documentViewModel,
         billingAddressViewModel = aggregateConfig?.billingAddressViewModel,
         noteViewModel = aggregateConfig?.noteViewModel,
-        passkeyViewModel = aggregateConfig?.passkeyViewModel
+        passkeyViewModel = aggregateConfig?.passkeyViewModel,
+        isReady = !useNativeSource || nativeComputed,
     )
 }
 
@@ -815,7 +823,8 @@ internal fun rememberPasswordListLazyListState(
     fastScrollRequestKey: Int,
     fastScrollProgress: Float,
     allowScrollPositionPersistence: Boolean,
-    onBackToTopVisibilityChange: (Boolean) -> Unit
+    onBackToTopVisibilityChange: (Boolean) -> Unit,
+    waitingForList: Boolean = false
 ): LazyListState {
     // These values seed a new list only. Collecting their every-frame persistence
     // updates would recompose the complete password page during a fling.
@@ -885,7 +894,8 @@ internal fun rememberPasswordListLazyListState(
         }
     }
 
-    LaunchedEffect(scrollToTopRequestKey) {
+    LaunchedEffect(scrollToTopRequestKey, waitingForList) {
+        if (waitingForList) return@LaunchedEffect
         if (scrollToTopRequestKey > lastHandledScrollToTopRequestKey) {
             try {
                 listState.animateScrollToItem(index = 0)
@@ -895,7 +905,8 @@ internal fun rememberPasswordListLazyListState(
         }
     }
 
-    LaunchedEffect(fastScrollRequestKey) {
+    LaunchedEffect(fastScrollRequestKey, waitingForList) {
+        if (waitingForList) return@LaunchedEffect
         if (fastScrollRequestKey <= lastHandledFastScrollRequestKey) {
             return@LaunchedEffect
         }

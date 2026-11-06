@@ -1,0 +1,299 @@
+{
+  "edition": "main",
+  "builds": {
+    "main": {
+      "seconds": 715.875,
+      "testOnlySeconds": 126.851,
+      "jvm": {
+        "tests": 279,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "apks": {
+        "Monica-Android-x86_64-1.0.325-26110712-22.APK": "3dd83bcae607faf748a32f7c975e31114d92c0e95d5367ffaef9aeee9e2315cd",
+        "app-debug-androidTest.apk": "e111100ffcad610011e12050ca57b1ae27ec2befdba24fef77ea7aced2626c52"
+      }
+    },
+    "fd": {
+      "seconds": 739.993,
+      "testOnlySeconds": 130.02,
+      "jvm": {
+        "tests": 279,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "apks": {
+        "Monica-Android-x86_64-1.0.325.apk": "86580088af47bc58311c65de4be9dd437a4ee9e7177e8d12fc46a6612cf69f9a",
+        "app-debug-androidTest.apk": "65980ee5681273e164994017fff0aa12619b06fe7102b44f4cf6142c2e983fc4"
+      }
+    }
+  },
+  "devices": {
+    "main": {
+      "actual": {
+        "methods": [
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#actualLegacyListRetainsScrolledCardsAtLargeFont",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#switchingKdbxNeverLeavesPreviousVaultActionable",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#switchingLegacyListStopsAnInFlightFling",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#actualLegacyListRetainsScrolledCards",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#actualVaultListRetainsScrolledCardsAtLargeFont",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#switchingVaultListStopsAnInFlightFling",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#legacySwitchWaitsForPasswordsAndSupplementaryNotesTogether",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#actualVaultListRetainsScrolledCards"
+        ],
+        "count": 8,
+        "seconds": 50.298,
+        "label": "final03-actual"
+      },
+      "retention": {
+        "methods": [
+          "takagi.ru.monica.keepass.KeePassRetainedListUiTest#lockingPreviousSourceDropsItsActualRowsWhileTargetIsPending",
+          "takagi.ru.monica.keepass.KeePassRetainedListUiTest#preparingFilteredRowsDoesNotStealFocusFromTheSearchField",
+          "takagi.ru.monica.keepass.KeePassRetainedListUiTest#sameOriginalSubtreeStaysMountedWhileNewInputsArePending",
+          "takagi.ru.monica.keepass.KeePassRetainedListUiTest#backgroundClearsRowsAndReturningDoesNotRestoreThemBeforeReadCompletes",
+          "takagi.ru.monica.keepass.KeePassRetainedListUiTest#rightSwipeReboundCannotSelectAfterSwitchingVault",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#lockingWhileReadIsPendingRejectsItsLateResult",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#canceledQueuedPasswordCannotUnlockReopenedDialog",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#emptyNativeDatabaseFinishesLoadingWithoutAnyPasswordRows",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#backgroundClearsPreviewAndDialogBeforeReturning",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#lockRemovesPreviewAndAuthenticationReopensOriginalWithoutWrites",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#evictedDecodedDatabaseReopensWithoutBeingMislabelledLocked",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#failedReadCanRetryAndKeepsTheOriginalBytes",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#delayedSelectionKeepsPreviousListAndOnlyLatestSelectionBecomesLive",
+          "takagi.ru.monica.keepass.AllVaultLoadingUiTest#vaultBarShowsShortLargeTextStatusAndRestoresBreadcrumb",
+          "takagi.ru.monica.keepass.AllVaultLoadingUiTest#lockedAndFailedBarsMatchLoadingHeightAndWholeBarRemainsClickable",
+          "takagi.ru.monica.keepass.AllVaultLoadingUiTest#actualQueuedDatabasesDriveStatusAndCompletionRestoresPath"
+        ],
+        "count": 16,
+        "seconds": 35.642,
+        "label": "final01-retention"
+      },
+      "regression": {
+        "methods": [
+          "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#externalRevisionRejectsStackWithoutOverwritingAnotherWriter",
+          "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#lockingOrRemovingASelectedIdentityRejectsWholeBatch",
+          "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#projectCredentialsResaveInOneCommitWithDistinctFieldsAndNewRows",
+          "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#deniedProjectBatchCannotPartiallySaveAnExistingAccount",
+          "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#stackModesCommitTheWholeSelectionOnceAndSurviveColdReopen",
+          "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#copiedContentRejectsChangedDestinationEvenAfterListRefresh",
+          "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#deniedBatchStackDoesNotPersistAnyMember",
+          "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#nativeCustomFieldsRoundTripWithoutLosingUnknownOrProtectedFields",
+          "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#everyAddContentEncodingSurvivesEditAndColdReopenInOriginalKdbx",
+          "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#copiedContentPublishesAfterSavingAnotherCredentialInSameFile",
+          "takagi.ru.monica.keepass.KeePassHistoryStabilityTest#accessOnlyExternalMergesAndRepeatedMergesKeepRealHistory",
+          "takagi.ru.monica.keepass.KeePassHistoryStabilityTest#repeatedIdenticalNativeSavesPreserveHistoryAfterDiskReopen",
+          "takagi.ru.monica.keepass.KeePassHistoryStabilityTest#historyDisplayIsNewestFirstAndDeleteKeepsOriginalNativeIndex",
+          "takagi.ru.monica.keepass.KeePassAddContentUiRegressionTest#allVisibleAddContentChoicesPersistInOriginalVault",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#kdbxOverviewNavigatesDuplicateParentsByUuidAndLocksWithoutWriting",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#overviewFolderLargeFontDarkKeepsFoldersAboveEntries",
+          "takagi.ru.monica.ui.PasswordListScrollWorkTest#pixelScrollingDoesNotRecomposeThePage",
+          "takagi.ru.monica.ui.PasswordListScrollWorkTest#visibilityFastScrollReturnToTopAndDetailRestoreKeepTheirBehavior"
+        ],
+        "count": 18,
+        "seconds": 83.768,
+        "label": "final01-regression"
+      }
+    },
+    "fd": {
+      "actual": {
+        "methods": [
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#actualLegacyListRetainsScrolledCardsAtLargeFont",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#switchingKdbxNeverLeavesPreviousVaultActionable",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#switchingLegacyListStopsAnInFlightFling",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#actualLegacyListRetainsScrolledCards",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#actualVaultListRetainsScrolledCardsAtLargeFont",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#switchingVaultListStopsAnInFlightFling",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#legacySwitchWaitsForPasswordsAndSupplementaryNotesTogether",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#actualVaultListRetainsScrolledCards"
+        ],
+        "count": 8,
+        "seconds": 48.367,
+        "label": "final01-actual"
+      },
+      "retention": {
+        "methods": [
+          "takagi.ru.monica.keepass.KeePassRetainedListUiTest#lockingPreviousSourceDropsItsActualRowsWhileTargetIsPending",
+          "takagi.ru.monica.keepass.KeePassRetainedListUiTest#preparingFilteredRowsDoesNotStealFocusFromTheSearchField",
+          "takagi.ru.monica.keepass.KeePassRetainedListUiTest#sameOriginalSubtreeStaysMountedWhileNewInputsArePending",
+          "takagi.ru.monica.keepass.KeePassRetainedListUiTest#backgroundClearsRowsAndReturningDoesNotRestoreThemBeforeReadCompletes",
+          "takagi.ru.monica.keepass.KeePassRetainedListUiTest#rightSwipeReboundCannotSelectAfterSwitchingVault",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#lockingWhileReadIsPendingRejectsItsLateResult",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#canceledQueuedPasswordCannotUnlockReopenedDialog",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#emptyNativeDatabaseFinishesLoadingWithoutAnyPasswordRows",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#backgroundClearsPreviewAndDialogBeforeReturning",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#lockRemovesPreviewAndAuthenticationReopensOriginalWithoutWrites",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#evictedDecodedDatabaseReopensWithoutBeingMislabelledLocked",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#failedReadCanRetryAndKeepsTheOriginalBytes",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#delayedSelectionKeepsPreviousListAndOnlyLatestSelectionBecomesLive",
+          "takagi.ru.monica.keepass.AllVaultLoadingUiTest#vaultBarShowsShortLargeTextStatusAndRestoresBreadcrumb",
+          "takagi.ru.monica.keepass.AllVaultLoadingUiTest#lockedAndFailedBarsMatchLoadingHeightAndWholeBarRemainsClickable",
+          "takagi.ru.monica.keepass.AllVaultLoadingUiTest#actualQueuedDatabasesDriveStatusAndCompletionRestoresPath"
+        ],
+        "count": 16,
+        "seconds": 34.798,
+        "label": "final01-retention"
+      },
+      "regression": {
+        "methods": [
+          "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#externalRevisionRejectsStackWithoutOverwritingAnotherWriter",
+          "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#lockingOrRemovingASelectedIdentityRejectsWholeBatch",
+          "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#projectCredentialsResaveInOneCommitWithDistinctFieldsAndNewRows",
+          "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#deniedProjectBatchCannotPartiallySaveAnExistingAccount",
+          "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#stackModesCommitTheWholeSelectionOnceAndSurviveColdReopen",
+          "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#copiedContentRejectsChangedDestinationEvenAfterListRefresh",
+          "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#deniedBatchStackDoesNotPersistAnyMember",
+          "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#nativeCustomFieldsRoundTripWithoutLosingUnknownOrProtectedFields",
+          "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#everyAddContentEncodingSurvivesEditAndColdReopenInOriginalKdbx",
+          "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#copiedContentPublishesAfterSavingAnotherCredentialInSameFile",
+          "takagi.ru.monica.keepass.KeePassHistoryStabilityTest#accessOnlyExternalMergesAndRepeatedMergesKeepRealHistory",
+          "takagi.ru.monica.keepass.KeePassHistoryStabilityTest#repeatedIdenticalNativeSavesPreserveHistoryAfterDiskReopen",
+          "takagi.ru.monica.keepass.KeePassHistoryStabilityTest#historyDisplayIsNewestFirstAndDeleteKeepsOriginalNativeIndex",
+          "takagi.ru.monica.keepass.KeePassAddContentUiRegressionTest#allVisibleAddContentChoicesPersistInOriginalVault",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#kdbxOverviewNavigatesDuplicateParentsByUuidAndLocksWithoutWriting",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#overviewFolderLargeFontDarkKeepsFoldersAboveEntries",
+          "takagi.ru.monica.ui.PasswordListScrollWorkTest#pixelScrollingDoesNotRecomposeThePage",
+          "takagi.ru.monica.ui.PasswordListScrollWorkTest#visibilityFastScrollReturnToTopAndDetailRestoreKeepTheirBehavior"
+        ],
+        "count": 18,
+        "seconds": 78.277,
+        "label": "final01-regression"
+      }
+    }
+  },
+  "source": {
+    "main": {
+      "allAppSourceFiles": 4919,
+      "sharedPaths": 33,
+      "sharedHashes": {
+        "app/src/main/java/takagi/ru/monica/ui/components/ExpressiveLazyListScrollbar.kt": "4d069e07c578a5bcc110dc9cb93454c5bfcec60deb50ae8ab718e3d4647416eb",
+        "app/src/main/java/takagi/ru/monica/ui/password/KeePassRetainedList.kt": "cdfc0db1e3919275974fd065ea5f3dd864b65829c6274e442316187933083e41",
+        "app/src/main/java/takagi/ru/monica/ui/password/KeePassListPresentation.kt": "9fc971dca080d4504fd7db22ea6ffe78fa9b90d40b0fea94c54ea2493d2ce684",
+        "app/src/main/java/takagi/ru/monica/ui/password/KeePassFileActions.kt": "8be059e3ed7763f22b0b01af1e2c23125dbd0e08530858d775e4a8520a851663",
+        "app/src/main/java/takagi/ru/monica/ui/password/PasswordListContent.kt": "9cd28d4c584926c73f6001b97bfdea6ce6ff25667aba7b1947fabbba482ffcb2",
+        "app/src/main/java/takagi/ru/monica/ui/password/PasswordListMainPane.kt": "a43b5add475884ce0ae309cb8ad9ecae3673fcea5235740ef6852468d7fdbdd5",
+        "app/src/main/java/takagi/ru/monica/ui/password/PasswordListContentSupport.kt": "ceea4a497a090f45dbd52c436acbd45698827be68f2eb7d3e158bcffda37909b",
+        "app/src/main/java/takagi/ru/monica/ui/password/PasswordListRows.kt": "d94c5d83147e8aee90073b79a3ce7bb743a9ed0566d01dd2f52150df8c03b2d8",
+        "app/src/main/java/takagi/ru/monica/ui/password/PasswordListScrollableContent.kt": "f45fcc78544b2b6ad366c6c039f86d43a8200204db27c2a8214649619a0a4274",
+        "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultV2Pane.kt": "1cdaf0528cd43eaaca6795048bbec55288235706fb2505461c2e46f507fd95ad",
+        "app/src/main/java/takagi/ru/monica/ui/gestures/SwipeActions.kt": "b7828c779dbb03ecb7db7947c0835f9725175b1d9dfe07097b5bd15e0f58177a",
+        "app/src/test/java/takagi/ru/monica/ui/password/KeePassListRetentionTest.kt": "f8f55132994c702c8eeb13852db51fb693782e2ff39ddbad389166f72fb066d7",
+        "app/src/androidTest/java/takagi/ru/monica/keepass/KeePassListPresentationUiTest.kt": "0877ccf28bc75cc979521f8ac53762a3759a12e3fe6e4440434370081a8dc131",
+        "app/src/androidTest/java/takagi/ru/monica/keepass/KeePassRetainedListUiTest.kt": "7897eca9563dceaf09b85a19d3c6b8aaded8694a68186ad0a01288b0e38b9948",
+        "app/src/androidTest/java/takagi/ru/monica/ui/vaultv2/VaultOverviewPaneTest.kt": "240252ad0f01a8aa70c6b442fe7546551e821c5de98098344d4f6a7f1ae5e88b",
+        "app/src/main/res/values/strings_keepass_list.xml": "f728bf088f63ffb03d77063d208695151a8019d95e6ec4b51612165a9b1843df",
+        "app/src/main/res/values-b+lzh/strings_keepass_list.xml": "adb5760d4e4c755512626ef27a7c57670c7271b37643af89be3aa1e6c849865e",
+        "app/src/main/res/values-b+zh+Hant/strings_keepass_list.xml": "ea0325ed267047b2a537d241883280058b729dbbd3d0fa78829b2f190b54c889",
+        "app/src/main/res/values-de/strings_keepass_list.xml": "e891f7098e7849b8dbd773f3cf4adc7fea33e5ec302a5fbd8bd9e5cc236a8398",
+        "app/src/main/res/values-es/strings_keepass_list.xml": "97d55c0c8474a70430293a23495c7096df859a846be90d19c60bb7244934ba7f",
+        "app/src/main/res/values-fr/strings_keepass_list.xml": "92d77f4922d04a5f0b8aff1ff764bc8cc3080794e27c2320351d866ef687103d",
+        "app/src/main/res/values-it/strings_keepass_list.xml": "7009b13b5cf4136b317c1b39ba7b1d4b0b29531add3803a2221eed190fa69052",
+        "app/src/main/res/values-ja/strings_keepass_list.xml": "c3d0c3c9376ec9ee95a074057729c75d80fe17f9e0857cf8928a2cd0feac7aa0",
+        "app/src/main/res/values-ko/strings_keepass_list.xml": "835890d5183b6bd83f3ddaa7a573395e3720ed436ea279bd94e9a7d04c6ce383",
+        "app/src/main/res/values-pl/strings_keepass_list.xml": "dfb98a6788df35e261ed9bc32a722e80e87f8a16b047bc88309fc75222d97c47",
+        "app/src/main/res/values-pt/strings_keepass_list.xml": "06e1d1eb2f53e09aabbe0118e977b66bf0c89bdd1744a01473127c02677d5b87",
+        "app/src/main/res/values-pt-rBR/strings_keepass_list.xml": "24253355abecd560915ee9d1520417c9941ece0380793204f66c748fd9d52f80",
+        "app/src/main/res/values-ru/strings_keepass_list.xml": "5b1d267f8303fadd565eeab96a14e35fc4e6ed5b1c4f30749a4269e8a1088df2",
+        "app/src/main/res/values-vi/strings_keepass_list.xml": "28e4e3d9e6a2b0a35a1631b335979ade57217f57735481b1551edcf29b91d8d2",
+        "app/src/main/res/values-zh/strings_keepass_list.xml": "b19eb294e506ee3410b7f2948c6a5d8a450bb60de6df684d505683cd7b7a936b",
+        "app/src/main/res/values-zh-rCN/strings_keepass_list.xml": "b19eb294e506ee3410b7f2948c6a5d8a450bb60de6df684d505683cd7b7a936b",
+        "app/src/main/res/values-zh-rNY/strings_keepass_list.xml": "b19eb294e506ee3410b7f2948c6a5d8a450bb60de6df684d505683cd7b7a936b",
+        "app/src/main/res/values-zh-rXB/strings_keepass_list.xml": "b19eb294e506ee3410b7f2948c6a5d8a450bb60de6df684d505683cd7b7a936b"
+      },
+      "blankLineWhitespaceCleanup": {
+        "path": "app/src/main/java/takagi/ru/monica/ui/password/KeePassListPresentation.kt",
+        "before": "18e826f9306e39502a1ce20529835f8f799e4555cbdb3d75a38f4c652525b306",
+        "after": "9fc971dca080d4504fd7db22ea6ffe78fa9b90d40b0fea94c54ea2493d2ce684",
+        "blankLineOnly": true
+      }
+    },
+    "fd": {
+      "allAppSourceFiles": 4917,
+      "sharedPaths": 33,
+      "sharedHashes": {
+        "app/src/main/java/takagi/ru/monica/ui/components/ExpressiveLazyListScrollbar.kt": "4d069e07c578a5bcc110dc9cb93454c5bfcec60deb50ae8ab718e3d4647416eb",
+        "app/src/main/java/takagi/ru/monica/ui/password/KeePassRetainedList.kt": "cdfc0db1e3919275974fd065ea5f3dd864b65829c6274e442316187933083e41",
+        "app/src/main/java/takagi/ru/monica/ui/password/KeePassListPresentation.kt": "9fc971dca080d4504fd7db22ea6ffe78fa9b90d40b0fea94c54ea2493d2ce684",
+        "app/src/main/java/takagi/ru/monica/ui/password/KeePassFileActions.kt": "8be059e3ed7763f22b0b01af1e2c23125dbd0e08530858d775e4a8520a851663",
+        "app/src/main/java/takagi/ru/monica/ui/password/PasswordListContent.kt": "9cd28d4c584926c73f6001b97bfdea6ce6ff25667aba7b1947fabbba482ffcb2",
+        "app/src/main/java/takagi/ru/monica/ui/password/PasswordListMainPane.kt": "a43b5add475884ce0ae309cb8ad9ecae3673fcea5235740ef6852468d7fdbdd5",
+        "app/src/main/java/takagi/ru/monica/ui/password/PasswordListContentSupport.kt": "ceea4a497a090f45dbd52c436acbd45698827be68f2eb7d3e158bcffda37909b",
+        "app/src/main/java/takagi/ru/monica/ui/password/PasswordListRows.kt": "d94c5d83147e8aee90073b79a3ce7bb743a9ed0566d01dd2f52150df8c03b2d8",
+        "app/src/main/java/takagi/ru/monica/ui/password/PasswordListScrollableContent.kt": "f45fcc78544b2b6ad366c6c039f86d43a8200204db27c2a8214649619a0a4274",
+        "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultV2Pane.kt": "1cdaf0528cd43eaaca6795048bbec55288235706fb2505461c2e46f507fd95ad",
+        "app/src/main/java/takagi/ru/monica/ui/gestures/SwipeActions.kt": "b7828c779dbb03ecb7db7947c0835f9725175b1d9dfe07097b5bd15e0f58177a",
+        "app/src/test/java/takagi/ru/monica/ui/password/KeePassListRetentionTest.kt": "f8f55132994c702c8eeb13852db51fb693782e2ff39ddbad389166f72fb066d7",
+        "app/src/androidTest/java/takagi/ru/monica/keepass/KeePassListPresentationUiTest.kt": "0877ccf28bc75cc979521f8ac53762a3759a12e3fe6e4440434370081a8dc131",
+        "app/src/androidTest/java/takagi/ru/monica/keepass/KeePassRetainedListUiTest.kt": "7897eca9563dceaf09b85a19d3c6b8aaded8694a68186ad0a01288b0e38b9948",
+        "app/src/androidTest/java/takagi/ru/monica/ui/vaultv2/VaultOverviewPaneTest.kt": "240252ad0f01a8aa70c6b442fe7546551e821c5de98098344d4f6a7f1ae5e88b",
+        "app/src/main/res/values/strings_keepass_list.xml": "f728bf088f63ffb03d77063d208695151a8019d95e6ec4b51612165a9b1843df",
+        "app/src/main/res/values-b+lzh/strings_keepass_list.xml": "adb5760d4e4c755512626ef27a7c57670c7271b37643af89be3aa1e6c849865e",
+        "app/src/main/res/values-b+zh+Hant/strings_keepass_list.xml": "ea0325ed267047b2a537d241883280058b729dbbd3d0fa78829b2f190b54c889",
+        "app/src/main/res/values-de/strings_keepass_list.xml": "e891f7098e7849b8dbd773f3cf4adc7fea33e5ec302a5fbd8bd9e5cc236a8398",
+        "app/src/main/res/values-es/strings_keepass_list.xml": "97d55c0c8474a70430293a23495c7096df859a846be90d19c60bb7244934ba7f",
+        "app/src/main/res/values-fr/strings_keepass_list.xml": "92d77f4922d04a5f0b8aff1ff764bc8cc3080794e27c2320351d866ef687103d",
+        "app/src/main/res/values-it/strings_keepass_list.xml": "7009b13b5cf4136b317c1b39ba7b1d4b0b29531add3803a2221eed190fa69052",
+        "app/src/main/res/values-ja/strings_keepass_list.xml": "c3d0c3c9376ec9ee95a074057729c75d80fe17f9e0857cf8928a2cd0feac7aa0",
+        "app/src/main/res/values-ko/strings_keepass_list.xml": "835890d5183b6bd83f3ddaa7a573395e3720ed436ea279bd94e9a7d04c6ce383",
+        "app/src/main/res/values-pl/strings_keepass_list.xml": "dfb98a6788df35e261ed9bc32a722e80e87f8a16b047bc88309fc75222d97c47",
+        "app/src/main/res/values-pt/strings_keepass_list.xml": "06e1d1eb2f53e09aabbe0118e977b66bf0c89bdd1744a01473127c02677d5b87",
+        "app/src/main/res/values-pt-rBR/strings_keepass_list.xml": "24253355abecd560915ee9d1520417c9941ece0380793204f66c748fd9d52f80",
+        "app/src/main/res/values-ru/strings_keepass_list.xml": "5b1d267f8303fadd565eeab96a14e35fc4e6ed5b1c4f30749a4269e8a1088df2",
+        "app/src/main/res/values-vi/strings_keepass_list.xml": "28e4e3d9e6a2b0a35a1631b335979ade57217f57735481b1551edcf29b91d8d2",
+        "app/src/main/res/values-zh/strings_keepass_list.xml": "b19eb294e506ee3410b7f2948c6a5d8a450bb60de6df684d505683cd7b7a936b",
+        "app/src/main/res/values-zh-rCN/strings_keepass_list.xml": "b19eb294e506ee3410b7f2948c6a5d8a450bb60de6df684d505683cd7b7a936b",
+        "app/src/main/res/values-zh-rNY/strings_keepass_list.xml": "b19eb294e506ee3410b7f2948c6a5d8a450bb60de6df684d505683cd7b7a936b",
+        "app/src/main/res/values-zh-rXB/strings_keepass_list.xml": "b19eb294e506ee3410b7f2948c6a5d8a450bb60de6df684d505683cd7b7a936b"
+      },
+      "blankLineWhitespaceCleanup": {
+        "path": "app/src/main/java/takagi/ru/monica/ui/password/KeePassListPresentation.kt",
+        "before": "18e826f9306e39502a1ce20529835f8f799e4555cbdb3d75a38f4c652525b306",
+        "after": "9fc971dca080d4504fd7db22ea6ffe78fa9b90d40b0fea94c54ea2493d2ce684",
+        "blankLineOnly": true
+      }
+    }
+  },
+  "limits": [
+    "Synthetic API35/x86_64 Debug only; no physical device/OEM/R8 testing.",
+    "Pixel comparison covers common visible card region, excludes 12dp sibling scrollbar gutter in Vault; exact coordinates and per-channel delta <=1. Scroll position must be equal.",
+    "No independent in-flight scrollbar drag, hardware keyboard or TalkBack exercise."
+  ],
+  "static": {
+    "sharedPaths": 33,
+    "resourceConfigurations": 18,
+    "resourceValues": 144,
+    "checks": {
+      "fd-metadata": {
+        "exitCode": 0
+      },
+      "fd-script-tests": {
+        "exitCode": 0
+      },
+      "main-whitespace": {
+        "exitCode": 0
+      },
+      "fd-whitespace": {
+        "exitCode": 0
+      }
+    }
+  },
+  "compiledApkAudit": {
+    "main": {
+      "compiledResourceValues": 144,
+      "apkSha256": "3dd83bcae607faf748a32f7c975e31114d92c0e95d5367ffaef9aeee9e2315cd",
+      "package": "package: name='takagi.ru.monica' versionCode='12' versionName='1.0.325-26110712-22' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'"
+    },
+    "fd": {
+      "compiledResourceValues": 144,
+      "apkSha256": "86580088af47bc58311c65de4be9dd437a4ee9e7177e8d12fc46a6612cf69f9a",
+      "package": "package: name='takagi.ru.monica.fdroid' versionCode='32' versionName='1.0.325' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'"
+    }
+  },
+  "cleanup": {
+    "onlyOwnedUserRemoved": true,
+    "originalUsersPreserved": true,
+    "ownedEmulatorAndAdbStopped": true,
+    "initialImmediateRemoveFailedThenStoppedUserRetrySucceeded": true
+  }
+}

@@ -38,6 +38,7 @@ import takagi.ru.monica.ui.password.toPasswordPageCardItemUi
 import takagi.ru.monica.viewmodel.PasswordViewModel
 
 internal fun LazyListScope.passwordPageListRows(
+    canInteract: () -> Boolean = { true },
     passwordPageListItems: List<PasswordPageListItemUi>,
     effectiveStackCardMode: StackCardMode,
     expandedGroups: Set<String>,
@@ -76,10 +77,12 @@ internal fun LazyListScope.passwordPageListRows(
     }
 
     fun updateProjectSelection(keys: Set<String>) {
+        if (!canInteract()) return
         onSelectedItemKeysChange(expandPasswordProjectSelection(keys, passwordEntries))
     }
 
     fun toggleSelectionForKey(key: String) {
+        if (!canInteract()) return
         val projectKeys = expandPasswordProjectSelection(setOf(key), passwordEntries)
         updateProjectSelection(if (projectKeys.all { it in selectedItemKeys })
             selectedItemKeys - projectKeys else selectedItemKeys + projectKeys)
@@ -87,6 +90,7 @@ internal fun LazyListScope.passwordPageListRows(
     }
 
     fun toggleSelectionForCards(cards: List<PasswordPageCardItemUi>) {
+        if (!canInteract()) return
         val cardKeys = expandPasswordProjectSelection(cards.mapTo(linkedSetOf(), PasswordPageCardItemUi::key), passwordEntries)
         val allSelected = cardKeys.all { it in selectedItemKeys }
         updateProjectSelection(
@@ -102,6 +106,7 @@ internal fun LazyListScope.passwordPageListRows(
     }
 
     fun selectSwipeRangeTo(targetKey: String) {
+        if (!canInteract()) return
         if (appSettings.passwordSwipeSelectionMode != PasswordSwipeSelectionMode.CONTINUOUS) {
             toggleSelectionForKey(targetKey)
             return
@@ -125,6 +130,7 @@ internal fun LazyListScope.passwordPageListRows(
     }
 
     fun selectSwipeRangeToKeys(targetKeys: Set<String>) {
+        if (!canInteract()) return
         if (targetKeys.isEmpty()) return
 
         if (appSettings.passwordSwipeSelectionMode != PasswordSwipeSelectionMode.CONTINUOUS) {
@@ -160,6 +166,7 @@ internal fun LazyListScope.passwordPageListRows(
     }
 
     fun openCard(card: PasswordPageCardItemUi) {
+        if (!canInteract()) return
         when (card.type) {
             PasswordPageContentType.API_KEY, PasswordPageContentType.API_TOKEN, PasswordPageContentType.GPG_KEY, PasswordPageContentType.PASSWORD ->
                 onPasswordClick(card.entry)
@@ -189,6 +196,7 @@ internal fun LazyListScope.passwordPageListRows(
     }
 
     fun requestDeleteForCards(cards: List<PasswordPageCardItemUi>) {
+        if (!canInteract()) return
         haptic.performWarning()
         if (!isSelectionMode) {
             onSelectionModeChange(true)
@@ -200,6 +208,7 @@ internal fun LazyListScope.passwordPageListRows(
     }
 
     fun toggleFavoriteForCard(card: PasswordPageCardItemUi) {
+        if (!canInteract()) return
         if (nativeTokens?.favoriteDisplayEntry(card.entry) == true) return
         when (card.type) {
             PasswordPageContentType.API_KEY, PasswordPageContentType.API_TOKEN, PasswordPageContentType.GPG_KEY, PasswordPageContentType.PASSWORD ->
@@ -274,19 +283,22 @@ internal fun LazyListScope.passwordPageListRows(
                     stackCardMode = effectiveStackCardMode,
                     enableSharedBounds = false,
                     swipedItemId = itemToDelete?.id,
-                    onToggleExpand = {
+                    onToggleExpand = callback@ {
+                        if (!canInteract()) return@callback
                         if (effectiveStackCardMode == StackCardMode.AUTO) {
                             viewModel.toggleExpandedGroup(groupKey)
                         }
                     },
-                    onPasswordClick = { password ->
+                    onPasswordClick = callback@ { password ->
+                        if (!canInteract()) return@callback
                         if (isSelectionMode) {
                             toggleSelectionForKey(passwordSelectionKey(password.id))
                         } else {
                             onPasswordClick(password)
                         }
                     },
-                    onSwipeLeft = { password ->
+                    onSwipeLeft = callback@ { password ->
+                        if (!canInteract()) return@callback
                         if (password.loginType == "API_TOKEN") {
                             requestDeleteForCards(listOf(password.toPasswordPageCardItemUi()))
                         } else if (itemToDelete == null) {
@@ -294,14 +306,16 @@ internal fun LazyListScope.passwordPageListRows(
                             onItemToDeleteChange(password)
                         }
                     },
-                    onSwipeRight = { password ->
+                    onSwipeRight = callback@ { password ->
+                        if (!canInteract()) return@callback
                         haptic.performSuccess()
                         if (!isSelectionMode) {
                             onSelectionModeChange(true)
                         }
                         selectSwipeRangeTo(passwordSelectionKey(password.id))
                     },
-                    onGroupSwipeRight = { groupPasswords ->
+                    onGroupSwipeRight = callback@ { groupPasswords ->
+                        if (!canInteract()) return@callback
                         haptic.performSuccess()
                         if (!isSelectionMode) {
                             onSelectionModeChange(true)
@@ -312,13 +326,16 @@ internal fun LazyListScope.passwordPageListRows(
                         selectSwipeRangeToKeys(groupSelectionKeys)
                     },
 
-                    onToggleFavorite = { password ->
+                    onToggleFavorite = callback@ { password ->
+                        if (!canInteract()) return@callback
                         if (nativeTokens?.favoriteDisplayEntry(password) != true) {
                             viewModel.toggleFavorite(password.id, !password.isFavorite)
                         }
                     },
-                    onToggleGroupCover = { password ->
+                    onToggleGroupCover = callback@ { password ->
+                        if (!canInteract()) return@callback
                         coroutineScope.launch {
+                            if (!canInteract()) return@launch
                             if (passwords.any { it.id < 0 }) {
                                 val db = takagi.ru.monica.data.PasswordDatabase.getDatabase(context)
                                 takagi.ru.monica.repository.PasswordPageAggregateStackRepository(
@@ -357,13 +374,16 @@ internal fun LazyListScope.passwordPageListRows(
                     },
                     isSelectionMode = isSelectionMode,
                     selectedPasswords = selectedPasswords,
-                    onToggleSelection = { id ->
+                    onToggleSelection = callback@ { id ->
+                        if (!canInteract()) return@callback
                         toggleSelectionForKey(passwordSelectionKey(id))
                     },
-                    onOpenMultiPasswordDialog = { passwords ->
+                    onOpenMultiPasswordDialog = callback@ { passwords ->
+                        if (!canInteract()) return@callback
                         onPasswordClick(passwords.first())
                     },
-                    onLongClick = { password ->
+                    onLongClick = callback@ { password ->
+                        if (!canInteract()) return@callback
                         haptic.performLongPress()
                         if (!isSelectionMode) {
                             onSelectionModeChange(true)
@@ -391,14 +411,16 @@ internal fun LazyListScope.passwordPageListRows(
                     isSelectionMode = isSelectionMode,
                     selectedItemKeys = selectedItemKeys,
                     onCardClick = ::openCard,
-                    onToggleCardSelection = { card ->
+                    onToggleCardSelection = callback@ { card ->
+                        if (!canInteract()) return@callback
                         haptic.performSuccess()
                         if (!isSelectionMode) {
                             onSelectionModeChange(true)
                         }
                         toggleSelectionForKey(card.key)
                     },
-                    onToggleGroupSelection = { cards ->
+                    onToggleGroupSelection = callback@ { cards ->
+                        if (!canInteract()) return@callback
                         haptic.performSuccess()
                         if (!isSelectionMode) {
                             onSelectionModeChange(true)
@@ -424,14 +446,16 @@ internal fun LazyListScope.passwordPageListRows(
                 val card = item.toPasswordPageCardItemUi()
                 PasswordListSingleCardItem(
                     entry = item.entry,
-                    onClick = {
+                    onClick = callback@ {
+                        if (!canInteract()) return@callback
                         if (isSelectionMode) {
                             toggleSelectionForKey(item.key)
                         } else {
                             openCard(card)
                         }
                     },
-                    onLongClick = {
+                    onLongClick = callback@ {
+                        if (!canInteract()) return@callback
                         haptic.performLongPress()
                         if (!isSelectionMode) {
                             onSelectionModeChange(true)
@@ -440,7 +464,8 @@ internal fun LazyListScope.passwordPageListRows(
                         }
                     },
                     onSwipeLeft = { requestDeleteForCards(listOf(card)) },
-                    onSwipeRight = {
+                    onSwipeRight = callback@ {
+                        if (!canInteract()) return@callback
                         haptic.performSuccess()
                         if (!isSelectionMode) {
                             onSelectionModeChange(true)

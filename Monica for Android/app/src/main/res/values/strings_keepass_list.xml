@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_list_loading">Loading…</string>
+    <string name="kp_list_preview">Previous list: %1$s</string>
+    <string name="kp_list_locked">Locked</string>
+    <string name="kp_list_failed">Could not load</string>
+    <string name="kp_list_unlock">Unlock</string>
+    <string name="kp_list_unlock_help">Verify your Monica master password to open this database with its saved credentials.</string>
+    <string name="kp_list_auth_failed">Verification failed or timed out. Please try again.</string>
+    <string name="kp_list_loading_databases">Loading… · %1$d vaults</string>
+</resources>

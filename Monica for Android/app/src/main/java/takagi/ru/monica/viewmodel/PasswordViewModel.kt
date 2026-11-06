@@ -634,6 +634,14 @@ class PasswordViewModel internal constructor(
             replay = 1,
         )
 
+    internal fun filterNativeListRows(
+        rows: List<PasswordEntry>, scope: takagi.ru.monica.keepass.KeePassPasswordNativeScope, query: String,
+    ): List<PasswordEntry> = rows.filter { row ->
+        !row.isArchived && !row.isDeleted && monicaKeePassStore?.matchesScope(row, scope) == true &&
+            (query.isBlank() || matchesSearchQuery(row, query) ||
+                monicaKeePassStore?.fields(row.id).orEmpty().any { it.value.contains(query, true) })
+    }
+
     private val passwordEntriesSource: Flow<List<PasswordEntry>> = combine(
         debouncedSearchQuery,
         _categoryFilter,
@@ -1626,9 +1634,9 @@ class PasswordViewModel internal constructor(
         return decoded
     }
 
-    internal fun holdNativeKeePassRead(databaseId: Long): AutoCloseable {
+    internal fun holdNativeKeePassRead(databaseId: Long, refresh: Boolean = true): AutoCloseable {
         monicaKeePassStore?.activate(databaseId, true)
-        viewModelScope.launch(Dispatchers.IO) {
+        if (refresh) viewModelScope.launch(Dispatchers.IO) {
             runCatching { monicaKeePassStore?.refresh(databaseId) }.onFailure {
                 Log.w("PasswordViewModel", "KeePass original-vault refresh failed: ${it.javaClass.simpleName}")
             }

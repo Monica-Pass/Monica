@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_list_loading">Caricamento…</string>
+    <string name="kp_list_preview">Elenco precedente: %1$s</string>
+    <string name="kp_list_locked">Bloccato</string>
+    <string name="kp_list_failed">Caricamento non riuscito</string>
+    <string name="kp_list_unlock">Sblocca</string>
+    <string name="kp_list_unlock_help">Verifica la password principale di Monica per aprire questo database con le credenziali salvate.</string>
+    <string name="kp_list_auth_failed">Verifica non riuscita o tempo scaduto. Riprova.</string>
+    <string name="kp_list_loading_databases">Caricamento… · %1$d archivi</string>
+</resources>

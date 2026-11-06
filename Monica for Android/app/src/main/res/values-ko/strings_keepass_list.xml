@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_list_loading">불러오는 중…</string>
+    <string name="kp_list_preview">이전 목록: %1$s</string>
+    <string name="kp_list_locked">잠김</string>
+    <string name="kp_list_failed">불러오기 실패</string>
+    <string name="kp_list_unlock">잠금 해제</string>
+    <string name="kp_list_unlock_help">Monica 마스터 비밀번호를 확인한 후 저장된 자격 증명으로 이 데이터베이스를 엽니다.</string>
+    <string name="kp_list_auth_failed">인증에 실패했거나 시간이 초과되었습니다. 다시 시도해 주세요.</string>
+    <string name="kp_list_loading_databases">불러오는 중… · 보관함 %1$d개</string>
+</resources>

@@ -6,6 +6,9 @@
 
 - 此版本已移除整个去重引擎，包括单数据库分析与清理、跨数据库去重合并及相关入口。现有数据库和记录保持不变；列表显示去重、导入导出、备份恢复及同步功能保留。
 
+- 改善 KeePass 切库显示：移除简化标题预览，加载时暂时保留上一库的实际列表组件，包括卡片、账号、图标、筛选、文件夹及滚动位置；目标库和列表准备好后才替换并恢复操作。仅保留前台的一份上一列表，锁定或离开前台时清除，不作为保存、同步或合并的数据来源；切换期间屏蔽点击、长按、滑动及迟到回调。加载、锁定与读取失败状态保持一致的紧凑尺寸，点击整条可解锁或重试。
+- “全部”视图在现有数据库任务或列表整理期间显示简短加载状态，多库任务按库计数，结束后恢复路径；不为状态提示额外读库。密码页所有堆叠连续排在普通单项前，两类内部保留原排序，不改变归组或数据库内容。
+
 - 统一 Bitwarden 账号安全、服务器配置、账号管理和 Send 接收的页面过渡，补齐进入、返回与内部步骤切换的短缩放效果；关闭或锁定仍立即清理敏感内容。
 
 - 修复 Bitwarden 新建登录在字段保存失败后仍留下记录、重试产生重复项目的问题：记录与字段一起提交或回滚，同步只读取完整记录；允许用户名和密码留空。
@@ -67,6 +70,9 @@
 ## English
 
 - This version removes the entire dedup engine, including single-database analysis and cleanup, cross-database deduplication and merge, and their entry points. Existing databases and records remain unchanged; list display deduplication, import/export, backup/restore and sync remain available.
+
+- Improve KeePass switching by removing the simplified title preview. Keep the previous actual list components, including cards, accounts, icons, filters, folders and scroll position, until the selected database and list are ready. Retain only one previous list in the foreground; clear it on locking or leaving the foreground and never use it as a save/sync/merge source. Block taps, long presses, swipes and late callbacks while switching. Loading, locked and read-failure bars share compact spacing; tap the whole locked/error bar to unlock or retry.
+- The All view shows a compact loading status for existing database tasks and list preparation, counts active databases, and restores the path when finished without starting extra reads. Password-page stacks now stay together before single items, preserving the order within each set and leaving grouping and database contents unchanged.
 
 - Align Bitwarden account security, server configuration, account management and Send receiver page transitions with Monica, including opening, returning and switching steps. Closing or locking still clears sensitive content immediately.
 

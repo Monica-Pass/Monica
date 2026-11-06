@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_list_loading">Chargement…</string>
+    <string name="kp_list_preview">Liste précédente : %1$s</string>
+    <string name="kp_list_locked">Verrouillée</string>
+    <string name="kp_list_failed">Échec du chargement</string>
+    <string name="kp_list_unlock">Déverrouiller</string>
+    <string name="kp_list_unlock_help">Vérifiez votre mot de passe principal Monica pour ouvrir cette base de données avec les identifiants enregistrés.</string>
+    <string name="kp_list_auth_failed">Échec ou expiration de la vérification. Réessayez.</string>
+    <string name="kp_list_loading_databases">Chargement… · %1$d bases</string>
+</resources>

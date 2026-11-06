@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.password
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -10,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -28,9 +30,11 @@ internal data class KeePassFileActions(
     val state: KeePassFileState, val writable: Boolean, val available: Boolean,
     val save: () -> Unit, val merge: () -> Unit, val reload: () -> Unit,
     val dismissStatus: () -> Unit = {},
+    val listTransition: KeePassListTransition? = null,
+    val listRead: KeePassListRead? = null,
 ) {
-    val busy get() = state == KeePassFileState.BUSY
-    val showStatus get() = available && state != KeePassFileState.READY
+    val busy get() = listTransition != null || state == KeePassFileState.BUSY
+    val showStatus get() = listTransition?.visible == true || available && state != KeePassFileState.READY
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -94,6 +98,10 @@ internal fun KeePassFileMenuItems(actions: KeePassFileActions, dismiss: () -> Un
 
 @Composable
 internal fun KeePassFileStatus(actions: KeePassFileActions) {
+    actions.listTransition?.let { transition ->
+        if (transition.visible) KeePassListStatus(transition)
+        return
+    }
     val failed = actions.state == KeePassFileState.RELOAD_FAILED || actions.state == KeePassFileState.WRITE_FAILED
     if (!actions.showStatus) return
     val label = when (actions.state) {
@@ -118,6 +126,46 @@ internal fun KeePassFileStatus(actions: KeePassFileActions) {
             if (failed || actions.state == KeePassFileState.MERGED_CONFLICTS) {
                 IconButton(onClick = actions.dismissStatus) { Icon(Icons.Default.Close, stringResource(R.string.close)) }
             }
+        }
+    }
+}
+
+internal fun KeePassFileActions.withListTransition(transition: KeePassListTransition?, read: KeePassListRead? = null) =
+    copy(listTransition = transition, listRead = read, writable = writable && transition == null, available = available && transition == null)
+
+@Composable
+private fun KeePassListStatus(transition: KeePassListTransition) {
+    val action = when {
+        transition.locked -> transition.unlock
+        transition.failed -> transition.retry
+        else -> null
+    }
+    val actionLabel = when {
+        transition.locked -> stringResource(R.string.kp_list_unlock)
+        transition.failed -> stringResource(R.string.kp_file_reload)
+        else -> null
+    }
+    // A full-width action keeps the compact status height and a generous horizontal target.
+    // clickable retains Compose's expanded minimum touch target without enlarging the layout.
+    val actionModifier = if (action != null) Modifier
+        .clickable(role = Role.Button, onClickLabel = actionLabel, onClick = action)
+        .testTag(if (transition.locked) "keepass-list-unlock" else "keepass-list-retry") else Modifier
+    Surface(Modifier.fillMaxWidth().testTag("keepass-list-status"), shape = RoundedCornerShape(16.dp),
+        color = if (transition.failed) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.surfaceContainerHigh) {
+        Row(Modifier.fillMaxWidth().then(actionModifier).heightIn(min = 36.dp).padding(horizontal = 12.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            if (!transition.locked && !transition.failed) CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
+            else Icon(if (transition.locked) Icons.Default.Lock else Icons.Default.ErrorOutline, null, Modifier.size(18.dp))
+            val title = when {
+                transition.locked -> stringResource(R.string.kp_list_locked)
+                transition.failed -> stringResource(R.string.kp_list_failed)
+                else -> stringResource(R.string.kp_list_loading)
+            }
+            val source = transition.previousSource
+            Text(title + (source?.let { " · " + stringResource(R.string.kp_list_preview, it.name) } ?: ""),
+                Modifier.weight(1f), style = MaterialTheme.typography.labelMedium)
+            if (actionLabel != null) Text(actionLabel, style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.primary)
         }
     }
 }

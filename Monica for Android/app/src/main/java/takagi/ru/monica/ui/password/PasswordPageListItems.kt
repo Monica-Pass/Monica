@@ -81,10 +81,17 @@ internal fun buildPasswordPageListItems(
         .filter { it.cards.isNotEmpty() }
         .sortedByDescending { group -> group.cards.maxOf { it.sortTime } }
 
-    return buildList {
+    return buildList<PasswordPageListItemUi> {
         addAll(passwordItems)
         addAll(mixedStackGroups)
         addAll(aggregateCards)
+    }.sortedBy { item ->
+        // Stable partition: retain the user's ordering within stacks and single items.
+        when (item) {
+            is PasswordGroupListItemUi -> item.passwords.size <= 1
+            is PasswordManualStackGroupListItemUi -> item.cards.size <= 1
+            is PasswordSupplementaryListItemUi -> true
+        }
     }
 }
 

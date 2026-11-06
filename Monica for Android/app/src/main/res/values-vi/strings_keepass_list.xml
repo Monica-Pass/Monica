@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_list_loading">Đang tải…</string>
+    <string name="kp_list_preview">Danh sách trước: %1$s</string>
+    <string name="kp_list_locked">Đã khóa</string>
+    <string name="kp_list_failed">Tải thất bại</string>
+    <string name="kp_list_unlock">Mở khóa</string>
+    <string name="kp_list_unlock_help">Xác minh mật khẩu chính Monica để mở cơ sở dữ liệu này bằng thông tin xác thực đã lưu.</string>
+    <string name="kp_list_auth_failed">Xác minh không thành công hoặc đã hết thời gian. Vui lòng thử lại.</string>
+    <string name="kp_list_loading_databases">Đang tải… · %1$d kho</string>
+</resources>

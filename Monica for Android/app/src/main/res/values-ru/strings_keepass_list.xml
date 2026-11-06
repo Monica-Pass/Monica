@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_list_loading">Загрузка…</string>
+    <string name="kp_list_preview">Предыдущий список: %1$s</string>
+    <string name="kp_list_locked">Заблокировано</string>
+    <string name="kp_list_failed">Ошибка загрузки</string>
+    <string name="kp_list_unlock">Разблокировать</string>
+    <string name="kp_list_unlock_help">Подтвердите мастер-пароль Monica, чтобы открыть эту базу данных с сохранёнными учётными данными.</string>
+    <string name="kp_list_auth_failed">Проверка не удалась или истекло время ожидания. Повторите попытку.</string>
+    <string name="kp_list_loading_databases">Загрузка… · %1$d баз</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_list_loading">Wird geladen…</string>
+    <string name="kp_list_preview">Vorherige Liste: %1$s</string>
+    <string name="kp_list_locked">Gesperrt</string>
+    <string name="kp_list_failed">Laden fehlgeschlagen</string>
+    <string name="kp_list_unlock">Entsperren</string>
+    <string name="kp_list_unlock_help">Bestätige dein Monica-Hauptpasswort, um diese Datenbank mit den gespeicherten Zugangsdaten zu öffnen.</string>
+    <string name="kp_list_auth_failed">Überprüfung fehlgeschlagen oder Zeitlimit überschritten. Bitte erneut versuchen.</string>
+    <string name="kp_list_loading_databases">Laden… · %1$d Datenbanken</string>
+</resources>

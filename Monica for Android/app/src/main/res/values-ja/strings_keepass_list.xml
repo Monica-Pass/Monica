@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_list_loading">読み込み中…</string>
+    <string name="kp_list_preview">前の一覧：%1$s</string>
+    <string name="kp_list_locked">ロック中</string>
+    <string name="kp_list_failed">読み込み失敗</string>
+    <string name="kp_list_unlock">ロック解除</string>
+    <string name="kp_list_unlock_help">Monica のマスターパスワードを確認し、保存済みの認証情報でこのデータベースを開きます。</string>
+    <string name="kp_list_auth_failed">確認に失敗したか、時間切れになりました。もう一度お試しください。</string>
+    <string name="kp_list_loading_databases">読み込み中… · %1$d 個の保管庫</string>
+</resources>

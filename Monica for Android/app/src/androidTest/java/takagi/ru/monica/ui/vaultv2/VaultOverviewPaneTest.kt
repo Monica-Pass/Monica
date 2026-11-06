@@ -1,6 +1,9 @@
 package takagi.ru.monica.ui.vaultv2
 
+import takagi.ru.monica.ui.password.StackCardMode
+
 import takagi.ru.monica.utils.AppLocaleStringResolver
+import takagi.ru.monica.ui.components.UnifiedCategoryFilterSelection
 
 import app.keemobile.kotpass.database.modifiers.modifyParentGroup
 import app.keemobile.kotpass.models.Group
@@ -53,6 +56,9 @@ import takagi.ru.monica.viewmodel.*
 @RunWith(AndroidJUnit4::class)
 class VaultOverviewPaneTest {
     @get:Rule val compose = createComposeRule()
+    @get:Rule val testName = org.junit.rules.TestName()
+    private var comparisonIndex = 0
+    private var scrollbarGutterPx = 0
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
     private val settings = SettingsManager(context)
     private lateinit var originalSettings: PageAdjustmentSettingsSnapshot
@@ -65,6 +71,7 @@ class VaultOverviewPaneTest {
     private var darkTheme by mutableStateOf(false)
     private var keyboardVisible = false
     private var testKeePassDatabases by mutableStateOf<List<LocalKeePassDatabase>>(emptyList())
+    private lateinit var testPasswordModel: PasswordViewModel
     private lateinit var testKeepassModel: LocalKeePassViewModel
     private var fixtureFontScale by mutableFloatStateOf(1f)
     private var testBitwardenVaults by mutableStateOf<List<BitwardenVault>>(emptyList())
@@ -91,7 +98,7 @@ class VaultOverviewPaneTest {
         database.close()
     }
 
-    private fun showPane(followOverviewSettings: Boolean = false, expectedOverviewCount: Int? = 24) {
+    private fun showPane(followOverviewSettings: Boolean = false, expectedOverviewCount: Int? = 24, legacy: Boolean = false) {
         val security = SecurityManager(context)
         val passwords = PasswordRepository(database.passwordEntryDao(), categoryDao = database.categoryDao(),
             bitwardenFolderDao = database.bitwardenFolderDao(), passwordArchiveSyncMetaDao = database.passwordArchiveSyncMetaDao())
@@ -100,6 +107,7 @@ class VaultOverviewPaneTest {
         val passwordModel = keep(PasswordViewModel(passwords, security,
             context = context.takeIf { testKeePassDatabases.isNotEmpty() },
             localKeePassDatabaseDao = PasswordDatabase.getDatabase(context).localKeePassDatabaseDao(), strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext))).also { it.restoreAuthenticatedUiState() }
+        testPasswordModel = passwordModel
         val totp = keep(TotpViewModel(items, passwords, strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext)))
         val cards = keep(BankCardViewModel(items, strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext)))
         val documents = keep(DocumentViewModel(items, strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext)))
@@ -125,7 +133,16 @@ class VaultOverviewPaneTest {
             CompositionLocalProvider(LocalDensity provides androidx.compose.ui.unit.Density(LocalDensity.current.density, fixtureFontScale)) {
             MaterialTheme(colorScheme = if (darkTheme) darkColorScheme() else lightColorScheme()) {
                 state = rememberVaultV2PaneState(remember { VaultV2RetainedState() })
-                VaultV2Pane(passwordModel, totp, cards, documents, addresses, notes, passkeys,
+                if (legacy) androidx.compose.foundation.layout.Column(Modifier.fillMaxSize()) {
+                    takagi.ru.monica.ui.PasswordListContent(viewModel = passwordModel, settingsViewModel = settingsModel,
+                        securityManager = security, keepassDatabases = testKeePassDatabases, mdbxDatabases = emptyList(),
+                        bitwardenVaults = emptyList(), localKeePassViewModel = keepass, mdbxViewModel = mdbx,
+                        stackCardMode = StackCardMode.ALWAYS_EXPANDED, onRenameCategory = {}, onDeleteCategory = {},
+                        onPasswordClick = { openedPassword = it.id }, onSelectionModeChange = { _, _, _, _, _, _, _, _ -> },
+                        aggregateConfig = takagi.ru.monica.ui.password.PasswordListAggregateConfig(
+                            PasswordPageContentType.entries.toList(), emptySet(), {}, totp, cards, documents, addresses,
+                            notes, passkeys, {}, {}, {}, {}, {}, {}))
+                } else VaultV2Pane(passwordModel, totp, cards, documents, addresses, notes, passkeys,
                     keepassDatabases = testKeePassDatabases, mdbxDatabases = emptyList(), bitwardenVaults = testBitwardenVaults,
                     localKeePassViewModel = keepass, mdbxViewModel = mdbx, settingsViewModel = settingsModel, state = state,
                     onOpenPassword = { openedPassword = it }, onOpenTotp = {}, onOpenBankCard = {}, onOpenDocument = {},
@@ -136,6 +153,7 @@ class VaultOverviewPaneTest {
             }
             }
         }
+        if (legacy) return
         compose.waitUntil(15_000) {
             runCatching { compose.onNodeWithTag("vault_overview_screen").assertExists() }.isSuccess
         }
@@ -650,6 +668,105 @@ class VaultOverviewPaneTest {
         compose.runOnIdle { assertEquals(VaultV2LayoutMode.CLASSIC, appSettings.vaultV2LayoutMode) }
     }
 
+
+    @Test fun legacySwitchWaitsForPasswordsAndSupplementaryNotesTogether() = runBlocking {
+        settings.updatePasswordPageAggregateEnabled(true)
+        fun seed(file: app.keemobile.kotpass.database.KeePassDatabase, label: String) = file.modifyParentGroup {
+            copy(entries = listOf(
+                entries[0].copy(fields = entries[0].fields + ("Title" to app.keemobile.kotpass.models.EntryValue.Plain("Legacy $label"))),
+                entries[1].copy(fields = app.keemobile.kotpass.models.EntryFields.of(
+                    "Title" to app.keemobile.kotpass.models.EntryValue.Plain("Note $label"),
+                    "MonicaItemType" to app.keemobile.kotpass.models.EntryValue.Plain("NOTE"),
+                    "MonicaItemData" to app.keemobile.kotpass.models.EntryValue.Plain("{\"content\":\"Synthetic note\"}")))
+            ))
+        }
+        KeePassDeleteInvestigationTest().scenario(databaseTransform = { seed(it, "A") }) { _, _, a, _, aUri ->
+            KeePassDeleteInvestigationTest().scenario(databaseTransform = { seed(it, "B") }) { _, _, b, _, bUri ->
+                val dao = PasswordDatabase.getDatabase(context).localKeePassDatabaseDao()
+                testKeePassDatabases = listOf(dao.getDatabaseById(a)!!.copy(name = "Vault A"), dao.getDatabaseById(b)!!.copy(name = "Vault B"))
+                val before = listOf(aUri, bUri).map { uri -> context.contentResolver.openInputStream(uri)!!.use { it.readBytes() } }
+                showPane(legacy = true)
+                fun actionable(text: String) = isEnabled() and hasClickAction() and (hasText(text) or hasAnyDescendant(hasText(text)))
+                compose.runOnIdle { testPasswordModel.setCategoryFilter(CategoryFilter.KeePassDatabase(a)) }
+                compose.waitUntil(30_000) { compose.onAllNodes(actionable("Note A")).fetchSemanticsNodes().isNotEmpty() }
+                compose.onAllNodes(actionable("Legacy A")).assertCountEquals(1)
+                val originalList = retainedBitmap()
+                capture("keepass-real-legacy-ready-a.png")
+                val store = testPasswordModel.monicaKeePassStore!!
+                val mutex = store.javaClass.getDeclaredField("mutex").apply { isAccessible = true }.get(store) as kotlinx.coroutines.sync.Mutex
+                mutex.lock()
+                try {
+                    compose.mainClock.autoAdvance = false
+                    compose.runOnIdle { testPasswordModel.setCategoryFilter(CategoryFilter.KeePassDatabase(b)) }
+                    compose.mainClock.advanceTimeByFrame()
+                    compose.onAllNodes(actionable("Legacy A")).assertCountEquals(0)
+                    compose.onAllNodes(actionable("Note A")).assertCountEquals(0)
+                    compose.onNodeWithTag("keepass-list-status", useUnmergedTree = true).assertExists()
+                    compose.mainClock.advanceTimeBy(400)
+                    assertRetainedPixels(originalList)
+                    assertPendingInputBlocked()
+                    capture("keepass-switch-legacy-previous.png")
+                } finally { compose.mainClock.autoAdvance = true; mutex.unlock() }
+                compose.waitUntil(30_000) { compose.onAllNodes(actionable("Note B")).fetchSemanticsNodes().isNotEmpty() }
+                compose.onAllNodes(actionable("Legacy B")).assertCountEquals(1)
+                compose.onAllNodes(actionable("Note A")).assertCountEquals(0)
+                listOf(aUri, bUri).forEachIndexed { i, uri ->
+                    assertArrayEquals(before[i], context.contentResolver.openInputStream(uri)!!.use { it.readBytes() })
+                }
+            }
+        }
+    }
+
+    @Test fun switchingKdbxNeverLeavesPreviousVaultActionable() = runBlocking {
+        scrollbarGutterPx = kotlin.math.ceil(12 * context.resources.displayMetrics.density).toInt()
+        fun rename(file: app.keemobile.kotpass.database.KeePassDatabase, label: String) =
+            file.modifyParentGroup { copy(entries = entries.take(1).map {
+                it.copy(fields = it.fields + ("Title" to app.keemobile.kotpass.models.EntryValue.Plain(label)))
+            }) }
+        KeePassDeleteInvestigationTest().scenario(databaseTransform = { rename(it, "Switch A") }) { _, _, a, _, aUri ->
+            KeePassDeleteInvestigationTest().scenario(databaseTransform = { rename(it, "Switch B") }) { _, _, b, _, bUri ->
+                val dao = PasswordDatabase.getDatabase(context).localKeePassDatabaseDao()
+                testKeePassDatabases = listOf(dao.getDatabaseById(a)!!.copy(name = "Vault A"), dao.getDatabaseById(b)!!.copy(name = "Vault B"))
+                val before = listOf(aUri, bUri).map { uri -> context.contentResolver.openInputStream(uri)!!.use { it.readBytes() } }
+                showPane(expectedOverviewCount = null)
+                compose.runOnIdle {
+                    state.overviewListOpen = true
+                    state.updateStorageFilter(VAULT_V2_STORAGE_FILTER_KEEPASS_DATABASE, primaryId = a)
+                }
+                val actionableA = hasClickAction() and (hasText("Switch A") or hasAnyDescendant(hasText("Switch A")))
+                compose.waitUntil(30_000) { compose.onAllNodes(actionableA).fetchSemanticsNodes().isNotEmpty() }
+                val originalList = retainedBitmap()
+                capture("keepass-real-vault-ready-a.png")
+                val store = requireNotNull(testPasswordModel.monicaKeePassStore)
+                val field = store.javaClass.getDeclaredField("mutex").apply { isAccessible = true }
+                val mutex = field.get(store) as kotlinx.coroutines.sync.Mutex
+                mutex.lock()
+                try {
+                    compose.mainClock.autoAdvance = false
+                    compose.runOnIdle { state.updateStorageFilter(VAULT_V2_STORAGE_FILTER_KEEPASS_DATABASE, primaryId = b) }
+                    compose.mainClock.advanceTimeByFrame()
+                    compose.waitForIdle()
+                    compose.onAllNodes(actionableA).assertCountEquals(0)
+                    compose.onNodeWithTag("keepass-list-status").assertExists()
+                    compose.mainClock.advanceTimeBy(400)
+                    assertRetainedPixels(originalList)
+                    assertPendingInputBlocked()
+                    capture("keepass-switch-previous.png")
+                } finally { compose.mainClock.autoAdvance = true; mutex.unlock() }
+                val actionableB = hasClickAction() and (hasText("Switch B") or hasAnyDescendant(hasText("Switch B")))
+                compose.waitUntil(30_000) { compose.onAllNodes(actionableB).fetchSemanticsNodes().isNotEmpty() }
+                capture("keepass-switch-ready.png")
+                compose.runOnIdle { testKeepassModel.lockKeePassDatabase(b) }
+                compose.onAllNodes(actionableB).assertCountEquals(0)
+                compose.onNodeWithTag("keepass-list-unlock").assertExists()
+                capture("keepass-switch-locked.png")
+                listOf(aUri, bUri).forEachIndexed { i, uri ->
+                    assertArrayEquals(before[i], context.contentResolver.openInputStream(uri)!!.use { it.readBytes() })
+                }
+            }
+        }
+    }
+
     @Test fun kdbxOverviewNavigatesDuplicateParentsByUuidAndLocksWithoutWriting() = runBlocking {
         val a = UUID.randomUUID(); val b = UUID.randomUUID()
         val ac = UUID.randomUUID(); val bc = UUID.randomUUID()
@@ -701,6 +818,161 @@ class VaultOverviewPaneTest {
             assertArrayEquals(original, context.contentResolver.openInputStream(uri)!!.use { it.readBytes() })
             assertEquals(VaultV2LayoutMode.CLASSIC, appSettings.vaultV2LayoutMode)
         }
+    }
+
+    @Test fun actualLegacyListRetainsScrolledCards() = actualScrolledList(legacy = true, large = false)
+    @Test fun actualLegacyListRetainsScrolledCardsAtLargeFont() = actualScrolledList(legacy = true, large = true)
+    @Test fun actualVaultListRetainsScrolledCards() = actualScrolledList(legacy = false, large = false)
+    @Test fun actualVaultListRetainsScrolledCardsAtLargeFont() = actualScrolledList(legacy = false, large = true)
+
+    @Test fun switchingLegacyListStopsAnInFlightFling() = actualScrolledList(legacy = true, large = false, fling = true)
+    @Test fun switchingVaultListStopsAnInFlightFling() = actualScrolledList(legacy = false, large = false, fling = true)
+
+    private fun actualScrolledList(legacy: Boolean, large: Boolean, fling: Boolean = false) = runBlocking {
+        // The sibling scrollbar responds to viewport height; compare the actual card
+        // area separately, including all cards and their full right-hand corners.
+        scrollbarGutterPx = if (legacy) 0 else kotlin.math.ceil(12 * context.resources.displayMetrics.density).toInt()
+        fixtureFontScale = if (large) 1.5f else 1f
+        fun seed(file: app.keemobile.kotpass.database.KeePassDatabase, label: String) = file.modifyParentGroup {
+            copy(entries = (1..(if (fling) 80 else 30)).map { index -> entries[0].copy(uuid = UUID.randomUUID(),
+                fields = app.keemobile.kotpass.models.EntryFields.of(
+                    "Title" to app.keemobile.kotpass.models.EntryValue.Plain("Real $label ${index.toString().padStart(2, '0')}"),
+                    "UserName" to app.keemobile.kotpass.models.EntryValue.Plain("synthetic-$index@example.invalid"),
+                    "Password" to app.keemobile.kotpass.models.EntryValue.Plain("Synthetic list only"))) },
+                groups = listOf(Group(uuid = UUID.randomUUID(), name = "Folder $label")))
+        }
+        KeePassDeleteInvestigationTest().scenario(databaseTransform = { seed(it, "A") }) { _, _, a, _, aUri ->
+            KeePassDeleteInvestigationTest().scenario(databaseTransform = { seed(it, "B") }) { _, _, b, _, bUri ->
+                val dao = PasswordDatabase.getDatabase(context).localKeePassDatabaseDao()
+                testKeePassDatabases = listOf(dao.getDatabaseById(a)!!.copy(name = "Vault A"), dao.getDatabaseById(b)!!.copy(name = "Vault B"))
+                val before = listOf(aUri, bUri).map { uri -> context.contentResolver.openInputStream(uri)!!.use { it.readBytes() } }
+                showPane(expectedOverviewCount = null, legacy = legacy)
+                fun select(id: Long) {
+                    if (legacy) testPasswordModel.setCategoryFilter(CategoryFilter.KeePassDatabase(id))
+                    else { state.overviewListOpen = true; state.updateStorageFilter(VAULT_V2_STORAGE_FILTER_KEEPASS_DATABASE, primaryId = id) }
+                }
+                compose.runOnIdle { select(a) }
+                compose.waitUntil(30_000) { compose.onAllNodesWithText("Real A 01", useUnmergedTree = true).fetchSemanticsNodes().isNotEmpty() &&
+                    compose.onAllNodesWithTag("keepass-list-status", useUnmergedTree = true).fetchSemanticsNodes().isEmpty() }
+                val suffix = "${if (legacy) "password" else "vault"}-${if (large) "large" else "normal"}${if (fling) "-fling" else ""}"
+                capture("real-list-$suffix-top.png")
+                val list = compose.onAllNodes(hasScrollAction() and hasAnyAncestor(hasTestTag("keepass-retained-list")), useUnmergedTree = true)
+                    .filter(hasScrollToIndexAction()).onFirst()
+                list.performScrollToIndex(10)
+                compose.waitForIdle()
+                val originalList = retainedBitmap()
+                val scrollAxis = list.fetchSemanticsNode().config[androidx.compose.ui.semantics.SemanticsProperties.VerticalScrollAxisRange]
+                val originalScrollPosition = scrollAxis.value()
+                capture("real-list-$suffix-scrolled.png")
+                val store = testPasswordModel.monicaKeePassStore!!
+                val mutex = store.javaClass.getDeclaredField("mutex").apply { isAccessible = true }.get(store) as kotlinx.coroutines.sync.Mutex
+                mutex.lock()
+                try {
+                    compose.mainClock.autoAdvance = false
+                    if (fling) {
+                        compose.onNodeWithTag("keepass-retained-list", useUnmergedTree = true)
+                            .performTouchInput { swipeUp(durationMillis = 60) }
+                        val afterGesture = scrollAxis.value()
+                        repeat(2) { compose.mainClock.advanceTimeByFrame() }
+                        assertNotEquals("Fixture must still be moving after finger release", afterGesture, scrollAxis.value())
+                    }
+                    compose.runOnUiThread { select(b) }
+                    compose.mainClock.advanceTimeByFrame()
+                    val stoppedPosition = scrollAxis.value()
+                    if (!fling) assertEquals("Original scroll position", originalScrollPosition, stoppedPosition, 0f)
+                    compose.mainClock.advanceTimeBy(400)
+                    assertEquals("Pending list must stop scrolling", stoppedPosition, scrollAxis.value(), 0f)
+                    compose.onNodeWithTag("keepass-list-status", useUnmergedTree = true).assertExists()
+                    capture("real-list-$suffix-before-assert.png")
+                    val stopped = if (fling) retainedBitmap() else originalList
+                    assertRetainedPixels(stopped)
+                    assertPendingInputBlocked()
+                    assertRetainedPixels(stopped)
+                    if (!legacy) {
+                        compose.onNodeWithTag("vault_scrollbar", useUnmergedTree = true).assertIsDisplayed()
+                            .performTouchInput { swipeUp(durationMillis = 200) }
+                        compose.mainClock.advanceTimeBy(500)
+                        assertEquals("Pending scrollbar must not move the original list", stoppedPosition, scrollAxis.value(), 0f)
+                    }
+                    capture("real-list-$suffix-pending.png")
+                } finally { compose.mainClock.autoAdvance = true; mutex.unlock() }
+                compose.waitUntil(30_000) { compose.onAllNodesWithTag("keepass-list-status", useUnmergedTree = true).fetchSemanticsNodes().isEmpty() }
+                compose.onAllNodesWithText("Real A 01", useUnmergedTree = true).assertCountEquals(0)
+                capture("real-list-$suffix-target.png")
+                val targetRows = compose.onAllNodes(hasText("Real B ", substring = true) and
+                    hasAnyAncestor(hasTestTag("keepass-retained-list")), useUnmergedTree = true)
+                val targetNodes = targetRows.fetchSemanticsNodes()
+                val displayedTargets = targetNodes.indices.map { targetRows[it].isDisplayed() }
+                File(context.cacheDir, "real-list-$suffix-target-nodes.txt").writeText(
+                    targetNodes.mapIndexed { index, node ->
+                        "index=$index displayed=${displayedTargets[index]} bounds=${node.boundsInRoot} text=${node.config[androidx.compose.ui.semantics.SemanticsProperties.Text]}"
+                    }.joinToString("\n")
+                )
+                // Lazy lists may keep an off-screen predecessor composed. Require an
+                // actually visible target row rather than the first semantics match.
+                assertTrue("Target database must have a visible row: $displayedTargets", displayedTargets.any { it })
+                compose.onAllNodes(hasText("Real A ", substring = true), useUnmergedTree = true).assertCountEquals(0)
+                compose.onNodeWithTag("keepass-list-status", useUnmergedTree = true).assertDoesNotExist()
+                val visibleTitle = targetNodes[displayedTargets.indexOf(true)]
+                    .config[androidx.compose.ui.semantics.SemanticsProperties.Text].single().text
+                val expectedTarget = store.presentationSnapshots.value.getValue(b).rows.single { it.title == visibleTitle }
+                val broadActions = compose.onAllNodes(hasClickAction() and
+                    (hasText(visibleTitle) or hasAnyDescendant(hasText(visibleTitle))))
+                File(context.cacheDir, "real-list-$suffix-target-nodes.txt").appendText(
+                    "\nBROAD CLICK CANDIDATES\n" + broadActions.fetchSemanticsNodes().mapIndexed { index, node ->
+                        "index=$index disabled=${node.config.contains(androidx.compose.ui.semantics.SemanticsProperties.Disabled)} bounds=${node.boundsInRoot}"
+                    }.joinToString("\n")
+                )
+                // Tap the visible title itself. A disabled clickable list ancestor may
+                // contain every title, and tapping its center targets a different card.
+                targetRows[displayedTargets.indexOf(true)].performTouchInput { click(center) }
+                File(context.cacheDir, "real-list-$suffix-target-nodes.txt").appendText(
+                    "\nexpectedTitle=$visibleTitle expectedId=${expectedTarget.id} openedId=$openedPassword\n"
+                )
+                assertEquals("Click must open the matching record from target database B", expectedTarget.id, openedPassword)
+                listOf(aUri, bUri).forEachIndexed { i, uri ->
+                    assertArrayEquals(before[i], context.contentResolver.openInputStream(uri)!!.use { it.readBytes() })
+                }
+            }
+        }
+    }
+
+    private fun retainedBitmap(): Bitmap = compose.onNodeWithTag("keepass-retained-list", useUnmergedTree = true)
+        .captureToImage().asAndroidBitmap()
+
+    private fun assertRetainedPixels(before: Bitmap) {
+        val pending = retainedBitmap()
+        assertEquals("Original list width", before.width, pending.width)
+        val height = minOf(before.height, pending.height)
+        val expected = Bitmap.createBitmap(before, 0, 0, before.width - scrollbarGutterPx, height)
+        val actual = Bitmap.createBitmap(pending, 0, 0, pending.width - scrollbarGutterPx, height)
+        val prefix = "comparison-${testName.methodName}-${comparisonIndex++}"
+        listOf("before" to expected, "pending" to actual).forEach { (suffix, bitmap) ->
+            File(context.cacheDir, "$prefix-$suffix.png").outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
+        }
+        val a = IntArray(expected.width * expected.height)
+        val b = IntArray(actual.width * actual.height)
+        expected.getPixels(a, 0, expected.width, 0, 0, expected.width, expected.height)
+        actual.getPixels(b, 0, actual.width, 0, 0, actual.width, actual.height)
+        val mismatches = a.indices.count { a[it] != b[it] }
+        File(context.cacheDir, "$prefix.txt").writeText("size=${expected.width}x${expected.height}; pixelsDifferent=$mismatches; beforeConfig=${expected.config}; pendingConfig=${actual.config}")
+        // Translating the same rounded card by the status-bar height changes a few
+        // GPU antialias samples by one 8-bit level. Preserve exact coordinates and
+        // reject every larger pixel difference; see the retained diagnostic PNGs.
+        val maxChannelDelta = a.indices.maxOf { index ->
+            (0..3).maxOf { channel -> kotlin.math.abs(((a[index] ushr (channel * 8)) and 255) - ((b[index] ushr (channel * 8)) and 255)) }
+        }
+        assertTrue("Actual list raster differs beyond one antialias level: $maxChannelDelta", maxChannelDelta <= 1)
+    }
+
+    private fun assertPendingInputBlocked() {
+        val oldOpened = openedPassword
+        val list = compose.onNodeWithTag("keepass-retained-list", useUnmergedTree = true)
+        list.performTouchInput { click(center) }
+        list.performTouchInput { longClick(center) }
+        list.performTouchInput { swipeRight() }
+        compose.mainClock.advanceTimeBy(1500)
+        assertEquals("Pending list must not navigate", oldOpened, openedPassword)
     }
 
     private fun prepareSortEntries() = runBlocking {

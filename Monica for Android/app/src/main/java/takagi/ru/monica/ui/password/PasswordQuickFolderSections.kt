@@ -1,5 +1,7 @@
 package takagi.ru.monica.ui
 
+import takagi.ru.monica.ui.password.AllVaultLoadingState
+import takagi.ru.monica.ui.password.AllVaultLoadingStatus
 import takagi.ru.monica.ui.password.KeePassFileActions
 import takagi.ru.monica.ui.password.KeePassFileStatus
 
@@ -153,10 +155,11 @@ internal fun PasswordQuickFolderBreadcrumbBanner(
     bitwardenSyncState: QuickStatusBitwardenSyncState? = null,
     keePassSyncState: QuickStatusKeePassSyncState? = null,
     keePassFileActions: KeePassFileActions? = null,
+    allVaultLoadingState: AllVaultLoadingState? = null,
     animateHeight: Boolean = true
 ) {
     // Do not keep an outgoing path or status composed after this vault is locked.
-    if (keePassFileActions != null && !keePassFileActions.available) return
+    if (keePassFileActions != null && !keePassFileActions.available && keePassFileActions.listTransition == null) return
     val sourceLabel = buildQuickStatusSourceLabel(breadcrumbs = breadcrumbs)
     val statusMode = when {
         transferState?.phase == PasswordBatchTransferPhase.RUNNING -> PasswordQuickStatusMode.TRANSFER_RUNNING
@@ -168,15 +171,17 @@ internal fun PasswordQuickFolderBreadcrumbBanner(
         bitwardenSyncState != null -> PasswordQuickStatusMode.BITWARDEN_SYNC
         else -> PasswordQuickStatusMode.BREADCRUMB
     }
-    AnimatedContent(
+    Box(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp)
+        .then(if (animateHeight) Modifier.animateContentSize(
+            animationSpec = tween(260, easing = FastOutSlowInEasing), alignment = Alignment.TopStart
+        ) else Modifier)) {
+    if (keePassFileActions?.listTransition != null) {
+        KeePassFileStatus(keePassFileActions)
+    } else if (allVaultLoadingState != null && transferState == null && deleteState == null) {
+        AllVaultLoadingStatus(allVaultLoadingState)
+    } else AnimatedContent(
         targetState = statusMode,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 4.dp)
-            .then(if (animateHeight) Modifier.animateContentSize(
-                animationSpec = tween(260, easing = FastOutSlowInEasing),
-                alignment = Alignment.TopStart
-            ) else Modifier),
+        modifier = Modifier.fillMaxWidth(),
         transitionSpec = {
             fadeIn(animationSpec = tween(durationMillis = 180))
                 .togetherWith(fadeOut(animationSpec = tween(durationMillis = 140)))
@@ -241,6 +246,7 @@ internal fun PasswordQuickFolderBreadcrumbBanner(
                 )
             }
         }
+    }
     }
 }
 

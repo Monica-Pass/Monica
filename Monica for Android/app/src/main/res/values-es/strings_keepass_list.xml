@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_list_loading">Cargando…</string>
+    <string name="kp_list_preview">Lista anterior: %1$s</string>
+    <string name="kp_list_locked">Bloqueada</string>
+    <string name="kp_list_failed">Error al cargar</string>
+    <string name="kp_list_unlock">Desbloquear</string>
+    <string name="kp_list_unlock_help">Verifica tu contraseña maestra de Monica para abrir esta base de datos con las credenciales guardadas.</string>
+    <string name="kp_list_auth_failed">La verificación falló o agotó el tiempo de espera. Inténtalo de nuevo.</string>
+    <string name="kp_list_loading_databases">Cargando… · %1$d bases</string>
+</resources>

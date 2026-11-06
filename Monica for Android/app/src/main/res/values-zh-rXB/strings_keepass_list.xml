@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kp_list_loading">加载中…</string>
+    <string name="kp_list_preview">暂显上一列表：%1$s</string>
+    <string name="kp_list_locked">已锁定</string>
+    <string name="kp_list_failed">加载失败</string>
+    <string name="kp_list_unlock">解锁</string>
+    <string name="kp_list_unlock_help">验证 Monica 主密码后，使用已保存的凭据打开此数据库。</string>
+    <string name="kp_list_auth_failed">验证失败或超时，请重试。</string>
+    <string name="kp_list_loading_databases">加载中… · %1$d 个库</string>
+</resources>

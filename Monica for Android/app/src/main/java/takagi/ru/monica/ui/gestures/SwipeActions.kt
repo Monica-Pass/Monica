@@ -67,6 +67,8 @@ fun SwipeActions(
     leftActionContentColor: Color = MaterialTheme.colorScheme.onErrorContainer,
     content: @Composable () -> Unit
 ) {
+    val canInteract = takagi.ru.monica.ui.password.LocalKeePassListInteraction.current
+    val enabled = enabled && canInteract()
     // 使用非动画状态记录实时拖动偏移，避免高频创建协程
     var dragOffset by remember { mutableFloatStateOf(0f) }
     // 仅用于回弹动画的 Animatable
@@ -212,7 +214,7 @@ fun SwipeActions(
                         shape = componentShape
                         clip = true
                     }
-                    .pointerInput(enabled, allowSwipeLeft, allowSwipeRight) {
+                    .pointerInput(enabled, allowSwipeLeft, allowSwipeRight, canInteract) {
                         if (!enabled || (!allowSwipeLeft && !allowSwipeRight)) return@pointerInput
                         awaitEachGesture {
                             val down = awaitFirstDown(requireUnconsumed = false)
@@ -313,14 +315,14 @@ fun SwipeActions(
 
                                     val dynamicThreshold = cardWidth * 0.2f
                                     if (allowSwipeLeft && animatableOffset.value < -dynamicThreshold) {
-                                        currentOnSwipeLeft()
+                                        if (canInteract()) currentOnSwipeLeft()
                                         animatableOffset.animateTo(-cardWidth, tween(300, easing = FastOutSlowInEasing))
                                         if (!currentIsSwiped) {
                                             animatableOffset.animateTo(0f, springSpec)
                                         }
                                     } else if (allowSwipeRight && animatableOffset.value > dynamicThreshold) {
                                         animatableOffset.animateTo(0f, springSpec)
-                                        currentOnSwipeRight()
+                                        if (canInteract()) currentOnSwipeRight()
                                     } else {
                                         animatableOffset.animateTo(0f, quickSpringSpec)
                                     }
