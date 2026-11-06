@@ -10,7 +10,7 @@ import org.robolectric.annotation.Config
 import takagi.ru.monica.data.model.*
 
 @RunWith(RobolectricTestRunner::class)
-@Config(sdk = [29])
+@Config(sdk = [29], application = android.app.Application::class)
 class MdbxKeyPayloadTest {
     @Test fun physicalIdentityMatchesPortableMd5Vector() {
         assertEquals("48f94648-e2a0-3d3d-91b8-77ff9895b136", mdbx2PhysicalEntryId("11111111-1111-1111-1111-111111111111", "password:22222222-2222-2222-2222-222222222222"))

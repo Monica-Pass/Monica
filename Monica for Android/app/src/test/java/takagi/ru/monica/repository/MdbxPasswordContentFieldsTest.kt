@@ -9,7 +9,7 @@ import org.robolectric.annotation.Config
 import takagi.ru.monica.data.PasswordEntry
 
 @RunWith(RobolectricTestRunner::class)
-@Config(sdk = [29])
+@Config(sdk = [29], application = android.app.Application::class)
 class MdbxPasswordContentFieldsTest {
     @Test fun wifiMetadataSurvivesColdReadsLegacyPayloadsAndUnknownExtensions() {
         val raw = """{"ssid":"network","security":"WEP","proxy":{"kind":"future"},"unknown":[1,true]}"""

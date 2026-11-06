@@ -46,9 +46,10 @@ import takagi.ru.monica.keepass.KeePassPendingChangeDao
         MdbxRemoteSource::class,
         MdbxSyncStateEntity::class,
         // KeePass entry-level pending changes
-        KeePassPendingChange::class
+        KeePassPendingChange::class,
+        LegacyDedupRecoveryEntity::class
     ],
-    version = 84,
+    version = 85,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -92,6 +93,20 @@ abstract class PasswordDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: PasswordDatabase? = null
         
+        // Retain schema 85 and its inert table for existing development installs.
+        // Removing the feature must not downgrade Room or destroy encrypted recovery data.
+        internal val MIGRATION_84_85 = object : androidx.room.migration.Migration(84, 85) {
+            override fun migrate(database: androidx.sqlite.db.SupportSQLiteDatabase) {
+                database.execSQL("""
+                    CREATE TABLE IF NOT EXISTS single_vault_dedup_recovery (
+                        id TEXT NOT NULL PRIMARY KEY, sourceKey TEXT NOT NULL,
+                        createdAt INTEGER NOT NULL, projectCount INTEGER NOT NULL,
+                        sealedPayload TEXT NOT NULL, state TEXT NOT NULL
+                    )
+                """.trimIndent())
+            }
+        }
+
         internal val MIGRATION_83_84 = object : androidx.room.migration.Migration(83, 84) {
             override fun migrate(database: androidx.sqlite.db.SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE bitwarden_vaults ADD COLUMN environment_preset TEXT")
@@ -2512,7 +2527,8 @@ abstract class PasswordDatabase : RoomDatabase() {
                         MIGRATION_80_81,   // Complete encrypted Bitwarden source documents
                         MIGRATION_81_82,   // Native Bitwarden history and all-type archive
                         MIGRATION_82_83,   // Authenticated encrypted Send cache
-                        MIGRATION_83_84    // Protected account transport configuration
+                        MIGRATION_83_84,   // Protected account transport configuration
+                        MIGRATION_84_85    // Legacy recovery data retained; engine removed
                     )
                     // 启用多进程失效通知：IME 跑在 :ime 独立进程，主进程需要
                     // 感知 IME 进程对数据库的修改（例如最近填充时间戳等）。

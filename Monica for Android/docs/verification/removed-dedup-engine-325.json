@@ -1,0 +1,1468 @@
+{
+  "edition": "main",
+  "version": "1.0.325",
+  "releaseState": "unreleased",
+  "finalBuild": {
+    "edition": "main",
+    "command": [
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\gradlew.bat",
+      ":app:assembleDebug",
+      ":app:assembleDebugAndroidTest",
+      "-PdailySeq=21",
+      "-PincludeX86TestAbi",
+      "-Pkotlin.compiler.execution.strategy=in-process",
+      "--continue",
+      "--no-daemon",
+      "--max-workers=1",
+      "-Dorg.gradle.jvmargs=-Xmx8g -XX:ActiveProcessorCount=4 -Dfile.encoding=UTF-8",
+      "-x",
+      ":app:generateDebugBuildConfig",
+      "-x",
+      ":app:generateDebugAndroidTestBuildConfig"
+    ],
+    "exitCode": 0,
+    "seconds": 167.003,
+    "inputsUnchanged": true,
+    "assembliesOnly": true,
+    "reusedBuildConfig": {
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\generated\\source\\buildConfig\\debug\\takagi\\ru\\monica\\BuildConfig.java": "c2fcfb535004813eb73711db9eae4deba221d2124f3df20b917f388dd626d0a4",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\generated\\source\\buildConfig\\androidTest\\debug\\takagi\\ru\\monica\\test\\BuildConfig.java": "d5faba5f067a45707776c7985824de959585f03f44e18c76c8fb1b63de69f2b9"
+    },
+    "app": {
+      "tests": 0,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "kotpass": {
+      "tests": 0,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "assemblySucceeded": true,
+    "apks": {
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.325-26110712-21.APK": "2e25ecb12ad747416b59b29f806b43a175c219698c6f914306a13b45c16dc9db",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "9ebb9742a01b80ca543e787e561576d6f7f5d34d366d51c4fdbc7729dd40b3bb"
+    }
+  },
+  "productionBuild": {
+    "edition": "main",
+    "command": [
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\gradlew.bat",
+      ":app:assembleDebug",
+      ":app:assembleDebugAndroidTest",
+      "-PdailySeq=21",
+      "-PincludeX86TestAbi",
+      "-Pkotlin.compiler.execution.strategy=in-process",
+      "--continue",
+      "--no-daemon",
+      "--max-workers=1",
+      "-Dorg.gradle.jvmargs=-Xmx8g -XX:ActiveProcessorCount=4 -Dfile.encoding=UTF-8",
+      "-x",
+      ":app:generateDebugBuildConfig",
+      "-x",
+      ":app:generateDebugAndroidTestBuildConfig"
+    ],
+    "exitCode": 0,
+    "seconds": 167.003,
+    "inputsUnchanged": true,
+    "assembliesOnly": true,
+    "reusedBuildConfig": {
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\generated\\source\\buildConfig\\debug\\takagi\\ru\\monica\\BuildConfig.java": "c2fcfb535004813eb73711db9eae4deba221d2124f3df20b917f388dd626d0a4",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\generated\\source\\buildConfig\\androidTest\\debug\\takagi\\ru\\monica\\test\\BuildConfig.java": "d5faba5f067a45707776c7985824de959585f03f44e18c76c8fb1b63de69f2b9"
+    },
+    "app": {
+      "tests": 0,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "kotpass": {
+      "tests": 0,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "assemblySucceeded": true,
+    "apks": {
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.325-26110712-21.APK": "2e25ecb12ad747416b59b29f806b43a175c219698c6f914306a13b45c16dc9db",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "9ebb9742a01b80ca543e787e561576d6f7f5d34d366d51c4fdbc7729dd40b3bb"
+    }
+  },
+  "jvmBuild": {
+    "edition": "main",
+    "command": [
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\gradlew.bat",
+      ":app:assembleDebug",
+      ":app:assembleDebugAndroidTest",
+      ":app:testDebugUnitTest",
+      "--tests",
+      "takagi.ru.monica.keepass.*",
+      "--tests",
+      "takagi.ru.monica.repository.*",
+      "--tests",
+      "takagi.ru.monica.sync.*",
+      "--tests",
+      "*PasswordDisplayDeduplicationRegressionTest",
+      "--tests",
+      "*PasswordCredentialSavePlannerTest",
+      "--tests",
+      "*MultiPasswordSaveRegressionGuardTest",
+      "--tests",
+      "*KeePassListPreviewCacheTest",
+      "--tests",
+      "*AllVaultLoadingStateTest",
+      "--tests",
+      "*PasswordStackOrderTest",
+      "--tests",
+      "*PasswordFirstFrameStackRetentionTest",
+      "--tests",
+      "*BitwardenSyncQueueTest",
+      "--tests",
+      "*CommonFieldSuggestionsTest",
+      "--tests",
+      "*AutofillCancellationTest",
+      "--tests",
+      "*SettingsControllerTest",
+      "--tests",
+      "*Timeline*",
+      "--tests",
+      "*SettingsSearch*",
+      ":kotpass:test",
+      "-PdailySeq=21",
+      "-PincludeX86TestAbi",
+      "-Pkotlin.compiler.execution.strategy=in-process",
+      "--continue",
+      "--no-daemon",
+      "--max-workers=1",
+      "-Dorg.gradle.jvmargs=-Xmx8g -XX:ActiveProcessorCount=4 -Dfile.encoding=UTF-8",
+      "-x",
+      ":app:generateDebugBuildConfig",
+      "-x",
+      ":app:generateDebugAndroidTestBuildConfig"
+    ],
+    "exitCode": 1,
+    "seconds": 942.102,
+    "inputsUnchanged": true,
+    "reusedBuildConfig": {
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\generated\\source\\buildConfig\\debug\\takagi\\ru\\monica\\BuildConfig.java": "c2fcfb535004813eb73711db9eae4deba221d2124f3df20b917f388dd626d0a4",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\generated\\source\\buildConfig\\androidTest\\debug\\takagi\\ru\\monica\\test\\BuildConfig.java": "d5faba5f067a45707776c7985824de959585f03f44e18c76c8fb1b63de69f2b9"
+    },
+    "app": {
+      "tests": 670,
+      "failures": 9,
+      "errors": 0,
+      "skipped": 0
+    },
+    "kotpass": {
+      "tests": 0,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "assemblySucceeded": true,
+    "apks": {
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.325-26110612-21.APK": "e00fbb875170764bffe172bc95672a1f8d4b8021a7110ef555ba1fe1fbec4c52",
+      "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "232b40be5076c094c44fc8bf36af53a0a7003f6a99fe7c37dd8c6c317e31267d"
+    }
+  },
+  "apkAudit": {
+    "sha256": "2e25ecb12ad747416b59b29f806b43a175c219698c6f914306a13b45c16dc9db",
+    "dexFilesChecked": 31,
+    "activeEngineClassesOrAdapterMethods": 0,
+    "compiledEngineResourcesAbsent": true,
+    "inertLegacyTablePreserved": true,
+    "legacySavedStateEnumsPresent": true,
+    "x86NativeLibraries": [
+      "lib/x86_64/darwin/libscrypt.dylib",
+      "lib/x86_64/libandroidx.graphics.path.so",
+      "lib/x86_64/libargon2jni.so",
+      "lib/x86_64/libargon2native.so",
+      "lib/x86_64/libdatastore_shared_counter.so",
+      "lib/x86_64/libimage_processing_util_jni.so",
+      "lib/x86_64/libjnidispatch.so",
+      "lib/x86_64/libmdbx_ffi.so",
+      "lib/x86_64/libmonica_rust_jni.so",
+      "lib/x86_64/libsurface_util_jni.so"
+    ]
+  },
+  "sourceAudit": {
+    "changedFiles": 171,
+    "deletedFiles": 106,
+    "unrelatedInputsUnchanged": true,
+    "protectedListFiles": 155,
+    "xmlFilesParsed": 1366,
+    "activeEngineReferences": 0
+  },
+  "backup": {
+    "sha": "d8b5170445d35978878cdbbf2c9d73bbc78339d0",
+    "branch": "codex/dedup-engine-backup-20261106",
+    "files": 170,
+    "remoteVerified": true,
+    "unrelatedResourceFilesCompared": 48
+  },
+  "preExistingJvmGuardComparison": {
+    "before": {
+      "exitCode": 1,
+      "failures": [
+        "passkeyCreateAndMoveUseMdbxAwarePersistencePaths(takagi.ru.monica.repository.MdbxAndroidIntegrationGuardTest)",
+        "addPasswordFromMdbxFolderPreservesFolderTargetAndShowsFolderPicker(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)",
+        "mdbxDatabaseViewsExposePathNavigationAndSyncAction(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)",
+        "webDavBackupScreenManualCreateSharesCoordinatorQueue(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)",
+        "mdbxManagerLivesUnderDatabaseBackupAndUsesStandalonePages(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)",
+        "addPasswordAuthenticatorKeyFieldHasInlineScanAction(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)",
+        "inlineTotpPreviewMatchesSimplePasswordPreviewAndKeepsCountdownInSync(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)",
+        "webDavBackupsUseMonicaLocalContentScope(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)",
+        "mdbxHistoryAndSnapshotViewsUseStaleWhileRevalidateCache(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)"
+      ],
+      "summary": [
+        "Tests run: 94,  Failures: 9"
+      ]
+    },
+    "after": {
+      "exitCode": 1,
+      "failures": [
+        "passkeyCreateAndMoveUseMdbxAwarePersistencePaths(takagi.ru.monica.repository.MdbxAndroidIntegrationGuardTest)",
+        "addPasswordFromMdbxFolderPreservesFolderTargetAndShowsFolderPicker(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)",
+        "mdbxDatabaseViewsExposePathNavigationAndSyncAction(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)",
+        "webDavBackupScreenManualCreateSharesCoordinatorQueue(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)",
+        "mdbxManagerLivesUnderDatabaseBackupAndUsesStandalonePages(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)",
+        "addPasswordAuthenticatorKeyFieldHasInlineScanAction(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)",
+        "inlineTotpPreviewMatchesSimplePasswordPreviewAndKeepsCountdownInSync(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)",
+        "webDavBackupsUseMonicaLocalContentScope(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)",
+        "mdbxHistoryAndSnapshotViewsUseStaleWhileRevalidateCache(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)"
+      ],
+      "summary": [
+        "Tests run: 94,  Failures: 9"
+      ]
+    },
+    "unchangedFailureSet": true
+  },
+  "focusedLegacyEnumR8": {
+    "without-rule": {
+      "classes": [],
+      "readExitCode": 1,
+      "output": "",
+      "error": "Exception in thread \"main\" java.lang.ClassNotFoundException: takagi.ru.monica.ui.screens.DedupSheet\n\tat java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)\n\tat java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)\n\tat java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520)\n\tat java.base/java.lang.Class.forName0(Native Method)\n\tat java.base/java.lang.Class.forName(Class.java:467)\n\tat java.base/java.io.ObjectInputStream.resolveClass(ObjectInputStream.java:778)\n\tat java.base/java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:2043)\n\tat java.base/java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1907)\n\tat java.base/java.io.ObjectInputStream.readEnum(ObjectInputStream.java:2161)\n\tat java.base/java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1736)\n\tat java.base/java.io.ObjectInputStream.readObject(ObjectInputStream.java:514)\n\tat java.base/java.io.ObjectInputStream.readObject(ObjectInputStream.java:472)\n\tat ReadLegacy.main(ReadLegacy.java:6)\n",
+      "sha256": "8739c76e681f900923b900c9df0ef75cf421d39cabb54650c4b9ad19b6a76d85"
+    },
+    "with-rule": {
+      "classes": [
+        "takagi/ru/monica/ui/screens/DedupPreviewFilter.class",
+        "takagi/ru/monica/ui/screens/DedupSheet.class"
+      ],
+      "readExitCode": 0,
+      "output": "takagi.ru.monica.ui.screens.DedupSheet:PREVIEW\ntakagi.ru.monica.ui.screens.DedupPreviewFilter:CONFLICT\n",
+      "error": "",
+      "sha256": "f3d107a4ce79967f13e09c6bb01259d0f047d395c66cb7544a6eb1e1a2c72cc9"
+    },
+    "scope": "R8 9.1.29 classfile shrinking of the two actual compiled Kotlin compatibility enums, then reading pre-removal enum fixtures on the JVM; not a whole application release/R8 APK build."
+  },
+  "finalDeviceMethods": 65,
+  "finalDeviceMethodsWithPassingResult": 64,
+  "finalUnresolvedDeviceMethods": [
+    "takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest#legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues"
+  ],
+  "allDeviceRuns": [
+    {
+      "file": "device-main-settings01.txt",
+      "passed": 12,
+      "failed": 1,
+      "methods": 13
+    },
+    {
+      "file": "device-main-keepass01.txt",
+      "passed": 24,
+      "failed": 1,
+      "methods": 25
+    },
+    {
+      "file": "device-main-allvault-isolated01.txt",
+      "passed": 1,
+      "failed": 0,
+      "methods": 1
+    },
+    {
+      "file": "device-main-local-bitwarden01.txt",
+      "passed": 11,
+      "failed": 0,
+      "methods": 11
+    },
+    {
+      "file": "device-main-mdbx01.txt",
+      "passed": 12,
+      "failed": 1,
+      "methods": 13
+    },
+    {
+      "file": "device-main-final01-settings.txt",
+      "passed": 15,
+      "failed": 1,
+      "methods": 16
+    },
+    {
+      "file": "device-main-final01-keepass.txt",
+      "passed": 25,
+      "failed": 0,
+      "methods": 25
+    },
+    {
+      "file": "device-main-final01-local-bitwarden.txt",
+      "passed": 11,
+      "failed": 0,
+      "methods": 11
+    },
+    {
+      "file": "device-main-final01-mdbx.txt",
+      "passed": 12,
+      "failed": 1,
+      "methods": 13
+    },
+    {
+      "file": "device-main-final02-settings.txt",
+      "passed": 16,
+      "failed": 0,
+      "methods": 16
+    },
+    {
+      "file": "device-main-final02-keepass.txt",
+      "passed": 25,
+      "failed": 0,
+      "methods": 25
+    },
+    {
+      "file": "device-main-final02-local-bitwarden.txt",
+      "passed": 11,
+      "failed": 0,
+      "methods": 11
+    },
+    {
+      "file": "device-main-final02-mdbx.txt",
+      "passed": 12,
+      "failed": 1,
+      "methods": 13
+    }
+  ],
+  "finalMethodOutcomes": {
+    "takagi.ru.monica.data.LegacyRecoveryCompatibilityTest#version84MigrationPreservesRecordsAndValidatesWholeSchema": [
+      {
+        "run": "device-main-final02-settings.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.data.LegacyRecoveryCompatibilityTest#existingVersion85KeepsOldIdentityRecoveryBytesAndNormalWrites": [
+      {
+        "run": "device-main-final02-settings.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#unavailablePlusRouteStaysDisabledAtLargeText": [
+      {
+        "run": "device-main-final02-settings.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#compactStatusDoesNotClaimDisabledAppIsOperational": [
+      {
+        "run": "device-main-final02-settings.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#databaseRoutesRemainDistinct": [
+      {
+        "run": "device-main-final02-settings.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#autofillSettingsRetainStrategyDialog": [
+      {
+        "run": "device-main-final02-settings.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#clearSelectionAndAuthenticationGatesStayVisible": [
+      {
+        "run": "device-main-final02-settings.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#extensionRowsToggleOnceAndKeepChoices": [
+      {
+        "run": "device-main-final02-settings.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#clearWithNoSelectionCannotSubmitEvenWithoutPasswordVerification": [
+      {
+        "run": "device-main-final02-settings.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#backClosesSearchBeforeDelegatingToTheParentPage": [
+      {
+        "run": "device-main-final02-settings.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls": [
+      {
+        "run": "device-main-final02-settings.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#keyboardResultNavigatesToSpecificRowWithoutTogglingAndReturnsToQuery": [
+      {
+        "run": "device-main-final02-settings.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.ui.screens.CloudBackupUiTest#mergeDedupCanBeChosenWithoutAffectingReplacementPolicy": [
+      {
+        "run": "device-main-final02-settings.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#externalRevisionRejectsStackWithoutOverwritingAnotherWriter": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#lockingOrRemovingASelectedIdentityRejectsWholeBatch": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#projectCredentialsResaveInOneCommitWithDistinctFieldsAndNewRows": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#deniedProjectBatchCannotPartiallySaveAnExistingAccount": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#stackModesCommitTheWholeSelectionOnceAndSurviveColdReopen": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#copiedContentRejectsChangedDestinationEvenAfterListRefresh": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#deniedBatchStackDoesNotPersistAnyMember": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#nativeCustomFieldsRoundTripWithoutLosingUnknownOrProtectedFields": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#everyAddContentEncodingSurvivesEditAndColdReopenInOriginalKdbx": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassStackContentRegressionTest#copiedContentPublishesAfterSavingAnotherCredentialInSameFile": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassHistoryStabilityTest#accessOnlyExternalMergesAndRepeatedMergesKeepRealHistory": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassHistoryStabilityTest#repeatedIdenticalNativeSavesPreserveHistoryAfterDiskReopen": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassHistoryStabilityTest#historyDisplayIsNewestFirstAndDeleteKeepsOriginalNativeIndex": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassListPresentationUiTest#lockingWhileReadIsPendingRejectsItsLateResult": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassListPresentationUiTest#delayedSelectionUsesTargetOrPreviousPreviewAndOnlyLatestSelectionBecomesLive": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassListPresentationUiTest#canceledQueuedPasswordCannotUnlockReopenedDialog": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassListPresentationUiTest#emptyNativeDatabaseFinishesLoadingWithoutAnyPasswordRows": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassListPresentationUiTest#backgroundClearsPreviewAndDialogBeforeReturning": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassListPresentationUiTest#lockRemovesPreviewAndAuthenticationReopensOriginalWithoutWrites": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassListPresentationUiTest#evictedDecodedDatabaseReopensWithoutBeingMislabelledLocked": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassListPresentationUiTest#failedReadCanRetryAndKeepsTheOriginalBytes": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.AllVaultLoadingUiTest#vaultBarShowsShortLargeTextStatusAndRestoresBreadcrumb": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.AllVaultLoadingUiTest#lockedAndFailedBarsMatchLoadingHeightAndWholeBarRemainsClickable": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.AllVaultLoadingUiTest#actualQueuedDatabasesDriveStatusAndCompletionRestoresPath": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.keepass.KeePassAddContentUiRegressionTest#allVisibleAddContentChoicesPersistInOriginalVault": [
+      {
+        "run": "device-main-final02-keepass.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest#restoreKeepsDifferentOtpParametersAndRecoveryDetails": [
+      {
+        "run": "device-main-final02-local-bitwarden.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest#damagedRecordDoesNotBlankTheListAndLaterWritesStillAppear": [
+      {
+        "run": "device-main-final02-local-bitwarden.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest#restoringPasswordBindingsPreservesUnknownOtpFields": [
+      {
+        "run": "device-main-final02-local-bitwarden.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest#restoreKeepsBothKeysForAnAccountAfterRotation": [
+      {
+        "run": "device-main-final02-local-bitwarden.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest#parsingAnOverwriteArchiveNeverDeletesExistingRecords": [
+      {
+        "run": "device-main-final02-local-bitwarden.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest#legacyMissingDefaultsDeduplicateWithoutDiscardingUnknownMetadata": [
+      {
+        "run": "device-main-final02-local-bitwarden.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest#failedRestoreKeepsOriginalRowsAndRetryCanRecover": [
+      {
+        "run": "device-main-final02-local-bitwarden.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest#otherReadersCannotSeeNewRecordBeforeItsFieldsAreSaved": [
+      {
+        "run": "device-main-final02-local-bitwarden.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest#lockAfterInsertAndRepeatedSaveCannotLeaveOrphanRecords": [
+      {
+        "run": "device-main-final02-local-bitwarden.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest#emptyUsernameAndPasswordReportSuccessAndStoreOneCompleteRecord": [
+      {
+        "run": "device-main-final02-local-bitwarden.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.credentialexchange.BitwardenCredentialCreateUiTest#titleOnlyInBitwardenFolderSavesOnceAndReopensWithoutCreatingAnother": [
+      {
+        "run": "device-main-final02-local-bitwarden.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest#snapshotRestoreReconcilesRoomWithoutRestart": [
+      {
+        "run": "device-main-final02-mdbx.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest#passwordAttachmentAndReopenRoundTrip": [
+      {
+        "run": "device-main-final02-mdbx.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest#historyDiffSnapshotRestoreAndDeleteRoundTrip": [
+      {
+        "run": "device-main-final02-mdbx.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest#nestedFolderCrudAndReopenRoundTrip": [
+      {
+        "run": "device-main-final02-mdbx.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest#deleteRemovesRoomMirrorsAttachmentBlobAndOwnedVaultFile": [
+      {
+        "run": "device-main-final02-mdbx.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest#ownedFileDeletionRefusesFilesOutsideMdbx2Directory": [
+      {
+        "run": "device-main-final02-mdbx.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest#missingVaultRollsBackRoomMutationsAndAttachmentBlob": [
+      {
+        "run": "device-main-final02-mdbx.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest#openFailuresAreStableAndSanitized": [
+      {
+        "run": "device-main-final02-mdbx.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest#ownedFileDeletionRemovesSqliteAndBlobStoreSidecars": [
+      {
+        "run": "device-main-final02-mdbx.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest#editingMovedProjectKeepsDistinctNativeObjects": [
+      {
+        "run": "device-main-final02-mdbx.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest#unreadablePasswordAbortsMoveAndRetainsSource": [
+      {
+        "run": "device-main-final02-mdbx.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest#nestedLocalCiphertextMustNotEscapeIntoMdbx": [
+      {
+        "run": "device-main-final02-mdbx.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest#legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues": [
+      {
+        "run": "device-main-final02-mdbx.txt",
+        "status": -2
+      }
+    ],
+    "takagi.ru.monica.navigation.RetiredRouteNavigationTest#obsoleteNavigationRequestRedirectsWithoutMountingTheLegacyPage": [
+      {
+        "run": "device-main-final02-settings.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.navigation.RetiredRouteNavigationTest#savedLegacyDestinationRestoresToBackupAndBackReturnsToOriginalParent": [
+      {
+        "run": "device-main-final02-settings.txt",
+        "status": 0
+      }
+    ],
+    "takagi.ru.monica.navigation.RetiredRouteNavigationTest#oldSerializedScreenEnumsSurviveAndroidStateParcel": [
+      {
+        "run": "device-main-final02-settings.txt",
+        "status": 0
+      }
+    ]
+  },
+  "cleanup": {
+    "beforeUsers": "Users:\r\n\tUserInfo{0:Owner:4c13} running\r\n\tUserInfo{10:Monica_RealOMK325_StockToModule:1030}\r\n\tUserInfo{11:Monica_RealOMK325_KeyChange:1030}\r\n\tUserInfo{12:Monica_RealOMK325_FinalStock:1030}\r\n\tUserInfo{13:Monica_RemoveDedup325_Test:1030} running\r\n",
+    "afterUsers": "Users:\r\n\tUserInfo{0:Owner:4c13} running\r\n\tUserInfo{10:Monica_RealOMK325_StockToModule:1030}\r\n\tUserInfo{11:Monica_RealOMK325_KeyChange:1030}\r\n\tUserInfo{12:Monica_RealOMK325_FinalStock:1030}\r\n",
+    "restoredUser": 0,
+    "removedOnlyOwnedUser": 13,
+    "stopUserOutput": "",
+    "initialStopFailure": "The first am stop-user -w 13 returned -4 because its managed-profile parent 0 is running. The documented -f flag stopped only the owned profile despite its unstoppable parent; parent 0 remained current.",
+    "removeUserOutput": "Success: removed user\r\n",
+    "mumuShutdown": "{\n  \"errcode\": 0,\n  \"errmsg\": \"\"\n}\n",
+    "mumuFinalState": {
+      "android_version": "15.0",
+      "created_timestamp": 1793856063204935,
+      "disk_size_bytes": 6671417896,
+      "error_code": 0,
+      "hyperv_enabled": true,
+      "index": "1",
+      "info_source": "rpc",
+      "is_android_started": false,
+      "is_main": false,
+      "is_process_started": false,
+      "name": "Monica OMK 325 Test"
+    },
+    "ownedAdbServerStopped": 15041,
+    "publicAvd": "Task-started public API32 AVD was stopped earlier after isolated-user allocation failed. Original users 0/10/11/12/13 and configuration/data disks preserved.",
+    "noVirtualDiskOrConfigurationDeletion": true
+  },
+  "deviceOwnership": {
+    "userId": 13,
+    "userName": "Monica_RemoveDedup325_Test",
+    "mumuIndex": 1,
+    "startedByTask": true,
+    "serial": "127.0.0.1:16416",
+    "adbPort": 15041,
+    "originalUser": 0,
+    "foregroundUser": 0,
+    "userType": "android.os.usertype.profile.MANAGED",
+    "rebootNote": "After MuMu restart, Android identifies test user 13 as a managed profile of 0 and rejects direct user switching. Instrumentation and app data remain under --user 13, with profile activities displayed on parent user 0."
+  },
+  "changedInputs": {
+    "app/src/main/java/takagi/ru/monica/bitwarden/repository/BitwardenRepository.kt": {
+      "before": "dd7e36a15b3cdace36a1a8a0a218392b61308488340569c381e23df1a82b223b",
+      "after": "ce26daaabb4165dba25c48c51c495424ee7b89fcfb3e97402011e442f3936c1f"
+    },
+    "app/src/main/java/takagi/ru/monica/repository/Mdbx2Repository.kt": {
+      "before": "9a0b82992056cf73f79de11e1d939a6419e301f6c53273eb0b99ae0d08704472",
+      "after": "bd336ae8e5306cd0f3f3dd162d513be9febad2d671fb6ab3d527ca4806e32298"
+    },
+    "app/src/main/java/takagi/ru/monica/repository/MdbxRepository.kt": {
+      "before": "591cdcb81db21899a48af01421887eab7beb13f6b6a75ff019a608005cf7ff97",
+      "after": "4b0084184090ffc8709c28ab2de32f4e1a0d83767c1729fdd854aed69d8596bc"
+    },
+    "app/src/main/java/takagi/ru/monica/repository/MdbxRepositoryRouter.kt": {
+      "before": "d8d97930e5e516c1c1441d4e2e73d19f211d3f9dd7cb4225dd4ebbf92fb28729",
+      "after": "735b842374aee2487f0ba44dbbb277f6565c0547a93e2959726ac9a9c16d53da"
+    },
+    "app/src/main/java/takagi/ru/monica/repository/PasskeyRepository.kt": {
+      "before": "34477de49d34a9e235162f1ad5a810b365ea217d6334264e2cf5d89e0133a6cc",
+      "after": "36ad774696c692b4864dd7f6ffda1c5df7c890ec68d291073037604a668315d8"
+    },
+    "app/src/main/java/takagi/ru/monica/repository/PasswordRepository.kt": {
+      "before": "ed2913b145fec03e92aeac93404a14fb27fab11933ac4f2b0a5112bf3703bc2f",
+      "after": "9dedece43ec6fcf422eb5e7005554cc38c7c21f29ec8e917a047e942bbd24231"
+    },
+    "app/src/main/java/takagi/ru/monica/repository/SecureItemRepository.kt": {
+      "before": "76a88fe2d9d6531f72e9bbfd18a102169f135519796c1becc386319ee4e14f7c",
+      "after": "c9ff2106ed4da6f41a66827728dab60c0ea978bdc8b2a6f07bd89cd5ee5f44b7"
+    },
+    "app/src/main/java/takagi/ru/monica/utils/KeePassCodecSupport.kt": {
+      "before": "7cda05573fd7a50ca91660e0eee011ed555dcd9ba5266339644df47a4a71455d",
+      "after": "b57c6488bf20d7fa88dfeedbe42b5b74592d0ec0f94280bf2c47e3133cc4fa04"
+    },
+    "app/src/main/java/takagi/ru/monica/utils/KeePassKdbxService.kt": {
+      "before": "d50c06399f7973a27080b62d55fb730153026d196f7a4b5c419f67821d16cd09",
+      "after": "8aa2c9ed04481badb3093e892801af3de23a9683bf3f823dac824f254b6e480f"
+    },
+    "kotpass/src/main/kotlin/app/keemobile/kotpass/database/header/DatabaseInnerHeader.kt": {
+      "before": "e3188f9d38f112c671467faddb4ea306e88656cc837a36e7748baf5f2c7d36ea",
+      "after": "63cb98c85d3ecd6761a400bae2512370c37e14d7819f77941dde156caf264a14"
+    },
+    "app/src/main/java/takagi/ru/monica/MainActivity.kt": {
+      "before": "ff85a5fc53f0ed5b2df4bda2d19bbfd115138656e405bbadc5d6d4912280dc6e",
+      "after": "3cf0bfc505929f9c61514d471438ff95789aac70b48da4b352ce722a08fbe9f3"
+    },
+    "app/src/main/java/takagi/ru/monica/navigation/Screens.kt": {
+      "before": "66d306a61cb442254e22a3891a63a3d0937f7163b3f711199642ce98c172cb8b",
+      "after": "903c98426d4240d548871a9cddd4f5ccc47aad626e2c4c6c94b7b00755a6edbe"
+    },
+    "app/src/main/java/takagi/ru/monica/ui/screens/SettingsSearchCatalog.kt": {
+      "before": "8b7ab8fe4959a60f7242096636dc0898a4b30bd2de14881af9282bf6df30265d",
+      "after": "4128be84e77e4a1a95161f2cae65e8f9fc0bd43a266c871f95a512f460d9c1df"
+    },
+    "app/src/main/java/takagi/ru/monica/ui/screens/SyncBackupScreen.kt": {
+      "before": "d8d13fbf21fde62c00302ec2308d99aa381f2331fee726ced9bd43463d202a87",
+      "after": "70ba8e81a33008c8460a14a7fa3ee24acdff2150d7e2e93c99361e222d059692"
+    },
+    "app/src/main/java/takagi/ru/monica/data/PasswordDatabase.kt": {
+      "before": "b9445da50d0c4d215ff95c79dab5dea60ec28d35303fba957a9984f139ac07f8",
+      "after": "bcd613e1fb2a7ad865e33c0892931625f113822ab06e574cb096706691f44846"
+    },
+    "app/src/main/java/takagi/ru/monica/data/LegacyDedupRecoveryEntity.kt": {
+      "before": null,
+      "after": "2ed1b0f0c19ac30b1e318975b03563f1bcb0ff5c2aed469d74e6cdc02d80f3b7"
+    },
+    "app/src/main/res/values/strings.xml": {
+      "before": "c8e5524ee290e07426367391ebd11a7132eb29b9b45945bb36a8e1490c4baaf5",
+      "after": "07103ffb24154ba9d4e7e1d142dcf052e42c4006ae2d3e81f2b280aad3ce353f"
+    },
+    "app/src/main/res/values/strings_single_vault_dedup.xml": {
+      "before": "0052ff4699bfebf542eb333e42560bb83651077a04d7bb2d9ee53ce453ab0bd9",
+      "after": null
+    },
+    "app/src/main/res/values-b+lzh/strings.xml": {
+      "before": "ba7516f87a1a0c8ed0b0c4888f024ae9836c01131f93db0caa3cae19353947b6",
+      "after": "da292f82c7844081c932b5a81ab1afaab92e981c8c822469b0de26ab84340619"
+    },
+    "app/src/main/res/values-b+lzh/strings_single_vault_dedup.xml": {
+      "before": "03b2432e4be751734ddea452e4887fff5e59d9a7b709b4b1fae5728abc69f42a",
+      "after": null
+    },
+    "app/src/main/res/values-b+zh+Hant/strings.xml": {
+      "before": "bdff5f1a8d6b0dc9d71997d97891e7f2fc7a2a125e995c89558e9bf81e0f73a9",
+      "after": "bff815d1be55ea492157c8a54430773be5f52d84ea5692319f94383d67d1b326"
+    },
+    "app/src/main/res/values-b+zh+Hant/strings_single_vault_dedup.xml": {
+      "before": "96b3b553b127063c34ba0ec63094bcb9cacc07378de759b3eba4b7a821820522",
+      "after": null
+    },
+    "app/src/main/res/values-de/dedup_merge_strings.xml": {
+      "before": "d0e309836ebef5637bd775ccc4098b79777657fbbcf7f6ba0789330c0e5d7c3b",
+      "after": "8a096526e7f05677ba51a323231b31ec2a4c3347947f94e37150cdad6b128238"
+    },
+    "app/src/main/res/values-de/strings.xml": {
+      "before": "a8ae50d5e69a513739d6dc643ecacf9a8460bcad3d354d0644d5068aeef23c08",
+      "after": "0ba2fd126139c1b3093271e3547e33dff27ed1377e05794e44a2f0166e263346"
+    },
+    "app/src/main/res/values-de/strings_single_vault_dedup.xml": {
+      "before": "6cd3f6cc8777d78770e719c0e95b1b4e63b5df943022d777b52efb60300682e2",
+      "after": null
+    },
+    "app/src/main/res/values-es/dedup_merge_strings.xml": {
+      "before": "be04c8fe233afb63da118d7b3264bf191f583ba720c47aac37dfb59c8b73fa56",
+      "after": "33c6cf987b3ee03133f11a4ade5a8008ad4336b011d9446495938cdbb0fb6b90"
+    },
+    "app/src/main/res/values-es/strings.xml": {
+      "before": "b235a64e02443a6ca25d75411e792a84780396bb40899d06aee2f6232c514623",
+      "after": "5ea9f00f11ba3f32087dddcd5cce6f8e6fa1ee702989bfc0dc07659d81219a5e"
+    },
+    "app/src/main/res/values-es/strings_single_vault_dedup.xml": {
+      "before": "ee259025fc7aa1923e5ffe988f3765bd07562a98b18eb37e4d2c9b9a43d18baa",
+      "after": null
+    },
+    "app/src/main/res/values-fr/strings.xml": {
+      "before": "2a59d6bc8d3049799069965f2c200240890eaa545986eac0b6ae859b8f4bf971",
+      "after": "f0a83fd3d9a1f9a1832d4e9030df70e0be1abf3db9c20a7c962a0466c8807817"
+    },
+    "app/src/main/res/values-fr/strings_single_vault_dedup.xml": {
+      "before": "7ebeb8c3e710c36b68c1cc5f9635d7c8e9cff8619d5e0259cb955573e4e32906",
+      "after": null
+    },
+    "app/src/main/res/values-it/strings.xml": {
+      "before": "cbc74c12f46a7e696d5bebb50aae0c803c03cd33ec56c5d05440642afab628dd",
+      "after": "1e96a706286821875d123b60ac25d0105f8f80af417f60464e62e6c18ae45e4a"
+    },
+    "app/src/main/res/values-it/strings_single_vault_dedup.xml": {
+      "before": "4dc53132c7b87ef79f2c856e7d1c20722c08fa06096880198e41f13002170dc8",
+      "after": null
+    },
+    "app/src/main/res/values-ja/dedup_merge_strings.xml": {
+      "before": "99867b21b0cbb9e8c1127a2b1dd93f18512e41345f26b1d4345f0ffbe8b64dd0",
+      "after": "71419197afe48c2ba28a1e17564feb4f7f2bdcde5dc3a020fd839b73470aa586"
+    },
+    "app/src/main/res/values-ja/strings.xml": {
+      "before": "ccff56737eefafc2683dddb5f1ff4f6ddc82c9dcced9c41dd46c6fb782b37656",
+      "after": "feee16a693e5d76cca75a6cd4dc5d09b651fe9aacbc5a518d8008a2a826857c3"
+    },
+    "app/src/main/res/values-ja/strings_single_vault_dedup.xml": {
+      "before": "b69225a6ecb9e90ca0a1d2b49436b5b9971994cd2427afd17bea16652695c032",
+      "after": null
+    },
+    "app/src/main/res/values-ko/dedup_merge_strings.xml": {
+      "before": "fbb62f0a34ccd10d977b5f7dfe6e1d5b009bba195a7812d9bce96cd2d1a9a241",
+      "after": "2e6323691cfb5b37c55d53a81c8e7ecc81d3e62e84ef2e8c07070591fde39277"
+    },
+    "app/src/main/res/values-ko/strings.xml": {
+      "before": "d64a56e516d759167d5dd45fa91ef5b0a8989aebb1b5c6e9de9aac11037daddc",
+      "after": "c9e3594c710f23a787c110c933985d31e5bea76c4fd9316ed664da979bcd020c"
+    },
+    "app/src/main/res/values-ko/strings_single_vault_dedup.xml": {
+      "before": "1feb77de39b3481e6ac2fde59954a2ad192100995167c32b1e3a3f71b1fc5454",
+      "after": null
+    },
+    "app/src/main/res/values-pl/strings.xml": {
+      "before": "eaa1e097b4c82253a74a8a59d701dc9cbfead4bfb49cc862303e89b2f5394246",
+      "after": "d891a07b150c0098a433016c26af77a16f678038dde3dc0d38442a9af1cefb21"
+    },
+    "app/src/main/res/values-pl/strings_single_vault_dedup.xml": {
+      "before": "e16c655dfe9dd889e42662965bc18c30260727575951eeb24bdc21df123eafe3",
+      "after": null
+    },
+    "app/src/main/res/values-pt/strings.xml": {
+      "before": "043ffae49c7c0e3c5b53fced972e1bc0e4ad9b8d7aa813034b49e6f0c5299731",
+      "after": "3ae4f1c0f324214ddada3380015e4ba10e91bc2c1e6df3ed92765c3c175321bd"
+    },
+    "app/src/main/res/values-pt/strings_single_vault_dedup.xml": {
+      "before": "f38f2d499a0012714fdab969783e9b1020a34ac0a99ef5fb23d3c600a42fa89a",
+      "after": null
+    },
+    "app/src/main/res/values-pt-rBR/strings.xml": {
+      "before": "b75670db9fe2cd086a77d3c5a582adfbd51936eea6680b1dd98ca7a9fb4776a5",
+      "after": "64bde062d21c806040369c4ce67f8de83ebc05b8d36fc0673d7348d5dfcb5763"
+    },
+    "app/src/main/res/values-pt-rBR/strings_single_vault_dedup.xml": {
+      "before": "7b6466f657cb968ddbd06893b42f63b4274e507ad0e5c191ac49dc32e462eed7",
+      "after": null
+    },
+    "app/src/main/res/values-ru/strings.xml": {
+      "before": "8eddd330072bfcb21946891981c500a1f903d7590cc277e6e70abae1ab61293b",
+      "after": "78cf70c35028a1daf30b3db1407567d4feeb1a3a9508ddf1feb76158d14aa754"
+    },
+    "app/src/main/res/values-ru/strings_single_vault_dedup.xml": {
+      "before": "ec5ce0185e2570825c90d0101985b6aabb5cfcd5b743395f41a1dbc9d6403923",
+      "after": null
+    },
+    "app/src/main/res/values-vi/dedup_merge_strings.xml": {
+      "before": "bddce085311333291e1d188b523f4103cdea91cb60fdc3de1048f5c2aa0a6a49",
+      "after": "80ddad6fa567ee411445af11fc90bdde996ef740917a4be543e72f8735d196a1"
+    },
+    "app/src/main/res/values-vi/strings.xml": {
+      "before": "bc10f7ff1540b55c13485442dc1882d0120e53c5d58668e4294c880a06ccabc7",
+      "after": "b1b40504267b68f32119365d27ef7fe38cae4b7c85ce0130dc8d7bd453cf6b88"
+    },
+    "app/src/main/res/values-vi/strings_single_vault_dedup.xml": {
+      "before": "e3c9fdaa7e3e1916071c14af57c8ebd21a2f043b894b44a6e548d68f0f2e5174",
+      "after": null
+    },
+    "app/src/main/res/values-zh/strings.xml": {
+      "before": "6af333c1f4a5a430502c95d62639c45bf4280579373ede4d87e60b78b2627d1a",
+      "after": "516e046e108ce6bcded948230dcb01c84ac9650ec60600bc514aaf336f9100d7"
+    },
+    "app/src/main/res/values-zh/strings_single_vault_dedup.xml": {
+      "before": "7cd4ba893070ec1a6dad6855a76a26c7bd84cfef560f7f50bba41a6aa75b04d8",
+      "after": null
+    },
+    "app/src/main/res/values-zh-rCN/strings_single_vault_dedup.xml": {
+      "before": "7cd4ba893070ec1a6dad6855a76a26c7bd84cfef560f7f50bba41a6aa75b04d8",
+      "after": null
+    },
+    "app/src/main/res/values-zh-rNY/strings_single_vault_dedup.xml": {
+      "before": "7cd4ba893070ec1a6dad6855a76a26c7bd84cfef560f7f50bba41a6aa75b04d8",
+      "after": null
+    },
+    "app/src/main/res/values-zh-rXB/strings_single_vault_dedup.xml": {
+      "before": "7cd4ba893070ec1a6dad6855a76a26c7bd84cfef560f7f50bba41a6aa75b04d8",
+      "after": null
+    },
+    "app/src/androidTest/java/takagi/ru/monica/data/dedup/DedupBatchInstrumentedTest.kt": {
+      "before": "93ea57e0a20097de59748e2cc19d3096a130d922f4f16dd6d9c12db0e480e922",
+      "after": null
+    },
+    "app/src/androidTest/java/takagi/ru/monica/data/dedup/DedupDatabaseMatrixInstrumentedTest.kt": {
+      "before": "92a50b1061b84d4791a247dd7c9ac8ea9683106787dd0c67d9809414eda856ec",
+      "after": null
+    },
+    "app/src/androidTest/java/takagi/ru/monica/data/dedup/DedupLocalPerformanceInstrumentedTest.kt": {
+      "before": "a9c9450f7639142e6dd8d757a42aea4ed39fbf773ba3a2e77ec5e2f387652de5",
+      "after": null
+    },
+    "app/src/androidTest/java/takagi/ru/monica/data/dedup/DedupMdbxCreateOnlyInstrumentedTest.kt": {
+      "before": "1a6328c1509ccbf82703f9dc1950aa961c1cbc270540d2a3b8872f174bdbeab6",
+      "after": null
+    },
+    "app/src/androidTest/java/takagi/ru/monica/data/dedup/DedupMdbxInstrumentedTest.kt": {
+      "before": "8e7e59e3592abe1f27be18ea1df4f7ab8bd9d9eec25afa07e5007f1d89f36ccd",
+      "after": null
+    },
+    "app/src/androidTest/java/takagi/ru/monica/data/dedup/DedupMergeInstrumentedTest.kt": {
+      "before": "f472de7eb370a6421a941e0c71a3c9a24863dc445a78a642e1a8e6eb88c54836",
+      "after": null
+    },
+    "app/src/androidTest/java/takagi/ru/monica/data/dedup/DedupMergeNativeSourceInstrumentedTest.kt": {
+      "before": "f09b65618f24c14827c486ca16d2cc93a3baf58d159d1d611ccc608354fc76e2",
+      "after": null
+    },
+    "app/src/androidTest/java/takagi/ru/monica/data/dedup/DedupMergeSafetyInstrumentedTest.kt": {
+      "before": "ef38ac0898ac1548ddaaf04e6631c75cb2e3f9371e069c2a53d838e3a8281eda",
+      "after": null
+    },
+    "app/src/androidTest/java/takagi/ru/monica/data/dedup/DedupPasskeyInstrumentedTest.kt": {
+      "before": "759def46e4052c8a6a32a9aac7a0e81d5515fe31eaf4472ccf3d122f237c214a",
+      "after": null
+    },
+    "app/src/androidTest/java/takagi/ru/monica/data/dedup/SingleVaultDedupExtendedContentInstrumentedTest.kt": {
+      "before": "04f674f69f42a8730b93e6814c1986ea6f91d3ec27e0714a83b90170d9a7b510",
+      "after": null
+    },
+    "app/src/androidTest/java/takagi/ru/monica/data/dedup/SingleVaultDedupExternalSourcesInstrumentedTest.kt": {
+      "before": "ceabdb9a62dfdcf578222fb25fcfcc5e8e901bcc4033d4cd0e849689d5f9ca6d",
+      "after": null
+    },
+    "app/src/androidTest/java/takagi/ru/monica/data/dedup/SingleVaultDedupFlowInstrumentedTest.kt": {
+      "before": "9e185948b9ad609408067270481c0f9a2e990c4787170b2b9370e6c25e5ebf79",
+      "after": null
+    },
+    "app/src/androidTest/java/takagi/ru/monica/data/dedup/SingleVaultDedupKeePassInstrumentedTest.kt": {
+      "before": "73334a9d69738912eb1cbea653cb81bae92ecaa5296ddadc1da0ba172e09ae8b",
+      "after": null
+    },
+    "app/src/androidTest/java/takagi/ru/monica/data/dedup/SingleVaultDedupLocalSafetyInstrumentedTest.kt": {
+      "before": "548ff88b83a0e20bcaef971ee4ad39e0fc2c143d6787b4313fc01f6110891072",
+      "after": null
+    },
+    "app/src/androidTest/java/takagi/ru/monica/data/dedup/SingleVaultDedupMigrationInstrumentedTest.kt": {
+      "before": "263e2d1a2f3703753674eb4c7d6734b73498131dec070e504272f277e45675fb",
+      "after": null
+    },
+    "app/src/androidTest/java/takagi/ru/monica/ui/screens/DedupEngineScreenInstrumentedTest.kt": {
+      "before": "108b8eb604ebf1dc50520f1dece5d7be639ac79a4776a6ebf31619f22503df92",
+      "after": null
+    },
+    "app/src/androidTest/java/takagi/ru/monica/ui/screens/DedupEntryNoticeInstrumentedTest.kt": {
+      "before": "c8ddae4ecbb241bfa02943e5ebda0ea1b6edc110faed3300d61ade3065f6472c",
+      "after": null
+    },
+    "app/src/androidTest/java/takagi/ru/monica/ui/screens/SingleVaultDedupScreenInstrumentedTest.kt": {
+      "before": "60e7656607800011811b72279ac06e2320f9ced80b7ba5eb1de49d0d2d87b8cf",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/DedupAttachmentSupport.kt": {
+      "before": "e383a36ce4b616d89a5b68a62131adc74dd6eb0c4afd5a19605cd04f8b18b1c5",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/DedupMergeCompatibility.kt": {
+      "before": "61387c1a7b2095b857f83779ea674bdc50b48d3ec59e6ee054e539f695c5ec23",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/DedupMergeContent.kt": {
+      "before": "20f00ddf2d63021b031a7e8e894a1e05f8ddc8eec089c43f844ce5fe4e736104",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/DedupMergeExecutor.kt": {
+      "before": "baff092ae5abcc18b10ae1b9095e23bdbed216c3103d2e78b488a72ca421ef26",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/DedupMergeOperations.kt": {
+      "before": "d6d2ad85d28f658eb06f167f23b949b5d1e1a6131054ebb86cb25e3f30e6fa5e",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/DedupMergeService.kt": {
+      "before": "409ef0df3c3d5266a343d8150c8330f4b80410ca4504cfcf3601e7d8ab4de845",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/DedupModels.kt": {
+      "before": "37d9156691543d657c69479cbb0d1f031980810229ee90fcca05c70822783a4c",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/DedupPasskeyPlanner.kt": {
+      "before": "5fac3f1d34bc22616abc14efa987a51ced19b15e974b72770b3d1c83c27bc695",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/DedupPasswordIdentity.kt": {
+      "before": "aef4e8ce66133b9779b2ba047efe855ee132154be28f3bb6b0e3a75e0da7e7ee",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/DedupStrings.kt": {
+      "before": "98365a7ff57e19190919777db5904ea121911db44b0c72bb2dd2bb0453b5b1d2",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/DedupStructuredPasskeyPolicy.kt": {
+      "before": "03d5fe51579b2c9e0e266d298cd4c6108157701a0f060b4b85d70f57d9c01c36",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/SingleVaultDedupAtomicFile.kt": {
+      "before": "ac1cbe34275986bfb72509c0c8ba19baac316b943dfd6328c47a2d4604d53520",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/SingleVaultDedupBitwardenAdapter.kt": {
+      "before": "f4d05b9e892ed75d3957dcb7d69a71cdaacb8a9d5db00d62f7b07b1bf47b3a47",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/SingleVaultDedupComparator.kt": {
+      "before": "9de43b690991e8b088c5df97fca1caa8e10fa2f1eccea1ab1099a34c6aa072d4",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/SingleVaultDedupDeviceSyncAudit.kt": {
+      "before": "76f88693dfc4e64de7d1bddbc8a5515bcc219a4dd36ddb71d9d0ae00dd71989a",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/SingleVaultDedupFactory.kt": {
+      "before": "0203db1e1a9469bdc16ab5ec116b037047f7ee2d708efa898592cc27353c5042",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/SingleVaultDedupKeePassAdapter.kt": {
+      "before": "bdf418f0ce2e53377385743dd3e68a71422245d8d066c8613ff38e57776631a2",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/SingleVaultDedupKeePassContent.kt": {
+      "before": "57578cf1698787731217d268ab11cceb3a819e07b876800f8903e3950dfd2ee5",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/SingleVaultDedupKeePassHeaderAudit.kt": {
+      "before": "85e2fcad2dde95cdca257f20f4967f0bee018780967562efa9c051fa81f44f7d",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/SingleVaultDedupKeePassXmlAudit.kt": {
+      "before": "f25f69efb219d66526cf17ad3bfdd0d65889980c9bd27132ebc32b9bb1b30c70",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/SingleVaultDedupLocalAdapter.kt": {
+      "before": "bd2eccb99235948677cc9c0fbc2a374cc9e4680d690ed85083330d6443a35447",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/SingleVaultDedupLocalAssets.kt": {
+      "before": "1b0127359b679518322ff1b7e2fbff5ce39db62b6d91ed907d371a078a5ca242",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/SingleVaultDedupLocalContent.kt": {
+      "before": "f6b4c9a5ea4be01b77e8bd0352b8b2dccfe8ab588b6cae5a2b490824540d7f19",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/SingleVaultDedupLocalDao.kt": {
+      "before": "300fbb07a3eba1f581fe05d3543cd80d907993b4fbf405d2898032c67dda4ea6",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/SingleVaultDedupMdbxAdapter.kt": {
+      "before": "14e980fd29475c389e6cc60cd05b920af53a7610a7508341e306a41b8b827c69",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/SingleVaultDedupModels.kt": {
+      "before": "7aa3489735bd4c5f2bc134fe0a8922a5db8f594be9157d7c54ccf5ed9a8d8519",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/SingleVaultDedupPayloadStore.kt": {
+      "before": "9153c992217d762b99ab4c23fbc43ff75ece2ab76f598cb98920d50a40c5e67e",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/SingleVaultDedupProjectBuilder.kt": {
+      "before": "e821ea64f1e37b1e2ab3bd701f05c076d5dab7286406d5467d38f1bfa0803f21",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/SingleVaultDedupRecoveryEntity.kt": {
+      "before": "525e6e10f051b812c4a95ae398a27afd830fadf205d466da6e4d09abf504f6d0",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/SingleVaultDedupRowCodec.kt": {
+      "before": "b332fe813ce63bb551491caa937a1c2f0bd82db88872fe7f09706ab950c82afc",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/SingleVaultDedupService.kt": {
+      "before": "7a3647e3747990e2b9438ca7b8cddcc0a4b61ecaf5c333e4462c62429c47e2f6",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/data/dedup/SingleVaultDedupSourceAdapter.kt": {
+      "before": "cc16edb7c2fa369c43ee27b78dd44dd36ec26116a6f633056755d3c000f1956e",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/ui/screens/DedupEngineModes.kt": {
+      "before": "cb48dd5cfbbbbeff4e6f8ac9df6d2c30d984643a51635a3f16067963df64c843",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/ui/screens/DedupEngineScreen.kt": {
+      "before": "ce9e8e420ea03b22264ae86d1a3e1f9ecf2917d7469554d6883cdad985509ccc",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/ui/screens/DedupEntryNotice.kt": {
+      "before": "7c0dc69624e8d8e742c85f30e9f64b7055a2c013074bdbf1998b38c0d5ec4d16",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/ui/screens/DedupPasskeyRetentionDialog.kt": {
+      "before": "5d433e3f57a92c2b28b1a7c97e078d34a8ccd8c3e0ac14d47dfdc7c784d86dd0",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/ui/screens/SingleVaultDedupScreen.kt": {
+      "before": "9017644e594bb22528ce04501ebc8a4624dd6d09eca03bab12b3e679cf7a37e0",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/viewmodel/DedupEngineViewModel.kt": {
+      "before": "175f72930a3629e8fd82bcfab021b3149a847d61600750ed1973e2de79ece5e3",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/viewmodel/SingleVaultDedupUiModels.kt": {
+      "before": "34000d34df040161c40fe94b33c189b91226324df41c3cf496ac1a454e0fa40a",
+      "after": null
+    },
+    "app/src/main/java/takagi/ru/monica/viewmodel/SingleVaultDedupViewModel.kt": {
+      "before": "33ab873433a2e1c8739569fa992490ccbde89325ac7003a3064f9441a20eaf20",
+      "after": null
+    },
+    "app/src/main/res/values/dedup_merge_strings.xml": {
+      "before": "6c3227a9904f30555780058087df9ae2a370cf686bc470bd5bee6e55c0f36e6a",
+      "after": null
+    },
+    "app/src/main/res/values-b+lzh/dedup_merge_strings.xml": {
+      "before": "593cf3bf1495571070d6fd796715306b815bc181f6e6ad17b83271e3b27881a3",
+      "after": null
+    },
+    "app/src/main/res/values-b+zh+Hant/dedup_merge_strings.xml": {
+      "before": "56ba07ed8a7d02f1c3e417d06ef3a5fa2aaae47cb0704f03acfab7520de95e5b",
+      "after": null
+    },
+    "app/src/main/res/values-fr/dedup_merge_strings.xml": {
+      "before": "a3eba82f0a20e07e822f9a1082229ccd042bd75eecacc903391684dd964d8c33",
+      "after": null
+    },
+    "app/src/main/res/values-it/dedup_merge_strings.xml": {
+      "before": "5df3708a1351c0a2b4f83a8191f0d57a774db8715d1286cd65532798556cf325",
+      "after": null
+    },
+    "app/src/main/res/values-pl/dedup_merge_strings.xml": {
+      "before": "a8e6dd7fef09834adc708c5bf6014f956db76d36fa253eac48e704353465be2b",
+      "after": null
+    },
+    "app/src/main/res/values-pt/dedup_merge_strings.xml": {
+      "before": "a33f59f542622b18eaa671cbc46fd9035b2c84bd219287d2833ea7f678f07cac",
+      "after": null
+    },
+    "app/src/main/res/values-pt-rBR/dedup_merge_strings.xml": {
+      "before": "f4c83c81f7501fdb39a4606428771badc4f8bee5bb8c8e52543febf19ab270cc",
+      "after": null
+    },
+    "app/src/main/res/values-ru/dedup_merge_strings.xml": {
+      "before": "a83f882b5f6b192fafe49cd1288f66cadc94b270beb0e44e96048474cc6b305d",
+      "after": null
+    },
+    "app/src/main/res/values-zh/dedup_merge_strings.xml": {
+      "before": "e0bab2c2594fef6b22525b6bac5d5305a56ba8177869a975ea1958b3a62d0a9f",
+      "after": null
+    },
+    "app/src/test/java/takagi/ru/monica/data/dedup/DedupMergeContentTest.kt": {
+      "before": "df920cbc8216682b2cff9f5fb02e41dc8111d74516fb52d654c9a699a1891bea",
+      "after": null
+    },
+    "app/src/test/java/takagi/ru/monica/data/dedup/DedupMergeExecutorTest.kt": {
+      "before": "907cdaa4000970de503e3d2ccf716e38ed9ba0d8e856bed85d4791c07d8f0383",
+      "after": null
+    },
+    "app/src/test/java/takagi/ru/monica/data/dedup/DedupMergeModelsTest.kt": {
+      "before": "165176161fed1e7e2af62a5910fbce0ef3e83490e7a0e9e622e59347dfbddc35",
+      "after": null
+    },
+    "app/src/test/java/takagi/ru/monica/data/dedup/DedupMergeSelectionTest.kt": {
+      "before": "0e90a6bfd1b016c7f795a381e42f6d83b7332c70cbaca5bb338b0438d4ce84ab",
+      "after": null
+    },
+    "app/src/test/java/takagi/ru/monica/data/dedup/DedupPasswordIdentityTest.kt": {
+      "before": "ed4d723602702d81281e3eb45f3cea544d33234d3c08569f90221399f50c804a",
+      "after": null
+    },
+    "app/src/test/java/takagi/ru/monica/data/dedup/DedupStructuredPasskeyPolicyTest.kt": {
+      "before": "1762ae332ab98fbb9222890fa130eb4a932567ac76eff123273e8a0d40d09f11",
+      "after": null
+    },
+    "app/src/test/java/takagi/ru/monica/data/dedup/SingleVaultDedupComparatorTest.kt": {
+      "before": "9c18b767a13a85c86f997fb9b785917e64f0d9b66fefdaff22aee85012c429a1",
+      "after": null
+    },
+    "app/src/test/java/takagi/ru/monica/data/dedup/SingleVaultDedupFileSafetyTest.kt": {
+      "before": "f5d1db38087bdd64c846bf6976271b41f90b44911535b8eccb278ac0aff7f2e5",
+      "after": null
+    },
+    "app/src/test/java/takagi/ru/monica/data/dedup/SingleVaultDedupKeePassContentTest.kt": {
+      "before": "b1d5668d03fa80984c40dc4a0c60a648a1ffd7c0a1c57358f038bff683949cd2",
+      "after": null
+    },
+    "app/src/test/java/takagi/ru/monica/data/dedup/SingleVaultDedupLocalContentTest.kt": {
+      "before": "29138209d318cbf712e1b8f64b42bca2f890d11c33f425c2f2bb4cee633ce439",
+      "after": null
+    },
+    "app/src/test/java/takagi/ru/monica/data/dedup/SingleVaultDedupNativeDocumentTest.kt": {
+      "before": "66e8c1633cae2a2a3eb9792127c50e8df313c622741db5836918d02b87fe9abc",
+      "after": null
+    },
+    "app/src/test/java/takagi/ru/monica/data/dedup/SingleVaultDedupPayloadStoreTest.kt": {
+      "before": "9db4b42b5a7e942bc58ec0c2633abf991e1933262d5e27d82f3ce84a4fcf6a02",
+      "after": null
+    },
+    "app/src/test/java/takagi/ru/monica/data/dedup/SingleVaultDedupProjectBuilderTest.kt": {
+      "before": "600bd63f9022189192e25dcf5896b44feb4af6400d437ddca1660c96b7f80587",
+      "after": null
+    },
+    "app/src/test/java/takagi/ru/monica/data/dedup/SingleVaultDedupRowCodecTest.kt": {
+      "before": "ba4f1217ff4bfcfadf8e321bcf0546da898b8d0bf71259bfbe63d3f1b238af75",
+      "after": null
+    },
+    "app/src/test/java/takagi/ru/monica/ui/screens/DedupCompactUiGuardTest.kt": {
+      "before": "291f752bc86497e0fd232e87a6c6b188124aa8e912bf76305b78903eea2ce690",
+      "after": null
+    },
+    "app/src/test/java/takagi/ru/monica/ui/screens/DedupEntrySessionTest.kt": {
+      "before": "68cd053daedf64137c2fe9e610ad3c971687473ab9fa68485312f73cca021901",
+      "after": null
+    },
+    "app/src/test/java/takagi/ru/monica/viewmodel/DedupEngineFlowTest.kt": {
+      "before": "d4a1dec9bdef5c8fafbd8884b37fa3a88b6232facc7a0ea04e1dcb2444bd151b",
+      "after": null
+    },
+    "app/src/test/java/takagi/ru/monica/viewmodel/DedupEngineViewModelTest.kt": {
+      "before": "5958615c0ceca5e76c8fb641f67da3784561f5c4970ed5eeec660a81adcf1bd4",
+      "after": null
+    },
+    "app/src/test/java/takagi/ru/monica/viewmodel/SingleVaultDedupViewModelTest.kt": {
+      "before": "f14529536bff34c0febc4cea672e1ad971bbe38d39e5da0c3c0a23148821def6",
+      "after": null
+    },
+    "kotpass/src/test/kotlin/app/keemobile/kotpass/database/header/DedupInnerHeaderEvidenceTest.kt": {
+      "before": "2c3132eb74fab30f9c4e50f0fdbb2217c07320e1e5a69bc20638d86c16777d83",
+      "after": null
+    },
+    "app/src/androidTest/java/takagi/ru/monica/ui/screens/UnifiedSettingsInstrumentedTest.kt": {
+      "before": "71e97fa664a0a0dd06e4535720731b7ad4313393cddb1b6f267c219edb50da0a",
+      "after": "cdb0c2a659ea67bd54e6a30683753e796c49eca7766b6c13dbdf6a6cf7700a91"
+    },
+    "app/src/androidTest/java/takagi/ru/monica/localization/AllLocalesInstrumentedTest.kt": {
+      "before": "9a3d2a80b104566107ebac462d6049694ad68836de7c9d8fa5ebd4a4df0d0063",
+      "after": "cd486698522a29ab01ed89049349b34569cc3eaeb771329ce46ffa3c04cf514f"
+    },
+    "app/src/androidTest/java/takagi/ru/monica/localization/ItalianLocaleInstrumentedTest.kt": {
+      "before": "f0cbe99cb6ca9aa66b382e1b4b883fc996a2f31d017164ca321758a5983709b5",
+      "after": "9211e5a79e17a9d63ec8a7d0f8559ec12e9492f2280ae255301b91791d3e91c2"
+    },
+    "app/src/androidTest/java/takagi/ru/monica/localization/PolishLocaleInstrumentedTest.kt": {
+      "before": "2db111c47dc979d895aef2fd1a598e75cfb0b7515a77cee5471a7e498b7571b8",
+      "after": "e3e42f1816221335146b5c69c712ffcb6e4b9dd911c7d13e4ee39cbd7f67fe43"
+    },
+    "app/src/androidTest/java/takagi/ru/monica/localization/PortugueseLocaleInstrumentedTest.kt": {
+      "before": "774eaf791fea2d66d4681bdb8ef4977cfe1d2f625273a92b8031771681e021a9",
+      "after": "ed8656fc2966706f9c7b02640b933e1f65396960582b522567d4d60f664932cf"
+    },
+    "app/src/main/java/takagi/ru/monica/ui/screens/TimelineTextPresentation.kt": {
+      "before": "c0793783a647b8eb3ddd63a6df90b1022b35a704dd405b019aca7345b82cfd57",
+      "after": "4751ddea57194417d977d953a318a85f9cbf12b2d85155bb01c79db87bd8fbe5"
+    },
+    "app/src/main/res/values/strings_timeline_sources.xml": {
+      "before": null,
+      "after": "54268737d1d10f193fd79c8e0af863ba10fcddda78ccbcde9bb80f3bc6ce4408"
+    },
+    "app/src/main/res/values-b+lzh/strings_timeline_sources.xml": {
+      "before": null,
+      "after": "627b1913c84cd2c5f56b5a3187d76a202680271afe4724ddaa669848cf538077"
+    },
+    "app/src/main/res/values-b+zh+Hant/strings_timeline_sources.xml": {
+      "before": null,
+      "after": "61775dd9c64d3a677c0d0c0fa98a81ce93af83c939a09431b93c106a0608fce5"
+    },
+    "app/src/main/res/values-de/strings_timeline_sources.xml": {
+      "before": null,
+      "after": "c9201773c9ab6ee522d0172c163c2ef737b6485395d4268206647d8c7e57c285"
+    },
+    "app/src/main/res/values-es/strings_timeline_sources.xml": {
+      "before": null,
+      "after": "d27086f2a99701eac36673b2011f14d4f19836305d51d06d4a127c9f95e82670"
+    },
+    "app/src/main/res/values-fr/strings_timeline_sources.xml": {
+      "before": null,
+      "after": "355fd3f30ebdc44a563ba9b4882fba625ca47d5196170824f1447ad5887634e4"
+    },
+    "app/src/main/res/values-it/strings_timeline_sources.xml": {
+      "before": null,
+      "after": "caccc8c74a09792c79a6620bc5f53c12b7710d2d753692b1700d5d5e4d994607"
+    },
+    "app/src/main/res/values-ja/strings_timeline_sources.xml": {
+      "before": null,
+      "after": "0108a7d7195485a21d8a2cbfda7bdaa4752e9a7eac68d5d6966022aad5b7112c"
+    },
+    "app/src/main/res/values-ko/strings_timeline_sources.xml": {
+      "before": null,
+      "after": "1668e64d8c0a9ba4f87fdbba94ef80f6709955843946065250bd61a27e770638"
+    },
+    "app/src/main/res/values-pl/strings_timeline_sources.xml": {
+      "before": null,
+      "after": "5e0325936dc807f14fcff23711c4c31aab8280cadf6c5a16f4af44f3e143a66a"
+    },
+    "app/src/main/res/values-pt/strings_timeline_sources.xml": {
+      "before": null,
+      "after": "640af43dd1cdd468d676a1c62864415ebd84d6d4610d041cce530e269ccb069f"
+    },
+    "app/src/main/res/values-pt-rBR/strings_timeline_sources.xml": {
+      "before": null,
+      "after": "640af43dd1cdd468d676a1c62864415ebd84d6d4610d041cce530e269ccb069f"
+    },
+    "app/src/main/res/values-ru/strings_timeline_sources.xml": {
+      "before": null,
+      "after": "6db50fe2e67276193ef1633319841c16d6bf2251614b6852cb6b8cc18901f54d"
+    },
+    "app/src/main/res/values-vi/strings_timeline_sources.xml": {
+      "before": null,
+      "after": "0f8b60e2639a9202ccc89fc6e3c3deb9de36c747ad2476d8c9d013ddbb60c40d"
+    },
+    "app/src/main/res/values-zh/strings_timeline_sources.xml": {
+      "before": null,
+      "after": "1e03cdb73d6ae2ef4f70620a32c6de52e723ff67e0d2d11159e336b863674693"
+    },
+    "app/src/androidTest/java/takagi/ru/monica/ui/screens/SettingsSearchInstrumentedTest.kt": {
+      "before": "18d2b5e2c3b949437a47015ce40eb066a96003d9e4045de0ccf3daa4c25a63b6",
+      "after": "821afff36f152e2733df5486211073dc074ec32f3be1c78df132cf80d6c1d50b"
+    },
+    "app/src/androidTest/java/takagi/ru/monica/data/LegacyRecoveryCompatibilityTest.kt": {
+      "before": null,
+      "after": "a12d0bee543d75e8585104135a68cc572cd694da04777661e356be6045637578"
+    },
+    "app/src/test/java/takagi/ru/monica/repository/MdbxKeyPayloadTest.kt": {
+      "before": "b3dff09a3966efd3df2f86574b84d1b6c2864b88222f9c24394c311c19253f41",
+      "after": "380c9296f5f0a09ad7acb424ca8b48fd6a9af3684d3cd353d984540c07d0ad48"
+    },
+    "app/src/test/java/takagi/ru/monica/repository/MdbxPasswordContentFieldsTest.kt": {
+      "before": "dcb52c67ab26a92ff2a786b22838475d33f4aacd8b02688f4865c78beda03b5d",
+      "after": "a69afb2ee6a09d5825c0f396ddbccac49e711cc06deb50807b3c63eea1401843"
+    },
+    "app/src/main/java/takagi/ru/monica/navigation/RetiredRouteNavigation.kt": {
+      "before": null,
+      "after": "50ff41edfc0700a383a39672ba0f37da61cedb69a72bf2f91fe78b8c8f8d25d1"
+    },
+    "app/src/androidTest/java/takagi/ru/monica/navigation/RetiredRouteNavigationTest.kt": {
+      "before": null,
+      "after": "ac8c98526c878e81bcac19dbe7fb30b1a83332eb76424d1b0860be8bb719c35b"
+    },
+    "app/src/main/java/takagi/ru/monica/ui/screens/LegacyDedupSavedState.kt": {
+      "before": null,
+      "after": "53eb9443ab5d898684eb2a25fd43cb47ffefdbd1deb6f0e5d5b7746c1bc884c5"
+    },
+    "app/proguard-rules.pro": {
+      "before": "88605823a952aa960c223f638cd54b0668e2f481c67f62c7894a550ad179faee",
+      "after": "a49c1087e786254ec5540fcc1c0afc43d9ae2378dc7922e062f15f779cd9c0de"
+    }
+  },
+  "limitations": [
+    "Synthetic API35/x86_64/Debug only; no physical device, OEM, full application R8, real cloud or user vault validation.",
+    "Existing uncommitted KeePass list changes preserved and present in the tested workspace; excluded from this removal commit.",
+    "Nine pre-existing source-text guards and one pre-existing MDBX legacy-repair device case remain failing. No assertion was weakened to hide them."
+  ]
+}

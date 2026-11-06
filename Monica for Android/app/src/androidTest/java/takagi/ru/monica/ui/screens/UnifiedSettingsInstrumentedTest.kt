@@ -61,19 +61,20 @@ class UnifiedSettingsInstrumentedTest {
         val events = mutableListOf<String>()
         show {
             SyncBackupScreen({}, { events += "export" }, { events += "import" },
-                { events += "webdav" }, { events += "onedrive" }, { events += "dedup" },
+                { events += "webdav" }, { events += "onedrive" },
                 { events += "keepass" }, { events += "mdbx" }, { events += "bitwarden" },
                 onNavigateToLanSync = { events += "nearby" }, isPlusActivated = true)
         }
+        compose.onNodeWithText("去重引擎").assertDoesNotExist()
         capture("database-dark")
         listOf(R.string.mdbx_ui_manager_entry_title to "mdbx", R.string.local_keepass_database to "keepass",
-            R.string.dedup_engine_title to "dedup", R.string.webdav_backup to "webdav",
+            R.string.webdav_backup to "webdav",
             R.string.onedrive_backup_title to "onedrive", R.string.sync_backup_bitwarden_sync_title to "bitwarden",
             R.string.lan_title to "nearby", R.string.export_data to "export", R.string.import_data to "import").forEach { (id, expected) ->
             compose.onNodeWithText(label(id)).performScrollTo().performClick()
             assertEquals(expected, events.last())
         }
-        assertEquals(9, events.size)
+        assertEquals(8, events.size)
         capture("database-bottom")
     }
     @Test fun unavailablePlusRouteStaysDisabledAtLargeText() {

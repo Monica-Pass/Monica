@@ -32,7 +32,6 @@ fun SyncBackupScreen(
     onNavigateToImportData: () -> Unit = {},
     onNavigateToWebDav: () -> Unit = {},
     onNavigateToOneDrive: () -> Unit = {},
-    onNavigateToDedupEngine: () -> Unit = {},
     onNavigateToLocalKeePass: () -> Unit = {},  // 本地 KeePass 数据库管理
     onNavigateToMdbx: () -> Unit = {},
     onNavigateToBitwarden: () -> Unit = {},  // Bitwarden 集成入口
@@ -83,8 +82,6 @@ fun SyncBackupScreen(
                     stringResource(R.string.mdbx_ui_manager_entry_description), onNavigateToMdbx)
                 SyncBackupItem(Icons.Default.Key, stringResource(R.string.local_keepass_database),
                     stringResource(R.string.local_keepass_database_description), onNavigateToLocalKeePass)
-                SyncBackupItem(Icons.Default.FilterList, stringResource(R.string.dedup_engine_title),
-                    stringResource(R.string.dedup_engine_entry_desc), onNavigateToDedupEngine)
             }
             SyncBackupSection(title = stringResource(R.string.sync_backup_common_sync)) {
                 SyncBackupItem(Icons.Default.Wifi, stringResource(R.string.lan_title),

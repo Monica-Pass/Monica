@@ -103,7 +103,6 @@ class PolishLocaleInstrumentedTest {
 
     @Test fun compiledSeparatorsAndKeePassTokensRemainUsable() {
         val polish = context.withLocale("pl")
-        assertEquals(", ", polish.getString(R.string.dedup_merge_list_separator))
         assertEquals(" · konto", polish.getString(R.string.sync_status_with_vault, "konto"))
         assertEquals(" · Domyślnie: 7", polish.getString(R.string.password_field_customization_default_value_suffix, "7"))
         assertEquals("Np. {USERNAME}{TAB}{PASSWORD}{ENTER}", polish.getString(R.string.keepass_native_auto_type_tokens_hint))

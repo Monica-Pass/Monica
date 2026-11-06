@@ -67,6 +67,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import takagi.ru.monica.navigation.addRetiredFeatureDestinations
 import androidx.navigation.navArgument
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.collect
@@ -92,7 +93,6 @@ import takagi.ru.monica.external.ExternalTotpImportRequest
 import takagi.ru.monica.keepass.KeePassNativeResolvedRoute
 import takagi.ru.monica.ui.components.navigateEntryTemplate
 import takagi.ru.monica.navigation.Screen
-import takagi.ru.monica.data.dedup.DedupMergeService
 import takagi.ru.monica.repository.PasswordRepository
 import takagi.ru.monica.repository.PasskeyRepository
 import takagi.ru.monica.repository.MdbxRepository
@@ -152,7 +152,6 @@ import takagi.ru.monica.steam.ui.SteamQrScannerScreen
 import takagi.ru.monica.viewmodel.BankCardViewModel
 import takagi.ru.monica.viewmodel.BillingAddressViewModel
 import takagi.ru.monica.viewmodel.DocumentViewModel
-import takagi.ru.monica.viewmodel.DedupEngineViewModel
 import takagi.ru.monica.viewmodel.GeneratorViewModel
 import takagi.ru.monica.viewmodel.PasswordViewModel
 import takagi.ru.monica.viewmodel.SecurityAnalysisViewModel
@@ -3951,9 +3950,6 @@ fun MonicaContent(
                 onNavigateToOneDrive = {
                     navController.navigate(Screen.OneDriveBackup.route)
                 },
-                onNavigateToDedupEngine = {
-                    navController.navigate(Screen.DedupEngine.route)
-                },
                 onNavigateToLocalKeePass = {
                     navController.navigate(Screen.LocalKeePass.route)
                 },
@@ -3972,87 +3968,7 @@ fun MonicaContent(
             }
         }
 
-        composable(
-            route = Screen.DedupEngine.route,
-            enterTransition = { easyNotesScreenEnter() },
-            exitTransition = { easyNotesScreenExit() },
-            popEnterTransition = { easyNotesScreenEnter() },
-            popExitTransition = { easyNotesScreenExit() }
-        ) {
-            val dedupPasskeyRepository = remember {
-                PasskeyRepository(database.passkeyDao(), mdbxRepository, context.applicationContext)
-            }
-            val dedupViewModel: DedupEngineViewModel = viewModel {
-                val strings = takagi.ru.monica.utils.AppLocaleStringResolver(context)
-                DedupEngineViewModel(
-                    mergeService = DedupMergeService(
-                        passwordRepository = repository,
-                        secureItemRepository = secureItemRepository,
-                        passkeyRepository = dedupPasskeyRepository,
-                        customFieldRepository = takagi.ru.monica.repository.CustomFieldRepository(database.customFieldDao()),
-                        localKeePassDatabaseDao = database.localKeePassDatabaseDao(),
-                        localMdbxDatabaseDao = database.localMdbxDatabaseDao(),
-                        bitwardenVaultDao = database.bitwardenVaultDao(),
-                        securityManager = securityManager,
-                        strings = strings,
-                        database = database,
-                        attachmentSupport = takagi.ru.monica.data.dedup.DedupAttachmentSupport(context.applicationContext, database)
-                    ),
-                    strings = strings
-                )
-            }
-            val uiState by dedupViewModel.uiState.collectAsState()
-            val dedupLifecycleOwner = LocalLifecycleOwner.current
-
-            DisposableEffect(dedupLifecycleOwner, dedupViewModel) {
-                val observer = LifecycleEventObserver { _, event ->
-                    if (event == Lifecycle.Event.ON_RESUME) {
-                        dedupViewModel.refresh()
-                    }
-                }
-                dedupLifecycleOwner.lifecycle.addObserver(observer)
-                onDispose {
-                    dedupLifecycleOwner.lifecycle.removeObserver(observer)
-                }
-            }
-
-            takagi.ru.monica.ui.screens.DedupEngineScreen(
-                uiState = uiState,
-                onNavigateBack = {
-                    navController.popBackStack()
-                },
-                onRefresh = {
-                    dedupViewModel.refresh()
-                },
-                onToggleSource = { sourceKey ->
-                    dedupViewModel.toggleMergeSource(sourceKey)
-                },
-                onSelectAllSources = { visibleKeys ->
-                    dedupViewModel.selectAllSources(visibleKeys)
-                },
-                onClearSources = {
-                    dedupViewModel.clearSources()
-                },
-                onSelectTarget = { target ->
-                    dedupViewModel.selectMergeTarget(target)
-                },
-                onCreateMdbxTarget = {
-                    navController.navigate(Screen.MdbxLocalCreate.route)
-                },
-                onConflictPolicyChange = { policy ->
-                    dedupViewModel.updateConflictPolicy(policy)
-                },
-                onExecuteMerge = {
-                    dedupViewModel.executeMerge()
-                },
-                onCancelMerge = {
-                    dedupViewModel.cancelMerge()
-                },
-                onConsumeMessage = {
-                    dedupViewModel.consumeMessage()
-                }
-            )
-        }
+        addRetiredFeatureDestinations(navController)
 
         composable(
             route = "database_manager?database={database}",

@@ -100,7 +100,6 @@ class PortugueseLocaleInstrumentedTest(private val language: Language, private v
 
     @Test fun technicalTokensAndMeaningfulSpacingSurviveCompilation() {
         val localized = context.withLocale(tag)
-        assertEquals(", ", localized.getString(R.string.dedup_merge_list_separator))
         assertEquals(" · conta", localized.getString(R.string.sync_status_with_vault, "conta"))
         val tokens = localized.getString(R.string.keepass_native_auto_type_tokens_hint)
         listOf("{USERNAME}", "{TAB}", "{PASSWORD}", "{ENTER}").forEach { assertTrue(tokens, tokens.contains(it)) }

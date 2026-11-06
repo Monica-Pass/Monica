@@ -101,7 +101,6 @@ class ItalianLocaleInstrumentedTest {
 
     @Test fun compiledSeparatorsAndKeePassTokensRemainUsable() {
         val italian = context.withLocale("it")
-        assertEquals(", ", italian.getString(R.string.dedup_merge_list_separator))
         assertEquals(" · account", italian.getString(R.string.sync_status_with_vault, "account"))
         assertEquals(" · Predefinito: 7", italian.getString(R.string.password_field_customization_default_value_suffix, "7"))
         assertEquals("Es. {USERNAME}{TAB}{PASSWORD}{ENTER}", italian.getString(R.string.keepass_native_auto_type_tokens_hint))

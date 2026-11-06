@@ -219,7 +219,6 @@ sealed class Screen(val route: String) {
     object PasskeySettings : Screen("passkey_settings")
     object SecurityAnalysis : Screen("security_analysis")
     object MasterPasswordLockingSettings : Screen("master_password_locking_settings")
-    object DedupEngine : Screen("dedup_engine")
     object BottomNavSettings : Screen("bottom_nav_settings")
     object ColorSchemeSelection : Screen("color_scheme_selection")
     object CustomColorSettings : Screen("custom_color_settings")

@@ -119,8 +119,6 @@ class AllLocalesInstrumentedTest {
         languages.forEach { language ->
             val localized = LocaleHelper.setLocale(context, language)
             assertEquals(language.name, " · vault-7", localized.getString(R.string.sync_status_with_vault, "vault-7"))
-            val comma = if (language in setOf(Language.CHINESE, Language.TRADITIONAL_CHINESE, Language.CLASSICAL_CHINESE, Language.JAPANESE)) "、" else ", "
-            assertEquals(language.name, comma, localized.getString(R.string.dedup_merge_list_separator))
             assertTrue(language.name, localized.getString(R.string.keepass_native_auto_type_tokens_hint)
                 .contains("{USERNAME}{TAB}{PASSWORD}{ENTER}"))
         }

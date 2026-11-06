@@ -213,8 +213,20 @@ class SettingsSearchInstrumentedTest {
     @Test fun localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls() {
         val zh = context.createConfigurationContext(Configuration(context.resources.configuration).apply { setLocale(Locale.SIMPLIFIED_CHINESE) })
         val entries = settingsSearchEntries(zh)
-        assertTrue(entries.size >= 100)
-        assertEquals(entries.size, entries.distinctBy { it.id }.size)
+        val plusEntries = settingsSearchEntries(zh, isPlusActivated = true)
+        val plusOnlyIds = setOf("validator_vibration", "copy_next_code_when_expiring")
+        val baseIds = entries.map { it.id }.toSet()
+        assertTrue(baseIds.intersect(plusOnlyIds).isEmpty())
+        assertEquals(baseIds + plusOnlyIds, plusEntries.map { it.id }.toSet())
+        listOf(entries, plusEntries).forEach { catalog ->
+            assertEquals(catalog.size, catalog.distinctBy { it.id }.size)
+            assertTrue(catalog.none { it.id.startsWith("dedup_") || it.route == "dedup_engine" })
+            assertEquals(Screen.Extensions.route, catalog.single { it.id == "smart_deduplication" }.route)
+            listOf("webdav_backup", "onedrive_backup_title", "sync_backup_bitwarden_sync_title",
+                "local_keepass_database", "mdbx_ui_manager_entry_title", "export_data", "import_data").forEach { id ->
+                assertEquals(id, Screen.SyncBackup.route, catalog.single { it.id == id }.route)
+            }
+        }
         assertEquals(Screen.AutofillSettings.route, entries.single { it.id == "ime_hide_pin_preview_title" }.route)
         assertEquals(Screen.Settings.route, entries.single { it.id == "developer_settings" }.route)
         show()

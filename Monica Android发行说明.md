@@ -4,6 +4,8 @@
 
 ## 中文
 
+- 此版本已移除整个去重引擎，包括单数据库分析与清理、跨数据库去重合并及相关入口。现有数据库和记录保持不变；列表显示去重、导入导出、备份恢复及同步功能保留。
+
 - 统一 Bitwarden 账号安全、服务器配置、账号管理和 Send 接收的页面过渡，补齐进入、返回与内部步骤切换的短缩放效果；关闭或锁定仍立即清理敏感内容。
 
 - 修复 Bitwarden 新建登录在字段保存失败后仍留下记录、重试产生重复项目的问题：记录与字段一起提交或回滚，同步只读取完整记录；允许用户名和密码留空。
@@ -63,6 +65,8 @@
 - 加强同步修订冲突处理及账号安全状态变化后的重新认证，保留较新的本地修改。
 
 ## English
+
+- This version removes the entire dedup engine, including single-database analysis and cleanup, cross-database deduplication and merge, and their entry points. Existing databases and records remain unchanged; list display deduplication, import/export, backup/restore and sync remain available.
 
 - Align Bitwarden account security, server configuration, account management and Send receiver page transitions with Monica, including opening, returning and switching steps. Closing or locking still clears sensitive content immediately.
 

@@ -75,7 +75,6 @@ internal fun settingsSearchEntries(context: Context, isPlusActivated: Boolean = 
         entry(R.string.webdav_backup, Screen.SyncBackup.route, listOf(R.string.settings_title, R.string.sync_backup_title), summary = R.string.webdav_backup_description),
         entry(R.string.onedrive_backup_title, Screen.SyncBackup.route, listOf(R.string.settings_title, R.string.sync_backup_title), summary = R.string.onedrive_backup_description),
         entry(R.string.sync_backup_bitwarden_sync_title, Screen.SyncBackup.route, listOf(R.string.settings_title, R.string.sync_backup_title), summary = R.string.sync_backup_bitwarden_sync_desc),
-        entry(R.string.dedup_engine_title, Screen.SyncBackup.route, listOf(R.string.settings_title, R.string.sync_backup_title), summary = R.string.dedup_engine_entry_desc),
         entry(R.string.local_keepass_database, Screen.SyncBackup.route, listOf(R.string.settings_title, R.string.sync_backup_title), summary = R.string.local_keepass_database_description),
         entry(R.string.mdbx_ui_manager_entry_title, Screen.SyncBackup.route, listOf(R.string.settings_title, R.string.sync_backup_title), summary = R.string.mdbx_ui_manager_entry_description),
         entry(R.string.export_data, Screen.SyncBackup.route, listOf(R.string.settings_title, R.string.sync_backup_title), summary = R.string.export_data_description),

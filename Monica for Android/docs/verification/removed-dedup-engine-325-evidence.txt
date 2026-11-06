@@ -1,0 +1,3679 @@
+=== build-main-01-result.json ===
+{
+  "edition": "main",
+  "command": [
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\gradlew.bat",
+    ":app:assembleDebug",
+    ":app:assembleDebugAndroidTest",
+    ":app:testDebugUnitTest",
+    "--tests",
+    "takagi.ru.monica.keepass.*",
+    "--tests",
+    "takagi.ru.monica.repository.*",
+    "--tests",
+    "takagi.ru.monica.sync.*",
+    "--tests",
+    "*PasswordDisplayDeduplicationRegressionTest",
+    "--tests",
+    "*PasswordCredentialSavePlannerTest",
+    "--tests",
+    "*MultiPasswordSaveRegressionGuardTest",
+    "--tests",
+    "*KeePassListPreviewCacheTest",
+    "--tests",
+    "*AllVaultLoadingStateTest",
+    "--tests",
+    "*PasswordStackOrderTest",
+    "--tests",
+    "*PasswordFirstFrameStackRetentionTest",
+    "--tests",
+    "*BitwardenSyncQueueTest",
+    "--tests",
+    "*CommonFieldSuggestionsTest",
+    "--tests",
+    "*AutofillCancellationTest",
+    "--tests",
+    "*SettingsControllerTest",
+    "--tests",
+    "*Timeline*",
+    "--tests",
+    "*SettingsSearch*",
+    ":kotpass:test",
+    "-PdailySeq=21",
+    "-PincludeX86TestAbi",
+    "-Pkotlin.compiler.execution.strategy=in-process",
+    "--no-daemon",
+    "--max-workers=1",
+    "-Dorg.gradle.jvmargs=-Xmx8g -XX:ActiveProcessorCount=4 -Dfile.encoding=UTF-8"
+  ],
+  "exitCode": 1,
+  "seconds": 992.002,
+  "inputsUnchanged": true,
+  "app": {
+    "tests": 670,
+    "failures": 18,
+    "errors": 0,
+    "skipped": 0
+  },
+  "kotpass": {
+    "executed": false,
+    "reason": "App unit test failure stopped build before kotpass task; stale XML ignored"
+  },
+  "assemblySucceeded": true,
+  "apks": {
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.325-26110612-21.APK": "1392c66e281b6012ec61fc99398b7bcbc7849ea57d16a7ad8bd1c038fecfe976",
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "6d421d8f3331f4b43a99282d1f7952b662130c495890e2f23570e4cc48b7ebdf"
+  }
+}
+
+=== build-main-02-result.json ===
+{
+  "edition": "main",
+  "command": [
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\gradlew.bat",
+    ":app:assembleDebug",
+    ":app:assembleDebugAndroidTest",
+    ":app:testDebugUnitTest",
+    "--tests",
+    "takagi.ru.monica.keepass.*",
+    "--tests",
+    "takagi.ru.monica.repository.*",
+    "--tests",
+    "takagi.ru.monica.sync.*",
+    "--tests",
+    "*PasswordDisplayDeduplicationRegressionTest",
+    "--tests",
+    "*PasswordCredentialSavePlannerTest",
+    "--tests",
+    "*MultiPasswordSaveRegressionGuardTest",
+    "--tests",
+    "*KeePassListPreviewCacheTest",
+    "--tests",
+    "*AllVaultLoadingStateTest",
+    "--tests",
+    "*PasswordStackOrderTest",
+    "--tests",
+    "*PasswordFirstFrameStackRetentionTest",
+    "--tests",
+    "*BitwardenSyncQueueTest",
+    "--tests",
+    "*CommonFieldSuggestionsTest",
+    "--tests",
+    "*AutofillCancellationTest",
+    "--tests",
+    "*SettingsControllerTest",
+    "--tests",
+    "*Timeline*",
+    "--tests",
+    "*SettingsSearch*",
+    ":kotpass:test",
+    "-PdailySeq=21",
+    "-PincludeX86TestAbi",
+    "-Pkotlin.compiler.execution.strategy=in-process",
+    "--continue",
+    "--no-daemon",
+    "--max-workers=1",
+    "-Dorg.gradle.jvmargs=-Xmx8g -XX:ActiveProcessorCount=4 -Dfile.encoding=UTF-8",
+    "-x",
+    ":app:generateDebugBuildConfig",
+    "-x",
+    ":app:generateDebugAndroidTestBuildConfig"
+  ],
+  "exitCode": 1,
+  "seconds": 272.412,
+  "inputsUnchanged": true,
+  "reusedBuildConfig": {
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\generated\\source\\buildConfig\\debug\\takagi\\ru\\monica\\BuildConfig.java": "c2fcfb535004813eb73711db9eae4deba221d2124f3df20b917f388dd626d0a4",
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\generated\\source\\buildConfig\\androidTest\\debug\\takagi\\ru\\monica\\test\\BuildConfig.java": "d5faba5f067a45707776c7985824de959585f03f44e18c76c8fb1b63de69f2b9"
+  },
+  "app": {
+    "tests": 670,
+    "failures": 9,
+    "errors": 0,
+    "skipped": 0
+  },
+  "kotpass": {
+    "tests": 7,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "assemblySucceeded": true,
+  "apks": {
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.325-26110612-21.APK": "1392c66e281b6012ec61fc99398b7bcbc7849ea57d16a7ad8bd1c038fecfe976",
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "0ede63304bf71aa0cf83f1d1fd9fb5ed5144fca89b599c15c18ce029a5602424"
+  }
+}
+
+=== build-main-03-result.json ===
+{
+  "edition": "main",
+  "command": [
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\gradlew.bat",
+    ":app:assembleDebug",
+    ":app:assembleDebugAndroidTest",
+    ":app:testDebugUnitTest",
+    "--tests",
+    "takagi.ru.monica.keepass.*",
+    "--tests",
+    "takagi.ru.monica.repository.*",
+    "--tests",
+    "takagi.ru.monica.sync.*",
+    "--tests",
+    "*PasswordDisplayDeduplicationRegressionTest",
+    "--tests",
+    "*PasswordCredentialSavePlannerTest",
+    "--tests",
+    "*MultiPasswordSaveRegressionGuardTest",
+    "--tests",
+    "*KeePassListPreviewCacheTest",
+    "--tests",
+    "*AllVaultLoadingStateTest",
+    "--tests",
+    "*PasswordStackOrderTest",
+    "--tests",
+    "*PasswordFirstFrameStackRetentionTest",
+    "--tests",
+    "*BitwardenSyncQueueTest",
+    "--tests",
+    "*CommonFieldSuggestionsTest",
+    "--tests",
+    "*AutofillCancellationTest",
+    "--tests",
+    "*SettingsControllerTest",
+    "--tests",
+    "*Timeline*",
+    "--tests",
+    "*SettingsSearch*",
+    ":kotpass:test",
+    "-PdailySeq=21",
+    "-PincludeX86TestAbi",
+    "-Pkotlin.compiler.execution.strategy=in-process",
+    "--continue",
+    "--no-daemon",
+    "--max-workers=1",
+    "-Dorg.gradle.jvmargs=-Xmx8g -XX:ActiveProcessorCount=4 -Dfile.encoding=UTF-8",
+    "-x",
+    ":app:generateDebugBuildConfig",
+    "-x",
+    ":app:generateDebugAndroidTestBuildConfig"
+  ],
+  "exitCode": 1,
+  "seconds": 942.102,
+  "inputsUnchanged": true,
+  "reusedBuildConfig": {
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\generated\\source\\buildConfig\\debug\\takagi\\ru\\monica\\BuildConfig.java": "c2fcfb535004813eb73711db9eae4deba221d2124f3df20b917f388dd626d0a4",
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\generated\\source\\buildConfig\\androidTest\\debug\\takagi\\ru\\monica\\test\\BuildConfig.java": "d5faba5f067a45707776c7985824de959585f03f44e18c76c8fb1b63de69f2b9"
+  },
+  "app": {
+    "tests": 670,
+    "failures": 9,
+    "errors": 0,
+    "skipped": 0
+  },
+  "kotpass": {
+    "tests": 0,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "assemblySucceeded": true,
+  "apks": {
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.325-26110612-21.APK": "e00fbb875170764bffe172bc95672a1f8d4b8021a7110ef555ba1fe1fbec4c52",
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "232b40be5076c094c44fc8bf36af53a0a7003f6a99fe7c37dd8c6c317e31267d"
+  }
+}
+
+=== build-main-04-result.json ===
+{
+  "edition": "main",
+  "command": [
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\gradlew.bat",
+    ":app:assembleDebug",
+    ":app:assembleDebugAndroidTest",
+    "-PdailySeq=21",
+    "-PincludeX86TestAbi",
+    "-Pkotlin.compiler.execution.strategy=in-process",
+    "--continue",
+    "--no-daemon",
+    "--max-workers=1",
+    "-Dorg.gradle.jvmargs=-Xmx8g -XX:ActiveProcessorCount=4 -Dfile.encoding=UTF-8",
+    "-x",
+    ":app:generateDebugBuildConfig",
+    "-x",
+    ":app:generateDebugAndroidTestBuildConfig"
+  ],
+  "exitCode": 0,
+  "seconds": 675.642,
+  "inputsUnchanged": true,
+  "assembliesOnly": true,
+  "reusedBuildConfig": {
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\generated\\source\\buildConfig\\debug\\takagi\\ru\\monica\\BuildConfig.java": "c2fcfb535004813eb73711db9eae4deba221d2124f3df20b917f388dd626d0a4",
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\generated\\source\\buildConfig\\androidTest\\debug\\takagi\\ru\\monica\\test\\BuildConfig.java": "d5faba5f067a45707776c7985824de959585f03f44e18c76c8fb1b63de69f2b9"
+  },
+  "app": {
+    "tests": 0,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "kotpass": {
+    "tests": 0,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "assemblySucceeded": true,
+  "apks": {
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.325-26110612-21.APK": "97bae919fb1239699baab82dbba1c9790c1f51154da3600df5f1d3686d73805b",
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "1b5db3d0b2ff663a20843dd2be8df69c8da007ca45087a4c6b9efe9ab800ab15"
+  }
+}
+
+=== build-main-05-result.json ===
+{
+  "edition": "main",
+  "command": [
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\gradlew.bat",
+    ":app:assembleDebug",
+    ":app:assembleDebugAndroidTest",
+    "-PdailySeq=21",
+    "-PincludeX86TestAbi",
+    "-Pkotlin.compiler.execution.strategy=in-process",
+    "--continue",
+    "--no-daemon",
+    "--max-workers=1",
+    "-Dorg.gradle.jvmargs=-Xmx8g -XX:ActiveProcessorCount=4 -Dfile.encoding=UTF-8",
+    "-x",
+    ":app:generateDebugBuildConfig",
+    "-x",
+    ":app:generateDebugAndroidTestBuildConfig"
+  ],
+  "exitCode": 0,
+  "seconds": 167.003,
+  "inputsUnchanged": true,
+  "assembliesOnly": true,
+  "reusedBuildConfig": {
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\generated\\source\\buildConfig\\debug\\takagi\\ru\\monica\\BuildConfig.java": "c2fcfb535004813eb73711db9eae4deba221d2124f3df20b917f388dd626d0a4",
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\generated\\source\\buildConfig\\androidTest\\debug\\takagi\\ru\\monica\\test\\BuildConfig.java": "d5faba5f067a45707776c7985824de959585f03f44e18c76c8fb1b63de69f2b9"
+  },
+  "app": {
+    "tests": 0,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "kotpass": {
+    "tests": 0,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "assemblySucceeded": true,
+  "apks": {
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\debug\\Monica-Android-x86_64-1.0.325-26110712-21.APK": "2e25ecb12ad747416b59b29f806b43a175c219698c6f914306a13b45c16dc9db",
+    "C:\\Users\\joyins\\Desktop\\Monica-all\\Monica-main\\Monica for Android\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": "9ebb9742a01b80ca543e787e561576d6f7f5d34d366d51c4fdbc7729dd40b3bb"
+  }
+}
+
+=== device-main-allvault-isolated01.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.AllVaultLoadingUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.keepass.AllVaultLoadingUiTest:
+INSTRUMENTATION_STATUS: test=actualQueuedDatabasesDriveStatusAndCompletionRestoresPath
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.AllVaultLoadingUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=actualQueuedDatabasesDriveStatusAndCompletionRestoresPath
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 0.934
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== device-main-final01-keepass.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.keepass.KeePassStackContentRegressionTest:
+INSTRUMENTATION_STATUS: test=externalRevisionRejectsStackWithoutOverwritingAnotherWriter
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=externalRevisionRejectsStackWithoutOverwritingAnotherWriter
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockingOrRemovingASelectedIdentityRejectsWholeBatch
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockingOrRemovingASelectedIdentityRejectsWholeBatch
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=projectCredentialsResaveInOneCommitWithDistinctFieldsAndNewRows
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=projectCredentialsResaveInOneCommitWithDistinctFieldsAndNewRows
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=deniedProjectBatchCannotPartiallySaveAnExistingAccount
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=deniedProjectBatchCannotPartiallySaveAnExistingAccount
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=stackModesCommitTheWholeSelectionOnceAndSurviveColdReopen
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=stackModesCommitTheWholeSelectionOnceAndSurviveColdReopen
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=copiedContentRejectsChangedDestinationEvenAfterListRefresh
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=copiedContentRejectsChangedDestinationEvenAfterListRefresh
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=deniedBatchStackDoesNotPersistAnyMember
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=deniedBatchStackDoesNotPersistAnyMember
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeCustomFieldsRoundTripWithoutLosingUnknownOrProtectedFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeCustomFieldsRoundTripWithoutLosingUnknownOrProtectedFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=everyAddContentEncodingSurvivesEditAndColdReopenInOriginalKdbx
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=everyAddContentEncodingSurvivesEditAndColdReopenInOriginalKdbx
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=copiedContentPublishesAfterSavingAnotherCredentialInSameFile
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=copiedContentPublishesAfterSavingAnotherCredentialInSameFile
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.keepass.KeePassHistoryStabilityTest:
+INSTRUMENTATION_STATUS: test=accessOnlyExternalMergesAndRepeatedMergesKeepRealHistory
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=accessOnlyExternalMergesAndRepeatedMergesKeepRealHistory
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=repeatedIdenticalNativeSavesPreserveHistoryAfterDiskReopen
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=repeatedIdenticalNativeSavesPreserveHistoryAfterDiskReopen
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=historyDisplayIsNewestFirstAndDeleteKeepsOriginalNativeIndex
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=historyDisplayIsNewestFirstAndDeleteKeepsOriginalNativeIndex
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.keepass.KeePassListPresentationUiTest:
+INSTRUMENTATION_STATUS: test=lockingWhileReadIsPendingRejectsItsLateResult
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockingWhileReadIsPendingRejectsItsLateResult
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=delayedSelectionUsesTargetOrPreviousPreviewAndOnlyLatestSelectionBecomesLive
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=delayedSelectionUsesTargetOrPreviousPreviewAndOnlyLatestSelectionBecomesLive
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=canceledQueuedPasswordCannotUnlockReopenedDialog
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=canceledQueuedPasswordCannotUnlockReopenedDialog
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=emptyNativeDatabaseFinishesLoadingWithoutAnyPasswordRows
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=emptyNativeDatabaseFinishesLoadingWithoutAnyPasswordRows
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=backgroundClearsPreviewAndDialogBeforeReturning
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=backgroundClearsPreviewAndDialogBeforeReturning
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockRemovesPreviewAndAuthenticationReopensOriginalWithoutWrites
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockRemovesPreviewAndAuthenticationReopensOriginalWithoutWrites
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=evictedDecodedDatabaseReopensWithoutBeingMislabelledLocked
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=evictedDecodedDatabaseReopensWithoutBeingMislabelledLocked
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedReadCanRetryAndKeepsTheOriginalBytes
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedReadCanRetryAndKeepsTheOriginalBytes
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.AllVaultLoadingUiTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.keepass.AllVaultLoadingUiTest:
+INSTRUMENTATION_STATUS: test=vaultBarShowsShortLargeTextStatusAndRestoresBreadcrumb
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.AllVaultLoadingUiTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=vaultBarShowsShortLargeTextStatusAndRestoresBreadcrumb
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.AllVaultLoadingUiTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockedAndFailedBarsMatchLoadingHeightAndWholeBarRemainsClickable
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.AllVaultLoadingUiTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockedAndFailedBarsMatchLoadingHeightAndWholeBarRemainsClickable
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.AllVaultLoadingUiTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=actualQueuedDatabasesDriveStatusAndCompletionRestoresPath
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.AllVaultLoadingUiTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=actualQueuedDatabasesDriveStatusAndCompletionRestoresPath
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassAddContentUiRegressionTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.keepass.KeePassAddContentUiRegressionTest:
+INSTRUMENTATION_STATUS: test=allVisibleAddContentChoicesPersistInOriginalVault
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassAddContentUiRegressionTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=allVisibleAddContentChoicesPersistInOriginalVault
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 99.753
+
+OK (25 tests)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== device-main-final01-local-bitwarden.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest:
+INSTRUMENTATION_STATUS: test=restoreKeepsDifferentOtpParametersAndRecoveryDetails
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=restoreKeepsDifferentOtpParametersAndRecoveryDetails
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=damagedRecordDoesNotBlankTheListAndLaterWritesStillAppear
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=damagedRecordDoesNotBlankTheListAndLaterWritesStillAppear
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=restoringPasswordBindingsPreservesUnknownOtpFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=restoringPasswordBindingsPreservesUnknownOtpFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=restoreKeepsBothKeysForAnAccountAfterRotation
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=restoreKeepsBothKeysForAnAccountAfterRotation
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=parsingAnOverwriteArchiveNeverDeletesExistingRecords
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=parsingAnOverwriteArchiveNeverDeletesExistingRecords
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=legacyMissingDefaultsDeduplicateWithoutDiscardingUnknownMetadata
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=legacyMissingDefaultsDeduplicateWithoutDiscardingUnknownMetadata
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedRestoreKeepsOriginalRowsAndRetryCanRecover
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedRestoreKeepsOriginalRowsAndRetryCanRecover
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest:
+INSTRUMENTATION_STATUS: test=otherReadersCannotSeeNewRecordBeforeItsFieldsAreSaved
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=otherReadersCannotSeeNewRecordBeforeItsFieldsAreSaved
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockAfterInsertAndRepeatedSaveCannotLeaveOrphanRecords
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockAfterInsertAndRepeatedSaveCannotLeaveOrphanRecords
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=emptyUsernameAndPasswordReportSuccessAndStoreOneCompleteRecord
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=emptyUsernameAndPasswordReportSuccessAndStoreOneCompleteRecord
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateUiTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.BitwardenCredentialCreateUiTest:
+INSTRUMENTATION_STATUS: test=titleOnlyInBitwardenFolderSavesOnceAndReopensWithoutCreatingAnother
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateUiTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=titleOnlyInBitwardenFolderSavesOnceAndReopensWithoutCreatingAnother
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 4.248
+
+OK (11 tests)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== device-main-final01-mdbx.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest:
+INSTRUMENTATION_STATUS: test=snapshotRestoreReconcilesRoomWithoutRestart
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=snapshotRestoreReconcilesRoomWithoutRestart
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=passwordAttachmentAndReopenRoundTrip
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=passwordAttachmentAndReopenRoundTrip
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=historyDiffSnapshotRestoreAndDeleteRoundTrip
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=historyDiffSnapshotRestoreAndDeleteRoundTrip
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nestedFolderCrudAndReopenRoundTrip
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nestedFolderCrudAndReopenRoundTrip
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest:
+INSTRUMENTATION_STATUS: test=deleteRemovesRoomMirrorsAttachmentBlobAndOwnedVaultFile
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=deleteRemovesRoomMirrorsAttachmentBlobAndOwnedVaultFile
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=ownedFileDeletionRefusesFilesOutsideMdbx2Directory
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=ownedFileDeletionRefusesFilesOutsideMdbx2Directory
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=missingVaultRollsBackRoomMutationsAndAttachmentBlob
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=missingVaultRollsBackRoomMutationsAndAttachmentBlob
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=openFailuresAreStableAndSanitized
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=openFailuresAreStableAndSanitized
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=ownedFileDeletionRemovesSqliteAndBlobStoreSidecars
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=ownedFileDeletionRemovesSqliteAndBlobStoreSidecars
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest:
+INSTRUMENTATION_STATUS: test=editingMovedProjectKeepsDistinctNativeObjects
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=editingMovedProjectKeepsDistinctNativeObjects
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unreadablePasswordAbortsMoveAndRetainsSource
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unreadablePasswordAbortsMoveAndRetainsSource
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nestedLocalCiphertextMustNotEscapeIntoMdbx
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nestedLocalCiphertextMustNotEscapeIntoMdbx
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest$legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues$1$1.invokeSuspend(MultiPasswordMdbxPortabilityTest.kt:128)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest.legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues(MultiPasswordMdbxPortabilityTest.kt:106)
+
+INSTRUMENTATION_STATUS: stream=
+Error in legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues(takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest):
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest$legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues$1$1.invokeSuspend(MultiPasswordMdbxPortabilityTest.kt:128)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest.legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues(MultiPasswordMdbxPortabilityTest.kt:106)
+
+INSTRUMENTATION_STATUS: test=legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 3.877
+There was 1 failure:
+1) legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues(takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest)
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest$legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues$1$1.invokeSuspend(MultiPasswordMdbxPortabilityTest.kt:128)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest.legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues(MultiPasswordMdbxPortabilityTest.kt:106)
+
+FAILURES!!!
+Tests run: 13,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== device-main-final01-settings.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.LegacyRecoveryCompatibilityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.data.LegacyRecoveryCompatibilityTest:
+INSTRUMENTATION_STATUS: test=version84MigrationPreservesRecordsAndValidatesWholeSchema
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.LegacyRecoveryCompatibilityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=version84MigrationPreservesRecordsAndValidatesWholeSchema
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.LegacyRecoveryCompatibilityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=existingVersion85KeepsOldIdentityRecoveryBytesAndNormalWrites
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.LegacyRecoveryCompatibilityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=existingVersion85KeepsOldIdentityRecoveryBytesAndNormalWrites
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest:
+INSTRUMENTATION_STATUS: test=unavailablePlusRouteStaysDisabledAtLargeText
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unavailablePlusRouteStaysDisabledAtLargeText
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=compactStatusDoesNotClaimDisabledAppIsOperational
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=compactStatusDoesNotClaimDisabledAppIsOperational
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=databaseRoutesRemainDistinct
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=databaseRoutesRemainDistinct
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=autofillSettingsRetainStrategyDialog
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=autofillSettingsRetainStrategyDialog
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=clearSelectionAndAuthenticationGatesStayVisible
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=clearSelectionAndAuthenticationGatesStayVisible
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=extensionRowsToggleOnceAndKeepChoices
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=extensionRowsToggleOnceAndKeepChoices
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=clearWithNoSelectionCannotSubmitEvenWithoutPasswordVerification
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=clearWithNoSelectionCannotSubmitEvenWithoutPasswordVerification
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest:
+INSTRUMENTATION_STATUS: test=backClosesSearchBeforeDelegatingToTheParentPage
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=backClosesSearchBeforeDelegatingToTheParentPage
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Retained catalog size: 98
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest.localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls(SettingsSearchInstrumentedTest.kt:217)
+
+INSTRUMENTATION_STATUS: stream=
+Error in localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls(takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest):
+java.lang.AssertionError: Retained catalog size: 98
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest.localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls(SettingsSearchInstrumentedTest.kt:217)
+
+INSTRUMENTATION_STATUS: test=localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=keyboardResultNavigatesToSpecificRowWithoutTogglingAndReturnsToQuery
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=keyboardResultNavigatesToSpecificRowWithoutTogglingAndReturnsToQuery
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.CloudBackupUiTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.screens.CloudBackupUiTest:
+INSTRUMENTATION_STATUS: test=mergeDedupCanBeChosenWithoutAffectingReplacementPolicy
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.CloudBackupUiTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=mergeDedupCanBeChosenWithoutAffectingReplacementPolicy
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.navigation.RetiredRouteNavigationTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.navigation.RetiredRouteNavigationTest:
+INSTRUMENTATION_STATUS: test=obsoleteNavigationRequestRedirectsWithoutMountingTheLegacyPage
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.navigation.RetiredRouteNavigationTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=obsoleteNavigationRequestRedirectsWithoutMountingTheLegacyPage
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.navigation.RetiredRouteNavigationTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=savedLegacyDestinationRestoresToBackupAndBackReturnsToOriginalParent
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.navigation.RetiredRouteNavigationTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=savedLegacyDestinationRestoresToBackupAndBackReturnsToOriginalParent
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.navigation.RetiredRouteNavigationTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=oldSerializedScreenEnumsSurviveAndroidStateParcel
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.navigation.RetiredRouteNavigationTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=oldSerializedScreenEnumsSurviveAndroidStateParcel
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 17.608
+There was 1 failure:
+1) localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls(takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest)
+java.lang.AssertionError: Retained catalog size: 98
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest.localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls(SettingsSearchInstrumentedTest.kt:217)
+
+FAILURES!!!
+Tests run: 16,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== device-main-final02-keepass.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.keepass.KeePassStackContentRegressionTest:
+INSTRUMENTATION_STATUS: test=externalRevisionRejectsStackWithoutOverwritingAnotherWriter
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=externalRevisionRejectsStackWithoutOverwritingAnotherWriter
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockingOrRemovingASelectedIdentityRejectsWholeBatch
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockingOrRemovingASelectedIdentityRejectsWholeBatch
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=projectCredentialsResaveInOneCommitWithDistinctFieldsAndNewRows
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=projectCredentialsResaveInOneCommitWithDistinctFieldsAndNewRows
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=deniedProjectBatchCannotPartiallySaveAnExistingAccount
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=deniedProjectBatchCannotPartiallySaveAnExistingAccount
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=stackModesCommitTheWholeSelectionOnceAndSurviveColdReopen
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=stackModesCommitTheWholeSelectionOnceAndSurviveColdReopen
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=copiedContentRejectsChangedDestinationEvenAfterListRefresh
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=copiedContentRejectsChangedDestinationEvenAfterListRefresh
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=deniedBatchStackDoesNotPersistAnyMember
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=deniedBatchStackDoesNotPersistAnyMember
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeCustomFieldsRoundTripWithoutLosingUnknownOrProtectedFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeCustomFieldsRoundTripWithoutLosingUnknownOrProtectedFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=everyAddContentEncodingSurvivesEditAndColdReopenInOriginalKdbx
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=everyAddContentEncodingSurvivesEditAndColdReopenInOriginalKdbx
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=copiedContentPublishesAfterSavingAnotherCredentialInSameFile
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=copiedContentPublishesAfterSavingAnotherCredentialInSameFile
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.keepass.KeePassHistoryStabilityTest:
+INSTRUMENTATION_STATUS: test=accessOnlyExternalMergesAndRepeatedMergesKeepRealHistory
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=accessOnlyExternalMergesAndRepeatedMergesKeepRealHistory
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=repeatedIdenticalNativeSavesPreserveHistoryAfterDiskReopen
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=repeatedIdenticalNativeSavesPreserveHistoryAfterDiskReopen
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=historyDisplayIsNewestFirstAndDeleteKeepsOriginalNativeIndex
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=historyDisplayIsNewestFirstAndDeleteKeepsOriginalNativeIndex
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.keepass.KeePassListPresentationUiTest:
+INSTRUMENTATION_STATUS: test=lockingWhileReadIsPendingRejectsItsLateResult
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockingWhileReadIsPendingRejectsItsLateResult
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=delayedSelectionUsesTargetOrPreviousPreviewAndOnlyLatestSelectionBecomesLive
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=delayedSelectionUsesTargetOrPreviousPreviewAndOnlyLatestSelectionBecomesLive
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=canceledQueuedPasswordCannotUnlockReopenedDialog
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=canceledQueuedPasswordCannotUnlockReopenedDialog
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=emptyNativeDatabaseFinishesLoadingWithoutAnyPasswordRows
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=emptyNativeDatabaseFinishesLoadingWithoutAnyPasswordRows
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=backgroundClearsPreviewAndDialogBeforeReturning
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=backgroundClearsPreviewAndDialogBeforeReturning
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockRemovesPreviewAndAuthenticationReopensOriginalWithoutWrites
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockRemovesPreviewAndAuthenticationReopensOriginalWithoutWrites
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=evictedDecodedDatabaseReopensWithoutBeingMislabelledLocked
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=evictedDecodedDatabaseReopensWithoutBeingMislabelledLocked
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedReadCanRetryAndKeepsTheOriginalBytes
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedReadCanRetryAndKeepsTheOriginalBytes
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.AllVaultLoadingUiTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.keepass.AllVaultLoadingUiTest:
+INSTRUMENTATION_STATUS: test=vaultBarShowsShortLargeTextStatusAndRestoresBreadcrumb
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.AllVaultLoadingUiTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=vaultBarShowsShortLargeTextStatusAndRestoresBreadcrumb
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.AllVaultLoadingUiTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockedAndFailedBarsMatchLoadingHeightAndWholeBarRemainsClickable
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.AllVaultLoadingUiTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockedAndFailedBarsMatchLoadingHeightAndWholeBarRemainsClickable
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.AllVaultLoadingUiTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=actualQueuedDatabasesDriveStatusAndCompletionRestoresPath
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.AllVaultLoadingUiTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=actualQueuedDatabasesDriveStatusAndCompletionRestoresPath
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassAddContentUiRegressionTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.keepass.KeePassAddContentUiRegressionTest:
+INSTRUMENTATION_STATUS: test=allVisibleAddContentChoicesPersistInOriginalVault
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassAddContentUiRegressionTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=allVisibleAddContentChoicesPersistInOriginalVault
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 100.09
+
+OK (25 tests)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== device-main-final02-local-bitwarden.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest:
+INSTRUMENTATION_STATUS: test=restoreKeepsDifferentOtpParametersAndRecoveryDetails
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=restoreKeepsDifferentOtpParametersAndRecoveryDetails
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=damagedRecordDoesNotBlankTheListAndLaterWritesStillAppear
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=damagedRecordDoesNotBlankTheListAndLaterWritesStillAppear
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=restoringPasswordBindingsPreservesUnknownOtpFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=restoringPasswordBindingsPreservesUnknownOtpFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=restoreKeepsBothKeysForAnAccountAfterRotation
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=restoreKeepsBothKeysForAnAccountAfterRotation
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=parsingAnOverwriteArchiveNeverDeletesExistingRecords
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=parsingAnOverwriteArchiveNeverDeletesExistingRecords
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=legacyMissingDefaultsDeduplicateWithoutDiscardingUnknownMetadata
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=legacyMissingDefaultsDeduplicateWithoutDiscardingUnknownMetadata
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedRestoreKeepsOriginalRowsAndRetryCanRecover
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedRestoreKeepsOriginalRowsAndRetryCanRecover
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest:
+INSTRUMENTATION_STATUS: test=otherReadersCannotSeeNewRecordBeforeItsFieldsAreSaved
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=otherReadersCannotSeeNewRecordBeforeItsFieldsAreSaved
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockAfterInsertAndRepeatedSaveCannotLeaveOrphanRecords
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockAfterInsertAndRepeatedSaveCannotLeaveOrphanRecords
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=emptyUsernameAndPasswordReportSuccessAndStoreOneCompleteRecord
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=emptyUsernameAndPasswordReportSuccessAndStoreOneCompleteRecord
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateUiTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.BitwardenCredentialCreateUiTest:
+INSTRUMENTATION_STATUS: test=titleOnlyInBitwardenFolderSavesOnceAndReopensWithoutCreatingAnother
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateUiTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=titleOnlyInBitwardenFolderSavesOnceAndReopensWithoutCreatingAnother
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 4.214
+
+OK (11 tests)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== device-main-final02-mdbx.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest:
+INSTRUMENTATION_STATUS: test=snapshotRestoreReconcilesRoomWithoutRestart
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=snapshotRestoreReconcilesRoomWithoutRestart
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=passwordAttachmentAndReopenRoundTrip
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=passwordAttachmentAndReopenRoundTrip
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=historyDiffSnapshotRestoreAndDeleteRoundTrip
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=historyDiffSnapshotRestoreAndDeleteRoundTrip
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nestedFolderCrudAndReopenRoundTrip
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nestedFolderCrudAndReopenRoundTrip
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest:
+INSTRUMENTATION_STATUS: test=deleteRemovesRoomMirrorsAttachmentBlobAndOwnedVaultFile
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=deleteRemovesRoomMirrorsAttachmentBlobAndOwnedVaultFile
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=ownedFileDeletionRefusesFilesOutsideMdbx2Directory
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=ownedFileDeletionRefusesFilesOutsideMdbx2Directory
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=missingVaultRollsBackRoomMutationsAndAttachmentBlob
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=missingVaultRollsBackRoomMutationsAndAttachmentBlob
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=openFailuresAreStableAndSanitized
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=openFailuresAreStableAndSanitized
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=ownedFileDeletionRemovesSqliteAndBlobStoreSidecars
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=ownedFileDeletionRemovesSqliteAndBlobStoreSidecars
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest:
+INSTRUMENTATION_STATUS: test=editingMovedProjectKeepsDistinctNativeObjects
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=editingMovedProjectKeepsDistinctNativeObjects
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unreadablePasswordAbortsMoveAndRetainsSource
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unreadablePasswordAbortsMoveAndRetainsSource
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nestedLocalCiphertextMustNotEscapeIntoMdbx
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nestedLocalCiphertextMustNotEscapeIntoMdbx
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest$legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues$1$1.invokeSuspend(MultiPasswordMdbxPortabilityTest.kt:128)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest.legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues(MultiPasswordMdbxPortabilityTest.kt:106)
+
+INSTRUMENTATION_STATUS: stream=
+Error in legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues(takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest):
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest$legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues$1$1.invokeSuspend(MultiPasswordMdbxPortabilityTest.kt:128)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest.legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues(MultiPasswordMdbxPortabilityTest.kt:106)
+
+INSTRUMENTATION_STATUS: test=legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 4.216
+There was 1 failure:
+1) legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues(takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest)
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest$legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues$1$1.invokeSuspend(MultiPasswordMdbxPortabilityTest.kt:128)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest.legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues(MultiPasswordMdbxPortabilityTest.kt:106)
+
+FAILURES!!!
+Tests run: 13,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== device-main-final02-settings.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.LegacyRecoveryCompatibilityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.data.LegacyRecoveryCompatibilityTest:
+INSTRUMENTATION_STATUS: test=version84MigrationPreservesRecordsAndValidatesWholeSchema
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.LegacyRecoveryCompatibilityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=version84MigrationPreservesRecordsAndValidatesWholeSchema
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.LegacyRecoveryCompatibilityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=existingVersion85KeepsOldIdentityRecoveryBytesAndNormalWrites
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.LegacyRecoveryCompatibilityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=existingVersion85KeepsOldIdentityRecoveryBytesAndNormalWrites
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest:
+INSTRUMENTATION_STATUS: test=unavailablePlusRouteStaysDisabledAtLargeText
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unavailablePlusRouteStaysDisabledAtLargeText
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=compactStatusDoesNotClaimDisabledAppIsOperational
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=compactStatusDoesNotClaimDisabledAppIsOperational
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=databaseRoutesRemainDistinct
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=databaseRoutesRemainDistinct
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=autofillSettingsRetainStrategyDialog
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=autofillSettingsRetainStrategyDialog
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=clearSelectionAndAuthenticationGatesStayVisible
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=clearSelectionAndAuthenticationGatesStayVisible
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=extensionRowsToggleOnceAndKeepChoices
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=extensionRowsToggleOnceAndKeepChoices
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=clearWithNoSelectionCannotSubmitEvenWithoutPasswordVerification
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=clearWithNoSelectionCannotSubmitEvenWithoutPasswordVerification
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest:
+INSTRUMENTATION_STATUS: test=backClosesSearchBeforeDelegatingToTheParentPage
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=backClosesSearchBeforeDelegatingToTheParentPage
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=keyboardResultNavigatesToSpecificRowWithoutTogglingAndReturnsToQuery
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=keyboardResultNavigatesToSpecificRowWithoutTogglingAndReturnsToQuery
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.CloudBackupUiTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.screens.CloudBackupUiTest:
+INSTRUMENTATION_STATUS: test=mergeDedupCanBeChosenWithoutAffectingReplacementPolicy
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.CloudBackupUiTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=mergeDedupCanBeChosenWithoutAffectingReplacementPolicy
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.navigation.RetiredRouteNavigationTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.navigation.RetiredRouteNavigationTest:
+INSTRUMENTATION_STATUS: test=obsoleteNavigationRequestRedirectsWithoutMountingTheLegacyPage
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.navigation.RetiredRouteNavigationTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=obsoleteNavigationRequestRedirectsWithoutMountingTheLegacyPage
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.navigation.RetiredRouteNavigationTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=savedLegacyDestinationRestoresToBackupAndBackReturnsToOriginalParent
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.navigation.RetiredRouteNavigationTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=savedLegacyDestinationRestoresToBackupAndBackReturnsToOriginalParent
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.navigation.RetiredRouteNavigationTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=oldSerializedScreenEnumsSurviveAndroidStateParcel
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.navigation.RetiredRouteNavigationTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=oldSerializedScreenEnumsSurviveAndroidStateParcel
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 14.714
+
+OK (16 tests)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== device-main-keepass01.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.keepass.KeePassStackContentRegressionTest:
+INSTRUMENTATION_STATUS: test=externalRevisionRejectsStackWithoutOverwritingAnotherWriter
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=externalRevisionRejectsStackWithoutOverwritingAnotherWriter
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockingOrRemovingASelectedIdentityRejectsWholeBatch
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockingOrRemovingASelectedIdentityRejectsWholeBatch
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=projectCredentialsResaveInOneCommitWithDistinctFieldsAndNewRows
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=projectCredentialsResaveInOneCommitWithDistinctFieldsAndNewRows
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=deniedProjectBatchCannotPartiallySaveAnExistingAccount
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=deniedProjectBatchCannotPartiallySaveAnExistingAccount
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=stackModesCommitTheWholeSelectionOnceAndSurviveColdReopen
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=stackModesCommitTheWholeSelectionOnceAndSurviveColdReopen
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=copiedContentRejectsChangedDestinationEvenAfterListRefresh
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=copiedContentRejectsChangedDestinationEvenAfterListRefresh
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=deniedBatchStackDoesNotPersistAnyMember
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=deniedBatchStackDoesNotPersistAnyMember
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeCustomFieldsRoundTripWithoutLosingUnknownOrProtectedFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeCustomFieldsRoundTripWithoutLosingUnknownOrProtectedFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=everyAddContentEncodingSurvivesEditAndColdReopenInOriginalKdbx
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=everyAddContentEncodingSurvivesEditAndColdReopenInOriginalKdbx
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=copiedContentPublishesAfterSavingAnotherCredentialInSameFile
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=copiedContentPublishesAfterSavingAnotherCredentialInSameFile
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.keepass.KeePassHistoryStabilityTest:
+INSTRUMENTATION_STATUS: test=accessOnlyExternalMergesAndRepeatedMergesKeepRealHistory
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=accessOnlyExternalMergesAndRepeatedMergesKeepRealHistory
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=repeatedIdenticalNativeSavesPreserveHistoryAfterDiskReopen
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=repeatedIdenticalNativeSavesPreserveHistoryAfterDiskReopen
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=historyDisplayIsNewestFirstAndDeleteKeepsOriginalNativeIndex
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassHistoryStabilityTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=historyDisplayIsNewestFirstAndDeleteKeepsOriginalNativeIndex
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.keepass.KeePassListPresentationUiTest:
+INSTRUMENTATION_STATUS: test=lockingWhileReadIsPendingRejectsItsLateResult
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockingWhileReadIsPendingRejectsItsLateResult
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=delayedSelectionUsesTargetOrPreviousPreviewAndOnlyLatestSelectionBecomesLive
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=delayedSelectionUsesTargetOrPreviousPreviewAndOnlyLatestSelectionBecomesLive
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=canceledQueuedPasswordCannotUnlockReopenedDialog
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=canceledQueuedPasswordCannotUnlockReopenedDialog
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=emptyNativeDatabaseFinishesLoadingWithoutAnyPasswordRows
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=emptyNativeDatabaseFinishesLoadingWithoutAnyPasswordRows
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=backgroundClearsPreviewAndDialogBeforeReturning
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=backgroundClearsPreviewAndDialogBeforeReturning
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockRemovesPreviewAndAuthenticationReopensOriginalWithoutWrites
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockRemovesPreviewAndAuthenticationReopensOriginalWithoutWrites
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=evictedDecodedDatabaseReopensWithoutBeingMislabelledLocked
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=evictedDecodedDatabaseReopensWithoutBeingMislabelledLocked
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedReadCanRetryAndKeepsTheOriginalBytes
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedReadCanRetryAndKeepsTheOriginalBytes
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.AllVaultLoadingUiTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.keepass.AllVaultLoadingUiTest:
+INSTRUMENTATION_STATUS: test=vaultBarShowsShortLargeTextStatusAndRestoresBreadcrumb
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.AllVaultLoadingUiTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=vaultBarShowsShortLargeTextStatusAndRestoresBreadcrumb
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.AllVaultLoadingUiTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockedAndFailedBarsMatchLoadingHeightAndWholeBarRemainsClickable
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.AllVaultLoadingUiTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockedAndFailedBarsMatchLoadingHeightAndWholeBarRemainsClickable
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.AllVaultLoadingUiTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=actualQueuedDatabasesDriveStatusAndCompletionRestoresPath
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.AllVaultLoadingUiTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes$default(TestOwner.kt:98)
+	at androidx.compose.ui.test.SemanticsNodeInteractionCollection.fetchSemanticsNodes(SemanticsNodeInteraction.kt:249)
+	at androidx.compose.ui.test.SemanticsNodeInteractionCollection.fetchSemanticsNodes$default(SemanticsNodeInteraction.kt:245)
+	at takagi.ru.monica.keepass.AllVaultLoadingUiTest$actualQueuedDatabasesDriveStatusAndCompletionRestoresPath$1.invokeSuspend$lambda$1(AllVaultLoadingUiTest.kt:53)
+	at takagi.ru.monica.keepass.AllVaultLoadingUiTest$actualQueuedDatabasesDriveStatusAndCompletionRestoresPath$1.$r8$lambda$kyeerjb5Ns4WUjok8XTwr0PwW2c(Unknown Source:0)
+	at takagi.ru.monica.keepass.AllVaultLoadingUiTest$actualQueuedDatabasesDriveStatusAndCompletionRestoresPath$1$$ExternalSyntheticLambda0.invoke(D8$$SyntheticClass:0)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:879)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:482)
+	at takagi.ru.monica.keepass.AllVaultLoadingUiTest$actualQueuedDatabasesDriveStatusAndCompletionRestoresPath$1.invokeSuspend(AllVaultLoadingUiTest.kt:53)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.keepass.AllVaultLoadingUiTest.actualQueuedDatabasesDriveStatusAndCompletionRestoresPath(AllVaultLoadingUiTest.kt:34)
+
+INSTRUMENTATION_STATUS: stream=
+Error in actualQueuedDatabasesDriveStatusAndCompletionRestoresPath(takagi.ru.monica.keepass.AllVaultLoadingUiTest):
+java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes$default(TestOwner.kt:98)
+	at androidx.compose.ui.test.SemanticsNodeInteractionCollection.fetchSemanticsNodes(SemanticsNodeInteraction.kt:249)
+	at androidx.compose.ui.test.SemanticsNodeInteractionCollection.fetchSemanticsNodes$default(SemanticsNodeInteraction.kt:245)
+	at takagi.ru.monica.keepass.AllVaultLoadingUiTest$actualQueuedDatabasesDriveStatusAndCompletionRestoresPath$1.invokeSuspend$lambda$1(AllVaultLoadingUiTest.kt:53)
+	at takagi.ru.monica.keepass.AllVaultLoadingUiTest$actualQueuedDatabasesDriveStatusAndCompletionRestoresPath$1.$r8$lambda$kyeerjb5Ns4WUjok8XTwr0PwW2c(Unknown Source:0)
+	at takagi.ru.monica.keepass.AllVaultLoadingUiTest$actualQueuedDatabasesDriveStatusAndCompletionRestoresPath$1$$ExternalSyntheticLambda0.invoke(D8$$SyntheticClass:0)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:879)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:482)
+	at takagi.ru.monica.keepass.AllVaultLoadingUiTest$actualQueuedDatabasesDriveStatusAndCompletionRestoresPath$1.invokeSuspend(AllVaultLoadingUiTest.kt:53)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.keepass.AllVaultLoadingUiTest.actualQueuedDatabasesDriveStatusAndCompletionRestoresPath(AllVaultLoadingUiTest.kt:34)
+
+INSTRUMENTATION_STATUS: test=actualQueuedDatabasesDriveStatusAndCompletionRestoresPath
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassAddContentUiRegressionTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.keepass.KeePassAddContentUiRegressionTest:
+INSTRUMENTATION_STATUS: test=allVisibleAddContentChoicesPersistInOriginalVault
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassAddContentUiRegressionTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=25
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=allVisibleAddContentChoicesPersistInOriginalVault
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 106.313
+There was 1 failure:
+1) actualQueuedDatabasesDriveStatusAndCompletionRestoresPath(takagi.ru.monica.keepass.AllVaultLoadingUiTest)
+java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes(TestOwner.kt:106)
+	at androidx.compose.ui.test.TestOwnerKt.getAllSemanticsNodes$default(TestOwner.kt:98)
+	at androidx.compose.ui.test.SemanticsNodeInteractionCollection.fetchSemanticsNodes(SemanticsNodeInteraction.kt:249)
+	at androidx.compose.ui.test.SemanticsNodeInteractionCollection.fetchSemanticsNodes$default(SemanticsNodeInteraction.kt:245)
+	at takagi.ru.monica.keepass.AllVaultLoadingUiTest$actualQueuedDatabasesDriveStatusAndCompletionRestoresPath$1.invokeSuspend$lambda$1(AllVaultLoadingUiTest.kt:53)
+	at takagi.ru.monica.keepass.AllVaultLoadingUiTest$actualQueuedDatabasesDriveStatusAndCompletionRestoresPath$1.$r8$lambda$kyeerjb5Ns4WUjok8XTwr0PwW2c(Unknown Source:0)
+	at takagi.ru.monica.keepass.AllVaultLoadingUiTest$actualQueuedDatabasesDriveStatusAndCompletionRestoresPath$1$$ExternalSyntheticLambda0.invoke(D8$$SyntheticClass:0)
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:879)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:482)
+	at takagi.ru.monica.keepass.AllVaultLoadingUiTest$actualQueuedDatabasesDriveStatusAndCompletionRestoresPath$1.invokeSuspend(AllVaultLoadingUiTest.kt:53)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.keepass.AllVaultLoadingUiTest.actualQueuedDatabasesDriveStatusAndCompletionRestoresPath(AllVaultLoadingUiTest.kt:34)
+
+FAILURES!!!
+Tests run: 25,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== device-main-local-bitwarden01.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest:
+INSTRUMENTATION_STATUS: test=restoreKeepsDifferentOtpParametersAndRecoveryDetails
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=restoreKeepsDifferentOtpParametersAndRecoveryDetails
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=damagedRecordDoesNotBlankTheListAndLaterWritesStillAppear
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=damagedRecordDoesNotBlankTheListAndLaterWritesStillAppear
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=restoringPasswordBindingsPreservesUnknownOtpFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=restoringPasswordBindingsPreservesUnknownOtpFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=restoreKeepsBothKeysForAnAccountAfterRotation
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=restoreKeepsBothKeysForAnAccountAfterRotation
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=parsingAnOverwriteArchiveNeverDeletesExistingRecords
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=parsingAnOverwriteArchiveNeverDeletesExistingRecords
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=legacyMissingDefaultsDeduplicateWithoutDiscardingUnknownMetadata
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=legacyMissingDefaultsDeduplicateWithoutDiscardingUnknownMetadata
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedRestoreKeepsOriginalRowsAndRetryCanRecover
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalOtpRestoreIntegrityTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedRestoreKeepsOriginalRowsAndRetryCanRecover
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest:
+INSTRUMENTATION_STATUS: test=otherReadersCannotSeeNewRecordBeforeItsFieldsAreSaved
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=otherReadersCannotSeeNewRecordBeforeItsFieldsAreSaved
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockAfterInsertAndRepeatedSaveCannotLeaveOrphanRecords
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockAfterInsertAndRepeatedSaveCannotLeaveOrphanRecords
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=emptyUsernameAndPasswordReportSuccessAndStoreOneCompleteRecord
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=emptyUsernameAndPasswordReportSuccessAndStoreOneCompleteRecord
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateUiTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.BitwardenCredentialCreateUiTest:
+INSTRUMENTATION_STATUS: test=titleOnlyInBitwardenFolderSavesOnceAndReopensWithoutCreatingAnother
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateUiTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=11
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=titleOnlyInBitwardenFolderSavesOnceAndReopensWithoutCreatingAnother
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 3.873
+
+OK (11 tests)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== device-main-mdbx-legacy-before01.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest:
+INSTRUMENTATION_STATUS: test=legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest$legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues$1$1.invokeSuspend(MultiPasswordMdbxPortabilityTest.kt:128)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest.legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues(MultiPasswordMdbxPortabilityTest.kt:106)
+
+INSTRUMENTATION_STATUS: stream=
+Error in legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues(takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest):
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest$legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues$1$1.invokeSuspend(MultiPasswordMdbxPortabilityTest.kt:128)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest.legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues(MultiPasswordMdbxPortabilityTest.kt:106)
+
+INSTRUMENTATION_STATUS: test=legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 0.799
+There was 1 failure:
+1) legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues(takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest)
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest$legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues$1$1.invokeSuspend(MultiPasswordMdbxPortabilityTest.kt:128)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest.legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues(MultiPasswordMdbxPortabilityTest.kt:106)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== device-main-mdbx01.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest:
+INSTRUMENTATION_STATUS: test=snapshotRestoreReconcilesRoomWithoutRestart
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=snapshotRestoreReconcilesRoomWithoutRestart
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=passwordAttachmentAndReopenRoundTrip
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=passwordAttachmentAndReopenRoundTrip
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=historyDiffSnapshotRestoreAndDeleteRoundTrip
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=historyDiffSnapshotRestoreAndDeleteRoundTrip
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nestedFolderCrudAndReopenRoundTrip
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2RepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nestedFolderCrudAndReopenRoundTrip
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest:
+INSTRUMENTATION_STATUS: test=deleteRemovesRoomMirrorsAttachmentBlobAndOwnedVaultFile
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=deleteRemovesRoomMirrorsAttachmentBlobAndOwnedVaultFile
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=ownedFileDeletionRefusesFilesOutsideMdbx2Directory
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=ownedFileDeletionRefusesFilesOutsideMdbx2Directory
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=missingVaultRollsBackRoomMutationsAndAttachmentBlob
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=missingVaultRollsBackRoomMutationsAndAttachmentBlob
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=openFailuresAreStableAndSanitized
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=openFailuresAreStableAndSanitized
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=ownedFileDeletionRemovesSqliteAndBlobStoreSidecars
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.repository.Mdbx2HardeningInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=ownedFileDeletionRemovesSqliteAndBlobStoreSidecars
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest:
+INSTRUMENTATION_STATUS: test=editingMovedProjectKeepsDistinctNativeObjects
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=editingMovedProjectKeepsDistinctNativeObjects
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unreadablePasswordAbortsMoveAndRetainsSource
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unreadablePasswordAbortsMoveAndRetainsSource
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nestedLocalCiphertextMustNotEscapeIntoMdbx
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nestedLocalCiphertextMustNotEscapeIntoMdbx
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest$legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues$1$1.invokeSuspend(MultiPasswordMdbxPortabilityTest.kt:128)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest.legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues(MultiPasswordMdbxPortabilityTest.kt:106)
+
+INSTRUMENTATION_STATUS: stream=
+Error in legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues(takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest):
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest$legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues$1$1.invokeSuspend(MultiPasswordMdbxPortabilityTest.kt:128)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest.legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues(MultiPasswordMdbxPortabilityTest.kt:106)
+
+INSTRUMENTATION_STATUS: test=legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 3.917
+There was 1 failure:
+1) legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues(takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest)
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest$legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues$1$1.invokeSuspend(MultiPasswordMdbxPortabilityTest.kt:128)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.MultiPasswordMdbxPortabilityTest.legacyRepairPreservesUnknownFieldsAndSkipsUnreadableValues(MultiPasswordMdbxPortabilityTest.kt:106)
+
+FAILURES!!!
+Tests run: 13,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== device-main-settings01.txt ===
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.LegacyRecoveryCompatibilityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.data.LegacyRecoveryCompatibilityTest:
+INSTRUMENTATION_STATUS: test=version84MigrationPreservesRecordsAndValidatesWholeSchema
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.LegacyRecoveryCompatibilityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=version84MigrationPreservesRecordsAndValidatesWholeSchema
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.LegacyRecoveryCompatibilityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=existingVersion85KeepsOldIdentityRecoveryBytesAndNormalWrites
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.LegacyRecoveryCompatibilityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=existingVersion85KeepsOldIdentityRecoveryBytesAndNormalWrites
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest:
+INSTRUMENTATION_STATUS: test=unavailablePlusRouteStaysDisabledAtLargeText
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unavailablePlusRouteStaysDisabledAtLargeText
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=compactStatusDoesNotClaimDisabledAppIsOperational
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=compactStatusDoesNotClaimDisabledAppIsOperational
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=databaseRoutesRemainDistinct
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=databaseRoutesRemainDistinct
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=autofillSettingsRetainStrategyDialog
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=autofillSettingsRetainStrategyDialog
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=clearSelectionAndAuthenticationGatesStayVisible
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=clearSelectionAndAuthenticationGatesStayVisible
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=extensionRowsToggleOnceAndKeepChoices
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=extensionRowsToggleOnceAndKeepChoices
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=clearWithNoSelectionCannotSubmitEvenWithoutPasswordVerification
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=clearWithNoSelectionCannotSubmitEvenWithoutPasswordVerification
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest:
+INSTRUMENTATION_STATUS: test=backClosesSearchBeforeDelegatingToTheParentPage
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=backClosesSearchBeforeDelegatingToTheParentPage
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest.localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls(SettingsSearchInstrumentedTest.kt:216)
+
+INSTRUMENTATION_STATUS: stream=
+Error in localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls(takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest):
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest.localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls(SettingsSearchInstrumentedTest.kt:216)
+
+INSTRUMENTATION_STATUS: test=localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=keyboardResultNavigatesToSpecificRowWithoutTogglingAndReturnsToQuery
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=keyboardResultNavigatesToSpecificRowWithoutTogglingAndReturnsToQuery
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.CloudBackupUiTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.screens.CloudBackupUiTest:
+INSTRUMENTATION_STATUS: test=mergeDedupCanBeChosenWithoutAffectingReplacementPolicy
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.CloudBackupUiTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=mergeDedupCanBeChosenWithoutAffectingReplacementPolicy
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 14.104
+There was 1 failure:
+1) localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls(takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest)
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest.localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls(SettingsSearchInstrumentedTest.kt:216)
+
+FAILURES!!!
+Tests run: 13,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1
+
+
+=== baseline-guards-main-before.txt ===
+JUnit version 4.13.2
+....E..........................E........E.......E......E.....E.....E...............E.E.................
+Time: 0.398
+There were 9 failures:
+1) passkeyCreateAndMoveUseMdbxAwarePersistencePaths(takagi.ru.monica.repository.MdbxAndroidIntegrationGuardTest)
+java.lang.AssertionError: Passkey list moves to MDBX must call the MDBX-aware persistence path instead of only mutating an in-memory copy.
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.repository.MdbxAndroidIntegrationGuardTest.passkeyCreateAndMoveUseMdbxAwarePersistencePaths(MdbxAndroidIntegrationGuardTest.kt:378)
+2) addPasswordFromMdbxFolderPreservesFolderTargetAndShowsFolderPicker(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)
+java.lang.AssertionError: Add Password must initialize and save a concrete MDBX folder target, not just the database id.
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest.addPasswordFromMdbxFolderPreservesFolderTargetAndShowsFolderPicker(MultiPasswordSaveRegressionGuardTest.kt:284)
+3) mdbxDatabaseViewsExposePathNavigationAndSyncAction(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)
+java.lang.AssertionError: MDBX database pages must expose sync as a quick status action beside, not inside, the breadcrumb path.
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest.mdbxDatabaseViewsExposePathNavigationAndSyncAction(MultiPasswordSaveRegressionGuardTest.kt:1515)
+4) webDavBackupScreenManualCreateSharesCoordinatorQueue(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)
+java.lang.AssertionError: WebDAV screen manual create must share the same backup:webdav coordinator queue as AutoBackupWorker.
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest.webDavBackupScreenManualCreateSharesCoordinatorQueue(MultiPasswordSaveRegressionGuardTest.kt:3072)
+5) mdbxManagerLivesUnderDatabaseBackupAndUsesStandalonePages(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)
+java.lang.AssertionError: Database and backup settings must expose MDBX as its own category.
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest.mdbxManagerLivesUnderDatabaseBackupAndUsesStandalonePages(MultiPasswordSaveRegressionGuardTest.kt:1312)
+6) addPasswordAuthenticatorKeyFieldHasInlineScanAction(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)
+java.lang.AssertionError: The Add Password authenticator key field should expose QR scanning as the field trailing action so scanned secrets fill the same form directly.
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest.addPasswordAuthenticatorKeyFieldHasInlineScanAction(MultiPasswordSaveRegressionGuardTest.kt:179)
+7) inlineTotpPreviewMatchesSimplePasswordPreviewAndKeepsCountdownInSync(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)
+java.lang.AssertionError: Inline TOTP previews should keep the compact code plus a one-second Material Expressive shape animation while the number uses the synchronized countdown.
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest.inlineTotpPreviewMatchesSimplePasswordPreviewAndKeepsCountdownInSync(MultiPasswordSaveRegressionGuardTest.kt:126)
+8) webDavBackupsUseMonicaLocalContentScope(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)
+java.lang.AssertionError: Manual WebDAV backup must use the Monica-local scope so external caches are not exported as Monica-local entries.
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest.webDavBackupsUseMonicaLocalContentScope(MultiPasswordSaveRegressionGuardTest.kt:2984)
+9) mdbxHistoryAndSnapshotViewsUseStaleWhileRevalidateCache(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)
+java.lang.AssertionError: MDBX password imports must preserve the existing Room row identity and sort metadata when refreshing an already imported entry.
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest.mdbxHistoryAndSnapshotViewsUseStaleWhileRevalidateCache(MultiPasswordSaveRegressionGuardTest.kt:716)
+
+FAILURES!!!
+Tests run: 94,  Failures: 9
+
+
+
+=== baseline-guards-main-after.txt ===
+JUnit version 4.13.2
+....E..........................E........E.......E......E.....E.....E...............E.E.................
+Time: 0.434
+There were 9 failures:
+1) passkeyCreateAndMoveUseMdbxAwarePersistencePaths(takagi.ru.monica.repository.MdbxAndroidIntegrationGuardTest)
+java.lang.AssertionError: Passkey list moves to MDBX must call the MDBX-aware persistence path instead of only mutating an in-memory copy.
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.repository.MdbxAndroidIntegrationGuardTest.passkeyCreateAndMoveUseMdbxAwarePersistencePaths(MdbxAndroidIntegrationGuardTest.kt:378)
+2) addPasswordFromMdbxFolderPreservesFolderTargetAndShowsFolderPicker(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)
+java.lang.AssertionError: Add Password must initialize and save a concrete MDBX folder target, not just the database id.
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest.addPasswordFromMdbxFolderPreservesFolderTargetAndShowsFolderPicker(MultiPasswordSaveRegressionGuardTest.kt:284)
+3) mdbxDatabaseViewsExposePathNavigationAndSyncAction(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)
+java.lang.AssertionError: MDBX database pages must expose sync as a quick status action beside, not inside, the breadcrumb path.
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest.mdbxDatabaseViewsExposePathNavigationAndSyncAction(MultiPasswordSaveRegressionGuardTest.kt:1515)
+4) webDavBackupScreenManualCreateSharesCoordinatorQueue(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)
+java.lang.AssertionError: WebDAV screen manual create must share the same backup:webdav coordinator queue as AutoBackupWorker.
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest.webDavBackupScreenManualCreateSharesCoordinatorQueue(MultiPasswordSaveRegressionGuardTest.kt:3072)
+5) mdbxManagerLivesUnderDatabaseBackupAndUsesStandalonePages(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)
+java.lang.AssertionError: Database and backup settings must expose MDBX as its own category.
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest.mdbxManagerLivesUnderDatabaseBackupAndUsesStandalonePages(MultiPasswordSaveRegressionGuardTest.kt:1312)
+6) addPasswordAuthenticatorKeyFieldHasInlineScanAction(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)
+java.lang.AssertionError: The Add Password authenticator key field should expose QR scanning as the field trailing action so scanned secrets fill the same form directly.
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest.addPasswordAuthenticatorKeyFieldHasInlineScanAction(MultiPasswordSaveRegressionGuardTest.kt:179)
+7) inlineTotpPreviewMatchesSimplePasswordPreviewAndKeepsCountdownInSync(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)
+java.lang.AssertionError: Inline TOTP previews should keep the compact code plus a one-second Material Expressive shape animation while the number uses the synchronized countdown.
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest.inlineTotpPreviewMatchesSimplePasswordPreviewAndKeepsCountdownInSync(MultiPasswordSaveRegressionGuardTest.kt:126)
+8) webDavBackupsUseMonicaLocalContentScope(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)
+java.lang.AssertionError: Manual WebDAV backup must use the Monica-local scope so external caches are not exported as Monica-local entries.
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest.webDavBackupsUseMonicaLocalContentScope(MultiPasswordSaveRegressionGuardTest.kt:2984)
+9) mdbxHistoryAndSnapshotViewsUseStaleWhileRevalidateCache(takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest)
+java.lang.AssertionError: MDBX password imports must preserve the existing Room row identity and sort metadata when refreshing an already imported entry.
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest.mdbxHistoryAndSnapshotViewsUseStaleWhileRevalidateCache(MultiPasswordSaveRegressionGuardTest.kt:716)
+
+FAILURES!!!
+Tests run: 94,  Failures: 9
+
+
+
+=== focused legacy enum R8 comparison ===
+{
+  "without-rule": {
+    "classes": [],
+    "readExitCode": 1,
+    "output": "",
+    "error": "Exception in thread \"main\" java.lang.ClassNotFoundException: takagi.ru.monica.ui.screens.DedupSheet\n\tat java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)\n\tat java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)\n\tat java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520)\n\tat java.base/java.lang.Class.forName0(Native Method)\n\tat java.base/java.lang.Class.forName(Class.java:467)\n\tat java.base/java.io.ObjectInputStream.resolveClass(ObjectInputStream.java:778)\n\tat java.base/java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:2043)\n\tat java.base/java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1907)\n\tat java.base/java.io.ObjectInputStream.readEnum(ObjectInputStream.java:2161)\n\tat java.base/java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1736)\n\tat java.base/java.io.ObjectInputStream.readObject(ObjectInputStream.java:514)\n\tat java.base/java.io.ObjectInputStream.readObject(ObjectInputStream.java:472)\n\tat ReadLegacy.main(ReadLegacy.java:6)\n",
+    "sha256": "8739c76e681f900923b900c9df0ef75cf421d39cabb54650c4b9ad19b6a76d85"
+  },
+  "with-rule": {
+    "classes": [
+      "takagi/ru/monica/ui/screens/DedupPreviewFilter.class",
+      "takagi/ru/monica/ui/screens/DedupSheet.class"
+    ],
+    "readExitCode": 0,
+    "output": "takagi.ru.monica.ui.screens.DedupSheet:PREVIEW\ntakagi.ru.monica.ui.screens.DedupPreviewFilter:CONFLICT\n",
+    "error": "",
+    "sha256": "f3d107a4ce79967f13e09c6bb01259d0f047d395c66cb7544a6eb1e1a2c72cc9"
+  },
+  "scope": "R8 9.1.29 classfile shrinking of the two actual compiled Kotlin compatibility enums, then reading pre-removal enum fixtures on the JVM; not a whole application release/R8 APK build."
+}

@@ -170,7 +170,7 @@ private val TIMELINE_FIELD_LABELS = mapOf(
     "驾照号" to R.string.document_license_number_label,
     "街道地址" to R.string.street_address,
     "类型" to R.string.send_type_section_title,
-    "来源" to R.string.dedup_merge_summary_sources,
+    "来源" to R.string.timeline_display_sources,
     "数据库" to R.string.category_selection_menu_databases,
     "存储位置" to R.string.storage_location,
     "存储路径" to R.string.timeline_display_path,
