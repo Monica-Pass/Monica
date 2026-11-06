@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.data.dedup.DedupMergeSelectionTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-06T12:18:27" hostname="JOYIN" time="0.011">
+  <properties/>
+  <testcase name="validationBlocksExecutionWhenEverythingAlreadyExists" classname="takagi.ru.monica.data.dedup.DedupMergeSelectionTest" time="0.011"/>
+  <testcase name="validationRequiresAtLeastOneSourceAndSeparateTarget" classname="takagi.ru.monica.data.dedup.DedupMergeSelectionTest" time="0.0"/>
+  <testcase name="selectAllNeverIncludesCurrentTarget" classname="takagi.ru.monica.data.dedup.DedupMergeSelectionTest" time="0.0"/>
+  <testcase name="selectingTargetRemovesSameDatabaseFromSources" classname="takagi.ru.monica.data.dedup.DedupMergeSelectionTest" time="0.0"/>
+  <testcase name="selectingCurrentTargetAsSourceClearsTarget" classname="takagi.ru.monica.data.dedup.DedupMergeSelectionTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

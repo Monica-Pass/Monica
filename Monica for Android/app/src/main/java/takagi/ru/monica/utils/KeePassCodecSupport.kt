@@ -30,6 +30,11 @@ object KeePassCodecSupport {
             KeePassDatabase.decode(input, credentials, contentParser = contentParser, cipherProviders = cipherProviders)
         }
 
+    internal fun decodeForDedup(input: InputStream, credentials: Credentials, parser: XmlContentParser): KeePassDatabase =
+        withNativeKdf {
+            KeePassDatabase.decode(input, credentials, contentParser = parser, cipherProviders = cipherProviders)
+        }
+
     private fun <T> withNativeKdf(operation: () -> T): T =
         KdfTransform.withAes(KeePassNativeAesKdf) { KdfTransform.withArgon2(KeePassNativeKdf, operation) }
 

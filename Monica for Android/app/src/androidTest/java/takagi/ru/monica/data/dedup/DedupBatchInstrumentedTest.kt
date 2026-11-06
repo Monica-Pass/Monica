@@ -56,7 +56,9 @@ class DedupBatchInstrumentedTest {
         assertEquals(204, result.insertedPasswords)
         assertEquals(1, result.failedItems)
         assertEquals("Synthetic 48", result.failures.single().label)
-        assertTrue(result.failures.single().reason.contains("synthetic field failure"))
+        assertEquals(AppLocaleStringResolver(context).get(takagi.ru.monica.R.string.dedup_merge_changed_review),
+            result.failures.single().reason)
+        assertFalse(result.failures.single().reason.contains("synthetic field failure"))
         val entries = db.passwordEntryDao().getActiveEntries().first()
         assertEquals(204, entries.size)
         assertEquals(204, entries.map { it.title }.distinct().size)

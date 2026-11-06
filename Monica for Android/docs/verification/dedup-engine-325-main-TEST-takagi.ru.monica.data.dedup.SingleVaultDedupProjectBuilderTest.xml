@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.data.dedup.SingleVaultDedupProjectBuilderTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-11-06T12:18:32" hostname="JOYIN" time="0.069">
+  <properties/>
+  <testcase name="passkeyBindingsAndInboundEvidenceRetainEveryMemberOfTheProject" classname="takagi.ru.monica.data.dedup.SingleVaultDedupProjectBuilderTest" time="0.003"/>
+  <testcase name="emptyProjectsDoNotQualifyAndExcludedMembersNeverShrinkProject" classname="takagi.ru.monica.data.dedup.SingleVaultDedupProjectBuilderTest" time="0.001"/>
+  <testcase name="explicitPasswordGroupsImplementAbcAndNeverGroupByTitleAlone" classname="takagi.ru.monica.data.dedup.SingleVaultDedupProjectBuilderTest" time="0.004"/>
+  <testcase name="jsonPreservesTypesNullMultiplicityAndRejectsDuplicateMemberNames" classname="takagi.ru.monica.data.dedup.SingleVaultDedupProjectBuilderTest" time="0.002"/>
+  <testcase name="identicalMetadataDuplicatesAreAcceptedButUnknownConflictingAndDanglingMetadataBlocked" classname="takagi.ru.monica.data.dedup.SingleVaultDedupProjectBuilderTest" time="0.003"/>
+  <testcase name="incompleteUnreadableUnknownAndExternalContentAreBlocked" classname="takagi.ru.monica.data.dedup.SingleVaultDedupProjectBuilderTest" time="0.002"/>
+  <testcase name="allEntityPropertiesRequireExplicitCoverageClassification" classname="takagi.ru.monica.data.dedup.SingleVaultDedupProjectBuilderTest" time="0.0"/>
+  <testcase name="usernamePasswordOrderOtpNoteAndContextChangesPreventContainment" classname="takagi.ru.monica.data.dedup.SingleVaultDedupProjectBuilderTest" time="0.003"/>
+  <testcase name="blocksUseVerifiedCompletePayloadAndNormalizeOnlyInternalIds" classname="takagi.ru.monica.data.dedup.SingleVaultDedupProjectBuilderTest" time="0.011"/>
+  <testcase name="cancellationIsNotAnUnreadableContentResult" classname="takagi.ru.monica.data.dedup.SingleVaultDedupProjectBuilderTest" time="0.001"/>
+  <testcase name="duplicateFieldsRetainMultiplicityProtectionNameAndOrder" classname="takagi.ru.monica.data.dedup.SingleVaultDedupProjectBuilderTest" time="0.002"/>
+  <testcase name="nestedWalletCredentialLabelProtectsWholeGroupWhileOrdinaryLabelRemainsEligible" classname="takagi.ru.monica.data.dedup.SingleVaultDedupProjectBuilderTest" time="0.021"/>
+  <testcase name="walletExtensionsAndNestedCustomFieldsAreCompleteAndAssetsBlock" classname="takagi.ru.monica.data.dedup.SingleVaultDedupProjectBuilderTest" time="0.005"/>
+  <testcase name="qrTemplateResolvedBehaviorMustAlsoBeCovered" classname="takagi.ru.monica.data.dedup.SingleVaultDedupProjectBuilderTest" time="0.011"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

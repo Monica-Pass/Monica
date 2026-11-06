@@ -75,6 +75,15 @@ class MdbxRepositoryRouter(
     override suspend fun upsertPassword(entry: PasswordEntry) =
         repositoryForEntry(entry.mdbxDatabaseId).upsertPassword(entry)
 
+    override suspend fun insertDedupPassword(entry: PasswordEntry) =
+        repositoryForEntry(entry.mdbxDatabaseId).insertDedupPassword(entry)
+
+    override suspend fun insertDedupSecureItem(item: SecureItem) =
+        repositoryForEntry(item.mdbxDatabaseId).insertDedupSecureItem(item)
+
+    override suspend fun insertDedupPasskey(passkey: PasskeyEntry) =
+        repositoryForEntry(passkey.mdbxDatabaseId).insertDedupPasskey(passkey)
+
     override suspend fun deletePassword(entry: PasswordEntry) =
         repositoryForEntry(entry.mdbxDatabaseId).deletePassword(entry)
 

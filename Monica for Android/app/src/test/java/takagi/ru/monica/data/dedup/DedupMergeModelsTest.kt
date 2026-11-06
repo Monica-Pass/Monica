@@ -3,8 +3,25 @@ package takagi.ru.monica.data.dedup
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import kotlinx.coroutines.runBlocking
+import takagi.ru.monica.data.PasskeyEntry
 
 class DedupMergeModelsTest {
+    @Test fun passkeysArePreservedWithoutResolvingMaterialsOrComparingCredentialIds() = runBlocking {
+        val first = PasskeyEntry(id = 1, credentialId = "same", rpId = "example.invalid", rpName = "Example",
+            userId = "user", userName = "User", userDisplayName = "User", publicKey = "unreadable",
+            privateKeyAlias = "not-a-private-key")
+        val sources = listOf(first, first.copy(id = 2, privateKeyAlias = "different-unreadable-key"))
+        val rows = DedupPasskeyPlanner().build(sources) { "Source" }
+        assertEquals(sources, rows.map { it.entry })
+        assertTrue(rows.all { !it.writable && !it.existsInTarget && it.skipReason == DedupPasskeySkipReason.PRESERVED })
+        val forged = rows.first().copy(skipReason = null, sourceEntryIds = listOf(1, 2))
+        assertTrue(!forged.writable)
+        val plan = DedupMergePlan(previewPasskeys = listOf(forged), totalSourcePasskeys = 2)
+        assertEquals(0, plan.writableItems); assertEquals(0, plan.consolidatedCopies)
+        assertEquals(0, plan.duplicateGroupsTotal); assertEquals(0, plan.targetExistingPasskeys)
+    }
+
     @Test
     fun planSeparatesConflictsFromDuplicatesAndUnsupportedItems() {
         val plan = DedupMergePlan(

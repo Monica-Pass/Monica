@@ -120,7 +120,9 @@ data class DedupResolvedPassword(
     val existsInTarget: Boolean = false,
     val targetHasDifferentContent: Boolean = false,
     val preferredSourceLabel: String = "",
-    val attachments: List<DedupAttachmentRef> = emptyList()
+    val attachments: List<DedupAttachmentRef> = emptyList(),
+    /** All members of an explicit project must commit together. */
+    val projectCopyKey: String? = null
 )
 
 data class DedupResolvedSecureItem(
@@ -138,12 +140,27 @@ data class DedupResolvedSecureItem(
 data class DedupAttachmentRef(
     val attachmentId: Long,
     val contentKey: String,
-    val readable: Boolean = true
+    val readable: Boolean = true,
+    val owner: takagi.ru.monica.attachments.model.AttachmentOwner? = null,
+    val keepassDatabaseId: Long? = null,
+    val keepassEntryUuid: String? = null
 )
 
+data class DedupMergeUnsupportedItem(val sourceLabel: String, val title: String)
+
 enum class DedupPasskeySkipReason {
-    REFERENCE_OR_MISSING_KEY, NONZERO_COUNTER, BOUND_PASSWORD, DEVICE_KEY, CREDENTIAL_CONFLICT
+    REFERENCE_OR_MISSING_KEY, NONZERO_COUNTER, BOUND_PASSWORD, DEVICE_KEY, CREDENTIAL_CONFLICT, PRESERVED
 }
+
+/** Actual source project membership retained because it contains or references a Passkey. */
+data class DedupPasskeyRetainedProject(
+    val sourceKey: String,
+    val sourceLabel: String,
+    val projectKey: String,
+    val title: String,
+    val passwordIds: List<Long>,
+    val secureItemIds: List<Long> = emptyList()
+)
 
 data class DedupResolvedPasskey(
     val mergeKey: String,
@@ -152,9 +169,10 @@ data class DedupResolvedPasskey(
     val sourceLabels: List<String>,
     val preferredSourceLabel: String,
     val existsInTarget: Boolean = false,
-    val skipReason: DedupPasskeySkipReason? = null,
+    val skipReason: DedupPasskeySkipReason? = DedupPasskeySkipReason.PRESERVED,
 ) {
-    val writable: Boolean get() = !existsInTarget && skipReason == null
+    /** Passkeys never participate in the dedup engine, including old or forged previews. */
+    val writable: Boolean get() = false
 }
 
 data class DedupMergePlan(
@@ -176,7 +194,14 @@ data class DedupMergePlan(
     val previewPasswords: List<DedupResolvedPassword> = emptyList(),
     val previewSecureItems: List<DedupResolvedSecureItem> = emptyList(),
     val previewPasskeys: List<DedupResolvedPasskey> = emptyList(),
-    val warnings: List<String> = emptyList()
+    val warnings: List<String> = emptyList(),
+    val unsupportedItems: List<DedupMergeUnsupportedItem> = emptyList(),
+    /** Whole sources whose native contents cannot be attested; never counted as fabricated items. */
+    val retainedSources: List<DedupMergeSourceOption> = emptyList(),
+    val passkeyRetainedProjects: List<DedupPasskeyRetainedProject> = emptyList(),
+    val mdbxTargetAddsIndependentCopies: Boolean = false,
+    /** Opaque, process-only authorization binding. Contains no content hashes. */
+    val reviewToken: String? = null
 ) {
     val writablePasswords: Int
         get() = (uniquePasswords - targetExistingDuplicates).coerceAtLeast(0)
@@ -188,7 +213,7 @@ data class DedupMergePlan(
         get() = writablePasswords + writableSecureItems + previewPasskeys.count { it.writable }
 
     val targetExistingPasskeys: Int
-        get() = previewPasskeys.count { it.existsInTarget }
+        get() = 0
 
     val previewItemCount: Int
         get() = previewPasswords.size + previewSecureItems.size + previewPasskeys.size
@@ -197,22 +222,20 @@ data class DedupMergePlan(
         get() = totalSourcePasswords + totalSourceSecureItems + totalSourcePasskeys
 
     val duplicateGroupsTotal: Int
-        get() = duplicateGroups + duplicateSecureItemGroups + previewPasskeys.count { it.sourceEntryIds.size > 1 }
+        get() = duplicateGroups + duplicateSecureItemGroups
 
     val conflictGroupsTotal: Int
         get() = passwordConflictGroups + secureItemConflictGroups
 
     val skippedItems: Int
-        get() = targetExistingDuplicates + targetExistingSecureItems + targetExistingPasskeys + unsupportedSourcePasskeys
+        get() = targetExistingDuplicates + targetExistingSecureItems + targetExistingPasskeys + unsupportedSourcePasskeys + unsupportedItems.size
 
     val consolidatedCopies: Int
-        get() = (totalSourcePasswords + totalSourceSecureItems - uniquePasswords - uniqueSecureItems).coerceAtLeast(0) +
-            previewPasskeys.sumOf { (it.sourceEntryIds.size - 1).coerceAtLeast(0) }
+        get() = (totalSourcePasswords + totalSourceSecureItems - uniquePasswords - uniqueSecureItems - unsupportedItems.size).coerceAtLeast(0)
 
     val reviewConflictGroups: Int
         get() = previewPasswords.count { it.conflictFields.isNotEmpty() || it.targetHasDifferentContent } +
-            previewSecureItems.count { it.conflictFields.isNotEmpty() || it.targetHasDifferentContent } +
-            previewPasskeys.count { it.skipReason == DedupPasskeySkipReason.CREDENTIAL_CONFLICT }
+            previewSecureItems.count { it.conflictFields.isNotEmpty() || it.targetHasDifferentContent }
 }
 
 enum class DedupMergeItemKind {

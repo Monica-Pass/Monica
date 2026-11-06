@@ -1,6 +1,8 @@
 package takagi.ru.monica.data.dedup
 
 internal interface DedupMergeOperations {
+    /** Synchronous authorization revocation; late readers must not republish a plan. */
+    fun invalidate() = Unit
     suspend fun getSourceOptions(): List<DedupMergeSourceOption>
     suspend fun getTargetOptions(): List<DedupMergeTargetOption>
     suspend fun buildPlan(

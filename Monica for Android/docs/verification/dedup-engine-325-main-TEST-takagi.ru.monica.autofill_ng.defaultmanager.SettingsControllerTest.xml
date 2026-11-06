@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.autofill_ng.defaultmanager.SettingsControllerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-06T12:18:26" hostname="JOYIN" time="0.084">
+  <properties/>
+  <testcase name="preservingOtherProvidersDeduplicatesShortAndLongComponents" classname="takagi.ru.monica.autofill_ng.defaultmanager.SettingsControllerTest" time="0.084"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

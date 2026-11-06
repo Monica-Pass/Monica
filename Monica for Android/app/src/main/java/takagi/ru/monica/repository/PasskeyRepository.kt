@@ -171,18 +171,28 @@ class PasskeyRepository(
         }
     }
 
-    suspend fun savePasskey(passkey: PasskeyEntry) {
+    suspend fun savePasskey(passkey: PasskeyEntry) = savePasskeyInternal(passkey, requireNewMdbxObject = false)
+
+    internal suspend fun saveDedupCopy(passkey: PasskeyEntry) = savePasskeyInternal(passkey, requireNewMdbxObject = true)
+
+    private suspend fun savePasskeyInternal(passkey: PasskeyEntry, requireNewMdbxObject: Boolean) {
         if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(passkey.id)) {
             requireNotNull(monicaKeePassStore.value).savePasskey(passkey)
             return
         }
         passkey.mdbxDatabaseId?.let { mdbxRepository?.requireRoomMirrorAllowed(it) }
         val protected = protectPrivateKeyForRoom(passkey)
+        var createdMdbxCopy = false
         try {
             commitMirrorThenRoom(
-                mirrorCommit = { mdbxRepository?.upsertPasskey(passkey) },
+                mirrorCommit = {
+                    if (requireNewMdbxObject && passkey.mdbxDatabaseId != null) {
+                        requireNotNull(mdbxRepository).insertDedupPasskey(passkey)
+                        createdMdbxCopy = true
+                    } else mdbxRepository?.upsertPasskey(passkey)
+                },
                 roomCommit = { passkeyDao.insert(protected) },
-                rollbackMirror = { mdbxRepository?.deletePasskey(passkey) }
+                rollbackMirror = { if (!requireNewMdbxObject || createdMdbxCopy) mdbxRepository?.deletePasskey(passkey) }
             )
         } catch (error: Throwable) {
             cleanupPrivateKeyIfUnreferenced(protected.privateKeyAlias)

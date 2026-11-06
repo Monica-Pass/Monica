@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.viewmodel.SingleVaultDedupViewModelTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-11-06T12:37:07" hostname="JOYIN" time="0.051">
+  <properties/>
+  <testcase name="exactReviewedSelectionExecutesOnceAndPublishesRecovery" classname="takagi.ru.monica.viewmodel.SingleVaultDedupViewModelTest" time="0.016"/>
+  <testcase name="lateUncancellableAnalysisCannotRestoreAfterLock" classname="takagi.ru.monica.viewmodel.SingleVaultDedupViewModelTest" time="0.004"/>
+  <testcase name="changedSelectionRevokesReview" classname="takagi.ru.monica.viewmodel.SingleVaultDedupViewModelTest" time="0.002"/>
+  <testcase name="cancellingExecutionRevokesProviderAndDiscardsLateResult" classname="takagi.ru.monica.viewmodel.SingleVaultDedupViewModelTest" time="0.004"/>
+  <testcase name="mismatchedSourceCapabilityCannotAuthorizeAnotherVault" classname="takagi.ru.monica.viewmodel.SingleVaultDedupViewModelTest" time="0.004"/>
+  <testcase name="unknownExecutionOutcomeDoesNotAutomaticallyRetry" classname="takagi.ru.monica.viewmodel.SingleVaultDedupViewModelTest" time="0.004"/>
+  <testcase name="analysisDefaultsToNoSelectionAndDoesNotCleanWithoutReview" classname="takagi.ru.monica.viewmodel.SingleVaultDedupViewModelTest" time="0.002"/>
+  <testcase name="analysisOnlySourceNeverAllowsSelectionOrCleanup" classname="takagi.ru.monica.viewmodel.SingleVaultDedupViewModelTest" time="0.002"/>
+  <testcase name="sourceAndArchiveChangesRemoveOldPlan" classname="takagi.ru.monica.viewmodel.SingleVaultDedupViewModelTest" time="0.002"/>
+  <testcase name="limitedOrLockedPlanCannotReviewEvenWithAStaleSelection" classname="takagi.ru.monica.viewmodel.SingleVaultDedupViewModelTest" time="0.001"/>
+  <testcase name="failedRescanCannotReuseOldApproval" classname="takagi.ru.monica.viewmodel.SingleVaultDedupViewModelTest" time="0.002"/>
+  <testcase name="sourceCapabilityDowngradeDuringCaptureDisablesCleanup" classname="takagi.ru.monica.viewmodel.SingleVaultDedupViewModelTest" time="0.003"/>
+  <testcase name="candidateCannotDependOnAnotherDeletedCandidate" classname="takagi.ru.monica.viewmodel.SingleVaultDedupViewModelTest" time="0.002"/>
+  <testcase name="restoreRequiresReviewOfAnAvailableBatch" classname="takagi.ru.monica.viewmodel.SingleVaultDedupViewModelTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

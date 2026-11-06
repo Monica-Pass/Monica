@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.data.dedup.DedupStructuredPasskeyPolicyTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-06T12:37:01" hostname="JOYIN" time="0.003">
+  <properties/>
+  <testcase name="explicitKeysAndNestedFieldLabelsArePreservedWithoutLookingAtSecretValues" classname="takagi.ru.monica.data.dedup.DedupStructuredPasskeyPolicyTest" time="0.003"/>
+  <testcase name="ordinaryNamesAndFreeTextMentionsRemainEligible" classname="takagi.ru.monica.data.dedup.DedupStructuredPasskeyPolicyTest" time="0.0"/>
+  <testcase name="explicitFieldObjectsAreDetectedButArbitraryStringBodiesAreNotParsed" classname="takagi.ru.monica.data.dedup.DedupStructuredPasskeyPolicyTest" time="0.0"/>
+  <testcase name="unsupportedDepthFailsClosedInsteadOfPretendingContentIsAbsent" classname="takagi.ru.monica.data.dedup.DedupStructuredPasskeyPolicyTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

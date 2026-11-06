@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="app.keemobile.kotpass.database.header.DedupInnerHeaderEvidenceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-06T08:58:36" hostname="JOYIN" time="0.026">
+  <properties/>
+  <testcase name="evidenceFlagDoesNotChangeEncodedBytes" classname="app.keemobile.kotpass.database.header.DedupInnerHeaderEvidenceTest" time="0.019"/>
+  <testcase name="duplicateBinaryAndUnknownFlagsKeepLegacyDecodeButInvalidateDedupEvidence" classname="app.keemobile.kotpass.database.header.DedupInnerHeaderEvidenceTest" time="0.006"/>
+  <testcase name="ordinaryHeaderIsCompleteAndReadsOriginalBinaryProtection" classname="app.keemobile.kotpass.database.header.DedupInnerHeaderEvidenceTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

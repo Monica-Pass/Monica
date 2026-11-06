@@ -66,6 +66,16 @@ class DedupEngineViewModel internal constructor(
     private var refreshJob: Job? = null
     private var analyzeJob: Job? = null
     private var executionJob: Job? = null
+    private val invalidationVersion = java.util.concurrent.atomic.AtomicLong()
+
+    fun invalidate() {
+        invalidationVersion.incrementAndGet()
+        mergeService.invalidate()
+        refreshJob?.cancel(); analyzeJob?.cancel(); executionJob?.cancel()
+        _uiState.value = DedupEngineUiState(isLoading = false)
+    }
+
+    override fun onCleared() { invalidate(); super.onCleared() }
 
     init {
         refresh()
@@ -75,6 +85,8 @@ class DedupEngineViewModel internal constructor(
         if (_uiState.value.isExecutingMerge) return
         refreshJob?.cancel()
         analyzeJob?.cancel()
+        mergeService.invalidate()
+        val version = invalidationVersion.get()
         refreshJob = viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, isAnalyzing = false, mergePlan = DedupMergePlan(), error = null) }
             runCatching {
@@ -82,6 +94,8 @@ class DedupEngineViewModel internal constructor(
                     mergeService.getSourceOptions() to mergeService.getTargetOptions()
                 }
             }.onSuccess { (sources, targets) ->
+                ensureActive()
+                if (invalidationVersion.get() != version) return@onSuccess
                 val current = _uiState.value
                 val validSourceKeys = sources.map { it.key }.toSet()
                 val selectedKeys = current.selectedMergeSourceKeys.intersect(validSourceKeys)
@@ -101,10 +115,11 @@ class DedupEngineViewModel internal constructor(
                 rebuildPlan()
             }.onFailure { throwable ->
                 if (throwable is CancellationException) throw throwable
+                if (invalidationVersion.get() != version) return@onFailure
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        error = throwable.message ?: strings.get(R.string.dedup_merge_load_failed)
+                        error = strings.get(R.string.dedup_merge_load_failed)
                     )
                 }
             }
@@ -144,6 +159,7 @@ class DedupEngineViewModel internal constructor(
     fun clearSources() {
         if (_uiState.value.isExecutingMerge) return
         analyzeJob?.cancel()
+        mergeService.invalidate()
         _uiState.update {
             it.copy(
                 isAnalyzing = false,
@@ -200,6 +216,7 @@ class DedupEngineViewModel internal constructor(
         }
 
         executionJob?.cancel()
+        val version = invalidationVersion.get()
         executionJob = viewModelScope.launch {
             _uiState.update {
                 it.copy(
@@ -213,9 +230,10 @@ class DedupEngineViewModel internal constructor(
             try {
                 val result = withContext(Dispatchers.IO) {
                     mergeService.executePlan(plan) { progress ->
-                        _uiState.update { current -> current.copy(executionProgress = progress) }
+                        if (invalidationVersion.get() == version) _uiState.update { current -> current.copy(executionProgress = progress) }
                     }
                 }
+                if (invalidationVersion.get() != version) return@launch
                 _uiState.update {
                     it.copy(
                         isExecutingMerge = false,
@@ -227,6 +245,7 @@ class DedupEngineViewModel internal constructor(
                 }
                 refresh()
             } catch (_: CancellationException) {
+                if (invalidationVersion.get() != version) return@launch
                 _uiState.update {
                     it.copy(
                         isExecutingMerge = false,
@@ -236,11 +255,12 @@ class DedupEngineViewModel internal constructor(
                 }
                 refresh()
             } catch (throwable: Throwable) {
+                if (invalidationVersion.get() != version) return@launch
                 _uiState.update {
                     it.copy(
                         isExecutingMerge = false,
                         executionProgress = null,
-                        error = throwable.message ?: strings.get(R.string.dedup_merge_write_failed)
+                        error = strings.get(R.string.dedup_merge_changed_review)
                     )
                 }
             }
@@ -264,6 +284,8 @@ class DedupEngineViewModel internal constructor(
 
     private fun rebuildPlan() {
         analyzeJob?.cancel()
+        mergeService.invalidate()
+        val version = invalidationVersion.get()
         val selection = _uiState.value
         if (!selection.validation.canReview) {
             _uiState.update { it.copy(isAnalyzing = false, mergePlan = DedupMergePlan()) }
@@ -280,6 +302,7 @@ class DedupEngineViewModel internal constructor(
                 }
             }.onSuccess { plan ->
                 ensureActive()
+                if (invalidationVersion.get() != version) return@onSuccess
                 val current = _uiState.value
                 if (current.selectedMergeSourceKeys != selectedKeys || current.selectedMergeTarget != selectedTarget ||
                     current.conflictPolicy != conflictPolicy) return@onSuccess
@@ -292,11 +315,12 @@ class DedupEngineViewModel internal constructor(
                 }
             }.onFailure { throwable ->
                 if (throwable is CancellationException) throw throwable
+                if (invalidationVersion.get() != version) return@onFailure
                 _uiState.update {
                     it.copy(
                         isAnalyzing = false,
                         mergePlan = DedupMergePlan(),
-                        error = throwable.message ?: strings.get(R.string.dedup_merge_plan_failed)
+                        error = strings.get(R.string.dedup_merge_plan_failed)
                     )
                 }
             }

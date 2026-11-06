@@ -28,10 +28,12 @@ internal class DedupAttachmentSupport(private val context: Context, private val 
 
     class Snapshot(
         private val byOwner: Map<AttachmentOwner, List<DedupAttachmentRef>>,
-        private val imageHashes: Map<String, String>
+        private val imageHashes: Map<String, String>,
+        private val namesByOwner: Map<AttachmentOwner, Set<String>>,
     ) {
         fun password(id: Long) = byOwner[AttachmentOwner.password(id)].orEmpty()
         fun secureItem(id: Long) = byOwner[AttachmentOwner.secureItem(id)].orEmpty()
+        fun secureItemFileNames(id: Long) = namesByOwner[AttachmentOwner.secureItem(id)].orEmpty()
         fun imageKey(paths: String): String = runCatching {
             LegacyImageAttachmentSupport.paths(paths).joinToString("|") { imageHashes[it].orEmpty() }
         }.getOrDefault(paths)
@@ -39,9 +41,11 @@ internal class DedupAttachmentSupport(private val context: Context, private val 
 
     suspend fun snapshot(passwords: List<PasswordEntry>, items: List<SecureItem>): Snapshot {
         val rows = buildList {
-            passwords.map { it.id }.distinct().chunked(800).forEach { addAll(db.attachmentDao().getActiveByParents(it)) }
-            items.map { it.id }.distinct().chunked(800).forEach { addAll(db.attachmentDao().getActiveBySecureItems(it)) }
+            passwords.distinctBy { it.id }.forEach { addAll(facade.list(AttachmentOwner.password(it.id))) }
+            items.distinctBy { it.id }.forEach { addAll(facade.list(AttachmentOwner.secureItem(it.id))) }
         }
+        val nativeOwners = passwords.associate { AttachmentOwner.password(it.id) to (it.keepassDatabaseId to it.keepassEntryUuid) } +
+            items.associate { AttachmentOwner.secureItem(it.id) to (it.keepassDatabaseId to it.keepassEntryUuid) }
         val excludedPhotos = items.associate { AttachmentOwner.secureItem(it.id) to images.representedFileNames(it) }
         val byOwner = mutableMapOf<AttachmentOwner, MutableList<DedupAttachmentRef>>()
         for (row in rows) {
@@ -49,22 +53,22 @@ internal class DedupAttachmentSupport(private val context: Context, private val 
             val owner = row.owner ?: continue
             if (row.fileName in excludedPhotos[owner].orEmpty()) continue
             val ref = try {
-                var hash = row.sha256Hex?.takeIf { SHA256.matches(it) }
-                if (hash == null) {
-                    val (bw, kp) = contexts(row)
+                val native = nativeOwners[owner]
+                val hash = run {
+                    val (bw, kp) = contexts(row, native?.first, native?.second)
                     val digest = MessageDigest.getInstance("SHA-256")
                     DigestOutputStream(object : OutputStream() {
                         override fun write(value: Int) = Unit
                         override fun write(bytes: ByteArray, offset: Int, length: Int) = Unit
                     }, digest).use { facade.copyAttachmentTo(row.id, it, bw, kp) }
-                    hash = digest.digest().toHex()
+                    digest.digest().toHex()
                 }
                 val readable = row.sourceEnum != AttachmentSource.LOCAL || hasLocalContent(row)
-                DedupAttachmentRef(row.id, contentKey(row, hash), readable)
+                DedupAttachmentRef(row.id, contentKey(row, hash), readable, owner, native?.first, native?.second)
             } catch (error: Exception) {
                 if (error is CancellationException) throw error
                 // Keep the row in the plan. Writing it must fail explicitly, never create a partial success.
-                DedupAttachmentRef(row.id, "unreadable:${row.id}", false)
+                DedupAttachmentRef(row.id, "unreadable:${row.id}", false, owner)
             }
             byOwner.getOrPut(owner) { mutableListOf() }.add(ref)
         }
@@ -78,20 +82,25 @@ internal class DedupAttachmentSupport(private val context: Context, private val 
                 }
             }
         }
-        return Snapshot(byOwner, hashes)
+        return Snapshot(byOwner, hashes, rows.mapNotNull { row -> row.owner?.let { it to row.fileName } }
+            .groupBy({ it.first }, { it.second }).mapValues { it.value.toSet() })
     }
 
     suspend fun copy(refs: List<DedupAttachmentRef>, target: AttachmentOwner) {
         if (refs.isEmpty()) return
         check(refs.all { it.readable }) { "Source attachment is unavailable" }
-        val rows = refs.map { ref -> checkNotNull(db.attachmentDao().getById(ref.attachmentId)) }
+        val rows = refs.map { ref ->
+            if (ref.owner != null) checkNotNull(facade.list(ref.owner).singleOrNull { it.id == ref.attachmentId })
+            else checkNotNull(db.attachmentDao().getById(ref.attachmentId))
+        }
         for ((owner, group) in rows.groupBy { checkNotNull(it.owner) }) {
             val needingDownload = group.firstOrNull { !hasLocalContent(it) }
-            val (bw, kp) = needingDownload?.let { contexts(it) } ?: (null to null)
+            val ref = refs.first { it.attachmentId == group.first().id }
+            val (bw, kp) = needingDownload?.let { contexts(it, ref.keepassDatabaseId, ref.keepassEntryUuid) } ?: (null to null)
             facade.cloneAttachmentsToNewOwner(owner, target, bw, kp, attachmentIds = group.map { it.id }.toSet())
         }
-        val copiedKeys = facade.list(target).map { contentKey(it, checkNotNull(it.sha256Hex)) }.toSet()
-        check(copiedKeys == refs.map { it.contentKey }.toSet()) { "Attachment content changed while copying" }
+        val copiedKeys = facade.list(target).map { contentKey(it, checkNotNull(it.sha256Hex)) }.sorted()
+        check(copiedKeys == refs.map { it.contentKey }.sorted()) { "Attachment content changed while copying" }
     }
 
     suspend fun rollback(owner: AttachmentOwner) {
@@ -114,11 +123,11 @@ internal class DedupAttachmentSupport(private val context: Context, private val 
             file.parentFile == base && file.isFile && file.length() > 0L
         } == true
 
-    private suspend fun contexts(row: Attachment): Pair<AttachmentFacade.BitwardenContext?, AttachmentFacade.KeePassContext?> {
+    private suspend fun contexts(row: Attachment, nativeDatabaseId: Long? = null, nativeEntryUuid: String? = null): Pair<AttachmentFacade.BitwardenContext?, AttachmentFacade.KeePassContext?> {
         val password = row.parentPasswordId?.let { db.passwordEntryDao().getPasswordEntryById(it) }
         val item = row.parentSecureItemId?.let { db.secureItemDao().getItemById(it) }
-        val keepassId = password?.keepassDatabaseId ?: item?.keepassDatabaseId
-        val entryUuid = password?.keepassEntryUuid ?: item?.keepassEntryUuid
+        val keepassId = nativeDatabaseId ?: password?.keepassDatabaseId ?: item?.keepassDatabaseId
+        val entryUuid = nativeEntryUuid ?: password?.keepassEntryUuid ?: item?.keepassEntryUuid
         val kp = if (keepassId != null && !entryUuid.isNullOrBlank()) AttachmentFacade.KeePassContext(keepassId, entryUuid) else null
         if (row.sourceEnum != AttachmentSource.BITWARDEN || hasLocalContent(row)) return null to kp
         val vaultId = password?.bitwardenVaultId ?: item?.bitwardenVaultId ?: throw AttachmentError.BitwardenLocked

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.data.dedup.SingleVaultDedupLocalContentTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-06T12:37:01" hostname="JOYIN" time="0.029">
+  <properties/>
+  <testcase name="unknownAssetFieldsAndInlineImagesCannotAuthorizeCleanup" classname="takagi.ru.monica.data.dedup.SingleVaultDedupLocalContentTest" time="0.028"/>
+  <testcase name="ambiguousUnprefixedLegacyCiphertextIsNotSilentlyPlaintext" classname="takagi.ru.monica.data.dedup.SingleVaultDedupLocalContentTest" time="0.0"/>
+  <testcase name="malformedReferenceValuesAreNotTreatedAsAbsent" classname="takagi.ru.monica.data.dedup.SingleVaultDedupLocalContentTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

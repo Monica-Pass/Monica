@@ -2,6 +2,8 @@ package takagi.ru.monica.ui.screens
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -74,6 +76,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -108,6 +111,7 @@ private enum class DedupSheet {
     TARGET,
     PREVIEW,
     WARNINGS,
+    RETAINED_SOURCES,
     FAILURES
 }
 
@@ -132,16 +136,38 @@ fun DedupEngineScreen(
     onConflictPolicyChange: (DedupConflictPolicy) -> Unit,
     onExecuteMerge: () -> Unit,
     onCancelMerge: () -> Unit,
-    onConsumeMessage: () -> Unit
+    onConsumeMessage: () -> Unit,
+    modeSwitch: (@Composable () -> Unit)? = null
 ) {
+    if (!DedupEntryNotice(singleVault = false, onCancel = onNavigateBack)) return
     val strings = rememberScreenStrings()
     val snackbarHostState = remember { SnackbarHostState() }
-    var showMergeConfirmation by rememberSaveable { mutableStateOf(false) }
+    var mergeConfirmationBinding by remember { mutableStateOf<Any?>(null) }
+    var passkeyReviewBinding by remember { mutableStateOf<Any?>(null) }
+    var passkeyInfoOnly by remember { mutableStateOf(false) }
     var showCancelConfirmation by rememberSaveable { mutableStateOf(false) }
     var activeSheet by rememberSaveable { mutableStateOf<DedupSheet?>(null) }
     var previewFilter by rememberSaveable { mutableStateOf(DedupPreviewFilter.ALL) }
     val listState = rememberLazyListState()
     val busy = uiState.isLoading || uiState.isAnalyzing || uiState.isExecutingMerge
+    val reviewBinding = remember(uiState.mergePlan, uiState.selectedMergeSourceKeys, uiState.selectedMergeTarget,
+        uiState.conflictPolicy, busy, uiState.error) { Any() }
+    val latestReviewBinding = rememberUpdatedState(reviewBinding)
+    val latestUiState = rememberUpdatedState(uiState)
+    val passkeyRows = remember(uiState.mergePlan) {
+        val plan = uiState.mergePlan
+        val retainedPasswordIds = plan.passkeyRetainedProjects.flatMap { it.passwordIds }.toSet()
+        plan.passkeyRetainedProjects.map {
+            DedupPasskeyRetentionRow("project:${it.sourceKey}:${it.projectKey}", it.title, it.sourceLabel)
+        } + plan.previewPasskeys.filter { key -> key.entry.boundPasswordId?.let { it !in retainedPasswordIds } ?: true }.map {
+            DedupPasskeyRetentionRow("passkey:${it.mergeKey}", it.entry.displayTitle(), it.sourceLabels.joinToString(" · "))
+        }
+    }
+
+    LaunchedEffect(reviewBinding) {
+        if (mergeConfirmationBinding !== reviewBinding) mergeConfirmationBinding = null
+        if (passkeyReviewBinding !== reviewBinding) passkeyReviewBinding = null
+    }
 
     fun requestBack() {
         if (uiState.isExecutingMerge) showCancelConfirmation = true else onNavigateBack()
@@ -156,7 +182,8 @@ fun DedupEngineScreen(
     }
     LaunchedEffect(uiState.isExecutingMerge) {
         if (uiState.isExecutingMerge) {
-            showMergeConfirmation = false
+            mergeConfirmationBinding = null
+            passkeyReviewBinding = null
             activeSheet = null
             listState.animateScrollToItem(0)
         }
@@ -206,19 +233,41 @@ fun DedupEngineScreen(
             warnings = uiState.mergePlan.warnings,
             onDismiss = { activeSheet = null }
         )
+        DedupSheet.RETAINED_SOURCES -> RetainedSourcesSheet(
+            sources = uiState.mergePlan.retainedSources,
+            onDismiss = { activeSheet = null }
+        )
         DedupSheet.FAILURES -> uiState.executionResult?.let { result ->
             FailureSheet(result = result, onDismiss = { activeSheet = null })
         }
         null -> Unit
     }
 
-    if (showMergeConfirmation) {
+    if (passkeyReviewBinding === reviewBinding && !busy && passkeyRows.isNotEmpty()) {
+        val displayedBinding = reviewBinding
+        DedupPasskeyRetentionDialog(
+            rows = passkeyRows,
+            onDismiss = { if (passkeyReviewBinding === displayedBinding) passkeyReviewBinding = null },
+            onContinueReview = if (!passkeyInfoOnly && uiState.canExecuteMerge) ({
+                if (latestReviewBinding.value === displayedBinding && latestUiState.value.canExecuteMerge &&
+                    passkeyReviewBinding === displayedBinding) {
+                    passkeyReviewBinding = null
+                    mergeConfirmationBinding = displayedBinding
+                }
+            }) else null
+        )
+    }
+    if (mergeConfirmationBinding === reviewBinding && uiState.canExecuteMerge) {
+        val displayedBinding = reviewBinding
         MergeConfirmationDialog(
             uiState = uiState,
-            onDismiss = { showMergeConfirmation = false },
+            onDismiss = { if (mergeConfirmationBinding === displayedBinding) mergeConfirmationBinding = null },
             onConfirm = {
-                showMergeConfirmation = false
-                onExecuteMerge()
+                if (latestReviewBinding.value === displayedBinding && latestUiState.value.canExecuteMerge &&
+                    mergeConfirmationBinding === displayedBinding) {
+                    mergeConfirmationBinding = null
+                    onExecuteMerge()
+                }
             }
         )
     }
@@ -275,7 +324,12 @@ fun DedupEngineScreen(
                     when {
                         uiState.selectedMergeSourceKeys.isEmpty() -> activeSheet = DedupSheet.SOURCES
                         uiState.selectedMergeTarget == null -> activeSheet = DedupSheet.TARGET
-                        else -> showMergeConfirmation = true
+                        uiState.canExecuteMerge -> if (passkeyRows.isEmpty()) {
+                            mergeConfirmationBinding = reviewBinding
+                        } else {
+                            passkeyInfoOnly = false
+                            passkeyReviewBinding = reviewBinding
+                        }
                     }
                 }
             )
@@ -291,6 +345,7 @@ fun DedupEngineScreen(
             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 12.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            modeSwitch?.let { item(key = "modes") { it() } }
             uiState.executionProgress?.let { progress ->
                 item(key = "progress") {
                     ExecutionProgressPanel(progress.completedItems, progress.totalItems, progress.currentLabel,
@@ -325,6 +380,37 @@ fun DedupEngineScreen(
             }
             if (uiState.isAnalyzing || (!uiState.isLoading && uiState.validation.canReview)) {
                 item(key = "summary") { MergeSummaryPanel(uiState) }
+            }
+
+            if (passkeyRows.isNotEmpty()) {
+                item(key = "passkey_retention") {
+                    DedupPasskeyRetentionNotice(passkeyRows.size, enabled = !busy, onClick = {
+                        passkeyInfoOnly = true
+                        passkeyReviewBinding = reviewBinding
+                    }, modifier = Modifier.testTag("dedup_passkey_notice"))
+                }
+            }
+            if (uiState.mergePlan.retainedSources.isNotEmpty()) {
+                item(key = "retained_sources") {
+                    CompactLinkPanel(
+                        icon = Icons.Default.Storage,
+                        title = strings.get(R.string.dedup_merge_retained_sources_title),
+                        subtitle = strings.get(R.string.dedup_merge_retained_sources_count, uiState.mergePlan.retainedSources.size),
+                        tint = MaterialTheme.colorScheme.tertiary,
+                        onClick = { activeSheet = DedupSheet.RETAINED_SOURCES },
+                        modifier = Modifier.testTag("dedup_retained_sources_notice")
+                    )
+                }
+            }
+            if (uiState.mergePlan.mdbxTargetAddsIndependentCopies) {
+                item(key = "mdbx_target_copies") {
+                    MessagePanel(
+                        icon = Icons.Default.Info,
+                        tint = MaterialTheme.colorScheme.primary,
+                        text = strings.get(R.string.dedup_merge_mdbx_target_copies),
+                        modifier = Modifier.fillMaxWidth().testTag("dedup_mdbx_target_notice")
+                    )
+                }
             }
 
             if (uiState.mergePlan.warnings.isNotEmpty()) {
@@ -422,10 +508,11 @@ private fun CompactLinkPanel(
     title: String,
     subtitle: String,
     tint: Color,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .clip(GroupedItemDefaults.SingleShape)
             .clickable(onClick = onClick),
@@ -488,6 +575,45 @@ private fun SourceSelectionSheet(
                             supportingContent = { Text(if (source.key == targetSourceKey) strings.get(R.string.dedup_merge_source_is_target)
                                 else "${source.kind.label()} · ${source.countSummary(strings)}", style = MaterialTheme.typography.bodySmall) },
                             leadingContent = { Checkbox(checked = source.key in selectedKeys, onCheckedChange = null) }
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun RetainedSourcesSheet(
+    sources: List<DedupMergeSourceOption>,
+    onDismiss: () -> Unit
+) {
+    val strings = rememberScreenStrings()
+    ModalBottomSheet(onDismissRequest = onDismiss,
+        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)) {
+        Column(Modifier.fillMaxWidth().fillMaxHeight(0.9f).navigationBarsPadding()) {
+            SheetHeader(
+                title = strings.get(R.string.dedup_merge_retained_sources_title),
+                subtitle = strings.get(R.string.dedup_merge_retained_source_reason),
+                onDismiss = onDismiss
+            )
+            LazyColumn(
+                modifier = Modifier.weight(1f).testTag("dedup_retained_sources_list"),
+                contentPadding = PaddingValues(12.dp),
+                verticalArrangement = Arrangement.spacedBy(GroupedItemDefaults.Spacing)
+            ) {
+                itemsIndexed(sources, key = { _, source -> source.key }) { index, source ->
+                    Surface(
+                        shape = GroupedItemDefaults.shape(index, sources.size),
+                        color = MaterialTheme.colorScheme.surfaceContainerLow,
+                        modifier = Modifier.fillMaxWidth().testTag("dedup_retained_source:${source.key}")
+                    ) {
+                        ListItem(
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                            headlineContent = { Text(source.label) },
+                            supportingContent = { Text(source.kind.label()) },
+                            leadingContent = { Icon(Icons.Default.Storage, contentDescription = null) }
                         )
                     }
                 }
@@ -563,6 +689,10 @@ private fun MergePreviewSheet(
         }
         matchesFilter && listOf(it.entry.displayTitle(), it.entry.rpId, it.entry.userName).any { text -> text.contains(query, true) }
     } }
+    val unsupported = remember(plan, selectedFilter, query) { plan.unsupportedItems.filter {
+        selectedFilter in setOf(DedupPreviewFilter.ALL, DedupPreviewFilter.SKIP) &&
+            (it.title.contains(query, true) || it.sourceLabel.contains(query, true))
+    } }
     ModalBottomSheet(onDismissRequest = onDismiss,
         sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)) {
         Column(
@@ -595,7 +725,7 @@ private fun MergePreviewSheet(
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                if (passwords.isEmpty() && secureItems.isEmpty() && passkeys.isEmpty()) {
+                if (passwords.isEmpty() && secureItems.isEmpty() && passkeys.isEmpty() && unsupported.isEmpty()) {
                     item { SheetEmptyText(strings.get(R.string.dedup_merge_filter_empty)) }
                 }
                 items(passwords, key = { "password:${it.mergeKey}" }) { resolved ->
@@ -606,6 +736,14 @@ private fun MergePreviewSheet(
                 }
                 items(passkeys, key = { "passkey:${it.mergeKey}" }) { resolved ->
                     PasskeyPreviewRow(resolved)
+                }
+                itemsIndexed(unsupported, key = { index, _ -> "unsupported:$index" }) { _, retained ->
+                    ListItem(headlineContent = { Text(retained.title) },
+                        supportingContent = { Column {
+                            Text(retained.sourceLabel)
+                            Text(strings.get(R.string.single_dedup_unsupported))
+                        } }, leadingContent = { Icon(Icons.Default.Warning, contentDescription = null) },
+                        modifier = Modifier.clip(GroupedItemDefaults.SingleShape))
                 }
             }
         }
@@ -820,12 +958,21 @@ private fun MergeConfirmationDialog(
     val strings = rememberScreenStrings()
     val plan = uiState.mergePlan
     AlertDialog(
+        modifier = Modifier.testTag("dedup_merge_confirmation"),
         onDismissRequest = onDismiss,
         icon = { Icon(Icons.Default.Merge, contentDescription = null) },
         title = { Text(strings.get(R.string.dedup_merge_confirm_title, uiState.selectedTargetOption?.label.orEmpty())) },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text(strings.get(R.string.dedup_merge_confirm_summary, plan.selectedSources.size, plan.writableItems))
+                if (plan.retainedSources.isNotEmpty()) {
+                    Text(strings.get(R.string.dedup_merge_retained_sources_count, plan.retainedSources.size),
+                        modifier = Modifier.testTag("dedup_confirm_retained_sources"))
+                }
+                if (plan.mdbxTargetAddsIndependentCopies) {
+                    Text(strings.get(R.string.dedup_merge_mdbx_target_copies),
+                        modifier = Modifier.testTag("dedup_confirm_mdbx_target"))
+                }
                 if (plan.conflictGroupsTotal > 0) {
                     Text(
                         strings.get(R.string.dedup_merge_confirm_conflicts, plan.conflictGroupsTotal, uiState.conflictPolicy.label(strings)),
@@ -916,8 +1063,9 @@ private fun ExecutionResultPanel(
 }
 
 @Composable
-private fun MessagePanel(icon: ImageVector, tint: Color, text: String) {
+private fun MessagePanel(icon: ImageVector, tint: Color, text: String, modifier: Modifier = Modifier) {
     Card(
+        modifier = modifier,
         shape = GroupedItemDefaults.SingleShape,
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
     ) {
@@ -979,6 +1127,7 @@ private fun PasskeyPreviewRow(resolved: DedupResolvedPasskey) {
             DedupPasskeySkipReason.BOUND_PASSWORD -> R.string.dedup_passkey_bound_password
             DedupPasskeySkipReason.DEVICE_KEY -> R.string.dedup_passkey_device_key
             DedupPasskeySkipReason.CREDENTIAL_CONFLICT -> R.string.dedup_passkey_identity_conflict
+            DedupPasskeySkipReason.PRESERVED -> R.string.dedup_passkey_preserved
         }) }
     )
 }

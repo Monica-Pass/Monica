@@ -4001,6 +4001,11 @@ fun MonicaContent(
                     strings = strings
                 )
             }
+            val singleDedupViewModel: takagi.ru.monica.viewmodel.SingleVaultDedupViewModel = viewModel {
+                takagi.ru.monica.viewmodel.SingleVaultDedupViewModel(
+                    takagi.ru.monica.data.dedup.createSingleVaultDedupService(context, database, securityManager)
+                )
+            }
             val uiState by dedupViewModel.uiState.collectAsState()
             val dedupLifecycleOwner = LocalLifecycleOwner.current
 
@@ -4016,7 +4021,15 @@ fun MonicaContent(
                 }
             }
 
+            takagi.ru.monica.ui.screens.DedupEngineModes(
+                singleViewModel = singleDedupViewModel,
+                mergeBusy = uiState.isLoading || uiState.isAnalyzing || uiState.isExecutingMerge,
+                onExitMerge = dedupViewModel::invalidate,
+                onEnterMerge = dedupViewModel::refresh,
+                onNavigateBack = { navController.popBackStack() },
+            ) { modeSwitch ->
             takagi.ru.monica.ui.screens.DedupEngineScreen(
+                modeSwitch = modeSwitch,
                 uiState = uiState,
                 onNavigateBack = {
                     navController.popBackStack()
@@ -4052,6 +4065,7 @@ fun MonicaContent(
                     dedupViewModel.consumeMessage()
                 }
             )
+            }
         }
 
         composable(

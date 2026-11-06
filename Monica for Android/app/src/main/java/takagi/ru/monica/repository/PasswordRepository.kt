@@ -311,11 +311,16 @@ class PasswordRepository(
             .withoutExternalSteamMaFileEntries()
     }
     
-    suspend fun insertPasswordEntry(entry: PasswordEntry): Long {
+    suspend fun insertPasswordEntry(entry: PasswordEntry): Long = insertPassword(entry, requireNewMdbxObject = false)
+
+    internal suspend fun insertDedupCopy(entry: PasswordEntry): Long = insertPassword(entry, requireNewMdbxObject = true)
+
+    private suspend fun insertPassword(entry: PasswordEntry, requireNewMdbxObject: Boolean): Long {
         require(!takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(entry.id)) { "KeePass UI identity cannot be persisted in Room" }
         entry.mdbxDatabaseId?.let { mdbxRepository?.requireRoomMirrorAllowed(it) }
         MdbxUnknownEntry.requireEditable(entry)
         val normalizedEntry = BitwardenMutationStateHelper.normalizePasswordInsert(entry)
+        var createdMdbxCopy = false
         return commitRoomThenMirror(
             roomCommit = {
                 val id = passwordEntryDao.insertPasswordEntry(normalizedEntry)
@@ -333,11 +338,14 @@ class PasswordRepository(
                 id to persistedEntry
             },
             mirrorCommit = { (_, persistedEntry) ->
-                mdbxRepository?.upsertPassword(persistedEntry)
+                if (requireNewMdbxObject && persistedEntry.mdbxDatabaseId != null) {
+                    requireNotNull(mdbxRepository).insertDedupPassword(persistedEntry)
+                    createdMdbxCopy = true
+                } else mdbxRepository?.upsertPassword(persistedEntry)
             },
             rollbackRoom = { (id, _) -> passwordEntryDao.deletePasswordEntryById(id) },
             rollbackMirror = { (_, persistedEntry) ->
-                mdbxRepository?.deletePassword(persistedEntry)
+                if (!requireNewMdbxObject || createdMdbxCopy) mdbxRepository?.deletePassword(persistedEntry)
             }
         ).first
     }

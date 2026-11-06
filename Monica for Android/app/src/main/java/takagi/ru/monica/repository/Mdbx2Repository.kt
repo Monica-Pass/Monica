@@ -98,6 +98,31 @@ class Mdbx2Repository(
 
     override suspend fun requiresStrictMutationConsistency(databaseId: Long): Boolean = true
 
+    /** Native analysis scope, bound to one identity and unchanged commit inventory. */
+    internal suspend fun <T> withDedupNativeRead(databaseId: Long, checkActive: () -> Unit,
+        block: (LocalMdbxDatabase, MdbxVault) -> T): T = withContext(Dispatchers.IO) {
+        val expectedDatabase = requireNotNull(databaseDao.getDatabaseById(databaseId))
+        val result = sessions.withNativeReadVault(databaseId) { database, vault ->
+            check(database == expectedDatabase)
+            val generation = takagi.ru.monica.security.SessionManager.lockGeneration.value
+            fun current() {
+                checkActive()
+                check(takagi.ru.monica.security.SessionManager.isUnlocked.value &&
+                    takagi.ru.monica.security.SessionManager.lockGeneration.value == generation)
+            }
+            current()
+            val identity = vault.info().vaultId
+            val inventory = vault.incrementalSyncCheckpoint().commitInventory
+            val result = block(database, vault)
+            current()
+            check(vault.info().vaultId == identity && vault.incrementalSyncCheckpoint().commitInventory == inventory)
+            result
+        }
+        checkActive()
+        check(databaseDao.getDatabaseById(databaseId) == expectedDatabase)
+        result
+    }
+
     override suspend fun requireRoomMirrorAllowed(databaseId: Long) {
         val database = databaseDao.getDatabaseById(databaseId) ?: error("MDBX database not found")
         requireMdbxAppReplicaAllowed(database)
@@ -1445,6 +1470,27 @@ class Mdbx2Repository(
         passkeyMutation(passkey)?.let { upsertMutations(listOf(it)) }
     }
 
+    override suspend fun insertDedupPassword(entry: PasswordEntry) {
+        requireRoomMirrorAllowed(requireNotNull(entry.mdbxDatabaseId))
+        insertDedupMutation(requireNotNull(passwordMutation(entry)))
+    }
+
+    override suspend fun insertDedupSecureItem(item: SecureItem) {
+        requireRoomMirrorAllowed(requireNotNull(item.mdbxDatabaseId))
+        insertDedupMutation(requireNotNull(secureItemMutation(item)))
+    }
+
+    override suspend fun insertDedupPasskey(passkey: PasskeyEntry) {
+        requireRoomMirrorAllowed(requireNotNull(passkey.mdbxDatabaseId))
+        insertDedupMutation(requireNotNull(passkeyMutation(passkey)))
+    }
+
+    private suspend fun insertDedupMutation(mutation: EntryMutation) {
+        sessions.withMutatingVault(mutation.databaseId) { _, vault ->
+            upsertMutationsInVault(mutation.databaseId, vault, listOf(mutation), requireAbsent = true)
+        }
+    }
+
     override suspend fun upsertPasskeys(passkeys: List<PasskeyEntry>) {
         passkeys.mapNotNull { it.mdbxDatabaseId }.distinct().forEach { requireRoomMirrorAllowed(it) }
         upsertMutations(passkeys.mapNotNull { passkeyMutation(it) })
@@ -2198,6 +2244,7 @@ class Mdbx2Repository(
         grouped: List<EntryMutation>,
         onCommitted: ((Set<String>) -> Unit)? = null,
         useDefaultBatchLimits: Boolean = false,
+        requireAbsent: Boolean = false,
     ) {
         val vaultId = vault.info().vaultId
         val rootProjectId = Mdbx2VaultSessionExecutor.rootProjectId(vaultId)
@@ -2217,6 +2264,12 @@ class Mdbx2Repository(
                 ?.takeIf { it.isNotBlank() && it in snapshot.activeCollectionIds }
                 ?: rootProjectId
             val current = snapshot.objectsById[physicalEntryId]
+            // The collection snapshot intentionally excludes deleted collections. Check
+            // the native object index as well, so a hidden or recycled object is never
+            // restored/replaced by a dedup copy. CreateEntry retains its transaction check.
+            check(!requireAbsent || current == null && vault.getObjectSummary(physicalEntryId) == null) {
+                "MDBX copy identity already exists"
+            }
             require(current == null || current.objectTypeId == mutation.entryType) {
                 "Cannot replace an MDBX object with a different entry type"
             }

@@ -58,6 +58,10 @@ interface MdbxRepository {
     ): MdbxStoredFolderEntry = throw UnsupportedOperationException("MDBX folder restore is unavailable")
 
     suspend fun upsertPassword(entry: PasswordEntry)
+    /** Explicit dedup copy: existing native identities, including tombstones, must never be updated. */
+    suspend fun insertDedupPassword(entry: PasswordEntry): Unit = throw UnsupportedOperationException("Create-only MDBX copy is unavailable")
+    suspend fun insertDedupSecureItem(item: SecureItem): Unit = throw UnsupportedOperationException("Create-only MDBX copy is unavailable")
+    suspend fun insertDedupPasskey(passkey: PasskeyEntry): Unit = throw UnsupportedOperationException("Create-only MDBX copy is unavailable")
     suspend fun deletePassword(entry: PasswordEntry)
     suspend fun upsertPasswords(entries: List<PasswordEntry>) {
         entries.forEach { upsertPassword(it) }

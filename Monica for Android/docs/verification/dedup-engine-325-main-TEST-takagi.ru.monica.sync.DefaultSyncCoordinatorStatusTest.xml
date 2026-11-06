@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.sync.DefaultSyncCoordinatorStatusTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-06T12:18:33" hostname="JOYIN" time="0.042">
+  <properties/>
+  <testcase name="observeTargetUsesDefaultDedupeKey" classname="takagi.ru.monica.sync.DefaultSyncCoordinatorStatusTest" time="0.042"/>
+  <system-out><![CDATA[MonicaSyncDiag: event=queued taskId=blocked target=keepass_compat:all:passkey trigger=MANUAL thread=Test worker @coroutine#7 detail=layer=coordinator key=<redacted> priority=MANUAL mode=BACKGROUND policy=ALLOWED
+MonicaSyncDiag: event=blocked taskId=blocked target=keepass_compat:all:passkey trigger=MANUAL thread=Test worker @coroutine#7 detail=reason=No SyncExecutor for KEEPASS_COMPATIBILITY_INDEX layer=coordinator key=<redacted> priority=MANUAL mode=BACKGROUND policy=ALLOWED
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

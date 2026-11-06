@@ -41,9 +41,13 @@ internal class RepositoryDedupMergeWriter(
     }
 
     override suspend fun writePassword(resolved: DedupResolvedPassword) {
+        require(resolved.entry.passkeyBindings.isEmpty() && !resolved.entry.loginType.trim().equals("PASSKEY", true) &&
+            resolved.customFields.none { it.title.contains("passkey", true) || it.title.contains("fido", true) }) {
+            "Passkey projects are excluded from deduplication"
+        }
         var insertedId: Long? = null
         try {
-            val newId = passwordRepository.insertPasswordEntry(resolved.entry)
+            val newId = passwordRepository.insertDedupCopy(resolved.entry)
             insertedId = newId
             val fields = resolved.customFields.map { field ->
                 field.copy(id = 0, entryId = newId)
@@ -58,6 +62,14 @@ internal class RepositoryDedupMergeWriter(
                 }
             }
             attachmentSupport?.copy(resolved.attachments, AttachmentOwner.password(newId))
+            val saved = checkNotNull(passwordRepository.getPasswordEntryById(newId))
+            // MDBX creates a new physical object identity; all content columns must still agree.
+            check(saved.copy(id = 0, replicaGroupId = if (saved.mdbxDatabaseId != null) resolved.entry.replicaGroupId else saved.replicaGroupId) ==
+                resolved.entry.copy(id = 0)) { "Destination content verification failed" }
+            val savedFields = customFieldRepository.getFieldsByEntryIdSync(newId)
+                .sortedWith(compareBy<takagi.ru.monica.data.CustomField> { it.sortOrder }.thenBy { it.id })
+                .map { it.copy(id = 0, entryId = 0) }
+            check(savedFields == resolved.customFields.map { it.copy(id = 0, entryId = 0) }) { "Destination fields verification failed" }
         } catch (throwable: Exception) {
             val rollbackFailure = insertedId?.let { id ->
                 runCatching {
@@ -80,7 +92,7 @@ internal class RepositoryDedupMergeWriter(
         try {
             images = attachmentSupport?.images?.copy(resolved.item.imagePaths)
             val item = images?.let { resolved.item.copy(imagePaths = it.imagePaths) } ?: resolved.item
-            val id = secureItemRepository.insertItem(item)
+            val id = secureItemRepository.insertDedupCopy(item)
             insertedId = id
             attachmentSupport?.copy(resolved.attachments, AttachmentOwner.secureItem(id))
             if (item.mdbxDatabaseId != null) attachmentSupport?.persistImages(item.copy(id = id))
@@ -102,8 +114,7 @@ internal class RepositoryDedupMergeWriter(
     }
 
     override suspend fun writePasskey(resolved: DedupResolvedPasskey) {
-        require(resolved.writable && resolved.entry.id == 0L)
-        passkeyRepository.savePasskey(resolved.entry)
+        error("Passkeys are excluded from deduplication")
     }
 }
 
@@ -120,11 +131,35 @@ internal class DedupMergeExecutor(
         targetLabel: String,
         passkeys: List<DedupResolvedPasskey> = emptyList(),
         skippedExistingPasskeys: Int = 0,
-        onProgress: (DedupMergeExecutionProgress) -> Unit = {}
+        onProgress: (DedupMergeExecutionProgress) -> Unit = {},
+        isCurrent: () -> Boolean = { true }
     ): DedupMergeExecutionResult {
+        // Reject legacy or forged executable key plans before any password/item write.
+        require(passkeys.isEmpty()) { "Passkeys are excluded from deduplication" }
         val totalItems = passwords.size + secureItems.size + passkeys.size
         var completedItems = 0
         val failures = mutableListOf<DedupMergeFailure>()
+        fun requireCurrent() = check(isCurrent()) { strings.get(R.string.dedup_merge_changed_review) }
+
+        var projectPasswords = 0
+        for (members in passwords.filter { it.projectCopyKey != null }.groupBy { it.projectCopyKey }.values) {
+            coroutineContext.ensureActive()
+            try {
+                require(members.all { it.entry.isLocalOnlyEntry() && it.attachments.isEmpty() })
+                check(writer.writeLocalBatch {
+                    requireCurrent()
+                    members.forEach { coroutineContext.ensureActive(); writer.writePassword(it) }
+                    requireCurrent()
+                }) { "Atomic project copy is unavailable" }
+                projectPasswords += members.size
+            } catch (error: Exception) {
+                if (error is CancellationException) throw error
+                // Never split a failed project into independent row retries.
+                members.forEach { failures += DedupMergeFailure(DedupMergeItemKind.PASSWORD, it.entry.title, failureReason(error)) }
+            }
+            completedItems += members.size
+            onProgress(DedupMergeExecutionProgress(completedItems, totalItems, members.first().entry.title))
+        }
 
         suspend fun <T> writeItems(
             items: List<T>,
@@ -137,6 +172,7 @@ internal class DedupMergeExecutor(
             var index = 0
             while (index < items.size) {
                 coroutineContext.ensureActive()
+                requireCurrent()
                 var end = index + 1
                 val local = canBatch(items[index])
                 if (local) {
@@ -150,9 +186,11 @@ internal class DedupMergeExecutor(
                         writer.writeLocalBatch {
                             for (item in batch) {
                                 coroutineContext.ensureActive()
+                                requireCurrent()
                                 write(item)
                             }
                             coroutineContext.ensureActive()
+                            requireCurrent()
                         }
                     } catch (error: Exception) {
                         if (error is CancellationException) throw error
@@ -170,6 +208,7 @@ internal class DedupMergeExecutor(
                         coroutineContext.ensureActive()
                         val label = labelOf(item)
                         try {
+                            requireCurrent()
                             write(item)
                             inserted++
                         } catch (error: Exception) {
@@ -185,7 +224,7 @@ internal class DedupMergeExecutor(
             return inserted
         }
 
-        val insertedPasswords = writeItems(passwords, DedupMergeItemKind.PASSWORD,
+        val insertedPasswords = projectPasswords + writeItems(passwords.filter { it.projectCopyKey == null }, DedupMergeItemKind.PASSWORD,
             canBatch = { it.entry.id == 0L && it.entry.isLocalOnlyEntry() && it.attachments.isEmpty() },
             labelOf = { it.entry.title.ifBlank { it.entry.username.ifBlank { strings.get(R.string.dedup_merge_untitled_password) } } },
             write = writer::writePassword)
@@ -194,13 +233,10 @@ internal class DedupMergeExecutor(
                 runCatching { LegacyImageAttachmentSupport.paths(it.item.imagePaths).all(String::isBlank) }.getOrDefault(false) },
             labelOf = { it.item.title.ifBlank { it.item.itemType.dedupLabel(strings) } },
             write = writer::writeSecureItem)
-        val insertedPasskeys = writeItems(passkeys, DedupMergeItemKind.PASSKEY,
-            canBatch = { false }, labelOf = { it.entry.displayTitle() }, write = writer::writePasskey)
-
         return DedupMergeExecutionResult(
             insertedPasswords = insertedPasswords,
             insertedSecureItems = insertedSecureItems,
-            insertedPasskeys = insertedPasskeys,
+            insertedPasskeys = 0,
             skippedExistingPasswords = skippedExistingPasswords,
             skippedExistingSecureItems = skippedExistingSecureItems,
             skippedExistingPasskeys = skippedExistingPasskeys,
@@ -234,6 +270,7 @@ internal class DedupMergeExecutor(
         AttachmentError.KdbxCapacityExceeded -> strings.get(R.string.attachment_error_kdbx_capacity)
         is AttachmentError.NetworkError -> strings.get(R.string.attachment_error_network, error.httpStatus?.toString() ?: "?")
         is AttachmentError.TooLarge -> strings.get(R.string.attachment_error_too_large, "${error.limitBytes / (1024 * 1024)} MiB")
-        else -> error.message?.takeIf { it.isNotBlank() } ?: error::class.java.simpleName
+        // Provider exception messages may contain a field value or source URI.
+        else -> strings.get(R.string.dedup_merge_changed_review)
     }
 }

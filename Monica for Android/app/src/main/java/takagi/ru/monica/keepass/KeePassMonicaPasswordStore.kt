@@ -50,6 +50,22 @@ internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxServic
 
     private val mutex = Mutex()
     private val snapshots = MutableStateFlow<Map<Long, Snapshot>>(emptyMap())
+    val presentationSnapshots = snapshots.asStateFlow()
+    private val listAuthorizations = mutableMapOf<Long, Long>()
+
+    // Explicit lock epochs, never decoded-LRU membership, decide whether list access needs authentication.
+    fun isListAuthenticationRequired(databaseId: Long): Boolean = synchronized(this) {
+        val version = KeePassKdbxService.nativeLockVersions.value[databaseId] ?: 0L
+        (databaseId in blocked || version > 0L && snapshots.value[databaseId]?.lockVersion != version) &&
+            listAuthorizations[databaseId] != version
+    }
+
+    fun authorizeListRead(databaseId: Long, expectedVersion: Long, expectedGeneration: Long) = synchronized(this) {
+        check(SessionManager.isUnlocked.value && SessionManager.lockGeneration.value == expectedGeneration)
+        check((KeePassKdbxService.nativeLockVersions.value[databaseId] ?: 0L) == expectedVersion)
+        listAuthorizations[databaseId] = expectedVersion
+        blocked -= databaseId
+    }
     private val _fileStates = MutableStateFlow<Map<Long, KeePassFileNotice>>(emptyMap())
     val fileStates = _fileStates.asStateFlow()
     private val lastSourceChecks = mutableMapOf<Long, Long>()
@@ -140,6 +156,7 @@ internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxServic
     fun clear(databaseId: Long? = null) {
         synchronized(this) {
             if (databaseId == null) {
+                listAuthorizations.clear()
                 snapshots.value = emptyMap()
                 _fileStates.value = emptyMap()
                 drafts.clear()
@@ -149,6 +166,7 @@ internal class KeePassMonicaPasswordStore(private val service: KeePassKdbxServic
                 blocked += secureIdentities.values.map { it.databaseId }
                 blocked += passkeyIdentities.values.map { it.databaseId }
             } else {
+                listAuthorizations.remove(databaseId)
                 snapshots.update { it - databaseId }
                 _fileStates.update { it - databaseId }
                 drafts.entries.removeAll { it.value.browser.databaseId == databaseId }

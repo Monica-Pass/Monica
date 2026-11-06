@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.data.dedup.DedupMergeExecutorTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-06T12:18:27" hostname="JOYIN" time="0.098">
+  <properties/>
+  <testcase name="projectFailureRollsBackAllMembersWithoutRetryingRows" classname="takagi.ru.monica.data.dedup.DedupMergeExecutorTest" time="0.072"/>
+  <testcase name="executionContinuesAfterIndependentFailuresAndReportsEveryItem" classname="takagi.ru.monica.data.dedup.DedupMergeExecutorTest" time="0.007"/>
+  <testcase name="cancellationStopsTheRemainingQueue" classname="takagi.ru.monica.data.dedup.DedupMergeExecutorTest" time="0.003"/>
+  <testcase name="fileAndPrivateKeyWritesStayOutsideRetriableRoomTransactions" classname="takagi.ru.monica.data.dedup.DedupMergeExecutorTest" time="0.009"/>
+  <testcase name="localizedFallbackLabelsHidePotentiallySensitiveProviderErrors" classname="takagi.ru.monica.data.dedup.DedupMergeExecutorTest" time="0.007"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -250,13 +250,18 @@ class SecureItemRepository(
         ).ids
     }
     
-    suspend fun insertItem(item: SecureItem): Long {
+    suspend fun insertItem(item: SecureItem): Long = insertItemInternal(item, requireNewMdbxObject = false)
+
+    internal suspend fun insertDedupCopy(item: SecureItem): Long = insertItemInternal(item, requireNewMdbxObject = true)
+
+    private suspend fun insertItemInternal(item: SecureItem, requireNewMdbxObject: Boolean): Long {
         if (item.keepassDatabaseId?.let(::usesOriginalKeePass) == true) {
             require(item.id == 0L) { "New original-vault items cannot use a Room identity" }
             return requireNotNull(monicaKeePassStore.value).saveSecure(item).id
         }
         require(!takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(item.id)) { "KeePass UI identity cannot be persisted in Room" }
         item.mdbxDatabaseId?.let { mdbxRepository?.requireRoomMirrorAllowed(it) }
+        var createdMdbxCopy = false
         return commitRoomThenMirror(
             roomCommit = {
                 val id = secureItemDao.insertItem(item)
@@ -270,11 +275,14 @@ class SecureItemRepository(
                 id to persistedItem
             },
             mirrorCommit = { (_, persistedItem) ->
-                mdbxRepository?.upsertSecureItem(persistedItem)
+                if (requireNewMdbxObject && persistedItem.mdbxDatabaseId != null) {
+                    requireNotNull(mdbxRepository).insertDedupSecureItem(persistedItem)
+                    createdMdbxCopy = true
+                } else mdbxRepository?.upsertSecureItem(persistedItem)
             },
             rollbackRoom = { (id, _) -> secureItemDao.deleteItemById(id) },
             rollbackMirror = { (_, persistedItem) ->
-                mdbxRepository?.deleteSecureItem(persistedItem)
+                if (!requireNewMdbxObject || createdMdbxCopy) mdbxRepository?.deleteSecureItem(persistedItem)
             }
         ).first
     }

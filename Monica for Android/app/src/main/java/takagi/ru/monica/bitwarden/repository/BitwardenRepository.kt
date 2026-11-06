@@ -586,6 +586,61 @@ class BitwardenRepository(private val context: Context) {
             }
         }
 
+    /** Read complete native ciphers for analysis; the callback never receives an API mutation handle. */
+    internal suspend fun <T> withDedupSource(
+        vaultId: Long,
+        checkActive: () -> Unit,
+        block: (BitwardenVault, takagi.ru.monica.bitwarden.api.SyncResponse, SymmetricCryptoKey) -> T,
+    ): T = withContext(Dispatchers.IO) {
+        syncMutexForVault(vaultId).withLock {
+            val appGeneration = takagi.ru.monica.security.SessionManager.lockGeneration.value
+            val generation = getVaultSessionGeneration(vaultId)
+            val vault = requireNotNull(vaultDao.getVaultById(vaultId))
+            val fingerprint = takagi.ru.monica.bitwarden.export.bitwardenJsonAccountFingerprint(vault)
+            val key = requireNotNull(symmetricKeyCache[vaultId])
+            var token = requireNotNull(accessTokenCache[vaultId])
+            fun current() {
+                checkActive()
+                check(takagi.ru.monica.security.SessionManager.isUnlocked.value &&
+                    takagi.ru.monica.security.SessionManager.lockGeneration.value == appGeneration &&
+                    isVaultUnlocked(vaultId) && getVaultSessionGeneration(vaultId) == generation &&
+                    symmetricKeyCache[vaultId] === key && isAccessTokenCurrent(vaultId, token))
+            }
+            suspend fun account() {
+                current()
+                val present = requireNotNull(vaultDao.getVaultById(vaultId))
+                check(present.isConnected && !present.isLocked &&
+                    takagi.ru.monica.bitwarden.export.bitwardenJsonAccountFingerprint(present) == fingerprint)
+                check(pendingOpDao.observeQueueRecords(vaultId).first().none { it.kind != "SEND" })
+            }
+            account()
+            if ((vault.accessTokenExpiresAt ?: 0) <= System.currentTimeMillis() + 60_000) {
+                val oldToken = token
+                token = requireNotNull(refreshToken(vault, publishIfCurrent = {
+                    runCatching { checkActive(); true }.getOrDefault(false) &&
+                        takagi.ru.monica.security.SessionManager.isUnlocked.value &&
+                        takagi.ru.monica.security.SessionManager.lockGeneration.value == appGeneration &&
+                        getVaultSessionGeneration(vaultId) == generation && symmetricKeyCache[vaultId] === key &&
+                        isAccessTokenCurrent(vaultId, oldToken) &&
+                        vaultDao.getVaultById(vaultId)?.let {
+                            takagi.ru.monica.bitwarden.export.bitwardenJsonAccountFingerprint(it) == fingerprint
+                        } == true
+                }))
+            }
+            account()
+            val response = apiManager.getVaultApi(vault).syncSource("Bearer $token")
+            check(response.isSuccessful)
+            val document = takagi.ru.monica.bitwarden.service.BitwardenCipherDocument.read(requireNotNull(response.body()), sync = true)
+            val native = takagi.ru.monica.bitwarden.service.BitwardenCipherDocument.decodeSync(document)
+            currentCoroutineContext().ensureActive()
+            check(validateBitwardenSessionProfile(vaultId, token, native.profile) {
+                runCatching { current(); true }.getOrDefault(false)
+            })
+            account()
+            block(vault, native, key).also { account() }
+        }
+    }
+
     private val syncIssues = takagi.ru.monica.bitwarden.service.BitwardenSyncIssues()
     val syncIssueReports = syncIssues.reports
     private val vaultSessionGenerations = ConcurrentHashMap<Long, kotlinx.coroutines.flow.MutableStateFlow<Long>>()

@@ -11,6 +11,8 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -44,9 +46,47 @@ class DedupEngineScreenInstrumentedTest {
     private var cancellations = 0
     private var back = 0
     private var restoreConfiguration: (() -> Unit)? = null
+    private var screenVisible by mutableStateOf(true)
     private var keyboard: SoftwareKeyboardController? = null
 
     @After fun restoreLocale() { compose.runOnUiThread { restoreConfiguration?.invoke() } }
+
+    @Test fun entryNoticeCancelsWithoutMountingMergeControlsOrAcceptingLateClick() {
+        state = ready()
+        show(acceptEntryNotice = false)
+        compose.onNodeWithTag("dedup_primary_action").assertDoesNotExist()
+        assertEquals(0f, compose.onNodeWithTag("dedup_entry_body").fetchSemanticsNode()
+            .config[SemanticsProperties.VerticalScrollAxisRange].value(), 0.01f)
+        compose.onNodeWithText(text(R.string.dedup_entry_common)).assertIsDisplayed()
+        screenshot("entry-merge-zh-normal-light.png")
+        val oldConfirm = compose.onNodeWithTag("dedup_entry_confirm")
+            .fetchSemanticsNode().config[SemanticsActions.OnClick].action!!
+        compose.onNodeWithTag("dedup_entry_cancel").performClick()
+        assertEquals(1, back)
+        compose.runOnIdle { oldConfirm() }
+        compose.onNodeWithTag("dedup_primary_action").assertDoesNotExist()
+        assertEquals(0, executions)
+    }
+
+    @Test fun entryNoticeLargeDarkTextReturnsOnlyOnReentry() {
+        state = ready()
+        show(textScale = 1.6f, dark = true, acceptEntryNotice = false)
+        assertEquals(0f, compose.onNodeWithTag("dedup_entry_body").fetchSemanticsNode()
+            .config[SemanticsProperties.VerticalScrollAxisRange].value(), 0.01f)
+        compose.onNodeWithText(text(R.string.dedup_entry_common)).assertIsDisplayed()
+        screenshot("entry-merge-zh-large-dark-top.png")
+        compose.onNodeWithTag("dedup_entry_scope").performScrollTo().assertIsDisplayed()
+        compose.onNodeWithTag("dedup_entry_confirm").assertIsDisplayed()
+        screenshot("entry-merge-zh-large-dark.png")
+        compose.onNodeWithTag("dedup_entry_confirm").performClick()
+        compose.runOnIdle { state = state.copy(isLoading = true) }
+        compose.onNodeWithTag("dedup_entry_notice").assertDoesNotExist()
+        compose.runOnIdle { state = state.copy(isLoading = false); screenVisible = false }
+        compose.runOnIdle { screenVisible = true }
+        compose.onNodeWithTag("dedup_entry_notice").assertIsDisplayed()
+        compose.onNodeWithTag("dedup_primary_action").assertDoesNotExist()
+        assertEquals(0, executions)
+    }
 
     @Test fun searchSelectionAndNewTargetRemainUsableWithManyDatabases() {
         show()
@@ -93,21 +133,111 @@ class DedupEngineScreenInstrumentedTest {
         assertEquals(1, executions)
     }
 
-    @Test fun passkeyPreviewShowsWriteAndSkipReasons() {
+    @Test fun passkeyPreviewShowsPreservedEntriesOnly() {
         val key = takagi.ru.monica.data.PasskeyEntry(credentialId = "synthetic", rpId = "example.invalid", rpName = "Example",
             userId = "AQID", userName = "alice", userDisplayName = "Ready key", publicKey = "public", privateKeyAlias = "synthetic")
         state = ready().let { ready -> ready.copy(mergePlan = ready.mergePlan.copy(totalSourcePasskeys = 2,
-            unsupportedSourcePasskeys = 1, previewPasskeys = listOf(
+            unsupportedSourcePasskeys = 2, previewPasskeys = listOf(
                 DedupResolvedPasskey("ready-passkey", key, listOf(5), listOf("Source 1"), "Source 1"),
                 DedupResolvedPasskey("skipped-passkey", key.copy(userDisplayName = "Old counter"), listOf(6), listOf("Source 2"),
-                    "Source 2", skipReason = DedupPasskeySkipReason.NONZERO_COUNTER)))) }
+                    "Source 2", skipReason = DedupPasskeySkipReason.PRESERVED)))) }
         show()
         compose.onNodeWithText(text(R.string.dedup_merge_preview_title)).performScrollTo().performClick()
         compose.onNodeWithTag("dedup_preview_search").performTextInput("Old counter")
         compose.runOnIdle { keyboard?.hide() }
-        compose.onNodeWithText(text(R.string.dedup_passkey_nonzero_counter)).assertIsDisplayed()
+        compose.onNodeWithText(text(R.string.dedup_passkey_preserved)).assertIsDisplayed()
         compose.onNodeWithText(text(R.string.dedup_merge_filter_skip, state.mergePlan.skippedItems)).performClick()
         compose.onNode(hasText("Old counter") and !hasSetTextAction()).assertIsDisplayed()
+        compose.onNodeWithText(text(R.string.dedup_merge_filter_write, state.mergePlan.writableItems)).performClick()
+        compose.onNodeWithText(text(R.string.dedup_merge_filter_empty)).assertIsDisplayed()
+    }
+
+    @Test fun passkeyReminderContinuesOnlyToTheNormalMergeConfirmation() {
+        state = readyWithPasskeys()
+        show()
+        compose.onNodeWithTag("dedup_primary_action").performClick()
+        compose.onNodeWithTag("dedup_passkey_dialog").assertIsDisplayed()
+        compose.onNodeWithTag("dedup_passkey_retention_list")
+            .performScrollToNode(hasTestTag("dedup_passkey_retained:project:keepass:1:linked-project"))
+        compose.onNode(hasText("Linked source project") and hasAnyAncestor(isDialog())).assertIsDisplayed()
+        compose.onAllNodes(hasText("Hidden bound key") and hasAnyAncestor(isDialog())).assertCountEquals(0)
+        compose.onNodeWithTag("dedup_passkey_retention_list")
+            .performScrollToNode(hasTestTag("dedup_passkey_retained:passkey:standalone-key"))
+        compose.onNode(hasText("Standalone source key") and hasAnyAncestor(isDialog())).assertIsDisplayed()
+        screenshot("passkey-retention-zh.png")
+        compose.onNodeWithText(text(R.string.cancel)).performClick()
+        compose.onNodeWithTag("dedup_merge_confirmation").assertDoesNotExist()
+        assertEquals(0, executions)
+        compose.onNodeWithTag("dedup_primary_action").performClick()
+        compose.onNodeWithTag("dedup_passkey_continue").performClick()
+        compose.onNodeWithTag("dedup_merge_confirmation").assertIsDisplayed()
+        assertEquals(0, executions)
+        compose.onNodeWithText(text(R.string.dedup_merge_start)).performClick()
+        assertEquals(1, executions)
+    }
+
+    @Test fun allPasskeysHaveOnlyAReadOnlyExplanation() {
+        state = readyWithPasskeys().let { ready -> ready.copy(mergePlan = ready.mergePlan.copy(
+            uniquePasswords = 0, totalSourcePasswords = 0, previewPasswords = emptyList(),
+            duplicateGroups = 0, passwordConflictGroups = 0
+        )) }
+        show(textScale = 1.6f, dark = true)
+        compose.onNodeWithTag("dedup_primary_action").assertIsNotEnabled()
+        compose.onNodeWithTag("dedup_passkey_notice").performScrollTo().performClick()
+        compose.onNodeWithTag("dedup_passkey_close").assertIsDisplayed()
+        compose.onNodeWithTag("dedup_passkey_continue").assertDoesNotExist()
+        compose.onNodeWithTag("dedup_passkey_close").performClick()
+        assertEquals(0, executions)
+    }
+
+    @Test fun replacedPlanAndLockRejectLatePasskeyAndMergeCallbacks() {
+        state = readyWithPasskeys()
+        show()
+        compose.onNodeWithTag("dedup_primary_action").performClick()
+        val oldContinue = compose.onNodeWithTag("dedup_passkey_continue")
+            .fetchSemanticsNode().config[SemanticsActions.OnClick].action!!
+        compose.runOnIdle { state = state.copy(mergePlan = state.mergePlan.copy(reviewToken = "new-plan")) }
+        compose.onNodeWithTag("dedup_passkey_dialog").assertDoesNotExist()
+        compose.runOnIdle { oldContinue() }
+        compose.onNodeWithTag("dedup_merge_confirmation").assertDoesNotExist()
+        compose.onNodeWithTag("dedup_primary_action").performClick()
+        compose.onNodeWithTag("dedup_passkey_continue").performClick()
+        val oldExecute = compose.onNode(hasText(text(R.string.dedup_merge_start)) and hasAnyAncestor(isDialog()))
+            .fetchSemanticsNode().config[SemanticsActions.OnClick].action!!
+        compose.runOnIdle { state = DedupEngineUiState(isLoading = false) }
+        compose.onNodeWithTag("dedup_merge_confirmation").assertDoesNotExist()
+        compose.runOnIdle { oldExecute() }
+        assertEquals(0, executions)
+    }
+
+    private fun readyWithPasskeys(): DedupEngineUiState {
+        val key = takagi.ru.monica.data.PasskeyEntry(credentialId = "retained", rpId = "example.invalid", rpName = "Example",
+            userId = "AQID", userName = "alice", userDisplayName = "Hidden bound key", publicKey = "public",
+            privateKeyAlias = "synthetic", boundPasswordId = 5)
+        return ready().let { ready -> ready.copy(mergePlan = ready.mergePlan.copy(
+            totalSourcePasskeys = 2, unsupportedSourcePasskeys = 2,
+            passkeyRetainedProjects = listOf(DedupPasskeyRetainedProject("keepass:1", "Source 1", "linked-project", "Linked source project", listOf(5))),
+            previewPasskeys = listOf(
+                DedupResolvedPasskey("bound-key", key, listOf(5), listOf("Source 1"), "Source 1"),
+                DedupResolvedPasskey("standalone-key", key.copy(credentialId = "standalone", boundPasswordId = null,
+                    userDisplayName = "Standalone source key"), listOf(6), listOf("Source 2"), "Source 2")
+            )
+        )) }
+    }
+
+    @Test fun incompatibleSourceProjectsRemainSearchableInSkippedPreview() {
+        state = ready().let { ready -> ready.copy(mergePlan = ready.mergePlan.copy(
+            unsupportedItems = listOf(DedupMergeUnsupportedItem("Native database", "Retained native project"))
+        )) }
+        show()
+        compose.onNodeWithText(text(R.string.dedup_merge_preview_title)).performScrollTo().performClick()
+        compose.onNodeWithTag("dedup_preview_search").performTextInput("Retained native project")
+        compose.runOnIdle { keyboard?.hide() }
+        compose.onNodeWithText(text(R.string.dedup_merge_filter_skip, state.mergePlan.skippedItems)).performClick()
+        compose.onNode(hasText("Retained native project") and !hasSetTextAction()).performScrollTo().assertIsDisplayed()
+        compose.onNodeWithText("Native database").assertExists()
+        compose.onNodeWithText(text(R.string.single_dedup_unsupported)).assertExists()
+        assertEquals(0, executions)
     }
 
     @Test fun runningMergeShowsProgressAndRequiresConfirmationToStop() {
@@ -123,6 +253,58 @@ class DedupEngineScreenInstrumentedTest {
         compose.onNode(hasText(text(R.string.dedup_merge_stop_action)) and hasAnyAncestor(isDialog())).performClick()
         assertEquals(1, cancellations)
         assertEquals(0, back)
+    }
+
+    @Test fun retainedDatabasesUseTheirOwnListWithoutCreatingSkippedProjects() {
+        val retained = (101..125).map {
+            DedupMergeSourceOption("mdbx:$it", DedupMergeSourceKind.MDBX, "Retained database $it", 98765)
+        }
+        state = ready().let { ready -> ready.copy(
+            sourceOptions = ready.sourceOptions + retained,
+            selectedMergeSourceKeys = ready.selectedMergeSourceKeys + retained.map { it.key },
+            mergePlan = ready.mergePlan.copy(
+                selectedSources = ready.mergePlan.selectedSources + retained,
+                retainedSources = retained
+            )
+        ) }
+        show()
+        compose.onNodeWithTag("dedup_retained_sources_notice").performScrollTo().assertIsDisplayed().performClick()
+        compose.onNodeWithText(text(R.string.dedup_merge_retained_source_reason)).assertIsDisplayed()
+        compose.onNodeWithTag("dedup_retained_sources_list")
+            .performScrollToNode(hasTestTag("dedup_retained_source:mdbx:125"))
+        compose.onNodeWithText("Retained database 125").assertIsDisplayed()
+        compose.onAllNodesWithText("98765", substring = true).assertCountEquals(0)
+        screenshot("retained-databases-zh.png")
+        compose.onNodeWithText(text(R.string.dedup_merge_done)).performClick()
+        compose.onNodeWithText(text(R.string.dedup_merge_preview_title)).performScrollTo().performClick()
+        compose.onNodeWithText(text(R.string.dedup_merge_filter_skip, 0)).assertIsDisplayed().performClick()
+        compose.onNodeWithText(text(R.string.dedup_merge_filter_empty)).assertIsDisplayed()
+        compose.onAllNodes(hasText("Retained database", substring = true) and hasAnyAncestor(isDialog())).assertCountEquals(0)
+        compose.onNodeWithText(text(R.string.dedup_merge_done)).performClick()
+        compose.onNodeWithTag("dedup_primary_action").performClick()
+        compose.onNodeWithTag("dedup_confirm_retained_sources").performScrollTo()
+            .assertTextEquals(text(R.string.dedup_merge_retained_sources_count, retained.size)).assertIsDisplayed()
+        compose.onNodeWithText(text(R.string.cancel)).performClick()
+        assertEquals(0, executions)
+    }
+
+    @Test fun mdbxIndependentCopyNoticeIsVisibleBeforeConfirmingAtLargeText() {
+        state = ready()
+        show(textScale = 1.6f, dark = true)
+        compose.onNodeWithTag("dedup_mdbx_target_notice").assertDoesNotExist()
+        compose.runOnIdle {
+            state = state.copy(mergePlan = state.mergePlan.copy(mdbxTargetAddsIndependentCopies = true))
+        }
+        compose.onNodeWithTag("dedup_mdbx_target_notice").performScrollTo().assertIsDisplayed()
+        compose.onNodeWithText(text(R.string.dedup_merge_mdbx_target_copies)).assertIsDisplayed()
+        screenshot("mdbx-copy-notice-zh-large-dark.png")
+        compose.onNodeWithTag("dedup_primary_action").performClick()
+        compose.onNodeWithTag("dedup_confirm_mdbx_target").performScrollTo()
+            .assertTextEquals(text(R.string.dedup_merge_mdbx_target_copies)).assertIsDisplayed()
+        compose.onNode(hasText(text(R.string.dedup_merge_start)) and hasAnyAncestor(isDialog())).assertIsDisplayed()
+        screenshot("mdbx-copy-confirm-zh-large-dark.png")
+        compose.onNodeWithText(text(R.string.cancel)).performClick()
+        assertEquals(0, executions)
     }
 
     @Test fun polishLargeTextAndDarkThemeKeepActionsReachable() {
@@ -153,7 +335,7 @@ class DedupEngineScreenInstrumentedTest {
         return state.copy(selectedMergeSourceKeys = sources.take(2).map { it.key }.toSet(), selectedMergeTarget = target, mergePlan = plan)
     }
 
-    private fun show(textScale: Float = 1f, dark: Boolean = false) {
+    private fun show(textScale: Float = 1f, dark: Boolean = false, acceptEntryNotice: Boolean = true) {
         compose.setContent {
             val activityContext = LocalContext.current
             keyboard = LocalSoftwareKeyboardController.current
@@ -178,7 +360,7 @@ class DedupEngineScreenInstrumentedTest {
             CompositionLocalProvider(LocalContext provides localized, LocalConfiguration provides localized.resources.configuration,
                 LocalDensity provides Density(LocalDensity.current.density, textScale)) {
                 MonicaTheme(darkTheme = dark) {
-                    DedupEngineScreen(uiState = state, onNavigateBack = { back++ }, onRefresh = {},
+                    if (screenVisible) DedupEngineScreen(uiState = state, onNavigateBack = { back++ }, onRefresh = {},
                         onToggleSource = { key -> state = state.copy(selectedMergeSourceKeys =
                             if (key in state.selectedMergeSourceKeys) state.selectedMergeSourceKeys - key else state.selectedMergeSourceKeys + key) },
                         onSelectAllSources = { keys -> selectedSearchKeys = keys; state = state.copy(selectedMergeSourceKeys = state.selectedMergeSourceKeys + keys) },
@@ -189,6 +371,7 @@ class DedupEngineScreenInstrumentedTest {
                 }
             }
         }
+        if (acceptEntryNotice) compose.onNodeWithTag("dedup_entry_confirm").performClick()
     }
 
     private fun text(id: Int, vararg args: Any): String = context.createConfigurationContext(

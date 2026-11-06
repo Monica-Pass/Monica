@@ -3063,6 +3063,103 @@ class KeePassKdbxService(
         }.onFailure { if (it is kotlinx.coroutines.CancellationException) throw it }
     }
 
+    /** A fresh decode with a loss-awareness audit, independent of visible list caches. */
+    internal suspend fun readNativeForDedup(databaseId: Long): takagi.ru.monica.data.dedup.SingleVaultDedupKeePassRead = withContext(Dispatchers.IO) {
+        withDatabaseMutationLocks(listOf(databaseId)) {
+            check(isDatabaseUnlocked(databaseId)) { "KeePass database is locked" }
+            val lockVersion = nativeLockVersions.value[databaseId] ?: 0L
+            val loaded = loadDatabase(databaseId)
+            val source = openDatabaseStreamSource(loaded.database)
+            try {
+                val headerComplete = source.openStream().use { takagi.ru.monica.data.dedup.SingleVaultDedupKeePassHeaderAudit.complete(it) }
+                val parser = takagi.ru.monica.data.dedup.SingleVaultDedupKeePassXmlAudit()
+                val decoded = withContext(decodeDispatcher) {
+                    withGlobalDecodeLock { source.openStream().use { KeePassCodecSupport.decodeForDedup(it, loaded.credentials, parser) } }
+                }
+                check(isDatabaseUnlocked(databaseId)) { "KeePass database was locked" }
+                check((nativeLockVersions.value[databaseId] ?: 0L) == lockVersion) { "KeePass lock changed" }
+                val session = takagi.ru.monica.keepass.KeePassNativeSessionBuilder.build(databaseId, source.revision, decoded) { parent, name ->
+                    if (parent.isNullOrEmpty()) name else "$parent/$name"
+                }
+                takagi.ru.monica.data.dedup.SingleVaultDedupKeePassRead(session, headerComplete && parser.complete &&
+                    ((decoded as? KeePassDatabase.Ver4x)?.innerHeader?.sourcePayloadComplete != false),
+                    loaded.database.sourceType == KeePassDatabaseSourceType.LOCAL_INTERNAL &&
+                        loaded.database.resolvedActiveStorageLocation() == KeePassStorageLocation.INTERNAL && !isDatabaseReadOnly(databaseId) && decoded.content.meta.recycleBinEnabled, lockVersion)
+            } finally { source.close() }
+        }
+    }
+
+    /** Only the app-private local file has the exclusive mutation scope required by cleanup. */
+    internal suspend fun changeNativeForDedup(
+        databaseId: Long,
+        expectedRevision: KeePassSourceRevision,
+        expectedLockVersion: Long,
+        transform: (KeePassDatabase) -> KeePassDatabase,
+        beforeCommit: suspend (KeePassDatabase, KeePassDatabase) -> Unit,
+        checkActive: () -> Unit,
+    ): KeePassNativeSession = withContext(Dispatchers.IO) {
+        withDatabaseMutationLocks(listOf(databaseId)) {
+            checkActive()
+            check(isDatabaseUnlocked(databaseId)) { "KeePass database is locked" }
+            check((nativeLockVersions.value[databaseId] ?: 0L) == expectedLockVersion) { "KeePass lock changed" }
+            val recordScope = nativeRecordCountCache.capture(databaseId)
+            accessPolicy.requireWritable(databaseId)
+            val loaded = loadDatabase(databaseId)
+            val registration = requireNotNull(dao.getDatabaseById(databaseId))
+            require(registration.sourceType == KeePassDatabaseSourceType.LOCAL_INTERNAL && registration.resolvedActiveStorageLocation() == KeePassStorageLocation.INTERNAL)
+            require(registration.resolvedActiveFilePath() == loaded.database.resolvedActiveFilePath())
+            assertNativeRevision(expectedRevision.sha256, loaded.sourceRevision.sha256)
+            val file = File(context.filesDir, registration.resolvedActiveFilePath())
+            val filesRoot = context.filesDir.canonicalFile.toPath()
+            require(file.canonicalFile.toPath().startsWith(filesRoot))
+            check(KeePassSourceSafety.revisionOf(file) == expectedRevision) { "KeePass source changed" }
+            val updated = transform(loaded.keePassDatabase)
+            encodeDatabaseArtifact(updated).use { artifact ->
+                val decoded = decodeDatabase(artifact.file.inputStream(), loaded.credentials, readFileHeader(artifact.file), logFailure = false)
+                check(takagi.ru.monica.data.dedup.SingleVaultDedupKeePassContent.roundTripEquivalent(updated, decoded)) { "Native dedup round-trip verification failed" }
+                beforeCommit(loaded.keePassDatabase, decoded)
+                checkActive()
+                check(isDatabaseUnlocked(databaseId)) { "KeePass database was locked" }
+                check((nativeLockVersions.value[databaseId] ?: 0L) == expectedLockVersion) { "KeePass lock changed" }
+                accessPolicy.requireWritable(databaseId)
+                check(dao.getDatabaseById(databaseId) == registration) { "KeePass registration changed" }
+                check(KeePassSourceSafety.revisionOf(file) == expectedRevision) { "KeePass source changed" }
+                takagi.ru.monica.data.dedup.SingleVaultDedupAtomicFile.replace(file, artifact.file, expectedRevision, artifact.revision,
+                    checkBeforeCommit = {
+                        check(dao.getAllDatabasesSync().singleOrNull { it.id == databaseId } == registration) { "KeePass registration changed" }
+                        checkActive()
+                        check(isDatabaseUnlocked(databaseId) && (nativeLockVersions.value[databaseId] ?: 0L) == expectedLockVersion) { "KeePass authorization changed" }
+                        accessPolicy.requireWritable(databaseId)
+                    }, syncDirectory = { directory ->
+                        val descriptor = android.system.Os.open(directory.path,
+                            android.system.OsConstants.O_RDONLY or android.system.OsConstants.O_NOFOLLOW or android.system.OsConstants.O_CLOEXEC, 0)
+                        try {
+                            check(android.system.OsConstants.S_ISDIR(android.system.Os.fstat(descriptor).st_mode))
+                            android.system.Os.fsync(descriptor)
+                        } finally { android.system.Os.close(descriptor) }
+                    })
+                // Once committed, preserve the durable result even if the UI leaves.
+                withContext(NonCancellable) {
+                    check(KeePassSourceSafety.revisionOf(file) == artifact.revision) { "KeePass read-back mismatch" }
+                    synchronized(loadedDatabaseCache) {
+                        // Replace only the still-authorized cache object. If a lock,
+                        // eviction or invalidation removed it, never recreate it.
+                        if (loadedDatabaseCache[databaseId]?.loaded === loaded &&
+                            (nativeLockVersions.value[databaseId] ?: 0L) == expectedLockVersion &&
+                            takagi.ru.monica.security.SessionManager.isUnlocked.value &&
+                            takagi.ru.monica.security.SessionManager.lockGeneration.value == recordScope.appGeneration) {
+                            cachePersistedDatabase(registration, loaded.credentials, decoded, artifact.revision, null, null, recordScope)
+                        }
+                    }
+                    dao.updateEntryCount(databaseId, countEntries(decoded.content.group))
+                    takagi.ru.monica.keepass.KeePassNativeSessionBuilder.build(databaseId, artifact.revision, decoded) { parent, name ->
+                        if (parent.isNullOrEmpty()) name else "$parent/$name"
+                    }
+                }
+            }
+        }
+    }
+
     internal suspend fun deleteNativeEntries(
         databaseId: Long,
         entryUuids: Set<UUID>,

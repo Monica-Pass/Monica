@@ -17,6 +17,7 @@ class DedupMergeExecutorTest {
         when (id) {
             R.string.dedup_merge_untitled_password -> "Unbenanntes Passwort"
             R.string.dedup_merge_type_note -> "Notiz"
+            R.string.dedup_merge_changed_review -> "Review required"
             R.string.dedup_merge_rollback_failed -> "${arguments[0]}; Rückgängig machen fehlgeschlagen: ${arguments[1]}"
             else -> error("Unexpected string resource: $id")
         }
@@ -75,7 +76,7 @@ class DedupMergeExecutorTest {
     }
 
     @Test
-    fun localizedFallbackLabelsPreserveWriteAndRollbackErrorDetails() = runBlocking {
+    fun localizedFallbackLabelsHidePotentiallySensitiveProviderErrors() = runBlocking {
         val writer = object : DedupMergeWriter {
             override suspend fun writePassword(resolved: DedupResolvedPassword) {
                 throw IllegalStateException("write failed").apply {
@@ -100,12 +101,39 @@ class DedupMergeExecutorTest {
 
         assertEquals("Unbenanntes Passwort", result.failures.single().label)
         assertEquals(
-            "write failed; Rückgängig machen fehlgeschlagen: rollback failed",
+            "Review required; Rückgängig machen fehlgeschlagen: Review required",
             result.failures.single().reason
         )
         assertEquals(listOf("Unbenanntes Passwort", "Notiz"), progress.map { it.currentLabel })
         assertEquals("My database", result.targetLabel)
         assertEquals(1, result.insertedSecureItems)
+    }
+
+    @Test fun projectFailureRollsBackAllMembersWithoutRetryingRows() = runBlocking {
+        val stored = mutableListOf<String>()
+        var attempts = 0
+        val writer = object : DedupMergeWriter {
+            override suspend fun writeLocalBatch(block: suspend () -> Unit): Boolean {
+                val before = stored.toList()
+                try { block() } catch (error: Exception) { stored.clear(); stored.addAll(before); throw error }
+                return true
+            }
+            override suspend fun writePassword(resolved: DedupResolvedPassword) {
+                attempts++
+                if (resolved.entry.password == "fail") error("synthetic secret must not leak")
+                stored += resolved.entry.password
+            }
+            override suspend fun writeSecureItem(resolved: DedupResolvedSecureItem) = Unit
+            override suspend fun writePasskey(resolved: DedupResolvedPasskey) = Unit
+        }
+        val first = password("First").copy(projectCopyKey = "one-project")
+        val second = password("Second").let { it.copy(entry = it.entry.copy(password = "fail"), projectCopyKey = "one-project") }
+        val result = DedupMergeExecutor(writer, strings).execute(listOf(first, second), emptyList(), 0, 0, 0, "Target")
+        assertEquals(0, result.insertedItems)
+        assertEquals(2, result.failedPasswords)
+        assertEquals(2, attempts)
+        assertTrue(stored.isEmpty())
+        assertTrue(result.failures.all { it.reason == "Review required" })
     }
 
     @Test
@@ -135,13 +163,17 @@ class DedupMergeExecutorTest {
             rpName = "Example", userId = "user", userName = "User", userDisplayName = "User",
             publicKey = "synthetic", privateKeyAlias = "synthetic"), listOf(1), listOf("Source"), "Source")
 
-        val result = DedupMergeExecutor(writer, strings).execute(
+        val rejected = runCatching { DedupMergeExecutor(writer, strings).execute(
             listOf(password("Local"), attached, mdbx), listOf(note("Note"), photo),
-            0, 0, 0, "Target", passkeys = listOf(key))
+            0, 0, 0, "Target", passkeys = listOf(key.copy(skipReason = null))) }
+        assertTrue(rejected.isFailure)
+        assertTrue(observed.isEmpty())
+        val result = DedupMergeExecutor(writer, strings).execute(
+            listOf(password("Local"), attached, mdbx), listOf(note("Note"), photo), 0, 0, 0, "Target")
 
-        assertEquals(6, result.insertedItems)
+        assertEquals(5, result.insertedItems)
         assertEquals(listOf("Local" to true, "Attachment" to false, "MDBX" to false,
-            "Note" to true, "Photo" to false, "Passkey" to false), observed)
+            "Note" to true, "Photo" to false), observed)
     }
 
     private fun password(title: String) = DedupResolvedPassword(
