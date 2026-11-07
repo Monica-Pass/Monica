@@ -137,3 +137,11 @@ test('an already synchronized release skips existing attachments and verifies th
   assert.equal(h.events.filter(e => ['POST', 'PATCH', 'PUT'].includes(e.method)).length, 0);
   assert.ok(h.logs.some(line => line.startsWith('[verify]')));
 });
+
+test('dry-run remains distinguishable from a completed publication', async () => {
+  const h = harness({ sourceAssets: [{ name: 'fixture.apk', size: 12 }],
+    env: { DRY_RUN: '1', GITHUB_OUTPUT: 'output' } });
+  await h.main();
+  assert.ok(h.events.some(e => e.kind === 'output' && e.text === 'sync_status=dry_run\n'));
+  assert.equal(h.events.filter(e => ['POST', 'PATCH', 'PUT'].includes(e.method)).length, 0);
+});

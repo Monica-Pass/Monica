@@ -408,7 +408,7 @@ async function main() {
     process.exitCode = 1;
     return;
   }
-  if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, 'sync_status=complete\n');
+  if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `sync_status=${DRY_RUN ? 'dry_run' : 'complete'}\n`);
   log(`完成：${release.tag_name} 同步成功${DRY_RUN ? '（dry-run，未写入 AtomGit）' : ''}`);
 }
 
