@@ -6,6 +6,10 @@ on:
   release:
     types: [published]
 
+  # GitCode 的只读镜像可能晚于 GitHub Release 更新；就绪后补同步最新正式版。
+  schedule:
+    - cron: '17 * * * *'
+
   # 手动触发（支持直接输入版本号，与 Telegram 推送一致）。
   workflow_dispatch:
     inputs:
@@ -18,7 +22,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: atomgit-release-sync-${{ inputs.release_tag || github.event.release.tag_name }}
+  group: atomgit-release-sync-${{ github.repository }}
   cancel-in-progress: false
 
 jobs:
@@ -34,6 +38,7 @@ jobs:
           ref: ${{ github.event.repository.default_branch }}
           fetch-depth: 1
           persist-credentials: false
+          sparse-checkout: .github/scripts
 
       - name: Set up Node.js 22
         uses: actions/setup-node@v6
@@ -56,6 +61,7 @@ jobs:
           getent hosts api.atomgit.com || true
 
       - name: Sync to AtomGit
+        id: sync
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_OWNER: ${{ github.repository_owner }}

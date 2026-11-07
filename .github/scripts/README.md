@@ -26,7 +26,7 @@ Remove-Item Env:AFDIAN_TOKEN
 
 ## AtomGit Release 同步脚本
 
-`sync-atomgit-release.js` 把 GitHub Release 的标题、说明、预发布标记和附件同步到 AtomGit。发布前通过 Git 核对源标签的实际提交；镜像尚未收到标签时，`sync-atomgit-tag.js` 使用独立的部分克隆，只补推这枚标签及其所需对象，不更新镜像分支。已有标签指向不同提交时停止，不强制覆盖，也不回退到默认分支创建错误版本。重复运行会核验标签、更新说明，并按名称跳过已有附件。
+`sync-atomgit-release.js` 把 GitHub Release 的标题、说明、预发布标记和附件同步到 AtomGit。发布前通过只读 Git 查询核对两端标签的实际提交。GitCode 镜像仓禁止 Git 推送；镜像尚未收到标签时，任务明确输出 `sync_status=pending`，不创建 Release，也不声称同步成功。每小时的补偿任务会在镜像就绪后同步最新正式版。已有标签指向不同提交时停止，不覆盖标签，也不回退到默认分支创建错误版本。重复运行会核验标签、更新说明，并按名称跳过已有附件。
 
 ### GitHub 配置
 
@@ -38,13 +38,14 @@ Remove-Item Env:AFDIAN_TOKEN
 
 可选 Repository variables：`ATOMGIT_REPO_OWNER`／`ATOMGIT_REPO_NAME`（默认 `Monica-Pass`／`Monica`）、`ATOMGIT_API_BASE`（默认 `https://api.atomgit.com`）、`ATOMGIT_HOSTS_HACK=true`（写入实测较快的解析地址，默认关闭）。
 
-Git 端点默认使用 API 域名去掉 `api.` 后的同名仓库；需要独立 Git 域名时设置 `ATOMGIT_GIT_URL`，值为对应仓库不含凭据的 HTTPS URL。现有 `GITCODERELEASE` PAT 需有该仓库的 Git 推送权限；脚本通过用户 API 取得登录名，认证头只在目标 Git 子进程环境中传递，不写入地址、命令参数或 Git 配置文件。创建 Release 始终使用核验过的标签提交，不使用可能已变化的 `target_commitish` 分支名。
+Git 端点默认使用 API 域名去掉 `api.` 后的同名仓库；需要独立 Git 域名时设置 `ATOMGIT_GIT_URL`，值为对应公开仓库不含凭据的 HTTPS URL。Git 查询不传递 API 令牌，也不修改仓库配置。创建 Release 始终使用核验过的标签提交，不使用可能已变化的 `target_commitish` 分支名。
 
 ### 触发方式
 
 工作流 `Sync Releases to AtomGit`：
 
 - 发布新 Release 时自动同步（`release: published`，含草稿转正式发布）。
+- 每小时第 17 分钟检查最新正式版并补偿镜像延迟；GitHub 的定时触发可能延后。运行已完成不等于等待中的 Release 已同步，以步骤摘要的 pending/complete 为准。定时任务不批量回填旧版本。
 - Actions 页面手动 `Run workflow`，必填 `release_tag`（例如 `V1.0.318`）：同步指定版本；历史 Release 与出错重跑都按 tag 逐个触发，与 Telegram 推送的手动方式一致。
 
 历史体量（2026-10-10 实测）：86 个已发布 Release、132 个附件、共 3.82 GiB，按需逐个回填。
@@ -56,6 +57,10 @@ GITHUB_TOKEN="$(gh auth token)" DRY_RUN=1 node .github/scripts/sync-atomgit-rele
 ```
 
 本地要真实写入时去掉 `DRY_RUN=1` 并提供 `ATOMGIT_TOKEN`；不带 AtomGit 令牌的 dry-run 会跳过 AtomGit 查询并在输出里注明。
+
+若持续等待，检查 GitCode 的仓库镜像更新状态；脚本只记录状态、最后成功时间及失败次数，不输出可能包含凭据的镜像配置 URL。镜像停用或上游拉取失败需要在 GitCode 修复；重试不改变镜像设置。
+
+上传结束后回读核对标题、正文、发布状态和附件名称，确认齐全才输出 `sync_status=complete`。回读失败保留已完成内容供下一次幂等重试；此检查不等于对镜像附件下载字节做哈希校验。
 
 同步回归测试（使用本地临时 Git 仓库和模拟 API，不上传文件）：
 

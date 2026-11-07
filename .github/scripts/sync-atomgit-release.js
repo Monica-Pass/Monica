@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* 把 GitHub Release 的标题、说明、预发布标记与附件同步到 AtomGit（与 gitcode 同一后端）。
- * 发布前核验 tag；镜像滞后时只补推该 tag 与所需提交，不覆盖分支或冲突 tag。
+ * 发布前核验只读镜像中的 tag；镜像滞后时明确等待，由定时任务补偿同步。
  * 幂等：已存在的发行版改走更新，已存在的附件跳过。
  * 用法见 .github/scripts/README.md。 */
 
@@ -9,6 +9,7 @@
 const { Readable } = require('node:stream');
 const { setTimeout: sleep } = require('node:timers/promises');
 const https = require('node:https');
+const fs = require('node:fs');
 const { ensureReleaseTag } = require('./sync-atomgit-tag');
 
 const GITHUB_API = 'https://api.github.com';
@@ -146,26 +147,31 @@ async function prepareReleaseTag(tag) {
     || target.pathname !== `/${encodeURIComponent(ATOMGIT_OWNER)}/${encodeURIComponent(ATOMGIT_REPO)}.git`) {
     fail('ATOMGIT_GIT_URL must be the HTTPS URL of the configured AtomGit repository without credentials');
   }
-  let targetEnv = {};
-  if (hasAtomgitToken) {
-    const userUrl = new URL(`${ATOMGIT_API_BASE}/api/v5/user`);
-    userUrl.searchParams.set('access_token', ATOMGIT_TOKEN);
-    const user = await requestJson('AtomGit', userUrl.toString(), { headers: atomgitHeaders() });
-    if (!user?.login || /[\r\n:]/.test(user.login)) fail('AtomGit did not return a valid Git username');
-    // Credentials stay in this child process's environment, scoped to the target repository.
-    // They are never put in a URL, command argument, checkout config or temporary file.
-    targetEnv = {
-      GIT_CONFIG_COUNT: '3',
-      GIT_CONFIG_KEY_0: 'credential.helper', GIT_CONFIG_VALUE_0: '',
-      GIT_CONFIG_KEY_1: `http.${target.href}.extraHeader`,
-      GIT_CONFIG_VALUE_1: `Authorization: Basic ${Buffer.from(`${user.login}:${ATOMGIT_TOKEN}`).toString('base64')}`,
-      GIT_CONFIG_KEY_2: 'http.followRedirects', GIT_CONFIG_VALUE_2: 'false',
-    };
-  }
   return ensureReleaseTag(tag, {
     sourceUrl: `https://github.com/${encodeURIComponent(GITHUB_OWNER)}/${encodeURIComponent(GITHUB_REPO)}.git`,
-    targetUrl: target.href, targetEnv, dryRun: DRY_RUN, log,
+    targetUrl: target.href,
   });
+}
+
+async function reportMirrorPending(tag) {
+  // Do not log mirror URLs or last_error: provider settings may contain credentials.
+  if (hasAtomgitToken) {
+    try {
+      const mirror = await requestJson('AtomGit', atomgitUrl('/repo_remote_mirror'), {
+        headers: atomgitHeaders(), allow404: true,
+      });
+      if (mirror) log(`[mirror] ${tag}: ${JSON.stringify({
+        enabled: mirror.mirroring_enabled, status: mirror.update_status,
+        lastSuccess: mirror.last_successful_update_at, failures: mirror.number_of_failures,
+      })}`);
+    } catch (error) {
+      log(`[warn] ${tag}: mirror status is unavailable: ${redact(error.message)}`);
+    }
+  }
+  const message = `${tag}: 等待 GitCode 镜像收到源标签，尚未同步 Release；每小时自动重试，也可在镜像更新后手动运行。`;
+  log(`[pending] ${message}`);
+  if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, 'sync_status=pending\n');
+  if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${message}\n`);
 }
 
 async function* countingStream(body, progress) {
@@ -332,9 +338,29 @@ async function syncRelease(release) {
     }
     await uploadAsset(tag, asset);
   }
+  if (!DRY_RUN) {
+    for (let attempt = 1; attempt <= 5; attempt++) {
+      const confirmed = await getAtomgitRelease(tag);
+      const names = new Set([...(confirmed?.assets || []), ...(confirmed?.attach_files || [])]
+        .map(item => item?.name || item?.file_name));
+      if (confirmed && confirmed.name === meta.name && (confirmed.body || '') === meta.body
+        && (confirmed.release_status || 'latest') === meta.release_status
+        && assets.every(asset => names.has(asset.name))) {
+        log(`[verify] ${tag}: 发行说明和 ${assets.length} 个附件已回读确认`);
+        return;
+      }
+      if (attempt < 5) await sleep(2000);
+    }
+    fail(`${tag}: AtomGit 回读尚未确认完整的发行说明和附件，未标记同步成功`);
+  }
 }
 
 async function getTargetRelease() {
+  if (!RELEASE_TAG && process.env.GITHUB_EVENT_NAME === 'schedule') {
+    return requestJson('GitHub', `${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/releases/latest`, {
+      headers: githubHeaders(),
+    });
+  }
   if (!RELEASE_TAG) fail('未提供 Release tag（手动触发时必填 release_tag）');
   const release = await getGithubRelease(RELEASE_TAG);
   if (!release) fail(`GitHub 上找不到 Release：${RELEASE_TAG}`);
@@ -374,10 +400,15 @@ async function main() {
   try {
     await syncRelease(release);
   } catch (error) {
+    if (error?.code === 'MIRROR_PENDING') {
+      await reportMirrorPending(release.tag_name);
+      return;
+    }
     console.error(`[fail] ${release.tag_name}: ${redact(error?.message || error)}`);
     process.exitCode = 1;
     return;
   }
+  if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, 'sync_status=complete\n');
   log(`完成：${release.tag_name} 同步成功${DRY_RUN ? '（dry-run，未写入 AtomGit）' : ''}`);
 }
 

@@ -38,15 +38,16 @@ async function fixture(t) {
     options: { sourceUrl: source, targetUrl: target, log() {} } };
 }
 
-test('copy missing annotated tag with its objects; leave mirror main and caller working tree intact', async t => {
+test('a missing mirrored tag is explicitly pending and performs no Git writes', async t => {
   const f = await fixture(t);
-  assert.equal(await ensureReleaseTag(TAG, f.options), f.current);
-  assert.equal(await runGit(['rev-parse', `refs/tags/${TAG}^{commit}`], { cwd: f.target }), f.current);
-  assert.equal(await runGit(['rev-parse', `refs/tags/${TAG}`], { cwd: f.target }), await f.git(['rev-parse', `refs/tags/${TAG}`]));
+  const calls = [];
+  await assert.rejects(ensureReleaseTag(TAG, { ...f.options, git: async (args, opts) => {
+    calls.push(args[0]); return runGit(args, opts);
+  } }), { code: 'MIRROR_PENDING' });
+  assert.deepEqual(calls, ['check-ref-format', 'ls-remote', 'ls-remote']);
   assert.equal(await runGit(['rev-parse', 'main'], { cwd: f.target }), f.old);
-  assert.equal(await runGit(['show', `${TAG}:tracked.txt`], { cwd: f.target }), 'release source');
   assert.equal(await f.git(['status', '--porcelain']), '?? private-untracked.txt');
-  assert.equal(await runGit(['for-each-ref', '--format=%(refname)'], { cwd: f.target }), `refs/heads/main\nrefs/tags/${TAG}`);
+  assert.equal(await runGit(['for-each-ref', '--format=%(refname)'], { cwd: f.target }), 'refs/heads/main');
 });
 
 test('existing correct tag is idempotent and needs no clone or push', async t => {
@@ -66,10 +67,13 @@ test('an existing conflicting tag is not moved or replaced', async t => {
   assert.equal(await runGit(['rev-parse', `refs/tags/${TAG}`], { cwd: f.target }), f.old);
 });
 
-test('dry-run validates but writes no tag or commit', async t => {
+test('a later run becomes ready once the external mirror copies the exact annotated tag', async t => {
   const f = await fixture(t);
-  assert.equal(await ensureReleaseTag(TAG, { ...f.options, dryRun: true }), f.current);
-  assert.equal(await runGit(['tag', '--list'], { cwd: f.target }), '');
+  await assert.rejects(ensureReleaseTag(TAG, f.options), { code: 'MIRROR_PENDING' });
+  // Simulate the provider's mirror updating independently of the release script.
+  await f.git(['push', f.target, `refs/tags/${TAG}:refs/tags/${TAG}`]);
+  assert.equal(await ensureReleaseTag(TAG, f.options), f.current);
+  assert.equal(await runGit(['rev-parse', 'main'], { cwd: f.target }), f.old);
 });
 
 test('missing or invalid source tags fail before writes', async t => {
@@ -79,25 +83,17 @@ test('missing or invalid source tags fail before writes', async t => {
   assert.equal(await runGit(['tag', '--list'], { cwd: f.target }), '');
 });
 
-test('failed push cannot produce success, and its isolated clone is removed', async t => {
+test('a Git network failure is an error, not pending or success', async t => {
   const f = await fixture(t);
-  let clone;
   await assert.rejects(ensureReleaseTag(TAG, { ...f.options, git: async (args, opts) => {
-    if (args[0] === 'clone') clone = args.at(-1);
-    if (args[0] === 'push') throw new Error('write denied');
+    if (args[0] === 'ls-remote') throw new Error('network failed');
     return runGit(args, opts);
-  } }), /write denied/);
-  await assert.rejects(fs.stat(path.dirname(clone)), { code: 'ENOENT' });
+  } }), error => error.message === 'network failed' && error.code !== 'MIRROR_PENDING');
   assert.equal(await runGit(['tag', '--list'], { cwd: f.target }), '');
 });
 
-test('a lost successful push response is accepted only after reading back the tag', async t => {
-  const f = await fixture(t);
-  assert.equal(await ensureReleaseTag(TAG, { ...f.options, git: async (args, opts) => {
-    const out = await runGit(args, opts);
-    if (args[0] === 'push') throw new Error('lost push response');
-    return out;
-  } }), f.current);
+test('malformed tag object is rejected', () => {
+  assert.throws(() => tagFromRefs(`invalid\trefs/tags/${TAG}`, `refs/tags/${TAG}`), /Invalid tag object/);
 });
 
 test('tag refs use exact names and peel annotations; unrelated matching SHA does not erase the tag', () => {
