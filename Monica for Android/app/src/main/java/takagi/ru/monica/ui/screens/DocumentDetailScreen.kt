@@ -142,14 +142,9 @@ fun DocumentDetailScreen(
             bitwardenVaults.firstOrNull { it.id == vaultId }
         }
     }
-    val attachmentBitwardenContext = remember(
-        attachmentBitwardenVault,
-        documentItem?.bitwardenCipherId
-    ) {
-        attachmentBitwardenVault?.let { vault ->
-            viewModel.getAttachmentBitwardenContext(vault, documentItem?.bitwardenCipherId)
-        }
-    }
+    val attachmentBitwardenContext = takagi.ru.monica.attachments.ui.rememberAttachmentBitwardenContext(
+        attachmentBitwardenVault, documentItem?.bitwardenCipherId
+    )
     val attachmentKeePassContext = remember(
         documentItem?.keepassDatabaseId,
         documentItem?.keepassEntryUuid

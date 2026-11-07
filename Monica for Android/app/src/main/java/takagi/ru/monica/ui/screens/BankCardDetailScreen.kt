@@ -152,14 +152,9 @@ fun BankCardDetailScreen(
             bitwardenVaults.firstOrNull { it.id == vaultId }
         }
     }
-    val attachmentBitwardenContext = remember(
-        attachmentBitwardenVault,
-        cardItem?.bitwardenCipherId
-    ) {
-        attachmentBitwardenVault?.let { vault ->
-            viewModel.getAttachmentBitwardenContext(vault, cardItem?.bitwardenCipherId)
-        }
-    }
+    val attachmentBitwardenContext = takagi.ru.monica.attachments.ui.rememberAttachmentBitwardenContext(
+        attachmentBitwardenVault, cardItem?.bitwardenCipherId
+    )
     val attachmentKeePassContext = remember(cardItem?.keepassDatabaseId, cardItem?.keepassEntryUuid) {
         val databaseId = cardItem?.keepassDatabaseId
         val entryUuid = cardItem?.keepassEntryUuid?.takeIf { it.isNotBlank() }

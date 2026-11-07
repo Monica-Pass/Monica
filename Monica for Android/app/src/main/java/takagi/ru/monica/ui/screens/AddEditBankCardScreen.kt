@@ -247,14 +247,9 @@ fun AddEditBankCardScreen(
             bitwardenVaults.firstOrNull { it.id == vaultId }
         }
     }
-    val attachmentBitwardenContext = remember(
-        attachmentBitwardenVault,
-        existingCardItem?.bitwardenCipherId
-    ) {
-        attachmentBitwardenVault?.let { vault ->
-            viewModel.getAttachmentBitwardenContext(vault, existingCardItem?.bitwardenCipherId)
-        }
-    }
+    val attachmentBitwardenContext = takagi.ru.monica.attachments.ui.rememberAttachmentBitwardenContext(
+        attachmentBitwardenVault, existingCardItem?.bitwardenCipherId
+    )
     val attachmentKeePassContext = remember(
         existingCardItem?.keepassDatabaseId,
         existingCardItem?.keepassEntryUuid

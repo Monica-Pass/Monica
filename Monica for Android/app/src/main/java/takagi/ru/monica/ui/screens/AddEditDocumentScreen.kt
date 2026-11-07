@@ -233,14 +233,9 @@ fun AddEditDocumentScreen(
             bitwardenVaults.firstOrNull { it.id == vaultId }
         }
     }
-    val attachmentBitwardenContext = remember(
-        attachmentBitwardenVault,
-        existingDocumentItem?.bitwardenCipherId
-    ) {
-        attachmentBitwardenVault?.let { vault ->
-            viewModel.getAttachmentBitwardenContext(vault, existingDocumentItem?.bitwardenCipherId)
-        }
-    }
+    val attachmentBitwardenContext = takagi.ru.monica.attachments.ui.rememberAttachmentBitwardenContext(
+        attachmentBitwardenVault, existingDocumentItem?.bitwardenCipherId
+    )
     val attachmentKeePassContext = remember(
         existingDocumentItem?.keepassDatabaseId,
         existingDocumentItem?.keepassEntryUuid

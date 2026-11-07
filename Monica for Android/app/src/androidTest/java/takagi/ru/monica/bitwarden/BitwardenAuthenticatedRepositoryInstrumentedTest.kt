@@ -79,6 +79,23 @@ class BitwardenAuthenticatedRepositoryInstrumentedTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
     private val context = instrumentation.targetContext
 
+    @Test fun attachmentContextCanBePreparedFromMainWithoutQueryingRoomOnMain(): Unit = runBlocking {
+        withFixture { f ->
+            val original = f.loginSuccessfully()
+            val handle = withContext(Dispatchers.Main) {
+                requireNotNull(f.repository.getAttachmentBitwardenContext(original, CIPHER_ID))
+            }
+            try {
+                assertEquals(CIPHER_ID, handle.cipherId)
+                handle.requireCurrent()
+                assertEquals(original, f.row())
+                assertEquals(0, f.oldCipherRequests.get())
+                assertEquals(0, f.refreshRequests.get())
+                f.assertUserKey(original.id)
+            } finally { handle.wrappingKey.clear() }
+        }
+    }
+
     @Test fun concurrentOldBearerRequestsShareOneRefreshAndPublishRotatedRoomCredentials(): Unit = runBlocking {
         withFixture { f -> coroutineScope {
             val original = f.loginSuccessfully()
@@ -228,7 +245,7 @@ class BitwardenAuthenticatedRepositoryInstrumentedTest {
         }
     }
 
-    private suspend fun withFixture(block: suspend (Fixture) -> Unit) = withContext(Dispatchers.IO) {
+    internal suspend fun withFixture(block: suspend (Fixture) -> Unit) = withContext(Dispatchers.IO) {
         val fixture = Fixture()
         var failure: Throwable? = null
         try { fixture.initialize(); block(fixture) }
@@ -239,15 +256,15 @@ class BitwardenAuthenticatedRepositoryInstrumentedTest {
         }
     }
 
-    private enum class WriteFailure { DISCONNECT, SERVICE_UNAVAILABLE }
+    internal enum class WriteFailure { DISCONNECT, SERVICE_UNAVAILABLE }
 
-    private class HeldRefresh {
+    internal class HeldRefresh {
         val entered = CountDownLatch(1)
         val release = CountDownLatch(1)
         fun awaitEntered() = assertTrue("Refresh never reached the owned TLS server", entered.await(25, TimeUnit.SECONDS))
     }
 
-    private inner class Fixture {
+    internal inner class Fixture {
         val repository = BitwardenRepository(context)
         private val database = PasswordDatabase.getDatabase(context)
         private val dao = database.bitwardenVaultDao()
@@ -405,7 +422,7 @@ class BitwardenAuthenticatedRepositoryInstrumentedTest {
             }
         }
 
-        fun attachmentContext(vault: BitwardenVault): AttachmentFacade.BitwardenContext =
+        suspend fun attachmentContext(vault: BitwardenVault): AttachmentFacade.BitwardenContext =
             requireNotNull(repository.getAttachmentBitwardenContext(vault, CIPHER_ID))
 
         suspend fun row(): BitwardenVault = dao.getAllVaults().filter { it.email == email }.single()

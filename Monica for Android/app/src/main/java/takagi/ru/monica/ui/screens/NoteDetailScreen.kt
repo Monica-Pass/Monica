@@ -138,14 +138,9 @@ fun NoteDetailScreen(
             bitwardenVaults.firstOrNull { it.id == vaultId }
         }
     }
-    val attachmentBitwardenContext = remember(
-        attachmentBitwardenVault,
-        noteItem?.bitwardenCipherId
-    ) {
-        attachmentBitwardenVault?.let { vault ->
-            viewModel.getAttachmentBitwardenContext(vault, noteItem?.bitwardenCipherId)
-        }
-    }
+    val attachmentBitwardenContext = takagi.ru.monica.attachments.ui.rememberAttachmentBitwardenContext(
+        attachmentBitwardenVault, noteItem?.bitwardenCipherId
+    )
     val attachmentKeePassContext = remember(noteItem?.keepassDatabaseId, noteItem?.keepassEntryUuid) {
         val databaseId = noteItem?.keepassDatabaseId
         val entryUuid = noteItem?.keepassEntryUuid?.takeIf { it.isNotBlank() }

@@ -4440,7 +4440,7 @@ class PasswordViewModel internal constructor(
      *
      * 返回 null 表示 vault 未解锁或会话无效。
      */
-    fun getAttachmentBitwardenContext(
+    suspend fun getAttachmentBitwardenContext(
         vault: BitwardenVault,
         cipherId: String?
     ): takagi.ru.monica.attachments.facade.AttachmentFacade.BitwardenContext? {

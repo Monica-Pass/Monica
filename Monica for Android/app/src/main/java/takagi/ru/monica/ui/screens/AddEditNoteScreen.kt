@@ -208,14 +208,9 @@ fun AddEditNoteScreen(
             bitwardenVaults.firstOrNull { it.id == vaultId }
         }
     }
-    val attachmentBitwardenContext = remember(
-        attachmentBitwardenVault,
-        attachmentOwnerItem?.bitwardenCipherId
-    ) {
-        attachmentBitwardenVault?.let { vault ->
-            viewModel.getAttachmentBitwardenContext(vault, attachmentOwnerItem?.bitwardenCipherId)
-        }
-    }
+    val attachmentBitwardenContext = takagi.ru.monica.attachments.ui.rememberAttachmentBitwardenContext(
+        attachmentBitwardenVault, attachmentOwnerItem?.bitwardenCipherId
+    )
     val attachmentKeePassContext = remember(
         attachmentOwnerItem?.keepassDatabaseId,
         attachmentOwnerItem?.keepassEntryUuid

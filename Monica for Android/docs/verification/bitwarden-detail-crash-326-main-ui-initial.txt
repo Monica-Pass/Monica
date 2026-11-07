@@ -1,0 +1,227 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest:
+INSTRUMENTATION_STATUS: test=accountLockRemovesReadyContext
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=accountLockRemovesReadyContext
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=switchingCipherStartsEmptyAndDisposalClearsTheOwnedKey
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Preparation did not reach Room
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest$TransportReadGate.awaitEntered(BitwardenAttachmentContextUiTest.kt:207)
+	at takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest$switchingCipherStartsEmptyAndDisposalClearsTheOwnedKey$1$1.invokeSuspend(BitwardenAttachmentContextUiTest.kt:114)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+INSTRUMENTATION_STATUS: stream=
+Error in switchingCipherStartsEmptyAndDisposalClearsTheOwnedKey(takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest):
+java.lang.AssertionError: Preparation did not reach Room
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest$TransportReadGate.awaitEntered(BitwardenAttachmentContextUiTest.kt:207)
+	at takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest$switchingCipherStartsEmptyAndDisposalClearsTheOwnedKey$1$1.invokeSuspend(BitwardenAttachmentContextUiTest.kt:114)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+INSTRUMENTATION_STATUS: test=switchingCipherStartsEmptyAndDisposalClearsTheOwnedKey
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cancelledPreparationPreservesAccountAndCanBeRetried
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cancelledPreparationPreservesAccountAndCanBeRetried
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=globalLockWhileRoomReadIsPendingCannotPublishLateContext
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=globalLockWhileRoomReadIsPendingCannotPublishLateContext
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=realPasswordDetailCanOpenReturnAndReopenWithoutDownloadingAttachments
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failed: performScrollToNode(Text + InputText + EditableText contains 'synthetic-detail.pdf' (ignoreCase: false))
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (ScrollToIndex is defined)
+Nodes found:
+1) Node #41 at (l=0.0, t=231.0, r=1080.0, b=2058.0)px
+CollectionInfo = 'CollectionInfo(rowCount=9, columnCount=1)'
+IsTraversalGroup = 'true'
+Shape = 'androidx.compose.foundation.VerticalScrollableClipShape@e087136'
+VerticalScrollAxisRange = 'ScrollAxisRange(value=0.0, maxValue=100.0, reverseScrolling=false)'
+Actions = [GetScrollViewportLength, IndexForKey, ScrollBy, ScrollByOffset, ScrollToIndex]
+Has 8 children, 2 siblings
+2) Node #115 at (l=32.0, t=1049.0, r=1048.0, b=1616.0)px, Tag: 'attachment_carousel_track'
+CollectionInfo = 'CollectionInfo(rowCount=1, columnCount=1)'
+HorizontalScrollAxisRange = 'ScrollAxisRange(value=0.0, maxValue=0.0, reverseScrolling=false)'
+IsTraversalGroup = 'true'
+Role = 'Carousel'
+Shape = 'androidx.compose.foundation.HorizontalScrollableClipShape@1dad837'
+Actions = [GetScrollViewportLength, IndexForKey, PageLeft, PageRight, ScrollBy, ScrollByOffset, ScrollToIndex]
+Has 1 child, 4 siblings
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.scrollToMatchingDescendantOrReturnScrollable(Actions.kt:276)
+	at androidx.compose.ui.test.ActionsKt.performScrollToNode(Actions.kt:235)
+	at takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest$realPasswordDetailCanOpenReturnAndReopenWithoutDownloadingAttachments$1$1.invokeSuspend(BitwardenAttachmentContextUiTest.kt:74)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+INSTRUMENTATION_STATUS: stream=
+Error in realPasswordDetailCanOpenReturnAndReopenWithoutDownloadingAttachments(takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest):
+java.lang.AssertionError: Failed: performScrollToNode(Text + InputText + EditableText contains 'synthetic-detail.pdf' (ignoreCase: false))
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (ScrollToIndex is defined)
+Nodes found:
+1) Node #41 at (l=0.0, t=231.0, r=1080.0, b=2058.0)px
+CollectionInfo = 'CollectionInfo(rowCount=9, columnCount=1)'
+IsTraversalGroup = 'true'
+Shape = 'androidx.compose.foundation.VerticalScrollableClipShape@e087136'
+VerticalScrollAxisRange = 'ScrollAxisRange(value=0.0, maxValue=100.0, reverseScrolling=false)'
+Actions = [GetScrollViewportLength, IndexForKey, ScrollBy, ScrollByOffset, ScrollToIndex]
+Has 8 children, 2 siblings
+2) Node #115 at (l=32.0, t=1049.0, r=1048.0, b=1616.0)px, Tag: 'attachment_carousel_track'
+CollectionInfo = 'CollectionInfo(rowCount=1, columnCount=1)'
+HorizontalScrollAxisRange = 'ScrollAxisRange(value=0.0, maxValue=0.0, reverseScrolling=false)'
+IsTraversalGroup = 'true'
+Role = 'Carousel'
+Shape = 'androidx.compose.foundation.HorizontalScrollableClipShape@1dad837'
+Actions = [GetScrollViewportLength, IndexForKey, PageLeft, PageRight, ScrollBy, ScrollByOffset, ScrollToIndex]
+Has 1 child, 4 siblings
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.scrollToMatchingDescendantOrReturnScrollable(Actions.kt:276)
+	at androidx.compose.ui.test.ActionsKt.performScrollToNode(Actions.kt:235)
+	at takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest$realPasswordDetailCanOpenReturnAndReopenWithoutDownloadingAttachments$1$1.invokeSuspend(BitwardenAttachmentContextUiTest.kt:74)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+INSTRUMENTATION_STATUS: test=realPasswordDetailCanOpenReturnAndReopenWithoutDownloadingAttachments
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 32.131
+There were 2 failures:
+1) switchingCipherStartsEmptyAndDisposalClearsTheOwnedKey(takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest)
+java.lang.AssertionError: Preparation did not reach Room
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest$TransportReadGate.awaitEntered(BitwardenAttachmentContextUiTest.kt:207)
+	at takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest$switchingCipherStartsEmptyAndDisposalClearsTheOwnedKey$1$1.invokeSuspend(BitwardenAttachmentContextUiTest.kt:114)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+2) realPasswordDetailCanOpenReturnAndReopenWithoutDownloadingAttachments(takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest)
+java.lang.AssertionError: Failed: performScrollToNode(Text + InputText + EditableText contains 'synthetic-detail.pdf' (ignoreCase: false))
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (ScrollToIndex is defined)
+Nodes found:
+1) Node #41 at (l=0.0, t=231.0, r=1080.0, b=2058.0)px
+CollectionInfo = 'CollectionInfo(rowCount=9, columnCount=1)'
+IsTraversalGroup = 'true'
+Shape = 'androidx.compose.foundation.VerticalScrollableClipShape@e087136'
+VerticalScrollAxisRange = 'ScrollAxisRange(value=0.0, maxValue=100.0, reverseScrolling=false)'
+Actions = [GetScrollViewportLength, IndexForKey, ScrollBy, ScrollByOffset, ScrollToIndex]
+Has 8 children, 2 siblings
+2) Node #115 at (l=32.0, t=1049.0, r=1048.0, b=1616.0)px, Tag: 'attachment_carousel_track'
+CollectionInfo = 'CollectionInfo(rowCount=1, columnCount=1)'
+HorizontalScrollAxisRange = 'ScrollAxisRange(value=0.0, maxValue=0.0, reverseScrolling=false)'
+IsTraversalGroup = 'true'
+Role = 'Carousel'
+Shape = 'androidx.compose.foundation.HorizontalScrollableClipShape@1dad837'
+Actions = [GetScrollViewportLength, IndexForKey, PageLeft, PageRight, ScrollBy, ScrollByOffset, ScrollToIndex]
+Has 1 child, 4 siblings
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.scrollToMatchingDescendantOrReturnScrollable(Actions.kt:276)
+	at androidx.compose.ui.test.ActionsKt.performScrollToNode(Actions.kt:235)
+	at takagi.ru.monica.bitwarden.BitwardenAttachmentContextUiTest$realPasswordDetailCanOpenReturnAndReopenWithoutDownloadingAttachments$1$1.invokeSuspend(BitwardenAttachmentContextUiTest.kt:74)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:113)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:589)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:823)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:720)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:707)
+
+FAILURES!!!
+Tests run: 5,  Failures: 2
+
+
+INSTRUMENTATION_CODE: -1

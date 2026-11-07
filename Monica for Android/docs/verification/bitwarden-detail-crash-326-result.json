@@ -1,0 +1,91 @@
+{
+  "version": "1.0.325",
+  "released": false,
+  "versionCode": {
+    "main": 12,
+    "fd": 32
+  },
+  "baseline": {
+    "expectedFailure": true,
+    "matchingRoomMainThreadException": true,
+    "runnerSeconds": 2.366
+  },
+  "main": {
+    "buildSeconds": 788.806,
+    "testRebuildSeconds": 169.642,
+    "jvm": {
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "device": {
+      "auth01": {
+        "tests": 7,
+        "runnerSeconds": 8.009
+      },
+      "ui02": {
+        "tests": 5,
+        "runnerSeconds": 22.085
+      },
+      "account01": {
+        "tests": 10,
+        "runnerSeconds": 13.56
+      }
+    }
+  },
+  "fd": {
+    "buildSeconds": 844.54,
+    "jvm": {
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "device": {
+      "focused01": {
+        "tests": 12,
+        "runnerSeconds": 22.585
+      },
+      "account01": {
+        "tests": 10,
+        "runnerSeconds": 8.305
+      }
+    }
+  },
+  "sourceInputsStillMatch": {
+    "main": true,
+    "fd": true
+  },
+  "sharedFiles": 15,
+  "firstMainUiBatch": {
+    "passed": 3,
+    "total": 5,
+    "failures": "Frame advancement in the test gate and ambiguous vertical/horizontal scroll selector; test-only corrections, original assertions retained."
+  },
+  "mainVisualRerun": {
+    "tests": 1,
+    "runnerSeconds": 8.536,
+    "screenshotInspected": true
+  },
+  "limitations": [
+    "Synthetic API32/x86_64; reported OEM/API37 not available locally",
+    "No new R8 validation; same defect reproduced with Debug baseline",
+    "Partial sync warnings were not diagnosed or fixed"
+  ],
+  "cleanup": {
+    "ownedUserRemoved": true,
+    "originalUsersPreserved": true,
+    "startedEmulatorStopped": true,
+    "avdConfigurationAndDataPreserved": true
+  },
+  "metadataScriptTestsPassed": 6,
+  "validatedBuildVersion": "1.0.326",
+  "validatedBuildVersionCode": {
+    "main": 12,
+    "fd": 33
+  },
+  "versionOnlyCorrectionAfterValidation": true,
+  "rebuiltAfterVersionCorrection": false,
+  "releaseStatus": "Unpublished fix for the existing 1.0.325 release"
+}

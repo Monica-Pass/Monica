@@ -1148,7 +1148,7 @@ class BitwardenRepository(private val context: Context) {
      * @param vault BitwardenVault 实体（调用方通常已通过 Flow 持有）
      * @param cipherId Bitwarden cipherId（来自 [takagi.ru.monica.data.PasswordEntry.bitwardenCipherId]）
      */
-    fun getAttachmentBitwardenContext(
+    suspend fun getAttachmentBitwardenContext(
         vault: BitwardenVault,
         cipherId: String?
     ): takagi.ru.monica.attachments.facade.AttachmentFacade.BitwardenContext? {
@@ -1156,33 +1156,56 @@ class BitwardenRepository(private val context: Context) {
         val accessToken = accessTokenCache[vault.id] ?: return null
         val wrappingKey = symmetricKeyCache[vault.id] ?: return null
         val requireCurrent = attachmentGuard(vault, wrappingKey, accessToken)
-        val vaultApi = apiManager.getVaultApi(vault)
-        val httpClient = apiManager.getOkHttpClient(vault)
-        val isOnline = isNetworkAvailable()
-        return takagi.ru.monica.attachments.facade.AttachmentFacade.BitwardenContext(
-            vaultApi = vaultApi,
-            httpClient = httpClient,
-            accessToken = accessToken,
-            cipherId = cipherId,
-            wrappingKey = SymmetricCryptoKey(
-                encKey = wrappingKey.encKey.copyOf(),
-                macKey = wrappingKey.macKey.copyOf()
-            ),
-            isOnline = isOnline,
-            wrappingKeyProvider = {
-                withContext(Dispatchers.IO) {
+        val appGeneration = takagi.ru.monica.security.SessionManager.lockGeneration.value
+        val vaultGeneration = getVaultSessionGeneration(vault.id)
+        var prepared: takagi.ru.monica.attachments.facade.AttachmentFacade.BitwardenContext? = null
+        try {
+            val result = withContext(Dispatchers.IO) {
+                requireCurrent()
+                val vaultApi = apiManager.getVaultApi(vault)
+                val httpClient = apiManager.getOkHttpClient(vault)
+                val isOnline = isNetworkAvailable()
+                takagi.ru.monica.attachments.facade.AttachmentFacade.BitwardenContext(
+                    vaultApi = vaultApi,
+                    httpClient = httpClient,
+                    accessToken = accessToken,
+                    cipherId = cipherId,
+                    wrappingKey = SymmetricCryptoKey(
+                        encKey = wrappingKey.encKey.copyOf(),
+                        macKey = wrappingKey.macKey.copyOf()
+                    ),
+                    isOnline = isOnline,
+                    wrappingKeyProvider = {
+                        withContext(Dispatchers.IO) {
+                            requireCurrent()
+                            val resolved = takagi.ru.monica.bitwarden.service.BitwardenAttachmentKeyResolver.resolve(
+                                vaultApi, accessToken, cipherId, wrappingKey)
+                            try { requireCurrent(); resolved }
+                            catch (error: Exception) { resolved.clear(); throw error }
+                        }
+                    },
+                    clientForUrl = { raw -> requireCurrent(); apiManager.getTransferClient(vault, raw) },
+                    requireCurrent = requireCurrent,
+                    withPublication = { action -> publishAttachment(vault, requireCurrent, action) },
+                    recoveryBinding = { owner -> takagi.ru.monica.attachments.executor.BitwardenAttachmentRecoveryStore.binding(vault, cipherId, owner) },
+                ).also {
+                    prepared = it
                     requireCurrent()
-                    val resolved = takagi.ru.monica.bitwarden.service.BitwardenAttachmentKeyResolver.resolve(
-                        vaultApi, accessToken, cipherId, wrappingKey)
-                    try { requireCurrent(); resolved }
-                    catch (error: Exception) { resolved.clear(); throw error }
+                    currentCoroutineContext().ensureActive()
                 }
-            },
-            clientForUrl = { raw -> requireCurrent(); apiManager.getTransferClient(vault, raw) },
-            requireCurrent = requireCurrent,
-            withPublication = { action -> publishAttachment(vault, requireCurrent, action) },
-            recoveryBinding = { owner -> takagi.ru.monica.attachments.executor.BitwardenAttachmentRecoveryStore.binding(vault, cipherId, owner) },
-        )
+            }
+            check(takagi.ru.monica.security.SessionManager.isUnlocked.value &&
+                takagi.ru.monica.security.SessionManager.lockGeneration.value == appGeneration &&
+                getVaultSessionGeneration(vault.id) == vaultGeneration &&
+                isVaultUnlocked(vault.id) && symmetricKeyCache[vault.id] === wrappingKey) {
+                "Bitwarden attachment session changed"
+            }
+            return result
+        } catch (error: Exception) {
+            // withContext can discard an already prepared result on prompt cancellation.
+            prepared?.wrappingKey?.clear()
+            throw error
+        }
     }
 
     /**

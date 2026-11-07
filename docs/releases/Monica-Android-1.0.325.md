@@ -1,6 +1,12 @@
+> **旧包已撤销：`Monica-Android-arm64-v8a-1.0.325-26110712-24.APK`。请下载修复后的 `Monica-Android-arm64-v8a-1.0.325-26110712-01.APK`。本次 `-01` 才是修复版，不要按尾号大小判断新旧。**
+>
+> **The `-24` build has been withdrawn. The fixed replacement is `-01`, despite its smaller suffix.**
+
 # Monica Android 1.0.325
 
 ## 中文
+
+- 修复打开 Bitwarden 密码、笔记、银行卡和证件详情或编辑页时可能闪退的问题。
 
 - 修复移动/复制目标中混入其他数据库文件夹的问题：Monica 分类与主列表采用相同的归属范围，切库后等待目标库的文件夹加载；已消失的目标和过期确认不能继续执行。保留有效空分类、同名分类及原数据库内容。
 
@@ -68,6 +74,8 @@
 - 加强同步修订冲突处理及账号安全状态变化后的重新认证，保留较新的本地修改。
 
 ## English
+
+- Fix a crash when opening Bitwarden login, note, bank card, or identity details and editors.
 
 - Fix move/copy destinations showing folders from other databases. Monica categories use the same ownership scope as the main list, and switching databases waits for that database’s folders. Missing targets and stale confirmations cannot proceed. Preserve valid empty and same-name categories and existing database contents.
 

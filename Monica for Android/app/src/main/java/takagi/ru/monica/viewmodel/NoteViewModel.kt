@@ -112,7 +112,7 @@ class NoteViewModel internal constructor(
         vaultId?.let { bitwardenRepository?.requestLocalMutationSync(it) }
     }
 
-    fun getAttachmentBitwardenContext(
+    suspend fun getAttachmentBitwardenContext(
         vault: BitwardenVault,
         cipherId: String?
     ): takagi.ru.monica.attachments.facade.AttachmentFacade.BitwardenContext? {

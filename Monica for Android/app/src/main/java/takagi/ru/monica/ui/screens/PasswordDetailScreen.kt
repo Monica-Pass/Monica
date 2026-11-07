@@ -998,11 +998,9 @@ fun PasswordDetailScreen(
                     val bwVault = entry.bitwardenVaultId?.let { vaultId ->
                         bitwardenVaults.firstOrNull { it.id == vaultId }
                     }
-                    val bwContext = if (bwVault != null) {
-                        remember(bwVault, entry.bitwardenCipherId) {
-                            viewModel.getAttachmentBitwardenContext(bwVault, entry.bitwardenCipherId)
-                        }
-                    } else null
+                    val bwContext = takagi.ru.monica.attachments.ui.rememberAttachmentBitwardenContext(
+                        bwVault, entry.bitwardenCipherId
+                    )
                     val kpContext = if (entry.keepassDatabaseId != null && !entry.keepassEntryUuid.isNullOrBlank()) {
                         remember(entry.keepassDatabaseId, entry.keepassEntryUuid) {
                             AttachmentFacade.KeePassContext(

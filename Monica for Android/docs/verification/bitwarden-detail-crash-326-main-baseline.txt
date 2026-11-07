@@ -1,0 +1,113 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAuthenticatedRepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenAuthenticatedRepositoryInstrumentedTest:
+INSTRUMENTATION_STATUS: test=attachmentContextCanBePreparedFromMainWithoutQueryingRoomOnMain
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenAuthenticatedRepositoryInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Cannot access database on the main thread since it may potentially lock the UI for a long period of time.
+	at androidx.room.RoomDatabase.assertNotMainThread(RoomDatabase.kt:439)
+	at androidx.room.RoomDatabase.query(RoomDatabase.kt:479)
+	at androidx.room.util.DBUtil.query(DBUtil.kt:75)
+	at takagi.ru.monica.data.bitwarden.BitwardenVaultDao_Impl.getTransportState(BitwardenVaultDao_Impl.java:1835)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository.isTransportCurrent(BitwardenRepository.kt:295)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository.requestSession$lambda$88(BitwardenRepository.kt:2206)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository.$r8$lambda$i9D-gVxtG3eG6OWrOcSo3IMBT3c(Unknown Source:0)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository$$ExternalSyntheticLambda40.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository.requestSession(BitwardenRepository.kt:2212)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository.apiManager$lambda$18(BitwardenRepository.kt:280)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository.$r8$lambda$h6srBpudIg6qEIAth6b6fwCaI6U(Unknown Source:0)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository$$ExternalSyntheticLambda27.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.bitwarden.api.BitwardenApiManager.protectVaultApi(BitwardenApiFactory.kt:488)
+	at takagi.ru.monica.bitwarden.api.BitwardenApiManager.getVaultApi(BitwardenApiFactory.kt:484)
+	at takagi.ru.monica.bitwarden.api.BitwardenApiManager.getVaultApi$default(BitwardenApiFactory.kt:475)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository.getAttachmentBitwardenContext(BitwardenRepository.kt:1159)
+	at takagi.ru.monica.bitwarden.BitwardenAuthenticatedRepositoryInstrumentedTest$attachmentContextCanBePreparedFromMainWithoutQueryingRoomOnMain$1$1$handle$1.invokeSuspend(BitwardenAuthenticatedRepositoryInstrumentedTest.kt:86)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: stream=
+Error in attachmentContextCanBePreparedFromMainWithoutQueryingRoomOnMain(takagi.ru.monica.bitwarden.BitwardenAuthenticatedRepositoryInstrumentedTest):
+java.lang.IllegalStateException: Cannot access database on the main thread since it may potentially lock the UI for a long period of time.
+	at androidx.room.RoomDatabase.assertNotMainThread(RoomDatabase.kt:439)
+	at androidx.room.RoomDatabase.query(RoomDatabase.kt:479)
+	at androidx.room.util.DBUtil.query(DBUtil.kt:75)
+	at takagi.ru.monica.data.bitwarden.BitwardenVaultDao_Impl.getTransportState(BitwardenVaultDao_Impl.java:1835)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository.isTransportCurrent(BitwardenRepository.kt:295)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository.requestSession$lambda$88(BitwardenRepository.kt:2206)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository.$r8$lambda$i9D-gVxtG3eG6OWrOcSo3IMBT3c(Unknown Source:0)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository$$ExternalSyntheticLambda40.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository.requestSession(BitwardenRepository.kt:2212)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository.apiManager$lambda$18(BitwardenRepository.kt:280)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository.$r8$lambda$h6srBpudIg6qEIAth6b6fwCaI6U(Unknown Source:0)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository$$ExternalSyntheticLambda27.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.bitwarden.api.BitwardenApiManager.protectVaultApi(BitwardenApiFactory.kt:488)
+	at takagi.ru.monica.bitwarden.api.BitwardenApiManager.getVaultApi(BitwardenApiFactory.kt:484)
+	at takagi.ru.monica.bitwarden.api.BitwardenApiManager.getVaultApi$default(BitwardenApiFactory.kt:475)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository.getAttachmentBitwardenContext(BitwardenRepository.kt:1159)
+	at takagi.ru.monica.bitwarden.BitwardenAuthenticatedRepositoryInstrumentedTest$attachmentContextCanBePreparedFromMainWithoutQueryingRoomOnMain$1$1$handle$1.invokeSuspend(BitwardenAuthenticatedRepositoryInstrumentedTest.kt:86)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+INSTRUMENTATION_STATUS: test=attachmentContextCanBePreparedFromMainWithoutQueryingRoomOnMain
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 2.366
+There was 1 failure:
+1) attachmentContextCanBePreparedFromMainWithoutQueryingRoomOnMain(takagi.ru.monica.bitwarden.BitwardenAuthenticatedRepositoryInstrumentedTest)
+java.lang.IllegalStateException: Cannot access database on the main thread since it may potentially lock the UI for a long period of time.
+	at androidx.room.RoomDatabase.assertNotMainThread(RoomDatabase.kt:439)
+	at androidx.room.RoomDatabase.query(RoomDatabase.kt:479)
+	at androidx.room.util.DBUtil.query(DBUtil.kt:75)
+	at takagi.ru.monica.data.bitwarden.BitwardenVaultDao_Impl.getTransportState(BitwardenVaultDao_Impl.java:1835)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository.isTransportCurrent(BitwardenRepository.kt:295)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository.requestSession$lambda$88(BitwardenRepository.kt:2206)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository.$r8$lambda$i9D-gVxtG3eG6OWrOcSo3IMBT3c(Unknown Source:0)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository$$ExternalSyntheticLambda40.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository.requestSession(BitwardenRepository.kt:2212)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository.apiManager$lambda$18(BitwardenRepository.kt:280)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository.$r8$lambda$h6srBpudIg6qEIAth6b6fwCaI6U(Unknown Source:0)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository$$ExternalSyntheticLambda27.invoke(D8$$SyntheticClass:0)
+	at takagi.ru.monica.bitwarden.api.BitwardenApiManager.protectVaultApi(BitwardenApiFactory.kt:488)
+	at takagi.ru.monica.bitwarden.api.BitwardenApiManager.getVaultApi(BitwardenApiFactory.kt:484)
+	at takagi.ru.monica.bitwarden.api.BitwardenApiManager.getVaultApi$default(BitwardenApiFactory.kt:475)
+	at takagi.ru.monica.bitwarden.repository.BitwardenRepository.getAttachmentBitwardenContext(BitwardenRepository.kt:1159)
+	at takagi.ru.monica.bitwarden.BitwardenAuthenticatedRepositoryInstrumentedTest$attachmentContextCanBePreparedFromMainWithoutQueryingRoomOnMain$1$1$handle$1.invokeSuspend(BitwardenAuthenticatedRepositoryInstrumentedTest.kt:86)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at android.os.Handler.handleCallback(Handler.java:938)
+	at android.os.Handler.dispatchMessage(Handler.java:99)
+	at android.os.Looper.loopOnce(Looper.java:201)
+	at android.os.Looper.loop(Looper.java:288)
+	at android.app.ActivityThread.main(ActivityThread.java:7870)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1003)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1
