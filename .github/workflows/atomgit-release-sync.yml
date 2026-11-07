@@ -40,6 +40,9 @@ jobs:
         with:
           node-version: 22
 
+      - name: Test release synchronization
+        run: node --test .github/scripts/sync-atomgit-*.test.js
+
       # 可选加速：文章实测的 AtomGit 解析地址。默认关闭，
       # 需要在 Settings → Variables 里设置 ATOMGIT_HOSTS_HACK=true 才启用。
       - name: Point AtomGit hosts to fast resolver (optional)
@@ -61,5 +64,6 @@ jobs:
           ATOMGIT_API_BASE: ${{ vars.ATOMGIT_API_BASE || 'https://api.atomgit.com' }}
           ATOMGIT_OWNER: ${{ vars.ATOMGIT_REPO_OWNER || 'Monica-Pass' }}
           ATOMGIT_REPO: ${{ vars.ATOMGIT_REPO_NAME || 'Monica' }}
+          ATOMGIT_GIT_URL: ${{ vars.ATOMGIT_GIT_URL }}
           RELEASE_TAG: ${{ inputs.release_tag || github.event.release.tag_name }}
         run: node .github/scripts/sync-atomgit-release.js

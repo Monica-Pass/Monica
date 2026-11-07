@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* 把 GitHub Release 的标题、说明、预发布标记与附件同步到 AtomGit（与 gitcode 同一后端）。
- * 代码与 tag 已由 AtomGit 自动镜像，本脚本只补 Release 本体。
+ * 发布前核验 tag；镜像滞后时只补推该 tag 与所需提交，不覆盖分支或冲突 tag。
  * 幂等：已存在的发行版改走更新，已存在的附件跳过。
  * 用法见 .github/scripts/README.md。 */
 
@@ -9,6 +9,7 @@
 const { Readable } = require('node:stream');
 const { setTimeout: sleep } = require('node:timers/promises');
 const https = require('node:https');
+const { ensureReleaseTag } = require('./sync-atomgit-tag');
 
 const GITHUB_API = 'https://api.github.com';
 const USER_AGENT = 'monica-atomgit-release-sync';
@@ -38,8 +39,11 @@ const hasAtomgitToken = Boolean(ATOMGIT_TOKEN);
 
 function redact(value) {
   let text = String(value ?? '');
-  if (ATOMGIT_TOKEN) text = text.split(ATOMGIT_TOKEN).join('***');
-  return text.replace(/access_token=[^&\s'"]+/g, 'access_token=***');
+  for (const token of [ATOMGIT_TOKEN, GITHUB_TOKEN]) {
+    if (token) text = text.split(token).join('***');
+  }
+  return text.replace(/access_token=[^&\s'"]+/g, 'access_token=***')
+    .replace(/Authorization:\s*(Basic|Bearer)\s+[^\s'"]+/gi, 'Authorization: $1 ***');
 }
 
 function fail(message) {
@@ -131,6 +135,36 @@ async function getAtomgitRelease(tag) {
   return requestJson('AtomGit', atomgitUrl(`/releases/${encodeURIComponent(tag)}`), {
     headers: atomgitHeaders(),
     allow404: true,
+  });
+}
+
+async function prepareReleaseTag(tag) {
+  const api = new URL(ATOMGIT_API_BASE);
+  const target = new URL(process.env.ATOMGIT_GIT_URL
+    || `https://${api.hostname.replace(/^api\./, '')}/${encodeURIComponent(ATOMGIT_OWNER)}/${encodeURIComponent(ATOMGIT_REPO)}.git`);
+  if (target.protocol !== 'https:' || target.username || target.password || target.search || target.hash
+    || target.pathname !== `/${encodeURIComponent(ATOMGIT_OWNER)}/${encodeURIComponent(ATOMGIT_REPO)}.git`) {
+    fail('ATOMGIT_GIT_URL must be the HTTPS URL of the configured AtomGit repository without credentials');
+  }
+  let targetEnv = {};
+  if (hasAtomgitToken) {
+    const userUrl = new URL(`${ATOMGIT_API_BASE}/api/v5/user`);
+    userUrl.searchParams.set('access_token', ATOMGIT_TOKEN);
+    const user = await requestJson('AtomGit', userUrl.toString(), { headers: atomgitHeaders() });
+    if (!user?.login || /[\r\n:]/.test(user.login)) fail('AtomGit did not return a valid Git username');
+    // Credentials stay in this child process's environment, scoped to the target repository.
+    // They are never put in a URL, command argument, checkout config or temporary file.
+    targetEnv = {
+      GIT_CONFIG_COUNT: '3',
+      GIT_CONFIG_KEY_0: 'credential.helper', GIT_CONFIG_VALUE_0: '',
+      GIT_CONFIG_KEY_1: `http.${target.href}.extraHeader`,
+      GIT_CONFIG_VALUE_1: `Authorization: Basic ${Buffer.from(`${user.login}:${ATOMGIT_TOKEN}`).toString('base64')}`,
+      GIT_CONFIG_KEY_2: 'http.followRedirects', GIT_CONFIG_VALUE_2: 'false',
+    };
+  }
+  return ensureReleaseTag(tag, {
+    sourceUrl: `https://github.com/${encodeURIComponent(GITHUB_OWNER)}/${encodeURIComponent(GITHUB_REPO)}.git`,
+    targetUrl: target.href, targetEnv, dryRun: DRY_RUN, log,
   });
 }
 
@@ -232,6 +266,7 @@ async function uploadAsset(tag, asset) {
 
 async function syncRelease(release) {
   const tag = release.tag_name;
+  const tagCommit = await prepareReleaseTag(tag);
   const meta = {
     name: release.name || tag,
     body: release.body || '',
@@ -268,7 +303,7 @@ async function syncRelease(release) {
       await requestJson('AtomGit', atomgitUrl('/releases'), {
         method: 'POST',
         headers: atomgitHeaders({ 'Content-Type': 'application/json' }),
-        body: JSON.stringify({ tag_name: tag, target_commitish: release.target_commitish || 'main', ...meta }),
+        body: JSON.stringify({ tag_name: tag, target_commitish: tagCommit, ...meta }),
       });
       log(`[create] ${tag}: 已新建 Release`);
     } catch (error) {
