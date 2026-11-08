@@ -152,12 +152,18 @@ class MonicaAccessibilityService : AccessibilityService() {
             username: String,
             password: String,
             preferPasswordField: Boolean,
+            beforeWrite: suspend () -> Boolean = { true },
+            isAuthorizationCurrent: () -> Boolean = { true },
+            expectedWebDomain: String? = null,
         ): Boolean {
             return activeInstance?.fillCredentialsInActiveWindow(
                 targetPackageName = targetPackageName,
                 username = username,
                 password = password,
-                preferPasswordField = preferPasswordField
+                preferPasswordField = preferPasswordField,
+                beforeWrite = beforeWrite,
+                isAuthorizationCurrent = isAuthorizationCurrent,
+                expectedWebDomain = expectedWebDomain,
             ) ?: false
         }
 
@@ -286,7 +292,11 @@ class MonicaAccessibilityService : AccessibilityService() {
         username: String,
         password: String,
         preferPasswordField: Boolean,
+        beforeWrite: suspend () -> Boolean = { true },
+        isAuthorizationCurrent: () -> Boolean = { true },
+        expectedWebDomain: String? = null,
     ): Boolean = runCatching {
+        if (!isAuthorizationCurrent()) return@runCatching false
         val root = rootInActiveWindow ?: return@runCatching false
         val activePackageName = root.packageName?.toString().orEmpty()
         val activeWindowId = root.windowId
@@ -339,11 +349,20 @@ class MonicaAccessibilityService : AccessibilityService() {
         var passwordFilled = false
         val browserSpec = browserSpecsByPackage[activePackageName]
         val originalUrl = browserSpec?.let { findBrowserUrl(root, it) }
+        if (expectedWebDomain != null &&
+            takagi.ru.monica.autofill_ng.AutofillHostPolicy.host(originalUrl) != expectedWebDomain) return@runCatching false
+        fun targetIsCurrent(): Boolean {
+            val current = rootInActiveWindow ?: return false
+            return isAuthorizationCurrent() && current.windowId == activeWindowId &&
+                current.packageName?.toString() == activePackageName &&
+                (browserSpec == null || findBrowserUrl(current, browserSpec) == originalUrl)
+        }
 
         if (username.isNotBlank()) {
+            if (!beforeWrite() || !targetIsCurrent()) return@runCatching false
             // Do not retrigger username input handlers during a bounded retry.
             usernameFilled = usernameCandidate?.node?.text?.toString() == username ||
-                setNodeText(usernameCandidate?.node, username)
+                setNodeText(usernameCandidate?.node, username, ::targetIsCurrent)
         }
         if (password.isNotBlank() && passwordCandidate != null) {
             if (usernameFilled && usernameCandidate != null && isWebInput(usernameCandidate.node)) {
@@ -368,7 +387,8 @@ class MonicaAccessibilityService : AccessibilityService() {
                     preferPasswordField && it.isFocused && it.type == FillFieldType.UNKNOWN
                 }?.node,
             ) ?: return@runCatching false
-            passwordFilled = setNodeText(currentPassword.node, password)
+            if (!beforeWrite() || !targetIsCurrent()) return@runCatching false
+            passwordFilled = setNodeText(currentPassword.node, password, ::targetIsCurrent)
             if (passwordFilled && isWebInput(currentPassword.node)) {
                 // A renderer may acknowledge SET_TEXT before a pending input
                 // handler replaces the control. Do not stop the caller's bounded
@@ -740,8 +760,9 @@ class MonicaAccessibilityService : AccessibilityService() {
             .firstOrNull()
     }
 
-    private fun setNodeText(node: AccessibilityNodeInfo?, text: String): Boolean {
-        if (node == null || text.isBlank()) return false
+    private fun setNodeText(node: AccessibilityNodeInfo?, text: String,
+        isAuthorizationCurrent: () -> Boolean = { true }): Boolean {
+        if (node == null || text.isBlank() || !isAuthorizationCurrent()) return false
 
         // Address the field itself before relying on the shared clipboard and
         // input focus. WebView may acknowledge PASTE before focus/clipboard work
@@ -750,7 +771,7 @@ class MonicaAccessibilityService : AccessibilityService() {
             putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, text)
         }
         if (runCatching {
-                node.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, args)
+                isAuthorizationCurrent() && node.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, args)
             }.getOrDefault(false)
         ) return true
 
@@ -775,11 +796,11 @@ class MonicaAccessibilityService : AccessibilityService() {
             }.getOrDefault(false)
         }
 
-        if (canPasteWithoutAppending) {
+        if (canPasteWithoutAppending && isAuthorizationCurrent()) {
             val temporaryClipboard = setTemporaryClipboard(text)
             if (temporaryClipboard != null) {
                 val pasted = runCatching {
-                    node.performAction(AccessibilityNodeInfo.ACTION_PASTE)
+                    isAuthorizationCurrent() && node.performAction(AccessibilityNodeInfo.ACTION_PASTE)
                 }.getOrDefault(false)
                 scheduleTemporaryClipboardRestore(temporaryClipboard)
                 if (pasted) return true

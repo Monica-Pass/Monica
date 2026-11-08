@@ -1,0 +1,945 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest:
+INSTRUMENTATION_STATUS: test=lowIdNativeMirrorCipherCallbackRequiresFreshPickerSelection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lowIdNativeMirrorCipherCallbackRequiresFreshPickerSelection
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=readOnlyNativeFileCanFillButCannotBind
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=readOnlyNativeFileCanFillButCannotBind
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=runtimeGenerationRevocationCannotBeRevivedByReloadingTheKey
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=runtimeGenerationRevocationCannotBeRevivedByReloadingTheKey
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cancellingNativePickerAuthenticationLeavesFrameworkFormEmpty
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cancellingNativePickerAuthenticationLeavesFrameworkFormEmpty
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=frameworkSuggestionsResolveAllLiteralNativePasswordsAfterPickerAuthentication
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: stream=ISSUE179 suggestion=0 scrollActions=0 user=OK password=OK
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: stream=ISSUE179 suggestion=1 scrollActions=0 user=OK password=OK
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: stream=ISSUE179 suggestion=2 scrollActions=0 user=OK password=OK
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: stream=ISSUE179 suggestion=3 scrollActions=1 user=OK password=OK
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=frameworkSuggestionsResolveAllLiteralNativePasswordsAfterPickerAuthentication
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeDeferredActionRejectsExternalRevisionAfterPickerSourceWasCleared
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeDeferredActionRejectsExternalRevisionAfterPickerSourceWasCleared
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=referencedNativeBindingFieldsAreNotExpandedOrOverwritten
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=referencedNativeBindingFieldsAreNotExpandedOrOverwritten
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lowIdNativeMirrorDirectDatasetRequiresFreshPickerSelection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lowIdNativeMirrorDirectDatasetRequiresFreshPickerSelection
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=frameworkManualPickerAuthenticatesAndFillsNativePrefixPassword
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=frameworkManualPickerAuthenticatesAndFillsNativePrefixPassword
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=bindingPreservesUnknownProtectedFieldsHistoryAttachmentsAndSibling
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=bindingPreservesUnknownProtectedFieldsHistoryAttachmentsAndSibling
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=realScreenOffThenWakeCannotReviveDeferredNativeAction
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: stream=ISSUE179 realScreenOff=true awakened=true actionRevoked=true generationChanged=false
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=realScreenOffThenWakeCannotReviveDeferredNativeAction
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=frameworkFillAndBindCommitsNativeBindingAndStillReturnsBothValues
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=frameworkFillAndBindCommitsNativeBindingAndStillReturnsBothValues
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=immediatePickerRecreationRetainsAuthenticationWithinDuplicateWindow
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: stream=ISSUE179 recreationElapsedMs=150 newActivityResumed=true authenticationRequired=true
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=immediatePickerRecreationRetainsAuthenticationWithinDuplicateWindow
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=revocationDuringFinalSourceHashPreventsNativeBindingCommit
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=revocationDuringFinalSourceHashPreventsNativeBindingCommit
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeDeferredActionRejectsNativeLockAndReauthenticationCannotReviveOldGeneration
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeDeferredActionRejectsNativeLockAndReauthenticationCannotReviveOldGeneration
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=directDatasetWithMissingRoomOwnerIsCancelled
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=directDatasetWithMissingRoomOwnerIsCancelled
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Expected issue179 UI not visible: android.widget.FrameLayout|null|null
+android.widget.FrameLayout|null|null
+android.widget.LinearLayout|null|null
+android.widget.LinearLayout|null|null
+android.widget.FrameLayout|null|null
+android.widget.FrameLayout|null|null
+androidx.compose.ui.platform.ComposeView|null|null
+androidx.compose.ui.platform.ComposeView|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|Autofill for the following app|null
+android.widget.TextView|Select a password to copy to clipboard|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|Autofill for the following app|null
+android.widget.TextView|Select a password to copy to clipboard|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|S|null
+android.widget.TextView|Close|null
+android.widget.Button|null|null
+android.widget.EditText||null
+android.view.View|null|null
+android.widget.HorizontalScrollView|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|S|null
+android.widget.TextView|Close|null
+android.widget.Button|null|null
+android.widget.EditText||null
+android.view.View|null|null
+android.widget.HorizontalScrollView|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|Search passwords...|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|Suggested fills|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|Add
+android.view.View|null|null
+android.widget.TextView|Search passwords...|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|Suggested fills|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|Add
+android.view.View|null|null
+android.widget.TextView|Filter|null
+android.widget.TextView|All|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.HorizontalScrollView|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|Password 1|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Bank Card 0|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Document 0|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Issue179 native login 0|null
+android.widget.TextView|C2|native-user-0|null
+android.view.View|null|null
+android.widget.TextView|Issue179 native login 1|null
+android.widget.TextView|C2|native-user-1|null
+android.view.View|null|null
+android.widget.TextView|Filter|null
+android.widget.TextView|All|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.HorizontalScrollView|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|Password 1|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Bank Card 0|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Document 0|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Issue179 native login 0|null
+android.widget.TextView|C2|native-user-0|null
+android.view.View|null|null
+android.widget.TextView|Issue179 native login 1|null
+android.widget.TextView|C2|native-user-1|null
+android.widget.TextView|1|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.HorizontalScrollView|null|null
+android.widget.TextView|1|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.HorizontalScrollView|null|null
+android.widget.TextView|KeePass|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|KeePass|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|All|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Monica|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|KeePass|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Bitwarden|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|All|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Monica|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|KeePass|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Bitwarden|null
+android.widget.CheckBox|null|null
+	at takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest.waitNode(KeePassAutofillInstrumentedTest.kt:1181)
+	at takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest.waitNode$default(KeePassAutofillInstrumentedTest.kt:1156)
+	at takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest.waitText(KeePassAutofillInstrumentedTest.kt:1124)
+	at takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest.access$waitText(KeePassAutofillInstrumentedTest.kt:83)
+	at takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest$actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders$1.invokeSuspend(KeePassAutofillInstrumentedTest.kt:827)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest.actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders(KeePassAutofillInstrumentedTest.kt:797)
+
+INSTRUMENTATION_STATUS: stream=
+Error in actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders(takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest):
+java.lang.AssertionError: Expected issue179 UI not visible: android.widget.FrameLayout|null|null
+android.widget.FrameLayout|null|null
+android.widget.LinearLayout|null|null
+android.widget.LinearLayout|null|null
+android.widget.FrameLayout|null|null
+android.widget.FrameLayout|null|null
+androidx.compose.ui.platform.ComposeView|null|null
+androidx.compose.ui.platform.ComposeView|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|Autofill for the following app|null
+android.widget.TextView|Select a password to copy to clipboard|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|Autofill for the following app|null
+android.widget.TextView|Select a password to copy to clipboard|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|S|null
+android.widget.TextView|Close|null
+android.widget.Button|null|null
+android.widget.EditText||null
+android.view.View|null|null
+android.widget.HorizontalScrollView|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|S|null
+android.widget.TextView|Close|null
+android.widget.Button|null|null
+android.widget.EditText||null
+android.view.View|null|null
+android.widget.HorizontalScrollView|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|Search passwords...|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|Suggested fills|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|Add
+android.view.View|null|null
+android.widget.TextView|Search passwords...|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|Suggested fills|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|Add
+android.view.View|null|null
+android.widget.TextView|Filter|null
+android.widget.TextView|All|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.HorizontalScrollView|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|Password 1|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Bank Card 0|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Document 0|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Issue179 native login 0|null
+android.widget.TextView|C2|native-user-0|null
+android.view.View|null|null
+android.widget.TextView|Issue179 native login 1|null
+android.widget.TextView|C2|native-user-1|null
+android.view.View|null|null
+android.widget.TextView|Filter|null
+android.widget.TextView|All|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.HorizontalScrollView|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|Password 1|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Bank Card 0|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Document 0|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Issue179 native login 0|null
+android.widget.TextView|C2|native-user-0|null
+android.view.View|null|null
+android.widget.TextView|Issue179 native login 1|null
+android.widget.TextView|C2|native-user-1|null
+android.widget.TextView|1|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.HorizontalScrollView|null|null
+android.widget.TextView|1|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.HorizontalScrollView|null|null
+android.widget.TextView|KeePass|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|KeePass|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|All|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Monica|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|KeePass|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Bitwarden|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|All|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Monica|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|KeePass|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Bitwarden|null
+android.widget.CheckBox|null|null
+	at takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest.waitNode(KeePassAutofillInstrumentedTest.kt:1181)
+	at takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest.waitNode$default(KeePassAutofillInstrumentedTest.kt:1156)
+	at takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest.waitText(KeePassAutofillInstrumentedTest.kt:1124)
+	at takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest.access$waitText(KeePassAutofillInstrumentedTest.kt:83)
+	at takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest$actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders$1.invokeSuspend(KeePassAutofillInstrumentedTest.kt:827)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest.actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders(KeePassAutofillInstrumentedTest.kt:797)
+
+INSTRUMENTATION_STATUS: test=actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=genuineDuplicatePickerLaunchStillFinishesOnlySecondActivity
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: stream=ISSUE179 duplicateElapsedMs=126 duplicateDestroyed=true originalResumed=true
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=genuineDuplicatePickerLaunchStillFinishesOnlySecondActivity
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=realNativeSmartCopyNotificationResolvesAfterSourceClosesAndRejectsLockedVault
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=realNativeSmartCopyNotificationResolvesAfterSourceClosesAndRejectsLockedVault
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=originalKdbxLoadsWithoutRoomOrMainSessionAndNewSourceResolvesStableIds
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=originalKdbxLoadsWithoutRoomOrMainSessionAndNewSourceResolvesStableIds
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=targetAuthorizationRevocationRejectsLoadedAndNewSelections
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=targetAuthorizationRevocationRejectsLoadedAndNewSelections
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=externalRevisionChangeRejectsSelectedValueAndBindingWithoutWriting
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=externalRevisionChangeRejectsSelectedValueAndBindingWithoutWriting
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=clearedRequestRejectsLateNativeReadAfterProviderUnblocks
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=clearedRequestRejectsLateNativeReadAfterProviderUnblocks
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeCiphertextLookingValuesRemainLiteralAtAccountAndSecretBoundary
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeCiphertextLookingValuesRemainLiteralAtAccountAndSecretBoundary
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeDeferredActionReopensAfterSourceClosesButCannotOutliveReplacementOrExpiry
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeDeferredActionReopensAfterSourceClosesButCannotOutliveReplacementOrExpiry
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=26
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeLockDuringPickerRecreationCannotRestoreVerification
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: stream=ISSUE179 nativeLockDuringRecreation=true oldGrantRevoked=true reverifiedByPassword=true
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=26
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeLockDuringPickerRecreationCannotRestoreVerification
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=27
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unreadableNativeFileDoesNotLeakStaleRoomProjection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=27
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unreadableNativeFileDoesNotLeakStaleRoomProjection
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=28
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=revokedAuthorizationRejectsLateNativeReadAfterProviderUnblocks
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=28
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=revokedAuthorizationRejectsLateNativeReadAfterProviderUnblocks
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=29
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=clearingRequestPermanentlyRevokesItWithoutRevokingAnotherNewRequest
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=29
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=clearingRequestPermanentlyRevokesItWithoutRevokingAnotherNewRequest
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=30
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=explicitNativeLockRejectsSelectionsAndDoesNotFallBackToRoomMirror
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=30
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=30
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=explicitNativeLockRejectsSelectionsAndDoesNotFallBackToRoomMirror
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 197.871
+There was 1 failure:
+1) actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders(takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest)
+java.lang.AssertionError: Expected issue179 UI not visible: android.widget.FrameLayout|null|null
+android.widget.FrameLayout|null|null
+android.widget.LinearLayout|null|null
+android.widget.LinearLayout|null|null
+android.widget.FrameLayout|null|null
+android.widget.FrameLayout|null|null
+androidx.compose.ui.platform.ComposeView|null|null
+androidx.compose.ui.platform.ComposeView|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|Autofill for the following app|null
+android.widget.TextView|Select a password to copy to clipboard|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|Autofill for the following app|null
+android.widget.TextView|Select a password to copy to clipboard|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|S|null
+android.widget.TextView|Close|null
+android.widget.Button|null|null
+android.widget.EditText||null
+android.view.View|null|null
+android.widget.HorizontalScrollView|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|S|null
+android.widget.TextView|Close|null
+android.widget.Button|null|null
+android.widget.EditText||null
+android.view.View|null|null
+android.widget.HorizontalScrollView|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|Search passwords...|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|Suggested fills|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|Add
+android.view.View|null|null
+android.widget.TextView|Search passwords...|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|Suggested fills|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|Add
+android.view.View|null|null
+android.widget.TextView|Filter|null
+android.widget.TextView|All|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.HorizontalScrollView|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|Password 1|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Bank Card 0|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Document 0|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Issue179 native login 0|null
+android.widget.TextView|C2|native-user-0|null
+android.view.View|null|null
+android.widget.TextView|Issue179 native login 1|null
+android.widget.TextView|C2|native-user-1|null
+android.view.View|null|null
+android.widget.TextView|Filter|null
+android.widget.TextView|All|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.HorizontalScrollView|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|Password 1|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Bank Card 0|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Document 0|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Issue179 native login 0|null
+android.widget.TextView|C2|native-user-0|null
+android.view.View|null|null
+android.widget.TextView|Issue179 native login 1|null
+android.widget.TextView|C2|native-user-1|null
+android.widget.TextView|1|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.HorizontalScrollView|null|null
+android.widget.TextView|1|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.HorizontalScrollView|null|null
+android.widget.TextView|KeePass|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|KeePass|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.view.View|null|null
+android.widget.TextView|All|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Monica|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|KeePass|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Bitwarden|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|All|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Monica|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|KeePass|null
+android.widget.CheckBox|null|null
+android.view.View|null|null
+android.widget.TextView|Bitwarden|null
+android.widget.CheckBox|null|null
+	at takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest.waitNode(KeePassAutofillInstrumentedTest.kt:1181)
+	at takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest.waitNode$default(KeePassAutofillInstrumentedTest.kt:1156)
+	at takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest.waitText(KeePassAutofillInstrumentedTest.kt:1124)
+	at takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest.access$waitText(KeePassAutofillInstrumentedTest.kt:83)
+	at takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest$actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders$1.invokeSuspend(KeePassAutofillInstrumentedTest.kt:827)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest.actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders(KeePassAutofillInstrumentedTest.kt:797)
+
+FAILURES!!!
+Tests run: 30,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

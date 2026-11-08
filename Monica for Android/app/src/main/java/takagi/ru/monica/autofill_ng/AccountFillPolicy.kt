@@ -12,6 +12,7 @@ object AccountFillPolicy {
         entry: PasswordEntry,
         securityManager: SecurityManager
     ): String {
+        if (AutofillPasswordSource.isNative(entry)) return entry.username
         return try {
             if (looksEncryptedPayload(entry.username)) {
                 securityManager.decryptData(entry.username)
@@ -24,6 +25,7 @@ object AccountFillPolicy {
     }
 
     fun resolveAccountIdentifierForDisplay(entry: PasswordEntry): String {
+        if (AutofillPasswordSource.isNative(entry)) return entry.username.trim()
         val candidate = entry.username.trim()
         if (candidate.isBlank() || looksEncryptedPayload(candidate)) {
             return ""

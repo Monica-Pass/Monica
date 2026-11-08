@@ -10,6 +10,7 @@ import takagi.ru.monica.autofill_ng.model.AutofillRequest
 import takagi.ru.monica.autofill_ng.parser.AutofillParserNg
 import takagi.ru.monica.data.PasswordEntry
 import takagi.ru.monica.security.SecurityManager
+import takagi.ru.monica.autofill_ng.NativeAutofillSelection
 
 class AutofillProcessorNg(
     private val context: Context,
@@ -37,6 +38,7 @@ class AutofillProcessorNg(
         saveEnabled: Boolean = true,
         checkCancelled: () -> Unit = {},
         autoLockTimeoutMinutes: Int? = null,
+        nativeSelections: Map<Long, NativeAutofillSelection> = emptyMap(),
     ): FillResponse? {
         val request = parser.parse(
             packageName = packageName,
@@ -57,6 +59,7 @@ class AutofillProcessorNg(
             requireAuthentication = requireAuthentication,
             checkCancelled = checkCancelled,
             autoLockTimeoutMinutes = autoLockTimeoutMinutes,
+            nativeSelections = nativeSelections,
         )
         return fillResponseBuilder.build(
             request = request,

@@ -13,6 +13,9 @@ import androidx.core.app.NotificationManagerCompat
 import takagi.ru.monica.R
 import takagi.ru.monica.utils.ClipboardUtils
 import takagi.ru.monica.notifications.LiveUpdateNotifications
+import takagi.ru.monica.autofill_ng.NativeAutofillAction
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * Helper for "Smart Copy" feature.
@@ -53,11 +56,32 @@ object SmartCopyNotificationHelper {
         return showCopyNotification(context, secondValue, secondLabel)
     }
 
-    private fun showCopyNotification(context: Context, valueToCopy: String, label: String): Boolean {
+    internal suspend fun copyAndQueueNative(
+        context: Context,
+        action: NativeAutofillAction,
+        usernameFirst: Boolean,
+        isRequestCurrent: () -> Boolean,
+    ): Boolean {
+        val entry = action.resolve(context) ?: return false
+        return withContext(Dispatchers.Main.immediate) {
+            if (!isRequestCurrent() || !action.isCurrent(context)) return@withContext false
+            val firstValue = if (usernameFirst) entry.username else entry.password
+            val firstLabel = context.getString(if (usernameFirst) R.string.autofill_username else R.string.autofill_password)
+            val secondLabel = context.getString(if (usernameFirst) R.string.autofill_password else R.string.autofill_username)
+            if (firstValue.isBlank()) return@withContext false
+            ClipboardUtils.copyToClipboard(context, firstValue, firstLabel, sensitive = true)
+            if (!isRequestCurrent() || !action.isCurrent(context)) return@withContext false
+            // The deferred native action contains only identity/revision/authorization metadata.
+            showCopyNotification(context, null, secondLabel, action)
+        }
+    }
+
+    private fun showCopyNotification(context: Context, valueToCopy: String?, label: String,
+        nativeAction: NativeAutofillAction? = null): Boolean {
         // Only session metadata is persisted; queued credentials stay in the private PendingIntent.
         dismissNotification(context)
         return try {
-            buildAndPost(context, valueToCopy, label)
+            buildAndPost(context, valueToCopy, label, nativeAction)
         } catch (_: Exception) {
             dismissNotification(context)
             android.util.Log.w("SmartCopy", "Queued copy notification unavailable")
@@ -65,7 +89,9 @@ object SmartCopyNotificationHelper {
         }
     }
 
-    private fun buildAndPost(context: Context, valueToCopy: String, label: String): Boolean {
+    private fun buildAndPost(context: Context, valueToCopy: String?, label: String,
+        nativeAction: NativeAutofillAction? = null): Boolean {
+        if (nativeAction != null && !nativeAction.isCurrent(context)) return false
         createNotificationChannel(context)
 
         if (!canPostSmartCopyNotification(context)) {
@@ -80,7 +106,8 @@ object SmartCopyNotificationHelper {
             .putString("id", sessionId).apply()
         val copyIntent = Intent(context, SmartCopyReceiver::class.java).apply {
             action = SmartCopyReceiver.ACTION_COPY
-            putExtra(SmartCopyReceiver.EXTRA_VALUE, valueToCopy)
+            if (nativeAction == null) putExtra(SmartCopyReceiver.EXTRA_VALUE, valueToCopy)
+            else putExtra(SmartCopyReceiver.EXTRA_NATIVE_ACTION, nativeAction.toBundle())
             putExtra(SmartCopyReceiver.EXTRA_LABEL, label)
             putExtra(SmartCopyReceiver.EXTRA_EXPIRES_AT, SystemClock.elapsedRealtime() + 60_000)
             putExtra(SmartCopyReceiver.EXTRA_SESSION_ID, sessionId)

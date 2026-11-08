@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.autofill.AutofillValue
 import android.widget.inline.InlinePresentationSpec
 import takagi.ru.monica.autofill_ng.AccountFillPolicy
+import takagi.ru.monica.autofill_ng.AutofillPasswordSource
+import takagi.ru.monica.autofill_ng.NativeAutofillSelection
 import takagi.ru.monica.autofill_ng.model.AutofillCipher
 import takagi.ru.monica.autofill_ng.model.AutofillRequest
 import takagi.ru.monica.autofill_ng.model.AutofillPartition
@@ -52,6 +54,7 @@ class FilledDataBuilderNg(
         requireAuthentication: Boolean = true,
         checkCancelled: () -> Unit = {},
         autoLockTimeoutMinutes: Int? = null,
+        nativeSelections: Map<Long, NativeAutofillSelection> = emptyMap(),
     ): FilledData {
         val autoLockMinutes = autoLockTimeoutMinutes ?: resolveAutoLockTimeoutForAutofill()
         // “永不过期”允许会话跨进程生命周期恢复，但显式锁定仍必须立即生效。
@@ -86,13 +89,17 @@ class FilledDataBuilderNg(
             // Presentation only: keep each real row ID and never combine credentials.
             val resolved = passwords.mapNotNull { entry ->
                 checkCancelled()
+                val native = AutofillPasswordSource.isNative(entry)
+                val selection = nativeSelections[entry.id]
+                // Native values are resolved at selection time. Never cache them in a framework dataset.
+                if (native && selection == null) return@mapNotNull null
                 buildCipherForResponse(
                     entry = entry,
                     fallbackWebsite = request.uri.orEmpty(),
-                    requireAuthentication = requireAuthentication,
+                    requireAuthentication = requireAuthentication || native,
                     isVaultLocked = isVaultLocked,
                     needsPassword = needsPassword,
-                )?.let { entry to it }
+                )?.let { entry to it.copy(nativeSelection = selection) }
             }
             // Legacy usernames may be encrypted with different nonces. Group the resolved
             // account name, without decrypting credentials a second time on the suggestion path.
@@ -113,7 +120,7 @@ class FilledDataBuilderNg(
                         autofillCipher = autofillCipher,
                         autofillViews = loginViews,
                         inlinePresentationSpec = getCipherInlinePresentationOrNull(),
-                        requiresAuthentication = requireAuthentication
+                        requiresAuthentication = requireAuthentication || autofillCipher.nativeSelection != null
                     )
                 }
                 .filter { it.filledItems.isNotEmpty() }

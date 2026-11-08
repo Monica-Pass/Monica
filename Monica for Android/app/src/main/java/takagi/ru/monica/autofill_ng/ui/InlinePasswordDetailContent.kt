@@ -23,6 +23,7 @@ import takagi.ru.monica.data.PasswordEntry
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.security.BoundedSecureDataRead
 import takagi.ru.monica.utils.ClipboardUtils
+import kotlinx.coroutines.launch
 
 /**
  * 内嵌密码详情内容
@@ -39,10 +40,12 @@ fun InlinePasswordDetailContent(
     onBack: () -> Unit,
     authorizationGeneration: Long,
     canPublishCredentials: () -> Boolean,
+    resolveCurrent: suspend () -> PasswordEntry? = { password },
     modifier: Modifier = Modifier,
     onAccessibilityFill: (() -> Unit)? = null,
 ) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     var passwordVisible by remember(password, authorizationGeneration) { mutableStateOf(false) }
     val currentGeneration by SecurityManager.dataReadGeneration.collectAsState()
     var secrets by remember(password, securityManager, authorizationGeneration) { mutableStateOf<Pair<String, String>?>(null) }
@@ -51,12 +54,14 @@ fun InlinePasswordDetailContent(
         secrets = null
         loading = true
         if (currentGeneration == authorizationGeneration) {
-            secrets = BoundedSecureDataRead.read(securityManager, authorizationGeneration) {
-                val username = if (password.username.contains("==") && password.username.length > 20) {
-                    securityManager.decryptData(password.username)
-                } else password.username
-                ensureActive()
-                username to securityManager.decryptData(password.password)
+            val current = resolveCurrent()
+            if (current != null && canPublishCredentials()) {
+                secrets = BoundedSecureDataRead.read(securityManager, authorizationGeneration) {
+                    val username = takagi.ru.monica.autofill_ng.AccountFillPolicy.resolveAccountIdentifier(current, securityManager)
+                    ensureActive()
+                    username to requireNotNull(takagi.ru.monica.autofill_ng.AutofillSecretResolver
+                        .resolvePasswordOrNull(securityManager, current))
+                }?.takeIf { canPublishCredentials() }
             }
         }
         loading = false
@@ -65,6 +70,27 @@ fun InlinePasswordDetailContent(
     val decryptedUsername = if (readable) secrets!!.first else ""
     val decryptedPassword = if (readable) secrets!!.second else ""
     fun canUseSecrets() = readable && canPublishCredentials() && securityManager.isDataReadCurrent(authorizationGeneration)
+    fun useCurrentSecrets(action: (Pair<String, String>) -> Unit) {
+        scope.launch {
+            if (!canUseSecrets()) return@launch
+            val current = resolveCurrent()
+            val values = current?.let {
+                BoundedSecureDataRead.read(securityManager, authorizationGeneration) {
+                    val account = takagi.ru.monica.autofill_ng.AccountFillPolicy.resolveAccountIdentifier(it, securityManager)
+                    ensureActive()
+                    account to requireNotNull(takagi.ru.monica.autofill_ng.AutofillSecretResolver
+                        .resolvePasswordOrNull(securityManager, it))
+                }
+            }
+            if (values == null || !canUseSecrets()) {
+                secrets = null
+                passwordVisible = false
+                return@launch
+            }
+            secrets = values
+            action(values)
+        }
+    }
     
     Column(
         modifier = modifier
@@ -143,7 +169,7 @@ fun InlinePasswordDetailContent(
             label = stringResource(R.string.autofill_username),
             value = decryptedUsername,
             icon = Icons.Outlined.Person,
-            onCopy = if (readable) ({ if (canUseSecrets()) copyToClipboard(context, context.getString(R.string.autofill_username), decryptedUsername) }) else null
+            onCopy = if (readable) ({ useCurrentSecrets { copyToClipboard(context, context.getString(R.string.autofill_username), it.first) } }) else null
         )
         
         // 密码字段
@@ -153,8 +179,8 @@ fun InlinePasswordDetailContent(
             icon = Icons.Outlined.Lock,
             isPassword = true,
             passwordVisible = passwordVisible,
-            onToggleVisibility = if (readable) ({ if (canUseSecrets()) passwordVisible = !passwordVisible }) else null,
-            onCopy = if (readable) ({ if (canUseSecrets()) copyToClipboard(context, context.getString(R.string.autofill_password), decryptedPassword) }) else null
+            onToggleVisibility = if (readable) ({ useCurrentSecrets { passwordVisible = !passwordVisible } }) else null,
+            onCopy = if (readable) ({ useCurrentSecrets { copyToClipboard(context, context.getString(R.string.autofill_password), it.second) } }) else null
         )
         if (!readable) {
             Text(stringResource(if (loading) R.string.loading else R.string.bitwarden_sync_issue_reason_decryption))
@@ -166,7 +192,7 @@ fun InlinePasswordDetailContent(
                 label = stringResource(R.string.autofill_website_app),
                 value = password.website,
                 icon = Icons.Outlined.Language,
-                onCopy = if (readable) ({ if (canUseSecrets()) copyToClipboard(context, context.getString(R.string.autofill_website_app), password.website) }) else null
+                onCopy = if (readable) ({ useCurrentSecrets { copyToClipboard(context, context.getString(R.string.autofill_website_app), password.website) } }) else null
             )
         }
         
@@ -187,7 +213,7 @@ fun InlinePasswordDetailContent(
                 value = password.notes,
                 icon = Icons.Outlined.Notes,
                 allowMultilineValue = true,
-                onCopy = if (readable) ({ if (canUseSecrets()) copyToClipboard(context, context.getString(R.string.notes), password.notes) }) else null
+                onCopy = if (readable) ({ useCurrentSecrets { copyToClipboard(context, context.getString(R.string.notes), password.notes) } }) else null
             )
         }
         

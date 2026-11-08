@@ -105,6 +105,8 @@ class MonicaAutofillServiceNg : AutofillService() {
     )
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    // Revokes fill work across screen-off/unlock without cancelling independent save work.
+    private val fillReadEpoch = AtomicLong(0L)
     private val otpBindingCache = AutofillOtpBindingCache(scope)
     private val otpActions by lazy { AutofillOtpActions(applicationContext, otpBindingCache) }
     private val otpBindingObserver = object : InvalidationTracker.Observer("secure_items", "local_mdbx_databases", "password_entries") {
@@ -126,6 +128,7 @@ class MonicaAutofillServiceNg : AutofillService() {
     private val screenOffReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent?.action == Intent.ACTION_SCREEN_OFF) {
+                fillReadEpoch.incrementAndGet()
                 matcher.clear()
                 passwordMemoryByPackage.clear()
                 recentFillSuggestions = null
@@ -182,6 +185,7 @@ class MonicaAutofillServiceNg : AutofillService() {
     }
 
     override fun onDestroy() {
+        fillReadEpoch.incrementAndGet()
         PasswordDatabase.getDatabase(applicationContext).invalidationTracker.removeObserver(otpBindingObserver)
         otpBindingCache.invalidate()
         matcher.clear()
@@ -203,6 +207,8 @@ class MonicaAutofillServiceNg : AutofillService() {
     ) {
         if (cancellationSignal.isCanceled) return
         val requestId = fillRequestSequence.incrementAndGet()
+        val requestReadEpoch = fillReadEpoch.get()
+        val requestGeneration = takagi.ru.monica.security.SecurityManager.dataReadGeneration.value
         val startedAt = android.os.SystemClock.elapsedRealtime()
         val completed = AtomicBoolean(false)
         AutofillLogger.i(
@@ -226,7 +232,7 @@ class MonicaAutofillServiceNg : AutofillService() {
                         throw startup.failure
                     }
                     withContext(Dispatchers.Default) {
-                        processFillRequest(request, cancellationSignal, requestId)
+                        processFillRequest(request, cancellationSignal, requestId, requestReadEpoch, requestGeneration)
                     }.also { timedOut = false }
                 }
                 if (cancellationSignal.isCanceled || !completed.compareAndSet(false, true)) return@launch
@@ -241,11 +247,15 @@ class MonicaAutofillServiceNg : AutofillService() {
                         "elapsedMs" to (android.os.SystemClock.elapsedRealtime() - startedAt),
                     )
                 )
-                callback.onSuccess(response)
+                callback.onSuccess(response.takeIf { isFillRequestCurrent(requestReadEpoch, requestGeneration) })
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
                 if (cancellationSignal.isCanceled || !completed.compareAndSet(false, true)) return@launch
+                if (!isFillRequestCurrent(requestReadEpoch, requestGeneration)) {
+                    callback.onSuccess(null)
+                    return@launch
+                }
                 AutofillLogger.e(
                     "AF",
                     "onFillRequest failed",
@@ -277,6 +287,8 @@ class MonicaAutofillServiceNg : AutofillService() {
         request: FillRequest,
         cancellationSignal: CancellationSignal,
         requestId: Long,
+        requestReadEpoch: Long,
+        requestGeneration: Long,
     ): FillResponse? {
         if (cancellationSignal.isCanceled) {
             AutofillLogger.w("AF", "Skip fill request: already cancelled", metadata = mapOf("requestId" to requestId))
@@ -610,13 +622,47 @@ class MonicaAutofillServiceNg : AutofillService() {
             autofillPreferences.touchAutofillInteraction(primaryInteractionIdentifier)
         }
 
+        val currentSettings = settingsManager.settingsFlow.first()
+        val autofillAuthRequired = currentSettings.autofillAuthRequired &&
+            DeveloperVerificationPolicy.requiresIdentityVerification(currentSettings)
+        val grantContext = AutofillGrantContext(
+            packageName = packageName,
+            webDomain = webDomain,
+            interactionIdentifier = primaryInteractionIdentifier,
+            fieldSignatureKey = fieldSignatureKey,
+        )
+        val grantActive = autofillAuthRequired && currentSettings.autofillKeepUnlocked &&
+            AutofillSessionGrants.isGranted(grantContext)
+        if (!autofillAuthRequired || !currentSettings.autofillKeepUnlocked) {
+            AutofillSessionGrants.clear()
+        }
+        val effectiveAuthenticationRequired = autofillAuthRequired && !grantActive
+        val readGeneration = takagi.ru.monica.security.SecurityManager.dataReadGeneration.value
+        val readManager = takagi.ru.monica.security.SecurityManager(applicationContext)
+        val readContext = currentCoroutineContext()
+        val nativeSource = AutofillPasswordSource(
+            context = applicationContext,
+            security = readManager,
+            generation = readGeneration,
+            isAuthorized = {
+                readContext[kotlinx.coroutines.Job]?.isActive == true && !cancellationSignal.isCanceled &&
+                    isFillRequestCurrent(requestReadEpoch, requestGeneration) &&
+                    takagi.ru.monica.security.SecurityManager.hasRuntimeUnlockCache() &&
+                    (!autofillAuthRequired || AutofillSessionGrants.isGranted(grantContext))
+            },
+        )
+
         val hasLoginTargets = fillableTargets.any { isLoginHint(it.hint) }
         val isPasswordOnlyLogin = AutofillInteractionContextResolver.isPasswordOnlyLogin(fillableTargets)
         var candidatePasswordCount = 0
         var currentCandidates: List<PasswordEntry> = emptyList()
         val matchStarted = android.os.SystemClock.elapsedRealtime()
         val matchedPasswords = if (hasLoginTargets) {
-            val allPasswords = passwordRepository.getAllPasswordEntries().first().filterNot { it.isKeyCredential() }
+            val canReadNative = !effectiveAuthenticationRequired &&
+                takagi.ru.monica.security.SecurityManager.hasRuntimeUnlockCache()
+            val allPasswords = (if (canReadNative) nativeSource.load()
+                else AutofillPasswordSource.loadRoomEntries(PasswordDatabase.getDatabase(applicationContext)))
+                .filterNot { it.isKeyCredential() }
             val sourceFilter = autofillPreferences.v2DefaultSourceFilter.first()
             val defaultKeepassDatabaseId = autofillPreferences.v2DefaultKeepassDatabaseId.first()
             val defaultBitwardenVaultId = autofillPreferences.v2DefaultBitwardenVaultId.first()
@@ -648,7 +694,8 @@ class MonicaAutofillServiceNg : AutofillService() {
                         maxSuggestions = Int.MAX_VALUE,
                         defaultUriMatchDisabled = uriConfig.disableMatch,
                     ),
-                    urlRules = PasswordUrlRuleStore.load(urlRulesDao, scopedPasswords.map { it.id }),
+                    urlRules = if (canReadNative) nativeSource.urlRules(scopedPasswords)
+                        else PasswordUrlRuleStore.load(urlRulesDao, scopedPasswords.map { it.id }),
                 )
                 val passwordOnlyLastFilledEntry = if (isPasswordOnlyLogin) {
                     resolveLastFilledEntry(
@@ -718,21 +765,6 @@ class MonicaAutofillServiceNg : AutofillService() {
 
         val inlineSuggestionsEnabled = autofillPreferences.isInlineSuggestionsEnabled.first()
         val passwordSuggestionEnabled = autofillPreferences.isPasswordSuggestionEnabled.first()
-        val currentSettings = settingsManager.settingsFlow.first()
-        val autofillAuthRequired = currentSettings.autofillAuthRequired &&
-            DeveloperVerificationPolicy.requiresIdentityVerification(currentSettings)
-        val grantContext = AutofillGrantContext(
-            packageName = packageName,
-            webDomain = webDomain,
-            interactionIdentifier = primaryInteractionIdentifier,
-            fieldSignatureKey = fieldSignatureKey,
-        )
-        val grantActive = autofillAuthRequired && currentSettings.autofillKeepUnlocked &&
-            AutofillSessionGrants.isGranted(grantContext)
-        if (!autofillAuthRequired || !currentSettings.autofillKeepUnlocked) {
-            AutofillSessionGrants.clear()
-        }
-        val effectiveAuthenticationRequired = autofillAuthRequired && !grantActive
         AutofillLogger.i(
             "AUTH",
             "Autofill authentication policy resolved",
@@ -771,6 +803,9 @@ class MonicaAutofillServiceNg : AutofillService() {
             saveEnabled = saveEnabled,
             checkCancelled = { requestContext.ensureActive() },
             autoLockTimeoutMinutes = currentSettings.autoLockMinutes,
+            nativeSelections = passwordsForResponse.mapNotNull { entry ->
+                nativeSource.selection(entry)?.let { entry.id to it }
+            }.toMap(),
         )
         AutofillLogger.i("PERF", "Autofill phase timings", metadata = mapOf(
             "requestId" to requestId, "purpose" to parsed.formPurpose.name,
@@ -813,7 +848,20 @@ class MonicaAutofillServiceNg : AutofillService() {
                 )
             )
         }
+        if (passwordsForResponse.any { AutofillPasswordSource.isNative(it) && !nativeSource.isCurrent(it) }) return null
         return response
+    }
+
+    private fun isFillRequestCurrent(epoch: Long, generation: Long): Boolean {
+        if (fillReadEpoch.get() != epoch ||
+            takagi.ru.monica.security.MainTaskSessionGuard.revokeIfTaskRemoved(applicationContext)) return false
+        if (getSystemService(android.os.PowerManager::class.java)?.isInteractive != true ||
+            getSystemService(android.app.KeyguardManager::class.java)?.isKeyguardLocked != false) {
+            fillReadEpoch.compareAndSet(epoch, epoch + 1L)
+            return false
+        }
+        return fillReadEpoch.get() == epoch &&
+            takagi.ru.monica.security.SecurityManager.dataReadGeneration.value == generation
     }
 
     private fun buildResponseStabilityKey(
@@ -848,6 +896,11 @@ class MonicaAutofillServiceNg : AutofillService() {
         currentCandidates: List<PasswordEntry>,
     ): List<PasswordEntry> {
         val now = android.os.SystemClock.elapsedRealtime()
+        // Keep native plaintext within this request; future requests load their own scoped snapshot.
+        if (matchedPasswords.any(AutofillPasswordSource::isNative)) {
+            recentFillSuggestions = null
+            return matchedPasswords
+        }
         val cached = recentFillSuggestions
         val currentById = currentCandidates.associateBy { it.id }
         val cachedIsUsable = cached != null &&

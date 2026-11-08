@@ -12,6 +12,7 @@ import android.view.autofill.AutofillManager
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.withResumed
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -24,7 +25,6 @@ import takagi.ru.monica.autofill_ng.builder.FilledDataBuilderNg
 import takagi.ru.monica.autofill_ng.core.AutofillLogger
 import takagi.ru.monica.autofill_ng.model.AutofillRequest
 import takagi.ru.monica.data.PasswordDatabase
-import takagi.ru.monica.repository.PasswordRepository
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.security.DeveloperVerificationPolicy
 import takagi.ru.monica.ui.components.MonicaPasswordDialogAuthScreen
@@ -48,6 +48,8 @@ class AutofillUnlockActivity : AppCompatActivity() {
     private var requestToken: String? = null
     private var biometricPromptShown = false
     private var resultPublished = false
+    private var nativeReadStarted = false
+    private var requestRevoked = false
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleHelper.setLocale(newBase, StartupLanguageCache.read(newBase)))
@@ -163,15 +165,23 @@ class AutofillUnlockActivity : AppCompatActivity() {
         }
         if (rejectBlockedRequest(pendingRequest.request)) return
 
+        lifecycle.withResumed { Unit }
+        val needsNative = pendingRequest.passwordIds.any(takagi.ru.monica.keepass.KeePassMonicaPasswordStore::isUiId)
+        nativeReadStarted = needsNative
+        val source = if (needsNative) AutofillPasswordSource(
+            context = applicationContext, security = securityManager, generation = generation,
+            isAuthorized = { !requestRevoked && canPublishResponse(generation) },
+            allowLockedDatabases = authenticationVerified,
+        ) else null
+        var selectedPasswords = emptyList<takagi.ru.monica.data.PasswordEntry>()
         val responseResult = runCatching {
-            val passwordRepository = PasswordRepository(
-                PasswordDatabase.getDatabase(applicationContext).passwordEntryDao()
-            )
             val passwordIdsInOrder = pendingRequest.passwordIds
             val passwords = withContext(Dispatchers.IO) {
-                val byId = passwordRepository.getAllPasswordEntries().first().filterNot { it.isKeyCredential() }.associateBy { it.id }
+                val entries = source?.load() ?: AutofillPasswordSource.loadRoomEntries(PasswordDatabase.getDatabase(applicationContext))
+                val byId = entries.filterNot { it.isKeyCredential() }.associateBy { it.id }
                 passwordIdsInOrder.mapNotNull(byId::get)
             }
+            selectedPasswords = passwords
             takagi.ru.monica.security.BoundedSecureDataRead.read(securityManager, generation) {
             val postFillOtpPasswordIds = kotlinx.coroutines.runBlocking {
                     AutofillOtpActions(applicationContext).eligiblePasswordIds(passwords)
@@ -184,6 +194,7 @@ class AutofillUnlockActivity : AppCompatActivity() {
                 passwords = passwords,
                 requireAuthentication = false,
                 checkCancelled = { ensureActive() },
+                nativeSelections = passwords.mapNotNull { entry -> source?.selection(entry)?.let { entry.id to it } }.toMap(),
             )
             ensureActive()
             FillResponseBuilderNg(applicationContext).build(
@@ -214,7 +225,9 @@ class AutofillUnlockActivity : AppCompatActivity() {
                 enabled = settings.autofillKeepUnlocked && settings.autofillAuthRequired)
         }
 
-        if (!canPublishResponse(generation)) { cancelAndFinish("authentication_revoked"); return }
+        if (!canPublishResponse(generation) || selectedPasswords.any {
+            AutofillPasswordSource.isNative(it) && source?.isCurrent(it) != true
+        }) { cancelAndFinish("authentication_revoked"); return }
         resultPublished = true
         setResult(
             Activity.RESULT_OK,
@@ -235,7 +248,7 @@ class AutofillUnlockActivity : AppCompatActivity() {
     }
 
     private fun canPublishResponse(generation: Long): Boolean =
-        !resultPublished && !isFinishing && !isDestroyed &&
+        !requestRevoked && !resultPublished && !isFinishing && !isDestroyed &&
             lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED) &&
             getSystemService(android.os.PowerManager::class.java)?.isInteractive == true &&
             getSystemService(android.app.KeyguardManager::class.java)?.isKeyguardLocked == false &&
@@ -250,6 +263,11 @@ class AutofillUnlockActivity : AppCompatActivity() {
         AutofillLogger.i("AUTH", "Discard blocked cached autofill request")
         finishBlockedAutofillRequest(request.partition.views.map { it.data.autofillId } + request.ignoreAutofillIds)
         return true
+    }
+
+    override fun onStop() {
+        if (nativeReadStarted && !resultPublished) requestRevoked = true
+        super.onStop()
     }
 
     private fun cancelAndFinish(reason: String) {

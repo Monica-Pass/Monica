@@ -21,6 +21,7 @@ import android.view.autofill.AutofillValue
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.withResumed
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -34,7 +35,6 @@ import takagi.ru.monica.autofill_ng.EnhancedAutofillStructureParserV2.ParsedItem
 import takagi.ru.monica.autofill_ng.builder.AutofillDatasetBuilder
 import takagi.ru.monica.autofill_ng.core.AutofillLogger
 import takagi.ru.monica.data.PasswordDatabase
-import takagi.ru.monica.repository.PasswordRepository
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.security.DeveloperVerificationPolicy
 import takagi.ru.monica.utils.SettingsManager
@@ -70,6 +70,12 @@ class AutofillCipherCallbackActivity : AppCompatActivity() {
                         putString("signature", args.fieldSignatureKey)
                         putBoolean("remember", args.rememberLastFilled)
                         putBoolean("authenticate", args.requireAuthentication)
+                        args.nativeDatabaseId?.let { putLong("native_database_id", it) }
+                        putString("native_entry_uuid", args.nativeEntryUuid)
+                        putString("native_revision", args.nativeRevision)
+                        args.nativeLockVersion?.let { putLong("native_lock_version", it) }
+                        putString("native_process_nonce", args.nativeProcessNonce)
+                        args.nativeGeneration?.let { putLong("native_generation", it) }
                     }
                 )
             }
@@ -88,13 +94,29 @@ class AutofillCipherCallbackActivity : AppCompatActivity() {
         val fieldSignatureKey: String? = null,
         val rememberLastFilled: Boolean = true,
         val requireAuthentication: Boolean = false,
-    ) : Parcelable
+        val nativeDatabaseId: Long? = null,
+        val nativeEntryUuid: String? = null,
+        val nativeRevision: String? = null,
+        val nativeLockVersion: Long? = null,
+        val nativeProcessNonce: String? = null,
+        val nativeGeneration: Long? = null,
+    ) : Parcelable {
+        fun nativeSelection(): NativeAutofillSelection? {
+            return NativeAutofillSelection(
+                nativeDatabaseId ?: return null, nativeEntryUuid ?: return null,
+                nativeRevision ?: return null, nativeLockVersion ?: return null,
+                nativeProcessNonce ?: return null, nativeGeneration ?: return null,
+            )
+        }
+    }
 
     private var callbackArgs: Args? = null
     private var callbackArgsToken: String? = null
     private lateinit var securityManager: SecurityManager
     private lateinit var settingsManager: SettingsManager
     private var resultPublished = false
+    private var credentialReadStarted = false
+    private var requestRevoked = false
 
     private fun grantContext() = AutofillGrantContext(
         callbackArgs?.applicationId.orEmpty(), callbackArgs?.webDomain,
@@ -127,14 +149,14 @@ class AutofillCipherCallbackActivity : AppCompatActivity() {
         )
         lifecycleScope.launch {
             if (rejectBlockedRequest()) return@launch
+            securityManager = SecurityManager(applicationContext)
+            settingsManager = SettingsManager(applicationContext)
             val directDataset = readDirectDataset()
-            if (args != null && !args.requireAuthentication && directDataset != null) {
+            if (args != null && !isNativeId(args.passwordId) && !args.requireAuthentication && directDataset != null) {
                 completeDirectAutofill(args, directDataset)
                 return@launch
             }
-            securityManager = SecurityManager(applicationContext)
-            settingsManager = SettingsManager(applicationContext)
-            if (args?.requireAuthentication == true) {
+            if (args?.requireAuthentication == true || args?.passwordId?.let(::isNativeId) == true) {
                 startAuthentication()
             } else {
                 completeCipherAutofill()
@@ -158,6 +180,10 @@ class AutofillCipherCallbackActivity : AppCompatActivity() {
                 return@launch
             }
             if (settings.autofillKeepUnlocked && AutofillSessionGrants.isGranted(grantContext())) {
+                completeCipherAutofill(generation = generation)
+                return@launch
+            }
+            if (!settings.autofillAuthRequired && callbackArgs?.passwordId?.let(::isNativeId) == true) {
                 completeCipherAutofill(generation = generation)
                 return@launch
             }
@@ -190,13 +216,36 @@ class AutofillCipherCallbackActivity : AppCompatActivity() {
             cancelAndFinish("missing_args")
             return
         }
-        val repository = PasswordRepository(
-            PasswordDatabase.getDatabase(applicationContext).passwordEntryDao()
-        )
-        val passwordEntry = withContext(Dispatchers.IO) {
-            repository.getPasswordEntryById(callbackArgs.passwordId)
-        } ?: run {
-            cancelAndFinish("missing_password_entry")
+        lifecycle.withResumed { Unit }
+        val native = isNativeId(callbackArgs.passwordId)
+        val expectedSelection = callbackArgs.nativeSelection()
+        if (native && (expectedSelection == null || !AutofillPasswordSource.isSelectionFromCurrentProcess(expectedSelection))) {
+            forwardToPicker(callbackArgs)
+            return
+        }
+        credentialReadStarted = true
+        val source = if (native) AutofillPasswordSource(
+            context = applicationContext, security = securityManager, generation = generation,
+            isAuthorized = { !takagi.ru.monica.security.MainTaskSessionGuard.revokeIfTaskRemoved(applicationContext) &&
+                !requestRevoked && !resultPublished && !isFinishing && !isDestroyed &&
+                lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED) &&
+                getSystemService(android.os.PowerManager::class.java)?.isInteractive == true &&
+                getSystemService(android.app.KeyguardManager::class.java)?.isKeyguardLocked == false },
+            allowLockedDatabases = authenticationVerified,
+        ) else null
+        val passwordEntry = (if (source != null) expectedSelection?.let { source.getSelected(it) }
+            ?.takeIf { it.id == callbackArgs.passwordId } else when (val read = AutofillRoomCredentialReader.read(
+                PasswordDatabase.getDatabase(applicationContext), callbackArgs.passwordId)) {
+                is AutofillRoomCredentialReader.Result.Available -> read.entry
+                AutofillRoomCredentialReader.Result.NativeMirror -> { forwardToPicker(callbackArgs); return }
+                AutofillRoomCredentialReader.Result.Unavailable -> null
+            }) ?: run {
+            if (native) forwardToPicker(callbackArgs) else cancelAndFinish("missing_password_entry")
+            return
+        }
+        if (native && (expectedSelection == null || source?.matchesSelection(passwordEntry, expectedSelection) != true ||
+                source?.resolve(passwordEntry) == null)) {
+            forwardToPicker(callbackArgs)
             return
         }
 
@@ -208,9 +257,9 @@ class AutofillCipherCallbackActivity : AppCompatActivity() {
         val credentials = takagi.ru.monica.security.BoundedSecureDataRead.read(securityManager, generation) {
             val account = AccountFillPolicy.resolveAccountIdentifier(passwordEntry, securityManager)
             ensureActive()
-            account to AutofillSecretResolver.decryptPasswordOrNull(
+            account to AutofillSecretResolver.resolvePasswordOrNull(
             securityManager = securityManager,
-            encryptedOrPlain = passwordEntry.password,
+            entry = passwordEntry,
             logTag = TAG,
         )
         } ?: run { cancelAndFinish("credential_read_unavailable"); return }
@@ -291,7 +340,18 @@ class AutofillCipherCallbackActivity : AppCompatActivity() {
             )
         )
 
-        if (!securityManager.isDataReadCurrent(generation) || isFinishing || isDestroyed ||
+        if (!native) {
+            when (val current = AutofillRoomCredentialReader.read(PasswordDatabase.getDatabase(applicationContext), passwordEntry.id)) {
+                is AutofillRoomCredentialReader.Result.Available -> if (current.entry != passwordEntry) {
+                    cancelAndFinish("credential_changed"); return
+                }
+                AutofillRoomCredentialReader.Result.NativeMirror -> { forwardToPicker(callbackArgs); return }
+                AutofillRoomCredentialReader.Result.Unavailable -> { cancelAndFinish("credential_no_longer_available"); return }
+            }
+        }
+        if (takagi.ru.monica.security.MainTaskSessionGuard.revokeIfTaskRemoved(applicationContext) ||
+            (native && source?.isCurrent(passwordEntry) != true) || requestRevoked ||
+            !securityManager.isDataReadCurrent(generation) || isFinishing || isDestroyed ||
             !lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED) ||
             getSystemService(android.os.PowerManager::class.java)?.isInteractive != true ||
             getSystemService(android.app.KeyguardManager::class.java)?.isKeyguardLocked != false) {
@@ -322,7 +382,24 @@ class AutofillCipherCallbackActivity : AppCompatActivity() {
 
     private suspend fun completeDirectAutofill(args: Args, dataset: Dataset) {
         if (resultPublished || rejectBlockedRequest()) return
-        // Commit the successful fill before optional database/clipboard/notification work.
+        val generation = SecurityManager.dataReadGeneration.value
+        lifecycle.withResumed { Unit }
+        credentialReadStarted = true
+        when (AutofillRoomCredentialReader.read(PasswordDatabase.getDatabase(applicationContext), args.passwordId)) {
+            is AutofillRoomCredentialReader.Result.Available -> Unit
+            AutofillRoomCredentialReader.Result.NativeMirror -> { forwardToPicker(args); return }
+            AutofillRoomCredentialReader.Result.Unavailable -> { cancelAndFinish("credential_no_longer_available"); return }
+        }
+        if (takagi.ru.monica.security.MainTaskSessionGuard.revokeIfTaskRemoved(applicationContext) ||
+            requestRevoked || resultPublished || isFinishing || isDestroyed ||
+            !securityManager.isDataReadCurrent(generation) ||
+            !lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED) ||
+            getSystemService(android.os.PowerManager::class.java)?.isInteractive != true ||
+            getSystemService(android.app.KeyguardManager::class.java)?.isKeyguardLocked != false) {
+            cancelAndFinish("credential_read_revoked")
+            return
+        }
+        // A queued direct dataset is valid only while its authoritative Room owner still exists.
         setResult(Activity.RESULT_OK, Intent().apply {
             putExtra(AutofillManager.EXTRA_AUTHENTICATION_RESULT, dataset)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -357,6 +434,12 @@ class AutofillCipherCallbackActivity : AppCompatActivity() {
                         fieldSignatureKey = bundle.getString("signature"),
                         rememberLastFilled = bundle.getBoolean("remember", true),
                         requireAuthentication = bundle.getBoolean("authenticate", false),
+                        nativeDatabaseId = bundle.takeIf { it.containsKey("native_database_id") }?.getLong("native_database_id"),
+                        nativeEntryUuid = bundle.getString("native_entry_uuid"),
+                        nativeRevision = bundle.getString("native_revision"),
+                        nativeLockVersion = bundle.takeIf { it.containsKey("native_lock_version") }?.getLong("native_lock_version"),
+                        nativeProcessNonce = bundle.getString("native_process_nonce"),
+                        nativeGeneration = bundle.takeIf { it.containsKey("native_generation") }?.getLong("native_generation"),
                     )
                 }
                 // Compatibility with callbacks already issued by an older process.
@@ -533,6 +616,33 @@ class AutofillCipherCallbackActivity : AppCompatActivity() {
         val signatureKey = fieldSignatureKey?.trim()?.lowercase().orEmpty()
         if (signatureKey.isBlank()) return
         AutofillPreferences(applicationContext).markFieldSignatureLearned(signatureKey)
+    }
+
+    private fun isNativeId(id: Long): Boolean = takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(id)
+
+    override fun onStop() {
+        if (credentialReadStarted && !resultPublished) requestRevoked = true
+        super.onStop()
+    }
+
+    /** A changed source or a cold process requires a fresh, visible selection. */
+    private fun forwardToPicker(args: Args) {
+        if (requestRevoked || resultPublished || isFinishing || isDestroyed) {
+            cancelAndFinish("native_selection_revoked")
+            return
+        }
+        val pickerArgs = AutofillPickerActivityV2.Args(
+            applicationId = args.applicationId, webDomain = args.webDomain,
+            interactionIdentifier = args.interactionIdentifier,
+            interactionIdentifierAliases = args.interactionIdentifierAliases,
+            autofillIds = args.autofillIds, autofillHints = args.autofillHints,
+            suggestedPasswordIds = longArrayOf(args.passwordId),
+            fieldSignatureKey = args.fieldSignatureKey, rememberLastFilled = args.rememberLastFilled,
+        )
+        resultPublished = true
+        callbackArgsToken?.let { pendingArgsByToken.remove(it) }
+        startActivity(AutofillPickerActivityV2.getIntent(this, pickerArgs).addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT))
+        finishWithoutAnimation()
     }
 
     private fun cancelAndFinish(reason: String) {

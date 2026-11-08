@@ -29,6 +29,9 @@ public final class KdbxDeleteTestProvider extends ContentProvider {
     private final ConcurrentHashMap<String, Boolean> takeoverReady = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, AtomicInteger> replaceReadCountdown = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, byte[]> readReplacement = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, AtomicInteger> blockReadCountdown = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, java.util.concurrent.CountDownLatch> readBarriers = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Boolean> readBlocked = new ConcurrentHashMap<>();
     private File file(Uri uri) {
         String name = uri.getLastPathSegment();
         if (name == null || !name.matches("delete-[a-f0-9-]+\\.kdbx")) throw new IllegalArgumentException("Fixture only");
@@ -53,6 +56,7 @@ public final class KdbxDeleteTestProvider extends ContentProvider {
                 case "write_opened_ms": values[i] = writeOpened.getOrDefault(f.getName(), 0L); break;
                 case "write_finished_ms": values[i] = writeFinished.getOrDefault(f.getName(), 0L); break;
                 case "blocked": values[i] = blocked.containsKey(f.getName()) ? 1 : 0; break;
+                case "read_blocked": values[i] = readBlocked.containsKey(f.getName()) ? 1 : 0; break;
             }
         }
         MatrixCursor cursor = new MatrixCursor(columns); cursor.addRow(values); return cursor;
@@ -60,6 +64,23 @@ public final class KdbxDeleteTestProvider extends ContentProvider {
     @Override public ParcelFileDescriptor openFile(Uri uri, String mode) throws FileNotFoundException {
         File f = file(uri);
         if (!mode.contains("w")) {
+            AtomicInteger blockCountdown = blockReadCountdown.get(f.getName());
+            if (blockCountdown != null && blockCountdown.decrementAndGet() == 0) {
+                blockReadCountdown.remove(f.getName());
+                java.util.concurrent.CountDownLatch barrier = readBarriers.get(f.getName());
+                readBlocked.put(f.getName(), true);
+                try {
+                    if (barrier == null || !barrier.await(30, java.util.concurrent.TimeUnit.SECONDS)) {
+                        throw new FileNotFoundException("Fixture read barrier timeout");
+                    }
+                } catch (InterruptedException error) {
+                    Thread.currentThread().interrupt();
+                    throw new FileNotFoundException("Interrupted fixture read");
+                } finally {
+                    readBlocked.remove(f.getName());
+                    readBarriers.remove(f.getName());
+                }
+            }
             AtomicInteger countdown = replaceReadCountdown.get(f.getName());
             if (countdown != null && countdown.decrementAndGet() == 0) {
                 replaceReadCountdown.remove(f.getName());
@@ -101,6 +122,18 @@ public final class KdbxDeleteTestProvider extends ContentProvider {
     @Override public Bundle call(String method, String arg, Bundle extras) {
         File f = file(Uri.parse(arg));
         switch (method) {
+            case "block-read":
+                int read = extras == null ? 1 : extras.getInt("read", 1);
+                if (read < 1) throw new IllegalArgumentException("Positive read ordinal required");
+                if (readBarriers.putIfAbsent(f.getName(), new java.util.concurrent.CountDownLatch(1)) != null) {
+                    throw new IllegalStateException("Read barrier already armed");
+                }
+                blockReadCountdown.put(f.getName(), new AtomicInteger(read));
+                break;
+            case "release-read":
+                java.util.concurrent.CountDownLatch readBarrier = readBarriers.get(f.getName());
+                if (readBarrier != null) readBarrier.countDown();
+                break;
             case "replace-on-read":
                 readReplacement.put(f.getName(), extras.getByteArray("bytes"));
                 replaceReadCountdown.put(f.getName(), new AtomicInteger(extras.getInt("read", 2)));

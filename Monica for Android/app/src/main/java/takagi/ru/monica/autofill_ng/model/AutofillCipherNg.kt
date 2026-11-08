@@ -1,6 +1,7 @@
 package takagi.ru.monica.autofill_ng.model
 
 import takagi.ru.monica.data.PasswordEntry
+import takagi.ru.monica.autofill_ng.NativeAutofillSelection
 
 /**
  * Bitwarden-compatible cipher model (login only in Monica v1).
@@ -18,6 +19,7 @@ sealed class AutofillCipher {
         val password: String,
         val website: String,
         val appPackageName: String?,
+        val nativeSelection: NativeAutofillSelection? = null,
     ) : AutofillCipher()
 }
 

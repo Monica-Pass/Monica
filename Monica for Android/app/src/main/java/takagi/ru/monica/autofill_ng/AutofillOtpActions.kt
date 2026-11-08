@@ -53,8 +53,14 @@ internal class AutofillOtpActions(context: Context, private val bindingCache: Au
         return ids
     }
 
-    suspend fun process(password: PasswordEntry) {
+    suspend fun process(password: PasswordEntry, isAuthorized: () -> Boolean = { true }) {
+        // The optional long-lived OTP service has no native revision/lock authorization.
+        // Explicit OTP fields still use resolveData inside the selected fill request.
+        if (AutofillPasswordSource.isNative(password)) return
         optional {
+            if (!isAuthorized()) return@optional
+            val current = AutofillRoomCredentialReader.read(PasswordDatabase.getDatabase(context), password.id)
+            if (current !is AutofillRoomCredentialReader.Result.Available || current.entry != password) return@optional
             val preferences = AutofillPreferences(context)
             val notify = preferences.isOtpNotificationEnabled.first()
             val copy = preferences.isAutoCopyOtpEnabled.first()
@@ -62,16 +68,23 @@ internal class AutofillOtpActions(context: Context, private val bindingCache: Au
             val data = resolveData(password) ?: return@optional
             val code = TotpGenerator.generateOtp(data).takeIf { it.isNotBlank() } ?: return@optional
             currentCoroutineContext().ensureActive()
+            if (!isAuthorized()) return@optional
             // Failure in either optional action must not prevent the other action or autofill.
             if (copy) optional {
+                val current = AutofillRoomCredentialReader.read(PasswordDatabase.getDatabase(context), password.id)
+                if (current !is AutofillRoomCredentialReader.Result.Available || current.entry != password) return@optional
                 withContext(Dispatchers.Main.immediate) {
+                    if (!isAuthorized()) return@withContext
                     (context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager)
                         ?.setPrimaryClip(ClipData.newPlainText("OTP Code", code))
                 }
             }
             if (notify) {
                 val duration = preferences.otpNotificationDuration.first()
+                val current = AutofillRoomCredentialReader.read(PasswordDatabase.getDatabase(context), password.id)
+                if (current !is AutofillRoomCredentialReader.Result.Available || current.entry != password) return@optional
                 withContext(Dispatchers.Main.immediate) {
+                    if (!isAuthorized()) return@withContext
                     AutofillOtpNotificationService.start(context, data, password.title, duration)
                 }
             }
@@ -82,7 +95,8 @@ internal class AutofillOtpActions(context: Context, private val bindingCache: Au
         withContext(Dispatchers.IO) {
             val inline = optional {
                 TotpDataResolver.fromAuthenticatorKey(
-                    securityManager.decryptDataIfMonicaCiphertext(password.authenticatorKey)
+                    if (AutofillPasswordSource.isNative(password)) password.authenticatorKey
+                    else securityManager.decryptDataIfMonicaCiphertext(password.authenticatorKey)
                 )
             }
             val existing = validators()
@@ -91,7 +105,8 @@ internal class AutofillOtpActions(context: Context, private val bindingCache: Au
                 ?: inline
                 ?: return@withContext null
             val resolved = selected.copy(
-                secret = securityManager.decryptDataIfMonicaCiphertext(selected.secret).trim()
+                secret = (if (AutofillPasswordSource.isNative(password) && selected === inline) selected.secret
+                    else securityManager.decryptDataIfMonicaCiphertext(selected.secret)).trim()
             )
             resolved.takeIf(::hasUsableSecret)
         }
@@ -130,14 +145,20 @@ internal class AutofillOtpActions(context: Context, private val bindingCache: Au
 
         /** Like the full picker: finish the system fill immediately, then perform optional work. */
         fun launchAfterFill(context: Context, passwordId: Long) {
+            if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(passwordId)) return
             val appContext = context.applicationContext
             postFillScope.launch {
                 try {
                     withTimeoutOrNull(5000) {
-                        val password = withContext(Dispatchers.IO) {
-                            PasswordDatabase.getDatabase(appContext).passwordEntryDao().getPasswordEntryById(passwordId)
+                        val security = SecurityManager(appContext)
+                        val generation = SecurityManager.dataReadGeneration.value
+                        val password = (AutofillRoomCredentialReader.read(PasswordDatabase.getDatabase(appContext), passwordId)
+                            as? AutofillRoomCredentialReader.Result.Available)?.entry
+                        if (password != null) AutofillOtpActions(appContext).process(password) {
+                            security.isDataReadCurrent(generation) &&
+                                appContext.getSystemService(android.os.PowerManager::class.java)?.isInteractive == true &&
+                                appContext.getSystemService(android.app.KeyguardManager::class.java)?.isKeyguardLocked == false
                         }
-                        if (password != null) AutofillOtpActions(appContext).process(password)
                     }
                 } catch (_: Exception) {
                     AutofillLogger.w("OTP", "Fill completed; optional OTP action unavailable")

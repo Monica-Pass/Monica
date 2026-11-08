@@ -366,6 +366,12 @@ class FillResponseBuilderNg(
             fieldSignatureKey = request.fieldSignatureKey,
             rememberLastFilled = true,
             requireAuthentication = requireAuthentication,
+            nativeDatabaseId = partition.autofillCipher.nativeSelection?.databaseId,
+            nativeEntryUuid = partition.autofillCipher.nativeSelection?.entryUuid,
+            nativeRevision = partition.autofillCipher.nativeSelection?.revision,
+            nativeLockVersion = partition.autofillCipher.nativeSelection?.lockVersion,
+            nativeProcessNonce = partition.autofillCipher.nativeSelection?.processNonce,
+            nativeGeneration = partition.autofillCipher.nativeSelection?.generation,
         )
         val pickerIntent = AutofillCipherCallbackActivity.getIntent(context, args).apply {
             if (directDataset != null) {

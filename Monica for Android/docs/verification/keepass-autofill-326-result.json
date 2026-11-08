@@ -1,0 +1,642 @@
+{
+  "version": "1.0.326",
+  "normalVersionCode": 12,
+  "fdroidVersionCode": 33,
+  "device": "MuMu API35 x86_64; task-owned secondary user; isolated full Gradle Debug packages",
+  "finalRuns": {
+    "main": {
+      "build": "main-build08",
+      "install": "main-install10",
+      "device": "main-device06",
+      "regression": "main-regression04",
+      "coldPrepare": "main-cold-final02-prepare",
+      "coldVerify": "main-cold-final02-verify",
+      "largeFont": "main-large-font01",
+      "testBuild": "main-tests10",
+      "deviceRerun": "main-folder-final02"
+    },
+    "fd": {
+      "build": "fd-build05",
+      "install": "fd-install03",
+      "device": "fd-device02",
+      "regression": "fd-regression02",
+      "coldPrepare": "fd-cold-final02-prepare",
+      "coldVerify": "fd-cold-final02-verify",
+      "largeFont": "fd-large-font01"
+    }
+  },
+  "editions": {
+    "main": {
+      "build": {
+        "label": "main-build08",
+        "seconds": 635.459,
+        "jvm": {
+          "tests": 402,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "apks": [
+        {
+          "path": "Monica-Android-x86_64-1.0.326-26110812-80.APK",
+          "sha256": "a92dc2957ec210aecbedd4a0d964bc3ed869f7d1695fb6eefef38c5e37b62b24",
+          "manifest": "package: name='takagi.ru.monica.issue179' versionCode='12' versionName='1.0.326-26110812-80' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'"
+        },
+        {
+          "path": "app-debug-androidTest.apk",
+          "sha256": "e9c34a229bab306c3277424bdf651b482ffa5d33d5ac084d6a7b2c132be47852",
+          "manifest": "package: name='takagi.ru.monica.issue179.test' versionCode='' versionName='' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'"
+        }
+      ],
+      "device": {
+        "label": "main-device06",
+        "tests": 30,
+        "initialFailures": 1,
+        "distinctMethodsPassed": 30,
+        "runnerSeconds": 197.871,
+        "hostSeconds": 201.86,
+        "failedMethods": [
+          "actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders"
+        ],
+        "sameAppApkIsolatedRerun": "main-folder-final02"
+      },
+      "regression": {
+        "label": "main-regression04",
+        "tests": 7,
+        "runnerSeconds": 5.845,
+        "hostSeconds": 8.636
+      },
+      "coldPrepare": {
+        "label": "main-cold-final02-prepare",
+        "tests": 1,
+        "runnerSeconds": 1.92,
+        "hostSeconds": 4.355
+      },
+      "coldVerify": {
+        "label": "main-cold-final02-verify",
+        "tests": 1,
+        "runnerSeconds": 1.247,
+        "hostSeconds": 3.664
+      },
+      "largeFont": {
+        "label": "main-large-font01",
+        "tests": 1,
+        "runnerSeconds": 18.393,
+        "hostSeconds": 21.419
+      },
+      "testBuild": {
+        "label": "main-tests10",
+        "seconds": 297.971,
+        "scope": "Instrumentation APK; JVM totals in this collection are retained results, not rerun tests"
+      },
+      "deviceRerun": {
+        "label": "main-folder-final02",
+        "tests": 1,
+        "runnerSeconds": 18.621,
+        "hostSeconds": 21.769
+      },
+      "subsequentTestOnlyChanges": [
+        "app/src/androidTest/java/takagi/ru/monica/autofill_ng/KeePassAutofillInstrumentedTest.kt"
+      ],
+      "appApkUnchangedForFolderFixtureCorrection": true,
+      "installedApksMatchCurrentOutputs": true,
+      "coldHost": {
+        "nativeTitleVisible": true,
+        "coldUiPid": 40456,
+        "entry": "Real Android framework manual picker",
+        "passwordEnteredThroughUi": true
+      }
+    },
+    "fd": {
+      "build": {
+        "label": "fd-build05",
+        "seconds": 1357.259,
+        "jvm": {
+          "tests": 404,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "apks": [
+        {
+          "path": "Monica-Android-x86_64-1.0.326.apk",
+          "sha256": "ea0107881ca4097b320edcb9cdcb1c63ba002e27032a71de955bf128c25c7b22",
+          "manifest": "package: name='takagi.ru.monica.issue179fd' versionCode='33' versionName='1.0.326' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'"
+        },
+        {
+          "path": "app-debug-androidTest.apk",
+          "sha256": "6fd88392df720414fbb57b09b5f09f6e9bedccca0aea9ab765b6d043e30dae46",
+          "manifest": "package: name='takagi.ru.monica.issue179fd.test' versionCode='' versionName='' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'"
+        }
+      ],
+      "device": {
+        "label": "fd-device02",
+        "tests": 30,
+        "runnerSeconds": 158.015,
+        "hostSeconds": 162.66
+      },
+      "regression": {
+        "label": "fd-regression02",
+        "tests": 7,
+        "runnerSeconds": 5.91,
+        "hostSeconds": 8.55
+      },
+      "coldPrepare": {
+        "label": "fd-cold-final02-prepare",
+        "tests": 1,
+        "runnerSeconds": 2.223,
+        "hostSeconds": 4.923
+      },
+      "coldVerify": {
+        "label": "fd-cold-final02-verify",
+        "tests": 1,
+        "runnerSeconds": 1.339,
+        "hostSeconds": 3.638
+      },
+      "largeFont": {
+        "label": "fd-large-font01",
+        "tests": 1,
+        "runnerSeconds": 17.844,
+        "hostSeconds": 20.087
+      },
+      "subsequentTestOnlyChanges": [],
+      "installedApksMatchCurrentOutputs": true,
+      "coldHost": {
+        "nativeTitleVisible": true,
+        "coldUiPid": 42890,
+        "entry": "Real Android framework manual picker",
+        "passwordEnteredThroughUi": true
+      }
+    }
+  },
+  "sharedFiles": [
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/keepass/KdbxDeleteTestProvider.java",
+      "sha256": "782eaf5b50f2c1e0471468054eb5088950405cb61f341f5d4a04114f96770553",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/AccountFillPolicy.kt",
+      "sha256": "a906fb6d820ef1aa5e4a8e647a9f1131d1e7cf69be1cb21b8b3d3bb4366beb19",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillCipherCallbackActivity.kt",
+      "sha256": "ff905686da625016a5167d70505bbfe90361148fc3eca5ac780d4c25ffca2cca",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillOtpActions.kt",
+      "sha256": "595a16b8869c2907784cc95ced7c7db8c5e993e90af67b5a2b30df637cdcb09c",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPickerActivityV2.kt",
+      "sha256": "00824ed15fbcc8cbb2da210ff617543222baf746a2db1502d4efe7ef1a63450b",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillSecretResolver.kt",
+      "sha256": "94db831e34bccca8907090ed07afc1288760f925e570a84819b87f2fd994fbfa",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillUnlockActivity.kt",
+      "sha256": "02fe3a5142b867df15995561cdb94ff9696488624f9f669bdca2f34da30f57e8",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/MonicaAutofillServiceNg.kt",
+      "sha256": "d2ef03dbab8f40b1928709511a40f30aa969f8dcae0903fcc244f32037086cc3",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/auth/AutofillSessionGrantStore.kt",
+      "sha256": "224ea77ee76d77533979b2c8dff20bea114af06b3db80fb0f456768355bddc4d",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/builder/FillResponseBuilderNg.kt",
+      "sha256": "ec595981c785f161ef0e288c08f0c9e27413ed4c746559434344dcbb1ca70e3e",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/builder/FilledDataBuilderNg.kt",
+      "sha256": "a06e5515db885f9b6531362d6384f21d24b19a6ad06c2ca08b891e516f755a49",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/model/AutofillCipherNg.kt",
+      "sha256": "80d2a62b6c80a22a86ca7fd7b58245dbd3ddc2f4cc3c0d9c188a2b55f9ef3914",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/processor/AutofillProcessorNg.kt",
+      "sha256": "2f781164ba6a8882b3264ad74148da235e72eef399abe2cc6242a75590d74301",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/ui/InlinePasswordDetailContent.kt",
+      "sha256": "4a036c2dc779b8aa377b790954d4cdc2ad1735b10f1b5df93e1e31dd188ce529",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/utils/SmartCopyNotificationHelper.kt",
+      "sha256": "61153c0d56c8aa9e18887c51c69203d38d0b4fbfacbe8fbb1e99dbd75b06947f",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/utils/SmartCopyReceiver.kt",
+      "sha256": "7cd796bcc8fb7c76e6e455c9a6b6b2554077d8c04f1d02a9498dcf9f5fa5dedd",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/service/MonicaAccessibilityService.kt",
+      "sha256": "5d099bf9ef8cac65f1255fef84741954a139aface2190dfe8f5cf0b65ac234fa",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/utils/KeePassKdbxService.kt",
+      "sha256": "392ec06a56dde263f33f421925ae70001f82209e2e5ad0ce9d562aaec8548be5",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPasswordSource.kt",
+      "sha256": "115f76ffba9069b0c29d286722671e037b3ae239a358b457cdc19fe182440f1c",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/NativeAutofillAction.kt",
+      "sha256": "1d4f936e67e324ec86e6e5e1bf08b512913fc7a7571d3ba9a0e82207720530ae",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/autofill_ng/KeePassAutofillInstrumentedTest.kt",
+      "sha256": "e6d5ce1d2a21f2ccf44c8e06e935c22dc0bdd80e70a676536b6f825e1358281a",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/autofill_ng/KeePassAutofillColdProcessTest.kt",
+      "sha256": "04175306b6b834a514c50fb00db309a4a3646de71492afc3d27b9c3b0b9b37f9",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillRoomCredentialReader.kt",
+      "sha256": "78ca61359aec7397014b518b327ebb105f53551f72c2979e9b18cf9664cf2104",
+      "baseEqual": true
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/autofill_ng/AutofillServiceRevocationTest.kt",
+      "sha256": "72783980fc5a9a96c5a9d515244bce31bd4d76d75e9b3dfc5594800ad44f50ef",
+      "baseEqual": true
+    }
+  ],
+  "sourceLimits": [
+    "Synthetic local KDBX fixtures; no reporter database",
+    "No physical/OEM, live remote provider or Release/R8 verification",
+    "Service screen-off authorization boundary tested with Robolectric API29/34; slow native read and real screen-off delayed action separately covered on device, not the exact combined onFillRequest race"
+  ],
+  "priorDeviceRuns": {
+    "main-device01": {
+      "passed": false,
+      "passingMethods": [
+        "bindingPreservesUnknownProtectedFieldsHistoryAttachmentsAndSibling",
+        "clearedRequestRejectsLateNativeReadAfterProviderUnblocks",
+        "clearingRequestPermanentlyRevokesItWithoutRevokingAnotherNewRequest",
+        "explicitNativeLockRejectsSelectionsAndDoesNotFallBackToRoomMirror",
+        "externalRevisionChangeRejectsSelectedValueAndBindingWithoutWriting",
+        "frameworkFillAndBindCommitsNativeBindingAndStillReturnsBothValues",
+        "frameworkManualPickerAuthenticatesAndFillsNativePrefixPassword",
+        "nativeCiphertextLookingValuesRemainLiteralAtAccountAndSecretBoundary",
+        "nativeDeferredActionRejectsExternalRevisionAfterPickerSourceWasCleared",
+        "nativeDeferredActionRejectsNativeLockAndReauthenticationCannotReviveOldGeneration",
+        "nativeDeferredActionReopensAfterSourceClosesButCannotOutliveReplacementOrExpiry",
+        "readOnlyNativeFileCanFillButCannotBind",
+        "realNativeSmartCopyNotificationResolvesAfterSourceClosesAndRejectsLockedVault",
+        "realScreenOffThenWakeCannotReviveDeferredNativeAction",
+        "referencedNativeBindingFieldsAreNotExpandedOrOverwritten",
+        "revocationDuringFinalSourceHashPreventsNativeBindingCommit",
+        "revokedAuthorizationRejectsLateNativeReadAfterProviderUnblocks",
+        "runtimeGenerationRevocationCannotBeRevivedByReloadingTheKey",
+        "targetAuthorizationRevocationRejectsLoadedAndNewSelections",
+        "unreadableNativeFileDoesNotLeakStaleRoomProjection"
+      ],
+      "failedMethods": [
+        "actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders",
+        "cancellingNativePickerAuthenticationLeavesFrameworkFormEmpty",
+        "frameworkSuggestionsResolveAllLiteralNativePasswordsAfterPickerAuthentication",
+        "originalKdbxLoadsWithoutRoomOrMainSessionAndNewSourceResolvesStableIds"
+      ],
+      "hostSeconds": 153.504
+    },
+    "main-device02": {
+      "passed": false,
+      "passingMethods": [
+        "bindingPreservesUnknownProtectedFieldsHistoryAttachmentsAndSibling",
+        "cancellingNativePickerAuthenticationLeavesFrameworkFormEmpty",
+        "clearedRequestRejectsLateNativeReadAfterProviderUnblocks",
+        "clearingRequestPermanentlyRevokesItWithoutRevokingAnotherNewRequest",
+        "directDatasetWithMissingRoomOwnerIsCancelled",
+        "explicitNativeLockRejectsSelectionsAndDoesNotFallBackToRoomMirror",
+        "externalRevisionChangeRejectsSelectedValueAndBindingWithoutWriting",
+        "frameworkFillAndBindCommitsNativeBindingAndStillReturnsBothValues",
+        "frameworkManualPickerAuthenticatesAndFillsNativePrefixPassword",
+        "lowIdNativeMirrorCipherCallbackRequiresFreshPickerSelection",
+        "lowIdNativeMirrorDirectDatasetRequiresFreshPickerSelection",
+        "nativeCiphertextLookingValuesRemainLiteralAtAccountAndSecretBoundary",
+        "nativeDeferredActionRejectsExternalRevisionAfterPickerSourceWasCleared",
+        "nativeDeferredActionRejectsNativeLockAndReauthenticationCannotReviveOldGeneration",
+        "nativeDeferredActionReopensAfterSourceClosesButCannotOutliveReplacementOrExpiry",
+        "originalKdbxLoadsWithoutRoomOrMainSessionAndNewSourceResolvesStableIds",
+        "readOnlyNativeFileCanFillButCannotBind",
+        "realNativeSmartCopyNotificationResolvesAfterSourceClosesAndRejectsLockedVault",
+        "realScreenOffThenWakeCannotReviveDeferredNativeAction",
+        "referencedNativeBindingFieldsAreNotExpandedOrOverwritten",
+        "revocationDuringFinalSourceHashPreventsNativeBindingCommit",
+        "revokedAuthorizationRejectsLateNativeReadAfterProviderUnblocks",
+        "runtimeGenerationRevocationCannotBeRevivedByReloadingTheKey",
+        "targetAuthorizationRevocationRejectsLoadedAndNewSelections",
+        "unreadableNativeFileDoesNotLeakStaleRoomProjection"
+      ],
+      "failedMethods": [
+        "actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders",
+        "frameworkSuggestionsResolveAllLiteralNativePasswordsAfterPickerAuthentication"
+      ],
+      "hostSeconds": 190.218
+    },
+    "main-suggestion-diagnostic01": {
+      "passed": false,
+      "passingMethods": [],
+      "failedMethods": [
+        "frameworkSuggestionsResolveAllLiteralNativePasswordsAfterPickerAuthentication"
+      ],
+      "hostSeconds": 34.719
+    },
+    "main-device03": {
+      "passed": false,
+      "passingMethods": [
+        "bindingPreservesUnknownProtectedFieldsHistoryAttachmentsAndSibling",
+        "clearedRequestRejectsLateNativeReadAfterProviderUnblocks",
+        "clearingRequestPermanentlyRevokesItWithoutRevokingAnotherNewRequest",
+        "directDatasetWithMissingRoomOwnerIsCancelled",
+        "explicitNativeLockRejectsSelectionsAndDoesNotFallBackToRoomMirror",
+        "externalRevisionChangeRejectsSelectedValueAndBindingWithoutWriting",
+        "frameworkSuggestionsResolveAllLiteralNativePasswordsAfterPickerAuthentication",
+        "nativeCiphertextLookingValuesRemainLiteralAtAccountAndSecretBoundary",
+        "nativeDeferredActionRejectsExternalRevisionAfterPickerSourceWasCleared",
+        "nativeDeferredActionRejectsNativeLockAndReauthenticationCannotReviveOldGeneration",
+        "nativeDeferredActionReopensAfterSourceClosesButCannotOutliveReplacementOrExpiry",
+        "originalKdbxLoadsWithoutRoomOrMainSessionAndNewSourceResolvesStableIds",
+        "readOnlyNativeFileCanFillButCannotBind",
+        "realNativeSmartCopyNotificationResolvesAfterSourceClosesAndRejectsLockedVault",
+        "realScreenOffThenWakeCannotReviveDeferredNativeAction",
+        "referencedNativeBindingFieldsAreNotExpandedOrOverwritten",
+        "revocationDuringFinalSourceHashPreventsNativeBindingCommit",
+        "revokedAuthorizationRejectsLateNativeReadAfterProviderUnblocks",
+        "runtimeGenerationRevocationCannotBeRevivedByReloadingTheKey",
+        "targetAuthorizationRevocationRejectsLoadedAndNewSelections",
+        "unreadableNativeFileDoesNotLeakStaleRoomProjection"
+      ],
+      "failedMethods": [
+        "actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders",
+        "cancellingNativePickerAuthenticationLeavesFrameworkFormEmpty",
+        "frameworkFillAndBindCommitsNativeBindingAndStillReturnsBothValues",
+        "frameworkManualPickerAuthenticatesAndFillsNativePrefixPassword",
+        "lowIdNativeMirrorCipherCallbackRequiresFreshPickerSelection",
+        "lowIdNativeMirrorDirectDatasetRequiresFreshPickerSelection"
+      ],
+      "hostSeconds": 267.594
+    },
+    "main-device04": {
+      "passed": false,
+      "passingMethods": [
+        "bindingPreservesUnknownProtectedFieldsHistoryAttachmentsAndSibling",
+        "cancellingNativePickerAuthenticationLeavesFrameworkFormEmpty",
+        "clearedRequestRejectsLateNativeReadAfterProviderUnblocks",
+        "clearingRequestPermanentlyRevokesItWithoutRevokingAnotherNewRequest",
+        "directDatasetWithMissingRoomOwnerIsCancelled",
+        "explicitNativeLockRejectsSelectionsAndDoesNotFallBackToRoomMirror",
+        "externalRevisionChangeRejectsSelectedValueAndBindingWithoutWriting",
+        "frameworkFillAndBindCommitsNativeBindingAndStillReturnsBothValues",
+        "frameworkManualPickerAuthenticatesAndFillsNativePrefixPassword",
+        "frameworkSuggestionsResolveAllLiteralNativePasswordsAfterPickerAuthentication",
+        "lowIdNativeMirrorCipherCallbackRequiresFreshPickerSelection",
+        "lowIdNativeMirrorDirectDatasetRequiresFreshPickerSelection",
+        "nativeCiphertextLookingValuesRemainLiteralAtAccountAndSecretBoundary",
+        "nativeDeferredActionRejectsExternalRevisionAfterPickerSourceWasCleared",
+        "nativeDeferredActionRejectsNativeLockAndReauthenticationCannotReviveOldGeneration",
+        "nativeDeferredActionReopensAfterSourceClosesButCannotOutliveReplacementOrExpiry",
+        "originalKdbxLoadsWithoutRoomOrMainSessionAndNewSourceResolvesStableIds",
+        "readOnlyNativeFileCanFillButCannotBind",
+        "realNativeSmartCopyNotificationResolvesAfterSourceClosesAndRejectsLockedVault",
+        "realScreenOffThenWakeCannotReviveDeferredNativeAction",
+        "referencedNativeBindingFieldsAreNotExpandedOrOverwritten",
+        "revocationDuringFinalSourceHashPreventsNativeBindingCommit",
+        "revokedAuthorizationRejectsLateNativeReadAfterProviderUnblocks",
+        "runtimeGenerationRevocationCannotBeRevivedByReloadingTheKey",
+        "targetAuthorizationRevocationRejectsLoadedAndNewSelections",
+        "unreadableNativeFileDoesNotLeakStaleRoomProjection"
+      ],
+      "failedMethods": [
+        "actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders"
+      ],
+      "hostSeconds": 188.422
+    },
+    "main-folder-diagnostic01": {
+      "passed": true,
+      "passingMethods": [
+        "actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders"
+      ],
+      "failedMethods": [],
+      "hostSeconds": 33.37
+    },
+    "fd-device01": {
+      "passed": false,
+      "passingMethods": [
+        "bindingPreservesUnknownProtectedFieldsHistoryAttachmentsAndSibling",
+        "cancellingNativePickerAuthenticationLeavesFrameworkFormEmpty",
+        "clearedRequestRejectsLateNativeReadAfterProviderUnblocks",
+        "clearingRequestPermanentlyRevokesItWithoutRevokingAnotherNewRequest",
+        "directDatasetWithMissingRoomOwnerIsCancelled",
+        "explicitNativeLockRejectsSelectionsAndDoesNotFallBackToRoomMirror",
+        "externalRevisionChangeRejectsSelectedValueAndBindingWithoutWriting",
+        "frameworkFillAndBindCommitsNativeBindingAndStillReturnsBothValues",
+        "frameworkManualPickerAuthenticatesAndFillsNativePrefixPassword",
+        "frameworkSuggestionsResolveAllLiteralNativePasswordsAfterPickerAuthentication",
+        "lowIdNativeMirrorCipherCallbackRequiresFreshPickerSelection",
+        "lowIdNativeMirrorDirectDatasetRequiresFreshPickerSelection",
+        "nativeCiphertextLookingValuesRemainLiteralAtAccountAndSecretBoundary",
+        "nativeDeferredActionRejectsExternalRevisionAfterPickerSourceWasCleared",
+        "nativeDeferredActionRejectsNativeLockAndReauthenticationCannotReviveOldGeneration",
+        "nativeDeferredActionReopensAfterSourceClosesButCannotOutliveReplacementOrExpiry",
+        "originalKdbxLoadsWithoutRoomOrMainSessionAndNewSourceResolvesStableIds",
+        "readOnlyNativeFileCanFillButCannotBind",
+        "realNativeSmartCopyNotificationResolvesAfterSourceClosesAndRejectsLockedVault",
+        "realScreenOffThenWakeCannotReviveDeferredNativeAction",
+        "referencedNativeBindingFieldsAreNotExpandedOrOverwritten",
+        "revocationDuringFinalSourceHashPreventsNativeBindingCommit",
+        "revokedAuthorizationRejectsLateNativeReadAfterProviderUnblocks",
+        "runtimeGenerationRevocationCannotBeRevivedByReloadingTheKey",
+        "targetAuthorizationRevocationRejectsLoadedAndNewSelections",
+        "unreadableNativeFileDoesNotLeakStaleRoomProjection"
+      ],
+      "failedMethods": [
+        "actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders"
+      ],
+      "hostSeconds": 131.464
+    },
+    "fd-folder-diagnostic01": {
+      "passed": false,
+      "passingMethods": [],
+      "failedMethods": [
+        "actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders"
+      ],
+      "hostSeconds": 5.162
+    },
+    "main-device05": {
+      "passed": false,
+      "passingMethods": [
+        "bindingPreservesUnknownProtectedFieldsHistoryAttachmentsAndSibling",
+        "clearedRequestRejectsLateNativeReadAfterProviderUnblocks",
+        "clearingRequestPermanentlyRevokesItWithoutRevokingAnotherNewRequest",
+        "directDatasetWithMissingRoomOwnerIsCancelled",
+        "explicitNativeLockRejectsSelectionsAndDoesNotFallBackToRoomMirror",
+        "externalRevisionChangeRejectsSelectedValueAndBindingWithoutWriting",
+        "frameworkFillAndBindCommitsNativeBindingAndStillReturnsBothValues",
+        "frameworkManualPickerAuthenticatesAndFillsNativePrefixPassword",
+        "frameworkSuggestionsResolveAllLiteralNativePasswordsAfterPickerAuthentication",
+        "genuineDuplicatePickerLaunchStillFinishesOnlySecondActivity",
+        "lowIdNativeMirrorCipherCallbackRequiresFreshPickerSelection",
+        "lowIdNativeMirrorDirectDatasetRequiresFreshPickerSelection",
+        "nativeCiphertextLookingValuesRemainLiteralAtAccountAndSecretBoundary",
+        "nativeDeferredActionRejectsExternalRevisionAfterPickerSourceWasCleared",
+        "nativeDeferredActionRejectsNativeLockAndReauthenticationCannotReviveOldGeneration",
+        "nativeDeferredActionReopensAfterSourceClosesButCannotOutliveReplacementOrExpiry",
+        "nativeLockDuringPickerRecreationCannotRestoreVerification",
+        "originalKdbxLoadsWithoutRoomOrMainSessionAndNewSourceResolvesStableIds",
+        "readOnlyNativeFileCanFillButCannotBind",
+        "realNativeSmartCopyNotificationResolvesAfterSourceClosesAndRejectsLockedVault",
+        "realScreenOffThenWakeCannotReviveDeferredNativeAction",
+        "referencedNativeBindingFieldsAreNotExpandedOrOverwritten",
+        "revocationDuringFinalSourceHashPreventsNativeBindingCommit",
+        "revokedAuthorizationRejectsLateNativeReadAfterProviderUnblocks",
+        "runtimeGenerationRevocationCannotBeRevivedByReloadingTheKey",
+        "targetAuthorizationRevocationRejectsLoadedAndNewSelections",
+        "unreadableNativeFileDoesNotLeakStaleRoomProjection"
+      ],
+      "failedMethods": [
+        "actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders",
+        "cancellingNativePickerAuthenticationLeavesFrameworkFormEmpty",
+        "immediatePickerRecreationRetainsAuthenticationWithinDuplicateWindow"
+      ],
+      "hostSeconds": 204.909
+    },
+    "main-device06": {
+      "passed": false,
+      "passingMethods": [
+        "bindingPreservesUnknownProtectedFieldsHistoryAttachmentsAndSibling",
+        "cancellingNativePickerAuthenticationLeavesFrameworkFormEmpty",
+        "clearedRequestRejectsLateNativeReadAfterProviderUnblocks",
+        "clearingRequestPermanentlyRevokesItWithoutRevokingAnotherNewRequest",
+        "directDatasetWithMissingRoomOwnerIsCancelled",
+        "explicitNativeLockRejectsSelectionsAndDoesNotFallBackToRoomMirror",
+        "externalRevisionChangeRejectsSelectedValueAndBindingWithoutWriting",
+        "frameworkFillAndBindCommitsNativeBindingAndStillReturnsBothValues",
+        "frameworkManualPickerAuthenticatesAndFillsNativePrefixPassword",
+        "frameworkSuggestionsResolveAllLiteralNativePasswordsAfterPickerAuthentication",
+        "genuineDuplicatePickerLaunchStillFinishesOnlySecondActivity",
+        "immediatePickerRecreationRetainsAuthenticationWithinDuplicateWindow",
+        "lowIdNativeMirrorCipherCallbackRequiresFreshPickerSelection",
+        "lowIdNativeMirrorDirectDatasetRequiresFreshPickerSelection",
+        "nativeCiphertextLookingValuesRemainLiteralAtAccountAndSecretBoundary",
+        "nativeDeferredActionRejectsExternalRevisionAfterPickerSourceWasCleared",
+        "nativeDeferredActionRejectsNativeLockAndReauthenticationCannotReviveOldGeneration",
+        "nativeDeferredActionReopensAfterSourceClosesButCannotOutliveReplacementOrExpiry",
+        "nativeLockDuringPickerRecreationCannotRestoreVerification",
+        "originalKdbxLoadsWithoutRoomOrMainSessionAndNewSourceResolvesStableIds",
+        "readOnlyNativeFileCanFillButCannotBind",
+        "realNativeSmartCopyNotificationResolvesAfterSourceClosesAndRejectsLockedVault",
+        "realScreenOffThenWakeCannotReviveDeferredNativeAction",
+        "referencedNativeBindingFieldsAreNotExpandedOrOverwritten",
+        "revocationDuringFinalSourceHashPreventsNativeBindingCommit",
+        "revokedAuthorizationRejectsLateNativeReadAfterProviderUnblocks",
+        "runtimeGenerationRevocationCannotBeRevivedByReloadingTheKey",
+        "targetAuthorizationRevocationRejectsLoadedAndNewSelections",
+        "unreadableNativeFileDoesNotLeakStaleRoomProjection"
+      ],
+      "failedMethods": [
+        "actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders"
+      ],
+      "hostSeconds": 201.86
+    },
+    "main-folder-observation03": {
+      "passed": true,
+      "passingMethods": [
+        "actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders"
+      ],
+      "failedMethods": [],
+      "hostSeconds": 33.533
+    },
+    "main-folder-diagnostic02": {
+      "passed": false,
+      "passingMethods": [],
+      "failedMethods": [
+        "actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders"
+      ],
+      "hostSeconds": 15.684
+    },
+    "main-folder-diagnostic03": {
+      "passed": false,
+      "passingMethods": [],
+      "failedMethods": [
+        "actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders"
+      ],
+      "hostSeconds": 38.0,
+      "runnerSeconds": 35.374,
+      "failure": "Picker control did not become stable and fully visible: KeePass (sourceChip=true, editable=null)",
+      "limitation": "The sourceChip fixture locator failed before selecting the database or empty folder; this run does not validate those later interactions. Stale folder-tree XML is excluded from evidence."
+    },
+    "main-folder-tree01": {
+      "passed": false,
+      "passingMethods": [],
+      "failedMethods": [
+        "actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders"
+      ],
+      "hostSeconds": 35.24,
+      "runnerSeconds": 32.892,
+      "failure": "Picker control did not become stable and fully visible: KeePass (sourceChip=true, editable=null)",
+      "limitation": "The sourceChip fixture locator failed before selecting the database or empty folder; this run does not validate those later interactions. Stale folder-tree XML is excluded from evidence."
+    },
+    "main-folder-final01": {
+      "passed": false,
+      "passingMethods": [],
+      "failedMethods": [
+        "actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders"
+      ],
+      "hostSeconds": 48.556,
+      "runnerSeconds": 45.052,
+      "failure": "waitText timed out at test line 842 after returning from the empty folder to the populated folder",
+      "limitation": "Search, source/database selection, empty-folder assertions and returning to the populated folder were reached. The observed screenshot showed four rows and production logged filteredCount=4, but the old waitNode did not clear the accessibility cache or refresh nodes. The exact stale-node identity was not captured; this run remains failed."
+    }
+  },
+  "cleanup": {
+    "verified": true,
+    "users": "Users:\r\n\tUserInfo{0:Owner:4c13} running\r\n\tUserInfo{10:Monica_KMP_Migration_20261108:410} running",
+    "currentUser": 10,
+    "originalApkSha256": "a2426d069598f55873faf3e2403bce2f76719503dd41c44b28fc41851841b428",
+    "displaySize": "Physical size: 1080x1920",
+    "displayDensity": "Physical density: 280",
+    "rotation": "lock 1",
+    "isolatedPackagesAbsent": {
+      "takagi.ru.monica.issue179": true,
+      "takagi.ru.monica.issue179.test": true,
+      "takagi.ru.monica.issue179fd": true,
+      "takagi.ru.monica.issue179fd.test": true
+    },
+    "preexistingMuMuAndAdbPreserved": true,
+    "sharedAvdUntouched": true
+  },
+  "validationComplete": true
+}

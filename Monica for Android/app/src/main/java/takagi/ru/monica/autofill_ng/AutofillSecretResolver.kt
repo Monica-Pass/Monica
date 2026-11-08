@@ -3,6 +3,7 @@ package takagi.ru.monica.autofill_ng
 import android.util.Base64
 import android.util.Log
 import takagi.ru.monica.security.SecurityManager
+import takagi.ru.monica.data.PasswordEntry
 
 /**
  * Autofill-only secret resolver.
@@ -14,6 +15,14 @@ object AutofillSecretResolver {
     private const val DATA_PREFIX_V2 = "V2|"
     private const val DATA_PREFIX_MDK = "MDK|"
     private const val DATA_PREFIX_COMPAT = "C2|"
+
+    /** KDBX projections already contain plaintext, including literal cipher-like prefixes. */
+    fun resolvePasswordOrNull(
+        securityManager: SecurityManager,
+        entry: PasswordEntry,
+        logTag: String = TAG,
+    ): String? = if (AutofillPasswordSource.isNative(entry)) entry.password
+        else decryptPasswordOrNull(securityManager, entry.password, logTag)
 
     fun decryptPasswordOrNull(
         securityManager: SecurityManager,

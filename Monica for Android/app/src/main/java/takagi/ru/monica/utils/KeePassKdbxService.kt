@@ -239,6 +239,13 @@ data class KeePassCustomFieldData(
     val sortOrder: Int = 0
 )
 
+/** Minimal request-lifetime projection; no photo restoration or Room mirror writes. */
+internal data class KeePassAutofillSnapshot(
+    val revision: KeePassSourceRevision,
+    val entries: List<KeePassEntryData>,
+    val groups: List<String>,
+)
+
 internal data class KeePassRawStringField(
     val key: String,
     val value: String,
@@ -1513,6 +1520,134 @@ class KeePassKdbxService(
             Result.success(data)
         } catch (e: Exception) {
             Result.failure(normalizeError(e))
+        }
+    }
+
+    internal suspend fun readAutofillSnapshot(
+        databaseId: Long,
+        expectedRevision: String? = null,
+        checkActive: () -> Unit,
+    ): Result<KeePassAutofillSnapshot> = withContext(Dispatchers.IO) {
+        try {
+            withDatabaseMutationLocks(listOf(databaseId)) {
+                checkActive()
+                var loaded = loadDatabase(databaseId)
+                checkActive()
+                var currentRegistration = requireNotNull(dao.getDatabaseById(databaseId))
+                var actualRevision = openDatabaseStreamSource(currentRegistration).use { it.revision }
+                checkActive()
+                if (!sameNativeSourceConfiguration(loaded.database, currentRegistration) || actualRevision != loaded.sourceRevision) {
+                    invalidateLoadedDatabaseCache(databaseId)
+                    if (expectedRevision != null) error("KeePass autofill selection changed")
+                    loaded = loadDatabase(databaseId)
+                    checkActive()
+                    currentRegistration = requireNotNull(dao.getDatabaseById(databaseId))
+                    actualRevision = openDatabaseStreamSource(currentRegistration).use { it.revision }
+                }
+                checkActive()
+                check(sameNativeSourceConfiguration(loaded.database, currentRegistration) && actualRevision == loaded.sourceRevision) {
+                    "KeePass source changed during autofill read"
+                }
+                expectedRevision?.let { assertNativeRevision(it, loaded.sourceRevision.sha256) }
+                val session = loaded.nativeSession.value
+                check(session.duplicateEntryIdentities.isEmpty()) { "Ambiguous native autofill identity" }
+                val bundle = loaded.projectionBundle.value
+                // Use the same password classification without emitting group/field diagnostic samples.
+                val entries = bundle.entries.mapNotNull { node ->
+                    checkActive()
+                    analyzePasswordEntry(node.entry, node.groupPath, node.groupUuid,
+                        node.isInRecycleBinByMeta, bundle.hasRecycleBinMeta, bundle.resolutionContext).data?.copy(
+                        monicaPresentation = takagi.ru.monica.keepass.KeePassMonicaPasswordStore.UI_FIELDS
+                            .filter { name -> node.entry.fields.keys.any { it.equals(name, true) } }
+                            .associateWith { name -> getFieldValueIgnoreCase(node.entry, bundle.resolutionContext, name) },
+                    )
+                }
+                val groups = session.groupNodes.filterNot { it.isInRecycleBin }
+                    .mapNotNull { it.legacyPath }.distinct()
+                checkActive()
+                if (expectedRevision != null) {
+                    val latestRegistration = requireNotNull(dao.getDatabaseById(databaseId))
+                    check(sameNativeSourceConfiguration(loaded.database, latestRegistration) &&
+                        openDatabaseStreamSource(latestRegistration).use { it.revision } == loaded.sourceRevision) {
+                        "KeePass source changed before autofill selection"
+                    }
+                    checkActive()
+                }
+                Result.success(KeePassAutofillSnapshot(loaded.sourceRevision, entries, groups))
+            }
+        } catch (cancelled: CancellationException) {
+            invalidateLoadedDatabaseCache(databaseId)
+            throw cancelled
+        } catch (error: Exception) {
+            // A slow decoder must not republish its cache after the requesting scope was revoked.
+            invalidateLoadedDatabaseCache(databaseId)
+            Result.failure(error)
+        }
+    }
+
+    internal suspend fun patchAutofillUriBinding(
+        databaseId: Long,
+        entryUuid: UUID,
+        expectedRevision: String,
+        website: String?,
+        appPackageName: String?,
+        appName: String?,
+        checkActive: () -> Unit,
+    ): Result<Boolean> = withContext(Dispatchers.IO) {
+        try {
+            checkActive()
+            mutateDatabase(databaseId, checkWriteAuthorization = checkActive, verifySourceBeforeWrite = true) { loaded ->
+                checkActive()
+                assertNativeRevision(expectedRevision, loaded.nativeSession.value.revisionToken, entryUuid)
+                // Autofill requests cannot own a remote working-copy commit plus its pending-upload
+                // bookkeeping after cancellation. Normal filling remains read-only and supported.
+                check(!loaded.database.isRemoteSource()) { "Remote KeePass URI binding requires native editing" }
+                accessPolicy.requireWritable(databaseId)
+                val node = requireUniqueNativeEntry(loaded.nativeSession.value, entryUuid)
+                check(!node.isInRecycleBin) { "KeePass autofill entry was deleted" }
+                val entry = node.entry
+                check(!entry.fields["MonicaIsArchived"]?.content.equals("true", true)) { "KeePass autofill entry was archived" }
+                val replacements = linkedMapOf<String, EntryValue>()
+                fun replace(value: String?, vararg names: String) {
+                    if (value == null) return
+                    val existingName = names.firstNotNullOfOrNull { alias -> entry.fields.keys.firstOrNull { it.equals(alias, true) } }
+                    val name = existingName ?: names.first()
+                    val previous = entry.fields[name]
+                    previous?.content?.let { raw ->
+                        check(KeePassFieldReferenceResolver.resolveValue(raw, entry,
+                            loaded.projectionBundle.value.resolutionContext) == raw) {
+                            "Referenced KeePass binding fields require native editing"
+                        }
+                    }
+                    replacements[name] = if (previous is EntryValue.Encrypted) EntryValue.Encrypted(EncryptedValue.fromString(value))
+                        else EntryValue.Plain(value)
+                }
+                replace(website, "URL")
+                replace(appPackageName, FIELD_APP_PACKAGE_NAME, "AppPackageName", "MonicaAppPackageName", "AndroidAppPackageName", "PackageName")
+                replace(appName, FIELD_APP_NAME, "AppName", "MonicaAppName", "Application", "Application Name")
+                require(replacements.isNotEmpty()) { "No URI binding changes" }
+                val patch = KeePassEntryFieldPatch.fromEntryFields(
+                    EntryFields.of(*replacements.toList().toTypedArray()), removeManagedField = { false }
+                )
+                val changeSet = KeePassChangeSet(
+                    databaseId = databaseId, target = KeePassChangeTarget.UNKNOWN_ENTRY,
+                    operation = KeePassChangeOperation.FIELD_PATCH, entryUuid = entryUuid.toString(),
+                    baseFingerprint = KeePassEntryFingerprint.build(entry),
+                    fieldPatch = patch.toChangePatch(KeePassManagedFieldScope.EXPLICIT_ONLY, entry),
+                )
+                MutationPlan(
+                    updatedDatabase = KeePassChangeSetApplier().apply(loaded.keePassDatabase, changeSet).updatedDatabase,
+                    result = true,
+                    beforeRemoteUpload = { registration, revision ->
+                        checkActive()
+                        enqueuePendingChangeSetsIfRemote(registration, listOf(changeSet), revision)
+                    },
+                )
+            }.let { Result.success(it) }
+        } catch (cancelled: CancellationException) {
+            throw cancelled
+        } catch (error: Exception) {
+            Result.failure(error)
         }
     }
 
@@ -4335,6 +4470,8 @@ class KeePassKdbxService(
             val current = nativeLockVersions.value
             nativeLockVersions.value = current + (databaseId to ((current[databaseId] ?: 0L) + 1L))
         }
+        // A previous app/domain grant cannot authorize the newly locked library epoch.
+        takagi.ru.monica.autofill_ng.auth.AutofillSessionGrants.clear()
     }
 
     private fun findEntryByUuid(group: Group, uuid: UUID): Entry? {
@@ -7939,14 +8076,18 @@ class KeePassKdbxService(
     private suspend fun <T> mutateDatabase(
         databaseId: Long,
         forceSyncWrite: Boolean = false,
+        checkWriteAuthorization: (() -> Unit)? = null,
+        verifySourceBeforeWrite: Boolean = false,
         mutation: (LoadedDatabase) -> MutationPlan<T>
     ): T {
         return withDatabaseMutationLocks(listOf(databaseId)) {
             try {
+                checkWriteAuthorization?.invoke()
                 if (forceSyncWrite && shouldForceReloadForWrite(databaseId)) {
                     invalidateLoadedDatabaseCache(databaseId)
                 }
                 val loaded = getCachedLoadedDatabase(databaseId) ?: loadDatabase(databaseId)
+                checkWriteAuthorization?.invoke()
                 val plan = mutation(loaded)
                 writeDatabase(
                     database = loaded.database,
@@ -7955,7 +8096,9 @@ class KeePassKdbxService(
                     sourceEtag = loaded.sourceEtag,
                     sourceLastModified = loaded.sourceLastModified,
                     expectedSourceRevision = loaded.sourceRevision,
-                    beforeRemoteUpload = plan.beforeRemoteUpload
+                    beforeRemoteUpload = plan.beforeRemoteUpload,
+                    checkWriteAuthorization = checkWriteAuthorization,
+                    verifySourceBeforeWrite = verifySourceBeforeWrite,
                 )
                 plan.afterWrite?.invoke(loaded.database, plan.updatedDatabase)
                 plan.result
@@ -8458,9 +8601,12 @@ class KeePassKdbxService(
         sourceEtag: String? = null,
         sourceLastModified: String? = null,
         expectedSourceRevision: KeePassSourceRevision? = null,
-        beforeRemoteUpload: (suspend (LocalKeePassDatabase, KeePassSourceRevision) -> Unit)? = null
+        beforeRemoteUpload: (suspend (LocalKeePassDatabase, KeePassSourceRevision) -> Unit)? = null,
+        checkWriteAuthorization: (() -> Unit)? = null,
+        verifySourceBeforeWrite: Boolean = false,
     ) {
         val recordCountScope = nativeRecordCountCache.capture(database.id)
+        checkWriteAuthorization?.invoke()
         accessPolicy.requireWritable(database.id)
         encodeDatabaseArtifact(keePassDatabase).use { artifact ->
             val encodedRevision = artifact.revision
@@ -8471,14 +8617,33 @@ class KeePassKdbxService(
                     header = readFileHeader(artifact.file),
                 )
             }
+            checkWriteAuthorization?.invoke()
+            accessPolicy.requireWritable(database.id)
+            val checkBeforeCommit: (() -> Unit)? = if (checkWriteAuthorization != null || verifySourceBeforeWrite) {
+                {
+                    checkWriteAuthorization?.invoke()
+                    accessPolicy.requireWritable(database.id)
+                    if (verifySourceBeforeWrite) {
+                        // This callback runs on the existing IO worker, immediately before replacing
+                        // the source, after potentially slow provider/temporary-file preparation.
+                        val current = requireNotNull(dao.getAllDatabasesSync().singleOrNull { it.id == database.id })
+                        check(sameNativeSourceConfiguration(database, current)) { "KeePass source configuration changed" }
+                        val actual = openDatabaseStreamSource(current).use { it.revision }
+                        check(expectedSourceRevision != null && actual == expectedSourceRevision) { "KeePass source changed before autofill write" }
+                    }
+                    checkWriteAuthorization?.invoke()
+                    accessPolicy.requireWritable(database.id)
+                }
+            } else null
             if (database.resolvedActiveStorageLocation() == KeePassStorageLocation.INTERNAL) {
-                writeInternal(database, artifact.file)
+                writeInternal(database, artifact.file, checkBeforeCommit)
             } else {
                 writeExternal(
                     database = database,
                     encodedFile = artifact.file,
                     targetRevision = encodedRevision,
                     expectedSourceRevision = expectedSourceRevision,
+                    checkBeforeCommit = checkBeforeCommit,
                 )
             }
             var resolvedSourceEtag = sourceEtag
@@ -9269,10 +9434,10 @@ class KeePassKdbxService(
         }
     }
 
-    private fun writeInternal(database: LocalKeePassDatabase, encodedFile: File) {
+    private fun writeInternal(database: LocalKeePassDatabase, encodedFile: File, checkBeforeCommit: (() -> Unit)? = null) {
         try {
             val file = File(context.filesDir, database.resolvedActiveFilePath())
-            writeInternalFile(file, encodedFile)
+            writeInternalFile(file, encodedFile, checkBeforeCommit)
         } catch (t: Throwable) {
             throw normalizeError(t)
         }
@@ -9324,7 +9489,7 @@ class KeePassKdbxService(
         if (backupFile.exists()) backupFile.delete()
     }
 
-    private fun writeInternalFile(file: File, encodedFile: File) {
+    private fun writeInternalFile(file: File, encodedFile: File, checkBeforeCommit: (() -> Unit)? = null) {
         val parent = file.parentFile ?: throw IOException(strings.get(R.string.storage_error_invalid_path))
         if (!parent.exists() && !parent.mkdirs()) throw IOException(strings.get(R.string.storage_error_create_directory))
         val tempFile = File(parent, "${file.name}.tmp")
@@ -9335,6 +9500,13 @@ class KeePassKdbxService(
                 output.flush()
                 output.fd.sync()
             }
+        }
+        try {
+            checkBeforeCommit?.invoke()
+        } catch (error: Exception) {
+            // No source/backup rename or write has begun. Do not enter a rollback path.
+            tempFile.delete()
+            throw error
         }
         if (file.exists()) {
             if (backupFile.exists()) backupFile.delete()
@@ -9376,7 +9548,8 @@ class KeePassKdbxService(
         database: LocalKeePassDatabase,
         encodedFile: File,
         targetRevision: KeePassSourceRevision,
-        expectedSourceRevision: KeePassSourceRevision?
+        expectedSourceRevision: KeePassSourceRevision?,
+        checkBeforeCommit: (() -> Unit)? = null,
     ) {
         val uri = Uri.parse(database.resolvedActiveFilePath())
         val originalRevision = openExternalInputStream(uri)?.use(KeePassSourceSafety::revisionOf)
@@ -9398,6 +9571,9 @@ class KeePassKdbxService(
             sourceLabel = uri.toString(),
             strings = strings,
         )
+        // Deliberately outside the write/rollback try: authorization failure must never
+        // rewrite an untouched source with a recovery copy. Keep that encrypted copy.
+        checkBeforeCommit?.invoke()
         var writeCompleted = false
         try {
             writeExternalFile(uri, encodedFile)

@@ -1,0 +1,74 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest:
+INSTRUMENTATION_STATUS: test=actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=java.lang.NullPointerException: Cannot run onActivity since Activity has been destroyed already
+	at androidx.test.internal.util.Checks.checkNotNull(Checks.java:50)
+	at androidx.test.core.app.ActivityScenario.lambda$onActivity$2$androidx-test-core-app-ActivityScenario(ActivityScenario.java:792)
+	at androidx.test.core.app.ActivityScenario$$ExternalSyntheticLambda2.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:524)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2624)
+	at android.os.Handler.handleCallback(Handler.java:991)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8971)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:597)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:919)
+
+INSTRUMENTATION_STATUS: stream=
+Error in actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders(takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest):
+java.lang.NullPointerException: Cannot run onActivity since Activity has been destroyed already
+	at androidx.test.internal.util.Checks.checkNotNull(Checks.java:50)
+	at androidx.test.core.app.ActivityScenario.lambda$onActivity$2$androidx-test-core-app-ActivityScenario(ActivityScenario.java:792)
+	at androidx.test.core.app.ActivityScenario$$ExternalSyntheticLambda2.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:524)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2624)
+	at android.os.Handler.handleCallback(Handler.java:991)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8971)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:597)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:919)
+
+INSTRUMENTATION_STATUS: test=actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 2.937
+There was 1 failure:
+1) actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders(takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest)
+java.lang.NullPointerException: Cannot run onActivity since Activity has been destroyed already
+	at androidx.test.internal.util.Checks.checkNotNull(Checks.java:50)
+	at androidx.test.core.app.ActivityScenario.lambda$onActivity$2$androidx-test-core-app-ActivityScenario(ActivityScenario.java:792)
+	at androidx.test.core.app.ActivityScenario$$ExternalSyntheticLambda2.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:524)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2624)
+	at android.os.Handler.handleCallback(Handler.java:991)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8971)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:597)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:919)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

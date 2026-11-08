@@ -126,6 +126,7 @@ object AutofillSessionGrants {
                     if (intent?.action == Intent.ACTION_SCREEN_OFF) {
                         clear()
                         AutofillUnlockRequests.clear()
+                        takagi.ru.monica.autofill_ng.NativeAutofillAction.revokeAll()
                     }
                 }
             },

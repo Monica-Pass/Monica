@@ -1,0 +1,26 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillColdProcessTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.KeePassAutofillColdProcessTest:
+INSTRUMENTATION_STATUS: test=prepareColdPickerFixture
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: stream=ISSUE179_COLD_PREPARED {"phase":"prepared","applicationId":"takagi.ru.monica.issue179","testPackage":"takagi.ru.monica.issue179.test","user":11,"pid":40305,"databaseId":185,"uri":"content:\/\/takagi.ru.monica.issue179.test.kdbx-delete\/delete-ea8bb361-ff68-4578-ba60-571bb85da944.kdbx","sourceSha256":"c60d28893b220a1def58733fd76dbc9c8b93ce57d215720315ed8c323b152a31","expectedTitle":"Issue179 cold original native login","activity":"takagi.ru.monica.autofill_ng.AutofillPickerActivityV2","manualExtra":"extra_manual_mode","targetExtra":"extra_manual_target_package"}
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillColdProcessTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=prepareColdPickerFixture
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 1.92
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1

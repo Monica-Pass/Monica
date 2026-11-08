@@ -1,0 +1,113 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.BoundedSecureDataReadInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.security.BoundedSecureDataReadInstrumentedTest:
+INSTRUMENTATION_STATUS: test=timedOutReadRetainsNativeSlotUntilWorkerReallyExits
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.BoundedSecureDataReadInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=timedOutReadRetainsNativeSlotUntilWorkerReallyExits
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.BoundedSecureDataReadInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cancelledWaitingRequestNeverRunsAfterPriorNativeCallReturns
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.security.BoundedSecureDataReadInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cancelledWaitingRequestNeverRunsAfterPriorNativeCallReturns
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillPickerArgsInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.AutofillPickerArgsInstrumentedTest:
+INSTRUMENTATION_STATUS: test=requestSurvivesSystemClassLoaderAndKeepsEveryTarget
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillPickerArgsInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=requestSurvivesSystemClassLoaderAndKeepsEveryTarget
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillPickerArgsInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=defaultsAndPreviouslyIssuedAppIntentsRemainReadable
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillPickerArgsInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=defaultsAndPreviouslyIssuedAppIntentsRemainReadable
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillNativeIndexInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.AutofillNativeIndexInstrumentedTest:
+INSTRUMENTATION_STATUS: test=urlOverridesSurviveNativePruningAndMetadataChanges
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.AutofillNativeIndexInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=urlOverridesSurviveNativePruningAndMetadataChanges
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassPasswordNativeInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.keepass.KeePassPasswordNativeInstrumentedTest:
+INSTRUMENTATION_STATUS: test=staleNativeDraftCannotOverwriteAnExternalRevision
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassPasswordNativeInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=staleNativeDraftCannotOverwriteAnExternalRevision
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassPasswordNativeInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeSaveUsesOneCommitWithoutDependingOnOverviewRows
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: stream=KDBX_NATIVE_PERF save_and_list_ms=303
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassPasswordNativeInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeSaveUsesOneCommitWithoutDependingOnOverviewRows
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 5.91
+
+OK (7 tests)
+
+
+INSTRUMENTATION_CODE: -1

@@ -1,0 +1,26 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillColdProcessTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.autofill_ng.KeePassAutofillColdProcessTest:
+INSTRUMENTATION_STATUS: test=verifyColdPickerFixtureAndCleanup
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: stream=ISSUE179_COLD_VERIFIED {"phase":"verified","applicationId":"takagi.ru.monica.issue179","preparedPid":40305,"hostObservedColdUiPid":40456,"verificationPid":40723,"databaseId":185,"sourceSha256":"c60d28893b220a1def58733fd76dbc9c8b93ce57d215720315ed8c323b152a31","roomMirrorCount":0,"mainSessionUnlocked":false,"scope":"Storage verification only; host separately asserts the cold password prompt and native title"}
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.autofill_ng.KeePassAutofillColdProcessTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=verifyColdPickerFixtureAndCleanup
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 1.247
+
+OK (1 test)
+
+
+INSTRUMENTATION_CODE: -1
