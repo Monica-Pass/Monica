@@ -121,12 +121,25 @@ internal object BitwardenCipherDocument {
     }
 
     /** New/partial formats never enter the legacy projection or ordinary editor. */
-    fun canProject(cipher: CipherApiResponse): Boolean = cipher.type in 1..5 && !cipher.name.isNullOrBlank() &&
-        (!present(cipher.data) || legacyData(cipher) != null) && !present(cipher.partialData) &&
-        (!present(cipher.encryptedByKeyId) || (cipher.encryptedByKeyId as? JsonPrimitive)?.let {
+    fun canProject(cipher: CipherApiResponse): Boolean = projectionRejection(cipher) == null
+
+    /** Fixed structural codes only: no field values, record identifiers or exception text. */
+    internal enum class ProjectionRejection {
+        TYPE, NAME, LEGACY_SHAPE, LEGACY_MIRROR, PARTIAL, KEY_ID, TYPE_SECTION
+    }
+
+    internal fun projectionRejection(cipher: CipherApiResponse): ProjectionRejection? {
+        if (cipher.type !in 1..5) return ProjectionRejection.TYPE
+        if (cipher.name.isNullOrBlank()) return ProjectionRejection.NAME
+        if (present(cipher.data)) {
+            if (parseLegacyData(cipher.data, cipher.type) == null) return ProjectionRejection.LEGACY_SHAPE
+            if (legacyData(cipher) == null) return ProjectionRejection.LEGACY_MIRROR
+        }
+        if (present(cipher.partialData)) return ProjectionRejection.PARTIAL
+        if (present(cipher.encryptedByKeyId) && (cipher.encryptedByKeyId as? JsonPrimitive)?.let {
             it.isString && Regex("[0-9a-f]{32}").matches(it.content)
-        } == true) &&
-        when (cipher.type) {
+        } != true) return ProjectionRejection.KEY_ID
+        val hasSection = when (cipher.type) {
             1 -> cipher.login != null
             2 -> cipher.secureNote != null
             3 -> cipher.card != null
@@ -134,6 +147,8 @@ internal object BitwardenCipherDocument {
             5 -> cipher.sshKey != null
             else -> false
         }
+        return if (hasSection) null else ProjectionRejection.TYPE_SECTION
+    }
 
     fun update(source: JsonObject, request: CipherUpdateRequest, key: SymmetricCryptoKey? = null, archiveIntent: JsonElement? = null, historyIntent: JsonElement? = null, passwordRevisionDateIntent: String? = null): JsonObject {
         val original = canonical(source)
@@ -188,13 +203,14 @@ internal object BitwardenCipherDocument {
                     else -> value
                 }
             }
-            result["data"] = JsonPrimitive(legacyServerKeys(JsonObject(data), legacyNames(cipher.type)).toString())
+            result["data"] = if (cipher.data is JsonObject) JsonObject(data)
+                else JsonPrimitive(legacyServerKeys(JsonObject(data), legacyNames(cipher.type)).toString())
         }
         result["lastKnownRevisionDate"] = JsonPrimitive(cipher.revisionDate)
         return JsonObject(result)
     }
 
-    /** Official Data may be serialized legacy JSON; encrypted blobs are a different format. */
+    /** Official servers serialize legacy Data; older Vaultwarden returns the same fields as an object. */
     private fun legacyNames(type: Int): Map<String, String> = names("name notes fields passwordHistory") + when (type) {
         1 -> loginNames
         2 -> names("type")
@@ -205,8 +221,16 @@ internal object BitwardenCipherDocument {
     }
 
     private fun parseLegacyData(value: JsonElement?, type: Int): JsonObject? = runCatching {
-        require(type in 1..5 && value is JsonPrimitive && value.isString)
-        normalize(BitwardenWireJson.parseObject(value.content), legacyNames(type))
+        require(type in 1..5)
+        val document = when (value) {
+            is JsonObject -> value
+            is JsonPrimitive -> {
+                require(value.isString)
+                BitwardenWireJson.parseObject(value.content)
+            }
+            else -> error("Unsupported legacy data representation")
+        }
+        normalize(document, legacyNames(type))
     }.getOrNull()
 
     private fun legacyFields(document: JsonObject, type: Int): JsonObject {

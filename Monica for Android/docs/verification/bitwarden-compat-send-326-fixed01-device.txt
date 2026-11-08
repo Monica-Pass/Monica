@@ -1,0 +1,1190 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest:
+INSTRUMENTATION_STATUS: test=pascalCaseObjectDataDownloadsAllFiveCipherTypes
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=pascalCaseObjectDataDownloadsAllFiveCipherTypes
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=typedCipherWithoutDataUploadsAndColdPullsWithoutAddingLegacyData
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<[]> but was:<[{"name":"2.0bitYBH9MKCCZkfPaYGayg==|REDPbMzz4jbGYkdIyo/ePMz9eZ2nGx5JN+KtcyiAPD8=|YF8YfvzOilbjQnLVpvXmJErethJFcUWdJsSIdqjWEdw=","value":"2.Am1RJP/K5zTVSkYGRiwxiQ==|MeGtsLB0Azx7PdV91xM5Lw2pNVTVfN8IEYMnfKVYeWAcQl+AZn49GZjnwMjtvBkHqrXp9r70KzZN2r9eqk1UNFy8mFTACI5vuxUJA0Fv44lhz6Nhtg6qsjw0lDzVyKs6Sz7KHXmEmKL/YVKzL8g+CSAlPNe0ITjYxNAqbhBsbg4=|c0wzZqxU8z8MusZbIil97UcfDT3kwlJ38n5VSsoWcdc=","type":0,"linkedId":null}]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture.checkUploadRoundTrip(BitwardenLegacyVaultwardenSyncTest.kt:305)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture$checkUploadRoundTrip$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest.typedCipherWithoutDataUploadsAndColdPullsWithoutAddingLegacyData(BitwardenLegacyVaultwardenSyncTest.kt:59)
+
+INSTRUMENTATION_STATUS: stream=
+Error in typedCipherWithoutDataUploadsAndColdPullsWithoutAddingLegacyData(takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest):
+java.lang.AssertionError: expected:<[]> but was:<[{"name":"2.0bitYBH9MKCCZkfPaYGayg==|REDPbMzz4jbGYkdIyo/ePMz9eZ2nGx5JN+KtcyiAPD8=|YF8YfvzOilbjQnLVpvXmJErethJFcUWdJsSIdqjWEdw=","value":"2.Am1RJP/K5zTVSkYGRiwxiQ==|MeGtsLB0Azx7PdV91xM5Lw2pNVTVfN8IEYMnfKVYeWAcQl+AZn49GZjnwMjtvBkHqrXp9r70KzZN2r9eqk1UNFy8mFTACI5vuxUJA0Fv44lhz6Nhtg6qsjw0lDzVyKs6Sz7KHXmEmKL/YVKzL8g+CSAlPNe0ITjYxNAqbhBsbg4=|c0wzZqxU8z8MusZbIil97UcfDT3kwlJ38n5VSsoWcdc=","type":0,"linkedId":null}]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture.checkUploadRoundTrip(BitwardenLegacyVaultwardenSyncTest.kt:305)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture$checkUploadRoundTrip$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest.typedCipherWithoutDataUploadsAndColdPullsWithoutAddingLegacyData(BitwardenLegacyVaultwardenSyncTest.kt:59)
+
+INSTRUMENTATION_STATUS: test=typedCipherWithoutDataUploadsAndColdPullsWithoutAddingLegacyData
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=serializedLegacyDataUploadAcceptsObjectServerMirrorAndColdPull
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<[]> but was:<[{"name":"2.qSTwyzrx500j49jM1xOBDQ==|1tdgHKkIf3GtmZI5dOPv/f3rCTG0UHMNUKuWhJRY0Y0=|zK1OcP5frtI7XTIBKLKh+/RVKRqoGa92/2CrQjPTxNc=","value":"2.LP8d0z1D2/i+IQT0JFTIDQ==|7GOcZ8a4l7vq0GEdee6FGkfEax3QLM1lR80HGWaL7/yrjtcM8Tek1xYQd9PVSzC5n/iblt9fCD1MAU/OVO09hGeS4Nl0GPZBTjib3BsFOilSuif/1bh/q7s8ozyxkRBlK7fPUqyk8U8fCIv1JPi0HxK9FLxxdd+kArmWdPX1uyw=|zBl91gcfGzhJ5XlOEk6B6S34p8dr5bMDaEudB6Ko/gw=","type":0,"linkedId":null}]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture.checkUploadRoundTrip(BitwardenLegacyVaultwardenSyncTest.kt:305)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture$checkUploadRoundTrip$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest.serializedLegacyDataUploadAcceptsObjectServerMirrorAndColdPull(BitwardenLegacyVaultwardenSyncTest.kt:55)
+
+INSTRUMENTATION_STATUS: stream=
+Error in serializedLegacyDataUploadAcceptsObjectServerMirrorAndColdPull(takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest):
+java.lang.AssertionError: expected:<[]> but was:<[{"name":"2.qSTwyzrx500j49jM1xOBDQ==|1tdgHKkIf3GtmZI5dOPv/f3rCTG0UHMNUKuWhJRY0Y0=|zK1OcP5frtI7XTIBKLKh+/RVKRqoGa92/2CrQjPTxNc=","value":"2.LP8d0z1D2/i+IQT0JFTIDQ==|7GOcZ8a4l7vq0GEdee6FGkfEax3QLM1lR80HGWaL7/yrjtcM8Tek1xYQd9PVSzC5n/iblt9fCD1MAU/OVO09hGeS4Nl0GPZBTjib3BsFOilSuif/1bh/q7s8ozyxkRBlK7fPUqyk8U8fCIv1JPi0HxK9FLxxdd+kArmWdPX1uyw=|zBl91gcfGzhJ5XlOEk6B6S34p8dr5bMDaEudB6Ko/gw=","type":0,"linkedId":null}]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture.checkUploadRoundTrip(BitwardenLegacyVaultwardenSyncTest.kt:305)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture$checkUploadRoundTrip$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest.serializedLegacyDataUploadAcceptsObjectServerMirrorAndColdPull(BitwardenLegacyVaultwardenSyncTest.kt:55)
+
+INSTRUMENTATION_STATUS: test=serializedLegacyDataUploadAcceptsObjectServerMirrorAndColdPull
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=camelCaseObjectDataDownloadsAllFiveCipherTypes
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=camelCaseObjectDataDownloadsAllFiveCipherTypes
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=conflictingMirrorsUnknownBlobsAndPartialObjectsCannotReplacePreviouslySyncedRows
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=conflictingMirrorsUnknownBlobsAndPartialObjectsCannotReplacePreviouslySyncedRows
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=pascalObjectDataUploadAcceptsCamelServerMirrorAndColdPull
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<[]> but was:<[{"name":"2.Pm/BXC1v3lWH8etysNOxPw==|/vEbp4JbS3BtPOfdjykVQ+PTyYTyzXeDSSD6clkMP3A=|Sq1w/J9uWemPUewtYyy/5bkYby3yUESqkwTDoWRfAhQ=","value":"2.YcaAU/x7EMoH0KbXMkhU7Q==|Wa54fVIlgESppziFlKq+Hi5CjAEPd/75bq8vE2hlwIXjEP8GutAcOIUUeEKCLvhruGBN0m1Nt+caUVARwig3Td6BT3fsMIoWuDw9Vsv7GqG4kvA8H3D+/euEZmu101VK/bJrjQhTLWrv/092JLhJEEzB2lfiaj+oe8qhMAXgTGU=|xQ/7KVjnVEypKzbKMX5fIsZtd6B++NdC0CmU0lZE1dY=","type":0,"linkedId":null}]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture.checkUploadRoundTrip(BitwardenLegacyVaultwardenSyncTest.kt:305)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture$checkUploadRoundTrip$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest.pascalObjectDataUploadAcceptsCamelServerMirrorAndColdPull(BitwardenLegacyVaultwardenSyncTest.kt:51)
+
+INSTRUMENTATION_STATUS: stream=
+Error in pascalObjectDataUploadAcceptsCamelServerMirrorAndColdPull(takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest):
+java.lang.AssertionError: expected:<[]> but was:<[{"name":"2.Pm/BXC1v3lWH8etysNOxPw==|/vEbp4JbS3BtPOfdjykVQ+PTyYTyzXeDSSD6clkMP3A=|Sq1w/J9uWemPUewtYyy/5bkYby3yUESqkwTDoWRfAhQ=","value":"2.YcaAU/x7EMoH0KbXMkhU7Q==|Wa54fVIlgESppziFlKq+Hi5CjAEPd/75bq8vE2hlwIXjEP8GutAcOIUUeEKCLvhruGBN0m1Nt+caUVARwig3Td6BT3fsMIoWuDw9Vsv7GqG4kvA8H3D+/euEZmu101VK/bJrjQhTLWrv/092JLhJEEzB2lfiaj+oe8qhMAXgTGU=|xQ/7KVjnVEypKzbKMX5fIsZtd6B++NdC0CmU0lZE1dY=","type":0,"linkedId":null}]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture.checkUploadRoundTrip(BitwardenLegacyVaultwardenSyncTest.kt:305)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture$checkUploadRoundTrip$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest.pascalObjectDataUploadAcceptsCamelServerMirrorAndColdPull(BitwardenLegacyVaultwardenSyncTest.kt:51)
+
+INSTRUMENTATION_STATUS: test=pascalObjectDataUploadAcceptsCamelServerMirrorAndColdPull
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=camelObjectDataUploadAcceptsServerRegeneratedMirrorAndColdPull
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<[]> but was:<[{"name":"2.N78s+o2cNiXaLgiXkY5RDg==|Jhkc2pEXb1rzamOGsWTQQT25A5rFnlAidLqdCAWk8vU=|xK7YNoz9Ndc1G/EcBqZG0HWIDmh/CZvWrN6QdX1ibk0=","value":"2.a8Ix6YE6doYRqewCuMcMDA==|+uLgE8vHFj9ZwplUHO2eRAVTROBBsUPurmzEOJ9zY448Edp9IASJdGA7d3NgJPSQ1MbjY4gaTEzKZJGvxJstMCwhxeRmZHo/m2zvFGTPDSxJsWKKS0/1sxolNqL7cTJjpAmfstIzw7zYxmtbbQa3mUTeL/ZSgc40C0/I6C9fSD0=|TEOppMBoL0Uo/+4Ic/3M820cEr8zcAihA/EIuCnh8as=","type":0,"linkedId":null}]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture.checkUploadRoundTrip(BitwardenLegacyVaultwardenSyncTest.kt:305)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture$checkUploadRoundTrip$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest.camelObjectDataUploadAcceptsServerRegeneratedMirrorAndColdPull(BitwardenLegacyVaultwardenSyncTest.kt:47)
+
+INSTRUMENTATION_STATUS: stream=
+Error in camelObjectDataUploadAcceptsServerRegeneratedMirrorAndColdPull(takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest):
+java.lang.AssertionError: expected:<[]> but was:<[{"name":"2.N78s+o2cNiXaLgiXkY5RDg==|Jhkc2pEXb1rzamOGsWTQQT25A5rFnlAidLqdCAWk8vU=|xK7YNoz9Ndc1G/EcBqZG0HWIDmh/CZvWrN6QdX1ibk0=","value":"2.a8Ix6YE6doYRqewCuMcMDA==|+uLgE8vHFj9ZwplUHO2eRAVTROBBsUPurmzEOJ9zY448Edp9IASJdGA7d3NgJPSQ1MbjY4gaTEzKZJGvxJstMCwhxeRmZHo/m2zvFGTPDSxJsWKKS0/1sxolNqL7cTJjpAmfstIzw7zYxmtbbQa3mUTeL/ZSgc40C0/I6C9fSD0=|TEOppMBoL0Uo/+4Ic/3M820cEr8zcAihA/EIuCnh8as=","type":0,"linkedId":null}]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture.checkUploadRoundTrip(BitwardenLegacyVaultwardenSyncTest.kt:305)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture$checkUploadRoundTrip$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest.camelObjectDataUploadAcceptsServerRegeneratedMirrorAndColdPull(BitwardenLegacyVaultwardenSyncTest.kt:47)
+
+INSTRUMENTATION_STATUS: test=camelObjectDataUploadAcceptsServerRegeneratedMirrorAndColdPull
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=batchOf262ObjectDataLoginsDownloadsEveryOriginalValueAndRetainsWireDocuments
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$batchOf262ObjectDataLoginsDownloadsEveryOriginalValueAndRetainsWireDocuments$1$1.invokeSuspend(BitwardenLegacyVaultwardenSyncTest.kt:78)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest.batchOf262ObjectDataLoginsDownloadsEveryOriginalValueAndRetainsWireDocuments(BitwardenLegacyVaultwardenSyncTest.kt:63)
+
+INSTRUMENTATION_STATUS: stream=
+Error in batchOf262ObjectDataLoginsDownloadsEveryOriginalValueAndRetainsWireDocuments(takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest):
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$batchOf262ObjectDataLoginsDownloadsEveryOriginalValueAndRetainsWireDocuments$1$1.invokeSuspend(BitwardenLegacyVaultwardenSyncTest.kt:78)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest.batchOf262ObjectDataLoginsDownloadsEveryOriginalValueAndRetainsWireDocuments(BitwardenLegacyVaultwardenSyncTest.kt:63)
+
+INSTRUMENTATION_STATUS: test=batchOf262ObjectDataLoginsDownloadsEveryOriginalValueAndRetainsWireDocuments
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockDuringObjectDataResponseRetainsOldRowsAndRejectsLatePublication
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockDuringObjectDataResponseRetainsOldRowsAndRejectsLatePublication
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest:
+INSTRUMENTATION_STATUS: test=settingChangesUpdateSameDialogFalseTrueFalse
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=initial-unprotected expectedParent=false expectedSheet=false parentSecure=false; dialogs=1; dialogFlags=-2122252032; secure=false
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=setting-enabled expectedParent=true expectedSheet=true parentSecure=true; dialogs=1; dialogFlags=-2122243840; secure=true
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=setting-disabled-again expectedParent=false expectedSheet=false parentSecure=false; dialogs=1; dialogFlags=-2122252032; secure=false
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=settingChangesUpdateSameDialogFalseTrueFalse
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=forcedProtectionAcquiredAndReleasedWhileOpenUpdatesTheSameSheet
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=before-forced-owner expectedParent=false expectedSheet=false parentSecure=false; dialogs=1; dialogFlags=-2122252032; secure=false
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=forced-owner-acquired expectedParent=true expectedSheet=true parentSecure=true; dialogs=1; dialogFlags=-2122243840; secure=true
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=forced-owner-released expectedParent=false expectedSheet=false parentSecure=false; dialogs=1; dialogFlags=-2122252032; secure=false
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=forcedProtectionAcquiredAndReleasedWhileOpenUpdatesTheSameSheet
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=disabledSettingCannotBypassForcedParentProtection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=forced-parent-setting-disabled expectedParent=true expectedSheet=true parentSecure=true; dialogs=1; dialogFlags=-2122243840; secure=true
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=forced-owner-retained expectedParent=true expectedSheet=true parentSecure=true; dialogs=1; dialogFlags=-2122243840; secure=true
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=disabledSettingCannotBypassForcedParentProtection
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=disabledSettingIsIndependentOfAStaleOrdinaryParentFlag
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=disabled-setting-stale-parent expectedParent=true expectedSheet=false parentSecure=true; dialogs=1; dialogFlags=-2122252032; secure=false
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=disabledSettingIsIndependentOfAStaleOrdinaryParentFlag
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=parentClearAndDisabledSettingReleaseAlreadyMountedSheet
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=mounted-protected expectedParent=true expectedSheet=true parentSecure=true; dialogs=1; dialogFlags=-2122243840; secure=true
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=parent-cleared-setting-disabled expectedParent=false expectedSheet=false parentSecure=false; dialogs=1; dialogFlags=-2122252032; secure=false
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=parentClearAndDisabledSettingReleaseAlreadyMountedSheet
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendNavigationTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenSendNavigationTest:
+INSTRUMENTATION_STATUS: test=systemBackReturnsExactlyOnceAndCanReopenEditor
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendNavigationTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=systemBackReturnsExactlyOnceAndCanReopenEditor
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendNavigationTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockRevocationCannotPopTheHomeScreenDuringEditorExit
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendNavigationTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockRevocationCannotPopTheHomeScreenDuringEditorExit
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendNavigationTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=toolbarBackReturnsExactlyOnceAndHomeRemainsVisibleAfterExit
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendNavigationTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=toolbarBackReturnsExactlyOnceAndHomeRemainsVisibleAfterExit
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendNavigationTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=backgroundRevocationClearsEditorAndReturnsOnlyOnce
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSendNavigationTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=backgroundRevocationClearsEditorAndReturnsOnlyOnce
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest:
+INSTRUMENTATION_STATUS: test=sealedSourcesKeepPendingBaselineAndLatestObservationAndRejectAccountOrEnvelopeSwap
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<82> but was:<85>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$sealedSourcesKeepPendingBaselineAndLatestObservationAndRejectAccountOrEnvelopeSwap$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:292)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.sealedSourcesKeepPendingBaselineAndLatestObservationAndRejectAccountOrEnvelopeSwap(BitwardenCipherDocumentInstrumentedTest.kt:288)
+
+INSTRUMENTATION_STATUS: stream=
+Error in sealedSourcesKeepPendingBaselineAndLatestObservationAndRejectAccountOrEnvelopeSwap(takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest):
+java.lang.AssertionError: expected:<82> but was:<85>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$sealedSourcesKeepPendingBaselineAndLatestObservationAndRejectAccountOrEnvelopeSwap$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:292)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.sealedSourcesKeepPendingBaselineAndLatestObservationAndRejectAccountOrEnvelopeSwap(BitwardenCipherDocumentInstrumentedTest.kt:288)
+
+INSTRUMENTATION_STATUS: test=sealedSourcesKeepPendingBaselineAndLatestObservationAndRejectAccountOrEnvelopeSwap
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=wrongWrappingKeyIdReportsIncompleteSyncAndRetainsReadableLocalData
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$wrongWrappingKeyIdReportsIncompleteSyncAndRetainsReadableLocalData$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:167)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.wrongWrappingKeyIdReportsIncompleteSyncAndRetainsReadableLocalData(BitwardenCipherDocumentInstrumentedTest.kt:156)
+
+INSTRUMENTATION_STATUS: stream=
+Error in wrongWrappingKeyIdReportsIncompleteSyncAndRetainsReadableLocalData(takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest):
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$wrongWrappingKeyIdReportsIncompleteSyncAndRetainsReadableLocalData$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:167)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.wrongWrappingKeyIdReportsIncompleteSyncAndRetainsReadableLocalData(BitwardenCipherDocumentInstrumentedTest.kt:156)
+
+INSTRUMENTATION_STATUS: test=wrongWrappingKeyIdReportsIncompleteSyncAndRetainsReadableLocalData
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=freshRemoteRevisionDoesNotReplaceOriginalEditAuthorizationAndConflictKeepsUnknownData
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=21
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=freshRemoteRevisionDoesNotReplaceOriginalEditAuthorizationAndConflictKeepsUnknownData
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unreadableFolderAndSendFieldsReportFailureAndRetainPreviousData
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=22
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$unreadableFolderAndSendFieldsReportFailureAndRetainPreviousData$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:61)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.unreadableFolderAndSendFieldsReportFailureAndRetainPreviousData(BitwardenCipherDocumentInstrumentedTest.kt:28)
+
+INSTRUMENTATION_STATUS: stream=
+Error in unreadableFolderAndSendFieldsReportFailureAndRetainPreviousData(takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest):
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$unreadableFolderAndSendFieldsReportFailureAndRetainPreviousData$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:61)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.unreadableFolderAndSendFieldsReportFailureAndRetainPreviousData(BitwardenCipherDocumentInstrumentedTest.kt:28)
+
+INSTRUMENTATION_STATUS: test=unreadableFolderAndSendFieldsReportFailureAndRetainPreviousData
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=serverNormalizingEmptyFieldsAndLegacyPrimaryUriRetiresOnlyConfirmedEdit
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=23
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$serverNormalizingEmptyFieldsAndLegacyPrimaryUriRetiresOnlyConfirmedEdit$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:124)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.serverNormalizingEmptyFieldsAndLegacyPrimaryUriRetiresOnlyConfirmedEdit(BitwardenCipherDocumentInstrumentedTest.kt:100)
+
+INSTRUMENTATION_STATUS: stream=
+Error in serverNormalizingEmptyFieldsAndLegacyPrimaryUriRetiresOnlyConfirmedEdit(takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest):
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$serverNormalizingEmptyFieldsAndLegacyPrimaryUriRetiresOnlyConfirmedEdit$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:124)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.serverNormalizingEmptyFieldsAndLegacyPrimaryUriRetiresOnlyConfirmedEdit(BitwardenCipherDocumentInstrumentedTest.kt:100)
+
+INSTRUMENTATION_STATUS: test=serverNormalizingEmptyFieldsAndLegacyPrimaryUriRetiresOnlyConfirmedEdit
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=incompleteLoginAcknowledgmentKeepsPendingArchiveOriginalSourceAndEditUntilRetry
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=24
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=incompleteLoginAcknowledgmentKeepsPendingArchiveOriginalSourceAndEditUntilRetry
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=noteCardAndIdentityEditsUseSameDocumentLayerAndKeepArchiveAndUnknownSections
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=25
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$noteCardAndIdentityEditsUseSameDocumentLayerAndKeepArchiveAndUnknownSections$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:222)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.noteCardAndIdentityEditsUseSameDocumentLayerAndKeepArchiveAndUnknownSections(BitwardenCipherDocumentInstrumentedTest.kt:201)
+
+INSTRUMENTATION_STATUS: stream=
+Error in noteCardAndIdentityEditsUseSameDocumentLayerAndKeepArchiveAndUnknownSections(takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest):
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$noteCardAndIdentityEditsUseSameDocumentLayerAndKeepArchiveAndUnknownSections$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:222)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.noteCardAndIdentityEditsUseSameDocumentLayerAndKeepArchiveAndUnknownSections(BitwardenCipherDocumentInstrumentedTest.kt:201)
+
+INSTRUMENTATION_STATUS: test=noteCardAndIdentityEditsUseSameDocumentLayerAndKeepArchiveAndUnknownSections
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=26
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=incompleteSecureItemAcknowledgmentKeepsOriginalSourceAndDirtyState
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=26
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=incompleteSecureItemAcknowledgmentKeepsOriginalSourceAndDirtyState
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=27
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=explicitArchiveAndUnarchiveUseExistingPendingIntentAndPreserveUnknownFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=27
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=explicitArchiveAndUnarchiveUseExistingPendingIntentAndPreserveUnknownFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=28
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=loginEditRetainsArchivedStateHistoryAndUnknownDataThroughColdPull
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=28
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$loginEditRetainsArchivedStateHistoryAndUnknownDataThroughColdPull$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:193)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.loginEditRetainsArchivedStateHistoryAndUnknownDataThroughColdPull(BitwardenCipherDocumentInstrumentedTest.kt:171)
+
+INSTRUMENTATION_STATUS: stream=
+Error in loginEditRetainsArchivedStateHistoryAndUnknownDataThroughColdPull(takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest):
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$loginEditRetainsArchivedStateHistoryAndUnknownDataThroughColdPull$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:193)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.loginEditRetainsArchivedStateHistoryAndUnknownDataThroughColdPull(BitwardenCipherDocumentInstrumentedTest.kt:171)
+
+INSTRUMENTATION_STATUS: test=loginEditRetainsArchivedStateHistoryAndUnknownDataThroughColdPull
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=29
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=revocationBetweenSourceReadAndPutKeepsLocalEditAndDoesNotSendMutation
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=29
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=revocationBetweenSourceReadAndPutKeepsLocalEditAndDoesNotSendMutation
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=30
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=malformedSyncNeverTriggersDeletionAndFailedPutKeepsLocalChanges
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=30
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=malformedSyncNeverTriggersDeletionAndFailedPutKeepsLocalChanges
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=31
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=syncIssuesIdentifyBrokenItemsAndVerifiedTitlesThenClearOnSuccessfulRetry
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=31
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=syncIssuesIdentifyBrokenItemsAndVerifiedTitlesThenClearOnSuccessfulRetry
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=32
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=blobPartialAndFutureTypesNeverReplaceAnExistingProjectionOrCreateEmptyEntries
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=32
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=blobPartialAndFutureTypesNeverReplaceAnExistingProjectionOrCreateEmptyEntries
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=33
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=newLegacyLoginWithWrappingKeyIdAndPerItemKeyIsPulled
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=33
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$newLegacyLoginWithWrappingKeyIdAndPerItemKeyIsPulled$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:150)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.newLegacyLoginWithWrappingKeyIdAndPerItemKeyIsPulled(BitwardenCipherDocumentInstrumentedTest.kt:130)
+
+INSTRUMENTATION_STATUS: stream=
+Error in newLegacyLoginWithWrappingKeyIdAndPerItemKeyIsPulled(takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest):
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$newLegacyLoginWithWrappingKeyIdAndPerItemKeyIsPulled$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:150)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.newLegacyLoginWithWrappingKeyIdAndPerItemKeyIsPulled(BitwardenCipherDocumentInstrumentedTest.kt:130)
+
+INSTRUMENTATION_STATUS: test=newLegacyLoginWithWrappingKeyIdAndPerItemKeyIsPulled
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=34
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sessionRevocationAfterPutCannotPublishAcknowledgmentOrRetirePendingEdit
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=34
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=sessionRevocationAfterPutCannotPublishAcknowledgmentOrRetirePendingEdit
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=35
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=corruptEncryptedFieldsCannotReplaceReadableDataOrAcceptTheirRevision
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=35
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$corruptEncryptedFieldsCannotReplaceReadableDataOrAcceptTheirRevision$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:96)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.corruptEncryptedFieldsCannotReplaceReadableDataOrAcceptTheirRevision(BitwardenCipherDocumentInstrumentedTest.kt:65)
+
+INSTRUMENTATION_STATUS: stream=
+Error in corruptEncryptedFieldsCannotReplaceReadableDataOrAcceptTheirRevision(takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest):
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$corruptEncryptedFieldsCannotReplaceReadableDataOrAcceptTheirRevision$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:96)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.corruptEncryptedFieldsCannotReplaceReadableDataOrAcceptTheirRevision(BitwardenCipherDocumentInstrumentedTest.kt:65)
+
+INSTRUMENTATION_STATUS: test=corruptEncryptedFieldsCannotReplaceReadableDataOrAcceptTheirRevision
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=36
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lostCreateRebindsWithoutPostingAgainAndKeepsExplicitHistoryClear
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=36
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lostCreateRebindsWithoutPostingAgainAndKeepsExplicitHistoryClear
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=37
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=syncIssuesIdentifyEachFailedUploadAndKeepPendingEditsUntilRetry
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest
+INSTRUMENTATION_STATUS: current=37
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=37
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=syncIssuesIdentifyEachFailedUploadAndKeepPendingEditsUntilRetry
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 63.222
+There were 13 failures:
+1) typedCipherWithoutDataUploadsAndColdPullsWithoutAddingLegacyData(takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest)
+java.lang.AssertionError: expected:<[]> but was:<[{"name":"2.0bitYBH9MKCCZkfPaYGayg==|REDPbMzz4jbGYkdIyo/ePMz9eZ2nGx5JN+KtcyiAPD8=|YF8YfvzOilbjQnLVpvXmJErethJFcUWdJsSIdqjWEdw=","value":"2.Am1RJP/K5zTVSkYGRiwxiQ==|MeGtsLB0Azx7PdV91xM5Lw2pNVTVfN8IEYMnfKVYeWAcQl+AZn49GZjnwMjtvBkHqrXp9r70KzZN2r9eqk1UNFy8mFTACI5vuxUJA0Fv44lhz6Nhtg6qsjw0lDzVyKs6Sz7KHXmEmKL/YVKzL8g+CSAlPNe0ITjYxNAqbhBsbg4=|c0wzZqxU8z8MusZbIil97UcfDT3kwlJ38n5VSsoWcdc=","type":0,"linkedId":null}]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture.checkUploadRoundTrip(BitwardenLegacyVaultwardenSyncTest.kt:305)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture$checkUploadRoundTrip$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest.typedCipherWithoutDataUploadsAndColdPullsWithoutAddingLegacyData(BitwardenLegacyVaultwardenSyncTest.kt:59)
+2) serializedLegacyDataUploadAcceptsObjectServerMirrorAndColdPull(takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest)
+java.lang.AssertionError: expected:<[]> but was:<[{"name":"2.qSTwyzrx500j49jM1xOBDQ==|1tdgHKkIf3GtmZI5dOPv/f3rCTG0UHMNUKuWhJRY0Y0=|zK1OcP5frtI7XTIBKLKh+/RVKRqoGa92/2CrQjPTxNc=","value":"2.LP8d0z1D2/i+IQT0JFTIDQ==|7GOcZ8a4l7vq0GEdee6FGkfEax3QLM1lR80HGWaL7/yrjtcM8Tek1xYQd9PVSzC5n/iblt9fCD1MAU/OVO09hGeS4Nl0GPZBTjib3BsFOilSuif/1bh/q7s8ozyxkRBlK7fPUqyk8U8fCIv1JPi0HxK9FLxxdd+kArmWdPX1uyw=|zBl91gcfGzhJ5XlOEk6B6S34p8dr5bMDaEudB6Ko/gw=","type":0,"linkedId":null}]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture.checkUploadRoundTrip(BitwardenLegacyVaultwardenSyncTest.kt:305)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture$checkUploadRoundTrip$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest.serializedLegacyDataUploadAcceptsObjectServerMirrorAndColdPull(BitwardenLegacyVaultwardenSyncTest.kt:55)
+3) pascalObjectDataUploadAcceptsCamelServerMirrorAndColdPull(takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest)
+java.lang.AssertionError: expected:<[]> but was:<[{"name":"2.Pm/BXC1v3lWH8etysNOxPw==|/vEbp4JbS3BtPOfdjykVQ+PTyYTyzXeDSSD6clkMP3A=|Sq1w/J9uWemPUewtYyy/5bkYby3yUESqkwTDoWRfAhQ=","value":"2.YcaAU/x7EMoH0KbXMkhU7Q==|Wa54fVIlgESppziFlKq+Hi5CjAEPd/75bq8vE2hlwIXjEP8GutAcOIUUeEKCLvhruGBN0m1Nt+caUVARwig3Td6BT3fsMIoWuDw9Vsv7GqG4kvA8H3D+/euEZmu101VK/bJrjQhTLWrv/092JLhJEEzB2lfiaj+oe8qhMAXgTGU=|xQ/7KVjnVEypKzbKMX5fIsZtd6B++NdC0CmU0lZE1dY=","type":0,"linkedId":null}]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture.checkUploadRoundTrip(BitwardenLegacyVaultwardenSyncTest.kt:305)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture$checkUploadRoundTrip$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest.pascalObjectDataUploadAcceptsCamelServerMirrorAndColdPull(BitwardenLegacyVaultwardenSyncTest.kt:51)
+4) camelObjectDataUploadAcceptsServerRegeneratedMirrorAndColdPull(takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest)
+java.lang.AssertionError: expected:<[]> but was:<[{"name":"2.N78s+o2cNiXaLgiXkY5RDg==|Jhkc2pEXb1rzamOGsWTQQT25A5rFnlAidLqdCAWk8vU=|xK7YNoz9Ndc1G/EcBqZG0HWIDmh/CZvWrN6QdX1ibk0=","value":"2.a8Ix6YE6doYRqewCuMcMDA==|+uLgE8vHFj9ZwplUHO2eRAVTROBBsUPurmzEOJ9zY448Edp9IASJdGA7d3NgJPSQ1MbjY4gaTEzKZJGvxJstMCwhxeRmZHo/m2zvFGTPDSxJsWKKS0/1sxolNqL7cTJjpAmfstIzw7zYxmtbbQa3mUTeL/ZSgc40C0/I6C9fSD0=|TEOppMBoL0Uo/+4Ic/3M820cEr8zcAihA/EIuCnh8as=","type":0,"linkedId":null}]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture.checkUploadRoundTrip(BitwardenLegacyVaultwardenSyncTest.kt:305)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$Fixture$checkUploadRoundTrip$1.invokeSuspend(Unknown Source:15)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest.camelObjectDataUploadAcceptsServerRegeneratedMirrorAndColdPull(BitwardenLegacyVaultwardenSyncTest.kt:47)
+5) batchOf262ObjectDataLoginsDownloadsEveryOriginalValueAndRetainsWireDocuments(takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest)
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest$batchOf262ObjectDataLoginsDownloadsEveryOriginalValueAndRetainsWireDocuments$1$1.invokeSuspend(BitwardenLegacyVaultwardenSyncTest.kt:78)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenLegacyVaultwardenSyncTest.batchOf262ObjectDataLoginsDownloadsEveryOriginalValueAndRetainsWireDocuments(BitwardenLegacyVaultwardenSyncTest.kt:63)
+6) sealedSourcesKeepPendingBaselineAndLatestObservationAndRejectAccountOrEnvelopeSwap(takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest)
+java.lang.AssertionError: expected:<82> but was:<85>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$sealedSourcesKeepPendingBaselineAndLatestObservationAndRejectAccountOrEnvelopeSwap$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:292)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.sealedSourcesKeepPendingBaselineAndLatestObservationAndRejectAccountOrEnvelopeSwap(BitwardenCipherDocumentInstrumentedTest.kt:288)
+7) wrongWrappingKeyIdReportsIncompleteSyncAndRetainsReadableLocalData(takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest)
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$wrongWrappingKeyIdReportsIncompleteSyncAndRetainsReadableLocalData$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:167)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.wrongWrappingKeyIdReportsIncompleteSyncAndRetainsReadableLocalData(BitwardenCipherDocumentInstrumentedTest.kt:156)
+8) unreadableFolderAndSendFieldsReportFailureAndRetainPreviousData(takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest)
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$unreadableFolderAndSendFieldsReportFailureAndRetainPreviousData$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:61)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.unreadableFolderAndSendFieldsReportFailureAndRetainPreviousData(BitwardenCipherDocumentInstrumentedTest.kt:28)
+9) serverNormalizingEmptyFieldsAndLegacyPrimaryUriRetiresOnlyConfirmedEdit(takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest)
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$serverNormalizingEmptyFieldsAndLegacyPrimaryUriRetiresOnlyConfirmedEdit$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:124)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.serverNormalizingEmptyFieldsAndLegacyPrimaryUriRetiresOnlyConfirmedEdit(BitwardenCipherDocumentInstrumentedTest.kt:100)
+10) noteCardAndIdentityEditsUseSameDocumentLayerAndKeepArchiveAndUnknownSections(takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest)
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$noteCardAndIdentityEditsUseSameDocumentLayerAndKeepArchiveAndUnknownSections$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:222)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.noteCardAndIdentityEditsUseSameDocumentLayerAndKeepArchiveAndUnknownSections(BitwardenCipherDocumentInstrumentedTest.kt:201)
+11) loginEditRetainsArchivedStateHistoryAndUnknownDataThroughColdPull(takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest)
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$loginEditRetainsArchivedStateHistoryAndUnknownDataThroughColdPull$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:193)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.loginEditRetainsArchivedStateHistoryAndUnknownDataThroughColdPull(BitwardenCipherDocumentInstrumentedTest.kt:171)
+12) newLegacyLoginWithWrappingKeyIdAndPerItemKeyIsPulled(takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest)
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$newLegacyLoginWithWrappingKeyIdAndPerItemKeyIsPulled$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:150)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.newLegacyLoginWithWrappingKeyIdAndPerItemKeyIsPulled(BitwardenCipherDocumentInstrumentedTest.kt:130)
+13) corruptEncryptedFieldsCannotReplaceReadableDataOrAcceptTheirRevision(takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest)
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest$corruptEncryptedFieldsCannotReplaceReadableDataOrAcceptTheirRevision$1$1.invokeSuspend(BitwardenCipherDocumentInstrumentedTest.kt:96)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.bitwarden.BitwardenCipherDocumentInstrumentedTest.corruptEncryptedFieldsCannotReplaceReadableDataOrAcceptTheirRevision(BitwardenCipherDocumentInstrumentedTest.kt:65)
+
+FAILURES!!!
+Tests run: 37,  Failures: 13
+
+
+INSTRUMENTATION_CODE: -1

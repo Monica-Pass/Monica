@@ -229,7 +229,11 @@ class CipherSyncProcessor(
         if (!cipher.organizationId.isNullOrBlank() && cipher.viewPassword == false) {
             return CipherSyncResult.Skipped("Organization item restricts password visibility")
         }
-        if (!BitwardenCipherDocument.canProject(cipher)) {
+        val formatRejection = BitwardenCipherDocument.projectionRejection(cipher)
+        if (formatRejection != null) {
+            forensicsCollector?.invoke(BitwardenSyncForensicsSummary(
+                cipherId = cipher.id, cipherType = cipher.type, syncOutcome = "SKIPPED",
+                deleted = cipher.deletedDate != null, message = "FORMAT_${formatRejection.name}"))
             return CipherSyncResult.Skipped("Unsupported or incomplete cipher format; source retained")
         }
         val historySession = if (cipher.type == 1) passwordHistoryStore.captureSession(vault.id) else null

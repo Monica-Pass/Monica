@@ -370,6 +370,8 @@ class BitwardenSyncService(
         var failedOrganizationCiphers = 0
         var failedPersonalCiphers = 0
         var failedOtherRecords = 0
+        val formatRejections = java.util.EnumMap<BitwardenCipherDocument.ProjectionRejection, Int>(
+            BitwardenCipherDocument.ProjectionRejection::class.java)
         val organizationKeys = runCatching {
             takagi.ru.monica.bitwarden.crypto.BitwardenOrganizationKeys.fromProfile(response.profile, symmetricKey)
         }.getOrNull()
@@ -461,6 +463,11 @@ class BitwardenSyncService(
                             report(SyncIssueReason.CONFLICT)
                         }
                         is CipherSyncResult.Skipped -> {
+                            if (result.reason.startsWith("Unsupported or incomplete")) {
+                                BitwardenCipherDocument.projectionRejection(cipherApi)?.let { reason ->
+                                    formatRejections[reason] = (formatRejections[reason] ?: 0) + 1
+                                }
+                            }
                             if (cipherApi.organizationId.isNullOrBlank() &&
                                 (result.reason.startsWith("Unsupported or incomplete") || result.reason.contains("decrypt failed", ignoreCase = true))) {
                                 failedPersonalCiphers++
@@ -598,6 +605,10 @@ class BitwardenSyncService(
             }
 
             requireCurrent()
+            if (formatRejections.isNotEmpty()) {
+                BitwardenDiagLogger.append("Bitwarden format rejections: " +
+                    formatRejections.entries.joinToString(",") { "${it.key.name}=${it.value}" })
+            }
             if (failedPersonalCiphers > 0 || failedOtherRecords > 0) {
                 val failure = SyncResult.Error(strings.get(R.string.bitwarden_sync_incomplete_items, failedPersonalCiphers + failedOrganizationCiphers + failedOtherRecords))
                 BitwardenSyncForensicsLogger.finishSession(context, forensicsSession, failure)

@@ -1,0 +1,127 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest:
+INSTRUMENTATION_STATUS: test=settingChangesUpdateSameDialogFalseTrueFalse
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=initial-unprotected expectedParent=false expectedSheet=false parentSecure=false; dialogs=1; dialogFlags=-2122252032; secure=false
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=setting-enabled expectedParent=true expectedSheet=true parentSecure=true; dialogs=1; dialogFlags=-2122243840; secure=true
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=setting-disabled-again expectedParent=false expectedSheet=false parentSecure=false; dialogs=1; dialogFlags=-2122252032; secure=false
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=settingChangesUpdateSameDialogFalseTrueFalse
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=forcedProtectionAcquiredAndReleasedWhileOpenUpdatesTheSameSheet
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=before-forced-owner expectedParent=false expectedSheet=false parentSecure=false; dialogs=1; dialogFlags=-2122252032; secure=false
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=forced-owner-acquired expectedParent=true expectedSheet=true parentSecure=true; dialogs=1; dialogFlags=-2122243840; secure=true
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=forced-owner-released expectedParent=false expectedSheet=false parentSecure=false; dialogs=1; dialogFlags=-2122252032; secure=false
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=forcedProtectionAcquiredAndReleasedWhileOpenUpdatesTheSameSheet
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=disabledSettingCannotBypassForcedParentProtection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=forced-parent-setting-disabled expectedParent=true expectedSheet=true parentSecure=true; dialogs=1; dialogFlags=-2122243840; secure=true
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=forced-owner-retained expectedParent=true expectedSheet=true parentSecure=true; dialogs=1; dialogFlags=-2122243840; secure=true
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=disabledSettingCannotBypassForcedParentProtection
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=disabledSettingIsIndependentOfAStaleOrdinaryParentFlag
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=disabled-setting-stale-parent expectedParent=true expectedSheet=false parentSecure=true; dialogs=1; dialogFlags=-2122252032; secure=false
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=disabledSettingIsIndependentOfAStaleOrdinaryParentFlag
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=parentClearAndDisabledSettingReleaseAlreadyMountedSheet
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=mounted-protected expectedParent=true expectedSheet=true parentSecure=true; dialogs=1; dialogFlags=-2122243840; secure=true
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: stream=SYNC_ISSUES_SCREENSHOT phase=parent-cleared-setting-disabled expectedParent=false expectedSheet=false parentSecure=false; dialogs=1; dialogFlags=-2122252032; secure=false
+
+INSTRUMENTATION_STATUS_CODE: 2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesScreenshotTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=parentClearAndDisabledSettingReleaseAlreadyMountedSheet
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.bitwarden.BitwardenSyncIssuesUiInstrumentedTest:
+INSTRUMENTATION_STATUS: test=actualSettingsOpensSearchableAccountIssuesAndLockRevokesDialogAndLateWriter
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.bitwarden.BitwardenSyncIssuesUiInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=actualSettingsOpensSearchableAccountIssuesAndLockRevokesDialogAndLateWriter
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 40.703
+
+OK (6 tests)
+
+
+INSTRUMENTATION_CODE: -1

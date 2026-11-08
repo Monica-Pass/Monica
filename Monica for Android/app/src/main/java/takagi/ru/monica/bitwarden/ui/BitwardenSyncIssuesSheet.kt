@@ -8,10 +8,17 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.window.SecureFlagPolicy
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
 import takagi.ru.monica.bitwarden.service.*
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import takagi.ru.monica.utils.SettingsManager
+import takagi.ru.monica.utils.ScreenshotProtectionUtil
+import takagi.ru.monica.utils.screenshotActivity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -21,12 +28,22 @@ internal fun BitwardenSyncIssuesSheet(
     onDismiss: () -> Unit,
     onRetry: () -> Unit,
 ) {
+    val context = LocalContext.current
+    val protection = remember(context.applicationContext) {
+        SettingsManager(context.applicationContext).settingsFlow
+            .map { it.screenshotProtectionEnabled }.distinctUntilChanged()
+    }
+    val protected by protection.collectAsState(initial = true)
+    val activity = context.screenshotActivity()
+    val forced = activity?.window?.let(ScreenshotProtectionUtil::hasForcedProtection) ?: true
     var query by remember { mutableStateOf("") }
     val items = report.items.filter {
         query.isBlank() || it.itemId.contains(query, ignoreCase = true) ||
             it.title?.contains(query, ignoreCase = true) == true
     }
     ModalBottomSheet(onDismissRequest = onDismiss,
+        properties = ModalBottomSheetProperties(securePolicy =
+            if (protected || forced) SecureFlagPolicy.SecureOn else SecureFlagPolicy.SecureOff),
         sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)) {
         LazyColumn(Modifier.fillMaxWidth().testTag("bitwarden_sync_issues"),
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 32.dp),

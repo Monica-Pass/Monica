@@ -289,7 +289,7 @@ class BitwardenCipherDocumentInstrumentedTest {
         scenario {
             seed("login", 1)
             assertTrue(service.fullSync(vault, token, key) is SyncResult.Success)
-            assertEquals(82, db.openHelper.writableDatabase.version)
+            assertEquals(85, db.openHelper.writableDatabase.version)
             val entry = requireNotNull(db.passwordEntryDao().getByBitwardenCipherIdInVault(vault.id, "login"))
             val original = remote.getValue("login")
             db.passwordEntryDao().update(entry.copy(title = "Pending baseline", bitwardenLocalModified = true))
@@ -554,8 +554,10 @@ class BitwardenCipherDocumentInstrumentedTest {
 
         suspend fun initialize() {
             val endpoint = server.url("/").toString()
-            val id = db.bitwardenVaultDao().insert(BitwardenVault(email = "$account@example.invalid", userId = account,
-                accountKey = account, serverUrl = endpoint, identityUrl = endpoint, apiUrl = endpoint))
+            val id = db.bitwardenVaultDao().insert(BitwardenVault(email = "$account@example.invalid",
+                canonicalEmail = "$account@example.invalid", userId = account,
+                accountKey = takagi.ru.monica.bitwarden.BitwardenVaultIdentity.buildAccountKey(endpoint, account, "$account@example.invalid"),
+                serverUrl = endpoint, identityUrl = endpoint, apiUrl = endpoint, isLocked = false))
             vault = requireNotNull(db.bitwardenVaultDao().getVaultById(id))
             cache<SymmetricCryptoKey>("symmetricKeyCache")[id] = key
             cache<String>("accessTokenCache")[id] = token

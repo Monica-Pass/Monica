@@ -996,6 +996,9 @@ fun AddEditSendScreen(
     val leaveForeground by rememberUpdatedState(onLeaveForeground)
     val navigateBack by rememberUpdatedState(onNavigateBack)
     fun revokeEditor() {
+        // Navigation keeps the outgoing entry alive through its exit transition. Its ON_STOP,
+        // a lock event and a save acknowledgment must not pop the destination underneath it.
+        if (editorRevoked) return
         editorRevoked = true
         title = ""; text = ""; notes = ""; password = ""; recipients = listOf("")
         selectedFileUri = null; selectedFileMeta = null; storedDraft = null
@@ -1072,7 +1075,7 @@ fun AddEditSendScreen(
             submitRequested = false
             submitStarted = false
             submitSuccessBaseline = sendCreateSuccessVersion
-            onNavigateBack()
+            revokeEditor()
         }
     }
     LaunchedEffect(sendState, submitRequested, submitStarted) {
@@ -1086,7 +1089,7 @@ fun AddEditSendScreen(
                     submitRequested = false
                     submitStarted = false
                     submitSuccessBaseline = sendCreateSuccessVersion
-                    onNavigateBack()
+                    revokeEditor()
                 }
             }
             is BitwardenViewModel.SendState.Error,
@@ -1107,7 +1110,7 @@ fun AddEditSendScreen(
         !official || BitwardenVaultPremiumStore.isPremium(context, vault.id)
     }
 
-    BackHandler(enabled = isSubmitting) {}
+    BackHandler { if (!isSubmitting) revokeEditor() }
 
     val draft = BitwardenSendDraft(title, text, notes.takeUnless { it.isEmpty() },
         passwordAction = when { removePassword -> SendPasswordAction.REMOVE; password.isNotEmpty() -> SendPasswordAction.REPLACE; else -> SendPasswordAction.KEEP },
@@ -1147,7 +1150,7 @@ fun AddEditSendScreen(
                 title = { Text(sendTopBarTitle, style = MaterialTheme.typography.titleLarge,
                     maxLines = 1, overflow = TextOverflow.Ellipsis) },
                 navigationIcon = {
-                    IconButton(onClick = onNavigateBack, enabled = !isSubmitting) {
+                    IconButton(onClick = { revokeEditor() }, enabled = !isSubmitting) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.back)

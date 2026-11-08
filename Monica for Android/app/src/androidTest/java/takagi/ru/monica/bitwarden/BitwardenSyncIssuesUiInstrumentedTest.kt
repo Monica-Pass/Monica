@@ -63,6 +63,8 @@ class BitwardenSyncIssuesUiInstrumentedTest {
         val previousAutoSync = repository.isAutoSyncEnabled
         repository.isAutoSyncEnabled = false
         try {
+            assertTrue("The synthetic account must be unlocked before opening settings", repository.isVaultUnlocked(id))
+            assertEquals(2, repository.syncIssueReports.value[id]?.items?.size)
             val localized = android.view.ContextThemeWrapper(compose.activity, compose.activity.theme).apply {
                 applyOverrideConfiguration(Configuration(compose.activity.resources.configuration).apply { setLocale(java.util.Locale.ENGLISH) })
             }
@@ -76,6 +78,11 @@ class BitwardenSyncIssuesUiInstrumentedTest {
                     } }
                 }
             }
+            compose.waitUntil(10000) {
+                compose.onAllNodesWithText("Synthetic sync account").fetchSemanticsNodes().isNotEmpty()
+            }
+            // Account actions are inside the collapsed card, as in the real settings flow.
+            compose.onNodeWithText("Synthetic sync account").performScrollTo().performClick()
             val button = localized.getString(R.string.bitwarden_sync_issues_button, 2)
             compose.waitUntil(10000) { compose.onAllNodesWithText(button).fetchSemanticsNodes().isNotEmpty() }
             compose.onNodeWithText(button).performScrollTo().performClick()

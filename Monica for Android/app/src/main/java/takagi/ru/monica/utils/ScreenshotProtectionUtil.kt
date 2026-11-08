@@ -7,6 +7,7 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.ui.platform.LocalContext
 
 /**
@@ -15,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 object ScreenshotProtectionUtil {
     private data class ForcedProtection(var owners: Int, var ordinaryEnabled: Boolean)
     private val forcedWindows = java.util.WeakHashMap<Window, ForcedProtection>()
+    private val forcedProtectionChanges = mutableIntStateOf(0)
     private const val FLAG = WindowManager.LayoutParams.FLAG_SECURE
 
     /** Main-thread ownership shared with the ordinary app setting. */
@@ -22,6 +24,7 @@ object ScreenshotProtectionUtil {
         val protection = forcedWindows[window]
         if (protection == null) {
             forcedWindows[window] = ForcedProtection(1, window.attributes.flags and FLAG != 0)
+            forcedProtectionChanges.intValue++
         } else protection.owners++
         window.addFlags(FLAG)
     }
@@ -30,8 +33,15 @@ object ScreenshotProtectionUtil {
         val protection = forcedWindows[window] ?: return
         if (--protection.owners == 0) {
             forcedWindows.remove(window)
+            forcedProtectionChanges.intValue++
             if (protection.ordinaryEnabled) window.addFlags(FLAG) else window.clearFlags(FLAG)
         }
+    }
+
+    /** Observed by separate Compose dialog windows without retaining their host Activity. */
+    internal fun hasForcedProtection(window: Window): Boolean {
+        forcedProtectionChanges.intValue
+        return forcedWindows.containsKey(window)
     }
     
     /**
@@ -55,7 +65,7 @@ object ScreenshotProtectionUtil {
     }
 }
 
-private tailrec fun Context.screenshotActivity(): Activity? = when (this) {
+internal tailrec fun Context.screenshotActivity(): Activity? = when (this) {
     is Activity -> this
     is ContextWrapper -> if (baseContext !== this) baseContext.screenshotActivity() else null
     else -> null
