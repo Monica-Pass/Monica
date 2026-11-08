@@ -1,5 +1,3 @@
-# 未发布 / Unreleased
-
 # Monica Android 1.0.326
 
 ## 中文
