@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="update_auto_check">Автоматически проверять обновления</string>
+    <string name="update_auto_check_summary">Проверять не чаще одного раза в день после разблокировки. Можно отключить в любое время.</string>
+    <string name="update_now">Обновить сейчас</string>
+    <string name="update_skip_version">Пропустить эту версию</string>
+    <string name="update_view_details">Подробнее</string>
+    <string name="update_later">Позже</string>
+    <string name="update_whats_new">Что нового</string>
+    <string name="update_open_fdroid">Открыть F-Droid</string>
+    <string name="update_fdroid_source">Проверка и установка обновлений выполняются через официальный репозиторий F-Droid.</string>
+    <string name="update_notes_unavailable">Примечания к выпуску недоступны. Откройте подробности для получения дополнительной информации.</string>
+    <string name="update_notes_truncated">Примечания слишком длинные. Откройте подробности, чтобы прочитать их полностью.</string>
+</resources>

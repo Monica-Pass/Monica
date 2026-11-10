@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="update_auto_check">자동으로 업데이트 확인</string>
+    <string name="update_auto_check_summary">잠금 해제 후 하루에 최대 한 번 확인합니다. 언제든지 끌 수 있습니다.</string>
+    <string name="update_now">지금 업데이트</string>
+    <string name="update_skip_version">이 버전 건너뛰기</string>
+    <string name="update_view_details">자세히 보기</string>
+    <string name="update_later">나중에</string>
+    <string name="update_whats_new">업데이트 내용</string>
+    <string name="update_open_fdroid">F-Droid 열기</string>
+    <string name="update_fdroid_source">공식 F-Droid 저장소를 통해 업데이트를 확인하고 설치합니다.</string>
+    <string name="update_notes_unavailable">릴리스 노트가 없습니다. 자세한 내용은 상세 정보를 확인하세요.</string>
+    <string name="update_notes_truncated">릴리스 노트가 깁니다. 전체 내용을 읽으려면 상세 정보를 확인하세요.</string>
+</resources>

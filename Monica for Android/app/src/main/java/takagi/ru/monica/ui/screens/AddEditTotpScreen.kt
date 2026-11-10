@@ -857,7 +857,7 @@ fun AddEditTotpScreen(
             }
             item("account") {
                 InfoCard(title = "") {
-                    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                    ConnectedFieldGroup({
                         // Issuer
                         OutlinedTextField(
                             value = issuer,
@@ -869,7 +869,7 @@ fun AddEditTotpScreen(
                             singleLine = true,
                             shape = RoundedCornerShape(12.dp)
                         )
-
+                    }, {
                         // Account Name
                         OutlinedTextField(
                             value = accountName,
@@ -881,7 +881,7 @@ fun AddEditTotpScreen(
                             singleLine = true,
                             shape = RoundedCornerShape(12.dp)
                         )
-                    }
+                    })
                 }
             }
 
@@ -911,28 +911,28 @@ InfoCard(title = stringResource(R.string.section_notes)) {
             if (editorSections.visible("advanced", selectedOtpType != OtpType.TOTP || period != "30" || digits != "6" || algorithm != "SHA1" || pin.isNotBlank() || counter != "0")) item("advanced") {
                 ItemEditorOptionalSection(editorSections, "advanced", selectedOtpType != OtpType.TOTP || period != "30" || digits != "6" || algorithm != "SHA1" || pin.isNotBlank() || counter != "0") {
                     InfoCard(title = stringResource(R.string.advanced_options)) {
-                    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                        OtpTypeSelector(selectedOtpType, onChange = { type ->
-                            selectedOtpType = type
-                            val updated = OtpParametersDraft(period, digits, algorithm, counter, pin).selectType(type)
-                            period = updated.period
-                            digits = updated.digits
-                            algorithm = updated.algorithm
-                        })
-                        OtpParameterFields(
-                            type = selectedOtpType,
-                            compact = true,
-                            draft = OtpParametersDraft(period, digits, algorithm, counter, pin),
-                            onChange = { updated ->
+                        ConnectedFieldGroup({
+                            OtpTypeSelector(selectedOtpType, onChange = { type ->
+                                selectedOtpType = type
+                                val updated = OtpParametersDraft(period, digits, algorithm, counter, pin).selectType(type)
                                 period = updated.period
                                 digits = updated.digits
                                 algorithm = updated.algorithm
-                                counter = updated.counter
-                                pin = updated.pin
-                            },
-                        )
-                    }
-
+                            })
+                        }, {
+                            OtpParameterFields(
+                                type = selectedOtpType,
+                                compact = true,
+                                draft = OtpParametersDraft(period, digits, algorithm, counter, pin),
+                                onChange = { updated ->
+                                    period = updated.period
+                                    digits = updated.digits
+                                    algorithm = updated.algorithm
+                                    counter = updated.counter
+                                    pin = updated.pin
+                                },
+                            )
+                        })
                     }
                 }
             }
@@ -941,63 +941,64 @@ InfoCard(title = stringResource(R.string.section_notes)) {
             if (editorSections.visible("association", link.isNotBlank() || associatedApp.isNotBlank() || boundPasswordId != null)) item("association") {
                 ItemEditorOptionalSection(editorSections, "association", link.isNotBlank() || associatedApp.isNotBlank() || boundPasswordId != null) {
                     InfoCard(title = stringResource(R.string.association_options)) {
-                    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                        OutlinedTextField(
-                            value = link,
-                            onValueChange = { link = it },
-                            label = { Text(stringResource(R.string.associated_link)) },
-                            placeholder = { Text(stringResource(R.string.link_example)) },
-                            leadingIcon = { Icon(Icons.Default.Link, contentDescription = null) },
-                            modifier = Modifier.fillMaxWidth(),
-                            singleLine = true,
-                            shape = RoundedCornerShape(12.dp)
-                        )
-
-                        AppSelectorField(
-                            grouped = true,
-                            selectedPackageName = associatedApp,
-                            selectedAppName = associatedAppName,
-                            onAppSelected = { packageName, name ->
-                                associatedApp = packageName
-                                associatedAppName = name
-                            }
-                        )
-
-                        if (passwordViewModel != null) {
-                            FilledTonalButton(
-                                onClick = { showPasswordSelectionDialog = true },
-                                modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
-                                shape = RoundedCornerShape(4.dp),
-                                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
-                                colors = ButtonDefaults.filledTonalButtonColors(
-                                    containerColor = MaterialTheme.colorScheme.surfaceContainer,
-                                    contentColor = MaterialTheme.colorScheme.onSurface,
+                        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                            ConnectedFieldGroup({
+                                OutlinedTextField(
+                                    value = link,
+                                    onValueChange = { link = it },
+                                    label = { Text(stringResource(R.string.associated_link)) },
+                                    placeholder = { Text(stringResource(R.string.link_example)) },
+                                    leadingIcon = { Icon(Icons.Default.Link, contentDescription = null) },
+                                    modifier = Modifier.fillMaxWidth(),
+                                    singleLine = true,
+                                    shape = RoundedCornerShape(12.dp)
                                 )
-                            ) {
-                                Icon(Icons.Default.Link, contentDescription = null)
-                                Spacer(modifier = Modifier.width(16.dp))
-                                Text(if (boundPasswordId != null) stringResource(R.string.bound_password_change) else stringResource(R.string.bind_password),
-                                    modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge)
-                                Icon(Icons.Default.ChevronRight, contentDescription = null)
-                            }
+                            }, {
+                                AppSelectorField(
+                                    grouped = true,
+                                    selectedPackageName = associatedApp,
+                                    selectedAppName = associatedAppName,
+                                    onAppSelected = { packageName, name ->
+                                        associatedApp = packageName
+                                        associatedAppName = name
+                                    }
+                                )
+                            })
 
-                            if (boundPasswordId != null) {
-                                TextButton(
-                                    onClick = {
-                                        boundPasswordId = null
-                                        link = ""
-                                        associatedApp = ""
-                                    },
-                                    modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp),
-                                    shape = RoundedCornerShape(4.dp),
-                                    colors = ButtonDefaults.textButtonColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
+                            if (passwordViewModel != null) {
+                                FilledTonalButton(
+                                    onClick = { showPasswordSelectionDialog = true },
+                                    modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
+                                    shape = RoundedCornerShape(24.dp),
+                                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+                                    colors = ButtonDefaults.filledTonalButtonColors(
+                                        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                                        contentColor = MaterialTheme.colorScheme.onSurface,
+                                    )
                                 ) {
-                                    Text(stringResource(R.string.unbind), color = MaterialTheme.colorScheme.error)
+                                    Icon(Icons.Default.Link, contentDescription = null)
+                                    Spacer(modifier = Modifier.width(16.dp))
+                                    Text(if (boundPasswordId != null) stringResource(R.string.bound_password_change) else stringResource(R.string.bind_password),
+                                        modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge)
+                                    Icon(Icons.Default.ChevronRight, contentDescription = null)
+                                }
+
+                                if (boundPasswordId != null) {
+                                    TextButton(
+                                        onClick = {
+                                            boundPasswordId = null
+                                            link = ""
+                                            associatedApp = ""
+                                        },
+                                        modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp),
+                                        shape = RoundedCornerShape(24.dp),
+                                        colors = ButtonDefaults.textButtonColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
+                                    ) {
+                                        Text(stringResource(R.string.unbind), color = MaterialTheme.colorScheme.error)
+                                    }
                                 }
                             }
                         }
-                    }
-
                     }
                 }
             }

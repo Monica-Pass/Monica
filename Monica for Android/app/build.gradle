@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
@@ -9,13 +8,13 @@ plugins {
 
 android {
     namespace 'takagi.ru.monica'
-    compileSdk 36
+    compileSdk 37
 
     def previewVersionSuffix = project.findProperty('previewVersionSuffix')?.toString()?.trim()
     // Intentionally frozen: same-signature sideloaded builds must remain mutually replaceable
     // for emergency rollback. Do not increment this value for routine releases.
     def appVersionCode = 12
-    def baseVersionName = previewVersionSuffix ? "1.0.326-${previewVersionSuffix}" : "1.0.326"
+    def baseVersionName = previewVersionSuffix ? "1.0.327-${previewVersionSuffix}" : "1.0.327"
     def normalizeTwoDigits = { raw ->
         def value = raw?.toString()?.trim()?.replaceAll('\\D', '')
         if (!value) {
@@ -40,14 +39,11 @@ android {
             return sanitizeTag(manualArch, 'universal')
         }
 
-        if (output?.metaClass?.respondsTo(output, 'getFilters')) {
-            def abiFilter = output.filters?.find {
-                def typeText = it?.filterType?.toString()
-                typeText?.equalsIgnoreCase('ABI') || typeText?.toUpperCase()?.endsWith('.ABI')
-            }
-            if (abiFilter?.identifier?.toString()?.trim()) {
-                return sanitizeTag(abiFilter.identifier, 'universal')
-            }
+        def abiFilter = output.filters.find {
+            it.filterType == com.android.build.api.variant.FilterConfiguration.FilterType.ABI
+        }
+        if (abiFilter != null) {
+            return sanitizeTag(abiFilter.identifier, 'universal')
         }
 
         def configuredAbis = defaultConfig.ndk?.abiFilters
@@ -134,7 +130,7 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             minifyEnabled false
@@ -145,23 +141,22 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = '11'
-    }
     buildFeatures {
         compose true
         buildConfig true
         aidl true
     }
 
-    applicationVariants.all { variant ->
-        variant.outputs.all { output ->
+    // Keep the existing naming helpers while using AGP's public Variant API.
+    def components = project.extensions.getByName('androidComponents')
+    components.onVariants(components.selector().all()) { variant ->
+        variant.outputs.each { output ->
             // 目标格式: Monica-Android-[架构]-[版本号]-yyMMddVV-SS.APK
             def apkPrefix = 'Monica'
             def archTag = resolveArchTag(output)
             def versionNameTag = sanitizeTag(project.findProperty('apkVersionName') ?: baseVersionName, '0.0.0')
             def namePrefix = "${apkPrefix}-Android-${archTag}-${versionNameTag}-${buildDateTag}${buildVersionTag}"
-            outputFileName = "${namePrefix}-${buildDailySeq}.APK"
+            output.outputFileName.set("${namePrefix}-${buildDailySeq}.APK".toString())
         }
     }
 
@@ -174,6 +169,9 @@ android {
             java {
                 // Legacy autofill tests target removed APIs and currently block unit-test compilation.
                 // Keep them isolated until the Autofill test suite is rebuilt against current architecture.
+                exclude 'takagi/ru/monica/autofill/**'
+            }
+            kotlin {
                 exclude 'takagi/ru/monica/autofill/**'
             }
         }
@@ -208,28 +206,23 @@ android {
 
 apply from: rootProject.file('gradle/monica-rust-jni.gradle')
 
-configurations.configureEach {
-    resolutionStrategy.force(
-        "org.jetbrains.kotlin:kotlin-bom:2.1.20",
-        "org.jetbrains.kotlin:kotlin-stdlib:2.1.20",
-        "org.jetbrains.kotlin:kotlin-stdlib-common:2.1.20",
-        "org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.1.20",
-        "org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.1.20",
-        "org.jetbrains.kotlinx:kotlinx-serialization-bom:1.6.0",
-        "org.jetbrains.kotlinx:kotlinx-serialization-core:1.6.0",
-        "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.6.0",
-        "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0",
-        "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.6.0"
-    )
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
+    }
+}
+
+ksp {
+    // Preserve Room 2.6's Java generation while upgrading its KSP2 processor.
+    arg('room.generateKotlin', 'false')
 }
 
 dependencies {
     // Offline phone parsing with country-specific numbering metadata (Apache-2.0).
     implementation "com.googlecode.libphonenumber:libphonenumber:9.0.17"
-    constraints {
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.6.0")
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-    }
+    // Align application runtimes without forcing the compiler/processor classpaths.
+    implementation platform("org.jetbrains.kotlin:kotlin-bom:${libs.versions.kotlin.get()}")
+    implementation platform("org.jetbrains.kotlinx:kotlinx-serialization-bom:${libs.versions.kotlinxSerialization.get()}")
 
     // Core Android libraries
     implementation project(':mdbx-engine')

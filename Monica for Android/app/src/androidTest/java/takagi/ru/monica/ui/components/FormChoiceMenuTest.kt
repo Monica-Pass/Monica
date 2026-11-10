@@ -41,7 +41,7 @@ class FormChoiceMenuTest {
                         Column(Modifier.padding(horizontal = 12.dp, vertical = 64.dp)) {
                             ExposedDropdownMenuBox(expanded.value, { expanded.value = it }) {
                                 OutlinedTextField(value = labels[selected.value], onValueChange = {}, readOnly = true,
-                                    label = { Text("卡类型") }, modifier = Modifier.menuAnchor().fillMaxWidth())
+                                    label = { Text("卡类型") }, modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable).fillMaxWidth())
                                 MonicaExposedChoiceMenu(expanded.value, { expanded.value = false },
                                     labels.mapIndexed { i, label -> MonicaMenuChoice(i, label) }, selected.value,
                                     { selected.value = it })

@@ -1,0 +1,83 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest:
+INSTRUMENTATION_STATUS: test=apiTokenKeepsThreeConnectedRowsInsideItsSection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: row 0 bottom left must be a compact inner corner: expected=ff89abc1 actual=ffffffff at (39,116)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest.assertCorner(ConnectedFieldGroupRegressionTest.kt:125)
+	at takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest.assertConnectedRows(ConnectedFieldGroupRegressionTest.kt:105)
+	at takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest.apiTokenKeepsThreeConnectedRowsInsideItsSection(ConnectedFieldGroupRegressionTest.kt:51)
+
+INSTRUMENTATION_STATUS: stream=
+Error in apiTokenKeepsThreeConnectedRowsInsideItsSection(takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest):
+java.lang.AssertionError: row 0 bottom left must be a compact inner corner: expected=ff89abc1 actual=ffffffff at (39,116)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest.assertCorner(ConnectedFieldGroupRegressionTest.kt:125)
+	at takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest.assertConnectedRows(ConnectedFieldGroupRegressionTest.kt:105)
+	at takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest.apiTokenKeepsThreeConnectedRowsInsideItsSection(ConnectedFieldGroupRegressionTest.kt:51)
+
+INSTRUMENTATION_STATUS: test=apiTokenKeepsThreeConnectedRowsInsideItsSection
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=wifiPasswordSecurityAndHiddenNetworkShareOneGroupAfterScanButton
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: row 0 bottom left must be a compact inner corner: expected=ff89abc1 actual=ffffffff at (39,221)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest.assertCorner(ConnectedFieldGroupRegressionTest.kt:125)
+	at takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest.assertConnectedRows(ConnectedFieldGroupRegressionTest.kt:105)
+	at takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest.wifiPasswordSecurityAndHiddenNetworkShareOneGroupAfterScanButton(ConnectedFieldGroupRegressionTest.kt:80)
+
+INSTRUMENTATION_STATUS: stream=
+Error in wifiPasswordSecurityAndHiddenNetworkShareOneGroupAfterScanButton(takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest):
+java.lang.AssertionError: row 0 bottom left must be a compact inner corner: expected=ff89abc1 actual=ffffffff at (39,221)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest.assertCorner(ConnectedFieldGroupRegressionTest.kt:125)
+	at takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest.assertConnectedRows(ConnectedFieldGroupRegressionTest.kt:105)
+	at takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest.wifiPasswordSecurityAndHiddenNetworkShareOneGroupAfterScanButton(ConnectedFieldGroupRegressionTest.kt:80)
+
+INSTRUMENTATION_STATUS: test=wifiPasswordSecurityAndHiddenNetworkShareOneGroupAfterScanButton
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 2.137
+There were 2 failures:
+1) apiTokenKeepsThreeConnectedRowsInsideItsSection(takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest)
+java.lang.AssertionError: row 0 bottom left must be a compact inner corner: expected=ff89abc1 actual=ffffffff at (39,116)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest.assertCorner(ConnectedFieldGroupRegressionTest.kt:125)
+	at takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest.assertConnectedRows(ConnectedFieldGroupRegressionTest.kt:105)
+	at takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest.apiTokenKeepsThreeConnectedRowsInsideItsSection(ConnectedFieldGroupRegressionTest.kt:51)
+2) wifiPasswordSecurityAndHiddenNetworkShareOneGroupAfterScanButton(takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest)
+java.lang.AssertionError: row 0 bottom left must be a compact inner corner: expected=ff89abc1 actual=ffffffff at (39,221)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest.assertCorner(ConnectedFieldGroupRegressionTest.kt:125)
+	at takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest.assertConnectedRows(ConnectedFieldGroupRegressionTest.kt:105)
+	at takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest.wifiPasswordSecurityAndHiddenNetworkShareOneGroupAfterScanButton(ConnectedFieldGroupRegressionTest.kt:80)
+
+FAILURES!!!
+Tests run: 2,  Failures: 2
+
+
+INSTRUMENTATION_CODE: -1

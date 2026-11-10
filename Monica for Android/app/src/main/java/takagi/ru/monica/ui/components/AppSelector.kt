@@ -66,7 +66,7 @@ fun AppSelectorField(
     Card(
         onClick = { showDialog = true },
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(if (grouped) 4.dp else 12.dp),
+        shape = if (grouped) connectedFieldShape(RoundedCornerShape(4.dp)) else RoundedCornerShape(12.dp),
         colors = if (grouped) CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
             else CardDefaults.outlinedCardColors(),
         border = if (grouped) null else CardDefaults.outlinedCardBorder()
@@ -146,13 +146,15 @@ fun AppSelectorField(
     
     // 应用选择对话框
     if (showDialog) {
-        AppSelectorDialog(
-            onDismiss = { showDialog = false },
-            onAppSelected = { packageName, appName ->
-                onAppSelected(packageName, appName)
-                showDialog = false
-            }
-        )
+        CompositionLocalProvider(LocalConnectedFieldEdges provides null) {
+            AppSelectorDialog(
+                onDismiss = { showDialog = false },
+                onAppSelected = { packageName, appName ->
+                    onAppSelected(packageName, appName)
+                    showDialog = false
+                }
+            )
+        }
     }
 }
 

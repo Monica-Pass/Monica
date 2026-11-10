@@ -36,14 +36,14 @@ class LocalizedOperationMessagesTest {
         }
     }
 
-    @Test fun bitwardenUnknownErrorsRetainTheirLengthLimitAndFormatArguments() {
+    @Test fun bitwardenUnknownErrorsNeverEchoRemoteBodiesOrSignedUrls() {
         val strings = xmlTestStrings("en")
-        val longError = "Remote detail ".repeat(30)
-        assertEquals(strings.get(R.string.bitwarden_message_login_failed, longError.take(100) + "..."),
-            BitwardenRepository.parseErrorMessage(longError, strings))
+        val generic = strings.get(R.string.bitwarden_account_operation_failed)
+        for (remoteError in listOf("Remote detail ".repeat(30), "HTTP 418",
+            "https://example.invalid/?token=synthetic-secret-marker")) {
+            assertEquals(generic, BitwardenRepository.parseErrorMessage(remoteError, strings))
+        }
         assertEquals(strings.get(R.string.bitwarden_message_unknown), BitwardenRepository.parseErrorMessage(null, strings))
-        assertEquals(strings.get(R.string.bitwarden_message_login_failed, "HTTP 418"),
-            BitwardenRepository.parseErrorMessage("HTTP 418", strings))
     }
 
     @Test fun translatedSyncErrorsStillOfferUnlockOrSignIn() {

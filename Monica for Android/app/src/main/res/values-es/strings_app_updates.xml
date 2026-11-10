@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="update_auto_check">Buscar actualizaciones automáticamente</string>
+    <string name="update_auto_check_summary">Se comprueba como máximo una vez al día después de desbloquear. Puedes desactivarlo en cualquier momento.</string>
+    <string name="update_now">Actualizar ahora</string>
+    <string name="update_skip_version">Omitir esta versión</string>
+    <string name="update_view_details">Ver detalles</string>
+    <string name="update_later">Más tarde</string>
+    <string name="update_whats_new">Novedades</string>
+    <string name="update_open_fdroid">Abrir F-Droid</string>
+    <string name="update_fdroid_source">Las actualizaciones se buscan e instalan a través del repositorio oficial de F-Droid.</string>
+    <string name="update_notes_unavailable">Las notas de la versión no están disponibles. Consulta los detalles para obtener más información.</string>
+    <string name="update_notes_truncated">Estas notas son extensas. Consulta los detalles para leer las notas completas de la versión.</string>
+</resources>

@@ -1,6 +1,10 @@
 package takagi.ru.monica.bitwarden.api
 
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNull
@@ -299,11 +303,18 @@ class BitwardenSendReceiverApi private constructor(trust: X509TrustManager?) : B
 
     override fun close() {
         closed = true
-        listOf(apiClient, storageClient).forEach { it.dispatcher.cancelAll(); it.connectionPool.evictAll() }
+        listOf(apiClient, storageClient).forEach { client ->
+            client.dispatcher.cancelAll()
+            val retiredPool = client.connectionPool
+            retiredPoolCleanup.launch { retiredPool.evictAll() }
+        }
     }
     override fun toString(): String = "BitwardenSendReceiverApi(redacted)"
 
     companion object {
+        // Receiver closed/lease/key revocation remains synchronous; only physical TLS shutdown is deferred.
+        private val retiredPoolCleanup = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
         /** Trust-only test seam; no key manager, existing client, account config or header injection. */
         internal fun withTrustForTests(trust: X509TrustManager) = BitwardenSendReceiverApi(trust)
 

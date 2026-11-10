@@ -1,6 +1,5 @@
 package takagi.ru.monica.utils
 
-import java.io.File
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -29,20 +28,12 @@ class UpdateCheckerTest {
     }
 
     @Test
-    fun apkDownloadUsesLongRunningClientAndReportsProgress() {
-        val source = File("src/main/java/takagi/ru/monica/utils/UpdateChecker.kt").readText()
-        val downloadClientBlock = source
-            .substringAfter("private val downloadClient")
-            .substringBefore("suspend fun checkLatestRelease")
-        val downloadApkBlock = source
-            .substringAfter("suspend fun downloadApk(")
-            .substringBefore("fun validateDownloadedApk")
-
-        assertFalse(downloadClientBlock.contains("callTimeout(20, TimeUnit.SECONDS)"))
-        assertTrue(downloadApkBlock.contains("onProgress: suspend (UpdateDownloadProgress) -> Unit"))
-        assertTrue(downloadApkBlock.contains("downloadClient.newCall(request)"))
-        assertTrue(downloadApkBlock.contains("body.contentLength()"))
-        assertTrue(downloadApkBlock.contains("onProgress(UpdateDownloadProgress(bytesRead, totalBytes))"))
+    fun compareVersionTagsRejectsUnknownOrPartialVersions() {
+        for (unknown in listOf("nightly", "1.2", "other1.2.3", "1.2.3/next", "999999999999999999999.2.3")) {
+            org.junit.Assert.assertThrows(IllegalArgumentException::class.java) {
+                UpdateChecker.compareVersionTags(unknown, "1.0.327")
+            }
+        }
     }
 
     @Test

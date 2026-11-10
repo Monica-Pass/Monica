@@ -46,13 +46,20 @@ class WalletContentEditorTest {
     private var wasUnlocked = false
 
     @Before fun prepare() {
+        runBlocking {
+            assertTrue("Standalone UI fixture requires prepared secure storage",
+                takagi.ru.monica.security.SecureStorageStartup.prepareWithRetry(context) is
+                    takagi.ru.monica.security.SecureStartupResult.Ready)
+        }
         wasUnlocked = SessionManager.isUnlocked.value
         SessionManager.markUnlocked()
         db = Room.inMemoryDatabaseBuilder(context, PasswordDatabase::class.java).build()
         val repo = SecureItemRepository(db.secureItemDao(), decryptSensitiveValue = security::decryptDataIfMonicaCiphertext)
-        bank = BankCardViewModel(repo, strings = AppLocaleStringResolver(context))
-        document = DocumentViewModel(repo, strings = AppLocaleStringResolver(context))
-        billing = BillingAddressViewModel(repo)
+        compose.runOnIdle {
+            bank = BankCardViewModel(repo, strings = AppLocaleStringResolver(context))
+            document = DocumentViewModel(repo, strings = AppLocaleStringResolver(context))
+            billing = BillingAddressViewModel(repo)
+        }
     }
     @After fun cleanup() {
         show { }

@@ -60,15 +60,16 @@ internal fun WalletPassFields(template: WalletPassTemplate,
     issuer: String, onIssuer: (String) -> Unit, expiry: String, onExpiry: (String) -> Unit,
     fields: Map<String, String>, onField: (String, String) -> Unit) {
     TemplateFormSection(stringResource(template.labelRes())) {
-        Column(Modifier.fillMaxWidth().testTag("wallet_pass_fields"), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            WalletProfileField(issuer, onIssuer, R.string.wallet_pass_issuer)
-            WalletProfileField(number, onNumber, if (template == WalletPassTemplate.TRAVEL) R.string.wallet_pass_booking else R.string.wallet_pass_number)
-            WalletProfileField(holder, onHolder, if (template == WalletPassTemplate.TRAVEL) R.string.wallet_pass_passenger else R.string.wallet_pass_holder)
+        val rows = buildList<@Composable () -> Unit> {
+            add { WalletProfileField(issuer, onIssuer, R.string.wallet_pass_issuer) }
+            add { WalletProfileField(number, onNumber, if (template == WalletPassTemplate.TRAVEL) R.string.wallet_pass_booking else R.string.wallet_pass_number) }
+            add { WalletProfileField(holder, onHolder, if (template == WalletPassTemplate.TRAVEL) R.string.wallet_pass_passenger else R.string.wallet_pass_holder) }
             template.fields().forEach { (key, label) ->
-                Box(Modifier.testTag("wallet_pass_$key")) { WalletProfileField(fields[key].orEmpty(), { onField(key, it) }, label) }
+                add { Box(Modifier.testTag("wallet_pass_$key")) { WalletProfileField(fields[key].orEmpty(), { onField(key, it) }, label) } }
             }
-            WalletProfileField(expiry, onExpiry, R.string.expiry_date_label)
+            add { WalletProfileField(expiry, onExpiry, R.string.expiry_date_label) }
         }
+        ConnectedFieldGroup(*rows.toTypedArray(), modifier = Modifier.fillMaxWidth().testTag("wallet_pass_fields"))
     }
 }
 

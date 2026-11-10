@@ -49,7 +49,7 @@ class BitwardenTransportMigrationInstrumentedTest {
         PasswordDatabase.MIGRATION_83_84.migrate(db)
         db.execSQL(
             "UPDATE bitwarden_vaults SET environment_preset = ?, web_vault_url = ?, notifications_url = ?, transport_revision = ?, transport_secret_ref = ? WHERE id = ?",
-            arrayOf("CUSTOM", "https://web.example.invalid/Team/", "https://notify.example.invalid/Notify/", REVISION, REFERENCE, 41L),
+            arrayOf<Any?>("CUSTOM", "https://web.example.invalid/Team/", "https://notify.example.invalid/Notify/", REVISION, REFERENCE, 41L),
         )
         assertEquals(before, rows(db, legacyColumns))
         db.query("SELECT id, environment_preset, web_vault_url, notifications_url, transport_revision, transport_secret_ref FROM bitwarden_vaults ORDER BY id").use { cursor ->
@@ -67,7 +67,7 @@ class BitwardenTransportMigrationInstrumentedTest {
         }
         db.execSQL(
             "INSERT INTO bitwarden_vaults (id, email, canonical_email, account_key, server_url, api_url, identity_url) VALUES (?, ?, ?, ?, ?, ?, ?)",
-            arrayOf(99L, "new@example.invalid", "new@example.invalid", "new-key", "https://new.example.invalid/", "https://new.example.invalid/api/", "https://new.example.invalid/identity/"),
+            arrayOf<Any?>(99L, "new@example.invalid", "new@example.invalid", "new-key", "https://new.example.invalid/", "https://new.example.invalid/api/", "https://new.example.invalid/identity/"),
         )
         db.query("SELECT environment_preset, web_vault_url, notifications_url, transport_revision, transport_secret_ref FROM bitwarden_vaults WHERE id = 99").use { cursor ->
             assertTrue(cursor.moveToFirst())

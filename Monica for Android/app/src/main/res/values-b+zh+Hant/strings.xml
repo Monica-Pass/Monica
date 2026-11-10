@@ -1435,7 +1435,7 @@
     <string name="mdbx_create_new_vault_button">建立新 Vault</string>
     <string name="mdbx_your_vaults">你的 Vault</string>
     <string name="mdbx_delete_vault_title">刪除 Vault</string>
-    <string name="mdbx_delete_vault_message">確定要刪除 \"%s\" 嗎？\n\n此操作僅移除本地引用，WebDAV 上的檔案不會被刪除。</string>
+    <string name="mdbx_delete_vault_message">確定要從 Monica 刪除「%s」嗎？\n\n此保險庫在 Monica 中的本機資料將被移除；由 Monica 管理的 MDBX2 檔案也會被刪除。外部儲存空間及雲端的原始檔案會保留。</string>
     <string name="mdbx_delete">刪除</string>
     <string name="mdbx_cancel">取消</string>
     <string name="mdbx_set_default">設為預設</string>
@@ -2243,9 +2243,9 @@
     <string name="transfer_to_external">轉移到外部儲存</string>
     <string name="remove_database">移除數據庫</string>
     <string name="confirm_remove">移除數據庫？</string>
-    <string name="confirm_remove_internal_description">這將移除數據庫記錄，內部儲存中的檔案也會被刪除。</string>
-    <string name="confirm_remove_external_description">這將移除數據庫引用，原始檔案不會被刪除。</string>
-    <string name="confirm_remove_remote_description">這將移除遠端數據庫記錄與本地工作副本，WebDAV 上的原始檔案不會被刪除。</string>
+    <string name="confirm_remove_internal_description">這會從 Monica 移除此資料庫。內部 KDBX 檔案會保留；若匯入的金鑰檔案副本未被其他資料庫使用，該副本會被刪除。</string>
+    <string name="confirm_remove_external_description">這會從 Monica 移除此資料庫。原始 KDBX 檔案會保留；若匯入的金鑰檔案副本未被其他資料庫使用，該副本會被刪除。</string>
+    <string name="confirm_remove_remote_description">這會從 Monica 移除此遠端資料庫，雲端原始檔案會保留。僅 WebDAV 連線會同時刪除本機工作副本和快取副本；若匯入的金鑰檔案副本未被其他資料庫使用，該副本會被刪除。</string>
     <string name="remove">移除</string>
     <string name="create">建立</string>
     <string name="import_existing_database">匯入已有數據庫</string>

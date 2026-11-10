@@ -1,0 +1,398 @@
+{
+  "version": "1.0.327",
+  "released": false,
+  "scope": "Connected editor field grouping; UI only",
+  "environment": {
+    "android_api": 35,
+    "abi": "x86_64",
+    "emulator": "MuMu",
+    "build_type": "Debug",
+    "synthetic_data_only": true
+  },
+  "builds": [
+    {
+      "label": "red-main01",
+      "exit": 1,
+      "seconds": 42.459,
+      "targets": [
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest"
+      ]
+    },
+    {
+      "label": "red-main02",
+      "exit": 1,
+      "seconds": 72.945,
+      "targets": [
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest"
+      ]
+    },
+    {
+      "label": "red-main03",
+      "exit": 1,
+      "seconds": 140.415,
+      "targets": [
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest"
+      ]
+    },
+    {
+      "label": "red-main04",
+      "exit": 1,
+      "seconds": 3.633,
+      "targets": [
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest"
+      ]
+    },
+    {
+      "label": "red-main05",
+      "exit": 0,
+      "seconds": 458.715,
+      "targets": [
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest"
+      ]
+    },
+    {
+      "label": "green-main01",
+      "exit": 0,
+      "seconds": 517.318,
+      "targets": [
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest"
+      ]
+    },
+    {
+      "label": "green-main-tests02",
+      "exit": 0,
+      "seconds": 30.705,
+      "targets": [
+        ":app:assembleDebugAndroidTest"
+      ]
+    },
+    {
+      "label": "green-fd01",
+      "exit": 0,
+      "seconds": 218.695,
+      "targets": [
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest"
+      ]
+    },
+    {
+      "label": "green-fd-tests02",
+      "exit": 0,
+      "seconds": 32.841,
+      "targets": [
+        ":app:assembleDebugAndroidTest"
+      ]
+    }
+  ],
+  "device": {
+    "main": {
+      "unique_passed_methods": 19,
+      "runs": [
+        {
+          "label": "green-main-final03",
+          "passed": 14,
+          "failed": 0,
+          "runner_seconds": 22.714,
+          "driver_seconds": 25.604,
+          "methods": [
+            "takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest#apiTokenKeepsThreeConnectedRowsInsideItsSection",
+            "takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest#wifiPasswordSecurityAndHiddenNetworkShareOneGroupAfterScanButton",
+            "takagi.ru.monica.ui.components.ConnectedFieldBehaviorTest#nestedGroupsKeepOnlyOuterCornersAndBothValueOverloadsKeepEditsAndSelection",
+            "takagi.ru.monica.ui.components.ConnectedFieldBehaviorTest#groupedErrorSupportAndIndependentButtonRemainWholeAt320DpWithLargeRtlText",
+            "takagi.ru.monica.ui.components.EditorShapeRegressionTest#filledErrorFieldKeepsLocalizedTextAndErrorSemanticsAt320DpAndLargeFont",
+            "takagi.ru.monica.ui.components.EditorShapeRegressionTest#selectedBorderedSurfaceKeepsItsEdgesInsideTemplateSection",
+            "takagi.ru.monica.ui.components.EditorShapeRegressionTest#filledDisabledFieldKeepsLocalizedSupportingTextAt320DpAndLargeFont",
+            "takagi.ru.monica.ui.components.EditorShapeRegressionTest#filterChipKeepsItsLeadingOutlineInsideTemplateSection",
+            "takagi.ru.monica.ui.ConnectedEditorPagesTest#wifiGroupAndSecurityMenuKeepDraftUntilSaved",
+            "takagi.ru.monica.ui.ConnectedEditorPagesTest#apiTokenRowsKeepUnsavedDraftWhenBackIsCancelled",
+            "takagi.ru.monica.ui.ConnectedEditorPagesTest#bankBasicAndPaymentRowsKeepValuesAfterSaveAndReopen",
+            "takagi.ru.monica.ui.ConnectedEditorPagesTest#authenticatorAccountGroupKeepsEditsThroughImportCancelAndSave",
+            "takagi.ru.monica.ui.ConnectedEditorPagesTest#documentTypeAndConnectedIdentityRowsKeepValuesAfterSaveAndReopen",
+            "takagi.ru.monica.ui.ConnectedEditorPagesTest#ordinaryPasswordGroupStillAcceptsAndSavesTheOriginalFields"
+          ],
+          "artifacts": [
+            {
+              "file": "Monica-Android-x86_64-1.0.327-26111012-92.APK",
+              "sha256": "e308b64410c6513d807567d086bf208efe7662f350b9347452e02f71354f734e",
+              "badging": "package: name='takagi.ru.monica.groups327' versionCode='12' versionName='1.0.327-26111012-92' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+            },
+            {
+              "file": "app-debug-androidTest.apk",
+              "sha256": "2560e342e63b1d8391d54249d57046c95379f88fa04aebce2a77b432fec7abc5",
+              "badging": "package: name='takagi.ru.monica.groups327.test' versionCode='' versionName='' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+            }
+          ]
+        },
+        {
+          "label": "green-main-wallet01",
+          "passed": 5,
+          "failed": 0,
+          "runner_seconds": 29.738,
+          "driver_seconds": 32.206,
+          "methods": [
+            "takagi.ru.monica.ui.WalletContentEditorTest#nameHelpAndPhotoCardsStayReadableWithLargeText",
+            "takagi.ru.monica.ui.WalletContentEditorTest#documentMoveMenuAndRecreationKeepExistingIdentityAndSaveOrder",
+            "takagi.ru.monica.ui.WalletContentEditorTest#smallDarkLargeTextEditorUsesIndependentFieldsAndKeepsEmptyAddedFields",
+            "takagi.ru.monica.ui.WalletContentEditorTest#billingExtrasCollapseAndReopenWithoutMixingNameOrContactValues",
+            "takagi.ru.monica.ui.WalletContentEditorTest#newBankCardCanDragContentsAndReopenWithOrderAndSecretsPreserved"
+          ],
+          "artifacts": [
+            {
+              "file": "Monica-Android-x86_64-1.0.327-26111012-92.APK",
+              "sha256": "e308b64410c6513d807567d086bf208efe7662f350b9347452e02f71354f734e",
+              "badging": "package: name='takagi.ru.monica.groups327' versionCode='12' versionName='1.0.327-26111012-92' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+            },
+            {
+              "file": "app-debug-androidTest.apk",
+              "sha256": "4c9416dda154e1947ce730536d17620be1aa730fe5fcda410cee19b6f00a251c",
+              "badging": "package: name='takagi.ru.monica.groups327.test' versionCode='' versionName='' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+            }
+          ]
+        }
+      ]
+    },
+    "fd": {
+      "unique_passed_methods": 19,
+      "runs": [
+        {
+          "label": "green-fd-final01",
+          "passed": 19,
+          "failed": 0,
+          "runner_seconds": 49.87,
+          "driver_seconds": 52.446,
+          "methods": [
+            "takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest#apiTokenKeepsThreeConnectedRowsInsideItsSection",
+            "takagi.ru.monica.ui.components.ConnectedFieldGroupRegressionTest#wifiPasswordSecurityAndHiddenNetworkShareOneGroupAfterScanButton",
+            "takagi.ru.monica.ui.components.ConnectedFieldBehaviorTest#nestedGroupsKeepOnlyOuterCornersAndBothValueOverloadsKeepEditsAndSelection",
+            "takagi.ru.monica.ui.components.ConnectedFieldBehaviorTest#groupedErrorSupportAndIndependentButtonRemainWholeAt320DpWithLargeRtlText",
+            "takagi.ru.monica.ui.components.EditorShapeRegressionTest#filledErrorFieldKeepsLocalizedTextAndErrorSemanticsAt320DpAndLargeFont",
+            "takagi.ru.monica.ui.components.EditorShapeRegressionTest#selectedBorderedSurfaceKeepsItsEdgesInsideTemplateSection",
+            "takagi.ru.monica.ui.components.EditorShapeRegressionTest#filledDisabledFieldKeepsLocalizedSupportingTextAt320DpAndLargeFont",
+            "takagi.ru.monica.ui.components.EditorShapeRegressionTest#filterChipKeepsItsLeadingOutlineInsideTemplateSection",
+            "takagi.ru.monica.ui.ConnectedEditorPagesTest#wifiGroupAndSecurityMenuKeepDraftUntilSaved",
+            "takagi.ru.monica.ui.ConnectedEditorPagesTest#apiTokenRowsKeepUnsavedDraftWhenBackIsCancelled",
+            "takagi.ru.monica.ui.ConnectedEditorPagesTest#bankBasicAndPaymentRowsKeepValuesAfterSaveAndReopen",
+            "takagi.ru.monica.ui.ConnectedEditorPagesTest#authenticatorAccountGroupKeepsEditsThroughImportCancelAndSave",
+            "takagi.ru.monica.ui.ConnectedEditorPagesTest#documentTypeAndConnectedIdentityRowsKeepValuesAfterSaveAndReopen",
+            "takagi.ru.monica.ui.ConnectedEditorPagesTest#ordinaryPasswordGroupStillAcceptsAndSavesTheOriginalFields",
+            "takagi.ru.monica.ui.WalletContentEditorTest#nameHelpAndPhotoCardsStayReadableWithLargeText",
+            "takagi.ru.monica.ui.WalletContentEditorTest#documentMoveMenuAndRecreationKeepExistingIdentityAndSaveOrder",
+            "takagi.ru.monica.ui.WalletContentEditorTest#smallDarkLargeTextEditorUsesIndependentFieldsAndKeepsEmptyAddedFields",
+            "takagi.ru.monica.ui.WalletContentEditorTest#billingExtrasCollapseAndReopenWithoutMixingNameOrContactValues",
+            "takagi.ru.monica.ui.WalletContentEditorTest#newBankCardCanDragContentsAndReopenWithOrderAndSecretsPreserved"
+          ],
+          "artifacts": [
+            {
+              "file": "Monica-Android-x86_64-1.0.327.apk",
+              "sha256": "2dfd4d770756df0e7f5216edb0cadd3aa2256eedc77776f5bc1c7f534a01285e",
+              "badging": "package: name='takagi.ru.monica.groups327fd' versionCode='34' versionName='1.0.327' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+            },
+            {
+              "file": "app-debug-androidTest.apk",
+              "sha256": "e356de611f8a32f588522e41063a16c27a1016ad64d0d8a4f3dafafd75b7081e",
+              "badging": "package: name='takagi.ru.monica.groups327fd.test' versionCode='' versionName='' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "source_files": [
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/AppSelector.kt",
+      "sha256": {
+        "main": "543378c0833e939ef15d9ce549d1323b5591bc79663df961ce9fef6a90b1c862",
+        "fd": "543378c0833e939ef15d9ce549d1323b5591bc79663df961ce9fef6a90b1c862"
+      },
+      "comparison": "byte-identical",
+      "kind": "production"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/EntryAddressFields.kt",
+      "sha256": {
+        "main": "ce5ca4b1036fe09bb75a62e6f8228f99af1083be52aa3c25c79d2e9e641d2f52",
+        "fd": "ce5ca4b1036fe09bb75a62e6f8228f99af1083be52aa3c25c79d2e9e641d2f52"
+      },
+      "comparison": "byte-identical",
+      "kind": "production"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/EntryContactFields.kt",
+      "sha256": {
+        "main": "999270ec7775b55a3fcc35e39add6e321ff7bbb9abda89e788351b566da54d06",
+        "fd": "999270ec7775b55a3fcc35e39add6e321ff7bbb9abda89e788351b566da54d06"
+      },
+      "comparison": "byte-identical",
+      "kind": "production"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/EntryPaymentFields.kt",
+      "sha256": {
+        "main": "12b65340d0d3b0e5d1db98a1d18bdf5ad92360ac2784a585904bfcd6e11aa8bc",
+        "fd": "acb0f69c5a2f8f12a54cff0e435abd2e966cd2ceb0f9f97420da601679d44392"
+      },
+      "comparison": "line-endings-only",
+      "kind": "production"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/OtpEditorFields.kt",
+      "sha256": {
+        "main": "4b8248092bb4865659e60b4e45f9fdac12bf8a0abf16021edc3f6472e8830ccb",
+        "fd": "4b8248092bb4865659e60b4e45f9fdac12bf8a0abf16021edc3f6472e8830ccb"
+      },
+      "comparison": "byte-identical",
+      "kind": "production"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/OutlinedTextField.kt",
+      "sha256": {
+        "main": "8963a407ea974f59498f7604220c2e70c65ab8c7df2f44fb77147fa80a96d2ee",
+        "fd": "8963a407ea974f59498f7604220c2e70c65ab8c7df2f44fb77147fa80a96d2ee"
+      },
+      "comparison": "byte-identical",
+      "kind": "production"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/TemplateCredentialFields.kt",
+      "sha256": {
+        "main": "37a6357aa2ceafcfb8bf68ac2d7ad4565f259f406e6a27e054682986e1612c09",
+        "fd": "37a6357aa2ceafcfb8bf68ac2d7ad4565f259f406e6a27e054682986e1612c09"
+      },
+      "comparison": "byte-identical",
+      "kind": "production"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/TemplateFormSection.kt",
+      "sha256": {
+        "main": "48d659eb3a1bf1a044807d49db37e03253b0b731bc7c3a613ecc010b7a9f32ea",
+        "fd": "48d659eb3a1bf1a044807d49db37e03253b0b731bc7c3a613ecc010b7a9f32ea"
+      },
+      "comparison": "byte-identical",
+      "kind": "production"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/WalletPassFields.kt",
+      "sha256": {
+        "main": "2327ebeb5ff64dd796f09d31d7067bde30a313863a9036abc439ad5ce71cdb39",
+        "fd": "2327ebeb5ff64dd796f09d31d7067bde30a313863a9036abc439ad5ce71cdb39"
+      },
+      "comparison": "byte-identical",
+      "kind": "production"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/WalletProfileFields.kt",
+      "sha256": {
+        "main": "d1ccecfcf31bd424858288bacd0484a5e020f880e3273db30360557d398d0274",
+        "fd": "d1ccecfcf31bd424858288bacd0484a5e020f880e3273db30360557d398d0274"
+      },
+      "comparison": "byte-identical",
+      "kind": "production"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AddEditBankCardScreen.kt",
+      "sha256": {
+        "main": "5dc8ac05008d802d43917f6e604332be1a513c068e5a1c68eb3b8625318d9bbb",
+        "fd": "5dc8ac05008d802d43917f6e604332be1a513c068e5a1c68eb3b8625318d9bbb"
+      },
+      "comparison": "byte-identical",
+      "kind": "production"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AddEditBillingAddressScreen.kt",
+      "sha256": {
+        "main": "5e9fea526874a6f2ff89a27dbc946554f77b3747a9f195e998305904a4283a0f",
+        "fd": "5e9fea526874a6f2ff89a27dbc946554f77b3747a9f195e998305904a4283a0f"
+      },
+      "comparison": "byte-identical",
+      "kind": "production"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AddEditDocumentScreen.kt",
+      "sha256": {
+        "main": "88bc0253bd39fa779136a4a404ebbfd70ce922f85540e1b81400aac9a5097ebd",
+        "fd": "88bc0253bd39fa779136a4a404ebbfd70ce922f85540e1b81400aac9a5097ebd"
+      },
+      "comparison": "byte-identical",
+      "kind": "production"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AddEditTotpScreen.kt",
+      "sha256": {
+        "main": "89d290f2d51e05b4ea69443f7af0d3570bb8ba59e574dd08410173bfa310d006",
+        "fd": "89d290f2d51e05b4ea69443f7af0d3570bb8ba59e574dd08410173bfa310d006"
+      },
+      "comparison": "byte-identical",
+      "kind": "production"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/ui/components/ConnectedFieldGroupRegressionTest.kt",
+      "sha256": {
+        "main": "66eb434a6c0048a735935370caeb97dd2c1ce30caf2267ba2505906004a5965f",
+        "fd": "66eb434a6c0048a735935370caeb97dd2c1ce30caf2267ba2505906004a5965f"
+      },
+      "comparison": "byte-identical",
+      "kind": "test"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/ui/components/ConnectedFieldBehaviorTest.kt",
+      "sha256": {
+        "main": "2bba01e76bc3ec912aef286ddf82a3192457982d84667def7701bd331e2675f1",
+        "fd": "2bba01e76bc3ec912aef286ddf82a3192457982d84667def7701bd331e2675f1"
+      },
+      "comparison": "byte-identical",
+      "kind": "test"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/ui/components/EditorShapeRegressionTest.kt",
+      "sha256": {
+        "main": "c5c25de75afb582e38fd5ac0aef60ad33ed7ecdcf8291869f078de5793eed186",
+        "fd": "c5c25de75afb582e38fd5ac0aef60ad33ed7ecdcf8291869f078de5793eed186"
+      },
+      "comparison": "byte-identical",
+      "kind": "test"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/ui/ConnectedEditorPagesTest.kt",
+      "sha256": {
+        "main": "32f9ee4409f2550d1c18991001a7350571ea419f1a34317d873c7816ddd4eb9a",
+        "fd": "32f9ee4409f2550d1c18991001a7350571ea419f1a34317d873c7816ddd4eb9a"
+      },
+      "comparison": "byte-identical",
+      "kind": "test"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/ui/WalletContentEditorTest.kt",
+      "sha256": {
+        "main": "dd274e5966cf798fd785d789f1be80f37863fa5c65d9bf434a94544a8a6cf635",
+        "fd": "dd274e5966cf798fd785d789f1be80f37863fa5c65d9bf434a94544a8a6cf635"
+      },
+      "comparison": "byte-identical",
+      "kind": "test"
+    }
+  ],
+  "jvm_tests_run_this_task": false,
+  "metadata": {
+    "passed": true,
+    "script_tests": 6
+  },
+  "closure": {
+    "complete": true,
+    "summary": "Both editions: 36 native screenshots retained locally, with 12-panel contact sheets inspected for each edition. Explicit groups and independent controls were readable in the selected normal/large text, RTL and dark-theme samples. The supplemental five-page editable Canvas was corrected after root found inaccurate initial bank/other group sketches; all five corrected pages were loaded and visually rechecked through the local browser, with navigation exercised. Superseded sketches are retained locally and are not accepted evidence. Canvas was added after implementation, not before. Device cleanup restored original user 0 and preserved users 0/10 and their exact installed package sets. Only owned user12 was removed: initial immediate removal failed, observed stopped state then retry succeeded. Original-task-started MuMu0 was stopped; its disk remains. No commit, push, release or APK delivery.",
+    "cleanup_receipt": "takeover-cleanup.json",
+    "screenshots_receipt": "takeover-screenshots.json",
+    "canvas_recheck": true
+  },
+  "limitations": [
+    "MuMu API 35 / x86_64 / isolated Debug packages with synthetic data only.",
+    "No physical-device, OEM, Android 8 device, release/R8, real vault, real cloud or full-app regression in this task.",
+    "No new JVM execution; existing toolchain verification is separate historical evidence.",
+    "Initial main device runs failed; final passed batches follow test-host and expected-value corrections.",
+    "Page components used an isolated debug host; this is not full production Activity navigation coverage."
+  ]
+}

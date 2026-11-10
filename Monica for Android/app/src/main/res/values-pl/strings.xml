@@ -1440,7 +1440,7 @@
     <string name="mdbx_create_new_vault_button">Utwórz nowy sejf</string>
     <string name="mdbx_your_vaults">Twoje sejfy</string>
     <string name="mdbx_delete_vault_title">Usuń sejf</string>
-    <string name="mdbx_delete_vault_message">Usunąć „%s”?\n\nUsunięte zostanie tylko lokalne powiązanie. Plik na WebDAV pozostanie bez zmian.</string>
+    <string name="mdbx_delete_vault_message">Usunąć „%s” z Monica?\n\nLokalne dane tego sejfu w Monica oraz jego pliki MDBX2 zarządzane przez Monica zostaną usunięte. Oryginalne pliki w pamięci zewnętrznej lub chmurze pozostaną.</string>
     <string name="mdbx_delete">Usuń</string>
     <string name="mdbx_cancel">Anuluj</string>
     <string name="mdbx_set_default">Ustaw jako domyślny</string>
@@ -2376,9 +2376,9 @@
     <string name="transfer_to_external">Przenieś do pamięci zewn.</string>
     <string name="remove_database">Usuń bazę</string>
     <string name="confirm_remove">Usunąć bazę?</string>
-    <string name="confirm_remove_internal_description">Baza zostanie usunięta z listy, a jej plik — z pamięci wewnętrznej.</string>
-    <string name="confirm_remove_external_description">Baza zostanie usunięta z listy. Oryginalny plik pozostanie bez zmian.</string>
-    <string name="confirm_remove_remote_description">Odłącz tę zdalną bazę i usuń lokalną kopię. Plik w chmurze pozostanie bez zmian.</string>
+    <string name="confirm_remove_internal_description">Baza zostanie usunięta z Monica. Wewnętrzny plik KDBX pozostanie. Zaimportowana kopia pliku klucza zostanie usunięta, jeśli nie korzysta z niej żadna inna baza.</string>
+    <string name="confirm_remove_external_description">Baza zostanie usunięta z Monica. Oryginalny plik KDBX pozostanie. Zaimportowana kopia pliku klucza zostanie usunięta, jeśli nie korzysta z niej żadna inna baza.</string>
+    <string name="confirm_remove_remote_description">Zdalna baza zostanie usunięta z Monica. Oryginalne pliki w chmurze pozostaną. Lokalne kopie robocze i kopie w pamięci podręcznej zostaną usunięte tylko dla WebDAV. Zaimportowana kopia pliku klucza zostanie usunięta, jeśli nie korzysta z niej żadna inna baza.</string>
     <string name="remove">Usuń</string>
     <string name="create">Utwórz</string>
     <string name="import_existing_database">Importuj istniejącą bazę</string>

@@ -1,0 +1,13 @@
+Retained build invocations (original logs remain in local task evidence)
+
+main01: exit=1, seconds=217.229, targets=:app:assembleDebug,:app:testDebugUnitTest, original_log_sha256=d495ae96cdfb0c1c0dc28151baef26dea0fc4b7eed4dc96745a40ec35d288e72
+main02: exit=1, seconds=170.498, targets=:app:assembleDebug,:app:assembleDebugAndroidTest,:app:testDebugUnitTest, original_log_sha256=03e292b6c070653a4d738358b2b9f13a19a5908516979fdd0a5dca977a1666c0
+main03: exit=0, seconds=106.189, targets=:app:assembleDebug,:app:assembleDebugAndroidTest,:app:testDebugUnitTest, original_log_sha256=c0b4ce1e2bfa18f8b06e8b3e3d596fa62980d2df251386f23500f571bcd724fb
+main04-tests: exit=0, seconds=38.185, targets=:app:assembleDebugAndroidTest, original_log_sha256=72c8e04f205f2cea47b82abecbef5c2e5281c6387076033161c769815f46df9b
+main05-tests: exit=0, seconds=38.068, targets=:app:assembleDebugAndroidTest, original_log_sha256=72c8e04f205f2cea47b82abecbef5c2e5281c6387076033161c769815f46df9b
+fd01: exit=0, seconds=262.462, targets=:app:assembleDebug,:app:assembleDebugAndroidTest,:app:testDebugUnitTest, original_log_sha256=daecca48f87d6a1fe27cd3c6250fe751d05fedd25b07d4d19088ae36c51117e2
+fd02-tests: exit=0, seconds=39.925, targets=:app:assembleDebugAndroidTest, original_log_sha256=5aff221f6bdc9ad40b9271588e3b4958fb0c6e2d380a76affdc490784c40e1e4
+
+Original build failure diagnostics (source paths made repository-relative):
+main01: app/src/test/java/takagi/ru/monica/update/UpdatePreferencesTest.kt:19:66 No type arguments expected for 'static fun getApplication(): Application!'.
+main02: org.junit.runners.model.InvalidTestClassError: Invalid test class 'takagi.ru.monica.utils.UpdateReleaseClientTest': Method insecureAssetsAreIgnoredAndInsecureReleaseLinksAreRejected() should be void.

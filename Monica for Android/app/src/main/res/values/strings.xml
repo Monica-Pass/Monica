@@ -1592,7 +1592,7 @@
     <string name="mdbx_create_new_vault_button">Create New Vault</string>
     <string name="mdbx_your_vaults">Your Vaults</string>
     <string name="mdbx_delete_vault_title">Delete Vault</string>
-    <string name="mdbx_delete_vault_message">Are you sure you want to delete \"%s\"?\n\nThis will only remove the local reference. The file on WebDAV will not be deleted.</string>
+    <string name="mdbx_delete_vault_message">Delete “%s” from Monica?\n\nThis removes the vault data stored locally in Monica. Any Monica-managed MDBX2 file for this vault is also deleted. Original files in external storage or the cloud are kept.</string>
     <string name="mdbx_delete">Delete</string>
     <string name="mdbx_cancel">Cancel</string>
     <string name="mdbx_set_default">Set as default</string>
@@ -2648,9 +2648,9 @@
     <string name="transfer_to_external">Transfer to External Storage</string>
     <string name="remove_database">Remove Database</string>
     <string name="confirm_remove">Remove Database?</string>
-    <string name="confirm_remove_internal_description">This will remove the database record. The file will also be deleted from internal storage.</string>
-    <string name="confirm_remove_external_description">This will remove the database reference. The original file will not be deleted.</string>
-    <string name="confirm_remove_remote_description">Remove this remote database and local copy. The cloud file stays untouched.</string>
+    <string name="confirm_remove_internal_description">This removes the database from Monica. The internal KDBX file is kept. An imported key-file copy is deleted if no other database uses it.</string>
+    <string name="confirm_remove_external_description">This removes the database from Monica. The original KDBX file is kept. An imported key-file copy is deleted if no other database uses it.</string>
+    <string name="confirm_remove_remote_description">This removes the remote database from Monica. Original cloud files are kept. Local working and cache copies are removed only for WebDAV. An imported key-file copy is deleted if no other database uses it.</string>
     <string name="remove">Remove</string>
     <string name="create">Create</string>
     <string name="import_existing_database">Import Existing Database</string>

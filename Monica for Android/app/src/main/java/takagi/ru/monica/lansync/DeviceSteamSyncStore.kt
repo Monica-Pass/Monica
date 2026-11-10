@@ -92,7 +92,7 @@ internal class DeviceSteamSyncStore(
         val id = if (previous == null) dao.insertCopy(encrypted) else { dao.update(encrypted); previous.id }
         database.openHelper.writableDatabase.execSQL(
             "INSERT OR REPLACE INTO device_sync_steam_identity(global_id,local_id,payload) VALUES(?,?,?)",
-            arrayOf(globalId, id, security.encryptData(data.toString()))
+            arrayOf<Any?>(globalId, id, security.encryptData(data.toString()))
         )
         snapshot(requireNotNull(dao.getById(id)))
     }

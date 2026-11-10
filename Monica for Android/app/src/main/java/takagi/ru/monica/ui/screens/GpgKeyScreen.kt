@@ -108,7 +108,7 @@ private fun GpgOptionDropdown(label: String, value: String, options: List<Pair<I
     ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { if (enabled) expanded = it }) {
         OutlinedTextField(value, {}, readOnly = true, enabled = enabled, label = { Text(label) },
             shape = RoundedCornerShape(12.dp), trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded) },
-            modifier = Modifier.fillMaxWidth().menuAnchor())
+            modifier = Modifier.fillMaxWidth().menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable))
         ExposedDropdownMenu(expanded, onDismissRequest = { expanded = false }) {
             options.forEach { (id, text) -> DropdownMenuItem(text = { Text(text) }, onClick = { expanded = false; onSelect(id) }) }
         }

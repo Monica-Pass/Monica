@@ -39,16 +39,36 @@ class StartupUpdatePreservationTest {
         SecurityManager.clearRuntimeUnlockCache()
     }
 
-    @Test fun verifyAfterCoveringInstallAndPasswordReentry() = runBlocking {
+    @Test fun verifyAfterCoveringInstallAndPasswordReentry() = verifyCheckpoint(null, null)
+
+    /** Reentrant verification of the exact already-authenticated OLD checkpoint frozen by the host. */
+    @Test fun verifyPreviouslyAuthenticatedCheckpointWithHostFrozenDigest() {
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        check(instrumentation.targetContext.packageName in setOf(
+            "takagi.ru.monica.bwsync326", "takagi.ru.monica.bwsync326fd"
+        )) { "Only the task-owned isolated applications are allowed" }
+        check(android.os.Process.myUid() / 100_000 == 12) { "Only the owned preservation profile is allowed" }
+        val frozenRaw = checkNotNull(InstrumentationRegistry.getArguments()
+            .getString("toolchainCheckpointRawDigest")) { "Supply the independently archived pre-update raw digest" }
+        check(frozenRaw.matches(Regex("[0-9a-f]{64}"))) { "Expected a SHA-256 digest" }
+        val frozenRecovery = checkNotNull(InstrumentationRegistry.getArguments()
+            .getString("toolchainCheckpointRecoveryDigest")) { "Supply the independently archived pre-update recovery digest" }
+        check(frozenRecovery.matches(Regex("[0-9a-f]{64}"))) { "Expected a SHA-256 recovery digest" }
+        verifyCheckpoint(frozenRaw, frozenRecovery)
+    }
+
+    private fun verifyCheckpoint(hostFrozenRaw: String?, hostFrozenRecovery: String?) = runBlocking {
         val f = Fixture()
         val expected = JSONObject(f.expected.readText())
+        val expectedRaw = hostFrozenRaw ?: expected.getString("raw")
+        val expectedRecovery = hostFrozenRecovery ?: expected.getString("recovery")
         SecurityManager.clearRuntimeUnlockCache()
         val prepared = SecureStorageStartup.prepareWithRetry(f.context)
         assertTrue(prepared is SecureStartupResult.Ready)
-        assertEquals(expected.getString("raw"), f.rawDigest())
+        assertEquals(expectedRaw, f.rawDigest())
         assertEquals(expected.getString("database"), f.digest(f.database.readBytes()))
         assertEquals(expected.getString("attachment"), f.digest(f.attachment.readBytes()))
-        assertEquals(expected.getString("recovery"), f.digest(f.envelope.readBytes()))
+        assertEquals(expectedRecovery, f.digest(f.envelope.readBytes()))
         // Exercise the existing 1.0.322 -> current version lock guard without changing real settings.
         f.context.getSharedPreferences("monica_app_update_guard", Context.MODE_PRIVATE).edit()
             .putLong("last_version_code", 12).putString("last_version_name", "1.0.322").commit()
@@ -56,7 +76,7 @@ class StartupUpdatePreservationTest {
         AppUpdateSecurityGuard.enforceLockIfAppUpdated(f.context, "synthetic_covering_install")
         assertFalse(SessionManager.isUnlocked.value)
         assertFalse(SecurityManager.hasRuntimeUnlockCache())
-        assertEquals(expected.getString("raw"), f.rawDigest())
+        assertEquals(expectedRaw, f.rawDigest())
         val manager = f.configure((prepared as SecureStartupResult.Ready).manager)
         assertTrue(manager.unlockVaultWithPassword(f.password))
         SQLiteDatabase.openDatabase(f.database.absolutePath, null, SQLiteDatabase.OPEN_READONLY).use { db ->

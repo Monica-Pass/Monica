@@ -1581,7 +1581,7 @@
     <string name="mdbx_create_new_vault_button">새 보관함 만들기</string>
     <string name="mdbx_your_vaults">내 보관함</string>
     <string name="mdbx_delete_vault_title">보관함 삭제</string>
-    <string name="mdbx_delete_vault_message">\"%s\"를 삭제하시겠습니까?\n\n이렇게 하면 로컬 참조만 삭제됩니다. WebDAV에 있는 파일은 삭제되지 않습니다.</string>
+    <string name="mdbx_delete_vault_message">Monica에서 ‘%s’을(를) 삭제하시겠습니까?\n\nMonica에 로컬로 저장된 이 보관함의 데이터와 Monica가 관리하는 이 보관함의 MDBX2 파일이 삭제됩니다. 외부 저장소 또는 클라우드의 원본 파일은 유지됩니다.</string>
     <string name="mdbx_delete">삭제</string>
     <string name="mdbx_cancel">취소</string>
     <string name="mdbx_set_default">기본값으로 설정</string>
@@ -2604,9 +2604,9 @@
     <string name="transfer_to_external">외부 저장소로 전송</string>
     <string name="remove_database">데이터베이스 제거</string>
     <string name="confirm_remove">데이터베이스를 제거하시겠습니까?</string>
-    <string name="confirm_remove_internal_description">이렇게 하면 데이터베이스 기록이 제거됩니다. 파일은 내부 저장소에서도 삭제됩니다.</string>
-    <string name="confirm_remove_external_description">이렇게 하면 데이터베이스 참조가 삭제됩니다. 원본 파일은 삭제되지 않습니다.</string>
-    <string name="confirm_remove_remote_description">이 원격 데이터베이스와 로컬 복사본을 제거하세요. 클라우드 파일은 그대로 유지됩니다.</string>
+    <string name="confirm_remove_internal_description">이 데이터베이스를 Monica에서 제거합니다. 내부 KDBX 파일은 유지됩니다. 가져온 키 파일 사본은 다른 데이터베이스에서 사용하지 않는 경우 삭제됩니다.</string>
+    <string name="confirm_remove_external_description">이 데이터베이스를 Monica에서 제거합니다. 원본 KDBX 파일은 유지됩니다. 가져온 키 파일 사본은 다른 데이터베이스에서 사용하지 않는 경우 삭제됩니다.</string>
+    <string name="confirm_remove_remote_description">이 원격 데이터베이스를 Monica에서 제거합니다. 클라우드의 원본 파일은 유지됩니다. 로컬 작업 사본과 캐시 사본은 WebDAV인 경우에만 삭제됩니다. 가져온 키 파일 사본은 다른 데이터베이스에서 사용하지 않는 경우 삭제됩니다.</string>
     <string name="remove">제거</string>
     <string name="create">만들기</string>
     <string name="import_existing_database">기존 데이터베이스 가져오기</string>

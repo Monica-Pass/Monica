@@ -36,7 +36,7 @@ internal class DeviceRoomVaultMetadata(private val database: PasswordDatabase, p
         val previous=rootMetadata().firstOrNull { it.globalId==owner }
         if(previous?.guard != expected && !(previous==null && expected.isNullOrEmpty())) return null
         database.openHelper.writableDatabase.execSQL("INSERT OR REPLACE INTO device_sync_vault_metadata(global_id,payload,deleted) VALUES(?,?,?)",
-            arrayOf(owner,security.encryptDataLegacyCompat(data.toString()),if(deleted)1 else 0))
+            arrayOf<Any?>(owner,security.encryptDataLegacyCompat(data.toString()),if(deleted)1 else 0))
         return DevicePasswordSnapshot("metadata:$owner",id,"metadata",DevicePasskeyShape.guard(data)+":"+deleted,deleted,data)
     }
     suspend fun prepareIdentities() {
@@ -50,7 +50,7 @@ internal class DeviceRoomVaultMetadata(private val database: PasswordDatabase, p
         } }
         addresses.forEach { address ->
             val id = known[address] ?: global(address) ?: UUID.randomUUID().toString()
-            if(address.startsWith("local:")) database.openHelper.writableDatabase.execSQL("INSERT OR REPLACE INTO device_sync_password_identity(global_id,local_id,entry_type) VALUES(?,?,COALESCE((SELECT entry_type FROM device_sync_password_identity WHERE local_id=?),'login'))", arrayOf(id, address.substringAfter(':').toLong(), address.substringAfter(':').toLong()))
+            if(address.startsWith("local:")) database.openHelper.writableDatabase.execSQL("INSERT OR REPLACE INTO device_sync_password_identity(global_id,local_id,entry_type) VALUES(?,?,COALESCE((SELECT entry_type FROM device_sync_password_identity WHERE local_id=?),'login'))", arrayOf<Any?>(id, address.substringAfter(':').toLong(), address.substringAfter(':').toLong()))
             else database.openHelper.writableDatabase.execSQL("INSERT OR REPLACE INTO device_sync_vault_identity(global_id,local_id) VALUES(?,?)", arrayOf(id,address))
         }
     }
@@ -159,7 +159,7 @@ internal class DeviceRoomVaultMetadata(private val database: PasswordDatabase, p
     }
     fun bindAttachment(localId: Long,portableId: String) {
         tables()
-        database.openHelper.writableDatabase.execSQL("INSERT OR REPLACE INTO device_sync_attachment_identity(local_id,portable_id) VALUES(?,?)",arrayOf(localId,portableId))
+        database.openHelper.writableDatabase.execSQL("INSERT OR REPLACE INTO device_sync_attachment_identity(local_id,portable_id) VALUES(?,?)",arrayOf<Any?>(localId,portableId))
     }
     suspend fun history(entryId: Long, data: JSONObject) {
         val history = data.optJSONArray("password_history") ?: return

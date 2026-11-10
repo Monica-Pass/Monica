@@ -16,9 +16,9 @@ class AppCompilationPerformanceGuardTest {
         val startupProfile = projectFile("app/src/main/startup-prof.txt").readSourceText()
 
         assertTrue(settings.contains("include ':baselineprofile'"))
-        // The release deliberately disables optimizer transformations for crypto compatibility.
+        // The upgraded release retains R8 optimization; runtime contracts are verified separately.
         assertTrue(appBuild.contains("minifyEnabled true"))
-        assertTrue(appBuild.contains("proguard-android.txt"))
+        assertTrue(appBuild.contains("proguard-android-optimize.txt"))
         assertTrue(baselineProfile.contains("Ltakagi/ru/monica/MainActivity;"))
         assertTrue(baselineProfile.contains("Ltakagi/ru/monica/ui/SimpleMainScreenKt;"))
         assertTrue(startupProfile.contains("Ltakagi/ru/monica/MonicaApplication;"))

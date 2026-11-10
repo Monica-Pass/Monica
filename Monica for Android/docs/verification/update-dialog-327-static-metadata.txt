@@ -1,0 +1,3 @@
+Metadata checked: `v1.0.327` / `takagi.ru.monica.fdroid`, versionCode `34`.
+
+Static version fields, existing tags and F-Droid changelog files checked. No APK build, tag creation or Release publication was performed. F-Droid builds and publication are handled separately by F-Droid.

@@ -29,11 +29,19 @@ class GpgKeyFlowTest {
     private lateinit var passwords: PasswordViewModel
     private lateinit var editor: GpgEditorViewModel
     @Before fun setup() {
+        runBlocking {
+            assertTrue("Standalone UI fixture requires prepared secure storage",
+                takagi.ru.monica.security.SecureStorageStartup.prepareWithRetry(context) is
+                    takagi.ru.monica.security.SecureStartupResult.Ready)
+        }
         db = Room.inMemoryDatabaseBuilder(context, PasswordDatabase::class.java).build()
-        passwords = PasswordViewModel(PasswordRepository(db.passwordEntryDao(), categoryDao = db.categoryDao()),
-            SecurityManager(context), customFieldRepository = CustomFieldRepository(db.customFieldDao()),
-            strings = AppLocaleStringResolver(context))
-        editor = GpgEditorViewModel()
+        val security = SecurityManager(context)
+        compose.runOnIdle {
+            passwords = PasswordViewModel(PasswordRepository(db.passwordEntryDao(), categoryDao = db.categoryDao()),
+                security, customFieldRepository = CustomFieldRepository(db.customFieldDao()),
+                strings = AppLocaleStringResolver(context))
+            editor = GpgEditorViewModel()
+        }
     }
     @After fun cleanup() { passwords.viewModelScope.cancel(); editor.viewModelScope.cancel(); db.close() }
 

@@ -748,40 +748,74 @@ fun AddEditDocumentScreen(
         WalletEditorSection("identity", R.string.document_identity_extended_title, Icons.Default.Badge, editorSections.visible("identity", listOf(titlePrefix, firstName, middleName, lastName, company, username, email, phone).any { it.isNotBlank() })) {
             WalletNamePartsHelp()
             InfoCard(title = stringResource(R.string.document_identity_extended_title)) {
-                Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                    OutlinedTextField(value = titlePrefix, onValueChange = { titlePrefix = it }, label = { Text(stringResource(R.string.document_title_prefix_label)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
-                    SuggestedOutlinedTextField(suggestionField = CommonSuggestionField.FIRST_NAME, value = firstName, onValueChange = { firstName = it }, label = { Text(stringResource(R.string.document_first_name_label)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
-                }
-                Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                    SuggestedOutlinedTextField(suggestionField = CommonSuggestionField.MIDDLE_NAME, value = middleName, onValueChange = { middleName = it }, label = { Text(stringResource(R.string.document_middle_name_label)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
-                    SuggestedOutlinedTextField(suggestionField = CommonSuggestionField.LAST_NAME, value = lastName, onValueChange = { lastName = it }, label = { Text(stringResource(R.string.document_last_name_label)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
-                }
-                OutlinedTextField(value = company, onValueChange = { company = it }, label = { Text(stringResource(R.string.document_company_label)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
-                OutlinedTextField(value = username, onValueChange = { username = it }, label = { Text(stringResource(R.string.username)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
-                OutlinedTextField(value = email, onValueChange = { email = it }, label = { Text(stringResource(R.string.email)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email), shape = RoundedCornerShape(12.dp))
-                OutlinedTextField(value = phone, onValueChange = { phone = it }, label = { Text(stringResource(R.string.document_phone_label)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone), shape = RoundedCornerShape(12.dp))
-
+                ConnectedFieldGroup(
+                    {
+                        OutlinedTextField(value = titlePrefix, onValueChange = { titlePrefix = it }, label = { Text(stringResource(R.string.document_title_prefix_label)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
+                    },
+                    {
+                        SuggestedOutlinedTextField(suggestionField = CommonSuggestionField.FIRST_NAME, value = firstName, onValueChange = { firstName = it }, label = { Text(stringResource(R.string.document_first_name_label)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
+                    },
+                    {
+                        SuggestedOutlinedTextField(suggestionField = CommonSuggestionField.MIDDLE_NAME, value = middleName, onValueChange = { middleName = it }, label = { Text(stringResource(R.string.document_middle_name_label)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
+                    },
+                    {
+                        SuggestedOutlinedTextField(suggestionField = CommonSuggestionField.LAST_NAME, value = lastName, onValueChange = { lastName = it }, label = { Text(stringResource(R.string.document_last_name_label)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
+                    },
+                    {
+                        OutlinedTextField(value = company, onValueChange = { company = it }, label = { Text(stringResource(R.string.document_company_label)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
+                    },
+                    {
+                        OutlinedTextField(value = username, onValueChange = { username = it }, label = { Text(stringResource(R.string.username)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
+                    },
+                    {
+                        OutlinedTextField(value = email, onValueChange = { email = it }, label = { Text(stringResource(R.string.email)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email), shape = RoundedCornerShape(12.dp))
+                    },
+                    {
+                        OutlinedTextField(value = phone, onValueChange = { phone = it }, label = { Text(stringResource(R.string.document_phone_label)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone), shape = RoundedCornerShape(12.dp))
+                    },
+                )
             }
         },
         WalletEditorSection("address", R.string.document_address_extra_title, Icons.Default.Home, editorSections.visible("address", listOf(district, address1, address2, address3, city, stateProvince, postalCode, country, passportNumber, licenseNumber, ssn, additionalInfo).any { it.isNotBlank() })) {
             InfoCard(title = stringResource(R.string.document_address_extra_title)) {
-                WalletProfileField(district, { district = it }, R.string.wallet_district)
-                SuggestedOutlinedTextField(suggestionField = CommonSuggestionField.STREET, value = address1, onValueChange = { address1 = it }, label = { Text(stringResource(R.string.document_address_line_1)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
-                SuggestedOutlinedTextField(suggestionField = CommonSuggestionField.APARTMENT, value = address2, onValueChange = { address2 = it }, label = { Text(stringResource(R.string.document_address_line_2)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
-                SuggestedOutlinedTextField(suggestionField = CommonSuggestionField.ADDRESS_LINE_3, value = address3, onValueChange = { address3 = it }, label = { Text(stringResource(R.string.document_address_line_3)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
-                Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                    SuggestedOutlinedTextField(suggestionField = CommonSuggestionField.CITY, value = city, onValueChange = { city = it }, label = { Text(stringResource(R.string.city)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
-                    SuggestedOutlinedTextField(suggestionField = CommonSuggestionField.REGION, value = stateProvince, onValueChange = { stateProvince = it }, label = { Text(stringResource(R.string.state)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
-                }
-                Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                    SuggestedOutlinedTextField(suggestionField = CommonSuggestionField.POSTAL_CODE, value = postalCode, onValueChange = { postalCode = it }, label = { Text(stringResource(R.string.postal_code)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
-                    SuggestedOutlinedTextField(suggestionField = CommonSuggestionField.COUNTRY, value = country, onValueChange = { country = it }, label = { Text(stringResource(R.string.country)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
-                }
-                OutlinedTextField(value = passportNumber, onValueChange = { passportNumber = it }, label = { Text(stringResource(R.string.document_passport_number_label)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
-                OutlinedTextField(value = licenseNumber, onValueChange = { licenseNumber = it }, label = { Text(stringResource(R.string.document_license_number_label)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
-                OutlinedTextField(value = ssn, onValueChange = { ssn = it }, label = { Text(stringResource(R.string.document_ssn_label)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
-                OutlinedTextField(value = additionalInfo, onValueChange = { additionalInfo = it }, label = { Text(stringResource(R.string.document_additional_info_label)) }, modifier = Modifier.fillMaxWidth(), minLines = 2, maxLines = 4, shape = RoundedCornerShape(12.dp))
-
+                ConnectedFieldGroup(
+                    {
+                        WalletProfileField(district, { district = it }, R.string.wallet_district)
+                    },
+                    {
+                        SuggestedOutlinedTextField(suggestionField = CommonSuggestionField.STREET, value = address1, onValueChange = { address1 = it }, label = { Text(stringResource(R.string.document_address_line_1)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
+                    },
+                    {
+                        SuggestedOutlinedTextField(suggestionField = CommonSuggestionField.APARTMENT, value = address2, onValueChange = { address2 = it }, label = { Text(stringResource(R.string.document_address_line_2)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
+                    },
+                    {
+                        SuggestedOutlinedTextField(suggestionField = CommonSuggestionField.ADDRESS_LINE_3, value = address3, onValueChange = { address3 = it }, label = { Text(stringResource(R.string.document_address_line_3)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
+                    },
+                    {
+                        SuggestedOutlinedTextField(suggestionField = CommonSuggestionField.CITY, value = city, onValueChange = { city = it }, label = { Text(stringResource(R.string.city)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
+                    },
+                    {
+                        SuggestedOutlinedTextField(suggestionField = CommonSuggestionField.REGION, value = stateProvince, onValueChange = { stateProvince = it }, label = { Text(stringResource(R.string.state)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
+                    },
+                    {
+                        SuggestedOutlinedTextField(suggestionField = CommonSuggestionField.POSTAL_CODE, value = postalCode, onValueChange = { postalCode = it }, label = { Text(stringResource(R.string.postal_code)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
+                    },
+                    {
+                        SuggestedOutlinedTextField(suggestionField = CommonSuggestionField.COUNTRY, value = country, onValueChange = { country = it }, label = { Text(stringResource(R.string.country)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
+                    },
+                    {
+                        OutlinedTextField(value = passportNumber, onValueChange = { passportNumber = it }, label = { Text(stringResource(R.string.document_passport_number_label)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
+                    },
+                    {
+                        OutlinedTextField(value = licenseNumber, onValueChange = { licenseNumber = it }, label = { Text(stringResource(R.string.document_license_number_label)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
+                    },
+                    {
+                        OutlinedTextField(value = ssn, onValueChange = { ssn = it }, label = { Text(stringResource(R.string.document_ssn_label)) }, modifier = Modifier.fillMaxWidth(), singleLine = true, shape = RoundedCornerShape(12.dp))
+                    },
+                    {
+                        OutlinedTextField(value = additionalInfo, onValueChange = { additionalInfo = it }, label = { Text(stringResource(R.string.document_additional_info_label)) }, modifier = Modifier.fillMaxWidth(), minLines = 2, maxLines = 4, shape = RoundedCornerShape(12.dp))
+                    },
+                )
             }
         },
         WalletEditorSection("home_contact", R.string.wallet_home_contact, Icons.Default.Person, editorSections.visible("home_contact", listOf(homeEmail, homePhone).any { it.isNotBlank() })) {
@@ -941,158 +975,159 @@ fun AddEditDocumentScreen(
                 } else {
                 // Basic Info
                 InfoCard(title = stringResource(R.string.section_basic_info)) {
-                    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                    ConnectedFieldGroup(*listOfNotNull<@Composable () -> Unit>(
+                        {
+                            // Document Type
+                            ExposedDropdownMenuBox(
+                                expanded = showDocumentTypeMenu,
+                                onExpandedChange = { showDocumentTypeMenu = it }
+                            ) {
+                                OutlinedTextField(
+                                    value = when (documentType) {
+                                        DocumentType.ID_CARD -> stringResource(R.string.id_card)
+                                        DocumentType.PASSPORT -> stringResource(R.string.passport)
+                                        DocumentType.DRIVER_LICENSE -> stringResource(R.string.drivers_license)
+                                        DocumentType.SOCIAL_SECURITY -> stringResource(R.string.social_security_card)
+                                        DocumentType.OTHER -> stringResource(R.string.other_document)
+                                    },
+                                    onValueChange = {},
+                                    readOnly = true,
+                                    label = { Text(stringResource(R.string.document_type)) },
+                                    leadingIcon = { Icon(Icons.Default.Category, contentDescription = null) },
+                                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = showDocumentTypeMenu) },
+                                    modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable).fillMaxWidth(),
+                                    shape = RoundedCornerShape(12.dp),
+                                    colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
+                                )
 
-
-                    // Document Type
-                    ExposedDropdownMenuBox(
-                        expanded = showDocumentTypeMenu,
-                        onExpandedChange = { showDocumentTypeMenu = it }
-                    ) {
-                        OutlinedTextField(
-                            value = when (documentType) {
-                                DocumentType.ID_CARD -> stringResource(R.string.id_card)
-                                DocumentType.PASSPORT -> stringResource(R.string.passport)
-                                DocumentType.DRIVER_LICENSE -> stringResource(R.string.drivers_license)
-                                DocumentType.SOCIAL_SECURITY -> stringResource(R.string.social_security_card)
-                                DocumentType.OTHER -> stringResource(R.string.other_document)
-                            },
-                            onValueChange = {},
-                            readOnly = true,
-                            label = { Text(stringResource(R.string.document_type)) },
-                            leadingIcon = { Icon(Icons.Default.Category, contentDescription = null) },
-                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = showDocumentTypeMenu) },
-                            modifier = Modifier.menuAnchor().fillMaxWidth(),
-                            shape = RoundedCornerShape(12.dp),
-                            colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
-                        )
-
-                        MonicaExposedChoiceMenu(
-                            expanded = showDocumentTypeMenu,
-                            onDismissRequest = { showDocumentTypeMenu = false },
-                            selectedValue = documentType,
-                            onSelect = { documentType = it },
-                            choices = listOf(
-                                MonicaMenuChoice(DocumentType.ID_CARD, stringResource(R.string.id_card), Icons.Default.Badge),
-                                MonicaMenuChoice(DocumentType.PASSPORT, stringResource(R.string.passport), Icons.Default.FlightTakeoff),
-                                MonicaMenuChoice(DocumentType.DRIVER_LICENSE, stringResource(R.string.drivers_license), Icons.Default.DirectionsCar),
-                                MonicaMenuChoice(DocumentType.SOCIAL_SECURITY, stringResource(R.string.social_security_card), Icons.Default.Security),
-                                MonicaMenuChoice(DocumentType.OTHER, stringResource(R.string.other_document), Icons.Default.Description),
-                            )
-                        )
-                    }
-
-                    // Document Number
-                    OutlinedTextField(
-                        value = documentNumber,
-                        onValueChange = { documentNumber = it },
-                        label = { Text(stringResource(R.string.document_number_required)) },
-                        placeholder = { Text(when (documentType) {
-                            DocumentType.ID_CARD -> "110101199001011234"
-                            DocumentType.PASSPORT -> "E12345678"
-                            DocumentType.DRIVER_LICENSE -> "123456789012"
-                            DocumentType.SOCIAL_SECURITY -> "1234567890"
-                            DocumentType.OTHER -> stringResource(R.string.document_number_required)
-                        }) },
-                        leadingIcon = { Icon(Icons.Default.Numbers, contentDescription = null) },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-                        trailingIcon = {
-                            IconButton(onClick = { showDocumentNumber = !showDocumentNumber }) {
-                                Icon(
-                                    if (showDocumentNumber) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                                    contentDescription = if (showDocumentNumber) stringResource(R.string.hide) else stringResource(R.string.show)
+                                MonicaExposedChoiceMenu(
+                                    expanded = showDocumentTypeMenu,
+                                    onDismissRequest = { showDocumentTypeMenu = false },
+                                    selectedValue = documentType,
+                                    onSelect = { documentType = it },
+                                    choices = listOf(
+                                        MonicaMenuChoice(DocumentType.ID_CARD, stringResource(R.string.id_card), Icons.Default.Badge),
+                                        MonicaMenuChoice(DocumentType.PASSPORT, stringResource(R.string.passport), Icons.Default.FlightTakeoff),
+                                        MonicaMenuChoice(DocumentType.DRIVER_LICENSE, stringResource(R.string.drivers_license), Icons.Default.DirectionsCar),
+                                        MonicaMenuChoice(DocumentType.SOCIAL_SECURITY, stringResource(R.string.social_security_card), Icons.Default.Security),
+                                        MonicaMenuChoice(DocumentType.OTHER, stringResource(R.string.other_document), Icons.Default.Description),
+                                    )
                                 )
                             }
                         },
-                        visualTransformation = if (showDocumentNumber) {
-                            androidx.compose.ui.text.input.VisualTransformation.None
-                        } else {
-                            androidx.compose.ui.text.input.PasswordVisualTransformation()
+                        {
+                            // Document Number
+                            OutlinedTextField(
+                                value = documentNumber,
+                                onValueChange = { documentNumber = it },
+                                label = { Text(stringResource(R.string.document_number_required)) },
+                                placeholder = { Text(when (documentType) {
+                                    DocumentType.ID_CARD -> "110101199001011234"
+                                    DocumentType.PASSPORT -> "E12345678"
+                                    DocumentType.DRIVER_LICENSE -> "123456789012"
+                                    DocumentType.SOCIAL_SECURITY -> "1234567890"
+                                    DocumentType.OTHER -> stringResource(R.string.document_number_required)
+                                }) },
+                                leadingIcon = { Icon(Icons.Default.Numbers, contentDescription = null) },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                trailingIcon = {
+                                    IconButton(onClick = { showDocumentNumber = !showDocumentNumber }) {
+                                        Icon(
+                                            if (showDocumentNumber) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                                            contentDescription = if (showDocumentNumber) stringResource(R.string.hide) else stringResource(R.string.show)
+                                        )
+                                    }
+                                },
+                                visualTransformation = if (showDocumentNumber) {
+                                    androidx.compose.ui.text.input.VisualTransformation.None
+                                } else {
+                                    androidx.compose.ui.text.input.PasswordVisualTransformation()
+                                },
+                                shape = RoundedCornerShape(12.dp)
+                            )
                         },
-                        shape = RoundedCornerShape(12.dp)
-                    )
-
-                    SuggestedOutlinedTextField(
-                        suggestionField = CommonSuggestionField.FULL_NAME,
-                        value = fullName,
-                        onValueChange = { fullName = it },
-                        label = { Text(stringResource(R.string.full_name)) },
-                        placeholder = { Text(stringResource(R.string.holder_name_example)) },
-                        leadingIcon = { Icon(Icons.Default.Person, contentDescription = null) },
-                        trailingIcon = {
-                            if (showCommonNameAction) {
-                                IconButton(onClick = {
-                                    shouldLoadCommonNameAnalysis = true
-                                    showCommonNamePicker = true
-                                }) {
-                                    Icon(
-                                        imageVector = Icons.Default.PersonAdd,
-                                        contentDescription = stringResource(R.string.common_name_fill_title),
-                                        modifier = Modifier.size(20.dp),
-                                        tint = MaterialTheme.colorScheme.primary
-                                    )
-                                }
-                            }
+                        {
+                            SuggestedOutlinedTextField(
+                                suggestionField = CommonSuggestionField.FULL_NAME,
+                                value = fullName,
+                                onValueChange = { fullName = it },
+                                label = { Text(stringResource(R.string.full_name)) },
+                                placeholder = { Text(stringResource(R.string.holder_name_example)) },
+                                leadingIcon = { Icon(Icons.Default.Person, contentDescription = null) },
+                                trailingIcon = {
+                                    if (showCommonNameAction) {
+                                        IconButton(onClick = {
+                                            shouldLoadCommonNameAnalysis = true
+                                            showCommonNamePicker = true
+                                        }) {
+                                            Icon(
+                                                imageVector = Icons.Default.PersonAdd,
+                                                contentDescription = stringResource(R.string.common_name_fill_title),
+                                                modifier = Modifier.size(20.dp),
+                                                tint = MaterialTheme.colorScheme.primary
+                                            )
+                                        }
+                                    }
+                                },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                shape = RoundedCornerShape(12.dp)
+                            )
                         },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-                        shape = RoundedCornerShape(12.dp)
-                    )
-
-                    // Dates
-                    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                        OutlinedTextField(
-                            value = issuedDate,
-                            onValueChange = { issuedDate = it },
-                            label = { Text(stringResource(R.string.issue_date)) },
-                            placeholder = { Text("2020/01/01") },
-                            modifier = Modifier.fillMaxWidth(),
-                            singleLine = true,
-                            leadingIcon = { Icon(Icons.Default.CalendarToday, contentDescription = null) },
-                            shape = RoundedCornerShape(12.dp)
-                        )
-
-                        OutlinedTextField(
-                            value = expiryDate,
-                            onValueChange = { expiryDate = it },
-                            label = { Text(stringResource(R.string.expiry_date_label)) },
-                            placeholder = { Text("2030/01/01") },
-                            modifier = Modifier.fillMaxWidth(),
-                            singleLine = true,
-                            leadingIcon = { Icon(Icons.Default.Event, contentDescription = null) },
-                            shape = RoundedCornerShape(12.dp)
-                        )
-                    }
-
-                    // Issuing Authority
-                    SuggestedOutlinedTextField(
-                        suggestionField = CommonSuggestionField.ISSUED_BY,
-                        value = issuedBy,
-                        onValueChange = { issuedBy = it },
-                        label = { Text(stringResource(R.string.issuing_authority)) },
-                        placeholder = { Text(stringResource(R.string.issuing_authority_example)) },
-                        leadingIcon = { Icon(Icons.Default.AccountBalance, contentDescription = null) },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-                        shape = RoundedCornerShape(12.dp)
-                    )
-
-                    // Nationality (Passport only)
-                    if (documentType == DocumentType.PASSPORT) {
-                        OutlinedTextField(
-                            value = nationality,
-                            onValueChange = { nationality = it },
-                            label = { Text(stringResource(R.string.nationality)) },
-                            placeholder = { Text(stringResource(R.string.nationality_example)) },
-                            leadingIcon = { Icon(Icons.Default.Public, contentDescription = null) },
-                            modifier = Modifier.fillMaxWidth(),
-                            singleLine = true,
-                            shape = RoundedCornerShape(12.dp)
-                        )
-                    }
+                        {
+                            OutlinedTextField(
+                                value = issuedDate,
+                                onValueChange = { issuedDate = it },
+                                label = { Text(stringResource(R.string.issue_date)) },
+                                placeholder = { Text("2020/01/01") },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                leadingIcon = { Icon(Icons.Default.CalendarToday, contentDescription = null) },
+                                shape = RoundedCornerShape(12.dp)
+                            )
+                        },
+                        {
+                            OutlinedTextField(
+                                value = expiryDate,
+                                onValueChange = { expiryDate = it },
+                                label = { Text(stringResource(R.string.expiry_date_label)) },
+                                placeholder = { Text("2030/01/01") },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                leadingIcon = { Icon(Icons.Default.Event, contentDescription = null) },
+                                shape = RoundedCornerShape(12.dp)
+                            )
+                        },
+                        {
+                            // Issuing Authority
+                            SuggestedOutlinedTextField(
+                                suggestionField = CommonSuggestionField.ISSUED_BY,
+                                value = issuedBy,
+                                onValueChange = { issuedBy = it },
+                                label = { Text(stringResource(R.string.issuing_authority)) },
+                                placeholder = { Text(stringResource(R.string.issuing_authority_example)) },
+                                leadingIcon = { Icon(Icons.Default.AccountBalance, contentDescription = null) },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                shape = RoundedCornerShape(12.dp)
+                            )
+                        },
+                        // Nationality (Passport only)
+                        if (documentType == DocumentType.PASSPORT) ({
+                            OutlinedTextField(
+                                value = nationality,
+                                onValueChange = { nationality = it },
+                                label = { Text(stringResource(R.string.nationality)) },
+                                placeholder = { Text(stringResource(R.string.nationality_example)) },
+                                leadingIcon = { Icon(Icons.Default.Public, contentDescription = null) },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                shape = RoundedCornerShape(12.dp)
+                            )
+                        }) else null,
+                    ).toTypedArray())
                 }
-            }
 
 
                 }

@@ -1441,7 +1441,7 @@
     <string name="mdbx_create_new_vault_button">建新密府</string>
     <string name="mdbx_your_vaults">君之密府</string>
     <string name="mdbx_delete_vault_title">删密府</string>
-    <string name="mdbx_delete_vault_message">果欲删“%s”乎？\n\n仅去本机之引，WebDAV 上之文件仍存。</string>
+    <string name="mdbx_delete_vault_message">果欲自 Monica 删“%s”乎？\n\n此库存于 Monica 之本机数据将去，Monica 所管之 MDBX2 文件亦删。外部存储与云端之原文件仍存。</string>
     <string name="mdbx_delete">删</string>
     <string name="mdbx_cancel">罢</string>
     <string name="mdbx_set_default">设为惯用</string>
@@ -2377,9 +2377,9 @@
     <string name="transfer_to_external">移至外部存储</string>
     <string name="remove_database">移除数据库</string>
     <string name="confirm_remove">移除此库乎？</string>
-    <string name="confirm_remove_internal_description">将去数据库之录，内部存储之文件亦删。</string>
-    <string name="confirm_remove_external_description">将去数据库之引，原文件仍留。</string>
-    <string name="confirm_remove_remote_description">去远程数据库及本机副本，云端原文件仍留。</string>
+    <string name="confirm_remove_internal_description">将自 Monica 去此库之录，内部 KDBX 文件仍存。所导入之密钥文件副本，若无他库用之，则删。</string>
+    <string name="confirm_remove_external_description">将自 Monica 去此库之录，原 KDBX 文件仍存。所导入之密钥文件副本，若无他库用之，则删。</string>
+    <string name="confirm_remove_remote_description">将自 Monica 去此远程库之录，云端原文件仍存。惟 WebDAV 连接兼删本机工作与缓存副本；所导入之密钥文件副本，若无他库用之，则删。</string>
     <string name="remove">去</string>
     <string name="create">建</string>
     <string name="import_existing_database">纳已有之库</string>

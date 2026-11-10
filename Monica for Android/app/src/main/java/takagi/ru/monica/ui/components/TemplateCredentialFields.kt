@@ -66,12 +66,8 @@ internal fun TemplateCredentialFields(draft: TemplateCredentialDraft, onChange: 
         "WIFI" -> if (ssidInIdentity) listOf("password") else listOf("ssid", "password")
         else -> PasswordContentBlocks.editableKeys(PasswordContentBlocks.Kind.valueOf(draft.type)).filter { it != "notes" }
     }
-    Column(verticalArrangement = Arrangement.spacedBy(if (LocalStandaloneTemplateFields.current) 12.dp else 2.dp)) {
-        if (draft.type == "WIFI" && ssidInIdentity && onScanWifi != null) FilledTonalButton(
-            onClick = onScanWifi, enabled = enabled, modifier = Modifier.fillMaxWidth()) {
-            Icon(Icons.Default.QrCodeScanner, null); Spacer(Modifier.width(8.dp)); Text(stringResource(R.string.wifi_scan_qr))
-        }
-        keys.forEachIndexed { index, key ->
+    val credentialFields = keys.mapIndexed { index, key ->
+        val field: @Composable () -> Unit = {
             var reveal by remember(key) { mutableStateOf(false) }
             val lifecycle = androidx.lifecycle.compose.LocalLifecycleOwner.current
             DisposableEffect(lifecycle, key) {
@@ -120,12 +116,11 @@ internal fun TemplateCredentialFields(draft: TemplateCredentialDraft, onChange: 
                     }) }
                 }
             }
-            if (key == "ssid" && onScanWifi != null) FilledTonalButton(onClick = onScanWifi,
-                enabled = enabled, modifier = Modifier.fillMaxWidth()) {
-                Icon(Icons.Default.QrCodeScanner, null); Spacer(Modifier.width(8.dp)); Text(stringResource(R.string.wifi_scan_qr))
-            }
         }
-        if (draft.type == "WIFI") {
+        field
+    }
+    val wifiFields = if (draft.type == "WIFI") listOf<@Composable () -> Unit>(
+        {
             var choosing by remember { mutableStateOf(false) }
             ExposedDropdownMenuBox(choosing, { if (enabled) choosing = it }) {
                 val security = WifiSecurity.entries.firstOrNull { it.name == draft.value("security") }
@@ -139,13 +134,25 @@ internal fun TemplateCredentialFields(draft: TemplateCredentialDraft, onChange: 
                         onClick = { onChange(draft.change("security", security.name)); choosing = false }) }
                 }
             }
-            Surface(shape = if (LocalStandaloneTemplateFields.current) androidx.compose.foundation.shape.RoundedCornerShape(24.dp) else entryGroupShape(1, 2), color = MaterialTheme.colorScheme.surfaceContainer) {
-            ListItem(headlineContent = { Text(stringResource(R.string.wifi_hidden_network)) },
-                colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainer), trailingContent = {
-                Switch(draft.value("hiddenNetwork") == "true", { onChange(draft.change("hiddenNetwork", it.toString())) }, enabled = enabled)
-            })
+        },
+        {
+            Surface(modifier = Modifier.fillMaxWidth().testTag("wifi_hidden_network"),
+                shape = connectedFieldShape(entryGroupShape(1, 2)), color = MaterialTheme.colorScheme.surfaceContainer) {
+                ListItem(headlineContent = { Text(stringResource(R.string.wifi_hidden_network)) },
+                    colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainer), trailingContent = {
+                    Switch(draft.value("hiddenNetwork") == "true", { onChange(draft.change("hiddenNetwork", it.toString())) }, enabled = enabled)
+                })
             }
+        },
+    ) else emptyList()
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        val separateSsid = draft.type == "WIFI" && !ssidInIdentity && onScanWifi != null
+        if (separateSsid) ConnectedFieldGroup(credentialFields.first())
+        if (draft.type == "WIFI" && onScanWifi != null) FilledTonalButton(
+            onClick = onScanWifi, enabled = enabled, modifier = Modifier.fillMaxWidth()) {
+            Icon(Icons.Default.QrCodeScanner, null); Spacer(Modifier.width(8.dp)); Text(stringResource(R.string.wifi_scan_qr))
         }
+        ConnectedFieldGroup(*(credentialFields.drop(if (separateSsid) 1 else 0) + wifiFields).toTypedArray())
         if (draft.type == "SSH_KEY") FilledTonalButton(enabled = enabled && !busy, onClick = {
             scope.launch {
                 busy = true

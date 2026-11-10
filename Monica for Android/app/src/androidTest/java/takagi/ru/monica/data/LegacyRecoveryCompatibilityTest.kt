@@ -55,7 +55,7 @@ class LegacyRecoveryCompatibilityTest {
             db.passwordEntryDao().insertPasswordEntry(original)
             db.openHelper.writableDatabase.execSQL(
                 "INSERT INTO single_vault_dedup_recovery VALUES (?, ?, ?, ?, ?, ?)",
-                arrayOf("fixture", "local", 1, 1, payload, "COMMITTED"))
+                arrayOf<Any?>("fixture", "local", 1, 1, payload, "COMMITTED"))
             // Captured from the pre-removal generated schema 85, with the old entity class.
             db.openHelper.writableDatabase.execSQL(
                 "UPDATE room_master_table SET identity_hash = 'f1cc89b0bd71d086b7a81d230b3fe1b7' WHERE id = 42")

@@ -12,7 +12,7 @@ import takagi.ru.monica.util.TotpGenerator
 import takagi.ru.monica.util.TotpUriParser
 
 @RunWith(RobolectricTestRunner::class)
-@Config(sdk = [29], manifest = Config.NONE)
+@Config(sdk = [29], manifest = Config.NONE, application = android.app.Application::class)
 class PasswordAuthenticatorDraftTest {
     private val base32 = "GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ"
 

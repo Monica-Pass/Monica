@@ -1440,7 +1440,7 @@
     <string name="mdbx_create_new_vault_button">Créer un nouveau coffre</string>
     <string name="mdbx_your_vaults">Vos coffres</string>
     <string name="mdbx_delete_vault_title">Supprimer le coffre</string>
-    <string name="mdbx_delete_vault_message">Êtes-vous sûr de vouloir supprimer « %s » ?\n\nCela supprimera uniquement la référence locale. Le fichier sur WebDAV ne sera pas supprimé.</string>
+    <string name="mdbx_delete_vault_message">Supprimer « %s » de Monica ?\n\nLes données du coffre stockées localement dans Monica seront supprimées, ainsi que tout fichier MDBX2 de ce coffre géré par Monica. Les fichiers originaux du stockage externe ou du cloud seront conservés.</string>
     <string name="mdbx_delete">Supprimer</string>
     <string name="mdbx_cancel">Annuler</string>
     <string name="mdbx_set_default">Définir par défaut</string>
@@ -2376,9 +2376,9 @@
     <string name="transfer_to_external">Transfert vers un stockage externe</string>
     <string name="remove_database">Supprimer la base</string>
     <string name="confirm_remove">Supprimer la base ?</string>
-    <string name="confirm_remove_internal_description">Cela supprimera l\'enregistrement de la base. Le fichier sera également supprimé de la mémoire interne.</string>
-    <string name="confirm_remove_external_description">Cela supprimera la référence à la base. Le fichier original ne sera pas supprimé.</string>
-    <string name="confirm_remove_remote_description">Supprimez cette base distante et cette copie locale. Le fichier cloud reste intact.</string>
+    <string name="confirm_remove_internal_description">La base sera retirée de Monica. Le fichier KDBX interne sera conservé. La copie importée du fichier de clé sera supprimée si aucune autre base ne l’utilise.</string>
+    <string name="confirm_remove_external_description">La base sera retirée de Monica. Le fichier KDBX original sera conservé. La copie importée du fichier de clé sera supprimée si aucune autre base ne l’utilise.</string>
+    <string name="confirm_remove_remote_description">La base distante sera retirée de Monica. Les fichiers originaux dans le cloud seront conservés. Les copies locales de travail et de cache seront supprimées uniquement pour WebDAV. La copie importée du fichier de clé sera supprimée si aucune autre base ne l’utilise.</string>
     <string name="remove">Retirer</string>
     <string name="create">Créer</string>
     <string name="import_existing_database">Importer une base existante</string>

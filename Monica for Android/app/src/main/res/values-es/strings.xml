@@ -1581,7 +1581,7 @@
     <string name="mdbx_create_new_vault_button">Crear nueva bóveda</string>
     <string name="mdbx_your_vaults">Su Bóvedas</string>
     <string name="mdbx_delete_vault_title">Eliminar bóveda</string>
-    <string name="mdbx_delete_vault_message">¿Está seguro de que desea eliminar \"%s\"?\n\nEsto solo eliminará la referencia local. El archivo en WebDAV no se eliminará.</string>
+    <string name="mdbx_delete_vault_message">¿Eliminar «%s» de Monica?\n\nSe eliminarán los datos de esta bóveda guardados localmente en Monica y cualquier archivo MDBX2 de la bóveda administrado por Monica. Se conservarán los archivos originales del almacenamiento externo o de la nube.</string>
     <string name="mdbx_delete">Eliminar</string>
     <string name="mdbx_cancel">Cancelar</string>
     <string name="mdbx_set_default">Establecer como predeterminado</string>
@@ -2604,9 +2604,9 @@
     <string name="transfer_to_external">Transferir a almacenamiento externo</string>
     <string name="remove_database">Eliminar base de datos</string>
     <string name="confirm_remove">¿Eliminar base de datos?</string>
-    <string name="confirm_remove_internal_description">Esto eliminar el registro de la base de datos. El archivo también se eliminará del almacenamiento interno.</string>
-    <string name="confirm_remove_external_description">Esto eliminará la referencia de la base de datos. El archivo original no se eliminará.</string>
-    <string name="confirm_remove_remote_description">Elimine esta base de datos remota y la copia local. El archivo en la nube permanece intacto.</string>
+    <string name="confirm_remove_internal_description">Se eliminará la base de datos de Monica. Se conservará el archivo KDBX interno. Se eliminará la copia importada del archivo de claves si ninguna otra base de datos la utiliza.</string>
+    <string name="confirm_remove_external_description">Se eliminará la base de datos de Monica. Se conservará el archivo KDBX original. Se eliminará la copia importada del archivo de claves si ninguna otra base de datos la utiliza.</string>
+    <string name="confirm_remove_remote_description">Se eliminará la base de datos remota de Monica. Se conservarán los archivos originales en la nube. Las copias locales de trabajo y de caché se eliminarán solo para WebDAV. Se eliminará la copia importada del archivo de claves si ninguna otra base de datos la utiliza.</string>
     <string name="remove">Eliminar</string>
     <string name="create">Crear</string>
     <string name="import_existing_database">Importar base de datos existente</string>

@@ -52,16 +52,10 @@ class WebDavSettingsBackupRegressionGuardTest {
             )
         )
         assertTrue(
-            source.contains(
-                "bottomNavVisibilitySteam =\n" +
-                    "                                                    pageAdjustmentBackup.bottomNavVisibilitySteam"
-            )
+            Regex("bottomNavVisibilitySteam\\s*=\\s*pageAdjustmentBackup\\.bottomNavVisibilitySteam").containsMatchIn(source)
         )
         assertTrue(
-            source.contains(
-                "steamMiniProfileBackgroundEnabled =\n" +
-                    "                                                    pageAdjustmentBackup.steamMiniProfileBackgroundEnabled"
-            )
+            Regex("steamMiniProfileBackgroundEnabled\\s*=\\s*pageAdjustmentBackup\\.steamMiniProfileBackgroundEnabled").containsMatchIn(source)
         )
     }
 

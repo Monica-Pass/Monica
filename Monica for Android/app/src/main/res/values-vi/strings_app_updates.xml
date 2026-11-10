@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="update_auto_check">Tự động kiểm tra bản cập nhật</string>
+    <string name="update_auto_check_summary">Kiểm tra tối đa một lần mỗi ngày sau khi mở khóa. Bạn có thể tắt bất cứ lúc nào.</string>
+    <string name="update_now">Cập nhật ngay</string>
+    <string name="update_skip_version">Bỏ qua phiên bản này</string>
+    <string name="update_view_details">Xem chi tiết</string>
+    <string name="update_later">Để sau</string>
+    <string name="update_whats_new">Có gì mới</string>
+    <string name="update_open_fdroid">Mở F-Droid</string>
+    <string name="update_fdroid_source">Các bản cập nhật được kiểm tra và cài đặt qua kho lưu trữ chính thức của F-Droid.</string>
+    <string name="update_notes_unavailable">Chưa có ghi chú phát hành. Xem chi tiết để biết thêm thông tin.</string>
+    <string name="update_notes_truncated">Ghi chú này khá dài. Xem chi tiết để đọc toàn bộ ghi chú phát hành.</string>
+</resources>

@@ -17,7 +17,7 @@ import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.test.*
-import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
@@ -29,20 +29,33 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 import org.junit.Assert.*
+import org.junit.After
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import takagi.ru.monica.R
+import takagi.ru.monica.suggestions.CommonInfoTestActivity
 
 /** Real parent-composited pixels, with synthetic resource text and no account or vault data. */
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalMaterial3Api::class)
 class EditorShapeRegressionTest {
-    @get:Rule val compose = createComposeRule()
+    @get:Rule val compose = createAndroidComposeRule<CommonInfoTestActivity>()
+
+    @After fun clearContent() { showContent {} }
+
+    private fun showContent(content: @Composable () -> Unit) {
+        // MuMu may recreate the activity for an orientation/configuration update after launch.
+        // This debug host reinstalls its current composition from onCreate.
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            CommonInfoTestActivity.content = content
+        }
+        compose.waitForIdle()
+    }
 
     @Test fun selectedBorderedSurfaceKeepsItsEdgesInsideTemplateSection() {
         var dark by mutableStateOf(false)
-        compose.setContent {
+        showContent {
             TestPage(dark) {
                 TemplateFormSection("") { AccountSurface("grouped") }
                 Spacer(Modifier.height(24.dp))
@@ -59,7 +72,7 @@ class EditorShapeRegressionTest {
 
     @Test fun filterChipKeepsItsLeadingOutlineInsideTemplateSection() {
         var dark by mutableStateOf(false)
-        compose.setContent {
+        showContent {
             TestPage(dark) {
                 TemplateFormSection("") { ChipRow("grouped") }
                 Spacer(Modifier.height(24.dp))
@@ -131,7 +144,7 @@ class EditorShapeRegressionTest {
     }
 
     private fun showSupportingField(enabled: Boolean, error: Boolean) {
-        compose.setContent {
+        showContent {
             TestPage(dark = error, fontScale = 1.5f) {
                 TemplateFormSection("") {
                     val hint = stringResource(R.string.barcode_manual_input_hint)

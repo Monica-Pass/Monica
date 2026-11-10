@@ -5428,7 +5428,7 @@ private fun PasswordTotpBindingPickerBottomSheet(
                         label = { Text(stringResource(R.string.password_picker_filter_database)) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = keepassMenuExpanded) },
                         modifier = Modifier
-                            .menuAnchor()
+                            .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                             .fillMaxWidth(),
                         singleLine = true
                     )
@@ -5469,7 +5469,7 @@ private fun PasswordTotpBindingPickerBottomSheet(
                         label = { Text(stringResource(R.string.password_picker_filter_database)) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = mdbxMenuExpanded) },
                         modifier = Modifier
-                            .menuAnchor()
+                            .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                             .fillMaxWidth(),
                         singleLine = true
                     )
@@ -5510,7 +5510,7 @@ private fun PasswordTotpBindingPickerBottomSheet(
                         label = { Text(stringResource(R.string.password_picker_filter_vault)) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = vaultMenuExpanded) },
                         modifier = Modifier
-                            .menuAnchor()
+                            .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                             .fillMaxWidth(),
                         singleLine = true
                     )
@@ -5553,7 +5553,7 @@ private fun PasswordTotpBindingPickerBottomSheet(
                             label = { Text(stringResource(R.string.password_picker_filter_folder)) },
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = folderMenuExpanded) },
                             modifier = Modifier
-                                .menuAnchor()
+                                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                                 .fillMaxWidth(),
                             singleLine = true
                         )
@@ -6352,7 +6352,7 @@ private fun LoginTypeSelector(
                         },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = showProviderMenu) },
                         modifier = Modifier
-                            .menuAnchor()
+                            .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                             .fillMaxWidth(),
                         shape = RoundedCornerShape(12.dp)
                     )

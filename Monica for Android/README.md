@@ -19,7 +19,9 @@
 
 ## 📖 Overview
 
-**Monica for Android** is not just a password manager; it's a comprehensive digital vault built with the latest Android technologies. It prioritizes **data sovereignty**—your data is encrypted locally using military-grade algorithms and never touches a cloud server unless *you* configure it to do so (via WebDAV).
+**Monica for Android** manages passwords, authenticators, cards and notes, with local storage and optional connections to Bitwarden/Vaultwarden, KeePass and cloud backup providers. Sensitive local fields use AES-GCM; connected vaults retain their own encryption and storage formats.
+
+The current checkout is **1.0.327, unreleased**. Development changes and dependency versions do not indicate that a release has been published.
 
 With a stunning **Material You** interface, seamless **Autofill** integration, and advanced features like **KeePass support** and **TOTP generation**, Monica brings desktop-class power to your mobile device.
 
@@ -28,26 +30,27 @@ With a stunning **Material You** interface, seamless **Autofill** integration, a
 ## ✨ Key Features
 
 ### 🔐 Advanced Credential Management
-*   **Zero-Knowledge Encryption**: All data is encrypted using **AES-256-GCM** backed by Android Keystore. The master password never leaves your device.
+*   **Local protection**: Sensitive local fields use AES-GCM, with master-password and Android Keystore protection for local key material. Provider-specific formats remain separate.
 *   **Rich Entries**: Store more than just passwords. Add **websites**, **notes**, **emails**, **phone numbers**, and custom tags.
-*   **Password Generator**: Generate cryptographically identifying passwords with customizable rules (length, charset, entropy).
+*   **Password Generator**: Generate random passwords with customizable rules (length, charset, entropy).
 *   **History & Recycle Bin**: Accidentally deleted something? Recover it from the recycle bin. view previous password versions in history.
 
-### �️ Next-Level TOTP Authenticator
+### 🛡️ TOTP Authenticator
 *   **Integrated 2FA**: No need for a separate authenticator app.
 *   **Smart Scan**: Add accounts instantly by scanning QR codes.
 *   **Steam Guard**: Native support for Steam's proprietary 2FA protocol.
 *   **Post-Fill Popup**: Automatically prompts the relevant TOTP code after autofilling a password—seamless login flow.
 
-### � Sync & Backup (WebDAV)
-*   **Your Cloud, Your Rules**: Sync securely across devices using any **WebDAV** provider (Nextcloud, Synology, JianguoYun, etc.).
-*   **Encrypted Backups**: Backups are packed into ZIP files and can be optionally **double-encrypted** with AES-256-GCM, rendering them useless to anyone but you.
-*   **Cross-Platform**: Fully compatible with Monica for Windows.
+### 🔄 Sync & Backup
+*   **Optional connections**: Configure WebDAV/OneDrive backups or connect a Bitwarden/Vaultwarden account. Server capabilities and vault formats determine the available operations.
+*   **Backups**: ZIP export offers an encryption option. Retain the backup password and verify a restore before relying on a backup.
+*   **Cross-platform formats**: Use supported KeePass/MDBX formats or import/export workflows; compatibility depends on the other client version and fields involved.
 
 ### 🧩 Interoperability & Migration
 *   **KeePass Integration**: Directly **read and write** `.kdbx` files. Use Monica as a modern UI for your existing KeePass databases.
 *   **Chrome Import**: Seamlessly migrate credentials from Google Chrome CSV exports.
-*   **Data Export**: Full freedom to export your vault to CSV or encrypted JSON formats.
+*   **Data Export**: Choose a supported export format and scope. CSV contains plaintext credentials; use an encrypted backup when needed.
+*   **Passkeys**: Android 14+ credential-provider integration is available; supported flows depend on the device, browser and service.
 
 ### 🤖 Intelligent Autofill System
 *   **Refactored Engine**: Completely redesigned autofill service for higher compatibility with apps and browsers.
@@ -75,36 +78,28 @@ The vault scrollbar style is inspired by [PixelPlayer](https://github.com/PixelP
 
 ## 🔒 Security Architecture
 
-We take security seriously. Here is how your data is protected:
-
-1.  **Encryption Key**: Your master password acts as the key to unlock the vault. It is hashed using **PBKDF2-HMAC-SHA256** with 100,000+ iterations.
-2.  **Algorithm**: The database is encrypted using **AES-256** in **GCM (Galois/Counter Mode)**, preventing both reading and tampering (integrity attacks).
-3.  **Hardware Security**: The encryption keys are wrapped by the **Android Keystore System** (TEE/SE), making them extraction-resistant even on rooted devices.
-4.  **Privacy**:
-    *   No Internet Permissions (except for WebDAV sync which you control).
-    *   Screenshot blocking in secure views.
-    *   Auto-lock on app switching or timeout.
+- Sensitive fields in Monica's local Room-backed storage use AES-GCM.
+- Local master-password verification and derivation of the password-based MDK wrapping key use PBKDF2-HMAC-SHA256 with 100,000 iterations. Bitwarden, KDBX and MDBX keep their own KDFs and formats.
+- Android Keystore protects local key material where used. Hardware-backed protection depends on the device and does not guarantee safety on a compromised operating system.
+- Screenshot protection and lock behavior follow the application's settings and platform capabilities. Keep an independent encrypted backup; recovery depends on the original password and available recovery material.
+- Network permission supports configured providers, transfers and update checks. Local use does not require a cloud account; optional automatic update checks can be disabled.
 
 ---
 
 ## 🛠️ Tech Stack
 
-Built by developers, for developers (and everyone else).
+| Component | Current configuration |
+| --- | --- |
+| Build runtime | JDK 17; Java/Kotlin bytecode target 11 |
+| Gradle Wrapper / Android Gradle Plugin | 9.7.0 / 9.3.1 |
+| Kotlin / KSP | 2.4.21 / 2.3.13 |
+| Compose BOM | 2026.09.00 |
+| Material 3 Expressive | 1.5.0-rc01, explicitly pinned outside the BOM |
+| Android SDK | compileSdk 37, targetSdk 34, minSdk 26 (Android 8.0) |
 
-*   **Language**: [Kotlin](https://kotlinlang.org/)
-*   **UI Framework**: [Jetpack Compose](https://developer.android.com/jetpack/compose)
-*   **UI Baseline**: Compose BOM `2026.03.00` + Material 3 (version aligned by BOM)
-*   **Architecture**: MVVM + Clean Architecture
-*   **Database**: Room (SQLite) with SQLCipher support
-*   **Async**: Coroutines & Flow
-*   **Dependency Injection**: Manual DI (simple & efficient)
-*   **Key Libraries**:
-    *   `androidx.security:security-crypto`: EncryptedSharedPreferences & MasterKey
-    *   `com.google.zxing`: QR Code processing
-    *   `dom4j`: XML parsing for KeePass
-    *   `sardine-android`: WebDAV client
+The app uses ViewModel, Coroutines/Flow and Room (SQLite), CameraX with ZXing for scanning, the local `kotpass` module for KDBX, `sardine-android` for WebDAV, CommonMark for Markdown, and Rust/JNI modules for supported native operations.
 
-> Dependency versions are maintained in `gradle/libs.versions.toml` and consumed by `app/build.gradle`.
+Version sources: [version catalog](gradle/libs.versions.toml), [app configuration](app/build.gradle) and [wrapper configuration](gradle/wrapper/gradle-wrapper.properties).
 
 ---
 
@@ -120,22 +115,35 @@ Built by developers, for developers (and everyone else).
 
 ---
 
-## � Getting Started
+## 🚀 Getting Started
 
 ### Installation
-1.  Download the latest `.apk` from the [**Releases**](https://github.com/Monica-Pass/Monica-for-Android/releases) page.
+1.  Download the latest `.apk` from the [**Releases**](https://github.com/Monica-Pass/Monica/releases) page.
 2.  Install on your Android device (Android 8 or higher required).
 3.  Launch and follow the setup wizard to create your Master Password.
 
 ### Build from Source
-```bash
-# Clone the repository
-git clone https://github.com/Monica-Pass/Monica-for-Android.git
-cd Monica-for-Android
 
-# Build the APK
+Install JDK 17, Android SDK Platform 37 / platform-tools / build-tools, a side-by-side Android NDK, and Rust via rustup. The JNI bridge is built from this checkout, so `cargo` and `cargo-ndk` must be available to Gradle. Configure the SDK through `local.properties` or `ANDROID_HOME`; set `ANDROID_NDK_HOME` when selecting an installed NDK explicitly. The native bridge targets Android API 26. See the [JNI build script](gradle/monica-rust-jni.gradle) and [tool discovery](gradle/rust-toolchain.gradle).
+
+```bash
+git clone https://github.com/Monica-Pass/Monica.git
+cd "Monica/Monica for Android"
+
+rustup toolchain install stable --profile minimal
+rustup default stable
+rustup target add aarch64-linux-android armv7-linux-androideabi
+cargo install cargo-ndk --version 4.1.2 --locked
+
 ./gradlew :app:assembleDebug
+./gradlew :app:testDebugUnitTest
+
+# x86_64 emulator: build both the application and instrumentation APKs
+rustup target add x86_64-linux-android
+./gradlew :app:assembleDebug :app:assembleDebugAndroidTest -PincludeX86TestAbi
 ```
+
+Default APK outputs target ARM. Windows PowerShell users should invoke `./gradlew.bat`. Open this Android subdirectory in the IDE; a successful build alone does not establish device or release validation.
 
 ---
 
@@ -146,14 +154,14 @@ You can also support Monica in euros (EUR) through [Liberapay](https://liberapay
 Monica is an open-source labor of love. If this app helps you secure your digital life, please consider supporting its development!
 
 <div align="center">
-<img src="support_author.jpg" alt="Support Author" width="300" style="border-radius: 10px"/>
+<img src="image/support_author.jpg" alt="Support Author" width="300" style="border-radius: 10px"/>
 <br/>
 <sub>Scan using WeChat or Alipay</sub>
 </div>
 
 **Your support enables:**
-*   Continuous security audits
-*   New feature development (e.g., Passkey support)
+*   Security maintenance and regression testing
+*   Feature development and compatibility testing
 *   Server costs for update distribution
 
 ---

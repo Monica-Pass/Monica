@@ -21,6 +21,7 @@ import org.robolectric.util.ReflectionHelpers
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [29, 34], application = Application::class)
+@OptIn(androidx.room.ExperimentalRoomApi::class)
 class AutofillCancellationTest {
     @Test fun cancelledRequestDoesNotDeliverFailureOrSuccessToTheOldSession() {
         val app = RuntimeEnvironment.getApplication()

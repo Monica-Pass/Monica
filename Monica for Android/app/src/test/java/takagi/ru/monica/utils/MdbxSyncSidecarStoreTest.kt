@@ -11,7 +11,7 @@ class MdbxSyncSidecarStoreTest {
 
     @Test
     fun manifestIsAtomicallyWrittenAndReadableAfterStoreRecreation() = runBlocking {
-        val root = createTempDir(prefix = "mdbx-sidecar-test-")
+        val root = kotlin.io.path.createTempDirectory(prefix = "mdbx-sidecar-test-").toFile()
         try {
             val file = File(root, "vault.json")
             val store = MdbxSyncSidecarStore(root)
@@ -48,7 +48,7 @@ class MdbxSyncSidecarStoreTest {
 
     @Test
     fun sidecarRejectsPathEscapeAndMalformedManifest(): Unit = runBlocking {
-        val root = createTempDir(prefix = "mdbx-sidecar-invalid-")
+        val root = kotlin.io.path.createTempDirectory(prefix = "mdbx-sidecar-invalid-").toFile()
         try {
             val store = MdbxSyncSidecarStore(root)
             assertThrows(IllegalArgumentException::class.java) {

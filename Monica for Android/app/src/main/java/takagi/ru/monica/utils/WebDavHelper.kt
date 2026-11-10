@@ -3986,520 +3986,36 @@ class WebDavHelper(
                                 // ✅ 恢复常用账号信息（兼容旧根目录与新的 monica_config 目录）
                                 normalizedEntryName == "monica_config/common_account.json" ||
                                     entryName.equals("common_account.json", ignoreCase = true) -> {
-                                    try {
-                                        val commonAccountJson = tempFile.readText(Charsets.UTF_8)
-                                        val json = Json { ignoreUnknownKeys = true }
-                                        val commonAccountBackup = json.decodeFromString<CommonAccountBackupEntry>(commonAccountJson)
-                                        
-                                        val commonAccountPreferences = takagi.ru.monica.data.CommonAccountPreferences(context)
-                                        val currentInfo = commonAccountPreferences.commonAccountInfo.first()
-                                        
-                                        // 只有当本地对应字段为空时才恢复，保护用户本地更新的数据
-                                        if (currentInfo.email.isEmpty() && commonAccountBackup.email.isNotEmpty()) {
-                                            commonAccountPreferences.setDefaultEmail(commonAccountBackup.email)
-                                        }
-                                        if (currentInfo.phone.isEmpty() && commonAccountBackup.phone.isNotEmpty()) {
-                                            commonAccountPreferences.setDefaultPhone(commonAccountBackup.phone)
-                                        }
-                                        if (currentInfo.username.isEmpty() && commonAccountBackup.username.isNotEmpty()) {
-                                            commonAccountPreferences.setDefaultUsername(commonAccountBackup.username)
-                                        }
-                                        // autoFillEnabled 只有在当前未启用且备份启用时才恢复
-                                        if (!currentInfo.autoFillEnabled && commonAccountBackup.autoFillEnabled) {
-                                            commonAccountPreferences.setAutoFillEnabled(true)
-                                        }
-                                        if (currentInfo.billingAddress.isEmpty() && commonAccountBackup.billingAddress.isNotBlank()) {
-                                            val restoredBillingAddress = CardWalletDataCodec.parseBillingAddress(
-                                                commonAccountBackup.billingAddress
-                                            )
-                                            if (!restoredBillingAddress.isEmpty()) {
-                                                commonAccountPreferences.setBillingAddress(restoredBillingAddress)
-                                            }
-                                        }
-
-                                        // 恢复模板：采用合并模式，不覆盖本地，仅补充缺失模板
-                                        val currentTemplates = commonAccountPreferences.templatesFlow.first()
-                                        val backupTemplates = commonAccountBackup.templates.mapNotNull { backupTemplate ->
-                                            val content = backupTemplate.content.trim()
-                                            if (content.isEmpty()) return@mapNotNull null
-                                            takagi.ru.monica.data.CommonAccountTemplate(
-                                                id = backupTemplate.id.trim().ifEmpty {
-                                                    java.util.UUID.randomUUID().toString()
-                                                },
-                                                type = backupTemplate.type.trim(),
-                                                title = "",
-                                                content = content
-                                            ).normalized()
-                                        }
-                                        if (backupTemplates.isNotEmpty()) {
-                                            val mergedTemplates = (currentTemplates + backupTemplates)
-                                                .map { it.normalized() }
-                                                .filter { it.content.isNotBlank() }
-                                                .distinctBy {
-                                                    "${it.type.trim().lowercase(Locale.ROOT)}|" +
-                                                        it.content.trim().lowercase(Locale.ROOT)
-                                                }
-                                            if (mergedTemplates != currentTemplates) {
-                                                commonAccountPreferences.setTemplates(mergedTemplates)
-                                            }
-                                        }
-                                        
-                                        android.util.Log.d(
-                                            "WebDavHelper",
-                                            "Restored common account info (merge mode, templates=${commonAccountBackup.templates.size})"
-                                        )
-                                    } catch (e: Exception) {
-                                        android.util.Log.w("WebDavHelper", "Failed to restore common account info: ${e.message}")
-                                        warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.backup_component_common_accounts), e.message ?: strings.get(R.string.import_data_unknown_error)))
-                                    }
+                                    restoreCommonAccountConfigEntry(tempFile, warnings)
                                 }
                                 // ✅ 恢复 Monica 自动填充屏蔽字段配置
                                 normalizedEntryName == "monica_config/autofill_blocked_fields.json" -> {
-                                    try {
-                                        val autofillConfigJson = tempFile.readText(Charsets.UTF_8)
-                                        val json = Json { ignoreUnknownKeys = true }
-                                        val autofillConfigBackup = json.decodeFromString<AutofillBlockedFieldsBackupEntry>(autofillConfigJson)
-                                        val autofillBlockedFieldRecords = autofillConfigBackup.blockedFieldSignatures
-                                            .mapNotNull { backup ->
-                                                backup.signatureKey
-                                                    .trim()
-                                                    .takeIf { it.isNotBlank() }
-                                                    ?.let { signatureKey ->
-                                                        AutofillPreferences.BlockedFieldSignatureRecord(
-                                                            signatureKey = signatureKey,
-                                                            packageName = backup.packageName?.trim()?.ifBlank { null },
-                                                            webDomain = backup.webDomain?.trim()?.ifBlank { null },
-                                                            hints = backup.hints,
-                                                            blockedAt = backup.blockedAt,
-                                                        )
-                                                    }
-                                            }
-                                        if (autofillBlockedFieldRecords.isNotEmpty()) {
-                                            AutofillPreferences(context).importBlockedFieldSignatureRecords(autofillBlockedFieldRecords)
-                                            warnings.add(strings.get(R.string.backup_report_restored_count, strings.get(R.string.autofill_blocked_fields_title), autofillBlockedFieldRecords.size))
-                                        }
-                                    } catch (e: Exception) {
-                                        android.util.Log.w("WebDavHelper", "Failed to restore blocked autofill fields: ${e.message}")
-                                        warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.autofill_blocked_fields_title), e.message ?: strings.get(R.string.import_data_unknown_error)))
-                                    }
+                                    restoreAutofillBlockedFieldsEntry(tempFile, warnings)
                                 }
                                 normalizedEntryName == "monica_config/autofill_save_blocked_targets.json" -> {
-                                    try {
-                                        val saveBlockedTargetsJson = tempFile.readText(Charsets.UTF_8)
-                                        val json = Json { ignoreUnknownKeys = true }
-                                        val saveBlockedTargetsBackup =
-                                            json.decodeFromString<AutofillSaveBlockedTargetsBackupEntry>(
-                                                saveBlockedTargetsJson
-                                            )
-                                        if (saveBlockedTargetsBackup.blockedTargets.isNotEmpty()) {
-                                            AutofillPreferences(context).importSaveBlockedTargets(
-                                                saveBlockedTargetsBackup.blockedTargets,
-                                            )
-                                            warnings.add(strings.get(R.string.backup_report_restored_count, strings.get(R.string.autofill_save_blocked_targets_title), saveBlockedTargetsBackup.blockedTargets.size))
-                                        }
-                                    } catch (e: Exception) {
-                                        android.util.Log.w("WebDavHelper", "Failed to restore save-blocked targets: ${e.message}")
-                                        warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.autofill_save_blocked_targets_title), e.message ?: strings.get(R.string.import_data_unknown_error)))
-                                    }
+                                    restoreAutofillSaveBlockedTargetsEntry(tempFile, warnings)
                                 }
                                 normalizedEntryName == "monica_config/autofill_blacklist.json" -> {
-                                    try {
-                                        val autofillBlacklistJson = tempFile.readText(Charsets.UTF_8)
-                                        val json = Json { ignoreUnknownKeys = true }
-                                        val autofillBlacklistBackup =
-                                            json.decodeFromString<AutofillBlacklistBackupEntry>(
-                                                autofillBlacklistJson
-                                            )
-                                        val normalizedPackages = autofillBlacklistBackup.packages
-                                            .mapNotNull { it.trim().takeIf { packageName -> packageName.isNotBlank() } }
-                                            .toSet()
-                                        AutofillPreferences(context).apply {
-                                            setBlacklistEnabled(autofillBlacklistBackup.enabled)
-                                            setBlacklistPackages(normalizedPackages)
-                                        }
-                                        warnings.add(strings.get(R.string.backup_report_restored_count, strings.get(R.string.autofill_blacklist_title), normalizedPackages.size))
-                                    } catch (e: Exception) {
-                                        android.util.Log.w("WebDavHelper", "Failed to restore autofill blacklist: ${e.message}")
-                                        warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.autofill_blacklist_title), e.message ?: strings.get(R.string.import_data_unknown_error)))
-                                    }
+                                    restoreAutofillBlacklistEntry(tempFile, warnings)
                                 }
                                 normalizedEntryName == "monica_config/bitwarden_vaults.json" ||
                                     entryName.equals("bitwarden_vaults.json", ignoreCase = true) -> {
-                                    try {
-                                        val bitwardenVaultsJson = tempFile.readText(Charsets.UTF_8)
-                                        val json = Json { ignoreUnknownKeys = true }
-                                        val bitwardenVaultsBackup = json.decodeFromString<BitwardenVaultsBackupEntry>(bitwardenVaultsJson)
-                                        val restoredCount = restoreBitwardenVaultBackups(
-                                            bitwardenVaultsBackup.vaults,
-                                            resolvedDecryptPassword,
-                                            warnings,
-                                        )
-                                        if (restoredCount > 0) {
-                                            warnings.add(strings.get(R.string.backup_bitwarden_restored_locked, restoredCount))
-                                        }
-                                    } catch (cancelled: CancellationException) { throw cancelled }
-                                    catch (_: Exception) {
-                                        android.util.Log.w("WebDavHelper", "Failed to restore Bitwarden configuration")
-                                        warnings.add(strings.get(R.string.backup_report_restore_failed, "Bitwarden", strings.get(R.string.import_data_unknown_error)))
-                                    }
+                                    restoreBitwardenConfigEntry(tempFile, warnings, resolvedDecryptPassword)
                                 }
                                 normalizedEntryName == "monica_config/page_adjustment_settings.json" -> {
-                                    try {
-                                        val pageAdjustmentSettingsJson = tempFile.readText(Charsets.UTF_8)
-                                        val json = Json { ignoreUnknownKeys = true }
-                                        val pageAdjustmentBackup =
-                                            json.decodeFromString<PageAdjustmentSettingsBackupEntry>(
-                                                pageAdjustmentSettingsJson
-                                            )
-                                        SettingsManager(context).importPageAdjustmentSettings(
-                                            PageAdjustmentSettingsSnapshot(
-                                                passwordListQuickFiltersEnabled =
-                                                    pageAdjustmentBackup.passwordListQuickFiltersEnabled,
-                                                passwordListQuickFilterItems =
-                                                    pageAdjustmentBackup.passwordListQuickFilterItems,
-                                                passwordListCategoryQuickFiltersEnabled =
-                                                    pageAdjustmentBackup.passwordListCategoryQuickFiltersEnabled,
-                                                passwordListQuickFoldersEnabled =
-                                                    pageAdjustmentBackup.passwordListQuickFoldersEnabled,
-                                                passwordListQuickFolderStyle =
-                                                    pageAdjustmentBackup.passwordListQuickFolderStyle,
-                                                passwordListQuickFolderPathBannerEnabled =
-                                                    pageAdjustmentBackup.passwordListQuickFolderPathBannerEnabled,
-                                                passwordListSystemBackToParentFolderEnabled =
-                                                    pageAdjustmentBackup.passwordListSystemBackToParentFolderEnabled,
-                                                addButtonBehaviorMode =
-                                                    pageAdjustmentBackup.addButtonBehaviorMode,
-                                                addButtonMenuOrder =
-                                                    pageAdjustmentBackup.addButtonMenuOrder,
-                                                addButtonMenuEnabledActions =
-                                                    pageAdjustmentBackup.addButtonMenuEnabledActions,
-                                                passwordPageAggregateEnabled =
-                                                    pageAdjustmentBackup.passwordPageAggregateEnabled,
-                                                passwordPageVisibleContentTypes =
-                                                    pageAdjustmentBackup.passwordPageVisibleContentTypes,
-                                                categorySelectionUiMode =
-                                                    pageAdjustmentBackup.categorySelectionUiMode,
-                                                colorSettingsVersion =
-                                                    pageAdjustmentBackup.colorSettingsVersion,
-                                                oledPureBlackEnabled =
-                                                    pageAdjustmentBackup.oledPureBlackEnabled,
-                                                colorScheme =
-                                                    pageAdjustmentBackup.colorScheme,
-                                                customPrimaryColor =
-                                                    pageAdjustmentBackup.customPrimaryColor,
-                                                customSecondaryColor =
-                                                    pageAdjustmentBackup.customSecondaryColor,
-                                                customTertiaryColor =
-                                                    pageAdjustmentBackup.customTertiaryColor,
-                                                customNeutralColor =
-                                                    pageAdjustmentBackup.customNeutralColor,
-                                                customNeutralVariantColor =
-                                                    pageAdjustmentBackup.customNeutralVariantColor,
-                                                bottomNavSettingsVersion =
-                                                    pageAdjustmentBackup.bottomNavSettingsVersion,
-                                                bottomNavOrder =
-                                                    pageAdjustmentBackup.bottomNavOrder,
-                                                bottomNavVisibilityVaultV2 =
-                                                    pageAdjustmentBackup.bottomNavVisibilityVaultV2,
-                                                bottomNavVisibilityPasswords =
-                                                    pageAdjustmentBackup.bottomNavVisibilityPasswords,
-                                                bottomNavVisibilityAuthenticator =
-                                                    pageAdjustmentBackup.bottomNavVisibilityAuthenticator,
-                                                bottomNavVisibilityCardWallet =
-                                                    pageAdjustmentBackup.bottomNavVisibilityCardWallet,
-                                                bottomNavVisibilityGenerator =
-                                                    pageAdjustmentBackup.bottomNavVisibilityGenerator,
-                                                bottomNavVisibilityNotes =
-                                                    pageAdjustmentBackup.bottomNavVisibilityNotes,
-                                                bottomNavVisibilitySend =
-                                                    pageAdjustmentBackup.bottomNavVisibilitySend,
-                                                bottomNavVisibilityPasskey =
-                                                    pageAdjustmentBackup.bottomNavVisibilityPasskey,
-                                                bottomNavVisibilitySteam =
-                                                    pageAdjustmentBackup.bottomNavVisibilitySteam,
-                                                autoHideBottomNavWhenSingleTab =
-                                                    pageAdjustmentBackup.autoHideBottomNavWhenSingleTab,
-                                                passwordListQuickAccessEnabled =
-                                                    pageAdjustmentBackup.passwordListQuickAccessEnabled,
-                                                passwordListTopModulesOrder =
-                                                    pageAdjustmentBackup.passwordListTopModulesOrder,
-                                                passwordCardDisplayMode =
-                                                    pageAdjustmentBackup.passwordCardDisplayMode,
-                                                passwordCardDisplayFields =
-                                                    pageAdjustmentBackup.passwordCardDisplayFields,
-                                                passwordCardShowAuthenticator =
-                                                    pageAdjustmentBackup.passwordCardShowAuthenticator,
-                                                passwordCardHideOtherContentWhenAuthenticator =
-                                                    pageAdjustmentBackup.passwordCardHideOtherContentWhenAuthenticator,
-                                                stackCardMode = pageAdjustmentBackup.stackCardMode,
-                                                walletStackLoopEnabled = pageAdjustmentBackup.walletStackLoopEnabled,
-                                                passwordGroupMode = pageAdjustmentBackup.passwordGroupMode,
-                                                passwordWebsiteStackMatchMode =
-                                                    pageAdjustmentBackup.passwordWebsiteStackMatchMode,
-                                                authenticatorCardDisplayFields =
-                                                    pageAdjustmentBackup.authenticatorCardDisplayFields,
-                                                authenticatorCardHideCodeByDefault =
-                                                    pageAdjustmentBackup.authenticatorCardHideCodeByDefault,
-                                                authenticatorLayoutMode =
-                                                    pageAdjustmentBackup.authenticatorLayoutMode,
-                                                vaultListSort = pageAdjustmentBackup.vaultListSort,
-                                                vaultV2LayoutMode =
-                                                    pageAdjustmentBackup.vaultV2LayoutMode,
-                                                autoFocusSearchOnStartup = pageAdjustmentBackup.autoFocusSearchOnStartup,
-                                                vaultOverviewEnabled = pageAdjustmentBackup.vaultOverviewEnabled,
-                                                vaultOverviewConfig = pageAdjustmentBackup.vaultOverviewConfig,
-                                                validatorProgressBarStyle =
-                                                    pageAdjustmentBackup.validatorProgressBarStyle,
-                                                validatorUnifiedProgressBar =
-                                                    pageAdjustmentBackup.validatorUnifiedProgressBar,
-                                                validatorSmoothProgress =
-                                                    pageAdjustmentBackup.validatorSmoothProgress,
-                                                validatorVibrationEnabled =
-                                                    pageAdjustmentBackup.validatorVibrationEnabled,
-                                                hapticFeedbackEnabled =
-                                                    pageAdjustmentBackup.hapticFeedbackEnabled,
-                                                copyNextCodeWhenExpiring =
-                                                    pageAdjustmentBackup.copyNextCodeWhenExpiring,
-                                                securityAnalysisAutoEnabled =
-                                                    pageAdjustmentBackup.securityAnalysisAutoEnabled,
-                                                passwordDetailSecurityAnalysisEnabled =
-                                                    pageAdjustmentBackup.passwordDetailSecurityAnalysisEnabled,
-                                                steamMiniProfileBackgroundEnabled =
-                                                    pageAdjustmentBackup.steamMiniProfileBackgroundEnabled,
-                                                autofillKeepUnlocked = pageAdjustmentBackup.autofillKeepUnlocked,
-                                                autofillAuthRequired =
-                                                    pageAdjustmentBackup.autofillAuthRequired,
-                                                iconCardsEnabled = pageAdjustmentBackup.iconCardsEnabled,
-                                                appLauncherIcon = pageAdjustmentBackup.appLauncherIcon,
-                                                appLauncherLabel = pageAdjustmentBackup.appLauncherLabel,
-                                                passwordPageIconEnabled =
-                                                    pageAdjustmentBackup.passwordPageIconEnabled,
-                                                authenticatorPageIconEnabled =
-                                                    pageAdjustmentBackup.authenticatorPageIconEnabled,
-                                                passkeyPageIconEnabled =
-                                                    pageAdjustmentBackup.passkeyPageIconEnabled,
-                                                unmatchedIconHandlingStrategy =
-                                                    pageAdjustmentBackup.unmatchedIconHandlingStrategy,
-                                                passwordFieldSettingsVersion =
-                                                    pageAdjustmentBackup.passwordFieldSettingsVersion,
-                                                passwordContentEditorEnabled = pageAdjustmentBackup.passwordContentEditorEnabled,
-                                                separateUsernameAccountEnabled =
-                                                    pageAdjustmentBackup.separateUsernameAccountEnabled,
-                                                presetCustomFieldsJson =
-                                                    pageAdjustmentBackup.presetCustomFieldsJson,
-                                                passwordFieldVisibility =
-                                                    PageAdjustmentPasswordFieldVisibilitySnapshot(
-                                                        securityVerification =
-                                                            pageAdjustmentBackup.passwordFieldVisibility.securityVerification,
-                                                        categoryAndNotes =
-                                                            pageAdjustmentBackup.passwordFieldVisibility.categoryAndNotes,
-                                                        appBinding =
-                                                            pageAdjustmentBackup.passwordFieldVisibility.appBinding,
-                                                        personalInfo =
-                                                            pageAdjustmentBackup.passwordFieldVisibility.personalInfo,
-                                                        addressInfo =
-                                                            pageAdjustmentBackup.passwordFieldVisibility.addressInfo,
-                                                        paymentInfo =
-                                                            pageAdjustmentBackup.passwordFieldVisibility.paymentInfo,
-                                                    ),
-                                            )
-                                        )
-                                        warnings.add(strings.get(R.string.backup_report_restored, strings.get(R.string.legacy_ui_config_page_adjustment)))
-                                    } catch (e: Exception) {
-                                        android.util.Log.w("WebDavHelper", "Failed to restore page adjustment settings: ${e.message}")
-                                        warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.legacy_ui_config_page_adjustment), e.message ?: strings.get(R.string.import_data_unknown_error)))
-                                    }
+                                    restorePageAdjustmentEntry(tempFile, warnings)
                                 }
                                 normalizedEntryName == "monica_config/security_questions.json" -> {
-                                    try {
-                                        val securityQuestionsBackup = Json { ignoreUnknownKeys = true }
-                                            .decodeFromString<SecurityQuestionsBackupEntry>(
-                                                tempFile.readText(Charsets.UTF_8)
-                                            )
-                                        val restored = SecurityManager(context)
-                                            .restoreSecurityQuestionsFromBackup(
-                                                SecurityQuestionsBackupSnapshot(
-                                                    question1Id = securityQuestionsBackup.question1Id,
-                                                    question1Text = securityQuestionsBackup.question1Text,
-                                                    answer1Hash = securityQuestionsBackup.answer1Hash,
-                                                    question2Id = securityQuestionsBackup.question2Id,
-                                                    question2Text = securityQuestionsBackup.question2Text,
-                                                    answer2Hash = securityQuestionsBackup.answer2Hash,
-                                                )
-                                            )
-                                        if (restored) {
-                                            warnings.add(strings.get(R.string.backup_report_restored, strings.get(R.string.security_questions)))
-                                        } else {
-                                            warnings.add(strings.get(R.string.backup_security_questions_invalid))
-                                        }
-                                    } catch (e: Exception) {
-                                        android.util.Log.w(
-                                            "WebDavHelper",
-                                            "Failed to restore security questions: ${e.message}"
-                                        )
-                                        warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.security_questions), e.message ?: strings.get(R.string.import_data_unknown_error)))
-                                    }
+                                    restoreSecurityQuestionsEntry(tempFile, warnings)
                                 }
                                 // ✅ 恢复 Monica 旧版聚合配置（兼容 monica_config.json）
                                 normalizedEntryName == "monica_config/monica_config.json" -> {
-                                    try {
-                                        val monicaConfigJson = tempFile.readText(Charsets.UTF_8)
-                                        val json = Json { ignoreUnknownKeys = true }
-                                        val monicaConfigBackup = json.decodeFromString<MonicaConfigBackupEntry>(monicaConfigJson)
-
-                                        val autofillBlockedFieldRecords = monicaConfigBackup.blockedFieldSignatures
-                                            .mapNotNull { backup ->
-                                                backup.signatureKey
-                                                    .trim()
-                                                    .takeIf { it.isNotBlank() }
-                                                    ?.let { signatureKey ->
-                                                        AutofillPreferences.BlockedFieldSignatureRecord(
-                                                            signatureKey = signatureKey,
-                                                            packageName = backup.packageName?.trim()?.ifBlank { null },
-                                                            webDomain = backup.webDomain?.trim()?.ifBlank { null },
-                                                            hints = backup.hints,
-                                                            blockedAt = backup.blockedAt,
-                                                        )
-                                                    }
-                                            }
-                                        if (autofillBlockedFieldRecords.isNotEmpty()) {
-                                            AutofillPreferences(context).importBlockedFieldSignatureRecords(autofillBlockedFieldRecords)
-                                            warnings.add(strings.get(R.string.backup_report_restored_count, strings.get(R.string.autofill_blocked_fields_title), autofillBlockedFieldRecords.size))
-                                        }
-
-                                        if (monicaConfigBackup.saveBlockedTargets.isNotEmpty()) {
-                                            AutofillPreferences(context).importSaveBlockedTargets(
-                                                monicaConfigBackup.saveBlockedTargets,
-                                            )
-                                            warnings.add(strings.get(R.string.backup_report_restored_count, strings.get(R.string.autofill_save_blocked_targets_title), monicaConfigBackup.saveBlockedTargets.size))
-                                        }
-
-                                        if (monicaConfigBackup.autofillBlacklistEnabled != null ||
-                                            monicaConfigBackup.autofillBlacklistPackages != null
-                                        ) {
-                                            val normalizedPackages = monicaConfigBackup.autofillBlacklistPackages
-                                                ?.mapNotNull { it.trim().takeIf { packageName -> packageName.isNotBlank() } }
-                                                ?.toSet()
-                                            AutofillPreferences(context).apply {
-                                                monicaConfigBackup.autofillBlacklistEnabled?.let {
-                                                    setBlacklistEnabled(it)
-                                                }
-                                                normalizedPackages?.let {
-                                                    setBlacklistPackages(it)
-                                                }
-                                            }
-                                            if (normalizedPackages != null) {
-                                                warnings.add(strings.get(R.string.backup_report_restored_count, strings.get(R.string.autofill_blacklist_title), normalizedPackages.size))
-                                            }
-                                        }
-
-                                        val restoredBitwardenVaultCount = restoreBitwardenVaultBackups(
-                                            monicaConfigBackup.bitwardenVaults,
-                                            resolvedDecryptPassword,
-                                            warnings,
-                                        )
-                                        if (restoredBitwardenVaultCount > 0) {
-                                            warnings.add(strings.get(R.string.backup_bitwarden_restored_locked, restoredBitwardenVaultCount))
-                                        }
-
-                                        if (!isConfigured()) {
-                                            if (monicaConfigBackup.encryptedPassword.isBlank()) {
-                                                warnings.add(strings.get(R.string.backup_webdav_password_missing))
-                                            } else {
-                                                try {
-                                                    val decryptedWebDavPassword = decryptBackupValueWithLegacyFallback(
-                                                        monicaConfigBackup.encryptedPassword,
-                                                        resolvedDecryptPassword,
-                                                    ).orEmpty()
-
-                                                    val decryptedEncPassword = decryptBackupValueWithLegacyFallback(
-                                                        monicaConfigBackup.encryptedEncryptionPassword,
-                                                        resolvedDecryptPassword,
-                                                    ).orEmpty()
-
-                                                    if (monicaConfigBackup.serverUrl.isNotEmpty() &&
-                                                        monicaConfigBackup.username.isNotEmpty() &&
-                                                        decryptedWebDavPassword.isNotEmpty()
-                                                    ) {
-                                                        configure(monicaConfigBackup.serverUrl, monicaConfigBackup.username, decryptedWebDavPassword)
-                                                        if (monicaConfigBackup.enableEncryption && decryptedEncPassword.isNotEmpty()) {
-                                                            configureEncryption(true, decryptedEncPassword)
-                                                        }
-                                                        configureAutoBackup(monicaConfigBackup.autoBackupEnabled)
-                                                        android.util.Log.d("WebDavHelper", "Restored WebDAV config from legacy Monica config")
-                                                        warnings.add(strings.get(R.string.backup_webdav_config_restored, monicaConfigBackup.serverUrl))
-                                                    }
-                                                } catch (e: Exception) {
-                                                    android.util.Log.w("WebDavHelper", "Failed to decrypt legacy Monica config WebDAV credentials: ${e.message}")
-                                                    warnings.add(strings.get(R.string.backup_webdav_config_decrypt_failed, e.message ?: strings.get(R.string.import_data_unknown_error)))
-                                                }
-                                            }
-                                        } else {
-                                            android.util.Log.d("WebDavHelper", "WebDAV already configured, skipping legacy Monica connection restore")
-                                            warnings.add(strings.get(R.string.backup_webdav_config_skipped))
-                                        }
-                                    } catch (cancelled: CancellationException) { throw cancelled }
-                                    catch (_: Exception) {
-                                        android.util.Log.w("WebDavHelper", "Failed to restore legacy Monica configuration")
-                                        warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.backup_component_settings), strings.get(R.string.import_data_unknown_error)))
-                                    }
+                                    restoreLegacyMonicaConfigEntry(tempFile, warnings, resolvedDecryptPassword)
                                 }
                                 // ✅ 恢复 WebDAV 连接配置（新文件与旧版 webdav_config.json 均兼容）
                                 normalizedEntryName == "monica_config/webdav_connection.json" ||
                                     entryName.equals("webdav_config.json", ignoreCase = true) -> {
-                                    try {
-                                        val webDavConfigJson = tempFile.readText(Charsets.UTF_8)
-                                        val json = Json { ignoreUnknownKeys = true }
-                                        val webDavConfigBackup = json.decodeFromString<WebDavConnectionBackupEntry>(webDavConfigJson)
-
-                                        // 只有当本地未配置 WebDAV 时才恢复连接信息
-                                        if (!isConfigured()) {
-                                            if (webDavConfigBackup.encryptedPassword.isBlank()) {
-                                                warnings.add(strings.get(R.string.backup_webdav_password_missing))
-                                            } else {
-                                                try {
-                                                    val decryptedWebDavPassword = decryptBackupValueWithLegacyFallback(
-                                                        webDavConfigBackup.encryptedPassword,
-                                                        resolvedDecryptPassword,
-                                                    ).orEmpty()
-
-                                                    val decryptedEncPassword = decryptBackupValueWithLegacyFallback(
-                                                        webDavConfigBackup.encryptedEncryptionPassword,
-                                                        resolvedDecryptPassword,
-                                                    ).orEmpty()
-                                                
-                                                    if (webDavConfigBackup.serverUrl.isNotEmpty() &&
-                                                        webDavConfigBackup.username.isNotEmpty() &&
-                                                        decryptedWebDavPassword.isNotEmpty()) {
-
-                                                        // 配置 WebDAV 连接
-                                                        configure(webDavConfigBackup.serverUrl, webDavConfigBackup.username, decryptedWebDavPassword)
-
-                                                        // 配置加密设置
-                                                        if (webDavConfigBackup.enableEncryption && decryptedEncPassword.isNotEmpty()) {
-                                                            configureEncryption(true, decryptedEncPassword)
-                                                        }
-
-                                                        // 配置自动备份
-                                                        configureAutoBackup(webDavConfigBackup.autoBackupEnabled)
-                                                        webDavConfigBackup.backupRetentionConfig?.let(::setBackupRetentionConfig)
-
-                                                        android.util.Log.d("WebDavHelper", "Restored WebDAV config")
-                                                        warnings.add(strings.get(R.string.backup_webdav_config_restored, webDavConfigBackup.serverUrl))
-                                                    }
-                                                } catch (e: Exception) {
-                                                    android.util.Log.w("WebDavHelper", "Failed to decrypt WebDAV credentials: ${e.message}")
-                                                    warnings.add(strings.get(R.string.backup_webdav_config_decrypt_failed, e.message ?: strings.get(R.string.import_data_unknown_error)))
-                                                }
-                                            }
-                                        } else {
-                                            android.util.Log.d("WebDavHelper", "WebDAV already configured, skipping restore")
-                                            warnings.add(strings.get(R.string.backup_webdav_config_skipped))
-                                        }
-                                    } catch (e: Exception) {
-                                        android.util.Log.w("WebDavHelper", "Failed to restore WebDAV config: ${e.message}")
-                                        warnings.add(strings.get(R.string.backup_report_restore_failed, "WebDAV", e.message ?: strings.get(R.string.import_data_unknown_error)))
-                                    }
+                                    restoreWebDavConnectionEntry(tempFile, warnings, resolvedDecryptPassword)
                                 }
                                 entryName.equals("keepass_webdav_config.json", ignoreCase = true) -> {
                                     // KeePass WebDAV 已下线，不再恢复该配置文件。
@@ -4917,6 +4433,557 @@ class WebDavHelper(
             decryptedBackup?.delete()
             if (!handedOff) stagedAttachmentFiles.forEach { it.delete() }
             if (handedOff) temporary?.close() else temporary?.discard()
+        }
+    }
+
+    // Keep archive dispatch small; each configuration entry retains its original error boundary.
+    private suspend fun restoreCommonAccountConfigEntry(
+        tempFile: File,
+        warnings: MutableList<String>,
+    ) {
+        try {
+            val commonAccountJson = tempFile.readText(Charsets.UTF_8)
+            val json = Json { ignoreUnknownKeys = true }
+            val commonAccountBackup = json.decodeFromString<CommonAccountBackupEntry>(commonAccountJson)
+
+            val commonAccountPreferences = takagi.ru.monica.data.CommonAccountPreferences(context)
+            val currentInfo = commonAccountPreferences.commonAccountInfo.first()
+
+            // 只有当本地对应字段为空时才恢复，保护用户本地更新的数据
+            if (currentInfo.email.isEmpty() && commonAccountBackup.email.isNotEmpty()) {
+                commonAccountPreferences.setDefaultEmail(commonAccountBackup.email)
+            }
+            if (currentInfo.phone.isEmpty() && commonAccountBackup.phone.isNotEmpty()) {
+                commonAccountPreferences.setDefaultPhone(commonAccountBackup.phone)
+            }
+            if (currentInfo.username.isEmpty() && commonAccountBackup.username.isNotEmpty()) {
+                commonAccountPreferences.setDefaultUsername(commonAccountBackup.username)
+            }
+            // autoFillEnabled 只有在当前未启用且备份启用时才恢复
+            if (!currentInfo.autoFillEnabled && commonAccountBackup.autoFillEnabled) {
+                commonAccountPreferences.setAutoFillEnabled(true)
+            }
+            if (currentInfo.billingAddress.isEmpty() && commonAccountBackup.billingAddress.isNotBlank()) {
+                val restoredBillingAddress = CardWalletDataCodec.parseBillingAddress(
+                    commonAccountBackup.billingAddress
+                )
+                if (!restoredBillingAddress.isEmpty()) {
+                    commonAccountPreferences.setBillingAddress(restoredBillingAddress)
+                }
+            }
+
+            // 恢复模板：采用合并模式，不覆盖本地，仅补充缺失模板
+            val currentTemplates = commonAccountPreferences.templatesFlow.first()
+            val backupTemplates = commonAccountBackup.templates.mapNotNull { backupTemplate ->
+                val content = backupTemplate.content.trim()
+                if (content.isEmpty()) return@mapNotNull null
+                takagi.ru.monica.data.CommonAccountTemplate(
+                    id = backupTemplate.id.trim().ifEmpty {
+                        java.util.UUID.randomUUID().toString()
+                    },
+                    type = backupTemplate.type.trim(),
+                    title = "",
+                    content = content
+                ).normalized()
+            }
+            if (backupTemplates.isNotEmpty()) {
+                val mergedTemplates = (currentTemplates + backupTemplates)
+                    .map { it.normalized() }
+                    .filter { it.content.isNotBlank() }
+                    .distinctBy {
+                        "${it.type.trim().lowercase(Locale.ROOT)}|" +
+                            it.content.trim().lowercase(Locale.ROOT)
+                    }
+                if (mergedTemplates != currentTemplates) {
+                    commonAccountPreferences.setTemplates(mergedTemplates)
+                }
+            }
+
+            android.util.Log.d(
+                "WebDavHelper",
+                "Restored common account info (merge mode, templates=${commonAccountBackup.templates.size})"
+            )
+        } catch (e: Exception) {
+            android.util.Log.w("WebDavHelper", "Failed to restore common account info: ${e.message}")
+            warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.backup_component_common_accounts), e.message ?: strings.get(R.string.import_data_unknown_error)))
+        }
+    }
+
+    private suspend fun restoreAutofillBlockedFieldsEntry(
+        tempFile: File,
+        warnings: MutableList<String>,
+    ) {
+        try {
+            val autofillConfigJson = tempFile.readText(Charsets.UTF_8)
+            val json = Json { ignoreUnknownKeys = true }
+            val autofillConfigBackup = json.decodeFromString<AutofillBlockedFieldsBackupEntry>(autofillConfigJson)
+            val autofillBlockedFieldRecords = autofillConfigBackup.blockedFieldSignatures
+                .mapNotNull { backup ->
+                    backup.signatureKey
+                        .trim()
+                        .takeIf { it.isNotBlank() }
+                        ?.let { signatureKey ->
+                            AutofillPreferences.BlockedFieldSignatureRecord(
+                                signatureKey = signatureKey,
+                                packageName = backup.packageName?.trim()?.ifBlank { null },
+                                webDomain = backup.webDomain?.trim()?.ifBlank { null },
+                                hints = backup.hints,
+                                blockedAt = backup.blockedAt,
+                            )
+                        }
+                }
+            if (autofillBlockedFieldRecords.isNotEmpty()) {
+                AutofillPreferences(context).importBlockedFieldSignatureRecords(autofillBlockedFieldRecords)
+                warnings.add(strings.get(R.string.backup_report_restored_count, strings.get(R.string.autofill_blocked_fields_title), autofillBlockedFieldRecords.size))
+            }
+        } catch (e: Exception) {
+            android.util.Log.w("WebDavHelper", "Failed to restore blocked autofill fields: ${e.message}")
+            warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.autofill_blocked_fields_title), e.message ?: strings.get(R.string.import_data_unknown_error)))
+        }
+    }
+
+    private suspend fun restoreAutofillSaveBlockedTargetsEntry(
+        tempFile: File,
+        warnings: MutableList<String>,
+    ) {
+        try {
+            val saveBlockedTargetsJson = tempFile.readText(Charsets.UTF_8)
+            val json = Json { ignoreUnknownKeys = true }
+            val saveBlockedTargetsBackup =
+                json.decodeFromString<AutofillSaveBlockedTargetsBackupEntry>(
+                    saveBlockedTargetsJson
+                )
+            if (saveBlockedTargetsBackup.blockedTargets.isNotEmpty()) {
+                AutofillPreferences(context).importSaveBlockedTargets(
+                    saveBlockedTargetsBackup.blockedTargets,
+                )
+                warnings.add(strings.get(R.string.backup_report_restored_count, strings.get(R.string.autofill_save_blocked_targets_title), saveBlockedTargetsBackup.blockedTargets.size))
+            }
+        } catch (e: Exception) {
+            android.util.Log.w("WebDavHelper", "Failed to restore save-blocked targets: ${e.message}")
+            warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.autofill_save_blocked_targets_title), e.message ?: strings.get(R.string.import_data_unknown_error)))
+        }
+    }
+
+    private suspend fun restoreAutofillBlacklistEntry(
+        tempFile: File,
+        warnings: MutableList<String>,
+    ) {
+        try {
+            val autofillBlacklistJson = tempFile.readText(Charsets.UTF_8)
+            val json = Json { ignoreUnknownKeys = true }
+            val autofillBlacklistBackup =
+                json.decodeFromString<AutofillBlacklistBackupEntry>(
+                    autofillBlacklistJson
+                )
+            val normalizedPackages = autofillBlacklistBackup.packages
+                .mapNotNull { it.trim().takeIf { packageName -> packageName.isNotBlank() } }
+                .toSet()
+            AutofillPreferences(context).apply {
+                setBlacklistEnabled(autofillBlacklistBackup.enabled)
+                setBlacklistPackages(normalizedPackages)
+            }
+            warnings.add(strings.get(R.string.backup_report_restored_count, strings.get(R.string.autofill_blacklist_title), normalizedPackages.size))
+        } catch (e: Exception) {
+            android.util.Log.w("WebDavHelper", "Failed to restore autofill blacklist: ${e.message}")
+            warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.autofill_blacklist_title), e.message ?: strings.get(R.string.import_data_unknown_error)))
+        }
+    }
+
+    private suspend fun restoreBitwardenConfigEntry(
+        tempFile: File,
+        warnings: MutableList<String>,
+        resolvedDecryptPassword: String?,
+    ) {
+        try {
+            val bitwardenVaultsJson = tempFile.readText(Charsets.UTF_8)
+            val json = Json { ignoreUnknownKeys = true }
+            val bitwardenVaultsBackup = json.decodeFromString<BitwardenVaultsBackupEntry>(bitwardenVaultsJson)
+            val restoredCount = restoreBitwardenVaultBackups(
+                bitwardenVaultsBackup.vaults,
+                resolvedDecryptPassword,
+                warnings,
+            )
+            if (restoredCount > 0) {
+                warnings.add(strings.get(R.string.backup_bitwarden_restored_locked, restoredCount))
+            }
+        } catch (cancelled: CancellationException) { throw cancelled }
+        catch (_: Exception) {
+            android.util.Log.w("WebDavHelper", "Failed to restore Bitwarden configuration")
+            warnings.add(strings.get(R.string.backup_report_restore_failed, "Bitwarden", strings.get(R.string.import_data_unknown_error)))
+        }
+    }
+
+    private suspend fun restorePageAdjustmentEntry(
+        tempFile: File,
+        warnings: MutableList<String>,
+    ) {
+        try {
+            val pageAdjustmentSettingsJson = tempFile.readText(Charsets.UTF_8)
+            val json = Json { ignoreUnknownKeys = true }
+            val pageAdjustmentBackup =
+                json.decodeFromString<PageAdjustmentSettingsBackupEntry>(
+                    pageAdjustmentSettingsJson
+                )
+            SettingsManager(context).importPageAdjustmentSettings(
+                PageAdjustmentSettingsSnapshot(
+                    passwordListQuickFiltersEnabled =
+                        pageAdjustmentBackup.passwordListQuickFiltersEnabled,
+                    passwordListQuickFilterItems =
+                        pageAdjustmentBackup.passwordListQuickFilterItems,
+                    passwordListCategoryQuickFiltersEnabled =
+                        pageAdjustmentBackup.passwordListCategoryQuickFiltersEnabled,
+                    passwordListQuickFoldersEnabled =
+                        pageAdjustmentBackup.passwordListQuickFoldersEnabled,
+                    passwordListQuickFolderStyle =
+                        pageAdjustmentBackup.passwordListQuickFolderStyle,
+                    passwordListQuickFolderPathBannerEnabled =
+                        pageAdjustmentBackup.passwordListQuickFolderPathBannerEnabled,
+                    passwordListSystemBackToParentFolderEnabled =
+                        pageAdjustmentBackup.passwordListSystemBackToParentFolderEnabled,
+                    addButtonBehaviorMode =
+                        pageAdjustmentBackup.addButtonBehaviorMode,
+                    addButtonMenuOrder =
+                        pageAdjustmentBackup.addButtonMenuOrder,
+                    addButtonMenuEnabledActions =
+                        pageAdjustmentBackup.addButtonMenuEnabledActions,
+                    passwordPageAggregateEnabled =
+                        pageAdjustmentBackup.passwordPageAggregateEnabled,
+                    passwordPageVisibleContentTypes =
+                        pageAdjustmentBackup.passwordPageVisibleContentTypes,
+                    categorySelectionUiMode =
+                        pageAdjustmentBackup.categorySelectionUiMode,
+                    colorSettingsVersion =
+                        pageAdjustmentBackup.colorSettingsVersion,
+                    oledPureBlackEnabled =
+                        pageAdjustmentBackup.oledPureBlackEnabled,
+                    colorScheme =
+                        pageAdjustmentBackup.colorScheme,
+                    customPrimaryColor =
+                        pageAdjustmentBackup.customPrimaryColor,
+                    customSecondaryColor =
+                        pageAdjustmentBackup.customSecondaryColor,
+                    customTertiaryColor =
+                        pageAdjustmentBackup.customTertiaryColor,
+                    customNeutralColor =
+                        pageAdjustmentBackup.customNeutralColor,
+                    customNeutralVariantColor =
+                        pageAdjustmentBackup.customNeutralVariantColor,
+                    bottomNavSettingsVersion =
+                        pageAdjustmentBackup.bottomNavSettingsVersion,
+                    bottomNavOrder =
+                        pageAdjustmentBackup.bottomNavOrder,
+                    bottomNavVisibilityVaultV2 =
+                        pageAdjustmentBackup.bottomNavVisibilityVaultV2,
+                    bottomNavVisibilityPasswords =
+                        pageAdjustmentBackup.bottomNavVisibilityPasswords,
+                    bottomNavVisibilityAuthenticator =
+                        pageAdjustmentBackup.bottomNavVisibilityAuthenticator,
+                    bottomNavVisibilityCardWallet =
+                        pageAdjustmentBackup.bottomNavVisibilityCardWallet,
+                    bottomNavVisibilityGenerator =
+                        pageAdjustmentBackup.bottomNavVisibilityGenerator,
+                    bottomNavVisibilityNotes =
+                        pageAdjustmentBackup.bottomNavVisibilityNotes,
+                    bottomNavVisibilitySend =
+                        pageAdjustmentBackup.bottomNavVisibilitySend,
+                    bottomNavVisibilityPasskey =
+                        pageAdjustmentBackup.bottomNavVisibilityPasskey,
+                    bottomNavVisibilitySteam =
+                        pageAdjustmentBackup.bottomNavVisibilitySteam,
+                    autoHideBottomNavWhenSingleTab =
+                        pageAdjustmentBackup.autoHideBottomNavWhenSingleTab,
+                    passwordListQuickAccessEnabled =
+                        pageAdjustmentBackup.passwordListQuickAccessEnabled,
+                    passwordListTopModulesOrder =
+                        pageAdjustmentBackup.passwordListTopModulesOrder,
+                    passwordCardDisplayMode =
+                        pageAdjustmentBackup.passwordCardDisplayMode,
+                    passwordCardDisplayFields =
+                        pageAdjustmentBackup.passwordCardDisplayFields,
+                    passwordCardShowAuthenticator =
+                        pageAdjustmentBackup.passwordCardShowAuthenticator,
+                    passwordCardHideOtherContentWhenAuthenticator =
+                        pageAdjustmentBackup.passwordCardHideOtherContentWhenAuthenticator,
+                    stackCardMode = pageAdjustmentBackup.stackCardMode,
+                    walletStackLoopEnabled = pageAdjustmentBackup.walletStackLoopEnabled,
+                    passwordGroupMode = pageAdjustmentBackup.passwordGroupMode,
+                    passwordWebsiteStackMatchMode =
+                        pageAdjustmentBackup.passwordWebsiteStackMatchMode,
+                    authenticatorCardDisplayFields =
+                        pageAdjustmentBackup.authenticatorCardDisplayFields,
+                    authenticatorCardHideCodeByDefault =
+                        pageAdjustmentBackup.authenticatorCardHideCodeByDefault,
+                    authenticatorLayoutMode =
+                        pageAdjustmentBackup.authenticatorLayoutMode,
+                    vaultListSort = pageAdjustmentBackup.vaultListSort,
+                    vaultV2LayoutMode =
+                        pageAdjustmentBackup.vaultV2LayoutMode,
+                    autoFocusSearchOnStartup = pageAdjustmentBackup.autoFocusSearchOnStartup,
+                    vaultOverviewEnabled = pageAdjustmentBackup.vaultOverviewEnabled,
+                    vaultOverviewConfig = pageAdjustmentBackup.vaultOverviewConfig,
+                    validatorProgressBarStyle =
+                        pageAdjustmentBackup.validatorProgressBarStyle,
+                    validatorUnifiedProgressBar =
+                        pageAdjustmentBackup.validatorUnifiedProgressBar,
+                    validatorSmoothProgress =
+                        pageAdjustmentBackup.validatorSmoothProgress,
+                    validatorVibrationEnabled =
+                        pageAdjustmentBackup.validatorVibrationEnabled,
+                    hapticFeedbackEnabled =
+                        pageAdjustmentBackup.hapticFeedbackEnabled,
+                    copyNextCodeWhenExpiring =
+                        pageAdjustmentBackup.copyNextCodeWhenExpiring,
+                    securityAnalysisAutoEnabled =
+                        pageAdjustmentBackup.securityAnalysisAutoEnabled,
+                    passwordDetailSecurityAnalysisEnabled =
+                        pageAdjustmentBackup.passwordDetailSecurityAnalysisEnabled,
+                    steamMiniProfileBackgroundEnabled =
+                        pageAdjustmentBackup.steamMiniProfileBackgroundEnabled,
+                    autofillKeepUnlocked = pageAdjustmentBackup.autofillKeepUnlocked,
+                    autofillAuthRequired =
+                        pageAdjustmentBackup.autofillAuthRequired,
+                    iconCardsEnabled = pageAdjustmentBackup.iconCardsEnabled,
+                    appLauncherIcon = pageAdjustmentBackup.appLauncherIcon,
+                    appLauncherLabel = pageAdjustmentBackup.appLauncherLabel,
+                    passwordPageIconEnabled =
+                        pageAdjustmentBackup.passwordPageIconEnabled,
+                    authenticatorPageIconEnabled =
+                        pageAdjustmentBackup.authenticatorPageIconEnabled,
+                    passkeyPageIconEnabled =
+                        pageAdjustmentBackup.passkeyPageIconEnabled,
+                    unmatchedIconHandlingStrategy =
+                        pageAdjustmentBackup.unmatchedIconHandlingStrategy,
+                    passwordFieldSettingsVersion =
+                        pageAdjustmentBackup.passwordFieldSettingsVersion,
+                    passwordContentEditorEnabled = pageAdjustmentBackup.passwordContentEditorEnabled,
+                    separateUsernameAccountEnabled =
+                        pageAdjustmentBackup.separateUsernameAccountEnabled,
+                    presetCustomFieldsJson =
+                        pageAdjustmentBackup.presetCustomFieldsJson,
+                    passwordFieldVisibility =
+                        PageAdjustmentPasswordFieldVisibilitySnapshot(
+                            securityVerification =
+                                pageAdjustmentBackup.passwordFieldVisibility.securityVerification,
+                            categoryAndNotes =
+                                pageAdjustmentBackup.passwordFieldVisibility.categoryAndNotes,
+                            appBinding =
+                                pageAdjustmentBackup.passwordFieldVisibility.appBinding,
+                            personalInfo =
+                                pageAdjustmentBackup.passwordFieldVisibility.personalInfo,
+                            addressInfo =
+                                pageAdjustmentBackup.passwordFieldVisibility.addressInfo,
+                            paymentInfo =
+                                pageAdjustmentBackup.passwordFieldVisibility.paymentInfo,
+                        ),
+                )
+            )
+            warnings.add(strings.get(R.string.backup_report_restored, strings.get(R.string.legacy_ui_config_page_adjustment)))
+        } catch (e: Exception) {
+            android.util.Log.w("WebDavHelper", "Failed to restore page adjustment settings: ${e.message}")
+            warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.legacy_ui_config_page_adjustment), e.message ?: strings.get(R.string.import_data_unknown_error)))
+        }
+    }
+
+    private suspend fun restoreSecurityQuestionsEntry(
+        tempFile: File,
+        warnings: MutableList<String>,
+    ) {
+        try {
+            val securityQuestionsBackup = Json { ignoreUnknownKeys = true }
+                .decodeFromString<SecurityQuestionsBackupEntry>(
+                    tempFile.readText(Charsets.UTF_8)
+                )
+            val restored = SecurityManager(context)
+                .restoreSecurityQuestionsFromBackup(
+                    SecurityQuestionsBackupSnapshot(
+                        question1Id = securityQuestionsBackup.question1Id,
+                        question1Text = securityQuestionsBackup.question1Text,
+                        answer1Hash = securityQuestionsBackup.answer1Hash,
+                        question2Id = securityQuestionsBackup.question2Id,
+                        question2Text = securityQuestionsBackup.question2Text,
+                        answer2Hash = securityQuestionsBackup.answer2Hash,
+                    )
+                )
+            if (restored) {
+                warnings.add(strings.get(R.string.backup_report_restored, strings.get(R.string.security_questions)))
+            } else {
+                warnings.add(strings.get(R.string.backup_security_questions_invalid))
+            }
+        } catch (e: Exception) {
+            android.util.Log.w(
+                "WebDavHelper",
+                "Failed to restore security questions: ${e.message}"
+            )
+            warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.security_questions), e.message ?: strings.get(R.string.import_data_unknown_error)))
+        }
+    }
+
+    private suspend fun restoreLegacyMonicaConfigEntry(
+        tempFile: File,
+        warnings: MutableList<String>,
+        resolvedDecryptPassword: String?,
+    ) {
+        try {
+            val monicaConfigJson = tempFile.readText(Charsets.UTF_8)
+            val json = Json { ignoreUnknownKeys = true }
+            val monicaConfigBackup = json.decodeFromString<MonicaConfigBackupEntry>(monicaConfigJson)
+
+            val autofillBlockedFieldRecords = monicaConfigBackup.blockedFieldSignatures
+                .mapNotNull { backup ->
+                    backup.signatureKey
+                        .trim()
+                        .takeIf { it.isNotBlank() }
+                        ?.let { signatureKey ->
+                            AutofillPreferences.BlockedFieldSignatureRecord(
+                                signatureKey = signatureKey,
+                                packageName = backup.packageName?.trim()?.ifBlank { null },
+                                webDomain = backup.webDomain?.trim()?.ifBlank { null },
+                                hints = backup.hints,
+                                blockedAt = backup.blockedAt,
+                            )
+                        }
+                }
+            if (autofillBlockedFieldRecords.isNotEmpty()) {
+                AutofillPreferences(context).importBlockedFieldSignatureRecords(autofillBlockedFieldRecords)
+                warnings.add(strings.get(R.string.backup_report_restored_count, strings.get(R.string.autofill_blocked_fields_title), autofillBlockedFieldRecords.size))
+            }
+
+            if (monicaConfigBackup.saveBlockedTargets.isNotEmpty()) {
+                AutofillPreferences(context).importSaveBlockedTargets(
+                    monicaConfigBackup.saveBlockedTargets,
+                )
+                warnings.add(strings.get(R.string.backup_report_restored_count, strings.get(R.string.autofill_save_blocked_targets_title), monicaConfigBackup.saveBlockedTargets.size))
+            }
+
+            if (monicaConfigBackup.autofillBlacklistEnabled != null ||
+                monicaConfigBackup.autofillBlacklistPackages != null
+            ) {
+                val normalizedPackages = monicaConfigBackup.autofillBlacklistPackages
+                    ?.mapNotNull { it.trim().takeIf { packageName -> packageName.isNotBlank() } }
+                    ?.toSet()
+                AutofillPreferences(context).apply {
+                    monicaConfigBackup.autofillBlacklistEnabled?.let {
+                        setBlacklistEnabled(it)
+                    }
+                    normalizedPackages?.let {
+                        setBlacklistPackages(it)
+                    }
+                }
+                if (normalizedPackages != null) {
+                    warnings.add(strings.get(R.string.backup_report_restored_count, strings.get(R.string.autofill_blacklist_title), normalizedPackages.size))
+                }
+            }
+
+            val restoredBitwardenVaultCount = restoreBitwardenVaultBackups(
+                monicaConfigBackup.bitwardenVaults,
+                resolvedDecryptPassword,
+                warnings,
+            )
+            if (restoredBitwardenVaultCount > 0) {
+                warnings.add(strings.get(R.string.backup_bitwarden_restored_locked, restoredBitwardenVaultCount))
+            }
+
+            if (!isConfigured()) {
+                if (monicaConfigBackup.encryptedPassword.isBlank()) {
+                    warnings.add(strings.get(R.string.backup_webdav_password_missing))
+                } else {
+                    try {
+                        val decryptedWebDavPassword = decryptBackupValueWithLegacyFallback(
+                            monicaConfigBackup.encryptedPassword,
+                            resolvedDecryptPassword,
+                        ).orEmpty()
+
+                        val decryptedEncPassword = decryptBackupValueWithLegacyFallback(
+                            monicaConfigBackup.encryptedEncryptionPassword,
+                            resolvedDecryptPassword,
+                        ).orEmpty()
+
+                        if (monicaConfigBackup.serverUrl.isNotEmpty() &&
+                            monicaConfigBackup.username.isNotEmpty() &&
+                            decryptedWebDavPassword.isNotEmpty()
+                        ) {
+                            configure(monicaConfigBackup.serverUrl, monicaConfigBackup.username, decryptedWebDavPassword)
+                            if (monicaConfigBackup.enableEncryption && decryptedEncPassword.isNotEmpty()) {
+                                configureEncryption(true, decryptedEncPassword)
+                            }
+                            configureAutoBackup(monicaConfigBackup.autoBackupEnabled)
+                            android.util.Log.d("WebDavHelper", "Restored WebDAV config from legacy Monica config")
+                            warnings.add(strings.get(R.string.backup_webdav_config_restored, monicaConfigBackup.serverUrl))
+                        }
+                    } catch (e: Exception) {
+                        android.util.Log.w("WebDavHelper", "Failed to decrypt legacy Monica config WebDAV credentials: ${e.message}")
+                        warnings.add(strings.get(R.string.backup_webdav_config_decrypt_failed, e.message ?: strings.get(R.string.import_data_unknown_error)))
+                    }
+                }
+            } else {
+                android.util.Log.d("WebDavHelper", "WebDAV already configured, skipping legacy Monica connection restore")
+                warnings.add(strings.get(R.string.backup_webdav_config_skipped))
+            }
+        } catch (cancelled: CancellationException) { throw cancelled }
+        catch (_: Exception) {
+            android.util.Log.w("WebDavHelper", "Failed to restore legacy Monica configuration")
+            warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.backup_component_settings), strings.get(R.string.import_data_unknown_error)))
+        }
+    }
+
+    private suspend fun restoreWebDavConnectionEntry(
+        tempFile: File,
+        warnings: MutableList<String>,
+        resolvedDecryptPassword: String?,
+    ) {
+        try {
+            val webDavConfigJson = tempFile.readText(Charsets.UTF_8)
+            val json = Json { ignoreUnknownKeys = true }
+            val webDavConfigBackup = json.decodeFromString<WebDavConnectionBackupEntry>(webDavConfigJson)
+
+            // 只有当本地未配置 WebDAV 时才恢复连接信息
+            if (!isConfigured()) {
+                if (webDavConfigBackup.encryptedPassword.isBlank()) {
+                    warnings.add(strings.get(R.string.backup_webdav_password_missing))
+                } else {
+                    try {
+                        val decryptedWebDavPassword = decryptBackupValueWithLegacyFallback(
+                            webDavConfigBackup.encryptedPassword,
+                            resolvedDecryptPassword,
+                        ).orEmpty()
+
+                        val decryptedEncPassword = decryptBackupValueWithLegacyFallback(
+                            webDavConfigBackup.encryptedEncryptionPassword,
+                            resolvedDecryptPassword,
+                        ).orEmpty()
+
+                        if (webDavConfigBackup.serverUrl.isNotEmpty() &&
+                            webDavConfigBackup.username.isNotEmpty() &&
+                            decryptedWebDavPassword.isNotEmpty()) {
+
+                            // 配置 WebDAV 连接
+                            configure(webDavConfigBackup.serverUrl, webDavConfigBackup.username, decryptedWebDavPassword)
+
+                            // 配置加密设置
+                            if (webDavConfigBackup.enableEncryption && decryptedEncPassword.isNotEmpty()) {
+                                configureEncryption(true, decryptedEncPassword)
+                            }
+
+                            // 配置自动备份
+                            configureAutoBackup(webDavConfigBackup.autoBackupEnabled)
+                            webDavConfigBackup.backupRetentionConfig?.let(::setBackupRetentionConfig)
+
+                            android.util.Log.d("WebDavHelper", "Restored WebDAV config")
+                            warnings.add(strings.get(R.string.backup_webdav_config_restored, webDavConfigBackup.serverUrl))
+                        }
+                    } catch (e: Exception) {
+                        android.util.Log.w("WebDavHelper", "Failed to decrypt WebDAV credentials: ${e.message}")
+                        warnings.add(strings.get(R.string.backup_webdav_config_decrypt_failed, e.message ?: strings.get(R.string.import_data_unknown_error)))
+                    }
+                }
+            } else {
+                android.util.Log.d("WebDavHelper", "WebDAV already configured, skipping restore")
+                warnings.add(strings.get(R.string.backup_webdav_config_skipped))
+            }
+        } catch (e: Exception) {
+            android.util.Log.w("WebDavHelper", "Failed to restore WebDAV config: ${e.message}")
+            warnings.add(strings.get(R.string.backup_report_restore_failed, "WebDAV", e.message ?: strings.get(R.string.import_data_unknown_error)))
         }
     }
 

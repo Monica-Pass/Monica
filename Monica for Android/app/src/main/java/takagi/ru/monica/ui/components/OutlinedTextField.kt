@@ -116,8 +116,8 @@ fun OutlinedTextField(
         maxLines = maxLines,
         minLines = minLines,
         interactionSource = interactionSource,
-        shape = if (LocalStandaloneTemplateFields.current) RoundedCornerShape(24.dp)
-            else if (LocalTemplateFieldShape.current) RoundedCornerShape(4.dp) else shape,
+        shape = connectedFieldShape(if (LocalStandaloneTemplateFields.current) RoundedCornerShape(24.dp)
+            else if (LocalTemplateFieldShape.current) RoundedCornerShape(4.dp) else shape),
         colors = androidx.compose.material3.TextFieldDefaults.colors(
             focusedContainerColor = androidx.compose.material3.MaterialTheme.colorScheme.surfaceContainerHigh,
             unfocusedContainerColor = androidx.compose.material3.MaterialTheme.colorScheme.surfaceContainer,
@@ -214,8 +214,8 @@ fun OutlinedTextField(
         maxLines = maxLines,
         minLines = minLines,
         interactionSource = interactionSource,
-        shape = if (LocalStandaloneTemplateFields.current) RoundedCornerShape(24.dp)
-            else if (LocalTemplateFieldShape.current) RoundedCornerShape(4.dp) else shape,
+        shape = connectedFieldShape(if (LocalStandaloneTemplateFields.current) RoundedCornerShape(24.dp)
+            else if (LocalTemplateFieldShape.current) RoundedCornerShape(4.dp) else shape),
         colors = androidx.compose.material3.TextFieldDefaults.colors(
             focusedContainerColor = androidx.compose.material3.MaterialTheme.colorScheme.surfaceContainerHigh,
             unfocusedContainerColor = androidx.compose.material3.MaterialTheme.colorScheme.surfaceContainer,

@@ -19,14 +19,14 @@ object MainTaskSessionGuard {
     /** Discover a task left in Recents before an autofill-only process restart. */
     fun initialize(context: Context) {
         val existing = runCatching {
-            context.getSystemService(ActivityManager::class.java).appTasks.filter { task ->
-                val info = task.taskInfo
+            context.getSystemService(ActivityManager::class.java).appTasks.mapNotNull { task ->
+                val info = requireNotNull(task.taskInfo)
                 val component = info.baseActivity ?: info.baseIntent.component
-                component != null && (component.className == "takagi.ru.monica.MainActivity" ||
+                if (component != null && (component.className == "takagi.ru.monica.MainActivity" ||
                     context.packageManager.getActivityInfo(component,
                         android.content.pm.PackageManager.MATCH_DISABLED_COMPONENTS).targetActivity ==
-                        "takagi.ru.monica.MainActivity")
-            }.map { taskId(it.taskInfo) }
+                        "takagi.ru.monica.MainActivity")) taskId(info) else null
+            }
         }.getOrDefault(emptyList())
         synchronized(lock) { mainTaskIds.addAll(existing) }
     }
@@ -47,7 +47,7 @@ object MainTaskSessionGuard {
         val tracked = synchronized(lock) { mainTaskIds.toSet() }
         if (tracked.isEmpty()) return false
         val current = runCatching {
-            context.getSystemService(ActivityManager::class.java).appTasks.map { taskId(it.taskInfo) }.toSet()
+            context.getSystemService(ActivityManager::class.java).appTasks.map { taskId(requireNotNull(it.taskInfo)) }.toSet()
         }.getOrDefault(emptySet())
         val removed = tracked - current
         if (removed.isEmpty()) return false

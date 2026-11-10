@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="update_auto_check">自查新版</string>
+    <string name="update_auto_check_summary">解锁后每日至多查一次，随时可停</string>
+    <string name="update_now">即刻更新</string>
+    <string name="update_skip_version">略此版</string>
+    <string name="update_view_details">览详情</string>
+    <string name="update_later">稍后</string>
+    <string name="update_whats_new">更新之事</string>
+    <string name="update_open_fdroid">前往 F-Droid</string>
+    <string name="update_fdroid_source">经 F-Droid 官方库查验并安装新版。</string>
+    <string name="update_notes_unavailable">暂无更新说明，可览详情。</string>
+    <string name="update_notes_truncated">说明较长，请览详情以观全文。</string>
+</resources>

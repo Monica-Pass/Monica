@@ -1443,10 +1443,10 @@ class AutofillFlowInstrumentedTest {
             SessionManager.updateAutoLockTimeout(-1)
             SessionManager.markUnlocked()
             val manager = context.getSystemService(android.app.ActivityManager::class.java)
-            val task = manager.appTasks.single { it.taskInfo.taskId == taskId }
+            val task = manager.appTasks.single { it.taskInfo?.taskId == taskId }
             task.finishAndRemoveTask()
             delay(1000)
-            assertFalse(manager.appTasks.any { it.taskInfo.taskId == taskId })
+            assertFalse(manager.appTasks.any { it.taskInfo?.taskId == taskId })
             assertFalse(AutofillSessionGrants.isGranted(issue153Context()))
             assertFalse(SessionManager.canSkipVerification(context))
             open("password")
@@ -1490,7 +1490,7 @@ class AutofillFlowInstrumentedTest {
                 assertEquals("Picker touch must not extend main session", before, field.getLong(SessionManager))
             }
             context.getSystemService(android.app.ActivityManager::class.java).appTasks
-                .single { it.taskInfo.taskId == mainTaskId }.moveToFront()
+                .single { it.taskInfo?.taskId == mainTaskId }.moveToFront()
             val deadline = SystemClock.elapsedRealtime() + 10000
             while (main.state != androidx.lifecycle.Lifecycle.State.RESUMED && SystemClock.elapsedRealtime() < deadline) delay(50)
             assertEquals(androidx.lifecycle.Lifecycle.State.RESUMED, main.state)

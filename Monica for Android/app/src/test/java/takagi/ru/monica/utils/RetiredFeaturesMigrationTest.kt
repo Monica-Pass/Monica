@@ -1,5 +1,7 @@
 package takagi.ru.monica.utils
 
+import android.app.Application
+import android.os.Build
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import kotlinx.coroutines.*
@@ -8,7 +10,12 @@ import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [26, 34], manifest = Config.NONE, application = Application::class)
 class RetiredFeaturesMigrationTest {
     @get:Rule val temporary = TemporaryFolder()
     private val drag = booleanPreferencesKey("use_draggable_bottom_nav")
@@ -41,6 +48,7 @@ class RetiredFeaturesMigrationTest {
     @Test fun coldOpeningOldPreferencesMigratesOnceAndSurvivesReopening() = runBlocking {
         val file = temporary.root.resolve("old.preferences_pb")
         suspend fun open(migrate: Boolean, action: suspend (androidx.datastore.core.DataStore<Preferences>) -> Unit) {
+            assertTrue("DataStore must run against a real supported Android API", Build.VERSION.SDK_INT >= 26)
             val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
             try {
                 val store = PreferenceDataStoreFactory.create(
@@ -59,6 +67,7 @@ class RetiredFeaturesMigrationTest {
         for (retired in listOf("NYA", "SNOW_LEOPARD")) {
             val file = temporary.root.resolve("$retired.preferences_pb")
             suspend fun open(migrate: Boolean, action: suspend (androidx.datastore.core.DataStore<Preferences>) -> Unit) {
+                assertTrue("DataStore must run against a real supported Android API", Build.VERSION.SDK_INT >= 26)
                 val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
                 try {
                     action(PreferenceDataStoreFactory.create(

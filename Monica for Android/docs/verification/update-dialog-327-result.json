@@ -1,0 +1,1499 @@
+{
+  "version": "1.0.327",
+  "released": false,
+  "version_codes": {
+    "main": 12,
+    "fd": 34
+  },
+  "environment": {
+    "emulator": "MuMu",
+    "api": 35,
+    "abi": "x86_64",
+    "build_type": "Debug",
+    "synthetic_data_only": true,
+    "isolated_packages": true
+  },
+  "builds": [
+    {
+      "label": "main01",
+      "edition": "main",
+      "exit": 1,
+      "driver_seconds": 217.229,
+      "targets": [
+        ":app:assembleDebug",
+        ":app:testDebugUnitTest"
+      ],
+      "original_log_sha256": "d495ae96cdfb0c1c0dc28151baef26dea0fc4b7eed4dc96745a40ec35d288e72"
+    },
+    {
+      "label": "main02",
+      "edition": "main",
+      "exit": 1,
+      "driver_seconds": 170.498,
+      "targets": [
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:testDebugUnitTest"
+      ],
+      "original_log_sha256": "03e292b6c070653a4d738358b2b9f13a19a5908516979fdd0a5dca977a1666c0"
+    },
+    {
+      "label": "main03",
+      "edition": "main",
+      "exit": 0,
+      "driver_seconds": 106.189,
+      "targets": [
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:testDebugUnitTest"
+      ],
+      "original_log_sha256": "c0b4ce1e2bfa18f8b06e8b3e3d596fa62980d2df251386f23500f571bcd724fb"
+    },
+    {
+      "label": "main04-tests",
+      "edition": "main",
+      "exit": 0,
+      "driver_seconds": 38.185,
+      "targets": [
+        ":app:assembleDebugAndroidTest"
+      ],
+      "original_log_sha256": "72c8e04f205f2cea47b82abecbef5c2e5281c6387076033161c769815f46df9b"
+    },
+    {
+      "label": "main05-tests",
+      "edition": "main",
+      "exit": 0,
+      "driver_seconds": 38.068,
+      "targets": [
+        ":app:assembleDebugAndroidTest"
+      ],
+      "original_log_sha256": "72c8e04f205f2cea47b82abecbef5c2e5281c6387076033161c769815f46df9b"
+    },
+    {
+      "label": "fd01",
+      "edition": "fd",
+      "exit": 0,
+      "driver_seconds": 262.462,
+      "targets": [
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:testDebugUnitTest"
+      ],
+      "original_log_sha256": "daecca48f87d6a1fe27cd3c6250fe751d05fedd25b07d4d19088ae36c51117e2"
+    },
+    {
+      "label": "fd02-tests",
+      "edition": "fd",
+      "exit": 0,
+      "driver_seconds": 39.925,
+      "targets": [
+        ":app:assembleDebugAndroidTest"
+      ],
+      "original_log_sha256": "5aff221f6bdc9ad40b9271588e3b4958fb0c6e2d380a76affdc490784c40e1e4"
+    }
+  ],
+  "jvm": {
+    "main02": {
+      "suites": [
+        {
+          "suite": "takagi.ru.monica.update.AppUpdateControllerTest",
+          "tests": 9,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.29,
+          "methods": [
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#lockRejectsNonCooperativeLateCheckAndManualFailureIsVisible",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#anOlderFailedDisableWriteCannotUndoANewerSuccessfulEnable",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#foregroundChangesCannotDuplicateInFlightOrDailyRequests",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#backgroundDuringDownloadNeverLaunchesInstallerAndDeletesReturnedFile",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#disablingAutomaticChecksRevokesLateAutomaticResult",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#skipPersistsExactIdentityAndDismissesImmediately",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#failedSkipWriteShowsTheOriginalReleaseAndCanBeRetried",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#disabledAutomaticCheckAndSkippedVersionStillAllowManualCheck",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#leavingMainPageRevokesLateAutomaticResponseWhileManualCheckCanContinue",
+              "outcome": "passed"
+            }
+          ],
+          "original_xml_sha256": "3d07e5134c0c6ab5479d7a392b87c79e44c971f4c9a6b2c8f263b73845dee956"
+        },
+        {
+          "suite": "takagi.ru.monica.update.AppUpdatePolicyTest",
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.002,
+          "methods": [
+            {
+              "method": "takagi.ru.monica.update.AppUpdatePolicyTest#disabledAutomaticChecksNeverFetchButManualChecksBypassAllSuppression",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdatePolicyTest#channelIdentityUsesTheApplicationIdSuffixAndNotArbitrarySubstring",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdatePolicyTest#clockRollbackAllowsOneFreshAttemptWithoutPermanentlySuppressingChecks",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdatePolicyTest#automaticChecksDefaultOnAndRespectTheDailyAttemptBoundary",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdatePolicyTest#skippingMatchesTheExactReleaseAndChannelOnly",
+              "outcome": "passed"
+            }
+          ],
+          "original_xml_sha256": "8feb7d945f523bcacc585ed5a2dbe77530611bb7c71fa84c99ce6c5655e6cff1"
+        },
+        {
+          "suite": "takagi.ru.monica.update.ReleaseNotesMarkdownTest",
+          "tests": 8,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.171,
+          "methods": [
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#unsafeLinksRemainReadableButNeverBecomeClickTargets",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#imageDestinationsAreDiscardedAndHtmlIsOnlyText",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#cancellationIsPropagatedRatherThanPublishingAPartialDocument",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#listsPreserveStartingNumberNestingAndReadOnlyTaskMarkers",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#commonMarkKeepsHeadingsNestedEmphasisCodeAndReferenceLinks",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#excessiveInlineNodesReportTruncationWithoutLosingInitialText",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#tablesStrikethroughQuotesAndFencedCodeKeepTheirContents",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#excessiveTextBlocksDepthAndColumnsReportTruncation",
+              "outcome": "passed"
+            }
+          ],
+          "original_xml_sha256": "f47b820c35012f4b82959f8ab20658f74ea99cfe49953fab74eecee8a251196e"
+        },
+        {
+          "suite": "takagi.ru.monica.update.UpdatePreferencesTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 4.419,
+          "methods": [
+            {
+              "method": "takagi.ru.monica.update.UpdatePreferencesTest#preferencesPersistAcrossInstancesAndDoNotChangeOtherSettings",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.UpdatePreferencesTest#concurrentIndependentWritesPreserveEveryPreference",
+              "outcome": "passed"
+            }
+          ],
+          "original_xml_sha256": "964d2a068157935099e720012e6dd249f862a826c4786e351476c3adc3577083"
+        },
+        {
+          "suite": "takagi.ru.monica.utils.UpdateCheckerTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.159,
+          "methods": [
+            {
+              "method": "takagi.ru.monica.utils.UpdateCheckerTest#updateDownloadProgressCalculatesFractionOnlyWhenTotalIsKnown",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateCheckerTest#compareVersionTagsRejectsUnknownOrPartialVersions",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateCheckerTest#compareVersionTags_ignoresReleaseLetterSuffix",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateCheckerTest#compareVersionTags_detectsOlderRelease",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateCheckerTest#compareVersionTags_detectsNewerRelease",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateCheckerTest#compareVersionTags_treatsMatchingPrefixAsSameVersion",
+              "outcome": "passed"
+            }
+          ],
+          "original_xml_sha256": "1ebb7cc3eef2ef2570c23355e3d62809ab5735de0d330c5cf87f4c9067dd59ec"
+        },
+        {
+          "suite": "takagi.ru.monica.utils.UpdateReleaseClientTest",
+          "tests": 1,
+          "failures": 1,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.004,
+          "methods": [
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#initializationError",
+              "outcome": "failed"
+            }
+          ],
+          "original_xml_sha256": "433e6139df121a39f307be6313d01b5d27f11f51d270f63a325835e077e91887"
+        }
+      ],
+      "tests": 31,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0
+    },
+    "main03": {
+      "suites": [
+        {
+          "suite": "takagi.ru.monica.update.AppUpdateControllerTest",
+          "tests": 9,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.098,
+          "methods": [
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#lockRejectsNonCooperativeLateCheckAndManualFailureIsVisible",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#anOlderFailedDisableWriteCannotUndoANewerSuccessfulEnable",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#foregroundChangesCannotDuplicateInFlightOrDailyRequests",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#backgroundDuringDownloadNeverLaunchesInstallerAndDeletesReturnedFile",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#disablingAutomaticChecksRevokesLateAutomaticResult",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#skipPersistsExactIdentityAndDismissesImmediately",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#failedSkipWriteShowsTheOriginalReleaseAndCanBeRetried",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#disabledAutomaticCheckAndSkippedVersionStillAllowManualCheck",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#leavingMainPageRevokesLateAutomaticResponseWhileManualCheckCanContinue",
+              "outcome": "passed"
+            }
+          ],
+          "original_xml_sha256": "8ed6c84b6403f8c04080a43e371554224365c52d04a88874a5811bbceaa2c359"
+        },
+        {
+          "suite": "takagi.ru.monica.update.AppUpdatePolicyTest",
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.001,
+          "methods": [
+            {
+              "method": "takagi.ru.monica.update.AppUpdatePolicyTest#disabledAutomaticChecksNeverFetchButManualChecksBypassAllSuppression",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdatePolicyTest#channelIdentityUsesTheApplicationIdSuffixAndNotArbitrarySubstring",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdatePolicyTest#clockRollbackAllowsOneFreshAttemptWithoutPermanentlySuppressingChecks",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdatePolicyTest#automaticChecksDefaultOnAndRespectTheDailyAttemptBoundary",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdatePolicyTest#skippingMatchesTheExactReleaseAndChannelOnly",
+              "outcome": "passed"
+            }
+          ],
+          "original_xml_sha256": "9be27099967d81a87f09e5645de4c71e4f200712902119e88b5ab4c8d61d8035"
+        },
+        {
+          "suite": "takagi.ru.monica.update.ReleaseNotesMarkdownTest",
+          "tests": 8,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.151,
+          "methods": [
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#unsafeLinksRemainReadableButNeverBecomeClickTargets",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#imageDestinationsAreDiscardedAndHtmlIsOnlyText",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#cancellationIsPropagatedRatherThanPublishingAPartialDocument",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#listsPreserveStartingNumberNestingAndReadOnlyTaskMarkers",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#commonMarkKeepsHeadingsNestedEmphasisCodeAndReferenceLinks",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#excessiveInlineNodesReportTruncationWithoutLosingInitialText",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#tablesStrikethroughQuotesAndFencedCodeKeepTheirContents",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#excessiveTextBlocksDepthAndColumnsReportTruncation",
+              "outcome": "passed"
+            }
+          ],
+          "original_xml_sha256": "de496f20c702c90c1feccc2fac45f6d60340512a75e656d8a2441516d5d1bcd6"
+        },
+        {
+          "suite": "takagi.ru.monica.update.UpdatePreferencesTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 3.121,
+          "methods": [
+            {
+              "method": "takagi.ru.monica.update.UpdatePreferencesTest#preferencesPersistAcrossInstancesAndDoNotChangeOtherSettings",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.UpdatePreferencesTest#concurrentIndependentWritesPreserveEveryPreference",
+              "outcome": "passed"
+            }
+          ],
+          "original_xml_sha256": "e2337867c08652f2a60d8cc4a382814a7ec2174b6d9e674af5f93cc474356f87"
+        },
+        {
+          "suite": "takagi.ru.monica.utils.UpdateCheckerTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.003,
+          "methods": [
+            {
+              "method": "takagi.ru.monica.utils.UpdateCheckerTest#updateDownloadProgressCalculatesFractionOnlyWhenTotalIsKnown",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateCheckerTest#compareVersionTagsRejectsUnknownOrPartialVersions",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateCheckerTest#compareVersionTags_ignoresReleaseLetterSuffix",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateCheckerTest#compareVersionTags_detectsOlderRelease",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateCheckerTest#compareVersionTags_detectsNewerRelease",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateCheckerTest#compareVersionTags_treatsMatchingPrefixAsSameVersion",
+              "outcome": "passed"
+            }
+          ],
+          "original_xml_sha256": "9526234e0b175464ffb10f8ce8ec799ab587eaf5f627031329e32062f34fb413"
+        },
+        {
+          "suite": "takagi.ru.monica.utils.UpdateReleaseClientTest",
+          "tests": 15,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 3.006,
+          "methods": [
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#fdroidSourceReleaseNotesFailureDoesNotEraseOfficialAvailability",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#cancellationDuringDownloadDeletesOnlyItsOwnPartialFile",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#fdroidUsesSuggestedVersionCodeAndMatchingNotesWithoutOfferingOrdinaryApks",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#x86DoesNotMatchX86_64AndExplicitUniversalIsAFallback",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#metadataLimitRejectsKnownLengthAndChunkedOverflow",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#timeoutIsReportedWithoutHanging",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#fdroidRejectsWrongPackageOrMissingSuggestedVersionAndDoesNotCheckNewerSourceTags",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#ordinaryCheckUsesNumericVersionAndPreferredSupportedAbiInsteadOfFirstAsset",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#insecureAssetsAreIgnoredAndInsecureReleaseLinksAreRejected",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#unknownVersionsAndPrereleasesFailRatherThanPromptByLexicalOrder",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#unsupportedAbiAndUnmarkedApkNeverSelectAnArbitraryPackage",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#downloadReportsProgressPreservesOtherFilesAndUsesAnApkSuffix",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#cancellationClosesTheCallDuringSlowResponseBody",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#cancellationClosesTheCallWhileWaitingForHeaders",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#httpFailureAndEmptyResponseRemainFailures",
+              "outcome": "passed"
+            }
+          ],
+          "original_xml_sha256": "4f8280611033eed2b652a062ab2ce3b1358e8ea178fc9dcb5e88c461adc5b421"
+        }
+      ],
+      "tests": 45,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "fd01": {
+      "suites": [
+        {
+          "suite": "takagi.ru.monica.update.AppUpdateControllerTest",
+          "tests": 9,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.32,
+          "methods": [
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#lockRejectsNonCooperativeLateCheckAndManualFailureIsVisible",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#anOlderFailedDisableWriteCannotUndoANewerSuccessfulEnable",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#foregroundChangesCannotDuplicateInFlightOrDailyRequests",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#backgroundDuringDownloadNeverLaunchesInstallerAndDeletesReturnedFile",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#disablingAutomaticChecksRevokesLateAutomaticResult",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#skipPersistsExactIdentityAndDismissesImmediately",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#failedSkipWriteShowsTheOriginalReleaseAndCanBeRetried",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#disabledAutomaticCheckAndSkippedVersionStillAllowManualCheck",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdateControllerTest#leavingMainPageRevokesLateAutomaticResponseWhileManualCheckCanContinue",
+              "outcome": "passed"
+            }
+          ],
+          "original_xml_sha256": "3261e271b0792de9f32f237ae70ff937102a70da754115d20468e930d6a0fa1b"
+        },
+        {
+          "suite": "takagi.ru.monica.update.AppUpdatePolicyTest",
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.002,
+          "methods": [
+            {
+              "method": "takagi.ru.monica.update.AppUpdatePolicyTest#disabledAutomaticChecksNeverFetchButManualChecksBypassAllSuppression",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdatePolicyTest#channelIdentityUsesTheApplicationIdSuffixAndNotArbitrarySubstring",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdatePolicyTest#clockRollbackAllowsOneFreshAttemptWithoutPermanentlySuppressingChecks",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdatePolicyTest#automaticChecksDefaultOnAndRespectTheDailyAttemptBoundary",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.AppUpdatePolicyTest#skippingMatchesTheExactReleaseAndChannelOnly",
+              "outcome": "passed"
+            }
+          ],
+          "original_xml_sha256": "fe212df21cc114741dc15b94045a73bb2bb84c9704e20dc294c4591f902f61cc"
+        },
+        {
+          "suite": "takagi.ru.monica.update.ReleaseNotesMarkdownTest",
+          "tests": 8,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.165,
+          "methods": [
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#unsafeLinksRemainReadableButNeverBecomeClickTargets",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#imageDestinationsAreDiscardedAndHtmlIsOnlyText",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#cancellationIsPropagatedRatherThanPublishingAPartialDocument",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#listsPreserveStartingNumberNestingAndReadOnlyTaskMarkers",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#commonMarkKeepsHeadingsNestedEmphasisCodeAndReferenceLinks",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#excessiveInlineNodesReportTruncationWithoutLosingInitialText",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#tablesStrikethroughQuotesAndFencedCodeKeepTheirContents",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.ReleaseNotesMarkdownTest#excessiveTextBlocksDepthAndColumnsReportTruncation",
+              "outcome": "passed"
+            }
+          ],
+          "original_xml_sha256": "fd9a79b846be1c4a3ed48f720835265e6ecfc77a466a832cb97c80b35df9bd72"
+        },
+        {
+          "suite": "takagi.ru.monica.update.UpdatePreferencesTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 2.969,
+          "methods": [
+            {
+              "method": "takagi.ru.monica.update.UpdatePreferencesTest#preferencesPersistAcrossInstancesAndDoNotChangeOtherSettings",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.update.UpdatePreferencesTest#concurrentIndependentWritesPreserveEveryPreference",
+              "outcome": "passed"
+            }
+          ],
+          "original_xml_sha256": "fd45809d1dd45be11ffa3f51a988c1035f469b1d0be3a65c7253b4cc74582288"
+        },
+        {
+          "suite": "takagi.ru.monica.utils.UpdateCheckerTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.118,
+          "methods": [
+            {
+              "method": "takagi.ru.monica.utils.UpdateCheckerTest#updateDownloadProgressCalculatesFractionOnlyWhenTotalIsKnown",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateCheckerTest#compareVersionTagsRejectsUnknownOrPartialVersions",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateCheckerTest#compareVersionTags_ignoresReleaseLetterSuffix",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateCheckerTest#compareVersionTags_detectsOlderRelease",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateCheckerTest#compareVersionTags_detectsNewerRelease",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateCheckerTest#compareVersionTags_treatsMatchingPrefixAsSameVersion",
+              "outcome": "passed"
+            }
+          ],
+          "original_xml_sha256": "65f9ec0dc4677cee19dd82b76e629a05e7f27d36ea97b7164466c9c5eddcfd5e"
+        },
+        {
+          "suite": "takagi.ru.monica.utils.UpdateReleaseClientTest",
+          "tests": 15,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 2.766,
+          "methods": [
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#fdroidSourceReleaseNotesFailureDoesNotEraseOfficialAvailability",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#cancellationDuringDownloadDeletesOnlyItsOwnPartialFile",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#fdroidUsesSuggestedVersionCodeAndMatchingNotesWithoutOfferingOrdinaryApks",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#x86DoesNotMatchX86_64AndExplicitUniversalIsAFallback",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#metadataLimitRejectsKnownLengthAndChunkedOverflow",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#timeoutIsReportedWithoutHanging",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#fdroidRejectsWrongPackageOrMissingSuggestedVersionAndDoesNotCheckNewerSourceTags",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#ordinaryCheckUsesNumericVersionAndPreferredSupportedAbiInsteadOfFirstAsset",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#insecureAssetsAreIgnoredAndInsecureReleaseLinksAreRejected",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#unknownVersionsAndPrereleasesFailRatherThanPromptByLexicalOrder",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#unsupportedAbiAndUnmarkedApkNeverSelectAnArbitraryPackage",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#downloadReportsProgressPreservesOtherFilesAndUsesAnApkSuffix",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#cancellationClosesTheCallDuringSlowResponseBody",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#cancellationClosesTheCallWhileWaitingForHeaders",
+              "outcome": "passed"
+            },
+            {
+              "method": "takagi.ru.monica.utils.UpdateReleaseClientTest#httpFailureAndEmptyResponseRemainFailures",
+              "outcome": "passed"
+            }
+          ],
+          "original_xml_sha256": "cfd56f6b1d828c96ca5df7549a75812e7411da9d7783a069e9bef4484c286721"
+        }
+      ],
+      "tests": 45,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "device": [
+    {
+      "label": "main-device01",
+      "edition": "main",
+      "batch_passed": false,
+      "shell_exit": 0,
+      "driver_seconds": 8.336,
+      "runner_seconds": 5.205,
+      "passed": 5,
+      "total": 6,
+      "methods": [
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#smallLargeTextRtlDarkDialogKeepsTextAndActionsReachable",
+          "status_code": -2,
+          "passed": false
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#fdroidOffersItsStoreInsteadOfApkInstallText",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#longNotesScrollWhileDownloadProgressAndActionsStayFixed",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#hostBackgroundCancelsCheckAndRejectsItsLateResponse",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#fourActionsAndParsedMarkdownLinkReachTheirCallbacks",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#hostLockHidesVisibleDialogAndRevokesPendingResponse",
+          "status_code": 0,
+          "passed": true
+        }
+      ],
+      "installed": [
+        {
+          "artifact": "main02-artifacts/debug/Monica-Android-x86_64-1.0.327-26111012-93.APK",
+          "sha256": "78445b6ba10185104e8c42e2ee0b536313703ee0fa7a42c06774807872d8bfc3",
+          "badging": "package: name='takagi.ru.monica.updates327' versionCode='12' versionName='1.0.327-26111012-93' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+        },
+        {
+          "artifact": "main02-artifacts/androidTest/debug/app-debug-androidTest.apk",
+          "sha256": "7881aed16769e89cfb34bc4debfb0448d8c7e1f40754925b5529f9007c4d3749",
+          "badging": "package: name='takagi.ru.monica.updates327.test' versionCode='' versionName='' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+        }
+      ],
+      "original_log_sha256": "548389427ad6153ce907be6c92e13feb1042a2f79a00d8ca52cdf0acf9786099"
+    },
+    {
+      "label": "main-device02",
+      "edition": "main",
+      "batch_passed": false,
+      "shell_exit": 0,
+      "driver_seconds": 8.286,
+      "runner_seconds": 5.738,
+      "passed": 6,
+      "total": 8,
+      "methods": [
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#smallLargeTextRtlDarkDialogKeepsTextAndActionsReachable",
+          "status_code": -2,
+          "passed": false
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#fdroidOffersItsStoreInsteadOfApkInstallText",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#longNotesScrollWhileDownloadProgressAndActionsStayFixed",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#dialogUsesActualSystemBlurOrItsCurrentSystemFallbackOverSyntheticGrid",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#hostBackgroundCancelsCheckAndRejectsItsLateResponse",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#shortHeightLargeTextDownloadCanScrollToItsProgressAndCancel",
+          "status_code": -2,
+          "passed": false
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#fourActionsAndParsedMarkdownLinkReachTheirCallbacks",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#hostLockHidesVisibleDialogAndRevokesPendingResponse",
+          "status_code": 0,
+          "passed": true
+        }
+      ],
+      "installed": [
+        {
+          "artifact": "main03-artifacts/debug/Monica-Android-x86_64-1.0.327-26111012-93.APK",
+          "sha256": "678067e7eae60c7dfb9b1101f70f489cefdd1a7703ec2aa68f7899e09f37bf9d",
+          "badging": "package: name='takagi.ru.monica.updates327' versionCode='12' versionName='1.0.327-26111012-93' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+        },
+        {
+          "artifact": "main03-artifacts/androidTest/debug/app-debug-androidTest.apk",
+          "sha256": "2d9465fe1a8fdc1af8c0dd0c9306545a6016209819ee2c8cf44f9da2570de938",
+          "badging": "package: name='takagi.ru.monica.updates327.test' versionCode='' versionName='' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+        }
+      ],
+      "original_log_sha256": "aa6af0e094f6315f1355ef461d7f2488361c6739b746bf6f90a978eb86861ad0"
+    },
+    {
+      "label": "main-layout-diagnostic01",
+      "edition": "main",
+      "batch_passed": false,
+      "shell_exit": 0,
+      "driver_seconds": 5.074,
+      "runner_seconds": 2.192,
+      "passed": 0,
+      "total": 2,
+      "methods": [
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#smallLargeTextRtlDarkDialogKeepsTextAndActionsReachable",
+          "status_code": -2,
+          "passed": false
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#shortHeightLargeTextDownloadCanScrollToItsProgressAndCancel",
+          "status_code": -2,
+          "passed": false
+        }
+      ],
+      "installed": [
+        {
+          "artifact": "main03-artifacts/debug/Monica-Android-x86_64-1.0.327-26111012-93.APK",
+          "sha256": "678067e7eae60c7dfb9b1101f70f489cefdd1a7703ec2aa68f7899e09f37bf9d",
+          "badging": "package: name='takagi.ru.monica.updates327' versionCode='12' versionName='1.0.327-26111012-93' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+        },
+        {
+          "artifact": "main04-tests-artifacts/androidTest/debug/app-debug-androidTest.apk",
+          "sha256": "3e1a9c0220b90fa8488dbe794c4606a68035fbe9e2e3e67456202a38e41ca03b",
+          "badging": "package: name='takagi.ru.monica.updates327.test' versionCode='' versionName='' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+        }
+      ],
+      "original_log_sha256": "52591ddd79abb0c1f64a47bca2d687afaaadbb035dba3fe214c7f57ffb214baa"
+    },
+    {
+      "label": "main-blur-fallback02",
+      "edition": "main",
+      "batch_passed": true,
+      "shell_exit": 0,
+      "driver_seconds": 4.037,
+      "runner_seconds": 1.162,
+      "passed": 1,
+      "total": 1,
+      "methods": [
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#dialogUsesActualSystemBlurOrItsCurrentSystemFallbackOverSyntheticGrid",
+          "status_code": 0,
+          "passed": true
+        }
+      ],
+      "installed": [
+        {
+          "artifact": "main03-artifacts/debug/Monica-Android-x86_64-1.0.327-26111012-93.APK",
+          "sha256": "678067e7eae60c7dfb9b1101f70f489cefdd1a7703ec2aa68f7899e09f37bf9d",
+          "badging": "package: name='takagi.ru.monica.updates327' versionCode='12' versionName='1.0.327-26111012-93' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+        },
+        {
+          "artifact": "main04-tests-artifacts/androidTest/debug/app-debug-androidTest.apk",
+          "sha256": "3e1a9c0220b90fa8488dbe794c4606a68035fbe9e2e3e67456202a38e41ca03b",
+          "badging": "package: name='takagi.ru.monica.updates327.test' versionCode='' versionName='' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+        }
+      ],
+      "original_log_sha256": "1d06ee0a45ca5f629ef56ab8e49f87f237e68fc9bcbebd1003cc5356a3c45600"
+    },
+    {
+      "label": "main-final01",
+      "edition": "main",
+      "batch_passed": true,
+      "shell_exit": 0,
+      "driver_seconds": 11.662,
+      "runner_seconds": 8.808,
+      "passed": 8,
+      "total": 8,
+      "methods": [
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#smallLargeTextRtlDarkDialogKeepsTextAndActionsReachable",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#fdroidOffersItsStoreInsteadOfApkInstallText",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#longNotesScrollWhileDownloadProgressAndActionsStayFixed",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#dialogUsesActualSystemBlurOrItsCurrentSystemFallbackOverSyntheticGrid",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#hostBackgroundCancelsCheckAndRejectsItsLateResponse",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#shortHeightLargeTextDownloadCanScrollToItsProgressAndCancel",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#fourActionsAndParsedMarkdownLinkReachTheirCallbacks",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#hostLockHidesVisibleDialogAndRevokesPendingResponse",
+          "status_code": 0,
+          "passed": true
+        }
+      ],
+      "installed": [
+        {
+          "artifact": "main03-artifacts/debug/Monica-Android-x86_64-1.0.327-26111012-93.APK",
+          "sha256": "678067e7eae60c7dfb9b1101f70f489cefdd1a7703ec2aa68f7899e09f37bf9d",
+          "badging": "package: name='takagi.ru.monica.updates327' versionCode='12' versionName='1.0.327-26111012-93' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+        },
+        {
+          "artifact": "main05-tests-artifacts/androidTest/debug/app-debug-androidTest.apk",
+          "sha256": "5c6419a738611b5f5a2ee6d213cc2070da36b34eaf98f74f81ad714e1184fdf9",
+          "badging": "package: name='takagi.ru.monica.updates327.test' versionCode='' versionName='' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+        }
+      ],
+      "original_log_sha256": "95e296bfb9559346891918ba7cc7612fec9a6ae2dba8e02b63ce72019bf1c544"
+    },
+    {
+      "label": "fd-final01",
+      "edition": "fd",
+      "batch_passed": true,
+      "shell_exit": 0,
+      "driver_seconds": 10.59,
+      "runner_seconds": 8.055,
+      "passed": 8,
+      "total": 8,
+      "methods": [
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#smallLargeTextRtlDarkDialogKeepsTextAndActionsReachable",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#fdroidOffersItsStoreInsteadOfApkInstallText",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#longNotesScrollWhileDownloadProgressAndActionsStayFixed",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#dialogUsesActualSystemBlurOrItsCurrentSystemFallbackOverSyntheticGrid",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#hostBackgroundCancelsCheckAndRejectsItsLateResponse",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#shortHeightLargeTextDownloadCanScrollToItsProgressAndCancel",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#fourActionsAndParsedMarkdownLinkReachTheirCallbacks",
+          "status_code": 0,
+          "passed": true
+        },
+        {
+          "method": "takagi.ru.monica.update.AppUpdateDialogTest#hostLockHidesVisibleDialogAndRevokesPendingResponse",
+          "status_code": 0,
+          "passed": true
+        }
+      ],
+      "installed": [
+        {
+          "artifact": "fd01-artifacts/debug/Monica-Android-x86_64-1.0.327.apk",
+          "sha256": "381d521853b70a746b8a966ea2da0147bb4fff6434b25bdce437348fe0129914",
+          "badging": "package: name='takagi.ru.monica.updates327.fdroid' versionCode='34' versionName='1.0.327' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+        },
+        {
+          "artifact": "fd02-tests-artifacts/androidTest/debug/app-debug-androidTest.apk",
+          "sha256": "3b664b2c3d2fbd6b7fc5a65d75fecec22d2ff7d768c7a9254672ef36dba4c707",
+          "badging": "package: name='takagi.ru.monica.updates327.fdroid.test' versionCode='' versionName='' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+        }
+      ],
+      "original_log_sha256": "0d76e6db59416eddac12f39bd8296270bffd74bbdd6872f4382e16f6d391854e"
+    }
+  ],
+  "source_verification": {
+    "main": {
+      "main_build": "main03",
+      "final_instrumentation_build": "main05-tests",
+      "frozen_file_count": 5116,
+      "current_all_match_final_snapshot": true,
+      "main_to_test_source_changes": [
+        "app/src/androidTest/java/takagi/ru/monica/update/AppUpdateDialogTest.kt"
+      ],
+      "main_debug_production_unchanged": true,
+      "final_instrumentation_source_sha256": "864363322955f26a2fe830d76f3eaed95eef78c8eed1b985cae8872aa4b89cac"
+    },
+    "fd": {
+      "main_build": "fd01",
+      "final_instrumentation_build": "fd02-tests",
+      "frozen_file_count": 5109,
+      "current_all_match_final_snapshot": true,
+      "main_to_test_source_changes": [
+        "app/src/androidTest/java/takagi/ru/monica/update/AppUpdateDialogTest.kt"
+      ],
+      "main_debug_production_unchanged": true,
+      "final_instrumentation_source_sha256": "864363322955f26a2fe830d76f3eaed95eef78c8eed1b985cae8872aa4b89cac"
+    }
+  },
+  "visual_review": {
+    "reviewer": "root agent",
+    "contact_sheet_panels_per_edition": 6,
+    "ordinary_blur_disabled_screenshot_reviewed": true,
+    "system_blur_enabled_screenshots_reviewed_each_edition": true,
+    "private_images_published": false
+  },
+  "metadata": {
+    "check_passed": true,
+    "script_tests_passed": 6
+  },
+  "shared_files": [
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/update/AppUpdateDialogTest.kt",
+      "sha256": {
+        "main": "864363322955f26a2fe830d76f3eaed95eef78c8eed1b985cae8872aa4b89cac",
+        "fd": "864363322955f26a2fe830d76f3eaed95eef78c8eed1b985cae8872aa4b89cac"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/MainActivity.kt",
+      "sha256": {
+        "main": "9ab882e47b0ed5930a7bdd6b3cb210c416d3224dbb744c7b8ecc38fb7ceee0e5",
+        "fd": "0adaa341f490b2ede435def85ef29a7514f7870b208497702e8b0cb9ca9ea78e"
+      },
+      "comparison": "edition-difference"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt",
+      "sha256": {
+        "main": "79598abf4d1d8790eacd82cb0c22bb85f142e27869ef35f52503009811a9a0fd",
+        "fd": "79598abf4d1d8790eacd82cb0c22bb85f142e27869ef35f52503009811a9a0fd"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/update/AppUpdateController.kt",
+      "sha256": {
+        "main": "ade090d40e3920400ac3d1583d6be5e7823477f4fc4ae78826a505a2d94ac1fb",
+        "fd": "ade090d40e3920400ac3d1583d6be5e7823477f4fc4ae78826a505a2d94ac1fb"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/update/AppUpdateDialog.kt",
+      "sha256": {
+        "main": "ca7224da2ce7ea0afb7e99e512c4440fa8137f42cde2adeab9c559ad2745d209",
+        "fd": "ca7224da2ce7ea0afb7e99e512c4440fa8137f42cde2adeab9c559ad2745d209"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/update/AppUpdateHost.kt",
+      "sha256": {
+        "main": "e95990410cc139e542eafa21934a16465107c1fe9223e08b250913af54823730",
+        "fd": "e95990410cc139e542eafa21934a16465107c1fe9223e08b250913af54823730"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/update/AppUpdatePolicy.kt",
+      "sha256": {
+        "main": "28d5dcbb53fc494cbed4d80de58b249e07379df6be32466f6a142a1edca38b7b",
+        "fd": "28d5dcbb53fc494cbed4d80de58b249e07379df6be32466f6a142a1edca38b7b"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/update/ReleaseNotesMarkdown.kt",
+      "sha256": {
+        "main": "d02bca6a30a8d0948c7a0763a7a20ad516821aff1be81ba0841a311911ac30d7",
+        "fd": "d02bca6a30a8d0948c7a0763a7a20ad516821aff1be81ba0841a311911ac30d7"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/update/UpdatePreferences.kt",
+      "sha256": {
+        "main": "bf61c129bd99603b029f4fb75e1308dabc73889b3ca12b9dde831b7628922a27",
+        "fd": "bf61c129bd99603b029f4fb75e1308dabc73889b3ca12b9dde831b7628922a27"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/utils/UpdateChecker.kt",
+      "sha256": {
+        "main": "429b119a978c6e5d8638bbe72589914a9f8a7155c68ecf9deb8a572334f4c277",
+        "fd": "429b119a978c6e5d8638bbe72589914a9f8a7155c68ecf9deb8a572334f4c277"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/res/values-b+lzh/strings_app_updates.xml",
+      "sha256": {
+        "main": "7244b413927ef2c5ec907ab21d99c8e798d9fb0b00dd85214969f6019c84d170",
+        "fd": "7244b413927ef2c5ec907ab21d99c8e798d9fb0b00dd85214969f6019c84d170"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/res/values-b+zh+Hant/strings_app_updates.xml",
+      "sha256": {
+        "main": "25dc83f21515167432497ebc77a0107f0fd4943fffc418c917684ee4f6a953bc",
+        "fd": "25dc83f21515167432497ebc77a0107f0fd4943fffc418c917684ee4f6a953bc"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/res/values-de/strings_app_updates.xml",
+      "sha256": {
+        "main": "beff3dee4bace039f4b434c94049c32646dd29f7b7b2089ea066f95695de13be",
+        "fd": "beff3dee4bace039f4b434c94049c32646dd29f7b7b2089ea066f95695de13be"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/res/values-es/strings_app_updates.xml",
+      "sha256": {
+        "main": "2b7889e30ab5fba9637843ff7795429006bd13a52f47723737cfb899752af769",
+        "fd": "2b7889e30ab5fba9637843ff7795429006bd13a52f47723737cfb899752af769"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/res/values-fr/strings_app_updates.xml",
+      "sha256": {
+        "main": "d309a0b471ee4a6a5826b28258f6c10fa5149983dae09a57de40c688f1ceb6b3",
+        "fd": "d309a0b471ee4a6a5826b28258f6c10fa5149983dae09a57de40c688f1ceb6b3"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/res/values-it/strings_app_updates.xml",
+      "sha256": {
+        "main": "9e264a95b8353edbad0d702ea505accba1ac1d257fe93dffd7d63152586bb2db",
+        "fd": "9e264a95b8353edbad0d702ea505accba1ac1d257fe93dffd7d63152586bb2db"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/res/values-ja/strings_app_updates.xml",
+      "sha256": {
+        "main": "e5b62c187b984a52a22080754924a7781cafb4031e7cfe4c754b58d884c9a535",
+        "fd": "e5b62c187b984a52a22080754924a7781cafb4031e7cfe4c754b58d884c9a535"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/res/values-ko/strings_app_updates.xml",
+      "sha256": {
+        "main": "7336b470660009dc06a974ca65f77cbf436e5547f6be21a5862f161993eb370d",
+        "fd": "7336b470660009dc06a974ca65f77cbf436e5547f6be21a5862f161993eb370d"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/res/values-pl/strings_app_updates.xml",
+      "sha256": {
+        "main": "547c61778657e423ffa1a3eb727f788ea78d55d2c58b3cda3fd63566badc1189",
+        "fd": "547c61778657e423ffa1a3eb727f788ea78d55d2c58b3cda3fd63566badc1189"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/res/values-pt-rBR/strings_app_updates.xml",
+      "sha256": {
+        "main": "2e0635ee8fc6defe81f2716dce1145940b06c35afc3b2ff8c4ef6a250fdfd919",
+        "fd": "2e0635ee8fc6defe81f2716dce1145940b06c35afc3b2ff8c4ef6a250fdfd919"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/res/values-pt/strings_app_updates.xml",
+      "sha256": {
+        "main": "b3bf3e58042cf79e385d5836dd8684a3f0deb1de6dcf49e1cd98f13ab25f9aa8",
+        "fd": "b3bf3e58042cf79e385d5836dd8684a3f0deb1de6dcf49e1cd98f13ab25f9aa8"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/res/values-ru/strings_app_updates.xml",
+      "sha256": {
+        "main": "f204ee4c4eddcf36c84a759cc8fbe61e8b7083bbca5e34b2abd1c090028d5a95",
+        "fd": "f204ee4c4eddcf36c84a759cc8fbe61e8b7083bbca5e34b2abd1c090028d5a95"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/res/values-vi/strings_app_updates.xml",
+      "sha256": {
+        "main": "fb3b6ca2cecb831aff4d9ca1c3dc6c080397d470a3a8a7d2b2ea0e07cfd8ee44",
+        "fd": "fb3b6ca2cecb831aff4d9ca1c3dc6c080397d470a3a8a7d2b2ea0e07cfd8ee44"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/res/values-zh-rCN/strings_app_updates.xml",
+      "sha256": {
+        "main": "afa385c66a18bec01249e87fbb8d0f51f20925029ec954716e7d563f2fd23490",
+        "fd": "afa385c66a18bec01249e87fbb8d0f51f20925029ec954716e7d563f2fd23490"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/res/values-zh-rNY/strings_app_updates.xml",
+      "sha256": {
+        "main": "afa385c66a18bec01249e87fbb8d0f51f20925029ec954716e7d563f2fd23490",
+        "fd": "afa385c66a18bec01249e87fbb8d0f51f20925029ec954716e7d563f2fd23490"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/res/values-zh-rXB/strings_app_updates.xml",
+      "sha256": {
+        "main": "afa385c66a18bec01249e87fbb8d0f51f20925029ec954716e7d563f2fd23490",
+        "fd": "afa385c66a18bec01249e87fbb8d0f51f20925029ec954716e7d563f2fd23490"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/res/values-zh/strings_app_updates.xml",
+      "sha256": {
+        "main": "afa385c66a18bec01249e87fbb8d0f51f20925029ec954716e7d563f2fd23490",
+        "fd": "afa385c66a18bec01249e87fbb8d0f51f20925029ec954716e7d563f2fd23490"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/main/res/values/strings_app_updates.xml",
+      "sha256": {
+        "main": "e0008095869d4d25e6687c0288543f1eac4ed17e408203e13c76029ba3417923",
+        "fd": "e0008095869d4d25e6687c0288543f1eac4ed17e408203e13c76029ba3417923"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/update/AppUpdateControllerTest.kt",
+      "sha256": {
+        "main": "af2852f10dfdbad4bc28ebc69d7cc052253bf0421df27edf2f1ceafaa955c25f",
+        "fd": "af2852f10dfdbad4bc28ebc69d7cc052253bf0421df27edf2f1ceafaa955c25f"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/update/AppUpdatePolicyTest.kt",
+      "sha256": {
+        "main": "ba5ac6b0f6077f87ed8bfb8107e472ac468f6588968015952c6b3078445e113b",
+        "fd": "ba5ac6b0f6077f87ed8bfb8107e472ac468f6588968015952c6b3078445e113b"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/update/ReleaseNotesMarkdownTest.kt",
+      "sha256": {
+        "main": "7a4b9d273013d88a79d3aa3773632a710a1a5daf2aa217692cb2ea23c2e98eba",
+        "fd": "7a4b9d273013d88a79d3aa3773632a710a1a5daf2aa217692cb2ea23c2e98eba"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/update/UpdatePreferencesTest.kt",
+      "sha256": {
+        "main": "0101aee0da5b9933ac31f75cf6eca81ddfbd6d514f5cc38c20fc14e87fb23ae2",
+        "fd": "0101aee0da5b9933ac31f75cf6eca81ddfbd6d514f5cc38c20fc14e87fb23ae2"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/utils/UpdateCheckerTest.kt",
+      "sha256": {
+        "main": "ce518518572a869bcd2288cfd32a05fa707e6b57d7efc319db376d5c72dbd084",
+        "fd": "ce518518572a869bcd2288cfd32a05fa707e6b57d7efc319db376d5c72dbd084"
+      },
+      "comparison": "byte-identical"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/utils/UpdateReleaseClientTest.kt",
+      "sha256": {
+        "main": "9e318b84b3da17a2a6d2987568b2b57021badf4842b58cf0c73addace0ef45c5",
+        "fd": "9e318b84b3da17a2a6d2987568b2b57021badf4842b58cf0c73addace0ef45c5"
+      },
+      "comparison": "byte-identical"
+    }
+  ],
+  "root_source_visual_crosscheck": {
+    "production": {
+      "main": {
+        "label": "main03",
+        "checked_paths": 3899,
+        "mismatches": []
+      },
+      "fd": {
+        "label": "fd01",
+        "checked_paths": 3904,
+        "mismatches": []
+      }
+    },
+    "final_test_builds": {
+      "main": {
+        "label": "main05-tests",
+        "checked_paths": 5116,
+        "mismatches": []
+      },
+      "fd": {
+        "label": "fd02-tests",
+        "checked_paths": 5109,
+        "mismatches": []
+      }
+    },
+    "shared_ui_test_sha256": [
+      "864363322955f26a2fe830d76f3eaed95eef78c8eed1b985cae8872aa4b89cac",
+      "864363322955f26a2fe830d76f3eaed95eef78c8eed1b985cae8872aa4b89cac"
+    ],
+    "visuals_reviewed": {
+      "main": {
+        "contact_sheet_sha256": "bf6f1e5dc885e1150511ca72bbaa567ed3dd00a141b9fa83471a99fa4616de1b",
+        "panels": [
+          "normal-markdown-actions",
+          "long-notes-progress",
+          "small-large-rtl-dark",
+          "short-height-large-download",
+          "fdroid-source",
+          "actual-window-blur-grid"
+        ],
+        "reviewer": "root",
+        "findings": "No observed text/action clipping in the reviewed final states. Short-height state is scrolled to progress and cancellation. Full enabled-blur image shows a blurred synthetic grid. English/light and forced RTL/dark representative coverage only."
+      },
+      "fd": {
+        "contact_sheet_sha256": "6ae3a159cf47a16f1b11cfe06499b00dd077d4abd7e9e300aabaf1d313d6638e",
+        "panels": [
+          "normal-markdown-actions",
+          "long-notes-progress",
+          "small-large-rtl-dark",
+          "short-height-large-download",
+          "fdroid-source",
+          "actual-window-blur-grid"
+        ],
+        "reviewer": "root",
+        "findings": "No observed text/action clipping in the reviewed final states. Short-height state is scrolled to progress and cancellation. Full enabled-blur image shows a blurred synthetic grid. English/light and forced RTL/dark representative coverage only."
+      }
+    }
+  },
+  "closure": {
+    "complete": true,
+    "summary": "Restored original user 0; removed only task-owned user 11 after first immediate removal failed and stopped-state retry succeeded. Original users 0/10 and their exact installed package sets remain. System disable_window_blurs returned to its original absent (null) value, enabled blur confirmed before shutdown. Stopped task-started MuMu instance 0 (verified PID39292); original VM configurations and both instances data disks remain. Canvas design service retained. Public AVD untouched."
+  },
+  "status": "complete",
+  "limitations": [
+    "Synthetic API35/x86_64 Debug fixtures only; no real vault/cloud account was used.",
+    "Dialog components and lifecycle host tests do not cover complete production Activity/settings navigation.",
+    "No end-to-end real APK download/signature rejection/installation or actual F-Droid app launch test.",
+    "No physical device, other OEM/API, Release/R8 or full-app regression in this task.",
+    "Representative screenshots do not certify every locale or arbitrary window/font combination."
+  ]
+}

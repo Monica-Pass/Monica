@@ -1,0 +1,11 @@
+test_branch_still_rejects_mismatched_version_heading (test_fdroid_release.ReleaseCheckTest.test_branch_still_rejects_mismatched_version_heading) ... ok
+test_branch_still_rejects_nonincreasing_version_code (test_fdroid_release.ReleaseCheckTest.test_branch_still_rejects_nonincreasing_version_code) ... ok
+test_branch_with_empty_workflow_input_accepts_unreleased_notes (test_fdroid_release.ReleaseCheckTest.test_branch_with_empty_workflow_input_accepts_unreleased_notes) ... ok
+test_fresh_proposed_tag_passes_with_final_notes (test_fdroid_release.ReleaseCheckTest.test_fresh_proposed_tag_passes_with_final_notes) ... ok
+test_proposed_tag_rejects_unreleased_notes (test_fdroid_release.ReleaseCheckTest.test_proposed_tag_rejects_unreleased_notes) ... ok
+test_tag_event_still_rejects_reusing_a_published_tag (test_fdroid_release.ReleaseCheckTest.test_tag_event_still_rejects_reusing_a_published_tag) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.111s
+
+OK

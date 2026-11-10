@@ -621,7 +621,7 @@ class DeviceVaultProviderTest {
     } }
 
     @Implements(value=SecurePreferencesStore::class,isInAndroidSdk=false)
-    class SecureStoreShadow {
+    internal class SecureStoreShadow {
         companion object {
             @JvmStatic @Implementation fun open(context: Context,name: String,alias: String): SecurePreferencesStore.Opened =
                 SecurePreferencesStore.Opened(ReflectionHelpers.callConstructor(MasterKey::class.java,
@@ -631,7 +631,7 @@ class DeviceVaultProviderTest {
     }
     /** Protocol fixtures substitute prepared storage; device tests exercise the real startup gate. */
     @Implements(value=PreparedSecureStore::class,isInAndroidSdk=false)
-    class PreparedStoreShadow {
+    internal class PreparedStoreShadow {
         @Implementation fun open(context: Context): SecurePreferencesStore.Opened =
             SecureStoreShadow.open(context, SecurePreferencesStore.MONICA, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
     }

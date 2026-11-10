@@ -1440,7 +1440,7 @@
     <string name="mdbx_create_new_vault_button">"Criar novo cofre"</string>
     <string name="mdbx_your_vaults">"Seus cofres"</string>
     <string name="mdbx_delete_vault_title">"Excluir cofre"</string>
-    <string name="mdbx_delete_vault_message">"Deseja excluir \"%s\"?\n\nSó será removida a referência local. O arquivo no WebDAV não será excluído."</string>
+    <string name="mdbx_delete_vault_message">Excluir “%s” da Monica?\n\nSerão removidos os dados deste cofre salvos localmente na Monica e seus arquivos MDBX2 gerenciados pela Monica. Os arquivos originais no armazenamento externo ou na nuvem serão mantidos.</string>
     <string name="mdbx_delete">"Excluir"</string>
     <string name="mdbx_cancel">"Cancelar"</string>
     <string name="mdbx_set_default">"Definir como padrão"</string>
@@ -2377,9 +2377,9 @@
     <string name="transfer_to_external">"Transferir para armazenamento externo"</string>
     <string name="remove_database">"Remover banco de dados"</string>
     <string name="confirm_remove">"Remover banco de dados?"</string>
-    <string name="confirm_remove_internal_description">"Esta ação remove o registro do banco de dados. O arquivo também será excluído do armazenamento interno."</string>
-    <string name="confirm_remove_external_description">"Esta ação remove a referência ao banco de dados. O arquivo original não será excluído."</string>
-    <string name="confirm_remove_remote_description">"Remover a referência a este banco de dados remoto e a cópia local. O arquivo na nuvem não será alterado."</string>
+    <string name="confirm_remove_internal_description">O banco de dados será removido da Monica. O arquivo KDBX interno será mantido. A cópia importada do arquivo de chave será excluída se nenhum outro banco de dados a utilizar.</string>
+    <string name="confirm_remove_external_description">O banco de dados será removido da Monica. O arquivo KDBX original será mantido. A cópia importada do arquivo de chave será excluída se nenhum outro banco de dados a utilizar.</string>
+    <string name="confirm_remove_remote_description">O banco de dados remoto será removido da Monica. Os arquivos originais na nuvem serão mantidos. As cópias locais de trabalho e de cache serão excluídas apenas em conexões WebDAV. A cópia importada do arquivo de chave será excluída se nenhum outro banco de dados a utilizar.</string>
     <string name="remove">"Remover"</string>
     <string name="create">"Criar"</string>
     <string name="import_existing_database">"Importar banco de dados existente"</string>

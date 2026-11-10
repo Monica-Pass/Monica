@@ -248,7 +248,7 @@ internal fun PresetFieldDialog(
                             label = { Text(stringResource(R.string.password_field_customization_field_type)) },
                             leadingIcon = { Icon(getFieldTypeIcon(fieldType), null) },
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(showTypeDropdown) },
-                            modifier = Modifier.fillMaxWidth().menuAnchor().testTag("preset_type"),
+                            modifier = Modifier.fillMaxWidth().menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable).testTag("preset_type"),
                             shape = settingsSectionItemShape(1, 2), colors = fieldColors)
                         ExposedDropdownMenu(expanded = showTypeDropdown, onDismissRequest = { showTypeDropdown = false }) {
                             PresetFieldType.entries.forEach { type ->

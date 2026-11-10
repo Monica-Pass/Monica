@@ -1581,7 +1581,7 @@
     <string name="mdbx_create_new_vault_button">Neuen Tresor erstellen</string>
     <string name="mdbx_your_vaults">Ihre Tresore</string>
     <string name="mdbx_delete_vault_title">Tresor löschen</string>
-    <string name="mdbx_delete_vault_message">Sind Sie sicher, dass Sie \"%s\" löschen möchten?\n\nDadurch wird nur der lokale Verweis entfernt. Die Datei auf WebDAV wird nicht gelöscht.</string>
+    <string name="mdbx_delete_vault_message">„%s“ aus Monica löschen?\n\nDie lokal in Monica gespeicherten Tresordaten werden entfernt. Eine von Monica verwaltete MDBX2-Datei dieses Tresors wird ebenfalls gelöscht. Originaldateien im externen Speicher oder in der Cloud bleiben erhalten.</string>
     <string name="mdbx_delete">Löschen</string>
     <string name="mdbx_cancel">Abbrechen</string>
     <string name="mdbx_set_default">Als Standard festlegen</string>
@@ -2604,9 +2604,9 @@
     <string name="transfer_to_external">In externen Speicher übertragen</string>
     <string name="remove_database">Datenbank entfernen</string>
     <string name="confirm_remove">Datenbank entfernen?</string>
-    <string name="confirm_remove_internal_description">Dadurch wird der Datenbankeintrag entfernt. Die Datei wird auch aus dem internen Speicher gelöscht.</string>
-    <string name="confirm_remove_external_description">Dadurch wird der Datenbankverweis entfernt. Die Originaldatei wird nicht gelöscht.</string>
-    <string name="confirm_remove_remote_description">Entfernen Sie diese Remote-Datenbank und die lokale Kopie. Die Cloud-Datei bleibt unberührt.</string>
+    <string name="confirm_remove_internal_description">Die Datenbank wird aus Monica entfernt. Die interne KDBX-Datei bleibt erhalten. Eine importierte Schlüsseldateikopie wird gelöscht, wenn keine andere Datenbank sie verwendet.</string>
+    <string name="confirm_remove_external_description">Die Datenbank wird aus Monica entfernt. Die ursprüngliche KDBX-Datei bleibt erhalten. Eine importierte Schlüsseldateikopie wird gelöscht, wenn keine andere Datenbank sie verwendet.</string>
+    <string name="confirm_remove_remote_description">Diese Datenbank wird aus Monica entfernt. Die Originaldateien in der Cloud bleiben erhalten. Lokale Arbeits- und Cachekopien werden nur bei WebDAV gelöscht. Eine importierte Schlüsseldateikopie wird gelöscht, wenn keine andere Datenbank sie verwendet.</string>
     <string name="remove">Entfernen</string>
     <string name="create">Erstellen</string>
     <string name="import_existing_database">Vorhandene Datenbank importieren</string>

@@ -1582,7 +1582,7 @@
     <string name="mdbx_create_new_vault_button">创建新 Vault</string>
     <string name="mdbx_your_vaults">你的 Vault</string>
     <string name="mdbx_delete_vault_title">删除 Vault</string>
-    <string name="mdbx_delete_vault_message">确定要删除 \"%s\" 吗？\n\n此操作仅移除本地引用，WebDAV 上的文件不会被删除。</string>
+    <string name="mdbx_delete_vault_message">确定要从 Monica 删除“%s”吗？\n\n此保险库在 Monica 中的本地数据将被移除；由 Monica 管理的 MDBX2 文件也会被删除。外部存储及云端的原始文件会保留。</string>
     <string name="mdbx_delete">删除</string>
     <string name="mdbx_cancel">取消</string>
     <string name="mdbx_set_default">设为默认</string>
@@ -2499,9 +2499,9 @@
     <string name="transfer_to_external">转移到外部存储</string>
     <string name="remove_database">移除数据库</string>
     <string name="confirm_remove">移除数据库？</string>
-    <string name="confirm_remove_internal_description">这将移除数据库记录，内部存储中的文件也会被删除。</string>
-    <string name="confirm_remove_external_description">这将移除数据库引用，原始文件不会被删除。</string>
-    <string name="confirm_remove_remote_description">这将移除远端数据库记录与本地工作副本，WebDAV 上的原始文件不会被删除。</string>
+    <string name="confirm_remove_internal_description">这会从 Monica 移除此数据库。内部 KDBX 文件会保留；若导入的密钥文件副本未被其他数据库使用，该副本会被删除。</string>
+    <string name="confirm_remove_external_description">这会从 Monica 移除此数据库。原始 KDBX 文件会保留；若导入的密钥文件副本未被其他数据库使用，该副本会被删除。</string>
+    <string name="confirm_remove_remote_description">这会从 Monica 移除此远端数据库，云端原始文件会保留。仅 WebDAV 连接会同时删除本地工作副本和缓存副本；若导入的密钥文件副本未被其他数据库使用，该副本会被删除。</string>
     <string name="remove">移除</string>
     <string name="create">创建</string>
     <string name="import_existing_database">导入已有数据库</string>

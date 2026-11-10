@@ -26,6 +26,8 @@ import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenu
+import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.DropdownMenuItem
@@ -285,7 +287,7 @@ fun PasswordEntryPickerBottomSheet(
                         label = { Text(stringResource(R.string.password_picker_filter_database)) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = keepassMenuExpanded) },
                         modifier = Modifier
-                            .menuAnchor()
+                            .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                             .fillMaxWidth(),
                         singleLine = true
                     )
@@ -326,7 +328,7 @@ fun PasswordEntryPickerBottomSheet(
                         label = { Text(stringResource(R.string.password_picker_filter_database)) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = mdbxMenuExpanded) },
                         modifier = Modifier
-                            .menuAnchor()
+                            .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                             .fillMaxWidth(),
                         singleLine = true
                     )
@@ -367,7 +369,7 @@ fun PasswordEntryPickerBottomSheet(
                         label = { Text(stringResource(R.string.password_picker_filter_vault)) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = vaultMenuExpanded) },
                         modifier = Modifier
-                            .menuAnchor()
+                            .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                             .fillMaxWidth(),
                         singleLine = true
                     )
@@ -410,7 +412,7 @@ fun PasswordEntryPickerBottomSheet(
                             label = { Text(stringResource(R.string.password_picker_filter_folder)) },
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = folderMenuExpanded) },
                             modifier = Modifier
-                                .menuAnchor()
+                                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                                 .fillMaxWidth(),
                             singleLine = true
                         )

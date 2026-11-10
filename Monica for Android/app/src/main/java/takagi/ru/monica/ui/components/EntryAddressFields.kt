@@ -18,14 +18,19 @@ fun EntryAddressFields(
     onPostalCode: (String) -> Unit, onCountry: (String) -> Unit,
     additionalStreet: (@Composable () -> Unit)? = null,
 ) {
-    Column(verticalArrangement = Arrangement.spacedBy(if (LocalTemplateFieldShape.current) 2.dp else 12.dp)) {
-        EntryAddressField(street, onStreet, R.string.street_address, "street")
-        additionalStreet?.invoke()
-        EntryAddressField(city, onCity, R.string.city, "city")
-        EntryAddressField(region, onRegion, R.string.state_province, "region")
+    val fields = buildList<@Composable () -> Unit> {
+        add { EntryAddressField(street, onStreet, R.string.street_address, "street") }
+        additionalStreet?.let { add(it) }
+        add { EntryAddressField(city, onCity, R.string.city, "city") }
+        add { EntryAddressField(region, onRegion, R.string.state_province, "region") }
         // Postal codes may contain letters and spaces (e.g. SW1A 1AA).
-        EntryAddressField(postalCode, onPostalCode, R.string.postal_code, "postal")
-        EntryAddressField(country, onCountry, R.string.country, "country")
+        add { EntryAddressField(postalCode, onPostalCode, R.string.postal_code, "postal") }
+        add { EntryAddressField(country, onCountry, R.string.country, "country") }
+    }
+    if (LocalStandaloneTemplateFields.current || LocalTemplateFieldShape.current || LocalConnectedFieldEdges.current != null) {
+        ConnectedFieldGroup(*fields.toTypedArray())
+    } else {
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) { fields.forEach { it() } }
     }
 }
 

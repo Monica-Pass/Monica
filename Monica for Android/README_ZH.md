@@ -9,7 +9,9 @@
 [![Kotlin](https://img.shields.io/badge/Language-Kotlin-purple?style=for-the-badge&logo=kotlin)](https://kotlinlang.org/)
 [![License](https://img.shields.io/badge/License-GPL--3.0-blue?style=for-the-badge)](LICENSE)
 
-**一个安全、简洁、功能强大的 Android 密码管理应用**
+**一个用于管理密码、验证码、卡片与笔记的 Android 应用**
+
+当前源码为 **1.0.327 未发布开发版本**；功能与依赖更新不代表已正式发布。
 
 [功能特性](#-功能特性) • [安装说明](#-安装说明) • [使用指南](#-使用指南) • [技术栈](#-技术栈) • [截图展示](#-截图展示) • [贡献指南](#-贡献指南)
 
@@ -27,10 +29,10 @@
 
 ### 🛡️ 安全特性
 - **主密码保护** - 支持字母、数字、符号与中文主密码
-- **数据加密** - 所有敏感数据采用 AES-256 加密
-- **安全问题** - 支持通过安全问题重置密码
+- **本地字段加密** - 本地敏感字段使用 AES-GCM；Bitwarden、KDBX、MDBX 沿用各自格式
+- **恢复保护** - 恢复取决于原密码与可用恢复材料，不应把安全问题视为通用的密码库解密方式
 - **屏幕截图保护** - 可选防止截图功能
-- **自动锁定** - 应用后台时自动锁定
+- **自动锁定** - 按已配置的后台、超时等策略锁定
 
 ### 📱 实用功能
 - **密码生成器** - 快速生成强密码
@@ -41,11 +43,13 @@
 - **QR 码扫描** - 快速扫描 TOTP 二维码
 - **搜索功能** - 快速查找您的密码和信息
 - **分组管理** - 按类型分类管理不同数据
+- **密码库与连接** - 支持 KeePass/KDBX、MDBX 和 Bitwarden/Vaultwarden，具体操作遵循各来源能力
+- **通行密钥** - 提供 Android 14+ 凭据提供程序入口，兼容范围取决于设备、浏览器与服务
 
 ### 🎨 界面设计
 - **Material Design 3** - 现代化的 UI 设计
 - **深色模式** - 支持浅色/深色主题
-- **多语言支持** - 简体中文、英语、越南语
+- **多语言支持** - 包含简繁中文、英语、日语、越南语、俄语及巴西/欧洲葡语等，完整选项见应用语言设置
 - **响应式布局** - 适配各种屏幕尺寸
 
 ---
@@ -54,27 +58,36 @@
 
 ### 系统要求
 - Android 8.0 (API 26) 及以上版本
-- 约 20MB 存储空间
+- 安装及备份所需空间以实际 APK、附件和密码库大小为准
 
 ### 下载安装
 
-#### 方式一: 从 Release 下载
-1. 前往 [Releases](https://github.com/Monica-Pass/Monica-for-Android/releases) 页面
-2. 下载最新版本的 APK 文件
-3. 在 Android 设备上安装 APK
+1. 前往 [Monica Releases](https://github.com/Monica-Pass/Monica/releases) 获取已发布 APK。
+2. 选择与设备架构相符的包并安装。
+3. 首次启动后设置主密码。开发分支版本不代表已经发布。
 
-#### 方式二: 从源码编译
+### 从源码编译
+
+准备 JDK 17、Android SDK Platform 37 / platform-tools / build-tools、side-by-side NDK，以及通过 rustup 安装的 Rust。JNI 随当前源码构建，因此 `cargo` 和 `cargo-ndk` 必须可供 Gradle 使用。SDK 通过 `local.properties` 或 `ANDROID_HOME` 配置，指定 NDK 时可设置 `ANDROID_NDK_HOME`。原生桥目标为 API 26，入口见 [JNI 构建脚本](gradle/monica-rust-jni.gradle)与[工具查找脚本](gradle/rust-toolchain.gradle)。
+
 ```bash
-# 克隆仓库
-git clone https://github.com/Monica-Pass/Monica-for-Android.git
-cd Monica-for-Android
+git clone https://github.com/Monica-Pass/Monica.git
+cd "Monica/Monica for Android"
 
-# 使用 Gradle 构建
-./gradlew assembleDebug
+rustup toolchain install stable --profile minimal
+rustup default stable
+rustup target add aarch64-linux-android armv7-linux-androideabi
+cargo install cargo-ndk --version 4.1.2 --locked
 
-# 安装到设备
-./gradlew installDebug
+./gradlew :app:assembleDebug
+./gradlew :app:testDebugUnitTest
+
+# x86_64 模拟器的主程序与测试包
+rustup target add x86_64-linux-android
+./gradlew :app:assembleDebug :app:assembleDebugAndroidTest -PincludeX86TestAbi
 ```
+
+默认 APK 输出为 ARM。Windows PowerShell 使用 `./gradlew.bat`；IDE 应打开 `Monica for Android` 子目录。打包成功不等于设备或 Release 验证通过。
 
 ---
 
@@ -85,12 +98,11 @@ cd Monica-for-Android
 1. **设置主密码**
    - 首次打开应用,设置您的主密码
    - 输入两次确认密码
-   - 记住您的主密码,遗忘将无法恢复数据
+   - 妥善保管主密码与独立加密备份；恢复依赖现有密钥和恢复材料
 
-2. **设置安全问题** (可选)
-   - 进入设置页面
-   - 设置安全问题和答案
-   - 用于忘记密码时重置
+2. **检查备份与锁定设置**
+   - 根据需要配置加密备份和自动锁定
+   - 验证备份可恢复后再依赖它；安全问题不能保证恢复所有加密数据
 
 ### 密码管理
 
@@ -135,9 +147,8 @@ cd Monica-for-Android
    - 内容
    - 标签 (可选)
    - 证件图片 (可上传)
-3. 支持富文本编辑
-4. 证件图片可下载保存到本地
-5. 安全加密存储
+3. 根据证件类型编辑对应字段与备注
+4. 图片及附件操作以当前编辑页提供的选项为准
 
 ### 银行卡管理
 
@@ -148,7 +159,7 @@ cd Monica-for-Android
    - 持卡人姓名
    - 有效期
    - CVV (可选)
-3. 所有信息加密存储
+3. 敏感字段按所选密码库的存储规则保护
 
 ### 数据导入导出
 
@@ -156,7 +167,7 @@ cd Monica-for-Android
 1. 进入设置 → 数据导出
 2. 输入主密码确认
 3. 选择保存位置
-4. 数据以加密 CSV 格式导出
+4. 按所选格式导出；CSV 是明文凭据文件，需要加密保护时选择支持加密的备份格式
 
 #### 导入数据
 1. 进入设置 → 数据导入
@@ -170,12 +181,12 @@ cd Monica-for-Android
 
 #### 安全设置
 - **更改主密码** - 修改登录密码
-- **安全问题** - 设置或修改安全问题
+- **恢复与备份** - 查看当前可用恢复入口并保留独立加密备份
 - **屏幕截图保护** - 防止应用内截图
 
 #### 外观设置
 - **主题** - 浅色/深色/跟随系统
-- **语言** - 简体中文/English/Tiếng Việt
+- **语言** - 在设置中选择当前支持的语言和地区
 
 #### 数据管理
 - **导出数据** - 备份所有数据
@@ -186,35 +197,18 @@ cd Monica-for-Android
 
 ## 🛠️ 技术栈
 
-### 核心技术
-- **Kotlin** - 主要开发语言
-- **Jetpack Compose** - 现代化 UI 框架
-- **Material Design 3** - UI 设计规范（通过 Compose BOM 统一版本）
+| 组件 | 当前配置 |
+| --- | --- |
+| 构建运行时 | JDK 17；Java/Kotlin 字节码目标 11 |
+| Gradle Wrapper / Android Gradle Plugin | 9.7.0 / 9.3.1 |
+| Kotlin / KSP | 2.4.21 / 2.3.13 |
+| Compose BOM | 2026.09.00 |
+| Material 3 Expressive | 1.5.0-rc01，独立固定版本，不跟随 BOM |
+| Android SDK | compileSdk 37、targetSdk 34、minSdk 26（Android 8.0） |
 
-### 架构组件
-- **Room Database** - 本地数据持久化
-- **ViewModel & LiveData** - MVVM 架构
-- **Kotlin Coroutines** - 异步编程
-- **Kotlin Flow** - 响应式数据流
+界面使用 Jetpack Compose、ViewModel、Coroutines/Flow；本地索引和记录使用 Room（SQLite）。扫码使用 CameraX 与 ZXing，KDBX 使用本地 `kotpass` 模块，WebDAV 使用 `sardine-android`，Markdown 使用 CommonMark，部分原生操作由 Rust/JNI 模块提供。
 
-### 安全组件
-- **AES-256 加密** - 数据加密标准
-- **PBKDF2** - 密码哈希算法
-- **SHA-256** - 安全哈希算法
-
-### 第三方库
-- **ZXing** - QR 码扫描
-- **Commons Codec** - 编解码工具
-- **CameraX** - 相机功能
-
-### 构建工具
-- **Gradle Wrapper 8.7** - 构建系统
-- **Android Gradle Plugin 8.6.0**
-- **Kotlin 2.0.21**
-- **KSP 2.0.21-1.0.25**
-- **Compose BOM 2026.03.00（Material3 跟随 BOM）**
-
-> 说明：依赖版本的最终准确信息以 `gradle/libs.versions.toml` 与 `app/build.gradle` 为准。
+依赖与构建的准确信息见 [版本目录](gradle/libs.versions.toml)、[应用配置](app/build.gradle)和 [Gradle Wrapper 配置](gradle/wrapper/gradle-wrapper.properties)。
 
 ---
 
@@ -243,22 +237,12 @@ cd Monica-for-Android
 
 ## 🔐 安全说明
 
-### 数据安全
-- ✅ 所有敏感数据使用 AES-256 加密
-- ✅ 主密码采用 PBKDF2 加密存储
-- ✅ 数据仅存储在本地设备
-- ✅ 不联网,无数据泄露风险
-
-### 密码策略
-- 主密码最少 4 个字符
-- 支持密码强度检测
-- 密码生成器可生成强密码
-
-### 隐私保护
-- 无需网络权限
-- 无广告,无追踪
-- 可选屏幕截图保护
-- 开源代码,公开透明
+- 本地敏感字段使用 AES-GCM。
+- 本地主密码校验及基于密码的 MDK 包装密钥派生采用 PBKDF2-HMAC-SHA256、100,000 次迭代。Bitwarden、KDBX 与 MDBX 保留各自的 KDF 和文件格式。
+- Android Keystore 用于保护相应的本地密钥材料；是否由硬件支持取决于设备，不保证受损系统或 root 环境下的绝对安全。
+- 本地使用无需云账号。网络权限用于所配置的服务、传输与更新检查，不能描述为完全不联网；自动检查更新可关闭。
+- 截图保护与自动锁定按应用设置及系统能力生效。请保留独立加密备份；忘记密码或丢失密钥时，是否能恢复取决于实际可用材料。
+- CSV 导出是明文，不能与加密备份等同。
 
 ---
 
@@ -277,7 +261,7 @@ cd Monica-for-Android
 ### 报告问题
 
 如果您发现 Bug 或有功能建议:
-1. 前往 [Issues](https://github.com/Monica-Pass/Monica-for-Android/issues) 页面
+1. 前往 [Issues](https://github.com/Monica-Pass/Monica/issues) 页面
 2. 搜索是否已有相关问题
 3. 创建新 Issue 并详细描述
 
@@ -354,7 +338,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 有问题或建议?
 - 📧 Email: lichaoran8@gmail.com
-- 💬 Issues: [GitHub Issues](https://github.com/Monica-Pass/Monica-for-Android/issues)
+- 💬 Issues: [GitHub Issues](https://github.com/Monica-Pass/Monica/issues)
 
 ---
 
@@ -366,7 +350,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 <div align="center">
 
-![支持作者](support_author.jpg)
+![支持作者](image/support_author.jpg)
 
 **扫码支持 • 感谢您的慷慨 ❤️**
 

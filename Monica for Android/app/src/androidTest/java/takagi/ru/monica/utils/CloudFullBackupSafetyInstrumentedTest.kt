@@ -243,8 +243,12 @@ class CloudFullBackupSafetyInstrumentedTest {
                         restoreMonicaConfig = false, importDataOnly = true).isFailure)
                     val result = archiveHelper.restoreFromBackupFile(downloaded, "synthetic archive password",
                         restoreMonicaConfig = false, importDataOnly = true).getOrThrow()
-                    assertEquals(passwords.map { it.password }, result.content.passwords.map { it.password })
-                    assertEquals(passwords.map { it.notes }, result.content.passwords.map { it.notes })
+                    // The archive stores separate files; ZIP enumeration is not record order.
+                    val restored = result.content.passwords
+                    assertEquals(passwords.size, restored.size)
+                    assertEquals(restored.size, restored.map { it.id }.toSet().size)
+                    assertTrue("Each restored ID must preserve its entire record, including exact whitespace",
+                        passwords.associateBy { it.id } == restored.associateBy { it.id })
                     assertTrue(result.content.passwords.all { it.passwordGroupId == "fixture-group" })
                     assertTrue(result.content.passwords.all { it.authenticatorKey == "JBSWY3DPEHPK3PXP" })
                 }

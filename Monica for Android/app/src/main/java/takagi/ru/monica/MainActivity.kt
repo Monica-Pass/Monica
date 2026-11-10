@@ -740,6 +740,7 @@ fun MonicaApp(
     }
 
     LaunchedEffect(viewModel, settingsManager) {
+        val startupLockGeneration = SessionManager.lockGeneration.value
         val loadedState = withContext(Dispatchers.IO) {
             val settingsSnapshot = runCatching {
                 settingsManager.settingsFlow.first()
@@ -764,6 +765,7 @@ fun MonicaApp(
                 )
             }
         }
+        var admittedState = loadedState
         if (loadedState.bypassEnabled) {
             android.util.Log.w(
                 "MonicaAuthGate",
@@ -771,18 +773,28 @@ fun MonicaApp(
             )
             viewModel.markAuthenticatedForBypass()
         } else if (loadedState.canRestoreSession) {
-            android.util.Log.d(
-                "MonicaAuthGate",
-                "Startup restored via ${loadedState.reason}"
-            )
-            viewModel.restoreAuthenticatedUiState()
+            val restored = SessionManager.publishAtGeneration(startupLockGeneration) {
+                viewModel.restoreAuthenticatedUiState()
+                true
+            } == true
+            if (restored) {
+                android.util.Log.d(
+                    "MonicaAuthGate",
+                    "Startup restored via ${loadedState.reason}"
+                )
+            } else {
+                admittedState = loadedState.copy(
+                    canRestoreSession = false,
+                    reason = "startup_session_changed"
+                )
+            }
         } else {
             android.util.Log.d(
                 "MonicaAuthGate",
                 "Startup requires authentication via ${loadedState.reason}"
             )
         }
-        startupAuthState = loadedState
+        startupAuthState = admittedState
     }
 
     val settings by settingsViewModel.settings.collectAsState()
@@ -909,8 +921,19 @@ fun MonicaContent(
     clearDataProgress?.let { progress ->
         takagi.ru.monica.ui.components.ClearDataProgressSheet(progress, clearDataViewModel::dismiss)
     }
-    val isAuthenticated by viewModel.isAuthenticated.collectAsState()
+    val viewModelAuthenticated by viewModel.isAuthenticated.collectAsState()
+    val mainSessionUnlocked by SessionManager.isUnlocked.collectAsState()
+    val mainSessionLockGeneration by SessionManager.lockGeneration.collectAsState()
     val settings by settingsViewModel.settings.collectAsState()
+    val settingsLoaded by settingsViewModel.settingsLoaded.collectAsState()
+    // Bootstrap already read the real setting; do not replace it with AppSettings defaults.
+    val developerBypassEnabled = if (settingsLoaded) {
+        settings.disablePasswordVerification
+    } else {
+        initialAuthState.bypassEnabled
+    }
+    // Preserve the explicit developer bypass while revoking ordinary UI admission on lock.
+    val isAuthenticated = viewModelAuthenticated && (developerBypassEnabled || mainSessionUnlocked)
     val lifecycleOwner = LocalLifecycleOwner.current
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     LaunchedEffect(navController) {
@@ -967,8 +990,10 @@ fun MonicaContent(
     }
     val mainAppAccessState = remember(
         isAuthenticated,
+        mainSessionUnlocked,
+        mainSessionLockGeneration,
         settings.autoLockMinutes,
-        settings.disablePasswordVerification,
+        developerBypassEnabled,
         initialAuthState
     ) {
         if (isAuthenticated) {
@@ -978,7 +1003,7 @@ fun MonicaContent(
                 securityManager,
                 context.applicationContext,
                 settings.autoLockMinutes,
-                settings.disablePasswordVerification
+                developerBypassEnabled
             )
         }
     }
@@ -1189,12 +1214,18 @@ fun MonicaContent(
     }
 
     val settingsSearchNavigation = takagi.ru.monica.ui.screens.rememberSettingsSearchNavigation(navController)
+    val appUpdateController = takagi.ru.monica.update.rememberAppUpdateController {
+        settingsViewModel.settingsLoaded.value && viewModel.isAuthenticated.value &&
+            (settingsViewModel.settings.value.disablePasswordVerification || SessionManager.isUnlocked.value) &&
+            lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)
+    }
 
     // Emergency safe mode: disable global shared transition lookahead to avoid
     // "Placement happened before lookahead" crashes on affected devices/builds.
     @OptIn(androidx.compose.animation.ExperimentalSharedTransitionApi::class)
     androidx.compose.runtime.CompositionLocalProvider(
         takagi.ru.monica.ui.screens.LocalSettingsSearchNavigation provides settingsSearchNavigation,
+        takagi.ru.monica.update.LocalAppUpdateController provides appUpdateController,
         takagi.ru.monica.ui.password.LocalNearbySyncMenu provides
             takagi.ru.monica.navigation.rememberNearbySyncMenu(navController),
         takagi.ru.monica.ui.LocalUiSecurityManager provides securityManager,
@@ -1209,6 +1240,11 @@ fun MonicaContent(
         takagi.ru.monica.ui.LocalHapticFeedbackEnabled provides settings.hapticFeedbackEnabled
     ) {
         takagi.ru.monica.ui.screens.NearbyDeletionReviewHost()
+        takagi.ru.monica.update.AppUpdateHost(
+            controller = appUpdateController,
+            eligible = settingsLoaded && isAuthenticated && !shouldRequireAuthentication && !isOnAuthRoute,
+            allowAutomatic = currentRoute == Screen.Main.routePattern && settings.quickSetupCompleted,
+        )
         Box(modifier = Modifier.fillMaxSize()) {
             NavHost(
                 navController = navController,

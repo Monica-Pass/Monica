@@ -21,6 +21,7 @@ import takagi.ru.monica.security.SecurityManager
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [29, 34], application = Application::class)
+@OptIn(androidx.room.ExperimentalRoomApi::class)
 class AutofillServiceRevocationTest {
     @Test fun screenOffAndUnlockCannotReviveAReadEvenWithoutAnAutofillGrant() = withService { service ->
         val app = RuntimeEnvironment.getApplication()

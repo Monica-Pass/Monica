@@ -22,6 +22,8 @@ import org.junit.Test
 import takagi.ru.monica.data.*
 import takagi.ru.monica.repository.PasswordRepository
 import takagi.ru.monica.security.SecurityManager
+import takagi.ru.monica.security.SecureStartupResult
+import takagi.ru.monica.security.SecureStorageStartup
 import takagi.ru.monica.security.SessionManager
 import takagi.ru.monica.utils.AppLocaleStringResolver
 import takagi.ru.monica.utils.KeePassKdbxService
@@ -205,6 +207,13 @@ class KeePassDeleteInvestigationTest {
     ) {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         val context = instrumentation.targetContext
+        val startup = withContext(Dispatchers.Default) {
+            SecureStorageStartup.prepareForEntry(context, timeoutMillis = 15_000L)
+        }
+        assertTrue(
+            "Secure storage must be READY before constructing PasswordViewModel",
+            startup is SecureStartupResult.Ready,
+        )
         val uri = Uri.parse("content://${instrumentation.context.packageName}.kdbx-delete/delete-${UUID.randomUUID()}.kdbx")
         val security = securityOverride ?: SecurityManager(context)
         val registrationDb = PasswordDatabase.getDatabase(context)

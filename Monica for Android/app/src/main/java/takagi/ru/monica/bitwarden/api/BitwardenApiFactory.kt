@@ -1,5 +1,9 @@
 package takagi.ru.monica.bitwarden.api
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import android.util.Base64
 import okhttp3.MediaType.Companion.toMediaType
@@ -433,6 +437,11 @@ class BitwardenApiManager(
     private val attemptRequestIsCurrent: (BitwardenEnvironment) -> Boolean = { true },
     private val wrapVaultApi: ((BitwardenVault, BitwardenVaultApi) -> BitwardenVaultApi)? = null,
 ) {
+    private companion object {
+        // Physical TLS shutdown outlives UI/model cancellation; authorization is revoked below synchronously.
+        val retiredPoolCleanup = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    }
+
     private class ClientKey(val owner: String, val revision: String, val fingerprint: String,
         val profile: BitwardenApiFactory.HeaderProfile, val foreign: Boolean) {
         override fun equals(other: Any?) = other is ClientKey && owner == other.owner &&
@@ -575,7 +584,8 @@ class BitwardenApiManager(
             clients.remove(key)?.let { entry ->
                 entry.active.set(false)
                 entry.client.dispatcher.cancelAll()
-                entry.client.connectionPool.evictAll()
+                val retiredPool = entry.client.connectionPool
+                retiredPoolCleanup.launch { retiredPool.evictAll() }
                 entry.client.dispatcher.executorService.shutdown()
             }
             identityApis.remove(key)

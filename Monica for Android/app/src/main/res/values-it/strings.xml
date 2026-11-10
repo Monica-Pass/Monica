@@ -1440,7 +1440,7 @@
     <string name="mdbx_create_new_vault_button">"Crea nuovo vault"</string>
     <string name="mdbx_your_vaults">"I tuoi vault"</string>
     <string name="mdbx_delete_vault_title">"Elimina Vault"</string>
-    <string name="mdbx_delete_vault_message">"Sei sicuro di voler eliminare \"%s\"?\n\nQuesto rimuoverà solo il riferimento locale. Il file su WebDAV non verrà eliminato."</string>
+    <string name="mdbx_delete_vault_message">Eliminare «%s» da Monica?\n\nVerranno rimossi i dati della cassaforte salvati localmente in Monica e gli eventuali file MDBX2 della cassaforte gestiti da Monica. I file originali nella memoria esterna o nel cloud verranno conservati.</string>
     <string name="mdbx_delete">"Elimina"</string>
     <string name="mdbx_cancel">"Annulla"</string>
     <string name="mdbx_set_default">"Imposta come predefinito"</string>
@@ -2376,9 +2376,9 @@
     <string name="transfer_to_external">"Trasferimento allo storage esterno"</string>
     <string name="remove_database">"Rimuovi database"</string>
     <string name="confirm_remove">"Rimuovere il database?"</string>
-    <string name="confirm_remove_internal_description">"Questo rimuoverà il record del database. Il file verrà eliminato anche dalla memoria interna."</string>
-    <string name="confirm_remove_external_description">"Questo rimuoverà il riferimento al database. Il file originale non verrà eliminato."</string>
-    <string name="confirm_remove_remote_description">"Rimuovi questo database remoto e copia locale. Il file cloud rimane intatto."</string>
+    <string name="confirm_remove_internal_description">Il database verrà rimosso da Monica. Il file KDBX interno verrà conservato. La copia importata del file chiave verrà eliminata se nessun altro database la utilizza.</string>
+    <string name="confirm_remove_external_description">Il database verrà rimosso da Monica. Il file KDBX originale verrà conservato. La copia importata del file chiave verrà eliminata se nessun altro database la utilizza.</string>
+    <string name="confirm_remove_remote_description">Il database remoto verrà rimosso da Monica. I file originali nel cloud verranno conservati. Le copie locali di lavoro e di cache verranno eliminate solo per WebDAV. La copia importata del file chiave verrà eliminata se nessun altro database la utilizza.</string>
     <string name="remove">"Rimuovi"</string>
     <string name="create">"Crea"</string>
     <string name="import_existing_database">"Importare database esistente"</string>

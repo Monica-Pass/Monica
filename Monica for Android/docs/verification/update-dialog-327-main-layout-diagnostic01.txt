@@ -1,0 +1,182 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.update.AppUpdateDialogTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.update.AppUpdateDialogTest:
+INSTRUMENTATION_STATUS: test=smallLargeTextRtlDarkDialogKeepsTextAndActionsReachable
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.update.AppUpdateDialogTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Update now must fit horizontally
+text=Update now
+semanticsSize=399 x 107
+boundsInRoot=Rect.fromLTRB(341.0, 1315.0, 740.0, 1422.0)
+boundsInWindow=Rect.fromLTRB(341.0, 1315.0, 740.0, 1422.0)
+layout[0] size=399 x 107 paragraphWidth=620.0 paragraphHeight=107.0
+constraints=Constraints(minWidth = 0, maxWidth = 620, minHeight = 0, maxHeight = Infinity) density=androidx.compose.ui.node.LayoutModifierNodeCoordinator@1803781 direction=Rtl
+overflowWidth=true overflowHeight=false maxLinesExceeded=false
+style=TextStyle(color=Color(0.21960784, 0.11764706, 0.44705883, 1.0, sRGB IEC61966-2.1), brush=null, alpha=1.0, fontSize=14.0.sp, fontWeight=FontWeight(weight=500), fontStyle=null, fontSynthesis=null, fontFamily=FontFamily.SansSerif, fontFeatureSettings=null, letterSpacing=0.1.sp, baselineShift=null, textGeometricTransform=null, localeList=null, background=Color(0.0, 0.0, 0.0, 0.0, None), textDecoration=null, shadow=null, drawStyle=null, textAlign=Unspecified, textDirection=Unspecified, lineHeight=20.0.sp, textIndent=null, platformStyle=PlatformTextStyle(spanStyle=null, paragraphSyle=PlatformParagraphStyle(includeFontPadding=false, emojiSupportMatch=EmojiSupportMatch.Default)), lineHeightStyle=LineHeightStyle(alignment=LineHeightStyle.Alignment.Center, trim=LineHeightStyle.Trim.None,mode=LineHeightStyle.Mode.Fixed), lineBreak=LineBreak(strategy=Strategy.Unspecified, strictness=Strictness.Unspecified, wordBreak=WordBreak.Unspecified), hyphens=Hyphens.Unspecified, textMotion=null) maxLines=2147483647 softWrap=true
+line[0] left=0.0 right=397.54095 top=0.0 bottom=107.0 start=0 end=10 ellipsized=false
+character[0] bounds=Rect.fromLTRB(0.0, 0.0, 48.3, 107.0)
+character[1] bounds=Rect.fromLTRB(48.3, 0.0, 90.8, 107.0)
+character[2] bounds=Rect.fromLTRB(90.8, 0.0, 133.3, 107.0)
+character[3] bounds=Rect.fromLTRB(133.3, 0.0, 173.8, 107.0)
+character[4] bounds=Rect.fromLTRB(173.8, 0.0, 199.3, 107.0)
+character[5] bounds=Rect.fromLTRB(199.3, 0.0, 239.8, 107.0)
+character[6] bounds=Rect.fromLTRB(239.8, 0.0, 258.3, 107.0)
+character[7] bounds=Rect.fromLTRB(258.3, 0.0, 299.8, 107.0)
+character[8] bounds=Rect.fromLTRB(299.8, 0.0, 342.3, 107.0)
+character[9] bounds=Rect.fromLTRB(342.3, 0.0, 397.5, 107.0)
+
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertFalse(Assert.java:65)
+	at takagi.ru.monica.update.AppUpdateDialogTest.assertTextNotClipped(AppUpdateDialogTest.kt:383)
+	at takagi.ru.monica.update.AppUpdateDialogTest.smallLargeTextRtlDarkDialogKeepsTextAndActionsReachable(AppUpdateDialogTest.kt:161)
+
+INSTRUMENTATION_STATUS: stream=
+Error in smallLargeTextRtlDarkDialogKeepsTextAndActionsReachable(takagi.ru.monica.update.AppUpdateDialogTest):
+java.lang.AssertionError: Update now must fit horizontally
+text=Update now
+semanticsSize=399 x 107
+boundsInRoot=Rect.fromLTRB(341.0, 1315.0, 740.0, 1422.0)
+boundsInWindow=Rect.fromLTRB(341.0, 1315.0, 740.0, 1422.0)
+layout[0] size=399 x 107 paragraphWidth=620.0 paragraphHeight=107.0
+constraints=Constraints(minWidth = 0, maxWidth = 620, minHeight = 0, maxHeight = Infinity) density=androidx.compose.ui.node.LayoutModifierNodeCoordinator@1803781 direction=Rtl
+overflowWidth=true overflowHeight=false maxLinesExceeded=false
+style=TextStyle(color=Color(0.21960784, 0.11764706, 0.44705883, 1.0, sRGB IEC61966-2.1), brush=null, alpha=1.0, fontSize=14.0.sp, fontWeight=FontWeight(weight=500), fontStyle=null, fontSynthesis=null, fontFamily=FontFamily.SansSerif, fontFeatureSettings=null, letterSpacing=0.1.sp, baselineShift=null, textGeometricTransform=null, localeList=null, background=Color(0.0, 0.0, 0.0, 0.0, None), textDecoration=null, shadow=null, drawStyle=null, textAlign=Unspecified, textDirection=Unspecified, lineHeight=20.0.sp, textIndent=null, platformStyle=PlatformTextStyle(spanStyle=null, paragraphSyle=PlatformParagraphStyle(includeFontPadding=false, emojiSupportMatch=EmojiSupportMatch.Default)), lineHeightStyle=LineHeightStyle(alignment=LineHeightStyle.Alignment.Center, trim=LineHeightStyle.Trim.None,mode=LineHeightStyle.Mode.Fixed), lineBreak=LineBreak(strategy=Strategy.Unspecified, strictness=Strictness.Unspecified, wordBreak=WordBreak.Unspecified), hyphens=Hyphens.Unspecified, textMotion=null) maxLines=2147483647 softWrap=true
+line[0] left=0.0 right=397.54095 top=0.0 bottom=107.0 start=0 end=10 ellipsized=false
+character[0] bounds=Rect.fromLTRB(0.0, 0.0, 48.3, 107.0)
+character[1] bounds=Rect.fromLTRB(48.3, 0.0, 90.8, 107.0)
+character[2] bounds=Rect.fromLTRB(90.8, 0.0, 133.3, 107.0)
+character[3] bounds=Rect.fromLTRB(133.3, 0.0, 173.8, 107.0)
+character[4] bounds=Rect.fromLTRB(173.8, 0.0, 199.3, 107.0)
+character[5] bounds=Rect.fromLTRB(199.3, 0.0, 239.8, 107.0)
+character[6] bounds=Rect.fromLTRB(239.8, 0.0, 258.3, 107.0)
+character[7] bounds=Rect.fromLTRB(258.3, 0.0, 299.8, 107.0)
+character[8] bounds=Rect.fromLTRB(299.8, 0.0, 342.3, 107.0)
+character[9] bounds=Rect.fromLTRB(342.3, 0.0, 397.5, 107.0)
+
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertFalse(Assert.java:65)
+	at takagi.ru.monica.update.AppUpdateDialogTest.assertTextNotClipped(AppUpdateDialogTest.kt:383)
+	at takagi.ru.monica.update.AppUpdateDialogTest.smallLargeTextRtlDarkDialogKeepsTextAndActionsReachable(AppUpdateDialogTest.kt:161)
+
+INSTRUMENTATION_STATUS: test=smallLargeTextRtlDarkDialogKeepsTextAndActionsReachable
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.update.AppUpdateDialogTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=shortHeightLargeTextDownloadCanScrollToItsProgressAndCancel
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.update.AppUpdateDialogTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: 61% must fit horizontally
+text=61%
+semanticsSize=117 x 81
+boundsInRoot=Rect.fromLTRB(814.0, 1026.0, 931.0, 1107.0)
+boundsInWindow=Rect.fromLTRB(814.0, 1026.0, 931.0, 1107.0)
+layout[0] size=117 x 81 paragraphWidth=782.0 paragraphHeight=81.0
+constraints=Constraints(minWidth = 0, maxWidth = 782, minHeight = 0, maxHeight = Infinity) density=androidx.compose.ui.node.LayoutModifierNodeCoordinator@7d9b25b direction=Rtl
+overflowWidth=true overflowHeight=false maxLinesExceeded=false
+style=TextStyle(color=Color(0.9019608, 0.8784314, 0.9137255, 1.0, sRGB IEC61966-2.1), brush=null, alpha=1.0, fontSize=12.0.sp, fontWeight=FontWeight(weight=400), fontStyle=null, fontSynthesis=null, fontFamily=FontFamily.SansSerif, fontFeatureSettings=null, letterSpacing=0.4.sp, baselineShift=null, textGeometricTransform=null, localeList=null, background=Color(0.0, 0.0, 0.0, 0.0, None), textDecoration=null, shadow=null, drawStyle=null, textAlign=Unspecified, textDirection=Unspecified, lineHeight=16.0.sp, textIndent=null, platformStyle=PlatformTextStyle(spanStyle=null, paragraphSyle=PlatformParagraphStyle(includeFontPadding=false, emojiSupportMatch=EmojiSupportMatch.Default)), lineHeightStyle=LineHeightStyle(alignment=LineHeightStyle.Alignment.Center, trim=LineHeightStyle.Trim.None,mode=LineHeightStyle.Mode.Fixed), lineBreak=LineBreak(strategy=Strategy.Unspecified, strictness=Strictness.Unspecified, wordBreak=WordBreak.Unspecified), hyphens=Hyphens.Unspecified, textMotion=null) maxLines=2147483647 softWrap=true
+line[0] left=0.0 right=116.0 top=0.0 bottom=81.0 start=0 end=3 ellipsized=false
+character[0] bounds=Rect.fromLTRB(0.0, 0.0, 35.0, 81.0)
+character[1] bounds=Rect.fromLTRB(35.0, 0.0, 71.0, 81.0)
+character[2] bounds=Rect.fromLTRB(71.0, 0.0, 116.0, 81.0)
+
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertFalse(Assert.java:65)
+	at takagi.ru.monica.update.AppUpdateDialogTest.assertTextNotClipped(AppUpdateDialogTest.kt:383)
+	at takagi.ru.monica.update.AppUpdateDialogTest.shortHeightLargeTextDownloadCanScrollToItsProgressAndCancel(AppUpdateDialogTest.kt:216)
+
+INSTRUMENTATION_STATUS: stream=
+Error in shortHeightLargeTextDownloadCanScrollToItsProgressAndCancel(takagi.ru.monica.update.AppUpdateDialogTest):
+java.lang.AssertionError: 61% must fit horizontally
+text=61%
+semanticsSize=117 x 81
+boundsInRoot=Rect.fromLTRB(814.0, 1026.0, 931.0, 1107.0)
+boundsInWindow=Rect.fromLTRB(814.0, 1026.0, 931.0, 1107.0)
+layout[0] size=117 x 81 paragraphWidth=782.0 paragraphHeight=81.0
+constraints=Constraints(minWidth = 0, maxWidth = 782, minHeight = 0, maxHeight = Infinity) density=androidx.compose.ui.node.LayoutModifierNodeCoordinator@7d9b25b direction=Rtl
+overflowWidth=true overflowHeight=false maxLinesExceeded=false
+style=TextStyle(color=Color(0.9019608, 0.8784314, 0.9137255, 1.0, sRGB IEC61966-2.1), brush=null, alpha=1.0, fontSize=12.0.sp, fontWeight=FontWeight(weight=400), fontStyle=null, fontSynthesis=null, fontFamily=FontFamily.SansSerif, fontFeatureSettings=null, letterSpacing=0.4.sp, baselineShift=null, textGeometricTransform=null, localeList=null, background=Color(0.0, 0.0, 0.0, 0.0, None), textDecoration=null, shadow=null, drawStyle=null, textAlign=Unspecified, textDirection=Unspecified, lineHeight=16.0.sp, textIndent=null, platformStyle=PlatformTextStyle(spanStyle=null, paragraphSyle=PlatformParagraphStyle(includeFontPadding=false, emojiSupportMatch=EmojiSupportMatch.Default)), lineHeightStyle=LineHeightStyle(alignment=LineHeightStyle.Alignment.Center, trim=LineHeightStyle.Trim.None,mode=LineHeightStyle.Mode.Fixed), lineBreak=LineBreak(strategy=Strategy.Unspecified, strictness=Strictness.Unspecified, wordBreak=WordBreak.Unspecified), hyphens=Hyphens.Unspecified, textMotion=null) maxLines=2147483647 softWrap=true
+line[0] left=0.0 right=116.0 top=0.0 bottom=81.0 start=0 end=3 ellipsized=false
+character[0] bounds=Rect.fromLTRB(0.0, 0.0, 35.0, 81.0)
+character[1] bounds=Rect.fromLTRB(35.0, 0.0, 71.0, 81.0)
+character[2] bounds=Rect.fromLTRB(71.0, 0.0, 116.0, 81.0)
+
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertFalse(Assert.java:65)
+	at takagi.ru.monica.update.AppUpdateDialogTest.assertTextNotClipped(AppUpdateDialogTest.kt:383)
+	at takagi.ru.monica.update.AppUpdateDialogTest.shortHeightLargeTextDownloadCanScrollToItsProgressAndCancel(AppUpdateDialogTest.kt:216)
+
+INSTRUMENTATION_STATUS: test=shortHeightLargeTextDownloadCanScrollToItsProgressAndCancel
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 2.192
+There were 2 failures:
+1) smallLargeTextRtlDarkDialogKeepsTextAndActionsReachable(takagi.ru.monica.update.AppUpdateDialogTest)
+java.lang.AssertionError: Update now must fit horizontally
+text=Update now
+semanticsSize=399 x 107
+boundsInRoot=Rect.fromLTRB(341.0, 1315.0, 740.0, 1422.0)
+boundsInWindow=Rect.fromLTRB(341.0, 1315.0, 740.0, 1422.0)
+layout[0] size=399 x 107 paragraphWidth=620.0 paragraphHeight=107.0
+constraints=Constraints(minWidth = 0, maxWidth = 620, minHeight = 0, maxHeight = Infinity) density=androidx.compose.ui.node.LayoutModifierNodeCoordinator@1803781 direction=Rtl
+overflowWidth=true overflowHeight=false maxLinesExceeded=false
+style=TextStyle(color=Color(0.21960784, 0.11764706, 0.44705883, 1.0, sRGB IEC61966-2.1), brush=null, alpha=1.0, fontSize=14.0.sp, fontWeight=FontWeight(weight=500), fontStyle=null, fontSynthesis=null, fontFamily=FontFamily.SansSerif, fontFeatureSettings=null, letterSpacing=0.1.sp, baselineShift=null, textGeometricTransform=null, localeList=null, background=Color(0.0, 0.0, 0.0, 0.0, None), textDecoration=null, shadow=null, drawStyle=null, textAlign=Unspecified, textDirection=Unspecified, lineHeight=20.0.sp, textIndent=null, platformStyle=PlatformTextStyle(spanStyle=null, paragraphSyle=PlatformParagraphStyle(includeFontPadding=false, emojiSupportMatch=EmojiSupportMatch.Default)), lineHeightStyle=LineHeightStyle(alignment=LineHeightStyle.Alignment.Center, trim=LineHeightStyle.Trim.None,mode=LineHeightStyle.Mode.Fixed), lineBreak=LineBreak(strategy=Strategy.Unspecified, strictness=Strictness.Unspecified, wordBreak=WordBreak.Unspecified), hyphens=Hyphens.Unspecified, textMotion=null) maxLines=2147483647 softWrap=true
+line[0] left=0.0 right=397.54095 top=0.0 bottom=107.0 start=0 end=10 ellipsized=false
+character[0] bounds=Rect.fromLTRB(0.0, 0.0, 48.3, 107.0)
+character[1] bounds=Rect.fromLTRB(48.3, 0.0, 90.8, 107.0)
+character[2] bounds=Rect.fromLTRB(90.8, 0.0, 133.3, 107.0)
+character[3] bounds=Rect.fromLTRB(133.3, 0.0, 173.8, 107.0)
+character[4] bounds=Rect.fromLTRB(173.8, 0.0, 199.3, 107.0)
+character[5] bounds=Rect.fromLTRB(199.3, 0.0, 239.8, 107.0)
+character[6] bounds=Rect.fromLTRB(239.8, 0.0, 258.3, 107.0)
+character[7] bounds=Rect.fromLTRB(258.3, 0.0, 299.8, 107.0)
+character[8] bounds=Rect.fromLTRB(299.8, 0.0, 342.3, 107.0)
+character[9] bounds=Rect.fromLTRB(342.3, 0.0, 397.5, 107.0)
+
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertFalse(Assert.java:65)
+	at takagi.ru.monica.update.AppUpdateDialogTest.assertTextNotClipped(AppUpdateDialogTest.kt:383)
+	at takagi.ru.monica.update.AppUpdateDialogTest.smallLargeTextRtlDarkDialogKeepsTextAndActionsReachable(AppUpdateDialogTest.kt:161)
+2) shortHeightLargeTextDownloadCanScrollToItsProgressAndCancel(takagi.ru.monica.update.AppUpdateDialogTest)
+java.lang.AssertionError: 61% must fit horizontally
+text=61%
+semanticsSize=117 x 81
+boundsInRoot=Rect.fromLTRB(814.0, 1026.0, 931.0, 1107.0)
+boundsInWindow=Rect.fromLTRB(814.0, 1026.0, 931.0, 1107.0)
+layout[0] size=117 x 81 paragraphWidth=782.0 paragraphHeight=81.0
+constraints=Constraints(minWidth = 0, maxWidth = 782, minHeight = 0, maxHeight = Infinity) density=androidx.compose.ui.node.LayoutModifierNodeCoordinator@7d9b25b direction=Rtl
+overflowWidth=true overflowHeight=false maxLinesExceeded=false
+style=TextStyle(color=Color(0.9019608, 0.8784314, 0.9137255, 1.0, sRGB IEC61966-2.1), brush=null, alpha=1.0, fontSize=12.0.sp, fontWeight=FontWeight(weight=400), fontStyle=null, fontSynthesis=null, fontFamily=FontFamily.SansSerif, fontFeatureSettings=null, letterSpacing=0.4.sp, baselineShift=null, textGeometricTransform=null, localeList=null, background=Color(0.0, 0.0, 0.0, 0.0, None), textDecoration=null, shadow=null, drawStyle=null, textAlign=Unspecified, textDirection=Unspecified, lineHeight=16.0.sp, textIndent=null, platformStyle=PlatformTextStyle(spanStyle=null, paragraphSyle=PlatformParagraphStyle(includeFontPadding=false, emojiSupportMatch=EmojiSupportMatch.Default)), lineHeightStyle=LineHeightStyle(alignment=LineHeightStyle.Alignment.Center, trim=LineHeightStyle.Trim.None,mode=LineHeightStyle.Mode.Fixed), lineBreak=LineBreak(strategy=Strategy.Unspecified, strictness=Strictness.Unspecified, wordBreak=WordBreak.Unspecified), hyphens=Hyphens.Unspecified, textMotion=null) maxLines=2147483647 softWrap=true
+line[0] left=0.0 right=116.0 top=0.0 bottom=81.0 start=0 end=3 ellipsized=false
+character[0] bounds=Rect.fromLTRB(0.0, 0.0, 35.0, 81.0)
+character[1] bounds=Rect.fromLTRB(35.0, 0.0, 71.0, 81.0)
+character[2] bounds=Rect.fromLTRB(71.0, 0.0, 116.0, 81.0)
+
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertFalse(Assert.java:65)
+	at takagi.ru.monica.update.AppUpdateDialogTest.assertTextNotClipped(AppUpdateDialogTest.kt:383)
+	at takagi.ru.monica.update.AppUpdateDialogTest.shortHeightLargeTextDownloadCanScrollToItsProgressAndCancel(AppUpdateDialogTest.kt:216)
+
+FAILURES!!!
+Tests run: 2,  Failures: 2
+
+
+INSTRUMENTATION_CODE: -1

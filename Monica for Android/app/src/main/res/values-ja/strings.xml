@@ -2713,9 +2713,9 @@
     <string name="transfer_to_external">外部ストレージへの転送</string>
     <string name="remove_database">データベースの削除</string>
     <string name="confirm_remove">データベースを削除しますか?</string>
-    <string name="confirm_remove_internal_description">これにより、データベースのレコードが削除されます。ファイルは内部ストレージからも削除されます。</string>
-    <string name="confirm_remove_external_description">これにより、データベース参照が削除されます。元のファイルは削除されません。</string>
-    <string name="confirm_remove_remote_description">このリモート データベースとローカル コピーを削除します。クラウド ファイルはそのまま残ります。</string>
+    <string name="confirm_remove_internal_description">このデータベースを Monica から削除します。内部の KDBX ファイルは残ります。インポートしたキーファイルのコピーは、他のデータベースで使われていない場合に削除されます。</string>
+    <string name="confirm_remove_external_description">このデータベースを Monica から削除します。元の KDBX ファイルは残ります。インポートしたキーファイルのコピーは、他のデータベースで使われていない場合に削除されます。</string>
+    <string name="confirm_remove_remote_description">このリモートデータベースを Monica から削除します。クラウドの元ファイルは残ります。ローカルの作業用コピーとキャッシュは WebDAV の場合のみ削除されます。インポートしたキーファイルのコピーは、他のデータベースで使われていない場合に削除されます。</string>
     <string name="remove">取り除く</string>
     <string name="create">作成する</string>
     <string name="import_existing_database">既存のデータベースをインポートする</string>
@@ -3878,7 +3878,7 @@
     <string name="mdbx_create_new_vault_button">新しい保管庫を作成</string>
     <string name="mdbx_your_vaults">自分の保管庫</string>
     <string name="mdbx_delete_vault_title">保管庫を削除</string>
-    <string name="mdbx_delete_vault_message">「%s」を削除してもよろしいですか？\n\nローカルの参照のみ削除します。WebDAV 上のファイルは削除されません。</string>
+    <string name="mdbx_delete_vault_message">「%s」を Monica から削除しますか？\n\nMonica 内に保存されたこの保管庫のローカルデータと、Monica が管理するこの保管庫の MDBX2 ファイルが削除されます。外部ストレージやクラウドの元ファイルは残ります。</string>
     <string name="mdbx_delete">削除</string>
     <string name="mdbx_cancel">キャンセル</string>
     <string name="mdbx_set_default">既定に設定</string>

@@ -2726,9 +2726,9 @@
     <string name="transfer_to_external">Chuyển sang bộ nhớ ngoài</string>
     <string name="remove_database">Xóa cơ sở dữ liệu</string>
     <string name="confirm_remove">Xóa cơ sở dữ liệu?</string>
-    <string name="confirm_remove_internal_description">Điều này sẽ loại bỏ bản ghi cơ sở dữ liệu. Tệp cũng sẽ bị xóa khỏi bộ nhớ trong.</string>
-    <string name="confirm_remove_external_description">Điều này sẽ loại bỏ tham chiếu cơ sở dữ liệu. Tệp gốc sẽ không bị xóa.</string>
-    <string name="confirm_remove_remote_description">Xóa cơ sở dữ liệu từ xa và bản sao cục bộ này. Tệp đám mây vẫn không bị ảnh hưởng.</string>
+    <string name="confirm_remove_internal_description">Cơ sở dữ liệu sẽ bị gỡ khỏi Monica. Tệp KDBX nội bộ được giữ lại. Bản sao tệp khóa đã nhập sẽ bị xóa nếu không có cơ sở dữ liệu nào khác sử dụng.</string>
+    <string name="confirm_remove_external_description">Cơ sở dữ liệu sẽ bị gỡ khỏi Monica. Tệp KDBX gốc được giữ lại. Bản sao tệp khóa đã nhập sẽ bị xóa nếu không có cơ sở dữ liệu nào khác sử dụng.</string>
+    <string name="confirm_remove_remote_description">Cơ sở dữ liệu từ xa sẽ bị gỡ khỏi Monica. Các tệp gốc trên đám mây được giữ lại. Bản sao làm việc và bản sao bộ nhớ đệm cục bộ chỉ bị xóa đối với WebDAV. Bản sao tệp khóa đã nhập sẽ bị xóa nếu không có cơ sở dữ liệu nào khác sử dụng.</string>
     <string name="remove">Di dời</string>
     <string name="create">Tạo nên</string>
     <string name="import_existing_database">Nhập cơ sở dữ liệu hiện có</string>
@@ -3927,7 +3927,7 @@
     <string name="mdbx_create_new_vault_button">Tạo kho mới</string>
     <string name="mdbx_your_vaults">Kho của bạn</string>
     <string name="mdbx_delete_vault_title">Xóa kho</string>
-    <string name="mdbx_delete_vault_message">Bạn có chắc muốn xóa \"%s\"?\n\nChỉ tham chiếu cục bộ bị xóa. Tệp trên WebDAV sẽ không bị xóa.</string>
+    <string name="mdbx_delete_vault_message">Xóa “%s” khỏi Monica?\n\nDữ liệu của kho này được lưu cục bộ trong Monica và các tệp MDBX2 của kho do Monica quản lý sẽ bị xóa. Các tệp gốc trên bộ nhớ ngoài hoặc đám mây được giữ lại.</string>
     <string name="mdbx_delete">Xóa</string>
     <string name="mdbx_cancel">Hủy</string>
     <string name="mdbx_set_default">Đặt làm mặc định</string>

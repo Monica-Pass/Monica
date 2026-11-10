@@ -46,15 +46,22 @@ class PasswordOtpEditorTest {
 
     @Before fun setup() {
         runBlocking {
+            assertTrue("Standalone UI fixture requires prepared secure storage",
+                takagi.ru.monica.security.SecureStorageStartup.prepareWithRetry(context) is
+                    takagi.ru.monica.security.SecureStartupResult.Ready)
+        }
+        runBlocking {
             val settings = takagi.ru.monica.utils.SettingsManager(context)
             previousContentEditor = settings.settingsFlow.first().passwordContentEditorEnabled
             settings.updatePasswordContentEditorEnabled(false)
         }
         db = Room.inMemoryDatabaseBuilder(context, PasswordDatabase::class.java).build()
         security = SecurityManager(context)
-        model = PasswordViewModel(PasswordRepository(db.passwordEntryDao(), categoryDao = db.categoryDao()),
-            security, customFieldRepository = CustomFieldRepository(db.customFieldDao()),
-            strings = AppLocaleStringResolver(context))
+        compose.runOnIdle {
+            model = PasswordViewModel(PasswordRepository(db.passwordEntryDao(), categoryDao = db.categoryDao()),
+                security, customFieldRepository = CustomFieldRepository(db.customFieldDao()),
+                strings = AppLocaleStringResolver(context))
+        }
     }
     @After fun cleanup() {
         model.viewModelScope.cancel(); db.close()
@@ -197,7 +204,8 @@ class PasswordOtpEditorTest {
         scroll("password_editor_value_2").performTextReplacement("last-fixture")
         androidx.test.espresso.Espresso.closeSoftKeyboard()
         capture("password-group-three")
-        scroll("password_editor_remove_1").performClick()
+        scroll("password_editor_1_menu").performClick()
+        compose.onNodeWithTag("password_editor_remove_1").assertIsDisplayed().performClick()
         scroll("password_editor_value_1").assertTextContains("last-fixture")
         capture("password-group-after-remove")
         scrollTo(hasText(context.getString(R.string.title_required))).assertExists()
@@ -240,7 +248,8 @@ class PasswordOtpEditorTest {
             compose.waitUntil(10_000) { compose.onAllNodesWithText("fixture-frequent-account").fetchSemanticsNodes().isNotEmpty() }
             compose.onNodeWithText("excluded-archived-account").assertDoesNotExist()
             compose.onNodeWithText("fixture-frequent-account").performClick()
-            scrollTo(hasContentDescription(context.getString(R.string.password_fill_title))).performClick()
+            scroll("password_editor_0_menu").performClick()
+        compose.onNodeWithTag("password_editor_0_generate").assertIsDisplayed().performClick()
             compose.waitUntil(10_000) { compose.onAllNodesWithText("Fixture Frequent Secret!").fetchSemanticsNodes().isNotEmpty() }
             compose.onNodeWithText("Excluded Archived Secret!").assertDoesNotExist()
             val screenshotDir = File(context.getExternalFilesDir(null), "generator-ui").apply { mkdirs() }
@@ -274,7 +283,8 @@ class PasswordOtpEditorTest {
         scrollTo(hasContentDescription(context.getString(R.string.cg_username_title))).performClick()
         val account = generated()
         compose.onNodeWithTag("generator_apply").performScrollTo().performClick()
-        scrollTo(hasContentDescription(context.getString(R.string.password_fill_title))).performClick()
+        scroll("password_editor_0_menu").performClick()
+        compose.onNodeWithTag("password_editor_0_generate").assertIsDisplayed().performClick()
         val password = generated()
         compose.onNodeWithTag("generator_apply").performScrollTo().performClick()
         save()
@@ -294,17 +304,19 @@ class PasswordOtpEditorTest {
     @Test fun onDemandEditorAddsSteamAndKeepsItAfterReedit() = verify(OtpType.STEAM, onDemand = true)
     @Test fun onDemandEditorAddsYandexAndKeepsItAfterReedit() = verify(OtpType.YANDEX, onDemand = true)
 
-    @Test fun onDemandContactsAndAddressSurviveSaveReeditAndClearing() {
+    @Test fun mergedAddressContactsSurviveSaveReeditAndClearing() {
         runBlocking { takagi.ru.monica.utils.SettingsManager(context).updatePasswordContentEditorEnabled(true) }
         show()
-        addContent("CONTACT")
-        scroll("entry_contact_email_0").performTextReplacement("alice@example.invalid")
-        scroll("entry_contact_phone_0").performTextReplacement("+44 20 7946 0123")
         addContent("ADDRESS")
-        scroll("entry_address_street").performTextReplacement("12 Example Street")
-        scroll("entry_address_city").performTextReplacement("London")
-        scroll("entry_address_postal").performTextReplacement("SW1A 1AA")
-        scroll("entry_address_country").performTextReplacement("UK")
+        openEmbeddedWalletSection("billing_item_editor", "contact")
+        compose.onNodeWithTag("entry_contact_email_0").performScrollTo().performTextReplacement("alice@example.invalid")
+        compose.onNodeWithTag("entry_contact_phone_0").performScrollTo().performTextReplacement("+44 20 7946 0123")
+        closeEmbeddedWalletSection()
+        embeddedWalletField("billing_item_editor", "entry_address_street").performTextReplacement("12 Example Street")
+        embeddedWalletField("billing_item_editor", "entry_address_city").performTextReplacement("London")
+        embeddedWalletField("billing_item_editor", "entry_address_postal").performTextReplacement("SW1A 1AA")
+        embeddedWalletField("billing_item_editor", "entry_address_country").performTextReplacement("UK")
+        saveEmbeddedWallet("billing_item_editor")
         save()
         val original = runBlocking { requireNotNull(db.passwordEntryDao().getPasswordEntryById(savedId!!)) }
         assertEquals("alice@example.invalid", original.email)
@@ -313,18 +325,28 @@ class PasswordOtpEditorTest {
         assertEquals("London", original.city)
         assertEquals("SW1A 1AA", original.zipCode)
         assertEquals("UK", original.country)
+        val originalSnapshot = savedEmbeddedWallet(takagi.ru.monica.data.model.EmbeddedWalletContent.Kind.ADDRESS)
+        val originalAddress = requireNotNull(takagi.ru.monica.data.model.CardWalletDataCodec.parseBillingAddressData(originalSnapshot.itemData.toString()))
+        assertEquals(original.email, originalAddress.email)
+        assertEquals(original.phone, originalAddress.phone)
+        assertEquals(original.addressLine, originalAddress.streetAddress)
+        assertEquals(original.city, originalAddress.city)
+        assertEquals(original.zipCode, originalAddress.postalCode)
+        assertEquals(original.country, originalAddress.country)
         compose.runOnIdle { editId = savedId; savedId = null }
-        // Existing sections may start collapsed; requesting them also opens their panels.
-        addContent("CONTACT")
-        scroll("entry_contact_email_0").assertTextContains("alice@example.invalid")
-        scroll("entry_contact_phone_0").assertTextContains("+44 20 7946 0123")
-        scroll("entry_contact_phone_0").performTextReplacement("")
         addContent("ADDRESS")
-        scroll("entry_address_postal").assertTextContains("SW1A 1AA")
-        scroll("entry_address_city").performTextReplacement("Oxford")
+        openEmbeddedWalletSection("billing_item_editor", "contact")
+        compose.onNodeWithTag("entry_contact_email_0").performScrollTo().assertTextContains("alice@example.invalid")
+        compose.onNodeWithTag("entry_contact_phone_0").performScrollTo().assertTextContains("+44 20 7946 0123")
+        compose.onNodeWithTag("entry_contact_phone_0").performScrollTo().performTextReplacement("")
+        closeEmbeddedWalletSection()
+        embeddedWalletField("billing_item_editor", "entry_address_postal").assertTextContains("SW1A 1AA")
+        embeddedWalletField("billing_item_editor", "entry_address_city").performTextReplacement("Oxford")
+        saveEmbeddedWallet("billing_item_editor")
         save()
         runBlocking {
             val edited = requireNotNull(db.passwordEntryDao().getPasswordEntryById(savedId!!))
+            assertEquals(original.id, edited.id)
             assertEquals(original.email, edited.email)
             assertEquals("", edited.phone)
             assertEquals("Oxford", edited.city)
@@ -332,7 +354,11 @@ class PasswordOtpEditorTest {
             assertEquals(original.zipCode, edited.zipCode)
             assertEquals(original.country, edited.country)
         }
-        capture("content-contact-address-reedited")
+        val editedSnapshot = savedEmbeddedWallet(takagi.ru.monica.data.model.EmbeddedWalletContent.Kind.ADDRESS)
+        assertEquals(originalSnapshot.id, editedSnapshot.id)
+        assertEquals(originalAddress.copy(phone = "", city = "Oxford"),
+            takagi.ru.monica.data.model.CardWalletDataCodec.parseBillingAddressData(editedSnapshot.itemData.toString()))
+        capture("content-merged-contact-address-reedited")
     }
 
     @Test fun onDemandHiddenCustomFieldSurvivesSaveReeditAndExplicitDeletion() {
@@ -373,48 +399,75 @@ class PasswordOtpEditorTest {
         runBlocking { assertTrue(db.customFieldDao().getFieldsByEntryIdSync(savedId!!).none { it.title != EntryContentFields.ORDER }) }
     }
 
-    @Test fun supplementalPaymentAndIdentityPreserveValuesProtectionAndInsertionOrder() {
+    @Test fun embeddedPaymentAndAddressPreserveValuesProtectionAndCurrentOrder() {
         runBlocking { takagi.ru.monica.utils.SettingsManager(context).updatePasswordContentEditorEnabled(true) }
         show()
         compose.waitForIdle()
-        capture("content-editor-top")
-        fun extra(key: String, value: String) {
-            scroll("entry_extra_add").performClick()
-            compose.onNodeWithTag("entry_extra_choose_$key").performScrollTo().performClick()
-            scroll("entry_extra_$key").performTextReplacement(value)
-        }
+        capture("content-current-editor-top")
         addContent("PAYMENT")
-        extra("pin", "8642")
-        scroll("entry_extra_pin").assert(SemanticsMatcher.keyIsDefined(androidx.compose.ui.semantics.SemanticsProperties.Password))
-        scroll("entry_extra_reveal_pin").performClick()
-        scroll("entry_extra_pin").assertTextContains("8642")
-        addContent("CONTACT")
-        extra("passportNumber", "EX1234567")
+        openEmbeddedWalletSection("embedded_bank_editor", "extended")
+        compose.onNodeWithTag("entry_extra_add").performScrollTo().performClick()
+        compose.onNodeWithTag("entry_extra_choose_pin").performScrollTo().performClick()
+        compose.onNodeWithTag("entry_extra_pin").performScrollTo().performTextReplacement("8642")
+        compose.onNodeWithTag("entry_extra_pin").assert(SemanticsMatcher.keyIsDefined(androidx.compose.ui.semantics.SemanticsProperties.Password))
+        compose.onNodeWithTag("entry_extra_reveal_pin").performScrollTo().performClick()
+        compose.onNodeWithTag("entry_extra_pin").assertTextContains("8642")
+        closeEmbeddedWalletSection()
+        saveEmbeddedWallet("embedded_bank_editor")
         addContent("ADDRESS")
-        extra("apartment", "Suite 9")
+        openEmbeddedWalletSection("billing_item_editor", "custom_hidden")
+        compose.onNodeWithTag("wallet_custom_name_0").performScrollTo().performTextReplacement("contact.passportNumber")
+        compose.onNodeWithTag("wallet_custom_value_0").performScrollTo().performTextReplacement("EX1234567")
+        compose.onNodeWithTag("wallet_custom_value_0").assert(SemanticsMatcher.keyIsDefined(androidx.compose.ui.semantics.SemanticsProperties.Password))
+        closeEmbeddedWalletSection()
+        val apartment = hasText(context.getString(R.string.apartment)) and hasSetTextAction()
+        compose.onNodeWithTag("billing_item_editor").performScrollToNode(apartment)
+        compose.onNode(apartment and hasAnyAncestor(isDialog())).performScrollTo().performTextReplacement("Suite 9")
+        compose.onNode(apartment and hasAnyAncestor(isDialog())).assert(
+            SemanticsMatcher.keyNotDefined(androidx.compose.ui.semantics.SemanticsProperties.Password))
+        saveEmbeddedWallet("billing_item_editor")
         save()
-        fun check() = runBlocking {
+        fun checkCurrent(order: String) = runBlocking {
             val fields = db.customFieldDao().getFieldsByEntryIdSync(savedId!!)
-            assertEquals("PAYMENT,CONTACT,ADDRESS", fields.single { it.title == EntryContentFields.ORDER }.value)
-            val embedded = fields.single { takagi.ru.monica.data.model.EmbeddedWalletContent.isMetadata(it.title) }
-            val snapshot = (takagi.ru.monica.data.model.EmbeddedWalletContent.read(security.decryptDataIfMonicaCiphertext(embedded.value))
-                as takagi.ru.monica.data.model.EmbeddedWalletContent.ReadResult.Available).snapshot
-            assertTrue(embedded.isProtected)
-            assertEquals("8642", snapshot.itemData["pin"].toString().trim('"'))
-            mapOf("contact.passportNumber" to "EX1234567", "address.apartment" to "Suite 9").forEach { (key, value) ->
-                val field = fields.single { it.title == "monica.content.$key" }
-                assertEquals(value, security.decryptDataIfMonicaCiphertext(field.value))
-                assertEquals(!key.startsWith("address"), field.isProtected)
-            }
+            assertEquals(order, fields.single { it.title == EntryContentFields.ORDER }.value)
+            val payment = savedEmbeddedWallet(takagi.ru.monica.data.model.EmbeddedWalletContent.Kind.BANK_CARD)
+            assertEquals("8642", payment.itemData["pin"].toString().trim('"'))
+            val address = savedEmbeddedWallet(takagi.ru.monica.data.model.EmbeddedWalletContent.Kind.ADDRESS)
+            val data = requireNotNull(takagi.ru.monica.data.model.CardWalletDataCodec.parseBillingAddressData(address.itemData.toString()))
+            assertEquals("Suite 9", data.apartment)
+            val passport = data.customFields.single()
+            assertEquals("contact.passportNumber", passport.label)
+            assertEquals("EX1234567", passport.value)
+            assertTrue(passport.isProtected())
+            assertEquals(2, fields.count { takagi.ru.monica.data.model.EmbeddedWalletContent.isMetadata(it.title) })
         }
-        check()
+        checkCurrent("PAYMENT,ADDRESS")
+        val originalPayment = savedEmbeddedWallet(takagi.ru.monica.data.model.EmbeddedWalletContent.Kind.BANK_CARD)
+        val originalAddress = savedEmbeddedWallet(takagi.ru.monica.data.model.EmbeddedWalletContent.Kind.ADDRESS)
         compose.runOnIdle { editId = savedId; savedId = null }
         addContent("PAYMENT")
-        scroll("entry_extra_pin").assertExists()
-        closeContent()
-        capture("content-editor-overview")
+        openEmbeddedWalletSection("embedded_bank_editor", "extended")
+        compose.onNodeWithTag("entry_extra_pin").performScrollTo().assertExists()
+        compose.onNodeWithTag("entry_extra_pin").assert(SemanticsMatcher.keyIsDefined(androidx.compose.ui.semantics.SemanticsProperties.Password))
+        closeEmbeddedWalletSection()
+        saveEmbeddedWallet("embedded_bank_editor")
+        addContent("ADDRESS")
+        compose.onNodeWithTag("billing_item_editor").performScrollToNode(hasTestTag("wallet_content_custom"))
+        compose.onNodeWithTag("wallet_content_custom").performClick()
+        compose.onNodeWithTag("wallet_detail_custom").assertIsDisplayed()
+        compose.onNodeWithTag("wallet_custom_name_0").performScrollTo().assertTextContains("contact.passportNumber")
+        compose.onNodeWithTag("wallet_custom_value_0").assert(SemanticsMatcher.keyIsDefined(androidx.compose.ui.semantics.SemanticsProperties.Password))
+        closeEmbeddedWalletSection()
+        saveEmbeddedWallet("billing_item_editor")
+        capture("content-current-editor-overview")
         save()
-        check()
+        checkCurrent("PAYMENT,ADDRESS")
+        val savedPayment = savedEmbeddedWallet(takagi.ru.monica.data.model.EmbeddedWalletContent.Kind.BANK_CARD)
+        val savedAddress = savedEmbeddedWallet(takagi.ru.monica.data.model.EmbeddedWalletContent.Kind.ADDRESS)
+        assertEquals(originalPayment.id, savedPayment.id)
+        assertEquals(originalPayment.itemData, savedPayment.itemData)
+        assertEquals(originalAddress.id, savedAddress.id)
+        assertEquals(originalAddress.itemData, savedAddress.itemData)
         compose.runOnIdle { editId = savedId; savedId = null; editorOpenCount++ }
         scrollTo(hasTestTag("content_panel_ADDRESS"))
         val dragHandle = compose.onNodeWithTag("content_panel_ADDRESS")
@@ -425,32 +478,82 @@ class PasswordOtpEditorTest {
             moveBy(androidx.compose.ui.geometry.Offset(0f, -distance), delayMillis = 150)
             up()
         }
-        capture("content-editor-after-drag")
+        capture("content-current-editor-after-drag")
         save()
-        runBlocking {
-            assertEquals("PAYMENT,ADDRESS,CONTACT", db.customFieldDao().getFieldsByEntryIdSync(savedId!!)
-                .single { it.title == EntryContentFields.ORDER }.value)
-        }
+        checkCurrent("AUTHENTICATOR,ADDRESS,PAYMENT")
+        assertEquals(savedPayment.itemData, savedEmbeddedWallet(takagi.ru.monica.data.model.EmbeddedWalletContent.Kind.BANK_CARD).itemData)
+        assertEquals(savedAddress.itemData, savedEmbeddedWallet(takagi.ru.monica.data.model.EmbeddedWalletContent.Kind.ADDRESS).itemData)
         compose.runOnIdle { editId = savedId; savedId = null; editorOpenCount++ }
-        scrollTo(hasTestTag("content_actions_CONTACT")).performClick()
+        scrollTo(hasTestTag("content_actions_ADDRESS")).performClick()
         compose.onNodeWithTag("content_remove").performClick()
         compose.onNodeWithText(context.getString(R.string.cancel)).performClick()
-        scrollTo(hasTestTag("content_panel_CONTACT")).assertIsDisplayed()
-        scrollTo(hasTestTag("content_actions_CONTACT")).performClick()
+        scrollTo(hasTestTag("content_panel_ADDRESS")).assertIsDisplayed()
+        save()
+        checkCurrent("AUTHENTICATOR,ADDRESS,PAYMENT")
+        assertEquals(savedPayment.itemData, savedEmbeddedWallet(takagi.ru.monica.data.model.EmbeddedWalletContent.Kind.BANK_CARD).itemData)
+        assertEquals(savedAddress.itemData, savedEmbeddedWallet(takagi.ru.monica.data.model.EmbeddedWalletContent.Kind.ADDRESS).itemData)
+        compose.runOnIdle { editId = savedId; savedId = null; editorOpenCount++ }
+        scrollTo(hasTestTag("content_actions_ADDRESS")).performClick()
         compose.onNodeWithTag("content_remove").performClick()
         compose.onNodeWithTag("content_remove_confirm").performClick()
-        compose.onNodeWithTag("content_panel_CONTACT").assertDoesNotExist()
+        compose.onNodeWithTag("content_panel_ADDRESS").assertDoesNotExist()
         save()
         runBlocking {
             val fields = db.customFieldDao().getFieldsByEntryIdSync(savedId!!)
-            assertEquals("PAYMENT,ADDRESS", fields.single { it.title == EntryContentFields.ORDER }.value)
-            assertFalse(fields.any { it.title == "monica.content.contact.passportNumber" })
-            val pin = fields.single { it.title == takagi.ru.monica.data.model.EmbeddedWalletContent.fieldName(takagi.ru.monica.data.model.EmbeddedWalletContent.Kind.BANK_CARD) }
-            val copy = takagi.ru.monica.data.model.EmbeddedWalletContent.read(security.decryptDataIfMonicaCiphertext(pin.value))
-                as takagi.ru.monica.data.model.EmbeddedWalletContent.ReadResult.Available
-            assertTrue(pin.isProtected)
-            assertEquals("8642", copy.snapshot.itemData["pin"].toString().trim('"'))
+            assertEquals("AUTHENTICATOR,PAYMENT", fields.single { it.title == EntryContentFields.ORDER }.value)
+            assertFalse(fields.any { it.title == takagi.ru.monica.data.model.EmbeddedWalletContent.fieldName(takagi.ru.monica.data.model.EmbeddedWalletContent.Kind.ADDRESS) })
+            assertFalse(fields.any { it.title.startsWith("monica.content.contact.") || it.title.startsWith("monica.content.address.") })
+            assertEquals(1, fields.count { takagi.ru.monica.data.model.EmbeddedWalletContent.isMetadata(it.title) })
+            val remaining = savedEmbeddedWallet(takagi.ru.monica.data.model.EmbeddedWalletContent.Kind.BANK_CARD)
+            assertEquals(savedPayment.id, remaining.id)
+            assertEquals(savedPayment.itemData, remaining.itemData)
+            assertEquals("8642", remaining.itemData["pin"].toString().trim('"'))
+            val row = requireNotNull(db.passwordEntryDao().getPasswordEntryById(savedId!!))
+            assertEquals("", row.email)
+            assertEquals("", row.phone)
+            assertEquals("", row.addressLine)
+            assertEquals("", row.city)
+            assertEquals("", row.zipCode)
+            assertEquals("", row.country)
         }
+    }
+
+    /** Current embedded wallet paths; used only by the two current-contract acceptance methods. */
+    private fun openEmbeddedWalletSection(root: String, key: String) {
+        androidx.test.espresso.Espresso.closeSoftKeyboard()
+        compose.onNodeWithTag(root).performScrollToNode(hasTestTag("item_editor_add_content"))
+        compose.onNodeWithTag("item_editor_add_content").performClick()
+        compose.waitUntil(5000) { compose.onAllNodesWithTag("item_editor_choose_$key").fetchSemanticsNodes().isNotEmpty() }
+        compose.onNodeWithTag("item_editor_choose_$key").performScrollTo().performClick()
+        compose.onNodeWithTag("wallet_detail_${if (key.startsWith("custom_")) "custom" else key}").assertIsDisplayed()
+    }
+
+    private fun closeEmbeddedWalletSection() {
+        androidx.test.espresso.Espresso.closeSoftKeyboard()
+        compose.onNodeWithTag("wallet_detail_done").performClick()
+        compose.waitForIdle()
+    }
+
+    private fun embeddedWalletField(root: String, tag: String): SemanticsNodeInteraction {
+        compose.onNodeWithTag(root).performScrollToNode(hasTestTag(tag))
+        return compose.onNodeWithTag(tag).performScrollTo()
+    }
+
+    private fun saveEmbeddedWallet(root: String) {
+        androidx.test.espresso.Espresso.closeSoftKeyboard()
+        compose.onNode(hasContentDescription(context.getString(R.string.save)) and hasAnyAncestor(isDialog()))
+            .assertIsDisplayed().performClick()
+        compose.waitUntil(15000) { compose.onAllNodesWithTag(root).fetchSemanticsNodes().isEmpty() }
+    }
+
+    private fun savedEmbeddedWallet(kind: takagi.ru.monica.data.model.EmbeddedWalletContent.Kind): takagi.ru.monica.data.model.EmbeddedWalletContent.Snapshot = runBlocking {
+        val field = db.customFieldDao().getFieldsByEntryIdSync(savedId!!).single {
+            it.title == takagi.ru.monica.data.model.EmbeddedWalletContent.fieldName(kind)
+        }
+        assertTrue("Embedded $kind envelope must stay protected", field.isProtected)
+        val decoded = takagi.ru.monica.data.model.EmbeddedWalletContent.read(security.decryptDataIfMonicaCiphertext(field.value))
+        assertTrue("Embedded $kind must remain readable", decoded is takagi.ru.monica.data.model.EmbeddedWalletContent.ReadResult.Available)
+        (decoded as takagi.ru.monica.data.model.EmbeddedWalletContent.ReadResult.Available).snapshot
     }
 
     private fun scrollTo(matcher: SemanticsMatcher): SemanticsNodeInteraction {
@@ -465,7 +568,8 @@ class PasswordOtpEditorTest {
     private fun closeContent() {
         if (compose.onAllNodesWithTag("embedded_bank_editor").fetchSemanticsNodes().isNotEmpty()) {
             androidx.test.espresso.Espresso.closeSoftKeyboard()
-            compose.onNodeWithContentDescription(context.getString(R.string.save)).performClick()
+            compose.onNode(hasContentDescription(context.getString(R.string.save)) and
+                hasAnyAncestor(isDialog())).assertIsDisplayed().performClick()
             compose.waitUntil(15000) { compose.onAllNodesWithTag("embedded_bank_editor").fetchSemanticsNodes().isEmpty() }
         }
         if (compose.onAllNodesWithTag("content_detail_back").fetchSemanticsNodes().isNotEmpty()) {
@@ -481,8 +585,7 @@ class PasswordOtpEditorTest {
     private fun addContent(section: String) {
         if (section == "AUTHENTICATOR") {
             closeContent()
-            scroll("password_otp_settings").performClick()
-            compose.onNodeWithTag("editor_advanced_open").performClick()
+            openOtpSettings()
             return
         }
         closeContent()
@@ -563,22 +666,34 @@ class PasswordOtpEditorTest {
         if (tag in setOf("password_otp_secret", "password_otp_settings", "password_otp_inline_preview")) closeContent()
         else if ((tag.startsWith("otp_") || tag == "password_otp_advanced") &&
             compose.onAllNodesWithTag("content_detail_scroll").fetchSemanticsNodes().isEmpty()) {
-            scroll("password_otp_settings").performClick()
-            compose.onNodeWithTag("editor_advanced_open").performClick()
+            openOtpSettings()
         }
         if (compose.onAllNodesWithTag("embedded_bank_editor").fetchSemanticsNodes().isNotEmpty()) {
             val node = compose.onNodeWithTag(tag).performScrollTo()
             compose.bringAboveFloatingActions(node, compose.onNodeWithTag("embedded_bank_editor"))
             return node
         }
-        activeScroll().performScrollToNode(hasTestTag(tag))
-        return compose.onNodeWithTag(tag).performScrollTo()
+        val editor = activeScroll()
+        editor.performScrollToNode(hasTestTag(tag))
+        val node = compose.onNodeWithTag(tag)
+        compose.bringAboveFloatingActions(node, editor)
+        return node
     }
+    private fun openOtpSettings() {
+        androidx.test.espresso.Espresso.closeSoftKeyboard()
+        scroll("password_otp_settings").assertIsDisplayed().performClick()
+        compose.waitUntil(5_000) {
+            compose.onAllNodesWithTag("editor_advanced_open").fetchSemanticsNodes().size == 1
+        }
+        compose.onNode(hasTestTag("editor_advanced_open") and
+            hasAnyAncestor(hasTestTag("editor_action_menu"))).assertIsDisplayed().performClick()
+        compose.onNodeWithTag("content_detail_scroll").assertExists()
+    }
+
     private fun save() {
         closeContent()
         androidx.test.espresso.Espresso.closeSoftKeyboard()
-        compose.onNode(hasTestTag("password_editor_save") or
-            hasContentDescription(context.getString(R.string.save))).performClick()
+        compose.onNodeWithTag("password_editor_save").assertIsDisplayed().performClick()
         compose.waitUntil(20_000) { savedId != null }
     }
     private fun payload() = runBlocking {

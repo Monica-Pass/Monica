@@ -357,8 +357,14 @@ fun AddEditBillingAddressScreen(
         WalletEditorSection("address_extra", R.string.wallet_address_extra, Icons.Default.Home,
             editorSections.visible("address_extra", district.isNotBlank() || addressLine3.isNotBlank())) {
             InfoCard(title = stringResource(R.string.wallet_address_extra)) {
-                WalletProfileField(district, { district = it }, R.string.wallet_district)
-                WalletProfileField(addressLine3, { addressLine3 = it }, R.string.wallet_address_line3)
+                ConnectedFieldGroup(
+                    {
+                        WalletProfileField(district, { district = it }, R.string.wallet_district)
+                    },
+                    {
+                        WalletProfileField(addressLine3, { addressLine3 = it }, R.string.wallet_address_line3)
+                    },
+                )
             }
         },
         WalletEditorSection("home_contact", R.string.wallet_home_contact, Icons.Default.Home,
@@ -424,24 +430,29 @@ fun AddEditBillingAddressScreen(
             )
 
             InfoCard(title = stringResource(R.string.billing_address)) {
-
-                SuggestedOutlinedTextField(
-                    suggestionField = CommonSuggestionField.FULL_NAME,
-                    value = fullName,
-                    onValueChange = { fullName = it },
-                    label = { Text(stringResource(R.string.full_name)) },
-                    leadingIcon = { Icon(Icons.Default.Person, contentDescription = null) },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true,
-                    shape = RoundedCornerShape(12.dp)
-                )
-                OutlinedTextField(
-                    value = company,
-                    onValueChange = { company = it },
-                    label = { Text(stringResource(R.string.document_company_label)) },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true,
-                    shape = RoundedCornerShape(12.dp)
+                ConnectedFieldGroup(
+                    {
+                        SuggestedOutlinedTextField(
+                            suggestionField = CommonSuggestionField.FULL_NAME,
+                            value = fullName,
+                            onValueChange = { fullName = it },
+                            label = { Text(stringResource(R.string.full_name)) },
+                            leadingIcon = { Icon(Icons.Default.Person, contentDescription = null) },
+                            modifier = Modifier.fillMaxWidth(),
+                            singleLine = true,
+                            shape = RoundedCornerShape(12.dp)
+                        )
+                    },
+                    {
+                        OutlinedTextField(
+                            value = company,
+                            onValueChange = { company = it },
+                            label = { Text(stringResource(R.string.document_company_label)) },
+                            modifier = Modifier.fillMaxWidth(),
+                            singleLine = true,
+                            shape = RoundedCornerShape(12.dp)
+                        )
+                    },
                 )
             }
 

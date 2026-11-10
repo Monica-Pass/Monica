@@ -47,6 +47,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import org.junit.Assert.*
 import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -75,6 +76,14 @@ class KeePassManagementUiTest {
         id = id, name = listOf("个人密码", "工作账户", "家庭共享", "归档").getOrNull(id.toInt() - 1) ?: "示例数据库 $id",
         filePath = "/synthetic/database-$id.kdbx", isDefault = id == 1L, sortOrder = id.toInt()
     ) }
+
+    @Before fun prepareSecureStorage() {
+        runBlocking {
+            assertTrue("Standalone UI fixture requires prepared secure storage",
+                takagi.ru.monica.security.SecureStorageStartup.prepareWithRetry(context) is
+                    takagi.ru.monica.security.SecureStartupResult.Ready)
+        }
+    }
 
     private fun label(id: Int): String = context.createConfigurationContext(
         Configuration(context.resources.configuration).apply { setLocale(testLocale.value) }).getString(id)

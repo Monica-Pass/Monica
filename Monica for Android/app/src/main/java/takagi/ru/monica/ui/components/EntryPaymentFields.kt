@@ -24,12 +24,17 @@ fun EntryPaymentFields(
     onExpiry: (String) -> Unit, onCvv: (String) -> Unit,
     onPickHolder: (() -> Unit)? = null,
 ) {
-    Column(verticalArrangement = Arrangement.spacedBy(if (LocalTemplateFieldShape.current) 2.dp else 12.dp)) {
-        PaymentField(number, { onNumber(EntryPaymentFormat.cardNumber(it)) }, R.string.field_card_number, "number", true, true)
-        PaymentField(holder, onHolder, R.string.cardholder_name, "holder", false, false, onPickHolder)
-        PaymentExpiryTextField(expiry, onExpiry,
-            modifier = Modifier.fillMaxWidth().testTag("entry_payment_expiry"), entryContentStyle = true)
-        PaymentField(cvv, { onCvv(EntryPaymentFormat.cvv(it)) }, R.string.cvv, "cvv", true, true)
+    val fields = arrayOf<@Composable () -> Unit>(
+        { PaymentField(number, { onNumber(EntryPaymentFormat.cardNumber(it)) }, R.string.field_card_number, "number", true, true) },
+        { PaymentField(holder, onHolder, R.string.cardholder_name, "holder", false, false, onPickHolder) },
+        { PaymentExpiryTextField(expiry, onExpiry,
+            modifier = Modifier.fillMaxWidth().testTag("entry_payment_expiry"), entryContentStyle = true) },
+        { PaymentField(cvv, { onCvv(EntryPaymentFormat.cvv(it)) }, R.string.cvv, "cvv", true, true) },
+    )
+    if (LocalStandaloneTemplateFields.current || LocalTemplateFieldShape.current || LocalConnectedFieldEdges.current != null) {
+        ConnectedFieldGroup(*fields)
+    } else {
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) { fields.forEach { it() } }
     }
 }
 

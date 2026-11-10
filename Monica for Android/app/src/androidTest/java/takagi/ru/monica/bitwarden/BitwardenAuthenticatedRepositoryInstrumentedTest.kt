@@ -407,6 +407,17 @@ class BitwardenAuthenticatedRepositoryInstrumentedTest {
             }
         }
 
+        // Read-only test access for the real LoginScreen acceptance. No authentication bypass.
+        internal val uiEmail: String get() = email
+        internal val uiPassword: String get() = PASSWORD
+        internal val uiRequestCount: Int get() = server.requestCount
+        internal fun uiTakeRequest(): RecordedRequest = requireNotNull(server.takeRequest(10, TimeUnit.SECONDS))
+        internal fun uiEnvironmentDraft() = BitwardenEnvironmentDraft(
+            BitwardenEnvironmentPreset.CUSTOM, baseUrl = endpoint, apiUrl = "$endpoint/api/",
+            identityUrl = "$endpoint/identity/", webUrl = "$endpoint/web/", notificationsUrl = "$endpoint/notifications/",
+            headers = listOf(BitwardenHeaderDraft(HEADER_NAME, HEADER_VALUE)), tls = BitwardenTlsConfig(caCertificatePem = pem),
+        )
+
         suspend fun loginSuccessfully(): BitwardenVault {
             val environment = requireNotNull(BitwardenEnvironmentResolver.resolve(BitwardenEnvironmentDraft(
                 BitwardenEnvironmentPreset.CUSTOM, baseUrl = endpoint, apiUrl = "$endpoint/api/",

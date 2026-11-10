@@ -53,6 +53,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExposedDropdownMenu
+import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -367,7 +369,7 @@ fun AutofillSettingsV2Screen(
                         readOnly = true,
                         singleLine = true,
                         modifier = Modifier
-                            .menuAnchor()
+                            .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                             .fillMaxWidth()
                             .padding(horizontal = 20.dp),
                         trailingIcon = {
@@ -419,7 +421,7 @@ fun AutofillSettingsV2Screen(
                             readOnly = true,
                             singleLine = true,
                             modifier = Modifier
-                                .menuAnchor()
+                                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                                 .fillMaxWidth()
                                 .padding(horizontal = 20.dp),
                             trailingIcon = {
@@ -479,7 +481,7 @@ fun AutofillSettingsV2Screen(
                             readOnly = true,
                             singleLine = true,
                             modifier = Modifier
-                                .menuAnchor()
+                                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                                 .fillMaxWidth()
                                 .padding(horizontal = 20.dp),
                             trailingIcon = {

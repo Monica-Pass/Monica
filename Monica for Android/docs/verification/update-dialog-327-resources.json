@@ -1,0 +1,2003 @@
+{
+  "scope": "Exact source XML versus retained x86_64 APK resources",
+  "editions": {
+    "main": {
+      "label": "main03",
+      "resource_apk_sha256": "678067e7eae60c7dfb9b1101f70f489cefdd1a7703ec2aa68f7899e09f37bf9d",
+      "resource_configuration_count": 18,
+      "resource_key_count": 11,
+      "compiled_values_checked": 198,
+      "compiled_values": [
+        {
+          "configuration": "default",
+          "key": "update_auto_check",
+          "value": "Automatically check for updates"
+        },
+        {
+          "configuration": "default",
+          "key": "update_auto_check_summary",
+          "value": "Check at most once a day after unlocking. You can turn this off at any time."
+        },
+        {
+          "configuration": "default",
+          "key": "update_now",
+          "value": "Update now"
+        },
+        {
+          "configuration": "default",
+          "key": "update_skip_version",
+          "value": "Skip this version"
+        },
+        {
+          "configuration": "default",
+          "key": "update_view_details",
+          "value": "View details"
+        },
+        {
+          "configuration": "default",
+          "key": "update_later",
+          "value": "Later"
+        },
+        {
+          "configuration": "default",
+          "key": "update_whats_new",
+          "value": "What's new"
+        },
+        {
+          "configuration": "default",
+          "key": "update_open_fdroid",
+          "value": "Open F-Droid"
+        },
+        {
+          "configuration": "default",
+          "key": "update_fdroid_source",
+          "value": "Updates are checked and installed through the official F-Droid repository."
+        },
+        {
+          "configuration": "default",
+          "key": "update_notes_unavailable",
+          "value": "Release notes are unavailable. View details for more information."
+        },
+        {
+          "configuration": "default",
+          "key": "update_notes_truncated",
+          "value": "These notes are long. View details to read the full release notes."
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_auto_check",
+          "value": "自查新版"
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_auto_check_summary",
+          "value": "解锁后每日至多查一次，随时可停"
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_now",
+          "value": "即刻更新"
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_skip_version",
+          "value": "略此版"
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_view_details",
+          "value": "览详情"
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_later",
+          "value": "稍后"
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_whats_new",
+          "value": "更新之事"
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_open_fdroid",
+          "value": "前往 F-Droid"
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_fdroid_source",
+          "value": "经 F-Droid 官方库查验并安装新版。"
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_notes_unavailable",
+          "value": "暂无更新说明，可览详情。"
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_notes_truncated",
+          "value": "说明较长，请览详情以观全文。"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_auto_check",
+          "value": "自動檢查更新"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_auto_check_summary",
+          "value": "解鎖後每天最多檢查一次，可隨時關閉"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_now",
+          "value": "立即更新"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_skip_version",
+          "value": "略過此版本"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_view_details",
+          "value": "查看詳情"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_later",
+          "value": "稍後"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_whats_new",
+          "value": "更新內容"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_open_fdroid",
+          "value": "前往 F-Droid"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_fdroid_source",
+          "value": "透過 F-Droid 官方軟體庫檢查及安裝更新。"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_notes_unavailable",
+          "value": "目前沒有更新說明，可查看詳情。"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_notes_truncated",
+          "value": "說明較長，請查看詳情以閱讀完整內容。"
+        },
+        {
+          "configuration": "de",
+          "key": "update_auto_check",
+          "value": "Automatisch nach Updates suchen"
+        },
+        {
+          "configuration": "de",
+          "key": "update_auto_check_summary",
+          "value": "Nach dem Entsperren höchstens einmal täglich prüfen. Jederzeit deaktivierbar."
+        },
+        {
+          "configuration": "de",
+          "key": "update_now",
+          "value": "Jetzt aktualisieren"
+        },
+        {
+          "configuration": "de",
+          "key": "update_skip_version",
+          "value": "Diese Version überspringen"
+        },
+        {
+          "configuration": "de",
+          "key": "update_view_details",
+          "value": "Details ansehen"
+        },
+        {
+          "configuration": "de",
+          "key": "update_later",
+          "value": "Später"
+        },
+        {
+          "configuration": "de",
+          "key": "update_whats_new",
+          "value": "Neuerungen"
+        },
+        {
+          "configuration": "de",
+          "key": "update_open_fdroid",
+          "value": "F-Droid öffnen"
+        },
+        {
+          "configuration": "de",
+          "key": "update_fdroid_source",
+          "value": "Updates werden über die offizielle F-Droid-Paketquelle geprüft und installiert."
+        },
+        {
+          "configuration": "de",
+          "key": "update_notes_unavailable",
+          "value": "Versionshinweise sind nicht verfügbar. Weitere Informationen finden Sie unter Details."
+        },
+        {
+          "configuration": "de",
+          "key": "update_notes_truncated",
+          "value": "Diese Hinweise sind lang. Öffnen Sie die Details, um die vollständigen Versionshinweise zu lesen."
+        },
+        {
+          "configuration": "es",
+          "key": "update_auto_check",
+          "value": "Buscar actualizaciones automáticamente"
+        },
+        {
+          "configuration": "es",
+          "key": "update_auto_check_summary",
+          "value": "Se comprueba como máximo una vez al día después de desbloquear. Puedes desactivarlo en cualquier momento."
+        },
+        {
+          "configuration": "es",
+          "key": "update_now",
+          "value": "Actualizar ahora"
+        },
+        {
+          "configuration": "es",
+          "key": "update_skip_version",
+          "value": "Omitir esta versión"
+        },
+        {
+          "configuration": "es",
+          "key": "update_view_details",
+          "value": "Ver detalles"
+        },
+        {
+          "configuration": "es",
+          "key": "update_later",
+          "value": "Más tarde"
+        },
+        {
+          "configuration": "es",
+          "key": "update_whats_new",
+          "value": "Novedades"
+        },
+        {
+          "configuration": "es",
+          "key": "update_open_fdroid",
+          "value": "Abrir F-Droid"
+        },
+        {
+          "configuration": "es",
+          "key": "update_fdroid_source",
+          "value": "Las actualizaciones se buscan e instalan a través del repositorio oficial de F-Droid."
+        },
+        {
+          "configuration": "es",
+          "key": "update_notes_unavailable",
+          "value": "Las notas de la versión no están disponibles. Consulta los detalles para obtener más información."
+        },
+        {
+          "configuration": "es",
+          "key": "update_notes_truncated",
+          "value": "Estas notas son extensas. Consulta los detalles para leer las notas completas de la versión."
+        },
+        {
+          "configuration": "fr",
+          "key": "update_auto_check",
+          "value": "Rechercher automatiquement les mises à jour"
+        },
+        {
+          "configuration": "fr",
+          "key": "update_auto_check_summary",
+          "value": "Vérification au plus une fois par jour après le déverrouillage. Vous pouvez désactiver cette option à tout moment."
+        },
+        {
+          "configuration": "fr",
+          "key": "update_now",
+          "value": "Mettre à jour"
+        },
+        {
+          "configuration": "fr",
+          "key": "update_skip_version",
+          "value": "Ignorer cette version"
+        },
+        {
+          "configuration": "fr",
+          "key": "update_view_details",
+          "value": "Voir les détails"
+        },
+        {
+          "configuration": "fr",
+          "key": "update_later",
+          "value": "Plus tard"
+        },
+        {
+          "configuration": "fr",
+          "key": "update_whats_new",
+          "value": "Nouveautés"
+        },
+        {
+          "configuration": "fr",
+          "key": "update_open_fdroid",
+          "value": "Ouvrir F-Droid"
+        },
+        {
+          "configuration": "fr",
+          "key": "update_fdroid_source",
+          "value": "Les mises à jour sont recherchées et installées via le dépôt officiel de F-Droid."
+        },
+        {
+          "configuration": "fr",
+          "key": "update_notes_unavailable",
+          "value": "Les notes de version ne sont pas disponibles. Consultez les détails pour en savoir plus."
+        },
+        {
+          "configuration": "fr",
+          "key": "update_notes_truncated",
+          "value": "Ces notes sont longues. Consultez les détails pour lire les notes de version complètes."
+        },
+        {
+          "configuration": "it",
+          "key": "update_auto_check",
+          "value": "Controlla automaticamente gli aggiornamenti"
+        },
+        {
+          "configuration": "it",
+          "key": "update_auto_check_summary",
+          "value": "Controlla al massimo una volta al giorno dopo lo sblocco. Puoi disattivare questa opzione in qualsiasi momento."
+        },
+        {
+          "configuration": "it",
+          "key": "update_now",
+          "value": "Aggiorna ora"
+        },
+        {
+          "configuration": "it",
+          "key": "update_skip_version",
+          "value": "Ignora questa versione"
+        },
+        {
+          "configuration": "it",
+          "key": "update_view_details",
+          "value": "Visualizza dettagli"
+        },
+        {
+          "configuration": "it",
+          "key": "update_later",
+          "value": "Più tardi"
+        },
+        {
+          "configuration": "it",
+          "key": "update_whats_new",
+          "value": "Novità"
+        },
+        {
+          "configuration": "it",
+          "key": "update_open_fdroid",
+          "value": "Apri F-Droid"
+        },
+        {
+          "configuration": "it",
+          "key": "update_fdroid_source",
+          "value": "Gli aggiornamenti vengono verificati e installati tramite il repository ufficiale di F-Droid."
+        },
+        {
+          "configuration": "it",
+          "key": "update_notes_unavailable",
+          "value": "Le note di rilascio non sono disponibili. Visualizza i dettagli per maggiori informazioni."
+        },
+        {
+          "configuration": "it",
+          "key": "update_notes_truncated",
+          "value": "Queste note sono lunghe. Visualizza i dettagli per leggere le note di rilascio complete."
+        },
+        {
+          "configuration": "ja",
+          "key": "update_auto_check",
+          "value": "更新を自動確認"
+        },
+        {
+          "configuration": "ja",
+          "key": "update_auto_check_summary",
+          "value": "ロック解除後、1日1回まで確認します。いつでもオフにできます。"
+        },
+        {
+          "configuration": "ja",
+          "key": "update_now",
+          "value": "今すぐ更新"
+        },
+        {
+          "configuration": "ja",
+          "key": "update_skip_version",
+          "value": "このバージョンをスキップ"
+        },
+        {
+          "configuration": "ja",
+          "key": "update_view_details",
+          "value": "詳細を見る"
+        },
+        {
+          "configuration": "ja",
+          "key": "update_later",
+          "value": "後で"
+        },
+        {
+          "configuration": "ja",
+          "key": "update_whats_new",
+          "value": "更新内容"
+        },
+        {
+          "configuration": "ja",
+          "key": "update_open_fdroid",
+          "value": "F-Droid を開く"
+        },
+        {
+          "configuration": "ja",
+          "key": "update_fdroid_source",
+          "value": "F-Droid の公式リポジトリを通じて更新の確認とインストールを行います。"
+        },
+        {
+          "configuration": "ja",
+          "key": "update_notes_unavailable",
+          "value": "リリースノートはありません。詳しくは詳細をご覧ください。"
+        },
+        {
+          "configuration": "ja",
+          "key": "update_notes_truncated",
+          "value": "リリースノートが長いため、全文は詳細をご覧ください。"
+        },
+        {
+          "configuration": "ko",
+          "key": "update_auto_check",
+          "value": "자동으로 업데이트 확인"
+        },
+        {
+          "configuration": "ko",
+          "key": "update_auto_check_summary",
+          "value": "잠금 해제 후 하루에 최대 한 번 확인합니다. 언제든지 끌 수 있습니다."
+        },
+        {
+          "configuration": "ko",
+          "key": "update_now",
+          "value": "지금 업데이트"
+        },
+        {
+          "configuration": "ko",
+          "key": "update_skip_version",
+          "value": "이 버전 건너뛰기"
+        },
+        {
+          "configuration": "ko",
+          "key": "update_view_details",
+          "value": "자세히 보기"
+        },
+        {
+          "configuration": "ko",
+          "key": "update_later",
+          "value": "나중에"
+        },
+        {
+          "configuration": "ko",
+          "key": "update_whats_new",
+          "value": "업데이트 내용"
+        },
+        {
+          "configuration": "ko",
+          "key": "update_open_fdroid",
+          "value": "F-Droid 열기"
+        },
+        {
+          "configuration": "ko",
+          "key": "update_fdroid_source",
+          "value": "공식 F-Droid 저장소를 통해 업데이트를 확인하고 설치합니다."
+        },
+        {
+          "configuration": "ko",
+          "key": "update_notes_unavailable",
+          "value": "릴리스 노트가 없습니다. 자세한 내용은 상세 정보를 확인하세요."
+        },
+        {
+          "configuration": "ko",
+          "key": "update_notes_truncated",
+          "value": "릴리스 노트가 깁니다. 전체 내용을 읽으려면 상세 정보를 확인하세요."
+        },
+        {
+          "configuration": "pl",
+          "key": "update_auto_check",
+          "value": "Automatycznie sprawdzaj aktualizacje"
+        },
+        {
+          "configuration": "pl",
+          "key": "update_auto_check_summary",
+          "value": "Sprawdzaj najwyżej raz dziennie po odblokowaniu. Możesz to wyłączyć w dowolnym momencie."
+        },
+        {
+          "configuration": "pl",
+          "key": "update_now",
+          "value": "Aktualizuj teraz"
+        },
+        {
+          "configuration": "pl",
+          "key": "update_skip_version",
+          "value": "Pomiń tę wersję"
+        },
+        {
+          "configuration": "pl",
+          "key": "update_view_details",
+          "value": "Zobacz szczegóły"
+        },
+        {
+          "configuration": "pl",
+          "key": "update_later",
+          "value": "Później"
+        },
+        {
+          "configuration": "pl",
+          "key": "update_whats_new",
+          "value": "Co nowego"
+        },
+        {
+          "configuration": "pl",
+          "key": "update_open_fdroid",
+          "value": "Otwórz F-Droid"
+        },
+        {
+          "configuration": "pl",
+          "key": "update_fdroid_source",
+          "value": "Aktualizacje są sprawdzane i instalowane za pośrednictwem oficjalnego repozytorium F-Droid."
+        },
+        {
+          "configuration": "pl",
+          "key": "update_notes_unavailable",
+          "value": "Informacje o wydaniu są niedostępne. Więcej informacji znajdziesz w szczegółach."
+        },
+        {
+          "configuration": "pl",
+          "key": "update_notes_truncated",
+          "value": "Te informacje są obszerne. Otwórz szczegóły, aby przeczytać pełne informacje o wydaniu."
+        },
+        {
+          "configuration": "pt",
+          "key": "update_auto_check",
+          "value": "Procurar atualizações automaticamente"
+        },
+        {
+          "configuration": "pt",
+          "key": "update_auto_check_summary",
+          "value": "Procura atualizações, no máximo, uma vez por dia após desbloquear. Pode desativar esta opção a qualquer momento."
+        },
+        {
+          "configuration": "pt",
+          "key": "update_now",
+          "value": "Atualizar agora"
+        },
+        {
+          "configuration": "pt",
+          "key": "update_skip_version",
+          "value": "Ignorar esta versão"
+        },
+        {
+          "configuration": "pt",
+          "key": "update_view_details",
+          "value": "Ver detalhes"
+        },
+        {
+          "configuration": "pt",
+          "key": "update_later",
+          "value": "Mais tarde"
+        },
+        {
+          "configuration": "pt",
+          "key": "update_whats_new",
+          "value": "Novidades"
+        },
+        {
+          "configuration": "pt",
+          "key": "update_open_fdroid",
+          "value": "Abrir o F-Droid"
+        },
+        {
+          "configuration": "pt",
+          "key": "update_fdroid_source",
+          "value": "As atualizações são verificadas e instaladas através do repositório oficial do F-Droid."
+        },
+        {
+          "configuration": "pt",
+          "key": "update_notes_unavailable",
+          "value": "As notas de lançamento não estão disponíveis. Consulte os detalhes para obter mais informações."
+        },
+        {
+          "configuration": "pt",
+          "key": "update_notes_truncated",
+          "value": "Estas notas são extensas. Consulte os detalhes para ler as notas de lançamento completas."
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_auto_check",
+          "value": "Verificar atualizações automaticamente"
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_auto_check_summary",
+          "value": "Verifica no máximo uma vez por dia após desbloquear. Você pode desativar esta opção a qualquer momento."
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_now",
+          "value": "Atualizar agora"
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_skip_version",
+          "value": "Ignorar esta versão"
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_view_details",
+          "value": "Ver detalhes"
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_later",
+          "value": "Mais tarde"
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_whats_new",
+          "value": "Novidades"
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_open_fdroid",
+          "value": "Abrir o F-Droid"
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_fdroid_source",
+          "value": "As atualizações são verificadas e instaladas pelo repositório oficial do F-Droid."
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_notes_unavailable",
+          "value": "As notas da versão não estão disponíveis. Veja os detalhes para mais informações."
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_notes_truncated",
+          "value": "Estas notas são longas. Veja os detalhes para ler as notas completas da versão."
+        },
+        {
+          "configuration": "ru",
+          "key": "update_auto_check",
+          "value": "Автоматически проверять обновления"
+        },
+        {
+          "configuration": "ru",
+          "key": "update_auto_check_summary",
+          "value": "Проверять не чаще одного раза в день после разблокировки. Можно отключить в любое время."
+        },
+        {
+          "configuration": "ru",
+          "key": "update_now",
+          "value": "Обновить сейчас"
+        },
+        {
+          "configuration": "ru",
+          "key": "update_skip_version",
+          "value": "Пропустить эту версию"
+        },
+        {
+          "configuration": "ru",
+          "key": "update_view_details",
+          "value": "Подробнее"
+        },
+        {
+          "configuration": "ru",
+          "key": "update_later",
+          "value": "Позже"
+        },
+        {
+          "configuration": "ru",
+          "key": "update_whats_new",
+          "value": "Что нового"
+        },
+        {
+          "configuration": "ru",
+          "key": "update_open_fdroid",
+          "value": "Открыть F-Droid"
+        },
+        {
+          "configuration": "ru",
+          "key": "update_fdroid_source",
+          "value": "Проверка и установка обновлений выполняются через официальный репозиторий F-Droid."
+        },
+        {
+          "configuration": "ru",
+          "key": "update_notes_unavailable",
+          "value": "Примечания к выпуску недоступны. Откройте подробности для получения дополнительной информации."
+        },
+        {
+          "configuration": "ru",
+          "key": "update_notes_truncated",
+          "value": "Примечания слишком длинные. Откройте подробности, чтобы прочитать их полностью."
+        },
+        {
+          "configuration": "vi",
+          "key": "update_auto_check",
+          "value": "Tự động kiểm tra bản cập nhật"
+        },
+        {
+          "configuration": "vi",
+          "key": "update_auto_check_summary",
+          "value": "Kiểm tra tối đa một lần mỗi ngày sau khi mở khóa. Bạn có thể tắt bất cứ lúc nào."
+        },
+        {
+          "configuration": "vi",
+          "key": "update_now",
+          "value": "Cập nhật ngay"
+        },
+        {
+          "configuration": "vi",
+          "key": "update_skip_version",
+          "value": "Bỏ qua phiên bản này"
+        },
+        {
+          "configuration": "vi",
+          "key": "update_view_details",
+          "value": "Xem chi tiết"
+        },
+        {
+          "configuration": "vi",
+          "key": "update_later",
+          "value": "Để sau"
+        },
+        {
+          "configuration": "vi",
+          "key": "update_whats_new",
+          "value": "Có gì mới"
+        },
+        {
+          "configuration": "vi",
+          "key": "update_open_fdroid",
+          "value": "Mở F-Droid"
+        },
+        {
+          "configuration": "vi",
+          "key": "update_fdroid_source",
+          "value": "Các bản cập nhật được kiểm tra và cài đặt qua kho lưu trữ chính thức của F-Droid."
+        },
+        {
+          "configuration": "vi",
+          "key": "update_notes_unavailable",
+          "value": "Chưa có ghi chú phát hành. Xem chi tiết để biết thêm thông tin."
+        },
+        {
+          "configuration": "vi",
+          "key": "update_notes_truncated",
+          "value": "Ghi chú này khá dài. Xem chi tiết để đọc toàn bộ ghi chú phát hành."
+        },
+        {
+          "configuration": "zh",
+          "key": "update_auto_check",
+          "value": "自动检查更新"
+        },
+        {
+          "configuration": "zh",
+          "key": "update_auto_check_summary",
+          "value": "解锁后每天最多检查一次，可随时关闭"
+        },
+        {
+          "configuration": "zh",
+          "key": "update_now",
+          "value": "立即更新"
+        },
+        {
+          "configuration": "zh",
+          "key": "update_skip_version",
+          "value": "跳过此版本"
+        },
+        {
+          "configuration": "zh",
+          "key": "update_view_details",
+          "value": "查看详情"
+        },
+        {
+          "configuration": "zh",
+          "key": "update_later",
+          "value": "稍后"
+        },
+        {
+          "configuration": "zh",
+          "key": "update_whats_new",
+          "value": "更新内容"
+        },
+        {
+          "configuration": "zh",
+          "key": "update_open_fdroid",
+          "value": "前往 F-Droid"
+        },
+        {
+          "configuration": "zh",
+          "key": "update_fdroid_source",
+          "value": "通过 F-Droid 官方仓库检查和安装更新。"
+        },
+        {
+          "configuration": "zh",
+          "key": "update_notes_unavailable",
+          "value": "暂无更新说明，可查看详情。"
+        },
+        {
+          "configuration": "zh",
+          "key": "update_notes_truncated",
+          "value": "说明较长，请查看详情阅读完整内容。"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_auto_check",
+          "value": "自动检查更新"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_auto_check_summary",
+          "value": "解锁后每天最多检查一次，可随时关闭"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_now",
+          "value": "立即更新"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_skip_version",
+          "value": "跳过此版本"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_view_details",
+          "value": "查看详情"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_later",
+          "value": "稍后"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_whats_new",
+          "value": "更新内容"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_open_fdroid",
+          "value": "前往 F-Droid"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_fdroid_source",
+          "value": "通过 F-Droid 官方仓库检查和安装更新。"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_notes_unavailable",
+          "value": "暂无更新说明，可查看详情。"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_notes_truncated",
+          "value": "说明较长，请查看详情阅读完整内容。"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_auto_check",
+          "value": "自动检查更新"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_auto_check_summary",
+          "value": "解锁后每天最多检查一次，可随时关闭"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_now",
+          "value": "立即更新"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_skip_version",
+          "value": "跳过此版本"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_view_details",
+          "value": "查看详情"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_later",
+          "value": "稍后"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_whats_new",
+          "value": "更新内容"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_open_fdroid",
+          "value": "前往 F-Droid"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_fdroid_source",
+          "value": "通过 F-Droid 官方仓库检查和安装更新。"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_notes_unavailable",
+          "value": "暂无更新说明，可查看详情。"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_notes_truncated",
+          "value": "说明较长，请查看详情阅读完整内容。"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_auto_check",
+          "value": "自动检查更新"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_auto_check_summary",
+          "value": "解锁后每天最多检查一次，可随时关闭"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_now",
+          "value": "立即更新"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_skip_version",
+          "value": "跳过此版本"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_view_details",
+          "value": "查看详情"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_later",
+          "value": "稍后"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_whats_new",
+          "value": "更新内容"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_open_fdroid",
+          "value": "前往 F-Droid"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_fdroid_source",
+          "value": "通过 F-Droid 官方仓库检查和安装更新。"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_notes_unavailable",
+          "value": "暂无更新说明，可查看详情。"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_notes_truncated",
+          "value": "说明较长，请查看详情阅读完整内容。"
+        }
+      ]
+    },
+    "fd": {
+      "label": "fd01",
+      "resource_apk_sha256": "381d521853b70a746b8a966ea2da0147bb4fff6434b25bdce437348fe0129914",
+      "resource_configuration_count": 18,
+      "resource_key_count": 11,
+      "compiled_values_checked": 198,
+      "compiled_values": [
+        {
+          "configuration": "default",
+          "key": "update_auto_check",
+          "value": "Automatically check for updates"
+        },
+        {
+          "configuration": "default",
+          "key": "update_auto_check_summary",
+          "value": "Check at most once a day after unlocking. You can turn this off at any time."
+        },
+        {
+          "configuration": "default",
+          "key": "update_now",
+          "value": "Update now"
+        },
+        {
+          "configuration": "default",
+          "key": "update_skip_version",
+          "value": "Skip this version"
+        },
+        {
+          "configuration": "default",
+          "key": "update_view_details",
+          "value": "View details"
+        },
+        {
+          "configuration": "default",
+          "key": "update_later",
+          "value": "Later"
+        },
+        {
+          "configuration": "default",
+          "key": "update_whats_new",
+          "value": "What's new"
+        },
+        {
+          "configuration": "default",
+          "key": "update_open_fdroid",
+          "value": "Open F-Droid"
+        },
+        {
+          "configuration": "default",
+          "key": "update_fdroid_source",
+          "value": "Updates are checked and installed through the official F-Droid repository."
+        },
+        {
+          "configuration": "default",
+          "key": "update_notes_unavailable",
+          "value": "Release notes are unavailable. View details for more information."
+        },
+        {
+          "configuration": "default",
+          "key": "update_notes_truncated",
+          "value": "These notes are long. View details to read the full release notes."
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_auto_check",
+          "value": "自查新版"
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_auto_check_summary",
+          "value": "解锁后每日至多查一次，随时可停"
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_now",
+          "value": "即刻更新"
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_skip_version",
+          "value": "略此版"
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_view_details",
+          "value": "览详情"
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_later",
+          "value": "稍后"
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_whats_new",
+          "value": "更新之事"
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_open_fdroid",
+          "value": "前往 F-Droid"
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_fdroid_source",
+          "value": "经 F-Droid 官方库查验并安装新版。"
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_notes_unavailable",
+          "value": "暂无更新说明，可览详情。"
+        },
+        {
+          "configuration": "lzh",
+          "key": "update_notes_truncated",
+          "value": "说明较长，请览详情以观全文。"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_auto_check",
+          "value": "自動檢查更新"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_auto_check_summary",
+          "value": "解鎖後每天最多檢查一次，可隨時關閉"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_now",
+          "value": "立即更新"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_skip_version",
+          "value": "略過此版本"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_view_details",
+          "value": "查看詳情"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_later",
+          "value": "稍後"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_whats_new",
+          "value": "更新內容"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_open_fdroid",
+          "value": "前往 F-Droid"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_fdroid_source",
+          "value": "透過 F-Droid 官方軟體庫檢查及安裝更新。"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_notes_unavailable",
+          "value": "目前沒有更新說明，可查看詳情。"
+        },
+        {
+          "configuration": "b+zh+Hant",
+          "key": "update_notes_truncated",
+          "value": "說明較長，請查看詳情以閱讀完整內容。"
+        },
+        {
+          "configuration": "de",
+          "key": "update_auto_check",
+          "value": "Automatisch nach Updates suchen"
+        },
+        {
+          "configuration": "de",
+          "key": "update_auto_check_summary",
+          "value": "Nach dem Entsperren höchstens einmal täglich prüfen. Jederzeit deaktivierbar."
+        },
+        {
+          "configuration": "de",
+          "key": "update_now",
+          "value": "Jetzt aktualisieren"
+        },
+        {
+          "configuration": "de",
+          "key": "update_skip_version",
+          "value": "Diese Version überspringen"
+        },
+        {
+          "configuration": "de",
+          "key": "update_view_details",
+          "value": "Details ansehen"
+        },
+        {
+          "configuration": "de",
+          "key": "update_later",
+          "value": "Später"
+        },
+        {
+          "configuration": "de",
+          "key": "update_whats_new",
+          "value": "Neuerungen"
+        },
+        {
+          "configuration": "de",
+          "key": "update_open_fdroid",
+          "value": "F-Droid öffnen"
+        },
+        {
+          "configuration": "de",
+          "key": "update_fdroid_source",
+          "value": "Updates werden über die offizielle F-Droid-Paketquelle geprüft und installiert."
+        },
+        {
+          "configuration": "de",
+          "key": "update_notes_unavailable",
+          "value": "Versionshinweise sind nicht verfügbar. Weitere Informationen finden Sie unter Details."
+        },
+        {
+          "configuration": "de",
+          "key": "update_notes_truncated",
+          "value": "Diese Hinweise sind lang. Öffnen Sie die Details, um die vollständigen Versionshinweise zu lesen."
+        },
+        {
+          "configuration": "es",
+          "key": "update_auto_check",
+          "value": "Buscar actualizaciones automáticamente"
+        },
+        {
+          "configuration": "es",
+          "key": "update_auto_check_summary",
+          "value": "Se comprueba como máximo una vez al día después de desbloquear. Puedes desactivarlo en cualquier momento."
+        },
+        {
+          "configuration": "es",
+          "key": "update_now",
+          "value": "Actualizar ahora"
+        },
+        {
+          "configuration": "es",
+          "key": "update_skip_version",
+          "value": "Omitir esta versión"
+        },
+        {
+          "configuration": "es",
+          "key": "update_view_details",
+          "value": "Ver detalles"
+        },
+        {
+          "configuration": "es",
+          "key": "update_later",
+          "value": "Más tarde"
+        },
+        {
+          "configuration": "es",
+          "key": "update_whats_new",
+          "value": "Novedades"
+        },
+        {
+          "configuration": "es",
+          "key": "update_open_fdroid",
+          "value": "Abrir F-Droid"
+        },
+        {
+          "configuration": "es",
+          "key": "update_fdroid_source",
+          "value": "Las actualizaciones se buscan e instalan a través del repositorio oficial de F-Droid."
+        },
+        {
+          "configuration": "es",
+          "key": "update_notes_unavailable",
+          "value": "Las notas de la versión no están disponibles. Consulta los detalles para obtener más información."
+        },
+        {
+          "configuration": "es",
+          "key": "update_notes_truncated",
+          "value": "Estas notas son extensas. Consulta los detalles para leer las notas completas de la versión."
+        },
+        {
+          "configuration": "fr",
+          "key": "update_auto_check",
+          "value": "Rechercher automatiquement les mises à jour"
+        },
+        {
+          "configuration": "fr",
+          "key": "update_auto_check_summary",
+          "value": "Vérification au plus une fois par jour après le déverrouillage. Vous pouvez désactiver cette option à tout moment."
+        },
+        {
+          "configuration": "fr",
+          "key": "update_now",
+          "value": "Mettre à jour"
+        },
+        {
+          "configuration": "fr",
+          "key": "update_skip_version",
+          "value": "Ignorer cette version"
+        },
+        {
+          "configuration": "fr",
+          "key": "update_view_details",
+          "value": "Voir les détails"
+        },
+        {
+          "configuration": "fr",
+          "key": "update_later",
+          "value": "Plus tard"
+        },
+        {
+          "configuration": "fr",
+          "key": "update_whats_new",
+          "value": "Nouveautés"
+        },
+        {
+          "configuration": "fr",
+          "key": "update_open_fdroid",
+          "value": "Ouvrir F-Droid"
+        },
+        {
+          "configuration": "fr",
+          "key": "update_fdroid_source",
+          "value": "Les mises à jour sont recherchées et installées via le dépôt officiel de F-Droid."
+        },
+        {
+          "configuration": "fr",
+          "key": "update_notes_unavailable",
+          "value": "Les notes de version ne sont pas disponibles. Consultez les détails pour en savoir plus."
+        },
+        {
+          "configuration": "fr",
+          "key": "update_notes_truncated",
+          "value": "Ces notes sont longues. Consultez les détails pour lire les notes de version complètes."
+        },
+        {
+          "configuration": "it",
+          "key": "update_auto_check",
+          "value": "Controlla automaticamente gli aggiornamenti"
+        },
+        {
+          "configuration": "it",
+          "key": "update_auto_check_summary",
+          "value": "Controlla al massimo una volta al giorno dopo lo sblocco. Puoi disattivare questa opzione in qualsiasi momento."
+        },
+        {
+          "configuration": "it",
+          "key": "update_now",
+          "value": "Aggiorna ora"
+        },
+        {
+          "configuration": "it",
+          "key": "update_skip_version",
+          "value": "Ignora questa versione"
+        },
+        {
+          "configuration": "it",
+          "key": "update_view_details",
+          "value": "Visualizza dettagli"
+        },
+        {
+          "configuration": "it",
+          "key": "update_later",
+          "value": "Più tardi"
+        },
+        {
+          "configuration": "it",
+          "key": "update_whats_new",
+          "value": "Novità"
+        },
+        {
+          "configuration": "it",
+          "key": "update_open_fdroid",
+          "value": "Apri F-Droid"
+        },
+        {
+          "configuration": "it",
+          "key": "update_fdroid_source",
+          "value": "Gli aggiornamenti vengono verificati e installati tramite il repository ufficiale di F-Droid."
+        },
+        {
+          "configuration": "it",
+          "key": "update_notes_unavailable",
+          "value": "Le note di rilascio non sono disponibili. Visualizza i dettagli per maggiori informazioni."
+        },
+        {
+          "configuration": "it",
+          "key": "update_notes_truncated",
+          "value": "Queste note sono lunghe. Visualizza i dettagli per leggere le note di rilascio complete."
+        },
+        {
+          "configuration": "ja",
+          "key": "update_auto_check",
+          "value": "更新を自動確認"
+        },
+        {
+          "configuration": "ja",
+          "key": "update_auto_check_summary",
+          "value": "ロック解除後、1日1回まで確認します。いつでもオフにできます。"
+        },
+        {
+          "configuration": "ja",
+          "key": "update_now",
+          "value": "今すぐ更新"
+        },
+        {
+          "configuration": "ja",
+          "key": "update_skip_version",
+          "value": "このバージョンをスキップ"
+        },
+        {
+          "configuration": "ja",
+          "key": "update_view_details",
+          "value": "詳細を見る"
+        },
+        {
+          "configuration": "ja",
+          "key": "update_later",
+          "value": "後で"
+        },
+        {
+          "configuration": "ja",
+          "key": "update_whats_new",
+          "value": "更新内容"
+        },
+        {
+          "configuration": "ja",
+          "key": "update_open_fdroid",
+          "value": "F-Droid を開く"
+        },
+        {
+          "configuration": "ja",
+          "key": "update_fdroid_source",
+          "value": "F-Droid の公式リポジトリを通じて更新の確認とインストールを行います。"
+        },
+        {
+          "configuration": "ja",
+          "key": "update_notes_unavailable",
+          "value": "リリースノートはありません。詳しくは詳細をご覧ください。"
+        },
+        {
+          "configuration": "ja",
+          "key": "update_notes_truncated",
+          "value": "リリースノートが長いため、全文は詳細をご覧ください。"
+        },
+        {
+          "configuration": "ko",
+          "key": "update_auto_check",
+          "value": "자동으로 업데이트 확인"
+        },
+        {
+          "configuration": "ko",
+          "key": "update_auto_check_summary",
+          "value": "잠금 해제 후 하루에 최대 한 번 확인합니다. 언제든지 끌 수 있습니다."
+        },
+        {
+          "configuration": "ko",
+          "key": "update_now",
+          "value": "지금 업데이트"
+        },
+        {
+          "configuration": "ko",
+          "key": "update_skip_version",
+          "value": "이 버전 건너뛰기"
+        },
+        {
+          "configuration": "ko",
+          "key": "update_view_details",
+          "value": "자세히 보기"
+        },
+        {
+          "configuration": "ko",
+          "key": "update_later",
+          "value": "나중에"
+        },
+        {
+          "configuration": "ko",
+          "key": "update_whats_new",
+          "value": "업데이트 내용"
+        },
+        {
+          "configuration": "ko",
+          "key": "update_open_fdroid",
+          "value": "F-Droid 열기"
+        },
+        {
+          "configuration": "ko",
+          "key": "update_fdroid_source",
+          "value": "공식 F-Droid 저장소를 통해 업데이트를 확인하고 설치합니다."
+        },
+        {
+          "configuration": "ko",
+          "key": "update_notes_unavailable",
+          "value": "릴리스 노트가 없습니다. 자세한 내용은 상세 정보를 확인하세요."
+        },
+        {
+          "configuration": "ko",
+          "key": "update_notes_truncated",
+          "value": "릴리스 노트가 깁니다. 전체 내용을 읽으려면 상세 정보를 확인하세요."
+        },
+        {
+          "configuration": "pl",
+          "key": "update_auto_check",
+          "value": "Automatycznie sprawdzaj aktualizacje"
+        },
+        {
+          "configuration": "pl",
+          "key": "update_auto_check_summary",
+          "value": "Sprawdzaj najwyżej raz dziennie po odblokowaniu. Możesz to wyłączyć w dowolnym momencie."
+        },
+        {
+          "configuration": "pl",
+          "key": "update_now",
+          "value": "Aktualizuj teraz"
+        },
+        {
+          "configuration": "pl",
+          "key": "update_skip_version",
+          "value": "Pomiń tę wersję"
+        },
+        {
+          "configuration": "pl",
+          "key": "update_view_details",
+          "value": "Zobacz szczegóły"
+        },
+        {
+          "configuration": "pl",
+          "key": "update_later",
+          "value": "Później"
+        },
+        {
+          "configuration": "pl",
+          "key": "update_whats_new",
+          "value": "Co nowego"
+        },
+        {
+          "configuration": "pl",
+          "key": "update_open_fdroid",
+          "value": "Otwórz F-Droid"
+        },
+        {
+          "configuration": "pl",
+          "key": "update_fdroid_source",
+          "value": "Aktualizacje są sprawdzane i instalowane za pośrednictwem oficjalnego repozytorium F-Droid."
+        },
+        {
+          "configuration": "pl",
+          "key": "update_notes_unavailable",
+          "value": "Informacje o wydaniu są niedostępne. Więcej informacji znajdziesz w szczegółach."
+        },
+        {
+          "configuration": "pl",
+          "key": "update_notes_truncated",
+          "value": "Te informacje są obszerne. Otwórz szczegóły, aby przeczytać pełne informacje o wydaniu."
+        },
+        {
+          "configuration": "pt",
+          "key": "update_auto_check",
+          "value": "Procurar atualizações automaticamente"
+        },
+        {
+          "configuration": "pt",
+          "key": "update_auto_check_summary",
+          "value": "Procura atualizações, no máximo, uma vez por dia após desbloquear. Pode desativar esta opção a qualquer momento."
+        },
+        {
+          "configuration": "pt",
+          "key": "update_now",
+          "value": "Atualizar agora"
+        },
+        {
+          "configuration": "pt",
+          "key": "update_skip_version",
+          "value": "Ignorar esta versão"
+        },
+        {
+          "configuration": "pt",
+          "key": "update_view_details",
+          "value": "Ver detalhes"
+        },
+        {
+          "configuration": "pt",
+          "key": "update_later",
+          "value": "Mais tarde"
+        },
+        {
+          "configuration": "pt",
+          "key": "update_whats_new",
+          "value": "Novidades"
+        },
+        {
+          "configuration": "pt",
+          "key": "update_open_fdroid",
+          "value": "Abrir o F-Droid"
+        },
+        {
+          "configuration": "pt",
+          "key": "update_fdroid_source",
+          "value": "As atualizações são verificadas e instaladas através do repositório oficial do F-Droid."
+        },
+        {
+          "configuration": "pt",
+          "key": "update_notes_unavailable",
+          "value": "As notas de lançamento não estão disponíveis. Consulte os detalhes para obter mais informações."
+        },
+        {
+          "configuration": "pt",
+          "key": "update_notes_truncated",
+          "value": "Estas notas são extensas. Consulte os detalhes para ler as notas de lançamento completas."
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_auto_check",
+          "value": "Verificar atualizações automaticamente"
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_auto_check_summary",
+          "value": "Verifica no máximo uma vez por dia após desbloquear. Você pode desativar esta opção a qualquer momento."
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_now",
+          "value": "Atualizar agora"
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_skip_version",
+          "value": "Ignorar esta versão"
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_view_details",
+          "value": "Ver detalhes"
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_later",
+          "value": "Mais tarde"
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_whats_new",
+          "value": "Novidades"
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_open_fdroid",
+          "value": "Abrir o F-Droid"
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_fdroid_source",
+          "value": "As atualizações são verificadas e instaladas pelo repositório oficial do F-Droid."
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_notes_unavailable",
+          "value": "As notas da versão não estão disponíveis. Veja os detalhes para mais informações."
+        },
+        {
+          "configuration": "pt-rBR",
+          "key": "update_notes_truncated",
+          "value": "Estas notas são longas. Veja os detalhes para ler as notas completas da versão."
+        },
+        {
+          "configuration": "ru",
+          "key": "update_auto_check",
+          "value": "Автоматически проверять обновления"
+        },
+        {
+          "configuration": "ru",
+          "key": "update_auto_check_summary",
+          "value": "Проверять не чаще одного раза в день после разблокировки. Можно отключить в любое время."
+        },
+        {
+          "configuration": "ru",
+          "key": "update_now",
+          "value": "Обновить сейчас"
+        },
+        {
+          "configuration": "ru",
+          "key": "update_skip_version",
+          "value": "Пропустить эту версию"
+        },
+        {
+          "configuration": "ru",
+          "key": "update_view_details",
+          "value": "Подробнее"
+        },
+        {
+          "configuration": "ru",
+          "key": "update_later",
+          "value": "Позже"
+        },
+        {
+          "configuration": "ru",
+          "key": "update_whats_new",
+          "value": "Что нового"
+        },
+        {
+          "configuration": "ru",
+          "key": "update_open_fdroid",
+          "value": "Открыть F-Droid"
+        },
+        {
+          "configuration": "ru",
+          "key": "update_fdroid_source",
+          "value": "Проверка и установка обновлений выполняются через официальный репозиторий F-Droid."
+        },
+        {
+          "configuration": "ru",
+          "key": "update_notes_unavailable",
+          "value": "Примечания к выпуску недоступны. Откройте подробности для получения дополнительной информации."
+        },
+        {
+          "configuration": "ru",
+          "key": "update_notes_truncated",
+          "value": "Примечания слишком длинные. Откройте подробности, чтобы прочитать их полностью."
+        },
+        {
+          "configuration": "vi",
+          "key": "update_auto_check",
+          "value": "Tự động kiểm tra bản cập nhật"
+        },
+        {
+          "configuration": "vi",
+          "key": "update_auto_check_summary",
+          "value": "Kiểm tra tối đa một lần mỗi ngày sau khi mở khóa. Bạn có thể tắt bất cứ lúc nào."
+        },
+        {
+          "configuration": "vi",
+          "key": "update_now",
+          "value": "Cập nhật ngay"
+        },
+        {
+          "configuration": "vi",
+          "key": "update_skip_version",
+          "value": "Bỏ qua phiên bản này"
+        },
+        {
+          "configuration": "vi",
+          "key": "update_view_details",
+          "value": "Xem chi tiết"
+        },
+        {
+          "configuration": "vi",
+          "key": "update_later",
+          "value": "Để sau"
+        },
+        {
+          "configuration": "vi",
+          "key": "update_whats_new",
+          "value": "Có gì mới"
+        },
+        {
+          "configuration": "vi",
+          "key": "update_open_fdroid",
+          "value": "Mở F-Droid"
+        },
+        {
+          "configuration": "vi",
+          "key": "update_fdroid_source",
+          "value": "Các bản cập nhật được kiểm tra và cài đặt qua kho lưu trữ chính thức của F-Droid."
+        },
+        {
+          "configuration": "vi",
+          "key": "update_notes_unavailable",
+          "value": "Chưa có ghi chú phát hành. Xem chi tiết để biết thêm thông tin."
+        },
+        {
+          "configuration": "vi",
+          "key": "update_notes_truncated",
+          "value": "Ghi chú này khá dài. Xem chi tiết để đọc toàn bộ ghi chú phát hành."
+        },
+        {
+          "configuration": "zh",
+          "key": "update_auto_check",
+          "value": "自动检查更新"
+        },
+        {
+          "configuration": "zh",
+          "key": "update_auto_check_summary",
+          "value": "解锁后每天最多检查一次，可随时关闭"
+        },
+        {
+          "configuration": "zh",
+          "key": "update_now",
+          "value": "立即更新"
+        },
+        {
+          "configuration": "zh",
+          "key": "update_skip_version",
+          "value": "跳过此版本"
+        },
+        {
+          "configuration": "zh",
+          "key": "update_view_details",
+          "value": "查看详情"
+        },
+        {
+          "configuration": "zh",
+          "key": "update_later",
+          "value": "稍后"
+        },
+        {
+          "configuration": "zh",
+          "key": "update_whats_new",
+          "value": "更新内容"
+        },
+        {
+          "configuration": "zh",
+          "key": "update_open_fdroid",
+          "value": "前往 F-Droid"
+        },
+        {
+          "configuration": "zh",
+          "key": "update_fdroid_source",
+          "value": "通过 F-Droid 官方仓库检查和安装更新。"
+        },
+        {
+          "configuration": "zh",
+          "key": "update_notes_unavailable",
+          "value": "暂无更新说明，可查看详情。"
+        },
+        {
+          "configuration": "zh",
+          "key": "update_notes_truncated",
+          "value": "说明较长，请查看详情阅读完整内容。"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_auto_check",
+          "value": "自动检查更新"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_auto_check_summary",
+          "value": "解锁后每天最多检查一次，可随时关闭"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_now",
+          "value": "立即更新"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_skip_version",
+          "value": "跳过此版本"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_view_details",
+          "value": "查看详情"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_later",
+          "value": "稍后"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_whats_new",
+          "value": "更新内容"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_open_fdroid",
+          "value": "前往 F-Droid"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_fdroid_source",
+          "value": "通过 F-Droid 官方仓库检查和安装更新。"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_notes_unavailable",
+          "value": "暂无更新说明，可查看详情。"
+        },
+        {
+          "configuration": "zh-rCN",
+          "key": "update_notes_truncated",
+          "value": "说明较长，请查看详情阅读完整内容。"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_auto_check",
+          "value": "自动检查更新"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_auto_check_summary",
+          "value": "解锁后每天最多检查一次，可随时关闭"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_now",
+          "value": "立即更新"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_skip_version",
+          "value": "跳过此版本"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_view_details",
+          "value": "查看详情"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_later",
+          "value": "稍后"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_whats_new",
+          "value": "更新内容"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_open_fdroid",
+          "value": "前往 F-Droid"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_fdroid_source",
+          "value": "通过 F-Droid 官方仓库检查和安装更新。"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_notes_unavailable",
+          "value": "暂无更新说明，可查看详情。"
+        },
+        {
+          "configuration": "zh-rNY",
+          "key": "update_notes_truncated",
+          "value": "说明较长，请查看详情阅读完整内容。"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_auto_check",
+          "value": "自动检查更新"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_auto_check_summary",
+          "value": "解锁后每天最多检查一次，可随时关闭"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_now",
+          "value": "立即更新"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_skip_version",
+          "value": "跳过此版本"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_view_details",
+          "value": "查看详情"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_later",
+          "value": "稍后"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_whats_new",
+          "value": "更新内容"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_open_fdroid",
+          "value": "前往 F-Droid"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_fdroid_source",
+          "value": "通过 F-Droid 官方仓库检查和安装更新。"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_notes_unavailable",
+          "value": "暂无更新说明，可查看详情。"
+        },
+        {
+          "configuration": "zh-rXB",
+          "key": "update_notes_truncated",
+          "value": "说明较长，请查看详情阅读完整内容。"
+        }
+      ]
+    }
+  }
+}

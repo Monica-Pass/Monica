@@ -9,9 +9,9 @@
 <p><strong>Bitwarden と KeePass をつなぐローカル優先のパスワード保管庫</strong></p>
 <p>Android · Local Vault · TOTP · WebDAV Backup</p>
 
-[![Release](https://img.shields.io/github/v/release/Monica-Pass/Monica-for-Android?style=flat-square)](https://github.com/Monica-Pass/Monica-for-Android/releases)
-[![Downloads](https://img.shields.io/github/downloads/Monica-Pass/Monica-for-Android/total?style=flat-square)](https://github.com/Monica-Pass/Monica-for-Android/releases)
-[![Last Commit](https://img.shields.io/github/last-commit/Monica-Pass/Monica-for-Android?style=flat-square)](https://github.com/Monica-Pass/Monica-for-Android/commits)
+[![Release](https://img.shields.io/github/v/release/Monica-Pass/Monica?style=flat-square)](https://github.com/Monica-Pass/Monica/releases)
+[![Downloads](https://img.shields.io/github/downloads/Monica-Pass/Monica/total?style=flat-square)](https://github.com/Monica-Pass/Monica/releases)
+[![Last Commit](https://img.shields.io/github/last-commit/Monica-Pass/Monica?style=flat-square)](https://github.com/Monica-Pass/Monica/commits)
 [![QQ グループ](https://img.shields.io/badge/QQ%20Group-1087865010-12B7F5?style=flat-square&logo=tencentqq&logoColor=white)](https://qm.qq.com/q/2vTdTkHV3u)
 [![Telegram](https://img.shields.io/badge/Telegram-Monica%20Community-26A5E4?style=flat-square&logo=telegram&logoColor=white)](https://t.me/+IZUDLL-vWOA1Y2U1)
 
@@ -51,7 +51,7 @@ MDBX は Monica が開発中のローカル優先暗号化 vault 形式です。
 
 ### クイックインストール
 
-1. [Releases](https://github.com/Monica-Pass/Monica-for-Android/releases) から最新 APK を取得。
+1. [Releases](https://github.com/Monica-Pass/Monica/releases) から最新 APK を取得。
 2. Android 8.0+ にインストールし、マスターパスワードを初期設定。
 
 ### 既知の制限
@@ -72,14 +72,15 @@ MDBX は Monica が開発中のローカル優先暗号化 vault 形式です。
 - UI: Jetpack Compose + Material 3 + Navigation Compose。
 - データ層: Room（`PasswordDatabase`）+ DAO + Repository。
 - 非同期: Kotlin Coroutines + Flow。
-- DI: Koin（`MonicaApplication` で初期化）。
+- 依存関係: Repository と Factory を手動で組み立て、必要なオブジェクトを渡します。
 - セキュリティ: Android Keystore、EncryptedSharedPreferences、BiometricPrompt。
 - バックグラウンド処理: WorkManager（`AutoBackupWorker`）で WebDAV 自動バックアップ。
 - プロトコル/連携: Retrofit + OkHttp（Bitwarden API）、kotpass（KeePass）、sardine-android（WebDAV）。
 
 ### セキュリティモデル
-- 暗号化: AES-256-GCM（認証付き暗号）。
-- KDF: PBKDF2-HMAC-SHA256（高反復パラメータ）。
+- ローカルの `SecurityManager` が扱うフィールドの暗号化には AES-256-GCM を使用します。
+- ローカルのマスターパスワード検証と MDK のラップ用鍵の導出には PBKDF2-HMAC-SHA256 を使用します。MDK 自体のラップは AES-GCM です。
+- Bitwarden、KeePass/KDBX、MDBX はそれぞれの形式と暗号・KDF の規則に従います。上記は保管庫全体に共通する暗号方式や単一の KDF を意味しません。
 - ローカル保護: マスターパスワードのハッシュと安全設定は端末内で管理。
 - ネットワーク境界: アプリはネットワーク権限を宣言し、主に Bitwarden 連携と WebDAV 同期/バックアップに使用。
 
@@ -116,31 +117,52 @@ Monica が役に立った場合は、継続開発とセキュリティ強化へ�
 ## 開発者向け情報
 
 ### プロジェクト層（現行コード）
+
+以下の Kotlin/Java パッケージは `Monica for Android/app/src/main/java/` を基準とします。
+
 - `takagi/ru/monica/ui`: Compose 画面とコンポーネント。
 - `takagi/ru/monica/data`: Room エンティティ、DAO、DB マイグレーション。
 - `takagi/ru/monica/repository`: データアクセスのラッパー。
 - `takagi/ru/monica/security`: 暗号化、鍵管理、認証関連ロジック。
 - `takagi/ru/monica/bitwarden`: API、暗号、マッパー、同期、ViewModel。
-- `takagi/ru/monica/autofill`: 自動入力サービスとフロー。
+- `takagi/ru/monica/autofill_ng`: 自動入力サービスとフロー。
 - `takagi/ru/monica/passkey`: Android 14+ Credential Provider 実装。
 - `takagi/ru/monica/workers`: WebDAV 自動バックアップ等のバックグラウンド処理。
 - `mdbx`: Monica MDBX ローカルデータベース形式の Rust workspace とクライアント接続ドキュメント。
 
 ### 現在使用中の主要コンポーネント（リポジトリで検証可能）
-- Android UI: Jetpack Compose, Material 3, Navigation Compose。
-- データ/状態: Room, DataStore Preferences, ViewModel。
+- Android UI: Jetpack Compose, Material 3 Expressive, Navigation Compose `2.10.2`。
+- データ/状態: Room `2.8.5`, DataStore Preferences `1.3.0`, Lifecycle ViewModel `2.11.0`。
 - セキュリティ: Android Keystore, EncryptedSharedPreferences, BiometricPrompt。
 - 通信/プロトコル: Retrofit, OkHttp, Kotlinx Serialization。
 - 同期/エコシステム: sardine-android (WebDAV), kotpass (KeePass), Bitwarden API 連携。
-- 非同期/ジョブ: Coroutines, Flow, WorkManager。
-- 追加機能: CameraX + ML Kit（QR スキャン）, Credentials API（Passkey）。
+- 非同期/ジョブ: Coroutines, Flow, WorkManager `2.12.0`。
+- 追加機能: CameraX `1.6.2` + ZXing（QR スキャン）, Credentials API（Passkey）。
 
 ### ビルドとコントリビューション
-- Android Studio: 最新安定版。
-- JDK: 17+。
-- Android 設定: `compileSdk 35`, `targetSdk 34`, `minSdk 26`（`Monica for Android/app/build.gradle`）。
-- Android ビルド基準: AGP `8.6.0`, Kotlin `2.0.21`, Compose BOM `2026.03.00`（Material3 は BOM に追従）。
-- バージョンの一次情報: `Monica for Android/gradle/libs.versions.toml` と `Monica for Android/app/build.gradle`。
+
+以下は現在チェックアウトしているソースの開発設定です。公開済みバージョンや、すべての端末での検証完了を示すものではありません。
+
+| 項目 | 現在の設定 |
+| --- | --- |
+| Gradle Wrapper / Android Gradle Plugin | `9.7.0` / `9.3.1` |
+| Kotlin / KSP | `2.4.21` / `2.3.13` |
+| Compose BOM | `2026.09.00` |
+| Material 3 Expressive | `1.5.0-rc01` を独立して固定（BOM 任せではありません） |
+| Android SDK | `compileSdk 37`, `targetSdk 34`, `minSdk 26` (Android 8.0+) |
+| ビルド用 JDK / Java・Kotlin のバイトコード対象 | `17` / `11` |
+
+- Android Studio は、この AGP と SDK に対応する版を使用してください。
+- 設定の一次情報: [version catalog](Monica%20for%20Android/gradle/libs.versions.toml), [app/build.gradle](Monica%20for%20Android/app/build.gradle), [Gradle Wrapper](Monica%20for%20Android/gradle/wrapper/gradle-wrapper.properties).
+- Android 工程は `Monica for Android/` 内にあります。 Windows PowerShell では `./gradlew` を `./gradlew.bat` に置き換えてください。
+
+```bash
+cd "Monica for Android"
+./gradlew :app:assembleDebug
+./gradlew :app:testDebugUnitTest
+```
+
+- SDK・NDK・Rust の要件は現在の Gradle 設定と CI に従ってください。
 - Issue / PR でのコントリビューション歓迎。
 
 ---
@@ -169,7 +191,7 @@ Monica の設計、互換性対応、そして一部の機能方針は、以下�
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Monica-Pass/Monica-for-Android&type=Date)](https://star-history.com/#Monica-Pass/Monica-for-Android&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=Monica-Pass/Monica&type=Date)](https://star-history.com/#Monica-Pass/Monica&Date)
 
 ---
 
@@ -194,7 +216,7 @@ Monica は [GNU General Public License v3.0](LICENSE) で公開されていま�
 ## サードパーティアイコン表記
 
 - 本プロジェクトには [Stratum Auth app](https://github.com/stratumauth/app) のアイコン資産をローカル同梱しています（バージョン [v1.4.0](https://github.com/stratumauth/app/releases/tag/v1.4.0)、ディレクトリ [icons](https://github.com/stratumauth/app/tree/v1.4.0/icons) / [extraicons](https://github.com/stratumauth/app/tree/v1.4.0/extraicons)、GPL-3.0）。
-- 銀行カード／決済カードアイコンの出典：ローカルディレクトリ [SVG Credit Card & Payment Icons](svg-credit-card-payment-icons-main)（Apache-2.0）。
+- 銀行カード／決済カードアイコンの出典：[SVG Credit Card & Payment Icons](https://github.com/aaronfagan/svg-credit-card-payment-icons)（Apache-2.0）。
 - ブランド名およびロゴの商標権は各権利者に帰属します。
 
 ## F-Droid contact

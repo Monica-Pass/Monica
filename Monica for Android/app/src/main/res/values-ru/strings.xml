@@ -2069,9 +2069,9 @@
     <string name="transfer_to_external">Перенести во внешнее</string>
     <string name="remove_database">Удалить базу</string>
     <string name="confirm_remove">Удалить базу?</string>
-    <string name="confirm_remove_internal_description">Запись будет удалена. Файл также удалится из внутреннего хранилища.</string>
-    <string name="confirm_remove_external_description">Ссылка будет удалена. Исходный файл не затрагивается.</string>
-    <string name="confirm_remove_remote_description">Удалить эту удалённую базу и локальную копию. Облачный файл останется.</string>
+    <string name="confirm_remove_internal_description">База будет удалена из Monica. Внутренний файл KDBX сохранится. Импортированная копия файла ключа будет удалена, если её не использует другая база.</string>
+    <string name="confirm_remove_external_description">База будет удалена из Monica. Исходный файл KDBX сохранится. Импортированная копия файла ключа будет удалена, если её не использует другая база.</string>
+    <string name="confirm_remove_remote_description">Удалённая база будет удалена из Monica. Исходные файлы в облаке сохранятся. Локальные рабочие и кэшированные копии будут удалены только для WebDAV. Импортированная копия файла ключа будет удалена, если её не использует другая база.</string>
     <string name="remove">Удалить</string>
     <string name="create">Создать</string>
     <string name="import_existing_database">Импортировать существующую базу</string>
@@ -4055,7 +4055,7 @@
     <string name="mdbx_dashboard_vault_count">Хранилищ отслеживается локально: %1$d</string>
     <string name="mdbx_default_badge">По умолчанию</string>
     <string name="mdbx_delete">Удалить</string>
-    <string name="mdbx_delete_vault_message">Удалить «%s»?\n\nЭто удалит только локальную ссылку. Файл на WebDAV не будет удалён.</string>
+    <string name="mdbx_delete_vault_message">Удалить «%s» из Monica?\n\nЛокальные данные этого хранилища в Monica и его файлы MDBX2, управляемые Monica, будут удалены. Исходные файлы во внешней памяти или облаке сохранятся.</string>
     <string name="mdbx_delete_vault_title">Удалить хранилище</string>
     <string name="mdbx_file_size_label">Файл</string>
     <string name="mdbx_format_description">Monica Database eXtended: официальный локальный зашифрованный формат базы данных с обратной совместимостью со старыми тестовыми хранилищами</string>

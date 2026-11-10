@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="update_auto_check">Automatisch nach Updates suchen</string>
+    <string name="update_auto_check_summary">Nach dem Entsperren höchstens einmal täglich prüfen. Jederzeit deaktivierbar.</string>
+    <string name="update_now">Jetzt aktualisieren</string>
+    <string name="update_skip_version">Diese Version überspringen</string>
+    <string name="update_view_details">Details ansehen</string>
+    <string name="update_later">Später</string>
+    <string name="update_whats_new">Neuerungen</string>
+    <string name="update_open_fdroid">F-Droid öffnen</string>
+    <string name="update_fdroid_source">Updates werden über die offizielle F-Droid-Paketquelle geprüft und installiert.</string>
+    <string name="update_notes_unavailable">Versionshinweise sind nicht verfügbar. Weitere Informationen finden Sie unter Details.</string>
+    <string name="update_notes_truncated">Diese Hinweise sind lang. Öffnen Sie die Details, um die vollständigen Versionshinweise zu lesen.</string>
+</resources>

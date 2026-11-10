@@ -754,18 +754,32 @@ fun AddEditBankCardScreen(
     val contentItems = listOf(
         WalletEditorSection("billing", R.string.billing_address, Icons.Default.Home, editorSections.visible("billing", hasBillingAddress)) {
             TemplateFormSection("") {
-                SuggestedOutlinedTextField(billingAddress.streetAddress, { billingAddress = billingAddress.copy(streetAddress = it); hasBillingAddress = !billingAddress.isEmpty() }, suggestionField = CommonSuggestionField.STREET,
-                    label = { Text(stringResource(R.string.street_address)) }, singleLine = true, modifier = Modifier.fillMaxWidth().testTag("wallet_billing_streetAddress"))
-                SuggestedOutlinedTextField(billingAddress.apartment, { billingAddress = billingAddress.copy(apartment = it); hasBillingAddress = !billingAddress.isEmpty() }, suggestionField = CommonSuggestionField.APARTMENT,
-                    label = { Text(stringResource(R.string.apartment)) }, singleLine = true, modifier = Modifier.fillMaxWidth().testTag("wallet_billing_apartment"))
-                SuggestedOutlinedTextField(billingAddress.city, { billingAddress = billingAddress.copy(city = it); hasBillingAddress = !billingAddress.isEmpty() }, suggestionField = CommonSuggestionField.CITY,
-                    label = { Text(stringResource(R.string.city)) }, singleLine = true, modifier = Modifier.fillMaxWidth().testTag("wallet_billing_city"))
-                SuggestedOutlinedTextField(billingAddress.stateProvince, { billingAddress = billingAddress.copy(stateProvince = it); hasBillingAddress = !billingAddress.isEmpty() }, suggestionField = CommonSuggestionField.REGION,
-                    label = { Text(stringResource(R.string.state_province)) }, singleLine = true, modifier = Modifier.fillMaxWidth().testTag("wallet_billing_stateProvince"))
-                SuggestedOutlinedTextField(billingAddress.postalCode, { billingAddress = billingAddress.copy(postalCode = it); hasBillingAddress = !billingAddress.isEmpty() }, suggestionField = CommonSuggestionField.POSTAL_CODE,
-                    label = { Text(stringResource(R.string.postal_code)) }, singleLine = true, modifier = Modifier.fillMaxWidth().testTag("wallet_billing_postalCode"))
-                SuggestedOutlinedTextField(billingAddress.country, { billingAddress = billingAddress.copy(country = it); hasBillingAddress = !billingAddress.isEmpty() }, suggestionField = CommonSuggestionField.COUNTRY,
-                    label = { Text(stringResource(R.string.country)) }, singleLine = true, modifier = Modifier.fillMaxWidth().testTag("wallet_billing_country"))
+                ConnectedFieldGroup(
+                    {
+                        SuggestedOutlinedTextField(billingAddress.streetAddress, { billingAddress = billingAddress.copy(streetAddress = it); hasBillingAddress = !billingAddress.isEmpty() }, suggestionField = CommonSuggestionField.STREET,
+                            label = { Text(stringResource(R.string.street_address)) }, singleLine = true, modifier = Modifier.fillMaxWidth().testTag("wallet_billing_streetAddress"))
+                    },
+                    {
+                        SuggestedOutlinedTextField(billingAddress.apartment, { billingAddress = billingAddress.copy(apartment = it); hasBillingAddress = !billingAddress.isEmpty() }, suggestionField = CommonSuggestionField.APARTMENT,
+                            label = { Text(stringResource(R.string.apartment)) }, singleLine = true, modifier = Modifier.fillMaxWidth().testTag("wallet_billing_apartment"))
+                    },
+                    {
+                        SuggestedOutlinedTextField(billingAddress.city, { billingAddress = billingAddress.copy(city = it); hasBillingAddress = !billingAddress.isEmpty() }, suggestionField = CommonSuggestionField.CITY,
+                            label = { Text(stringResource(R.string.city)) }, singleLine = true, modifier = Modifier.fillMaxWidth().testTag("wallet_billing_city"))
+                    },
+                    {
+                        SuggestedOutlinedTextField(billingAddress.stateProvince, { billingAddress = billingAddress.copy(stateProvince = it); hasBillingAddress = !billingAddress.isEmpty() }, suggestionField = CommonSuggestionField.REGION,
+                            label = { Text(stringResource(R.string.state_province)) }, singleLine = true, modifier = Modifier.fillMaxWidth().testTag("wallet_billing_stateProvince"))
+                    },
+                    {
+                        SuggestedOutlinedTextField(billingAddress.postalCode, { billingAddress = billingAddress.copy(postalCode = it); hasBillingAddress = !billingAddress.isEmpty() }, suggestionField = CommonSuggestionField.POSTAL_CODE,
+                            label = { Text(stringResource(R.string.postal_code)) }, singleLine = true, modifier = Modifier.fillMaxWidth().testTag("wallet_billing_postalCode"))
+                    },
+                    {
+                        SuggestedOutlinedTextField(billingAddress.country, { billingAddress = billingAddress.copy(country = it); hasBillingAddress = !billingAddress.isEmpty() }, suggestionField = CommonSuggestionField.COUNTRY,
+                            label = { Text(stringResource(R.string.country)) }, singleLine = true, modifier = Modifier.fillMaxWidth().testTag("wallet_billing_country"))
+                    },
+                )
             }
             if (hasCommonBillingAddress) WalletEditorAction(stringResource(R.string.common_account_billing_use_saved), Icons.Default.AccountCircle, 0, 1) {
                 billingAddress = commonBillingAddress
@@ -934,89 +948,89 @@ fun AddEditBankCardScreen(
 
                 // Basic Information
                 InfoCard(title = stringResource(R.string.section_basic_info)) {
-                    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-
-
-                    // Bank Name
-                    SuggestedOutlinedTextField(
-                        suggestionField = CommonSuggestionField.BANK_NAME,
-                        value = bankName,
-                        onValueChange = { bankName = it },
-                        label = { Text(stringResource(R.string.bank_name)) },
-                        placeholder = { Text(stringResource(R.string.bank_name_example)) },
-                        leadingIcon = { Icon(Icons.Default.AccountBalance, contentDescription = null) },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-                        shape = RoundedCornerShape(12.dp)
-                    )
-
-                    SuggestedOutlinedTextField(
-                        suggestionField = CommonSuggestionField.BANK_BRANCH,
-                        value = bankBranch,
-                        onValueChange = { bankBranch = it },
-                        label = { Text(stringResource(R.string.bank_branch)) },
-                        placeholder = { Text(stringResource(R.string.bank_branch_example)) },
-                        leadingIcon = { Icon(Icons.Default.AccountBalance, contentDescription = null) },
-                        modifier = Modifier.fillMaxWidth().testTag("bank_branch"),
-                        singleLine = true,
-                        shape = RoundedCornerShape(12.dp)
-                    )
-
-                    // Card Type
-                    ExposedDropdownMenuBox(
-                        expanded = showCardTypeMenu,
-                        onExpandedChange = { showCardTypeMenu = it }
-                    ) {
-                        OutlinedTextField(
-                            value = when (cardType) {
-                                CardType.CREDIT -> stringResource(R.string.credit_card)
-                                CardType.DEBIT -> stringResource(R.string.debit_card)
-                                CardType.PREPAID -> stringResource(R.string.prepaid_card)
-                            },
-                            onValueChange = {},
-                            readOnly = true,
-                            label = { Text(stringResource(R.string.card_type)) },
-                            leadingIcon = { Icon(Icons.Default.CreditCard, contentDescription = null) },
-                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = showCardTypeMenu) },
-                            modifier = Modifier.menuAnchor().fillMaxWidth(),
-                            shape = RoundedCornerShape(12.dp),
-                            colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
-                        )
-
-                        MonicaExposedChoiceMenu(
-                            expanded = showCardTypeMenu,
-                            onDismissRequest = { showCardTypeMenu = false },
-                            selectedValue = cardType,
-                            onSelect = { cardType = it },
-                            choices = listOf(
-                                MonicaMenuChoice(CardType.DEBIT, stringResource(R.string.debit_card)),
-                                MonicaMenuChoice(CardType.CREDIT, stringResource(R.string.credit_card)),
-                                MonicaMenuChoice(CardType.PREPAID, stringResource(R.string.prepaid_card)),
+                    ConnectedFieldGroup(
+                        {
+                            // Bank Name
+                            SuggestedOutlinedTextField(
+                                suggestionField = CommonSuggestionField.BANK_NAME,
+                                value = bankName,
+                                onValueChange = { bankName = it },
+                                label = { Text(stringResource(R.string.bank_name)) },
+                                placeholder = { Text(stringResource(R.string.bank_name_example)) },
+                                leadingIcon = { Icon(Icons.Default.AccountBalance, contentDescription = null) },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                shape = RoundedCornerShape(12.dp)
                             )
-                        )
-                    }
+                        },
+                        {
+                            SuggestedOutlinedTextField(
+                                suggestionField = CommonSuggestionField.BANK_BRANCH,
+                                value = bankBranch,
+                                onValueChange = { bankBranch = it },
+                                label = { Text(stringResource(R.string.bank_branch)) },
+                                placeholder = { Text(stringResource(R.string.bank_branch_example)) },
+                                leadingIcon = { Icon(Icons.Default.AccountBalance, contentDescription = null) },
+                                modifier = Modifier.fillMaxWidth().testTag("bank_branch"),
+                                singleLine = true,
+                                shape = RoundedCornerShape(12.dp)
+                            )
+                        },
+                        {
+                            // Card Type
+                            ExposedDropdownMenuBox(
+                                expanded = showCardTypeMenu,
+                                onExpandedChange = { showCardTypeMenu = it }
+                            ) {
+                                OutlinedTextField(
+                                    value = when (cardType) {
+                                        CardType.CREDIT -> stringResource(R.string.credit_card)
+                                        CardType.DEBIT -> stringResource(R.string.debit_card)
+                                        CardType.PREPAID -> stringResource(R.string.prepaid_card)
+                                    },
+                                    onValueChange = {},
+                                    readOnly = true,
+                                    label = { Text(stringResource(R.string.card_type)) },
+                                    leadingIcon = { Icon(Icons.Default.CreditCard, contentDescription = null) },
+                                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = showCardTypeMenu) },
+                                    modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable).fillMaxWidth(),
+                                    shape = RoundedCornerShape(12.dp),
+                                    colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
+                                )
 
-run {
-    takagi.ru.monica.ui.components.EntryPaymentFields(
-        cardNumber, cardholderName,
-        takagi.ru.monica.ui.components.EntryPaymentFormat.joinExpiry(expiryMonth, expiryYear), cvv,
-        onNumber = { cardNumber = it },
-        onHolder = { cardholderName = it },
-        onExpiry = { input ->
-            val (month, year) = takagi.ru.monica.ui.components.EntryPaymentFormat.splitExpiry(input)
-            expiryMonth = month
-            expiryYear = year
-        },
-        onCvv = { cvv = it },
-        onPickHolder = if (showCommonNameAction) {{
-            shouldLoadCommonNameAnalysis = true
-            showCommonNamePicker = true
-        }} else null,
-    )
-}
-
+                                MonicaExposedChoiceMenu(
+                                    expanded = showCardTypeMenu,
+                                    onDismissRequest = { showCardTypeMenu = false },
+                                    selectedValue = cardType,
+                                    onSelect = { cardType = it },
+                                    choices = listOf(
+                                        MonicaMenuChoice(CardType.DEBIT, stringResource(R.string.debit_card)),
+                                        MonicaMenuChoice(CardType.CREDIT, stringResource(R.string.credit_card)),
+                                        MonicaMenuChoice(CardType.PREPAID, stringResource(R.string.prepaid_card)),
+                                    )
+                                )
+                            }
+                        },
+                        {
+                            takagi.ru.monica.ui.components.EntryPaymentFields(
+                                cardNumber, cardholderName,
+                                takagi.ru.monica.ui.components.EntryPaymentFormat.joinExpiry(expiryMonth, expiryYear), cvv,
+                                onNumber = { cardNumber = it },
+                                onHolder = { cardholderName = it },
+                                onExpiry = { input ->
+                                    val (month, year) = takagi.ru.monica.ui.components.EntryPaymentFormat.splitExpiry(input)
+                                    expiryMonth = month
+                                    expiryYear = year
+                                },
+                                onCvv = { cvv = it },
+                                onPickHolder = if (showCommonNameAction) {{
+                                    shouldLoadCommonNameAnalysis = true
+                                    showCommonNamePicker = true
+                                }} else null,
+                            )
+                        },
+                    )
                 }
-            }
 
 
                 },

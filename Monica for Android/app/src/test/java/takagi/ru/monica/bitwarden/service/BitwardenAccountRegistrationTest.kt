@@ -83,10 +83,22 @@ class BitwardenAccountRegistrationTest {
             server.enqueue(MockResponse().setResponseCode(404))
             server.enqueue(MockResponse().setResponseCode(204))
             val client = service()
-            val ticket = client.startRegistration(server.url("/").toString(), email, null, null).getOrThrow()
+            val initialGeneration = takagi.ru.monica.security.SessionManager.lockGeneration.value
+            fun <T> checkedPhase(phase: String, result: Result<T>): T {
+                result.exceptionOrNull()?.let { failure ->
+                    throw AssertionError(
+                        "Registration $phase phase failed; requests=${server.requestCount}; " +
+                            "unlocked=${takagi.ru.monica.security.SessionManager.isUnlocked.value}; " +
+                            "sameGeneration=${initialGeneration == takagi.ru.monica.security.SessionManager.lockGeneration.value}",
+                        failure,
+                    )
+                }
+                return result.getOrThrow()
+            }
+            val ticket = checkedPhase("start", client.startRegistration(server.url("/").toString(), email, null, null))
             assertTrue(ticket.legacy)
             assertTrue(ticket.readyForPassword)
-            client.finishRegistration(ticket, password, password, null).getOrThrow()
+            checkedPhase("finish", client.finishRegistration(ticket, password, password, null))
             assertEquals("/identity/accounts/register/send-verification-email", server.takeRequest().path)
             val registration = server.takeRequest()
             assertEquals("/api/accounts/register", registration.path)

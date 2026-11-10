@@ -4,6 +4,7 @@ apply from: rootProject.file('gradle/rust-toolchain.gradle')
 
 def nativeSource = new File(rootDir, 'rust-jni')
 def nativeOutput = new File(buildDir, 'monicaRustJniLibs')
+def monicaAndroidSdkDirectory = androidComponents.sdkComponents.sdkDirectory
 def nativeAbis = project.hasProperty('includeX86TestAbi')
         ? ['arm64-v8a', 'armeabi-v7a', 'x86_64'] : ['arm64-v8a', 'armeabi-v7a']
 
@@ -24,7 +25,7 @@ def buildNative = tasks.register('buildMonicaRustJniFromSource') {
         def command = ['ndk']
         nativeAbis.each { command.addAll(['-t', it]) }
         command.addAll(['-P', '26', '-o', nativeOutput.absolutePath, 'build', '--release', '--locked'])
-        def process = rustCargoProcess(command, nativeSource, android.sdkDirectory).start()
+        def process = rustCargoProcess(command, nativeSource, monicaAndroidSdkDirectory.get().asFile).start()
         process.inputStream.eachLine { println it }
         if (process.waitFor() != 0) throw new GradleException('Building Monica Rust JNI from source failed')
         nativeAbis.each { abi ->

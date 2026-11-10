@@ -9,9 +9,9 @@
 <p><strong>Kho mat khau uu tien local, ket noi Bitwarden va KeePass</strong></p>
 <p>Android · Local Vault · TOTP · WebDAV Backup</p>
 
-[![Release](https://img.shields.io/github/v/release/Monica-Pass/Monica-for-Android?style=flat-square)](https://github.com/Monica-Pass/Monica-for-Android/releases)
-[![Downloads](https://img.shields.io/github/downloads/Monica-Pass/Monica-for-Android/total?style=flat-square)](https://github.com/Monica-Pass/Monica-for-Android/releases)
-[![Last Commit](https://img.shields.io/github/last-commit/Monica-Pass/Monica-for-Android?style=flat-square)](https://github.com/Monica-Pass/Monica-for-Android/commits)
+[![Release](https://img.shields.io/github/v/release/Monica-Pass/Monica?style=flat-square)](https://github.com/Monica-Pass/Monica/releases)
+[![Downloads](https://img.shields.io/github/downloads/Monica-Pass/Monica/total?style=flat-square)](https://github.com/Monica-Pass/Monica/releases)
+[![Last Commit](https://img.shields.io/github/last-commit/Monica-Pass/Monica?style=flat-square)](https://github.com/Monica-Pass/Monica/commits)
 [![QQ Group](https://img.shields.io/badge/QQ%20Group-1087865010-12B7F5?style=flat-square&logo=tencentqq&logoColor=white)](https://qm.qq.com/q/2vTdTkHV3u)
 [![Telegram](https://img.shields.io/badge/Telegram-Monica%20Community-26A5E4?style=flat-square&logo=telegram&logoColor=white)](https://t.me/+IZUDLL-vWOA1Y2U1)
 
@@ -51,7 +51,7 @@ Neu ban muon tich hop MDBX vao client khac, hay bat dau voi [MDBX workspace READ
 
 ### Cai dat nhanh
 
-1. Tai APK moi nhat tai [Releases](https://github.com/Monica-Pass/Monica-for-Android/releases).
+1. Tai APK moi nhat tai [Releases](https://github.com/Monica-Pass/Monica/releases).
 2. Cai dat tren Android 8.0+ va khoi tao master password.
 
 ### Gioi han da biet
@@ -72,14 +72,15 @@ Neu ban muon tich hop MDBX vao client khac, hay bat dau voi [MDBX workspace READ
 - UI: Jetpack Compose + Material 3 + Navigation Compose.
 - Data layer: Room (`PasswordDatabase`) + DAO + Repository.
 - Bat dong bo: Kotlin Coroutines + Flow.
-- DI: Koin (khoi tao trong `MonicaApplication`).
+- Phụ thuộc: khởi tạo Repository và Factory thủ công, rồi truyền các đối tượng cần thiết.
 - Bao mat: Android Keystore, EncryptedSharedPreferences, BiometricPrompt.
 - Nen task: WorkManager (`AutoBackupWorker`) cho auto backup WebDAV.
 - Giao thuc va tich hop: Retrofit + OkHttp (Bitwarden API), kotpass (KeePass), sardine-android (WebDAV).
 
 ### Mo hinh bao mat
-- Ma hoa: AES-256-GCM (authenticated encryption).
-- KDF: PBKDF2-HMAC-SHA256 (tham so lap cao).
+- Các trường do `SecurityManager` cục bộ quản lý được mã hóa bằng AES-256-GCM.
+- Luồng cục bộ dùng PBKDF2-HMAC-SHA256 để xác minh mật khẩu chính và dẫn xuất khóa bọc MDK; chính MDK được bọc bằng AES-GCM.
+- Bitwarden, KeePass/KDBX và MDBX tuân theo định dạng cùng thuật toán mã hóa/KDF riêng. Mô tả trên không có nghĩa toàn bộ kho dùng chung một thuật toán mã hóa hay một KDF.
 - Bao ve local: hash master password va cai dat bao mat duoc quan ly tren thiet bi.
 - Ranh gioi mang: ung dung co khai bao quyen mang, chu yeu de tich hop Bitwarden va dong bo/backup WebDAV.
 
@@ -116,31 +117,52 @@ Nguon ung ho duoc uu tien cho:
 ## Ghi Chu Cho Nha Phat Trien
 
 ### Cau truc ma nguon hien tai
+
+Các đường dẫn gói Kotlin/Java bên dưới tính từ `Monica for Android/app/src/main/java/`.
+
 - `takagi/ru/monica/ui`: man hinh va thanh phan Compose.
 - `takagi/ru/monica/data`: entity Room, DAO, migration co so du lieu.
 - `takagi/ru/monica/repository`: lop truy cap du lieu.
 - `takagi/ru/monica/security`: ma hoa, quan ly khoa, logic xac thuc.
 - `takagi/ru/monica/bitwarden`: API, crypto, mapper, sync, viewmodel.
-- `takagi/ru/monica/autofill`: dich vu va luong autofill.
+- `takagi/ru/monica/autofill_ng`: dich vu va luong autofill.
 - `takagi/ru/monica/passkey`: Credential Provider cho Android 14+.
 - `takagi/ru/monica/workers`: task nen nhu auto backup WebDAV.
 - `mdbx`: Rust workspace va tai lieu tich hop client cho dinh dang co so du lieu local Monica MDBX.
 
 ### Thanh phan da duoc su dung (co the doi chieu trong repo)
-- Android UI: Jetpack Compose, Material 3, Navigation Compose.
-- Data va state: Room, DataStore Preferences, ViewModel.
+- Android UI: Jetpack Compose, Material 3 Expressive, Navigation Compose `2.10.2`.
+- Dữ liệu và trạng thái: Room `2.8.5`, DataStore Preferences `1.3.0`, Lifecycle ViewModel `2.11.0`.
 - Bao mat: Android Keystore, EncryptedSharedPreferences, BiometricPrompt.
 - Network va protocol: Retrofit, OkHttp, Kotlinx Serialization.
 - Dong bo va he sinh thai: sardine-android (WebDAV), kotpass (KeePass), tich hop Bitwarden API.
-- Bat dong bo va job: Coroutines, Flow, WorkManager.
-- Tinh nang bo sung: CameraX + ML Kit (quet QR), Credentials API (Passkey).
+- Bất đồng bộ và tác vụ: Coroutines, Flow, WorkManager `2.12.0`.
+- Tính năng bổ sung: CameraX `1.6.2` + ZXing (quét QR), Credentials API (Passkey).
 
 ### Build va dong gop
-- Android Studio: phien ban stable moi nhat.
-- JDK: 17+.
-- Cau hinh Android: `compileSdk 35`, `targetSdk 34`, `minSdk 26` (xem `Monica for Android/app/build.gradle`).
-- Moc build Android: AGP `8.6.0`, Kotlin `2.0.21`, Compose BOM `2026.03.00` (Material3 dong bo theo BOM).
-- Nguon thong tin phien ban: `Monica for Android/gradle/libs.versions.toml` va `Monica for Android/app/build.gradle`.
+
+Các phiên bản sau là cấu hình phát triển của mã nguồn đang được checkout, không phải tuyên bố về bản đã phát hành hay kết quả kiểm thử trên mọi thiết bị.
+
+| Thành phần | Cấu hình hiện tại |
+| --- | --- |
+| Gradle Wrapper / Android Gradle Plugin | `9.7.0` / `9.3.1` |
+| Kotlin / KSP | `2.4.21` / `2.3.13` |
+| Compose BOM | `2026.09.00` |
+| Material 3 Expressive | Cố định riêng ở `1.5.0-rc01`, không lấy phiên bản từ BOM |
+| Android SDK | `compileSdk 37`, `targetSdk 34`, `minSdk 26` (Android 8.0+) |
+| JDK để build / đích bytecode Java và Kotlin | `17` / `11` |
+
+- Dùng phiên bản Android Studio tương thích với AGP và SDK này.
+- Nguồn cấu hình: [version catalog](Monica%20for%20Android/gradle/libs.versions.toml), [app/build.gradle](Monica%20for%20Android/app/build.gradle), [Gradle Wrapper](Monica%20for%20Android/gradle/wrapper/gradle-wrapper.properties).
+- Dự án Android nằm trong `Monica for Android/`. Trên Windows PowerShell, thay `./gradlew` bằng `./gradlew.bat`.
+
+```bash
+cd "Monica for Android"
+./gradlew :app:assembleDebug
+./gradlew :app:testDebugUnitTest
+```
+
+- Theo yêu cầu SDK, NDK và Rust trong cấu hình Gradle và CI hiện tại.
 - Hoan nghenh dong gop qua Issue va PR.
 
 ---
@@ -169,7 +191,7 @@ Thiet ke, kha nang tuong thich va mot so dinh huong tinh nang cua Monica da nhan
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Monica-Pass/Monica-for-Android&type=Date)](https://star-history.com/#Monica-Pass/Monica-for-Android&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=Monica-Pass/Monica&type=Date)](https://star-history.com/#Monica-Pass/Monica&Date)
 
 ---
 
@@ -194,7 +216,7 @@ Monica duoc phat hanh theo [GNU General Public License v3.0](LICENSE).
 ## Ghi Chu Ve Bieu Tuong Ben Thu Ba
 
 - Du an nay dong goi cuc bo cac tai nguyen icon tu [Stratum Auth app](https://github.com/stratumauth/app) (phien ban [v1.4.0](https://github.com/stratumauth/app/releases/tag/v1.4.0), thu muc [icons](https://github.com/stratumauth/app/tree/v1.4.0/icons) / [extraicons](https://github.com/stratumauth/app/tree/v1.4.0/extraicons), GPL-3.0).
-- Nguon icon the ngan hang/thanh toan: thu muc cuc bo [SVG Credit Card & Payment Icons](svg-credit-card-payment-icons-main) (Apache-2.0).
+- Nguon icon the ngan hang/thanh toan: [SVG Credit Card & Payment Icons](https://github.com/aaronfagan/svg-credit-card-payment-icons) (Apache-2.0).
 - Ten thuong hieu va logo thuoc quyen so huu cua cac chu so huu tuong ung.
 
 ## F-Droid contact

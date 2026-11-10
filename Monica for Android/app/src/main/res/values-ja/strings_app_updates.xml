@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="update_auto_check">更新を自動確認</string>
+    <string name="update_auto_check_summary">ロック解除後、1日1回まで確認します。いつでもオフにできます。</string>
+    <string name="update_now">今すぐ更新</string>
+    <string name="update_skip_version">このバージョンをスキップ</string>
+    <string name="update_view_details">詳細を見る</string>
+    <string name="update_later">後で</string>
+    <string name="update_whats_new">更新内容</string>
+    <string name="update_open_fdroid">F-Droid を開く</string>
+    <string name="update_fdroid_source">F-Droid の公式リポジトリを通じて更新の確認とインストールを行います。</string>
+    <string name="update_notes_unavailable">リリースノートはありません。詳しくは詳細をご覧ください。</string>
+    <string name="update_notes_truncated">リリースノートが長いため、全文は詳細をご覧ください。</string>
+</resources>
