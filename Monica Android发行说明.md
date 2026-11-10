@@ -2,7 +2,7 @@
 
 ## 中文
 
-- 内置图标库添加 Monica 本体图标，支持搜索并为条目选择（#180）。
+- 下一未发布版本：内置图标库添加 Monica 本体图标，支持搜索并为条目选择（#180）。
 - 修复旧版 Vaultwarden 的对象形式数据被误判为不支持，导致整批项目同步失败；兼容官方 Bitwarden 的字符串形式及新版 Vaultwarden 的普通字段格式，保留内容一致性与上传确认校验。
 - 修复新建 Send 返回时重复回退导致黑屏；返回、保存完成、锁定与后台退出统一清理，避免弹出下层页面。
 - 同步问题弹窗明确跟随防截屏设置，并保留强制保护；同步诊断补充不含项目内容的格式失败类别统计。
@@ -14,7 +14,7 @@
 
 ## English
 
-- Add the Monica app icon to the built-in icon library so it can be searched for and selected for entries (#180).
+- Next unreleased version: add the Monica app icon to the built-in icon library so it can be searched for and selected for entries (#180).
 - Fix older Vaultwarden object data being rejected as unsupported, which could fail an entire vault sync. Support official Bitwarden serialized data and newer Vaultwarden typed responses while preserving content consistency and upload confirmation checks.
 - Fix a black screen when leaving a new Send caused by a second navigation pop. Back, completed saves, locking and background exit share cleanup without removing the underlying page.
 - Make the sync issues sheet explicitly follow screenshot protection settings while retaining forced protection, and add format failure counts without item content to sync diagnostics.
