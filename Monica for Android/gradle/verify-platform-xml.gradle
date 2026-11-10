@@ -1,0 +1,115 @@
+import org.gradle.api.DefaultTask
+import org.gradle.api.GradleException
+import org.gradle.api.file.ConfigurableFileCollection
+import org.gradle.api.tasks.Classpath
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.TaskAction
+import java.util.zip.ZipFile
+
+// Reject platform XML API copies before release optimization.
+// This inspects resolved release program artifacts, never Android's boot classpath.
+abstract class VerifyPlatformXmlClasses extends DefaultTask {
+    @Classpath
+    abstract ConfigurableFileCollection getProgramArtifacts()
+
+    @Input
+    abstract org.gradle.api.provider.Property<String> getConfigurationName()
+
+    static boolean isPlatformXmlClass(String entry) {
+        def canonical = entry.replaceFirst('^META-INF/versions/[0-9]+/', '')
+        canonical.startsWith('org/xmlpull/v1/') && canonical.endsWith('.class')
+    }
+
+    static void inspectJarStream(InputStream source, String label, File scratch, List<String> failures) {
+        // ZipFile validates the archive directory; ZipInputStream alone can silently
+        // treat a malformed embedded JAR as empty. Keep scratch only in this task's temp dir.
+        def nested = File.createTempFile('platform-xml-', '.jar', scratch)
+        try {
+            source.withCloseable { input ->
+                nested.withOutputStream { output -> output << input }
+            }
+            new ZipFile(nested).withCloseable { jar ->
+                jar.entries().each { entry ->
+                    if (!entry.directory && VerifyPlatformXmlClasses.isPlatformXmlClass(entry.name)) {
+                        failures.add("${label}!/${entry.name}")
+                    }
+                }
+            }
+        } finally {
+            if (!nested.delete() && nested.exists()) {
+                throw new GradleException("Cannot remove verification scratch file: ${nested}")
+            }
+        }
+    }
+
+    static void inspectArtifact(File file, File scratch, List<String> failures) {
+        if (file.isDirectory()) {
+            file.eachFileRecurse { child ->
+                if (child.isFile()) {
+                    def relative = file.toPath().relativize(child.toPath()).toString().replace('\\', '/')
+                    if (VerifyPlatformXmlClasses.isPlatformXmlClass(relative)) failures.add("${file}!/${relative}")
+                }
+            }
+            return
+        }
+        if (!file.isFile()) throw new GradleException("Missing runtime artifact: ${file}")
+        def extension = file.name.tokenize('.').last().toLowerCase(Locale.ROOT)
+        if (!(extension in ['jar', 'aar'])) {
+            throw new GradleException("Unrecognized runtime artifact; review instead of skipping: ${file}")
+        }
+        new ZipFile(file).withCloseable { archive ->
+            archive.entries().each { entry ->
+                if (!entry.directory && VerifyPlatformXmlClasses.isPlatformXmlClass(entry.name)) {
+                    failures.add("${file}!/${entry.name}")
+                }
+                // These are AAR program-code entries. Assets and arbitrary nested archives
+                // are not classpath inputs and must not be mistaken for program classes.
+                if (extension == 'aar' && !entry.directory &&
+                        (entry.name == 'classes.jar' || entry.name ==~ /libs\/[^\/]+\.jar/)) {
+                    VerifyPlatformXmlClasses.inspectJarStream(archive.getInputStream(entry), "${file}!/${entry.name}", scratch, failures)
+                }
+            }
+        }
+    }
+
+    @TaskAction
+    void verifyArtifacts() {
+        def artifacts = programArtifacts.files.sort { it.absolutePath }
+        if (artifacts.isEmpty()) throw new GradleException("Empty ${configurationName.get()}; cannot verify")
+        def failures = []
+        artifacts.each { VerifyPlatformXmlClasses.inspectArtifact(it, temporaryDir, failures) }
+        if (!failures.isEmpty()) {
+            throw new GradleException("Android platform XML classes are supplied as program code in " +
+                    "${configurationName.get()}:\n${failures.sort().join('\n')}\n" +
+                    'Exclude the transitive duplicate at its source; do not suppress or obfuscate the platform API.')
+        }
+        logger.lifecycle("Verified {} artifacts in {}; no org.xmlpull.v1 program classes", artifacts.size(), configurationName.get())
+    }
+}
+
+plugins.withId('com.android.application') {
+    androidComponents.onVariants(androidComponents.selector().withBuildType('release')) { variant ->
+        def capitalized = variant.name.substring(0, 1).toUpperCase(Locale.ROOT) + variant.name.substring(1)
+        def configuration = configurations.named("${variant.name}RuntimeClasspath")
+        def classArtifacts = configuration.get().incoming.artifactView {
+            // AGP publishes several artifact variants from library projects; request
+            // the program-class JARs explicitly rather than ambiguous resources/metadata.
+            attributes {
+                attribute(org.gradle.api.attributes.Attribute.of('artifactType', String), 'android-classes-jar')
+            }
+        }.files
+        def verification = tasks.register("verify${capitalized}PlatformXmlClasses", VerifyPlatformXmlClasses) {
+            group = 'verification'
+            description = 'Rejects Android platform XML API copies in release runtime dependencies'
+            configurationName.set(configuration.name)
+            programArtifacts.from(classArtifacts)
+        }
+        // The direct R8 dependency makes this a real build gate, including local builds.
+        // The pre-build hook also covers release builds where minification is disabled.
+        tasks.configureEach {
+            if (name == "minify${capitalized}WithR8" || name == "pre${capitalized}Build") {
+                dependsOn verification
+            }
+        }
+    }
+}

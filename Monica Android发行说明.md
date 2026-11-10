@@ -2,6 +2,7 @@
 
 ## 中文
 
+- 修复从旧版本更新后可能在启动时崩溃的问题，保留原密码库和恢复材料。
 - 减小安装包：压缩赞赏码图片、无损优化内置品牌图标并复用 Monica 图标，保留已有项目的 PNG 自定义图标；精简依赖的多余语言资源，保留全部应用语言和特殊中文配置。
 - 提升本地主密码保护：旧版 PBKDF2 在首次成功验证主密码时升级至 600000 次派生，保留原数据密钥与已存内容；安全设置中可为整个应用选择 Argon2id。
 - 旧加密 ZIP 备份仍可读取，新备份默认使用兼容 V1；可主动选择 600000 次派生的增强 V2，但恢复端也必须支持 V2，请保留旧备份。
@@ -29,6 +30,7 @@
 
 ## English
 
+- Fix a startup crash after updating from an older version while retaining the existing vault and recovery material.
 - Reduce package size with compressed donation images, lossless bundled brand icons and a shared Monica icon. Preserve existing custom PNG icons and all app languages, including special Chinese locales, while removing unused dependency translations.
 - Strengthen local master-password protection: after the first successful password verification, upgrade legacy PBKDF2 to 600000 iterations while retaining the existing data key and stored content. Security settings also offer Argon2id for the whole app.
 - Keep reading older encrypted ZIP backups and use compatible V1 for new backups by default. Enhanced V2 with 600000 iterations is optional and requires a V2-capable reader; retain earlier backups.

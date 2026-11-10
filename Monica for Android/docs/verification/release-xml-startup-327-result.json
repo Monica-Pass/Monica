@@ -1,0 +1,250 @@
+{
+  "date": "2026-11-11",
+  "issue": "R8 XML Pull interface identity crash during retained-data startup",
+  "priorValidationGap": "Earlier 327 acceptance omitted the required old Release retained-data upgrade.",
+  "sourceScope": "Sardine transitive exclusions and Release dependency-class gate; no runtime Kotlin/Java or storage/KDF implementation changes in this fix.",
+  "environment": {
+    "emulator": "MuMu",
+    "api": 35,
+    "android": "15",
+    "hostAbi": "x86_64",
+    "installedPrimaryAbi": "arm64-v8a",
+    "syntheticDataOnly": true
+  },
+  "ordinary": {
+    "oldPublishedApkSha256": "895e0f44bdbd7417811a7635dd010f6a7f168e1b02696d070690b6c0f183644a",
+    "brokenApkSha256": "b47801824dc2322977e7b5e6ad1c6607c182679efd0f26749a987ede962f6ca1",
+    "fixed": {
+      "apkSha256": "2dda6a9bee1869523f69401fa8ea51ad5b6de74b738d4de76bb6ecabcf7b5712",
+      "mapId": "f6ddf61c887d6a50bb98096650d62d6e3ba41eaa370ad0e0df6127c3cf18464e",
+      "metadata": {
+        "signatureVerified": true,
+        "signerCertificateSha256": [
+          "ee18951f09e806c104dd85548d777176ae2bec0b202a0d44bc49b9fe3e0b33c1"
+        ],
+        "package": "takagi.ru.monica",
+        "versionCode": "12",
+        "versionName": "1.0.327-26111112-00",
+        "debuggable": false,
+        "nativeCode": [
+          "'arm64-v8a' 'x86_64'"
+        ]
+      }
+    },
+    "officialSigningIdentity": true,
+    "sameSigner": true,
+    "upgradeChecks": [
+      "original password",
+      "old password, OTP and account note",
+      "new login and cold read",
+      "wrong password rejected",
+      "old and new compatible encrypted WebDAV backups restored",
+      "independent IME authentication and real external fill",
+      "broken 327 directly replaced by corrected 327"
+    ],
+    "inPlaceDataChecks": {
+      "originalLoginIdsPreserved": true,
+      "allOriginalLoginColumnsEqual": true,
+      "unwrappedMdkIdentical": true,
+      "loginKdf100kTo600kVerified": true,
+      "originalDecryptedPasswordsIdenticalByEntryId": true
+    },
+    "defaultEncryptedBackupChecks": {
+      "backups": {
+        "014244": {
+          "sha256": "40b66cfc30906ff37ea9faad9629f8f12031726b9158bc0776e70b3cc1f33f73",
+          "originalEncryptedFileUnchanged": true,
+          "encryptedFormatV1": true,
+          "algorithm": "PBKDF2_SHA256",
+          "iterations": 100000,
+          "authenticatedAes256GcmDecryptPassed": true,
+          "zipCrcPassed": true,
+          "zipMemberCount": 6,
+          "loginCount": 1,
+          "otpRecordCount": 1,
+          "nonEmptyAccountMetadataNotesCount": 1,
+          "allLoginSemanticsMatchSourceSnapshot": true,
+          "allOtpSemanticsMatchSourceSnapshot": true
+        },
+        "014941": {
+          "sha256": "a78db039727c237266cef949e909b0c468b0db41a6874931458475a551c64a27",
+          "originalEncryptedFileUnchanged": true,
+          "encryptedFormatV1": true,
+          "algorithm": "PBKDF2_SHA256",
+          "iterations": 100000,
+          "authenticatedAes256GcmDecryptPassed": true,
+          "zipCrcPassed": true,
+          "zipMemberCount": 7,
+          "loginCount": 2,
+          "otpRecordCount": 1,
+          "nonEmptyAccountMetadataNotesCount": 1,
+          "allLoginSemanticsMatchSourceSnapshot": true,
+          "allOtpSemanticsMatchSourceSnapshot": true
+        }
+      },
+      "bothOldAndNewDefaultExportsUseV1": true,
+      "oldBackupOriginalLoginContainedInNewBackup": true,
+      "oldBackupLoginSemanticsEqualRestoredDatabase": true,
+      "oldBackupOtpSemanticsEqualRestoredDatabase": true,
+      "newOnlyLoginCount": 1,
+      "newOnlyLoginsAbsentAfterOldBackupRestore": true,
+      "restoredLoginKdfIterations": 600000,
+      "restoredLoginKdfAlgorithm": "PBKDF2_SHA256",
+      "restoredMdkEqualsBeforeRestore": true,
+      "plaintextArchiveWrittenToDisk": false
+    },
+    "dexChecks": {
+      "exactBrokenMappingMatched": true,
+      "brokenAliasDefined": true,
+      "brokenActualSetInputCallFound": true,
+      "fixedHasNoPlatformMappingDefinitions": true,
+      "fixedHasNoPlatformDexDefinitions": true,
+      "fixedHasActualOriginalSetInputCall": true,
+      "fixedSetInputUsesInvokeInterface": true,
+      "sameSigner": true,
+      "fixedNotDebuggable": true,
+      "distinctApkBytes": true
+    }
+  },
+  "fdroid": {
+    "oldTestedApkSha256": "120d34e88104b9366980286288e5f50c9bb92167b440a87c96acc2980f79fb3a",
+    "fixed": {
+      "apkSha256": "5a7fd2d196e6f516a47fe03f88bcc4f262d5d05fc5c2503c5eb8ee1beb4ad264",
+      "mapId": "833fb618d5e7e9febb921fa335e292f6ddb579068f875678c1ad6cfb8880e8ba",
+      "metadata": {
+        "signatureVerified": true,
+        "signerCertificateSha256": [
+          "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0"
+        ],
+        "package": "takagi.ru.monica.bwsync326fd",
+        "versionCode": "34",
+        "versionName": "1.0.327",
+        "debuggable": false,
+        "nativeCode": [
+          "'arm64-v8a'"
+        ]
+      }
+    },
+    "officialSigningIdentity": false,
+    "signingScope": "Matching local test certificate and isolated application ID, non-debuggable minified Release. Not official F-Droid store signing.",
+    "sameSigner": true,
+    "preLaunchArchivesByteIdentical": true,
+    "originalPasswordChecks": {
+      "old_cold_original_password_passed": true,
+      "upgraded_original_password_passed": true,
+      "new_write_cold_original_password_passed": true,
+      "after_restore_original_password_passed": true
+    },
+    "inPlaceDataChecks": {
+      "originalLoginIdsPreserved": true,
+      "allOriginalLoginColumnsEqual": true,
+      "unwrappedMdkIdentical": true,
+      "loginKdf100kTo600kVerified": true,
+      "originalDecryptedPasswordsIdenticalByEntryId": true
+    },
+    "ownUnencryptedBackupRestoreChecks": {
+      "backupSha256": "2d5fcbadd4c785c233b924c7ccdaf7c5e0264d2eaa07417e0695d0e6ef2f6d0e",
+      "backupOriginalBytesUnchanged": true,
+      "encryptedEnvelope": false,
+      "cryptographicBackupAuthenticationClaimed": false,
+      "zipCrcPassed": true,
+      "zipMemberCount": 5,
+      "backupLoginCount": 2,
+      "backupOtpCount": 0,
+      "backupNonEmptyAccountMetadataNotesCount": 0,
+      "backupLoginsMatchBeforeRestore": true,
+      "backupLoginsMatchAfterRestore": true,
+      "beforeAndAfterRestoreLoginSemanticsIdentical": true,
+      "restoredExactlyTwoLogins": true,
+      "restoredNoDeletedOrArchivedLogin": true,
+      "restoredIdsDifferFromOriginalIds": true,
+      "loginKdfAlgorithm": "PBKDF2_SHA256",
+      "loginKdfIterations": 600000,
+      "loginKdfRemains600k": true,
+      "mdkUnchangedAcrossRestore": true,
+      "backupLoginsMatchFinalColdSnapshot": true,
+      "finalColdExactlyTwoLogins": true,
+      "finalColdLoginKdfRemains600k": true,
+      "finalColdMdkUnchanged": true
+    },
+    "otpOrNoteFixturePresent": false,
+    "dexAuditPassed": true
+  },
+  "builds": {
+    "ordinary": {
+      "success": true,
+      "duration": "5m43s",
+      "runtimeArtifactsChecked": 224
+    },
+    "fdroid": {
+      "success": true,
+      "duration": "13m5s",
+      "runtimeArtifactsChecked": 191
+    }
+  },
+  "supplementaryDebugJvm": [
+    {
+      "name": "takagi.ru.monica.security.LocalPasswordKdfTest",
+      "tests": "9",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "6.918"
+    },
+    {
+      "name": "takagi.ru.monica.webdav.WebDavBackupTransportTest",
+      "tests": "4",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "17.375"
+    },
+    {
+      "name": "takagi.ru.monica.utils.WebDavBackupDirectoryFailureTest",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "4.463"
+    }
+  ],
+  "metadataValidation": {
+    "fdroidCheckPassed": true,
+    "scriptTestsPassed": 6
+  },
+  "crashBuffer": {
+    "deliberateBrokenApkCrashes": 3,
+    "brokenPids": [
+      4726,
+      4892,
+      9000
+    ],
+    "fdFatalCount": 0
+  },
+  "cleanup": {
+    "mumu2Stopped": true,
+    "allThreeInstancesRetained": true,
+    "originalInstancesStoppedAsBefore": true,
+    "adbdRestoredToShell": true,
+    "originalImeVerified": true,
+    "taskReverseRemoved": true,
+    "applicationDataCleared": false,
+    "packagesUninstalled": false,
+    "logcatCleared": false,
+    "initialCleanupFailure": "Shutdown command succeeded but immediate two-second status probe still reported running; subsequent independent status confirms normal shutdown. Earlier shell-UID and IME assertions passed. No forced process termination or retry of data operations."
+  },
+  "limits": [
+    "One emulator environment and synthetic data, not all user vaults or physical devices.",
+    "No official F-Droid-signature update matrix.",
+    "No Argon2id or V2 backup regression claimed here.",
+    "No ARMv7 device execution.",
+    "No new NFC hardware, KeePass/MDBX format or real cloud-provider matrix.",
+    "Generic intermediate pre-fill XML names were reused; named acceptance stages and archives remained distinct.",
+    "Application Gradle files lack pre-build byte-hash snapshots; do not claim strict source-byte freeze."
+  ],
+  "publication": {
+    "releaseCreated": false,
+    "tagCreated": false,
+    "apkDelivered": false
+  }
+}
