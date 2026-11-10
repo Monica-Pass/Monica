@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -45,8 +46,11 @@ fun PaymentExpiryTextField(
     modifier: Modifier = Modifier,
     maxYearDigits: Int = 4,
     entryContentStyle: Boolean = false,
+    saveTextState: Boolean = true,
 ) {
-    var editValue by rememberSaveable(stateSaver = TextFieldValue.Saver) {
+    var editValue by if (saveTextState) rememberSaveable(stateSaver = TextFieldValue.Saver) {
+        mutableStateOf(TextFieldValue(value, TextRange(value.length)))
+    } else remember {
         mutableStateOf(TextFieldValue(value, TextRange(value.length)))
     }
     // Loading/replacing an entry must not normalize its stored value or reuse a

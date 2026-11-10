@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nfc_card_scan_title">Odczytaj kartę NFC</string>
+    <string name="nfc_card_scan_hint">Przytrzymaj kartę przy antenie NFC telefonu. Obsługiwane są niektóre zbliżeniowe karty bankowe.</string>
+    <string name="nfc_card_scanning">Odczytywanie karty…</string>
+    <string name="nfc_card_unavailable">To urządzenie nie obsługuje NFC.</string>
+    <string name="nfc_card_disabled">Najpierw włącz NFC w ustawieniach systemu.</string>
+    <string name="nfc_card_unlock_retap">Odblokuj Monica, a następnie ponownie zbliż kartę.</string>
+    <string name="nfc_card_unsupported">Ta karta nie zawiera możliwego do odczytania numeru karty bankowej. Chronione dokumenty tożsamości nie są obsługiwane; UID chipu nie jest numerem karty.</string>
+    <string name="nfc_card_read_failed">Nie udało się odczytać karty. Przytrzymaj ją blisko telefonu i spróbuj ponownie.</string>
+    <string name="nfc_card_new_title">Utworzyć kartę bankową?</string>
+    <string name="nfc_card_new_message">Odczytano kartę bankową, ale ta strona dotyczy innego typu elementu. Otworzyć nową stronę karty bankowej? Bieżąca zawartość zostanie zachowana.</string>
+    <string name="nfc_card_replace_title">Zastąpić istniejące dane karty?</string>
+    <string name="nfc_card_replace_message">Odczytane dane różnią się od formularza. Zastąpione zostaną tylko numer karty, termin ważności i dane posiadacza udostępnione przez kartę. Pozostała zawartość zostanie zachowana.</string>
+    <string name="nfc_card_type_hint">Odczytano dane karty. NFC nie pozwala wiarygodnie rozróżnić kart kredytowych, debetowych i przedpłaconych. Potwierdź typ.</string>
+    <string name="nfc_card_ready">Uzupełniono odczytane dane karty. Sprawdź je przed zapisaniem.</string>
+    <string name="nfc_card_busy">Zakończ bieżącą operację przed odczytaniem karty.</string>
+    <string name="nfc_card_new_action">Otwórz nową kartę</string>
+    <string name="nfc_card_replace_action">Zastąp</string>
+    <string name="nfc_card_type_select">Wybierz typ karty</string>
+</resources>

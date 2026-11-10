@@ -61,6 +61,7 @@ fun AddEditApiTokenScreen(
     onSwitchType: (EntryTypeChipOption, Long?, String?) -> Unit,
     onManageDatabases: () -> Unit,
 ) {
+    takagi.ru.monica.nfc.card.NfcCardBlockingEditor()
     val context = LocalContext.current
     val model: NativeApiTokenEditorViewModel = viewModel(
         key = "api-token-editor:$initialDatabaseId:$entryId",

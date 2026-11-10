@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nfc_card_scan_title">Ler cartão NFC</string>
+    <string name="nfc_card_scan_hint">Aproxime o cartão da antena NFC do celular. Alguns cartões bancários por aproximação são compatíveis.</string>
+    <string name="nfc_card_scanning">Lendo cartão…</string>
+    <string name="nfc_card_unavailable">Este dispositivo não oferece suporte a NFC.</string>
+    <string name="nfc_card_disabled">Primeiro, ative o NFC nas configurações do sistema.</string>
+    <string name="nfc_card_unlock_retap">Desbloqueie o Monica e aproxime o cartão novamente.</string>
+    <string name="nfc_card_unsupported">Este cartão não tem um número de cartão bancário legível. Documentos de identidade protegidos não são compatíveis; o UID do chip não é um número de cartão.</string>
+    <string name="nfc_card_read_failed">Não foi possível ler o cartão. Mantenha-o perto do celular e tente novamente.</string>
+    <string name="nfc_card_new_title">Criar um cartão bancário?</string>
+    <string name="nfc_card_new_message">Um cartão bancário foi lido, mas esta página é para outro tipo de item. Abrir uma nova página de cartão bancário? O conteúdo atual será mantido.</string>
+    <string name="nfc_card_replace_title">Substituir os dados existentes do cartão?</string>
+    <string name="nfc_card_replace_message">Os dados lidos são diferentes dos dados do formulário. Somente o número, a validade e os dados do titular fornecidos pelo cartão serão substituídos. O restante do conteúdo será mantido.</string>
+    <string name="nfc_card_type_hint">Os dados do cartão foram lidos. O NFC não consegue distinguir com segurança cartões de crédito, débito ou pré-pagos. Confirme o tipo.</string>
+    <string name="nfc_card_ready">Os dados lidos do cartão foram preenchidos. Confira antes de salvar.</string>
+    <string name="nfc_card_busy">Conclua a operação atual antes de ler um cartão.</string>
+    <string name="nfc_card_new_action">Abrir novo cartão</string>
+    <string name="nfc_card_replace_action">Substituir</string>
+    <string name="nfc_card_type_select">Selecionar tipo de cartão</string>
+</resources>

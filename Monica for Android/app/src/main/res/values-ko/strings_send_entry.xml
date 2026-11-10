@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="send_account_choose">계정 선택</string>
+    <string name="send_search_or_link_hint">Send 검색 또는 Send 링크 붙여넣기</string>
+    <string name="send_draft_replace_title">이 초안을 여시겠습니까?</string>
+    <string name="send_draft_replace_message">이 양식에서 저장하지 않은 변경 사항은 대체됩니다. 저장된 초안은 유지됩니다.</string>
+</resources>

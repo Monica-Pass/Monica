@@ -541,6 +541,11 @@ fun AddEditDocumentScreen(
     val unsupportedCardFaceTarget = selectedStorageTargets
         .filterIsInstance<StorageTarget.Bitwarden>()
         .firstOrNull { !BitwardenVaultPremiumStore.isPremium(context, it.vaultId) }
+    takagi.ru.monica.nfc.card.NfcCardEditor(
+        kind = takagi.ru.monica.nfc.card.NfcCardEditorKind.DOCUMENT,
+        eligible = documentId == null && embeddedDraft == null && newDraftInitialized,
+        busy = isSaving,
+    )
     val isExistingDocumentReady = (documentId == null && embeddedDraft == null) || hasLoadedExistingDocumentFields
     fun currentDocumentData(): DocumentData {
         // Full name and structured name parts may intentionally differ (for example,
@@ -907,6 +912,9 @@ fun AddEditDocumentScreen(
                 modifier = modifier.fillMaxSize().testTag(if (embeddedDraft == null) "document_item_editor" else "embedded_document_editor")
                     .padding(paddingValues).consumeWindowInsets(paddingValues).imePadding(),
                 primary = {
+                if (documentId == null && embeddedDraft == null) {
+                    takagi.ru.monica.nfc.card.NfcCardScanButton(enabled = !isSaving)
+                }
                 if (embeddedDraft == null) MultiStorageTargetSelectorCard(
                     selectedTargets = selectedStorageTargets,
                     existingTargetKeys = existingReplicaTargetKeys,

@@ -72,10 +72,14 @@ import java.util.concurrent.atomic.AtomicLong
 
 /** Receiving is independent of Bitwarden accounts; the surrounding Monica session must be unlocked. */
 @Composable
-fun BitwardenSendReceiverDialog(onDismiss: () -> Unit) {
-    BitwardenSendReceiverDialog(onDismiss) { link, target, current ->
+fun BitwardenSendReceiverDialog(
+    onDismiss: () -> Unit,
+    initialLink: String = "",
+    onInitialLinkConsumed: () -> Unit = {},
+) {
+    BitwardenSendReceiverDialog(onDismiss, sessionFactory = { link, target, current ->
         BitwardenSendReceiverSession(link, target, requireCurrent = current)
-    }
+    }, initialLink = initialLink, onInitialLinkConsumed = onInitialLinkConsumed)
 }
 
 /** Test seam supplies only a synthetic session factory, never a production account client. */
@@ -83,6 +87,8 @@ fun BitwardenSendReceiverDialog(onDismiss: () -> Unit) {
 @Composable
 internal fun BitwardenSendReceiverDialog(
     onDismiss: () -> Unit,
+    initialLink: String = "",
+    onInitialLinkConsumed: () -> Unit = {},
     sessionFactory: (BitwardenSendReceiverLink, BitwardenSendReceiverTarget, () -> Unit) -> BitwardenSendReceiverSession,
 ) {
     val context = LocalContext.current
@@ -91,6 +97,8 @@ internal fun BitwardenSendReceiverDialog(
     val scope = rememberCoroutineScope()
     val currentDismiss by rememberUpdatedState(onDismiss)
     val currentFactory by rememberUpdatedState(sessionFactory)
+    val currentInitialLink by rememberUpdatedState(initialLink)
+    val currentLinkConsumed by rememberUpdatedState(onInitialLinkConsumed)
     val unlocked by SessionManager.isUnlocked.collectAsState()
     val lockGeneration by SessionManager.lockGeneration.collectAsState()
     var now by remember { mutableLongStateOf(SystemClock.elapsedRealtime()) }
@@ -221,6 +229,19 @@ internal fun BitwardenSendReceiverDialog(
         try { saveLauncher.launch(receiverFileName(ready.fileName)) }
         catch (_: Exception) {
             ui.picker = null; ui.obscured = false; ui.error = R.string.bitwarden_receiver_export_failed
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        if (currentInitialLink.isNotBlank()) {
+            if (SessionManager.isUnlocked.value && SessionManager.lockGeneration.value == ui.generation) {
+                ui.link = currentInitialLink
+                currentLinkConsumed()
+                parseLink()
+            } else {
+                currentLinkConsumed()
+                dismiss()
+            }
         }
     }
 

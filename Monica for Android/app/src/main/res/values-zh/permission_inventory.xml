@@ -23,8 +23,8 @@
     <string name="pm_location">按你的操作用当前位置填地址；Android 12 及以下创建临时热点还需要精确位置。填地址可使用大致位置，不申请后台位置。</string>
     <string name="pm_nearby_name">附近 Wi-Fi 设备</string>
     <string name="pm_nearby">用于 Android 13 及以上创建或加入临时同步热点。拒绝后仍可用已有 Wi-Fi 同步，不用此权限推断位置。</string>
-    <string name="pm_nfc_name">NFC 硬件安全密钥</string>
-    <string name="pm_nfc">连接 NFC FIDO 硬件密钥以使用 Passkey，需设备支持并开启 NFC。普通密码、OTP 和 Wi-Fi 同步不依赖 NFC。</string>
+    <string name="pm_nfc_name">NFC 卡片与安全密钥</string>
+    <string name="pm_nfc">读取受支持非接触式银行卡的公开信息，并连接 NFC FIDO 硬件密钥以使用 Passkey，需设备支持并开启 NFC。普通密码、OTP 和 Wi-Fi 同步不依赖 NFC。</string>
     <string name="pm_biometric">可选的生物识别认证；Android 8 使用旧版指纹权限声明。</string>
     <string name="pm_network">云备份、账户服务、远程数据库与局域网同步。具备网络权限不会自行发起传输。</string>
     <string name="pm_network_state">检查网络连接，让联网功能响应连接变化。</string>

@@ -96,6 +96,58 @@ class BitwardenSendReceiverUiInstrumentedTest {
         assertEquals("https://identity.example.test/private/", transport.targets.single().identityBase.toString())
     }
 
+    @Test fun prefilledSelfHostedLinkIsConsumedOnceAndWaitsForExplicitTargetReview() {
+        val transport = SyntheticTransport()
+        val consumed = AtomicInteger()
+        val pending = mutableStateOf("  https://self.example.test/team/vault/#/send/$ID/$KEY\n")
+        val dark = mutableStateOf(false)
+        compose.setContent {
+            val visible = remember { mutableStateOf(true) }
+            MonicaTheme(darkTheme = dark.value) {
+                Surface {
+                    if (visible.value) BitwardenSendReceiverDialog(
+                        onDismiss = { dismissed.set(true); visible.value = false },
+                        initialLink = pending.value,
+                        onInitialLinkConsumed = { consumed.incrementAndGet(); pending.value = "" },
+                        sessionFactory = { link, target, current ->
+                            created.incrementAndGet()
+                            BitwardenSendReceiverSession(link, target, transport, current)
+                        },
+                    )
+                }
+            }
+        }
+        waitForTag("bitwarden_receiver_confirm_target")
+        compose.runOnIdle {
+            assertEquals(1, consumed.get())
+            assertEquals("The parent must release the supplied link after consumption", "", pending.value)
+            assertEquals("Review alone must not create a networking session", 0, created.get())
+            assertTrue(transport.credentials.isEmpty())
+            assertEquals(0, transport.accesses.get())
+            assertEquals(0, transport.fileAuthorizations.get())
+            dark.value = true
+        }
+        compose.waitForIdle()
+        compose.onNodeWithTag("bitwarden_receiver_confirm_target").assertIsDisplayed()
+        compose.onNodeWithTag("bitwarden_receiver_api").assertTextContains("https://self.example.test/team/vault/api/")
+        compose.onNodeWithTag("bitwarden_receiver_identity").assertTextContains("https://self.example.test/team/vault/identity/")
+        assertEquals("Recomposition must not consume the link twice", 1, consumed.get())
+        assertEquals(0, created.get())
+        assertTrue(transport.credentials.isEmpty())
+        screenshot("prefilled-target-review")
+        compose.onNodeWithTag("bitwarden_receiver_confirm_target").performClick()
+        waitForTag("bitwarden_receiver_content")
+        assertEquals(1, created.get())
+        assertEquals(1, transport.accesses.get())
+        assertEquals("https://self.example.test/team/vault/api/", transport.targets.single().apiBase.toString())
+        compose.onNodeWithTag("bitwarden_receiver_new_link").performClick()
+        waitForTag("bitwarden_receiver_link")
+        compose.onNodeWithTag("bitwarden_receiver_confirm_target").assertDoesNotExist()
+        assertEquals(1, consumed.get())
+        assertEquals("Reset must not replay the initial link or create another session", 1, created.get())
+        assertTrue(transport.closed.get())
+    }
+
     @Test fun passwordInputIsExplicitAndClearedAfterSuccessfulOpening() {
         val transport = SyntheticTransport(Auth.PASSWORD)
         show(transport)
@@ -244,7 +296,9 @@ class BitwardenSendReceiverUiInstrumentedTest {
     }
     private fun waitForTag(tag: String) {
         try {
-            compose.waitUntil(15_000) { compose.onAllNodesWithTag(tag).fetchSemanticsNodes().isNotEmpty() }
+            compose.waitUntil(15_000) {
+                compose.onAllNodesWithTag(tag).fetchSemanticsNodes(atLeastOneRootRequired = false).isNotEmpty()
+            }
         } catch (error: androidx.compose.ui.test.ComposeTimeoutException) {
             throw AssertionError("Missing $tag; dismissed=${dismissed.get()}; synthetic tree: " +
                 compose.onRoot(useUnmergedTree = true).printToString(), error)

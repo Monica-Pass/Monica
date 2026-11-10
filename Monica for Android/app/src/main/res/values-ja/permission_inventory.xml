@@ -23,8 +23,8 @@
     <string name="pm_location">操作に応じて現在地から住所を入力します。Android 12 以前の一時アクセスポイントには正確な位置情報も必要です。住所にはおおよその位置も使用できます。バックグラウンドの位置情報は要求しません。</string>
     <string name="pm_nearby_name">付近の Wi-Fi デバイス</string>
     <string name="pm_nearby">Android 13 以降で一時同期アクセスポイントを作成・接続します。拒否しても既存の Wi-Fi で同期できます。この権限で位置情報を推定することはありません。</string>
-    <string name="pm_nfc_name">NFC セキュリティキー</string>
-    <string name="pm_nfc">NFC の FIDO キーを接続して Passkey を使用します。NFC 対応端末で NFC を有効にする必要があります。パスワード、OTP、Wi-Fi 同期には NFC は不要です。</string>
+    <string name="pm_nfc_name">NFC カードとセキュリティキー</string>
+    <string name="pm_nfc">対応する非接触型銀行カードの公開情報を読み取り、NFC FIDO セキュリティキーを接続して Passkey を使用します。NFC 対応端末で NFC を有効にする必要があります。パスワード、OTP、Wi-Fi 同期には NFC は不要です。</string>
     <string name="pm_biometric">任意の生体認証に使用します。Android 8 は従来の指紋認証の権限宣言を使います。</string>
     <string name="pm_network">クラウドバックアップ、アカウントサービス、リモートデータベース、ローカル同期に使用します。ネットワーク権限だけで転送が始まることはありません。</string>
     <string name="pm_network_state">接続状態を確認し、ネットワーク機能を接続の変化に対応させます。</string>

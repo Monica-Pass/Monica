@@ -1,0 +1,364 @@
+{
+  "scope": "Send entry UI 1.0.327, ordinary and canonical F-Droid local main",
+  "jvm_per_edition": {
+    "tests": 44,
+    "failures": 0,
+    "skipped": 0
+  },
+  "build_seconds": {
+    "main02": 585.729,
+    "main03-tests": 126.72,
+    "main04-tests": 42.037,
+    "fd01": 389.011,
+    "fd02-tests": 40.269
+  },
+  "device": {
+    "main": [
+      {
+        "run": "main-ui01",
+        "runner_seconds": 51.337,
+        "passed": true,
+        "tests": 15,
+        "failures": 0
+      },
+      {
+        "run": "main-regression01",
+        "runner_seconds": 37.433,
+        "passed": false,
+        "tests": 18,
+        "failures": 1
+      },
+      {
+        "run": "main-final02",
+        "runner_seconds": 82.227,
+        "passed": true,
+        "tests": 33,
+        "failures": 0
+      }
+    ],
+    "fd": [
+      {
+        "run": "fd-final01",
+        "runner_seconds": 114.226,
+        "passed": false,
+        "tests": 33,
+        "failures": 2
+      },
+      {
+        "run": "fd-receiver-isolated02",
+        "runner_seconds": 2.957,
+        "passed": true,
+        "tests": 2,
+        "failures": 0
+      }
+    ]
+  },
+  "artifacts": {
+    "main": [
+      {
+        "sha256": "4582afb596784933420f2c786245e38ac0acf1976fa8000c3ac260842b65a425",
+        "badging": "package: name='takagi.ru.monica.sendentry327' versionCode='12' versionName='1.0.327-26111012-94' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+      },
+      {
+        "sha256": "da5ca8cb55b7337c43cbd4d3b40969393989464b0deb2ab160d880d9d3e2666a",
+        "badging": "package: name='takagi.ru.monica.sendentry327.test' versionCode='' versionName='' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+      }
+    ],
+    "fd": [
+      {
+        "sha256": "b9022544a9367a13bca76d2b9f666a3eedf9881306ba94e3290f01de1d84b18a",
+        "badging": "package: name='takagi.ru.monica.sendentry327.fdroid' versionCode='34' versionName='1.0.327' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+      },
+      {
+        "sha256": "c32f7cdb7a26a375047c4bab3188f704cbdce3581d8854fe38fb0a9288890ffd",
+        "badging": "package: name='takagi.ru.monica.sendentry327.fdroid.test' versionCode='' versionName='' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+      }
+    ]
+  },
+  "compiled_strings_per_edition": 72,
+  "language_configurations": 18,
+  "shared_files": [
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenSendDraftsInstrumentedTest.kt",
+      "byte_identical": true,
+      "sha256": {
+        "main": "ac3bc899a2fc4f6bae3f577649fae742b757afa990741dbd9e5cc8d3f9d77548",
+        "fd": "ac3bc899a2fc4f6bae3f577649fae742b757afa990741dbd9e5cc8d3f9d77548"
+      }
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenSendManagementInstrumentedTest.kt",
+      "byte_identical": true,
+      "sha256": {
+        "main": "6554fd02e5927e9440d2bc2463b90182e0f1f856a33f40e5f89dba5172127ab4",
+        "fd": "6554fd02e5927e9440d2bc2463b90182e0f1f856a33f40e5f89dba5172127ab4"
+      }
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenSendReceiverUiInstrumentedTest.kt",
+      "byte_identical": true,
+      "sha256": {
+        "main": "43829fcbe7652f63cbfab883e8e52aed6245d5e8189cab27c81f215f62d73919",
+        "fd": "43829fcbe7652f63cbfab883e8e52aed6245d5e8189cab27c81f215f62d73919"
+      }
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/ui/send/SendEntryUiTest.kt",
+      "byte_identical": true,
+      "sha256": {
+        "main": "0d84b3c70a3c1264bda253fb5af495e519047b81b0ad8019a654d7350fddab6b",
+        "fd": "0d84b3c70a3c1264bda253fb5af495e519047b81b0ad8019a654d7350fddab6b"
+      }
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/MainActivity.kt",
+      "byte_identical": false,
+      "sha256": {
+        "main": "34c0d360cc72eace065ab35ac0665d786a5394891d03ba0dc8337a3005911628",
+        "fd": "f9c3591f303ad6f49e3885d6bc7e5ac67f8521fcb8bf462114a52696999e610f"
+      }
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/ui/BitwardenSendReceiverDialog.kt",
+      "byte_identical": true,
+      "sha256": {
+        "main": "933b42ba4e9cd4cf16104a8682269d9f48de32a07cafb08fa67068b1a29d1554",
+        "fd": "933b42ba4e9cd4cf16104a8682269d9f48de32a07cafb08fa67068b1a29d1554"
+      }
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/BitwardenSendDraftUi.kt",
+      "byte_identical": true,
+      "sha256": {
+        "main": "2608b3a1313c817b0c8c3c47eb56036c66bc73214fa7485c93ab1fd1beb838b3",
+        "fd": "2608b3a1313c817b0c8c3c47eb56036c66bc73214fa7485c93ab1fd1beb838b3"
+      }
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/SendEditorDraftHost.kt",
+      "byte_identical": true,
+      "sha256": {
+        "main": "c197d44c87af0b312dde56f45485270b081895af729d7bea908455803002017c",
+        "fd": "c197d44c87af0b312dde56f45485270b081895af729d7bea908455803002017c"
+      }
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/SendScreen.kt",
+      "byte_identical": true,
+      "sha256": {
+        "main": "c72b322e80ac0ff694eb523cc60c3f8dd688a0b1bbc850a24cae07675ff15ba7",
+        "fd": "c72b322e80ac0ff694eb523cc60c3f8dd688a0b1bbc850a24cae07675ff15ba7"
+      }
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/send/SendPane.kt",
+      "byte_identical": true,
+      "sha256": {
+        "main": "a34d44f948324782e48806177eb3b7f0e8f2a169fd61687d66a16524bd1d7d79",
+        "fd": "a34d44f948324782e48806177eb3b7f0e8f2a169fd61687d66a16524bd1d7d79"
+      }
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/send/SendSearchLink.kt",
+      "byte_identical": true,
+      "sha256": {
+        "main": "ece6be471256d650374337c84ed5a89791ca9a477c71eb99a0e463403cd7c0b8",
+        "fd": "ece6be471256d650374337c84ed5a89791ca9a477c71eb99a0e463403cd7c0b8"
+      }
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/send/SendSearchLinkAction.kt",
+      "byte_identical": true,
+      "sha256": {
+        "main": "c089a380b5f7e9708452dea40734e623c58cf642c8939e27f7b61d4318510d3b",
+        "fd": "c089a380b5f7e9708452dea40734e623c58cf642c8939e27f7b61d4318510d3b"
+      }
+    },
+    {
+      "path": "app/src/main/res/values-b+lzh/strings_send_entry.xml",
+      "byte_identical": true,
+      "sha256": {
+        "main": "4ef5ab20560a43713e62e8b27fe1d499e9ab55aa20ffbf3f0291a30fe9b68583",
+        "fd": "4ef5ab20560a43713e62e8b27fe1d499e9ab55aa20ffbf3f0291a30fe9b68583"
+      }
+    },
+    {
+      "path": "app/src/main/res/values-b+zh+Hant/strings_send_entry.xml",
+      "byte_identical": true,
+      "sha256": {
+        "main": "5ef4a4925d72a19f1cc56899098b301e4897a02adfec5c9d909a64daeed9bf06",
+        "fd": "5ef4a4925d72a19f1cc56899098b301e4897a02adfec5c9d909a64daeed9bf06"
+      }
+    },
+    {
+      "path": "app/src/main/res/values-de/strings_send_entry.xml",
+      "byte_identical": true,
+      "sha256": {
+        "main": "21187c640e284175854a67f47a1c30f4ecac89055c10e64a5368f0504d6dc785",
+        "fd": "21187c640e284175854a67f47a1c30f4ecac89055c10e64a5368f0504d6dc785"
+      }
+    },
+    {
+      "path": "app/src/main/res/values-es/strings_send_entry.xml",
+      "byte_identical": true,
+      "sha256": {
+        "main": "8c02c001857d229c3601d34b787c3e3ce17bf72e6471f6b0cbe25c3d3ffd86ac",
+        "fd": "8c02c001857d229c3601d34b787c3e3ce17bf72e6471f6b0cbe25c3d3ffd86ac"
+      }
+    },
+    {
+      "path": "app/src/main/res/values-fr/strings_send_entry.xml",
+      "byte_identical": true,
+      "sha256": {
+        "main": "83070ea423f7b9188ef108076b9162650c6e29ee87ea3cda8c07d46ee454435d",
+        "fd": "83070ea423f7b9188ef108076b9162650c6e29ee87ea3cda8c07d46ee454435d"
+      }
+    },
+    {
+      "path": "app/src/main/res/values-it/strings_send_entry.xml",
+      "byte_identical": true,
+      "sha256": {
+        "main": "dc06d040d8e78654b33a0cce127798d078174cb00e955ec72172dd9647f5c0aa",
+        "fd": "dc06d040d8e78654b33a0cce127798d078174cb00e955ec72172dd9647f5c0aa"
+      }
+    },
+    {
+      "path": "app/src/main/res/values-ja/strings_send_entry.xml",
+      "byte_identical": true,
+      "sha256": {
+        "main": "58e40a5d17390cf3fcdcbbbbe159902b077af1bc10f2993b0149966222dfd511",
+        "fd": "58e40a5d17390cf3fcdcbbbbe159902b077af1bc10f2993b0149966222dfd511"
+      }
+    },
+    {
+      "path": "app/src/main/res/values-ko/strings_send_entry.xml",
+      "byte_identical": true,
+      "sha256": {
+        "main": "e9edcf0c128e21c023ce8e431d69e132fa8438bed60c9ab890e356ba6a7f5563",
+        "fd": "e9edcf0c128e21c023ce8e431d69e132fa8438bed60c9ab890e356ba6a7f5563"
+      }
+    },
+    {
+      "path": "app/src/main/res/values-pl/strings_send_entry.xml",
+      "byte_identical": true,
+      "sha256": {
+        "main": "a488bf3bf491f0a9cb64600a7353ae1e4bdf37e87a712819e2c876b03837dc51",
+        "fd": "a488bf3bf491f0a9cb64600a7353ae1e4bdf37e87a712819e2c876b03837dc51"
+      }
+    },
+    {
+      "path": "app/src/main/res/values-pt-rBR/strings_send_entry.xml",
+      "byte_identical": true,
+      "sha256": {
+        "main": "c4aeaccc5ec4e2de14b746c22a420ea68fb4754e0abc811fb282216c8986ee6d",
+        "fd": "c4aeaccc5ec4e2de14b746c22a420ea68fb4754e0abc811fb282216c8986ee6d"
+      }
+    },
+    {
+      "path": "app/src/main/res/values-pt/strings_send_entry.xml",
+      "byte_identical": true,
+      "sha256": {
+        "main": "d66ffc5ccc498015832179f52953c08d75165abf898eb1914e2669e0f05bed37",
+        "fd": "d66ffc5ccc498015832179f52953c08d75165abf898eb1914e2669e0f05bed37"
+      }
+    },
+    {
+      "path": "app/src/main/res/values-ru/strings_send_entry.xml",
+      "byte_identical": true,
+      "sha256": {
+        "main": "bf1d52e09b078395037a1ece4ba558ba3a1037883064958609b584bc443d4a2c",
+        "fd": "bf1d52e09b078395037a1ece4ba558ba3a1037883064958609b584bc443d4a2c"
+      }
+    },
+    {
+      "path": "app/src/main/res/values-vi/strings_send_entry.xml",
+      "byte_identical": true,
+      "sha256": {
+        "main": "ab26397adb1beddae457ac0e1e6dc9e3868027ec1ff42232ab5dfc80212a1bbc",
+        "fd": "ab26397adb1beddae457ac0e1e6dc9e3868027ec1ff42232ab5dfc80212a1bbc"
+      }
+    },
+    {
+      "path": "app/src/main/res/values-zh-rCN/strings_send_entry.xml",
+      "byte_identical": true,
+      "sha256": {
+        "main": "8e2e4d4b0bfb49d968660535dfde56ca2a124969aaa30d0dd20cfb23c2ef6f10",
+        "fd": "8e2e4d4b0bfb49d968660535dfde56ca2a124969aaa30d0dd20cfb23c2ef6f10"
+      }
+    },
+    {
+      "path": "app/src/main/res/values-zh-rNY/strings_send_entry.xml",
+      "byte_identical": true,
+      "sha256": {
+        "main": "8e2e4d4b0bfb49d968660535dfde56ca2a124969aaa30d0dd20cfb23c2ef6f10",
+        "fd": "8e2e4d4b0bfb49d968660535dfde56ca2a124969aaa30d0dd20cfb23c2ef6f10"
+      }
+    },
+    {
+      "path": "app/src/main/res/values-zh-rXB/strings_send_entry.xml",
+      "byte_identical": true,
+      "sha256": {
+        "main": "8e2e4d4b0bfb49d968660535dfde56ca2a124969aaa30d0dd20cfb23c2ef6f10",
+        "fd": "8e2e4d4b0bfb49d968660535dfde56ca2a124969aaa30d0dd20cfb23c2ef6f10"
+      }
+    },
+    {
+      "path": "app/src/main/res/values-zh/strings_send_entry.xml",
+      "byte_identical": true,
+      "sha256": {
+        "main": "8e2e4d4b0bfb49d968660535dfde56ca2a124969aaa30d0dd20cfb23c2ef6f10",
+        "fd": "8e2e4d4b0bfb49d968660535dfde56ca2a124969aaa30d0dd20cfb23c2ef6f10"
+      }
+    },
+    {
+      "path": "app/src/main/res/values/strings_send_entry.xml",
+      "byte_identical": true,
+      "sha256": {
+        "main": "b908db6f16e91e2e7247dde229803043a99615d6ecd6275da519640c654c5b5e",
+        "fd": "b908db6f16e91e2e7247dde229803043a99615d6ecd6275da519640c654c5b5e"
+      }
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/ui/send/SendSearchLinkTest.kt",
+      "byte_identical": true,
+      "sha256": {
+        "main": "fce03de1f4b11edf44d58d140170440fa74c8c303b4e555f92a276a2b1ed0d73",
+        "fd": "fce03de1f4b11edf44d58d140170440fa74c8c303b4e555f92a276a2b1ed0d73"
+      }
+    }
+  ],
+  "post_test_whitespace_only": [
+    {
+      "edition": "main",
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/SendEditorDraftHost.kt",
+      "tested_sha256": "fe91b59209bd41666ff8f4f41217b8719cafa553b2436904b7e09e1aca2c60dc",
+      "final_sha256": "c197d44c87af0b312dde56f45485270b081895af729d7bea908455803002017c",
+      "change": "remove terminal blank lines only; executable source identical",
+      "rebuild": "not needed for terminal whitespace only"
+    },
+    {
+      "edition": "fd",
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/SendEditorDraftHost.kt",
+      "tested_sha256": "fe91b59209bd41666ff8f4f41217b8719cafa553b2436904b7e09e1aca2c60dc",
+      "final_sha256": "c197d44c87af0b312dde56f45485270b081895af729d7bea908455803002017c",
+      "change": "remove terminal blank lines only; executable source identical",
+      "rebuild": "not needed for terminal whitespace only"
+    }
+  ],
+  "limits": [
+    "MuMu Android35 x86_64 Debug, synthetic accounts and local/mock transports",
+    "No actual cloud accounts, hardware, OEM, ARM, R8, full Activity navigation or all localized pages tested",
+    "F-Droid full batch31/33; same APK isolated2/2. Batch root-registration/lifecycle issue not fully resolved."
+  ],
+  "cleanup": {
+    "complete": true,
+    "original_packages_preserved": {
+      "0": true,
+      "10": true
+    },
+    "owned_emulator_stopped": true
+  },
+  "release": false,
+  "committed": false,
+  "pushed": false
+}

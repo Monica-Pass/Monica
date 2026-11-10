@@ -23,8 +23,8 @@
     <string name="pm_location">Điền địa chỉ từ vị trí hiện tại khi bạn yêu cầu. Điểm phát Wi-Fi tạm thời trên Android 12 trở xuống còn cần vị trí chính xác. Địa chỉ có thể dùng vị trí gần đúng; không yêu cầu vị trí nền.</string>
     <string name="pm_nearby_name">Thiết bị Wi-Fi ở gần</string>
     <string name="pm_nearby">Tạo hoặc kết nối điểm phát đồng bộ tạm thời trên Android 13 trở lên. Nếu từ chối, vẫn đồng bộ được qua Wi-Fi hiện có. Không dùng quyền này để suy ra vị trí.</string>
-    <string name="pm_nfc_name">Khóa bảo mật NFC</string>
-    <string name="pm_nfc">Kết nối khóa FIDO qua NFC để dùng Passkey. Cần thiết bị hỗ trợ và đã bật NFC. Mật khẩu, OTP và đồng bộ Wi-Fi không phụ thuộc NFC.</string>
+    <string name="pm_nfc_name">Thẻ và khóa bảo mật NFC</string>
+    <string name="pm_nfc">Đọc thông tin công khai từ thẻ ngân hàng không tiếp xúc được hỗ trợ và kết nối khóa bảo mật FIDO qua NFC để dùng Passkey. Cần thiết bị hỗ trợ NFC và đã bật NFC. Mật khẩu, OTP và đồng bộ Wi-Fi không phụ thuộc NFC.</string>
     <string name="pm_biometric">Xác thực sinh trắc học tùy chọn; Android 8 dùng khai báo quyền vân tay cũ.</string>
     <string name="pm_network">Sao lưu đám mây, dịch vụ tài khoản, cơ sở dữ liệu từ xa và đồng bộ nội bộ. Có quyền mạng không tự bắt đầu truyền dữ liệu.</string>
     <string name="pm_network_state">Kiểm tra kết nối để tính năng mạng phản ứng với thay đổi.</string>

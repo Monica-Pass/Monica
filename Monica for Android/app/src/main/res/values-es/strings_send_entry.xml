@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="send_account_choose">Seleccionar cuenta</string>
+    <string name="send_search_or_link_hint">Buscar Sends o pegar un enlace Send</string>
+    <string name="send_draft_replace_title">¿Abrir este borrador?</string>
+    <string name="send_draft_replace_message">Los cambios sin guardar de este formulario se reemplazarán. Los borradores guardados se conservarán.</string>
+</resources>

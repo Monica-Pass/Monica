@@ -102,7 +102,11 @@ internal fun SendPane(
                         onNavigateBack = onInlineSendEditorBack,
                         onCreate = onCreateSend,
                         onCreateFile = onCreateFileSend,
-                        onSubmitStoredDraft = bitwardenViewModel::submitStoredSendDraft,
+                        localDrafts = bitwardenViewModel.localSendDrafts.collectAsState().value,
+                draftsUnavailable = bitwardenViewModel.localSendDraftsUnavailable.collectAsState().value,
+                onRefreshDrafts = bitwardenViewModel::refreshLocalSendDrafts,
+                onDiscardDraft = bitwardenViewModel::discardLocalSendDraft,
+                onSubmitStoredDraft = bitwardenViewModel::submitStoredSendDraft,
                     onLeaveForeground = bitwardenViewModel::leaveSendEditorForeground,
                 onSaveDraft = { vaultId, draft, uri, fileName ->
                             bitwardenViewModel.saveSendDraft(vaultId, draft, fileUri = uri, fileName = fileName)

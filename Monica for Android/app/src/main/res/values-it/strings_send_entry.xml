@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="send_account_choose">Seleziona account</string>
+    <string name="send_search_or_link_hint">Cerca Send o incolla un link Send</string>
+    <string name="send_draft_replace_title">Aprire questa bozza?</string>
+    <string name="send_draft_replace_message">Le modifiche non salvate in questo modulo saranno sostituite. Le bozze salvate saranno conservate.</string>
+</resources>

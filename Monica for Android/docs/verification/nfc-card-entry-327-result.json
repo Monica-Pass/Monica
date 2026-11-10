@@ -1,0 +1,520 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-10",
+  "status": "complete_with_scoped_validation",
+  "release": "1.0.327",
+  "published": false,
+  "evidence_root": ".codex-tasks/20261110-nfc-card-entry",
+  "path_basis": "All receipt/log references are relative to evidence_root in the local workspace; local artifacts are not Git deliverables.",
+  "environment": {
+    "emulator": "existing MuMu instance 0",
+    "android_api": 35,
+    "abi": "x86_64",
+    "variant": "Debug",
+    "owned_test_user": 11,
+    "synthetic_only": true,
+    "physical_rf_tested": false,
+    "public_api32_used": false
+  },
+  "editions": {
+    "main": {
+      "identity": {
+        "name": "takagi.ru.monica.sendentry327",
+        "versionCode": "12",
+        "versionName": "1.0.327-26111012-94",
+        "native_code": [
+          "x86_64"
+        ]
+      },
+      "build": {
+        "label": "main02",
+        "seconds": 551.481,
+        "exit": 0,
+        "test_label": "main05-tests",
+        "test_seconds": 48.811,
+        "test_exit": 0
+      },
+      "jvm": {
+        "total": 42,
+        "suites": [
+          {
+            "class": "takagi.ru.monica.nfc.card.EmvCardReaderTest",
+            "tests": 22,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "takagi.ru.monica.nfc.card.NfcCardDraftTest",
+            "tests": 13,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "takagi.ru.monica.ui.send.SendSearchLinkTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          }
+        ],
+        "unmatched_filter": "*EntryPaymentFormatTest",
+        "unmatched_filter_counted": false
+      },
+      "app": {
+        "label": "main04-repack",
+        "sha256": "5ccbf060da1284462d1a281d0f74eda33a4c1c2a991fd312b89278432fcdb2d8",
+        "bytes": 95842996,
+        "source_build_label": "main02",
+        "repack_seconds": 43.27,
+        "all_original_members_equal": true,
+        "members": 2789,
+        "v2_signature_verified": true
+      },
+      "test_apk": {
+        "label": "main05-tests",
+        "sha256": "220103bc0f68a44982ed06d38db92d3fe4040fcf939801c9e6a3ede0b8c4ac21",
+        "bytes": 9641128
+      },
+      "size": {
+        "send_baseline_bytes": 95742226,
+        "original_candidate_bytes": 106859482,
+        "original_zip_gap_bytes": 11021962,
+        "final_zip_gap_bytes": 0,
+        "delta_baseline_bytes": 100770,
+        "delta_kib": 98.408,
+        "scope": "x86_64 Debug; all intervening changes, not isolated NFC attribution or Release/R8 prediction"
+      },
+      "device": {
+        "final_label": "main-final01",
+        "final_passed": 27,
+        "final_total": 27,
+        "runner_seconds": 69.767,
+        "driver_seconds": 72.704,
+        "distinct_passed_methods": 47,
+        "composition": {
+          "NfcCardEntryUiTest": 17,
+          "EntryPaymentExpiryInputTest": 10,
+          "WalletContentEditorTest": 5,
+          "SendEntryUiTest": 15
+        },
+        "earlier_wallet_send_label": "main-regression01",
+        "single_47_method_batch": false
+      },
+      "source_freeze": {
+        "production_files_frozen": 4072,
+        "test_files_frozen": 1094,
+        "current_production_and_tests_match_selected_snapshots": true,
+        "test_build_production_matches_app_build": true,
+        "added_dependency_declarations": 0
+      }
+    },
+    "fd": {
+      "identity": {
+        "name": "takagi.ru.monica.sendentry327.fdroid",
+        "versionCode": "34",
+        "versionName": "1.0.327",
+        "native_code": [
+          "x86_64"
+        ]
+      },
+      "build": {
+        "label": "fd01",
+        "seconds": 604.636,
+        "exit": 0,
+        "test_label": "fd05-tests",
+        "test_seconds": 52.182,
+        "test_exit": 0
+      },
+      "jvm": {
+        "total": 42,
+        "suites": [
+          {
+            "class": "takagi.ru.monica.nfc.card.EmvCardReaderTest",
+            "tests": 22,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "takagi.ru.monica.nfc.card.NfcCardDraftTest",
+            "tests": 13,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          },
+          {
+            "class": "takagi.ru.monica.ui.send.SendSearchLinkTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          }
+        ],
+        "unmatched_filter": "*EntryPaymentFormatTest",
+        "unmatched_filter_counted": false
+      },
+      "app": {
+        "label": "fd03-repack",
+        "sha256": "e3e5470e8dff1adf539649fd81d9f1a81a03d314fa3b88b97842d4b81cf74c6a",
+        "bytes": 91122585,
+        "source_build_label": "fd01",
+        "repack_seconds": 41.066,
+        "all_original_members_equal": true,
+        "members": 2689,
+        "v2_signature_verified": true
+      },
+      "test_apk": {
+        "label": "fd05-tests",
+        "sha256": "5d940f6bd3b79ed8ede9944961d42a35793391925fba0c73700e8689a39c71c1",
+        "bytes": 9735280
+      },
+      "size": {
+        "send_baseline_bytes": 91021819,
+        "original_candidate_bytes": 101825305,
+        "original_zip_gap_bytes": 10706800,
+        "final_zip_gap_bytes": 0,
+        "delta_baseline_bytes": 100766,
+        "delta_kib": 98.404,
+        "scope": "x86_64 Debug; all intervening changes, not isolated NFC attribution or Release/R8 prediction"
+      },
+      "device": {
+        "final_label": "fd-final01",
+        "final_passed": 27,
+        "final_total": 27,
+        "runner_seconds": 68.275,
+        "driver_seconds": 70.547,
+        "distinct_passed_methods": 47,
+        "composition": {
+          "NfcCardEntryUiTest": 17,
+          "EntryPaymentExpiryInputTest": 10,
+          "WalletContentEditorTest": 5,
+          "SendEntryUiTest": 15
+        },
+        "earlier_wallet_send_label": "fd-ui01",
+        "single_47_method_batch": false
+      },
+      "source_freeze": {
+        "production_files_frozen": 4073,
+        "test_files_frozen": 1086,
+        "current_production_and_tests_match_selected_snapshots": true,
+        "test_build_production_matches_app_build": true,
+        "added_dependency_declarations": 0
+      }
+    }
+  },
+  "device_batches": [
+    {
+      "label": "main-ui01",
+      "passed": false,
+      "tests": 17,
+      "passed_methods": 11,
+      "failed_methods": 6,
+      "runner_seconds": 54.072,
+      "driver_seconds": 57.583,
+      "classes": [
+        {
+          "class": "takagi.ru.monica.nfc.card.NfcCardEntryUiTest",
+          "passed": 11,
+          "failed": 6
+        }
+      ],
+      "failed_method_ids": [
+        "takagi.ru.monica.nfc.card.NfcCardEntryUiTest#coldOrLockedTagIntentDropsSensitiveExtrasAndRequiresANewTap",
+        "takagi.ru.monica.nfc.card.NfcCardEntryUiTest#conflictingScanCancelAndConfirmRetainAbsentAndUnrelatedBankFields",
+        "takagi.ru.monica.nfc.card.NfcCardEntryUiTest#scannedEditorStateExcludesPanHolderAndExpiryFromSavedState",
+        "takagi.ru.monica.nfc.card.NfcCardEntryUiTest#warmTagWaitsThroughActivityResumeUntilItsEditorLifecycleRegisters",
+        "takagi.ru.monica.nfc.card.NfcCardEntryUiTest#bankScanFillsCurrentEditorPreservesUnrelatedFieldsAndRequiresTypeBeforeSave",
+        "takagi.ru.monica.nfc.card.NfcCardEntryUiTest#documentMismatchCancelAndNewBankReturnPreserveOriginalUnsavedDraft"
+      ],
+      "app_sha256": "8269a5c866ebb05d765d53f99b574bcb8f0469fa31bb7ed1fe18a5a8224344bd",
+      "test_sha256": "b83ee7ecd292b6b31a21531452531dd4924ffe91b691618a70c5c4cb7fe27a97",
+      "receipt": "raw/main-ui01.json",
+      "log": "raw/main-ui01.txt",
+      "log_sha256": "0118f01ca9449183aea62266e91614e44e4862cbb6e487da719612973f1e4be0"
+    },
+    {
+      "label": "main-regression01",
+      "passed": false,
+      "tests": 29,
+      "passed_methods": 27,
+      "failed_methods": 2,
+      "runner_seconds": 92.77,
+      "driver_seconds": 95.621,
+      "classes": [
+        {
+          "class": "takagi.ru.monica.ui.components.EntryPaymentExpiryInputTest",
+          "passed": 7,
+          "failed": 2
+        },
+        {
+          "class": "takagi.ru.monica.ui.send.SendEntryUiTest",
+          "passed": 15,
+          "failed": 0
+        },
+        {
+          "class": "takagi.ru.monica.ui.WalletContentEditorTest",
+          "passed": 5,
+          "failed": 0
+        }
+      ],
+      "failed_method_ids": [
+        "takagi.ru.monica.ui.components.EntryPaymentExpiryInputTest#selectionReplacementAndEditingMonthKeepTheirPositions",
+        "takagi.ru.monica.ui.components.EntryPaymentExpiryInputTest#filteredPasteAndLengthLimitKeepCursorInBounds"
+      ],
+      "app_sha256": "8269a5c866ebb05d765d53f99b574bcb8f0469fa31bb7ed1fe18a5a8224344bd",
+      "test_sha256": "b83ee7ecd292b6b31a21531452531dd4924ffe91b691618a70c5c4cb7fe27a97",
+      "receipt": "raw/main-regression01.json",
+      "log": "raw/main-regression01.txt",
+      "log_sha256": "4e48e1fd690221526045ef6f7c0c82f629caa17035b1a3e7c2eafbfaa55a43a5"
+    },
+    {
+      "label": "main-expiry-isolated01",
+      "passed": false,
+      "tests": 9,
+      "passed_methods": 6,
+      "failed_methods": 3,
+      "runner_seconds": 14.423,
+      "driver_seconds": 17.172,
+      "classes": [
+        {
+          "class": "takagi.ru.monica.ui.components.EntryPaymentExpiryInputTest",
+          "passed": 6,
+          "failed": 3
+        }
+      ],
+      "failed_method_ids": [
+        "takagi.ru.monica.ui.components.EntryPaymentExpiryInputTest#passwordPaymentFieldRetainsTwoDigitYearLimit",
+        "takagi.ru.monica.ui.components.EntryPaymentExpiryInputTest#outlinedWalletKeepsCursorAfterFirstYearDigit",
+        "takagi.ru.monica.ui.components.EntryPaymentExpiryInputTest#filteredPasteAndLengthLimitKeepCursorInBounds"
+      ],
+      "app_sha256": "8269a5c866ebb05d765d53f99b574bcb8f0469fa31bb7ed1fe18a5a8224344bd",
+      "test_sha256": "b83ee7ecd292b6b31a21531452531dd4924ffe91b691618a70c5c4cb7fe27a97",
+      "receipt": "raw/main-expiry-isolated01.json",
+      "log": "raw/main-expiry-isolated01.txt",
+      "log_sha256": "67ea8b202e2faca7f6b9fd887556e25addcb3ef473b26ad5cbeaff8105c6700f"
+    },
+    {
+      "label": "main-ui02",
+      "passed": false,
+      "tests": 26,
+      "passed_methods": 25,
+      "failed_methods": 1,
+      "runner_seconds": 66.184,
+      "driver_seconds": 68.694,
+      "classes": [
+        {
+          "class": "takagi.ru.monica.nfc.card.NfcCardEntryUiTest",
+          "passed": 17,
+          "failed": 0
+        },
+        {
+          "class": "takagi.ru.monica.ui.components.EntryPaymentExpiryInputTest",
+          "passed": 8,
+          "failed": 1
+        }
+      ],
+      "failed_method_ids": [
+        "takagi.ru.monica.ui.components.EntryPaymentExpiryInputTest#outlinedWalletKeepsCursorAfterFirstYearDigit"
+      ],
+      "app_sha256": "8269a5c866ebb05d765d53f99b574bcb8f0469fa31bb7ed1fe18a5a8224344bd",
+      "test_sha256": "13d4e288d01fd14dee2c5266db5d8096717379d9b02003c6be0c97fa6ec488d0",
+      "receipt": "raw/main-ui02.json",
+      "log": "raw/main-ui02.txt",
+      "log_sha256": "44df9a69fadcd975a3f100a02a3eefced309d53155bf785a4e3ad7cb0468edf1"
+    },
+    {
+      "label": "fd-ui01",
+      "passed": false,
+      "tests": 46,
+      "passed_methods": 43,
+      "failed_methods": 3,
+      "runner_seconds": 143.298,
+      "driver_seconds": 145.652,
+      "classes": [
+        {
+          "class": "takagi.ru.monica.nfc.card.NfcCardEntryUiTest",
+          "passed": 17,
+          "failed": 0
+        },
+        {
+          "class": "takagi.ru.monica.ui.components.EntryPaymentExpiryInputTest",
+          "passed": 6,
+          "failed": 3
+        },
+        {
+          "class": "takagi.ru.monica.ui.send.SendEntryUiTest",
+          "passed": 15,
+          "failed": 0
+        },
+        {
+          "class": "takagi.ru.monica.ui.WalletContentEditorTest",
+          "passed": 5,
+          "failed": 0
+        }
+      ],
+      "failed_method_ids": [
+        "takagi.ru.monica.ui.components.EntryPaymentExpiryInputTest#externallyLoadedExpiryIsDisplayedWithoutNormalizingOrSaving",
+        "takagi.ru.monica.ui.components.EntryPaymentExpiryInputTest#backspaceThroughYearAndSeparatorCanContinueTyping",
+        "takagi.ru.monica.ui.components.EntryPaymentExpiryInputTest#filledWalletKeepsCursorAfterFirstYearDigit"
+      ],
+      "app_sha256": "7db404c70159103a9a774ebee7e34e8ca2af3fda4bf7e5bae2bfedbe225c8e7d",
+      "test_sha256": "61b8bf2ea3e7e180c4d833d98e36033696363236f4896790ca53ba42267b7134",
+      "receipt": "raw/fd-ui01.json",
+      "log": "raw/fd-ui01.txt",
+      "log_sha256": "7a5b8381e876d6dde2eddffe5c532e4674a8eb0ebf8858e9b4cff264aad5917c"
+    },
+    {
+      "label": "fd-expiry-diagnostic01",
+      "passed": false,
+      "tests": 9,
+      "passed_methods": 8,
+      "failed_methods": 1,
+      "runner_seconds": 10.478,
+      "driver_seconds": 13.119,
+      "classes": [
+        {
+          "class": "takagi.ru.monica.ui.components.EntryPaymentExpiryInputTest",
+          "passed": 8,
+          "failed": 1
+        }
+      ],
+      "failed_method_ids": [
+        "takagi.ru.monica.ui.components.EntryPaymentExpiryInputTest#walletAcceptsPastedFormattedAndUnformattedExpiry"
+      ],
+      "app_sha256": "7db404c70159103a9a774ebee7e34e8ca2af3fda4bf7e5bae2bfedbe225c8e7d",
+      "test_sha256": "5a2bcb55da5b2d520444391647ddf8d2b46784189685c4d4478365206d7b389e",
+      "receipt": "raw/fd-expiry-diagnostic01.json",
+      "log": "raw/fd-expiry-diagnostic01.txt",
+      "log_sha256": "400c0f1ceda440219d9da2ab43527a47cb40704b509efa42d09d14ddd1dfb4e9"
+    },
+    {
+      "label": "main-final01",
+      "passed": true,
+      "tests": 27,
+      "passed_methods": 27,
+      "failed_methods": 0,
+      "runner_seconds": 69.767,
+      "driver_seconds": 72.704,
+      "classes": [
+        {
+          "class": "takagi.ru.monica.nfc.card.NfcCardEntryUiTest",
+          "passed": 17,
+          "failed": 0
+        },
+        {
+          "class": "takagi.ru.monica.ui.components.EntryPaymentExpiryInputTest",
+          "passed": 10,
+          "failed": 0
+        }
+      ],
+      "failed_method_ids": [],
+      "app_sha256": "5ccbf060da1284462d1a281d0f74eda33a4c1c2a991fd312b89278432fcdb2d8",
+      "test_sha256": "220103bc0f68a44982ed06d38db92d3fe4040fcf939801c9e6a3ede0b8c4ac21",
+      "receipt": "raw/main-final01.json",
+      "log": "raw/main-final01.txt",
+      "log_sha256": "8a15e370a8650231e1f262ac7da6e1f2c5eb195f9e2bb14e4dfc47be3a9c00a5"
+    },
+    {
+      "label": "fd-final01",
+      "passed": true,
+      "tests": 27,
+      "passed_methods": 27,
+      "failed_methods": 0,
+      "runner_seconds": 68.275,
+      "driver_seconds": 70.547,
+      "classes": [
+        {
+          "class": "takagi.ru.monica.nfc.card.NfcCardEntryUiTest",
+          "passed": 17,
+          "failed": 0
+        },
+        {
+          "class": "takagi.ru.monica.ui.components.EntryPaymentExpiryInputTest",
+          "passed": 10,
+          "failed": 0
+        }
+      ],
+      "failed_method_ids": [],
+      "app_sha256": "e3e5470e8dff1adf539649fd81d9f1a81a03d314fa3b88b97842d4b81cf74c6a",
+      "test_sha256": "5d940f6bd3b79ed8ede9944961d42a35793391925fba0c73700e8689a39c71c1",
+      "receipt": "raw/fd-final01.json",
+      "log": "raw/fd-final01.txt",
+      "log_sha256": "15f54ede22eb63bbc4cb186d0df7d01a8ceec11cec8e195617f053a998968af5"
+    }
+  ],
+  "static": {
+    "receipt": "raw/static-artifacts-verified.json",
+    "scope_status": "SCOPED_STATIC_EVIDENCE_NOT_FINAL_ACCEPTANCE",
+    "shared_byte_identical_paths": 50,
+    "resource_configurations": 18,
+    "new_resource_keys": 18,
+    "permission_resource_keys": 2,
+    "compiled_values_per_edition": 360,
+    "action": "android.nfc.action.TECH_DISCOVERED",
+    "technology": "android.nfc.tech.IsoDep",
+    "new_dependency_declarations": 0,
+    "new_permissions": 0,
+    "source_scope_paths_per_edition": 53,
+    "source_scope_modified_per_edition": 27,
+    "source_scope_added_per_edition": 26,
+    "source_scope_deleted_per_edition": 0,
+    "additional_expiry_test_byte_identical": true
+  },
+  "retained_failures": {
+    "nfc_initial": "main-ui01: four masked-value fixture assertions and two hidden mock-Tag API failures; repaired real visibility actions and public Tag.CREATOR, no skipped method",
+    "expiry": "Original ComponentActivity content lost after MuMu orientation/size relaunch (hex 0x480). Existing CommonInfoTestActivity restores content; all original nine assertions and default one-second node requirement retained, plus forced-recreation method.",
+    "evidence_scripts": "Initial aapt2 T: and C: text parser and no-action assembleDebug verifier failures retained; local evidence scripts corrected.",
+    "cleanup": "First remove-user after stop returned exit 1; retained raw/cleanup.json. Confirmed stop and retried successfully."
+  },
+  "visual": {
+    "reviewed_final_screenshots": 8,
+    "per_edition": 4,
+    "cases": [
+      "normal/light bank replacement",
+      "normal/light document new-bank confirmation",
+      "1.5 font/dark unselected card type",
+      "1.5 font/dark prepaid"
+    ],
+    "review": "Root inspected final contact sheet; inspected content not clipped, Toast covers part of expiry; not full-page unobscured or all-language acceptance",
+    "images_committed": false
+  },
+  "metadata": {
+    "fdroid_metadata": "passed",
+    "script_checks_passed": 6,
+    "source": "raw/fd-metadata-checks.json; raw/fd-metadata.txt; raw/fd-release-tests.txt"
+  },
+  "cleanup": {
+    "receipt": "raw/cleanup-retry.json",
+    "complete": true,
+    "restored_user": 0,
+    "removed_only_owned_user": 11,
+    "preserved_original_users": [
+      0,
+      10
+    ],
+    "original_package_sets_preserved": {
+      "0": true,
+      "10": true
+    },
+    "emulator_stopped": true,
+    "instance_and_disk_retained": true,
+    "first_failure_receipt": "raw/cleanup.json"
+  },
+  "limitations": [
+    "Synthetic parsed card injection and no-service mock IsoDep Tag; no physical card/RF, protected resident identity card or real user data.",
+    "Component/editor hosts, not complete MainActivity navigation or OEM resolver selection.",
+    "Process-wide worker and independent close scope statically reviewed; no physical blocked-driver fault injection.",
+    "API35 x86_64 Debug only; no ARM, Release/R8 or all-language visual acceptance.",
+    "47 distinct methods combine final 27 with earlier unchanged Wallet5/Send15; not an initially clean batch."
+  ],
+  "actions": {
+    "committed": false,
+    "pushed": false,
+    "tagged": false,
+    "published": false,
+    "apk_delivered": false,
+    "images_or_apks_added_to_repository": false
+  }
+}

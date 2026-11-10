@@ -100,7 +100,7 @@ import takagi.ru.monica.ui.components.OutlinedTextField
 import takagi.ru.monica.ui.components.SuggestedOutlinedTextField
 import takagi.ru.monica.data.CommonSuggestionField
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun AddEditBankCardScreen(
     viewModel: BankCardViewModel,
@@ -149,14 +149,17 @@ fun AddEditBankCardScreen(
     val commonBillingAddress by commonAccountPreferences.billingAddress.collectAsState(initial = BillingAddress())
     val hasCommonBillingAddress = !commonBillingAddress.isEmpty()
 
+    var nfcHasScanned by rememberSaveable { mutableStateOf(false) }
+    var nfcTypeConfirmed by rememberSaveable { mutableStateOf(true) }
+    var newDraftInitialized by rememberSaveable { mutableStateOf(false) }
     var title by rememberSaveable { mutableStateOf("") }
-    var cardNumber by rememberSaveable { mutableStateOf("") }
-    var cardholderName by rememberSaveable { mutableStateOf("") }
-    var cardholderFirstName by rememberSaveable { mutableStateOf("") }
-    var cardholderMiddleName by rememberSaveable { mutableStateOf("") }
-    var cardholderLastName by rememberSaveable { mutableStateOf("") }
-    var expiryMonth by rememberSaveable { mutableStateOf("") }
-    var expiryYear by rememberSaveable { mutableStateOf("") }
+    var cardNumber by takagi.ru.monica.nfc.card.rememberNfcCardField { nfcHasScanned }
+    var cardholderName by takagi.ru.monica.nfc.card.rememberNfcCardField { nfcHasScanned }
+    var cardholderFirstName by takagi.ru.monica.nfc.card.rememberNfcCardField { nfcHasScanned }
+    var cardholderMiddleName by takagi.ru.monica.nfc.card.rememberNfcCardField { nfcHasScanned }
+    var cardholderLastName by takagi.ru.monica.nfc.card.rememberNfcCardField { nfcHasScanned }
+    var expiryMonth by takagi.ru.monica.nfc.card.rememberNfcCardField { nfcHasScanned }
+    var expiryYear by takagi.ru.monica.nfc.card.rememberNfcCardField { nfcHasScanned }
     var cvv by rememberSaveable { mutableStateOf("") }
     var bankName by rememberSaveable { mutableStateOf("") }
     var bankBranch by rememberSaveable { mutableStateOf("") }
@@ -452,7 +455,8 @@ fun AddEditBankCardScreen(
                 setSelectedStorageTargets(listOf(item.toStorageTarget()))
                 hasLoadedExistingCardFields = true
             }
-        } else {
+        } else if (!newDraftInitialized) {
+            newDraftInitialized = true
             existingCardItem = null
             hasLoadedExistingCardFields = false
             currentReplicaGroupId = null
@@ -542,6 +546,27 @@ fun AddEditBankCardScreen(
         existingReplicaTargetKeys = selectedTargets.map(StorageTarget::stableKey).toSet()
     }
 
+    val nfcFields = takagi.ru.monica.nfc.card.NfcCardFields(cardNumber, expiryMonth, expiryYear,
+        cardholderName.ifBlank { listOf(cardholderFirstName, cardholderMiddleName, cardholderLastName).filter(String::isNotBlank).joinToString(" ") },
+        hasNameParts = listOf(cardholderFirstName, cardholderMiddleName, cardholderLastName).any(String::isNotBlank))
+    takagi.ru.monica.nfc.card.NfcCardEditor(
+        kind = takagi.ru.monica.nfc.card.NfcCardEditorKind.BANK,
+        eligible = cardId == null && embeddedDraft == null && newDraftInitialized,
+        busy = isSaving,
+        fields = nfcFields,
+        onFill = { scanned ->
+            val merged = nfcFields.merge(scanned)
+            nfcHasScanned = true
+            nfcTypeConfirmed = false
+            cardNumber = merged.number
+            expiryMonth = merged.month
+            expiryYear = merged.year
+            if (!scanned.holder.isNullOrBlank()) {
+                cardholderName = merged.holder
+                cardholderFirstName = ""; cardholderMiddleName = ""; cardholderLastName = ""
+            }
+        },
+    )
     val isExistingCardReady = cardId == null || hasLoadedExistingCardFields
     val displayedCardFaceBitmap = rememberCardFaceBitmap(
         item = existingCardItem,
@@ -593,9 +618,9 @@ fun AddEditBankCardScreen(
             cardFace = cardFaceConfig
         )
     }
-    val canSave = isExistingCardReady && (cardNumber.isNotBlank() || embeddedDraft != null) && !isSaving
+    val canSave = nfcTypeConfirmed && isExistingCardReady && (cardNumber.isNotBlank() || embeddedDraft != null) && !isSaving
     val save: () -> Unit = saveAction@{
-        if (!isExistingCardReady || isSaving || (cardNumber.isBlank() && embeddedDraft == null)) return@saveAction
+        if (!nfcTypeConfirmed || !isExistingCardReady || isSaving || (cardNumber.isBlank() && embeddedDraft == null)) return@saveAction
         if (embeddedDraft != null && onEmbeddedSave != null) {
             isSaving = true
             coroutineScope.launch {
@@ -918,6 +943,23 @@ fun AddEditBankCardScreen(
                     onRemoveTarget = ::removeSelectedStorageTarget
                 )
 
+                if (cardId == null && embeddedDraft == null) {
+                    takagi.ru.monica.nfc.card.NfcCardScanButton(enabled = !isSaving)
+                    if (nfcHasScanned) {
+                        Text(stringResource(R.string.nfc_card_type_hint), style = MaterialTheme.typography.bodySmall,
+                            modifier = Modifier.testTag("nfc_card_type_hint"))
+                        Text(stringResource(R.string.nfc_card_type_select), style = MaterialTheme.typography.titleSmall)
+                        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            listOf(CardType.DEBIT to R.string.debit_card, CardType.CREDIT to R.string.credit_card,
+                                CardType.PREPAID to R.string.prepaid_card).forEach { (type, label) ->
+                                FilterChip(selected = nfcTypeConfirmed && cardType == type,
+                                    onClick = { cardType = type; nfcTypeConfirmed = true }, enabled = !isSaving,
+                                    label = { Text(stringResource(label)) }, modifier = Modifier.testTag("nfc_card_type_${type.name}"))
+                            }
+                        }
+                    }
+                }
+
                 onEmbeddedCopy?.let { copy ->
                     FilledTonalButton(onClick = copy, modifier = Modifier.fillMaxWidth()) {
                         Icon(Icons.Default.CreditCard, null)
@@ -983,7 +1025,7 @@ fun AddEditBankCardScreen(
                                 onExpandedChange = { showCardTypeMenu = it }
                             ) {
                                 OutlinedTextField(
-                                    value = when (cardType) {
+                                    value = if (!nfcTypeConfirmed) stringResource(R.string.nfc_card_type_select) else when (cardType) {
                                         CardType.CREDIT -> stringResource(R.string.credit_card)
                                         CardType.DEBIT -> stringResource(R.string.debit_card)
                                         CardType.PREPAID -> stringResource(R.string.prepaid_card)
@@ -1002,7 +1044,7 @@ fun AddEditBankCardScreen(
                                     expanded = showCardTypeMenu,
                                     onDismissRequest = { showCardTypeMenu = false },
                                     selectedValue = cardType,
-                                    onSelect = { cardType = it },
+                                    onSelect = { cardType = it; nfcTypeConfirmed = true },
                                     choices = listOf(
                                         MonicaMenuChoice(CardType.DEBIT, stringResource(R.string.debit_card)),
                                         MonicaMenuChoice(CardType.CREDIT, stringResource(R.string.credit_card)),
@@ -1023,6 +1065,7 @@ fun AddEditBankCardScreen(
                                     expiryYear = year
                                 },
                                 onCvv = { cvv = it },
+                                saveTextState = !nfcHasScanned,
                                 onPickHolder = if (showCommonNameAction) {{
                                     shouldLoadCommonNameAnalysis = true
                                     showCommonNamePicker = true

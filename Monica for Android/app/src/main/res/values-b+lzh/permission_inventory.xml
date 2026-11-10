@@ -23,8 +23,8 @@
     <string name="pm_location">依君之請，以當前位置填地址。Android 12 及其前建臨時熱點，須精確位置。地址可用概略位置，不請背景位置。</string>
     <string name="pm_nearby_name">附近 Wi-Fi 裝置</string>
     <string name="pm_nearby">Android 13 及其後，建或入臨時同步熱點之用。拒授仍可循既有 Wi-Fi 同步，不據此推位置。</string>
-    <string name="pm_nfc_name">NFC 安全金鑰</string>
-    <string name="pm_nfc">接 NFC FIDO 金鑰而用 Passkey。裝置須支援並啟 NFC。尋常密碼、OTP、Wi-Fi 同步不賴 NFC。</string>
+    <string name="pm_nfc_name">NFC 卡片與安全金鑰</string>
+    <string name="pm_nfc">讀受支援非接觸式銀行卡之公開資訊，接 NFC FIDO 金鑰而用 Passkey。裝置須支援並啟 NFC。尋常密碼、OTP、Wi-Fi 同步不賴 NFC。</string>
     <string name="pm_biometric">生物辨識認證，可擇用之。Android 8 循舊指紋權限宣告。</string>
     <string name="pm_network">雲端備份、帳戶服務、遠端資料庫及區域網同步之用。得網路之權，不自發傳輸。</string>
     <string name="pm_network_state">察網路連線，使聯網功能應其變。</string>

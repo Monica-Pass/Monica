@@ -1,12 +1,15 @@
 package takagi.ru.monica.ui.components
 
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.semantics.SemanticsProperties
-import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
+import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTextInputSelection
@@ -18,20 +21,38 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextRange
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotSame
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import takagi.ru.monica.suggestions.CommonInfoTestActivity
 
 @RunWith(AndroidJUnit4::class)
 class EntryPaymentExpiryInputTest {
-    @get:Rule val compose = createComposeRule()
+    @get:Rule val compose = createAndroidComposeRule<CommonInfoTestActivity>()
     private val field get() = compose.onNodeWithTag("entry_payment_expiry")
+
+    @After fun clearHostContent() {
+        compose.runOnUiThread { CommonInfoTestActivity.content = {} }
+    }
+
+    private fun setExpiryContent(content: @Composable () -> Unit) {
+        // The host reinstalls this composition if launch-time configuration changes recreate it.
+        compose.runOnUiThread { CommonInfoTestActivity.content = content }
+        awaitExpiryField()
+    }
+
+    @OptIn(ExperimentalTestApi::class)
+    private fun awaitExpiryField() {
+        compose.waitUntilExactlyOneExists(hasTestTag("entry_payment_expiry"))
+    }
 
     private fun showWallet(filled: Boolean) {
         var month by mutableStateOf("")
         var year by mutableStateOf("")
-        compose.setContent {
+        setExpiryContent {
             MaterialTheme {
                 CompositionLocalProvider(LocalFilledEntryForm provides filled) {
                     EntryPaymentFields("", "", EntryPaymentFormat.joinExpiry(month, year), "",
@@ -127,7 +148,7 @@ class EntryPaymentExpiryInputTest {
 
     @Test fun passwordPaymentFieldRetainsTwoDigitYearLimit() {
         var expiry by mutableStateOf("")
-        compose.setContent { MaterialTheme {
+        setExpiryContent { MaterialTheme {
             PaymentExpiryTextField(expiry, { expiry = it },
                 Modifier.testTag("entry_payment_expiry"), maxYearDigits = 2)
         } }
@@ -141,7 +162,7 @@ class EntryPaymentExpiryInputTest {
     @Test fun externallyLoadedExpiryIsDisplayedWithoutNormalizingOrSaving() {
         var expiry by mutableStateOf("09/2030")
         val changes = mutableListOf<String>()
-        compose.setContent { MaterialTheme {
+        setExpiryContent { MaterialTheme {
             PaymentExpiryTextField(expiry, { changes += it; expiry = it },
                 Modifier.testTag("entry_payment_expiry"))
         } }
@@ -150,4 +171,21 @@ class EntryPaymentExpiryInputTest {
         assertExpiry("legacy expiry")
         compose.runOnIdle { assertEquals(emptyList<String>(), changes) }
     }
+
+    @Test fun recreatedHostRestoresInputAndCursorAndAcceptsFurtherEdits() {
+        showWallet(filled = true)
+        field.performTextInput("07/3")
+        field.performTextInputSelection(TextRange(3))
+        assertExpiry("07/3", 3)
+        val previousHost = compose.activity
+
+        compose.activityRule.scenario.recreate()
+        awaitExpiryField()
+
+        assertNotSame(previousHost, compose.activity)
+        assertExpiry("07/3", 3)
+        field.performTextInput("1")
+        assertExpiry("07/13", 4)
+    }
+
 }

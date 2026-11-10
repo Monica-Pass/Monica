@@ -23,8 +23,8 @@
     <string name="pm_location">Auf Wunsch eine Adresse anhand des aktuellen Standorts ausfüllen. Temporäre Hotspots benötigen unter Android 12 und älter einen genauen Standort. Für Adressen genügt auch ein ungefährer Standort; kein Hintergrundstandort wird angefragt.</string>
     <string name="pm_nearby_name">WLAN-Geräte in der Nähe</string>
     <string name="pm_nearby">Unter Android 13 und neuer einen temporären Sync-Hotspot erstellen oder verbinden. Bei Ablehnung bleibt Sync über vorhandenes WLAN verfügbar. Diese Berechtigung wird nicht zur Standortermittlung verwendet.</string>
-    <string name="pm_nfc_name">NFC-Sicherheitsschlüssel</string>
-    <string name="pm_nfc">NFC-FIDO-Schlüssel für Passkeys verbinden. Erfordert ein NFC-Gerät mit aktiviertem NFC. Passwörter, OTP und WLAN-Sync brauchen kein NFC.</string>
+    <string name="pm_nfc_name">NFC-Karten und Sicherheitsschlüssel</string>
+    <string name="pm_nfc">Öffentlich zugängliche Daten unterstützter kontaktloser Bankkarten lesen und NFC-FIDO-Sicherheitsschlüssel für Passkeys verbinden. Erfordert ein NFC-fähiges Gerät mit aktiviertem NFC. Passwörter, OTP und WLAN-Synchronisierung benötigen kein NFC.</string>
     <string name="pm_biometric">Optionale biometrische Anmeldung; Android 8 verwendet die ältere Fingerabdruckberechtigung.</string>
     <string name="pm_network">Cloud-Backups, Kontodienste, entfernte Datenbanken und lokaler Sync. Netzwerkzugriff allein startet keine Übertragung.</string>
     <string name="pm_network_state">Verbindung prüfen, damit Netzwerkfunktionen auf Änderungen reagieren können.</string>

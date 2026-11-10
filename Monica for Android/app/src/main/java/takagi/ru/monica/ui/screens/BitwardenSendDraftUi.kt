@@ -90,6 +90,7 @@ internal fun SendLocalDraftList(
     drafts: List<BitwardenSendDraftStore.Draft>, unavailable: Boolean, busy: Boolean,
     onResume: (BitwardenSendDraftStore.Draft) -> Unit,
     onDiscard: (BitwardenSendDraftStore.Draft) -> Unit,
+    canDiscard: (BitwardenSendDraftStore.Draft) -> Boolean = { true },
 ) {
     var discard by remember { mutableStateOf<BitwardenSendDraftStore.Draft?>(null) }
     Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -105,7 +106,7 @@ internal fun SendLocalDraftList(
                         modifier = Modifier.fillMaxWidth().testTag("send_draft_resume_${saved.id}")) {
                         Text(stringResource(if (saved.submissionUncertain) R.string.bw_send_draft_reconcile else R.string.bw_send_draft_resume))
                     }
-                    OutlinedButton(onClick = { discard = saved }, enabled = !busy,
+                    OutlinedButton(onClick = { discard = saved }, enabled = !busy && canDiscard(saved),
                         modifier = Modifier.fillMaxWidth().testTag("send_draft_discard_${saved.id}")) {
                         Text(stringResource(R.string.bw_send_draft_discard))
                     }
@@ -118,7 +119,7 @@ internal fun SendLocalDraftList(
             title = { Text(stringResource(R.string.bw_send_draft_discard)) },
             text = { Text(stringResource(R.string.bw_send_draft_discard_confirm)) },
             dismissButton = { TextButton(onClick = { discard = null }) { Text(stringResource(R.string.cancel)) } },
-            confirmButton = { TextButton(onClick = { discard = null; onDiscard(selected) }, enabled = !busy) {
+            confirmButton = { TextButton(onClick = { discard = null; if (canDiscard(selected)) onDiscard(selected) }, enabled = !busy && canDiscard(selected)) {
                 Text(stringResource(R.string.bw_send_draft_discard))
             } })
     }

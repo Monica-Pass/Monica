@@ -23,8 +23,8 @@
     <string name="pm_location">Fill an address from your current location when you ask. Precise location is also required for temporary hotspots on Android 12 and earlier. Approximate location can be used for addresses; no background location is requested.</string>
     <string name="pm_nearby_name">Nearby Wi-Fi devices</string>
     <string name="pm_nearby">Create or join a temporary sync hotspot on Android 13 and later. Existing Wi-Fi sync remains available if declined. This permission is not used to derive location.</string>
-    <string name="pm_nfc_name">NFC security keys</string>
-    <string name="pm_nfc">Connect NFC FIDO security keys for Passkeys. Requires an NFC-capable device with NFC enabled. Passwords, OTP and Wi-Fi sync do not depend on NFC.</string>
+    <string name="pm_nfc_name">NFC cards and security keys</string>
+    <string name="pm_nfc">Read publicly accessible details from supported contactless bank cards and connect NFC FIDO security keys for Passkeys. Requires an NFC-capable device with NFC enabled. Passwords, OTP and Wi-Fi sync do not depend on NFC.</string>
     <string name="pm_biometric">Optional biometric authentication; Android 8 uses the legacy fingerprint declaration.</string>
     <string name="pm_network">Cloud backup, account services, remote databases and local-network sync. Network access alone does not start a transfer.</string>
     <string name="pm_network_state">Check connectivity so network features can react to connection changes.</string>

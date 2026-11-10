@@ -496,7 +496,7 @@ class BitwardenSendDraftsInstrumentedTest {
         } finally { bitmap.recycle() }
     }
 
-    @Test fun actualSendPageOpensThemedDraftDialogAndResumesStoredContent() = runBlocking { fixture {
+    @Test fun actualNewSendEditorOpensThemedDraftSheetAndResumesStoredContent() = runBlocking { fixture {
         val saved = save(draft(SendAuthAction.NONE))
         val owner = androidx.lifecycle.ViewModelStore()
         lateinit var model: BitwardenViewModel
@@ -506,7 +506,20 @@ class BitwardenSendDraftsInstrumentedTest {
         }
         try {
             compose.setContent { SendTestTheme {
-                takagi.ru.monica.ui.screens.SendScreen(bitwardenViewModel = model)
+                val vaults by model.vaults.collectAsState()
+                val active by model.activeVault.collectAsState()
+                val unlocked by model.unlockStateByVault.collectAsState()
+                val state by model.sendState.collectAsState()
+                val drafts by model.localSendDrafts.collectAsState()
+                val unavailable by model.localSendDraftsUnavailable.collectAsState()
+                AddEditSendScreen(sendState = state, vaults = vaults, activeVault = active,
+                    unlockStateByVault = unlocked, localDrafts = drafts, draftsUnavailable = unavailable,
+                    onRefreshDrafts = model::refreshLocalSendDrafts,
+                    onDiscardDraft = model::discardLocalSendDraft,
+                    onSubmitStoredDraft = model::submitStoredSendDraft,
+                    onLeaveForeground = model::leaveSendEditorForeground, onNavigateBack = {},
+                    onCreate = { _, _, _, _, _, _, _, _, _ -> error("Unexpected legacy create") },
+                    onCreateFile = { _, _, _, _, _, _, _, _, _ -> error("Unexpected legacy file create") })
             } }
             compose.waitUntil(15_000) { model.unlockStateByVault.value[vaultId] == BitwardenViewModel.UnlockState.Unlocked }
             compose.onNodeWithTag("send_open_drafts").assertIsEnabled().performClick()

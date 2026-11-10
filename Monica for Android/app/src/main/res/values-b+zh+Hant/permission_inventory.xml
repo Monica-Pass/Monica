@@ -23,8 +23,8 @@
     <string name="pm_location">依你的操作用目前位置填寫地址；Android 12 及以下建立暫時熱點還需要精確位置。填寫地址可使用概略位置，不申請背景位置。</string>
     <string name="pm_nearby_name">附近的 Wi-Fi 裝置</string>
     <string name="pm_nearby">用於 Android 13 及以上建立或加入暫時同步熱點。拒絕後仍可使用現有 Wi-Fi 同步，不用此權限推斷位置。</string>
-    <string name="pm_nfc_name">NFC 硬體安全金鑰</string>
-    <string name="pm_nfc">連接 NFC FIDO 硬體金鑰以使用 Passkey，需裝置支援並啟用 NFC。一般密碼、OTP 和 Wi-Fi 同步不依賴 NFC。</string>
+    <string name="pm_nfc_name">NFC 卡片與安全金鑰</string>
+    <string name="pm_nfc">讀取支援的感應式銀行卡公開資訊，並連接 NFC FIDO 硬體金鑰以使用 Passkey，需裝置支援並啟用 NFC。一般密碼、OTP 和 Wi-Fi 同步不依賴 NFC。</string>
     <string name="pm_biometric">選用的生物辨識認證；Android 8 使用舊版指紋權限宣告。</string>
     <string name="pm_network">雲端備份、帳戶服務、遠端資料庫與區域網路同步。具備網路權限不會自行發起傳輸。</string>
     <string name="pm_network_state">檢查網路連線，讓連網功能回應連線變化。</string>

@@ -23,8 +23,8 @@
     <string name="pm_location">Rellenar una dirección con tu ubicación actual cuando lo pidas. Los puntos de acceso temporales en Android 12 o anterior también requieren ubicación precisa. Para direcciones puede usarse la ubicación aproximada; no se solicita ubicación en segundo plano.</string>
     <string name="pm_nearby_name">Dispositivos Wi-Fi cercanos</string>
     <string name="pm_nearby">Crear o unirse a un punto de acceso temporal de sincronización en Android 13 o posterior. Si lo deniegas, sigue disponible la sincronización por una red Wi-Fi existente. No se usa para determinar tu ubicación.</string>
-    <string name="pm_nfc_name">Llaves de seguridad NFC</string>
-    <string name="pm_nfc">Conectar llaves FIDO por NFC para usar Passkeys. Requiere un dispositivo compatible con NFC activado. Las contraseñas, OTP y sincronización Wi-Fi no dependen de NFC.</string>
+    <string name="pm_nfc_name">Tarjetas y llaves de seguridad NFC</string>
+    <string name="pm_nfc">Leer información de acceso público de tarjetas bancarias sin contacto compatibles y conectar llaves de seguridad FIDO por NFC para usar Passkeys. Requiere un dispositivo compatible con NFC activado. Las contraseñas, OTP y sincronización Wi-Fi no dependen de NFC.</string>
     <string name="pm_biometric">Autenticación biométrica opcional. Android 8 usa la declaración antigua de huella digital.</string>
     <string name="pm_network">Copias en la nube, servicios de cuentas, bases de datos remotas y sincronización local. El acceso a la red por sí solo no inicia transferencias.</string>
     <string name="pm_network_state">Comprobar la conexión para que las funciones de red respondan a cambios.</string>

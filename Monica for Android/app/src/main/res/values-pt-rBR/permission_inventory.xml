@@ -23,8 +23,8 @@
     <string name="pm_location">Preencher um endereço com a localização atual, a seu pedido. No Android 12 ou anterior, o hotspot temporário também exige localização precisa. Endereços podem usar localização aproximada; nenhuma localização em segundo plano é solicitada.</string>
     <string name="pm_nearby_name">Dispositivos Wi-Fi próximos</string>
     <string name="pm_nearby">Criar ou entrar em um hotspot de sincronização temporário no Android 13 ou superior. Se você recusar, a sincronização pela rede Wi-Fi existente continua disponível. Não usamos essa permissão para obter sua localização.</string>
-    <string name="pm_nfc_name">Chaves de segurança NFC</string>
-    <string name="pm_nfc">Conectar chaves FIDO por NFC para usar Passkeys. Exige um dispositivo compatível com NFC ativado. Senhas, OTP e sincronização por Wi-Fi não dependem de NFC.</string>
+    <string name="pm_nfc_name">Cartões e chaves de segurança NFC</string>
+    <string name="pm_nfc">Ler informações publicamente acessíveis de cartões bancários por aproximação compatíveis e conectar chaves de segurança FIDO por NFC para usar Passkeys. Exige um dispositivo compatível com NFC ativado. Senhas, OTP e sincronização por Wi-Fi não dependem de NFC.</string>
     <string name="pm_biometric">Autenticação biométrica opcional. O Android 8 usa a declaração antiga de impressão digital.</string>
     <string name="pm_network">Backup na nuvem, serviços de contas, bancos de dados remotos e sincronização local. Ter acesso à rede não inicia transferências por conta própria.</string>
     <string name="pm_network_state">Verificar a conexão para que os recursos de rede respondam a mudanças.</string>

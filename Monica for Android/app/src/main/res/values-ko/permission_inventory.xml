@@ -23,8 +23,8 @@
     <string name="pm_location">요청 시 현재 위치로 주소를 채웁니다. Android 12 이하의 임시 핫스팟에는 정확한 위치 권한도 필요합니다. 주소에는 대략적인 위치도 사용할 수 있으며 백그라운드 위치는 요청하지 않습니다.</string>
     <string name="pm_nearby_name">주변 Wi-Fi 기기</string>
     <string name="pm_nearby">Android 13 이상에서 임시 동기화 핫스팟을 만들거나 연결합니다. 거부해도 기존 Wi-Fi 동기화는 사용할 수 있습니다. 이 권한으로 위치를 추정하지 않습니다.</string>
-    <string name="pm_nfc_name">NFC 보안 키</string>
-    <string name="pm_nfc">NFC FIDO 키를 연결해 Passkey를 사용합니다. NFC를 지원하는 기기에서 NFC가 켜져 있어야 합니다. 비밀번호, OTP 및 Wi-Fi 동기화에는 NFC가 필요하지 않습니다.</string>
+    <string name="pm_nfc_name">NFC 카드 및 보안 키</string>
+    <string name="pm_nfc">지원되는 비접촉식 은행 카드의 공개 정보를 읽고 NFC FIDO 보안 키를 연결해 Passkey를 사용합니다. NFC를 지원하는 기기에서 NFC가 켜져 있어야 합니다. 비밀번호, OTP 및 Wi-Fi 동기화에는 NFC가 필요하지 않습니다.</string>
     <string name="pm_biometric">선택적인 생체 인증에 사용합니다. Android 8은 기존 지문 권한 선언을 사용합니다.</string>
     <string name="pm_network">클라우드 백업, 계정 서비스, 원격 데이터베이스 및 로컬 동기화에 사용합니다. 네트워크 권한만으로 전송을 시작하지 않습니다.</string>
     <string name="pm_network_state">연결 상태를 확인해 네트워크 기능이 연결 변경에 대응하도록 합니다.</string>

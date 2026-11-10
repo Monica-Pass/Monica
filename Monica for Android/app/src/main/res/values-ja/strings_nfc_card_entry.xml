@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nfc_card_scan_title">NFC カードを読み取る</string>
+    <string name="nfc_card_scan_hint">カードをスマートフォンの NFC アンテナに近づけてください。一部の非接触型銀行カードに対応しています。</string>
+    <string name="nfc_card_scanning">カードを読み取り中…</string>
+    <string name="nfc_card_unavailable">この端末は NFC に対応していません。</string>
+    <string name="nfc_card_disabled">先にシステム設定で NFC を有効にしてください。</string>
+    <string name="nfc_card_unlock_retap">Monica のロックを解除してから、カードをもう一度かざしてください。</string>
+    <string name="nfc_card_unsupported">このカードには読み取れる銀行カード番号がありません。保護された身分証などには対応していません。チップの UID はカード番号ではありません。</string>
+    <string name="nfc_card_read_failed">カードを読み取れませんでした。スマートフォンに近づけたまま、もう一度お試しください。</string>
+    <string name="nfc_card_new_title">銀行カードを作成しますか？</string>
+    <string name="nfc_card_new_message">銀行カードを読み取りましたが、このページは別の項目タイプ用です。新しい銀行カードのページを開きますか？現在の内容は保持されます。</string>
+    <string name="nfc_card_replace_title">既存のカード情報を置き換えますか？</string>
+    <string name="nfc_card_replace_message">読み取った情報がフォームの内容と異なります。カードから取得できたカード番号、有効期限、名義人情報のみを置き換えます。その他の内容は保持されます。</string>
+    <string name="nfc_card_type_hint">カード情報を読み取りました。NFC ではクレジット、デビット、プリペイドを確実に判別できません。種類を確認してください。</string>
+    <string name="nfc_card_ready">読み取ったカード情報を入力しました。確認してから保存してください。</string>
+    <string name="nfc_card_busy">現在の操作を完了してからカードを読み取ってください。</string>
+    <string name="nfc_card_new_action">新しいカードを開く</string>
+    <string name="nfc_card_replace_action">置き換える</string>
+    <string name="nfc_card_type_select">カードの種類を選択</string>
+</resources>

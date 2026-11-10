@@ -430,25 +430,38 @@ class BitwardenSendManagementInstrumentedTest {
                 }
             }
         }
+        compose.onNodeWithTag("send_account_picker").performScrollTo().performClick()
+        compose.onNodeWithTag("send_account_sheet").assertIsDisplayed()
         val account = compose.onNodeWithTag("send_vault_${vault.id}")
-        revealFully(account)
+        account.performScrollTo()
+        assertFullyVisible(account)
+        val inAccount = hasAnyAncestor(hasTestTag("send_vault_${vault.id}"))
         account.assertIsSelected()
-        compose.onAllNodesWithText(vault.email, useUnmergedTree = true).assertCountEquals(1)
-        compose.onAllNodesWithText(vault.serverUrl, useUnmergedTree = true).assertCountEquals(1)
-        assertTextFits(hasText(vault.email))
-        assertTextFits(hasText(vault.serverUrl))
-        screenshotIfRequested(null, "account", account)
+        compose.onAllNodes(hasText(vault.email) and inAccount, useUnmergedTree = true).assertCountEquals(1)
+        compose.onAllNodes(hasText(vault.serverUrl) and inAccount, useUnmergedTree = true).assertCountEquals(1)
+        assertTextFits(hasText(vault.email) and inAccount)
+        assertTextFits(hasText(vault.serverUrl) and inAccount)
+        if (InstrumentationRegistry.getArguments().getString("sendManagementScreenshots") == "true") {
+            val bitmap = requireNotNull(instrumentation.uiAutomation.takeScreenshot())
+            val folder = File(context.filesDir, "editor-shapes-325").apply { check(isDirectory || mkdirs()) }
+            val suffix = "${if (testDark) "dark" else "light"}-${if (testFontScale > 1f) "large" else "normal"}"
+            try {
+                File(folder, "send-account-$suffix.png").outputStream().use { check(bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)) }
+            } finally { bitmap.recycle() }
+        }
 
         // A configured name replaces the heading, while the email still appears exactly once.
         compose.runOnIdle { displayName.value = "Synthetic team" }
         compose.waitForIdle()
-        compose.onAllNodesWithText("Synthetic team", useUnmergedTree = true).assertCountEquals(1)
-        compose.onAllNodesWithText(vault.email, useUnmergedTree = true).assertCountEquals(1)
-        compose.onAllNodesWithText(vault.serverUrl, useUnmergedTree = true).assertCountEquals(1)
-        assertTextFits(hasText("Synthetic team"))
-        assertTextFits(hasText(vault.email))
-        assertTextFits(hasText(vault.serverUrl))
+        compose.onAllNodes(hasText("Synthetic team") and inAccount, useUnmergedTree = true).assertCountEquals(1)
+        compose.onAllNodes(hasText(vault.email) and inAccount, useUnmergedTree = true).assertCountEquals(1)
+        compose.onAllNodes(hasText(vault.serverUrl) and inAccount, useUnmergedTree = true).assertCountEquals(1)
+        assertTextFits(hasText("Synthetic team") and inAccount)
+        assertTextFits(hasText(vault.email) and inAccount)
+        assertTextFits(hasText(vault.serverUrl) and inAccount)
 
+        account.performClick()
+        compose.onNodeWithTag("send_account_sheet").assertDoesNotExist()
         val textChip = compose.onNode(hasClickAction() and hasText(english.getString(R.string.send_type_text)))
         val fileChip = compose.onNode(hasClickAction() and hasText(english.getString(R.string.send_type_file)))
         revealFully(textChip)
