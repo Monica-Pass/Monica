@@ -442,7 +442,9 @@ class BitwardenSendDraftsInstrumentedTest {
                         onCreateFile = { _, _, _, _, _, _, _, _, _ -> error("Unexpected legacy file") })
                 }
             } }
-            compose.onNodeWithTag("send_auth_email").performScrollTo().performClick()
+            compose.onNodeWithTag("send_auth_selector").performScrollTo().performClick()
+            compose.onNode(hasText(context.getString(R.string.bw_send_auth_email)) and isSelectable())
+                .assertIsEnabled().performClick()
             compose.onNodeWithTag("send_auth_recipient_0").performScrollTo().performTextReplacement("recipient@example.test")
             androidx.test.espresso.Espresso.closeSoftKeyboard()
             captureIfRequested("send-auth", "send_auth_recipient_0")

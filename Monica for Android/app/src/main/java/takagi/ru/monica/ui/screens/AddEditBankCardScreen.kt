@@ -943,23 +943,6 @@ fun AddEditBankCardScreen(
                     onRemoveTarget = ::removeSelectedStorageTarget
                 )
 
-                if (cardId == null && embeddedDraft == null) {
-                    takagi.ru.monica.nfc.card.NfcCardScanButton(enabled = !isSaving)
-                    if (nfcHasScanned) {
-                        Text(stringResource(R.string.nfc_card_type_hint), style = MaterialTheme.typography.bodySmall,
-                            modifier = Modifier.testTag("nfc_card_type_hint"))
-                        Text(stringResource(R.string.nfc_card_type_select), style = MaterialTheme.typography.titleSmall)
-                        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            listOf(CardType.DEBIT to R.string.debit_card, CardType.CREDIT to R.string.credit_card,
-                                CardType.PREPAID to R.string.prepaid_card).forEach { (type, label) ->
-                                FilterChip(selected = nfcTypeConfirmed && cardType == type,
-                                    onClick = { cardType = type; nfcTypeConfirmed = true }, enabled = !isSaving,
-                                    label = { Text(stringResource(label)) }, modifier = Modifier.testTag("nfc_card_type_${type.name}"))
-                            }
-                        }
-                    }
-                }
-
                 onEmbeddedCopy?.let { copy ->
                     FilledTonalButton(onClick = copy, modifier = Modifier.fillMaxWidth()) {
                         Icon(Icons.Default.CreditCard, null)
@@ -1035,16 +1018,19 @@ fun AddEditBankCardScreen(
                                     label = { Text(stringResource(R.string.card_type)) },
                                     leadingIcon = { Icon(Icons.Default.CreditCard, contentDescription = null) },
                                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = showCardTypeMenu) },
-                                    modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable).fillMaxWidth(),
+                                    modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable).fillMaxWidth()
+                                        .testTag("bank_card_type"),
                                     shape = RoundedCornerShape(12.dp),
                                     colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
                                 )
 
-                                MonicaExposedChoiceMenu(
+                                MonicaExposedChoiceMenu<CardType?>(
                                     expanded = showCardTypeMenu,
                                     onDismissRequest = { showCardTypeMenu = false },
-                                    selectedValue = cardType,
-                                    onSelect = { cardType = it; nfcTypeConfirmed = true },
+                                    selectedValue = cardType.takeIf { nfcTypeConfirmed },
+                                    onSelect = { selected ->
+                                        if (selected != null) { cardType = selected; nfcTypeConfirmed = true }
+                                    },
                                     choices = listOf(
                                         MonicaMenuChoice(CardType.DEBIT, stringResource(R.string.debit_card)),
                                         MonicaMenuChoice(CardType.CREDIT, stringResource(R.string.credit_card)),

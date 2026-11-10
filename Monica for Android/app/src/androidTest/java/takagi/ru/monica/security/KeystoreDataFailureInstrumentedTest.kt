@@ -194,16 +194,23 @@ class KeystoreDataFailureInstrumentedTest {
             val preferences = field.get(fixture.manager) as SharedPreferences
             var armed = true
             val interleaved = object : SharedPreferences by preferences {
-                override fun getString(key: String?, defValue: String?): String? {
-                    val value = preferences.getString(key, defValue)
-                    if (armed && key == "mdk_password_blob") {
-                        check(!value.isNullOrEmpty())
-                        armed = false
-                        // A deterministic cancellation/lock interleave with real password KDF
-                        // and MDK decryption. No timing or native-provider delay is simulated.
-                        SessionManager.markLocked()
+                override fun getAll(): MutableMap<String, *> {
+                    val snapshot = preferences.all
+                    return object : MutableMap<String, Any?> by snapshot.toMutableMap() {
+                        override fun get(key: String): Any? {
+                            val value = snapshot[key]
+                            if (armed && key == "mdk_password_blob" && Thread.currentThread().stackTrace.any {
+                                it.className == LocalPasswordCredentials::class.java.name && it.methodName == "unwrap"
+                            }) {
+                                check(value is String && value.isNotEmpty())
+                                armed = false
+                                // Interleave at the real credential wrapper read, after its KDF.
+                                // Fingerprint/validation reads of the same key do not arm the lock.
+                                SessionManager.markLocked()
+                            }
+                            return value
+                        }
                     }
-                    return value
                 }
             }
             field.set(fixture.manager, interleaved)

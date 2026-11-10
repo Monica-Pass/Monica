@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="nfc_card_scan_title">Считать карту NFC</string>
-    <string name="nfc_card_scan_hint">Поднесите карту к антенне NFC телефона. Поддерживаются некоторые бесконтактные банковские карты.</string>
-    <string name="nfc_card_scanning">Чтение карты…</string>
-    <string name="nfc_card_unavailable">Это устройство не поддерживает NFC.</string>
-    <string name="nfc_card_disabled">Сначала включите NFC в настройках системы.</string>
     <string name="nfc_card_unlock_retap">Разблокируйте Monica и снова поднесите карту.</string>
-    <string name="nfc_card_unsupported">На этой карте нет доступного для чтения номера банковской карты. Защищённые удостоверения личности не поддерживаются; UID чипа не является номером карты.</string>
+    <string name="nfc_card_unsupported">Не удалось считать пригодный для использования номер банковской карты. Удерживайте карту рядом с телефоном и повторите попытку. Некоторые карты не предоставляют эти сведения.</string>
     <string name="nfc_card_read_failed">Не удалось прочитать карту. Держите её рядом с телефоном и повторите попытку.</string>
     <string name="nfc_card_new_title">Создать банковскую карту?</string>
     <string name="nfc_card_new_message">Прочитана банковская карта, но эта страница предназначена для другого типа записи. Открыть новую страницу банковской карты? Текущее содержимое будет сохранено.</string>
     <string name="nfc_card_replace_title">Заменить существующие данные карты?</string>
     <string name="nfc_card_replace_message">Прочитанные данные отличаются от данных формы. Будут заменены только номер карты, срок действия и сведения о владельце, предоставленные картой. Остальное содержимое будет сохранено.</string>
-    <string name="nfc_card_type_hint">Данные карты прочитаны. NFC не позволяет надёжно различить кредитные, дебетовые и предоплаченные карты. Подтвердите тип.</string>
-    <string name="nfc_card_ready">Прочитанные данные карты подставлены. Проверьте их перед сохранением.</string>
     <string name="nfc_card_busy">Завершите текущую операцию перед чтением карты.</string>
     <string name="nfc_card_new_action">Открыть новую карту</string>
     <string name="nfc_card_replace_action">Заменить</string>

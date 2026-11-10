@@ -2,13 +2,46 @@ package takagi.ru.monica.security
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.JsonReader
 import java.io.File
+import java.io.StringReader
+import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
 
 /** Reuses only a caller-accepted startup result, never a timed-out worker's result. */
 internal object PreparedSecureStore {
     private const val KEYSET = "__androidx_security_crypto_encrypted_prefs_key_keyset__"
     private const val VALUES = "__androidx_security_crypto_encrypted_prefs_value_keyset__"
     @Volatile private var accepted: Entry? = null
+    private val mirrorCommits = ConcurrentHashMap<String, MirrorCommit>()
+    private val pendingMirrors = ConcurrentHashMap.newKeySet<String>()
+
+    internal fun markMirrorPending(directory: String) { pendingMirrors.add(directory) }
+    internal fun clearMirrorPending(directory: String) { pendingMirrors.remove(directory) }
+    internal fun isMirrorPending(directory: String): Boolean = directory in pendingMirrors
+
+    internal class MirrorCommit internal constructor(
+        val directory: String,
+        val oldGeneration: String?,
+        val oldRevision: String?,
+        val generation: String,
+        val revision: String,
+    )
+
+    /** Only the final canonical/mirror IO window; KDF work never receives this allowance. */
+    internal fun beginMirrorCommit(
+        directory: String,
+        oldGeneration: String?,
+        oldRevision: String?,
+        generation: String,
+        revision: String,
+    ): MirrorCommit = MirrorCommit(directory, oldGeneration, oldRevision, generation, revision).also {
+        check(mirrorCommits.putIfAbsent(directory, it) == null) { "Concurrent local mirror commit" }
+    }
+
+    internal fun finishMirrorCommit(commit: MirrorCommit) {
+        mirrorCommits.remove(commit.directory, commit)
+    }
 
     private class Entry(val directory: String, val opened: SecurePreferencesStore.Opened)
 
@@ -16,7 +49,7 @@ internal object PreparedSecureStore {
         val entry = accepted ?: return null
         if (entry.directory != context.applicationInfo.dataDir) return null
         val prefs = entry.opened.preferences as? CheckedPreferences ?: return null
-        return if (runCatching { prefs.checkActive() }.isSuccess) entry.opened else {
+        return if (runCatching { prefs.checkActive(); prefs.revisionCurrent() }.getOrDefault(false)) entry.opened else {
             if (accepted === entry) accepted = null
             null
         }
@@ -32,6 +65,7 @@ internal object PreparedSecureStore {
 
     fun fresh(context: Context): SecurePreferencesStore.Opened {
         val directory = context.applicationInfo.dataDir
+        LocalVaultRecovery(context).refreshPreferenceCache()
         val before = selector(directory)
         val opened = SecurePreferencesStore.open(context, SecurePreferencesStore.MONICA)
         check(before == selector(directory)) { "Secure storage changed while opening" }
@@ -74,6 +108,70 @@ internal object PreparedSecureStore {
         }
     }
 
+    private data class RecoveryHeader(val generation: String?, val revision: String?, val revoked: String? = null)
+
+    /** Inspect only the publication header. Never wait for the recovery writer or read its
+     * encrypted snapshot on a foreground access check. Writers keep this header first. */
+    private fun recoveryHeader(directory: String): RecoveryHeader? {
+        val base = File(directory, "files/local-vault-recovery/recovery.json")
+        val backup = File(base.path + ".bak")
+        val file = if (backup.exists()) backup else base
+        if (!file.exists()) return null
+        val text = file.inputStream().use { input ->
+            val bytes = ByteArray(4096)
+            var count = 0
+            while (count < bytes.size) {
+                val n = input.read(bytes, count, bytes.size - count)
+                if (n < 0) break
+                count += n
+            }
+            require(count > 0) { "Empty recovery header" }
+            String(bytes, 0, count, Charsets.UTF_8)
+        }
+        return JsonReader(StringReader(text)).use { reader ->
+            var version: Int? = null
+            var rounds: Int? = null
+            var kdf: String? = null
+            var generation: String? = null
+            var revision: String? = null
+            var reason: String? = null
+            var snapshot = false
+            val names = mutableSetOf<String>()
+            reader.beginObject()
+            while (reader.hasNext()) {
+                val name = reader.nextName()
+                require(names.add(name)) { "Duplicate recovery header field" }
+                if (name == "snapshot") { snapshot = true; break }
+                when (name) {
+                    "version" -> version = reader.nextInt()
+                    "rounds" -> rounds = reader.nextInt()
+                    "kdf" -> kdf = reader.nextString()
+                    "generation" -> generation = reader.nextString()
+                    "revision" -> revision = reader.nextString()
+                    "reason" -> reason = reader.nextString()
+                    "salt", "credentials", "key" -> reader.nextString()
+                    else -> throw IllegalArgumentException("Unknown recovery header field")
+                }
+            }
+            if (version == 0) {
+                require(!snapshot && reason in setOf("explicit_reset", "credential_change_requires_enrollment"))
+                reader.endObject()
+                RecoveryHeader(null, null, reason)
+            } else {
+                require(snapshot && version in setOf(1, 2)) { "Unsupported recovery header" }
+                require(names.containsAll(setOf("salt", "credentials", "key", "generation")))
+                UUID.fromString(requireNotNull(generation))
+                if (version == 1) require(rounds == 600_000 && kdf == null)
+                else {
+                    require(PasswordKdf.fromMetadata(requireNotNull(kdf)).encoded != null)
+                    require(revision != null)
+                }
+                revision?.let(UUID::fromString)
+                RecoveryHeader(generation, revision)
+            }
+        }
+    }
+
     private class CheckedPreferences(
         val delegate: SharedPreferences,
         private val directory: String,
@@ -83,9 +181,47 @@ internal object PreparedSecureStore {
         private val keys = raw.getString(KEYSET, null)
         private val values = raw.getString(VALUES, null)
 
+        fun revisionCurrent(): Boolean {
+            val header = recoveryHeader(directory) ?: return delegate.getString(LocalVaultRecovery.REVISION, null) == null
+            val revision = delegate.getString(LocalVaultRecovery.REVISION, null)
+            val inFlight = mirrorCommits[directory]
+            return header.revoked != null || header.revision == revision ||
+                (inFlight != null && inFlight.oldRevision == revision && header.revision == inFlight.revision &&
+                    delegate.getString(LocalVaultRecovery.GENERATION, null) == inFlight.oldGeneration)
+        }
+
         fun checkActive() {
-            if (selectorAtOpen != selector(directory) || keys != raw.getString(KEYSET, null) ||
-                values != raw.getString(VALUES, null)) {
+            fun current(): Boolean = runCatching {
+                if (directory in pendingMirrors) return@runCatching false
+                val beforeRead = mirrorCommits[directory]
+                val generation = delegate.getString(LocalVaultRecovery.GENERATION, null)
+                val revision = delegate.getString(LocalVaultRecovery.REVISION, null)
+                val inFlight = (beforeRead ?: mirrorCommits[directory])?.takeIf {
+                    it.oldGeneration == generation && it.oldRevision == revision
+                }
+                val header = runCatching { recoveryHeader(directory) }
+                val credentialsCurrent = header.fold(onSuccess = { value ->
+                    when {
+                        value == null -> generation == null && revision == null
+                        value.revoked == "explicit_reset" -> !delegate.contains("master_password_hash")
+                        value.revoked == "credential_change_requires_enrollment" ->
+                            !delegate.contains(PasswordKdf.METADATA_KEY)
+                        // A settings revision is a write-conflict boundary, not a fresh
+                        // authentication requirement. Credential changes always change generation.
+                        else -> value.generation == generation ||
+                            (inFlight != null && value.generation == inFlight.generation && value.revision == inFlight.revision)
+                    }
+                }, onFailure = {
+                    // Older AtomicFile implementations may expose a partially written primary
+                    // during initial publication. Only this process's exact IO window qualifies.
+                    inFlight != null
+                })
+                selectorAtOpen == selector(directory) && keys == raw.getString(KEYSET, null) &&
+                    values == raw.getString(VALUES, null) && credentialsCurrent
+            }.getOrDefault(false)
+            // A commit may finish between the separate preference/header reads. One fresh
+            // bounded observation avoids treating that completed local publication as a lock.
+            if (!current() && !current()) {
                 invalidate()
                 SecurityManager.clearRuntimeUnlockCache()
                 SessionManager.markLocked()

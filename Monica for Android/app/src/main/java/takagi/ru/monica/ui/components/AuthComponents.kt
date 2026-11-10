@@ -17,9 +17,17 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicLong
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import takagi.ru.monica.R
 import takagi.ru.monica.security.MasterPasswordPolicy
 import takagi.ru.monica.security.SecurityManager
+import takagi.ru.monica.security.BoundedSecureDataRead
 import takagi.ru.monica.utils.BiometricAuthHelper
 
 private enum class PasswordVerificationBiometricAccessResult {
@@ -44,7 +52,8 @@ fun PasswordVerificationContent(
     onVerifyPassword: (String) -> Boolean,
     onSetPassword: (String) -> Boolean = { false },
     onSuccess: () -> Unit,
-    onForgotPassword: (() -> Unit)? = null
+    onForgotPassword: (() -> Unit)? = null,
+    passwordSecurityManager: SecurityManager? = null,
 ) {
     val context = LocalContext.current
     val activity = context as? FragmentActivity
@@ -57,6 +66,16 @@ fun PasswordVerificationContent(
     var confirmPasswordVisible by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
     var authenticationCompleted by remember { mutableStateOf(false) }
+    var passwordBusy by remember { mutableStateOf(false) }
+    var passwordForeground by remember { mutableStateOf(true) }
+    val passwordActive = remember { AtomicBoolean(true) }
+    val passwordRequest = remember { AtomicLong(0) }
+    val passwordScope = rememberCoroutineScope()
+    val passwordLifecycle = LocalLifecycleOwner.current.lifecycle
+    val passwordGeneration by SecurityManager.dataReadGeneration.collectAsState()
+    var passwordJob by remember { mutableStateOf<Job?>(null) }
+    var verificationAttempt by remember { mutableStateOf<SecurityManager.PasswordVerificationAttempt?>(null) }
+    var setupAttempt by remember { mutableStateOf<SecurityManager.LocalPasswordChangeAttempt?>(null) }
     
     // 内部状态，用于处理首次设置密码的确认流程
     var internalIsConfirming by remember { mutableStateOf(isConfirmingPassword) }
@@ -71,10 +90,54 @@ fun PasswordVerificationContent(
     val canUseBiometric = !isFirstTime && isBiometricAvailable && biometricEnabled
     var autoBiometricTried by remember { mutableStateOf(false) }
 
+    fun clearPasswordInputs() {
+        masterPassword = ""
+        confirmPassword = ""
+        passwordVisible = false
+        confirmPasswordVisible = false
+        internalIsConfirming = false
+    }
+
+    fun revokePasswordRequest() {
+        passwordRequest.incrementAndGet()
+        verificationAttempt?.cancel()
+        setupAttempt?.cancel()
+        verificationAttempt = null
+        setupAttempt = null
+        passwordJob?.cancel()
+        passwordJob = null
+        passwordBusy = false
+        clearPasswordInputs()
+    }
+
+    DisposableEffect(passwordLifecycle, passwordSecurityManager) {
+        if (passwordSecurityManager == null) return@DisposableEffect onDispose { }
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_PAUSE || event == Lifecycle.Event.ON_STOP) {
+                passwordActive.set(false)
+                passwordForeground = false
+                revokePasswordRequest()
+            } else if (event == Lifecycle.Event.ON_RESUME) {
+                passwordActive.set(true)
+                passwordForeground = true
+            }
+        }
+        passwordLifecycle.addObserver(observer)
+        onDispose {
+            passwordLifecycle.removeObserver(observer)
+            passwordActive.set(false)
+            revokePasswordRequest()
+        }
+    }
+    LaunchedEffect(passwordGeneration) {
+        if (passwordSecurityManager != null) revokePasswordRequest()
+    }
+
     fun completeAuthentication() {
         if (authenticationCompleted) return
+        if (passwordSecurityManager != null) revokePasswordRequest()
         if (persistVaultUnlockToSession) {
-            securityManager.value.markVaultAuthenticated()
+            (passwordSecurityManager ?: securityManager.value).markVaultAuthenticated()
         }
         authenticationCompleted = true
         keyboardController?.hide()
@@ -82,9 +145,43 @@ fun PasswordVerificationContent(
         onSuccess()
     }
 
-    fun canSubmitPassword(): Boolean = !authenticationCompleted &&
+    fun canSubmitPassword(): Boolean = !authenticationCompleted && !passwordBusy && passwordForeground &&
         (disablePasswordVerification ||
             (if (internalIsConfirming) confirmPassword else masterPassword).isNotEmpty())
+
+    fun submitManagedPassword(setup: Boolean) {
+        val manager = checkNotNull(passwordSecurityManager)
+        val submittedPassword = masterPassword
+        val request = passwordRequest.incrementAndGet()
+        val generation = SecurityManager.dataReadGeneration.value
+        val verifyAttempt = if (setup) null else SecurityManager.PasswordVerificationAttempt()
+        val createAttempt = if (setup) SecurityManager.LocalPasswordChangeAttempt() else null
+        verificationAttempt = verifyAttempt
+        setupAttempt = createAttempt
+        passwordBusy = true
+        clearPasswordInputs()
+        keyboardController?.hide()
+        fun isCurrent() = passwordActive.get() && passwordRequest.get() == request &&
+            manager.isDataReadCurrent(generation)
+        passwordJob = passwordScope.launch {
+            try {
+                val accepted = BoundedSecureDataRead.readChecked(isCurrent = ::isCurrent) {
+                    if (createAttempt != null) manager.setMasterPassword(submittedPassword, createAttempt) { ensureActive() }
+                    else manager.verifyMasterPassword(submittedPassword, checkNotNull(verifyAttempt)) { ensureActive() }
+                }
+                if (!isCurrent()) return@launch
+                if (accepted == true && (setup || verifyAttempt?.commit() == true)) completeAuthentication()
+                else errorMessage = context.getString(if (setup)
+                    R.string.local_password_protection_reset_failed else R.string.error_invalid_password)
+            } finally {
+                verifyAttempt?.cancel()
+                createAttempt?.cancel()
+                if (verificationAttempt === verifyAttempt) verificationAttempt = null
+                if (setupAttempt === createAttempt) setupAttempt = null
+                if (passwordRequest.get() == request) passwordBusy = false
+            }
+        }
+    }
 
     // The button and IME must use the same validation, including empty-input guards.
     fun submitPassword() {
@@ -112,11 +209,13 @@ fun PasswordVerificationContent(
                     internalIsConfirming = false
                     return
                 }
-                if (onSetPassword(masterPassword)) completeAuthentication()
+                if (passwordSecurityManager != null) submitManagedPassword(setup = true)
+                else if (onSetPassword(masterPassword)) completeAuthentication()
                 else errorMessage = context.getString(R.string.local_recovery_save_failed)
             }
         } else {
-            if (onVerifyPassword(masterPassword)) {
+            if (passwordSecurityManager != null) submitManagedPassword(setup = false)
+            else if (onVerifyPassword(masterPassword)) {
                 completeAuthentication()
             } else {
                 errorMessage = context.getString(R.string.error_invalid_password)
@@ -253,7 +352,7 @@ fun PasswordVerificationContent(
         Spacer(modifier = Modifier.height(32.dp))
         
         // Master Password Field
-        MasterPasswordTextField(
+        if (!passwordBusy && passwordForeground) MasterPasswordTextField(
             value = if (internalIsConfirming) confirmPassword else masterPassword,
             onValueChange = { input ->
                 if (internalIsConfirming) {
@@ -288,6 +387,7 @@ fun PasswordVerificationContent(
                 onNext = { submitPassword() },
                 onDone = { submitPassword() }
             ),
+            saveTextState = false,
         )
         
         // Error Message
@@ -308,6 +408,10 @@ fun PasswordVerificationContent(
             modifier = Modifier.fillMaxWidth(),
             enabled = canSubmitPassword()
         ) {
+            if (passwordBusy) {
+                CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp)
+                Spacer(Modifier.width(8.dp))
+            }
             Text(
                 text = when {
                     isFirstTime && !internalIsConfirming -> stringResource(R.string.set_up_password)
@@ -338,7 +442,8 @@ fun PasswordVerificationContent(
                         }
                     )
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                enabled = !passwordBusy
             ) {
                 Icon(
                     imageVector = Icons.Default.Fingerprint,
@@ -354,7 +459,11 @@ fun PasswordVerificationContent(
         if (!isFirstTime && onForgotPassword != null) {
             Spacer(modifier = Modifier.height(16.dp))
             TextButton(
-                onClick = onForgotPassword
+                onClick = {
+                    if (passwordSecurityManager != null) revokePasswordRequest()
+                    onForgotPassword()
+                },
+                enabled = !passwordBusy
             ) {
                 Text(
                     text = stringResource(R.string.forgot_password),

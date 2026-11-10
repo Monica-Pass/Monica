@@ -2,10 +2,15 @@ package takagi.ru.monica.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.LockOpen
+import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -18,8 +23,11 @@ import takagi.ru.monica.bitwarden.service.BitwardenSendDraftStore
 import takagi.ru.monica.bitwarden.service.SendAuthAction
 import takagi.ru.monica.data.bitwarden.BitwardenSend
 import takagi.ru.monica.ui.components.OutlinedTextField
+import takagi.ru.monica.ui.components.MonicaExposedChoiceMenu
+import takagi.ru.monica.ui.components.MonicaMenuChoice
 import takagi.ru.monica.ui.components.TemplateFormSection
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SendAuthenticationFields(
     existing: BitwardenSend?, mode: SendAuthAction, password: String,
@@ -37,21 +45,39 @@ internal fun SendAuthenticationFields(
                         modifier = Modifier.testTag("send_auth_remove_password"))
                 }
             } else {
+                var menuExpanded by remember(existing?.id, enabled) { mutableStateOf(false) }
                 val choices = buildList {
-                    if (existing != null) add(SendAuthAction.KEEP to R.string.bw_send_auth_unchanged)
-                    add(SendAuthAction.NONE to R.string.bw_send_auth_none)
-                    add(SendAuthAction.PASSWORD to R.string.bw_send_auth_password)
-                    add(SendAuthAction.EMAIL to R.string.bw_send_auth_email)
+                    if (existing != null) add(MonicaMenuChoice(SendAuthAction.KEEP,
+                        stringResource(R.string.bw_send_auth_unchanged), Icons.Default.Tune, enabled))
+                    add(MonicaMenuChoice(SendAuthAction.NONE,
+                        stringResource(R.string.bw_send_auth_none), Icons.Default.LockOpen, enabled))
+                    add(MonicaMenuChoice(SendAuthAction.PASSWORD,
+                        stringResource(R.string.bw_send_auth_password), Icons.Default.Lock, enabled))
+                    add(MonicaMenuChoice(SendAuthAction.EMAIL,
+                        stringResource(R.string.bw_send_auth_email), Icons.Default.Email, enabled && premium))
                 }
-                choices.forEach { (choice, label) ->
-                    OutlinedButton(onClick = { onMode(choice) },
-                        enabled = enabled && (choice != SendAuthAction.EMAIL || premium),
-                        modifier = Modifier.fillMaxWidth().testTag("send_auth_${choice.name.lowercase()}")) {
-                        RadioButton(selected = mode == choice, onClick = null,
-                            enabled = enabled && (choice != SendAuthAction.EMAIL || premium))
-                        Spacer(Modifier.width(8.dp))
-                        Text(stringResource(label), Modifier.weight(1f))
-                    }
+                val selected = choices.firstOrNull { it.value == mode }
+                ExposedDropdownMenuBox(
+                    expanded = menuExpanded,
+                    onExpandedChange = { if (enabled) menuExpanded = it },
+                ) {
+                    OutlinedTextField(
+                        value = selected?.label.orEmpty(), onValueChange = {},
+                        readOnly = true, enabled = enabled,
+                        leadingIcon = selected?.icon?.let { icon -> { Icon(icon, contentDescription = null) } },
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = menuExpanded) },
+                        modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, enabled = enabled)
+                            .fillMaxWidth().testTag("send_auth_selector"),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
+                    )
+                    MonicaExposedChoiceMenu(
+                        expanded = menuExpanded,
+                        onDismissRequest = { menuExpanded = false },
+                        choices = choices,
+                        selectedValue = mode,
+                        onSelect = onMode,
+                    )
                 }
                 if (!premium) Text(stringResource(R.string.bw_send_auth_premium),
                     style = MaterialTheme.typography.bodySmall)

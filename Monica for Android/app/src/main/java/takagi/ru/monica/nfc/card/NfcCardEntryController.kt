@@ -189,16 +189,6 @@ internal class NfcCardEntryController(private val activity: ComponentActivity) :
         }
     }
 
-    fun showScanHelp() {
-        state.value = Ui(message = when {
-            !admitted() -> R.string.nfc_card_unlock_retap
-            adapter == null -> R.string.nfc_card_unavailable
-            !adapter.isEnabled -> R.string.nfc_card_disabled
-            else -> R.string.nfc_card_scan_hint
-        })
-        updateReader()
-    }
-
     private fun scan(tag: Tag) {
         if (!admitted() || !focused || workerRunning.get() || pending != null) return
         val now = SystemClock.elapsedRealtime()
@@ -282,7 +272,7 @@ internal class NfcCardEntryController(private val activity: ComponentActivity) :
         if (awaitingNewEditor && target?.kind != NfcCardEditorKind.BANK) return
         when (nfcCardRouteDecision(target?.kind, otherEditorOpen() || target?.busy?.invoke() == true,
             target?.fields?.invoke()?.conflictsWith(value.card) == true, allowNew)) {
-            NfcCardRouteDecision.FILL -> { target?.fill?.invoke(value.card); clearPending(); state.value = Ui(message = R.string.nfc_card_ready) }
+            NfcCardRouteDecision.FILL -> { target?.fill?.invoke(value.card); clearPending(); state.value = Ui() }
             NfcCardRouteDecision.REPLACE -> { promptOwner = target?.owner; state.value = Ui(prompt = Prompt.REPLACE) }
             NfcCardRouteDecision.CONFIRM_NEW_CARD -> { promptOwner = target?.owner; state.value = Ui(prompt = Prompt.NEW_CARD) }
             NfcCardRouteDecision.NEW_CARD -> openNew()
@@ -296,7 +286,7 @@ internal class NfcCardEntryController(private val activity: ComponentActivity) :
         val target = editor
         if (target == null || target.owner !== promptOwner || target.busy()) { dismiss(); return }
         when (state.value.prompt) {
-            Prompt.REPLACE -> { target.fill(value.card); clearPending(); state.value = Ui(message = R.string.nfc_card_ready) }
+            Prompt.REPLACE -> { target.fill(value.card); clearPending(); state.value = Ui() }
             Prompt.NEW_CARD -> openNew()
             Prompt.NONE -> Unit
         }

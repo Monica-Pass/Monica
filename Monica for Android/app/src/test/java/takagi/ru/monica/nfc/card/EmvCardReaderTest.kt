@@ -53,9 +53,9 @@ class EmvCardReaderTest {
         conversation.complete()
     }
 
-    @Test fun pdolUsesDeclaredLengthsAndZeroTerminalDataWithoutTransactionAuthorization() {
-        val pdol = tlv(0x9F38, hex("9F66049F02069F3704"))
-        val expected = hex("80A8000010830E") + ByteArray(14) + hex("00")
+    @Test fun pdolDeclaresOnlyContactlessEmvAndKeepsAmountsAndUnknownDataZero() {
+        val pdol = tlv(0x9F38, hex("9F66049F0206DF01049F33039F7A01"))
+        val expected = hex("80A8000014831220000000") + ByteArray(14) + hex("00")
         val conversation = Dialogue(step(SELECT_PPSE, directory(VISA)), step(select(VISA), fci(VISA, pdol)),
             step(expected, gpoResponse()), step(READ_RECORD, tlv(0x70, pan(PAN_A))))
         assertTrue(bank(conversation.reader().read()).number == PAN_A)
@@ -83,7 +83,7 @@ class EmvCardReaderTest {
         assertTrue(result.number == PAN_B)
         assertEquals("Mastercard", result.scheme)
         conversation.complete()
-        assertEquals(7, conversation.commands.size)
+        assertEquals(1 + FALLBACK.size, conversation.commands.size)
         conversation.assertReadCommandsOnly()
     }
 
@@ -117,13 +117,13 @@ class EmvCardReaderTest {
         val twice = Dialogue(*(listOf(rawStep(SELECT_PPSE, "6C10"), rawStep(corrected, "6C10")) + rejectedFallback()).toTypedArray())
         assertSame(EmvCardReadResult.Unsupported, twice.reader().read())
         twice.complete()
-        assertEquals(8, twice.commands.size)
+        assertEquals(2 + FALLBACK.size, twice.commands.size)
         val chained = mutableListOf(rawStep(SELECT_PPSE, "6101"))
         repeat(4) { chained += rawStep(hex("00C0000001"), "6101") }
         val endless = Dialogue(*(chained + rejectedFallback()).toTypedArray())
         assertSame(EmvCardReadResult.Unsupported, endless.reader().read())
         endless.complete()
-        assertEquals(11, endless.commands.size)
+        assertEquals(5 + FALLBACK.size, endless.commands.size)
     }
 
     @Test fun refusedProcessingAndUnsuccessfulAdvertisedRecordReturnNoPartialCard() {
@@ -153,7 +153,7 @@ class EmvCardReaderTest {
         val oversize = Dialogue(Step(SELECT_PPSE, ByteArray(2051)))
         assertSame(EmvCardReadResult.Malformed, oversize.reader().read())
         oversize.complete()
-        listOf(hex("9F0281"), hex("9F66049F02"), hex("9F6600")).forEach { pdol ->
+        listOf(hex("9F0281"), hex("9F66049F02")).forEach { pdol ->
             val conversation = Dialogue(step(SELECT_PPSE, directory(VISA)), step(select(VISA), fci(VISA, tlv(0x9F38, pdol))))
             assertSame(EmvCardReadResult.Malformed, conversation.reader().read())
             conversation.complete()
@@ -271,7 +271,114 @@ class EmvCardReaderTest {
         conversation.complete()
     }
 
-    private class Step(val command: ByteArray, val response: ByteArray)
+    @Test fun unionPayProductsAndIssuerSuffixesUseFullAdvertisedAidAndDomesticPdol() {
+        for (aid in listOf("A000000333010101", "A000000333010102", "A000000333010103", "A0000003330101010101")) {
+            val selected = hex(aid)
+            val pdol = tlv(0x9F38, hex("9F66049F1A025F2A029F02069F03069F7A01"))
+            val expected = hex("80A800001783152000000001560156") + ByteArray(13) + hex("00")
+            val conversation = Dialogue(step(SELECT_PPSE, directory(selected)), step(select(selected), fci(selected, pdol)),
+                step(expected, gpoResponse()), step(READ_RECORD, tlv(0x70, pan(PAN_UNIONPAY) + tlv(0x5F24, hex("300131")))))
+            val card = bank(conversation.reader().read())
+            assertEquals(PAN_UNIONPAY, card.number)
+            assertEquals("UnionPay", card.scheme)
+            assertEquals(2030, card.expiryYear)
+            conversation.complete()
+            conversation.assertReadCommandsOnly()
+        }
+    }
+
+    @Test fun noDirectoryStillTriesDiscoverAndAdditionalUnionPayProduct() {
+        for (target in listOf(hex("A000000333010103"), hex("A0000001523010"))) {
+            val conversation = Dialogue(*(listOf(rawStep(SELECT_PPSE, "6A82")) + FALLBACK.map { aid ->
+                if (aid.contentEquals(target)) step(select(aid), fci(aid, pan(PAN_A))) else rawStep(select(aid), "6A82")
+            }).toTypedArray())
+            assertEquals(PAN_A, bank(conversation.reader().read()).number)
+            conversation.complete()
+            conversation.assertReadCommandsOnly()
+        }
+    }
+
+    @Test fun unionPayLuhnExceptionRequiresVerifiedUnionPayApplicationAndConsistentPan() {
+        val nonLuhn = "6200000000000000"
+        val union = hex("A000000333010101")
+        val accepted = Dialogue(step(SELECT_PPSE, directory(union)), step(select(union), fci(union, pan(nonLuhn))))
+        assertEquals(nonLuhn, bank(accepted.reader().read()).number)
+        accepted.complete()
+        val visa = Dialogue(step(SELECT_PPSE, directory(VISA)), step(select(VISA), fci(VISA, pan(nonLuhn))))
+        assertSame(EmvCardReadResult.Malformed, visa.reader().read())
+        visa.complete()
+        val tooShort = Dialogue(step(SELECT_PPSE, directory(union)), step(select(union), fci(union, pan("62000000000000"))))
+        assertSame(EmvCardReadResult.Malformed, tooShort.reader().read())
+        tooShort.complete()
+        val conflicts = Dialogue(step(SELECT_PPSE, directory(union)),
+            step(select(union), fci(union, pan(nonLuhn) + tlv(0x57, track(PAN_UNIONPAY)))))
+        assertSame(EmvCardReadResult.ConflictingData, conflicts.reader().read())
+        conflicts.complete()
+    }
+
+    @Test fun pdolNumericPaddingAndZeroLengthEntriesFollowDeclaredOffsets() {
+        val aid = hex("A000000333010101")
+        val pdol = tlv(0x9F38, hex("9F66009F1A015F2A039F6606DF0101"))
+        val expected = hex("80A800000D830B560001562000000000000000")
+        val conversation = Dialogue(step(SELECT_PPSE, directory(aid)), step(select(aid), fci(aid, pdol)),
+            step(expected, gpoResponse()), step(READ_RECORD, tlv(0x70, pan(PAN_UNIONPAY))))
+        assertEquals(PAN_UNIONPAY, bank(conversation.reader().read()).number)
+        conversation.complete()
+    }
+
+    @Test fun requestedDateTimeAndUnpredictableNumberAreBoundedAndNotEmptyPlaceholders() {
+        val pdol = tlv(0x9F38, hex("9A039F21039F3704"))
+        val conversation = Dialogue(step(SELECT_PPSE, directory(VISA)), step(select(VISA), fci(VISA, pdol)),
+            Step(byteArrayOf(), gpoResponse() + hex("9000")) { command ->
+                assertEquals(18, command.size)
+                assertArrayEquals(hex("80A800000C830A"), command.copyOfRange(0, 7))
+                val digits = command.copyOfRange(7, 13).map { (it.toInt() and 255).let { value ->
+                    assertTrue(value shr 4 <= 9 && value and 15 <= 9)
+                    (value shr 4) * 10 + (value and 15)
+                } }
+                assertTrue(digits[1] in 1..12 && digits[2] in 1..31)
+                assertTrue(digits[3] in 0..23 && digits[4] in 0..59 && digits[5] in 0..59)
+                assertEquals(0, command.last().toInt())
+            }, step(READ_RECORD, tlv(0x70, pan(PAN_A))))
+        assertEquals(PAN_A, bank(conversation.reader().read()).number)
+        conversation.complete()
+    }
+
+    @Test fun trackOneReturnsOnlyPanNameAndExpiryIncludingWithoutStartSentinel() {
+        for (prefix in listOf("%B", "B")) {
+            val record = tlv(0x70, tlv(0x56, (prefix + PAN_A + "^SYNTHETIC/HOLDER^29122010000000?").toByteArray()))
+            val conversation = standard(record)
+            val card = bank(conversation.reader().read())
+            assertEquals(PAN_A, card.number)
+            assertEquals("SYNTHETIC/HOLDER", card.holder)
+            assertEquals(12, card.expiryMonth)
+            assertEquals(2029, card.expiryYear)
+            conversation.complete()
+            assertTrue(conversation.responses.all { bytes -> bytes.all { it == 0.toByte() } })
+        }
+    }
+
+    @Test fun malformedOrConflictingTrackOneNeverProvidesAPartialCard() {
+        for (value in listOf("B${PAN_A}^NAME^2912", "B${PAN_A}^NAME^2912X01", "B${PAN_A}^NAME^2912201?EXTRA")) {
+            val conversation = standard(tlv(0x70, tlv(0x56, value.toByteArray())))
+            assertSame(EmvCardReadResult.Malformed, conversation.reader().read())
+            conversation.complete()
+        }
+        val conflict = standard(tlv(0x70, pan(PAN_A) + tlv(0x56, "B${PAN_B}^NAME^2912201?".toByteArray())))
+        assertSame(EmvCardReadResult.ConflictingData, conflict.reader().read())
+        conflict.complete()
+    }
+
+    @Test fun excessApplicationDirectoryIsRejectedAndDuplicateAidIsReadOnce() {
+        val tooMany = Dialogue(step(SELECT_PPSE, directory(*(1..13).map { hex("A0000003330101") + byteArrayOf(it.toByte()) }.toTypedArray())))
+        assertSame(EmvCardReadResult.Malformed, tooMany.reader().read())
+        tooMany.complete()
+        val duplicate = Dialogue(step(SELECT_PPSE, directory(VISA, VISA)), step(select(VISA), fci(VISA, pan(PAN_A))))
+        assertEquals(PAN_A, bank(duplicate.reader().read()).number)
+        duplicate.complete()
+    }
+
+    private class Step(val command: ByteArray, val response: ByteArray, val check: ((ByteArray) -> Unit)? = null)
     private class Dialogue(vararg steps: Step) {
         private val expected = steps.toList()
         val commands = mutableListOf<ByteArray>()
@@ -279,7 +386,8 @@ class EmvCardReaderTest {
         fun reader(allowGpo: Boolean = true, check: () -> Unit = {}) = EmvCardReader(EmvCardChannel { command ->
             assertTrue("Reader exceeded the synthetic APDU plan", commands.size < expected.size)
             val step = expected[commands.size]
-            assertTrue("Unexpected read command", step.command.contentEquals(command))
+            if (step.check != null) step.check.invoke(command)
+            else assertTrue("Unexpected read command", step.command.contentEquals(command))
             commands += command.copyOf()
             step.response.copyOf().also(responses::add)
         }, checkCurrent = check, allowGpo = allowGpo)
@@ -323,9 +431,12 @@ class EmvCardReaderTest {
     private companion object {
         const val PAN_A = "4111111111111111"
         const val PAN_B = "5555555555554444"
+        const val PAN_UNIONPAY = "6200000000000005"
         val VISA = hex("A0000000031010")
         val MASTERCARD = hex("A0000000041010")
-        val FALLBACK = listOf(VISA, MASTERCARD, hex("A000000333010101"), hex("A000000333010102"), hex("A00000002501"), hex("A0000000651010"))
+        val FALLBACK = listOf(VISA, MASTERCARD, hex("A000000333010101"), hex("A000000333010102"),
+            hex("A000000333010103"), hex("A00000002501"), hex("A0000000651010"),
+            hex("A0000000032010"), hex("A0000000043060"), hex("A0000001523010"))
         val AFL = hex("08010100")
         val SELECT_PPSE = select("2PAY.SYS.DDF01".toByteArray())
         val EMPTY_GPO = hex("80A8000002830000")

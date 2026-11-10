@@ -232,43 +232,28 @@ fun ForgotPasswordScreen(
     
     // Confirmation Dialog with Password Input
     if (showConfirmDialog) {
-        var passwordInput by remember { mutableStateOf("") }
-        var passwordError by remember { mutableStateOf(false) }
-
-        M3IdentityVerifyDialog(
+        val manager = remember(context) { takagi.ru.monica.security.SecurityManager(context) }
+        takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog(
+            manager = manager,
             title = context.getString(R.string.forgot_password_confirm),
             message = context.getString(R.string.forgot_password_warning),
-            passwordValue = passwordInput,
-            onPasswordChange = {
-                passwordInput = it
-                passwordError = false
-            },
-            onDismiss = { showConfirmDialog = false },
-            onConfirm = {
-                if (viewModel.verifyMasterPassword(passwordInput)) {
-                    showConfirmDialog = false
-                    isResetting = true
-
-                    viewModel.resetAllData(
-                        clearPasswords = clearPasswords,
-                        clearTotp = clearAuthenticators,
-                        clearDocuments = clearDocuments,
-                        clearBankCards = clearBankCards,
-                        clearGeneratorHistory = clearGeneratorHistory
-                    )
-
-                    isResetting = false
-                    onResetComplete()
-                } else {
-                    passwordError = true
-                }
-            },
             confirmText = context.getString(R.string.reset_all_data),
             destructiveConfirm = true,
-            isPasswordError = passwordError,
-            passwordErrorText = context.getString(R.string.error_invalid_password),
-            onBiometricClick = null,
-            biometricHintText = context.getString(R.string.biometric_not_available)
+            isRequestCurrent = { showConfirmDialog && !isResetting },
+            onDismiss = { showConfirmDialog = false },
+            onSuccess = {
+                showConfirmDialog = false
+                isResetting = true
+                viewModel.resetAllData(
+                    clearPasswords = clearPasswords,
+                    clearTotp = clearAuthenticators,
+                    clearDocuments = clearDocuments,
+                    clearBankCards = clearBankCards,
+                    clearGeneratorHistory = clearGeneratorHistory,
+                )
+                isResetting = false
+                onResetComplete()
+            },
         )
     }
 }

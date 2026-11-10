@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application>
+        <service android:name="takagi.ru.monica.security.LocalKdfProcessTestService"
+            android:exported="false" android:process=":ime" />
         <activity android:name="takagi.ru.monica.suggestions.CommonInfoTestActivity" android:exported="false" />
         <activity android:name="takagi.ru.monica.credentialexchange.CxfImportTestActivity" android:exported="false" />
         <activity android:name="takagi.ru.monica.ui.screens.DefaultManagerTestActivity" android:exported="false" />

@@ -56,6 +56,13 @@ private class PendingDatabaseExport(
     val jsonRequest: BitwardenJsonExportRequest? = null,
 )
 
+private class SteamExportVerificationRequest(
+    val source: ImportDestination,
+    val option: ExportOption,
+    val ids: Set<Long>,
+    val generation: Long,
+)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExportDataScreen(
@@ -95,6 +102,9 @@ fun ExportDataScreen(
     var loadingSteam by remember { mutableStateOf(false) }
     var showSteamRisk by remember { mutableStateOf(false) }
     var showSteamIdentity by remember { mutableStateOf(false) }
+    var steamIdentityRequest by remember { mutableStateOf<SteamExportVerificationRequest?>(null) }
+    var steamBiometric by remember { mutableStateOf<takagi.ru.monica.utils.BiometricAuthHelper?>(null) }
+    val steamLockGeneration by SecurityManager.dataReadGeneration.collectAsState()
     var identityPassword by remember { mutableStateOf("") }
     var identityError by remember { mutableStateOf(false) }
     var showJsonIdentity by remember { mutableStateOf(false) }
@@ -107,6 +117,29 @@ fun ExportDataScreen(
     val jsonOption = option == ExportOption.BITWARDEN_JSON || option == ExportOption.BITWARDEN_JSON_ENCRYPTED
     val jsonUnlocked by SessionManager.isUnlocked.collectAsState()
     val jsonLockGeneration by SessionManager.lockGeneration.collectAsState()
+    fun currentSteam(request: SteamExportVerificationRequest): Boolean {
+        val activeJob = DatabaseExportJobs.state.value
+        val exportJob = activeJob?.takeIf { it.kind == DataTaskKind.EXPORT }
+        return jsonAlive.get() && steamIdentityRequest === request && showSteamIdentity &&
+            request.source.key == (exportJob?.sourceKey ?: sourceKey) &&
+            request.option.name == (exportJob?.formatKey ?: formatKey) &&
+            request.ids == selectedSteamIds && activeJob?.status != ExportJobStatus.RUNNING &&
+            SecurityManager.dataReadGeneration.value == request.generation &&
+            jsonLifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) &&
+            context.getSystemService(android.os.PowerManager::class.java)?.isInteractive == true &&
+            context.getSystemService(android.app.KeyguardManager::class.java)?.isKeyguardLocked == false
+    }
+    fun cancelSteamIdentity() {
+        val prompt = steamBiometric
+        steamBiometric = null
+        steamIdentityRequest = null
+        showSteamIdentity = false
+        identityPassword = ""
+        prompt?.cancelAuthentication()
+    }
+    LaunchedEffect(source.key, option.name, selectedSteamIds, steamLockGeneration) {
+        steamIdentityRequest?.let { if (!currentSteam(it)) cancelSteamIdentity() }
+    }
     fun currentJson(request: BitwardenJsonExportRequest, foreground: Boolean = true): Boolean {
         val activeJob = DatabaseExportJobs.state.value
         val exportJob = activeJob?.takeIf { it.kind == DataTaskKind.EXPORT }
@@ -142,12 +175,13 @@ fun ExportDataScreen(
     }
     DisposableEffect(jsonLifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_PAUSE || event == Lifecycle.Event.ON_STOP) cancelSteamIdentity()
             if (event == Lifecycle.Event.ON_STOP) cancelJson(preservePicker = true)
         }
         jsonLifecycleOwner.lifecycle.addObserver(observer)
         onDispose {
             jsonLifecycleOwner.lifecycle.removeObserver(observer)
-            jsonAlive.set(false); cancelJson()
+            jsonAlive.set(false); cancelSteamIdentity(); cancelJson()
         }
     }
     val security = remember { SecurityManager(context) }
@@ -233,6 +267,11 @@ fun ExportDataScreen(
             scope.launch { snackbar.showSnackbar(if (expectedJson != null) context.getString(R.string.bw_json_reason_unavailable) else context.getString(R.string.error_launch_export, error.message.orEmpty())) }
         }
         password = ""; confirmation = ""
+    }
+    fun verifiedSteam(request: SteamExportVerificationRequest) {
+        if (!currentSteam(request)) return
+        cancelSteamIdentity()
+        chooseLocation()
     }
     fun verifiedJson(request: BitwardenJsonExportRequest) {
         if (!currentJson(request) || !showJsonIdentity || !request.authenticated()) return
@@ -357,6 +396,8 @@ fun ExportDataScreen(
                     color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 4.dp))
                 ExportScopeToggle(stringResource(R.string.transfer_encrypt_backup), encrypt, 0, 1,
                     enabled = !preferences.includePasskeys && !preferences.includeImages && !preferences.includeWebDavConfig) { encrypt = it }
+                if (encrypt) BackupEncryptionFormatSelector(preferences.encryptionFormat,
+                    onFormatChange = { preferences = preferences.copy(encryptionFormat = it) })
                 Text(stringResource(R.string.transfer_encryption_hint), style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 4.dp))
             }
@@ -401,17 +442,14 @@ fun ExportDataScreen(
         })
     if (showJsonIdentity) {
     val request = jsonRequest
-    if (request != null) M3IdentityVerifyDialog(
-        savePasswordTextState = false,
+    if (request != null) takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog(
+        manager = security,
         title = stringResource(R.string.verify_identity), message = stringResource(R.string.bw_json_boundary),
-        passwordValue = identityPassword, onPasswordChange = { identityPassword = it; identityError = false },
+        confirmText = stringResource(R.string.start_export),
+        requirePassword = security.isMasterPasswordSet(),
+        isRequestCurrent = { showJsonIdentity && currentJson(request) },
         onDismiss = { cancelJson() },
-        onConfirm = {
-            if (!security.isMasterPasswordSet() || security.verifyMasterPassword(identityPassword)) verifiedJson(request)
-            else identityError = true
-        }, confirmText = stringResource(R.string.start_export),
-        confirmEnabled = !security.isMasterPasswordSet() || identityPassword.isNotBlank(), destructiveConfirm = false,
-        isPasswordError = identityError, passwordErrorText = stringResource(R.string.current_password_incorrect),
+        onSuccess = { verifiedJson(request) },
         onBiometricClick = if (context is FragmentActivity && biometricEnabled && biometric.isBiometricAvailable()) ({
             biometric.authenticate(context, context.getString(R.string.verify_identity), context.getString(R.string.bw_json_title),
                 onSuccess = { verifiedJson(request) }, onError = { if (currentJson(request)) scope.launch { snackbar.showSnackbar(it) } }, onFailed = {})
@@ -421,25 +459,42 @@ fun ExportDataScreen(
     if (showSteamRisk) AlertDialog(onDismissRequest = { showSteamRisk = false },
         title = { Text(stringResource(R.string.steam_mafile_export_confirm_title)) },
         text = { Text(stringResource(R.string.steam_mafile_export_confirm_message, selectedSteamIds.size)) },
-        confirmButton = { TextButton(onClick = { showSteamRisk = false; showSteamIdentity = true }) { Text(stringResource(R.string.confirm)) } },
+        confirmButton = { TextButton(onClick = {
+            showSteamRisk = false
+            cancelSteamIdentity()
+            steamIdentityRequest = SteamExportVerificationRequest(source, option, selectedSteamIds.toSet(), SecurityManager.dataReadGeneration.value)
+            showSteamIdentity = true
+        }) { Text(stringResource(R.string.confirm)) } },
         dismissButton = { TextButton(onClick = { showSteamRisk = false }) { Text(stringResource(R.string.cancel)) } })
-    if (showSteamIdentity) M3IdentityVerifyDialog(
-        title = stringResource(R.string.verify_identity), message = stringResource(R.string.steam_mafile_export_verify_message),
-        passwordValue = identityPassword, onPasswordChange = { identityPassword = it; identityError = false },
-        onDismiss = { showSteamIdentity = false; identityPassword = "" },
-        onConfirm = {
-            if (!security.isMasterPasswordSet() || security.verifyMasterPassword(identityPassword)) {
-                showSteamIdentity = false; identityPassword = ""; chooseLocation()
-            } else identityError = true
-        }, confirmText = stringResource(R.string.start_export),
-        confirmEnabled = !security.isMasterPasswordSet() || identityPassword.isNotBlank(), destructiveConfirm = false,
-        isPasswordError = identityError, passwordErrorText = stringResource(R.string.current_password_incorrect),
-        onBiometricClick = if (context is FragmentActivity && biometricEnabled && biometric.isBiometricAvailable()) ({
-            biometric.authenticate(context, context.getString(R.string.verify_identity), context.getString(R.string.steam_mafile_export_verify_subtitle),
-                onSuccess = { showSteamIdentity = false; identityPassword = ""; chooseLocation() },
-                onError = { scope.launch { snackbar.showSnackbar(it) } }, onFailed = {})
-        }) else null,
-    )
+    val steamRequest = steamIdentityRequest
+    if (showSteamIdentity && steamRequest != null) key(steamRequest) {
+        takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog(
+            manager = security,
+            title = stringResource(R.string.verify_identity), message = stringResource(R.string.steam_mafile_export_verify_message),
+            confirmText = stringResource(R.string.start_export),
+            requirePassword = security.isMasterPasswordSet(),
+            isRequestCurrent = { currentSteam(steamRequest) },
+            onDismiss = ::cancelSteamIdentity,
+            onSuccess = { verifiedSteam(steamRequest) },
+            onBiometricClick = if (context is FragmentActivity && biometricEnabled && biometric.isBiometricAvailable()) ({
+                if (currentSteam(steamRequest)) {
+                    steamBiometric?.cancelAuthentication()
+                    val prompt = takagi.ru.monica.utils.BiometricAuthHelper(context)
+                    steamBiometric = prompt
+                    prompt.authenticate(context, context.getString(R.string.verify_identity), context.getString(R.string.steam_mafile_export_verify_subtitle),
+                        onSuccess = { if (steamBiometric === prompt) verifiedSteam(steamRequest) },
+                        onError = { _, message ->
+                            if (steamBiometric === prompt && currentSteam(steamRequest)) {
+                                steamBiometric = null
+                                scope.launch { snackbar.showSnackbar(message) }
+                            }
+                        },
+                        onCancel = { if (steamBiometric === prompt) steamBiometric = null },
+                    )
+                }
+            }) else null,
+        )
+    }
 }
 
 @Composable

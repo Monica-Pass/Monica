@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="nfc_card_scan_title">NFC-Karte lesen</string>
-    <string name="nfc_card_scan_hint">Halten Sie die Karte an die NFC-Antenne Ihres Telefons. Einige kontaktlose Bankkarten werden unterstützt.</string>
-    <string name="nfc_card_scanning">Karte wird gelesen…</string>
-    <string name="nfc_card_unavailable">Dieses Gerät unterstützt kein NFC.</string>
-    <string name="nfc_card_disabled">Aktivieren Sie zuerst NFC in den Systemeinstellungen.</string>
     <string name="nfc_card_unlock_retap">Entsperren Sie Monica und halten Sie die Karte erneut an das Telefon.</string>
-    <string name="nfc_card_unsupported">Diese Karte enthält keine lesbare Bankkartennummer. Geschützte Ausweise werden nicht unterstützt; die Chip-UID ist keine Kartennummer.</string>
+    <string name="nfc_card_unsupported">Es konnte keine verwendbare Bankkartennummer gelesen werden. Halten Sie die Karte weiter ans Telefon und versuchen Sie es erneut. Manche Karten geben diese Informationen nicht frei.</string>
     <string name="nfc_card_read_failed">Die Karte konnte nicht gelesen werden. Halten Sie sie nah an das Telefon und versuchen Sie es erneut.</string>
     <string name="nfc_card_new_title">Bankkarte erstellen?</string>
     <string name="nfc_card_new_message">Eine Bankkarte wurde gelesen, aber diese Seite ist für einen anderen Eintragstyp. Eine neue Bankkartenseite öffnen? Ihr aktueller Inhalt bleibt erhalten.</string>
     <string name="nfc_card_replace_title">Vorhandene Kartendaten ersetzen?</string>
     <string name="nfc_card_replace_message">Die gelesenen Daten unterscheiden sich vom Formular. Nur die von der Karte bereitgestellte Kartennummer, das Ablaufdatum und die Karteninhaberdaten werden ersetzt. Andere Inhalte bleiben erhalten.</string>
-    <string name="nfc_card_type_hint">Kartendaten wurden gelesen. NFC kann Kredit-, Debit- und Prepaidkarten nicht zuverlässig unterscheiden. Bitte bestätigen Sie den Typ.</string>
-    <string name="nfc_card_ready">Gelesene Kartendaten eingefügt. Prüfen Sie sie vor dem Speichern.</string>
     <string name="nfc_card_busy">Schließen Sie den aktuellen Vorgang ab, bevor Sie eine Karte lesen.</string>
     <string name="nfc_card_new_action">Neue Karte öffnen</string>
     <string name="nfc_card_replace_action">Ersetzen</string>

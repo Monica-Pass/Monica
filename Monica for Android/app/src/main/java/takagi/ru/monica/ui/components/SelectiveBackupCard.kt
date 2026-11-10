@@ -120,7 +120,8 @@ fun SelectiveBackupCard(
                                 includeGeneratorHistory = true,
                                 includeTimeline = true,
                                 includeTrash = true,
-                                includeLocalKeePass = localKeePassCount > 0
+                                includeLocalKeePass = localKeePassCount > 0,
+                                encryptionFormat = preferences.encryptionFormat
                             )
                         )
                     }) { Text(stringResource(R.string.select_all)) }
@@ -138,7 +139,8 @@ fun SelectiveBackupCard(
                                 includeGeneratorHistory = false,
                                 includeTimeline = false,
                                 includeTrash = false,
-                                includeLocalKeePass = false
+                                includeLocalKeePass = false,
+                                encryptionFormat = preferences.encryptionFormat
                             )
                         )
                     }) { Text(stringResource(R.string.deselect_all)) }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_kdf_title">加密备份格式</string>
+    <string name="backup_kdf_compatible">兼容 V1 · 100000 次派生</string>
+    <string name="backup_kdf_enhanced">增强 V2 · 600000 次派生</string>
+    <string name="backup_kdf_scope">仅影响新生成的加密 ZIP 备份，已有备份保持原样。</string>
+    <string name="backup_kdf_compatibility_warning">V2 需要接收端支持。旧版扩展或桌面客户端可能无法恢复，请保留旧备份。</string>
+</resources>

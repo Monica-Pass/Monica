@@ -39,6 +39,59 @@ class LocalVaultRecoveryInstrumentedTest {
         val manager: SecurityManager
         init { SecurityManager.clearRuntimeUnlockCache(); manager = SecurityManager(context) }
         fun enroll() { assertTrue(manager.setMasterPassword(password)) }
+        fun enrollLegacy() {
+            fun random(size: Int) = ByteArray(size).also(java.security.SecureRandom()::nextBytes)
+            fun hex(bytes: ByteArray) = bytes.joinToString("") { "%02x".format(it) }
+            fun encode(bytes: ByteArray) = Base64.encodeToString(bytes, Base64.NO_WRAP)
+            fun derive(salt: ByteArray, rounds: Int): ByteArray {
+                val spec = javax.crypto.spec.PBEKeySpec(password.toCharArray(), salt, rounds, 256)
+                return try { javax.crypto.SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256").generateSecret(spec).encoded }
+                finally { spec.clearPassword() }
+            }
+            fun seal(key: ByteArray, plain: ByteArray, aad: String? = null): String {
+                val cipher = Cipher.getInstance("AES/GCM/NoPadding")
+                cipher.init(Cipher.ENCRYPT_MODE, javax.crypto.spec.SecretKeySpec(key, "AES"))
+                aad?.let { cipher.updateAAD(it.toByteArray(Charsets.UTF_8)) }
+                return encode(cipher.iv + cipher.doFinal(plain))
+            }
+            val salt = random(16)
+            val wrapSalt = random(32)
+            val recoverySalt = random(32)
+            val verifier = derive(salt, 100_000)
+            val wrapKey = derive(wrapSalt, 100_000)
+            val recoveryPasswordKey = derive(recoverySalt, 600_000)
+            val mdk = random(32)
+            val recoveryKey = random(32)
+            try {
+                val values = linkedMapOf<String, Any>(
+                    "master_password_hash" to hex(verifier), "master_password_salt" to hex(salt),
+                    "mdk_password_blob" to seal(wrapKey, mdk), "mdk_password_salt" to hex(wrapSalt),
+                    "mdk_ready" to true,
+                )
+                val fields = listOf("master_password_hash", "master_password_salt", "mdk_password_blob", "mdk_password_salt")
+                val fingerprint = encode(java.security.MessageDigest.getInstance("SHA-256")
+                    .digest(org.json.JSONArray(fields.map { values[it] }).toString().toByteArray(Charsets.UTF_8)))
+                val generation = UUID.randomUUID().toString()
+                val snapshot = org.json.JSONObject()
+                values.forEach { (name, value) -> snapshot.put(name, org.json.JSONObject()
+                    .put("t", if (value is Boolean) "b" else "s").put("v", value)) }
+                val doc = org.json.JSONObject().put("version", 1).put("rounds", 600_000)
+                    .put("salt", encode(recoverySalt)).put("generation", generation).put("credentials", fingerprint)
+                    .put("key", seal(recoveryPasswordKey, recoveryKey, "monica-recovery-key:$generation"))
+                    .put("snapshot", seal(recoveryKey, snapshot.toString().toByteArray(Charsets.UTF_8),
+                        "monica-recovery-prefs:$generation:$fingerprint"))
+                check(envelope.parentFile!!.isDirectory || envelope.parentFile!!.mkdirs())
+                envelope.writeText(doc.toString())
+                val legacy = SecurePreferencesStore.openRaw(context, SecurePreferencesStore.MONICA,
+                    MasterKey.DEFAULT_MASTER_KEY_ALIAS).preferences
+                val editor = legacy.edit()
+                values.forEach { (name, value) -> LocalVaultRecovery.put(editor, name, value) }
+                assertTrue(editor.putString(LocalVaultRecovery.KEY, encode(recoveryKey))
+                    .putString(LocalVaultRecovery.GENERATION, generation).commit())
+            } finally {
+                verifier.fill(0); wrapKey.fill(0); recoveryPasswordKey.fill(0); mdk.fill(0); recoveryKey.fill(0)
+            }
+        }
         val raw get() = context.getSharedPreferences(SecurePreferencesStore.MONICA, Context.MODE_PRIVATE)
         val envelope get() = File(root, "files/local-vault-recovery/recovery.json")
         fun damageOriginal() {
@@ -155,7 +208,7 @@ class LocalVaultRecoveryInstrumentedTest {
 
     @Test fun changingPasswordInLegacyClientRevokesStaleRecoveryUntilPasswordUnlock() {
         Fixture().use { f ->
-            f.enroll()
+            f.enrollLegacy()
             val legacy = SecurePreferencesStore.openRaw(f.context, SecurePreferencesStore.MONICA, MasterKey.DEFAULT_MASTER_KEY_ALIAS).preferences
             // Model a legacy credential edit without corrupting the actual verifier.
             val blob = legacy.getString("mdk_password_blob", null)!!
@@ -237,7 +290,8 @@ class LocalVaultRecoveryInstrumentedTest {
 
     @Test fun failedRecoveryWriteDoesNotSetInitialPassword() {
         Fixture().use { f ->
-            File(f.root, "files").writeText("fixture prevents directory creation")
+            // API 32/35 AtomicFile stages here; the lock directory already exists after open.
+            assertTrue(File(f.envelope.path + ".new").mkdir())
             assertFalse(f.manager.setMasterPassword(f.password))
             assertFalse(f.manager.isMasterPasswordSet())
             assertFalse(f.manager.isVaultRuntimeUnlocked())

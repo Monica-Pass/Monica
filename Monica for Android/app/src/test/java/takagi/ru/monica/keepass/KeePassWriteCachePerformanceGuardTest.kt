@@ -158,10 +158,14 @@ class KeePassWriteCachePerformanceGuardTest {
 
     @Test
     fun `entry counting uses an iterative traversal for deeply nested databases`() {
-        val source = serviceSource()
-        val countBody = source
-            .substringAfter("private fun countEntries(group: Group): Int")
-            .substringBefore("private fun cleanupUnreferencedInternalKeyFile(")
+        val source = projectFile(
+            "app/src/main/java/takagi/ru/monica/keepass/KeePassTreeNavigation.kt",
+        ).readText()
+        val start = "fun countEntries(group: Group): Int"
+        val end = "fun collectEntriesInGroupPath("
+        assertTrue(source.contains(start))
+        assertTrue(source.substringAfter(start).contains(end))
+        val countBody = source.substringAfter(start).substringBefore(end)
 
         assertTrue(countBody.contains("ArrayDeque<Group>()"))
         assertFalse(countBody.contains("sumOf(::countEntries)"))
@@ -170,13 +174,30 @@ class KeePassWriteCachePerformanceGuardTest {
     @Test
     fun `field reference checks traverse entries lazily without a temporary complete list`() {
         val source = serviceSource()
-        val resolutionBody = source
-            .substringAfter("private fun buildResolutionContext(")
-            .substringBefore("private fun buildGroupTraversalContextIndex(")
+        val start = "private fun buildResolutionContext("
+        val end = "private fun containsReferenceToken("
+        assertTrue(source.contains(start))
+        assertTrue(source.substringAfter(start).contains(end))
+        val resolutionBody = source.substringAfter(start).substringBefore(end)
 
         assertTrue(resolutionBody.contains("entrySequence(keePassDatabase.content.group)"))
         assertFalse(resolutionBody.contains("mutableListOf<Entry>()"))
-        assertFalse(source.contains("private fun collectEntries(group: Group, entries: MutableList<Entry>)"))
+        val navigation = projectFile(
+            "app/src/main/java/takagi/ru/monica/keepass/KeePassTreeNavigation.kt",
+        ).readText()
+        val sequenceStart = "fun entrySequence(group: Group): Sequence<Entry>"
+        val sequenceEnd = "fun buildGroupTraversalContextIndex("
+        assertTrue(navigation.contains(sequenceStart))
+        assertTrue(navigation.substringAfter(sequenceStart).contains(sequenceEnd))
+        val sequenceBody = navigation.substringAfter(sequenceStart).substringBefore(sequenceEnd)
+        assertFalse(sequenceBody.contains("mutableListOf<Entry>()"))
+        val referenceStart = "private fun containsReferenceToken("
+        val referenceEnd = "private fun collectGroups("
+        assertTrue(source.contains(referenceStart))
+        assertTrue(source.substringAfter(referenceStart).contains(referenceEnd))
+        val referenceBody = source.substringAfter(referenceStart).substringBefore(referenceEnd)
+        assertFalse(referenceBody.contains("mutableListOf<Entry>()"))
+        assertFalse((source + navigation).contains("private fun collectEntries(group: Group, entries: MutableList<Entry>)"))
     }
 
     @Test

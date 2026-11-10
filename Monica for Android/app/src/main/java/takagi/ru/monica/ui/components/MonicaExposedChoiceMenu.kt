@@ -16,7 +16,12 @@ import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 
-internal data class MonicaMenuChoice<T>(val value: T, val label: String, val icon: ImageVector? = null)
+internal data class MonicaMenuChoice<T>(
+    val value: T,
+    val label: String,
+    val icon: ImageVector? = null,
+    val enabled: Boolean = true,
+)
 
 /** Anchored, compact choices with a persistent selection mark and clipped press feedback. */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,6 +52,7 @@ internal fun <T> ExposedDropdownMenuBoxScope.MonicaExposedChoiceMenu(
             val foreground = if (isSelected) MaterialTheme.colorScheme.onSecondaryContainer
                 else MaterialTheme.colorScheme.onSurface
             DropdownMenuItem(
+                enabled = choice.enabled,
                 text = { Text(choice.label, style = MaterialTheme.typography.bodyLarge) },
                 leadingIcon = choice.icon?.let { icon -> { Icon(icon, contentDescription = null) } },
                 trailingIcon = {

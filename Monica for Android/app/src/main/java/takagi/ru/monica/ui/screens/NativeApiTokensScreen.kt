@@ -51,7 +51,7 @@ fun NativeApiTokensScreen(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val securityManager = remember(context) { SecurityManager(context) }
+    val securityManager = takagi.ru.monica.ui.rememberUiSecurityManager()
     val stacks = remember(context) { PasswordPageAggregateStackRepository(PasswordDatabase.getDatabase(context).passwordPageAggregateStackDao()) }
     val memberships by stacks.observeAll().collectAsStateWithLifecycle(initialValue = emptyList())
     val selected = remember { mutableStateListOf<String>() }
@@ -88,9 +88,9 @@ fun NativeApiTokensScreen(
     val selectedItems = items.filter { it.key in selected }
     val open: (VaultV2Item) -> Unit = { it.nativeToken?.let { token -> onOpen(token.databaseId, token.entryId) } }
     val requestDelete: (List<VaultV2Item>) -> Unit = { group -> selected.clear(); selected.addAll(group.map { it.key }); delete = true }
-    fun deleteSelected() { scope.launch {
+    fun deleteSelected(targets: List<VaultV2Item>) { delete = false; scope.launch {
         try {
-            selectedItems.forEach { viewModel.deleteNativeApiToken(checkNotNull(it.nativeToken)); stacks.clearManualStack(listOf(it.key)) }
+            targets.forEach { viewModel.deleteNativeApiToken(checkNotNull(it.nativeToken)); stacks.clearManualStack(listOf(it.key)) }
             selected.clear()
         } catch (cancelled: CancellationException) { throw cancelled }
         catch (_: Exception) { Toast.makeText(context, R.string.api_token_load_error, Toast.LENGTH_LONG).show() }
@@ -155,12 +155,16 @@ fun NativeApiTokensScreen(
         } catch (cancelled: CancellationException) { throw cancelled }
         catch (_: Exception) { Toast.makeText(context, R.string.api_token_load_error, Toast.LENGTH_LONG).show() }
     } })
-    if (delete) takagi.ru.monica.ui.common.dialog.DeleteConfirmDialog(
-        itemTitle = stringResource(R.string.selected_items, selected.size), itemType = typeLabel,
-        biometricEnabled = appSettings.biometricEnabled, skipIdentityVerification = appSettings.disablePasswordVerification,
-        onDismiss = { delete = false }, onConfirmWithoutVerification = ::deleteSelected,
-        onConfirmWithPassword = { password -> if (securityManager.unlockVaultWithPassword(password)) deleteSelected() },
-        onConfirmWithBiometric = ::deleteSelected,
-    )
+    if (delete) {
+        val targets = remember { selectedItems.toList() }
+        val deleteTargets = { deleteSelected(targets) }
+        takagi.ru.monica.ui.common.dialog.DeleteConfirmDialog(
+            itemTitle = stringResource(R.string.selected_items, targets.size), itemType = typeLabel,
+            biometricEnabled = appSettings.biometricEnabled, skipIdentityVerification = appSettings.disablePasswordVerification,
+            onDismiss = { delete = false }, onConfirmWithoutVerification = deleteTargets,
+            onPasswordVerified = deleteTargets, onConfirmWithBiometric = deleteTargets,
+            isRequestCurrent = { delete && selectedItems == targets },
+        )
+    }
     NativeTokenBatchMoveSheet(move, viewModel, selectedItems.mapNotNull { it.nativeToken }, { move = false }, { selected.clear() })
 }

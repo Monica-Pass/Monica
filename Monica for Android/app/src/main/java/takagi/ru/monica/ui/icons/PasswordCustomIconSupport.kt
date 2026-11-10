@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import takagi.ru.monica.R
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URI
@@ -34,6 +35,8 @@ const val PASSWORD_ICON_TYPE_EMOJI = "EMOJI"
 private const val STRATUM_ICON_ASSET_ROOT = "stratum_icons"
 private const val STRATUM_ICON_ASSET_MAIN_DIR = "$STRATUM_ICON_ASSET_ROOT/icons"
 private const val STRATUM_ICON_ASSET_EXTRA_DIR = "$STRATUM_ICON_ASSET_ROOT/extraicons"
+private val SIMPLE_ICON_ASSET_EXTENSIONS = listOf("webp", "png")
+private const val MONICA_ICON_SLUG = "monica"
 
 data class SimpleIconOption(
     val slug: String,
@@ -67,6 +70,8 @@ object SimpleIconCatalog {
         val slugs = LinkedHashSet<String>()
         collectSlugs(context, STRATUM_ICON_ASSET_MAIN_DIR, slugs)
         collectSlugs(context, STRATUM_ICON_ASSET_EXTRA_DIR, slugs)
+        // The former duplicate asset shares the launcher drawable; saved slugs stay unchanged.
+        slugs.add(MONICA_ICON_SLUG)
 
         val resolved = slugs.map { slug ->
             SimpleIconOption(slug = slug, label = prettyLabel(slug))
@@ -86,8 +91,8 @@ object SimpleIconCatalog {
     private fun collectSlugs(context: Context, assetDir: String, output: MutableSet<String>) {
         val files = runCatching { context.assets.list(assetDir).orEmpty() }.getOrDefault(emptyArray())
         files.forEach { name ->
-            if (!name.endsWith(".png", ignoreCase = true)) return@forEach
-            val raw = name.removeSuffix(".png")
+            if (name.substringAfterLast('.', "").lowercase(Locale.ROOT) !in SIMPLE_ICON_ASSET_EXTENSIONS) return@forEach
+            val raw = name.substringBeforeLast('.').lowercase(Locale.ROOT)
             val normalized = if (raw.endsWith("_dark")) raw.removeSuffix("_dark") else raw
             if (normalized.isNotBlank()) {
                 output.add(normalized.lowercase(Locale.ROOT))
@@ -413,9 +418,10 @@ object PasswordCustomIconStore {
     }
 }
 
-private object SimpleIconCache {
+internal object SimpleIconCache {
     private const val TAG = "SimpleIconCache"
     private const val DISK_DIR = "stratum_icons"
+    // Package encodings may change losslessly; existing decoded PNG caches remain compatible.
     private const val CACHE_VERSION = "stratum_v1_4_0"
     private val memory = LruCache<String, ImageBitmap>(80)
 
@@ -454,20 +460,20 @@ private object SimpleIconCache {
     }
 
     private fun fetchSimpleIconBitmap(context: Context, normalizedSlug: String, darkTheme: Boolean): Bitmap? {
-        val candidates = if (darkTheme) {
-            listOf(
-                "$STRATUM_ICON_ASSET_MAIN_DIR/${normalizedSlug}_dark.png",
-                "$STRATUM_ICON_ASSET_EXTRA_DIR/${normalizedSlug}_dark.png",
-                "$STRATUM_ICON_ASSET_MAIN_DIR/$normalizedSlug.png",
-                "$STRATUM_ICON_ASSET_EXTRA_DIR/$normalizedSlug.png"
-            )
+        if (normalizedSlug == MONICA_ICON_SLUG) {
+            return BitmapFactory.decodeResource(context.resources, R.drawable.monica_launcher,
+                BitmapFactory.Options().apply { inScaled = false })
+        }
+        val variants = if (darkTheme) {
+            listOf("${normalizedSlug}_dark", normalizedSlug)
         } else {
-            listOf(
-                "$STRATUM_ICON_ASSET_MAIN_DIR/$normalizedSlug.png",
-                "$STRATUM_ICON_ASSET_EXTRA_DIR/$normalizedSlug.png",
-                "$STRATUM_ICON_ASSET_MAIN_DIR/${normalizedSlug}_dark.png",
-                "$STRATUM_ICON_ASSET_EXTRA_DIR/${normalizedSlug}_dark.png"
-            )
+            listOf(normalizedSlug, "${normalizedSlug}_dark")
+        }
+        // Theme and directory precedence are independent of each file's lossless encoding.
+        val candidates = variants.flatMap { variant ->
+            listOf(STRATUM_ICON_ASSET_MAIN_DIR, STRATUM_ICON_ASSET_EXTRA_DIR).flatMap { directory ->
+                SIMPLE_ICON_ASSET_EXTENSIONS.map { extension -> "$directory/$variant.$extension" }
+            }
         }
 
         for (assetPath in candidates) {

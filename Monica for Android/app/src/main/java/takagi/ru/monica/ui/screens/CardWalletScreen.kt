@@ -23,6 +23,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.filled.Badge
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.FlightTakeoff
 import androidx.compose.material.icons.Icons
@@ -110,6 +111,7 @@ import takagi.ru.monica.ui.cardwallet.orderWalletIndependentEntries
 import takagi.ru.monica.ui.cardwallet.prepareWalletSelectionEntries
 import takagi.ru.monica.ui.cardwallet.reorderWalletSelectionCards
 import takagi.ru.monica.ui.components.rememberDirectReorderScroller
+import takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog
 import takagi.ru.monica.ui.cardwallet.toggleWalletSelectionGroup
 import takagi.ru.monica.data.isKeePassOwned
 import takagi.ru.monica.data.isLocalOnlyItem
@@ -361,8 +363,7 @@ fun CardWalletScreen(
     var itemToDelete by remember { mutableStateOf<SecureItem?>(null) }
     var showBatchDeleteDialog by remember { mutableStateOf(false) }
     var showVerifyDialog by remember { mutableStateOf(false) }
-    var verifyPassword by remember { mutableStateOf("") }
-    var verifyPasswordError by remember { mutableStateOf(false) }
+
     var verifyDeleteIds by remember { mutableStateOf(setOf<Long>()) }
     var showBatchMoveCategoryDialog by remember { mutableStateOf(false) }
     val categoryMgmt = takagi.ru.monica.ui.category.rememberCategoryManagementState()
@@ -477,8 +478,6 @@ fun CardWalletScreen(
     val requestDeleteVerification: (Set<Long>) -> Unit = requestDeleteVerification@{ ids ->
         if (ids.isEmpty()) return@requestDeleteVerification
         verifyDeleteIds = ids
-        verifyPassword = ""
-        verifyPasswordError = false
         showVerifyDialog = true
     }
 
@@ -1528,7 +1527,10 @@ fun CardWalletScreen(
                 }
             },
             onRevealCover = { stackCoverRevealed = true },
-            onDismiss = { expandedStackId = null; stackCoverRevealed = false },
+            onDismiss = {
+                expandedStackId = null
+                stackCoverRevealed = false
+            },
             onOpenCard = { card ->
                 focusedStackCardId = card.id
                 hasOpenedStackDetail = true
@@ -1654,6 +1656,7 @@ fun CardWalletScreen(
     }
 
     if (showVerifyDialog) {
+        val deletionIds = remember { verifyDeleteIds.toSet() }
         val skipIdentityVerification = appSettings.disablePasswordVerification
         val biometricAction = if (
             !skipIdentityVerification &&
@@ -1669,8 +1672,6 @@ fun CardWalletScreen(
                     onSuccess = {
                         performDelete(verifyDeleteIds)
                         verifyDeleteIds = emptySet()
-                        verifyPassword = ""
-                        verifyPasswordError = false
                         showVerifyDialog = false
                     },
                     onError = { error ->
@@ -1683,49 +1684,57 @@ fun CardWalletScreen(
             null
         }
 
-        M3IdentityVerifyDialog(
-            title = stringResource(R.string.verify_identity),
-            message = if (verifyDeleteIds.size > 1) {
-                stringResource(R.string.batch_delete_message, verifyDeleteIds.size)
-            } else {
-                stringResource(R.string.verify_identity_to_delete)
-            },
-            passwordValue = verifyPassword,
-            onPasswordChange = {
-                verifyPassword = it
-                verifyPasswordError = false
-            },
-            onDismiss = {
-                showVerifyDialog = false
-                verifyDeleteIds = emptySet()
-                verifyPassword = ""
-                verifyPasswordError = false
-            },
-            onConfirm = {
-                scope.launch {
-                    if (skipIdentityVerification || securityManager.verifyMasterPassword(verifyPassword)) {
-                        performDelete(verifyDeleteIds)
-                        verifyDeleteIds = emptySet()
-                        verifyPassword = ""
-                        verifyPasswordError = false
-                        showVerifyDialog = false
-                    } else {
-                        verifyPasswordError = true
-                    }
-                }
-            },
-            confirmText = stringResource(R.string.delete),
-            destructiveConfirm = true,
-            requireIdentityVerification = !skipIdentityVerification,
-            isPasswordError = verifyPasswordError,
-            passwordErrorText = stringResource(R.string.current_password_incorrect),
-            onBiometricClick = biometricAction,
-            biometricHintText = if (biometricAction == null) {
-                context.getString(R.string.biometric_not_available)
-            } else {
-                null
-            }
-        )
+        if (skipIdentityVerification) {
+            M3IdentityVerifyDialog(
+                title = stringResource(R.string.verify_identity),
+                message = if (deletionIds.size > 1) {
+                    stringResource(R.string.batch_delete_message, deletionIds.size)
+                } else {
+                    stringResource(R.string.verify_identity_to_delete)
+                },
+                passwordValue = "",
+                onPasswordChange = {},
+                onDismiss = {
+                    showVerifyDialog = false
+                    verifyDeleteIds = emptySet()
+                },
+                onConfirm = {
+                    performDelete(deletionIds)
+                    verifyDeleteIds = emptySet()
+                    showVerifyDialog = false
+                },
+                confirmText = stringResource(R.string.delete),
+                destructiveConfirm = true,
+                requireIdentityVerification = false,
+            )
+        } else {
+            SecondaryPasswordVerificationDialog(
+                manager = securityManager,
+                title = stringResource(R.string.verify_identity),
+                message = if (deletionIds.size > 1) {
+                    stringResource(R.string.batch_delete_message, deletionIds.size)
+                } else {
+                    stringResource(R.string.verify_identity_to_delete)
+                },
+                onDismiss = {
+                    showVerifyDialog = false
+                    verifyDeleteIds = emptySet()
+                },
+                onSuccess = {
+                    performDelete(deletionIds)
+                    verifyDeleteIds = emptySet()
+                    showVerifyDialog = false
+                },
+                isRequestCurrent = { showVerifyDialog && verifyDeleteIds == deletionIds },
+                confirmText = stringResource(R.string.delete),
+                icon = Icons.Default.Warning,
+                destructiveConfirm = true,
+                onBiometricClick = biometricAction,
+                biometricHintText = if (biometricAction == null) {
+                    stringResource(R.string.biometric_not_available)
+                } else null,
+            )
+        }
     }
 
     if (showBatchMoveCategoryDialog) {

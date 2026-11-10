@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_kdf_title">Format des sauvegardes chiffrées</string>
+    <string name="backup_kdf_compatible">Compatible V1 · 100000 itérations</string>
+    <string name="backup_kdf_enhanced">Renforcé V2 · 600000 itérations</string>
+    <string name="backup_kdf_scope">Ce choix concerne uniquement les nouvelles sauvegardes ZIP chiffrées. Les sauvegardes existantes restent inchangées.</string>
+    <string name="backup_kdf_compatibility_warning">V2 nécessite un lecteur compatible. Les anciennes extensions ou applications de bureau peuvent ne pas le restaurer. Conservez les sauvegardes précédentes.</string>
+</resources>

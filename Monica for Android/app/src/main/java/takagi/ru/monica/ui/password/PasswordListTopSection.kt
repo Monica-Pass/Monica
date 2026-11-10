@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui
 
+import takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog
 import takagi.ru.monica.ui.password.KeePassFileActions
 
 import takagi.ru.monica.utils.AppLocaleStringResolver
@@ -57,7 +58,6 @@ import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.ui.components.CreateCategoryDialog
 import takagi.ru.monica.ui.components.CreateDialogTarget
 import takagi.ru.monica.ui.components.ExpressiveTopBar
-import takagi.ru.monica.ui.components.M3IdentityVerifyDialog
 import takagi.ru.monica.ui.components.UnifiedCategoryFilterChipMenuDropdown
 import takagi.ru.monica.ui.components.UnifiedCategoryFilterChipMenuOffset
 import takagi.ru.monica.ui.components.UnifiedCategoryFilterSelection
@@ -170,8 +170,6 @@ internal fun PasswordListTopSection(
     val isAuthenticated by viewModel.isAuthenticated.collectAsState()
     var showCreateCategoryDialog by remember { mutableStateOf(false) }
     var showReunlockDialog by remember { mutableStateOf(false) }
-    var reunlockPassword by remember { mutableStateOf("") }
-    var reunlockPasswordError by remember { mutableStateOf(false) }
     var showBitwardenUnlockDialog by remember { mutableStateOf(false) }
     var showClearBitwardenCacheDialog by remember { mutableStateOf(false) }
     var clearCacheRiskSummary by remember { mutableStateOf<BitwardenRepository.VaultCacheRiskSummary?>(null) }
@@ -742,10 +740,28 @@ internal fun PasswordListTopSection(
         }
 
         if (showReunlockDialog) {
+            val targetFilter = remember { currentFilter }
+            val latestFilter = androidx.compose.runtime.rememberUpdatedState(currentFilter)
+            val lifecycle = androidx.lifecycle.compose.LocalLifecycleOwner.current.lifecycle
+            val generation = remember { SecurityManager.dataReadGeneration.value }
+            val active = remember { java.util.concurrent.atomic.AtomicBoolean(true) }
+            androidx.compose.runtime.DisposableEffect(Unit) { onDispose { active.set(false) } }
+            fun currentReunlock() = active.get() && showReunlockDialog && latestFilter.value == targetFilter &&
+                securityManager.isDataReadCurrent(generation) &&
+                lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED) &&
+                context.getSystemService(android.os.PowerManager::class.java)?.isInteractive == true &&
+                context.getSystemService(android.app.KeyguardManager::class.java)?.isKeyguardLocked == false
             val dismissReunlockDialog: () -> Unit = {
+                active.set(false)
                 showReunlockDialog = false
-                reunlockPassword = ""
-                reunlockPasswordError = false
+            }
+            val finishReunlock = {
+                if (currentReunlock() && active.compareAndSet(true, false)) {
+                    securityManager.markVaultAuthenticated()
+                    viewModel.restoreAuthenticatedUiState()
+                    Toast.makeText(context, context.getString(R.string.current_database_unlocked), Toast.LENGTH_SHORT).show()
+                    dismissReunlockDialog()
+                }
             }
             val skipIdentityVerification = appSettings.disablePasswordVerification
             val biometricAction = if (!skipIdentityVerification && activity != null && canUseBiometric) {
@@ -755,18 +771,11 @@ internal fun PasswordListTopSection(
                         title = context.getString(R.string.verify_identity),
                         subtitle = context.getString(R.string.reunlock_current_database_menu),
                         onSuccess = {
-                            val unlocked = runCatching {
+                            val unlocked = currentReunlock() && runCatching {
                                 securityManager.unlockVaultWithBiometric()
                             }.getOrDefault(false)
                             if (unlocked) {
-                                securityManager.markVaultAuthenticated()
-                                viewModel.restoreAuthenticatedUiState()
-                                Toast.makeText(
-                                    context,
-                                    context.getString(R.string.current_database_unlocked),
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                dismissReunlockDialog()
+                                finishReunlock()
                             } else {
                                 Toast.makeText(
                                     context,
@@ -785,45 +794,26 @@ internal fun PasswordListTopSection(
                 null
             }
 
-            M3IdentityVerifyDialog(
+            SecondaryPasswordVerificationDialog(
+                manager = securityManager,
                 title = stringResource(R.string.verify_identity),
                 message = stringResource(R.string.reunlock_current_database_message),
-                passwordValue = reunlockPassword,
-                onPasswordChange = {
-                    reunlockPassword = it
-                    reunlockPasswordError = false
-                },
                 onDismiss = dismissReunlockDialog,
-                onConfirm = {
-                    val unlocked = if (skipIdentityVerification) {
+                onSuccess = {
+                    val unlocked = !skipIdentityVerification ||
                         securityManager.unlockVaultForDeveloperBypass(appSettings.autoLockMinutes)
-                    } else {
-                        securityManager.unlockVaultWithPassword(reunlockPassword)
-                    }
                     if (unlocked) {
-                        securityManager.markVaultAuthenticated()
-                        viewModel.restoreAuthenticatedUiState()
-                        Toast.makeText(
-                            context,
-                            context.getString(R.string.current_database_unlocked),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        dismissReunlockDialog()
+                        finishReunlock()
                     } else {
-                        reunlockPasswordError = true
+                        dismissReunlockDialog()
+                        Toast.makeText(context, context.getString(R.string.reunlock_current_database_failed), Toast.LENGTH_SHORT).show()
                     }
                 },
+                isRequestCurrent = ::currentReunlock,
+                requirePassword = !skipIdentityVerification,
                 confirmText = stringResource(R.string.unlock),
-                destructiveConfirm = false,
-                requireIdentityVerification = !skipIdentityVerification,
-                isPasswordError = reunlockPasswordError,
-                passwordErrorText = stringResource(R.string.current_password_incorrect),
                 onBiometricClick = biometricAction,
-                biometricHintText = if (biometricAction == null) {
-                    context.getString(R.string.biometric_not_available)
-                } else {
-                    null
-                }
+                biometricHintText = if (biometricAction == null) context.getString(R.string.biometric_not_available) else null,
             )
         }
 

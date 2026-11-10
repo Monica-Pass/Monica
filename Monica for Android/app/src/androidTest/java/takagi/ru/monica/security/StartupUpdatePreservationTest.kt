@@ -41,6 +41,22 @@ class StartupUpdatePreservationTest {
 
     @Test fun verifyAfterCoveringInstallAndPasswordReentry() = verifyCheckpoint(null, null)
 
+    /** Run in a new instrumentation process after the first real old-APK migration. */
+    @Test fun verifyKdfUpgradedCheckpointAfterProcessRestart() {
+        val f = Fixture()
+        check(f.base.packageName in setOf("takagi.ru.monica.keepassrefactor327", "takagi.ru.monica.keepassrefactor327.fdroid"))
+        val original = JSONObject(f.expected.readText())
+        assertEquals(original.getString("database"), f.digest(f.database.readBytes()))
+        assertEquals(original.getString("attachment"), f.digest(f.attachment.readBytes()))
+        val raw = f.rawDigest()
+        val envelope = f.digest(f.envelope.readBytes())
+        verifyCheckpoint(raw, envelope)
+        val store = LocalVaultRecovery(f.context).activeStore()?.first ?: SecurePreferencesStore.MONICA
+        val alias = LocalVaultRecovery(f.context).activeStore()?.second ?: androidx.security.crypto.MasterKey.DEFAULT_MASTER_KEY_ALIAS
+        val prefs = SecurePreferencesStore.openRaw(f.context, store, alias).preferences
+        assertEquals(PasswordKdf.PBKDF2_600K.encoded, prefs.getString(PasswordKdf.METADATA_KEY, null))
+    }
+
     /** Reentrant verification of the exact already-authenticated OLD checkpoint frozen by the host. */
     @Test fun verifyPreviouslyAuthenticatedCheckpointWithHostFrozenDigest() {
         val instrumentation = InstrumentationRegistry.getInstrumentation()

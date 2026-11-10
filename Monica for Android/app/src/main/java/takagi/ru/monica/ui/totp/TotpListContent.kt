@@ -149,7 +149,6 @@ import takagi.ru.monica.ui.components.QrCodeDialog
 import takagi.ru.monica.ui.components.ExpressiveTopBar
 import takagi.ru.monica.ui.components.SwipeableAddFab
 import takagi.ru.monica.ui.components.SyncStatusIcon
-import takagi.ru.monica.ui.components.M3IdentityVerifyDialog
 import takagi.ru.monica.ui.components.MonicaItemCardShape
 import takagi.ru.monica.ui.components.MonicaTileGrid
 import takagi.ru.monica.ui.components.UnifiedCategoryFilterChipMenu
@@ -1066,10 +1065,6 @@ fun TotpListContent(
         itemToDeleteState = ui.itemToDelete,
         deletedItemIdsState = ui.deletedItemIds,
         showBatchDeleteDialogState = ui.showBatchDeleteDialog,
-        singleItemPasswordInputState = ui.singleItemPasswordInput,
-        showSingleItemPasswordVerifyState = ui.showSingleItemPasswordVerify,
-        passwordInputState = ui.passwordInput,
-        passwordErrorState = ui.passwordError,
         selectedItemsState = ui.selectedItems,
         isSelectionModeState = ui.isSelectionMode,
         appSettings = appSettings,
@@ -1124,11 +1119,7 @@ private class TotpListUiState(
     val selectedItems = mutableStateOf<Set<Long>>(emptySet())
     val showBatchDeleteDialog = mutableStateOf(false)
     val showMoveToCategoryDialog = mutableStateOf(false)
-    val passwordInput = mutableStateOf("")
-    val passwordError = mutableStateOf(false)
     val itemToDelete = mutableStateOf<takagi.ru.monica.data.SecureItem?>(null)
-    val singleItemPasswordInput = mutableStateOf("")
-    val showSingleItemPasswordVerify = mutableStateOf(false)
     val pendingBoundSingleDelete = mutableStateOf<SecureItem?>(null)
     val pendingBoundBatchDelete = mutableStateOf<List<SecureItem>>(emptyList())
     val deletedItemIds = mutableStateOf<Set<Long>>(emptySet())
@@ -1423,10 +1414,6 @@ private fun TotpDeleteConfirmDialogs(
     itemToDeleteState: MutableState<takagi.ru.monica.data.SecureItem?>,
     deletedItemIdsState: MutableState<Set<Long>>,
     showBatchDeleteDialogState: MutableState<Boolean>,
-    singleItemPasswordInputState: MutableState<String>,
-    showSingleItemPasswordVerifyState: MutableState<Boolean>,
-    passwordInputState: MutableState<String>,
-    passwordErrorState: MutableState<Boolean>,
     selectedItemsState: MutableState<Set<Long>>,
     isSelectionModeState: MutableState<Boolean>,
     appSettings: AppSettings,
@@ -1480,6 +1467,7 @@ private fun TotpDeleteConfirmDialogs(
 
     // 单项删除确认对话框(支持指纹和密码验证)
     itemToDeleteState.value?.let { item ->
+        val targetItem = remember { item }
         DeleteConfirmDialog(
             itemTitle = item.title,
             itemType = stringResource(R.string.item_type_authenticator),
@@ -1495,10 +1483,12 @@ private fun TotpDeleteConfirmDialogs(
                 Toast.makeText(context, context.getString(R.string.deleted), Toast.LENGTH_SHORT).show()
                 itemToDeleteState.value = null
             },
-            onConfirmWithPassword = { password ->
-                singleItemPasswordInputState.value = password
-                showSingleItemPasswordVerifyState.value = true
+            onPasswordVerified = {
+                itemToDeleteState.value = null
+                onDeleteTotp(targetItem)
+                Toast.makeText(context, context.getString(R.string.deleted), Toast.LENGTH_SHORT).show()
             },
+            isRequestCurrent = { itemToDeleteState.value == targetItem },
             onConfirmWithBiometric = {
                 // 指纹验证成功，直接删除
                 onDeleteTotp(item)
@@ -1512,122 +1502,35 @@ private fun TotpDeleteConfirmDialogs(
         )
     }
 
-    // 单项删除密码验证
-    if (showSingleItemPasswordVerifyState.value && itemToDeleteState.value != null) {
-        LaunchedEffect(Unit) {
-            val securityManager = takagi.ru.monica.security.SecurityManager(context)
-            if (securityManager.verifyMasterPassword(singleItemPasswordInputState.value)) {
-                // 密码正确，删除 TOTP
-                onDeleteTotp(itemToDeleteState.value!!)
-
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.deleted),
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                // 清理状态（保持在 deletedItemIds 中，因为已真实删除）
-                itemToDeleteState.value = null
-                singleItemPasswordInputState.value = ""
-                showSingleItemPasswordVerifyState.value = false
-            } else {
-                // 密码错误，恢复卡片显示
-                deletedItemIdsState.value = deletedItemIdsState.value - itemToDeleteState.value!!.id
-
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.current_password_incorrect),
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                // 重置状态
-                itemToDeleteState.value = null
-                singleItemPasswordInputState.value = ""
-                showSingleItemPasswordVerifyState.value = false
-            }
-        }
-    }
-
-    // 批量删除验证对话框（统一 M3 身份验证弹窗）
     if (showBatchDeleteDialogState.value) {
-        val skipIdentityVerification = appSettings.disablePasswordVerification
-        val biometricAction = if (!skipIdentityVerification && canUseBiometric) {
-            {
-                biometricHelper.authenticate(
-                    activity = activity!!,
-                    title = context.getString(R.string.verify_identity),
-                    subtitle = context.getString(R.string.verify_to_delete),
-                    onSuccess = {
-                        coroutineScope.launch {
-                            val toDelete = totpItems.filter { selectedItemsState.value.contains(it.id) }
-                            viewModel.deleteTotpItems(toDelete)
-                            android.widget.Toast.makeText(
-                                context,
-                                context.getString(R.string.deleted_items, toDelete.size),
-                                android.widget.Toast.LENGTH_SHORT
-                            ).show()
-                            isSelectionModeState.value = false
-                            selectedItemsState.value = setOf()
-                            passwordInputState.value = ""
-                            passwordErrorState.value = false
-                            showBatchDeleteDialogState.value = false
-                        }
-                    },
-                    onError = { error ->
-                        Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
-                    },
-                    onFailed = {}
-                )
+        val targetIds = remember { selectedItemsState.value.toSet() }
+        val targetItems = remember { totpItems.filter { it.id in targetIds } }
+        val deleteSelection: () -> Unit = {
+            showBatchDeleteDialogState.value = false
+            coroutineScope.launch {
+                viewModel.deleteTotpItems(targetItems)
+                Toast.makeText(context, context.getString(R.string.deleted_items, targetItems.size), Toast.LENGTH_SHORT).show()
+                isSelectionModeState.value = false
+                selectedItemsState.value = emptySet()
             }
-        } else {
-            null
         }
-        M3IdentityVerifyDialog(
+        DeleteConfirmDialog(
+            itemTitle = stringResource(R.string.selected_items, targetIds.size),
+            biometricEnabled = appSettings.biometricEnabled,
+            skipIdentityVerification = appSettings.disablePasswordVerification,
             title = stringResource(R.string.verify_identity),
-            message = stringResource(R.string.batch_delete_totp_message, selectedItemsState.value.size),
-            passwordValue = passwordInputState.value,
-            onPasswordChange = {
-                passwordInputState.value = it
-                passwordErrorState.value = false
+            message = stringResource(R.string.batch_delete_totp_message, targetIds.size),
+            onDismiss = { showBatchDeleteDialogState.value = false },
+            onConfirmWithoutVerification = deleteSelection,
+            onPasswordVerified = deleteSelection,
+            onConfirmWithBiometric = deleteSelection,
+            isRequestCurrent = {
+                showBatchDeleteDialogState.value && selectedItemsState.value == targetIds &&
+                    totpItems.filter { it.id in targetIds } == targetItems
             },
-            onDismiss = {
-                showBatchDeleteDialogState.value = false
-                passwordInputState.value = ""
-                passwordErrorState.value = false
-            },
-            onConfirm = {
-                if (skipIdentityVerification || SecurityManager(context).verifyMasterPassword(passwordInputState.value)) {
-                    coroutineScope.launch {
-                        val toDelete = totpItems.filter { selectedItemsState.value.contains(it.id) }
-                        viewModel.deleteTotpItems(toDelete)
-                        android.widget.Toast.makeText(
-                            context,
-                            context.getString(R.string.deleted_items, toDelete.size),
-                            android.widget.Toast.LENGTH_SHORT
-                        ).show()
-                        isSelectionModeState.value = false
-                        selectedItemsState.value = setOf()
-                        passwordInputState.value = ""
-                        passwordErrorState.value = false
-                        showBatchDeleteDialogState.value = false
-                    }
-                } else {
-                    passwordErrorState.value = true
-                }
-            },
-            confirmText = stringResource(R.string.delete),
-            destructiveConfirm = true,
-            requireIdentityVerification = !skipIdentityVerification,
-            isPasswordError = passwordErrorState.value,
-            passwordErrorText = stringResource(R.string.current_password_incorrect),
-            onBiometricClick = biometricAction,
-            biometricHintText = if (biometricAction == null) {
-                context.getString(R.string.biometric_not_available)
-            } else {
-                null
-            }
         )
     }
+
 }
 
 private data class BoundTotpDeleteImpact(

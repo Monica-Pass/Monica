@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="nfc_card_scan_title">讀 NFC 卡</string>
-    <string name="nfc_card_scan_hint">將卡貼近手機 NFC 感應處。可讀部分非接觸式銀行卡。</string>
-    <string name="nfc_card_scanning">正讀卡片…</string>
-    <string name="nfc_card_unavailable">此裝置不支援 NFC。</string>
-    <string name="nfc_card_disabled">請先於系統設定啟用 NFC。</string>
     <string name="nfc_card_unlock_retap">解鎖 Monica 後，請再貼卡讀取。</string>
-    <string name="nfc_card_unsupported">此卡無可讀銀行卡號。居民身分證等受保護之卡暫不支援；晶片 UID 非卡號。</string>
+    <string name="nfc_card_unsupported">未讀得可用銀行卡號。請持卡近機再試；部分卡不公開此訊息。</string>
     <string name="nfc_card_read_failed">讀卡未成，請保持貼近而重試。</string>
     <string name="nfc_card_new_title">新建銀行卡？</string>
     <string name="nfc_card_new_message">已讀銀行卡，與本頁類型不符。是否另開銀行卡頁？本頁內容仍保留。</string>
     <string name="nfc_card_replace_title">替換已有卡片資訊？</string>
     <string name="nfc_card_replace_message">所讀資訊與已填欄位不同。僅替換卡所提供之卡號、有效期及持卡人資訊，其餘保留。</string>
-    <string name="nfc_card_type_hint">已讀卡片資訊。NFC 難以確辨信用卡、借記卡或預付卡，請確認類型。</string>
-    <string name="nfc_card_ready">已填所讀卡片資訊，請核對後儲存。</string>
     <string name="nfc_card_busy">請先畢當前操作，再行貼卡。</string>
     <string name="nfc_card_new_action">另開新建</string>
     <string name="nfc_card_replace_action">替換</string>

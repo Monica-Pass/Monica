@@ -9,14 +9,23 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.activity.compose.BackHandler
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import java.util.concurrent.atomic.AtomicBoolean
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
 import takagi.ru.monica.security.MasterPasswordPolicy
 import takagi.ru.monica.security.SecurityManager
+import takagi.ru.monica.security.BoundedSecureDataRead
 import takagi.ru.monica.ui.components.MasterPasswordTextField
 import takagi.ru.monica.ui.components.rememberBringIntoViewOnFocusModifier
 
@@ -27,6 +36,29 @@ fun ResetPasswordScreen(
     onNavigateBack: () -> Unit,
     onResetSuccess: () -> Unit,
     skipCurrentPassword: Boolean = false
+) {
+    val generation by SecurityManager.dataReadGeneration.collectAsState()
+    ResetPasswordScreenContent(
+        generation = generation,
+        isCurrent = securityManager::isDataReadCurrent,
+        resetPassword = securityManager::resetMasterPassword,
+        authorizedReset = securityManager::setMasterPassword,
+        onNavigateBack = onNavigateBack,
+        onResetSuccess = onResetSuccess,
+        skipCurrentPassword = skipCurrentPassword,
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
+@Composable
+internal fun ResetPasswordScreenContent(
+    generation: Long,
+    isCurrent: (Long) -> Boolean,
+    resetPassword: (String, String, SecurityManager.LocalPasswordChangeAttempt, () -> Unit) -> Boolean,
+    authorizedReset: (String, SecurityManager.LocalPasswordChangeAttempt, () -> Unit) -> Boolean,
+    onNavigateBack: () -> Unit,
+    onResetSuccess: () -> Unit,
+    skipCurrentPassword: Boolean = false,
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -46,8 +78,64 @@ fun ResetPasswordScreen(
     var isLoading by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
     var showSuccessDialog by remember { mutableStateOf(false) }
-    
+    val entryGeneration = remember { generation }
+    val active = remember { AtomicBoolean(true) }
+    val currentCheck = rememberUpdatedState(isCurrent)
+    val reset = rememberUpdatedState(resetPassword)
+    val authorized = rememberUpdatedState(authorizedReset)
+    val back = rememberUpdatedState(onNavigateBack)
+    val success = rememberUpdatedState(onResetSuccess)
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    val keyboard = LocalSoftwareKeyboardController.current
+    var attempt by remember { mutableStateOf<SecurityManager.LocalPasswordChangeAttempt?>(null) }
+    var operation by remember { mutableStateOf<Job?>(null) }
+    var ended by remember { mutableStateOf(false) }
 
+    fun sessionCurrent() = active.get() && currentCheck.value(entryGeneration)
+    fun clearPasswords() {
+        currentPassword = ""
+        newPassword = ""
+        confirmPassword = ""
+        currentPasswordVisible = false
+        newPasswordVisible = false
+        confirmPasswordVisible = false
+        keyboard?.hide()
+    }
+    fun revoke() {
+        active.set(false)
+        attempt?.cancel()
+        attempt = null
+        operation?.cancel()
+        operation = null
+        clearPasswords()
+        showSuccessDialog = false
+        ended = true
+    }
+    fun leave() {
+        if (!active.get()) return
+        revoke()
+        back.value()
+    }
+    fun finish() {
+        if (!sessionCurrent()) return
+        revoke()
+        success.value()
+    }
+    BackHandler(onBack = ::leave)
+    DisposableEffect(lifecycle) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_PAUSE || event == Lifecycle.Event.ON_STOP) leave()
+        }
+        lifecycle.addObserver(observer)
+        onDispose {
+            lifecycle.removeObserver(observer)
+            revoke()
+        }
+    }
+    LaunchedEffect(generation) {
+        if (generation != entryGeneration || !sessionCurrent()) leave()
+    }
+    if (ended || generation != entryGeneration) return
 
     // 准备共享元素 Modifier
     val sharedTransitionScope = takagi.ru.monica.ui.LocalSharedTransitionScope.current
@@ -70,7 +158,7 @@ fun ResetPasswordScreen(
             TopAppBar(
                 title = { Text(context.getString(R.string.reset_password_title)) },
                 navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
+                    IconButton(onClick = ::leave, modifier = Modifier.testTag("reset-password-back")) {
                         Icon(Icons.Default.ArrowBack, contentDescription = context.getString(R.string.back))
                     }
                 }
@@ -114,7 +202,8 @@ fun ResetPasswordScreen(
                 }
             }
             
-            // Current Password (only show if not skipping)
+            if (!isLoading && !showSuccessDialog) {
+            // Password fields leave composition during work and after success.
             if (!skipCurrentPassword) {
                 MasterPasswordTextField(
                     value = currentPassword,
@@ -137,8 +226,10 @@ fun ResetPasswordScreen(
                     onVisibilityChange = { currentPasswordVisible = it },
                     modifier = Modifier
                         .fillMaxWidth()
+                        .testTag("reset-password-current")
                         .then(currentPasswordImeModifier),
                     enabled = !isLoading,
+                    saveTextState = false,
                 )
                 
                 HorizontalDivider()
@@ -169,8 +260,10 @@ fun ResetPasswordScreen(
                 onVisibilityChange = { newPasswordVisible = it },
                 modifier = Modifier
                     .fillMaxWidth()
+                    .testTag("reset-password-new")
                     .then(newPasswordImeModifier),
                 enabled = !isLoading,
+                saveTextState = false,
                 isError = newPassword.isNotEmpty() && !MasterPasswordPolicy.meetsMinLength(newPassword)
             )
             
@@ -208,8 +301,10 @@ fun ResetPasswordScreen(
                 onVisibilityChange = { confirmPasswordVisible = it },
                 modifier = Modifier
                     .fillMaxWidth()
+                    .testTag("reset-password-confirm")
                     .then(confirmPasswordImeModifier),
                 enabled = !isLoading,
+                saveTextState = false,
                 isError = confirmPassword.isNotEmpty() && newPassword != confirmPassword
             )
             
@@ -220,6 +315,7 @@ fun ResetPasswordScreen(
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.padding(start = 16.dp)
                 )
+            }
             }
             
             // Error Message
@@ -267,32 +363,37 @@ fun ResetPasswordScreen(
                             errorMessage = context.getString(R.string.passwords_do_not_match)
                         }
                         else -> {
+                            if (!sessionCurrent()) return@Button
                             isLoading = true
                             errorMessage = ""
                             
                             val current = currentPassword
                             val replacement = newPassword
-                            scope.launch {
+                            val submittedAttempt = SecurityManager.LocalPasswordChangeAttempt()
+                            attempt = submittedAttempt
+                            clearPasswords()
+                            operation = scope.launch {
                                 try {
-                                    val verified = skipCurrentPassword || kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
-                                        securityManager.verifyMasterPassword(current)
-                                    }
-                                    if (!verified) errorMessage = context.getString(R.string.current_password_incorrect)
-                                    else {
-                                        val saved = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
-                                            securityManager.setMasterPassword(replacement)
+                                    val saved = BoundedSecureDataRead.readChecked(isCurrent = ::sessionCurrent) {
+                                        if (skipCurrentPassword) {
+                                            authorized.value(replacement, submittedAttempt) { ensureActive() }
+                                        } else {
+                                            reset.value(current, replacement, submittedAttempt) { ensureActive() }
                                         }
-                                        if (saved) showSuccessDialog = true
-                                        else errorMessage = context.getString(R.string.local_recovery_save_failed)
                                     }
-                                } catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
-                                catch (_: Exception) { errorMessage = context.getString(R.string.local_recovery_save_failed) }
-                                finally { isLoading = false }
+                                    if (!sessionCurrent()) return@launch
+                                    if (saved == true) showSuccessDialog = true
+                                    else errorMessage = context.getString(R.string.local_password_protection_reset_failed)
+                                } finally {
+                                    submittedAttempt.cancel()
+                                    if (attempt === submittedAttempt) attempt = null
+                                    if (sessionCurrent()) isLoading = false
+                                }
                             }
                         }
                     }
                 },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().testTag("reset-password-submit"),
                 enabled = !isLoading && 
                          (skipCurrentPassword || currentPassword.isNotEmpty()) && 
                          newPassword.isNotEmpty() && 
@@ -313,10 +414,7 @@ fun ResetPasswordScreen(
     // Success Dialog
     if (showSuccessDialog) {
         AlertDialog(
-            onDismissRequest = { 
-                showSuccessDialog = false
-                onResetSuccess()
-            },
+            onDismissRequest = ::finish,
             icon = {
                 Icon(
                     imageVector = Icons.Default.CheckCircle,
@@ -332,10 +430,8 @@ fun ResetPasswordScreen(
             },
             confirmButton = {
                 TextButton(
-                    onClick = { 
-                        showSuccessDialog = false
-                        onResetSuccess()
-                    }
+                    onClick = ::finish,
+                    modifier = Modifier.testTag("reset-password-success"),
                 ) {
                     Text(context.getString(R.string.ok))
                 }

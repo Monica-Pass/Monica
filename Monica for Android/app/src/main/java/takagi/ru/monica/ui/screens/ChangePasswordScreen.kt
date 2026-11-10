@@ -38,6 +38,20 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.activity.compose.BackHandler
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.testTag
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import java.util.concurrent.atomic.AtomicBoolean
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import takagi.ru.monica.security.SecurityManager
+import takagi.ru.monica.security.BoundedSecureDataRead
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -60,7 +74,7 @@ import takagi.ru.monica.ui.components.rememberBringIntoViewOnFocusModifier
 @Composable
 fun ChangePasswordScreen(
     onNavigateBack: () -> Unit,
-    onPasswordChanged: (String, String) -> Unit
+    securityManager: SecurityManager
 ) {
     val context = LocalContext.current
 
@@ -74,6 +88,61 @@ fun ChangePasswordScreen(
 
     var errorMessage by remember { mutableStateOf("") }
     var showSuccessDialog by remember { mutableStateOf(false) }
+
+    val scope = rememberCoroutineScope()
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    val generation by SecurityManager.dataReadGeneration.collectAsState()
+    val entryGeneration = remember(securityManager) { generation }
+    val active = remember(securityManager) { AtomicBoolean(true) }
+    var busy by remember { mutableStateOf(false) }
+    var request by remember { mutableStateOf<SecurityManager.LocalPasswordChangeAttempt?>(null) }
+    var work by remember { mutableStateOf<Job?>(null) }
+    fun clearInputs() {
+        currentPassword = ""; newPassword = ""; confirmPassword = ""
+        currentPasswordVisible = false; newPasswordVisible = false; confirmPasswordVisible = false
+    }
+    fun revoke() {
+        active.set(false)
+        request?.cancel(); request = null
+        work?.cancel(); work = null
+        busy = false
+        showSuccessDialog = false
+        clearInputs()
+    }
+    fun leave() { if (active.get()) { revoke(); onNavigateBack() } }
+    BackHandler(onBack = ::leave)
+    DisposableEffect(lifecycle, securityManager) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_PAUSE || event == Lifecycle.Event.ON_STOP) leave()
+        }
+        lifecycle.addObserver(observer)
+        onDispose { lifecycle.removeObserver(observer); revoke() }
+    }
+    LaunchedEffect(generation) { if (generation != entryGeneration) leave() }
+    fun submit() {
+        if (busy || !active.get() || !lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) return
+        val old = currentPassword
+        val replacement = newPassword
+        val attempt = SecurityManager.LocalPasswordChangeAttempt()
+        request = attempt
+        busy = true
+        clearInputs()
+        work = scope.launch {
+            try {
+                val accepted = BoundedSecureDataRead.readChecked(isCurrent = {
+                    active.get() && securityManager.isDataReadCurrent(entryGeneration)
+                }) { securityManager.resetMasterPassword(old, replacement, attempt) { ensureActive() } }
+                if (!active.get() || !securityManager.isDataReadCurrent(entryGeneration) ||
+                    request !== attempt || !lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) return@launch
+                if (accepted == true) showSuccessDialog = true
+                else errorMessage = context.getString(R.string.local_password_protection_reset_failed)
+            } finally {
+                attempt.cancel()
+                if (request === attempt) request = null
+                busy = false
+            }
+        }
+    }
 
     val scrollState = rememberScrollState()
     val currentPasswordImeModifier = rememberBringIntoViewOnFocusModifier()
@@ -103,7 +172,7 @@ fun ChangePasswordScreen(
 
     val showNewPasswordLengthError = newPassword.isNotEmpty() && !MasterPasswordPolicy.meetsMinLength(newPassword)
     val showPasswordMismatchError = confirmPassword.isNotEmpty() && newPassword != confirmPassword
-    val canSubmit = currentPassword.isNotEmpty() && newPassword.isNotEmpty() && confirmPassword.isNotEmpty()
+    val canSubmit = !busy && !showSuccessDialog && currentPassword.isNotEmpty() && newPassword.isNotEmpty() && confirmPassword.isNotEmpty()
 
     Scaffold(
         modifier = sharedModifier,
@@ -111,7 +180,7 @@ fun ChangePasswordScreen(
             CenterAlignedTopAppBar(
                 title = { Text(stringResource(R.string.change_password_title)) },
                 navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
+                    IconButton(onClick = ::leave) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = stringResource(R.string.return_text)
@@ -150,6 +219,7 @@ fun ChangePasswordScreen(
 
                     MasterPasswordTextField(
                         value = currentPassword,
+                        enabled = !busy && !showSuccessDialog,
                         onValueChange = { input ->
                             currentPassword = input
                             errorMessage = ""
@@ -165,13 +235,14 @@ fun ChangePasswordScreen(
                         },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .then(currentPasswordImeModifier),
+                            .then(currentPasswordImeModifier).testTag("change-password-current"),
                         imeAction = ImeAction.Next,
                         isError = errorMessage == errorCurrentEmpty
                     )
 
                     MasterPasswordTextField(
                         value = newPassword,
+                        enabled = !busy && !showSuccessDialog,
                         onValueChange = { input ->
                             newPassword = input
                             errorMessage = ""
@@ -187,7 +258,7 @@ fun ChangePasswordScreen(
                         },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .then(newPasswordImeModifier),
+                            .then(newPasswordImeModifier).testTag("change-password-new"),
                         imeAction = ImeAction.Next,
                         isError = showNewPasswordLengthError ||
                             errorMessage == errorNewEmpty ||
@@ -206,6 +277,7 @@ fun ChangePasswordScreen(
 
                     MasterPasswordTextField(
                         value = confirmPassword,
+                        enabled = !busy && !showSuccessDialog,
                         onValueChange = { input ->
                             confirmPassword = input
                             errorMessage = ""
@@ -221,7 +293,7 @@ fun ChangePasswordScreen(
                         },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .then(confirmPasswordImeModifier),
+                            .then(confirmPasswordImeModifier).testTag("change-password-confirm"),
                         imeAction = ImeAction.Done,
                         isError = showPasswordMismatchError ||
                             errorMessage == errorConfirmEmpty ||
@@ -264,21 +336,20 @@ fun ChangePasswordScreen(
                                     errorMessage = errorSameAsCurrent
                                 }
                                 else -> {
-                                    onPasswordChanged(currentPassword, newPassword)
-                                    showSuccessDialog = true
+                                    submit()
                                 }
                             }
                         },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .heightIn(min = 56.dp),
+                            .heightIn(min = 56.dp).testTag("change-password-submit"),
                         shape = RoundedCornerShape(24.dp),
                         enabled = canSubmit
                     ) {
                         Icon(Icons.Default.Check, contentDescription = null)
                         Spacer(modifier = Modifier.size(10.dp))
                         Text(
-                            text = stringResource(R.string.change_password_button),
+                            text = stringResource(if (busy) R.string.loading else R.string.change_password_button),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
@@ -302,8 +373,7 @@ fun ChangePasswordScreen(
             confirmButton = {
                 TextButton(
                     onClick = {
-                        showSuccessDialog = false
-                        onNavigateBack()
+                        leave()
                     }
                 ) {
                     Text(stringResource(R.string.confirm))

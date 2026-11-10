@@ -42,7 +42,7 @@ import takagi.ru.monica.data.AppSettings
 import takagi.ru.monica.data.ThemeMode
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.security.launchWithSecureStorage
-import takagi.ru.monica.ui.components.M3IdentityVerifyDialog
+import takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog
 import takagi.ru.monica.ui.theme.MonicaTheme
 import takagi.ru.monica.utils.LocaleHelper
 import takagi.ru.monica.utils.SettingsManager
@@ -58,10 +58,9 @@ class CredentialExportActivity : FragmentActivity() {
     private var prepared by mutableStateOf<CredentialExchangeExporter.Prepared?>(null)
     private var busy by mutableStateOf(false)
     private var showAuthentication by mutableStateOf(false)
-    private var password by mutableStateOf("")
-    private var passwordError by mutableStateOf(false)
     private var errorText by mutableStateOf<String?>(null)
     private var work: Job? = null
+    private var authenticationGeneration: Long? = null
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleHelper.setLocale(newBase, StartupLanguageCache.read(newBase)))
@@ -146,28 +145,18 @@ class CredentialExportActivity : FragmentActivity() {
         if (showAuthentication) {
             val biometricAvailable = biometricEnabled && BiometricManager.from(this).canAuthenticate(
                 BiometricManager.Authenticators.BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS
-            M3IdentityVerifyDialog(
+            val destinationAtOpen = remember { destination.key }
+            val requestAtOpen = remember { request }
+            SecondaryPasswordVerificationDialog(
+                manager = security,
                 title = getString(R.string.verify_identity), message = getString(R.string.exchange_export_help),
-                icon = Icons.Default.Lock, passwordValue = password,
-                onPasswordChange = { password = it; passwordError = false },
-                onDismiss = { showAuthentication = false; password = "" },
-                onConfirm = {
-                    if (!busy) {
-                        val candidate = password
-                        password = ""
-                        busy = true
-                        work = lifecycleScope.launch {
-                            val valid = try {
-                                withContext(Dispatchers.IO) { security.unlockVaultWithPassword(candidate) }
-                            } finally { busy = false }
-                            if (valid) authenticated() else passwordError = true
-                        }
-                    }
-                }, confirmText = getString(R.string.confirm), confirmEnabled = password.isNotEmpty() && !busy,
-                destructiveConfirm = false, isPasswordError = passwordError,
-                passwordErrorText = getString(R.string.current_password_incorrect),
+                onDismiss = { showAuthentication = false },
+                isRequestCurrent = {
+                    showAuthentication && !isFinishing && !isDestroyed &&
+                        destination.key == destinationAtOpen && request === requestAtOpen
+                },
+                onSuccess = { generation -> authenticated(generation) },
                 onBiometricClick = if (biometricAvailable && !busy) ({ beginBiometric() }) else null,
-                showBiometricSlot = biometricAvailable,
             )
         }
     }
@@ -182,10 +171,15 @@ class CredentialExportActivity : FragmentActivity() {
     }
 
     private fun beginBiometric() {
+        val generation = SecurityManager.dataReadGeneration.value
+        val source = destination.key
+        val incoming = request
         val prompt = BiometricPrompt(this, ContextCompat.getMainExecutor(this), object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 if (BiometricAuthenticationPolicy.acceptsResult(result.authenticationType, Build.VERSION.SDK_INT) &&
-                    lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED) && security.unlockVaultWithBiometric()) authenticated()
+                    lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) && showAuthentication &&
+                    destination.key == source && request === incoming && security.isDataReadCurrent(generation) &&
+                    security.unlockVaultWithBiometric()) authenticated(generation)
                 else errorText = getString(R.string.exchange_failed)
             }
         })
@@ -194,11 +188,12 @@ class CredentialExportActivity : FragmentActivity() {
             .setNegativeButtonText(getString(R.string.cancel)).build())
     }
 
-    private fun authenticated() {
+    private fun authenticated(generation: Long) {
         val incoming = request ?: return
+        if (!showAuthentication || !lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) ||
+            !security.isDataReadCurrent(generation) || isFinishing || isDestroyed) return
+        authenticationGeneration = generation
         showAuthentication = false
-        password = ""
-        passwordError = false
         authorization.grant(destination.key, SystemClock.elapsedRealtime())
         val source = destination
         busy = true
@@ -214,7 +209,9 @@ class CredentialExportActivity : FragmentActivity() {
     private fun deliver() {
         val incoming = request ?: return
         val payload = prepared ?: return
-        if (TransferCallingAppVerifier.verifyExport(this, incoming) == null ||
+        if (!lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) ||
+            authenticationGeneration?.let(security::isDataReadCurrent) != true ||
+            TransferCallingAppVerifier.verifyExport(this, incoming) == null ||
             !authorization.consume(destination.key, SystemClock.elapsedRealtime())) {
             prepared = null
             beginAuthentication()
@@ -249,10 +246,15 @@ class CredentialExportActivity : FragmentActivity() {
         finish()
     }
 
+    override fun onPause() {
+        showAuthentication = false
+        super.onPause()
+    }
+
     override fun onStop() {
+        authenticationGeneration = null
         authorization.clear()
         prepared = null
-        password = ""
         showAuthentication = false
         work?.cancel()
         busy = false

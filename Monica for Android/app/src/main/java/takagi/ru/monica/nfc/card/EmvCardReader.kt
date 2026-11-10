@@ -1,5 +1,9 @@
 package takagi.ru.monica.nfc.card
 
+import java.security.SecureRandom
+import java.util.Calendar
+import java.util.GregorianCalendar
+
 /** Blocking transport. The owner supplies connection timeout, background execution and cancellation. */
 fun interface EmvCardChannel {
     fun transceive(command: ByteArray): ByteArray
@@ -27,9 +31,11 @@ sealed interface EmvCardReadResult {
  * GENERATE AC, GET CHALLENGE, log entry lookup, arbitrary record scan or write command.
  *
  * GPO is opt-in because some cards can update internal counters when processing it. It does
- * not authorize a payment here. PDOL is encoded exactly as declared, with zero terminal data
- * (including zero amounts/capabilities); cards requiring other values remain unsupported.
- * This intentionally favors a bounded, conservative read over complete card compatibility.
+ * not complete or submit a payment here, but contactless cards may generate a cryptogram as
+ * part of GPO. PDOL declares contactless EMV, no PIN/signature/offline authentication, zero
+ * amounts, current date/time and fresh random data. UnionPay uses its domestic country and
+ * currency codes. Other unknown terminal fields remain zero. Only advertised AFL records
+ * are read; cards requiring a different flow remain unsupported.
  *
  * Transport and checkCurrent exceptions propagate; callers must not log their messages or
  * raw APDUs. checkCurrent is called around every exchange and during all bounded parse loops.
@@ -62,8 +68,9 @@ class EmvCardReader(
                     requireApplicationName(directory.bytes, roots, PPSE)
                     all(roots).filter { it.tag == 0x4F }.mapNotNull { node ->
                         requireData(node.length in 5..16)
-                        APPLICATIONS.firstOrNull { it.aid.matches(directory.bytes, node.start, node.end) }
-                    }.distinct().also { requireData(it.size <= MAX_APPLICATIONS) }
+                        val aid = directory.bytes.copyOfRange(node.start, node.end)
+                        paymentScheme(aid)?.let { Application(aid, it) }
+                    }.distinctBy { it.aid.toList() }.also { requireData(it.size <= MAX_APPLICATIONS) }
                 } else FALLBACK
             } finally {
                 directory.bytes.fill(0)
@@ -78,7 +85,7 @@ class EmvCardReader(
         }
 
         private fun readApplication(application: Application): CardData? {
-            val data = CardData()
+            val data = CardData(unionPay = application.scheme == "UnionPay")
             val selected = exchange(select(application.aid))
             if (!selected.ok) { selected.bytes.fill(0); return null }
             var afl: ByteArray? = null
@@ -97,7 +104,7 @@ class EmvCardReader(
             try {
                 if (afl == null && !data.hasNumber) {
                     if (!allowGpo) return null
-                    val command = gpo(pdol ?: byteArrayOf())
+                    val command = gpo(pdol ?: byteArrayOf(), application)
                     val response = try { exchange(command) } finally { command.fill(0) }
                     try {
                         if (!response.ok) return null
@@ -141,11 +148,12 @@ class EmvCardReader(
             }
         }
 
-        private fun gpo(pdol: ByteArray): ByteArray {
+        private fun gpo(pdol: ByteArray, application: Application): ByteArray {
             requireData(pdol.size <= MAX_PDOL_BYTES)
             var cursor = 0
             var requested = 0
             var fields = 0
+            val entries = mutableListOf<Pair<Int, Int>>()
             while (cursor < pdol.size) {
                 checkCurrent()
                 requireData(++fields <= MAX_PDOL_FIELDS)
@@ -153,12 +161,37 @@ class EmvCardReader(
                 cursor = parsed.second
                 requireData(cursor < pdol.size)
                 val length = pdol[cursor++].unsigned()
-                requireData(length > 0 && length <= MAX_PDOL_BYTES - requested)
+                requireData(length <= MAX_PDOL_BYTES - requested)
                 requested += length
+                entries += parsed.first to length
             }
             val templateHeader = if (requested < 128) byteArrayOf(0x83.toByte(), requested.toByte())
                 else byteArrayOf(0x83.toByte(), 0x81.toByte(), requested.toByte())
             val body = templateHeader + ByteArray(requested)
+            var offset = templateHeader.size
+            val calendar = GregorianCalendar()
+            for ((tag, length) in entries) {
+                checkCurrent()
+                val numeric = tag in setOf(0x9F1A, 0x5F2A, 0x9A, 0x9F21, 0x5F36)
+                val value = when (tag) {
+                    // Contactless EMV only. Do not advertise PIN, signature, issuer scripts,
+                    // offline approval, cash/e-cash, or request a transaction cryptogram.
+                    0x9F66 -> hex("20000000")
+                    0x9F1A, 0x5F2A -> if (application.scheme == "UnionPay") hex("0156") else byteArrayOf()
+                    0x5F36 -> byteArrayOf(0x02)
+                    0x9A -> byteArrayOf(bcd(calendar.get(Calendar.YEAR) % 100),
+                        bcd(calendar.get(Calendar.MONTH) + 1), bcd(calendar.get(Calendar.DAY_OF_MONTH)))
+                    0x9F21 -> byteArrayOf(bcd(calendar.get(Calendar.HOUR_OF_DAY)),
+                        bcd(calendar.get(Calendar.MINUTE)), bcd(calendar.get(Calendar.SECOND)))
+                    0x9F37 -> ByteArray(length).also(RANDOM::nextBytes)
+                    else -> byteArrayOf()
+                }
+                val count = minOf(value.size, length)
+                value.copyInto(body, offset + if (numeric) length - count else 0,
+                    if (numeric) value.size - count else 0, if (numeric) value.size else count)
+                value.fill(0)
+                offset += length
+            }
             return byteArrayOf(0x80.toByte(), 0xA8.toByte(), 0x00, 0x00, body.size.toByte()) + body + byteArrayOf(0x00)
         }
 
@@ -277,7 +310,7 @@ class EmvCardReader(
             requireData(names.size == 1 && expected.matches(bytes, names.single().start, names.single().end))
         }
 
-        private inner class CardData {
+        private inner class CardData(private val unionPay: Boolean = false) {
             private var number: String? = null
             private val expiries = linkedSetOf<Int>()
             private val holders = linkedSetOf<String>()
@@ -294,17 +327,49 @@ class EmvCardReader(
                             acceptPan(digits(bytes, node, 0, end))
                         }
                         0x57, 0x9F6B -> track(bytes, node)
+                        0x56 -> trackOne(bytes, node)
                         0x5F24 -> if (node.length == 3) {
                             val year = decimalByte(bytes[node.start])
                             val month = decimalByte(bytes[node.start + 1])
                             val day = decimalByte(bytes[node.start + 2])
                             if (year != null && month != null && day != null && day in 1..31) expiry(year, month)
                         }
-                        0x5F20 -> if (node.length in 2..26 && (node.start until node.end).all { bytes[it].unsigned() in 32..126 }) {
+                        0x5F20, 0x9F0B -> if (node.length in 2..(if (node.tag == 0x5F20) 26 else 45) && (node.start until node.end).all { bytes[it].unsigned() in 32..126 }) {
                             String(bytes, node.start, node.length, Charsets.US_ASCII).trim().takeIf { it.isNotEmpty() }?.let(holders::add)
                         }
                     }
                 }
+            }
+
+            private fun trackOne(bytes: ByteArray, node: Node) {
+                // ISO 7813 track 1: optional %, format B, PAN ^ NAME ^ YYMM/service data.
+                // Never turn the whole track into a String or retain discretionary data.
+                requireData(node.length in 18..79)
+                var cursor = node.start
+                if (bytes[cursor] == '%'.code.toByte()) cursor++
+                requireData(cursor < node.end && bytes[cursor++] == 'B'.code.toByte())
+                val panStart = cursor
+                while (cursor < node.end && bytes[cursor].unsigned() in 48..57) cursor++
+                requireData(cursor - panStart in 8..19 && cursor < node.end && bytes[cursor++] == '^'.code.toByte())
+                val panEnd = cursor - 1
+                val nameStart = cursor
+                while (cursor < node.end && bytes[cursor] != '^'.code.toByte()) {
+                    requireData(bytes[cursor].unsigned() in 32..126 && cursor - nameStart < 26)
+                    cursor++
+                }
+                val nameEnd = cursor
+                requireData(cursor < node.end && bytes[cursor++] == '^'.code.toByte() && node.end - cursor >= 7)
+                requireData((cursor until cursor + 7).all { bytes[it].unsigned() in 48..57 })
+                val yy = (bytes[cursor].unsigned() - 48) * 10 + bytes[cursor + 1].unsigned() - 48
+                val mm = (bytes[cursor + 2].unsigned() - 48) * 10 + bytes[cursor + 3].unsigned() - 48
+                // Optional end sentinel only at the end; malformed tracks never provide a PAN.
+                requireData((cursor + 7 until node.end).all {
+                    bytes[it].unsigned() in 32..126 && (bytes[it] != '?'.code.toByte() || it == node.end - 1)
+                })
+                acceptPan(String(bytes, panStart, panEnd - panStart, Charsets.US_ASCII))
+                expiry(yy, mm)
+                if (nameEnd > nameStart) String(bytes, nameStart, nameEnd - nameStart, Charsets.US_ASCII)
+                    .trim().takeIf { it.isNotEmpty() }?.let(holders::add)
             }
 
             private fun track(bytes: ByteArray, node: Node) {
@@ -322,8 +387,12 @@ class EmvCardReader(
                 // Service/discretionary bytes are checked for structure, never retained or exposed.
             }
 
-            private fun acceptPan(value: String) {
-                requireData(value.length in 8..19 && value.any { it != value.first() } && luhn(value))
+            private fun acceptPan(value: String, allowUnionPayPan: Boolean = unionPay) {
+                // Some UnionPay PANs do not use Luhn. This exception is tied to the verified
+                // payment application's RID, never inferred from a number prefix alone.
+                val validUnionPay = allowUnionPayPan && value.length in 16..19 &&
+                    (value.startsWith("62") || value.startsWith("81"))
+                requireData(value.length in 8..19 && value.any { it != value.first() } && (luhn(value) || validUnionPay))
                 if (number != null && number != value) throw ConflictingPan()
                 number = value
             }
@@ -333,7 +402,7 @@ class EmvCardReader(
             }
 
             fun merge(other: CardData, scheme: String) {
-                other.number?.let(::acceptPan)
+                other.number?.let { acceptPan(it, allowUnionPayPan = other.unionPay) }
                 expiries += other.expiries
                 holders += other.holders
                 schemes += scheme
@@ -356,7 +425,7 @@ class EmvCardReader(
     private class ConflictingPan : RuntimeException()
 
     private companion object {
-        const val MAX_APPLICATIONS = 6
+        const val MAX_APPLICATIONS = 12
         const val MAX_RECORDS = 16
         const val MAX_EXCHANGES = 48
         const val MAX_CONTINUATIONS = 4
@@ -369,18 +438,29 @@ class EmvCardReader(
         const val MAX_PDOL_FIELDS = 32
         val PADDING = setOf(0, 255)
         val PPSE = "2PAY.SYS.DDF01".toByteArray(Charsets.US_ASCII)
+        val RANDOM = SecureRandom()
         val APPLICATIONS = listOf(
             Application(hex("A0000000031010"), "Visa"),
             Application(hex("A0000000041010"), "Mastercard"),
             Application(hex("A000000333010101"), "UnionPay"),
             Application(hex("A000000333010102"), "UnionPay"),
+            Application(hex("A000000333010103"), "UnionPay"),
             Application(hex("A00000002501"), "American Express"),
             Application(hex("A0000000651010"), "JCB"),
             Application(hex("A0000000032010"), "Visa"),
             Application(hex("A0000000043060"), "Maestro"),
             Application(hex("A0000001523010"), "Discover"),
         )
-        val FALLBACK = APPLICATIONS.take(MAX_APPLICATIONS)
+        val FALLBACK = APPLICATIONS
+
+        // PPSE supplies the full AID. Recognize supported payment providers without losing
+        // product/issuer suffixes, and still require exact DF-name equality after SELECT.
+        fun paymentScheme(aid: ByteArray): String? = APPLICATIONS.firstOrNull { it.aid.contentEquals(aid) }?.scheme
+            ?: listOf("A000000003" to "Visa", "A000000004" to "Mastercard", "A000000333" to "UnionPay",
+                "A000000025" to "American Express", "A000000065" to "JCB", "A000000152" to "Discover")
+                .firstOrNull { (rid, _) -> hex(rid).let { prefix -> aid.size >= prefix.size && prefix.indices.all { aid[it] == prefix[it] } } }?.second
+
+        fun bcd(value: Int): Byte = ((value / 10 shl 4) or (value % 10)).toByte()
 
         fun Byte.unsigned(): Int = toInt() and 0xFF
         fun requireData(condition: Boolean) { if (!condition) throw InvalidData() }

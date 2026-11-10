@@ -7,6 +7,8 @@ import android.nfc.Tag
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcel
+import android.os.ParcelFileDescriptor
+import android.os.SystemClock
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -42,7 +44,11 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.RuleChain
+import org.junit.rules.TestRule
+import org.junit.runner.Description
 import org.junit.runner.RunWith
+import org.junit.runners.model.Statement
 import takagi.ru.monica.R
 import takagi.ru.monica.data.PasswordDatabase
 import takagi.ru.monica.data.model.CardType
@@ -63,7 +69,83 @@ import takagi.ru.monica.viewmodel.DocumentViewModel
 /** Real host/editors with synthetic, already-parsed reader results; this does not exercise RF. */
 @RunWith(AndroidJUnit4::class)
 class NfcCardEntryUiTest {
-    @get:Rule val compose = createAndroidComposeRule<ComponentActivity>()
+    private val compose = createAndroidComposeRule<ComponentActivity>()
+
+    // Popup creates a separate Android view with density from its Context. Set the real
+    // isolated user's configuration before the Activity rule starts, then restore after it closes.
+    private val systemFontRule = object : TestRule {
+        override fun apply(base: Statement, description: Description) = object : Statement() {
+            override fun evaluate() {
+                if (description.methodName != "darkLargeTextKeepsTypeSelectionReadableAndCanSavePrepaidCard") {
+                    base.evaluate()
+                    return
+                }
+                val instrumentation = InstrumentationRegistry.getInstrumentation()
+                val user = android.os.Process.myUid() / 100000
+                check(user > 0 && InstrumentationRegistry.getArguments().getString("legacyVaultwardenUser") == user.toString()) {
+                    "System font fixture requires the task-owned synthetic Android user"
+                }
+                fun shell(command: String): String = ParcelFileDescriptor.AutoCloseInputStream(
+                    instrumentation.uiAutomation.executeShellCommand(command)
+                ).bufferedReader().use { it.readText().trim() }
+                check(shell("am get-current-user").toIntOrNull() == user) {
+                    "System font fixture requires its isolated user to be foreground"
+                }
+                val getSetting = "settings --user $user get system font_scale"
+                val originalSetting = shell(getSetting)
+                val originalScale = if (originalSetting == "null") 1f else {
+                    check(Regex("[+]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[eE][+-]?[0-9]+)?").matches(originalSetting)) {
+                        "Unexpected original font_scale value"
+                    }
+                    requireNotNull(originalSetting.toFloatOrNull()).also {
+                        check(it.isFinite() && it > 0f) { "Original font_scale must be finite and positive" }
+                    }
+                }
+                fun configurationScale(): Float {
+                    var scale = Float.NaN
+                    instrumentation.runOnMainSync { scale = context.resources.configuration.fontScale }
+                    return scale
+                }
+                fun awaitSettingAndConfiguration(setting: String, scale: Float) {
+                    val deadline = SystemClock.uptimeMillis() + 5_000
+                    do {
+                        if (shell(getSetting) == setting && configurationScale() == scale) return
+                        SystemClock.sleep(50)
+                    } while (SystemClock.uptimeMillis() < deadline)
+                    throw AssertionError("User $user font_scale expected=$setting/$scale actual=${shell(getSetting)}/${configurationScale()}")
+                }
+                // Verify the starting configuration before making any change.
+                awaitSettingAndConfiguration(originalSetting, originalScale)
+                val directory = File(context.filesDir, "nfc-card-entry-327")
+                check(directory.isDirectory || directory.mkdirs())
+                val journal = File(directory, "system-font-scale-${System.currentTimeMillis()}.txt")
+                journal.writeText("user=$user originalSetting=$originalSetting originalFontScale=$originalScale requestedFontScale=1.5\n")
+                var failure: Throwable? = null
+                try {
+                    shell("settings --user $user put system font_scale 1.5")
+                    awaitSettingAndConfiguration("1.5", 1.5f)
+                    journal.appendText("setVerified=true fontScale=${configurationScale()}\n")
+                    base.evaluate()
+                } catch (error: Throwable) {
+                    failure = error
+                    throw error
+                } finally {
+                    try {
+                        shell(if (originalSetting == "null") "settings --user $user delete system font_scale"
+                            else "settings --user $user put system font_scale $originalSetting")
+                        awaitSettingAndConfiguration(originalSetting, originalScale)
+                        journal.appendText("restoreVerified=true setting=${shell(getSetting)} fontScale=${configurationScale()}\n")
+                    } catch (restoreError: Throwable) {
+                        runCatching { journal.appendText("restoreVerified=false error=${restoreError.javaClass.name}: ${restoreError.message}\n") }
+                        val originalFailure = failure
+                        if (originalFailure != null) originalFailure.addSuppressed(restoreError) else throw restoreError
+                    }
+                }
+            }
+        }
+    }
+
+    @get:Rule val rules: TestRule = RuleChain.outerRule(systemFontRule).around(compose)
     private val context get() = InstrumentationRegistry.getInstrumentation().targetContext
     private val security by lazy { SecurityManager(context) }
     private lateinit var controller: NfcCardEntryController
@@ -140,6 +222,8 @@ class NfcCardEntryUiTest {
         input("entry_payment_cvv", "123")
         inject(sample)
         assertEquals(0, navigationCount)
+        assertNull(controller.ui.value.message)
+        assertNoManualNfcControls()
         assertValue("entry_payment_number", PAN)
         assertValue("entry_payment_holder", HOLDER)
         assertValue("entry_payment_expiry", "09/2031")
@@ -151,12 +235,10 @@ class NfcCardEntryUiTest {
         saveButton().performClick()
         compose.runOnIdle { assertFalse(saved) }
         assertTrue(runBlocking { db.secureItemDao().getAllItems().first().isEmpty() })
-        for (type in CardType.entries) {
-            scroll(BANK_ROOT, "nfc_card_type_${type.name}")
-            compose.onNodeWithTag("nfc_card_type_${type.name}").assertIsNotSelected()
-        }
-        scroll(BANK_ROOT, "nfc_card_type_CREDIT")
-        compose.onNodeWithTag("nfc_card_type_CREDIT").performClick().assertIsSelected()
+        openCardTypeMenu()
+        for (type in CardType.entries) compose.onNode(cardTypeChoice(type)).assertIsNotSelected()
+        compose.onNode(cardTypeChoice(CardType.CREDIT)).performClick()
+        assertEditable(compose.onNodeWithTag("bank_card_type"), cardTypeLabel(CardType.CREDIT))
         compose.runOnIdle { assertTrue(canSave) }
         saveButton().performClick()
         compose.waitUntil(15000) { saved }
@@ -191,7 +273,7 @@ class NfcCardEntryUiTest {
         capture("replace-cancel")
         compose.onNodeWithTag("nfc_card_cancel").performClick()
         assertValue("entry_payment_number", SECOND_PAN)
-        compose.onNodeWithTag("nfc_card_type_hint").assertDoesNotExist()
+        assertValue("bank_card_type", cardTypeLabel(CardType.DEBIT))
         inject(EmvCardReadResult.BankCard(PAN))
         compose.onNodeWithTag("nfc_card_confirm").performClick()
         assertValue("entry_payment_number", PAN)
@@ -200,8 +282,8 @@ class NfcCardEntryUiTest {
         assertValue("entry_payment_cvv", "456")
         assertValue("item_editor_title", "Keep title")
         assertEquals(0, navigationCount)
-        scroll(BANK_ROOT, "nfc_card_type_DEBIT")
-        compose.onNodeWithTag("nfc_card_type_DEBIT").performClick()
+        assertNull(controller.ui.value.message)
+        selectCardType(CardType.DEBIT)
         saveButton().performClick()
         compose.waitUntil(15000) { saved }
         val item = runBlocking { db.secureItemDao().getAllItems().first().single() }
@@ -225,6 +307,7 @@ class NfcCardEntryUiTest {
                     onNavigateBack = { route = DOCUMENT_ROUTE; page = "document" })
             }
         }
+        assertNoManualNfcControls()
         input("item_editor_title", "Unsaved synthetic document", DOCUMENT_ROOT)
         val documentNumber = hasText(context.getString(R.string.document_number_required)) and hasSetTextAction()
         compose.onNodeWithTag(DOCUMENT_ROOT).performScrollToNode(documentNumber)
@@ -488,16 +571,12 @@ class NfcCardEntryUiTest {
         assertEquals(1, fills)
     }
 
-    @Test fun scanButtonReportsActualHardwareAvailabilityWithoutNavigationOrDraft() {
-        show("main") { NfcCardScanButton() }
-        compose.onNodeWithTag("nfc_card_scan").performClick()
-        val adapter = NfcAdapter.getDefaultAdapter(context)
-        val expected = when {
-            adapter == null -> R.string.nfc_card_unavailable
-            !adapter.isEnabled -> R.string.nfc_card_disabled
-            else -> R.string.nfc_card_scan_hint
-        }
-        assertEquals(expected, controller.ui.value.message)
+    @Test fun bankAndDocumentEditorsOmitManualNfcControlsWithoutNavigationOrDraft() {
+        show(BANK_ROUTE) { AddEditBankCardScreen(bank, initialStorageExplicit = true, onNavigateBack = {}) }
+        assertNoManualNfcControls()
+        show(DOCUMENT_ROUTE) { AddEditDocumentScreen(document, initialStorageExplicit = true, onNavigateBack = {}) }
+        assertNoManualNfcControls()
+        assertNull(controller.ui.value.message)
         assertEquals(0, navigationCount)
         assertEquals(NfcCardEntryController.Prompt.NONE, controller.ui.value.prompt)
         assertTrue(runBlocking { db.secureItemDao().getAllItems().first().isEmpty() })
@@ -508,23 +587,121 @@ class NfcCardEntryUiTest {
         compose.runOnIdle { fontScale = 1.5f; dark = true }
         show(BANK_ROUTE) { AddEditBankCardScreen(bank, initialStorageExplicit = true, onNavigateBack = { saved = true }) }
         inject(sample)
-        scroll(BANK_ROOT, "nfc_card_type_hint")
-        val layouts = mutableListOf<TextLayoutResult>()
-        compose.onNodeWithTag("nfc_card_type_hint").performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(layouts) }
-        assertTrue(layouts.isNotEmpty())
-        assertTrue(layouts.all { it.layoutInput.density.fontScale == 1.5f && !it.hasVisualOverflow })
-        capture("bank-dark-large-type-hint")
+        assertNoManualNfcControls()
+        openCardTypeMenu()
+        capture("bank-dark-large-type-menu")
         for (type in CardType.entries) {
-            scroll(BANK_ROOT, "nfc_card_type_${type.name}")
-            compose.onNodeWithTag("nfc_card_type_${type.name}").assertIsDisplayed().performClick().assertIsSelected()
+            compose.onNode(cardTypeChoice(type)).assertIsDisplayed().assertIsNotSelected()
+            assertCardTypeTextNotClipped(type)
         }
-        scroll(BANK_ROOT, "nfc_card_type_PREPAID")
-        compose.onNodeWithTag("nfc_card_type_PREPAID").performClick().assertIsSelected()
+        compose.onNode(cardTypeChoice(CardType.DEBIT)).performClick()
+        for (type in CardType.entries) selectCardType(type)
+        selectCardType(CardType.PREPAID)
         capture("bank-dark-large-prepaid")
         saveButton().performClick()
         compose.waitUntil(15000) { saved }
         val item = runBlocking { db.secureItemDao().getAllItems().first().single() }
         assertEquals(CardType.PREPAID, requireNotNull(bank.parseCardData(item.itemData)).cardType)
+    }
+
+    private fun assertCardTypeTextNotClipped(type: CardType) {
+        val text = cardTypeLabel(type)
+        val node = compose.onNode(hasText(text) and
+            hasAnyAncestor(SemanticsMatcher.keyIsDefined(SemanticsProperties.Selected)), useUnmergedTree = true)
+        node.assertIsDisplayed()
+        val layouts = mutableListOf<TextLayoutResult>()
+        node.performSemanticsAction(SemanticsActions.GetTextLayoutResult) { assertTrue(it(layouts)) }
+        val semantics = node.fetchSemanticsNode()
+        val diagnostic = buildString {
+            appendLine("type=$type text=$text")
+            appendLine("semanticsSize=${semantics.size}")
+            appendLine("boundsInRoot=${semantics.boundsInRoot}")
+            appendLine("boundsInWindow=${semantics.boundsInWindow}")
+            layouts.forEachIndexed { index, layout ->
+                appendLine("layout[$index] size=${layout.size} paragraphWidth=${layout.multiParagraph.width} paragraphHeight=${layout.multiParagraph.height}")
+                appendLine("constraints=${layout.layoutInput.constraints} density=${layout.layoutInput.density.density} fontScale=${layout.layoutInput.density.fontScale} direction=${layout.layoutInput.layoutDirection}")
+                appendLine("visualOverflow=${layout.hasVisualOverflow} overflowWidth=${layout.didOverflowWidth} overflowHeight=${layout.didOverflowHeight} maxLinesExceeded=${layout.multiParagraph.didExceedMaxLines}")
+                appendLine("style=${layout.layoutInput.style} maxLines=${layout.layoutInput.maxLines} softWrap=${layout.layoutInput.softWrap}")
+                repeat(layout.lineCount) { line ->
+                    appendLine("line[$line] left=${layout.getLineLeft(line)} right=${layout.getLineRight(line)} top=${layout.getLineTop(line)} bottom=${layout.getLineBottom(line)} start=${layout.getLineStart(line)} end=${layout.getLineEnd(line)} ellipsized=${layout.isLineEllipsized(line)}")
+                }
+                layout.layoutInput.text.text.indices.forEach { offset ->
+                    appendLine("character[$offset] bounds=${layout.getBoundingBox(offset)}")
+                }
+            }
+        }
+        val directory = File(context.filesDir, "nfc-card-entry-327")
+        check(directory.isDirectory || directory.mkdirs())
+        File(directory, "text-layout-${type.name}.txt").writeText(diagnostic)
+        assertTrue("$text must expose a text layout\n$diagnostic", layouts.isNotEmpty())
+        layouts.forEach { layout ->
+            assertEquals(1.5f, layout.layoutInput.density.fontScale, 0f)
+            assertFalse("$text must fit vertically\n$diagnostic", layout.didOverflowHeight)
+            assertFalse("$text must keep every line\n$diagnostic", layout.multiParagraph.didExceedMaxLines)
+            assertEquals("Measured text width matches the actual node\n$diagnostic", semantics.size.width, layout.size.width)
+            assertEquals("Measured text height matches the actual node\n$diagnostic", semantics.size.height, layout.size.height)
+            // String Text's semantics may reconstruct MultiParagraph at the old maximum width,
+            // while retaining the intrinsic layoutSize. Check actual lines and characters against
+            // that laid-out node, as in AppUpdateDialogTest, rather than comparing paragraph widths.
+            fun assertVisible(left: Float, top: Float, right: Float, bottom: Float, part: String) {
+                val tolerance = 0.5f // Half a physical pixel only for float/int layout rounding.
+                assertTrue("$part must stay inside the left edge\n$diagnostic", left >= -tolerance)
+                assertTrue("$part must stay inside the right edge\n$diagnostic", right <= layout.size.width + tolerance)
+                assertTrue("$part must stay inside the top edge\n$diagnostic", top >= -tolerance)
+                assertTrue("$part must stay inside the bottom edge\n$diagnostic", bottom <= layout.size.height + tolerance)
+                assertTrue("$part must have finite ordered bounds\n$diagnostic",
+                    left.isFinite() && right.isFinite() && top.isFinite() && bottom.isFinite() &&
+                        left <= right && top <= bottom)
+            }
+            repeat(layout.lineCount) { line ->
+                assertFalse("$text line $line must not be ellipsized\n$diagnostic", layout.isLineEllipsized(line))
+                assertVisible(layout.getLineLeft(line), layout.getLineTop(line),
+                    layout.getLineRight(line), layout.getLineBottom(line), "$text line $line")
+            }
+            layout.layoutInput.text.text.forEachIndexed { offset, character ->
+                if (character != '\n' && character != '\r') {
+                    val bounds = layout.getBoundingBox(offset)
+                    assertVisible(bounds.left, bounds.top, bounds.right, bounds.bottom, "$text character $offset")
+                }
+            }
+        }
+        assertEquals("$text remains vertically visible\n$diagnostic", semantics.size.height.toFloat(), semantics.boundsInRoot.height, 1f)
+        assertEquals("$text remains horizontally visible\n$diagnostic", semantics.size.width.toFloat(), semantics.boundsInRoot.width, 1f)
+    }
+
+    private fun assertNoManualNfcControls() {
+        compose.onNodeWithTag("nfc_card_scan").assertDoesNotExist()
+        compose.onNodeWithTag("nfc_card_type_hint").assertDoesNotExist()
+        for (type in CardType.entries) compose.onNodeWithTag("nfc_card_type_${type.name}").assertDoesNotExist()
+        // The original card-type field may show the prompt, but there is no separate heading.
+        compose.onAllNodes(hasText(context.getString(R.string.nfc_card_type_select)) and
+            !hasTestTag("bank_card_type") and !hasAnyAncestor(hasTestTag("bank_card_type")))
+            .assertCountEquals(0)
+    }
+
+    private fun cardTypeLabel(type: CardType): String = context.getString(when (type) {
+        CardType.CREDIT -> R.string.credit_card
+        CardType.DEBIT -> R.string.debit_card
+        CardType.PREPAID -> R.string.prepaid_card
+    })
+
+    private fun cardTypeChoice(type: CardType) =
+        hasText(cardTypeLabel(type)) and SemanticsMatcher.keyIsDefined(SemanticsProperties.Selected)
+
+    private fun openCardTypeMenu() {
+        closeKeyboard()
+        scroll(BANK_ROOT, "bank_card_type")
+        compose.onNodeWithTag("bank_card_type").performClick()
+    }
+
+    private fun selectCardType(type: CardType) {
+        openCardTypeMenu()
+        compose.onNode(cardTypeChoice(type)).assertIsDisplayed().performClick()
+        assertEditable(compose.onNodeWithTag("bank_card_type"), cardTypeLabel(type))
+        openCardTypeMenu()
+        compose.onNode(cardTypeChoice(type)).assertIsSelected()
+        androidx.test.espresso.Espresso.pressBack()
+        compose.waitForIdle()
     }
 
     private fun show(currentRoute: String, content: @Composable () -> Unit) {

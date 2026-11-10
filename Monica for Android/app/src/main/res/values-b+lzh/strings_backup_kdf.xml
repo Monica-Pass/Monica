@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_kdf_title">密備格式</string>
+    <string name="backup_kdf_compatible">相容 V1 · 推衍十萬次</string>
+    <string name="backup_kdf_enhanced">增強 V2 · 推衍六十萬次</string>
+    <string name="backup_kdf_scope">此擇惟施於新製加密 ZIP 備本，舊本不易。</string>
+    <string name="backup_kdf_compatibility_warning">V2 須接收端相容。舊擴展或桌面端或不能復，宜存舊備本。</string>
+</resources>

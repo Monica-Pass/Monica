@@ -112,6 +112,17 @@ android {
         
     }
 
+    androidResources {
+        // Keep every app locale plus existing dependency regions for supported languages.
+        // AAPT filters exact qualifiers: bare zh/pt do not preserve Hant/HK/TW or pt-PT.
+        // Unqualified English resources and non-locale configurations remain available.
+        localeFilters += ['en', 'en-rAU', 'en-rCA', 'en-rGB', 'en-rIN', 'en-rXC',
+                          'de', 'es', 'es-rUS', 'b+es+419', 'fr', 'fr-rCA', 'it',
+                          'ja', 'ko', 'pl', 'pt', 'pt-rBR', 'pt-rPT', 'ru', 'vi',
+                          'zh', 'zh-rCN', 'zh-rHK', 'zh-rTW', 'b+zh+Hant',
+                          'zh-rNY', 'zh-rXB', 'b+lzh']
+    }
+
     splits {
         abi {
             // 仅输出 ARM 32/64 位两个 APK，不生成 universal 包。

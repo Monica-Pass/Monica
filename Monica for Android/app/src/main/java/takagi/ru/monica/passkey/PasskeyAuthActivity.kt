@@ -49,7 +49,7 @@ import takagi.ru.monica.data.ThemeMode
 import takagi.ru.monica.repository.MdbxRepositoryFactory
 import takagi.ru.monica.repository.PasskeyRepository
 import takagi.ru.monica.security.SecurityManager
-import takagi.ru.monica.ui.components.MasterPasswordDialog
+import takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog
 import takagi.ru.monica.ui.theme.MonicaTheme
 import takagi.ru.monica.utils.BiometricAuthHelper
 import takagi.ru.monica.utils.SettingsManager
@@ -95,7 +95,6 @@ class PasskeyAuthActivity : FragmentActivity() {
     }
 
     private val showMasterPasswordDialog = mutableStateOf(false)
-    private val masterPasswordError = mutableStateOf(false)
     
     private var resultFinished = false
     private var signingStarted = false
@@ -353,36 +352,25 @@ class PasskeyAuthActivity : FragmentActivity() {
                 )
 
                 if (showMasterPasswordDialog.value) {
-                    MasterPasswordDialog(
-                        onDismiss = {
-                            showMasterPasswordDialog.value = false
-                            masterPasswordError.value = false
+                    val requestAtOpen = remember { pendingRequestJson }
+                    val attemptAtOpen = remember { verificationAttempt }
+                    SecondaryPasswordVerificationDialog(
+                        manager = securityManager,
+                        onDismiss = { showMasterPasswordDialog.value = false },
+                        isRequestCurrent = {
+                            !resultFinished && !signingStarted && !isFinishing && !isDestroyed &&
+                                showMasterPasswordDialog.value && attemptAtOpen == verificationAttempt &&
+                                requestAtOpen == pendingRequestJson
                         },
-                        onConfirm = passwordConfirm@{ password ->
-                            if (resultFinished || signingStarted || isFinishing) return@passwordConfirm
-                            if (securityManager.verifyMasterPassword(password)) {
-                                masterPasswordError.value = false
+                        onSuccess = { generation ->
+                            if (securityManager.isDataReadCurrent(generation)) {
                                 showMasterPasswordDialog.value = false
                                 repository.logAudit("PASSKEY_AUTH_MASTER_PASSWORD_SUCCESS", currentPasskey.credentialId)
-                                recordPasskeyEvent(
-                                    stage = "master_password_success",
-                                    rpId = currentPasskey.rpId,
-                                    credentialId = currentPasskey.credentialId,
-                                )
-                                authenticateWithPasskey(pendingRequestJson, currentPasskey)
-                            } else {
-                                masterPasswordError.value = true
-                                repository.logAudit("PASSKEY_AUTH_MASTER_PASSWORD_FAILED", currentPasskey.credentialId)
-                                recordPasskeyEvent(
-                                    stage = "master_password_failed",
-                                    rpId = currentPasskey.rpId,
-                                    credentialId = currentPasskey.credentialId,
-                                    errorType = "MasterPasswordVerificationFailed",
-                                    errorMessage = "Invalid master password",
-                                )
+                                recordPasskeyEvent(stage = "master_password_success", rpId = currentPasskey.rpId,
+                                    credentialId = currentPasskey.credentialId)
+                                authenticateWithPasskey(requestAtOpen, currentPasskey)
                             }
                         },
-                        isError = masterPasswordError.value
                     )
                 }
             }

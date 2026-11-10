@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.password
 
+import takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.runtime.*
@@ -11,13 +12,10 @@ import androidx.lifecycle.compose.currentStateAsState
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import takagi.ru.monica.R
 import takagi.ru.monica.keepass.KeePassMonicaPasswordStore
-import takagi.ru.monica.security.BoundedSecureDataRead
 import takagi.ru.monica.security.SessionManager
-import takagi.ru.monica.ui.components.M3IdentityVerifyDialog
 import takagi.ru.monica.utils.KeePassKdbxService
 import takagi.ru.monica.viewmodel.LocalKeePassViewModel
 import takagi.ru.monica.viewmodel.PasswordViewModel
@@ -51,10 +49,6 @@ internal fun rememberKeePassListRead(
     var completed by remember(request) { mutableStateOf(false) }
     var failed by remember(request) { mutableStateOf(false) }
     var showUnlock by remember(request) { mutableStateOf(false) }
-    var password by remember(request) { mutableStateOf("") }
-    var passwordError by remember(request) { mutableStateOf(false) }
-    var verifying by remember(request) { mutableStateOf(false) }
-    val scope = rememberCoroutineScope()
     val snapshots = store?.presentationSnapshots?.collectAsState()?.value.orEmpty()
     val locked = databaseId != null && store?.isListAuthenticationRequired(databaseId) == true
     val currentRequest by rememberUpdatedState(request)
@@ -69,45 +63,24 @@ internal fun rememberKeePassListRead(
         catch (_: Exception) { failed = true }
     }
     if (showUnlock && visible && databaseId != null && store != null) {
-        M3IdentityVerifyDialog(
+        SecondaryPasswordVerificationDialog(
+            manager = takagi.ru.monica.ui.rememberUiSecurityManager(),
             title = stringResource(R.string.kp_list_unlock),
             message = stringResource(R.string.kp_list_unlock_help),
-            passwordValue = password,
-            onPasswordChange = { password = it; passwordError = false },
-            // Revoke this attempt even if the dialog is opened again before its worker finishes.
-            onDismiss = { showUnlock = false; password = ""; retry++ },
-            onConfirm = {
-                if (!verifying) {
-                    val attempt = password
-                    password = ""
-                    verifying = true
-                    scope.launch {
-                        fun current() = currentRequest === request && showUnlock &&
-                            lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) &&
-                            SessionManager.isUnlocked.value && SessionManager.lockGeneration.value == generation &&
-                            KeePassKdbxService.nativeLockVersions.value[databaseId] == versions[databaseId]
-                        val valid = BoundedSecureDataRead.readChecked(isCurrent = ::current) {
-                            localViewModel.verifyMonicaMasterPassword(attempt)
-                        }
-                        if (current()) {
-                            verifying = false
-                            if (valid == true) {
-                                runCatching { store.authorizeListRead(databaseId, versions[databaseId] ?: 0L, generation) }
-                                    .onSuccess { showUnlock = false; retry++ }
-                                    .onFailure { passwordError = true }
-                            } else passwordError = true
-                        }
-                    }
-                }
+            onDismiss = { showUnlock = false; retry++ },
+            isRequestCurrent = {
+                currentRequest === request && showUnlock &&
+                    lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) &&
+                    SessionManager.isUnlocked.value && SessionManager.lockGeneration.value == generation &&
+                    KeePassKdbxService.nativeLockVersions.value[databaseId] == versions[databaseId]
+            },
+            onSuccess = {
+                runCatching { store.authorizeListRead(databaseId, versions[databaseId] ?: 0L, generation) }
+                    .onSuccess { showUnlock = false; retry++ }
+                    .onFailure { showUnlock = false; failed = true }
             },
             confirmText = stringResource(R.string.kp_list_unlock),
-            confirmEnabled = password.isNotEmpty() && !verifying,
-            destructiveConfirm = false,
             icon = Icons.Default.Lock,
-            isPasswordError = passwordError,
-            passwordErrorText = stringResource(R.string.kp_list_auth_failed),
-            showBiometricSlot = false,
-            savePasswordTextState = false,
         )
     }
     return KeePassListRead(databaseId,

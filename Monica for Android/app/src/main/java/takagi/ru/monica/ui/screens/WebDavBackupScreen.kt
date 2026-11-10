@@ -505,6 +505,11 @@ fun WebDavBackupScreen(
                     },
                     onPasswordChange = { encryptionPassword = it; webDavHelper.setEncryptionConfig(true, it) },
                     onVisibilityChange = { encryptionPasswordVisible = !encryptionPasswordVisible },
+                    format = backupPreferences.encryptionFormat,
+                    onFormatChange = {
+                        backupPreferences = backupPreferences.copy(encryptionFormat = it)
+                        webDavHelper.saveBackupPreferences(backupPreferences)
+                    },
                 )
                 takagi.ru.monica.ui.components.SelectiveBackupCard(
                     preferences = backupPreferences,

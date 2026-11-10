@@ -710,8 +710,6 @@ fun PasswordListContent(
     // 详情对话框状态
     var showDetailDialog by remember { mutableStateOf(false) }
     var selectedPasswordForDetail by remember { mutableStateOf<takagi.ru.monica.data.PasswordEntry?>(null) }
-    var passwordInput by remember { mutableStateOf("") }
-    var passwordError by remember { mutableStateOf(false) }
     
     
     LaunchedEffect(currentFilter, nativeListRead.locked, nativeListRead.visible) {
@@ -724,7 +722,6 @@ fun PasswordListContent(
         showManualStackConfirmDialog = false
         showDetailDialog = false
         selectedPasswordForDetail = null
-        passwordInput = ""
     }
     val context = androidx.compose.ui.platform.LocalContext.current
     val activity = context as? FragmentActivity
@@ -888,8 +885,6 @@ fun PasswordListContent(
     
     // 添加单项删除对话框状态
     var itemToDelete by remember { mutableStateOf<takagi.ru.monica.data.PasswordEntry?>(null) }
-    var singleItemPasswordInput by remember { mutableStateOf("") }
-    var showSingleItemPasswordVerify by remember { mutableStateOf(false) }
     
     // 添加已删除项ID集合（用于在验证前隐藏项）
     var deletedItemIds by remember { mutableStateOf(setOf<Long>()) }
@@ -2128,12 +2123,21 @@ fun PasswordListContent(
         viewModel = viewModel,
         context = context,
         coroutineScope = coroutineScope,
-        onDeleteSelection = { onProgress ->
-            val selectedPasswordIdsSnapshot = selectedPasswords.toSet()
-            val selectedSupplementaryItemsSnapshot = selectedSupplementaryItems.toList()
-            val selectedItemKeysSnapshot = selectedItemKeys.toList()
+        onDeleteSelection = { targetKeys, targetPasswordIds, onProgress ->
+            // Resolve only the reviewed selection, even before a selection change recomposes the dialog.
+            check(selectedItemKeys == targetKeys) { "Delete selection changed" }
+            val targetCards = resolveSelectedPasswordPageCardItems(passwordPageListItems, targetKeys)
+            check(targetCards.mapTo(linkedSetOf()) { it.key } == targetKeys &&
+                targetCards.mapNotNullTo(linkedSetOf()) { it.passwordId } == targetPasswordIds
+            ) { "Delete selection is no longer available" }
+            val selectedPasswordIdsSnapshot = targetPasswordIds
+            val selectedSupplementaryItemsSnapshot = targetCards.mapNotNull { it.toSelectedSupplementaryItemOrNull() }
+            val selectedItemKeysSnapshot = targetKeys.toList()
             val selectedPasswordEntries = passwordEntries.filter { it.id in selectedPasswordIdsSnapshot }
             val selectedNativeEntries = selectedPasswordIdsSnapshot.mapNotNull(nativeTokens.byDisplayId::get)
+            check(selectedPasswordEntries.mapTo(linkedSetOf()) { it.id } +
+                selectedPasswordIdsSnapshot.filter { it in nativeTokens.byDisplayId } == targetPasswordIds
+            ) { "Delete target is no longer available" }
             val totalToProcess = selectedPasswordEntries.size + selectedSupplementaryItemsSnapshot.size + selectedNativeEntries.size
             var processedCount = 0
             onProgress(processedCount, totalToProcess.coerceAtLeast(1))
@@ -2211,23 +2215,12 @@ fun PasswordListContent(
         },
         showBatchDeleteDialog = showBatchDeleteDialog,
         onShowBatchDeleteDialogChange = { showBatchDeleteDialog = it },
-        passwordInput = passwordInput,
-        onPasswordInputChange = {
-            passwordInput = it
-            passwordError = false
-        },
-        passwordError = passwordError,
-        onPasswordErrorChange = { passwordError = it },
         canUseBiometric = canUseBiometric,
         activity = activity,
         biometricHelper = biometricHelper,
         itemToDelete = itemToDelete,
         onItemToDeleteChange = { itemToDelete = it },
         appSettings = appSettings,
-        singleItemPasswordInput = singleItemPasswordInput,
-        onSingleItemPasswordInputChange = { singleItemPasswordInput = it },
-        showSingleItemPasswordVerify = showSingleItemPasswordVerify,
-        onShowSingleItemPasswordVerifyChange = { showSingleItemPasswordVerify = it },
         localKeePassViewModel = localKeePassViewModel
     )
 }

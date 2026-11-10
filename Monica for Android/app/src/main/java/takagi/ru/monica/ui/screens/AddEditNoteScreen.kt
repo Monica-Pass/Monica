@@ -41,6 +41,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Fullscreen
@@ -102,6 +103,7 @@ import takagi.ru.monica.data.NoteCodeBlockCollapseMode
 import takagi.ru.monica.data.PasswordDatabase
 import takagi.ru.monica.data.CustomFieldDraft
 import takagi.ru.monica.ui.components.CustomFieldEditorSection
+import takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog
 import takagi.ru.monica.data.model.StorageTarget
 import takagi.ru.monica.data.model.toStorageTarget
 import takagi.ru.monica.notes.domain.NoteDraftStore
@@ -173,8 +175,7 @@ fun AddEditNoteScreen(
     var showNoteImageDialog by remember { mutableStateOf<String?>(null) } // 存文件名
     var showConfirmDelete by remember { mutableStateOf(false) }
     var showPasswordDialog by remember { mutableStateOf(false) }
-    var masterPassword by remember { mutableStateOf("") }
-    var passwordError by remember { mutableStateOf(false) }
+
     var showAddImageDialog by remember { mutableStateOf(false) }
     var showRestoreNewNoteDraftDialog by rememberSaveable(noteId) { mutableStateOf(false) }
     var pendingImageInsertionCursor by rememberSaveable { mutableStateOf(-1) }
@@ -1224,18 +1225,18 @@ fun AddEditNoteScreen(
     }
 
     fun performDelete() {
+        val noteToDelete = editorState.currentNote
         scope.launch {
-            editorState.currentNote?.let { note ->
+            noteToDelete?.let { note ->
                 viewModel.deleteNote(note)
             }
             showPasswordDialog = false
-            masterPassword = ""
-            passwordError = false
             onNavigateBack()
         }
     }
 
     if (showPasswordDialog) {
+        val deletionNoteId = remember { editorState.currentNote?.id }
         val fragmentActivity = context as? FragmentActivity
         val skipIdentityVerification = appSettings.disablePasswordVerification
         val biometricAction = if (
@@ -1263,38 +1264,35 @@ fun AddEditNoteScreen(
         } else {
             null
         }
-        M3IdentityVerifyDialog(
-            title = stringResource(R.string.verify_identity),
-            message = stringResource(R.string.verify_to_delete),
-            passwordValue = masterPassword,
-            onPasswordChange = {
-                masterPassword = it
-                passwordError = false
-            },
-            onDismiss = {
-                showPasswordDialog = false
-                masterPassword = ""
-                passwordError = false
-            },
-            onConfirm = {
-                if (skipIdentityVerification || securityManager.verifyMasterPassword(masterPassword)) {
-                    performDelete()
-                } else {
-                    passwordError = true
-                }
-            },
-            confirmText = stringResource(R.string.delete),
-            destructiveConfirm = true,
-            requireIdentityVerification = !skipIdentityVerification,
-            isPasswordError = passwordError,
-            passwordErrorText = stringResource(R.string.current_password_incorrect),
-            onBiometricClick = biometricAction,
-            biometricHintText = if (biometricAction == null) {
-                context.getString(R.string.biometric_not_available)
-            } else {
-                null
-            }
-        )
+        if (skipIdentityVerification) {
+            M3IdentityVerifyDialog(
+                title = stringResource(R.string.verify_identity),
+                message = stringResource(R.string.verify_to_delete),
+                passwordValue = "",
+                onPasswordChange = {},
+                onDismiss = { showPasswordDialog = false },
+                onConfirm = { performDelete() },
+                confirmText = stringResource(R.string.delete),
+                destructiveConfirm = true,
+                requireIdentityVerification = false,
+            )
+        } else {
+            SecondaryPasswordVerificationDialog(
+                manager = securityManager,
+                title = stringResource(R.string.verify_identity),
+                message = stringResource(R.string.verify_to_delete),
+                onDismiss = { showPasswordDialog = false },
+                onSuccess = { performDelete() },
+                isRequestCurrent = { showPasswordDialog && deletionNoteId != null && editorState.currentNote?.id == deletionNoteId },
+                confirmText = stringResource(R.string.delete),
+                icon = Icons.Default.Warning,
+                destructiveConfirm = true,
+                onBiometricClick = biometricAction,
+                biometricHintText = if (biometricAction == null) {
+                    stringResource(R.string.biometric_not_available)
+                } else null,
+            )
+        }
     }
 }
 

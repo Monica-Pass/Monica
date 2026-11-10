@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="nfc_card_scan_title">Read NFC card</string>
-    <string name="nfc_card_scan_hint">Hold the card near your phone NFC antenna. Some contactless bank cards are supported.</string>
-    <string name="nfc_card_scanning">Reading card…</string>
-    <string name="nfc_card_unavailable">This device does not support NFC.</string>
-    <string name="nfc_card_disabled">Turn on NFC in system settings first.</string>
     <string name="nfc_card_unlock_retap">Unlock Monica, then tap the card again.</string>
-    <string name="nfc_card_unsupported">This card has no readable bank card number. Protected identity cards are not supported; a chip UID is not a card number.</string>
+    <string name="nfc_card_unsupported">No usable bank card number was read. Keep the card near the phone and try again; some cards do not expose this information.</string>
     <string name="nfc_card_read_failed">Could not read the card. Hold it near the phone and try again.</string>
     <string name="nfc_card_new_title">Create a bank card?</string>
     <string name="nfc_card_new_message">A bank card was read, but this page is for another item type. Open a new bank card page? Your current content will be kept.</string>
     <string name="nfc_card_replace_title">Replace existing card details?</string>
     <string name="nfc_card_replace_message">The scanned details differ from the form. Only the card number, expiry and cardholder details provided by the card will be replaced. Other content will be kept.</string>
-    <string name="nfc_card_type_hint">Card details were read. NFC cannot reliably identify credit, debit or prepaid cards. Please confirm the type.</string>
-    <string name="nfc_card_ready">Scanned card details filled in. Review them before saving.</string>
     <string name="nfc_card_busy">Finish the current operation before scanning a card.</string>
     <string name="nfc_card_new_action">Open new card</string>
     <string name="nfc_card_replace_action">Replace</string>

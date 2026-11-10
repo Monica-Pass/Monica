@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_kdf_title">Encrypted backup format</string>
+    <string name="backup_kdf_compatible">Compatible V1 · 100000 rounds</string>
+    <string name="backup_kdf_enhanced">Enhanced V2 · 600000 rounds</string>
+    <string name="backup_kdf_scope">Only newly created encrypted ZIP backups use this choice. Existing backups are unchanged.</string>
+    <string name="backup_kdf_compatibility_warning">V2 requires a compatible reader. Older extensions or desktop clients may not restore it. Keep earlier backups.</string>
+</resources>

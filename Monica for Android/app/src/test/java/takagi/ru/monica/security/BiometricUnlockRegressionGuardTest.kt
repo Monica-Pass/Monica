@@ -33,14 +33,28 @@ class BiometricUnlockRegressionGuardTest {
         val persistBody = source.substringAfter("private fun persistKeystoreWrappedMdk(mdk: ByteArray): Boolean {")
             .substringBefore("private fun persistCompatKeystoreWrappedMdk")
         val ensureBody = source.substringAfter("private fun ensureMdkInitializedWithPassword(")
+            .substringBefore("private fun publishPasswordMdk(")
+        val publishBody = source.substringAfter("private fun publishPasswordMdk(")
             .substringBefore("private fun ensureMdkKeystoreWrapper()")
+        val compatBody = source.substringAfter("private fun persistCompatKeystoreWrappedMdk(")
+            .substringBefore("private fun generateRandom(")
+        val commitBody = source.substringAfter("private fun commitLocalPassword(")
+            .substringBefore("private fun ensureMdkInitializedWithPassword(")
         assertTrue(persistBody.contains("KeyPermanentlyInvalidatedException"))
         assertTrue(persistBody.contains("UnrecoverableKeyException"))
         assertFalse("A failed key read is not authority to delete the original alias", persistBody.contains("deleteSecureKeyAlias("))
         assertFalse("An existing unreadable wrapper must remain available for recovery", ensureBody.contains("hasKeystoreBlob = false"))
-        assertTrue("Password auth may only add a missing compatibility wrapper under the original policy",
-            ensureBody.contains("if (!hasKeystoreBlob) persistCompatKeystoreWrappedMdk(actualMdk, allowInitialKeyCreation = initialEnrollment)"))
-        assertTrue(ensureBody.contains("mdkAuthUnavailableUntilMillis = 0L"))
+        assertTrue("Normal password auth may only add a missing compatibility wrapper using an existing device key",
+            ensureBody.contains("if (!sharedPreferences.contains(MDK_KEYSTORE_BLOB_KEY)) persistCompatKeystoreWrappedMdk(mdk)") &&
+                compatBody.contains("allowInitialKeyCreation: Boolean = false") &&
+                compatBody.contains("else getExistingDataKey(compat = true)"))
+        assertTrue("New device keys remain limited to initial enrollment without a password or ready MDK",
+            commitBody.replace(Regex("\\s+"), " ").contains(
+                "allowInitialKeyCreation = original[MASTER_PASSWORD_HASH_KEY] == null && original[MDK_READY_KEY] != true"))
+        assertTrue("Only current authenticated credentials may publish MDK state and clear its cooldown",
+            ensureBody.contains("publishPasswordMdk(mdk, authenticatedCredentials, generation, epoch, attempt)") &&
+                publishBody.contains("check(isDataReadCurrent(generation) && credentialsMatch(credentials))") &&
+                publishBody.contains("mdkAuthUnavailableUntilMillis = 0L"))
     }
 
     @Test
@@ -67,7 +81,14 @@ class BiometricUnlockRegressionGuardTest {
         val getOrCreateBody = source.substringAfter("private fun getOrCreateMdkBytes(): ByteArray {")
             .substringBefore("private fun getMdkForCrypto()")
         val ensureBody = source.substringAfter("private fun ensureMdkInitializedWithPassword(")
-            .substringBefore("private fun ensureMdkKeystoreWrapper()")
+            .substringBefore("private fun publishPasswordMdk(")
+        val passwordReadBody = source.substringAfter("private fun readPasswordAuthenticatedMdk(")
+            .substringBefore("private fun credentialUpdates(")
+        val credentialSource = projectFile(
+            "app/src/main/java/takagi/ru/monica/security/LocalPasswordCredentials.kt"
+        ).readSourceText()
+        val unwrapBody = credentialSource.substringAfter("fun unwrap(").substringBefore("fun create(")
+        val cipherUnwrapBody = credentialSource.substringAfter("private fun unwrapWithKey(")
 
         assertTrue(
             "An empty runtime MDK cache must be ignored so a freshly persisted wrapper can still be read.",
@@ -81,8 +102,18 @@ class BiometricUnlockRegressionGuardTest {
             "MDK recovery should also ignore empty runtime cache before falling back to the keystore wrapper.",
             getOrCreateBody.contains("cached.isNotEmpty()")
         )
-        assertTrue("Damaged password-wrapped MDK material must be rejected rather than replaced",
-            ensureBody.contains("check(actualMdk.size == 32)"))
+        assertTrue("An existing password wrapper must be authenticated before migration, without a cache/error fallback",
+            ensureBody.contains("val mdk = readPasswordAuthenticatedMdk(password, original)") &&
+                passwordReadBody.contains("check(hasBlob == hasSalt)") &&
+                passwordReadBody.contains("if (hasBlob) return LocalPasswordCredentials.unwrap(password, original)") &&
+                !passwordReadBody.contains("catch (") && !passwordReadBody.contains("runCatching") &&
+                unwrapBody.contains("unwrapWithKey(key, values[BLOB] as String, profile)") &&
+                !unwrapBody.contains("catch ("))
+        assertTrue("Password MDK unwrap must validate its authenticated envelope, profile AAD and 32-byte key",
+            cipherUnwrapBody.contains("require(blob.length == 80)") &&
+                cipherUnwrapBody.contains("require(bytes.size == 60)") &&
+                cipherUnwrapBody.contains("PasswordKdf.mdkAad(profile)?.let(cipher::updateAAD)") &&
+                cipherUnwrapBody.contains("cipher.doFinal(bytes, 12, 48).also { require(it.size == 32) }"))
         assertFalse("Authentication must not rewrite an unreadable existing password wrapper",
             ensureBody.contains("shouldRewritePasswordBlob = true"))
     }
@@ -234,6 +265,9 @@ class BiometricUnlockRegressionGuardTest {
         val keePassKdbxSource = projectFile(
             "app/src/main/java/takagi/ru/monica/utils/KeePassKdbxService.kt"
         ).readSourceText()
+        val secureItemCodecSource = projectFile(
+            "app/src/main/java/takagi/ru/monica/keepass/KeePassSecureItemFieldCodec.kt"
+        ).readSourceText()
 
         assertTrue(
             "MDBX write boundary must preserve current plaintext data, but decrypt explicitly-prefixed Monica ciphertext before writing shared payloads.",
@@ -266,10 +300,20 @@ class BiometricUnlockRegressionGuardTest {
                 webDavHelperSource.contains(".map { portableSecureItemForBackup(it, securityManager) }")
         )
         assertTrue(
-            "KeePass write boundary must decrypt Monica field ciphertext before storing MonicaItemData in KDBX.",
-            keePassKdbxSource.contains("portableSecureItemDataForKeePass(") &&
+            "KeePass service must own portable payload decryption and reject unreadable ciphertext.",
+            keePassKdbxSource.contains("private fun portableSecureItemDataForKeePass(") &&
+                keePassKdbxSource.contains("securityManager.looksLikeMonicaCiphertext(itemData)") &&
                 keePassKdbxSource.contains("securityManager.decryptData(itemData)") &&
-                keePassKdbxSource.contains("FIELD_MONICA_ITEM_DATA to EntryValue.Encrypted(EncryptedValue.fromString(portableItemData))")
+                keePassKdbxSource.contains("Cannot write encrypted secure item data to KeePass") &&
+                keePassKdbxSource.contains("private val secureItemFieldCodec = KeePassSecureItemFieldCodec(") &&
+                keePassKdbxSource.contains("portableSecureItemDataForKeePass = ::portableSecureItemDataForKeePass")
+        )
+        assertTrue(
+            "KeePass codec must consume the service-prepared portable payload and protect it in KDBX fields.",
+            secureItemCodecSource.contains("val portableItemData = portableSecureItemDataForKeePass(item)") &&
+                secureItemCodecSource.contains("FIELD_MONICA_ITEM_DATA to EntryValue.Encrypted(EncryptedValue.fromString(portableItemData))") &&
+                secureItemCodecSource.contains("val portable = portableSecureItemDataForKeePass(item)") &&
+                secureItemCodecSource.contains("FIELD_MONICA_TOTP_DATA to EntryValue.Encrypted(EncryptedValue.fromString(portable))")
         )
     }
 
@@ -789,10 +833,14 @@ class BiometricUnlockRegressionGuardTest {
             addEditBankCardScreenSource.contains("withContext(Dispatchers.Default) {\n                    viewModel.parseCardData(item.itemData)") &&
                 addEditDocumentScreenSource.contains("withContext(Dispatchers.Default) {\n                    embeddedEditor?.data ?: viewModel.parseDocumentData(item.itemData)")
         )
+        val cardSaveConditions = addEditBankCardScreenSource.substringAfter("val canSave = ")
+            .substringBefore('\n').split("&&").map(String::trim)
         assertTrue(
             "Card-wallet editors must not show a blank edit form before encrypted fields have been parsed.",
             addEditBankCardScreenSource.contains("val isExistingCardReady = cardId == null || hasLoadedExistingCardFields") &&
-                addEditBankCardScreenSource.contains("val canSave = isExistingCardReady && (cardNumber.isNotBlank() || embeddedDraft != null) && !isSaving") &&
+                cardSaveConditions.containsAll(listOf("nfcTypeConfirmed", "isExistingCardReady",
+                    "(cardNumber.isNotBlank() || embeddedDraft != null)", "!isSaving")) &&
+                addEditBankCardScreenSource.contains("if (!nfcTypeConfirmed || !isExistingCardReady || isSaving || (cardNumber.isBlank() && embeddedDraft == null)) return@saveAction") &&
                 addEditBankCardScreenSource.contains("if (!isExistingCardReady)") &&
                 addEditBankCardScreenSource.contains("BankCardEditLoadingPlaceholder(") &&
                 addEditBankCardScreenSource.substringAfter("withContext(Dispatchers.IO) {").substringBefore("}?.let").contains("viewModel.getCardById(requireNotNull(cardId))") &&
@@ -833,9 +881,10 @@ class BiometricUnlockRegressionGuardTest {
         val listItemSource = projectFile(
             "app/src/main/java/takagi/ru/monica/autofill_ng/ui/PasswordListItem.kt"
         ).readSourceText()
-        val handleSignature = "private fun handleAutofill(password: PasswordEntry, forceAddUri: Boolean, generation: Long) {"
-        assertTrue("The guard must locate the actual handler", pickerSource.contains(handleSignature))
-        val handleBody = pickerSource.substringAfter(handleSignature)
+        val handleSignature = Regex("""private\s+fun\s+handleAutofill\(\s*\w+:\s*PasswordEntry,\s*forceAddUri:\s*Boolean,\s*generation:\s*Long\s*\)\s*\{""")
+        val handleMatches = handleSignature.findAll(pickerSource).toList()
+        assertTrue("The guard must locate exactly one real handler regardless of the selection parameter name", handleMatches.size == 1)
+        val handleBody = pickerSource.substring(handleMatches.single().range.last + 1)
             .substringBefore("private suspend fun preparePasswordAutofill(")
         val prepareBody = pickerSource.substringAfter("private suspend fun preparePasswordAutofill(")
             .substringBefore("private fun handleGeneratedPasswordFill(")
@@ -845,6 +894,7 @@ class BiometricUnlockRegressionGuardTest {
         assertFalse(
             "Autofill button confirmation must not decrypt passwords directly on the main-thread return path.",
             handleBody.contains("AutofillSecretResolver.decryptPasswordOrNull") ||
+                handleBody.contains("AutofillSecretResolver.resolvePasswordOrNull") ||
                 handleBody.contains("AccountFillPolicy.resolveAccountIdentifier")
         )
         assertFalse(
@@ -853,12 +903,19 @@ class BiometricUnlockRegressionGuardTest {
         )
         assertTrue("Password reads retain a native worker slot and the original authorization generation",
             prepareBody.contains("BoundedSecureDataRead.read<PasswordAutofillPreparation>(securityManager, generation)") &&
-                prepareBody.contains("AutofillSecretResolver.decryptPasswordOrNull") &&
-                handleBody.contains("isDataReadCurrent(generation)") && handleBody.contains("canPublishCredentials()"))
+                prepareBody.contains("AutofillSecretResolver.resolvePasswordOrNull") &&
+                handleBody.contains("isDataReadCurrent(generation)") && handleBody.contains("canPublishCredentials()") &&
+                handleBody.contains("if (!source.isCurrent(password)) return@launch"))
+        val resolverSource = projectFile("app/src/main/java/takagi/ru/monica/autofill_ng/AutofillSecretResolver.kt").readSourceText()
+        val resolveBody = resolverSource.substringAfter("fun resolvePasswordOrNull(").substringBefore("fun decryptPasswordOrNull(")
+        assertTrue("Native projection routing must retain the local decryption boundary rather than bypassing it",
+            resolveBody.contains("if (AutofillPasswordSource.isNative(entry)) entry.password") &&
+                resolveBody.contains("else decryptPasswordOrNull(securityManager, entry.password, logTag)"))
         assertFalse("Stale ID-only plaintext prewarming must not return", pickerSource.contains("private fun prewarmPasswordAutofill("))
         assertTrue(
             "OTP copy/notification side effects should use suspending IO reads instead of runBlocking on the selection path.",
-            otpActionBody.contains("AutofillOtpActions(applicationContext).process(password)") &&
+            otpActionBody.contains("AutofillOtpActions(applicationContext).process(password, isAuthorized = {") &&
+                otpActionBody.contains("!AutofillPasswordSource.isNative(password) || source?.isCurrent(password) == true") &&
                 !otpActionBody.contains("runBlocking") &&
                 projectFile("app/src/main/java/takagi/ru/monica/autofill_ng/AutofillOtpActions.kt").readSourceText()
                     .let { it.contains("withContext(Dispatchers.IO)") && !it.contains("runBlocking") }
@@ -872,6 +929,48 @@ class BiometricUnlockRegressionGuardTest {
                     .substringBefore("} else {")
                     .contains("CircularProgressIndicator()")
         )
+    }
+
+    @Test
+    fun migratedSecondaryBiometricsKeepOneUseRequestAndForegroundGates() {
+        val settings = projectFile("app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt").readSourceText()
+        val currentDeveloper = settings.substringAfter("fun currentDeveloperRequest(").substringBefore("fun cancelDeveloperVerification()")
+        val cancelDeveloper = settings.substringAfter("fun cancelDeveloperVerification() {").substringBefore("fun completeDeveloperVerification(")
+        val completeDeveloper = settings.substringAfter("fun completeDeveloperVerification(").substringBefore("fun startDeveloperBiometric(")
+        val developerBiometric = settings.substringAfter("fun startDeveloperBiometric(").substringBefore("DisposableEffect(developerLifecycle)")
+        assertTrue("Developer first prompt and retry must use the same guarded flow",
+            settings.contains("startDeveloperBiometric(request)") && settings.contains("startDeveloperBiometric(currentDeveloperVerification)"))
+        assertTrue("Developer callbacks must remain bound to the original live request, lock generation and foreground",
+            currentDeveloper.contains("developerAlive.get() && developerRequest === request") &&
+                currentDeveloper.contains("dataReadGeneration.value == request.generation") &&
+                currentDeveloper.contains("Lifecycle.State.RESUMED") &&
+                currentDeveloper.contains("?.isInteractive == true") && currentDeveloper.contains("?.isKeyguardLocked == false"))
+        assertTrue("Developer completion must reject stale callbacks and consume the request before navigation",
+            completeDeveloper.contains("if (!currentDeveloperRequest(request)) return") &&
+                completeDeveloper.indexOf("cancelDeveloperVerification()") < completeDeveloper.indexOf("developerNavigate.value()"))
+        assertTrue("Canceled prompts cannot reopen the password dialog or inherit a replacement's callbacks",
+            cancelDeveloper.contains("developerRequest = null") && cancelDeveloper.contains("prompt?.cancelAuthentication()") &&
+                developerBiometric.contains("val prompt = BiometricAuthHelper(context)") &&
+                developerBiometric.contains("developerBiometric === prompt && currentDeveloperRequest(request)") &&
+                settings.contains("Lifecycle.Event.ON_PAUSE || event == androidx.lifecycle.Lifecycle.Event.ON_STOP"))
+
+        val export = projectFile("app/src/main/java/takagi/ru/monica/ui/screens/ExportDataScreen.kt").readSourceText()
+        val currentSteam = export.substringAfter("fun currentSteam(").substringBefore("fun cancelSteamIdentity()")
+        val verifiedSteam = export.substringAfter("fun verifiedSteam(").substringBefore("fun verifiedJson(")
+        assertTrue("Steam identity must remain bound to the original selected source, format, IDs and generation",
+            currentSteam.contains("steamIdentityRequest === request") && currentSteam.contains("request.source.key ==") &&
+                currentSteam.contains("request.option.name ==") && currentSteam.contains("request.ids == selectedSteamIds") &&
+                currentSteam.contains("SecurityManager.dataReadGeneration.value == request.generation") &&
+                currentSteam.contains("Lifecycle.State.RESUMED"))
+        assertTrue("Password, skip and biometric Steam success share a single consumed authorization",
+            verifiedSteam.contains("if (!currentSteam(request)) return") &&
+                verifiedSteam.indexOf("cancelSteamIdentity()") < verifiedSteam.indexOf("chooseLocation()") &&
+                export.contains("onSuccess = { verifiedSteam(steamRequest) }") &&
+                export.contains("onSuccess = { if (steamBiometric === prompt) verifiedSteam(steamRequest) }"))
+        assertTrue("Steam retains strong biometric entry and revokes it when its owner pauses or closes",
+            export.contains("val prompt = takagi.ru.monica.utils.BiometricAuthHelper(context)") &&
+                export.contains("Lifecycle.Event.ON_PAUSE || event == Lifecycle.Event.ON_STOP) cancelSteamIdentity()") &&
+                export.contains("onDismiss = ::cancelSteamIdentity") && export.contains("prompt?.cancelAuthentication()"))
     }
 
     private fun projectFile(relativePath: String): File {

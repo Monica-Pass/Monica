@@ -841,10 +841,16 @@ open class MonicaInputMethodService : InputMethodService() {
 
     private fun updateUnlockState(settings: AppSettings): Boolean {
         if (!::securityManager.isInitialized) return false
-        val unlocked = if (DeveloperVerificationPolicy.bypassesIdentityVerification(settings)) {
-            securityManager.unlockVaultForDeveloperBypass(settings.autoLockMinutes)
-        } else {
-            securityManager.canAccessVaultNowStrict(this, settings.autoLockMinutes)
+        val unlocked = try {
+            if (DeveloperVerificationPolicy.bypassesIdentityVerification(settings)) {
+                securityManager.unlockVaultForDeveloperBypass(settings.autoLockMinutes)
+            } else {
+                securityManager.canAccessVaultNowStrict(this, settings.autoLockMinutes)
+            }
+        } catch (_: takagi.ru.monica.security.SecureStorageUnavailableException) {
+            // Another process changed the credential store. Existing callers follow the
+            // locked UI/reauthentication path; a failed read never means an unconfigured vault.
+            false
         }
         if (unlocked) {
             uiState.update { it.copy(unlocked = true, errorMessage = null) }

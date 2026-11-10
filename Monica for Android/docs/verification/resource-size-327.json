@@ -1,0 +1,1257 @@
+{
+  "date": "2026-11-11",
+  "version": "1.0.327",
+  "scope": "Bundled images and dependency locale resources only",
+  "imageSourceBytes": {
+    "before": 7996125,
+    "after": 3285576,
+    "saved": 4710549
+  },
+  "compatibility": {
+    "existingUploadedPngFormatUnchanged": true,
+    "existingPngDiskCachePreserved": true,
+    "stableBundledSlugs": 838,
+    "lightDarkMappings": 1676,
+    "originalIconRgbaComparisons": 1080,
+    "remainingBundledWebpAssets": 1078,
+    "sharedLauncher": true,
+    "qrOriginalDimensionsPreserved": true,
+    "qrPayloadCount": 4,
+    "qrCheckedWidths": [
+      "original",
+      1200,
+      800
+    ],
+    "qrEncodingQuality": 95
+  },
+  "sharedSourcePaths": 1088,
+  "sharedBytesIdentical": true,
+  "editions": {
+    "main": {
+      "builds": {
+        "build-01": {
+          "exit": 0,
+          "seconds": 165.547
+        },
+        "tests-02": {
+          "exit": 0,
+          "seconds": 18.311
+        },
+        "package-03": {
+          "exit": 0,
+          "seconds": 11.326
+        }
+      },
+      "jvmSuites": [
+        {
+          "name": "takagi.ru.monica.ui.icons.EmojiIconSupportTest",
+          "tests": "12",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "0.057"
+        },
+        {
+          "name": "takagi.ru.monica.ui.icons.InstalledIconPackParserTest",
+          "tests": "4",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "0.013"
+        },
+        {
+          "name": "takagi.ru.monica.ui.icons.PasswordCustomIconSupportTest",
+          "tests": "2",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "0.022"
+        },
+        {
+          "name": "takagi.ru.monica.ui.icons.UploadedPasswordIconCacheGuardTest",
+          "tests": "1",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "0.006"
+        }
+      ],
+      "device": {
+        "methods": 19,
+        "passed": true,
+        "runnerSeconds": 15.812,
+        "driverSeconds": 18.508
+      },
+      "independentColdRun": {
+        "edition": "main",
+        "previousPid": "",
+        "emptyAfterForceStop": true,
+        "instrumentationPids": [
+          "6089"
+        ],
+        "installed": [
+          {
+            "package": "takagi.ru.monica.keepassrefactor327",
+            "sha256": "313548312b4976f1f270c6dba8628fb7c1791d9fe4ee0123af0551de5c26ae87"
+          },
+          {
+            "package": "takagi.ru.monica.keepassrefactor327.test",
+            "sha256": "888e4cb11ef62a9fa91dc6c0682695bb1ec2f8343515f3e041b0ee174388bb5a"
+          }
+        ],
+        "seconds": 3.644,
+        "exit": 0,
+        "passed": true
+      },
+      "sourceFreeze": {
+        "sourceCount": 5246,
+        "allFinalBuildSourcesUnchanged": true,
+        "unchangedLocaleXmlCount": 1456,
+        "productionChangesConfinedToResourceTask": true
+      },
+      "locale": {
+        "scope": "Actual compiled resources only; does not assert runtime locale resolution or attribute all APK savings to locale filtering",
+        "declaredFilters": [
+          "en",
+          "en-rAU",
+          "en-rCA",
+          "en-rGB",
+          "en-rIN",
+          "en-rXC",
+          "de",
+          "es",
+          "es-rUS",
+          "b+es+419",
+          "fr",
+          "fr-rCA",
+          "it",
+          "ja",
+          "ko",
+          "pl",
+          "pt",
+          "pt-rBR",
+          "pt-rPT",
+          "ru",
+          "vi",
+          "zh",
+          "zh-rCN",
+          "zh-rHK",
+          "zh-rTW",
+          "b+zh+Hant",
+          "zh-rNY",
+          "zh-rXB",
+          "b+lzh"
+        ],
+        "appSourceLocales": [
+          "b+zh+Hant",
+          "de",
+          "es",
+          "fr",
+          "it",
+          "ja",
+          "ko",
+          "lzh",
+          "pl",
+          "pt",
+          "pt-rBR",
+          "ru",
+          "vi",
+          "zh",
+          "zh-rCN",
+          "zh-rNY",
+          "zh-rXB"
+        ],
+        "removedConfigurations": [
+          "af",
+          "am",
+          "ar",
+          "as",
+          "az",
+          "b+sr+Latn",
+          "be",
+          "bg",
+          "bn",
+          "bs",
+          "ca",
+          "cs",
+          "da",
+          "el",
+          "et",
+          "eu",
+          "fa",
+          "fi",
+          "gl",
+          "gu",
+          "he",
+          "hi",
+          "hr",
+          "hu",
+          "hy",
+          "id",
+          "in",
+          "is",
+          "iw",
+          "ka",
+          "kk",
+          "km",
+          "kn",
+          "ky",
+          "lo",
+          "lt",
+          "lv",
+          "mk",
+          "ml",
+          "mn",
+          "mr",
+          "ms",
+          "my",
+          "nb",
+          "ne",
+          "nl",
+          "or",
+          "pa",
+          "ro",
+          "si",
+          "sk",
+          "sl",
+          "sq",
+          "sr",
+          "sv",
+          "sw",
+          "ta",
+          "te",
+          "th",
+          "tl",
+          "tr",
+          "uk",
+          "ur",
+          "uz",
+          "zu"
+        ],
+        "unexpectedLocaleConfigurations": [],
+        "missingRetainedConfigurations": [],
+        "missingSourceNames": [],
+        "baselineMissingSourceNames": [],
+        "newlyMissingSourceNames": [],
+        "missingSourceLocales": [],
+        "checkedCompiledValues": 105043,
+        "checkedByConfiguration": {
+          "b+zh+Hant": 6900,
+          "de": 6735,
+          "default": 7316,
+          "es": 6735,
+          "fr": 6736,
+          "it": 6733,
+          "ja": 6734,
+          "ko": 6735,
+          "lzh": 6748,
+          "pl": 6733,
+          "pt": 7306,
+          "pt-rBR": 7306,
+          "ru": 6735,
+          "vi": 6734,
+          "zh": 7015,
+          "zh-rCN": 1022,
+          "zh-rNY": 410,
+          "zh-rXB": 410
+        },
+        "missingCompiledValues": [],
+        "changedCompiledValues": [],
+        "resourceTableDelta": {
+          "rawBytes": -2983604,
+          "compressedBytes": -2983604
+        },
+        "passed": true
+      },
+      "apkSizes": [
+        {
+          "abi": "arm64-v8a",
+          "before": {
+            "sha256": "bf3a97d67662b514f3608d33378dc20f60c64308373c8472891390ef5b61dc53",
+            "bytes": 105168501,
+            "containedAbis": [
+              "arm64-v8a",
+              "x86_64"
+            ],
+            "compressedEntryBytes": 93675104,
+            "unreferencedPaddingBytes": 10967139,
+            "groups": {
+              "brand_assets": {
+                "entry_count": 1079,
+                "raw_bytes": 5945574,
+                "compressed_bytes": 5945574
+              },
+              "launcher": {
+                "entry_count": 1,
+                "raw_bytes": 356216,
+                "compressed_bytes": 356216
+              },
+              "donation_qr": {
+                "entry_count": 1,
+                "raw_bytes": 1128710,
+                "compressed_bytes": 1128710
+              },
+              "donation_qr_free": {
+                "entry_count": 1,
+                "raw_bytes": 565625,
+                "compressed_bytes": 565625
+              },
+              "resources_arsc": {
+                "entry_count": 1,
+                "raw_bytes": 11139764,
+                "compressed_bytes": 11139764
+              },
+              "dex": {
+                "entry_count": 33,
+                "raw_bytes": 176999028,
+                "compressed_bytes": 62195951
+              },
+              "native_libraries": {
+                "entry_count": 10,
+                "raw_bytes": 9733020,
+                "compressed_bytes": 9719877
+              },
+              "other_entries": {
+                "entry_count": 1663,
+                "raw_bytes": 4312022,
+                "compressed_bytes": 2623387
+              }
+            }
+          },
+          "after": {
+            "sha256": "f46c44b367de562e23cc50a62474103b02963e587c937fec1027302c889029c6",
+            "bytes": 86518688,
+            "containedAbis": [
+              "arm64-v8a",
+              "x86_64"
+            ],
+            "compressedEntryBytes": 85982268,
+            "unreferencedPaddingBytes": 0,
+            "groups": {
+              "brand_assets": {
+                "entry_count": 1078,
+                "raw_bytes": 2768744,
+                "compressed_bytes": 2768744
+              },
+              "launcher": {
+                "entry_count": 1,
+                "raw_bytes": 258134,
+                "compressed_bytes": 258134
+              },
+              "donation_qr": {
+                "entry_count": 1,
+                "raw_bytes": 155046,
+                "compressed_bytes": 155046
+              },
+              "donation_qr_free": {
+                "entry_count": 1,
+                "raw_bytes": 103652,
+                "compressed_bytes": 103652
+              },
+              "resources_arsc": {
+                "entry_count": 1,
+                "raw_bytes": 8156160,
+                "compressed_bytes": 8156160
+              },
+              "dex": {
+                "entry_count": 33,
+                "raw_bytes": 177001108,
+                "compressed_bytes": 62197270
+              },
+              "native_libraries": {
+                "entry_count": 10,
+                "raw_bytes": 9733020,
+                "compressed_bytes": 9719877
+              },
+              "other_entries": {
+                "entry_count": 1663,
+                "raw_bytes": 4312022,
+                "compressed_bytes": 2623385
+              }
+            }
+          },
+          "build01ToFinalContentCheck": {
+            "build_01_path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261110-resource-size-327\\raw\\main-build-01-artifacts\\debug\\Monica-Android-arm64-v8a-1.0.327-26111112-99.APK",
+            "package_03_path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261110-resource-size-327\\raw\\main-package-03-artifacts\\debug\\Monica-Android-arm64-v8a-1.0.327-26111112-99.APK",
+            "build_01_entry_count": 2788,
+            "package_03_entry_count": 2788,
+            "same_name_and_content_count": 2788,
+            "all_same_name_entry_contents_equal": true,
+            "all_non_dex_entry_contents_equal": true,
+            "dex_content_hash_multiset_equal": true
+          }
+        },
+        {
+          "abi": "armeabi-v7a",
+          "before": {
+            "sha256": "779e8ab972a046ea71dd004d4b0e468e0eed0647d08ffd55f956c856f89a141b",
+            "bytes": 102807787,
+            "containedAbis": [
+              "armeabi-v7a",
+              "x86_64"
+            ],
+            "compressedEntryBytes": 91277464,
+            "unreferencedPaddingBytes": 10967139,
+            "groups": {
+              "brand_assets": {
+                "entry_count": 1079,
+                "raw_bytes": 5945574,
+                "compressed_bytes": 5945574
+              },
+              "launcher": {
+                "entry_count": 1,
+                "raw_bytes": 356216,
+                "compressed_bytes": 356216
+              },
+              "donation_qr": {
+                "entry_count": 1,
+                "raw_bytes": 1128710,
+                "compressed_bytes": 1128710
+              },
+              "donation_qr_free": {
+                "entry_count": 1,
+                "raw_bytes": 565625,
+                "compressed_bytes": 565625
+              },
+              "resources_arsc": {
+                "entry_count": 1,
+                "raw_bytes": 11139764,
+                "compressed_bytes": 11139764
+              },
+              "dex": {
+                "entry_count": 33,
+                "raw_bytes": 176999028,
+                "compressed_bytes": 62195951
+              },
+              "native_libraries": {
+                "entry_count": 10,
+                "raw_bytes": 7335380,
+                "compressed_bytes": 7322237
+              },
+              "other_entries": {
+                "entry_count": 1663,
+                "raw_bytes": 4312022,
+                "compressed_bytes": 2623387
+              }
+            }
+          },
+          "after": {
+            "sha256": "f82d9ffccbc2fd7d916920a0209d3e0b5945910e427de865e339ecc2c7494d45",
+            "bytes": 84157974,
+            "containedAbis": [
+              "armeabi-v7a",
+              "x86_64"
+            ],
+            "compressedEntryBytes": 83584628,
+            "unreferencedPaddingBytes": 0,
+            "groups": {
+              "brand_assets": {
+                "entry_count": 1078,
+                "raw_bytes": 2768744,
+                "compressed_bytes": 2768744
+              },
+              "launcher": {
+                "entry_count": 1,
+                "raw_bytes": 258134,
+                "compressed_bytes": 258134
+              },
+              "donation_qr": {
+                "entry_count": 1,
+                "raw_bytes": 155046,
+                "compressed_bytes": 155046
+              },
+              "donation_qr_free": {
+                "entry_count": 1,
+                "raw_bytes": 103652,
+                "compressed_bytes": 103652
+              },
+              "resources_arsc": {
+                "entry_count": 1,
+                "raw_bytes": 8156160,
+                "compressed_bytes": 8156160
+              },
+              "dex": {
+                "entry_count": 33,
+                "raw_bytes": 177001108,
+                "compressed_bytes": 62197270
+              },
+              "native_libraries": {
+                "entry_count": 10,
+                "raw_bytes": 7335380,
+                "compressed_bytes": 7322237
+              },
+              "other_entries": {
+                "entry_count": 1663,
+                "raw_bytes": 4312022,
+                "compressed_bytes": 2623385
+              }
+            }
+          },
+          "build01ToFinalContentCheck": {
+            "build_01_path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261110-resource-size-327\\raw\\main-build-01-artifacts\\debug\\Monica-Android-armeabi-v7a-1.0.327-26111112-99.APK",
+            "package_03_path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261110-resource-size-327\\raw\\main-package-03-artifacts\\debug\\Monica-Android-armeabi-v7a-1.0.327-26111112-99.APK",
+            "build_01_entry_count": 2788,
+            "package_03_entry_count": 2788,
+            "same_name_and_content_count": 2788,
+            "all_same_name_entry_contents_equal": true,
+            "all_non_dex_entry_contents_equal": true,
+            "dex_content_hash_multiset_equal": true
+          }
+        },
+        {
+          "abi": "x86_64",
+          "before": {
+            "sha256": "74a6951d996752423a06729f176bef4706278d5b31a13965dc50a3c64dc68d47",
+            "bytes": 106970730,
+            "containedAbis": [
+              "x86_64"
+            ],
+            "compressedEntryBytes": 95435160,
+            "unreferencedPaddingBytes": 10967139,
+            "groups": {
+              "brand_assets": {
+                "entry_count": 1079,
+                "raw_bytes": 5945574,
+                "compressed_bytes": 5945574
+              },
+              "launcher": {
+                "entry_count": 1,
+                "raw_bytes": 356216,
+                "compressed_bytes": 356216
+              },
+              "donation_qr": {
+                "entry_count": 1,
+                "raw_bytes": 1128710,
+                "compressed_bytes": 1128710
+              },
+              "donation_qr_free": {
+                "entry_count": 1,
+                "raw_bytes": 565625,
+                "compressed_bytes": 565625
+              },
+              "resources_arsc": {
+                "entry_count": 1,
+                "raw_bytes": 11139764,
+                "compressed_bytes": 11139764
+              },
+              "dex": {
+                "entry_count": 33,
+                "raw_bytes": 176999028,
+                "compressed_bytes": 62195951
+              },
+              "native_libraries": {
+                "entry_count": 10,
+                "raw_bytes": 11493076,
+                "compressed_bytes": 11479933
+              },
+              "other_entries": {
+                "entry_count": 1663,
+                "raw_bytes": 4312022,
+                "compressed_bytes": 2623387
+              }
+            }
+          },
+          "after": {
+            "sha256": "313548312b4976f1f270c6dba8628fb7c1791d9fe4ee0123af0551de5c26ae87",
+            "bytes": 88320917,
+            "containedAbis": [
+              "x86_64"
+            ],
+            "compressedEntryBytes": 87742324,
+            "unreferencedPaddingBytes": 0,
+            "groups": {
+              "brand_assets": {
+                "entry_count": 1078,
+                "raw_bytes": 2768744,
+                "compressed_bytes": 2768744
+              },
+              "launcher": {
+                "entry_count": 1,
+                "raw_bytes": 258134,
+                "compressed_bytes": 258134
+              },
+              "donation_qr": {
+                "entry_count": 1,
+                "raw_bytes": 155046,
+                "compressed_bytes": 155046
+              },
+              "donation_qr_free": {
+                "entry_count": 1,
+                "raw_bytes": 103652,
+                "compressed_bytes": 103652
+              },
+              "resources_arsc": {
+                "entry_count": 1,
+                "raw_bytes": 8156160,
+                "compressed_bytes": 8156160
+              },
+              "dex": {
+                "entry_count": 33,
+                "raw_bytes": 177001108,
+                "compressed_bytes": 62197270
+              },
+              "native_libraries": {
+                "entry_count": 10,
+                "raw_bytes": 11493076,
+                "compressed_bytes": 11479933
+              },
+              "other_entries": {
+                "entry_count": 1663,
+                "raw_bytes": 4312022,
+                "compressed_bytes": 2623385
+              }
+            }
+          },
+          "build01ToFinalContentCheck": {
+            "build_01_path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261110-resource-size-327\\raw\\main-build-01-artifacts\\debug\\Monica-Android-x86_64-1.0.327-26111112-99.APK",
+            "package_03_path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261110-resource-size-327\\raw\\main-package-03-artifacts\\debug\\Monica-Android-x86_64-1.0.327-26111112-99.APK",
+            "build_01_entry_count": 2788,
+            "package_03_entry_count": 2788,
+            "same_name_and_content_count": 2788,
+            "all_same_name_entry_contents_equal": true,
+            "all_non_dex_entry_contents_equal": true,
+            "dex_content_hash_multiset_equal": true
+          }
+        }
+      ]
+    },
+    "fd": {
+      "builds": {
+        "build-01": {
+          "exit": 0,
+          "seconds": 148.578
+        },
+        "tests-02": {
+          "exit": 0,
+          "seconds": 15.536
+        },
+        "package-03": {
+          "exit": 0,
+          "seconds": 9.433
+        }
+      },
+      "jvmSuites": [
+        {
+          "name": "takagi.ru.monica.ui.icons.EmojiIconSupportTest",
+          "tests": "12",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "0.054"
+        },
+        {
+          "name": "takagi.ru.monica.ui.icons.InstalledIconPackParserTest",
+          "tests": "4",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "0.017"
+        },
+        {
+          "name": "takagi.ru.monica.ui.icons.PasswordCustomIconSupportTest",
+          "tests": "2",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "0.015"
+        },
+        {
+          "name": "takagi.ru.monica.ui.icons.UploadedPasswordIconCacheGuardTest",
+          "tests": "1",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "0.008"
+        }
+      ],
+      "device": {
+        "methods": 19,
+        "passed": true,
+        "runnerSeconds": 16.313,
+        "driverSeconds": 19.063
+      },
+      "independentColdRun": {
+        "edition": "fd",
+        "previousPid": "",
+        "emptyAfterForceStop": true,
+        "instrumentationPids": [
+          "6264"
+        ],
+        "installed": [
+          {
+            "package": "takagi.ru.monica.keepassrefactor327.fdroid",
+            "sha256": "155dcdf62518c9b94afcefee6a2f2f8595ef3a5f86a8b73004d68bc3b064edcd"
+          },
+          {
+            "package": "takagi.ru.monica.keepassrefactor327.fdroid.test",
+            "sha256": "49001db9aadd7a6ea6579e12cd778a3cca2abc9e82cdb9095e0fae52691c7a65"
+          }
+        ],
+        "seconds": 3.552,
+        "exit": 0,
+        "passed": true
+      },
+      "sourceFreeze": {
+        "sourceCount": 5239,
+        "allFinalBuildSourcesUnchanged": true,
+        "unchangedLocaleXmlCount": 1471,
+        "productionChangesConfinedToResourceTask": true
+      },
+      "locale": {
+        "scope": "Actual compiled resources only; does not assert runtime locale resolution or attribute all APK savings to locale filtering",
+        "declaredFilters": [
+          "en",
+          "en-rAU",
+          "en-rCA",
+          "en-rGB",
+          "en-rIN",
+          "en-rXC",
+          "de",
+          "es",
+          "es-rUS",
+          "b+es+419",
+          "fr",
+          "fr-rCA",
+          "it",
+          "ja",
+          "ko",
+          "pl",
+          "pt",
+          "pt-rBR",
+          "pt-rPT",
+          "ru",
+          "vi",
+          "zh",
+          "zh-rCN",
+          "zh-rHK",
+          "zh-rTW",
+          "b+zh+Hant",
+          "zh-rNY",
+          "zh-rXB",
+          "b+lzh"
+        ],
+        "appSourceLocales": [
+          "b+zh+Hant",
+          "de",
+          "es",
+          "fr",
+          "it",
+          "ja",
+          "ko",
+          "lzh",
+          "pl",
+          "pt",
+          "pt-rBR",
+          "ru",
+          "vi",
+          "zh",
+          "zh-rCN",
+          "zh-rNY",
+          "zh-rXB"
+        ],
+        "removedConfigurations": [
+          "af",
+          "am",
+          "ar",
+          "as",
+          "az",
+          "b+sr+Latn",
+          "be",
+          "bg",
+          "bn",
+          "bs",
+          "ca",
+          "cs",
+          "da",
+          "el",
+          "et",
+          "eu",
+          "fa",
+          "fi",
+          "gl",
+          "gu",
+          "he",
+          "hi",
+          "hr",
+          "hu",
+          "hy",
+          "id",
+          "in",
+          "is",
+          "iw",
+          "ka",
+          "kk",
+          "km",
+          "kn",
+          "ky",
+          "lo",
+          "lt",
+          "lv",
+          "mk",
+          "ml",
+          "mn",
+          "mr",
+          "ms",
+          "my",
+          "nb",
+          "ne",
+          "nl",
+          "or",
+          "pa",
+          "ro",
+          "si",
+          "sk",
+          "sl",
+          "sq",
+          "sr",
+          "sv",
+          "sw",
+          "ta",
+          "te",
+          "th",
+          "tl",
+          "tr",
+          "uk",
+          "ur",
+          "uz",
+          "zu"
+        ],
+        "unexpectedLocaleConfigurations": [],
+        "missingRetainedConfigurations": [],
+        "missingSourceNames": [
+          "string/qs_import_from_apps",
+          "string/qs_import_from_apps_desc"
+        ],
+        "baselineMissingSourceNames": [
+          "string/qs_import_from_apps",
+          "string/qs_import_from_apps_desc"
+        ],
+        "newlyMissingSourceNames": [],
+        "missingSourceLocales": [],
+        "checkedCompiledValues": 105054,
+        "checkedByConfiguration": {
+          "b+zh+Hant": 6901,
+          "de": 6736,
+          "default": 7316,
+          "es": 6736,
+          "fr": 6737,
+          "it": 6734,
+          "ja": 6735,
+          "ko": 6736,
+          "lzh": 6749,
+          "pl": 6734,
+          "pt": 7306,
+          "pt-rBR": 7306,
+          "ru": 6736,
+          "vi": 6735,
+          "zh": 7015,
+          "zh-rCN": 1022,
+          "zh-rNY": 410,
+          "zh-rXB": 410
+        },
+        "missingCompiledValues": [],
+        "changedCompiledValues": [],
+        "resourceTableDelta": {
+          "rawBytes": -2762424,
+          "compressedBytes": -2762424
+        },
+        "passed": true
+      },
+      "apkSizes": [
+        {
+          "abi": "arm64-v8a",
+          "before": {
+            "sha256": "18c4f8d786cd90b5402ca04fc67c988619765020b6c61d73b15c55d57bb62bfc",
+            "bytes": 100134332,
+            "containedAbis": [
+              "arm64-v8a"
+            ],
+            "compressedEntryBytes": 88973998,
+            "unreferencedPaddingBytes": 10648622,
+            "groups": {
+              "brand_assets": {
+                "entry_count": 1079,
+                "raw_bytes": 5945574,
+                "compressed_bytes": 5945574
+              },
+              "launcher": {
+                "entry_count": 1,
+                "raw_bytes": 356216,
+                "compressed_bytes": 356216
+              },
+              "donation_qr": {
+                "entry_count": 1,
+                "raw_bytes": 1128710,
+                "compressed_bytes": 1128710
+              },
+              "donation_qr_free": {
+                "entry_count": 1,
+                "raw_bytes": 565625,
+                "compressed_bytes": 565625
+              },
+              "resources_arsc": {
+                "entry_count": 1,
+                "raw_bytes": 10826000,
+                "compressed_bytes": 10826000
+              },
+              "dex": {
+                "entry_count": 32,
+                "raw_bytes": 165873188,
+                "compressed_bytes": 57969521
+              },
+              "native_libraries": {
+                "entry_count": 9,
+                "raw_bytes": 9711984,
+                "compressed_bytes": 9711984
+              },
+              "other_entries": {
+                "entry_count": 1565,
+                "raw_bytes": 4035806,
+                "compressed_bytes": 2470368
+              }
+            }
+          },
+          "after": {
+            "sha256": "70e4a7553336a54dfda99f7764b15395b3f2f7e4b3d05530da621fc61ef3a903",
+            "bytes": 82019481,
+            "containedAbis": [
+              "arm64-v8a"
+            ],
+            "compressedEntryBytes": 81502241,
+            "unreferencedPaddingBytes": 0,
+            "groups": {
+              "brand_assets": {
+                "entry_count": 1078,
+                "raw_bytes": 2768744,
+                "compressed_bytes": 2768744
+              },
+              "launcher": {
+                "entry_count": 1,
+                "raw_bytes": 258134,
+                "compressed_bytes": 258134
+              },
+              "donation_qr": {
+                "entry_count": 1,
+                "raw_bytes": 155046,
+                "compressed_bytes": 155046
+              },
+              "donation_qr_free": {
+                "entry_count": 1,
+                "raw_bytes": 103652,
+                "compressed_bytes": 103652
+              },
+              "resources_arsc": {
+                "entry_count": 1,
+                "raw_bytes": 8063576,
+                "compressed_bytes": 8063576
+              },
+              "dex": {
+                "entry_count": 32,
+                "raw_bytes": 165875276,
+                "compressed_bytes": 57970737
+              },
+              "native_libraries": {
+                "entry_count": 9,
+                "raw_bytes": 9711984,
+                "compressed_bytes": 9711984
+              },
+              "other_entries": {
+                "entry_count": 1565,
+                "raw_bytes": 4035806,
+                "compressed_bytes": 2470368
+              }
+            }
+          },
+          "build01ToFinalContentCheck": {
+            "build_01_path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261110-resource-size-327\\raw\\fd-build-01-artifacts\\debug\\Monica-Android-arm64-v8a-1.0.327.apk",
+            "package_03_path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261110-resource-size-327\\raw\\fd-package-03-artifacts\\debug\\Monica-Android-arm64-v8a-1.0.327.apk",
+            "build_01_entry_count": 2688,
+            "package_03_entry_count": 2688,
+            "same_name_and_content_count": 2688,
+            "all_same_name_entry_contents_equal": true,
+            "all_non_dex_entry_contents_equal": true,
+            "dex_content_hash_multiset_equal": true
+          }
+        },
+        {
+          "abi": "armeabi-v7a",
+          "before": {
+            "sha256": "fffb26e1b5dbf01b6cfaeb7c3ed2ff09de3a8036812a0509cbdfe2890f499789",
+            "bytes": 97773618,
+            "containedAbis": [
+              "armeabi-v7a"
+            ],
+            "compressedEntryBytes": 86576598,
+            "unreferencedPaddingBytes": 10648622,
+            "groups": {
+              "brand_assets": {
+                "entry_count": 1079,
+                "raw_bytes": 5945574,
+                "compressed_bytes": 5945574
+              },
+              "launcher": {
+                "entry_count": 1,
+                "raw_bytes": 356216,
+                "compressed_bytes": 356216
+              },
+              "donation_qr": {
+                "entry_count": 1,
+                "raw_bytes": 1128710,
+                "compressed_bytes": 1128710
+              },
+              "donation_qr_free": {
+                "entry_count": 1,
+                "raw_bytes": 565625,
+                "compressed_bytes": 565625
+              },
+              "resources_arsc": {
+                "entry_count": 1,
+                "raw_bytes": 10826000,
+                "compressed_bytes": 10826000
+              },
+              "dex": {
+                "entry_count": 32,
+                "raw_bytes": 165873188,
+                "compressed_bytes": 57969521
+              },
+              "native_libraries": {
+                "entry_count": 9,
+                "raw_bytes": 7314584,
+                "compressed_bytes": 7314584
+              },
+              "other_entries": {
+                "entry_count": 1565,
+                "raw_bytes": 4035806,
+                "compressed_bytes": 2470368
+              }
+            }
+          },
+          "after": {
+            "sha256": "195add80a4cbd7d7ec8fcaa1a4cfb31026af46a8198ce03f7fcda57858c1809a",
+            "bytes": 79658767,
+            "containedAbis": [
+              "armeabi-v7a"
+            ],
+            "compressedEntryBytes": 79104841,
+            "unreferencedPaddingBytes": 0,
+            "groups": {
+              "brand_assets": {
+                "entry_count": 1078,
+                "raw_bytes": 2768744,
+                "compressed_bytes": 2768744
+              },
+              "launcher": {
+                "entry_count": 1,
+                "raw_bytes": 258134,
+                "compressed_bytes": 258134
+              },
+              "donation_qr": {
+                "entry_count": 1,
+                "raw_bytes": 155046,
+                "compressed_bytes": 155046
+              },
+              "donation_qr_free": {
+                "entry_count": 1,
+                "raw_bytes": 103652,
+                "compressed_bytes": 103652
+              },
+              "resources_arsc": {
+                "entry_count": 1,
+                "raw_bytes": 8063576,
+                "compressed_bytes": 8063576
+              },
+              "dex": {
+                "entry_count": 32,
+                "raw_bytes": 165875276,
+                "compressed_bytes": 57970737
+              },
+              "native_libraries": {
+                "entry_count": 9,
+                "raw_bytes": 7314584,
+                "compressed_bytes": 7314584
+              },
+              "other_entries": {
+                "entry_count": 1565,
+                "raw_bytes": 4035806,
+                "compressed_bytes": 2470368
+              }
+            }
+          },
+          "build01ToFinalContentCheck": {
+            "build_01_path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261110-resource-size-327\\raw\\fd-build-01-artifacts\\debug\\Monica-Android-armeabi-v7a-1.0.327.apk",
+            "package_03_path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261110-resource-size-327\\raw\\fd-package-03-artifacts\\debug\\Monica-Android-armeabi-v7a-1.0.327.apk",
+            "build_01_entry_count": 2688,
+            "package_03_entry_count": 2688,
+            "same_name_and_content_count": 2688,
+            "all_same_name_entry_contents_equal": true,
+            "all_non_dex_entry_contents_equal": true,
+            "dex_content_hash_multiset_equal": true
+          }
+        },
+        {
+          "abi": "x86_64",
+          "before": {
+            "sha256": "e6bdfd34e55be86519fc777f20bc47f8ee58a5bb1b58dc433ed491b9b5e4d906",
+            "bytes": 101936561,
+            "containedAbis": [
+              "x86_64"
+            ],
+            "compressedEntryBytes": 90734054,
+            "unreferencedPaddingBytes": 10648622,
+            "groups": {
+              "brand_assets": {
+                "entry_count": 1079,
+                "raw_bytes": 5945574,
+                "compressed_bytes": 5945574
+              },
+              "launcher": {
+                "entry_count": 1,
+                "raw_bytes": 356216,
+                "compressed_bytes": 356216
+              },
+              "donation_qr": {
+                "entry_count": 1,
+                "raw_bytes": 1128710,
+                "compressed_bytes": 1128710
+              },
+              "donation_qr_free": {
+                "entry_count": 1,
+                "raw_bytes": 565625,
+                "compressed_bytes": 565625
+              },
+              "resources_arsc": {
+                "entry_count": 1,
+                "raw_bytes": 10826000,
+                "compressed_bytes": 10826000
+              },
+              "dex": {
+                "entry_count": 32,
+                "raw_bytes": 165873188,
+                "compressed_bytes": 57969521
+              },
+              "native_libraries": {
+                "entry_count": 9,
+                "raw_bytes": 11472040,
+                "compressed_bytes": 11472040
+              },
+              "other_entries": {
+                "entry_count": 1565,
+                "raw_bytes": 4035806,
+                "compressed_bytes": 2470368
+              }
+            }
+          },
+          "after": {
+            "sha256": "155dcdf62518c9b94afcefee6a2f2f8595ef3a5f86a8b73004d68bc3b064edcd",
+            "bytes": 83821710,
+            "containedAbis": [
+              "x86_64"
+            ],
+            "compressedEntryBytes": 83262297,
+            "unreferencedPaddingBytes": 0,
+            "groups": {
+              "brand_assets": {
+                "entry_count": 1078,
+                "raw_bytes": 2768744,
+                "compressed_bytes": 2768744
+              },
+              "launcher": {
+                "entry_count": 1,
+                "raw_bytes": 258134,
+                "compressed_bytes": 258134
+              },
+              "donation_qr": {
+                "entry_count": 1,
+                "raw_bytes": 155046,
+                "compressed_bytes": 155046
+              },
+              "donation_qr_free": {
+                "entry_count": 1,
+                "raw_bytes": 103652,
+                "compressed_bytes": 103652
+              },
+              "resources_arsc": {
+                "entry_count": 1,
+                "raw_bytes": 8063576,
+                "compressed_bytes": 8063576
+              },
+              "dex": {
+                "entry_count": 32,
+                "raw_bytes": 165875276,
+                "compressed_bytes": 57970737
+              },
+              "native_libraries": {
+                "entry_count": 9,
+                "raw_bytes": 11472040,
+                "compressed_bytes": 11472040
+              },
+              "other_entries": {
+                "entry_count": 1565,
+                "raw_bytes": 4035806,
+                "compressed_bytes": 2470368
+              }
+            }
+          },
+          "build01ToFinalContentCheck": {
+            "build_01_path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261110-resource-size-327\\raw\\fd-build-01-artifacts\\debug\\Monica-Android-x86_64-1.0.327.apk",
+            "package_03_path": "C:\\Users\\joyins\\Desktop\\Monica-all\\.codex-tasks\\20261110-resource-size-327\\raw\\fd-package-03-artifacts\\debug\\Monica-Android-x86_64-1.0.327.apk",
+            "build_01_entry_count": 2688,
+            "package_03_entry_count": 2688,
+            "same_name_and_content_count": 2688,
+            "all_same_name_entry_contents_equal": true,
+            "all_non_dex_entry_contents_equal": true,
+            "dex_content_hash_multiset_equal": true
+          }
+        }
+      ]
+    }
+  },
+  "cleanup": {
+    "passed": true,
+    "restoredUser": 0,
+    "removedOnlyOwnedUser": 11,
+    "preservedUsers": [
+      0,
+      10
+    ],
+    "preservedUserPackagesEqual": {
+      "0": true,
+      "10": true
+    },
+    "mumuIndex": 0,
+    "androidStopped": true,
+    "processStopped": true,
+    "publicAvdUsed": false,
+    "vmDeleted": false
+  },
+  "limitations": [
+    "Debug packages, API 35 x86_64 MuMu, synthetic data only",
+    "No release/R8, physical/OEM device or API 26 runtime validation in this task",
+    "No real cloud account or end-to-end remote WebDAV/LAN sync operation",
+    "ZIP fixture uses process Room for category reads; run only in owned synthetic user",
+    "Existing explicit-icon favicon behavior outside the tested automatic match is unchanged"
+  ],
+  "retainedFailures": [
+    "main-device-01: 18/19; locale fixture incorrectly expected Hans instead of existing default English",
+    "preliminary-main-locale-baseline: 3/5; same locale error and expected Arabic dependency negative control",
+    "FD initial APK resource check: two preexisting Italian-only resources without defaults absent in both APKs",
+    "Initial freeze helper compared broader current source scope against app-only baseline; scope corrected",
+    "First cleanup used unsupported cmd user is-user-running; stopped before deletion; supported am state check succeeded"
+  ],
+  "repositoryState": {
+    "branch": "main",
+    "committed": false,
+    "pushed": false,
+    "released": false,
+    "apkDelivered": false
+  },
+  "oldApkCorrectedLocaleTest": {
+    "passed": true,
+    "methods": 1,
+    "runnerSeconds": 0.071
+  },
+  "metadataChecks": {
+    "metadata": 0,
+    "scripts": 0
+  }
+}

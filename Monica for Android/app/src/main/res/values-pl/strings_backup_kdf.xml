@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_kdf_title">Format zaszyfrowanej kopii</string>
+    <string name="backup_kdf_compatible">Zgodny V1 · 100000 iteracji</string>
+    <string name="backup_kdf_enhanced">Wzmocniony V2 · 600000 iteracji</string>
+    <string name="backup_kdf_scope">Wybór dotyczy tylko nowych zaszyfrowanych kopii ZIP. Istniejące kopie pozostają bez zmian.</string>
+    <string name="backup_kdf_compatibility_warning">V2 wymaga zgodnego programu odczytującego. Starsze rozszerzenia lub aplikacje komputerowe mogą nie odtworzyć tej kopii. Zachowaj wcześniejsze kopie.</string>
+</resources>

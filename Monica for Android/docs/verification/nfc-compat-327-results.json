@@ -1,0 +1,199 @@
+{
+  "status": "COMPLETE_LOCAL_NOT_COMMITTED",
+  "version": "1.0.327",
+  "scope": "NFC UI simplification and UnionPay EMV compatibility; no physical RF validation",
+  "builds": {
+    "main01": {
+      "seconds": 321.207,
+      "exit": 0,
+      "log_sha256": "1da0dd387aa2e0fd24c2835e989f95a691f922a702b1c4c7d5ece387f5a765c1"
+    },
+    "fd01": {
+      "seconds": 325.62,
+      "exit": 0,
+      "log_sha256": "eaf11203b78f286a462b9241e1ca3fa18c374db5dbcc983845e67afb06267192"
+    },
+    "main03": {
+      "seconds": 62.562,
+      "exit": 0,
+      "log_sha256": "a28c2ee229e6ddd8f900048a0163ea1eb0ea39ecb7968d13826def4b36538741"
+    },
+    "fd03": {
+      "seconds": 63.025,
+      "exit": 0,
+      "log_sha256": "9b78d21a1603e367cb93723316a3ef2966bd59502063905a2d98f64943b28d8b"
+    }
+  },
+  "jvm_tests_per_edition": 48,
+  "device": {
+    "main": {
+      "label": "main-ui03",
+      "driver_seconds": 78.704,
+      "runner_seconds": 75.999,
+      "tests": 27,
+      "log_sha256": "6266145b96c54ddfc55196604977a656b10fa4157ed02c8a48ace7863087a932"
+    },
+    "fd": {
+      "label": "fd-ui01",
+      "driver_seconds": 75.566,
+      "runner_seconds": 73.271,
+      "tests": 27,
+      "log_sha256": "730c222579829ac4eeed2050c89656eb89c4b8e957d729383acb78acd51d7708"
+    }
+  },
+  "earlier_device_runs": {
+    "main-ui01": {
+      "passed": 26,
+      "failed": 1
+    },
+    "main-ui02": {
+      "passed": 26,
+      "failed": 1
+    }
+  },
+  "baseline_reader": {
+    "tests": 30,
+    "passed": 18,
+    "expected_failures": 12,
+    "scope": "New feature/sequence expectations, not twelve confirmed real-card bugs"
+  },
+  "shared_files": [
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenSendDraftsInstrumentedTest.kt",
+      "sha256": "1e25d6e56720594d0e1a220de32339583117ac49b5318d9b622b171458e8e9cf"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/nfc/card/NfcCardEntryUiTest.kt",
+      "sha256": "490d2048d16f8c395a5bd8799f13a038e5262f8d873636418d11b084c23fee3c"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/nfc/card/EmvCardReader.kt",
+      "sha256": "b2698666e6e0e959e3943b8687f4bc8a6961b4e52ba12eaa577a0a82e885cdae"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/nfc/card/NfcCardEntryController.kt",
+      "sha256": "6199e850da42c2219053e3b6367da496bac2d14aaf88a2bfe9639f7512be7c51"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/nfc/card/NfcCardEntryUi.kt",
+      "sha256": "257a13a4983750a734ad3eb03867624ab9f7b604d641f5d591c41c3a1c3eb1c6"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/MonicaExposedChoiceMenu.kt",
+      "sha256": "253f802ae79dac9ed096f761009b243a2bfdd1bf523e394cfb273cca9d2d929d"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AddEditBankCardScreen.kt",
+      "sha256": "9f3865c5a8f9e0148e68ac813d9d21dce3164719ddfff83a5d18f585376f626d"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AddEditDocumentScreen.kt",
+      "sha256": "22c49f72d4e647f0e767100f9e7d3a21abd3cbe3b31dc91d295c52ddb4cb2284"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/BitwardenSendDraftUi.kt",
+      "sha256": "c18fdd0d06111716ee912558cc06a62b8a0448cf842cc3e82c8e5fb2a2bd227e"
+    },
+    {
+      "path": "app/src/main/res/values-b+lzh/strings_nfc_card_entry.xml",
+      "sha256": "2db6b608642aa9ba3bbd74057ccc20b948c57fec636dd204b0b37103aac1c06c"
+    },
+    {
+      "path": "app/src/main/res/values-b+zh+Hant/strings_nfc_card_entry.xml",
+      "sha256": "37ca2098571cdf26bedbb65e9943323b868e257460371d733aedb51b2f43bbd4"
+    },
+    {
+      "path": "app/src/main/res/values-de/strings_nfc_card_entry.xml",
+      "sha256": "58344b28e4be81eb4c54b27e9944d7b081c4812ca37bc8e437a6c89b0ee537bc"
+    },
+    {
+      "path": "app/src/main/res/values-es/strings_nfc_card_entry.xml",
+      "sha256": "12891dcdf2d36102c662a46fdcd51ce8ff62a7c367a82f0b10da868270a6f83b"
+    },
+    {
+      "path": "app/src/main/res/values-fr/strings_nfc_card_entry.xml",
+      "sha256": "b2c075c6693aa0f701b820bded83050ed6ce832dd472cf1e9d2636bdfc1a754d"
+    },
+    {
+      "path": "app/src/main/res/values-it/strings_nfc_card_entry.xml",
+      "sha256": "4d2ff7280483c352fa93214facfeda756f2595452ce100a8bec5dd6fa3acaf6a"
+    },
+    {
+      "path": "app/src/main/res/values-ja/strings_nfc_card_entry.xml",
+      "sha256": "af5e393a0875a5e784654a562ce576f50d49fb2b32ed569e3d7e23e609d23c6a"
+    },
+    {
+      "path": "app/src/main/res/values-ko/strings_nfc_card_entry.xml",
+      "sha256": "38c1943a7d415e39c469279b5aeb8ceb27e42c906e5807a37637324b99fdea67"
+    },
+    {
+      "path": "app/src/main/res/values-pl/strings_nfc_card_entry.xml",
+      "sha256": "44cae988ebfe15487cfae9d2d314d24dada4fc1ef9f4d09c6e3d7cdee8a5f975"
+    },
+    {
+      "path": "app/src/main/res/values-pt-rBR/strings_nfc_card_entry.xml",
+      "sha256": "5f667bd86c10bfed417c662dadd6bc9901e9878c96252c9b94d104b1b921fcef"
+    },
+    {
+      "path": "app/src/main/res/values-pt/strings_nfc_card_entry.xml",
+      "sha256": "a4d1813c374c2f2e9a93c6d89a4f28c3cb0a89b9dfe649c624949deec1d5e5a5"
+    },
+    {
+      "path": "app/src/main/res/values-ru/strings_nfc_card_entry.xml",
+      "sha256": "001098ed386ea3cc75f319876dadd0e5b9dca8cbc7cdae2a039f641f6420b8ca"
+    },
+    {
+      "path": "app/src/main/res/values-vi/strings_nfc_card_entry.xml",
+      "sha256": "29f749ff3b36a424febc0c455357e745c2ae2a14780c873c43f61eacb182c30f"
+    },
+    {
+      "path": "app/src/main/res/values-zh-rCN/strings_nfc_card_entry.xml",
+      "sha256": "fa54705018ae860d03f6b4332983e22bd66d60d96ac5f600e4f5a58f4a6f6399"
+    },
+    {
+      "path": "app/src/main/res/values-zh-rNY/strings_nfc_card_entry.xml",
+      "sha256": "fa54705018ae860d03f6b4332983e22bd66d60d96ac5f600e4f5a58f4a6f6399"
+    },
+    {
+      "path": "app/src/main/res/values-zh-rXB/strings_nfc_card_entry.xml",
+      "sha256": "fa54705018ae860d03f6b4332983e22bd66d60d96ac5f600e4f5a58f4a6f6399"
+    },
+    {
+      "path": "app/src/main/res/values-zh/strings_nfc_card_entry.xml",
+      "sha256": "fa54705018ae860d03f6b4332983e22bd66d60d96ac5f600e4f5a58f4a6f6399"
+    },
+    {
+      "path": "app/src/main/res/values/strings_nfc_card_entry.xml",
+      "sha256": "b941533ef578cb2f723ce7d7488bc25df7d218a9a4c1b307e3ca2da8a07d474e"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/nfc/card/EmvCardReaderTest.kt",
+      "sha256": "22989df213068aceb002340c4909d0e4aece63ddf469ff5e1d9ec53b0d3e58e4"
+    }
+  ],
+  "compiled_nfc_resource_values_per_edition": 198,
+  "fdroid_metadata": {
+    "version_code": 34,
+    "check_passed": true,
+    "script_tests_passed": 6
+  },
+  "screenshots_reviewed_per_edition": 4,
+  "cleanup": {
+    "original_user_restored": 0,
+    "owned_user_removed": 11,
+    "retained_users": [
+      0,
+      10
+    ],
+    "package_sets_unchanged": true,
+    "task_started_mumu_stopped": true,
+    "data_disks_retained": true,
+    "initial_remove_failed_then_stopped_state_verified_and_retry_succeeded": true
+  },
+  "limitations": [
+    "Only synthetic data and MuMu API35 x86_64 Debug",
+    "No physical UnionPay/NFC RF, OEM, release R8 or protected identity card verification",
+    "No dependency changes, commits, pushes, tags, publication or APK delivery"
+  ],
+  "local_evidence": ".codex-tasks/20261110-nfc-compat"
+}

@@ -912,9 +912,6 @@ fun AddEditDocumentScreen(
                 modifier = modifier.fillMaxSize().testTag(if (embeddedDraft == null) "document_item_editor" else "embedded_document_editor")
                     .padding(paddingValues).consumeWindowInsets(paddingValues).imePadding(),
                 primary = {
-                if (documentId == null && embeddedDraft == null) {
-                    takagi.ru.monica.nfc.card.NfcCardScanButton(enabled = !isSaving)
-                }
                 if (embeddedDraft == null) MultiStorageTargetSelectorCard(
                     selectedTargets = selectedStorageTargets,
                     existingTargetKeys = existingReplicaTargetKeys,

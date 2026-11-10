@@ -24,6 +24,7 @@ import takagi.ru.monica.data.PasswordEntry
 import takagi.ru.monica.data.PasswordHistoryEntry
 import takagi.ru.monica.data.SecureItem
 import takagi.ru.monica.data.PasswordHistoryManager
+import takagi.ru.monica.data.BackupEncryptionFormat
 import takagi.ru.monica.data.BackupPreferences
 import takagi.ru.monica.data.ItemType
 import takagi.ru.monica.data.PasskeyEntry
@@ -726,6 +727,7 @@ class WebDavHelper(
         private const val KEY_BACKUP_INCLUDE_TRASH_AND_HISTORY = "backup_include_trash_and_history"
         private const val KEY_BACKUP_INCLUDE_WEBDAV_CONFIG = "backup_include_webdav_config"
         private const val KEY_BACKUP_INCLUDE_LOCAL_KEEPASS = "backup_include_local_keepass"
+        private const val KEY_BACKUP_ENCRYPTION_FORMAT = "backup_encryption_format"
         private const val BACKUP_FOLDER_NAME = "Monica_Backups"
         private const val STEAM_MAFILE_BACKUP_DIR = "steam/mafiles"
         private const val STEAM_MAFILE_BACKUP_TYPE = "Steam maFile"
@@ -1382,6 +1384,7 @@ class WebDavHelper(
             .remove(KEY_BACKUP_INCLUDE_TRASH_AND_HISTORY)
             .remove(KEY_BACKUP_INCLUDE_WEBDAV_CONFIG)
             .remove(KEY_BACKUP_INCLUDE_LOCAL_KEEPASS)
+            .remove(KEY_BACKUP_ENCRYPTION_FORMAT)
             .remove(KEY_SERVER_URL)
             .remove(KEY_USERNAME)
             .remove(KEY_PASSWORD)
@@ -1611,6 +1614,7 @@ class WebDavHelper(
             putBoolean(KEY_BACKUP_INCLUDE_TRASH_AND_HISTORY, preferences.includeTrashAndHistory)
             putBoolean(KEY_BACKUP_INCLUDE_WEBDAV_CONFIG, preferences.includeWebDavConfig)
             putBoolean(KEY_BACKUP_INCLUDE_LOCAL_KEEPASS, preferences.includeLocalKeePass)
+            putString(KEY_BACKUP_ENCRYPTION_FORMAT, preferences.encryptionFormat.name)
             apply()
         }
         android.util.Log.d("WebDavHelper", "Saved backup preferences: $preferences")
@@ -1635,7 +1639,9 @@ class WebDavHelper(
             includeTrash = prefs.getBoolean(KEY_BACKUP_INCLUDE_TRASH, true),
             includeTrashAndHistory = prefs.getBoolean(KEY_BACKUP_INCLUDE_TRASH_AND_HISTORY, true),
             includeWebDavConfig = prefs.getBoolean(KEY_BACKUP_INCLUDE_WEBDAV_CONFIG, false),
-            includeLocalKeePass = prefs.getBoolean(KEY_BACKUP_INCLUDE_LOCAL_KEEPASS, false)
+            includeLocalKeePass = prefs.getBoolean(KEY_BACKUP_INCLUDE_LOCAL_KEEPASS, false),
+            encryptionFormat = BackupEncryptionFormat.valueOf(prefs.getString(KEY_BACKUP_ENCRYPTION_FORMAT,
+                BackupEncryptionFormat.COMPATIBLE_V1.name) ?: BackupEncryptionFormat.COMPATIBLE_V1.name)
         )
     }
     
@@ -2895,6 +2901,7 @@ class WebDavHelper(
                         outputFile = finalFile,
                         password = checkNotNull(backupEncryptPassword),
                         strings = strings,
+                        format = preferences.encryptionFormat,
                     )
                     if (encryptResult.isFailure) throw encryptResult.exceptionOrNull()!!
                 } else {

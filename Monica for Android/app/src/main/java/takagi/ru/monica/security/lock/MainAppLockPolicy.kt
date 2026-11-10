@@ -20,7 +20,11 @@ object MainAppLockPolicy {
         autoLockMinutes: Int,
         disablePasswordVerification: Boolean
     ): MainAppAccessState {
-        val firstTime = !securityManager.isMasterPasswordSet()
+        val firstTime = try {
+            !securityManager.isMasterPasswordSet()
+        } catch (_: takagi.ru.monica.security.SecureStorageUnavailableException) {
+            return storageChangedState()
+        }
         if (firstTime) {
             return MainAppAccessState(
                 isFirstTime = true,
@@ -39,7 +43,11 @@ object MainAppLockPolicy {
             )
         }
 
-        val canRestoreSession = securityManager.canRestoreMainAppSession(context, autoLockMinutes)
+        val canRestoreSession = try {
+            securityManager.canRestoreMainAppSession(context, autoLockMinutes)
+        } catch (_: takagi.ru.monica.security.SecureStorageUnavailableException) {
+            return storageChangedState()
+        }
         return MainAppAccessState(
             isFirstTime = false,
             bypassEnabled = false,
@@ -47,4 +55,11 @@ object MainAppLockPolicy {
             reason = if (canRestoreSession) "restorable_session" else "authentication_required"
         )
     }
+
+    private fun storageChangedState() = MainAppAccessState(
+        isFirstTime = false,
+        bypassEnabled = false,
+        canRestoreSession = false,
+        reason = "secure_storage_changed",
+    )
 }

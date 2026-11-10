@@ -1,6 +1,7 @@
 package takagi.ru.monica.steam.ui
 
 import takagi.ru.monica.ui.components.animateMonicaContentSize
+import takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -51,6 +52,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
@@ -181,7 +183,6 @@ import takagi.ru.monica.ui.common.pull.rememberPullToSearchState
 import takagi.ru.monica.ui.common.pull.PullSearchDefaults
 import takagi.ru.monica.ui.common.pull.PullSearchHint
 import takagi.ru.monica.ui.components.ExpressiveTopBar
-import takagi.ru.monica.ui.components.M3IdentityVerifyDialog
 import takagi.ru.monica.ui.components.MonicaItemCardShape
 import takagi.ru.monica.ui.components.MonicaModalBottomSheet
 import takagi.ru.monica.ui.components.MonicaExpressiveFilterChip
@@ -352,8 +353,7 @@ fun SteamScreen(
     var pendingProtectedMarketAction by remember {
         mutableStateOf<SteamProtectedMarketAction?>(null)
     }
-    var protectedMarketPasswordInput by remember { mutableStateOf("") }
-    var protectedMarketPasswordError by remember { mutableStateOf(false) }
+
     var addAccountMethod by remember { mutableStateOf<SteamAddAccountMethod?>(null) }
     var steamIdCompletionAccountId by rememberSaveable { mutableStateOf<Long?>(null) }
     val steamIdCompletionAccount = uiState.accounts.firstOrNull { it.id == steamIdCompletionAccountId }
@@ -367,8 +367,7 @@ fun SteamScreen(
     var removeAuthenticatorRequest by remember { mutableStateOf<SteamAccount?>(null) }
     var removeAuthenticatorVerifyAccount by remember { mutableStateOf<SteamAccount?>(null) }
     var removeAuthenticatorVerifyMode by remember { mutableStateOf(SteamAuthenticatorRemovalMode.REMOTE) }
-    var removeAuthenticatorPasswordInput by remember { mutableStateOf("") }
-    var removeAuthenticatorPasswordError by remember { mutableStateOf(false) }
+
     var scannedQrPayload by remember { mutableStateOf<String?>(null) }
     var pendingLoginAction by remember { mutableStateOf<LoginActionRequest?>(null) }
     var autoPromptedLoginClientIds by remember(selectedAccount?.id) { mutableStateOf<Set<Long>>(emptySet()) }
@@ -456,8 +455,6 @@ fun SteamScreen(
         selectedMarketListingIds = emptyList()
         batchSellStacks = emptyList()
         pendingProtectedMarketAction = null
-        protectedMarketPasswordInput = ""
-        protectedMarketPasswordError = false
         viewModel.clearBatchMarketQuotes()
         viewModel.clearSelectedConfirmations()
     }
@@ -472,8 +469,6 @@ fun SteamScreen(
         selectedMarketListingIds = emptyList()
         batchSellStacks = emptyList()
         pendingProtectedMarketAction = null
-        protectedMarketPasswordInput = ""
-        protectedMarketPasswordError = false
         viewModel.clearBatchMarketQuotes()
     }
 
@@ -486,8 +481,6 @@ fun SteamScreen(
     fun dismissRemoveAuthenticatorVerify() {
         removeAuthenticatorVerifyAccount = null
         removeAuthenticatorVerifyMode = SteamAuthenticatorRemovalMode.REMOTE
-        removeAuthenticatorPasswordInput = ""
-        removeAuthenticatorPasswordError = false
     }
 
     fun requestRemoveAuthenticatorVerification(
@@ -497,8 +490,6 @@ fun SteamScreen(
         removeAuthenticatorRequest = null
         removeAuthenticatorVerifyAccount = account
         removeAuthenticatorVerifyMode = mode
-        removeAuthenticatorPasswordInput = ""
-        removeAuthenticatorPasswordError = false
     }
 
     fun confirmRemoveAuthenticator(
@@ -1056,6 +1047,8 @@ fun SteamScreen(
     }
 
     removeAuthenticatorVerifyAccount?.let { account ->
+        val verificationAccount = remember { account }
+        val verificationMode = remember { removeAuthenticatorVerifyMode }
         val accountLabel = account.displayName
             .ifBlank { account.accountName.ifBlank { account.visibleSteamId } }
             .ifBlank { "Steam" }
@@ -1089,7 +1082,8 @@ fun SteamScreen(
             null
         }
 
-        M3IdentityVerifyDialog(
+        SecondaryPasswordVerificationDialog(
+            manager = securityManager,
             title = stringResource(R.string.verify_identity),
             message = stringResource(
                 when (removalMode) {
@@ -1098,18 +1092,10 @@ fun SteamScreen(
                 },
                 accountLabel
             ),
-            passwordValue = removeAuthenticatorPasswordInput,
-            onPasswordChange = {
-                removeAuthenticatorPasswordInput = it
-                removeAuthenticatorPasswordError = false
-            },
             onDismiss = { dismissRemoveAuthenticatorVerify() },
-            onConfirm = {
-                if (securityManager.verifyMasterPassword(removeAuthenticatorPasswordInput)) {
-                    confirmRemoveAuthenticator(account, removalMode)
-                } else {
-                    removeAuthenticatorPasswordError = true
-                }
+            onSuccess = { confirmRemoveAuthenticator(verificationAccount, verificationMode) },
+            isRequestCurrent = {
+                removeAuthenticatorVerifyAccount === verificationAccount && removeAuthenticatorVerifyMode == verificationMode
             },
             confirmText = stringResource(
                 when (removalMode) {
@@ -1117,15 +1103,12 @@ fun SteamScreen(
                     SteamAuthenticatorRemovalMode.LOCAL_ONLY -> R.string.steam_remove_authenticator_local_action
                 }
             ),
+            icon = Icons.Default.Warning,
             destructiveConfirm = true,
-            isPasswordError = removeAuthenticatorPasswordError,
-            passwordErrorText = stringResource(R.string.current_password_incorrect),
             onBiometricClick = biometricAction,
             biometricHintText = if (biometricAction == null) {
                 stringResource(R.string.biometric_not_available)
-            } else {
-                null
-            }
+            } else null,
         )
     }
 
@@ -1153,15 +1136,11 @@ fun SteamScreen(
 
     fun dismissProtectedMarketAction() {
         pendingProtectedMarketAction = null
-        protectedMarketPasswordInput = ""
-        protectedMarketPasswordError = false
     }
 
     fun requestProtectedMarketAction(action: SteamProtectedMarketAction) {
         if (uiState.inventoryMarket.actionLoading) return
         pendingProtectedMarketAction = action
-        protectedMarketPasswordInput = ""
-        protectedMarketPasswordError = false
     }
 
     fun executeProtectedMarketAction(action: SteamProtectedMarketAction) {
@@ -1205,6 +1184,7 @@ fun SteamScreen(
     }
 
     pendingProtectedMarketAction?.let { action ->
+        val verificationAction = remember { action }
         val isCancellation = action is SteamProtectedMarketAction.CancelListings
         val affectedCount = when (action) {
             is SteamProtectedMarketAction.Sell -> action.entries.sumOf { it.quantity }
@@ -1248,36 +1228,23 @@ fun SteamScreen(
             null
         }
 
-        M3IdentityVerifyDialog(
+        SecondaryPasswordVerificationDialog(
+            manager = securityManager,
             title = stringResource(R.string.verify_identity),
             message = message,
-            passwordValue = protectedMarketPasswordInput,
-            onPasswordChange = {
-                protectedMarketPasswordInput = it
-                protectedMarketPasswordError = false
-            },
             onDismiss = { dismissProtectedMarketAction() },
-            onConfirm = {
-                if (
-                    masterPasswordAvailable &&
-                    securityManager.verifyMasterPassword(protectedMarketPasswordInput)
-                ) {
-                    executeProtectedMarketAction(action)
-                } else {
-                    protectedMarketPasswordError = true
-                }
-            },
+            onSuccess = { executeProtectedMarketAction(verificationAction) },
+            isRequestCurrent = { masterPasswordAvailable && pendingProtectedMarketAction === verificationAction },
             confirmText = confirmText,
-            confirmEnabled = masterPasswordAvailable && protectedMarketPasswordInput.isNotBlank(),
+            confirmEnabled = masterPasswordAvailable,
+            icon = Icons.Default.Warning,
             destructiveConfirm = isCancellation,
-            isPasswordError = protectedMarketPasswordError,
-            passwordErrorText = stringResource(R.string.current_password_incorrect),
             onBiometricClick = biometricAction,
             biometricHintText = when {
                 biometricAction != null -> null
                 !masterPasswordAvailable -> stringResource(R.string.steam_market_auth_unavailable)
                 else -> stringResource(R.string.biometric_not_available)
-            }
+            },
         )
     }
 

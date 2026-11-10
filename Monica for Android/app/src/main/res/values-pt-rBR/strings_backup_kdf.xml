@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_kdf_title">Formato do backup criptografado</string>
+    <string name="backup_kdf_compatible">Compatível V1 · 100000 iterações</string>
+    <string name="backup_kdf_enhanced">Reforçado V2 · 600000 iterações</string>
+    <string name="backup_kdf_scope">Esta escolha só afeta novos backups ZIP criptografados. Os backups existentes não são alterados.</string>
+    <string name="backup_kdf_compatibility_warning">V2 exige um leitor compatível. Extensões ou aplicativos de computador antigos podem não conseguir restaurá-lo. Guarde os backups anteriores.</string>
+</resources>

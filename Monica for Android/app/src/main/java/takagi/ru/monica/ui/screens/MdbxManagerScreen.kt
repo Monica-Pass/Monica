@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.screens
 
+import takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.ui.semantics.Role
 import takagi.ru.monica.workers.MdbxAutoSyncPreferences
@@ -114,7 +115,6 @@ import takagi.ru.monica.repository.MdbxStructureNodeStatus
 import takagi.ru.monica.repository.MdbxStructureNodeType
 import takagi.ru.monica.repository.MdbxStructurePreview
 import takagi.ru.monica.repository.MdbxVaultDiagnostics
-import takagi.ru.monica.ui.components.M3IdentityVerifyDialog
 import takagi.ru.monica.ui.components.MonicaExpandableContent
 import takagi.ru.monica.ui.components.MonicaExpansionChevron
 import takagi.ru.monica.ui.components.MonicaTileGrid
@@ -165,8 +165,7 @@ fun MdbxManagerScreen(
     val oneDriveGridState = rememberLazyGridState()
     var showDeleteDialog by remember { mutableStateOf<LocalMdbxDatabase?>(null) }
     var showHealthRepairDeleteVerification by rememberSaveable { mutableStateOf(false) }
-    var healthRepairMasterPassword by rememberSaveable { mutableStateOf("") }
-    var healthRepairPasswordError by rememberSaveable { mutableStateOf(false) }
+
     val healthRepairBiometricHelper = remember(context) { BiometricHelper(context) }
     var page by rememberSaveable(
         initialDatabaseId,
@@ -218,8 +217,7 @@ fun MdbxManagerScreen(
     LaunchedEffect(healthRepairState) {
         if (healthRepairState !is MdbxViewModel.MdbxHealthRepairState.Reviewing) {
             showHealthRepairDeleteVerification = false
-            healthRepairMasterPassword = ""
-            healthRepairPasswordError = false
+
         }
     }
     LaunchedEffect(page, selectedDatabase?.id, deltaDialogState) {
@@ -690,8 +688,7 @@ fun MdbxManagerScreen(
         MdbxHealthRepairDialog(
             state = healthRepairState,
             onCancel = {
-                healthRepairMasterPassword = ""
-                healthRepairPasswordError = false
+
                 viewModel.dismissHealthRepair()
             },
             onRetry = {
@@ -708,19 +705,31 @@ fun MdbxManagerScreen(
             },
             onDeleteObject = {
                 showHealthRepairDeleteVerification = true
-                healthRepairMasterPassword = ""
-                healthRepairPasswordError = false
+
             }
         )
     }
 
     if (showHealthRepairDeleteVerification) {
         val activity = context.findActivity() as? FragmentActivity
+        val manager = takagi.ru.monica.ui.rememberUiSecurityManager()
+        val targetRepair = remember { healthRepairState }
+        val latestRepair = androidx.compose.runtime.rememberUpdatedState(healthRepairState)
+        val lifecycle = androidx.lifecycle.compose.LocalLifecycleOwner.current.lifecycle
+        val generation = remember { takagi.ru.monica.security.SecurityManager.dataReadGeneration.value }
+        val active = remember { java.util.concurrent.atomic.AtomicBoolean(true) }
+        androidx.compose.runtime.DisposableEffect(Unit) { onDispose { active.set(false) } }
         val completeDeleteChoice = {
-            showHealthRepairDeleteVerification = false
-            healthRepairMasterPassword = ""
-            healthRepairPasswordError = false
-            viewModel.chooseHealthRepairConflict(MdbxHealthRepairChoice.DELETE_OBJECT)
+            if (showHealthRepairDeleteVerification && latestRepair.value == targetRepair &&
+                manager.isDataReadCurrent(generation) &&
+                lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED) &&
+                context.getSystemService(android.os.PowerManager::class.java)?.isInteractive == true &&
+                context.getSystemService(android.app.KeyguardManager::class.java)?.isKeyguardLocked == false &&
+                active.compareAndSet(true, false)
+            ) {
+                showHealthRepairDeleteVerification = false
+                viewModel.chooseHealthRepairConflict(MdbxHealthRepairChoice.DELETE_OBJECT)
+            }
         }
         val biometricAction = if (
             activity != null && healthRepairBiometricHelper.isBiometricAvailable()
@@ -740,33 +749,18 @@ fun MdbxManagerScreen(
         } else {
             null
         }
-        M3IdentityVerifyDialog(
+        SecondaryPasswordVerificationDialog(
+            manager = manager,
             title = strings.get(R.string.mdbx_ui_repair_verify_delete_title),
             message = strings.get(R.string.mdbx_ui_repair_verify_delete_description),
-            passwordValue = healthRepairMasterPassword,
-            onPasswordChange = {
-                healthRepairMasterPassword = it
-                healthRepairPasswordError = false
-            },
-            onDismiss = {
-                showHealthRepairDeleteVerification = false
-                healthRepairMasterPassword = ""
-                healthRepairPasswordError = false
-            },
-            onConfirm = {
-                if (viewModel.verifyMasterPassword(healthRepairMasterPassword)) {
-                    completeDeleteChoice()
-                } else {
-                    healthRepairPasswordError = true
-                }
-            },
+            onDismiss = { active.set(false); showHealthRepairDeleteVerification = false },
+            onSuccess = { completeDeleteChoice() },
+            isRequestCurrent = { showHealthRepairDeleteVerification && healthRepairState == targetRepair },
             confirmText = strings.get(R.string.mdbx_ui_verify_and_delete),
             icon = Icons.Default.Delete,
             destructiveConfirm = true,
-            isPasswordError = healthRepairPasswordError,
-            passwordErrorText = strings.get(R.string.mdbx_ui_master_password_incorrect),
             onBiometricClick = biometricAction,
-            biometricHintText = if (biometricAction == null) strings.get(R.string.mdbx_ui_biometrics_unavailable) else null
+            biometricHintText = if (biometricAction == null) strings.get(R.string.mdbx_ui_biometrics_unavailable) else null,
         )
     }
 
@@ -2231,7 +2225,6 @@ internal fun MdbxMaintenancePage(
             )
         }
 
-
         diagnostics?.let { diagnostic ->
             item {
                 MdbxDiagnosticSection(title = strings.get(R.string.mdbx_ui_key_metrics)) {
@@ -2422,7 +2415,6 @@ private fun MdbxSectionHeader(icon: ImageVector, title: String, subtitle: String
         }
     }
 }
-
 
 
 @Composable

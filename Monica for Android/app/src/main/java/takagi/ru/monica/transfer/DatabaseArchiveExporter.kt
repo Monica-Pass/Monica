@@ -180,7 +180,7 @@ internal class DatabaseArchiveExporter(context: Context) {
                 progress.report(TransferProgress(TransferPhase.ENCRYPTING))
                 File.createTempFile("monica-database-", ".enc.zip", context.cacheDir).also { target ->
                     completedFile = target
-                    EncryptionHelper.encryptFile(file, target, checkNotNull(password), AppLocaleStringResolver(context)).getOrThrow()
+                    EncryptionHelper.encryptFile(file, target, checkNotNull(password), AppLocaleStringResolver(context), preferences.encryptionFormat).getOrThrow()
                 }
             } else File.createTempFile("monica-database-", ".zip", context.cacheDir).also { target ->
                 completedFile = target

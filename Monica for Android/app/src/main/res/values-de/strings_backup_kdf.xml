@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_kdf_title">Format verschlüsselter Sicherungen</string>
+    <string name="backup_kdf_compatible">Kompatibel V1 · 100000 Durchläufe</string>
+    <string name="backup_kdf_enhanced">Verstärkt V2 · 600000 Durchläufe</string>
+    <string name="backup_kdf_scope">Diese Auswahl gilt nur für neue verschlüsselte ZIP-Sicherungen. Vorhandene Sicherungen bleiben unverändert.</string>
+    <string name="backup_kdf_compatibility_warning">V2 erfordert ein kompatibles Programm. Ältere Erweiterungen oder Desktop-Clients können es möglicherweise nicht wiederherstellen. Frühere Sicherungen aufbewahren.</string>
+</resources>

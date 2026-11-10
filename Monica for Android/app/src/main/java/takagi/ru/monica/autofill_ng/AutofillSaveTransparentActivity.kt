@@ -152,6 +152,9 @@ class AutofillSaveTransparentActivity : androidx.fragment.app.FragmentActivity()
         val customFieldRepository = CustomFieldRepository(database.customFieldDao())
         val application = applicationContext as Application
 
+        // Read at the guarded Activity entry: a concurrent credential change is rendered
+        // by launchWithSecureStorage, rather than throwing from a later Compose frame.
+        val masterPasswordSetAtOpen = securityManager.isMasterPasswordSet()
         val lockGenerationAtOpen = SessionManager.lockGeneration.value
         setContent {
             val lockGeneration by SessionManager.lockGeneration.collectAsState()
@@ -159,7 +162,7 @@ class AutofillSaveTransparentActivity : androidx.fragment.app.FragmentActivity()
                 if (lockGeneration != lockGenerationAtOpen) closeSave(AutofillSaveDiagnostics.Event.LOCK_CHANGED)
             }
             val unlocked by SessionManager.isUnlocked.collectAsState()
-            var authorized by remember { mutableStateOf(unlocked || !securityManager.isMasterPasswordSet()) }
+            var authorized by remember { mutableStateOf(unlocked || !masterPasswordSetAtOpen) }
             var wasUnlocked by remember { mutableStateOf(unlocked) }
             LaunchedEffect(Unit) {
                 val current = settingsManager.settingsFlow.first()

@@ -35,9 +35,7 @@ import kotlinx.coroutines.launch
 import takagi.ru.monica.R
 import takagi.ru.monica.data.AppSettings
 import takagi.ru.monica.data.PasswordEntry
-import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.ui.common.dialog.DeleteConfirmDialog
-import takagi.ru.monica.ui.components.M3IdentityVerifyDialog
 import takagi.ru.monica.ui.password.PasswordBatchDeleteGlobalProgressState
 import takagi.ru.monica.ui.password.PasswordBatchDeletePhase
 import takagi.ru.monica.ui.password.PasswordBatchDeleteProgressTracker
@@ -106,25 +104,21 @@ internal fun PasswordListDialogs(
     viewModel: PasswordViewModel,
     context: Context,
     coroutineScope: kotlinx.coroutines.CoroutineScope,
-    onDeleteSelection: suspend (onProgress: (processed: Int, total: Int) -> Unit) -> Int,
+    onDeleteSelection: suspend (
+        targetKeys: Set<String>,
+        targetPasswordIds: Set<Long>,
+        onProgress: (processed: Int, total: Int) -> Unit,
+    ) -> Int,
     onBatchDeleteStarted: () -> Unit = {},
     onSelectionCleared: () -> Unit,
     showBatchDeleteDialog: Boolean,
     onShowBatchDeleteDialogChange: (Boolean) -> Unit,
-    passwordInput: String,
-    onPasswordInputChange: (String) -> Unit,
-    passwordError: Boolean,
-    onPasswordErrorChange: (Boolean) -> Unit,
     canUseBiometric: Boolean,
     activity: FragmentActivity?,
     biometricHelper: BiometricHelper,
     itemToDelete: PasswordEntry?,
     onItemToDeleteChange: (PasswordEntry?) -> Unit,
     appSettings: AppSettings,
-    singleItemPasswordInput: String,
-    onSingleItemPasswordInputChange: (String) -> Unit,
-    showSingleItemPasswordVerify: Boolean,
-    onShowSingleItemPasswordVerifyChange: (Boolean) -> Unit,
     localKeePassViewModel: LocalKeePassViewModel? = null
 ) {
     var batchDeleteProcessed by remember { mutableStateOf(0) }
@@ -196,6 +190,8 @@ internal fun PasswordListDialogs(
     }
 
     if (showBatchDeleteDialog) {
+        val targetKeys = remember { selectedItemKeys.toSet() }
+        val targetPasswords = remember { selectedPasswords.toSet() }
         suspend fun executeBatchDelete() {
             val shouldTrackProgress = selectedCount > 0
             val notificationId = if (shouldTrackProgress) {
@@ -217,15 +213,13 @@ internal fun PasswordListDialogs(
                 }
             }
             onShowBatchDeleteDialogChange(false)
-            onPasswordInputChange("")
-            onPasswordErrorChange(false)
 
             var didFinishDeleteFlow = false
             var deletedCountResult = 0
             try {
                 deletedCountResult = if (shouldTrackProgress) {
                     var started = false
-                    onDeleteSelection { processed, total ->
+                    onDeleteSelection(targetKeys, targetPasswords) { processed, total ->
                         if (!started) {
                             started = true
                             onBatchDeleteStarted()
@@ -246,7 +240,7 @@ internal fun PasswordListDialogs(
                     }
                 } else {
                     onBatchDeleteStarted()
-                    onDeleteSelection { _, _ -> }
+                    onDeleteSelection(targetKeys, targetPasswords) { _, _ -> }
                 }
                 Toast.makeText(
                     context,
@@ -280,73 +274,27 @@ internal fun PasswordListDialogs(
             }
         }
 
-        val skipIdentityVerification = appSettings.disablePasswordVerification
-        val biometricAction = if (!skipIdentityVerification && canUseBiometric) {
-            {
-                val hostActivity = activity
-                if (hostActivity == null) {
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.biometric_not_available),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    biometricHelper.authenticate(
-                        activity = hostActivity,
-                        title = context.getString(R.string.verify_identity),
-                        subtitle = context.getString(R.string.verify_to_delete),
-                        onSuccess = {
-                            viewModel.viewModelScope.launch {
-                                executeBatchDelete()
-                            }
-                        },
-                        onError = { error ->
-                            Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
-                        },
-                        onFailed = {}
-                    )
-                }
-            }
-        } else {
-            null
+        val deleteSelection: () -> Unit = {
+            viewModel.viewModelScope.launch { executeBatchDelete() }
         }
-        M3IdentityVerifyDialog(
+        DeleteConfirmDialog(
+            itemTitle = stringResource(R.string.selected_items, selectedCount),
+            biometricEnabled = appSettings.biometricEnabled,
+            skipIdentityVerification = appSettings.disablePasswordVerification,
             title = stringResource(R.string.verify_identity),
             message = stringResource(R.string.batch_delete_passwords_message, selectedCount),
-            passwordValue = passwordInput,
-            onPasswordChange = {
-                onPasswordInputChange(it)
-                onPasswordErrorChange(false)
+            onDismiss = { onShowBatchDeleteDialogChange(false) },
+            onConfirmWithoutVerification = deleteSelection,
+            onPasswordVerified = deleteSelection,
+            onConfirmWithBiometric = deleteSelection,
+            isRequestCurrent = {
+                showBatchDeleteDialog && selectedItemKeys == targetKeys && selectedPasswords == targetPasswords
             },
-            onDismiss = {
-                onShowBatchDeleteDialogChange(false)
-                onPasswordInputChange("")
-                onPasswordErrorChange(false)
-            },
-            onConfirm = {
-                if (skipIdentityVerification || SecurityManager(context).verifyMasterPassword(passwordInput)) {
-                    viewModel.viewModelScope.launch {
-                        executeBatchDelete()
-                    }
-                } else {
-                    onPasswordErrorChange(true)
-                }
-            },
-            confirmText = stringResource(R.string.delete),
-            destructiveConfirm = true,
-            requireIdentityVerification = !skipIdentityVerification,
-            isPasswordError = passwordError,
-            passwordErrorText = stringResource(R.string.current_password_incorrect),
-            onBiometricClick = biometricAction,
-            biometricHintText = if (biometricAction == null) {
-                context.getString(R.string.biometric_not_available)
-            } else {
-                null
-            }
         )
     }
 
     itemToDelete?.let { item ->
+        val targetItem = remember { item }
         DeleteConfirmDialog(
             itemTitle = item.title,
             itemType = stringResource(R.string.item_type_password),
@@ -362,10 +310,14 @@ internal fun PasswordListDialogs(
                     onItemToDeleteChange(null)
                 }
             },
-            onConfirmWithPassword = { password ->
-                onSingleItemPasswordInputChange(password)
-                onShowSingleItemPasswordVerifyChange(true)
+            onPasswordVerified = {
+                onItemToDeleteChange(null)
+                coroutineScope.launch {
+                    viewModel.deletePasswordEntry(targetItem)
+                    Toast.makeText(context, context.getString(R.string.deleted), Toast.LENGTH_SHORT).show()
+                }
             },
+            isRequestCurrent = { itemToDelete == targetItem },
             onConfirmWithBiometric = {
                 coroutineScope.launch {
                     viewModel.deletePasswordEntry(item)
@@ -380,29 +332,6 @@ internal fun PasswordListDialogs(
         )
     }
 
-    if (showSingleItemPasswordVerify && itemToDelete != null) {
-        val pendingDeleteItem = itemToDelete
-        LaunchedEffect(pendingDeleteItem.id, showSingleItemPasswordVerify) {
-            val securityManager = SecurityManager(context)
-            if (securityManager.verifyMasterPassword(singleItemPasswordInput)) {
-                viewModel.deletePasswordEntry(pendingDeleteItem)
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.deleted),
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.current_password_incorrect),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            onItemToDeleteChange(null)
-            onSingleItemPasswordInputChange("")
-            onShowSingleItemPasswordVerifyChange(false)
-        }
-    }
 }
 
 @Composable

@@ -2,6 +2,16 @@
 
 ## 中文
 
+- 减小安装包：压缩赞赏码图片、无损优化内置品牌图标并复用 Monica 图标，保留已有项目的 PNG 自定义图标；精简依赖的多余语言资源，保留全部应用语言和特殊中文配置。
+- 提升本地主密码保护：旧版 PBKDF2 在首次成功验证主密码时升级至 600000 次派生，保留原数据密钥与已存内容；安全设置中可为整个应用选择 Argon2id。
+- 旧加密 ZIP 备份仍可读取，新备份默认使用兼容 V1；可主动选择 600000 次派生的增强 V2，但恢复端也必须支持 V2，请保留旧备份。
+- 旧 APK 无法识别新的本地主密码保护。请使用支持此保护的新版客户端，不要直接降级打开升级后的本地数据。
+
+- 优化 KeePass 内部代码结构，按职责拆分目录、条目和字段处理逻辑，便于维护与后续改进；现有加密方式、文件格式和使用流程保持一致。
+
+- 精简银行卡和证件新建页，移除顶部 NFC 按钮、说明和读取成功提示；保留自动贴卡填入，卡片类型在原有菜单中确认。
+- 改进银联 NFC 兼容性：补齐应用选择与读取参数，兼容部分无需 Luhn 校验的银联卡，并补充 Track 1 卡号、姓名和有效期读取。实体银联卡仍需复测；卡片未公开的信息无法读取。
+- Send 访问控制改为与银行卡类型选择一致的紧凑 M3E 菜单，选中后显示对应密码或邮箱字段。
 - 内置图标库添加 Monica 本体图标，支持搜索并为条目选择（#180 / #181）。
 - 整理 Send 创建页：以单张账号卡片打开账号单选底部面板，并将草稿入口移至新建页。
 - 若当前表单有未保存内容，打开草稿前可取消或确认替换；已保存的草稿会保留。
@@ -19,6 +29,16 @@
 
 ## English
 
+- Reduce package size with compressed donation images, lossless bundled brand icons and a shared Monica icon. Preserve existing custom PNG icons and all app languages, including special Chinese locales, while removing unused dependency translations.
+- Strengthen local master-password protection: after the first successful password verification, upgrade legacy PBKDF2 to 600000 iterations while retaining the existing data key and stored content. Security settings also offer Argon2id for the whole app.
+- Keep reading older encrypted ZIP backups and use compatible V1 for new backups by default. Enhanced V2 with 600000 iterations is optional and requires a V2-capable reader; retain earlier backups.
+- Older APKs cannot recognize the new local password protection. Use an updated client that supports it; do not directly downgrade to open upgraded local data.
+
+- Improve KeePass code organization by separating group, entry and field handling, making maintenance and future improvements easier while preserving existing encryption, file formats and workflows.
+
+- Simplify bank-card and document creation by removing the top NFC button, help block and success messages. Keep automatic tap-to-fill and confirm the card type in the existing menu.
+- Improve UnionPay NFC compatibility with broader application selection and appropriate read parameters, limited support for UnionPay numbers without Luhn validation, and Track 1 number, name and expiry parsing. Physical UnionPay cards still need retesting; information withheld by the card remains unavailable.
+- Use a compact M3E menu for Send access control, matching the bank-card type picker and showing password or email fields for the selected mode.
 - Add the Monica app icon to the built-in icon library for search and entry selection (#180 / #181).
 - Simplify Send creation with a single account card that opens a single-selection bottom sheet, and move drafts into the New Send page.
 - When opening a draft would replace unsaved form edits, offer cancel or confirm; saved drafts are retained.

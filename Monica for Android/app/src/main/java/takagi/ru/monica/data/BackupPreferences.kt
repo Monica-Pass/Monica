@@ -17,7 +17,8 @@ data class BackupPreferences(
     val includeTrash: Boolean = true,              // 保留用于向后兼容
     val includeTrashAndHistory: Boolean = true,    // ✅ 新增：回收站与历史（合并项）
     val includeWebDavConfig: Boolean = false,      // Monica 配置（旧字段名，默认关闭，需手动开启）
-    val includeLocalKeePass: Boolean = false      // 本地 KeePass 数据库（默认关闭）
+    val includeLocalKeePass: Boolean = false,      // 本地 KeePass 数据库（默认关闭）
+    val encryptionFormat: BackupEncryptionFormat = BackupEncryptionFormat.COMPATIBLE_V1
 ) {
     /**
      * 检查是否至少启用了一种内容类型

@@ -1,9 +1,6 @@
 package takagi.ru.monica.nfc.card
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Nfc
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.Saver
@@ -12,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -104,17 +100,5 @@ internal fun NfcCardEditor(
         lifecycle.addObserver(observer)
         if (eligible && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) controller.register(target)
         onDispose { lifecycle.removeObserver(observer); controller.unregister(target.owner) }
-    }
-}
-
-@Composable
-internal fun NfcCardScanButton(enabled: Boolean = true) {
-    val controller = LocalNfcCardEntry.current ?: return
-    val ui by controller.ui.collectAsState()
-    OutlinedButton(onClick = controller::showScanHelp, enabled = enabled && !ui.reading,
-        modifier = Modifier.fillMaxWidth().testTag("nfc_card_scan")) {
-        Icon(Icons.Default.Nfc, null)
-        Spacer(Modifier.width(8.dp))
-        Text(stringResource(if (ui.reading) R.string.nfc_card_scanning else R.string.nfc_card_scan_title))
     }
 }

@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="nfc_card_scan_title">Ler cartão NFC</string>
-    <string name="nfc_card_scan_hint">Aproxime o cartão da antena NFC do telemóvel. Alguns cartões bancários sem contacto são compatíveis.</string>
-    <string name="nfc_card_scanning">A ler o cartão…</string>
-    <string name="nfc_card_unavailable">Este dispositivo não suporta NFC.</string>
-    <string name="nfc_card_disabled">Ative primeiro o NFC nas definições do sistema.</string>
     <string name="nfc_card_unlock_retap">Desbloqueie o Monica e volte a aproximar o cartão.</string>
-    <string name="nfc_card_unsupported">Este cartão não tem um número de cartão bancário legível. Os documentos de identificação protegidos não são suportados; o UID do chip não é um número de cartão.</string>
+    <string name="nfc_card_unsupported">Não foi possível ler um número de cartão bancário utilizável. Mantenha o cartão junto ao telemóvel e tente novamente; alguns cartões não disponibilizam estas informações.</string>
     <string name="nfc_card_read_failed">Não foi possível ler o cartão. Mantenha-o junto ao telemóvel e tente novamente.</string>
     <string name="nfc_card_new_title">Criar um cartão bancário?</string>
     <string name="nfc_card_new_message">Foi lido um cartão bancário, mas esta página destina-se a outro tipo de item. Abrir uma nova página de cartão bancário? O conteúdo atual será mantido.</string>
     <string name="nfc_card_replace_title">Substituir os dados existentes do cartão?</string>
     <string name="nfc_card_replace_message">Os dados lidos diferem dos do formulário. Apenas o número, a validade e os dados do titular fornecidos pelo cartão serão substituídos. O restante conteúdo será mantido.</string>
-    <string name="nfc_card_type_hint">Os dados do cartão foram lidos. O NFC não consegue distinguir com fiabilidade cartões de crédito, débito ou pré-pagos. Confirme o tipo.</string>
-    <string name="nfc_card_ready">Os dados lidos do cartão foram preenchidos. Verifique-os antes de guardar.</string>
     <string name="nfc_card_busy">Conclua a operação atual antes de ler um cartão.</string>
     <string name="nfc_card_new_action">Abrir novo cartão</string>
     <string name="nfc_card_replace_action">Substituir</string>

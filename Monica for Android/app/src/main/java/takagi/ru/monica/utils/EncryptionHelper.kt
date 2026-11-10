@@ -1,6 +1,7 @@
 package takagi.ru.monica.utils
 
 import takagi.ru.monica.R
+import takagi.ru.monica.data.BackupEncryptionFormat
 
 import android.util.Base64
 import android.util.Log
@@ -12,7 +13,6 @@ import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
 import java.io.File
 import java.io.FileInputStream
-import java.io.FileOutputStream
 import java.io.InputStream
 
 /**
@@ -32,11 +32,11 @@ class EncryptionHelper {
         
         // PBKDF2 参数
         private const val PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA256"
-        private const val PBKDF2_ITERATIONS = 100000 // 高强度迭代次数
+        private const val PBKDF2_ITERATIONS = 100000 // Frozen unversioned configuration-string format
         private const val SALT_LENGTH = 32 // 32 bytes salt
         
         // 文件头标识 (用于验证文件是否是 Monica 加密文件)
-        private const val FILE_MAGIC = "MONICA_ENC_V1"
+        private const val FILE_MAGIC = PortableBackupCrypto.FAMILY_PREFIX
         
         /**
          * 检测文件是否加密
@@ -61,7 +61,8 @@ class EncryptionHelper {
         }
 
         fun hasEncryptedFileHeader(input: InputStream): Boolean {
-            val expected = FILE_MAGIC.toByteArray(Charsets.UTF_8)
+            // Recognize the family, including unknown versions, so callers never treat it as plaintext ZIP.
+            val expected = FILE_MAGIC.toByteArray(Charsets.US_ASCII)
             val header = ByteArray(expected.size)
             var offset = 0
             while (offset < header.size) {
@@ -108,107 +109,44 @@ class EncryptionHelper {
         /**
          * 加密文件
          */
-        internal fun encryptFile(inputFile: File, outputFile: File, password: String, strings: StringResolver): Result<File> {
-            return try {
-                Log.d(TAG, "Starting encryption: ${inputFile.name} -> ${outputFile.name}")
-
-                // 1. 生成盐值和 IV
-                val salt = generateSalt()
-                val iv = generateIV()
-                
-                // 2. 派生密钥
-                val key = deriveKey(password, salt)
-                
-                // 3. 初始化加密器
-                val cipher = Cipher.getInstance(ALGORITHM)
-                val gcmSpec = GCMParameterSpec(GCM_TAG_LENGTH, iv)
-                cipher.init(Cipher.ENCRYPT_MODE, key, gcmSpec)
-                
-                // 4. 读取输入文件
-                val inputBytes = inputFile.readBytes()
-                
-                // 5. 加密数据
-                val encryptedBytes = cipher.doFinal(inputBytes)
-                
-                // 6. 写入输出文件
-                // 文件格式: [MAGIC][SALT][IV][ENCRYPTED_DATA]
-                FileOutputStream(outputFile).use { fos ->
-                    fos.write(FILE_MAGIC.toByteArray(Charsets.UTF_8))
-                    fos.write(salt)
-                    fos.write(iv)
-                    fos.write(encryptedBytes)
-                }
-                
-                Log.d(TAG, "File encrypted successfully: ${outputFile.name}")
-                Result.success(outputFile)
-                
-            } catch (e: Exception) {
-                Log.e(TAG, "Encryption failed", e)
-                Result.failure(Exception(strings.get(R.string.crypto_message_encrypt_failed, e.message ?: strings.get(R.string.import_data_unknown_error)), e))
-            }
+        internal fun encryptFile(
+            inputFile: File,
+            outputFile: File,
+            password: String,
+            strings: StringResolver,
+            format: BackupEncryptionFormat = BackupEncryptionFormat.COMPATIBLE_V1,
+        ): Result<File> = try {
+            require(inputFile.canonicalFile != outputFile.canonicalFile) { "Backup output must differ from input" }
+            val plaintext = inputFile.readBytes()
+            try {
+                outputFile.writeBytes(PortableBackupCrypto.encrypt(plaintext, password, format))
+            } finally { plaintext.fill(0) }
+            Result.success(outputFile)
+        } catch (error: Exception) {
+            Log.e(TAG, "Backup encryption failed: ${error.javaClass.simpleName}")
+            Result.failure(Exception(strings.get(R.string.crypto_message_encrypt_failed,
+                strings.get(R.string.import_data_unknown_error)), error))
         }
-        
-        /**
-         * 解密文件
-         */
-        internal fun decryptFile(inputFile: File, outputFile: File, password: String, strings: StringResolver): Result<File> {
-            return try {
-                Log.d(TAG, "Starting decryption: ${inputFile.name} -> ${outputFile.name}")
 
-                // 1. 读取文件
-                val fileBytes = inputFile.readBytes()
-                
-                // 2. 验证文件大小
-                if (fileBytes.size < FILE_MAGIC.length + SALT_LENGTH + GCM_IV_LENGTH) {
-                    return Result.failure(Exception(strings.get(R.string.crypto_message_file_too_small)))
-                }
-
-                // 3. 验证文件头
-                val magicBytes = fileBytes.copyOfRange(0, FILE_MAGIC.length)
-                val magic = String(magicBytes, Charsets.UTF_8)
-                if (magic != FILE_MAGIC) {
-                    return Result.failure(Exception(strings.get(R.string.crypto_message_invalid_file)))
-                }
-                
-                var offset = FILE_MAGIC.length
-                
-                // 4. 提取盐值
-                val salt = fileBytes.copyOfRange(offset, offset + SALT_LENGTH)
-                offset += SALT_LENGTH
-                
-                // 5. 提取 IV
-                val iv = fileBytes.copyOfRange(offset, offset + GCM_IV_LENGTH)
-                offset += GCM_IV_LENGTH
-                
-                // 6. 提取加密数据
-                val encryptedData = fileBytes.copyOfRange(offset, fileBytes.size)
-                
-                // 7. 派生密钥
-                val key = deriveKey(password, salt)
-                
-                // 8. 初始化解密器
-                val cipher = Cipher.getInstance(ALGORITHM)
-                val gcmSpec = GCMParameterSpec(GCM_TAG_LENGTH, iv)
-                cipher.init(Cipher.DECRYPT_MODE, key, gcmSpec)
-                
-                // 9. 解密数据
-                val decryptedBytes = cipher.doFinal(encryptedData)
-                
-                // 10. 写入输出文件
-                outputFile.writeBytes(decryptedBytes)
-                
-                Log.d(TAG, "File decrypted successfully: ${outputFile.name}")
-                Result.success(outputFile)
-                
-            } catch (e: javax.crypto.AEADBadTagException) {
-                Log.e(TAG, "Decryption failed - wrong password", e)
-                Result.failure(Exception(strings.get(R.string.crypto_message_password_or_corrupt), e))
-            } catch (e: Exception) {
-                Log.e(TAG, "Decryption failed", e)
-                Result.failure(Exception(strings.get(R.string.crypto_message_decrypt_failed, e.message ?: strings.get(R.string.import_data_unknown_error)), e))
-            }
+        /** Automatically reads V1 or V2. Invalid or unsupported envelopes never fall back to another KDF. */
+        internal fun decryptFile(inputFile: File, outputFile: File, password: String, strings: StringResolver): Result<File> = try {
+            require(inputFile.canonicalFile != outputFile.canonicalFile) { "Backup output must differ from input" }
+            val plaintext = PortableBackupCrypto.decrypt(inputFile.readBytes(), password)
+            try {
+                // Authentication completes before touching the destination.
+                outputFile.writeBytes(plaintext)
+            } finally { plaintext.fill(0) }
+            Result.success(outputFile)
+        } catch (error: javax.crypto.AEADBadTagException) {
+            Result.failure(Exception(strings.get(R.string.crypto_message_password_or_corrupt), error))
+        } catch (error: IllegalArgumentException) {
+            Result.failure(Exception(strings.get(R.string.crypto_message_invalid_file), error))
+        } catch (error: Exception) {
+            Log.e(TAG, "Backup decryption failed: ${error.javaClass.simpleName}")
+            Result.failure(Exception(strings.get(R.string.crypto_message_decrypt_failed,
+                strings.get(R.string.import_data_unknown_error)), error))
         }
-        
+
         /**
          * 测试密码是否正确
          */

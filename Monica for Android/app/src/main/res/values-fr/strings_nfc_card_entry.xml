@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="nfc_card_scan_title">Lire une carte NFC</string>
-    <string name="nfc_card_scan_hint">Placez la carte près de l\'antenne NFC du téléphone. Certaines cartes bancaires sans contact sont prises en charge.</string>
-    <string name="nfc_card_scanning">Lecture de la carte…</string>
-    <string name="nfc_card_unavailable">Cet appareil ne prend pas en charge le NFC.</string>
-    <string name="nfc_card_disabled">Activez d\'abord le NFC dans les paramètres système.</string>
     <string name="nfc_card_unlock_retap">Déverrouillez Monica, puis présentez à nouveau la carte.</string>
-    <string name="nfc_card_unsupported">Cette carte ne contient aucun numéro de carte bancaire lisible. Les cartes d\'identité protégées ne sont pas prises en charge ; l\'UID de la puce n\'est pas un numéro de carte.</string>
+    <string name="nfc_card_unsupported">Aucun numéro de carte bancaire exploitable n’a pu être lu. Maintenez la carte près du téléphone et réessayez ; certaines cartes ne donnent pas accès à ces informations.</string>
     <string name="nfc_card_read_failed">Impossible de lire la carte. Maintenez-la près du téléphone et réessayez.</string>
     <string name="nfc_card_new_title">Créer une carte bancaire ?</string>
     <string name="nfc_card_new_message">Une carte bancaire a été lue, mais cette page concerne un autre type d\'élément. Ouvrir une nouvelle page de carte bancaire ? Votre contenu actuel sera conservé.</string>
     <string name="nfc_card_replace_title">Remplacer les informations de carte existantes ?</string>
     <string name="nfc_card_replace_message">Les informations lues diffèrent de celles du formulaire. Seuls le numéro, la date d\'expiration et les informations du titulaire fournis par la carte seront remplacés. Le reste du contenu sera conservé.</string>
-    <string name="nfc_card_type_hint">Les informations de la carte ont été lues. Le NFC ne peut pas distinguer de manière fiable les cartes de crédit, de débit ou prépayées. Confirmez le type.</string>
-    <string name="nfc_card_ready">Les informations lues ont été renseignées. Vérifiez-les avant d\'enregistrer.</string>
     <string name="nfc_card_busy">Terminez l\'opération en cours avant de lire une carte.</string>
     <string name="nfc_card_new_action">Ouvrir une nouvelle carte</string>
     <string name="nfc_card_replace_action">Remplacer</string>

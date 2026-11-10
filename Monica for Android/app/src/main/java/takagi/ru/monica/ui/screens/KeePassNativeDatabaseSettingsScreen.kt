@@ -493,19 +493,19 @@ internal fun KeePassNativeDatabaseSettingsScreen(
     }
 
     if (showMasterPasswordVerification) {
-        MasterPasswordDialog(
-            onDismiss = { showMasterPasswordVerification = false },
-            onConfirm = { password ->
-                if (viewModel.verifyMonicaMasterPassword(password)) {
-                    masterPasswordError = false
+        val context = androidx.compose.ui.platform.LocalContext.current
+        val manager = remember(context) { takagi.ru.monica.security.SecurityManager(context) }
+        androidx.compose.runtime.key(database.id) {
+            takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog(
+                manager = manager,
+                isRequestCurrent = { showMasterPasswordVerification },
+                onDismiss = { showMasterPasswordVerification = false },
+                onSuccess = {
                     showMasterPasswordVerification = false
                     showCredentialDialog = true
-                } else {
-                    masterPasswordError = true
-                }
-            },
-            isError = masterPasswordError
-        )
+                },
+            )
+        }
     }
 
     if (showCredentialDialog) {

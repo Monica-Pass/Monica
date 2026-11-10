@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_kdf_title">Định dạng bản sao lưu mã hóa</string>
+    <string name="backup_kdf_compatible">Tương thích V1 · 100000 vòng</string>
+    <string name="backup_kdf_enhanced">Tăng cường V2 · 600000 vòng</string>
+    <string name="backup_kdf_scope">Lựa chọn này chỉ áp dụng cho bản sao lưu ZIP mã hóa mới. Các bản sao lưu hiện có không thay đổi.</string>
+    <string name="backup_kdf_compatibility_warning">V2 cần trình đọc tương thích. Tiện ích mở rộng hoặc ứng dụng máy tính cũ có thể không khôi phục được. Hãy giữ các bản sao lưu trước đó.</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_kdf_title">Формат зашифрованной копии</string>
+    <string name="backup_kdf_compatible">Совместимый V1 · 100000 итераций</string>
+    <string name="backup_kdf_enhanced">Усиленный V2 · 600000 итераций</string>
+    <string name="backup_kdf_scope">Выбор применяется только к новым зашифрованным ZIP-копиям. Существующие копии не изменяются.</string>
+    <string name="backup_kdf_compatibility_warning">Для V2 нужна совместимая программа. Старые расширения или настольные клиенты могут не восстановить такую копию. Сохраните предыдущие копии.</string>
+</resources>

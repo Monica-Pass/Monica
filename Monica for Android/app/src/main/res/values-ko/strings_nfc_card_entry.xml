@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="nfc_card_scan_title">NFC 카드 읽기</string>
-    <string name="nfc_card_scan_hint">카드를 휴대폰의 NFC 안테나 가까이에 대세요. 일부 비접촉식 은행 카드를 지원합니다.</string>
-    <string name="nfc_card_scanning">카드 읽는 중…</string>
-    <string name="nfc_card_unavailable">이 기기는 NFC를 지원하지 않습니다.</string>
-    <string name="nfc_card_disabled">먼저 시스템 설정에서 NFC를 켜세요.</string>
     <string name="nfc_card_unlock_retap">Monica의 잠금을 해제한 후 카드를 다시 대세요.</string>
-    <string name="nfc_card_unsupported">이 카드에는 읽을 수 있는 은행 카드 번호가 없습니다. 보호된 신분증 등은 지원하지 않으며, 칩 UID는 카드 번호가 아닙니다.</string>
+    <string name="nfc_card_unsupported">사용 가능한 은행 카드 번호를 읽지 못했습니다. 카드를 휴대폰 가까이에 댄 상태로 다시 시도하세요. 일부 카드는 이 정보를 공개하지 않습니다.</string>
     <string name="nfc_card_read_failed">카드를 읽지 못했습니다. 휴대폰 가까이에 댄 상태로 다시 시도하세요.</string>
     <string name="nfc_card_new_title">은행 카드를 만드시겠습니까?</string>
     <string name="nfc_card_new_message">은행 카드를 읽었지만 현재 페이지는 다른 항목 유형용입니다. 새 은행 카드 페이지를 여시겠습니까? 현재 내용은 유지됩니다.</string>
     <string name="nfc_card_replace_title">기존 카드 정보를 바꾸시겠습니까?</string>
     <string name="nfc_card_replace_message">읽은 정보가 양식의 내용과 다릅니다. 카드에서 제공한 카드 번호, 유효기간 및 카드 소유자 정보만 바뀝니다. 다른 내용은 유지됩니다.</string>
-    <string name="nfc_card_type_hint">카드 정보를 읽었습니다. NFC로는 신용카드, 체크카드 또는 선불카드를 정확히 구분할 수 없습니다. 유형을 확인하세요.</string>
-    <string name="nfc_card_ready">읽은 카드 정보를 입력했습니다. 확인 후 저장하세요.</string>
     <string name="nfc_card_busy">현재 작업을 완료한 후 카드를 읽으세요.</string>
     <string name="nfc_card_new_action">새 카드 열기</string>
     <string name="nfc_card_replace_action">바꾸기</string>

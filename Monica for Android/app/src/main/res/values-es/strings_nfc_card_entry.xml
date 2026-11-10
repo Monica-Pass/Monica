@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="nfc_card_scan_title">Leer tarjeta NFC</string>
-    <string name="nfc_card_scan_hint">Acerca la tarjeta a la antena NFC del teléfono. Se admiten algunas tarjetas bancarias sin contacto.</string>
-    <string name="nfc_card_scanning">Leyendo tarjeta…</string>
-    <string name="nfc_card_unavailable">Este dispositivo no admite NFC.</string>
-    <string name="nfc_card_disabled">Activa primero NFC en los ajustes del sistema.</string>
     <string name="nfc_card_unlock_retap">Desbloquea Monica y vuelve a acercar la tarjeta.</string>
-    <string name="nfc_card_unsupported">Esta tarjeta no tiene un número de tarjeta bancaria legible. No se admiten documentos de identidad protegidos; el UID del chip no es un número de tarjeta.</string>
+    <string name="nfc_card_unsupported">No se pudo leer un número de tarjeta bancaria válido. Mantén la tarjeta cerca del teléfono e inténtalo de nuevo; algunas tarjetas no permiten leer esta información.</string>
     <string name="nfc_card_read_failed">No se pudo leer la tarjeta. Mantenla cerca del teléfono e inténtalo de nuevo.</string>
     <string name="nfc_card_new_title">¿Crear una tarjeta bancaria?</string>
     <string name="nfc_card_new_message">Se ha leído una tarjeta bancaria, pero esta página es para otro tipo de elemento. ¿Abrir una nueva página de tarjeta bancaria? Se conservará el contenido actual.</string>
     <string name="nfc_card_replace_title">¿Reemplazar los datos existentes de la tarjeta?</string>
     <string name="nfc_card_replace_message">Los datos leídos difieren de los del formulario. Solo se reemplazarán el número, la fecha de caducidad y los datos del titular proporcionados por la tarjeta. El resto del contenido se conservará.</string>
-    <string name="nfc_card_type_hint">Se han leído los datos de la tarjeta. NFC no puede distinguir de forma fiable entre tarjetas de crédito, débito o prepago. Confirma el tipo.</string>
-    <string name="nfc_card_ready">Se han rellenado los datos leídos de la tarjeta. Revísalos antes de guardar.</string>
     <string name="nfc_card_busy">Termina la operación actual antes de leer una tarjeta.</string>
     <string name="nfc_card_new_action">Abrir nueva tarjeta</string>
     <string name="nfc_card_replace_action">Reemplazar</string>

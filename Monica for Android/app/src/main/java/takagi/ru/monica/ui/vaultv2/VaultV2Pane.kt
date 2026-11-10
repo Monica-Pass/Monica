@@ -4410,8 +4410,8 @@ fun VaultV2Pane(
 
 			// 删除二次确认对话框（带指纹/密码验证）
 			if (showDeleteConfirmDialog) {
+                val selection = remember { selectedItems.toList() }
 				val doDelete = {
-                    val selection = selectedItems.toList()
                     val passwords = selection.filter { it.type == VaultV2ItemType.PASSWORD && it.nativeToken == null }
                         .mapNotNull { it.passwordEntry }.distinctBy { it.id }
                     scope.launch {
@@ -4479,12 +4479,11 @@ fun VaultV2Pane(
 						showDeleteConfirmDialog = false
 						doDelete()
 					},
-					onConfirmWithPassword = { password ->
-						if (securityManager.unlockVaultWithPassword(password)) {
-							showDeleteConfirmDialog = false
-							doDelete()
-						}
-					},
+                    onPasswordVerified = {
+                        showDeleteConfirmDialog = false
+                        doDelete()
+                    },
+                    isRequestCurrent = { showDeleteConfirmDialog && selectedItems.toList() == selection },
 					onConfirmWithBiometric = {
 						showDeleteConfirmDialog = false
 						doDelete()

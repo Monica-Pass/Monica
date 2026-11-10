@@ -3,6 +3,7 @@ package takagi.ru.monica.ui.screens
 import takagi.ru.monica.data.model.CredentialExchangeMetadata
 
 import takagi.ru.monica.ui.components.DetailSectionLayout
+import takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog
 import takagi.ru.monica.ui.components.DetailGroupItem
 import takagi.ru.monica.ui.components.entryGroupShape
 
@@ -203,6 +204,7 @@ fun PasswordDetailScreen(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
+    val securityManager = takagi.ru.monica.ui.rememberUiSecurityManager()
     DisposableEffect(passwordId) {
         val nativeRead = viewModel.holdNativeKeePassEntryRead(passwordId)
         onDispose { nativeRead?.close() }
@@ -258,8 +260,7 @@ fun PasswordDetailScreen(
     
     // Verification State
     var showMasterPasswordDialog by remember { mutableStateOf(false) }
-    var masterPasswordInput by remember { mutableStateOf("") }
-    var passwordVerificationError by remember { mutableStateOf(false) }
+
     
     // 自定义字段状态
     var customFields by remember { mutableStateOf<List<CustomField>>(emptyList()) }
@@ -387,25 +388,17 @@ fun PasswordDetailScreen(
                     onSuccess = { executeDeletion() },
                     onError = {
                         // If error is not user cancellation, show password dialog
-                        masterPasswordInput = ""
-                        passwordVerificationError = false
                          showMasterPasswordDialog = true
                     },
                     onFailed = {
                         // Authentication failed (e.g. wrong finger), show password dialog
-                        masterPasswordInput = ""
-                        passwordVerificationError = false
                         showMasterPasswordDialog = true
                     }
                 )
             } ?: run {
-                masterPasswordInput = ""
-                passwordVerificationError = false
                 showMasterPasswordDialog = true
             }
         } else {
-            masterPasswordInput = ""
-            passwordVerificationError = false
             showMasterPasswordDialog = true
         }
     }
@@ -1234,6 +1227,7 @@ fun PasswordDetailScreen(
     }
 
     if (showMasterPasswordDialog) {
+        val deletionTargetId = remember { itemToDelete?.id ?: passwordEntry?.id }
         val activity = context as? FragmentActivity
         val skipIdentityVerification = settings.disablePasswordVerification
         val retryBiometricAction = if (
@@ -1248,7 +1242,6 @@ fun PasswordDetailScreen(
                     title = context.getString(R.string.verify_identity_to_delete),
                     onSuccess = {
                         showMasterPasswordDialog = false
-                        passwordVerificationError = false
                         executeDeletion()
                     },
                     onError = {
@@ -1262,41 +1255,43 @@ fun PasswordDetailScreen(
         } else {
             null
         }
-        M3IdentityVerifyDialog(
-            title = stringResource(R.string.verify_identity),
-            message = stringResource(R.string.verify_identity_to_delete),
-            passwordValue = masterPasswordInput,
-            onPasswordChange = {
-                masterPasswordInput = it
-                passwordVerificationError = false
-            },
-            onDismiss = {
-                showMasterPasswordDialog = false 
-                masterPasswordInput = ""
-                passwordVerificationError = false
-            },
-            onConfirm = {
-                if (skipIdentityVerification || viewModel.verifyMasterPassword(masterPasswordInput)) {
+        if (skipIdentityVerification) {
+            M3IdentityVerifyDialog(
+                title = stringResource(R.string.verify_identity),
+                message = stringResource(R.string.verify_identity_to_delete),
+                passwordValue = "",
+                onPasswordChange = {},
+                onDismiss = { showMasterPasswordDialog = false },
+                onConfirm = {
                     showMasterPasswordDialog = false
-                    masterPasswordInput = ""
-                    passwordVerificationError = false
                     executeDeletion()
-                } else {
-                    passwordVerificationError = true
-                }
-            },
-            confirmText = stringResource(R.string.delete),
-            destructiveConfirm = true,
-            requireIdentityVerification = !skipIdentityVerification,
-            isPasswordError = passwordVerificationError,
-            passwordErrorText = stringResource(R.string.current_password_incorrect),
-            onBiometricClick = retryBiometricAction,
-            biometricHintText = if (retryBiometricAction == null) {
-                context.getString(R.string.biometric_not_available)
-            } else {
-                null
-            }
-        )
+                },
+                confirmText = stringResource(R.string.delete),
+                destructiveConfirm = true,
+                requireIdentityVerification = false,
+            )
+        } else {
+            SecondaryPasswordVerificationDialog(
+                manager = securityManager,
+                title = stringResource(R.string.verify_identity),
+                message = stringResource(R.string.verify_identity_to_delete),
+                onDismiss = { showMasterPasswordDialog = false },
+                onSuccess = {
+                    showMasterPasswordDialog = false
+                    executeDeletion()
+                },
+                isRequestCurrent = {
+                    showMasterPasswordDialog && deletionTargetId != null && (itemToDelete?.id ?: passwordEntry?.id) == deletionTargetId
+                },
+                confirmText = stringResource(R.string.delete),
+                icon = Icons.Default.Warning,
+                destructiveConfirm = true,
+                onBiometricClick = retryBiometricAction,
+                biometricHintText = if (retryBiometricAction == null) {
+                    stringResource(R.string.biometric_not_available)
+                } else null,
+            )
+        }
     }
 
     if (noteViewModel != null) {

@@ -671,6 +671,11 @@ fun OneDriveBackupScreen(
                     },
                     onPasswordChange = { encryptionPassword = it; webDavHelper.setEncryptionConfig(encryptionEnabled, it) },
                     onVisibilityChange = { encryptionPasswordVisible = !encryptionPasswordVisible },
+                    format = backupPreferences.encryptionFormat,
+                    onFormatChange = {
+                        backupPreferences = backupPreferences.copy(encryptionFormat = it)
+                        webDavHelper.saveBackupPreferences(backupPreferences)
+                    },
                 )
                 SelectiveBackupCard(
                     preferences = backupPreferences,

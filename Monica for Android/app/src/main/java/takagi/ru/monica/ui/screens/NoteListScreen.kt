@@ -24,6 +24,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
@@ -92,6 +93,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.compose.ui.res.stringResource
 import takagi.ru.monica.R
 import takagi.ru.monica.ui.components.M3IdentityVerifyDialog
+import takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog
 import takagi.ru.monica.ui.components.ExpressiveTopBar
 import takagi.ru.monica.ui.components.MonicaExpressiveFilterChip
 import takagi.ru.monica.ui.components.SyncStatusIcon
@@ -149,8 +151,7 @@ fun NoteListScreen(
     var bitwardenImageWarningCount by remember { mutableStateOf(0) }
     var showPasswordDialog by remember { mutableStateOf(false) }
     var showTopActionsMenu by remember { mutableStateOf(false) }
-    var masterPassword by remember { mutableStateOf("") }
-    var passwordError by remember { mutableStateOf(false) }
+
     
     // 防止重复点击
     var isNavigating by remember { mutableStateOf(false) }
@@ -377,8 +378,6 @@ fun NoteListScreen(
         selectedNoteIds = emptySet()
         showDeleteDialog = false
         showPasswordDialog = false
-        masterPassword = ""
-        passwordError = false
     }
 
     fun performBatchMove(target: UnifiedMoveCategoryTarget, action: UnifiedMoveAction) {
@@ -785,6 +784,7 @@ fun NoteListScreen(
         }
 
         if (showPasswordDialog) {
+            val deletionIds = remember { selectedNoteIds.toSet() }
             val skipIdentityVerification = settings.disablePasswordVerification
             val biometricAction = if (!skipIdentityVerification && activity != null && canUseBiometric) {
                 {
@@ -806,38 +806,35 @@ fun NoteListScreen(
             } else {
                 null
             }
-            M3IdentityVerifyDialog(
-                title = stringResource(R.string.verify_identity),
-                message = stringResource(R.string.notes_delete_selected_confirm, selectedNoteIds.size),
-                passwordValue = masterPassword,
-                onPasswordChange = {
-                    masterPassword = it
-                    passwordError = false
-                },
-                onDismiss = {
-                    showPasswordDialog = false
-                    masterPassword = ""
-                    passwordError = false
-                },
-                onConfirm = {
-                    if (skipIdentityVerification || securityManager.verifyMasterPassword(masterPassword)) {
-                        performDelete()
-                    } else {
-                        passwordError = true
-                    }
-                },
-                confirmText = stringResource(R.string.delete),
-                destructiveConfirm = true,
-                requireIdentityVerification = !skipIdentityVerification,
-                isPasswordError = passwordError,
-                passwordErrorText = stringResource(R.string.current_password_incorrect),
-                onBiometricClick = biometricAction,
-                biometricHintText = if (biometricAction == null) {
-                    context.getString(R.string.biometric_not_available)
-                } else {
-                    null
-                }
-            )
+            if (skipIdentityVerification) {
+                M3IdentityVerifyDialog(
+                    title = stringResource(R.string.verify_identity),
+                    message = stringResource(R.string.notes_delete_selected_confirm, deletionIds.size),
+                    passwordValue = "",
+                    onPasswordChange = {},
+                    onDismiss = { showPasswordDialog = false },
+                    onConfirm = { performDelete() },
+                    confirmText = stringResource(R.string.delete),
+                    destructiveConfirm = true,
+                    requireIdentityVerification = false,
+                )
+            } else {
+                SecondaryPasswordVerificationDialog(
+                    manager = securityManager,
+                    title = stringResource(R.string.verify_identity),
+                    message = stringResource(R.string.notes_delete_selected_confirm, deletionIds.size),
+                    onDismiss = { showPasswordDialog = false },
+                    onSuccess = { performDelete() },
+                    isRequestCurrent = { showPasswordDialog && selectedNoteIds == deletionIds },
+                    confirmText = stringResource(R.string.delete),
+                    icon = Icons.Default.Warning,
+                    destructiveConfirm = true,
+                    onBiometricClick = biometricAction,
+                    biometricHintText = if (biometricAction == null) {
+                        stringResource(R.string.biometric_not_available)
+                    } else null,
+                )
+            }
         }
 
         UnifiedMoveToCategoryBottomSheet(

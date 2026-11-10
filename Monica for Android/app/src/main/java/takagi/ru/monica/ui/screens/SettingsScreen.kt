@@ -87,6 +87,8 @@ private fun VersionLinkButton(
     }
 }
 
+private class DeveloperSettingsVerificationRequest(val generation: Long)
+
 private val LocalSettingsSectionContent = compositionLocalOf { false }
 
 internal data class SettingsSectionCornerRadii(
@@ -189,6 +191,81 @@ fun SettingsScreen(
         biometricHelper.isBiometricAvailable()
     }
     
+    val developerLifecycle = androidx.lifecycle.compose.LocalLifecycleOwner.current.lifecycle
+    val developerAlive = remember { java.util.concurrent.atomic.AtomicBoolean(true) }
+    val developerNavigate = rememberUpdatedState(onNavigateToDeveloperSettings)
+    val developerLockGeneration by takagi.ru.monica.security.SecurityManager.dataReadGeneration.collectAsState()
+    var developerRequest by remember { mutableStateOf<DeveloperSettingsVerificationRequest?>(null) }
+    var developerBiometric by remember { mutableStateOf<BiometricAuthHelper?>(null) }
+    fun currentDeveloperRequest(request: DeveloperSettingsVerificationRequest): Boolean =
+        developerAlive.get() && developerRequest === request &&
+            takagi.ru.monica.security.SecurityManager.dataReadGeneration.value == request.generation &&
+            developerLifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED) &&
+            context.getSystemService(android.os.PowerManager::class.java)?.isInteractive == true &&
+            context.getSystemService(android.app.KeyguardManager::class.java)?.isKeyguardLocked == false
+    fun cancelDeveloperVerification() {
+        val prompt = developerBiometric
+        developerBiometric = null
+        developerRequest = null
+        showDeveloperVerifyDialog = false
+        developerPasswordInput = ""
+        developerPasswordError = false
+        prompt?.cancelAuthentication()
+    }
+    fun completeDeveloperVerification(request: DeveloperSettingsVerificationRequest) {
+        if (!currentDeveloperRequest(request)) return
+        cancelDeveloperVerification()
+        developerNavigate.value()
+    }
+    fun startDeveloperBiometric(request: DeveloperSettingsVerificationRequest) {
+        if (!currentDeveloperRequest(request)) return
+        val owner = activity ?: run { showDeveloperVerifyDialog = true; return }
+        developerBiometric?.cancelAuthentication()
+        // Each prompt owns its callbacks; an older prompt cannot inherit a replacement request.
+        val prompt = BiometricAuthHelper(context)
+        developerBiometric = prompt
+        prompt.authenticate(
+            activity = owner,
+            title = context.getString(R.string.biometric_login_title),
+            subtitle = context.getString(R.string.biometric_login_subtitle),
+            description = context.getString(R.string.biometric_login_description),
+            negativeButtonText = context.getString(R.string.use_master_password),
+            onSuccess = {
+                if (developerBiometric === prompt) completeDeveloperVerification(request)
+            },
+            onError = { _, errorMessage ->
+                if (developerBiometric === prompt && currentDeveloperRequest(request)) {
+                    developerBiometric = null
+                    showDeveloperVerifyDialog = true
+                    Toast.makeText(context, context.getString(R.string.biometric_auth_error, errorMessage), Toast.LENGTH_SHORT).show()
+                }
+            },
+            onCancel = {
+                if (developerBiometric === prompt && currentDeveloperRequest(request)) {
+                    developerBiometric = null
+                    showDeveloperVerifyDialog = true
+                    Toast.makeText(context, context.getString(R.string.use_master_password), Toast.LENGTH_SHORT).show()
+                }
+            },
+        )
+    }
+    DisposableEffect(developerLifecycle) {
+        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
+            if (event == androidx.lifecycle.Lifecycle.Event.ON_PAUSE || event == androidx.lifecycle.Lifecycle.Event.ON_STOP) {
+                cancelDeveloperVerification()
+            }
+        }
+        developerLifecycle.addObserver(observer)
+        onDispose {
+            developerLifecycle.removeObserver(observer)
+            developerAlive.set(false)
+            cancelDeveloperVerification()
+        }
+    }
+    LaunchedEffect(developerLockGeneration) {
+        developerRequest?.let { if (it.generation != developerLockGeneration) cancelDeveloperVerification() }
+    }
+
     // 使用本地状态跟踪生物识别开关,避免验证失败时状态不一致
     var biometricSwitchState by remember(settings.biometricEnabled) { 
         mutableStateOf(settings.biometricEnabled) 
@@ -782,13 +859,15 @@ fun SettingsScreen(
                                     "Developer settings tapped. hasActivity=$hasActivity, biometricEnabled=$biometricEnabled, biometricAvailable=$biometricAvailableNow"
                                 )
 
-                                developerPasswordInput = ""
-                                developerPasswordError = false
-                                showDeveloperVerifyDialog = false
+                                cancelDeveloperVerification()
+                                val request = DeveloperSettingsVerificationRequest(
+                                    takagi.ru.monica.security.SecurityManager.dataReadGeneration.value
+                                )
+                                developerRequest = request
 
                                 when {
                                     settings.disablePasswordVerification -> {
-                                        onNavigateToDeveloperSettings()
+                                        completeDeveloperVerification(request)
                                     }
                                     !hasActivity -> {
                                         android.util.Log.w(
@@ -803,47 +882,7 @@ fun SettingsScreen(
                                         showDeveloperVerifyDialog = true
                                     }
                                     biometricAvailableNow -> {
-                                        biometricHelper.authenticate(
-                                            activity = activity!!,
-                                            title = context.getString(R.string.biometric_login_title),
-                                            subtitle = context.getString(R.string.biometric_login_subtitle),
-                                            description = context.getString(R.string.biometric_login_description),
-                                            negativeButtonText = context.getString(R.string.use_master_password),
-                                            onSuccess = {
-                                                android.util.Log.d(
-                                                    "SettingsScreen",
-                                                    "Developer biometric authentication succeeded"
-                                                )
-                                                showDeveloperVerifyDialog = false
-                                                developerPasswordInput = ""
-                                                developerPasswordError = false
-                                                onNavigateToDeveloperSettings()
-                                            },
-                                            onError = { errorCode, errorMessage ->
-                                                android.util.Log.w(
-                                                    "SettingsScreen",
-                                                    "Developer biometric error: code=$errorCode, message=$errorMessage"
-                                                )
-                                                Toast.makeText(
-                                                    context,
-                                                    context.getString(R.string.biometric_auth_error, errorMessage),
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                                showDeveloperVerifyDialog = true
-                                            },
-                                            onCancel = {
-                                                android.util.Log.d(
-                                                    "SettingsScreen",
-                                                    "Developer biometric canceled by user"
-                                                )
-                                                Toast.makeText(
-                                                    context,
-                                                    context.getString(R.string.use_master_password),
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                                showDeveloperVerifyDialog = true
-                                            }
-                                        )
+                                        startDeveloperBiometric(request)
                                     }
                                     else -> {
                                         android.util.Log.d(
@@ -913,81 +952,23 @@ fun SettingsScreen(
     }
     
     // Developer Settings Verification Dialog
-    if (showDeveloperVerifyDialog) {
+    val currentDeveloperVerification = developerRequest
+    if (showDeveloperVerifyDialog && currentDeveloperVerification != null) {
         val canUseBiometricInDialog = activity != null &&
-            settings.biometricEnabled &&
-            biometricHelper.isBiometricAvailable()
-        val retryBiometricAction = if (canUseBiometricInDialog) {
-            {
-                biometricHelper.authenticate(
-                    activity = activity!!,
-                    title = context.getString(R.string.biometric_login_title),
-                    subtitle = context.getString(R.string.biometric_login_subtitle),
-                    description = context.getString(R.string.biometric_login_description),
-                    negativeButtonText = context.getString(R.string.use_master_password),
-                    onSuccess = {
-                        showDeveloperVerifyDialog = false
-                        developerPasswordInput = ""
-                        developerPasswordError = false
-                        onNavigateToDeveloperSettings()
-                    },
-                    onError = { _, errorMessage ->
-                        Toast.makeText(
-                            context,
-                            context.getString(R.string.biometric_auth_error, errorMessage),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    },
-                    onCancel = {
-                        Toast.makeText(
-                            context,
-                            context.getString(R.string.use_master_password),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                )
-            }
-        } else {
-            null
+            settings.biometricEnabled && biometricHelper.isBiometricAvailable()
+        val manager = remember(context) { takagi.ru.monica.security.SecurityManager(context) }
+        key(currentDeveloperVerification) {
+            takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog(
+                manager = manager,
+                title = stringResource(R.string.verify_identity),
+                message = stringResource(R.string.enter_master_password_confirm),
+                icon = Icons.Default.Code,
+                isRequestCurrent = { showDeveloperVerifyDialog && currentDeveloperRequest(currentDeveloperVerification) },
+                onDismiss = ::cancelDeveloperVerification,
+                onSuccess = { completeDeveloperVerification(currentDeveloperVerification) },
+                onBiometricClick = if (canUseBiometricInDialog) ({ startDeveloperBiometric(currentDeveloperVerification) }) else null,
+            )
         }
-        M3IdentityVerifyDialog(
-            title = stringResource(R.string.verify_identity),
-            message = stringResource(R.string.enter_master_password_confirm),
-            passwordValue = developerPasswordInput,
-            onPasswordChange = {
-                developerPasswordInput = it
-                developerPasswordError = false
-            },
-            onDismiss = {
-                showDeveloperVerifyDialog = false
-                developerPasswordInput = ""
-                developerPasswordError = false
-            },
-            onConfirm = {
-                coroutineScope.launch {
-                    val securityManager = takagi.ru.monica.security.SecurityManager(context)
-                    if (securityManager.verifyMasterPassword(developerPasswordInput)) {
-                        showDeveloperVerifyDialog = false
-                        developerPasswordInput = ""
-                        developerPasswordError = false
-                        onNavigateToDeveloperSettings()
-                    } else {
-                        developerPasswordError = true
-                    }
-                }
-            },
-            confirmText = stringResource(R.string.confirm),
-            destructiveConfirm = false,
-            icon = Icons.Default.Code,
-            isPasswordError = developerPasswordError,
-            passwordErrorText = stringResource(R.string.current_password_incorrect),
-            onBiometricClick = retryBiometricAction,
-            biometricHintText = if (retryBiometricAction == null) {
-                context.getString(R.string.biometric_not_available)
-            } else {
-                null
-            }
-        )
     }
 
     if (showWeakBiometricWarning) {
@@ -1105,26 +1086,18 @@ fun SettingsScreen(
         var clearGeneratorHistory by remember { mutableStateOf(true) }
         
         var verifying by remember { mutableStateOf(false) }
-        val sheetState = rememberModalBottomSheetState(
-            skipPartiallyExpanded = true,
-            confirmValueChange = { !verifying || it != SheetValue.Hidden },
-        )
-        fun dismissClearDataSheet(afterDismiss: (() -> Unit)? = null) {
-            coroutineScope.launch {
-                if (sheetState.isVisible) {
-                    sheetState.hide()
-                }
-                showClearDataDialog = false
-                clearDataPasswordInput = ""
-                afterDismiss?.invoke()
-            }
+        val manager = remember(context) { takagi.ru.monica.security.SecurityManager(context) }
+        val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+        fun clearSelectedData() {
+            showClearDataDialog = false
+            clearDataPasswordInput = ""
+            onClearAllData(clearPasswords, clearTotp, clearNotes, clearDocuments, clearBankCards, clearGeneratorHistory)
         }
-        
         ModalBottomSheet(
-            onDismissRequest = { if (!verifying) dismissClearDataSheet() },
+            onDismissRequest = { showClearDataDialog = false; clearDataPasswordInput = "" },
             sheetState = sheetState,
             containerColor = MaterialTheme.colorScheme.surface,
-            tonalElevation = 0.dp
+            tonalElevation = 0.dp,
         ) {
             takagi.ru.monica.ui.components.ClearDataSheetContent(
                 selected = listOf(clearPasswords, clearTotp, clearNotes, clearDocuments, clearBankCards, clearGeneratorHistory),
@@ -1136,37 +1109,22 @@ fun SettingsScreen(
                     4 -> clearBankCards = value
                     5 -> clearGeneratorHistory = value
                 } },
-                password = clearDataPasswordInput, onPassword = { clearDataPasswordInput = it },
-                verificationRequired = !settings.disablePasswordVerification,
+                password = "", onPassword = { },
+                verificationRequired = false,
                 verifying = verifying,
-                onCancel = { if (!verifying) dismissClearDataSheet() },
-                onConfirm = {
-                    if (!verifying) {
-                        verifying = true
-                        val passwordToVerify = clearDataPasswordInput
-                        coroutineScope.launch {
-                            val verified = try {
-                                settings.disablePasswordVerification || kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
-                                    takagi.ru.monica.security.SecurityManager(context.applicationContext)
-                                        .verifyMasterPassword(passwordToVerify)
-                                }
-                            } catch (cancelled: kotlinx.coroutines.CancellationException) {
-                                throw cancelled
-                            } catch (_: Exception) {
-                                false
-                            }
-                            if (verified) {
-                                showClearDataDialog = false
-                                clearDataPasswordInput = ""
-                                onClearAllData(clearPasswords, clearTotp, clearNotes, clearDocuments, clearBankCards, clearGeneratorHistory)
-                            } else {
-                                verifying = false
-                                Toast.makeText(context, context.getString(R.string.password_incorrect), Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }
-                })
+                onCancel = { showClearDataDialog = false; clearDataPasswordInput = "" },
+                onConfirm = { verifying = true },
+            )
         }
+        if (verifying) takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog(
+            manager = manager,
+            requirePassword = !settings.disablePasswordVerification,
+            destructiveConfirm = true,
+            confirmText = context.getString(R.string.reset_all_data),
+            isRequestCurrent = { showClearDataDialog && verifying },
+            onDismiss = { verifying = false },
+            onSuccess = { clearSelectedData() },
+        )
     }
 }
 

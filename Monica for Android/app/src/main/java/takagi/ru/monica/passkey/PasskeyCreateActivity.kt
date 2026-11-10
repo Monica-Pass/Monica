@@ -1,5 +1,7 @@
 package takagi.ru.monica.passkey
 
+import takagi.ru.monica.security.showSecureStorageBlocked
+
 import takagi.ru.monica.security.launchWithSecureStorage
 
 import android.content.Context
@@ -72,7 +74,7 @@ import takagi.ru.monica.passkey.hardware.HardwareKeyPresence
 import takagi.ru.monica.passkey.hardware.HardwareKeyPresenceMonitor
 import takagi.ru.monica.passkey.hardware.HardwareRegistrationRequest
 import takagi.ru.monica.passkey.hardware.PasskeyRegistrationTargetPicker
-import takagi.ru.monica.ui.components.MasterPasswordDialog
+import takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog
 import takagi.ru.monica.ui.components.PasswordEntryPickerBottomSheet
 import takagi.ru.monica.ui.components.UnifiedMoveCategoryTarget
 import takagi.ru.monica.ui.components.UnifiedMoveToCategoryBottomSheet
@@ -187,7 +189,6 @@ class PasskeyCreateActivity : FragmentActivity() {
     }
 
     private val showMasterPasswordDialog = mutableStateOf(false)
-    private val masterPasswordError = mutableStateOf(false)
     
     // 存储待处理的请求数据
     private var pendingRequestJson: String = ""
@@ -582,34 +583,28 @@ class PasskeyCreateActivity : FragmentActivity() {
                 )
 
                 if (showMasterPasswordDialog.value) {
-                    MasterPasswordDialog(
-                        onDismiss = {
-                            showMasterPasswordDialog.value = false
-                            masterPasswordError.value = false
+                    val requestAtOpen = remember { pendingRequestJson }
+                    val targetAtOpen = remember { listOf(pendingBoundPasswordId, pendingCategoryId,
+                        pendingKeepassDatabaseId, pendingKeepassGroupPath, pendingBitwardenVaultId,
+                        pendingBitwardenFolderId, pendingMdbxDatabaseId, pendingMdbxFolderId) }
+                    SecondaryPasswordVerificationDialog(
+                        manager = securityManager,
+                        onDismiss = { showMasterPasswordDialog.value = false },
+                        isRequestCurrent = {
+                            !isFinishing && !isDestroyed && showMasterPasswordDialog.value &&
+                                pendingRequestJson == requestAtOpen && targetAtOpen == listOf(
+                                    pendingBoundPasswordId, pendingCategoryId, pendingKeepassDatabaseId,
+                                    pendingKeepassGroupPath, pendingBitwardenVaultId, pendingBitwardenFolderId,
+                                    pendingMdbxDatabaseId, pendingMdbxFolderId)
                         },
-                        onConfirm = { password ->
-                            if (securityManager.verifyMasterPassword(password)) {
-                                masterPasswordError.value = false
+                        onSuccess = { generation ->
+                            if (securityManager.isDataReadCurrent(generation)) {
                                 showMasterPasswordDialog.value = false
                                 repository.logAudit("PASSKEY_CREATE_MASTER_PASSWORD_SUCCESS", pendingRpId)
                                 recordPasskeyEvent(stage = "master_password_success")
-                                createPasskey(
-                                    pendingRequestJson,
-                                    pendingRpId,
-                                    pendingUserName,
-                                    pendingUserDisplayName,
-                                )
-                            } else {
-                                masterPasswordError.value = true
-                                repository.logAudit("PASSKEY_CREATE_MASTER_PASSWORD_FAILED", pendingRpId)
-                                recordPasskeyEvent(
-                                    stage = "master_password_failed",
-                                    errorType = "MasterPasswordVerificationFailed",
-                                    errorMessage = "Invalid master password",
-                                )
+                                createPasskey(requestAtOpen, pendingRpId, pendingUserName, pendingUserDisplayName)
                             }
                         },
-                        isError = masterPasswordError.value,
                     )
                 }
             }
@@ -621,11 +616,19 @@ class PasskeyCreateActivity : FragmentActivity() {
      * 请求生物识别验证
      * 只有通过生物识别后才能创建 Passkey
      */
+    private fun masterPasswordSetForCurrentRequest(): Boolean? = try {
+        securityManager.isMasterPasswordSet()
+    } catch (failure: takagi.ru.monica.security.SecureStorageUnavailableException) {
+        showSecureStorageBlocked(takagi.ru.monica.security.SecureStartupResult.Blocked(failure))
+        null
+    }
+
     private fun requestBiometricAuth() {
         repository.logAudit("PASSKEY_CREATE_BIOMETRIC_REQUESTED", pendingRpId)
         recordPasskeyEvent(stage = "biometric_requested")
 
-        if (!biometricHelper.isBiometricAvailable() && securityManager.isMasterPasswordSet()) {
+        val masterPasswordSet = masterPasswordSetForCurrentRequest() ?: return
+        if (!biometricHelper.isBiometricAvailable() && masterPasswordSet) {
             recordPasskeyEvent(stage = "biometric_unavailable")
             showMasterPasswordDialog.value = true
             return
@@ -650,7 +653,8 @@ class PasskeyCreateActivity : FragmentActivity() {
                     errorType = "BiometricError:$errorCode",
                     errorMessage = errString.toString(),
                 )
-                if (securityManager.isMasterPasswordSet()) {
+                val masterPasswordSet = masterPasswordSetForCurrentRequest() ?: return@biometricError
+                if (masterPasswordSet) {
                     showMasterPasswordDialog.value = true
                     return@biometricError
                 }

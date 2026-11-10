@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="nfc_card_scan_title">Đọc thẻ NFC</string>
-    <string name="nfc_card_scan_hint">Đưa thẻ đến gần ăng-ten NFC của điện thoại. Hỗ trợ một số thẻ ngân hàng không tiếp xúc.</string>
-    <string name="nfc_card_scanning">Đang đọc thẻ…</string>
-    <string name="nfc_card_unavailable">Thiết bị này không hỗ trợ NFC.</string>
-    <string name="nfc_card_disabled">Trước tiên, hãy bật NFC trong phần cài đặt hệ thống.</string>
     <string name="nfc_card_unlock_retap">Mở khóa Monica rồi đưa thẻ lại gần để đọc.</string>
-    <string name="nfc_card_unsupported">Thẻ này không có số thẻ ngân hàng có thể đọc được. Chưa hỗ trợ giấy tờ tùy thân được bảo vệ; UID của chip không phải số thẻ.</string>
+    <string name="nfc_card_unsupported">Chưa đọc được số thẻ ngân hàng có thể sử dụng. Hãy giữ thẻ gần điện thoại và thử lại; một số thẻ không cung cấp thông tin này.</string>
     <string name="nfc_card_read_failed">Không thể đọc thẻ. Hãy giữ thẻ gần điện thoại và thử lại.</string>
     <string name="nfc_card_new_title">Tạo thẻ ngân hàng?</string>
     <string name="nfc_card_new_message">Đã đọc được thẻ ngân hàng, nhưng trang này dành cho loại mục khác. Mở trang thẻ ngân hàng mới? Nội dung hiện tại sẽ được giữ lại.</string>
     <string name="nfc_card_replace_title">Thay thế thông tin thẻ hiện có?</string>
     <string name="nfc_card_replace_message">Thông tin đọc được khác với biểu mẫu. Chỉ thay thế số thẻ, ngày hết hạn và thông tin chủ thẻ do thẻ cung cấp. Nội dung khác sẽ được giữ lại.</string>
-    <string name="nfc_card_type_hint">Đã đọc thông tin thẻ. NFC không thể xác định đáng tin cậy thẻ tín dụng, ghi nợ hay trả trước. Hãy xác nhận loại thẻ.</string>
-    <string name="nfc_card_ready">Đã điền thông tin đọc được từ thẻ. Hãy kiểm tra trước khi lưu.</string>
     <string name="nfc_card_busy">Hãy hoàn tất thao tác hiện tại trước khi đọc thẻ.</string>
     <string name="nfc_card_new_action">Mở thẻ mới</string>
     <string name="nfc_card_replace_action">Thay thế</string>

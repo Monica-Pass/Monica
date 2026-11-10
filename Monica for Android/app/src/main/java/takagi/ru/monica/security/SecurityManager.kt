@@ -15,9 +15,7 @@ import java.security.UnrecoverableKeyException
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
-import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.GCMParameterSpec
-import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
 
 data class SecurityQuestionsBackupSnapshot(
@@ -39,6 +37,11 @@ class SecurityManager private constructor(
     constructor(context: Context) : this(context, PreparedSecureStore.open(context))
 
     internal fun acceptPreparedStore() = PreparedSecureStore.accept(context, secureStore)
+
+    internal fun isPreparedStoreCurrent(): Boolean = runCatching {
+        PreparedSecureStore.unwrap(sharedPreferences)
+        true
+    }.getOrDefault(false)
 
     enum class VaultAccessState {
         ACCESSIBLE,
@@ -107,7 +110,6 @@ class SecurityManager private constructor(
         private const val SECURITY_QUESTION_2_ANSWER_KEY = "security_question_2_answer"
         private const val SECURITY_QUESTION_2_TEXT_KEY = "security_question_2_text"
         private val SECURITY_ANSWER_HASH_PATTERN = Regex("^[0-9a-fA-F]{64}$")
-        private const val PBKDF2_ITERATIONS = 100000
         private const val MDK_PASSWORD_BLOB_KEY = "mdk_password_blob"
         private const val MDK_PASSWORD_SALT_KEY = "mdk_password_salt"
         private const val MDK_KEYSTORE_BLOB_KEY = "mdk_keystore_blob"
@@ -129,6 +131,7 @@ class SecurityManager private constructor(
         private var processCachedMdk: ByteArray? = null
         private val runtimeKeyLock = Any()
         private val runtimeKeyGeneration = java.util.concurrent.atomic.AtomicLong()
+        private val passwordCredentialEpoch = java.util.concurrent.atomic.AtomicLong()
         private val dataReadGenerationState = kotlinx.coroutines.flow.MutableStateFlow(0L)
         internal val dataReadGeneration: kotlinx.coroutines.flow.StateFlow<Long> = dataReadGenerationState
         @Volatile
@@ -153,35 +156,48 @@ class SecurityManager private constructor(
     /** One password submission; cancelled work may finish IO but cannot unlock the process. */
     class PasswordVerificationAttempt internal constructor() {
         internal val generation = runtimeKeyGeneration.get()
+        @Volatile internal var credentialEpoch = passwordCredentialEpoch.get()
+            private set
         private var active = true
         private var candidate: ByteArray? = null
         private var manager: SecurityManager? = null
+        private var credentials: Map<String, Any?>? = null
 
         internal fun isCurrent(): Boolean = synchronized(runtimeKeyLock) {
-            active && runtimeKeyGeneration.get() == generation
+            active && runtimeKeyGeneration.get() == generation && passwordCredentialEpoch.get() == credentialEpoch
         }
 
-        internal fun stage(owner: SecurityManager, mdk: ByteArray) {
+        internal fun advanceCredentialEpoch(next: Long) {
+            // Called only by this verified attempt, inside the final credential commit gate.
+            credentialEpoch = next
+        }
+
+        internal fun stage(owner: SecurityManager, mdk: ByteArray, verifiedCredentials: Map<String, *>) {
+            check(owner.credentialsMatch(verifiedCredentials)) { "Password credentials changed" }
             check(owner.isDataReadCurrent(generation)) { "Password verification was revoked" }
             synchronized(runtimeKeyLock) {
-                check(active && runtimeKeyGeneration.get() == generation) { "Password verification was revoked" }
+                check(active && runtimeKeyGeneration.get() == generation && passwordCredentialEpoch.get() == credentialEpoch) { "Password verification was revoked" }
                 candidate?.fill(0)
                 candidate = mdk.copyOf()
                 manager = owner
+                credentials = LocalPasswordCredentials.snapshot(verifiedCredentials)
             }
         }
 
         internal fun commit(): Boolean {
             val owner = synchronized(runtimeKeyLock) { manager } ?: return false
-            if (!owner.isDataReadCurrent(generation)) { cancel(); return false }
+            if (!owner.isDataReadCurrent(generation) || credentials?.let(owner::credentialsMatch) != true) {
+                cancel(); return false
+            }
             return synchronized(runtimeKeyLock) {
-                if (!active || runtimeKeyGeneration.get() != generation || candidate == null) {
+                if (!active || runtimeKeyGeneration.get() != generation || passwordCredentialEpoch.get() != credentialEpoch || candidate == null) {
                     cancel()
                     return@synchronized false
                 }
                 processCachedMdk = candidate
                 candidate = null
                 manager = null
+                credentials = null
                 active = false
                 true
             }
@@ -192,81 +208,105 @@ class SecurityManager private constructor(
             candidate?.fill(0)
             candidate = null
             manager = null
+            credentials = null
         }
     }
 
-    /**
-     * Hash the master password using PBKDF2
-     */
+    /** A single settings submission. Cancellation wins until the credential commit starts. */
+    class LocalPasswordChangeAttempt {
+        internal val generation = runtimeKeyGeneration.get()
+        private val state = java.util.concurrent.atomic.AtomicInteger(0)
+        internal var credentialEpoch = passwordCredentialEpoch.get()
+            private set
+        fun cancel() { state.compareAndSet(0, 2) }
+        internal fun ensureCurrent() {
+            check(state.get() == 0 && runtimeKeyGeneration.get() == generation && passwordCredentialEpoch.get() == credentialEpoch) { "Password change was revoked" }
+        }
+        internal fun beginCommit(ensureActive: () -> Unit) {
+            ensureActive()
+            synchronized(runtimeKeyLock) {
+                check(runtimeKeyGeneration.get() == generation && passwordCredentialEpoch.get() == credentialEpoch && state.compareAndSet(0, 1)) {
+                    "Password change was revoked"
+                }
+                credentialEpoch = passwordCredentialEpoch.incrementAndGet()
+            }
+        }
+    }
+
+    /** New standalone verifiers use the default profile; stored credentials always use their metadata. */
     fun hashMasterPassword(password: String, salt: ByteArray? = null): Pair<String, ByteArray> {
-        val actualSalt = salt ?: generateSalt()
-        val spec = PBEKeySpec(password.toCharArray(), actualSalt, PBKDF2_ITERATIONS, 256)
-        val factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
-        val hash = factory.generateSecret(spec).encoded
-        return Pair(hash.joinToString("") { "%02x".format(it) }, actualSalt)
+        val actualSalt = salt ?: generateRandom(16)
+        val hash = PasswordKdf.derive(password, actualSalt, PasswordKdf.PBKDF2_600K)
+        return try { PasswordKdf.hex(hash) to actualSalt } finally { hash.fill(0) }
     }
-    
-    /**
-     * Generate a random salt
-     */
-    private fun generateSalt(): ByteArray {
-        val salt = ByteArray(16)
-        SecureRandom().nextBytes(salt)
-        return salt
-    }
-    
-    /**
-     * Verify the master password.
-     */
-    fun verifyMasterPassword(inputPassword: String, attempt: PasswordVerificationAttempt? = null): Boolean {
+
+    private fun credentialsMatch(expected: Map<String, *>): Boolean = runCatching {
+        LocalPasswordCredentials.matches(sharedPreferences.all, expected)
+    }.getOrDefault(false)
+
+    fun verifyMasterPassword(
+        inputPassword: String,
+        attempt: PasswordVerificationAttempt? = null,
+        ensureActive: () -> Unit = {},
+    ): Boolean {
         val generation = attempt?.generation ?: runtimeKeyGeneration.get()
-        if (attempt?.isCurrent() == false) return false
-        android.util.Log.d("SecurityManager", "Performing normal password verification")
-        val storedHash = sharedPreferences.getString(MASTER_PASSWORD_HASH_KEY, null) ?: return false
-        val storedSalt = sharedPreferences.getString(MASTER_PASSWORD_SALT_KEY, null)?.let { saltStr ->
-            saltStr.chunked(2).map { it.toInt(16).toByte() }.toByteArray()
-        } ?: return false
-        
-        val (computedHash, _) = hashMasterPassword(inputPassword, storedSalt)
-        val result = computedHash == storedHash
-        android.util.Log.d("SecurityManager", "Password verification result: $result")
-        if (result) {
-            try {
-                ensureMdkInitializedWithPassword(inputPassword, generation = generation, attempt = attempt)
-            } catch (e: Exception) {
-                android.util.Log.w("SecurityManager", "MDK init failed: ${e.javaClass.simpleName}")
-                return false
-            }
-        }
-        return result
-    }
-
-    fun unlockVaultWithPassword(inputPassword: String, attempt: PasswordVerificationAttempt? = null): Boolean {
-        val generation = attempt?.generation ?: runtimeKeyGeneration.get()
-        if (attempt?.isCurrent() == false) return false
-        if (!isMasterPasswordSet()) {
-            return true
-        }
-
-        android.util.Log.d("SecurityManager", "Vault unlock requested")
-
+        val credentialEpoch = attempt?.credentialEpoch ?: passwordCredentialEpoch.get()
         return try {
-            val storedHash = sharedPreferences.getString(MASTER_PASSWORD_HASH_KEY, null) ?: return false
-            val storedSalt = sharedPreferences.getString(MASTER_PASSWORD_SALT_KEY, null)?.let { saltStr ->
-                saltStr.chunked(2).map { it.toInt(16).toByte() }.toByteArray()
-            } ?: return false
-
-            val (computedHash, _) = hashMasterPassword(inputPassword, storedSalt)
-            if (computedHash != storedHash) {
-                return false
-            }
-
-            ensureMdkInitializedWithPassword(inputPassword, generation = generation, attempt = attempt)
+            ensureActive()
+            if (attempt?.isCurrent() == false) return false
+            localRecovery.validate(sharedPreferences)
+            val original = sharedPreferences.all
+            if (!LocalPasswordCredentials.verify(inputPassword, original)) return false
+            ensureMdkInitializedWithPassword(inputPassword, original, generation, credentialEpoch, attempt, ensureActive)
             true
-        } catch (e: Exception) {
-            android.util.Log.w("SecurityManager", "Vault password unlock failed: ${e.javaClass.simpleName}")
+        } catch (_: Exception) {
+            android.util.Log.w(logTag, "Password authentication unavailable or rejected")
             false
         }
+    }
+
+    fun unlockVaultWithPassword(
+        inputPassword: String,
+        attempt: PasswordVerificationAttempt? = null,
+        ensureActive: () -> Unit = {},
+    ): Boolean {
+        if (attempt?.isCurrent() == false) return false
+        if (!isMasterPasswordSet()) return true
+        return verifyMasterPassword(inputPassword, attempt, ensureActive)
+    }
+
+    fun getLocalPasswordAlgorithm(): LocalPasswordAlgorithm = PasswordKdf.fromValues(sharedPreferences.all).algorithm
+
+    fun changeLocalPasswordAlgorithm(
+        password: String,
+        algorithm: LocalPasswordAlgorithm,
+        attempt: LocalPasswordChangeAttempt,
+        ensureActive: () -> Unit = {},
+    ): Boolean = changeVerifiedPassword(password, password, PasswordKdf.forAlgorithm(algorithm), attempt, ensureActive)
+
+    private fun changeVerifiedPassword(
+        currentPassword: String,
+        newPassword: String,
+        requestedProfile: PasswordKdf.Profile?,
+        attempt: LocalPasswordChangeAttempt,
+        ensureActive: () -> Unit,
+    ): Boolean {
+        var mdk: ByteArray? = null
+        return try {
+            attempt.ensureCurrent(); ensureActive()
+            localRecovery.validate(sharedPreferences)
+            val original = sharedPreferences.all
+            if (!LocalPasswordCredentials.verify(currentPassword, original)) return false
+            // Even a warm runtime cache cannot conceal damage to the password wrapper.
+            mdk = readPasswordAuthenticatedMdk(currentPassword, original)
+            val current = PasswordKdf.fromValues(original)
+            val profile = requestedProfile ?: current.takeUnless { it == PasswordKdf.LEGACY } ?: PasswordKdf.PBKDF2_600K
+            commitLocalPassword(newPassword, mdk, original, profile, attempt, ensureActive)
+            true
+        } catch (_: Exception) {
+            android.util.Log.w(logTag, "Local password protection update was not confirmed")
+            false
+        } finally { mdk?.fill(0) }
     }
 
     fun unlockVaultWithBiometric(): Boolean {
@@ -574,38 +614,50 @@ class SecurityManager private constructor(
     /**
      * Set the master password
      */
-    fun setMasterPassword(password: String): Boolean {
+    fun setMasterPassword(
+        password: String,
+        attempt: LocalPasswordChangeAttempt = LocalPasswordChangeAttempt(),
+        ensureActive: () -> Unit = {},
+    ): Boolean {
+        var mdk: ByteArray? = null
         return try {
-            ensureMdkInitializedWithPassword(password, true)
+            attempt.ensureCurrent(); ensureActive()
+            localRecovery.validate(sharedPreferences)
+            val original = sharedPreferences.all
+            val current = PasswordKdf.fromValues(original)
+            val profile = current.takeUnless { it == PasswordKdf.LEGACY } ?: PasswordKdf.PBKDF2_600K
+            // Initial setup and the existing authorized device/security-question reset route.
+            // Normal password changes use changeVerifiedPassword and cannot reuse cached authorization.
+            mdk = getOrCreateMdkBytes()
+            commitLocalPassword(password, mdk, original, profile, attempt, ensureActive)
             true
-        } catch (e: Exception) {
-            android.util.Log.w("SecurityManager", "Master password update could not be committed")
+        } catch (_: Exception) {
+            android.util.Log.w(logTag, "Master password update could not be committed")
             clearRuntimeUnlockCache()
             SessionManager.markLocked()
             false
-        }
+        } finally { mdk?.fill(0) }
     }
-    
-    /**
-     * Check if master password is set
-     */
-    fun isMasterPasswordSet(): Boolean {
-        return sharedPreferences.contains(MASTER_PASSWORD_HASH_KEY)
-    }
-    
-    /**
-     * Reset master password - requires current password verification
-     */
-    fun resetMasterPassword(currentPassword: String, newPassword: String): Boolean {
-        // Verify current password first
-        if (!verifyMasterPassword(currentPassword)) {
-            return false
-        }
-        
-        // Set new password
-        return setMasterPassword(newPassword)
-    }
-    
+
+    // Unknown storage is treated as password-protected. Never expose first-time setup or
+    // a no-password bypass when a retired/damaged store cannot be read. Authentication
+    // and credential writes independently validate the store and still fail closed.
+    fun isMasterPasswordSet(): Boolean = runCatching {
+        sharedPreferences.contains(MASTER_PASSWORD_HASH_KEY) ||
+            sharedPreferences.contains(MASTER_PASSWORD_SALT_KEY) ||
+            sharedPreferences.contains(MDK_PASSWORD_BLOB_KEY) ||
+            sharedPreferences.contains(MDK_PASSWORD_SALT_KEY) ||
+            sharedPreferences.contains(PasswordKdf.METADATA_KEY) ||
+            sharedPreferences.getBoolean(MDK_READY_KEY, false)
+    }.getOrDefault(true)
+
+    fun resetMasterPassword(
+        currentPassword: String,
+        newPassword: String,
+        attempt: LocalPasswordChangeAttempt = LocalPasswordChangeAttempt(),
+        ensureActive: () -> Unit = {},
+    ): Boolean = changeVerifiedPassword(currentPassword, newPassword, null, attempt, ensureActive)
+
     /**
      * Clear all security data (for complete reset scenarios)
      */
@@ -613,6 +665,7 @@ class SecurityManager private constructor(
         sharedPreferences.edit()
             .remove(MASTER_PASSWORD_HASH_KEY)
             .remove(MASTER_PASSWORD_SALT_KEY)
+            .remove(PasswordKdf.METADATA_KEY)
             .remove(BIOMETRIC_ENABLED_KEY)
             .remove(AUTO_LOCK_TIMEOUT_KEY)
             .remove(SECURITY_QUESTION_1_ID_KEY)
@@ -1038,13 +1091,6 @@ class SecurityManager private constructor(
         return b
     }
 
-    private fun deriveAesKeyFromPassword(password: String, salt: ByteArray): SecretKeySpec {
-        val spec = PBEKeySpec(password.toCharArray(), salt, PBKDF2_ITERATIONS, 256)
-        val factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
-        val keyBytes = factory.generateSecret(spec).encoded
-        return SecretKeySpec(keyBytes, "AES")
-    }
-
     private fun aesGcmEncrypt(key: SecretKeySpec, data: ByteArray): String {
         val cipher = Cipher.getInstance("AES/GCM/NoPadding")
         cipher.init(Cipher.ENCRYPT_MODE, key)
@@ -1064,68 +1110,114 @@ class SecurityManager private constructor(
         return cipher.doFinal(enc)
     }
 
+    private fun readPasswordAuthenticatedMdk(password: String, original: Map<String, *>): ByteArray {
+        val hasBlob = original.containsKey(MDK_PASSWORD_BLOB_KEY)
+        val hasSalt = original.containsKey(MDK_PASSWORD_SALT_KEY)
+        check(hasBlob == hasSalt) { "Incomplete password key material" }
+        if (hasBlob) return LocalPasswordCredentials.unwrap(password, original)
+        // A genuinely pre-MDK installation may still use the original device-encrypted fields.
+        check(original[MDK_READY_KEY] != true && PasswordKdf.fromValues(original) == PasswordKdf.LEGACY) {
+            "Existing vault key unavailable"
+        }
+        return getOrCreateMdkBytes().also { check(it.size == 32) }
+    }
+
+    private fun credentialUpdates(password: String, mdk: ByteArray, profile: PasswordKdf.Profile): Map<String, Any> =
+        LocalPasswordCredentials.create(password, mdk, profile).toMutableMap().apply {
+            put(MDK_READY_KEY, true)
+            if (!sharedPreferences.contains("legacy_master_key_description_v1")) {
+                put("legacy_master_key_description_v1", masterKey.toString())
+            }
+        }
+
+    private fun commitLocalPassword(
+        password: String,
+        mdk: ByteArray,
+        original: Map<String, *>,
+        profile: PasswordKdf.Profile,
+        attempt: LocalPasswordChangeAttempt,
+        ensureActive: () -> Unit,
+    ) {
+        attempt.ensureCurrent(); ensureActive()
+        check(mdk.size == 32)
+        val values = credentialUpdates(password, mdk, profile)
+        attempt.ensureCurrent(); ensureActive()
+        localRecovery.enroll(sharedPreferences, password, values, expectedCredentials = original,
+            beforeCommit = { attempt.beginCommit(ensureActive) })
+        val committed = original + values
+        // The credential transaction may finish after cancellation; it must stay coherent,
+        // but it is never permission to publish a runtime key into a subsequently locked session.
+        ensureActive()
+        publishPasswordMdk(mdk, committed, attempt.generation, attempt.credentialEpoch, null)
+        if (!sharedPreferences.contains(MDK_KEYSTORE_BLOB_KEY)) {
+            persistCompatKeystoreWrappedMdk(mdk, allowInitialKeyCreation = original[MASTER_PASSWORD_HASH_KEY] == null && original[MDK_READY_KEY] != true)
+        }
+    }
+
     private fun ensureMdkInitializedWithPassword(
         password: String,
-        forceUpdate: Boolean = false,
-        generation: Long = runtimeKeyGeneration.get(),
-        attempt: PasswordVerificationAttempt? = null,
+        original: Map<String, *>,
+        generation: Long,
+        originalEpoch: Long,
+        attempt: PasswordVerificationAttempt?,
+        ensureActive: () -> Unit,
     ) {
-        localRecovery.validate(sharedPreferences)
-        val initialEnrollment = !isMasterPasswordSet() && !sharedPreferences.getBoolean(MDK_READY_KEY, false)
-        val hasPasswordBlob = sharedPreferences.contains(MDK_PASSWORD_BLOB_KEY)
-        val hasKeystoreBlob = sharedPreferences.contains(MDK_KEYSTORE_BLOB_KEY)
-        val oldSalt = sharedPreferences.getString(MDK_PASSWORD_SALT_KEY, null)
-        val salt = if (forceUpdate || oldSalt == null) generateRandom(32)
-            else oldSalt.chunked(2).map { it.toInt(16).toByte() }.toByteArray()
-        val pwKey = deriveAesKeyFromPassword(password, salt)
-        val actualMdk = if (hasPasswordBlob && !forceUpdate) {
-            aesGcmDecrypt(pwKey, checkNotNull(sharedPreferences.getString(MDK_PASSWORD_BLOB_KEY, null)))
-        } else if (!hasPasswordBlob && !hasKeystoreBlob && !sharedPreferences.getBoolean(MDK_READY_KEY, false)) {
-            generateRandom(32)
-        } else {
-            getOrCreateMdkBytes()
-        }
-        // Missing or damaged key material is never permission to generate a replacement.
-        check(actualMdk.size == 32) { "Existing vault key unavailable" }
-        check(runtimeKeyGeneration.get() == generation) { "Vault locked during password authentication" }
-        val values = mutableMapOf<String, Any>()
-        if (!sharedPreferences.contains("legacy_master_key_description_v1")) {
-            values["legacy_master_key_description_v1"] = masterKey.toString()
-        }
-        if (!hasPasswordBlob || forceUpdate) {
-            values[MDK_PASSWORD_BLOB_KEY] = aesGcmEncrypt(pwKey, actualMdk)
-            values[MDK_PASSWORD_SALT_KEY] = salt.joinToString("") { "%02x".format(it) }
-        }
-        values[MDK_READY_KEY] = true
-        if (forceUpdate) {
-            val (hash, hashSalt) = hashMasterPassword(password)
-            values[MASTER_PASSWORD_HASH_KEY] = hash
-            values[MASTER_PASSWORD_SALT_KEY] = hashSalt.joinToString("") { "%02x".format(it) }
-        }
+        var epoch = originalEpoch
+        val mdk = readPasswordAuthenticatedMdk(password, original)
         try {
-            localRecovery.enroll(sharedPreferences, password, values)
-        } catch (error: Exception) {
-            // Adding recovery is best-effort for a healthy, already password-wrapped vault.
-            // A new password/key must never be reported saved when its transaction failed.
-            if (forceUpdate || !hasPasswordBlob) throw error
-            localRecovery.validate(sharedPreferences)
-            android.util.Log.w(logTag, "Local recovery enrollment deferred; original password wrapper retained")
-        }
-        // Failure to restore biometric convenience must not replace the password-recoverable MDK.
-        // Password authentication unlocks the existing MDK. It is not permission to
-        // replace a missing device key or overwrite an unreadable convenience wrapper.
-        if (!hasKeystoreBlob) persistCompatKeystoreWrappedMdk(actualMdk, allowInitialKeyCreation = initialEnrollment)
+            val oldProfile = PasswordKdf.fromValues(original)
+            val upgrading = oldProfile == PasswordKdf.LEGACY
+            val values = if (upgrading) credentialUpdates(password, mdk, PasswordKdf.PBKDF2_600K)
+                else emptyMap()
+            fun ensureCurrent() {
+                ensureActive()
+                check(runtimeKeyGeneration.get() == generation && passwordCredentialEpoch.get() == epoch && attempt?.isCurrent() != false) {
+                    "Vault locked during password authentication"
+                }
+            }
+            ensureCurrent()
+            var authenticatedCredentials: Map<String, *> = original + values
+            try {
+                localRecovery.enroll(sharedPreferences, password, values, expectedCredentials = original,
+                    beforeCommit = {
+                        synchronized(runtimeKeyLock) {
+                            ensureCurrent()
+                            if (upgrading) {
+                                epoch = passwordCredentialEpoch.incrementAndGet()
+                                attempt?.advanceCredentialEpoch(epoch)
+                            }
+                        }
+                    })
+            } catch (error: Exception) {
+                // An optional upgrade that failed BEFORE canonical commit must not lock a
+                // healthy old user out. A partially committed generation instead requires recovery.
+                localRecovery.validate(sharedPreferences)
+                if (!credentialsMatch(original) || original[MDK_PASSWORD_BLOB_KEY] == null) throw error
+                authenticatedCredentials = original
+                android.util.Log.w(logTag, "Password protection upgrade deferred; original credentials retained")
+            }
+            ensureCurrent()
+            if (!sharedPreferences.contains(MDK_KEYSTORE_BLOB_KEY)) persistCompatKeystoreWrappedMdk(mdk)
+            publishPasswordMdk(mdk, authenticatedCredentials, generation, epoch, attempt)
+        } finally { mdk.fill(0) }
+    }
+
+    private fun publishPasswordMdk(
+        mdk: ByteArray,
+        credentials: Map<String, *>,
+        generation: Long,
+        credentialEpoch: Long,
+        attempt: PasswordVerificationAttempt?,
+    ) {
+        check(isDataReadCurrent(generation) && credentialsMatch(credentials)) { "Password authentication was revoked" }
         mdkWrapperUnavailable = false
         mdkAuthUnavailableUntilMillis = 0L
         hasLoggedMdkAuthExpiredWarning = false
         hasLoggedMdkFallbackEncryption = false
-        // KDF, recovery enrollment and device-key wrapping may outlive a cancelled UI request.
-        // A concurrent lock must win over the password operation's late runtime publication.
-        if (attempt != null) {
-            try { attempt.stage(this, actualMdk) } finally { actualMdk.fill(0) }
-        } else synchronized(runtimeKeyLock) {
-            check(runtimeKeyGeneration.get() == generation) { "Vault locked during password authentication" }
-            processCachedMdk = actualMdk
+        if (attempt != null) attempt.stage(this, mdk, credentials)
+        else synchronized(runtimeKeyLock) {
+            check(runtimeKeyGeneration.get() == generation && passwordCredentialEpoch.get() == credentialEpoch) { "Vault locked during password authentication" }
+            processCachedMdk = mdk.copyOf()
         }
     }
 

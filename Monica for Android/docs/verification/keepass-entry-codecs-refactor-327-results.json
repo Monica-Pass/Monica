@@ -1,0 +1,4069 @@
+{
+  "version": "1.0.327",
+  "phase": "KeePass entry-field responsibility extraction",
+  "baseline": {
+    "inherited_phase1_per_edition": {
+      "app_jvm": 393,
+      "device": 72,
+      "source_manifest_exact_match": true
+    },
+    "additional_fields": {
+      "passed": 15,
+      "runner_seconds": 20.603,
+      "driver_seconds": 24.564,
+      "methods": [
+        {
+          "class": "takagi.ru.monica.keepass.KeePassMinimalFieldsInstrumentedTest",
+          "test": "secureNoteOmitsDefaultsButRetainsEmptyIndependentNoteAndProtectedBody"
+        },
+        {
+          "class": "takagi.ru.monica.keepass.KeePassMinimalFieldsInstrumentedTest",
+          "test": "accountMetadataRetainsNotesIdentitiesOrderAndUnknownKeys"
+        },
+        {
+          "class": "takagi.ru.monica.keepass.KeePassMinimalFieldsInstrumentedTest",
+          "test": "secureFavoriteReferencesPreserveUnchangedFalseAndAllowExplicitTrueToFalse"
+        },
+        {
+          "class": "takagi.ru.monica.keepass.KeePassMinimalFieldsInstrumentedTest",
+          "test": "legacyProjectionPreservesLocalOnlyMetadataWhenSourceNeverWroteIt"
+        },
+        {
+          "class": "takagi.ru.monica.keepass.KeePassMinimalFieldsInstrumentedTest",
+          "test": "explicitSaveRemovesOnlyRedundantMetadataAndPreservesReferencesAndNativeData"
+        },
+        {
+          "class": "takagi.ru.monica.keepass.KeePassMinimalFieldsInstrumentedTest",
+          "test": "simpleNativeLoginCreatesOnlyStandardFieldsAndReopens"
+        },
+        {
+          "class": "takagi.ru.monica.keepass.KeePassMinimalFieldsInstrumentedTest",
+          "test": "enabledMetadataSurvivesAndExplicitlyClearingItUsesMissingFieldDefaults"
+        },
+        {
+          "class": "takagi.ru.monica.keepass.KeePassMonicaSecureItemTest",
+          "test": "monicaPasskeyDetailsWriteUuidEntryWithoutRoomProjectionOrLegacySecondWrite"
+        },
+        {
+          "class": "takagi.ru.monica.keepass.KeePassMonicaSecureItemTest",
+          "test": "nativeNoteDraftDoesNotOverwriteExternalChangeAfterRefresh"
+        },
+        {
+          "class": "takagi.ru.monica.keepass.KeePassMonicaSecureItemTest",
+          "test": "lateBoundMonicaNoteFlowReadsAndWritesOriginalVaultWithoutDoubleCommit"
+        },
+        {
+          "class": "takagi.ru.monica.credentialexchange.PasswordContentStorageInstrumentedTest",
+          "test": "keepassSecureItemEditorsRetainExtendedFieldsAfterSaveEditAndReopen"
+        },
+        {
+          "class": "takagi.ru.monica.credentialexchange.PasswordOtpStorageInstrumentedTest",
+          "test": "allPasswordOtpTypesSurviveKeePassNativeReopen"
+        },
+        {
+          "class": "takagi.ru.monica.credentialexchange.PasswordOtpStorageInstrumentedTest",
+          "test": "keepassPasswordEditPreservesExistingSteamMetadata"
+        },
+        {
+          "class": "takagi.ru.monica.credentialexchange.ApiKeyStorageInstrumentedTest",
+          "test": "keepassWriteEditClearAndReopenPreserveApiKeyAndUnknownFields"
+        },
+        {
+          "class": "takagi.ru.monica.utils.GpgStorageDeviceTest",
+          "test": "keySurvivesRealKeePassWriteCloseAndReopen"
+        }
+      ],
+      "artifacts": [
+        {
+          "file": "Monica-Android-x86_64-1.0.327-26111012-98.APK",
+          "sha256": "fd48f1452a7bd52ab0478ef662b2ae361f0de30c5298d84c1a14b6dc140ba70a",
+          "badging": "package: name='takagi.ru.monica.keepassrefactor327' versionCode='12' versionName='1.0.327-26111012-98' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+        },
+        {
+          "file": "app-debug-androidTest.apk",
+          "sha256": "38241928189bace90b88386ea837988a5897c171d9e2c8dc0cd2c278d0c5d588",
+          "badging": "package: name='takagi.ru.monica.keepassrefactor327.test' versionCode='' versionName='' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+        }
+      ]
+    },
+    "new_failure_case": {
+      "passed": 1,
+      "runner_seconds": 0.362,
+      "driver_seconds": 2.99,
+      "methods": [
+        {
+          "class": "takagi.ru.monica.keepass.KeePassSecureItemPayloadFailureInstrumentedTest",
+          "test": "unreadableSecurePayloadRejectsBatchCreateAndUpdateWithoutChangingKdbxBytes"
+        }
+      ],
+      "artifacts": [
+        {
+          "file": "Monica-Android-x86_64-1.0.327-26111012-98.APK",
+          "sha256": "fd48f1452a7bd52ab0478ef662b2ae361f0de30c5298d84c1a14b6dc140ba70a",
+          "badging": "package: name='takagi.ru.monica.keepassrefactor327' versionCode='12' versionName='1.0.327-26111012-98' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+        },
+        {
+          "file": "app-debug-androidTest.apk",
+          "sha256": "7223e244deb1677ee4b8cf629512836df4d36e97c95472f5834be8f65e371cfb",
+          "badging": "package: name='takagi.ru.monica.keepassrefactor327.test' versionCode='' versionName='' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+        }
+      ]
+    },
+    "test_only_build_seconds": 92.89
+  },
+  "final": {
+    "main": {
+      "builds": [
+        {
+          "label": "final-main-01",
+          "seconds": 520.742,
+          "exit": 1
+        },
+        {
+          "label": "final-main-02",
+          "seconds": 136.22,
+          "exit": 0
+        }
+      ],
+      "jvm": {
+        "totals": {
+          "tests": 423,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "suites": [
+          {
+            "name": "takagi.ru.monica.attachments.executor.KeePassAttachmentExecutorRegressionGuardTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "keepassAttachmentOperationsDoNotRequireWarmServiceCache",
+              "pendingDraftsCanFlushToKeePassAfterNewEntryIsSaved"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.attachments.executor.KeePassAttachmentReconcilerTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "reconcileSnapshot_keepsSameHashDifferentFileNamesSeparate",
+              "reconcileSnapshot_insertsKeePassMetadataWithoutDownloadingBytes",
+              "reconcileSnapshot_keepsSecureItemOwnerSeparateFromSameNumericPasswordId",
+              "reconcileSnapshot_upgradesLegacyHashRefAndInvalidatesOldCache"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.data.ConvertersKeePassEnumTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "keepassEnumConvertersFallbackForInvalidLegacyValues",
+              "keepassEnumConvertersReadCurrentValues"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.data.KeePassOperationAvailabilityTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "remoteDatabaseWithoutLocalCopyRequiresManualRefresh",
+              "localDatabasesAreAlwaysWritable",
+              "remoteDatabaseBlocksUnsafeSyncStates",
+              "remoteDatabaseAllowsWritableSyncedLocalCopies"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.data.model.CardWalletDataCodecTest",
+            "tests": 10,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "bankCardFaceConfigRoundTrips",
+              "legacyPaymentAccountJsonParsesAsPaymentAccountData",
+              "billingEditorOrderPreservesIndependentFieldsAndAcceptsOlderRecords",
+              "documentAndBillingCardFacesRoundTripAndValidateAttachmentName",
+              "paymentAccountDataRoundTrips",
+              "untrustedCardFaceAttachmentNameIsDiscarded",
+              "legacyBankCardWithoutCardFaceKeepsOriginalLayout",
+              "billingAddressDataRoundTrips",
+              "legacyBillingAddressJsonParsesAsBillingAddressData",
+              "brandIconPreferenceSurvivesSyncMetadataAndOlderCardFacesKeepTheirDefault"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.data.TimelineSnapshotIntegrationGuardTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "restoreAndCopyRefuseStaleOrKeePassBoundVersions"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.BankCardFieldCodecTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "aliasesKeepExistingPrecedenceAndExplicitExpiryPartsOverrideIndependently",
+              "onlyTypeOrValidFromOrBlankCustomValuesDoNotCreateACard",
+              "referencesResolveThroughContextWithoutRewritingOriginalValuesOrProtection",
+              "writingProtectsSensitiveFieldsAndKeepsFirstCustomNameWithoutReplacingNativeFields"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.EntryWriterBoundaryTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "passwordAndSecureItemDecoderFailuresPropagateWithoutMutatingSource",
+              "notePatchKeepsUnresolvedMetadataReferencesAndLoginAlongsideSeparateNotes",
+              "passkeyFailuresPropagateAndOnlyNullExportUsesExistingProtectedPem",
+              "editingTotpOnMixedLoginReplacesOtpAliasesWithoutConvertingTheEntry",
+              "blankPasswordOtpSkipsDecoderAndPreservesNativeCredentialsAndOpaqueFields",
+              "passkeyResolutionPrecedesPemExportAndBothReceiveOriginalAlias"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassAutoTypeEditorTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "fromAndPatchPreserveEntryAutoTypeMetadata",
+              "validationRejectsBlankAndDuplicateWindows"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassBatchMoveTransactionGuardTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "same database password moves use one native database mutation"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassChangeSetApplierConflictTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "fieldPatchAppliesWhenRemoteStillMatchesBaseField",
+              "fieldPatchThrowsConflictWhenRemoteTouchedSameBaseField"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassChangeSetTest",
+            "tests": 11,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "attachmentChangeSetsRoundTripWithContentForAddOnly",
+              "trashMoveIsASeparateStructureChange",
+              "groupCreateChangeSetRoundTripsWithoutBaseFingerprint",
+              "createEntryChangeSetRoundTripsWithEntryPatch",
+              "customIconPoolPatchRoundTripsWithoutEntryFingerprint",
+              "groupTreeChangeSetRoundTripsWithLosslessPayload",
+              "fieldPatchChangeSetRoundTripsWithBaseFingerprintAndEntryUuid",
+              "trashRestoreIsNotModeledAsAFieldPatch",
+              "groupMoveIsAStructureChangeWithoutBaseFingerprint",
+              "groupRenameAndDeleteAreStructureChanges",
+              "structureOperationRequiresStructurePatch"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassConflictCenterTest",
+            "tests": 19,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "automatic preservation of one conflict does not duplicate unrelated field merges",
+              "selected merge requires and applies a choice for a divergent field",
+              "independent expiry change survives a newer remote field edit",
+              "Argon2 salt regeneration is ignored while its cost changes remain settings",
+              "protection-only changes are compared against concurrent field edits",
+              "selected merge resolves deletion against an edited entry",
+              "automatic merge combines fields and retains protected extensions history and attachments",
+              "independent KDBX saves do not create database settings conflicts",
+              "selected merge combines independent field edits without a conflict copy",
+              "protected field conflict hides values while preserving selected protection",
+              "an attachment-only local edit merges with a remote field edit",
+              "history-only local edits survive and distinct properties do not collapse",
+              "selected merge resolves divergent entry locations",
+              "whole database decisions preserve the selected side and cancellation writes nothing",
+              "deleting a folder cannot erase concurrent new entries or their reused attachments",
+              "remote KDF settings survive an independent local save",
+              "snapshot reports entry group metadata tombstone binary and icon changes",
+              "merge keeps independent changes and creates a conflict copy for divergent entry edits",
+              "usage-only timestamps and counts do not appear as conflicting edits"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassConflictResolutionControllerTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "cancelledBackendWriteReleasesTheBusyStateAndRequiresFreshComparison",
+              "failedComparisonCanBeRefreshedWithoutLeavingTheReview",
+              "independentChangesCanBeSubmittedWithNoManualChoices",
+              "staleComparisonCannotReplaceAnotherDatabaseOrReopenADismissedSheet",
+              "writingBlocksDuplicateSubmissionRefreshAndDismissUntilItCompletes",
+              "everyDisputedFieldMustBeChosenAndTheReviewedRevisionsReachTheWriter",
+              "anUnconfirmedWriteInvalidatesThePreviewBeforeRetry"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassCreateEntryReplayTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "fullNativeCreateReplaysTemplateMetadataAndOpaqueEntryState"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassCrossDatabaseTransferTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "bindPasswordKeepsExistingKeePassUuidWhenTargetDatabaseMatches",
+              "nativeMoveProjectionUsesPersistedTargetUuidWithoutRewritingKdbx",
+              "nativePasswordMoveRoutingFallsBackForProjectionOnlyEntries",
+              "nativePasswordMoveRoutingUsesRawEntryForSameAndCrossDatabaseMoves",
+              "forcedPasswordTargetUuidIsStableForRetriesAndGroupAware",
+              "secureItemTargetUuidIsStableAndTypeAwareForRetries",
+              "secureItemTargetUuidReusesExistingUuidForSameDatabase"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassCustomIconEditorTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "newIconCopiesBytesAndNormalizesName",
+              "listSortsByNameAndKeepsReferenceCounts",
+              "countReferencesCountsDuplicateReferences",
+              "rejectsUnknownOrOversizedIconData"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassDatabaseAccessPolicyTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "runtime lock clears every decoded cache layer",
+              "service enforces read-only at the shared encoded write boundary",
+              "read-only database rejects shared write boundary",
+              "process lock invalidates session projection and active cache state",
+              "writable database passes shared write boundary"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassDatabaseCredentialsTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "combined password and key file replacement supports reopening",
+              "key-file-only replacement is valid",
+              "service verifies and writes new credentials before committing registration",
+              "password replacement rewrites native credentials and preserves content"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassDatabaseSettingsTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "kdbx4 settings update changes native header and meta without rebuilding content",
+              "enabling recycle bin without a selected group creates one safely",
+              "kdbx3 rejects unsupported chacha and argon settings",
+              "compression setting maps to native header"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest",
+            "tests": 17,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "unrelatedDatabasesImportNewUuidsButRepeatedMergeIsIdempotent",
+              "sourceDeletionDoesNotResurrectAnOldEntry",
+              "reencodedHistoryKeepsDistinctRealVersionsWithoutGrowingOnMerge",
+              "accessAndUsageOnlyDifferencesDoNotInventHistoryOrConflict",
+              "equalTimeDivergencePreservesTargetAndSourceInHistory",
+              "iconCollisionRetainsBothOriginalImagesAndReferences",
+              "untimedPluginConflictIsNotSilentlyLost",
+              "equalRawAttachmentHashWithDifferentRepresentationIsRejected",
+              "twoRecycleBinsRemainRecycledAfterMerge",
+              "moveAfterDeletionSurvivesEvenWhenContentComesFromOtherSide",
+              "modificationAfterDeletionSurvives",
+              "groupMoveAndEntryEditAreMergedIndependently",
+              "attachmentsRemainAvailableForHistoricalVersions",
+              "winningGroupMovePersistsAcrossLaterMergeWithOlderLocation",
+              "deletedGroupRetainsANewerDescendant",
+              "sameUuidUsesNewerContentAndPreservesHistoryWithoutDuplicates",
+              "ambiguousUuidFailsBeforeAnyWrite"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassDxPasskeyCodecTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "buildCustomFieldPairsWritesKeePassDxCompatibleFields",
+              "buildCustomFieldPairsFallsBackToExistingPrivateKeyWhenExportFails"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassEncodeBufferPolicyTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "uses a small bounded default when prior database size is unavailable",
+              "reuses a realistic prior size without exceeding the memory cap"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassEntryFieldPatchTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "secureItemPatchDoesNotDeleteExternalUnknownFields",
+              "passkeyPatchReplacesCompatFieldsAndPreservesExternalUnknownFields",
+              "passwordPatchPreservesTotpUnknownFieldsAndBinaries",
+              "passwordRenameAndNotesPatchPreservesOtpCustomUnknownAndPluginFields"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassEntryGroupRelocatorTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "keeps tree unchanged when entry is missing",
+              "moves complete entry between groups and applies field update",
+              "updates entry in place when target group is unchanged"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassEntryPresentationPatchTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "combinedEntryEditAppliesFieldsAndIconAsOnePatch",
+              "remotePropertyChangeRejectsTheWholeEditBeforeUpdatingFields",
+              "tagsExpiryAndFieldsSaveTogetherWithOneOriginalHistorySnapshot",
+              "clearingCurrentReferenceKeepsIconUsedByHistory",
+              "selectingNewIconAddsPoolItemAndUpdatesEntry"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassEntrySnapshotTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "snapshotPreservesFieldRolesAndBinaryMetadata",
+              "fingerprintChangesWhenPreservedDataChanges"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassFieldRegistryTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "classifiesKeepPassPluginAndPasskeyFieldsAsPreserved",
+              "exposesPasswordProjectionAndFallbackDecisions",
+              "classifiesMonicaOwnedFieldsSeparatelyFromPreservedFields",
+              "classifiesKeePassTotpAliasesCaseInsensitively"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassFieldSafetyTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "fullReplacementNeverSilentlyErasesARemotelyAddedField",
+              "fullReplacementCanEditOneOfSeveralCaseDistinctKeys",
+              "partialEditsAndExplicitRemovalRespectExactNames"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassFolderDragPolicyTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "rejectsSelfAndDescendantTargets",
+              "all selected folders must be valid for a batch drop"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassFolderPathRegressionGuardTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "passwordFallbackCreationUsesEntryGroupPath"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassKdbxFixtureIntegrationTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "kdbxRoundTripPreservesOtpUnknownPluginAttachmentHistoryAndMetadataAfterPatch",
+              "groupTreeChangeSetCreatesAndDeletesSubtreeWithHistoryCustomDataAndTimes",
+              "file artifact encoding remains readable when Kotpass closes its sink"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassLosslessTransferTest",
+            "tests": 8,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "target first transfer leaves source untouched when target verification fails",
+              "copies complete native entry with binary and custom icon payloads",
+              "same database relocation preserves native entry without deletion tombstone",
+              "inserted native payload remains equal after KDBX encode decode round trip",
+              "target first transfer verifies durable target before removing source",
+              "target first transfer leaves source untouched when target persistence fails",
+              "rejects target UUID collision with different native content",
+              "source remains intact until explicit removal after target insertion"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassMaintenanceTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "integrity report detects duplicate identities missing resources and unreferenced resources",
+              "repair reassigns duplicate UUIDs and removes only unreferenced resources"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassNativeBrowserTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "browser retains reference resolution when a field uses KeePass REF syntax",
+              "entry classifier routes recognized Monica types and keeps templates generic",
+              "duplicate legacy group paths remain separate browser nodes by UUID",
+              "unknown native entry remains visible with raw fields metadata attachment and history",
+              "browser skips the field reference index when entries contain no references"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassNativeEntryMutationTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "UUID group operations isolate duplicate same-path groups",
+              "generic ordered field replacement preserves protection metadata and creates history",
+              "history change sets round trip and reject missing history patches",
+              "history deletion removes only selected snapshot without creating another version",
+              "history restore keeps identity and all history while snapshot becomes current"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassNativeEntryRouteTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "recognized native kinds use specialized Monica routes",
+              "unknown and template entries always stay in generic native route"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassNativeManagementTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "duplicate and batch move preserve native entry data without tombstones",
+              "batch folder move writes one coherent tree and rejects parent child selection",
+              "attachment actions distinguish equal payload names and retain history binaries",
+              "group properties can upload and assign a custom icon atomically",
+              "natural sorting keeps folders first and recycle bin last",
+              "attachment rename keeps binary payload and group properties remain editable"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassNativeMutationTest",
+            "tests": 10,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "changingProtectionIsStillARealEditEvenWithIdenticalText",
+              "historyItemLimitKeepsNewestSnapshots",
+              "rewritingIdenticalProtectedFieldsKeepsOriginalHistoryAndTimes",
+              "zeroHistorySizeRemovesAllSnapshots",
+              "replayingAnIdenticalProtectedFieldPatchDoesNotAddHistory",
+              "unlimitedHistoryKeepsExistingSnapshotsAndNewSnapshot",
+              "movingEntryUpdatesLocationChangedWithoutCreatingHistory",
+              "fieldEditCreatesFlatHistoryAndTouchesKeePassTimes",
+              "permanentGroupDeleteWritesTombstonesForWholeTree",
+              "permanentEntryDeleteWritesDeletedObjectTombstone"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassNativeSearchTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "group UUID scope isolates duplicate same-path groups",
+              "search covers selected fields while protected values require explicit opt in",
+              "invalid regular expression reports an error without crashing",
+              "regex case expiry recycle bin and template options are deterministic"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassNativeSessionTest",
+            "tests": 8,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "session cache reuses same revision and rebuilds after revision change or invalidation",
+              "deferred session avoids rebuilding the complete native index until first use",
+              "projection bundle cache reuses one traversal and reference context per session revision",
+              "session exposes raw KDBX as source of truth and immutable revision token",
+              "indexes duplicate sibling paths by stable database and group UUID identity",
+              "entries without reference fields do not build the entry reference index",
+              "deferred projection bundle does not rebuild the complete projection during save",
+              "retains duplicate UUID evidence instead of silently overwriting native nodes"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassPasswordEntryAttachmentRegressionGuardTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "passwordUpdatesReuseExistingEntrySoAttachmentsSurviveSave"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassPendingChangeRepositoryTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "enqueuePersistsBaseSnapshotForRemoteRecovery",
+              "enqueueIsIdempotentForSameDatabaseAndChangeId"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassPendingFlushPlannerTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "prepareRecoversStaleInProgressBeforePlanningReadyChangesAndDoesNotStopAtMaxRetries",
+              "prepareBlocksIncompleteGroupTreePayloadBeforeReplay",
+              "prepareKeepsInvalidPayloadBlockedWithoutDroppingValidReadyChange"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassProjectionIndexGateTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "unchanged indexed revision skips duplicate feature projection work",
+              "new revision and explicit invalidation require projection refresh"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassRecordCountCacheTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "invalidationRejectsALateReadEvenWithoutALockEpochChange",
+              "globalLockAndReunlockCannotExposeOrPublishAnOldTotal",
+              "independentCountsAndZeroRemainAvailableWithoutDecodedObjects",
+              "readingWhileLockedDoesNotBecomeAuthorizedAfterUnlock",
+              "successfulSameScopeUpdatesReplaceTheDisplayedTotal",
+              "perDatabaseLockRevokesOnlyItsOwnOldScope"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassRecoveryCatalogTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "tampered recovery copy remains visible but cannot be restored",
+              "recovery catalog lists verifies exports restores and deletes complete copies",
+              "raw save copy preserves every byte",
+              "merge from keeps attachments icons and native fields"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassRecycleBinApplierTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "restoreFromRecycleBinRejectsEntryOutsideRecycleBin",
+              "moveToRecycleBinAndRestoreUseKdbxStructureNotRoomSoftDelete"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassRecycleBinPolicyTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "requestedRecycleBinDeleteNeverAllowsPermanentDeleteFallback",
+              "softDeleteCreatesNativeRecycleBinWhenDatabaseDoesNotHaveOne",
+              "softDeleteRepairsBrokenRecycleBinMetadataInsteadOfPermanentlyDeleting"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassRemoteRebaseTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "rebaseAppliesReadyPendingChangesOnLatestRemoteWithoutOverwritingUnrelatedRemoteFields",
+              "rebaseRejectsBlockedPendingPlanBeforeApplyingReadyChanges",
+              "pendingChangePersistsRemoteBaseSnapshotForLaterConflictDecisions",
+              "rebaseReturnsNullWhenThereAreNoReadyChanges"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassSecureItemPhotoAttachmentTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "resaveReplacesManagedPhotoWithoutTouchingOtherAttachments",
+              "removingOnePhotoOnlyRemovesItsManagedBinary",
+              "managedPhotosCanBeReadBackForMonicaLocalCache",
+              "bankCardPhotosBecomeStandardKdbxBinariesAndSurviveRoundTrip"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassSecureItemPhotoIntegrationGuardTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "secureItemReadsHydrateManagedBinariesIntoEncryptedLocalImagePaths",
+              "secureItemWritesLoadEncryptedPhotosAndAppendAttachmentChangeSets"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassSourceSafetyTest",
+            "tests": 10,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "precomputedUnchangedSourceRevisionIsAcceptedWithoutRehashingBytes",
+              "corruptedRecoveryCopyFailsVerificationAndIsRetained",
+              "streamRevisionMatchesByteArrayRevision",
+              "unchangedSourceRevisionIsAccepted",
+              "googleDriveRevisionAcceptsEitherDriveVersionOrChecksum",
+              "loadedDatabaseCarriesSourceContentRevisionIntoWriteBoundary",
+              "recoveryCopyAcceptsTheRevisionAlreadyComputedAtTheWriteBoundary",
+              "changedSourceRevisionIsRejectedBeforeWrite",
+              "foregroundGoogleDriveWriteUsesLoadedExpectedVersion",
+              "recoveryCopyIsWrittenAtomicallyAndCanBeVerified"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassTemplateEngineTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "instantiating template removes marker and allocates a fresh entry",
+              "deleting template rejects normal entries and removes only template",
+              "saving as template creates metadata group and preserves native payload"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassTotpCodecTest",
+            "tests": 16,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "parsesKeeOtpKeyValueFormatInsteadOfTreatingTheWholeQueryAsASecret",
+              "returnsNullWhenNoSecretExists",
+              "steamEncoderAndTrayTotpSteamSettingsProduceSteamTokens",
+              "parsesOtpAuthUri",
+              "malformedOrAmbiguousNativeSecretsAreNotTreatedAsValidCodes",
+              "parsesPlainOtpSecretWithSettings",
+              "nativeKeePassSecretEncodingsGenerateRfc4226And6238Codes",
+              "emitsKeePassCompatibleHotpFields",
+              "nativeKeePassAlgorithmsMatchRfc6238Vectors",
+              "writesConsistentKeePassNativeAndUriRepresentations",
+              "parsesTotpSeedWithSeparateFields",
+              "invalid native HOTP counters must never restart from zero",
+              "uriComponentsAreDecodedOnceAndLiteralPlusInAccountIsPreserved",
+              "parsesTrayTotpPositionalSettingsWithoutConfusingDefaultPeriodWithDigits",
+              "parsesHotpCounterFromSettingsOrSeparateField",
+              "emitsKeePassCompatibleTotpFields"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassTotpDisplaySourceTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "copiedBindingCannotHideAnotherNativeEntry",
+              "unboundUnreadableAndDifferentSecretsStayVisible",
+              "repeatedBindingsCollapseOnlyWithinTheSameNativeEntryAndDatabase",
+              "legacyBindingsRemainScopedToTheirStorage",
+              "identicalSecretsInDifferentDatabasesOrNativeEntriesDoNotHideEachOther",
+              "localMdbxAndBitwardenBindingsDoNotCollapseAcrossVaultsOrNativeCiphers"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassTotpExtensionsTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "extensionUrisPreserveTypeSecretPinAndNamesWithoutNativeTotpFallback",
+              "pinInNativeUriWinsOverStaleMonicaMetadata"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassTotpProjectionMatcherTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "sourceEntryUuidWinsOverLegacyIdentityMatch",
+              "titlePathFallbackCannotOverwriteAnUnrelatedKnownSecret",
+              "aCopiedMonicaIdMustNotStealTheProjectionOfAnotherDatabase",
+              "legacyProjectionWithoutEntryUuidMatchesByTotpIdentityBeforeTitlePathFallback",
+              "oneLegacyProjectionCannotBeAssignedToTwoEntriesInTheSameRefresh",
+              "distinctNativeUuidsWithTheSameTitleAndGroupMustNotOverwriteEachOther"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassTreeNavigationTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "recycleUuidMarksDescendantsEvenWhenDisabledAndNamesOrZeroUuidNeverMarkOrdinaryGroups",
+              "duplicatePathLookupKeepsFirstGroupButCollectionKeepsAllDirectEntriesInTreeOrder",
+              "restoreUsesExistingActiveParentIncludingRootAndRejectsMissingOrRecycledPreviousParent",
+              "iterativeCountAndSequenceHandleDeepTreesWithoutVisitingHistoricalEntries",
+              "rootPathRemainsNullAndEncodedSpecialSegmentsRoundTripThroughEveryLookup",
+              "duplicateUuidLookupKeepsFirstEntryAndPathWhileContextIndexKeepsLastGroup"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassWriteCachePerformanceGuardTest",
+            "tests": 16,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "raw writes share the same no reread cache path",
+              "normal writes reuse persisted bytes instead of reading the full database again",
+              "pending remote changes reuse the revision already computed for the write",
+              "entry count refresh does not allocate a complete temporary entry list",
+              "opening and saving do not eagerly rebuild every compatibility projection",
+              "native browser snapshot is built once per loaded revision",
+              "evicting a decoded database also releases its native indexes",
+              "field reference checks traverse entries lazily without a temporary complete list",
+              "unchanged entry counts do not emit Room table updates",
+              "KDBX encoding starts with a bounded capacity estimate",
+              "entry counting uses an iterative traversal for deeply nested databases",
+              "persisted cache state is derived from known bytes and cheap file metadata",
+              "field reference indexing avoids a second complete entry list",
+              "native browser hierarchy traversal uses identity indexes instead of rescanning every group",
+              "one computed revision is reused through local write remote verification and cache refresh",
+              "external writes reuse the source revision for conflict and recovery checks"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassWritePreflightTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "large attachment is rejected before allocation with a concrete deficit",
+              "borderline write requests confirmation instead of failing",
+              "native uri attachment checks declared size before reading bytes",
+              "small database and attachment fit within available heap"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassXmlContentParserTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "dtdAndExternalEntitiesAreRejectedBeforeReadingContent",
+              "encryptedKdbx3And4RetainExactTextProtectionTagsAndHistory",
+              "literalXmlKeepsCdataChunksEntitiesAndEmptyPluginValues"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.passkey.PasskeyBackupFlagsTest",
+            "tests": 8,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "refreshPreservesKnownEligibilityAndAcceptsBackupStateChanges",
+              "jsonFlagsDistinguishLegacyMissingValuesAndRejectMalformedValues",
+              "legacyAndroidPayloadOverridesOldSyncMarkerDerivedNativeFlags",
+              "refreshDoesNotReinterpretLegacyNullAsANewCredential",
+              "keePassPayloadAndNativeFieldsKeepAllValidFlagPairsAndKeyBytes",
+              "actualAuthenticatorDataUsesExplicitFlagsWithoutChangingKeyOrStoredCounter",
+              "bitwardenRefusesChangingImmutableEligibilityDuringTransfer",
+              "oldRecordsKeepTheirFlagsRegardlessOfLocalBackupStatus"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.passkey.PasskeyPageSyncPolicyTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "keepassRefreshOnlyIncludesExistingDatabasesInCurrentScope"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.repository.KeePassPasskeySyncMergeTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "mergeKeePassImportedPasskeys_collapsesRepeatedImportedAndExistingRows",
+              "mergeKeePassImportedPasskeys_preservesExistingRecordIdAndMetadata"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.repository.SecureItemRepairSingleFlightGuardTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "legacyKeePassRepairIsSingleFlightPerRepository"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "sharedDatabaseAndSyncBoundariesDoNotExportLocalOnlyTotpCiphertext"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.steam.SteamExternalVaultStorageGuardTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "storageSourcesAndPreferencesIncludeKeePassAndBitwarden"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.sync.DefaultSyncCoordinatorTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "keepassCompatibilityIndexSerializesAllAndSpecificDatabaseRefreshesButThrottlesByTarget"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.sync.SyncFailureClassifierTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "remoteAndLocalKeePassChangesAreClassifiedAsConflict"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.cardwallet.CardFacePersistenceGuardTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "cardFaceUsesPortableMetadataAndEveryAttachmentBackend"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.components.UnifiedMoveInitialSourceTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "KeePass filters use their owning database"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.KeePassGroupFilterIdentityTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "database identity is always required",
+              "legacy rows without UUID use path fallback",
+              "duplicate legacy paths remain distinguishable when both UUIDs are known",
+              "UUID identity survives a display path rename"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.KeePassMoveActionPolicyTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "still protects unsupported destructive targets",
+              "copy requests are never rewritten",
+              "keeps move for a different KeePass database",
+              "keeps move when reorganizing into Monica or MDBX",
+              "keeps move for another group in the same KeePass database"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.NoteBitwardenAutoSyncGuardTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "allLocalKeePassAndMdbxNotesHaveNoBitwardenSyncTarget"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.password.KeePassListRetentionTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "retainsTheActualPreviousObjectWithoutRebuildingIt",
+              "sourceLockRevokesPreviousEvenWhenAnotherTargetIsUnlocked",
+              "clearingDropsThePreviousList",
+              "completedEmptyListReplacesPreviousAndOnlyOneListIsRetained"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.PasswordBatchMoveFailureTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "keepassBatchFailureKeepsRemoteConflictReason"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.screens.KeePassNativeEntryEditorGuardTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "entry detail keeps notes in their own section and localizes standard labels",
+              "new entry opens an in memory editor and is written only on save",
+              "predefined icon picker displays a visual grid",
+              "entry editor reuses shared custom field components"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.screens.KeePassNativeEntryEditorModelTest",
+            "tests": 13,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "second field for the same semantic slot remains an editable custom field",
+              "existing aliases use password form slots without renaming fields",
+              "invalid OTP replacement is rejected instead of removing the existing secret",
+              "existing keepass totp fields populate the authenticator editor",
+              "save plan preserves field order names values and protection",
+              "new custom field is plain and ordered after existing fields",
+              "validation permits unnamed entries and requires unique nonblank field names",
+              "new draft starts with password style fields and encrypted password",
+              "case and whitespace distinct custom names survive an unrelated edit",
+              "advancing native HOTP keeps a referenced secret and rejects overflow",
+              "tagsUseKeePassSeparatorsAndRetainColons",
+              "advancing HOTP preserves raw URI encoding secrets and custom fields",
+              "totp fields are managed by the authenticator card and remain keepass compatible"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.screens.KeePassNativeManagerBrowserGuardTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "new folder reuses the complete group property editor",
+              "browser keeps search collapsed and selection actions in the shared page model"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.screens.KeePassNativeManagerLayoutTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "summary counts folders and entries independently",
+              "search field is visible while expanded or when query is present",
+              "select all only changes entries visible in the current folder",
+              "selection toggle adds and removes one entry without touching other entries",
+              "empty visible list leaves selection unchanged"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.screens.KeePassNativeManagerMenuGuardTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "vault top menu keeps the same manager shortcut",
+              "password top menu exposes native manager for the selected keepass database",
+              "manager shortcut is translated in every bundled language"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.screens.LocalKeePassExportRegressionGuardTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "exportReportsAnErrorWhenTheDestinationCannotBeOpened",
+              "internalDatabaseExportStaysConnectedToDocumentPickerAndViewModel"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.vaultv2.VaultOverviewKeePassFolderTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "passkeyOnlyUsesCatalogueUuid",
+              "initialSnapshotWithoutCatalogueIsOrderIndependent",
+              "passkeysShareCatalogueFolderWithPasswordsAndCombinedCount",
+              "identicalPathsInDifferentDatabasesRemainSeparate",
+              "differentUuidsRemainDistinctEvenWithIdenticalPaths",
+              "passkeyOnlyFallbackDecodesOnceAndKeepsEncodedNavigationPath"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.vaultv2.VaultOverviewProjectionTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "emptyAndRenamedKeePassFoldersKeepTheirDatabaseAndUuid"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.vaultv2.VaultV2FolderLayoutTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "keepass database shows root items and counts nested groups"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.util.KeePassCredentialSupportTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "hexKeyFile_buildsHexVariantCandidates",
+              "invalidCredentialMessage_containsAttemptSummary",
+              "noKeyFile_buildsPasswordOnlyCandidate",
+              "raw32ByteKeyRemainsUnchangedAndEachCandidateUsesTheOriginalBytes",
+              "xmlKeyFile_buildsXmlVariantCandidates"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.util.KeePassCustomFieldExtractionTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "monicaPasswordCompatibilityFieldsAreNotDuplicatedAsCustomFields",
+              "keepsNonStandardKeePassStringFieldsForDetailDisplay"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.util.KeePassErrorTest",
+            "tests": 9,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "securityException_mapsToPermissionDenied",
+              "legacyKdbMessage_mapsToLegacyUnsupported",
+              "invalidKey_mapsToInvalidCredential",
+              "outOfMemory_mapsToKdfMemoryInsufficient",
+              "mappedException_keepsOriginalInstance",
+              "keyFileUnavailable_keepsDedicatedRecoveryCode",
+              "oneDriveRedirectConflict_mapsToActionableMessage",
+              "unsupportedVersion_mapsToFormatUnsupported",
+              "ioException_mapsToReadWriteFailed"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.util.KeePassFieldReferenceResolverTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "referencesSupportContainmentAndLocalCustomFieldRedirection",
+              "localPlaceholdersResolveWithoutAWholeDatabaseAndKeepExactCustomNames",
+              "absentPasswordsUseOnlyExplicitLegacyAliasesAndPreserveReferences",
+              "customSearchCodeCannotBeUsedAsTheRetrievedField",
+              "presentPasswordAlwaysWinsOverAliasesAndOtherProtectedFields",
+              "unresolvedAndCyclicReferencesStayVisibleWithoutChangingStoredStrings"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.util.KeePassFormatInspectorTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "detect_legacyKdbSignature",
+              "detect_kdbxSignature",
+              "detect_legacyByExtensionFallback"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.util.KeePassKeyFilePermissionPolicyTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "keyFilePersistsReadPermissionWithoutRequiringWriteAccess"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.util.KeePassKeyFileStorePolicyTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "displayNameCannotEscapeWithPathSeparators",
+              "internalPathIsOpaqueAndStableForFingerprint",
+              "readerAcceptsKeyFilesLargerThanOneMiB"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.utils.BackupContentPolicyTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "localOnlyScopeKeepsLegacyDetachedKeePassRepairBehavior"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.utils.KeePassFileNameResolverTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "fallsBackToUriFileNameWhenProviderDoesNotExposeDisplayName",
+              "manualNameWinsOverProviderIdentifierOnlyWhenItIsARealName",
+              "neverUsesDocumentIdentifierAsDatabaseName",
+              "usesProviderDisplayNameAndRemovesKeepassExtension",
+              "keepsUnicodeFileNames",
+              "displayNameHasStableFallback"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.utils.KeePassPortableSecretExportPolicyTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "exports the decrypted secret instead of stored ciphertext",
+              "keeps plaintext returned by the compatible decryptor",
+              "never falls back to device ciphertext when decryption fails"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.utils.OrderingPersistenceGuardTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "keepassCredentialFieldsUseTheSharedMultilingualKeyboardPolicy"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.utils.WebDavKeePassBackupPolicyTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "declaredKeyRequiresMatchingEncryptedEntry",
+              "internalKeyCopyRequiresEncryptedBackup",
+              "parsesKeepassEntriesRegardlessOfZipDirectoryPrefix",
+              "rejectsMalformedOrOverflowingEntryNames",
+              "undeclaredKeyIsIgnoredInsteadOfBindingAnUnknownCredential",
+              "legacyDatabaseWithoutKeyMetadataRemainsRestorable"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "deletingKeePassDatabaseDeletesCachedRowsInsteadOfConvertingThemToLocal",
+              "keepassRemoteManualAndVisibleSyncShareCoordinatorQueue",
+              "keepassRemoteWritesStayVisibleToOtherClients",
+              "keepassCompatibilityRefreshEntrypointsUseSyncTaskRunner"
+            ]
+          }
+        ]
+      },
+      "kotpass_current": {
+        "totals": {
+          "tests": 0,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "suites": []
+      },
+      "device": {
+        "passed": 89,
+        "runner_seconds": 172.373,
+        "driver_seconds": 177.034,
+        "methods": [
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "editingAndAddingOtpPreservesPasskeyAndRecoveryNotes"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "ordinaryTrashNamedGroupsAreNotRecycleBins"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "failedAttachmentOrIconDoesNotPartiallySaveAndCanBeRetried"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "changingPasswordAndKeyFileRequiresBothNewCredentialsAfterReopen"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "fiveAuthenticatorsInALargeKeePassDatabaseAreAllProjected"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "editingAnAuthenticatorOnALoginPreservesLoginFieldsAndForeignMetadata"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "nativeDraftRoundTripsFieldsPropertiesIconsAndAttachmentsInBothKdbxVersions"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "mixedOtpPasskeysAndRecoveryNotesRemainVisibleAfterReopeningKdbx3And4"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "customFieldOnlyEntriesRemainReachableIncludingEmptyFields"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "passwordCreationAndModificationDatesSurviveKdbx3And4Projection"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "unknownAndIncompleteMonicaMetadataCannotHideAnEntry"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "editingOneOfTwoIdenticalLoginNamesTargetsOnlyItsUuid"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "databaseCardCountsNativeEntriesRegardlessOfProjectionType"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "staleAndReadOnlyEditsPreserveTheCommittedDatabase"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "groupsRecycleAttachmentsAndHistoryRemainUsableAfterReopen"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassPasswordNativeInstrumentedTest",
+            "test": "passwordBrowserDetailAndEditorDoNotNavigateToRoomAndLockDisposesDraft"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassPasswordNativeInstrumentedTest",
+            "test": "staleNativeDraftCannotOverwriteAnExternalRevision"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassPasswordNativeInstrumentedTest",
+            "test": "failedNativeWritePreservesFileAndOverview"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassPasswordNativeInstrumentedTest",
+            "test": "customOnlyAndMixedEntriesKeepTheSamePasswordMembershipAsTheOverview"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassPasswordNativeInstrumentedTest",
+            "test": "folderUuidAndFiltersRemainNativeAndMissingGroupDoesNotFallBack"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassPasswordNativeInstrumentedTest",
+            "test": "nativeSaveUsesOneCommitWithoutDependingOnOverviewRows"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassHistoryStabilityTest",
+            "test": "accessOnlyExternalMergesAndRepeatedMergesKeepRealHistory"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassHistoryStabilityTest",
+            "test": "repeatedIdenticalNativeSavesPreserveHistoryAfterDiskReopen"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassHistoryStabilityTest",
+            "test": "historyDisplayIsNewestFirstAndDeleteKeepsOriginalNativeIndex"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassDeleteInvestigationTest",
+            "test": "deniedWritePreservesFileAndEveryVisibleRow"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassDeleteInvestigationTest",
+            "test": "localExternal300DeleteThenColdReload"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassDeleteInvestigationTest",
+            "test": "blockedSingleSaveDoesNotHideRowBeforeFileCommit"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassDeleteInvestigationTest",
+            "test": "fortySelectedPasswordsUseOneFileCommit"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassDeleteInvestigationTest",
+            "test": "snapshotReadBeforeDeleteMustNotResurrectDeletedRows"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassDeleteInvestigationTest",
+            "test": "staleSelectionCannotPartiallyDeleteDatabase"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassDeleteInvestigationTest",
+            "test": "failedVerificationMustNotRollBackAnotherSessionsSuccessfulWrite"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassDeleteInvestigationTest",
+            "test": "coldProjectionPublishesWholeListOnly"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassServiceGroupExtractionInstrumentedTest",
+            "test": "legacyGroupPathsCreateRenameMoveDeleteAndNativeCreateSurviveColdRead"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassServiceGroupExtractionInstrumentedTest",
+            "test": "crossVaultLegacyGroupMovePreservesCompleteTreeAndHistoryOnlyAttachments"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeSnapshotBuilderInstrumentedTest",
+            "test": "bothCaptureEntrypointsRejectMissingHistoryResources"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeSnapshotBuilderInstrumentedTest",
+            "test": "entryAndGroupCaptureReplayHistoryOnlyCompressedAttachmentAndIcon"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest",
+            "test": "multiTargetEditUpdatesExistingLocalReplicaAndPreservesUnrelatedRows"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest",
+            "test": "nativeCrossVaultMoveFailureLeavesBothFilesIntact"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest",
+            "test": "failedNativeSaveKeepsSourceAndUnselectedReplica"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest",
+            "test": "nativeCrossVaultMovePreservesUuidHistoryAndAttachment"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest",
+            "test": "singleTargetEditStillRemovesUnselectedReplicaAfterSuccessfulSave"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest",
+            "test": "unchangedRefreshReusesProjectionButNewRevisionRefreshesReferenceDependents"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest",
+            "test": "sameVaultSaveDoesNotSubscribeToGlobalPasswordRows"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest",
+            "test": "scopedCandidatesPreserveOverviewVisibilityAcrossStores"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassStackContentRegressionTest",
+            "test": "externalRevisionRejectsStackWithoutOverwritingAnotherWriter"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassStackContentRegressionTest",
+            "test": "lockingOrRemovingASelectedIdentityRejectsWholeBatch"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassStackContentRegressionTest",
+            "test": "projectCredentialsResaveInOneCommitWithDistinctFieldsAndNewRows"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassStackContentRegressionTest",
+            "test": "deniedProjectBatchCannotPartiallySaveAnExistingAccount"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassStackContentRegressionTest",
+            "test": "stackModesCommitTheWholeSelectionOnceAndSurviveColdReopen"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassStackContentRegressionTest",
+            "test": "copiedContentRejectsChangedDestinationEvenAfterListRefresh"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassStackContentRegressionTest",
+            "test": "deniedBatchStackDoesNotPersistAnyMember"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassStackContentRegressionTest",
+            "test": "nativeCustomFieldsRoundTripWithoutLosingUnknownOrProtectedFields"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassStackContentRegressionTest",
+            "test": "everyAddContentEncodingSurvivesEditAndColdReopenInOriginalKdbx"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassStackContentRegressionTest",
+            "test": "copiedContentPublishesAfterSavingAnotherCredentialInSameFile"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest",
+            "test": "readOnlyCurrentFileMergeDoesNotWrite"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest",
+            "test": "unreadableCurrentFileIsNotOverwrittenAndLastSessionIsKept"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest",
+            "test": "currentFileMergeReadsExternalEditsAndDeletionWithoutChoosingASource"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest",
+            "test": "eachClientsAddedEntrySurvivesCurrentFileMerge"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest",
+            "test": "lockedCurrentFileMergeDoesNotWrite"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest",
+            "test": "sourceChangedDuringMergeIsNotOverwritten"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "emptyDatabasePublishesReadinessWithoutPasswordRowChanges"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "failedInitialReadKeepsSubscriptionForExplicitRecovery"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "mergingSameDatabaseNeverDuplicatesItsEntries"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "subscriptionStartedWhileLockedSurvivesUnlockAndHidesOnDatabaseLock"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "explicitSaveWritesOnceAndPreservesDatabaseParameters"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "ordinaryGroupNamedTrashMustStayVisible"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "reloadedDeletionCannotBeOverwrittenByAnOldEditorDraft"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "failedExternalReloadKeepsTheFileAndShowsFailure"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "unchangedSourceCheckKeepsTheSameProjectionAndDoesNotWrite"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "externalDeletionMustBeVisibleWhenReenteringTheDatabase"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "foregroundCheckLoadsExternalDeletionAndMarksTheStatus"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "disablingFutureRecyclingMustNotExposeExistingRecycledDescendants"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassMinimalFieldsInstrumentedTest",
+            "test": "secureNoteOmitsDefaultsButRetainsEmptyIndependentNoteAndProtectedBody"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassMinimalFieldsInstrumentedTest",
+            "test": "accountMetadataRetainsNotesIdentitiesOrderAndUnknownKeys"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassMinimalFieldsInstrumentedTest",
+            "test": "secureFavoriteReferencesPreserveUnchangedFalseAndAllowExplicitTrueToFalse"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassMinimalFieldsInstrumentedTest",
+            "test": "legacyProjectionPreservesLocalOnlyMetadataWhenSourceNeverWroteIt"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassMinimalFieldsInstrumentedTest",
+            "test": "explicitSaveRemovesOnlyRedundantMetadataAndPreservesReferencesAndNativeData"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassMinimalFieldsInstrumentedTest",
+            "test": "simpleNativeLoginCreatesOnlyStandardFieldsAndReopens"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassMinimalFieldsInstrumentedTest",
+            "test": "enabledMetadataSurvivesAndExplicitlyClearingItUsesMissingFieldDefaults"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassMonicaSecureItemTest",
+            "test": "monicaPasskeyDetailsWriteUuidEntryWithoutRoomProjectionOrLegacySecondWrite"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassMonicaSecureItemTest",
+            "test": "nativeNoteDraftDoesNotOverwriteExternalChangeAfterRefresh"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassMonicaSecureItemTest",
+            "test": "lateBoundMonicaNoteFlowReadsAndWritesOriginalVaultWithoutDoubleCommit"
+          },
+          {
+            "class": "takagi.ru.monica.credentialexchange.PasswordContentStorageInstrumentedTest",
+            "test": "keepassSecureItemEditorsRetainExtendedFieldsAfterSaveEditAndReopen"
+          },
+          {
+            "class": "takagi.ru.monica.credentialexchange.PasswordOtpStorageInstrumentedTest",
+            "test": "allPasswordOtpTypesSurviveKeePassNativeReopen"
+          },
+          {
+            "class": "takagi.ru.monica.credentialexchange.PasswordOtpStorageInstrumentedTest",
+            "test": "keepassPasswordEditPreservesExistingSteamMetadata"
+          },
+          {
+            "class": "takagi.ru.monica.credentialexchange.ApiKeyStorageInstrumentedTest",
+            "test": "keepassWriteEditClearAndReopenPreserveApiKeyAndUnknownFields"
+          },
+          {
+            "class": "takagi.ru.monica.utils.GpgStorageDeviceTest",
+            "test": "keySurvivesRealKeePassWriteCloseAndReopen"
+          },
+          {
+            "class": "takagi.ru.monica.credentialexchange.CredentialImportInstrumentedTest",
+            "test": "cxfPersistsToAllFourDestinationsAndRepeatedImportsDoNotOverwriteKeys"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassSecureItemPayloadFailureInstrumentedTest",
+            "test": "unreadableSecurePayloadRejectsBatchCreateAndUpdateWithoutChangingKdbxBytes"
+          }
+        ],
+        "artifacts": [
+          {
+            "file": "Monica-Android-x86_64-1.0.327-26111012-99.APK",
+            "sha256": "f68cc0a07bec18212e7e04d0fbe7838260f03882d0d58d13bf8c9611f8be178c",
+            "badging": "package: name='takagi.ru.monica.keepassrefactor327' versionCode='12' versionName='1.0.327-26111012-99' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+          },
+          {
+            "file": "app-debug-androidTest.apk",
+            "sha256": "f543b265e5d8d4dac6551e7a179891a3902a55cdd63409fa4a522fac0c4a2b4b",
+            "badging": "package: name='takagi.ru.monica.keepassrefactor327.test' versionCode='' versionName='' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+          }
+        ]
+      }
+    },
+    "fd": {
+      "builds": [
+        {
+          "label": "final-fd-01",
+          "seconds": 522.761,
+          "exit": 0
+        }
+      ],
+      "jvm": {
+        "totals": {
+          "tests": 423,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "suites": [
+          {
+            "name": "takagi.ru.monica.attachments.executor.KeePassAttachmentExecutorRegressionGuardTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "keepassAttachmentOperationsDoNotRequireWarmServiceCache",
+              "pendingDraftsCanFlushToKeePassAfterNewEntryIsSaved"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.attachments.executor.KeePassAttachmentReconcilerTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "reconcileSnapshot_keepsSameHashDifferentFileNamesSeparate",
+              "reconcileSnapshot_insertsKeePassMetadataWithoutDownloadingBytes",
+              "reconcileSnapshot_keepsSecureItemOwnerSeparateFromSameNumericPasswordId",
+              "reconcileSnapshot_upgradesLegacyHashRefAndInvalidatesOldCache"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.data.ConvertersKeePassEnumTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "keepassEnumConvertersFallbackForInvalidLegacyValues",
+              "keepassEnumConvertersReadCurrentValues"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.data.KeePassOperationAvailabilityTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "remoteDatabaseWithoutLocalCopyRequiresManualRefresh",
+              "localDatabasesAreAlwaysWritable",
+              "remoteDatabaseBlocksUnsafeSyncStates",
+              "remoteDatabaseAllowsWritableSyncedLocalCopies"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.data.model.CardWalletDataCodecTest",
+            "tests": 10,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "bankCardFaceConfigRoundTrips",
+              "legacyPaymentAccountJsonParsesAsPaymentAccountData",
+              "billingEditorOrderPreservesIndependentFieldsAndAcceptsOlderRecords",
+              "documentAndBillingCardFacesRoundTripAndValidateAttachmentName",
+              "paymentAccountDataRoundTrips",
+              "untrustedCardFaceAttachmentNameIsDiscarded",
+              "legacyBankCardWithoutCardFaceKeepsOriginalLayout",
+              "billingAddressDataRoundTrips",
+              "legacyBillingAddressJsonParsesAsBillingAddressData",
+              "brandIconPreferenceSurvivesSyncMetadataAndOlderCardFacesKeepTheirDefault"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.data.TimelineSnapshotIntegrationGuardTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "restoreAndCopyRefuseStaleOrKeePassBoundVersions"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.BankCardFieldCodecTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "aliasesKeepExistingPrecedenceAndExplicitExpiryPartsOverrideIndependently",
+              "onlyTypeOrValidFromOrBlankCustomValuesDoNotCreateACard",
+              "referencesResolveThroughContextWithoutRewritingOriginalValuesOrProtection",
+              "writingProtectsSensitiveFieldsAndKeepsFirstCustomNameWithoutReplacingNativeFields"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.EntryWriterBoundaryTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "passwordAndSecureItemDecoderFailuresPropagateWithoutMutatingSource",
+              "notePatchKeepsUnresolvedMetadataReferencesAndLoginAlongsideSeparateNotes",
+              "passkeyFailuresPropagateAndOnlyNullExportUsesExistingProtectedPem",
+              "editingTotpOnMixedLoginReplacesOtpAliasesWithoutConvertingTheEntry",
+              "blankPasswordOtpSkipsDecoderAndPreservesNativeCredentialsAndOpaqueFields",
+              "passkeyResolutionPrecedesPemExportAndBothReceiveOriginalAlias"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassAutoTypeEditorTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "fromAndPatchPreserveEntryAutoTypeMetadata",
+              "validationRejectsBlankAndDuplicateWindows"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassBatchMoveTransactionGuardTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "same database password moves use one native database mutation"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassChangeSetApplierConflictTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "fieldPatchAppliesWhenRemoteStillMatchesBaseField",
+              "fieldPatchThrowsConflictWhenRemoteTouchedSameBaseField"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassChangeSetTest",
+            "tests": 11,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "attachmentChangeSetsRoundTripWithContentForAddOnly",
+              "trashMoveIsASeparateStructureChange",
+              "groupCreateChangeSetRoundTripsWithoutBaseFingerprint",
+              "createEntryChangeSetRoundTripsWithEntryPatch",
+              "customIconPoolPatchRoundTripsWithoutEntryFingerprint",
+              "groupTreeChangeSetRoundTripsWithLosslessPayload",
+              "fieldPatchChangeSetRoundTripsWithBaseFingerprintAndEntryUuid",
+              "trashRestoreIsNotModeledAsAFieldPatch",
+              "groupMoveIsAStructureChangeWithoutBaseFingerprint",
+              "groupRenameAndDeleteAreStructureChanges",
+              "structureOperationRequiresStructurePatch"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassConflictCenterTest",
+            "tests": 19,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "automatic preservation of one conflict does not duplicate unrelated field merges",
+              "selected merge requires and applies a choice for a divergent field",
+              "independent expiry change survives a newer remote field edit",
+              "Argon2 salt regeneration is ignored while its cost changes remain settings",
+              "protection-only changes are compared against concurrent field edits",
+              "selected merge resolves deletion against an edited entry",
+              "automatic merge combines fields and retains protected extensions history and attachments",
+              "independent KDBX saves do not create database settings conflicts",
+              "selected merge combines independent field edits without a conflict copy",
+              "protected field conflict hides values while preserving selected protection",
+              "an attachment-only local edit merges with a remote field edit",
+              "history-only local edits survive and distinct properties do not collapse",
+              "selected merge resolves divergent entry locations",
+              "whole database decisions preserve the selected side and cancellation writes nothing",
+              "deleting a folder cannot erase concurrent new entries or their reused attachments",
+              "remote KDF settings survive an independent local save",
+              "snapshot reports entry group metadata tombstone binary and icon changes",
+              "merge keeps independent changes and creates a conflict copy for divergent entry edits",
+              "usage-only timestamps and counts do not appear as conflicting edits"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassConflictResolutionControllerTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "cancelledBackendWriteReleasesTheBusyStateAndRequiresFreshComparison",
+              "failedComparisonCanBeRefreshedWithoutLeavingTheReview",
+              "independentChangesCanBeSubmittedWithNoManualChoices",
+              "staleComparisonCannotReplaceAnotherDatabaseOrReopenADismissedSheet",
+              "writingBlocksDuplicateSubmissionRefreshAndDismissUntilItCompletes",
+              "everyDisputedFieldMustBeChosenAndTheReviewedRevisionsReachTheWriter",
+              "anUnconfirmedWriteInvalidatesThePreviewBeforeRetry"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassCreateEntryReplayTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "fullNativeCreateReplaysTemplateMetadataAndOpaqueEntryState"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassCrossDatabaseTransferTest",
+            "tests": 7,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "bindPasswordKeepsExistingKeePassUuidWhenTargetDatabaseMatches",
+              "nativeMoveProjectionUsesPersistedTargetUuidWithoutRewritingKdbx",
+              "nativePasswordMoveRoutingFallsBackForProjectionOnlyEntries",
+              "nativePasswordMoveRoutingUsesRawEntryForSameAndCrossDatabaseMoves",
+              "forcedPasswordTargetUuidIsStableForRetriesAndGroupAware",
+              "secureItemTargetUuidIsStableAndTypeAwareForRetries",
+              "secureItemTargetUuidReusesExistingUuidForSameDatabase"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassCustomIconEditorTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "newIconCopiesBytesAndNormalizesName",
+              "listSortsByNameAndKeepsReferenceCounts",
+              "countReferencesCountsDuplicateReferences",
+              "rejectsUnknownOrOversizedIconData"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassDatabaseAccessPolicyTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "runtime lock clears every decoded cache layer",
+              "service enforces read-only at the shared encoded write boundary",
+              "read-only database rejects shared write boundary",
+              "process lock invalidates session projection and active cache state",
+              "writable database passes shared write boundary"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassDatabaseCredentialsTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "combined password and key file replacement supports reopening",
+              "key-file-only replacement is valid",
+              "service verifies and writes new credentials before committing registration",
+              "password replacement rewrites native credentials and preserves content"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassDatabaseSettingsTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "kdbx4 settings update changes native header and meta without rebuilding content",
+              "enabling recycle bin without a selected group creates one safely",
+              "kdbx3 rejects unsupported chacha and argon settings",
+              "compression setting maps to native header"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassDatabaseSynchronizerTest",
+            "tests": 17,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "unrelatedDatabasesImportNewUuidsButRepeatedMergeIsIdempotent",
+              "sourceDeletionDoesNotResurrectAnOldEntry",
+              "reencodedHistoryKeepsDistinctRealVersionsWithoutGrowingOnMerge",
+              "accessAndUsageOnlyDifferencesDoNotInventHistoryOrConflict",
+              "equalTimeDivergencePreservesTargetAndSourceInHistory",
+              "iconCollisionRetainsBothOriginalImagesAndReferences",
+              "untimedPluginConflictIsNotSilentlyLost",
+              "equalRawAttachmentHashWithDifferentRepresentationIsRejected",
+              "twoRecycleBinsRemainRecycledAfterMerge",
+              "moveAfterDeletionSurvivesEvenWhenContentComesFromOtherSide",
+              "modificationAfterDeletionSurvives",
+              "groupMoveAndEntryEditAreMergedIndependently",
+              "attachmentsRemainAvailableForHistoricalVersions",
+              "winningGroupMovePersistsAcrossLaterMergeWithOlderLocation",
+              "deletedGroupRetainsANewerDescendant",
+              "sameUuidUsesNewerContentAndPreservesHistoryWithoutDuplicates",
+              "ambiguousUuidFailsBeforeAnyWrite"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassDxPasskeyCodecTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "buildCustomFieldPairsWritesKeePassDxCompatibleFields",
+              "buildCustomFieldPairsFallsBackToExistingPrivateKeyWhenExportFails"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassEncodeBufferPolicyTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "uses a small bounded default when prior database size is unavailable",
+              "reuses a realistic prior size without exceeding the memory cap"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassEntryFieldPatchTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "secureItemPatchDoesNotDeleteExternalUnknownFields",
+              "passkeyPatchReplacesCompatFieldsAndPreservesExternalUnknownFields",
+              "passwordPatchPreservesTotpUnknownFieldsAndBinaries",
+              "passwordRenameAndNotesPatchPreservesOtpCustomUnknownAndPluginFields"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassEntryGroupRelocatorTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "keeps tree unchanged when entry is missing",
+              "moves complete entry between groups and applies field update",
+              "updates entry in place when target group is unchanged"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassEntryPresentationPatchTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "combinedEntryEditAppliesFieldsAndIconAsOnePatch",
+              "remotePropertyChangeRejectsTheWholeEditBeforeUpdatingFields",
+              "tagsExpiryAndFieldsSaveTogetherWithOneOriginalHistorySnapshot",
+              "clearingCurrentReferenceKeepsIconUsedByHistory",
+              "selectingNewIconAddsPoolItemAndUpdatesEntry"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassEntrySnapshotTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "snapshotPreservesFieldRolesAndBinaryMetadata",
+              "fingerprintChangesWhenPreservedDataChanges"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassFieldRegistryTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "classifiesKeepPassPluginAndPasskeyFieldsAsPreserved",
+              "exposesPasswordProjectionAndFallbackDecisions",
+              "classifiesMonicaOwnedFieldsSeparatelyFromPreservedFields",
+              "classifiesKeePassTotpAliasesCaseInsensitively"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassFieldSafetyTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "fullReplacementNeverSilentlyErasesARemotelyAddedField",
+              "fullReplacementCanEditOneOfSeveralCaseDistinctKeys",
+              "partialEditsAndExplicitRemovalRespectExactNames"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassFolderDragPolicyTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "rejectsSelfAndDescendantTargets",
+              "all selected folders must be valid for a batch drop"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassFolderPathRegressionGuardTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "passwordFallbackCreationUsesEntryGroupPath"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassKdbxFixtureIntegrationTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "kdbxRoundTripPreservesOtpUnknownPluginAttachmentHistoryAndMetadataAfterPatch",
+              "groupTreeChangeSetCreatesAndDeletesSubtreeWithHistoryCustomDataAndTimes",
+              "file artifact encoding remains readable when Kotpass closes its sink"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassLosslessTransferTest",
+            "tests": 8,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "target first transfer leaves source untouched when target verification fails",
+              "copies complete native entry with binary and custom icon payloads",
+              "same database relocation preserves native entry without deletion tombstone",
+              "inserted native payload remains equal after KDBX encode decode round trip",
+              "target first transfer verifies durable target before removing source",
+              "target first transfer leaves source untouched when target persistence fails",
+              "rejects target UUID collision with different native content",
+              "source remains intact until explicit removal after target insertion"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassMaintenanceTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "integrity report detects duplicate identities missing resources and unreferenced resources",
+              "repair reassigns duplicate UUIDs and removes only unreferenced resources"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassNativeBrowserTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "browser retains reference resolution when a field uses KeePass REF syntax",
+              "entry classifier routes recognized Monica types and keeps templates generic",
+              "duplicate legacy group paths remain separate browser nodes by UUID",
+              "unknown native entry remains visible with raw fields metadata attachment and history",
+              "browser skips the field reference index when entries contain no references"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassNativeEntryMutationTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "UUID group operations isolate duplicate same-path groups",
+              "generic ordered field replacement preserves protection metadata and creates history",
+              "history change sets round trip and reject missing history patches",
+              "history deletion removes only selected snapshot without creating another version",
+              "history restore keeps identity and all history while snapshot becomes current"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassNativeEntryRouteTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "recognized native kinds use specialized Monica routes",
+              "unknown and template entries always stay in generic native route"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassNativeManagementTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "duplicate and batch move preserve native entry data without tombstones",
+              "batch folder move writes one coherent tree and rejects parent child selection",
+              "attachment actions distinguish equal payload names and retain history binaries",
+              "group properties can upload and assign a custom icon atomically",
+              "natural sorting keeps folders first and recycle bin last",
+              "attachment rename keeps binary payload and group properties remain editable"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassNativeMutationTest",
+            "tests": 10,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "changingProtectionIsStillARealEditEvenWithIdenticalText",
+              "historyItemLimitKeepsNewestSnapshots",
+              "rewritingIdenticalProtectedFieldsKeepsOriginalHistoryAndTimes",
+              "zeroHistorySizeRemovesAllSnapshots",
+              "replayingAnIdenticalProtectedFieldPatchDoesNotAddHistory",
+              "unlimitedHistoryKeepsExistingSnapshotsAndNewSnapshot",
+              "movingEntryUpdatesLocationChangedWithoutCreatingHistory",
+              "fieldEditCreatesFlatHistoryAndTouchesKeePassTimes",
+              "permanentGroupDeleteWritesTombstonesForWholeTree",
+              "permanentEntryDeleteWritesDeletedObjectTombstone"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassNativeSearchTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "group UUID scope isolates duplicate same-path groups",
+              "search covers selected fields while protected values require explicit opt in",
+              "invalid regular expression reports an error without crashing",
+              "regex case expiry recycle bin and template options are deterministic"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassNativeSessionTest",
+            "tests": 8,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "session cache reuses same revision and rebuilds after revision change or invalidation",
+              "deferred session avoids rebuilding the complete native index until first use",
+              "projection bundle cache reuses one traversal and reference context per session revision",
+              "session exposes raw KDBX as source of truth and immutable revision token",
+              "indexes duplicate sibling paths by stable database and group UUID identity",
+              "entries without reference fields do not build the entry reference index",
+              "deferred projection bundle does not rebuild the complete projection during save",
+              "retains duplicate UUID evidence instead of silently overwriting native nodes"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassPasswordEntryAttachmentRegressionGuardTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "passwordUpdatesReuseExistingEntrySoAttachmentsSurviveSave"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassPendingChangeRepositoryTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "enqueuePersistsBaseSnapshotForRemoteRecovery",
+              "enqueueIsIdempotentForSameDatabaseAndChangeId"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassPendingFlushPlannerTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "prepareRecoversStaleInProgressBeforePlanningReadyChangesAndDoesNotStopAtMaxRetries",
+              "prepareBlocksIncompleteGroupTreePayloadBeforeReplay",
+              "prepareKeepsInvalidPayloadBlockedWithoutDroppingValidReadyChange"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassProjectionIndexGateTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "unchanged indexed revision skips duplicate feature projection work",
+              "new revision and explicit invalidation require projection refresh"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassRecordCountCacheTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "invalidationRejectsALateReadEvenWithoutALockEpochChange",
+              "globalLockAndReunlockCannotExposeOrPublishAnOldTotal",
+              "independentCountsAndZeroRemainAvailableWithoutDecodedObjects",
+              "readingWhileLockedDoesNotBecomeAuthorizedAfterUnlock",
+              "successfulSameScopeUpdatesReplaceTheDisplayedTotal",
+              "perDatabaseLockRevokesOnlyItsOwnOldScope"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassRecoveryCatalogTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "tampered recovery copy remains visible but cannot be restored",
+              "recovery catalog lists verifies exports restores and deletes complete copies",
+              "raw save copy preserves every byte",
+              "merge from keeps attachments icons and native fields"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassRecycleBinApplierTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "restoreFromRecycleBinRejectsEntryOutsideRecycleBin",
+              "moveToRecycleBinAndRestoreUseKdbxStructureNotRoomSoftDelete"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassRecycleBinPolicyTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "requestedRecycleBinDeleteNeverAllowsPermanentDeleteFallback",
+              "softDeleteCreatesNativeRecycleBinWhenDatabaseDoesNotHaveOne",
+              "softDeleteRepairsBrokenRecycleBinMetadataInsteadOfPermanentlyDeleting"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassRemoteRebaseTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "rebaseAppliesReadyPendingChangesOnLatestRemoteWithoutOverwritingUnrelatedRemoteFields",
+              "rebaseRejectsBlockedPendingPlanBeforeApplyingReadyChanges",
+              "pendingChangePersistsRemoteBaseSnapshotForLaterConflictDecisions",
+              "rebaseReturnsNullWhenThereAreNoReadyChanges"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassSecureItemPhotoAttachmentTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "resaveReplacesManagedPhotoWithoutTouchingOtherAttachments",
+              "removingOnePhotoOnlyRemovesItsManagedBinary",
+              "managedPhotosCanBeReadBackForMonicaLocalCache",
+              "bankCardPhotosBecomeStandardKdbxBinariesAndSurviveRoundTrip"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassSecureItemPhotoIntegrationGuardTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "secureItemReadsHydrateManagedBinariesIntoEncryptedLocalImagePaths",
+              "secureItemWritesLoadEncryptedPhotosAndAppendAttachmentChangeSets"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassSourceSafetyTest",
+            "tests": 10,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "precomputedUnchangedSourceRevisionIsAcceptedWithoutRehashingBytes",
+              "corruptedRecoveryCopyFailsVerificationAndIsRetained",
+              "streamRevisionMatchesByteArrayRevision",
+              "unchangedSourceRevisionIsAccepted",
+              "googleDriveRevisionAcceptsEitherDriveVersionOrChecksum",
+              "loadedDatabaseCarriesSourceContentRevisionIntoWriteBoundary",
+              "recoveryCopyAcceptsTheRevisionAlreadyComputedAtTheWriteBoundary",
+              "changedSourceRevisionIsRejectedBeforeWrite",
+              "foregroundGoogleDriveWriteUsesLoadedExpectedVersion",
+              "recoveryCopyIsWrittenAtomicallyAndCanBeVerified"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassTemplateEngineTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "instantiating template removes marker and allocates a fresh entry",
+              "deleting template rejects normal entries and removes only template",
+              "saving as template creates metadata group and preserves native payload"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassTotpCodecTest",
+            "tests": 16,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "parsesKeeOtpKeyValueFormatInsteadOfTreatingTheWholeQueryAsASecret",
+              "returnsNullWhenNoSecretExists",
+              "steamEncoderAndTrayTotpSteamSettingsProduceSteamTokens",
+              "parsesOtpAuthUri",
+              "malformedOrAmbiguousNativeSecretsAreNotTreatedAsValidCodes",
+              "parsesPlainOtpSecretWithSettings",
+              "nativeKeePassSecretEncodingsGenerateRfc4226And6238Codes",
+              "emitsKeePassCompatibleHotpFields",
+              "nativeKeePassAlgorithmsMatchRfc6238Vectors",
+              "writesConsistentKeePassNativeAndUriRepresentations",
+              "parsesTotpSeedWithSeparateFields",
+              "invalid native HOTP counters must never restart from zero",
+              "uriComponentsAreDecodedOnceAndLiteralPlusInAccountIsPreserved",
+              "parsesTrayTotpPositionalSettingsWithoutConfusingDefaultPeriodWithDigits",
+              "parsesHotpCounterFromSettingsOrSeparateField",
+              "emitsKeePassCompatibleTotpFields"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassTotpDisplaySourceTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "copiedBindingCannotHideAnotherNativeEntry",
+              "unboundUnreadableAndDifferentSecretsStayVisible",
+              "repeatedBindingsCollapseOnlyWithinTheSameNativeEntryAndDatabase",
+              "legacyBindingsRemainScopedToTheirStorage",
+              "identicalSecretsInDifferentDatabasesOrNativeEntriesDoNotHideEachOther",
+              "localMdbxAndBitwardenBindingsDoNotCollapseAcrossVaultsOrNativeCiphers"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassTotpExtensionsTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "extensionUrisPreserveTypeSecretPinAndNamesWithoutNativeTotpFallback",
+              "pinInNativeUriWinsOverStaleMonicaMetadata"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassTotpProjectionMatcherTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "sourceEntryUuidWinsOverLegacyIdentityMatch",
+              "titlePathFallbackCannotOverwriteAnUnrelatedKnownSecret",
+              "aCopiedMonicaIdMustNotStealTheProjectionOfAnotherDatabase",
+              "legacyProjectionWithoutEntryUuidMatchesByTotpIdentityBeforeTitlePathFallback",
+              "oneLegacyProjectionCannotBeAssignedToTwoEntriesInTheSameRefresh",
+              "distinctNativeUuidsWithTheSameTitleAndGroupMustNotOverwriteEachOther"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassTreeNavigationTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "recycleUuidMarksDescendantsEvenWhenDisabledAndNamesOrZeroUuidNeverMarkOrdinaryGroups",
+              "duplicatePathLookupKeepsFirstGroupButCollectionKeepsAllDirectEntriesInTreeOrder",
+              "restoreUsesExistingActiveParentIncludingRootAndRejectsMissingOrRecycledPreviousParent",
+              "iterativeCountAndSequenceHandleDeepTreesWithoutVisitingHistoricalEntries",
+              "rootPathRemainsNullAndEncodedSpecialSegmentsRoundTripThroughEveryLookup",
+              "duplicateUuidLookupKeepsFirstEntryAndPathWhileContextIndexKeepsLastGroup"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassWriteCachePerformanceGuardTest",
+            "tests": 16,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "raw writes share the same no reread cache path",
+              "normal writes reuse persisted bytes instead of reading the full database again",
+              "pending remote changes reuse the revision already computed for the write",
+              "entry count refresh does not allocate a complete temporary entry list",
+              "opening and saving do not eagerly rebuild every compatibility projection",
+              "native browser snapshot is built once per loaded revision",
+              "evicting a decoded database also releases its native indexes",
+              "field reference checks traverse entries lazily without a temporary complete list",
+              "unchanged entry counts do not emit Room table updates",
+              "KDBX encoding starts with a bounded capacity estimate",
+              "entry counting uses an iterative traversal for deeply nested databases",
+              "persisted cache state is derived from known bytes and cheap file metadata",
+              "field reference indexing avoids a second complete entry list",
+              "native browser hierarchy traversal uses identity indexes instead of rescanning every group",
+              "one computed revision is reused through local write remote verification and cache refresh",
+              "external writes reuse the source revision for conflict and recovery checks"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassWritePreflightTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "large attachment is rejected before allocation with a concrete deficit",
+              "borderline write requests confirmation instead of failing",
+              "native uri attachment checks declared size before reading bytes",
+              "small database and attachment fit within available heap"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.keepass.KeePassXmlContentParserTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "dtdAndExternalEntitiesAreRejectedBeforeReadingContent",
+              "encryptedKdbx3And4RetainExactTextProtectionTagsAndHistory",
+              "literalXmlKeepsCdataChunksEntitiesAndEmptyPluginValues"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.passkey.PasskeyBackupFlagsTest",
+            "tests": 8,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "refreshPreservesKnownEligibilityAndAcceptsBackupStateChanges",
+              "jsonFlagsDistinguishLegacyMissingValuesAndRejectMalformedValues",
+              "legacyAndroidPayloadOverridesOldSyncMarkerDerivedNativeFlags",
+              "refreshDoesNotReinterpretLegacyNullAsANewCredential",
+              "keePassPayloadAndNativeFieldsKeepAllValidFlagPairsAndKeyBytes",
+              "actualAuthenticatorDataUsesExplicitFlagsWithoutChangingKeyOrStoredCounter",
+              "bitwardenRefusesChangingImmutableEligibilityDuringTransfer",
+              "oldRecordsKeepTheirFlagsRegardlessOfLocalBackupStatus"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.passkey.PasskeyPageSyncPolicyTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "keepassRefreshOnlyIncludesExistingDatabasesInCurrentScope"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.repository.KeePassPasskeySyncMergeTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "mergeKeePassImportedPasskeys_collapsesRepeatedImportedAndExistingRows",
+              "mergeKeePassImportedPasskeys_preservesExistingRecordIdAndMetadata"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.repository.SecureItemRepairSingleFlightGuardTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "legacyKeePassRepairIsSingleFlightPerRepository"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "sharedDatabaseAndSyncBoundariesDoNotExportLocalOnlyTotpCiphertext"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.steam.SteamExternalVaultStorageGuardTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "storageSourcesAndPreferencesIncludeKeePassAndBitwarden"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.sync.DefaultSyncCoordinatorTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "keepassCompatibilityIndexSerializesAllAndSpecificDatabaseRefreshesButThrottlesByTarget"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.sync.SyncFailureClassifierTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "remoteAndLocalKeePassChangesAreClassifiedAsConflict"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.cardwallet.CardFacePersistenceGuardTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "cardFaceUsesPortableMetadataAndEveryAttachmentBackend"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.components.UnifiedMoveInitialSourceTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "KeePass filters use their owning database"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.KeePassGroupFilterIdentityTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "database identity is always required",
+              "legacy rows without UUID use path fallback",
+              "duplicate legacy paths remain distinguishable when both UUIDs are known",
+              "UUID identity survives a display path rename"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.KeePassMoveActionPolicyTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "still protects unsupported destructive targets",
+              "copy requests are never rewritten",
+              "keeps move for a different KeePass database",
+              "keeps move when reorganizing into Monica or MDBX",
+              "keeps move for another group in the same KeePass database"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.NoteBitwardenAutoSyncGuardTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "allLocalKeePassAndMdbxNotesHaveNoBitwardenSyncTarget"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.password.KeePassListRetentionTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "retainsTheActualPreviousObjectWithoutRebuildingIt",
+              "sourceLockRevokesPreviousEvenWhenAnotherTargetIsUnlocked",
+              "clearingDropsThePreviousList",
+              "completedEmptyListReplacesPreviousAndOnlyOneListIsRetained"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.PasswordBatchMoveFailureTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "keepassBatchFailureKeepsRemoteConflictReason"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.screens.KeePassNativeEntryEditorGuardTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "entry detail keeps notes in their own section and localizes standard labels",
+              "new entry opens an in memory editor and is written only on save",
+              "predefined icon picker displays a visual grid",
+              "entry editor reuses shared custom field components"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.screens.KeePassNativeEntryEditorModelTest",
+            "tests": 13,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "second field for the same semantic slot remains an editable custom field",
+              "existing aliases use password form slots without renaming fields",
+              "invalid OTP replacement is rejected instead of removing the existing secret",
+              "existing keepass totp fields populate the authenticator editor",
+              "save plan preserves field order names values and protection",
+              "new custom field is plain and ordered after existing fields",
+              "validation permits unnamed entries and requires unique nonblank field names",
+              "new draft starts with password style fields and encrypted password",
+              "case and whitespace distinct custom names survive an unrelated edit",
+              "advancing native HOTP keeps a referenced secret and rejects overflow",
+              "tagsUseKeePassSeparatorsAndRetainColons",
+              "advancing HOTP preserves raw URI encoding secrets and custom fields",
+              "totp fields are managed by the authenticator card and remain keepass compatible"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.screens.KeePassNativeManagerBrowserGuardTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "new folder reuses the complete group property editor",
+              "browser keeps search collapsed and selection actions in the shared page model"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.screens.KeePassNativeManagerLayoutTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "summary counts folders and entries independently",
+              "search field is visible while expanded or when query is present",
+              "select all only changes entries visible in the current folder",
+              "selection toggle adds and removes one entry without touching other entries",
+              "empty visible list leaves selection unchanged"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.screens.KeePassNativeManagerMenuGuardTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "vault top menu keeps the same manager shortcut",
+              "password top menu exposes native manager for the selected keepass database",
+              "manager shortcut is translated in every bundled language"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.screens.LocalKeePassExportRegressionGuardTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "exportReportsAnErrorWhenTheDestinationCannotBeOpened",
+              "internalDatabaseExportStaysConnectedToDocumentPickerAndViewModel"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.vaultv2.VaultOverviewKeePassFolderTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "passkeyOnlyUsesCatalogueUuid",
+              "initialSnapshotWithoutCatalogueIsOrderIndependent",
+              "passkeysShareCatalogueFolderWithPasswordsAndCombinedCount",
+              "identicalPathsInDifferentDatabasesRemainSeparate",
+              "differentUuidsRemainDistinctEvenWithIdenticalPaths",
+              "passkeyOnlyFallbackDecodesOnceAndKeepsEncodedNavigationPath"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.vaultv2.VaultOverviewProjectionTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "emptyAndRenamedKeePassFoldersKeepTheirDatabaseAndUuid"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.ui.vaultv2.VaultV2FolderLayoutTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "keepass database shows root items and counts nested groups"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.util.KeePassCredentialSupportTest",
+            "tests": 5,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "hexKeyFile_buildsHexVariantCandidates",
+              "invalidCredentialMessage_containsAttemptSummary",
+              "noKeyFile_buildsPasswordOnlyCandidate",
+              "raw32ByteKeyRemainsUnchangedAndEachCandidateUsesTheOriginalBytes",
+              "xmlKeyFile_buildsXmlVariantCandidates"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.util.KeePassCustomFieldExtractionTest",
+            "tests": 2,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "monicaPasswordCompatibilityFieldsAreNotDuplicatedAsCustomFields",
+              "keepsNonStandardKeePassStringFieldsForDetailDisplay"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.util.KeePassErrorTest",
+            "tests": 9,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "securityException_mapsToPermissionDenied",
+              "legacyKdbMessage_mapsToLegacyUnsupported",
+              "invalidKey_mapsToInvalidCredential",
+              "outOfMemory_mapsToKdfMemoryInsufficient",
+              "mappedException_keepsOriginalInstance",
+              "keyFileUnavailable_keepsDedicatedRecoveryCode",
+              "oneDriveRedirectConflict_mapsToActionableMessage",
+              "unsupportedVersion_mapsToFormatUnsupported",
+              "ioException_mapsToReadWriteFailed"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.util.KeePassFieldReferenceResolverTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "referencesSupportContainmentAndLocalCustomFieldRedirection",
+              "localPlaceholdersResolveWithoutAWholeDatabaseAndKeepExactCustomNames",
+              "absentPasswordsUseOnlyExplicitLegacyAliasesAndPreserveReferences",
+              "customSearchCodeCannotBeUsedAsTheRetrievedField",
+              "presentPasswordAlwaysWinsOverAliasesAndOtherProtectedFields",
+              "unresolvedAndCyclicReferencesStayVisibleWithoutChangingStoredStrings"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.util.KeePassFormatInspectorTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "detect_legacyKdbSignature",
+              "detect_kdbxSignature",
+              "detect_legacyByExtensionFallback"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.util.KeePassKeyFilePermissionPolicyTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "keyFilePersistsReadPermissionWithoutRequiringWriteAccess"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.util.KeePassKeyFileStorePolicyTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "displayNameCannotEscapeWithPathSeparators",
+              "internalPathIsOpaqueAndStableForFingerprint",
+              "readerAcceptsKeyFilesLargerThanOneMiB"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.utils.BackupContentPolicyTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "localOnlyScopeKeepsLegacyDetachedKeePassRepairBehavior"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.utils.KeePassFileNameResolverTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "fallsBackToUriFileNameWhenProviderDoesNotExposeDisplayName",
+              "manualNameWinsOverProviderIdentifierOnlyWhenItIsARealName",
+              "neverUsesDocumentIdentifierAsDatabaseName",
+              "usesProviderDisplayNameAndRemovesKeepassExtension",
+              "keepsUnicodeFileNames",
+              "displayNameHasStableFallback"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.utils.KeePassPortableSecretExportPolicyTest",
+            "tests": 3,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "exports the decrypted secret instead of stored ciphertext",
+              "keeps plaintext returned by the compatible decryptor",
+              "never falls back to device ciphertext when decryption fails"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.utils.OrderingPersistenceGuardTest",
+            "tests": 1,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "keepassCredentialFieldsUseTheSharedMultilingualKeyboardPolicy"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.utils.WebDavKeePassBackupPolicyTest",
+            "tests": 6,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "declaredKeyRequiresMatchingEncryptedEntry",
+              "internalKeyCopyRequiresEncryptedBackup",
+              "parsesKeepassEntriesRegardlessOfZipDirectoryPrefix",
+              "rejectsMalformedOrOverflowingEntryNames",
+              "undeclaredKeyIsIgnoredInsteadOfBindingAnUnknownCredential",
+              "legacyDatabaseWithoutKeyMetadataRemainsRestorable"
+            ]
+          },
+          {
+            "name": "takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest",
+            "tests": 4,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "cases": [
+              "deletingKeePassDatabaseDeletesCachedRowsInsteadOfConvertingThemToLocal",
+              "keepassRemoteManualAndVisibleSyncShareCoordinatorQueue",
+              "keepassRemoteWritesStayVisibleToOtherClients",
+              "keepassCompatibilityRefreshEntrypointsUseSyncTaskRunner"
+            ]
+          }
+        ]
+      },
+      "kotpass_current": {
+        "totals": {
+          "tests": 0,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "suites": []
+      },
+      "device": {
+        "passed": 89,
+        "runner_seconds": 138.527,
+        "driver_seconds": 140.908,
+        "methods": [
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "editingAndAddingOtpPreservesPasskeyAndRecoveryNotes"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "ordinaryTrashNamedGroupsAreNotRecycleBins"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "failedAttachmentOrIconDoesNotPartiallySaveAndCanBeRetried"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "changingPasswordAndKeyFileRequiresBothNewCredentialsAfterReopen"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "fiveAuthenticatorsInALargeKeePassDatabaseAreAllProjected"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "editingAnAuthenticatorOnALoginPreservesLoginFieldsAndForeignMetadata"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "nativeDraftRoundTripsFieldsPropertiesIconsAndAttachmentsInBothKdbxVersions"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "mixedOtpPasskeysAndRecoveryNotesRemainVisibleAfterReopeningKdbx3And4"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "customFieldOnlyEntriesRemainReachableIncludingEmptyFields"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "passwordCreationAndModificationDatesSurviveKdbx3And4Projection"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "unknownAndIncompleteMonicaMetadataCannotHideAnEntry"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "editingOneOfTwoIdenticalLoginNamesTargetsOnlyItsUuid"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "databaseCardCountsNativeEntriesRegardlessOfProjectionType"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "staleAndReadOnlyEditsPreserveTheCommittedDatabase"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeCompatibilityInstrumentedTest",
+            "test": "groupsRecycleAttachmentsAndHistoryRemainUsableAfterReopen"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassPasswordNativeInstrumentedTest",
+            "test": "passwordBrowserDetailAndEditorDoNotNavigateToRoomAndLockDisposesDraft"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassPasswordNativeInstrumentedTest",
+            "test": "staleNativeDraftCannotOverwriteAnExternalRevision"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassPasswordNativeInstrumentedTest",
+            "test": "failedNativeWritePreservesFileAndOverview"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassPasswordNativeInstrumentedTest",
+            "test": "customOnlyAndMixedEntriesKeepTheSamePasswordMembershipAsTheOverview"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassPasswordNativeInstrumentedTest",
+            "test": "folderUuidAndFiltersRemainNativeAndMissingGroupDoesNotFallBack"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassPasswordNativeInstrumentedTest",
+            "test": "nativeSaveUsesOneCommitWithoutDependingOnOverviewRows"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassHistoryStabilityTest",
+            "test": "accessOnlyExternalMergesAndRepeatedMergesKeepRealHistory"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassHistoryStabilityTest",
+            "test": "repeatedIdenticalNativeSavesPreserveHistoryAfterDiskReopen"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassHistoryStabilityTest",
+            "test": "historyDisplayIsNewestFirstAndDeleteKeepsOriginalNativeIndex"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassDeleteInvestigationTest",
+            "test": "deniedWritePreservesFileAndEveryVisibleRow"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassDeleteInvestigationTest",
+            "test": "localExternal300DeleteThenColdReload"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassDeleteInvestigationTest",
+            "test": "blockedSingleSaveDoesNotHideRowBeforeFileCommit"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassDeleteInvestigationTest",
+            "test": "fortySelectedPasswordsUseOneFileCommit"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassDeleteInvestigationTest",
+            "test": "snapshotReadBeforeDeleteMustNotResurrectDeletedRows"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassDeleteInvestigationTest",
+            "test": "staleSelectionCannotPartiallyDeleteDatabase"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassDeleteInvestigationTest",
+            "test": "failedVerificationMustNotRollBackAnotherSessionsSuccessfulWrite"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassDeleteInvestigationTest",
+            "test": "coldProjectionPublishesWholeListOnly"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassServiceGroupExtractionInstrumentedTest",
+            "test": "legacyGroupPathsCreateRenameMoveDeleteAndNativeCreateSurviveColdRead"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassServiceGroupExtractionInstrumentedTest",
+            "test": "crossVaultLegacyGroupMovePreservesCompleteTreeAndHistoryOnlyAttachments"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeSnapshotBuilderInstrumentedTest",
+            "test": "bothCaptureEntrypointsRejectMissingHistoryResources"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassNativeSnapshotBuilderInstrumentedTest",
+            "test": "entryAndGroupCaptureReplayHistoryOnlyCompressedAttachmentAndIcon"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest",
+            "test": "multiTargetEditUpdatesExistingLocalReplicaAndPreservesUnrelatedRows"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest",
+            "test": "nativeCrossVaultMoveFailureLeavesBothFilesIntact"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest",
+            "test": "failedNativeSaveKeepsSourceAndUnselectedReplica"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest",
+            "test": "nativeCrossVaultMovePreservesUuidHistoryAndAttachment"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest",
+            "test": "singleTargetEditStillRemovesUnselectedReplicaAfterSuccessfulSave"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest",
+            "test": "unchangedRefreshReusesProjectionButNewRevisionRefreshesReferenceDependents"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest",
+            "test": "sameVaultSaveDoesNotSubscribeToGlobalPasswordRows"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassSavePipelineInstrumentedTest",
+            "test": "scopedCandidatesPreserveOverviewVisibilityAcrossStores"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassStackContentRegressionTest",
+            "test": "externalRevisionRejectsStackWithoutOverwritingAnotherWriter"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassStackContentRegressionTest",
+            "test": "lockingOrRemovingASelectedIdentityRejectsWholeBatch"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassStackContentRegressionTest",
+            "test": "projectCredentialsResaveInOneCommitWithDistinctFieldsAndNewRows"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassStackContentRegressionTest",
+            "test": "deniedProjectBatchCannotPartiallySaveAnExistingAccount"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassStackContentRegressionTest",
+            "test": "stackModesCommitTheWholeSelectionOnceAndSurviveColdReopen"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassStackContentRegressionTest",
+            "test": "copiedContentRejectsChangedDestinationEvenAfterListRefresh"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassStackContentRegressionTest",
+            "test": "deniedBatchStackDoesNotPersistAnyMember"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassStackContentRegressionTest",
+            "test": "nativeCustomFieldsRoundTripWithoutLosingUnknownOrProtectedFields"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassStackContentRegressionTest",
+            "test": "everyAddContentEncodingSurvivesEditAndColdReopenInOriginalKdbx"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassStackContentRegressionTest",
+            "test": "copiedContentPublishesAfterSavingAnotherCredentialInSameFile"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest",
+            "test": "readOnlyCurrentFileMergeDoesNotWrite"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest",
+            "test": "unreadableCurrentFileIsNotOverwrittenAndLastSessionIsKept"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest",
+            "test": "currentFileMergeReadsExternalEditsAndDeletionWithoutChoosingASource"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest",
+            "test": "eachClientsAddedEntrySurvivesCurrentFileMerge"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest",
+            "test": "lockedCurrentFileMergeDoesNotWrite"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest",
+            "test": "sourceChangedDuringMergeIsNotOverwritten"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "emptyDatabasePublishesReadinessWithoutPasswordRowChanges"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "failedInitialReadKeepsSubscriptionForExplicitRecovery"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "mergingSameDatabaseNeverDuplicatesItsEntries"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "subscriptionStartedWhileLockedSurvivesUnlockAndHidesOnDatabaseLock"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "explicitSaveWritesOnceAndPreservesDatabaseParameters"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "ordinaryGroupNamedTrashMustStayVisible"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "reloadedDeletionCannotBeOverwrittenByAnOldEditorDraft"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "failedExternalReloadKeepsTheFileAndShowsFailure"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "unchangedSourceCheckKeepsTheSameProjectionAndDoesNotWrite"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "externalDeletionMustBeVisibleWhenReenteringTheDatabase"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "foregroundCheckLoadsExternalDeletionAndMarksTheStatus"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest",
+            "test": "disablingFutureRecyclingMustNotExposeExistingRecycledDescendants"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassMinimalFieldsInstrumentedTest",
+            "test": "secureNoteOmitsDefaultsButRetainsEmptyIndependentNoteAndProtectedBody"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassMinimalFieldsInstrumentedTest",
+            "test": "accountMetadataRetainsNotesIdentitiesOrderAndUnknownKeys"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassMinimalFieldsInstrumentedTest",
+            "test": "secureFavoriteReferencesPreserveUnchangedFalseAndAllowExplicitTrueToFalse"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassMinimalFieldsInstrumentedTest",
+            "test": "legacyProjectionPreservesLocalOnlyMetadataWhenSourceNeverWroteIt"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassMinimalFieldsInstrumentedTest",
+            "test": "explicitSaveRemovesOnlyRedundantMetadataAndPreservesReferencesAndNativeData"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassMinimalFieldsInstrumentedTest",
+            "test": "simpleNativeLoginCreatesOnlyStandardFieldsAndReopens"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassMinimalFieldsInstrumentedTest",
+            "test": "enabledMetadataSurvivesAndExplicitlyClearingItUsesMissingFieldDefaults"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassMonicaSecureItemTest",
+            "test": "monicaPasskeyDetailsWriteUuidEntryWithoutRoomProjectionOrLegacySecondWrite"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassMonicaSecureItemTest",
+            "test": "nativeNoteDraftDoesNotOverwriteExternalChangeAfterRefresh"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassMonicaSecureItemTest",
+            "test": "lateBoundMonicaNoteFlowReadsAndWritesOriginalVaultWithoutDoubleCommit"
+          },
+          {
+            "class": "takagi.ru.monica.credentialexchange.PasswordContentStorageInstrumentedTest",
+            "test": "keepassSecureItemEditorsRetainExtendedFieldsAfterSaveEditAndReopen"
+          },
+          {
+            "class": "takagi.ru.monica.credentialexchange.PasswordOtpStorageInstrumentedTest",
+            "test": "allPasswordOtpTypesSurviveKeePassNativeReopen"
+          },
+          {
+            "class": "takagi.ru.monica.credentialexchange.PasswordOtpStorageInstrumentedTest",
+            "test": "keepassPasswordEditPreservesExistingSteamMetadata"
+          },
+          {
+            "class": "takagi.ru.monica.credentialexchange.ApiKeyStorageInstrumentedTest",
+            "test": "keepassWriteEditClearAndReopenPreserveApiKeyAndUnknownFields"
+          },
+          {
+            "class": "takagi.ru.monica.utils.GpgStorageDeviceTest",
+            "test": "keySurvivesRealKeePassWriteCloseAndReopen"
+          },
+          {
+            "class": "takagi.ru.monica.credentialexchange.CredentialImportInstrumentedTest",
+            "test": "cxfPersistsToAllFourDestinationsAndRepeatedImportsDoNotOverwriteKeys"
+          },
+          {
+            "class": "takagi.ru.monica.keepass.KeePassSecureItemPayloadFailureInstrumentedTest",
+            "test": "unreadableSecurePayloadRejectsBatchCreateAndUpdateWithoutChangingKdbxBytes"
+          }
+        ],
+        "artifacts": [
+          {
+            "file": "Monica-Android-x86_64-1.0.327.apk",
+            "sha256": "24a285fb60705249c78002b2ac350ec24a4c75aec58425e1306c33dddb2f4a5d",
+            "badging": "package: name='takagi.ru.monica.keepassrefactor327.fdroid' versionCode='34' versionName='1.0.327' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+          },
+          {
+            "file": "app-debug-androidTest.apk",
+            "sha256": "7553a12f5a0dbe1743dce27f510c8df9cad843234ad8fbc9db1f230ceb9484af",
+            "badging": "package: name='takagi.ru.monica.keepassrefactor327.fdroid.test' versionCode='' versionName='' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'"
+          }
+        ]
+      }
+    }
+  },
+  "source_checks": {
+    "main": {
+      "preserved_existing_sources": 5170,
+      "changed_existing": [
+        "app/src/main/java/takagi/ru/monica/utils/KeePassKdbxService.kt",
+        "app/src/test/java/takagi/ru/monica/security/BiometricUnlockRegressionGuardTest.kt"
+      ],
+      "moved_methods": [
+        {
+          "method": "buildMonicaPasswordFields",
+          "owner": "KeePassPasswordEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "80221a00e6c2a4cf9023c815ef9be094a6a468d9c319b1a7a0495d9b843d0d4e"
+        },
+        {
+          "method": "buildEntry",
+          "owner": "KeePassPasswordEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "aa564ca7977e6562b95256b018e11b0edc3b5e64bcea00f7069f558c0470826e"
+        },
+        {
+          "method": "buildUpdatedEntry",
+          "owner": "KeePassPasswordEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "c44c5a8d451a741c1caa05aed466ec558831265744a0f8023203b49749b3674c"
+        },
+        {
+          "method": "buildPasswordEntryFieldPatch",
+          "owner": "KeePassPasswordEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "f4cf3ac91eb528729c7d912661b67802aaca2e88ba142e2e874c856c2d91e5b4"
+        },
+        {
+          "method": "applyPasswordEntryPresentation",
+          "owner": "KeePassPasswordEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "08e395b559e498a8b56b920fef7e19c6ad349f8f115b0c771da27f356e721403"
+        },
+        {
+          "method": "buildEntryFields",
+          "owner": "KeePassPasswordEntryWriter",
+          "hook_substitutions": {
+            "securityManager.decryptDataIfMonicaCiphertext(entry.authenticatorKey)": "decryptAuthenticatorKey(entry.authenticatorKey)"
+          },
+          "original_sha256": "fc87d42e3f3a771f684e851d34ad14a76fcfbcecbce4a181edc6e1ded03cfa43"
+        },
+        {
+          "method": "appendPasswordCompatibilityFields",
+          "owner": "KeePassPasswordEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "9deb78135bf379e7aea3dd778bfbc699ae335fc48f138cdfdcb38d5b162b29ac"
+        },
+        {
+          "method": "appendKeePassCustomFields",
+          "owner": "KeePassPasswordEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "b7081bec0d53a1de5916d531b012264724b9625c7b86abca105cdaafe2196d70"
+        },
+        {
+          "method": "buildSecureItemEntry",
+          "owner": "KeePassSecureItemFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "957ca24af2de2ea7f33ac6255881c379734d76639cb81eb2bdd528008a02f7f0"
+        },
+        {
+          "method": "buildUpdatedSecureItemEntry",
+          "owner": "KeePassSecureItemFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "1bff15c2949cf0419248a018c10448344ea708b93ee2857428f05a9f6bfd2f3f"
+        },
+        {
+          "method": "buildSecureItemEntryFieldPatch",
+          "owner": "KeePassSecureItemFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "2afb9697eded9663a6a16735778ed3d1c2945ccc4f5170b06f0fedf4a9a8f157"
+        },
+        {
+          "method": "portableSecureItemFields",
+          "owner": "KeePassSecureItemFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "2190f0859df5c482a7c6533dace5ad316136152f5c636568ae3ab48461d1f04e"
+        },
+        {
+          "method": "buildSecureItemFields",
+          "owner": "KeePassSecureItemFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "ec69e235a80e09bc95f559399ef9cebb6c056e3e21c8edc88526f3a65bb1af5e"
+        },
+        {
+          "method": "appendKeePassTotpFields",
+          "owner": "KeePassSecureItemFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "1d618567ba5a9e672c4b7e9f14f0d70298c57f79918687f7a279499ffde6e53e"
+        },
+        {
+          "method": "appendBankCardFields",
+          "owner": "KeePassBankCardFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "295cdce21ba6da460a628681f4143ee1969ec11a20057a7db58ed2cdbe739354"
+        },
+        {
+          "method": "appendSecureItemCustomFields",
+          "owner": "KeePassBankCardFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "ef7116c6a7826285cf355fbb022e91c7299acdeb0ae8fcca90efb092146cf0b1"
+        },
+        {
+          "method": "buildBankCardItemDataFromEntry",
+          "owner": "KeePassBankCardFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "c13976bac402da3b091ec4eaef57ee0714f2dc0005fdcbcc175d40a92041db23"
+        },
+        {
+          "method": "splitCardExpiry",
+          "owner": "KeePassBankCardFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "9c033a617a6bd668c998958fd86bac337c6fb8120739da14e5a24a83ccec7990"
+        },
+        {
+          "method": "parseKeePassCardType",
+          "owner": "KeePassBankCardFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "cdb55161e3fbc3d3a190ee02a1f4a65d116dad9245e0380cde653103445e85f0"
+        },
+        {
+          "method": "extractStructuredSecureItemCustomFields",
+          "owner": "KeePassBankCardFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "77dc3d701b8c56bc62c2f71f7c17f820b2b64105a640b1b29c4e4ec143b6698d"
+        },
+        {
+          "method": "baseSecureItemFieldNames",
+          "owner": "KeePassBankCardFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "921c42474bab431f9abdb5f7b45537686d14d40762ffd364e441c2f06a9da1cb"
+        },
+        {
+          "method": "bankCardSecureItemFieldNames",
+          "owner": "KeePassBankCardFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "40254057f21f23798f9b439ce5d6a463dd6b916e1d5ec69b797d7179437aa533"
+        },
+        {
+          "method": "buildPasskeyEntry",
+          "owner": "KeePassPasskeyEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "3ed553d39a91faf190fe291f7eb530d1a028a204d55afc82665cdcb185efcb5b"
+        },
+        {
+          "method": "buildPasskeyTimeData",
+          "owner": "KeePassPasskeyEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "c6e8505a346284d288eb48b8ed16d2ee46fa801adfa8be6309e27378f504278d"
+        },
+        {
+          "method": "epochMillisToInstant",
+          "owner": "KeePassPasskeyEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "327afc63cac00df639c4709a9a4d7f766eb05652608794eeb7492edd7ea4d301"
+        },
+        {
+          "method": "buildPasskeyFields",
+          "owner": "KeePassPasskeyEntryWriter",
+          "hook_substitutions": {
+            "PasskeyPrivateKeyStore.resolve(context, passkey.privateKeyAlias)": "resolvePrivateKey(passkey.privateKeyAlias)",
+            "PasskeyPrivateKeyStore.exportPem(context, keyMaterial)": "exportPrivateKeyPem(keyMaterial)"
+          },
+          "original_sha256": "f0af83db7163a3a3f64764e426fcf790bbee25be7b20489fd9ec7b59315af09b"
+        },
+        {
+          "method": "buildUpdatedPasskeyEntry",
+          "owner": "KeePassPasskeyEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "00aa8fb245735225566719d3df7ae039bf1e10bea95d7f7d98be0bef178b513a"
+        },
+        {
+          "method": "buildPasskeyEntryFieldPatch",
+          "owner": "KeePassPasskeyEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "aad6230d14589665fc0d962e36869ba43731fee74d168d5ad2da28d4dbb23b6c"
+        },
+        {
+          "method": "parseUuid",
+          "owner": "KeePassEntryFieldSupport",
+          "hook_substitutions": {},
+          "original_sha256": "2449998747bcba3d68f0179cb22fbe08ea9f19225bb684926e11fffb4b85bf10"
+        },
+        {
+          "method": "preserveExistingLoginFields",
+          "owner": "KeePassEntryFieldSupport",
+          "hook_substitutions": {},
+          "original_sha256": "06cb416e21215eb9ba58d0777f4fe68aef0e77d06ceb3c0953c14cb6c62ab45a"
+        }
+      ],
+      "constant_count": 54,
+      "shared_sources": {
+        "app/src/androidTest/java/takagi/ru/monica/keepass/KeePassSecureItemPayloadFailureInstrumentedTest.kt": "7f2762b8efe3253798d676b7ecf00b2af4fddd5b3e6cdcff970969387d3bae0a",
+        "app/src/main/java/takagi/ru/monica/keepass/KeePassBankCardFieldCodec.kt": "8c6d65b5d256ecb7bbe2cea737ccb07880cafd131a267e4e2e72af0637c2872f",
+        "app/src/main/java/takagi/ru/monica/keepass/KeePassCompatibilityFieldNames.kt": "adf3f2587e501f5fb8415be83328df0e269e96583e12cb196eca549681a81a38",
+        "app/src/main/java/takagi/ru/monica/keepass/KeePassEntryFieldSupport.kt": "ea1765bd09a7dea9557ffb402ea13c9f82893c8b80f27e75ac92a7f1dd1a6551",
+        "app/src/main/java/takagi/ru/monica/keepass/KeePassPasskeyEntryWriter.kt": "8b2e2c4bce7ca515ee89fc33314df1d1d760832ee86b76051fedb9496276683c",
+        "app/src/main/java/takagi/ru/monica/keepass/KeePassPasswordEntryWriter.kt": "6ec4eaf6a40995d4fe73a89216a87ddb01d9aaec16c595518dcd4ed4048f58f2",
+        "app/src/main/java/takagi/ru/monica/keepass/KeePassSecureItemFieldCodec.kt": "1c5e4b4530c363e5e79889383164ab99e8c9f14130a92dfde0244647ad8cb790",
+        "app/src/main/java/takagi/ru/monica/utils/KeePassKdbxService.kt": "8b1b2a6a39ce00111707e076922aedceae0465b5d93e7bdcd9e5754bac3890a3",
+        "app/src/test/java/takagi/ru/monica/keepass/BankCardFieldCodecTest.kt": "6badfa8fa89041f54b33f0531b0447119869316e6422453ebc899ab54d0d903e",
+        "app/src/test/java/takagi/ru/monica/keepass/EntryWriterBoundaryTest.kt": "69ff019a663cdd3452e62beb5f25f96191ca5189acc168f07fd7755e7e6c8032",
+        "app/src/test/java/takagi/ru/monica/security/BiometricUnlockRegressionGuardTest.kt": "8aaa51ecfa40c7bf3b8da212b86fdc6ab5f53a7a193a6a37f1336477dd63c955"
+      },
+      "service_before_lines": 9508,
+      "service_after_lines": 8787
+    },
+    "fd": {
+      "preserved_existing_sources": 5163,
+      "changed_existing": [
+        "app/src/main/java/takagi/ru/monica/utils/KeePassKdbxService.kt",
+        "app/src/test/java/takagi/ru/monica/security/BiometricUnlockRegressionGuardTest.kt"
+      ],
+      "moved_methods": [
+        {
+          "method": "buildMonicaPasswordFields",
+          "owner": "KeePassPasswordEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "80221a00e6c2a4cf9023c815ef9be094a6a468d9c319b1a7a0495d9b843d0d4e"
+        },
+        {
+          "method": "buildEntry",
+          "owner": "KeePassPasswordEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "aa564ca7977e6562b95256b018e11b0edc3b5e64bcea00f7069f558c0470826e"
+        },
+        {
+          "method": "buildUpdatedEntry",
+          "owner": "KeePassPasswordEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "c44c5a8d451a741c1caa05aed466ec558831265744a0f8023203b49749b3674c"
+        },
+        {
+          "method": "buildPasswordEntryFieldPatch",
+          "owner": "KeePassPasswordEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "f4cf3ac91eb528729c7d912661b67802aaca2e88ba142e2e874c856c2d91e5b4"
+        },
+        {
+          "method": "applyPasswordEntryPresentation",
+          "owner": "KeePassPasswordEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "08e395b559e498a8b56b920fef7e19c6ad349f8f115b0c771da27f356e721403"
+        },
+        {
+          "method": "buildEntryFields",
+          "owner": "KeePassPasswordEntryWriter",
+          "hook_substitutions": {
+            "securityManager.decryptDataIfMonicaCiphertext(entry.authenticatorKey)": "decryptAuthenticatorKey(entry.authenticatorKey)"
+          },
+          "original_sha256": "fc87d42e3f3a771f684e851d34ad14a76fcfbcecbce4a181edc6e1ded03cfa43"
+        },
+        {
+          "method": "appendPasswordCompatibilityFields",
+          "owner": "KeePassPasswordEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "9deb78135bf379e7aea3dd778bfbc699ae335fc48f138cdfdcb38d5b162b29ac"
+        },
+        {
+          "method": "appendKeePassCustomFields",
+          "owner": "KeePassPasswordEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "b7081bec0d53a1de5916d531b012264724b9625c7b86abca105cdaafe2196d70"
+        },
+        {
+          "method": "buildSecureItemEntry",
+          "owner": "KeePassSecureItemFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "957ca24af2de2ea7f33ac6255881c379734d76639cb81eb2bdd528008a02f7f0"
+        },
+        {
+          "method": "buildUpdatedSecureItemEntry",
+          "owner": "KeePassSecureItemFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "1bff15c2949cf0419248a018c10448344ea708b93ee2857428f05a9f6bfd2f3f"
+        },
+        {
+          "method": "buildSecureItemEntryFieldPatch",
+          "owner": "KeePassSecureItemFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "2afb9697eded9663a6a16735778ed3d1c2945ccc4f5170b06f0fedf4a9a8f157"
+        },
+        {
+          "method": "portableSecureItemFields",
+          "owner": "KeePassSecureItemFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "2190f0859df5c482a7c6533dace5ad316136152f5c636568ae3ab48461d1f04e"
+        },
+        {
+          "method": "buildSecureItemFields",
+          "owner": "KeePassSecureItemFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "ec69e235a80e09bc95f559399ef9cebb6c056e3e21c8edc88526f3a65bb1af5e"
+        },
+        {
+          "method": "appendKeePassTotpFields",
+          "owner": "KeePassSecureItemFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "1d618567ba5a9e672c4b7e9f14f0d70298c57f79918687f7a279499ffde6e53e"
+        },
+        {
+          "method": "appendBankCardFields",
+          "owner": "KeePassBankCardFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "295cdce21ba6da460a628681f4143ee1969ec11a20057a7db58ed2cdbe739354"
+        },
+        {
+          "method": "appendSecureItemCustomFields",
+          "owner": "KeePassBankCardFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "ef7116c6a7826285cf355fbb022e91c7299acdeb0ae8fcca90efb092146cf0b1"
+        },
+        {
+          "method": "buildBankCardItemDataFromEntry",
+          "owner": "KeePassBankCardFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "c13976bac402da3b091ec4eaef57ee0714f2dc0005fdcbcc175d40a92041db23"
+        },
+        {
+          "method": "splitCardExpiry",
+          "owner": "KeePassBankCardFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "9c033a617a6bd668c998958fd86bac337c6fb8120739da14e5a24a83ccec7990"
+        },
+        {
+          "method": "parseKeePassCardType",
+          "owner": "KeePassBankCardFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "cdb55161e3fbc3d3a190ee02a1f4a65d116dad9245e0380cde653103445e85f0"
+        },
+        {
+          "method": "extractStructuredSecureItemCustomFields",
+          "owner": "KeePassBankCardFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "77dc3d701b8c56bc62c2f71f7c17f820b2b64105a640b1b29c4e4ec143b6698d"
+        },
+        {
+          "method": "baseSecureItemFieldNames",
+          "owner": "KeePassBankCardFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "921c42474bab431f9abdb5f7b45537686d14d40762ffd364e441c2f06a9da1cb"
+        },
+        {
+          "method": "bankCardSecureItemFieldNames",
+          "owner": "KeePassBankCardFieldCodec",
+          "hook_substitutions": {},
+          "original_sha256": "40254057f21f23798f9b439ce5d6a463dd6b916e1d5ec69b797d7179437aa533"
+        },
+        {
+          "method": "buildPasskeyEntry",
+          "owner": "KeePassPasskeyEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "3ed553d39a91faf190fe291f7eb530d1a028a204d55afc82665cdcb185efcb5b"
+        },
+        {
+          "method": "buildPasskeyTimeData",
+          "owner": "KeePassPasskeyEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "c6e8505a346284d288eb48b8ed16d2ee46fa801adfa8be6309e27378f504278d"
+        },
+        {
+          "method": "epochMillisToInstant",
+          "owner": "KeePassPasskeyEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "327afc63cac00df639c4709a9a4d7f766eb05652608794eeb7492edd7ea4d301"
+        },
+        {
+          "method": "buildPasskeyFields",
+          "owner": "KeePassPasskeyEntryWriter",
+          "hook_substitutions": {
+            "PasskeyPrivateKeyStore.resolve(context, passkey.privateKeyAlias)": "resolvePrivateKey(passkey.privateKeyAlias)",
+            "PasskeyPrivateKeyStore.exportPem(context, keyMaterial)": "exportPrivateKeyPem(keyMaterial)"
+          },
+          "original_sha256": "f0af83db7163a3a3f64764e426fcf790bbee25be7b20489fd9ec7b59315af09b"
+        },
+        {
+          "method": "buildUpdatedPasskeyEntry",
+          "owner": "KeePassPasskeyEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "00aa8fb245735225566719d3df7ae039bf1e10bea95d7f7d98be0bef178b513a"
+        },
+        {
+          "method": "buildPasskeyEntryFieldPatch",
+          "owner": "KeePassPasskeyEntryWriter",
+          "hook_substitutions": {},
+          "original_sha256": "aad6230d14589665fc0d962e36869ba43731fee74d168d5ad2da28d4dbb23b6c"
+        },
+        {
+          "method": "parseUuid",
+          "owner": "KeePassEntryFieldSupport",
+          "hook_substitutions": {},
+          "original_sha256": "2449998747bcba3d68f0179cb22fbe08ea9f19225bb684926e11fffb4b85bf10"
+        },
+        {
+          "method": "preserveExistingLoginFields",
+          "owner": "KeePassEntryFieldSupport",
+          "hook_substitutions": {},
+          "original_sha256": "06cb416e21215eb9ba58d0777f4fe68aef0e77d06ceb3c0953c14cb6c62ab45a"
+        }
+      ],
+      "constant_count": 54,
+      "shared_sources": {
+        "app/src/androidTest/java/takagi/ru/monica/keepass/KeePassSecureItemPayloadFailureInstrumentedTest.kt": "7f2762b8efe3253798d676b7ecf00b2af4fddd5b3e6cdcff970969387d3bae0a",
+        "app/src/main/java/takagi/ru/monica/keepass/KeePassBankCardFieldCodec.kt": "8c6d65b5d256ecb7bbe2cea737ccb07880cafd131a267e4e2e72af0637c2872f",
+        "app/src/main/java/takagi/ru/monica/keepass/KeePassCompatibilityFieldNames.kt": "adf3f2587e501f5fb8415be83328df0e269e96583e12cb196eca549681a81a38",
+        "app/src/main/java/takagi/ru/monica/keepass/KeePassEntryFieldSupport.kt": "ea1765bd09a7dea9557ffb402ea13c9f82893c8b80f27e75ac92a7f1dd1a6551",
+        "app/src/main/java/takagi/ru/monica/keepass/KeePassPasskeyEntryWriter.kt": "8b2e2c4bce7ca515ee89fc33314df1d1d760832ee86b76051fedb9496276683c",
+        "app/src/main/java/takagi/ru/monica/keepass/KeePassPasswordEntryWriter.kt": "6ec4eaf6a40995d4fe73a89216a87ddb01d9aaec16c595518dcd4ed4048f58f2",
+        "app/src/main/java/takagi/ru/monica/keepass/KeePassSecureItemFieldCodec.kt": "1c5e4b4530c363e5e79889383164ab99e8c9f14130a92dfde0244647ad8cb790",
+        "app/src/main/java/takagi/ru/monica/utils/KeePassKdbxService.kt": "8b1b2a6a39ce00111707e076922aedceae0465b5d93e7bdcd9e5754bac3890a3",
+        "app/src/test/java/takagi/ru/monica/keepass/BankCardFieldCodecTest.kt": "6badfa8fa89041f54b33f0531b0447119869316e6422453ebc899ab54d0d903e",
+        "app/src/test/java/takagi/ru/monica/keepass/EntryWriterBoundaryTest.kt": "69ff019a663cdd3452e62beb5f25f96191ca5189acc168f07fd7755e7e6c8032",
+        "app/src/test/java/takagi/ru/monica/security/BiometricUnlockRegressionGuardTest.kt": "8aaa51ecfa40c7bf3b8da212b86fdc6ab5f53a7a193a6a37f1336477dd63c955"
+      },
+      "service_before_lines": 9508,
+      "service_after_lines": 8787
+    }
+  },
+  "failed_runs": [
+    {
+      "label": "final-main-01",
+      "seconds": 520.742,
+      "exit": 1,
+      "passed": null
+    }
+  ],
+  "review": {
+    "moved_methods": 30,
+    "unchanged_method_bodies": 28,
+    "callback_expression_substitutions": 3,
+    "constants": 54,
+    "preserved_service_tokens": 48764,
+    "preserved_nonempty_service_code_lines": 7998,
+    "external_service_facades": 5,
+    "service_call_receiver_changes": 4,
+    "applied_review_sha256": "e15de64e60502d8a25712a6bd8f7bd2a143b08821aa0ee15b6410fd7cd3279d9"
+  },
+  "environment": {
+    "api": 35,
+    "abi": "x86_64",
+    "device": "MuMu0",
+    "build_type": "Debug",
+    "synthetic_data_only": true,
+    "isolated_ids": true
+  },
+  "metadata_and_whitespace_checks": {
+    "metadata": {
+      "metadata": {
+        "status": "fulfilled",
+        "value": {
+          "chunk_id": "a6dd4e",
+          "wall_time_seconds": 1.4642427,
+          "exit_code": 0,
+          "original_token_count": 72,
+          "output": "Metadata checked: `v1.0.327` / `takagi.ru.monica.fdroid`, versionCode `34`.\r\n\r\nStatic version fields, existing tags and F-Droid changelog files checked. No APK build, tag creation or Release publication was performed. F-Droid builds and publication are handled separately by F-Droid.\r\n\r\n"
+        }
+      },
+      "script_tests": {
+        "status": "fulfilled",
+        "value": {
+          "chunk_id": "233e62",
+          "wall_time_seconds": 0.6585287,
+          "exit_code": 0,
+          "original_token_count": 28,
+          "output": "......\r\n----------------------------------------------------------------------\r\nRan 6 tests in 0.056s\r\n\r\nOK\r\n"
+        }
+      }
+    },
+    "editions": {
+      "main": {
+        "diff_check": true,
+        "checked_sources": 11,
+        "phase1_reports_unchanged": true,
+        "head": "a0c5ac00fe041b652381be949159f78e95cdfcdf",
+        "branch": "main"
+      },
+      "fd": {
+        "diff_check": true,
+        "checked_sources": 11,
+        "phase1_reports_unchanged": true,
+        "head": "bc1785f907f36869e2f81e8496326733ea0dfbaa",
+        "branch": "main"
+      }
+    },
+    "passed": true
+  },
+  "cleanup": {
+    "complete": true,
+    "restored_user": 0,
+    "removed_owned_user": 11,
+    "preserved_users": [
+      0,
+      10
+    ],
+    "packages_preserved": {
+      "0": true,
+      "10": true
+    },
+    "task_started_emulator_stopped": true,
+    "retry_needed": true
+  },
+  "limitations": [
+    "No physical device/OEM, real user vault or live cloud validation",
+    "No new R8/release, power-loss or cross-process cold-start validation",
+    "Cache invalidation and decrypt/reopen are not process restarts",
+    "Cross-vault operations retain existing target-first behavior, not cross-file atomicity"
+  ],
+  "committed_or_pushed_by_this_refactor": false,
+  "released": false,
+  "apk_delivered": false
+}

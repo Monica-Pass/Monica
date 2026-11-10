@@ -40,6 +40,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
+import takagi.ru.monica.data.BackupEncryptionFormat
 import takagi.ru.monica.ui.components.MonicaExpandableContent
 import takagi.ru.monica.utils.BackupFile
 import takagi.ru.monica.utils.FileSourceEntry
@@ -292,6 +293,8 @@ internal fun CloudBackupEncryptionSettings(
     onEnabledChange: (Boolean) -> Unit,
     onPasswordChange: (String) -> Unit,
     onVisibilityChange: () -> Unit,
+    format: BackupEncryptionFormat = BackupEncryptionFormat.COMPATIBLE_V1,
+    onFormatChange: (BackupEncryptionFormat) -> Unit = {},
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(stringResource(R.string.onedrive_backup_security_title), modifier = Modifier.padding(start = 12.dp),
@@ -308,22 +311,26 @@ internal fun CloudBackupEncryptionSettings(
                 Switch(checked = enabled, onCheckedChange = onEnabledChange, modifier = Modifier.testTag("cloud_backup_encryption"))
             }
             MonicaExpandableContent(enabled) {
-                OutlinedTextField(
-                    value = password, onValueChange = onPasswordChange,
-                    modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
-                        .testTag("cloud_backup_encryption_password"),
-                    shape = DatabaseManagementFieldShape,
-                    label = { Text(stringResource(R.string.webdav_encryption_password)) },
-                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                    trailingIcon = {
-                        IconButton(onClick = onVisibilityChange) {
-                            Icon(if (passwordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-                                stringResource(if (passwordVisible) R.string.hide_password else R.string.show_password))
-                        }
-                    },
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
-                )
+                Column {
+                    OutlinedTextField(
+                        value = password, onValueChange = onPasswordChange,
+                        modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                            .testTag("cloud_backup_encryption_password"),
+                        shape = DatabaseManagementFieldShape,
+                        label = { Text(stringResource(R.string.webdav_encryption_password)) },
+                        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                        trailingIcon = {
+                            IconButton(onClick = onVisibilityChange) {
+                                Icon(if (passwordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                                    stringResource(if (passwordVisible) R.string.hide_password else R.string.show_password))
+                            }
+                        },
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
+                    )
+                    BackupEncryptionFormatSelector(format, onFormatChange,
+                        Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp))
+                }
             }
         }
     }

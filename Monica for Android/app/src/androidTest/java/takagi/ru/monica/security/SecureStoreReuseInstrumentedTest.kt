@@ -51,12 +51,17 @@ class SecureStoreReuseInstrumentedTest {
             val selector = File(directory, "files/local-vault-recovery/active-store.json")
             selector.parentFile!!.mkdirs()
             selector.writeText("{\"id\":\"${UUID.randomUUID()}\"}")
-            val failure = runCatching { initial.manager.isMasterPasswordSet() }.exceptionOrNull()
-            assertTrue("A live manager must reject a selector published by another process", failure is SecureStorageUnavailableException)
+            val filesBefore = directory.walkTopDown().filter { it.isFile }
+                .associate { it.relativeTo(directory).path to it.readBytes().toList() }
+            assertTrue("Unknown storage must remain password-protected", initial.manager.isMasterPasswordSet())
+            val failure = runCatching { initial.manager.getLocalPasswordAlgorithm() }.exceptionOrNull()
+            assertTrue("A live manager must reject actual credential reads after another selector", failure is SecureStorageUnavailableException)
             assertFalse(SessionManager.isUnlocked.value)
             assertNull(PreparedSecureStore.cached(context))
             assertEquals(before, context.getSharedPreferences(SecurePreferencesStore.MONICA, 0).all)
-            assertEquals("No new store is opened by invalidation", 1, directory.walkTopDown().count { it.isFile })
+            assertEquals("Invalidation must not open or rewrite any store", filesBefore,
+                directory.walkTopDown().filter { it.isFile }
+                    .associate { it.relativeTo(directory).path to it.readBytes().toList() })
         } finally {
             SessionManager.markLocked()
             PreparedSecureStore.invalidate()

@@ -65,6 +65,7 @@ fun MasterPasswordLockingSettingsScreen(
     }
     var showWeakBiometricWarning by remember { mutableStateOf(false) }
     var showAutoLockDialog by remember { mutableStateOf(false) }
+    var showLocalProtectionDialog by remember { mutableStateOf(false) }
 
     val startBiometricEnable = {
         if (activity != null) {
@@ -178,6 +179,13 @@ fun MasterPasswordLockingSettingsScreen(
 
             SettingsItem(
                 icon = Icons.Default.Security,
+                title = stringResource(R.string.local_password_protection_title),
+                subtitle = stringResource(R.string.local_password_protection_summary),
+                onClick = { showLocalProtectionDialog = true }
+            )
+
+            SettingsItem(
+                icon = Icons.Default.Security,
                 title = stringResource(R.string.security_questions),
                 subtitle = stringResource(R.string.security_questions_description),
                 onClick = onSecurityQuestions
@@ -192,6 +200,10 @@ fun MasterPasswordLockingSettingsScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
         }
+    }
+
+    if (showLocalProtectionDialog) {
+        LocalPasswordProtectionDialog(onDismiss = { showLocalProtectionDialog = false })
     }
 
     if (showAutoLockDialog) {

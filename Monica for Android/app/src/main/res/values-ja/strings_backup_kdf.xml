@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backup_kdf_title">暗号化バックアップ形式</string>
+    <string name="backup_kdf_compatible">互換 V1 · 100000 回の導出</string>
+    <string name="backup_kdf_enhanced">強化 V2 · 600000 回の導出</string>
+    <string name="backup_kdf_scope">新しく作成する暗号化 ZIP バックアップにのみ適用されます。既存のバックアップは変わりません。</string>
+    <string name="backup_kdf_compatibility_warning">V2 に対応した読み込み側が必要です。古い拡張機能やデスクトップ版では復元できない場合があります。以前のバックアップを保管してください。</string>
+</resources>

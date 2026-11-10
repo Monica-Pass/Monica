@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalContext
 import takagi.ru.monica.ui.components.PasswordVerificationContent
 import takagi.ru.monica.viewmodel.PasswordViewModel
 import takagi.ru.monica.viewmodel.SettingsViewModel
+import takagi.ru.monica.ui.rememberUiSecurityManager
 
 @Composable
 fun LoginScreen(
@@ -18,6 +19,7 @@ fun LoginScreen(
     onForgotPassword: (() -> Unit)? = null
 ) {
     val context = LocalContext.current
+    val passwordSecurityManager = rememberUiSecurityManager()
     
     val isFirstTime = !viewModel.isMasterPasswordSet()
     
@@ -51,7 +53,8 @@ fun LoginScreen(
             onSuccess = {
                 viewModel.restoreAuthenticatedUiState()
             },
-            onForgotPassword = onForgotPassword
+            onForgotPassword = onForgotPassword,
+            passwordSecurityManager = passwordSecurityManager,
         )
     }
 }

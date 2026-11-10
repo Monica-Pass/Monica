@@ -76,7 +76,6 @@ import takagi.ru.monica.ui.category.CategoryManagementTrailingContent
 import takagi.ru.monica.ui.category.CategoryManagementCreateDialog
 import takagi.ru.monica.ui.category.rememberCategoryManagementState
 import takagi.ru.monica.ui.components.ExpressiveTopBar
-import takagi.ru.monica.ui.components.M3IdentityVerifyDialog
 import takagi.ru.monica.ui.components.PullActionVisualState
 import takagi.ru.monica.ui.components.PasswordEntryPickerBottomSheet
 import takagi.ru.monica.ui.components.SyncStatusBadge
@@ -299,8 +298,7 @@ fun PasskeyListScreen(
     var categoryPillBoundsInWindow by remember { mutableStateOf<androidx.compose.ui.geometry.Rect?>(null) }
     var showBatchMoveCategoryDialog by remember { mutableStateOf(false) }
     var showDeleteConfirmDialog by remember { mutableStateOf(false) }
-    var deletePasswordInput by remember { mutableStateOf("") }
-    var deletePasswordError by remember { mutableStateOf(false) }
+
     val haptic = rememberHapticFeedback()
     val settingsManager = remember { SettingsManager(context) }
     val appSettings by settingsManager.settingsFlow.collectAsState(
@@ -472,7 +470,6 @@ fun PasskeyListScreen(
             isSearchExpanded = true
         }
     }
-
 
     BackHandler(enabled = selectionMode) {
         selectionMode = false
@@ -777,8 +774,7 @@ fun PasskeyListScreen(
                 }
                 pendingDeletePasskey = null
                 showDeleteConfirmDialog = false
-                deletePasswordInput = ""
-                deletePasswordError = false
+
                 val msg = if (failedCount == 0) {
                     context.getString(R.string.deleted_items, deletedCount)
                 } else {
@@ -1190,79 +1186,34 @@ fun PasskeyListScreen(
     }
 
     if (showDeleteConfirmDialog) {
-        val deleteTargets = if (pendingDeletePasskey != null) {
-            listOf(pendingDeletePasskey!!)
-        } else {
-            combinedPasskeys.filter { selectedPasskeys.contains(it.managementKey()) }
+        val singleTarget = remember { pendingDeletePasskey }
+        val deleteTargets = remember {
+            singleTarget?.let(::listOf)
+                ?: combinedPasskeys.filter { selectedPasskeys.contains(it.managementKey()) }
         }
-
-        val skipIdentityVerification = appSettings.disablePasswordVerification
-        val biometricAction = if (!skipIdentityVerification && activity != null && canUseBiometric) {
-            {
-                biometricHelper.authenticate(
-                    activity = activity,
-                    title = context.getString(R.string.verify_identity),
-                    subtitle = context.getString(R.string.verify_to_delete),
-                    onSuccess = { performDeleteTargets(deleteTargets) },
-                    onError = { error ->
-                        Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
-                    },
-                    onFailed = {}
-                )
-            }
-        } else {
-            null
-        }
-
-        M3IdentityVerifyDialog(
-            title = if (pendingDeletePasskey != null) {
-                stringResource(R.string.passkey_delete_title)
+        val currentTargets = pendingDeletePasskey?.let(::listOf)
+            ?: combinedPasskeys.filter { selectedPasskeys.contains(it.managementKey()) }
+        val deleteAction = { performDeleteTargets(deleteTargets) }
+        takagi.ru.monica.ui.common.dialog.DeleteConfirmDialog(
+            itemTitle = stringResource(R.string.selected_items, deleteTargets.size),
+            itemType = stringResource(R.string.passkey_title),
+            biometricEnabled = appSettings.biometricEnabled,
+            skipIdentityVerification = appSettings.disablePasswordVerification,
+            title = if (singleTarget != null) stringResource(R.string.passkey_delete_title)
+                else stringResource(R.string.delete_item_title, stringResource(R.string.passkey_title)),
+            message = if (singleTarget != null) {
+                stringResource(R.string.passkey_delete_message,
+                    singleTarget.rpName.ifBlank { singleTarget.rpId },
+                    singleTarget.userDisplayName.ifBlank { singleTarget.userName })
             } else {
-                stringResource(R.string.delete_item_title, stringResource(R.string.passkey_title))
+                stringResource(R.string.delete_item_message, stringResource(R.string.passkey_title),
+                    stringResource(R.string.selected_items, deleteTargets.size))
             },
-            message = if (pendingDeletePasskey != null) {
-                val passkey = pendingDeletePasskey!!
-                stringResource(
-                    R.string.passkey_delete_message,
-                    passkey.rpName.ifBlank { passkey.rpId },
-                    passkey.userDisplayName.ifBlank { passkey.userName }
-                )
-            } else {
-                stringResource(
-                    R.string.delete_item_message,
-                    stringResource(R.string.passkey_title),
-                    stringResource(R.string.selected_items, deleteTargets.size)
-                )
-            },
-            passwordValue = deletePasswordInput,
-            onPasswordChange = {
-                deletePasswordInput = it
-                deletePasswordError = false
-            },
-            onDismiss = {
-                showDeleteConfirmDialog = false
-                pendingDeletePasskey = null
-                deletePasswordInput = ""
-                deletePasswordError = false
-            },
-            onConfirm = {
-                if (skipIdentityVerification || takagi.ru.monica.security.SecurityManager(context).verifyMasterPassword(deletePasswordInput)) {
-                    performDeleteTargets(deleteTargets)
-                } else {
-                    deletePasswordError = true
-                }
-            },
-            confirmText = stringResource(R.string.delete),
-            destructiveConfirm = true,
-            requireIdentityVerification = !skipIdentityVerification,
-            isPasswordError = deletePasswordError,
-            passwordErrorText = stringResource(R.string.current_password_incorrect),
-            onBiometricClick = biometricAction,
-            biometricHintText = if (biometricAction == null) {
-                context.getString(R.string.biometric_not_available)
-            } else {
-                null
-            }
+            onDismiss = { showDeleteConfirmDialog = false; pendingDeletePasskey = null },
+            onConfirmWithoutVerification = deleteAction,
+            onPasswordVerified = deleteAction,
+            onConfirmWithBiometric = deleteAction,
+            isRequestCurrent = { showDeleteConfirmDialog && currentTargets == deleteTargets && pendingDeletePasskey == singleTarget },
         )
     }
 
