@@ -2,6 +2,9 @@
 
 ## 中文
 
+- 加固主密码找回：安全问题答案之外，还需本次系统锁屏凭据确认（Android 11 及以上）；取消、后台、锁定或请求替换后授权失效。持久限制尝试次数，新答案使用带随机盐的 PBKDF2-SHA256／600000 次；旧 SHA-256 答案与备份保留兼容，仅在提供真实答案并完成找回后迁移。
+- TOTP、银行卡和证件的新本地写入缺少加密依赖时拒绝保存；历史明文兼容读取继续保留。
+
 - 修复从旧版本更新后可能在启动时崩溃的问题，保留原密码库和恢复材料。
 - 减小安装包：压缩赞赏码图片、无损优化内置品牌图标并复用 Monica 图标，保留已有项目的 PNG 自定义图标；精简依赖的多余语言资源，保留全部应用语言和特殊中文配置。
 - 本地主密码统一使用 PBKDF2-SHA256／600000 次派生，移除算法切换入口；兼容读取旧 PBKDF2 和 Argon2id，并在成功验证原密码后迁移，保留原数据密钥与已存内容。
@@ -31,6 +34,9 @@
 - 库移除确认准确说明文件处理范围：KeePass 移除注册后保留原文件，MDBX 本地库确认删除时移除目标本地文件。
 
 ## English
+
+- Harden master-password recovery: security answers also require fresh device-credential confirmation on Android 11+. Cancel, background, lock or request replacement revokes authorization. Persist attempt limits, store new answers with salted PBKDF2-SHA256/600000, and keep legacy SHA-256 answers and backups readable; migrate only after actual answers and authorized recovery.
+- Reject new local TOTP, bank-card and document writes without an encryption dependency while preserving legacy plaintext reads.
 
 - Fix a startup crash after updating from an older version while retaining the existing vault and recovery material.
 - Reduce package size with compressed donation images, lossless bundled brand icons and a shared Monica icon. Preserve existing custom PNG icons and all app languages, including special Chinese locales, while removing unused dependency translations.

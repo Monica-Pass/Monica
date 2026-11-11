@@ -237,11 +237,13 @@ class BiometricUnlockRegressionGuardTest {
                 resolverSource.contains("rawKey = resolvedItemData")
         )
         assertTrue(
-            "TotpViewModel must decrypt only known Monica ciphertext and preserve the original storage shape when rewriting.",
+            "TotpViewModel must decrypt only known Monica ciphertext and encrypt every new rewrite while preserving legacy plaintext reads.",
             viewModelSource.contains("decryptDataIfMonicaCiphertext(value)") &&
                 viewModelSource.contains("looksLikeMonicaCiphertext(value)") &&
                 viewModelSource.contains("encodeStoredSensitiveValueForRewrite") &&
-                viewModelSource.contains("securityManager?.encryptDataLegacyCompat(plainValue)")
+                viewModelSource.contains("SensitiveValueEncryptor(it::encryptDataLegacyCompat)") &&
+                viewModelSource.contains("requireNotNull(sensitiveValueEncryptor)") &&
+                !viewModelSource.contains("encryptDataLegacyCompat(plainValue) ?: plainValue")
         )
         assertFalse(
             "TotpViewModel must not parse item.itemData directly; direct parsing would hide encrypted legacy TOTP data from old users after migration.",
@@ -335,7 +337,9 @@ class BiometricUnlockRegressionGuardTest {
         assertTrue(
             "Standalone TOTP saves must encrypt new Room itemData writes, while keeping plaintext JSON only as the portable business value.",
             totpViewModelSource.contains("private fun encodeStoredSensitiveValueForNewWrite(plainValue: String): String") &&
-                totpViewModelSource.contains("securityManager?.encryptDataLegacyCompat(plainValue)") &&
+                totpViewModelSource.contains("SensitiveValueEncryptor(it::encryptDataLegacyCompat)") &&
+                totpViewModelSource.contains("requireNotNull(sensitiveValueEncryptor)") &&
+                !totpViewModelSource.contains("encryptDataLegacyCompat(plainValue) ?: plainValue") &&
                 totpViewModelSource.contains("val storedItemData = encodeStoredSensitiveValueForNewWrite(itemDataJson)") &&
                 totpViewModelSource.contains("itemData = storedItemData")
         )
@@ -396,10 +400,14 @@ class BiometricUnlockRegressionGuardTest {
         assertTrue(
             "Bank card and document ViewModels must encrypt new local itemData writes and decrypt when reading for UI/edit.",
             bankCardViewModelSource.contains("private fun encodeCardDataForLocalStorage(cardData: BankCardData): String") &&
-                bankCardViewModelSource.contains("securityManager?.encryptDataLegacyCompat(plainValue)") &&
+                bankCardViewModelSource.contains("SensitiveValueEncryptor(it::encryptDataLegacyCompat)") &&
+                bankCardViewModelSource.contains("requireNotNull(sensitiveValueEncryptor)") &&
+                !bankCardViewModelSource.contains("encryptDataLegacyCompat(plainValue) ?: plainValue") &&
                 bankCardViewModelSource.contains("decryptIfNeeded = ::decryptStoredSensitiveValue") &&
                 documentViewModelSource.contains("private fun encodeDocumentDataForLocalStorage(documentData: DocumentData): String") &&
-                documentViewModelSource.contains("securityManager?.encryptDataLegacyCompat(plainValue)") &&
+                documentViewModelSource.contains("SensitiveValueEncryptor(it::encryptDataLegacyCompat)") &&
+                documentViewModelSource.contains("requireNotNull(sensitiveValueEncryptor)") &&
+                !documentViewModelSource.contains("encryptDataLegacyCompat(plainValue) ?: plainValue") &&
                 documentViewModelSource.contains("decryptIfNeeded = ::decryptStoredSensitiveValue")
         )
         assertTrue(

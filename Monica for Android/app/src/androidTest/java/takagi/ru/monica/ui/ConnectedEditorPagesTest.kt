@@ -58,8 +58,8 @@ class ConnectedEditorPagesTest {
         val strings = AppLocaleStringResolver(context)
         val items = SecureItemRepository(db.secureItemDao(), decryptSensitiveValue = security::decryptDataIfMonicaCiphertext)
         compose.runOnIdle {
-            bank = BankCardViewModel(items, strings = strings)
-            document = DocumentViewModel(items, strings = strings)
+            bank = BankCardViewModel(items, strings = strings, sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it })
+            document = DocumentViewModel(items, strings = strings, sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it })
             passwords = PasswordViewModel(PasswordRepository(db.passwordEntryDao(), categoryDao = db.categoryDao()), security,
                 customFieldRepository = CustomFieldRepository(db.customFieldDao()), strings = strings)
             mdbx = MdbxViewModel(context.applicationContext as Application, db.localMdbxDatabaseDao(), db.mdbxRemoteSourceDao(),

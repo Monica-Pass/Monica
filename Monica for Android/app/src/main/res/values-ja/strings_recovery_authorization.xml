@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_device_required">秘密の質問に答えた後、端末のPIN、パターンまたはパスワードを確認します。回答だけではマスターパスワードをリセットできません。</string>
+    <string name="recovery_device_title">端末の認証情報を確認</string>
+    <string name="recovery_device_unavailable">この端末では復旧に必要な画面ロックの認証を確認できません。元のマスターパスワードか暗号化バックアップを使用してください。</string>
+    <string name="recovery_authorization_expired">復旧の確認が取り消されたか期限切れです。最初からやり直してください。</string>
+    <string name="recovery_attempts_limited">試行回数が多すぎます。画面を離れたり再起動しても制限は続きます。しばらくしてからお試しください。</string>
+</resources>

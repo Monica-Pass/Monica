@@ -121,7 +121,9 @@ class TotpViewModel internal constructor(
     context: Context? = null,
     private val localKeePassDatabaseDao: LocalKeePassDatabaseDao? = null,
     private val securityManager: SecurityManager? = null,
-    private val strings: StringResolver
+    private val strings: StringResolver,
+    private val sensitiveValueEncryptor: takagi.ru.monica.security.SensitiveValueEncryptor? =
+        securityManager?.let { takagi.ru.monica.security.SensitiveValueEncryptor(it::encryptDataLegacyCompat) },
 ) : ViewModel() {
     private val applicationContext = context?.applicationContext
 
@@ -199,16 +201,13 @@ class TotpViewModel internal constructor(
     }
 
     private fun encodeStoredSensitiveValueForRewrite(originalValue: String, plainValue: String): String {
-        return if (looksLikeStoredSensitiveCiphertext(originalValue)) {
-            securityManager?.encryptDataLegacyCompat(plainValue) ?: plainValue
-        } else {
-            plainValue
-        }
+        // Legacy plaintext remains readable; every newly written nonempty value is encrypted.
+        return encodeStoredSensitiveValueForNewWrite(plainValue)
     }
 
     private fun encodeStoredSensitiveValueForNewWrite(plainValue: String): String {
         if (plainValue.isBlank()) return plainValue
-        return securityManager?.encryptDataLegacyCompat(plainValue) ?: plainValue
+        return requireNotNull(sensitiveValueEncryptor) { "Sensitive writes require encryption" }.encrypt(plainValue)
     }
 
     private suspend fun updatePasswordAuthenticatorKeyForStorage(passwordId: Long, plainAuthenticatorKey: String) {

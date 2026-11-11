@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_device_required">答对安全问题后，还需确认设备的 PIN、图案或锁屏密码。安全问题本身不能重置主密码。</string>
+    <string name="recovery_device_title">确认设备锁屏凭据</string>
+    <string name="recovery_device_unavailable">此设备无法完成找回所需的锁屏凭据确认。请使用原主密码或加密备份。</string>
+    <string name="recovery_authorization_expired">找回确认已取消或过期，请重新开始。</string>
+    <string name="recovery_attempts_limited">尝试次数过多。离开页面或重启后限制仍保留，请稍后再试。</string>
+</resources>

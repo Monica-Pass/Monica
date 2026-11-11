@@ -32,7 +32,7 @@ class AuthenticatorVisibilityIntegrityTest {
         val db = Room.inMemoryDatabaseBuilder(context, PasswordDatabase::class.java).build()
         val passwords = PasswordRepository(db.passwordEntryDao())
         val items = SecureItemRepository(db.secureItemDao())
-        val model = TotpViewModel(items, passwords, strings = AppLocaleStringResolver(context))
+        val model = TotpViewModel(items, passwords, strings = AppLocaleStringResolver(context), sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it })
         try {
             val storedId = items.insertItem(SecureItem(itemType = ItemType.TOTP, title = "Unreadable stored",
                 itemData = "C2|synthetic-unreadable-stored"))
@@ -72,7 +72,7 @@ class AuthenticatorVisibilityIntegrityTest {
         val db = Room.inMemoryDatabaseBuilder(context, PasswordDatabase::class.java).build()
         val passwords = PasswordRepository(db.passwordEntryDao())
         val items = SecureItemRepository(db.secureItemDao())
-        val model = TotpViewModel(items, passwords, strings = AppLocaleStringResolver(context))
+        val model = TotpViewModel(items, passwords, strings = AppLocaleStringResolver(context), sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it })
         try {
             val passwordId = passwords.insertPasswordEntry(PasswordEntry(title = "mOTP account",
                 website = "", username = "", password = ""))
@@ -96,7 +96,7 @@ class AuthenticatorVisibilityIntegrityTest {
         val db = Room.inMemoryDatabaseBuilder(context, PasswordDatabase::class.java).build()
         val passwords = PasswordRepository(db.passwordEntryDao())
         val items = SecureItemRepository(db.secureItemDao())
-        val model = TotpViewModel(items, passwords, strings = AppLocaleStringResolver(context))
+        val model = TotpViewModel(items, passwords, strings = AppLocaleStringResolver(context), sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it })
         try {
             val data = TotpData(secret = "1234567890abcdef", otpType = OtpType.MOTP, period = 10, pin = "1234")
             val passwordId = passwords.insertPasswordEntry(PasswordEntry(title = "mOTP password", website = "", username = "",
@@ -170,7 +170,7 @@ class AuthenticatorVisibilityIntegrityTest {
         val db = Room.inMemoryDatabaseBuilder(context, PasswordDatabase::class.java).build()
         val passwords = PasswordRepository(db.passwordEntryDao())
         val items = SecureItemRepository(db.secureItemDao())
-        val model = TotpViewModel(items, passwords, strings = AppLocaleStringResolver(context))
+        val model = TotpViewModel(items, passwords, strings = AppLocaleStringResolver(context), sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it })
         try {
             val data = TotpData(secret = "1234567890abcdef", otpType = OtpType.MOTP, period = 10, pin = "1234")
             val key = TotpDataResolver.toBitwardenPayload("Password OTP", data)

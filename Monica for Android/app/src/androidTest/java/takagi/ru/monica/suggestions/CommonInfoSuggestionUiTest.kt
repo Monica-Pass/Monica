@@ -154,8 +154,8 @@ class CommonInfoSuggestionUiTest {
     @Test fun bankAndDocumentEditorsUseSuggestionsInTheirActualFields() {
         val db = Room.inMemoryDatabaseBuilder(context, PasswordDatabase::class.java).build()
         val repository = SecureItemRepository(db.secureItemDao(), decryptSensitiveValue = security::decryptDataIfMonicaCiphertext)
-        val bank = BankCardViewModel(repository, strings = AppLocaleStringResolver(context))
-        val document = DocumentViewModel(repository, strings = AppLocaleStringResolver(context))
+        val bank = BankCardViewModel(repository, strings = AppLocaleStringResolver(context), sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it })
+        val document = DocumentViewModel(repository, strings = AppLocaleStringResolver(context), sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it })
         try {
             show { AddEditBankCardScreen(bank, onNavigateBack = {}) }
             compose.onNodeWithTag("bank_item_editor").performScrollToNode(hasText(context.getString(R.string.bank_name)) and hasSetTextAction())
@@ -229,8 +229,8 @@ class CommonInfoSuggestionUiTest {
     @Test fun holderAndDocumentNamesUseTheSameInlineSuggestions() {
         val db = Room.inMemoryDatabaseBuilder(context, PasswordDatabase::class.java).build()
         val repository = SecureItemRepository(db.secureItemDao(), decryptSensitiveValue = security::decryptDataIfMonicaCiphertext)
-        val bank = BankCardViewModel(repository, strings = AppLocaleStringResolver(context))
-        val document = DocumentViewModel(repository, strings = AppLocaleStringResolver(context))
+        val bank = BankCardViewModel(repository, strings = AppLocaleStringResolver(context), sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it })
+        val document = DocumentViewModel(repository, strings = AppLocaleStringResolver(context), sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it })
         try {
             show { AddEditBankCardScreen(bank, onNavigateBack = {}) }
             compose.onNodeWithTag("bank_item_editor").performScrollToNode(hasTestTag("entry_payment_holder"))

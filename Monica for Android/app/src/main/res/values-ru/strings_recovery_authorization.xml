@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_device_required">Ответьте на контрольные вопросы, затем подтвердите PIN, графический ключ или пароль устройства. Одних ответов недостаточно для сброса мастер-пароля.</string>
+    <string name="recovery_device_title">Подтвердите код устройства</string>
+    <string name="recovery_device_unavailable">На этом устройстве нельзя подтвердить код блокировки для восстановления. Используйте исходный мастер-пароль или зашифрованную резервную копию.</string>
+    <string name="recovery_authorization_expired">Подтверждение восстановления отменено или истекло. Начните снова.</string>
+    <string name="recovery_attempts_limited">Слишком много попыток. Ограничение сохраняется после выхода со страницы или перезапуска. Повторите позже.</string>
+</resources>

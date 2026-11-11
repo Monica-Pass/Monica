@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_device_required">Rispondi alle domande di sicurezza, poi conferma il PIN, la sequenza o la password del dispositivo. Le sole risposte non consentono di reimpostare la password principale.</string>
+    <string name="recovery_device_title">Conferma blocco del dispositivo</string>
+    <string name="recovery_device_unavailable">Questo dispositivo non può confermare il blocco richiesto per il recupero. Usa la password principale originale o un backup crittografato.</string>
+    <string name="recovery_authorization_expired">La conferma è stata annullata o è scaduta. Ricomincia.</string>
+    <string name="recovery_attempts_limited">Troppi tentativi. Il limite rimane dopo aver lasciato la pagina o riavviato. Riprova più tardi.</string>
+</resources>

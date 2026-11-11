@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_device_required">Beantworten Sie die Sicherheitsfragen und bestätigen Sie dann die Geräte-PIN, das Muster oder das Passwort. Antworten allein setzen das Master-Passwort nicht zurück.</string>
+    <string name="recovery_device_title">Gerätesperre bestätigen</string>
+    <string name="recovery_device_unavailable">Dieses Gerät kann die für die Wiederherstellung erforderliche Bildschirmsperre nicht bestätigen. Nutzen Sie das ursprüngliche Master-Passwort oder eine verschlüsselte Sicherung.</string>
+    <string name="recovery_authorization_expired">Die Bestätigung wurde abgebrochen oder ist abgelaufen. Beginnen Sie erneut.</string>
+    <string name="recovery_attempts_limited">Zu viele Versuche. Das Limit bleibt nach Verlassen der Seite oder Neustart bestehen. Versuchen Sie es später erneut.</string>
+</resources>

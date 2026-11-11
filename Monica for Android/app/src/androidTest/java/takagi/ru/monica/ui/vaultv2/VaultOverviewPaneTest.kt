@@ -108,9 +108,9 @@ class VaultOverviewPaneTest {
             context = context.takeIf { testKeePassDatabases.isNotEmpty() },
             localKeePassDatabaseDao = PasswordDatabase.getDatabase(context).localKeePassDatabaseDao(), strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext))).also { it.restoreAuthenticatedUiState() }
         testPasswordModel = passwordModel
-        val totp = keep(TotpViewModel(items, passwords, strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext)))
-        val cards = keep(BankCardViewModel(items, strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext)))
-        val documents = keep(DocumentViewModel(items, strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext)))
+        val totp = keep(TotpViewModel(items, passwords, strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext), sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it }))
+        val cards = keep(BankCardViewModel(items, strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext), sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it }))
+        val documents = keep(DocumentViewModel(items, strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext), sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it }))
         val addresses = keep(BillingAddressViewModel(items))
         val notes = keep(NoteViewModel(items, strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext)))
         val passkeys = keep(PasskeyViewModel(PasskeyRepository(database.passkeyDao()), strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext)))

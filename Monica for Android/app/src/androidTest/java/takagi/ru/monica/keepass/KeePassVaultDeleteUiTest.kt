@@ -44,9 +44,9 @@ class KeePassVaultDeleteUiTest {
             val models = mutableListOf<ViewModel>()
             fun <T: ViewModel> keep(value: T): T = value.also { models += it }
             val strings = AppLocaleStringResolver(context)
-            val totp = keep(TotpViewModel(items, passwords, strings=strings))
-            val cards = keep(BankCardViewModel(items, strings=strings))
-            val documents = keep(DocumentViewModel(items, strings=strings))
+            val totp = keep(TotpViewModel(items, passwords, strings=strings, sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it }))
+            val cards = keep(BankCardViewModel(items, strings=strings, sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it }))
+            val documents = keep(DocumentViewModel(items, strings=strings, sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it }))
             val addresses = keep(BillingAddressViewModel(items))
             val notes = keep(NoteViewModel(items, strings=strings))
             val passkeys = keep(PasskeyViewModel(PasskeyRepository(room.passkeyDao()), strings=strings))

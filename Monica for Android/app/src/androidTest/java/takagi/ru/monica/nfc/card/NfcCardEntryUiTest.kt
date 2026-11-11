@@ -174,8 +174,8 @@ class NfcCardEntryUiTest {
         val repository = SecureItemRepository(db.secureItemDao(), decryptSensitiveValue = security::decryptDataIfMonicaCiphertext)
         compose.runOnIdle {
             SessionManager.markUnlocked()
-            bank = BankCardViewModel(repository, strings = AppLocaleStringResolver(context))
-            document = DocumentViewModel(repository, strings = AppLocaleStringResolver(context))
+            bank = BankCardViewModel(repository, strings = AppLocaleStringResolver(context), sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it })
+            document = DocumentViewModel(repository, strings = AppLocaleStringResolver(context), sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it })
             controller = NfcCardEntryController(compose.activity)
         }
         compose.setContent {

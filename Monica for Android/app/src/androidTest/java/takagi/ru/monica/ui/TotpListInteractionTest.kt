@@ -58,7 +58,7 @@ class TotpListInteractionTest {
         val database = Room.inMemoryDatabaseBuilder(context, PasswordDatabase::class.java).build()
         val passwords = PasswordRepository(database.passwordEntryDao())
         val items = SecureItemRepository(database.secureItemDao())
-        val model = TotpViewModel(items, passwords, strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext))
+        val model = TotpViewModel(items, passwords, strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext), sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it })
         val passwordModel = PasswordViewModel(passwords, SecurityManager(context), items, strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext))
         val visible = mutableStateOf(true)
         val selection = AtomicReference(Selection())

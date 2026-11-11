@@ -30,7 +30,7 @@ class LocalAccountTotpDeletionTest {
         val db = Room.inMemoryDatabaseBuilder(context, PasswordDatabase::class.java).build()
         val passwords = PasswordRepository(db.passwordEntryDao())
         val items = SecureItemRepository(db.secureItemDao())
-        val model = TotpViewModel(items, passwords, strings = AppLocaleStringResolver(context))
+        val model = TotpViewModel(items, passwords, strings = AppLocaleStringResolver(context), sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it })
         suspend fun rows() = db.passwordEntryDao().getAllPasswordEntriesSync().sortedBy { it.id }
         suspend fun account(project: String = UUID.randomUUID().toString(), metadata: Boolean = true,
                             otp: String = secret, keepassId: Long? = null): List<Long> {

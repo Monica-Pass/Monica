@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_device_required">Answer the security questions, then confirm your device PIN, pattern or password. Answers alone cannot reset the master password.</string>
+    <string name="recovery_device_title">Confirm device credential</string>
+    <string name="recovery_device_unavailable">This device cannot confirm a lock screen credential for recovery. Use your original master password or an encrypted backup.</string>
+    <string name="recovery_authorization_expired">Recovery confirmation was cancelled or expired. Start again.</string>
+    <string name="recovery_attempts_limited">Too many attempts. The limit remains after leaving this page or restarting. Try again later.</string>
+</resources>

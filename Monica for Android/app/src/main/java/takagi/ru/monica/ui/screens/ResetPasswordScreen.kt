@@ -35,14 +35,22 @@ fun ResetPasswordScreen(
     securityManager: SecurityManager,
     onNavigateBack: () -> Unit,
     onResetSuccess: () -> Unit,
-    skipCurrentPassword: Boolean = false
+    skipCurrentPassword: Boolean = false,
+    recoveryPermit: takagi.ru.monica.security.RecoveryPermit? = null,
 ) {
     val generation by SecurityManager.dataReadGeneration.collectAsState()
+    DisposableEffect(recoveryPermit) {
+        onDispose { recoveryPermit?.let(securityManager::cancelRecovery) }
+    }
     ResetPasswordScreenContent(
         generation = generation,
         isCurrent = securityManager::isDataReadCurrent,
         resetPassword = securityManager::resetMasterPassword,
-        authorizedReset = securityManager::setMasterPassword,
+        authorizedReset = { password, attempt, active ->
+            if (recoveryPermit != null) securityManager.recoverMasterPassword(password, recoveryPermit, attempt, active)
+            else if (!securityManager.isMasterPasswordSet()) securityManager.setMasterPassword(password, attempt, active)
+            else false
+        },
         onNavigateBack = onNavigateBack,
         onResetSuccess = onResetSuccess,
         skipCurrentPassword = skipCurrentPassword,

@@ -70,7 +70,7 @@ class HotpGenerationPersistenceTest {
     }
 
     private fun newViewModel() = TotpViewModel(repository, PasswordRepository(database.passwordEntryDao()),
-        strings = StringResolver { _, _ -> "Fixture" })
+        strings = StringResolver { _, _ -> "Fixture" }, sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it })
 
     private fun show() {
         compose.runOnUiThread {

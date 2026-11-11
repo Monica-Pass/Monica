@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_device_required">Odpowiedz na pytania zabezpieczające, a następnie potwierdź PIN, wzór lub hasło urządzenia. Same odpowiedzi nie pozwalają zresetować hasła głównego.</string>
+    <string name="recovery_device_title">Potwierdź blokadę urządzenia</string>
+    <string name="recovery_device_unavailable">To urządzenie nie może potwierdzić blokady wymaganej do odzyskiwania. Użyj pierwotnego hasła głównego lub zaszyfrowanej kopii zapasowej.</string>
+    <string name="recovery_authorization_expired">Potwierdzenie odzyskiwania zostało anulowane lub wygasło. Zacznij ponownie.</string>
+    <string name="recovery_attempts_limited">Zbyt wiele prób. Limit pozostaje po opuszczeniu strony lub ponownym uruchomieniu. Spróbuj później.</string>
+</resources>

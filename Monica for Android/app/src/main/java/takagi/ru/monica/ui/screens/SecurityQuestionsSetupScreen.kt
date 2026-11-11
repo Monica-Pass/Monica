@@ -43,6 +43,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import kotlinx.coroutines.launch
+import takagi.ru.monica.security.BoundedSecureDataRead
+import java.util.concurrent.atomic.AtomicBoolean
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -69,6 +77,17 @@ fun SecurityQuestionsSetupScreen(
 ) {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
+    val scope = rememberCoroutineScope()
+    val active = remember { AtomicBoolean(true) }
+    val entryGeneration = remember { SecurityManager.dataReadGeneration.value }
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    DisposableEffect(lifecycle) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_PAUSE || event == Lifecycle.Event.ON_STOP) active.set(false)
+        }
+        lifecycle.addObserver(observer)
+        onDispose { active.set(false); lifecycle.removeObserver(observer) }
+    }
     val questionIds = remember { PredefinedSecurityQuestions.questions.map { it.id } }
     val questions = questionIds.map { id ->
         SecurityQuestion(id, stringResource(PredefinedSecurityQuestions.textResIdFor(id)))
@@ -255,21 +274,35 @@ fun SecurityQuestionsSetupScreen(
                             isLoading = true
                             errorMessage = ""
 
+                            val firstId = selectedQuestion1!!.id
+                            val secondId = selectedQuestion2!!.id
+                            val firstAnswer = answer1.trim()
+                            val secondAnswer = answer2.trim()
+                            answer1 = ""; answer2 = ""
+                            scope.launch {
+                                val saved = BoundedSecureDataRead.readChecked(isCurrent = {
+                                    active.get() && securityManager.isDataReadCurrent(entryGeneration)
+                                }) {
                             securityManager.setSecurityQuestions(
-                                question1Id = selectedQuestion1!!.id,
-                                answer1 = answer1.trim(),
-                                question2Id = selectedQuestion2!!.id,
-                                answer2 = answer2.trim(),
+                                question1Id = firstId,
+                                answer1 = firstAnswer,
+                                question2Id = secondId,
+                                answer2 = secondAnswer,
                                 question1Text = customQuestion1.takeIf {
-                                    PredefinedSecurityQuestions.isCustomQuestion(selectedQuestion1!!.id)
+                                    PredefinedSecurityQuestions.isCustomQuestion(firstId)
                                 },
                                 question2Text = customQuestion2.takeIf {
-                                    PredefinedSecurityQuestions.isCustomQuestion(selectedQuestion2!!.id)
+                                    PredefinedSecurityQuestions.isCustomQuestion(secondId)
                                 }
                             )
 
-                            isLoading = false
-                            onSetupComplete()
+                                    true
+                                }
+                                if (!active.get() || !securityManager.isDataReadCurrent(entryGeneration)) return@launch
+                                isLoading = false
+                                if (saved == true) onSetupComplete()
+                                else errorMessage = context.getString(R.string.recovery_authorization_expired)
+                            }
                         }
                     }
                 },
@@ -340,7 +373,7 @@ private fun SecurityQuestionSetupHero(isExistingSetup: Boolean) {
             )
 
             Text(
-                text = stringResource(R.string.security_questions_description),
+                text = stringResource(R.string.recovery_device_required),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.9f)
             )

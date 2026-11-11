@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_device_required">Répondez aux questions de sécurité, puis confirmez le code PIN, le schéma ou le mot de passe de votre appareil. Les réponses seules ne permettent pas de réinitialiser le mot de passe principal.</string>
+    <string name="recovery_device_title">Confirmer le verrouillage de l’appareil</string>
+    <string name="recovery_device_unavailable">Cet appareil ne peut pas confirmer le verrouillage requis pour la récupération. Utilisez le mot de passe principal d’origine ou une sauvegarde chiffrée.</string>
+    <string name="recovery_authorization_expired">La confirmation a été annulée ou a expiré. Recommencez.</string>
+    <string name="recovery_attempts_limited">Trop de tentatives. La limite persiste après avoir quitté la page ou redémarré. Réessayez plus tard.</string>
+</resources>

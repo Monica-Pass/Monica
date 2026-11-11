@@ -92,6 +92,95 @@ class SecurityManager private constructor(
     
     private val sharedPreferences = secureStore.preferences
     private val localRecovery = LocalVaultRecovery(context)
+    private val recoveryLimiter = RecoveryAttemptLimiter(context)
+    private val recoveryAuthorization = RecoveryAuthorization(android.os.SystemClock::elapsedRealtime, System::currentTimeMillis)
+
+    private fun recoveryBinding(): Map<String, Any?> {
+        check(isPreparedStoreCurrent()) { "Recovery store was retired" }
+        val values = sharedPreferences.all
+        val keys = LocalPasswordCredentials.keys + listOf(MDK_READY_KEY, MDK_KEYSTORE_BLOB_KEY,
+            LocalVaultRecovery.GENERATION, SECURITY_QUESTION_1_ID_KEY, SECURITY_QUESTION_1_ANSWER_KEY,
+            SECURITY_QUESTION_1_TEXT_KEY, SECURITY_QUESTION_2_ID_KEY, SECURITY_QUESTION_2_ANSWER_KEY,
+            SECURITY_QUESTION_2_TEXT_KEY)
+        return keys.associateWith { values[it] } + ("store" to context.applicationInfo.dataDir)
+    }
+
+    internal fun recoveryAttemptStatus() = recoveryLimiter.status()
+    internal fun cancelRecovery() = recoveryAuthorization.cancel()
+    internal fun cancelRecovery(challenge: RecoveryChallenge) = recoveryAuthorization.cancel(challenge)
+    fun cancelRecovery(permit: RecoveryPermit) = recoveryAuthorization.cancel(permit)
+    fun isRecoveryPermitCurrent(permit: RecoveryPermit?): Boolean = runCatching {
+        recoveryAuthorization.isCurrent(permit, recoveryBinding(), runtimeKeyGeneration.get(), passwordCredentialEpoch.get())
+    }.getOrDefault(false)
+
+    /** Answers create only a pending challenge. The platform credential callback issues the permit. */
+    internal fun beginRecoveryWithAnswers(answer1: String, answer2: String, ensureActive: () -> Unit): RecoveryChallenge? {
+        recoveryAuthorization.cancel()
+        val generation = runtimeKeyGeneration.get()
+        val epoch = passwordCredentialEpoch.get()
+        return try {
+            ensureActive()
+            localRecovery.validate(sharedPreferences)
+            check(isMasterPasswordSet())
+            val binding = recoveryBinding()
+            if (!recoveryLimiter.reserve()) return null
+            val first = binding[SECURITY_QUESTION_1_ANSWER_KEY] as? String ?: return null
+            val second = binding[SECURITY_QUESTION_2_ANSWER_KEY] as? String ?: return null
+            val valid1 = SecurityAnswerHash.verify(answer1, first)
+            val valid2 = SecurityAnswerHash.verify(answer2, second)
+            if (!valid1 || !valid2) return null
+            val updates = buildMap {
+                if (SecurityAnswerHash.isLegacy(first)) put(SECURITY_QUESTION_1_ANSWER_KEY, SecurityAnswerHash.create(answer1))
+                if (SecurityAnswerHash.isLegacy(second)) put(SECURITY_QUESTION_2_ANSWER_KEY, SecurityAnswerHash.create(answer2))
+            }
+            ensureActive()
+            synchronized(runtimeKeyLock) {
+                check(runtimeKeyGeneration.get() == generation && passwordCredentialEpoch.get() == epoch && recoveryBinding() == binding)
+                recoveryAuthorization.begin(binding, generation, epoch, updates)
+            }
+        } catch (_: Exception) { null }
+    }
+
+    internal fun completeRecoveryDeviceCredential(challenge: RecoveryChallenge): RecoveryPermit? = runCatching {
+        synchronized(runtimeKeyLock) {
+            recoveryAuthorization.confirm(challenge, recoveryBinding(), runtimeKeyGeneration.get(), passwordCredentialEpoch.get())
+        }
+    }.getOrNull()
+
+    fun recoverMasterPassword(
+        password: String,
+        permit: RecoveryPermit?,
+        attempt: LocalPasswordChangeAttempt = LocalPasswordChangeAttempt(),
+        ensureActive: () -> Unit = {},
+    ): Boolean {
+        var mdk: ByteArray? = null
+        return try {
+            require(MasterPasswordPolicy.meetsMinLength(password))
+            attempt.ensureCurrent(); ensureActive()
+            val proof = requireNotNull(permit)
+            val binding = recoveryBinding()
+            val updates = requireNotNull(recoveryAuthorization.updates(proof, binding, attempt.generation, attempt.credentialEpoch))
+            localRecovery.validate(sharedPreferences)
+            val original = sharedPreferences.all
+            PasswordKdf.fromValues(original)
+            // COMPAT may supply the original MDK only AFTER explicit recovery authorization.
+            check(original[MDK_READY_KEY] == true && original[MDK_PASSWORD_BLOB_KEY] != null)
+            mdk = readKeystoreWrappedMdk(original[MDK_KEYSTORE_BLOB_KEY] as? String ?: return false)
+            check(mdk.size == 32)
+            commitLocalPassword(password, mdk, original, attempt, ensureActive, updates) {
+                check(recoveryAuthorization.consume(proof, recoveryBinding(), attempt.generation, attempt.credentialEpoch)) {
+                    "Recovery authorization was revoked"
+                }
+            }
+            runCatching { recoveryLimiter.clearAfterAuthenticatedRecovery() }
+            true
+        } catch (_: Exception) {
+            false
+        } finally {
+            permit?.let(recoveryAuthorization::cancel)
+            mdk?.fill(0)
+        }
+    }
     
     companion object {
         internal fun openFresh(context: Context) = SecurityManager(context, PreparedSecureStore.fresh(context))
@@ -612,12 +701,13 @@ class SecurityManager private constructor(
         var mdk: ByteArray? = null
         return try {
             attempt.ensureCurrent(); ensureActive()
+            check(!isMasterPasswordSet()) { "Master password already set" }
             localRecovery.validate(sharedPreferences)
             val original = sharedPreferences.all
-            // Reject unknown metadata even on an otherwise authorized reset.
+            // Initial enrollment alone. Cached keys and wrappers cannot authorize replacement.
+            check(!isMasterPasswordSet()) { "Master password already set" }
+            require(MasterPasswordPolicy.meetsMinLength(password))
             PasswordKdf.fromValues(original)
-            // Initial setup and the existing authorized device/security-question reset route.
-            // Normal password changes use changeVerifiedPassword and cannot reuse cached authorization.
             mdk = getOrCreateMdkBytes()
             commitLocalPassword(password, mdk, original, attempt, ensureActive)
             true
@@ -714,23 +804,26 @@ class SecurityManager private constructor(
         question1Text: String? = null,
         question2Text: String? = null
     ) {
-        val hashedAnswer1 = hashAnswer(answer1)
-        val hashedAnswer2 = hashAnswer(answer2)
-        
-        sharedPreferences.edit()
-            .putInt(SECURITY_QUESTION_1_ID_KEY, question1Id)
-            .putString(SECURITY_QUESTION_1_ANSWER_KEY, hashedAnswer1)
-            .putString(
-                SECURITY_QUESTION_1_TEXT_KEY,
-                if (PredefinedSecurityQuestions.isCustomQuestion(question1Id)) question1Text else null
-            )
-            .putInt(SECURITY_QUESTION_2_ID_KEY, question2Id)
-            .putString(SECURITY_QUESTION_2_ANSWER_KEY, hashedAnswer2)
-            .putString(
-                SECURITY_QUESTION_2_TEXT_KEY,
-                if (PredefinedSecurityQuestions.isCustomQuestion(question2Id)) question2Text else null
-            )
-            .apply()
+        check(SessionManager.isUnlocked.value && hasRuntimeUnlockCache()) { "Security question setup requires authentication" }
+        require(isValidSecurityQuestionId(question1Id) && isValidSecurityQuestionId(question2Id))
+        val generation = runtimeKeyGeneration.get()
+        val original = recoveryBinding()
+        val hashedAnswer1 = SecurityAnswerHash.create(answer1)
+        val hashedAnswer2 = SecurityAnswerHash.create(answer2)
+        val updates = mapOf(
+            SECURITY_QUESTION_1_ID_KEY to question1Id,
+            SECURITY_QUESTION_1_ANSWER_KEY to hashedAnswer1,
+            SECURITY_QUESTION_1_TEXT_KEY to question1Text.takeIf { PredefinedSecurityQuestions.isCustomQuestion(question1Id) },
+            SECURITY_QUESTION_2_ID_KEY to question2Id,
+            SECURITY_QUESTION_2_ANSWER_KEY to hashedAnswer2,
+            SECURITY_QUESTION_2_TEXT_KEY to question2Text.takeIf { PredefinedSecurityQuestions.isCustomQuestion(question2Id) },
+        )
+        check(localRecovery.commitAuthenticatedSettings(sharedPreferences, updates) {
+            synchronized(runtimeKeyLock) {
+                check(runtimeKeyGeneration.get() == generation && SessionManager.isUnlocked.value && recoveryBinding() == original)
+                cancelRecovery()
+            }
+        }) { "Security questions could not be saved" }
     }
     
     fun areSecurityQuestionsSet(): Boolean {
@@ -763,13 +856,14 @@ class SecurityManager private constructor(
     }
     
     fun verifySecurityAnswers(answer1: String, answer2: String): Boolean {
-        val storedAnswer1 = sharedPreferences.getString(SECURITY_QUESTION_1_ANSWER_KEY, null) ?: return false
-        val storedAnswer2 = sharedPreferences.getString(SECURITY_QUESTION_2_ANSWER_KEY, null) ?: return false
-        
-        val hashedAnswer1 = hashAnswer(answer1)
-        val hashedAnswer2 = hashAnswer(answer2)
-        
-        return hashedAnswer1 == storedAnswer1 && hashedAnswer2 == storedAnswer2
+        if (!recoveryLimiter.reserve()) return false
+        return runCatching {
+            val first = sharedPreferences.getString(SECURITY_QUESTION_1_ANSWER_KEY, null) ?: return false
+            val second = sharedPreferences.getString(SECURITY_QUESTION_2_ANSWER_KEY, null) ?: return false
+            val valid1 = SecurityAnswerHash.verify(answer1, first)
+            val valid2 = SecurityAnswerHash.verify(answer2, second)
+            valid1 && valid2
+        }.getOrDefault(false)
     }
 
     fun exportSecurityQuestionsForBackup(): SecurityQuestionsBackupSnapshot? {
@@ -798,9 +892,9 @@ class SecurityManager private constructor(
     fun restoreSecurityQuestionsFromBackup(snapshot: SecurityQuestionsBackupSnapshot): Boolean {
         val normalized = snapshot.copy(
             question1Text = snapshot.question1Text?.trim()?.takeIf { it.isNotEmpty() },
-            answer1Hash = snapshot.answer1Hash.trim().lowercase(),
+            answer1Hash = SecurityAnswerHash.canonical(snapshot.answer1Hash),
             question2Text = snapshot.question2Text?.trim()?.takeIf { it.isNotEmpty() },
-            answer2Hash = snapshot.answer2Hash.trim().lowercase()
+            answer2Hash = SecurityAnswerHash.canonical(snapshot.answer2Hash)
         )
         if (
             !isValidSecurityQuestionId(normalized.question1Id) ||
@@ -822,6 +916,7 @@ class SecurityManager private constructor(
         ) {
             return false
         }
+        cancelRecovery()
         sharedPreferences.edit()
             .putInt(SECURITY_QUESTION_1_ID_KEY, normalized.question1Id)
             .putString(SECURITY_QUESTION_1_ANSWER_KEY, normalized.answer1Hash)
@@ -847,18 +942,10 @@ class SecurityManager private constructor(
         return PredefinedSecurityQuestions.getQuestionById(questionId) != null
     }
 
-    private fun isValidSecurityAnswerHash(value: String): Boolean {
-        return SECURITY_ANSWER_HASH_PATTERN.matches(value)
-    }
-    
-    private fun hashAnswer(answer: String): String {
-        val cleanAnswer = answer.trim().lowercase()
-        val digest = MessageDigest.getInstance("SHA-256")
-        val hashedBytes = digest.digest(cleanAnswer.toByteArray())
-        return hashedBytes.joinToString("") { "%02x".format(it) }
-    }
-    
+    private fun isValidSecurityAnswerHash(value: String): Boolean = SecurityAnswerHash.isValid(value)
+
     fun clearSecurityQuestions() {
+        cancelRecovery()
         sharedPreferences.edit()
             .remove(SECURITY_QUESTION_1_ID_KEY)
             .remove(SECURITY_QUESTION_1_ANSWER_KEY)
@@ -1126,13 +1213,21 @@ class SecurityManager private constructor(
         original: Map<String, *>,
         attempt: LocalPasswordChangeAttempt,
         ensureActive: () -> Unit,
+        extraUpdates: Map<String, String> = emptyMap(),
+        authorizeCommit: () -> Unit = {},
     ) {
         attempt.ensureCurrent(); ensureActive()
         check(mdk.size == 32)
-        val values = credentialUpdates(password, mdk)
+        val values = credentialUpdates(password, mdk) + extraUpdates
         attempt.ensureCurrent(); ensureActive()
         localRecovery.enroll(sharedPreferences, password, values, expectedCredentials = original,
-            beforeCommit = { attempt.beginCommit(ensureActive) })
+            beforeCommit = {
+                synchronized(runtimeKeyLock) {
+                    attempt.ensureCurrent(); ensureActive()
+                    authorizeCommit()
+                    attempt.beginCommit(ensureActive)
+                }
+            })
         val committed = original + values
         // The credential transaction may finish after cancellation; it must stay coherent,
         // but it is never permission to publish a runtime key into a subsequently locked session.
@@ -1241,22 +1336,21 @@ class SecurityManager private constructor(
             return ByteArray(0)
         }
         return try {
-            val wrapped = parseWrappedMdkBlob(keystoreBlob)
-            val ksKey = when (wrapped.mode) {
-                WrapperMode.AUTH -> getExistingDataKey(compat = false)
-                WrapperMode.COMPAT -> getExistingDataKey(compat = true)
-            }
-            val combined = android.util.Base64.decode(wrapped.payload, android.util.Base64.NO_WRAP)
-            val iv = combined.copyOfRange(0, 12)
-            val enc = combined.copyOfRange(12, combined.size)
-            val cipher = Cipher.getInstance("AES/GCM/NoPadding")
-            val spec = GCMParameterSpec(128, iv)
-            cipher.init(Cipher.DECRYPT_MODE, ksKey, spec)
-            cipher.doFinal(enc)
+            readKeystoreWrappedMdk(keystoreBlob)
         } catch (e: Exception) {
             android.util.Log.w("SecurityManager", "Get MDK by keystore failed: ${e.javaClass.simpleName}; wrapper retained")
             ByteArray(0)
         }
+    }
+
+    private fun readKeystoreWrappedMdk(blob: String): ByteArray {
+        val wrapped = parseWrappedMdkBlob(blob)
+        val key = getExistingDataKey(compat = wrapped.mode == WrapperMode.COMPAT)
+        val combined = android.util.Base64.decode(wrapped.payload, android.util.Base64.NO_WRAP)
+        require(combined.size == 60) { "Invalid existing MDK wrapper" }
+        val cipher = Cipher.getInstance("AES/GCM/NoPadding")
+        cipher.init(Cipher.DECRYPT_MODE, key, GCMParameterSpec(128, combined, 0, 12))
+        return cipher.doFinal(combined, 12, combined.size - 12).also { require(it.size == 32) }
     }
 
     private fun getMdkForCrypto(): ByteArray? {

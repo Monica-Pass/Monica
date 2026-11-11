@@ -56,8 +56,8 @@ class WalletContentEditorTest {
         db = Room.inMemoryDatabaseBuilder(context, PasswordDatabase::class.java).build()
         val repo = SecureItemRepository(db.secureItemDao(), decryptSensitiveValue = security::decryptDataIfMonicaCiphertext)
         compose.runOnIdle {
-            bank = BankCardViewModel(repo, strings = AppLocaleStringResolver(context))
-            document = DocumentViewModel(repo, strings = AppLocaleStringResolver(context))
+            bank = BankCardViewModel(repo, strings = AppLocaleStringResolver(context), sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it })
+            document = DocumentViewModel(repo, strings = AppLocaleStringResolver(context), sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it })
             billing = BillingAddressViewModel(repo)
         }
     }

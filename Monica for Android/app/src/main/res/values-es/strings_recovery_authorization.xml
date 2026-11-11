@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_device_required">Responda las preguntas de seguridad y confirme el PIN, patrón o contraseña del dispositivo. Las respuestas por sí solas no permiten restablecer la contraseña maestra.</string>
+    <string name="recovery_device_title">Confirmar bloqueo del dispositivo</string>
+    <string name="recovery_device_unavailable">Este dispositivo no puede confirmar el bloqueo necesario para recuperar el acceso. Use la contraseña maestra original o una copia cifrada.</string>
+    <string name="recovery_authorization_expired">La confirmación se canceló o caducó. Empiece de nuevo.</string>
+    <string name="recovery_attempts_limited">Demasiados intentos. El límite permanece al salir de la página o reiniciar. Inténtelo más tarde.</string>
+</resources>

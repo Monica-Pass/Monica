@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_device_required">Trả lời câu hỏi bảo mật, rồi xác nhận mã PIN, hình mở khóa hoặc mật khẩu thiết bị. Chỉ câu trả lời không đủ để đặt lại mật khẩu chính.</string>
+    <string name="recovery_device_title">Xác nhận thông tin khóa thiết bị</string>
+    <string name="recovery_device_unavailable">Thiết bị này không thể xác nhận khóa màn hình để khôi phục. Hãy dùng mật khẩu chính gốc hoặc bản sao lưu mã hóa.</string>
+    <string name="recovery_authorization_expired">Xác nhận khôi phục đã bị hủy hoặc hết hạn. Hãy bắt đầu lại.</string>
+    <string name="recovery_attempts_limited">Quá nhiều lần thử. Giới hạn vẫn giữ nguyên khi rời trang hoặc khởi động lại. Hãy thử lại sau.</string>
+</resources>

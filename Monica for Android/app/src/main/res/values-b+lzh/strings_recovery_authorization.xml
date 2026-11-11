@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_device_required">既答安保之問，尚須驗此機之 PIN、圖式或鎖屏密碼。僅憑答案，不得重設主密碼。</string>
+    <string name="recovery_device_title">驗此機鎖屏憑證</string>
+    <string name="recovery_device_unavailable">此機不能驗找回所需之鎖屏憑證。請用原主密碼或加密備份。</string>
+    <string name="recovery_authorization_expired">找回之驗已撤或逾期，請重新開始。</string>
+    <string name="recovery_attempts_limited">所試過多。離頁或重啟，限制仍存，請稍後再試。</string>
+</resources>

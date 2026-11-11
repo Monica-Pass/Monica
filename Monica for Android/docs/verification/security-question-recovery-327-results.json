@@ -1,0 +1,1228 @@
+{
+  "version": "1.0.327",
+  "scope": "Synthetic API 35 x86_64; local test signature and isolated application IDs",
+  "sharedByteIdenticalPaths": 55,
+  "resourceAudit": {
+    "main": {
+      "build": "final-main-06",
+      "actualReleaseValues": 90,
+      "configurations": 18,
+      "allMatchedSource": true
+    },
+    "fd": {
+      "build": "final-fd-03",
+      "actualReleaseValues": 90,
+      "configurations": 18,
+      "allMatchedSource": true
+    }
+  },
+  "retainedReleaseAudit": {
+    "main": {
+      "sameMdkEveryStage": true,
+      "recoveryRetainsEveryOriginalRowColumnAndCiphertext": true,
+      "originalRowsUnchangedByNewWriteAndColdRead": true,
+      "bothColdSecretsVerified": true,
+      "legacyAnswersMigratedFromActualPlainAnswers": true,
+      "wrapperUnchanged": true,
+      "recordCounts": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "finalSnapshotSha256": "ae9c0f44ffe044d2d52f37d0866250b495cd78615f3e3b3c9d1c87abaad99dc7"
+    },
+    "fd": {
+      "sameMdkEveryStage": true,
+      "recoveryRetainsEveryOriginalRowColumnAndCiphertext": true,
+      "originalRowsUnchangedByNewWriteAndColdRead": true,
+      "bothColdSecretsVerified": true,
+      "legacyAnswersMigratedFromActualPlainAnswers": true,
+      "wrapperUnchanged": true,
+      "recordCounts": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "finalSnapshotSha256": "101146e3663c1ff2abb1d615fefed4a042bb0b3a7e15b87fa3311a7594290d61"
+    }
+  },
+  "cleanup": {
+    "ownGuestRemoved": true,
+    "owner0Preserved": true,
+    "currentUser": 0,
+    "adbdUid": 2000,
+    "density": "Physical density: 280",
+    "night": "Night mode: no",
+    "complete": true
+  },
+  "editions": {
+    "main": {
+      "productionBuild": "final-main-06",
+      "testBuild": "final-main-tests-07",
+      "jvmBuild": "final-main-06",
+      "productionBuildSeconds": 599.468,
+      "jvm": {
+        "tests": 46,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "jvmCases": [
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "biometricUnlockClearsPreviousMdkCooldownBeforeReadingKeyMaterial",
+          "seconds": "0.029"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "sharedDatabaseAndSyncBoundariesDoNotExportLocalOnlyTotpCiphertext",
+          "seconds": "0.027"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "highTrafficTotpReadSurfacesUseEncryptedFieldCompatibleResolver",
+          "seconds": "0.083"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "compatDataEncryptionDoesNotUsePredictableMasterKeyString",
+          "seconds": "0.003"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "monicaCiphertextDetectionRequiresExplicitPrefix",
+          "seconds": "0.001"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "totpFieldEncryptionCompatibilityReadsThroughSingleHelper",
+          "seconds": "0.001"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "invalidatedAndUnrecoverableKeysRetainOriginalWrappers",
+          "seconds": "0.006"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "emptyRuntimeMdkCacheCannotMaskReadableKeystoreWrapper",
+          "seconds": "0.002"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "totpNewWritesStoreLocalCiphertextWithoutBreakingPortableBoundaries",
+          "seconds": "0.009"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "migratedSecondaryBiometricsKeepOneUseRequestAndForegroundGates",
+          "seconds": "0.001"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "bankCardAndDocumentItemDataUseEncryptedLocalStorageWithPortableBoundaries",
+          "seconds": "0.009"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "productionTotpItemDataParsingIsCentralizedInResolver",
+          "seconds": "0.36"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "pageSwitchHotPathsDoNotRunAuthOrBitwardenSyncWorkOnMainThread",
+          "seconds": "0.041"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "autofillPasswordSelectionReturnPathDoesNotBlockMainThread",
+          "seconds": "0.019"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "legacySensitiveFieldMigrationRunsAfterUnlockAndOnlyTouchesLocalRoomCache",
+          "seconds": "0.006"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "mainPasswordLoginUsesFullVaultUnlockPath",
+          "seconds": "0.003"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "compatDataPrefixIsRecognizedAtPasswordBoundaries",
+          "seconds": "0.005"
+        },
+        {
+          "classname": "takagi.ru.monica.security.LocalPasswordKdfTest",
+          "name": "exactParserRejectsUnknownTruncatedNonStringAndUnboundedProfiles",
+          "seconds": "0.058"
+        },
+        {
+          "classname": "takagi.ru.monica.security.LocalPasswordKdfTest",
+          "name": "credentialSnapshotsDetectAllCredentialChangesButIgnoreUnrelatedSettings",
+          "seconds": "0.02"
+        },
+        {
+          "classname": "takagi.ru.monica.security.LocalPasswordKdfTest",
+          "name": "legacy100kVerifierAndWrapperRemainReadableWithoutMetadata",
+          "seconds": "0.175"
+        },
+        {
+          "classname": "takagi.ru.monica.security.LocalPasswordKdfTest",
+          "name": "invalidMdkAndLegacyCreationAreRejectedBeforeReplacement",
+          "seconds": "0.001"
+        },
+        {
+          "classname": "takagi.ru.monica.security.LocalPasswordKdfTest",
+          "name": "aadMismatchWrongPasswordAndChangedMetadataRejectTheWrapper",
+          "seconds": "0.766"
+        },
+        {
+          "classname": "takagi.ru.monica.security.LocalPasswordKdfTest",
+          "name": "malformedUtf16KeepsHistoricalJceOutcomeForBothPbkdf2Costs",
+          "seconds": "0.9"
+        },
+        {
+          "classname": "takagi.ru.monica.security.LocalPasswordKdfTest",
+          "name": "bothNewProfilesRewrapTheSameMdkAndKeepExistingRecordCiphertextUsable",
+          "seconds": "1.223"
+        },
+        {
+          "classname": "takagi.ru.monica.security.LocalPasswordKdfTest",
+          "name": "hashSuccessDoesNotConcealBrokenWrapperAndWrapperSuccessDoesNotReplaceHashVerification",
+          "seconds": "1.155"
+        },
+        {
+          "classname": "takagi.ru.monica.security.LocalPasswordKdfTest",
+          "name": "allProfilesMatchIndependentUnicodeWhitespaceAndBothSaltLengthVectors",
+          "seconds": "2.755"
+        },
+        {
+          "classname": "takagi.ru.monica.security.RecoveryAuthorizationTest",
+          "name": "correctConfirmationIsSingleUse",
+          "seconds": "0.002"
+        },
+        {
+          "classname": "takagi.ru.monica.security.RecoveryAuthorizationTest",
+          "name": "lockOrCredentialEpochRevokes",
+          "seconds": "0.0"
+        },
+        {
+          "classname": "takagi.ru.monica.security.RecoveryAuthorizationTest",
+          "name": "cancelBeforeAndAfterConfirmationRevokes",
+          "seconds": "0.001"
+        },
+        {
+          "classname": "takagi.ru.monica.security.RecoveryAuthorizationTest",
+          "name": "answersAndFabricatedPermitCannotAuthorize",
+          "seconds": "0.0"
+        },
+        {
+          "classname": "takagi.ru.monica.security.RecoveryAuthorizationTest",
+          "name": "expirationAndEitherClockRollbackRevokes",
+          "seconds": "0.0"
+        },
+        {
+          "classname": "takagi.ru.monica.security.RecoveryAuthorizationTest",
+          "name": "differentStorePasswordOrAnswerRevokes",
+          "seconds": "0.0"
+        },
+        {
+          "classname": "takagi.ru.monica.security.RecoveryAuthorizationTest",
+          "name": "wrongRequestCannotConfirmOrCancelReplacement",
+          "seconds": "0.0"
+        },
+        {
+          "classname": "takagi.ru.monica.security.SecurityAnswerHashTest",
+          "name": "invalidVersionsAndUnboundedCostsFailClosed",
+          "seconds": "0.005"
+        },
+        {
+          "classname": "takagi.ru.monica.security.SecurityAnswerHashTest",
+          "name": "saltedNewEnrollmentMatchesIndependentPbkdfVerifier",
+          "seconds": "0.608"
+        },
+        {
+          "classname": "takagi.ru.monica.security.SecurityAnswerHashTest",
+          "name": "legacyBackupIsComparedToActualAnswerAndNotRehashedAsAnswer",
+          "seconds": "0.004"
+        },
+        {
+          "classname": "takagi.ru.monica.viewmodel.HotpGenerationOrderTest",
+          "name": "searchAndCategoryFilterRetainCounterPosition",
+          "seconds": "5.681"
+        },
+        {
+          "classname": "takagi.ru.monica.viewmodel.HotpGenerationOrderTest",
+          "name": "otherItemTypesRetainMostRecentlyModifiedOrdering",
+          "seconds": "0.098"
+        },
+        {
+          "classname": "takagi.ru.monica.viewmodel.HotpGenerationOrderTest",
+          "name": "identicalCreationTimesUseStableIdsAndBothDaoStreamsAgree",
+          "seconds": "0.11"
+        },
+        {
+          "classname": "takagi.ru.monica.viewmodel.HotpGenerationOrderTest",
+          "name": "favoritePriorityRemainsAboveOrdinaryRows",
+          "seconds": "0.103"
+        },
+        {
+          "classname": "takagi.ru.monica.viewmodel.HotpGenerationOrderTest",
+          "name": "generatingRepeatedlyKeepsDefaultPositionAndAdvancesModificationTime",
+          "seconds": "0.119"
+        },
+        {
+          "classname": "takagi.ru.monica.viewmodel.HotpGenerationOrderTest",
+          "name": "savedDragRanksRemainPrimaryWhenCounterChanges",
+          "seconds": "0.088"
+        },
+        {
+          "classname": "takagi.ru.monica.viewmodel.SensitiveWriteDependencyTest",
+          "name": "explicitEncryptionFailureCannotFallBackToPlaintext",
+          "seconds": "0.11"
+        },
+        {
+          "classname": "takagi.ru.monica.viewmodel.SensitiveWriteDependencyTest",
+          "name": "missingDocumentEncryptionDependencyRejectsBeforeInsert",
+          "seconds": "0.082"
+        },
+        {
+          "classname": "takagi.ru.monica.viewmodel.SensitiveWriteDependencyTest",
+          "name": "missingCardEncryptionDependencyRejectsBeforeInsert",
+          "seconds": "0.073"
+        },
+        {
+          "classname": "takagi.ru.monica.viewmodel.SensitiveWriteDependencyTest",
+          "name": "missingTotpEncryptionDependencyReportsFailureWithoutInsert",
+          "seconds": "0.072"
+        }
+      ],
+      "deviceBatches": [
+        {
+          "part": "core",
+          "methods": 43,
+          "seconds": 137.705,
+          "runnerSeconds": 134.784,
+          "passed": true,
+          "apks": [
+            {
+              "sha256": "8333a9baee23ff3d851144451461461c85dc7b64b18c5331e2e589e8031fa7f3"
+            },
+            {
+              "sha256": "4643033bc45f3ca98ae9a4e68bcf1d65915f70d2af227a76fbfc3bcbc6868a3a"
+            }
+          ]
+        },
+        {
+          "part": "sensitive",
+          "methods": 20,
+          "seconds": 36.087,
+          "runnerSeconds": 33.258,
+          "passed": true,
+          "apks": [
+            {
+              "sha256": "8333a9baee23ff3d851144451461461c85dc7b64b18c5331e2e589e8031fa7f3"
+            },
+            {
+              "sha256": "4643033bc45f3ca98ae9a4e68bcf1d65915f70d2af227a76fbfc3bcbc6868a3a"
+            }
+          ]
+        }
+      ],
+      "deviceCases": [
+        {
+          "class": "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest",
+          "test": "versionedBackupRestoresVerifiersWithoutTreatingHashesAsUserAnswers"
+        },
+        {
+          "class": "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest",
+          "test": "lockOrAnswerReplacementRevokesPermitBeforeCredentialCommit"
+        },
+        {
+          "class": "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest",
+          "test": "authenticatedRecoveryRetainsMdkCiphertextAndMigratesActualLegacyAnswers"
+        },
+        {
+          "class": "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest",
+          "test": "reservationsSurviveReopeningAndWrongAnswersNeverModifyLegacyHashes"
+        },
+        {
+          "class": "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest",
+          "test": "answersAloneAndCancelledChallengeDoNotAuthorize"
+        },
+        {
+          "class": "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest",
+          "test": "forgedOrMissingPermitNeverChangesCredentials"
+        },
+        {
+          "class": "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest",
+          "test": "missingWrapperCannotGenerateReplacementMdkDuringRecovery"
+        },
+        {
+          "class": "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest",
+          "test": "questionSaveDoesNotHoldRuntimeLockDuringStorageCommitAndRejectsLockBeforeGate"
+        },
+        {
+          "class": "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest",
+          "test": "initialEnrollmentCannotReplaceExistingPasswordWithCacheOrCompatWrapper"
+        },
+        {
+          "class": "takagi.ru.monica.security.OldRecoveryBypassInstrumentedTest",
+          "test": "cachedOrCompatMdkIsNotResetAuthorization"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "brokenPasswordWrapperIsNotRepairedFromAWarmRuntimeKey"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "argonWrongPasswordCancellationAndLockKeepOriginalBytes"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "lockAtTheFinalCommitGatePreventsCredentialAndRecoveryWrites"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "missingVerifierWithRemainingCredentialMaterialNeverBecomesAnUnprotectedVault"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "cancelledChangeAndCancelledPasswordAttemptCannotWriteOrUnlock"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "legacyLoginAutomaticallyUpgradesAndFreshManagerReadsTheSameMdkAndCiphertext"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "argonPasswordResetAndAuthorizedResetAlwaysWrite600k"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "historicalProfilesMigrateTo600kAndResetRetainsMdkButRevokesOldPassword"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "malformedUtf16KeepsHistoricalJceOutcomeForBothPbkdf2Costs"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "wrongLegacyPasswordChangesNoEncryptedFileBytes"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "androidAndNativeDerivationsMatchAllIndependentVectorsWithMeasuredDurations"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "stagedPasswordAttemptsCannotCommitAcrossAlgorithmOrPasswordReplacement"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "activityCancellationAfterAuthenticationKeepsAllOriginalBytes"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "unknownStoredProfileCannotFallBackToLegacyOrWriteReplacement"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "current600kLoginDoesNotRewrapPasswordCredentials"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "staleSettingsWriterRefreshesAndMergesWithoutLosingConcurrentValues"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "bothNewProfilesRecoverTheOriginalPasswordWrappedMdk"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "failedMirrorCommitKeepsCanonicalRecoverableAndBlocksOldMirror"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "staleCredentialGenerationCannotWriteOrReenroll"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "readDuringOwnCanonicalCommitDoesNotRevokeTheExistingSession"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "genuineVersionOneRecoveryRetainsLegacyKdfAndOldApkProtectedValues"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "credentialCasIncludesKdfMetadata"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "unknownEnvelopeVersionIsNotTreatedAsAbsentRecovery"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "failedCommitWithPublishedMemoryStaysBlockedUntilDiskAndCanonicalAgree"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "revokedCommitLeavesBothCanonicalAndMirrorUntouched"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "freshPreparationReloadsExactEncryptedDiskValuesAfterStaleCache"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordCrossProcessInstrumentedTest",
+          "test": "staleImeHandleIsRejectedAfterMainMigrationAndFreshImeOpensNewProfile"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordCrossProcessInstrumentedTest",
+          "test": "twoRealProcessCredentialWritersCannotOverwriteEachOthersGenerationOrUnknownValue"
+        },
+        {
+          "class": "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest",
+          "test": "authorizedResetRetainsExistingRouteWithoutOldPasswordRead"
+        },
+        {
+          "class": "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest",
+          "test": "resetBackRevokesWorkerBeforeCommit"
+        },
+        {
+          "class": "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest",
+          "test": "resetBackgroundRevokesWorkerBeforeCommit"
+        },
+        {
+          "class": "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest",
+          "test": "resetUsesOneVerifiedOperationAndClearsAllPasswordFields"
+        },
+        {
+          "class": "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest",
+          "test": "resetSavedStateContainsNeitherOldNorNewPassword"
+        },
+        {
+          "class": "takagi.ru.monica.ui.HotpGenerationPersistenceTest",
+          "test": "generationRetainsPersistedManualOrder"
+        },
+        {
+          "class": "takagi.ru.monica.ui.HotpGenerationPersistenceTest",
+          "test": "repeatedGenerateNextKeepsDefaultPositionAfterReopening"
+        },
+        {
+          "class": "takagi.ru.monica.ui.WalletContentEditorTest",
+          "test": "nameHelpAndPhotoCardsStayReadableWithLargeText"
+        },
+        {
+          "class": "takagi.ru.monica.ui.WalletContentEditorTest",
+          "test": "documentMoveMenuAndRecreationKeepExistingIdentityAndSaveOrder"
+        },
+        {
+          "class": "takagi.ru.monica.ui.WalletContentEditorTest",
+          "test": "smallDarkLargeTextEditorUsesIndependentFieldsAndKeepsEmptyAddedFields"
+        },
+        {
+          "class": "takagi.ru.monica.ui.WalletContentEditorTest",
+          "test": "billingExtrasCollapseAndReopenWithoutMixingNameOrContactValues"
+        },
+        {
+          "class": "takagi.ru.monica.ui.WalletContentEditorTest",
+          "test": "newBankCardCanDragContentsAndReopenWithOrderAndSecretsPreserved"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.AuthenticatorVisibilityIntegrityTest",
+          "test": "differentMotpPinsOnTheSameBindingRemainSeparateButExactMirrorsCollapse"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.AuthenticatorVisibilityIntegrityTest",
+          "test": "unlockingReloadsTheSameCiphertextWithoutWritingThePasswordRow"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.AuthenticatorVisibilityIntegrityTest",
+          "test": "passwordAndStoredMotpWithDifferentPinsAreNotMirrors"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.AuthenticatorVisibilityIntegrityTest",
+          "test": "unreadablePasswordOtpStaysVisibleWithoutBecomingSelectableOrChangingStorage"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.AuthenticatorVisibilityIntegrityTest",
+          "test": "deletingOneMotpDoesNotClearThePasswordKeyWithADifferentPin"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.LocalAccountTotpDeletionTest",
+          "test": "deletingAStaleBindingDoesNotClearAReplacementOrItsSiblings"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.LocalAccountTotpDeletionTest",
+          "test": "deletingResidualOtpAllowsAnAlreadyPartlyClearedAccountToRestore"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.LocalAccountTotpDeletionTest",
+          "test": "legacyExplicitGroupWithoutCredentialMetadataClearsTogether"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.LocalAccountTotpDeletionTest",
+          "test": "aDifferentOtpOnASiblingIsNeverDeleted"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.LocalAccountTotpDeletionTest",
+          "test": "batchDeleteClearsAllPasswordsAfterExcludingEverySelectedBinding"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.LocalAccountTotpDeletionTest",
+          "test": "unsupportedAccountMetadataPreservesBothPasswordAndAuthenticatorData"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.LocalAccountTotpDeletionTest",
+          "test": "deletionStaysWithinExactLocalAccountEvenWhenNamesAndOtpMatch"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.LocalAccountTotpDeletionTest",
+          "test": "siblingBindingRetainsSharedOtpUntilLastStoredAuthenticatorIsDeleted"
+        }
+      ],
+      "optimizedReleasePair": [
+        {
+          "label": "old-main-02",
+          "sha256": "65fc1b7acf8223c01b34f523d62a8bfa9d9e360c7738d3efc9cbf097626150af",
+          "package": "package: name='takagi.ru.monica.recovery327' versionCode='12' versionName='1.0.327-26111112-80' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+          "abi": "native-code: 'x86_64'",
+          "certificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "r8ReleaseMarkers": [
+            "~~R8{\"backend\":\"dex\",\"compilation-mode\":\"release\",\"has-checksums\":false,\"min-api\":26,\"pg-map-id\":\"bca28db963a636218ce71300caddd1f891b711f436ad780bdc8dce2127db0699\",\"r8-mode\":\"full\",\"version\":\"9.3.16\"}",
+            "~~R8{\"backend\":\"dex\",\"compilation-mode\":\"release\",\"has-checksums\":false,\"min-api\":26,\"pg-map-id\":\"bca28db963a636218ce71300caddd1f891b711f436ad780bdc8dce2127db0699\",\"r8-mode\":\"full\",\"version\":\"9.3.16\"}",
+            "~~R8{\"backend\":\"dex\",\"compilation-mode\":\"release\",\"has-checksums\":false,\"min-api\":26,\"pg-map-id\":\"bca28db963a636218ce71300caddd1f891b711f436ad780bdc8dce2127db0699\",\"r8-mode\":\"full\",\"version\":\"9.3.16\"}"
+          ]
+        },
+        {
+          "label": "final-main-06",
+          "sha256": "4c0702522f3e330f2775ba2aab819106893658b8bcdb5f9353c4985528661a05",
+          "package": "package: name='takagi.ru.monica.recovery327' versionCode='12' versionName='1.0.327-26111112-81' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+          "abi": "native-code: 'x86_64'",
+          "certificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "r8ReleaseMarkers": [
+            "~~R8{\"backend\":\"dex\",\"compilation-mode\":\"release\",\"has-checksums\":false,\"min-api\":26,\"pg-map-id\":\"f87a0f7e48947496d85f2a5107790bd315f4375ef13c399a66c3bacadf9efc4c\",\"r8-mode\":\"full\",\"version\":\"9.3.16\"}",
+            "~~R8{\"backend\":\"dex\",\"compilation-mode\":\"release\",\"has-checksums\":false,\"min-api\":26,\"pg-map-id\":\"f87a0f7e48947496d85f2a5107790bd315f4375ef13c399a66c3bacadf9efc4c\",\"r8-mode\":\"full\",\"version\":\"9.3.16\"}",
+            "~~R8{\"backend\":\"dex\",\"compilation-mode\":\"release\",\"has-checksums\":false,\"min-api\":26,\"pg-map-id\":\"f87a0f7e48947496d85f2a5107790bd315f4375ef13c399a66c3bacadf9efc4c\",\"r8-mode\":\"full\",\"version\":\"9.3.16\"}"
+          ]
+        }
+      ],
+      "systemEntry": {
+        "coldImePid": "21783",
+        "oldPasswordRejected": true,
+        "newPasswordAuthenticated": true,
+        "actualInputConnectionFilledUsernameAndPassword": true,
+        "retainedCredentialsMatch": true
+      }
+    },
+    "fd": {
+      "productionBuild": "final-fd-03",
+      "testBuild": "final-fd-tests-05",
+      "jvmBuild": "final-fd-jvm-06",
+      "productionBuildSeconds": 402.64,
+      "jvm": {
+        "tests": 46,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "jvmCases": [
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "biometricUnlockClearsPreviousMdkCooldownBeforeReadingKeyMaterial",
+          "seconds": "0.022"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "sharedDatabaseAndSyncBoundariesDoNotExportLocalOnlyTotpCiphertext",
+          "seconds": "0.028"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "highTrafficTotpReadSurfacesUseEncryptedFieldCompatibleResolver",
+          "seconds": "0.042"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "compatDataEncryptionDoesNotUsePredictableMasterKeyString",
+          "seconds": "0.001"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "monicaCiphertextDetectionRequiresExplicitPrefix",
+          "seconds": "0.001"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "totpFieldEncryptionCompatibilityReadsThroughSingleHelper",
+          "seconds": "0.001"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "invalidatedAndUnrecoverableKeysRetainOriginalWrappers",
+          "seconds": "0.003"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "emptyRuntimeMdkCacheCannotMaskReadableKeystoreWrapper",
+          "seconds": "0.002"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "totpNewWritesStoreLocalCiphertextWithoutBreakingPortableBoundaries",
+          "seconds": "0.007"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "migratedSecondaryBiometricsKeepOneUseRequestAndForegroundGates",
+          "seconds": "0.005"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "bankCardAndDocumentItemDataUseEncryptedLocalStorageWithPortableBoundaries",
+          "seconds": "0.005"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "productionTotpItemDataParsingIsCentralizedInResolver",
+          "seconds": "0.325"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "pageSwitchHotPathsDoNotRunAuthOrBitwardenSyncWorkOnMainThread",
+          "seconds": "0.03"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "autofillPasswordSelectionReturnPathDoesNotBlockMainThread",
+          "seconds": "0.022"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "legacySensitiveFieldMigrationRunsAfterUnlockAndOnlyTouchesLocalRoomCache",
+          "seconds": "0.006"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "mainPasswordLoginUsesFullVaultUnlockPath",
+          "seconds": "0.003"
+        },
+        {
+          "classname": "takagi.ru.monica.security.BiometricUnlockRegressionGuardTest",
+          "name": "compatDataPrefixIsRecognizedAtPasswordBoundaries",
+          "seconds": "0.006"
+        },
+        {
+          "classname": "takagi.ru.monica.security.LocalPasswordKdfTest",
+          "name": "exactParserRejectsUnknownTruncatedNonStringAndUnboundedProfiles",
+          "seconds": "0.075"
+        },
+        {
+          "classname": "takagi.ru.monica.security.LocalPasswordKdfTest",
+          "name": "credentialSnapshotsDetectAllCredentialChangesButIgnoreUnrelatedSettings",
+          "seconds": "0.032"
+        },
+        {
+          "classname": "takagi.ru.monica.security.LocalPasswordKdfTest",
+          "name": "legacy100kVerifierAndWrapperRemainReadableWithoutMetadata",
+          "seconds": "0.177"
+        },
+        {
+          "classname": "takagi.ru.monica.security.LocalPasswordKdfTest",
+          "name": "invalidMdkAndLegacyCreationAreRejectedBeforeReplacement",
+          "seconds": "0.001"
+        },
+        {
+          "classname": "takagi.ru.monica.security.LocalPasswordKdfTest",
+          "name": "aadMismatchWrongPasswordAndChangedMetadataRejectTheWrapper",
+          "seconds": "0.703"
+        },
+        {
+          "classname": "takagi.ru.monica.security.LocalPasswordKdfTest",
+          "name": "malformedUtf16KeepsHistoricalJceOutcomeForBothPbkdf2Costs",
+          "seconds": "0.854"
+        },
+        {
+          "classname": "takagi.ru.monica.security.LocalPasswordKdfTest",
+          "name": "bothNewProfilesRewrapTheSameMdkAndKeepExistingRecordCiphertextUsable",
+          "seconds": "1.229"
+        },
+        {
+          "classname": "takagi.ru.monica.security.LocalPasswordKdfTest",
+          "name": "hashSuccessDoesNotConcealBrokenWrapperAndWrapperSuccessDoesNotReplaceHashVerification",
+          "seconds": "1.152"
+        },
+        {
+          "classname": "takagi.ru.monica.security.LocalPasswordKdfTest",
+          "name": "allProfilesMatchIndependentUnicodeWhitespaceAndBothSaltLengthVectors",
+          "seconds": "2.692"
+        },
+        {
+          "classname": "takagi.ru.monica.security.RecoveryAuthorizationTest",
+          "name": "correctConfirmationIsSingleUse",
+          "seconds": "0.004"
+        },
+        {
+          "classname": "takagi.ru.monica.security.RecoveryAuthorizationTest",
+          "name": "lockOrCredentialEpochRevokes",
+          "seconds": "0.0"
+        },
+        {
+          "classname": "takagi.ru.monica.security.RecoveryAuthorizationTest",
+          "name": "cancelBeforeAndAfterConfirmationRevokes",
+          "seconds": "0.0"
+        },
+        {
+          "classname": "takagi.ru.monica.security.RecoveryAuthorizationTest",
+          "name": "answersAndFabricatedPermitCannotAuthorize",
+          "seconds": "0.0"
+        },
+        {
+          "classname": "takagi.ru.monica.security.RecoveryAuthorizationTest",
+          "name": "expirationAndEitherClockRollbackRevokes",
+          "seconds": "0.0"
+        },
+        {
+          "classname": "takagi.ru.monica.security.RecoveryAuthorizationTest",
+          "name": "differentStorePasswordOrAnswerRevokes",
+          "seconds": "0.0"
+        },
+        {
+          "classname": "takagi.ru.monica.security.RecoveryAuthorizationTest",
+          "name": "wrongRequestCannotConfirmOrCancelReplacement",
+          "seconds": "0.0"
+        },
+        {
+          "classname": "takagi.ru.monica.security.SecurityAnswerHashTest",
+          "name": "invalidVersionsAndUnboundedCostsFailClosed",
+          "seconds": "0.005"
+        },
+        {
+          "classname": "takagi.ru.monica.security.SecurityAnswerHashTest",
+          "name": "saltedNewEnrollmentMatchesIndependentPbkdfVerifier",
+          "seconds": "0.637"
+        },
+        {
+          "classname": "takagi.ru.monica.security.SecurityAnswerHashTest",
+          "name": "legacyBackupIsComparedToActualAnswerAndNotRehashedAsAnswer",
+          "seconds": "0.004"
+        },
+        {
+          "classname": "takagi.ru.monica.viewmodel.HotpGenerationOrderTest",
+          "name": "searchAndCategoryFilterRetainCounterPosition",
+          "seconds": "5.839"
+        },
+        {
+          "classname": "takagi.ru.monica.viewmodel.HotpGenerationOrderTest",
+          "name": "otherItemTypesRetainMostRecentlyModifiedOrdering",
+          "seconds": "0.101"
+        },
+        {
+          "classname": "takagi.ru.monica.viewmodel.HotpGenerationOrderTest",
+          "name": "identicalCreationTimesUseStableIdsAndBothDaoStreamsAgree",
+          "seconds": "0.079"
+        },
+        {
+          "classname": "takagi.ru.monica.viewmodel.HotpGenerationOrderTest",
+          "name": "favoritePriorityRemainsAboveOrdinaryRows",
+          "seconds": "0.079"
+        },
+        {
+          "classname": "takagi.ru.monica.viewmodel.HotpGenerationOrderTest",
+          "name": "generatingRepeatedlyKeepsDefaultPositionAndAdvancesModificationTime",
+          "seconds": "0.078"
+        },
+        {
+          "classname": "takagi.ru.monica.viewmodel.HotpGenerationOrderTest",
+          "name": "savedDragRanksRemainPrimaryWhenCounterChanges",
+          "seconds": "0.074"
+        },
+        {
+          "classname": "takagi.ru.monica.viewmodel.SensitiveWriteDependencyTest",
+          "name": "explicitEncryptionFailureCannotFallBackToPlaintext",
+          "seconds": "0.114"
+        },
+        {
+          "classname": "takagi.ru.monica.viewmodel.SensitiveWriteDependencyTest",
+          "name": "missingDocumentEncryptionDependencyRejectsBeforeInsert",
+          "seconds": "0.098"
+        },
+        {
+          "classname": "takagi.ru.monica.viewmodel.SensitiveWriteDependencyTest",
+          "name": "missingCardEncryptionDependencyRejectsBeforeInsert",
+          "seconds": "0.048"
+        },
+        {
+          "classname": "takagi.ru.monica.viewmodel.SensitiveWriteDependencyTest",
+          "name": "missingTotpEncryptionDependencyReportsFailureWithoutInsert",
+          "seconds": "0.096"
+        }
+      ],
+      "deviceBatches": [
+        {
+          "part": "core",
+          "methods": 43,
+          "seconds": 138.24,
+          "runnerSeconds": 135.477,
+          "passed": true,
+          "apks": [
+            {
+              "sha256": "0a30c8e85ecef330bda5878bc377fddd51178efd4a115938ea1d0db33fa37963"
+            },
+            {
+              "sha256": "fbd16d8a41e228e165d2d41bdcb08c9da9a70056ccf5ca775f0663151ef3b4e9"
+            }
+          ]
+        },
+        {
+          "part": "sensitive",
+          "methods": 20,
+          "seconds": 35.479,
+          "runnerSeconds": 33.024,
+          "passed": true,
+          "apks": [
+            {
+              "sha256": "0a30c8e85ecef330bda5878bc377fddd51178efd4a115938ea1d0db33fa37963"
+            },
+            {
+              "sha256": "fbd16d8a41e228e165d2d41bdcb08c9da9a70056ccf5ca775f0663151ef3b4e9"
+            }
+          ]
+        }
+      ],
+      "deviceCases": [
+        {
+          "class": "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest",
+          "test": "versionedBackupRestoresVerifiersWithoutTreatingHashesAsUserAnswers"
+        },
+        {
+          "class": "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest",
+          "test": "lockOrAnswerReplacementRevokesPermitBeforeCredentialCommit"
+        },
+        {
+          "class": "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest",
+          "test": "authenticatedRecoveryRetainsMdkCiphertextAndMigratesActualLegacyAnswers"
+        },
+        {
+          "class": "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest",
+          "test": "reservationsSurviveReopeningAndWrongAnswersNeverModifyLegacyHashes"
+        },
+        {
+          "class": "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest",
+          "test": "answersAloneAndCancelledChallengeDoNotAuthorize"
+        },
+        {
+          "class": "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest",
+          "test": "forgedOrMissingPermitNeverChangesCredentials"
+        },
+        {
+          "class": "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest",
+          "test": "missingWrapperCannotGenerateReplacementMdkDuringRecovery"
+        },
+        {
+          "class": "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest",
+          "test": "questionSaveDoesNotHoldRuntimeLockDuringStorageCommitAndRejectsLockBeforeGate"
+        },
+        {
+          "class": "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest",
+          "test": "initialEnrollmentCannotReplaceExistingPasswordWithCacheOrCompatWrapper"
+        },
+        {
+          "class": "takagi.ru.monica.security.OldRecoveryBypassInstrumentedTest",
+          "test": "cachedOrCompatMdkIsNotResetAuthorization"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "brokenPasswordWrapperIsNotRepairedFromAWarmRuntimeKey"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "argonWrongPasswordCancellationAndLockKeepOriginalBytes"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "lockAtTheFinalCommitGatePreventsCredentialAndRecoveryWrites"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "missingVerifierWithRemainingCredentialMaterialNeverBecomesAnUnprotectedVault"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "cancelledChangeAndCancelledPasswordAttemptCannotWriteOrUnlock"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "legacyLoginAutomaticallyUpgradesAndFreshManagerReadsTheSameMdkAndCiphertext"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "argonPasswordResetAndAuthorizedResetAlwaysWrite600k"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "historicalProfilesMigrateTo600kAndResetRetainsMdkButRevokesOldPassword"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "malformedUtf16KeepsHistoricalJceOutcomeForBothPbkdf2Costs"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "wrongLegacyPasswordChangesNoEncryptedFileBytes"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "androidAndNativeDerivationsMatchAllIndependentVectorsWithMeasuredDurations"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "stagedPasswordAttemptsCannotCommitAcrossAlgorithmOrPasswordReplacement"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "activityCancellationAfterAuthenticationKeepsAllOriginalBytes"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "unknownStoredProfileCannotFallBackToLegacyOrWriteReplacement"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest",
+          "test": "current600kLoginDoesNotRewrapPasswordCredentials"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "staleSettingsWriterRefreshesAndMergesWithoutLosingConcurrentValues"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "bothNewProfilesRecoverTheOriginalPasswordWrappedMdk"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "failedMirrorCommitKeepsCanonicalRecoverableAndBlocksOldMirror"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "staleCredentialGenerationCannotWriteOrReenroll"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "readDuringOwnCanonicalCommitDoesNotRevokeTheExistingSession"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "genuineVersionOneRecoveryRetainsLegacyKdfAndOldApkProtectedValues"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "credentialCasIncludesKdfMetadata"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "unknownEnvelopeVersionIsNotTreatedAsAbsentRecovery"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "failedCommitWithPublishedMemoryStaysBlockedUntilDiskAndCanonicalAgree"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "revokedCommitLeavesBothCanonicalAndMirrorUntouched"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest",
+          "test": "freshPreparationReloadsExactEncryptedDiskValuesAfterStaleCache"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordCrossProcessInstrumentedTest",
+          "test": "staleImeHandleIsRejectedAfterMainMigrationAndFreshImeOpensNewProfile"
+        },
+        {
+          "class": "takagi.ru.monica.security.LocalPasswordCrossProcessInstrumentedTest",
+          "test": "twoRealProcessCredentialWritersCannotOverwriteEachOthersGenerationOrUnknownValue"
+        },
+        {
+          "class": "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest",
+          "test": "authorizedResetRetainsExistingRouteWithoutOldPasswordRead"
+        },
+        {
+          "class": "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest",
+          "test": "resetBackRevokesWorkerBeforeCommit"
+        },
+        {
+          "class": "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest",
+          "test": "resetBackgroundRevokesWorkerBeforeCommit"
+        },
+        {
+          "class": "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest",
+          "test": "resetUsesOneVerifiedOperationAndClearsAllPasswordFields"
+        },
+        {
+          "class": "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest",
+          "test": "resetSavedStateContainsNeitherOldNorNewPassword"
+        },
+        {
+          "class": "takagi.ru.monica.ui.HotpGenerationPersistenceTest",
+          "test": "generationRetainsPersistedManualOrder"
+        },
+        {
+          "class": "takagi.ru.monica.ui.HotpGenerationPersistenceTest",
+          "test": "repeatedGenerateNextKeepsDefaultPositionAfterReopening"
+        },
+        {
+          "class": "takagi.ru.monica.ui.WalletContentEditorTest",
+          "test": "nameHelpAndPhotoCardsStayReadableWithLargeText"
+        },
+        {
+          "class": "takagi.ru.monica.ui.WalletContentEditorTest",
+          "test": "documentMoveMenuAndRecreationKeepExistingIdentityAndSaveOrder"
+        },
+        {
+          "class": "takagi.ru.monica.ui.WalletContentEditorTest",
+          "test": "smallDarkLargeTextEditorUsesIndependentFieldsAndKeepsEmptyAddedFields"
+        },
+        {
+          "class": "takagi.ru.monica.ui.WalletContentEditorTest",
+          "test": "billingExtrasCollapseAndReopenWithoutMixingNameOrContactValues"
+        },
+        {
+          "class": "takagi.ru.monica.ui.WalletContentEditorTest",
+          "test": "newBankCardCanDragContentsAndReopenWithOrderAndSecretsPreserved"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.AuthenticatorVisibilityIntegrityTest",
+          "test": "differentMotpPinsOnTheSameBindingRemainSeparateButExactMirrorsCollapse"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.AuthenticatorVisibilityIntegrityTest",
+          "test": "unlockingReloadsTheSameCiphertextWithoutWritingThePasswordRow"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.AuthenticatorVisibilityIntegrityTest",
+          "test": "passwordAndStoredMotpWithDifferentPinsAreNotMirrors"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.AuthenticatorVisibilityIntegrityTest",
+          "test": "unreadablePasswordOtpStaysVisibleWithoutBecomingSelectableOrChangingStorage"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.AuthenticatorVisibilityIntegrityTest",
+          "test": "deletingOneMotpDoesNotClearThePasswordKeyWithADifferentPin"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.LocalAccountTotpDeletionTest",
+          "test": "deletingAStaleBindingDoesNotClearAReplacementOrItsSiblings"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.LocalAccountTotpDeletionTest",
+          "test": "deletingResidualOtpAllowsAnAlreadyPartlyClearedAccountToRestore"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.LocalAccountTotpDeletionTest",
+          "test": "legacyExplicitGroupWithoutCredentialMetadataClearsTogether"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.LocalAccountTotpDeletionTest",
+          "test": "aDifferentOtpOnASiblingIsNeverDeleted"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.LocalAccountTotpDeletionTest",
+          "test": "batchDeleteClearsAllPasswordsAfterExcludingEverySelectedBinding"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.LocalAccountTotpDeletionTest",
+          "test": "unsupportedAccountMetadataPreservesBothPasswordAndAuthenticatorData"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.LocalAccountTotpDeletionTest",
+          "test": "deletionStaysWithinExactLocalAccountEvenWhenNamesAndOtpMatch"
+        },
+        {
+          "class": "takagi.ru.monica.viewmodel.LocalAccountTotpDeletionTest",
+          "test": "siblingBindingRetainsSharedOtpUntilLastStoredAuthenticatorIsDeleted"
+        }
+      ],
+      "optimizedReleasePair": [
+        {
+          "label": "old-fd-01",
+          "sha256": "d95ee3f4b678aafc0dbea492669ffc2e55a792a4a52736ad9be6de7673643b5d",
+          "package": "package: name='takagi.ru.monica.recovery327.fdroid' versionCode='34' versionName='1.0.327' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+          "abi": "native-code: 'x86_64'",
+          "certificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "r8ReleaseMarkers": [
+            "~~R8{\"backend\":\"dex\",\"compilation-mode\":\"release\",\"has-checksums\":false,\"min-api\":26,\"pg-map-id\":\"36d089772adfb332f8ce88250999b2248b007b61e3456adc0bdeb988bba2f4a6\",\"r8-mode\":\"full\",\"version\":\"9.3.16\"}",
+            "~~R8{\"backend\":\"dex\",\"compilation-mode\":\"release\",\"has-checksums\":false,\"min-api\":26,\"pg-map-id\":\"36d089772adfb332f8ce88250999b2248b007b61e3456adc0bdeb988bba2f4a6\",\"r8-mode\":\"full\",\"version\":\"9.3.16\"}"
+          ]
+        },
+        {
+          "label": "final-fd-03",
+          "sha256": "0275c1d9f7a9c542bcd9f12b91b28ef924f4755fdbb40cf92091ca7e0e002f0a",
+          "package": "package: name='takagi.ru.monica.recovery327.fdroid' versionCode='34' versionName='1.0.327' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+          "abi": "native-code: 'x86_64'",
+          "certificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "r8ReleaseMarkers": [
+            "~~R8{\"backend\":\"dex\",\"compilation-mode\":\"release\",\"has-checksums\":false,\"min-api\":26,\"pg-map-id\":\"ee9fc11edd9bc2df6521a31650c08360917cca1a2e4db90d009f8e8c4e7d682d\",\"r8-mode\":\"full\",\"version\":\"9.3.16\"}",
+            "~~R8{\"backend\":\"dex\",\"compilation-mode\":\"release\",\"has-checksums\":false,\"min-api\":26,\"pg-map-id\":\"ee9fc11edd9bc2df6521a31650c08360917cca1a2e4db90d009f8e8c4e7d682d\",\"r8-mode\":\"full\",\"version\":\"9.3.16\"}"
+          ]
+        }
+      ],
+      "systemEntry": {
+        "coldImePid": "22561",
+        "oldPasswordRejected": true,
+        "newPasswordAuthenticated": true,
+        "actualInputConnectionFilledUsernameAndPassword": true,
+        "retainedCredentialsMatch": true
+      }
+    }
+  },
+  "backupChecks": {
+    "mainV1Export": {
+      "file": "monica_backup_20261111_234429.enc.zip",
+      "sha256": "ff4caed4e1fbc42a7eb8fc98ae55e62dbd8501bdb3468774a8c57dd343074108",
+      "authenticatedV1": true,
+      "nativePickerExport": true,
+      "members": [
+        "database_export.json",
+        "monica_config/page_adjustment_settings.json",
+        "monica_config/security_questions.json",
+        "monica_config/webdav_connection.json",
+        "monica_config/autofill_blocked_fields.json",
+        "monica_config/autofill_save_blocked_targets.json",
+        "monica_config/autofill_blacklist.json",
+        "passwords/password_2.json",
+        "passwords/password_1.json",
+        "totp/item_1.json"
+      ]
+    },
+    "fdV2Export": {
+      "file": "monica_backup_20261111_232541.enc.zip",
+      "sha256": "73e217e0cfd65f853b876d6b46b31dad5673298b2a991d3f962cff95000d239d",
+      "v2HeaderAndAuthenticated600kGcm": true,
+      "zipCrcValid": true,
+      "nativePickerExport": true
+    },
+    "mainNativeRestore": {
+      "actualNativeReplaceRestore": true,
+      "settingsOverwriteConfirmed": true,
+      "sameMdk": true,
+      "sameSecrets": true,
+      "sameVersionedAnswerHashes": true,
+      "passwordRecords": 2
+    },
+    "fdNativeRestore": {
+      "actualNativeReplaceRestore": true,
+      "sameMdk": true,
+      "sameSecrets": true,
+      "sameVersionedAnswerHashes": true,
+      "passwordRecords": 2
+    }
+  }
+}

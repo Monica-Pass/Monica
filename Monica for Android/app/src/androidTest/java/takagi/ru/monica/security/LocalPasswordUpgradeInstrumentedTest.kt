@@ -276,12 +276,23 @@ class LocalPasswordUpgradeInstrumentedTest {
         for (authorized in listOf(false, true)) Fixture(PasswordKdf.ARGON2ID).use { f ->
             val manager = f.manager()
             if (authorized) {
-                // Seed only the isolated fixture's already authorized runtime key.
-                val field = SecurityManager::class.java.getDeclaredField("processCachedMdk").apply { isAccessible = true }
-                field.set(null, f.mdk.copyOf())
-                assertTrue(manager.setMasterPassword("Replacement synthetic password"))
+                // Independent old Argon credentials and COMPAT material do not authorize reset.
+                val seedWrapper = SecurityManager::class.java.getDeclaredMethod(
+                    "persistCompatKeystoreWrappedMdk", ByteArray::class.java, Boolean::class.javaPrimitiveType,
+                ).apply { isAccessible = true }
+                assertTrue(seedWrapper.invoke(manager, f.mdk, true) as Boolean)
+                fun legacyAnswer(value: String) = PasswordKdf.hex(MessageDigest.getInstance("SHA-256").digest(value.toByteArray()))
+                assertTrue(manager.restoreSecurityQuestionsFromBackup(SecurityQuestionsBackupSnapshot(
+                    1, null, legacyAnswer("first answer"), 2, null, legacyAnswer("second answer"),
+                )))
+                assertEquals(PasswordKdf.ARGON2ID, PasswordKdf.fromValues(f.originalPlain.all))
+                assertFalse(manager.setMasterPassword("Replacement synthetic password"))
+                val challenge = checkNotNull(manager.beginRecoveryWithAnswers("first answer", "second answer") {})
+                val permit = checkNotNull(manager.completeRecoveryDeviceCredential(challenge))
+                assertTrue(manager.recoverMasterPassword("Replacement synthetic password", permit))
             } else assertTrue(manager.resetMasterPassword(f.password, "Replacement synthetic password"))
             assertEquals(PasswordKdf.PBKDF2_600K, PasswordKdf.fromValues(f.originalPlain.all))
+            assertTrue(manager.unlockVaultWithPassword("Replacement synthetic password"))
             f.assertRecordAndMdk(manager, "Replacement synthetic password")
         }
     }
@@ -332,17 +343,19 @@ class LocalPasswordUpgradeInstrumentedTest {
         Fixture().use { f ->
             val manager = f.manager()
             val before = f.bytesSnapshot()
-            var calls = 0
+            var injected = false
             assertFalse(manager.resetMasterPassword(f.password, f.password,
                 SecurityManager.LocalPasswordChangeAttempt()) {
-                calls++
-                // Initial check, pre-derivation, post-derivation, then final beforeCommit callback.
-                if (calls == 4) {
+                // Inject inside enrollment's final gate, independently of extra caller checks.
+                if (!injected && Thread.currentThread().stackTrace.any {
+                    it.className.startsWith(LocalVaultRecovery::class.java.name) && it.methodName.startsWith("enroll")
+                }) {
+                    injected = true
                     SecurityManager.clearRuntimeUnlockCache()
                     SessionManager.markLocked()
                 }
             })
-            assertEquals("The injection must reach the final publication gate", 4, calls)
+            assertTrue("The injection must reach the final publication gate", injected)
             assertEquals(before, f.bytesSnapshot())
             assertFalse(SecurityManager.hasRuntimeUnlockCache())
         }

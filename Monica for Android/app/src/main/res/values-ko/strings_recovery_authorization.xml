@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_device_required">보안 질문에 답한 뒤 기기의 PIN, 패턴 또는 잠금 비밀번호를 확인하세요. 답변만으로는 마스터 비밀번호를 재설정할 수 없습니다.</string>
+    <string name="recovery_device_title">기기 잠금 인증 확인</string>
+    <string name="recovery_device_unavailable">이 기기에서 복구에 필요한 잠금 인증을 확인할 수 없습니다. 기존 마스터 비밀번호 또는 암호화된 백업을 사용하세요.</string>
+    <string name="recovery_authorization_expired">복구 확인이 취소되었거나 만료되었습니다. 다시 시작하세요.</string>
+    <string name="recovery_attempts_limited">시도 횟수가 너무 많습니다. 페이지를 나가거나 재시작해도 제한이 유지됩니다. 나중에 다시 시도하세요.</string>
+</resources>

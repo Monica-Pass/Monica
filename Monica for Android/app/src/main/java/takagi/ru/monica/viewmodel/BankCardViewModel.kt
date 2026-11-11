@@ -73,7 +73,9 @@ class BankCardViewModel internal constructor(
     context: Context? = null,
     private val localKeePassDatabaseDao: LocalKeePassDatabaseDao? = null,
     private val securityManager: SecurityManager? = null,
-    private val strings: StringResolver
+    private val strings: StringResolver,
+    private val sensitiveValueEncryptor: takagi.ru.monica.security.SensitiveValueEncryptor? =
+        securityManager?.let { takagi.ru.monica.security.SensitiveValueEncryptor(it::encryptDataLegacyCompat) },
 ) : ViewModel() {
     private val attachmentFacade = context?.let { AttachmentContainer.facade(it) }
     private data class KeePassMutationIdentity(
@@ -119,7 +121,7 @@ class BankCardViewModel internal constructor(
 
     private fun encodeStoredSensitiveValueForNewWrite(plainValue: String): String {
         if (plainValue.isBlank()) return plainValue
-        return securityManager?.encryptDataLegacyCompat(plainValue) ?: plainValue
+        return requireNotNull(sensitiveValueEncryptor) { "Sensitive writes require encryption" }.encrypt(plainValue)
     }
 
     private fun encodeCardDataForLocalStorage(cardData: BankCardData): String {

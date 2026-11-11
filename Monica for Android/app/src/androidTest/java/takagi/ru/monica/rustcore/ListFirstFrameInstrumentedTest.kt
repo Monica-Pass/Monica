@@ -58,7 +58,7 @@ class ListFirstFrameInstrumentedTest {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val database = Room.inMemoryDatabaseBuilder(context, PasswordDatabase::class.java).build()
         val passwords = database.passwordEntryDao()
-        val viewModel = TotpViewModel(SecureItemRepository(database.secureItemDao()), PasswordRepository(passwords), strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext))
+        val viewModel = TotpViewModel(SecureItemRepository(database.secureItemDao()), PasswordRepository(passwords), strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext), sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it })
         try {
             assertFalse(viewModel.parsedTotpState.value.isReady)
             val empty = withTimeout(10000) { viewModel.parsedTotpState.first { it.isReady } }
@@ -74,7 +74,7 @@ class ListFirstFrameInstrumentedTest {
             val populated = withTimeout(10000) { viewModel.parsedTotpState.first { it.items.size == 1 } }
             assertEquals("valid", populated.items.single().item.title)
             assertEquals("JBSWY3DPEHPK3PXP", populated.items.single().totpData.secret)
-            val coldViewModel = TotpViewModel(SecureItemRepository(database.secureItemDao()), PasswordRepository(passwords), strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext))
+            val coldViewModel = TotpViewModel(SecureItemRepository(database.secureItemDao()), PasswordRepository(passwords), strings = AppLocaleStringResolver(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext), sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it })
             try {
                 assertFalse(coldViewModel.parsedTotpState.value.isReady)
                 val firstReady = withTimeout(10000) { coldViewModel.parsedTotpState.first { it.isReady } }

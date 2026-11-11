@@ -49,7 +49,7 @@ class TotpFilterNavigationTest {
         val items = SecureItemRepository(database.secureItemDao())
         val models = mutableListOf<TotpViewModel>()
         fun newModel() = TotpViewModel(items, passwords, context = context,
-            strings = AppLocaleStringResolver(context)).also { models += it }
+            strings = AppLocaleStringResolver(context), sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it }).also { models += it }
         val model = mutableStateOf(newModel())
         val passwordModel = PasswordViewModel(passwords, SecurityManager(context), items,
             strings = AppLocaleStringResolver(context))

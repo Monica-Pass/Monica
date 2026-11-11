@@ -66,7 +66,7 @@ class HotpGenerationOrderTest {
     }
 
     private fun viewModel() = TotpViewModel(repository, PasswordRepository(database.passwordEntryDao()),
-        strings = StringResolver { _, _ -> "Fixture" }).also { store.put("totp", it) }
+        strings = StringResolver { _, _ -> "Fixture" }, sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it }).also { store.put("totp", it) }
 
     @Test fun generatingRepeatedlyKeepsDefaultPositionAndAdvancesModificationTime() = runBlocking {
         seed()

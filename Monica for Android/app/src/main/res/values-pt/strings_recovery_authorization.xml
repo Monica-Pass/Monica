@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recovery_device_required">Responda às perguntas de segurança e confirme o PIN, padrão ou palavra-passe do dispositivo. As respostas por si só não repõem a palavra-passe mestra.</string>
+    <string name="recovery_device_title">Confirmar bloqueio do dispositivo</string>
+    <string name="recovery_device_unavailable">Este dispositivo não pode confirmar o bloqueio necessário para recuperação. Use a palavra-passe mestra original ou uma cópia de segurança cifrada.</string>
+    <string name="recovery_authorization_expired">A confirmação foi cancelada ou expirou. Comece novamente.</string>
+    <string name="recovery_attempts_limited">Demasiadas tentativas. O limite mantém-se ao sair da página ou reiniciar. Tente mais tarde.</string>
+</resources>

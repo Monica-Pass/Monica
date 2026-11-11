@@ -40,7 +40,7 @@ class WalletMembershipCodeTest {
         wasUnlocked = SessionManager.isUnlocked.value
         SessionManager.markUnlocked()
         db = Room.inMemoryDatabaseBuilder(context, PasswordDatabase::class.java).build()
-        model = DocumentViewModel(SecureItemRepository(db.secureItemDao()), strings = AppLocaleStringResolver(context))
+        model = DocumentViewModel(SecureItemRepository(db.secureItemDao()), strings = AppLocaleStringResolver(context), sensitiveValueEncryptor = takagi.ru.monica.security.SensitiveValueEncryptor { it })
     }
     @After fun cleanup() {
         model.viewModelScope.cancel(); db.close()

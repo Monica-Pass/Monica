@@ -324,6 +324,19 @@ internal class LocalVaultRecovery(private val context: Context) {
 
     fun wrap(prefs: SharedPreferences): SharedPreferences = MirroredPreferences(prefs)
 
+    /** Storage lock precedes the short authorization gate, as it does for password enrollment. */
+    internal fun commitAuthenticatedSettings(
+        prefs: SharedPreferences,
+        updates: Map<String, Any?>,
+        authorizeCommit: () -> Unit,
+    ): Boolean = locked {
+        validate(prefs)
+        val editor = prefs.edit()
+        updates.forEach { (key, value) -> put(editor, key, value) }
+        authorizeCommit()
+        editor.commit()
+    }
+
     /** Called only with a verified password and a valid MDK; atomically replaces old recovery credentials. */
     fun enroll(
         prefs: SharedPreferences,
