@@ -79,7 +79,9 @@ The vault scrollbar style is inspired by [PixelPlayer](https://github.com/PixelP
 ## 🔒 Security Architecture
 
 - Sensitive fields in Monica's local Room-backed storage use AES-GCM.
-- Local master-password verification and derivation of the password-based MDK wrapping key use PBKDF2-HMAC-SHA256 with 100,000 iterations. Bitwarden, KDBX and MDBX keep their own KDFs and formats.
+- Local master-password verification and derivation of the password-based MDK wrapping key: PBKDF2-HMAC-SHA256, with 600,000 iterations for new credentials in 1.0.327. Legacy 100,000-iteration PBKDF2 and Argon2id credentials remain readable and migrate after successful verification of the original password, preserving the MDK and record ciphertext.
+- Portable encrypted backups: compatible V1 uses PBKDF2-HMAC-SHA256 with 100,000 iterations; enhanced V2 uses 600,000. Backup formats are handled separately from local master-password protection.
+- Bitwarden, KDBX and MDBX keep their own KDFs and formats.
 - Android Keystore protects local key material where used. Hardware-backed protection depends on the device and does not guarantee safety on a compromised operating system.
 - Screenshot protection and lock behavior follow the application's settings and platform capabilities. Keep an independent encrypted backup; recovery depends on the original password and available recovery material.
 - Network permission supports configured providers, transfers and update checks. Local use does not require a cloud account; optional automatic update checks can be disabled.

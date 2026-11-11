@@ -85,7 +85,8 @@ If you want to integrate MDBX in another client, start with the [MDBX workspace 
 ### Security model
 
 - Local sensitive fields: AES-256-GCM authenticated encryption in `SecurityManager`.
-- Local master password verification and derivation of the password-based MDK wrapping key: PBKDF2-HMAC-SHA256, currently 100,000 iterations.
+- Local master-password verification and derivation of the password-based MDK wrapping key: PBKDF2-HMAC-SHA256, with 600,000 iterations for new credentials in 1.0.327. Legacy 100,000-iteration PBKDF2 and Argon2id credentials remain readable and migrate after successful verification of the original password, preserving the MDK and record ciphertext.
+- Portable encrypted backups: compatible V1 uses PBKDF2-HMAC-SHA256 with 100,000 iterations; enhanced V2 uses 600,000. Backup formats are handled separately from local master-password protection.
 - Bitwarden, KeePass, and MDBX use the encryption and key derivation rules of their own formats and configurations.
 - Local protection: master password hash and security settings are managed locally.
 - Network boundary: the app declares network permissions for features such as Bitwarden, WebDAV, OneDrive, local-network transfers, and update checks.

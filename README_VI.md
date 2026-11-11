@@ -79,7 +79,8 @@ Neu ban muon tich hop MDBX vao client khac, hay bat dau voi [MDBX workspace READ
 
 ### Mo hinh bao mat
 - Các trường do `SecurityManager` cục bộ quản lý được mã hóa bằng AES-256-GCM.
-- Luồng cục bộ dùng PBKDF2-HMAC-SHA256 để xác minh mật khẩu chính và dẫn xuất khóa bọc MDK; chính MDK được bọc bằng AES-GCM.
+- Xác minh mật khẩu chính cục bộ và dẫn xuất khóa bọc MDK dùng PBKDF2-HMAC-SHA256 với 600,000 vòng lặp cho thông tin xác thực được ghi mới trong 1.0.327; MDK được bọc bằng AES-GCM. Thông tin xác thực PBKDF2 cũ với 100,000 vòng lặp và Argon2id vẫn đọc được, rồi được chuyển đổi sau khi xác minh thành công mật khẩu gốc, giữ nguyên MDK và bản mã của các bản ghi.
+- Bản sao lưu mã hóa có thể chuyển giữa các thiết bị: V1 tương thích dùng PBKDF2-HMAC-SHA256 với 100,000 vòng lặp; V2 tăng cường dùng 600,000. Định dạng sao lưu được xử lý riêng với cơ chế bảo vệ mật khẩu chính cục bộ.
 - Bitwarden, KeePass/KDBX và MDBX tuân theo định dạng cùng thuật toán mã hóa/KDF riêng. Mô tả trên không có nghĩa toàn bộ kho dùng chung một thuật toán mã hóa hay một KDF.
 - Bao ve local: hash master password va cai dat bao mat duoc quan ly tren thiet bi.
 - Ranh gioi mang: ung dung co khai bao quyen mang, chu yeu de tich hop Bitwarden va dong bo/backup WebDAV.
