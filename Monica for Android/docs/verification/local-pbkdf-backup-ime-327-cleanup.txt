@@ -1,0 +1,20 @@
+Cleanup receipt extract — Android 1.0.327
+
+Status: complete. Derived from the retained device, service and emulator cleanup receipts; no private original-user file contents are included.
+
+Device:
+- Only the task-created guest user 10 was removed. The original user 0 was retained and selected.
+- Restored 1080x1920, physical density 280, font scale 1.0, rotation lock 1, original Sogou input method and adbd UID 2000.
+- Removed the task's reverse mapping and temporary UI dump.
+- The first remove-user returned an error. The next checks confirmed user 0 was current and user 10 was stopped; the explicit retry succeeded. Both results are retained.
+- Before cleanup, the original user 0's two app archives contained 31 and 29 files. Every file's content and each whole tar SHA-256 matched the pre-task archive. Neither private archive was copied to public evidence.
+
+Local synthetic service:
+- The exact task WebDAV script invocation and its loopback listener were verified for PID 55892 before stopping that process.
+- Initial precheck expected an absolute script path and rejected the actual relative invocation. Exact relative command-line and listener verification subsequently passed; the process was then stopped.
+
+Emulator:
+- Only task-started MuMu instance 2 was shut down. Its creation timestamp still matches, and the existing data disk remains.
+- Shutdown is asynchronous: the first post-command snapshot still reported running, so it was not accepted as completion. A later snapshot confirmed Android and process stopped.
+- Preexisting MuMu instances 0 and 1 remain stopped. The public AVD was not used or modified by this task.
+- Preserved original users, configuration/data disks, private original-user archives and available task logs/mappings/synthetic recovery evidence. The separately documented missing historical APKs were not reconstructed or silently replaced.

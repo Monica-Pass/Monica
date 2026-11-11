@@ -4,7 +4,9 @@
 
 - 修复从旧版本更新后可能在启动时崩溃的问题，保留原密码库和恢复材料。
 - 减小安装包：压缩赞赏码图片、无损优化内置品牌图标并复用 Monica 图标，保留已有项目的 PNG 自定义图标；精简依赖的多余语言资源，保留全部应用语言和特殊中文配置。
-- 提升本地主密码保护：旧版 PBKDF2 在首次成功验证主密码时升级至 600000 次派生，保留原数据密钥与已存内容；安全设置中可为整个应用选择 Argon2id。
+- 本地主密码统一使用 PBKDF2-SHA256／600000 次派生，移除算法切换入口；兼容读取旧 PBKDF2 和 Argon2id，并在成功验证原密码后迁移，保留原数据密钥与已存内容。
+- ZIP 导出前弹窗选择加密 V1、V2 或符合条件的明文备份；Passkey、附件和 Monica 配置仍须加密。WebDAV／OneDrive 使用分组选项弹窗，确认后保存，取消不更改选择。
+- 输入法解锁框避让软键盘，内容过高时可滚动操作，支持大字号。修复切换系统字号时重复挂载键盘视图导致的输入法崩溃。
 - 旧加密 ZIP 备份仍可读取，新备份默认使用兼容 V1；可主动选择 600000 次派生的增强 V2，但恢复端也必须支持 V2，请保留旧备份。
 - 旧 APK 无法识别新的本地主密码保护。请使用支持此保护的新版客户端，不要直接降级打开升级后的本地数据。
 
@@ -32,7 +34,9 @@
 
 - Fix a startup crash after updating from an older version while retaining the existing vault and recovery material.
 - Reduce package size with compressed donation images, lossless bundled brand icons and a shared Monica icon. Preserve existing custom PNG icons and all app languages, including special Chinese locales, while removing unused dependency translations.
-- Strengthen local master-password protection: after the first successful password verification, upgrade legacy PBKDF2 to 600000 iterations while retaining the existing data key and stored content. Security settings also offer Argon2id for the whole app.
+- Standardize local master-password writes on PBKDF2-SHA256 with 600000 iterations and remove the algorithm selector. Read historical PBKDF2 and Argon2id credentials, migrating only after successful original-password verification while retaining the data key and stored content.
+- Choose encrypted V1, V2 or eligible unencrypted ZIP in a dialog before export. Passkeys, attachments and Monica configuration still require encryption. WebDAV and OneDrive use grouped format dialogs that save only on confirmation.
+- Keep the keyboard unlock dialog above the software keyboard, with scrolling for larger content and font sizes. Fix an IME crash caused by reattaching its view after a system font-size change.
 - Keep reading older encrypted ZIP backups and use compatible V1 for new backups by default. Enhanced V2 with 600000 iterations is optional and requires a V2-capable reader; retain earlier backups.
 - Older APKs cannot recognize the new local password protection. Use an updated client that supports it; do not directly downgrade to open upgraded local data.
 

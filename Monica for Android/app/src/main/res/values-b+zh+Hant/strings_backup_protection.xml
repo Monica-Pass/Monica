@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_protection_title">備份保護</string>
+    <string name="zip_protection_plain">未加密的 ZIP</string>
+    <string name="zip_protection_plain_warning">任何持有此檔案的人都可以讀取其中的內容。</string>
+    <string name="zip_protection_required">Passkey、附件和 Monica 設定必須加密。取消選取這些內容後，才可匯出未加密的 ZIP。</string>
+</resources>

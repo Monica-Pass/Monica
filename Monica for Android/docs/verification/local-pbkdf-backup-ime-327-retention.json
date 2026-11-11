@@ -1,0 +1,241 @@
+{
+  "historicalMigrationAndBackupAudit": {
+    "main-cli": {
+      "historicalArgonReadAndMigrated": true,
+      "wrongPasswordDoesNotMigrateOrChangeRecords": true,
+      "originalMdkAndAllRecordColumnsRetainedOnUpgrade": true,
+      "v2HeaderAndGcmAuthenticated": true,
+      "backupSha256": "7b9af889c28af249eb2864f7110a2f5cc641b3ce09deef28df92a688d1ae59f0",
+      "exportedRecords": 2,
+      "replacementAssignedNewIds": true,
+      "restoreMatchesExportedSecretsAndRecords": true,
+      "restoredColumnsUnchangedAfterColdLaunch": true,
+      "sameMdkAcrossAllStages": true,
+      "snapshots": [
+        "main-cli-old-argon",
+        "main-cli-after-wrong",
+        "main-cli-after-upgrade",
+        "main-cli-after-write",
+        "main-cli-after-restore",
+        "main-cli-after-restore-cold"
+      ]
+    },
+    "fd": {
+      "historicalArgonReadAndMigrated": true,
+      "wrongPasswordDoesNotMigrateOrChangeRecords": true,
+      "originalMdkAndAllRecordColumnsRetainedOnUpgrade": true,
+      "v2HeaderAndGcmAuthenticated": true,
+      "backupSha256": "f861e6dda913c3fa26caccdaf2e43d723298e0848408b9a0517c50c4dd212295",
+      "exportedRecords": 2,
+      "replacementAssignedNewIds": true,
+      "restoreMatchesExportedSecretsAndRecords": true,
+      "restoredColumnsUnchangedAfterColdLaunch": true,
+      "sameMdkAcrossAllStages": true,
+      "snapshots": [
+        "fd-old-argon",
+        "fd-after-wrong",
+        "fd-after-upgrade",
+        "fd-final02-cold-read",
+        "fd-final02-restored",
+        "fd-final02-restored-cold"
+      ]
+    }
+  },
+  "finalRelease": {
+    "main": {
+      "status": "passed",
+      "allStagesPbkdf2Sha256600000": true,
+      "allStagesOriginalMdkUnchanged": true,
+      "authenticatedRecoveryPasswordWrapperAndDatabaseIntegrity": true,
+      "finalApkColdReadPreservesEveryOriginalRowColumn": true,
+      "newWriteRetainsEveryOriginalRowColumn": true,
+      "newWriteIsOriginalTwoPlusExpectedSyntheticRecord": true,
+      "newWriteColdReadPreservesEveryRowColumn": true,
+      "replacementRestoreMatchesPriorTwoRecordBackupSemantics": true,
+      "replacementRestoreAssignsDisjointNewIds": true,
+      "postBackupThirdRecordAbsentAfterReplacement": true,
+      "restoredColdReadPreservesEveryRowColumn": true,
+      "allOriginalArchiveBytesUnchanged": true,
+      "snapshots": [
+        {
+          "stage": "reference",
+          "label": "main-cli-after-write",
+          "tarSha256": "fae5d3b0e1243c6da84a2f4eacd827a728760bcbfad4306c07d4293bba5acf30",
+          "tableRowCounts": {
+            "password_entries": 2,
+            "custom_fields": 0,
+            "secure_items": 0
+          }
+        },
+        {
+          "stage": "before",
+          "label": "main-cli-before-final04",
+          "tarSha256": "eab254d6188b4618fe77a4e85fa3ccf52cd15d29228b8509c6f5378463e68361",
+          "tableRowCounts": {
+            "password_entries": 2,
+            "custom_fields": 0,
+            "secure_items": 0
+          }
+        },
+        {
+          "stage": "cold",
+          "label": "main-cli-final04-cold-read",
+          "tarSha256": "6858b954913a9de879cca6139fc946aef2ec556f119d67838ed35072ba4cb583",
+          "tableRowCounts": {
+            "password_entries": 2,
+            "custom_fields": 0,
+            "secure_items": 0
+          }
+        },
+        {
+          "stage": "written",
+          "label": "main-cli-final04-new-write",
+          "tarSha256": "be5358fad8ad37ee9dad757439749f0e6b25578c51edbac80dfb83cb74ea2fc8",
+          "tableRowCounts": {
+            "password_entries": 3,
+            "custom_fields": 0,
+            "secure_items": 0
+          }
+        },
+        {
+          "stage": "writtenCold",
+          "label": "main-cli-final04-new-write-cold",
+          "tarSha256": "df80e72bcbef7fa00a3ff92aeff2a9c7f1d05d69e8d4ecd594a5f44089e8e2ab",
+          "tableRowCounts": {
+            "password_entries": 3,
+            "custom_fields": 0,
+            "secure_items": 0
+          }
+        },
+        {
+          "stage": "restored",
+          "label": "main-cli-final04-restored",
+          "tarSha256": "9772bbe6ea79b45de0365d885963f12725bc904e5697a819103ee8afe381db7e",
+          "tableRowCounts": {
+            "password_entries": 2,
+            "custom_fields": 0,
+            "secure_items": 0
+          }
+        },
+        {
+          "stage": "restoredCold",
+          "label": "main-cli-final04-restored-cold",
+          "tarSha256": "03f149efa8b980e2c9a2a923dabb6b8eb79296048e60cd80aaba0bb8997aa8c9",
+          "tableRowCounts": {
+            "password_entries": 2,
+            "custom_fields": 0,
+            "secure_items": 0
+          }
+        }
+      ]
+    },
+    "fd": {
+      "status": "passed",
+      "allStagesPbkdf2Sha256600000": true,
+      "allStagesOriginalMdkUnchanged": true,
+      "authenticatedRecoveryPasswordWrapperAndDatabaseIntegrity": true,
+      "finalApkColdReadPreservesEveryOriginalRowColumn": true,
+      "newWriteRetainsEveryOriginalRowColumn": true,
+      "newWriteIsOriginalTwoPlusExpectedSyntheticRecord": true,
+      "newWriteColdReadPreservesEveryRowColumn": true,
+      "replacementRestoreMatchesPriorTwoRecordBackupSemantics": true,
+      "replacementRestoreAssignsDisjointNewIds": true,
+      "postBackupThirdRecordAbsentAfterReplacement": true,
+      "restoredColdReadPreservesEveryRowColumn": true,
+      "allOriginalArchiveBytesUnchanged": true,
+      "snapshots": [
+        {
+          "stage": "reference",
+          "label": "fd-final02-restored",
+          "tarSha256": "153ac4f2042fa50923a03511e2426ca74f3cf3b5b3ee738a4e7d7e71a7029877",
+          "tableRowCounts": {
+            "password_entries": 2,
+            "custom_fields": 0,
+            "secure_items": 0
+          }
+        },
+        {
+          "stage": "before",
+          "label": "fd-before-final03",
+          "tarSha256": "33efffff7bc0976463ce3e66a8be5c12a79e16a8b98464f9e52e4ff994017113",
+          "tableRowCounts": {
+            "password_entries": 2,
+            "custom_fields": 0,
+            "secure_items": 0
+          }
+        },
+        {
+          "stage": "cold",
+          "label": "fd-final03-cold-read",
+          "tarSha256": "b869564b71d8e69bc1ee3062e966c914d538d898d3b50b71b665c4e3928e5e32",
+          "tableRowCounts": {
+            "password_entries": 2,
+            "custom_fields": 0,
+            "secure_items": 0
+          }
+        },
+        {
+          "stage": "written",
+          "label": "fd-final03-new-write",
+          "tarSha256": "1b07beabbdd052452e295c11abf99f78f026757b73e5d0f6a8c0a324aba17ed1",
+          "tableRowCounts": {
+            "password_entries": 3,
+            "custom_fields": 0,
+            "secure_items": 0
+          }
+        },
+        {
+          "stage": "writtenCold",
+          "label": "fd-final03-new-write-cold",
+          "tarSha256": "dcfff68deddcb21087f8f471f2fc470fa9eda19ea703aa07a98cf5f74c36538e",
+          "tableRowCounts": {
+            "password_entries": 3,
+            "custom_fields": 0,
+            "secure_items": 0
+          }
+        },
+        {
+          "stage": "restored",
+          "label": "fd-final03-restored",
+          "tarSha256": "545b5515663513714470163901fce8269cfc25ad11fa42ba7fbbf516f1d2ad95",
+          "tableRowCounts": {
+            "password_entries": 2,
+            "custom_fields": 0,
+            "secure_items": 0
+          }
+        },
+        {
+          "stage": "restoredCold",
+          "label": "fd-final03-restored-cold",
+          "tarSha256": "677f5b78ade8934c30111db967d1542a75305329ba8ab5729797dc1eff6edbcd",
+          "tableRowCounts": {
+            "password_entries": 2,
+            "custom_fields": 0,
+            "secure_items": 0
+          }
+        }
+      ]
+    }
+  },
+  "privateMaterialExcluded": true,
+  "note": "Only validation booleans, stage labels, counts and hashes are published. No database, recovery material, password, screenshot or device XML is included.",
+  "bothFinalReleaseRetentionsPassed": true,
+  "originalUserDataRetainedBeforeCleanup": {
+    "takagi.ru.monica": {
+      "fileCountBefore": 31,
+      "fileCountAfter": 31,
+      "allFileContentsUnchanged": true,
+      "changedRelativePaths": [],
+      "beforeTarSha256": "d886a467ff39a228446c400cc972a0bdb7cbab03fc67eaba89172fb0470aafb1",
+      "afterTarSha256": "d886a467ff39a228446c400cc972a0bdb7cbab03fc67eaba89172fb0470aafb1"
+    },
+    "takagi.ru.monica.bwsync326fd": {
+      "fileCountBefore": 29,
+      "fileCountAfter": 29,
+      "allFileContentsUnchanged": true,
+      "changedRelativePaths": [],
+      "beforeTarSha256": "40820820ee347a1cc4567c4238737f4fe0b45ef7fa7f022ea4998dfb2cefb5f5",
+      "afterTarSha256": "40820820ee347a1cc4567c4238737f4fe0b45ef7fa7f022ea4998dfb2cefb5f5"
+    }
+  }
+}

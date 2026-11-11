@@ -24,6 +24,10 @@
     </style>
     
     <!-- Material透明对话框主题,用于需要Material组件的认证对话框 -->
+    <style name="Theme.ImePasswordAuth" parent="Theme.TransparentDialog">
+        <item name="android:windowIsFloating">false</item>
+    </style>
+
     <style name="Theme.TransparentDialog" parent="Theme.MaterialComponents.Light.Dialog">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>

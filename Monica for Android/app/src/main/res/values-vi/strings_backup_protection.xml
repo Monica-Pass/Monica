@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_protection_title">Bảo vệ bản sao lưu</string>
+    <string name="zip_protection_plain">ZIP không mã hóa</string>
+    <string name="zip_protection_plain_warning">Bất kỳ ai có tệp này đều có thể đọc nội dung của nó.</string>
+    <string name="zip_protection_required">Passkey, tệp đính kèm và cấu hình Monica cần được mã hóa. Bỏ chọn các mục này để xuất ZIP không mã hóa.</string>
+</resources>

@@ -328,7 +328,7 @@ internal fun CloudBackupEncryptionSettings(
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
                     )
-                    BackupEncryptionFormatSelector(format, onFormatChange,
+                    BackupEncryptionFormatField(format, onFormatChange,
                         Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp))
                 }
             }

@@ -18,6 +18,7 @@ import android.text.InputType
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import java.util.Locale
 import androidx.compose.runtime.Recomposer
@@ -292,7 +293,11 @@ open class MonicaInputMethodService : InputMethodService() {
                 }
             }
         }
-        return composeView!!
+        return composeView!!.also { view ->
+            // InputMethodService replaces its input frame on configuration changes.
+            // Release the cached view from the old frame before the system attaches it.
+            (view.parent as? ViewGroup)?.removeView(view)
+        }
     }
 
     override fun onEvaluateFullscreenMode(): Boolean = false

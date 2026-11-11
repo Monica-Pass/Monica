@@ -1,0 +1,606 @@
+{
+  "version": "1.0.327",
+  "status": "complete",
+  "debug": {
+    "main": {
+      "productionBuild": "main-ime-final-02",
+      "testBuild": "main-ime-test-03",
+      "buildSeconds": 225.841,
+      "testRebuildSeconds": 33.754,
+      "jvm": {
+        "tests": 33,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "differentDeviceMethodsPassed": 59,
+      "initialBatchAllGreen": false,
+      "unresolvedMethods": [],
+      "deviceRuns": [
+        {
+          "label": "main-ime-final-core-02",
+          "passed": 31,
+          "failed": 0,
+          "passedMethods": [
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#brokenPasswordWrapperIsNotRepairedFromAWarmRuntimeKey",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#argonWrongPasswordCancellationAndLockKeepOriginalBytes",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#lockAtTheFinalCommitGatePreventsCredentialAndRecoveryWrites",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#missingVerifierWithRemainingCredentialMaterialNeverBecomesAnUnprotectedVault",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#cancelledChangeAndCancelledPasswordAttemptCannotWriteOrUnlock",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#legacyLoginAutomaticallyUpgradesAndFreshManagerReadsTheSameMdkAndCiphertext",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#argonPasswordResetAndAuthorizedResetAlwaysWrite600k",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#historicalProfilesMigrateTo600kAndResetRetainsMdkButRevokesOldPassword",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#malformedUtf16KeepsHistoricalJceOutcomeForBothPbkdf2Costs",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#wrongLegacyPasswordChangesNoEncryptedFileBytes",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#androidAndNativeDerivationsMatchAllIndependentVectorsWithMeasuredDurations",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#stagedPasswordAttemptsCannotCommitAcrossAlgorithmOrPasswordReplacement",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#activityCancellationAfterAuthenticationKeepsAllOriginalBytes",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#unknownStoredProfileCannotFallBackToLegacyOrWriteReplacement",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#current600kLoginDoesNotRewrapPasswordCredentials",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#staleSettingsWriterRefreshesAndMergesWithoutLosingConcurrentValues",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#bothNewProfilesRecoverTheOriginalPasswordWrappedMdk",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#failedMirrorCommitKeepsCanonicalRecoverableAndBlocksOldMirror",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#staleCredentialGenerationCannotWriteOrReenroll",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#readDuringOwnCanonicalCommitDoesNotRevokeTheExistingSession",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#genuineVersionOneRecoveryRetainsLegacyKdfAndOldApkProtectedValues",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#credentialCasIncludesKdfMetadata",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#unknownEnvelopeVersionIsNotTreatedAsAbsentRecovery",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#failedCommitWithPublishedMemoryStaysBlockedUntilDiskAndCanonicalAgree",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#revokedCommitLeavesBothCanonicalAndMirrorUntouched",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#freshPreparationReloadsExactEncryptedDiskValuesAfterStaleCache",
+            "takagi.ru.monica.security.LocalPasswordCrossProcessInstrumentedTest#staleImeHandleIsRejectedAfterMainMigrationAndFreshImeOpensNewProfile",
+            "takagi.ru.monica.security.LocalPasswordCrossProcessInstrumentedTest#twoRealProcessCredentialWritersCannotOverwriteEachOthersGenerationOrUnknownValue",
+            "takagi.ru.monica.security.SecureStoreReuseInstrumentedTest#coldUiConstructorRefusesToOpenProviderSynchronously",
+            "takagi.ru.monica.security.SecureStoreReuseInstrumentedTest#selectorChangeRevokesCachedReadsAndRuntimeUnlockWithoutOpeningNewStore",
+            "takagi.ru.monica.security.SecureStoreReuseInstrumentedTest#warmUiManagersDoNotReopenProvider"
+          ],
+          "failedMethods": [],
+          "runnerSeconds": 74.807,
+          "driverSeconds": 77.412
+        },
+        {
+          "label": "main-ime-final-ui-02",
+          "passed": 17,
+          "failed": 1,
+          "passedMethods": [
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#defaultChoiceWarnsBeforeOptInAndBothChoicesWork",
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#cloudFormatChoiceDoesNotChangePasswordOrEncryptionToggle",
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#reopeningZipDiscardsPreviousPlaintextOrV2Choice",
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#protectedContentDisablesPlaintextAndChangedRequirementCannotBypassIt",
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#largeDarkZipOptionsAndConfirmationRemainReachable",
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#zipPlaintextRequiresAnExplicitChoiceAndCancelDoesNotExport",
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#narrowLargeDarkRtlKeepsBothOptionsAndWarningReachable",
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#zipStartsEncryptedV1AndSelectionNeedsConfirmation",
+            "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#authorizedResetRetainsExistingRouteWithoutOldPasswordRead",
+            "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#resetBackRevokesWorkerBeforeCommit",
+            "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#resetBackgroundRevokesWorkerBeforeCommit",
+            "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#resetUsesOneVerifiedOperationAndClearsAllPasswordFields",
+            "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#resetSavedStateContainsNeitherOldNorNewPassword",
+            "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#existingPasswordRejectsWrongThenCommitsVerifiedRuntimeKey",
+            "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#firstSetupRunsOnceAndNewPasswordCanUnlockAfterColdManagerOpen",
+            "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#changePasswordScreenRejectsWrongPasswordThenConfirmsOnlyACommittedReplacement",
+            "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#changePasswordScreenBackgroundClearsInputsAndKeepsTheOriginalCredentials"
+          ],
+          "failedMethods": [
+            "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#backgroundBeforeSetupConfirmationErasesFirstPasswordAndReturnsToFirstStep"
+          ],
+          "runnerSeconds": 24.004,
+          "driverSeconds": 27.006
+        },
+        {
+          "label": "main-ime-final-backup-fallback-02",
+          "passed": 8,
+          "failed": 0,
+          "passedMethods": [
+            "takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest#androidProviderMatchesAllPythonVectorsAndReadsBothFormats",
+            "takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest#manualZipAndSharedCloudArchiveHonorExplicitFormatAndPersistCloudChoice",
+            "takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest#fileApiPreservesDestinationOnWrongPasswordCorruptionAndUnknownVersion",
+            "takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest#unversionedConfigurationStringsRemainCompatibleWith100000Iterations",
+            "takagi.ru.monica.security.MasterPasswordFallbackUiTest#existingPasswordIsVerifiedWithoutApplyingNewPasswordLengthRules",
+            "takagi.ru.monica.security.MasterPasswordFallbackUiTest#slowPasswordVerificationKeepsMainResponsive",
+            "takagi.ru.monica.security.MasterPasswordFallbackUiTest#cancellingPendingVerificationRejectsItsLateSuccess",
+            "takagi.ru.monica.security.MasterPasswordFallbackUiTest#cancellingDoesNotVerifyOrAuthorize"
+          ],
+          "failedMethods": [],
+          "runnerSeconds": 48.994,
+          "driverSeconds": 51.857
+        },
+        {
+          "label": "main-ime-final-confirm-portrait-03",
+          "passed": 1,
+          "failed": 0,
+          "passedMethods": [
+            "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#backgroundBeforeSetupConfirmationErasesFirstPasswordAndReturnsToFirstStep"
+          ],
+          "failedMethods": [],
+          "runnerSeconds": 1.5,
+          "driverSeconds": 4.639
+        },
+        {
+          "label": "main-ime-config-settled-03",
+          "passed": 2,
+          "failed": 0,
+          "passedMethods": [
+            "takagi.ru.monica.ime.MonicaImeSystemTest#systemKeyboardTypesNumbersAndLettersAndAppliesTheSavedShuffleSwitch",
+            "takagi.ru.monica.ime.MonicaImeSystemTest#activeKeyboardSurvivesRepeatedFontScaleChangesAndStillTypes"
+          ],
+          "failedMethods": [],
+          "runnerSeconds": 13.445,
+          "driverSeconds": 16.773
+        }
+      ],
+      "passedMethods": [
+        "takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest#androidProviderMatchesAllPythonVectorsAndReadsBothFormats",
+        "takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest#fileApiPreservesDestinationOnWrongPasswordCorruptionAndUnknownVersion",
+        "takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest#manualZipAndSharedCloudArchiveHonorExplicitFormatAndPersistCloudChoice",
+        "takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest#unversionedConfigurationStringsRemainCompatibleWith100000Iterations",
+        "takagi.ru.monica.ime.MonicaImeSystemTest#activeKeyboardSurvivesRepeatedFontScaleChangesAndStillTypes",
+        "takagi.ru.monica.ime.MonicaImeSystemTest#systemKeyboardTypesNumbersAndLettersAndAppliesTheSavedShuffleSwitch",
+        "takagi.ru.monica.security.LocalPasswordCrossProcessInstrumentedTest#staleImeHandleIsRejectedAfterMainMigrationAndFreshImeOpensNewProfile",
+        "takagi.ru.monica.security.LocalPasswordCrossProcessInstrumentedTest#twoRealProcessCredentialWritersCannotOverwriteEachOthersGenerationOrUnknownValue",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#bothNewProfilesRecoverTheOriginalPasswordWrappedMdk",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#credentialCasIncludesKdfMetadata",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#failedCommitWithPublishedMemoryStaysBlockedUntilDiskAndCanonicalAgree",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#failedMirrorCommitKeepsCanonicalRecoverableAndBlocksOldMirror",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#freshPreparationReloadsExactEncryptedDiskValuesAfterStaleCache",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#genuineVersionOneRecoveryRetainsLegacyKdfAndOldApkProtectedValues",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#readDuringOwnCanonicalCommitDoesNotRevokeTheExistingSession",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#revokedCommitLeavesBothCanonicalAndMirrorUntouched",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#staleCredentialGenerationCannotWriteOrReenroll",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#staleSettingsWriterRefreshesAndMergesWithoutLosingConcurrentValues",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#unknownEnvelopeVersionIsNotTreatedAsAbsentRecovery",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#activityCancellationAfterAuthenticationKeepsAllOriginalBytes",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#androidAndNativeDerivationsMatchAllIndependentVectorsWithMeasuredDurations",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#argonPasswordResetAndAuthorizedResetAlwaysWrite600k",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#argonWrongPasswordCancellationAndLockKeepOriginalBytes",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#brokenPasswordWrapperIsNotRepairedFromAWarmRuntimeKey",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#cancelledChangeAndCancelledPasswordAttemptCannotWriteOrUnlock",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#current600kLoginDoesNotRewrapPasswordCredentials",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#historicalProfilesMigrateTo600kAndResetRetainsMdkButRevokesOldPassword",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#legacyLoginAutomaticallyUpgradesAndFreshManagerReadsTheSameMdkAndCiphertext",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#lockAtTheFinalCommitGatePreventsCredentialAndRecoveryWrites",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#malformedUtf16KeepsHistoricalJceOutcomeForBothPbkdf2Costs",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#missingVerifierWithRemainingCredentialMaterialNeverBecomesAnUnprotectedVault",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#stagedPasswordAttemptsCannotCommitAcrossAlgorithmOrPasswordReplacement",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#unknownStoredProfileCannotFallBackToLegacyOrWriteReplacement",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#wrongLegacyPasswordChangesNoEncryptedFileBytes",
+        "takagi.ru.monica.security.MasterPasswordFallbackUiTest#cancellingDoesNotVerifyOrAuthorize",
+        "takagi.ru.monica.security.MasterPasswordFallbackUiTest#cancellingPendingVerificationRejectsItsLateSuccess",
+        "takagi.ru.monica.security.MasterPasswordFallbackUiTest#existingPasswordIsVerifiedWithoutApplyingNewPasswordLengthRules",
+        "takagi.ru.monica.security.MasterPasswordFallbackUiTest#slowPasswordVerificationKeepsMainResponsive",
+        "takagi.ru.monica.security.SecureStoreReuseInstrumentedTest#coldUiConstructorRefusesToOpenProviderSynchronously",
+        "takagi.ru.monica.security.SecureStoreReuseInstrumentedTest#selectorChangeRevokesCachedReadsAndRuntimeUnlockWithoutOpeningNewStore",
+        "takagi.ru.monica.security.SecureStoreReuseInstrumentedTest#warmUiManagersDoNotReopenProvider",
+        "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#cloudFormatChoiceDoesNotChangePasswordOrEncryptionToggle",
+        "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#defaultChoiceWarnsBeforeOptInAndBothChoicesWork",
+        "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#largeDarkZipOptionsAndConfirmationRemainReachable",
+        "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#narrowLargeDarkRtlKeepsBothOptionsAndWarningReachable",
+        "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#protectedContentDisablesPlaintextAndChangedRequirementCannotBypassIt",
+        "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#reopeningZipDiscardsPreviousPlaintextOrV2Choice",
+        "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#zipPlaintextRequiresAnExplicitChoiceAndCancelDoesNotExport",
+        "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#zipStartsEncryptedV1AndSelectionNeedsConfirmation",
+        "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#authorizedResetRetainsExistingRouteWithoutOldPasswordRead",
+        "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#resetBackRevokesWorkerBeforeCommit",
+        "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#resetBackgroundRevokesWorkerBeforeCommit",
+        "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#resetSavedStateContainsNeitherOldNorNewPassword",
+        "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#resetUsesOneVerifiedOperationAndClearsAllPasswordFields",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#backgroundBeforeSetupConfirmationErasesFirstPasswordAndReturnsToFirstStep",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#changePasswordScreenBackgroundClearsInputsAndKeepsTheOriginalCredentials",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#changePasswordScreenRejectsWrongPasswordThenConfirmsOnlyACommittedReplacement",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#existingPasswordRejectsWrongThenCommitsVerifiedRuntimeKey",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#firstSetupRunsOnceAndNewPasswordCanUnlockAfterColdManagerOpen"
+      ]
+    },
+    "fd": {
+      "productionBuild": "fd-ime-final-02",
+      "testBuild": "fd-ime-test-03",
+      "buildSeconds": 130.699,
+      "testRebuildSeconds": 29.702,
+      "jvm": {
+        "tests": 33,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "differentDeviceMethodsPassed": 59,
+      "initialBatchAllGreen": false,
+      "unresolvedMethods": [],
+      "deviceRuns": [
+        {
+          "label": "fd-ime-final-core-02",
+          "passed": 31,
+          "failed": 0,
+          "passedMethods": [
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#brokenPasswordWrapperIsNotRepairedFromAWarmRuntimeKey",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#argonWrongPasswordCancellationAndLockKeepOriginalBytes",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#lockAtTheFinalCommitGatePreventsCredentialAndRecoveryWrites",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#missingVerifierWithRemainingCredentialMaterialNeverBecomesAnUnprotectedVault",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#cancelledChangeAndCancelledPasswordAttemptCannotWriteOrUnlock",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#legacyLoginAutomaticallyUpgradesAndFreshManagerReadsTheSameMdkAndCiphertext",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#argonPasswordResetAndAuthorizedResetAlwaysWrite600k",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#historicalProfilesMigrateTo600kAndResetRetainsMdkButRevokesOldPassword",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#malformedUtf16KeepsHistoricalJceOutcomeForBothPbkdf2Costs",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#wrongLegacyPasswordChangesNoEncryptedFileBytes",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#androidAndNativeDerivationsMatchAllIndependentVectorsWithMeasuredDurations",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#stagedPasswordAttemptsCannotCommitAcrossAlgorithmOrPasswordReplacement",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#activityCancellationAfterAuthenticationKeepsAllOriginalBytes",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#unknownStoredProfileCannotFallBackToLegacyOrWriteReplacement",
+            "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#current600kLoginDoesNotRewrapPasswordCredentials",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#staleSettingsWriterRefreshesAndMergesWithoutLosingConcurrentValues",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#bothNewProfilesRecoverTheOriginalPasswordWrappedMdk",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#failedMirrorCommitKeepsCanonicalRecoverableAndBlocksOldMirror",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#staleCredentialGenerationCannotWriteOrReenroll",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#readDuringOwnCanonicalCommitDoesNotRevokeTheExistingSession",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#genuineVersionOneRecoveryRetainsLegacyKdfAndOldApkProtectedValues",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#credentialCasIncludesKdfMetadata",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#unknownEnvelopeVersionIsNotTreatedAsAbsentRecovery",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#failedCommitWithPublishedMemoryStaysBlockedUntilDiskAndCanonicalAgree",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#revokedCommitLeavesBothCanonicalAndMirrorUntouched",
+            "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#freshPreparationReloadsExactEncryptedDiskValuesAfterStaleCache",
+            "takagi.ru.monica.security.LocalPasswordCrossProcessInstrumentedTest#staleImeHandleIsRejectedAfterMainMigrationAndFreshImeOpensNewProfile",
+            "takagi.ru.monica.security.LocalPasswordCrossProcessInstrumentedTest#twoRealProcessCredentialWritersCannotOverwriteEachOthersGenerationOrUnknownValue",
+            "takagi.ru.monica.security.SecureStoreReuseInstrumentedTest#coldUiConstructorRefusesToOpenProviderSynchronously",
+            "takagi.ru.monica.security.SecureStoreReuseInstrumentedTest#selectorChangeRevokesCachedReadsAndRuntimeUnlockWithoutOpeningNewStore",
+            "takagi.ru.monica.security.SecureStoreReuseInstrumentedTest#warmUiManagersDoNotReopenProvider"
+          ],
+          "failedMethods": [],
+          "runnerSeconds": 80.175,
+          "driverSeconds": 83.267
+        },
+        {
+          "label": "fd-ime-final-ui-02",
+          "passed": 13,
+          "failed": 5,
+          "passedMethods": [
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#defaultChoiceWarnsBeforeOptInAndBothChoicesWork",
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#cloudFormatChoiceDoesNotChangePasswordOrEncryptionToggle",
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#reopeningZipDiscardsPreviousPlaintextOrV2Choice",
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#protectedContentDisablesPlaintextAndChangedRequirementCannotBypassIt",
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#largeDarkZipOptionsAndConfirmationRemainReachable",
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#zipPlaintextRequiresAnExplicitChoiceAndCancelDoesNotExport",
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#narrowLargeDarkRtlKeepsBothOptionsAndWarningReachable",
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#zipStartsEncryptedV1AndSelectionNeedsConfirmation",
+            "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#existingPasswordRejectsWrongThenCommitsVerifiedRuntimeKey",
+            "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#backgroundBeforeSetupConfirmationErasesFirstPasswordAndReturnsToFirstStep",
+            "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#firstSetupRunsOnceAndNewPasswordCanUnlockAfterColdManagerOpen",
+            "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#changePasswordScreenRejectsWrongPasswordThenConfirmsOnlyACommittedReplacement",
+            "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#changePasswordScreenBackgroundClearsInputsAndKeepsTheOriginalCredentials"
+          ],
+          "failedMethods": [
+            "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#authorizedResetRetainsExistingRouteWithoutOldPasswordRead",
+            "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#resetBackRevokesWorkerBeforeCommit",
+            "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#resetBackgroundRevokesWorkerBeforeCommit",
+            "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#resetUsesOneVerifiedOperationAndClearsAllPasswordFields",
+            "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#resetSavedStateContainsNeitherOldNorNewPassword"
+          ],
+          "runnerSeconds": 74.627,
+          "driverSeconds": 77.822
+        },
+        {
+          "label": "fd-ime-final-backup-fallback-02",
+          "passed": 8,
+          "failed": 0,
+          "passedMethods": [
+            "takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest#androidProviderMatchesAllPythonVectorsAndReadsBothFormats",
+            "takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest#manualZipAndSharedCloudArchiveHonorExplicitFormatAndPersistCloudChoice",
+            "takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest#fileApiPreservesDestinationOnWrongPasswordCorruptionAndUnknownVersion",
+            "takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest#unversionedConfigurationStringsRemainCompatibleWith100000Iterations",
+            "takagi.ru.monica.security.MasterPasswordFallbackUiTest#existingPasswordIsVerifiedWithoutApplyingNewPasswordLengthRules",
+            "takagi.ru.monica.security.MasterPasswordFallbackUiTest#slowPasswordVerificationKeepsMainResponsive",
+            "takagi.ru.monica.security.MasterPasswordFallbackUiTest#cancellingPendingVerificationRejectsItsLateSuccess",
+            "takagi.ru.monica.security.MasterPasswordFallbackUiTest#cancellingDoesNotVerifyOrAuthorize"
+          ],
+          "failedMethods": [],
+          "runnerSeconds": 40.965,
+          "driverSeconds": 43.72
+        },
+        {
+          "label": "fd-ime-final-ui-originalkeyboard-03",
+          "passed": 18,
+          "failed": 0,
+          "passedMethods": [
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#defaultChoiceWarnsBeforeOptInAndBothChoicesWork",
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#cloudFormatChoiceDoesNotChangePasswordOrEncryptionToggle",
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#reopeningZipDiscardsPreviousPlaintextOrV2Choice",
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#protectedContentDisablesPlaintextAndChangedRequirementCannotBypassIt",
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#largeDarkZipOptionsAndConfirmationRemainReachable",
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#zipPlaintextRequiresAnExplicitChoiceAndCancelDoesNotExport",
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#narrowLargeDarkRtlKeepsBothOptionsAndWarningReachable",
+            "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#zipStartsEncryptedV1AndSelectionNeedsConfirmation",
+            "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#authorizedResetRetainsExistingRouteWithoutOldPasswordRead",
+            "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#resetBackRevokesWorkerBeforeCommit",
+            "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#resetBackgroundRevokesWorkerBeforeCommit",
+            "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#resetUsesOneVerifiedOperationAndClearsAllPasswordFields",
+            "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#resetSavedStateContainsNeitherOldNorNewPassword",
+            "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#existingPasswordRejectsWrongThenCommitsVerifiedRuntimeKey",
+            "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#backgroundBeforeSetupConfirmationErasesFirstPasswordAndReturnsToFirstStep",
+            "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#firstSetupRunsOnceAndNewPasswordCanUnlockAfterColdManagerOpen",
+            "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#changePasswordScreenRejectsWrongPasswordThenConfirmsOnlyACommittedReplacement",
+            "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#changePasswordScreenBackgroundClearsInputsAndKeepsTheOriginalCredentials"
+          ],
+          "failedMethods": [],
+          "runnerSeconds": 25.335,
+          "driverSeconds": 28.092
+        },
+        {
+          "label": "fd-ime-config-settled-01",
+          "passed": 2,
+          "failed": 0,
+          "passedMethods": [
+            "takagi.ru.monica.ime.MonicaImeSystemTest#systemKeyboardTypesNumbersAndLettersAndAppliesTheSavedShuffleSwitch",
+            "takagi.ru.monica.ime.MonicaImeSystemTest#activeKeyboardSurvivesRepeatedFontScaleChangesAndStillTypes"
+          ],
+          "failedMethods": [],
+          "runnerSeconds": 14.702,
+          "driverSeconds": 18.654
+        }
+      ],
+      "passedMethods": [
+        "takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest#androidProviderMatchesAllPythonVectorsAndReadsBothFormats",
+        "takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest#fileApiPreservesDestinationOnWrongPasswordCorruptionAndUnknownVersion",
+        "takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest#manualZipAndSharedCloudArchiveHonorExplicitFormatAndPersistCloudChoice",
+        "takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest#unversionedConfigurationStringsRemainCompatibleWith100000Iterations",
+        "takagi.ru.monica.ime.MonicaImeSystemTest#activeKeyboardSurvivesRepeatedFontScaleChangesAndStillTypes",
+        "takagi.ru.monica.ime.MonicaImeSystemTest#systemKeyboardTypesNumbersAndLettersAndAppliesTheSavedShuffleSwitch",
+        "takagi.ru.monica.security.LocalPasswordCrossProcessInstrumentedTest#staleImeHandleIsRejectedAfterMainMigrationAndFreshImeOpensNewProfile",
+        "takagi.ru.monica.security.LocalPasswordCrossProcessInstrumentedTest#twoRealProcessCredentialWritersCannotOverwriteEachOthersGenerationOrUnknownValue",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#bothNewProfilesRecoverTheOriginalPasswordWrappedMdk",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#credentialCasIncludesKdfMetadata",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#failedCommitWithPublishedMemoryStaysBlockedUntilDiskAndCanonicalAgree",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#failedMirrorCommitKeepsCanonicalRecoverableAndBlocksOldMirror",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#freshPreparationReloadsExactEncryptedDiskValuesAfterStaleCache",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#genuineVersionOneRecoveryRetainsLegacyKdfAndOldApkProtectedValues",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#readDuringOwnCanonicalCommitDoesNotRevokeTheExistingSession",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#revokedCommitLeavesBothCanonicalAndMirrorUntouched",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#staleCredentialGenerationCannotWriteOrReenroll",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#staleSettingsWriterRefreshesAndMergesWithoutLosingConcurrentValues",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#unknownEnvelopeVersionIsNotTreatedAsAbsentRecovery",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#activityCancellationAfterAuthenticationKeepsAllOriginalBytes",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#androidAndNativeDerivationsMatchAllIndependentVectorsWithMeasuredDurations",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#argonPasswordResetAndAuthorizedResetAlwaysWrite600k",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#argonWrongPasswordCancellationAndLockKeepOriginalBytes",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#brokenPasswordWrapperIsNotRepairedFromAWarmRuntimeKey",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#cancelledChangeAndCancelledPasswordAttemptCannotWriteOrUnlock",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#current600kLoginDoesNotRewrapPasswordCredentials",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#historicalProfilesMigrateTo600kAndResetRetainsMdkButRevokesOldPassword",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#legacyLoginAutomaticallyUpgradesAndFreshManagerReadsTheSameMdkAndCiphertext",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#lockAtTheFinalCommitGatePreventsCredentialAndRecoveryWrites",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#malformedUtf16KeepsHistoricalJceOutcomeForBothPbkdf2Costs",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#missingVerifierWithRemainingCredentialMaterialNeverBecomesAnUnprotectedVault",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#stagedPasswordAttemptsCannotCommitAcrossAlgorithmOrPasswordReplacement",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#unknownStoredProfileCannotFallBackToLegacyOrWriteReplacement",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest#wrongLegacyPasswordChangesNoEncryptedFileBytes",
+        "takagi.ru.monica.security.MasterPasswordFallbackUiTest#cancellingDoesNotVerifyOrAuthorize",
+        "takagi.ru.monica.security.MasterPasswordFallbackUiTest#cancellingPendingVerificationRejectsItsLateSuccess",
+        "takagi.ru.monica.security.MasterPasswordFallbackUiTest#existingPasswordIsVerifiedWithoutApplyingNewPasswordLengthRules",
+        "takagi.ru.monica.security.MasterPasswordFallbackUiTest#slowPasswordVerificationKeepsMainResponsive",
+        "takagi.ru.monica.security.SecureStoreReuseInstrumentedTest#coldUiConstructorRefusesToOpenProviderSynchronously",
+        "takagi.ru.monica.security.SecureStoreReuseInstrumentedTest#selectorChangeRevokesCachedReadsAndRuntimeUnlockWithoutOpeningNewStore",
+        "takagi.ru.monica.security.SecureStoreReuseInstrumentedTest#warmUiManagersDoNotReopenProvider",
+        "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#cloudFormatChoiceDoesNotChangePasswordOrEncryptionToggle",
+        "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#defaultChoiceWarnsBeforeOptInAndBothChoicesWork",
+        "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#largeDarkZipOptionsAndConfirmationRemainReachable",
+        "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#narrowLargeDarkRtlKeepsBothOptionsAndWarningReachable",
+        "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#protectedContentDisablesPlaintextAndChangedRequirementCannotBypassIt",
+        "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#reopeningZipDiscardsPreviousPlaintextOrV2Choice",
+        "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#zipPlaintextRequiresAnExplicitChoiceAndCancelDoesNotExport",
+        "takagi.ru.monica.ui.screens.BackupEncryptionFormatUiTest#zipStartsEncryptedV1AndSelectionNeedsConfirmation",
+        "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#authorizedResetRetainsExistingRouteWithoutOldPasswordRead",
+        "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#resetBackRevokesWorkerBeforeCommit",
+        "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#resetBackgroundRevokesWorkerBeforeCommit",
+        "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#resetSavedStateContainsNeitherOldNorNewPassword",
+        "takagi.ru.monica.ui.screens.LocalPasswordProtectionUiTest#resetUsesOneVerifiedOperationAndClearsAllPasswordFields",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#backgroundBeforeSetupConfirmationErasesFirstPasswordAndReturnsToFirstStep",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#changePasswordScreenBackgroundClearsInputsAndKeepsTheOriginalCredentials",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#changePasswordScreenRejectsWrongPasswordThenConfirmsOnlyACommittedReplacement",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#existingPasswordRejectsWrongThenCommitsVerifiedRuntimeKey",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#firstSetupRunsOnceAndNewPasswordCanUnlockAfterColdManagerOpen"
+      ]
+    }
+  },
+  "releaseArtifacts": {
+    "main": {
+      "label": "main-release-new-04",
+      "buildSeconds": 1317.883,
+      "apkSha256": "ed8a8519a4cca3633b34ca78039bbca9326823a602a2fb1659428be19ee59e23",
+      "mappingSha256": "84d8c6ca67da1b74006d56c71ac780a1fe1d81096535079274d7062616404558",
+      "package": "takagi.ru.monica.mainrelease327",
+      "signerSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "actualAbi": [
+        "arm64-v8a"
+      ],
+      "actualR8": true,
+      "platformXmlDependencyGate": true,
+      "frozenSourceFilesMatchingCurrent": 5265,
+      "testCertificateOnly": true,
+      "oldApkDirectlyRechecked": false,
+      "priorRecordedSignerAndPackageMatch": "main-release-old-02",
+      "limitation": "Prior APK absent from original artifact directory at independent review; historical signer/package uses preserved earlier audit, not a new read of that binary."
+    },
+    "fd": {
+      "label": "fd-release-03",
+      "buildSeconds": 1143.731,
+      "apkSha256": "5b171959bbf81f26a9edce41250f2e4966ef60f443199138d1da7290af608645",
+      "mappingSha256": "8a72623fdd7acd2e2530f303db17913547da31370852a433b28486cd0e581579",
+      "package": "takagi.ru.monica.bwsync326fd",
+      "signerSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "actualAbi": [
+        "arm64-v8a"
+      ],
+      "actualR8": true,
+      "platformXmlDependencyGate": true,
+      "frozenSourceFilesMatchingCurrent": 5258,
+      "testCertificateOnly": true,
+      "oldApkDirectlyRechecked": false,
+      "priorRecordedSignerAndPackageMatch": "fd-release-01",
+      "limitation": "Prior APK absent from original artifact directory at independent review; historical signer/package uses preserved earlier audit, not a new read of that binary."
+    }
+  },
+  "releaseIme": {
+    "main": {
+      "status": "passed",
+      "fourFontChangesSamePid": "43343",
+      "noTargetCrashThroughFinal": true,
+      "softwareKeyEnteredQ": true,
+      "quickFillRestoredOriginalCredentials": true,
+      "filledXmlSha256": "c39035bbfb2d05d95720f3efa997b8813535b0edbcfcb5db97f0db782e8a8a86",
+      "qXmlSha256": "6275cac4e99df099a4c8f4b1471887281dc2af9ce2265a8441b8829c5d7e8e9c",
+      "actions": [
+        {
+          "process": "takagi.ru.monica.mainrelease327:ime",
+          "pid": "44391",
+          "fontScale": "1.0",
+          "mode": "unlock",
+          "bothActionsAboveKeyboard": true,
+          "physicalTapWithoutHidingKeyboard": true,
+          "resultReturnedToFixture": true
+        },
+        {
+          "process": "takagi.ru.monica.mainrelease327:ime",
+          "pid": "43764",
+          "fontScale": "1.5",
+          "mode": "cancel",
+          "bothActionsAboveKeyboard": true,
+          "physicalTapWithoutHidingKeyboard": true,
+          "resultReturnedToFixture": true
+        }
+      ]
+    },
+    "fd": {
+      "status": "passed",
+      "fourFontChangesSamePid": "48075",
+      "noTargetCrashThroughFinal": true,
+      "softwareKeyEnteredQ": true,
+      "quickFillRestoredOriginalCredentials": true,
+      "filledXmlSha256": "c39035bbfb2d05d95720f3efa997b8813535b0edbcfcb5db97f0db782e8a8a86",
+      "qXmlSha256": "785050f9c94f2be9850b44ef43556e79ae7142a93b1c8433df29e0803a8961b8",
+      "actions": [
+        {
+          "process": "takagi.ru.monica.bwsync326fd:ime",
+          "pid": "49072",
+          "fontScale": "1.0",
+          "mode": "unlock",
+          "bothActionsAboveKeyboard": true,
+          "physicalTapWithoutHidingKeyboard": true,
+          "resultReturnedToFixture": true
+        },
+        {
+          "process": "takagi.ru.monica.bwsync326fd:ime",
+          "pid": "48540",
+          "fontScale": "1.5",
+          "mode": "cancel",
+          "bothActionsAboveKeyboard": true,
+          "physicalTapWithoutHidingKeyboard": true,
+          "resultReturnedToFixture": true
+        }
+      ]
+    }
+  },
+  "releaseRetention": {
+    "main": "passed",
+    "fd": "passed"
+  },
+  "compiledResourceChecks": {
+    "main": {
+      "build": "main-ime-final-02",
+      "valuesChecked": 72,
+      "apkSha256": "edcd5e5ff1c9d26a85eab4a056444d303697cb081107aa32c8466729cf09d719"
+    },
+    "fd": {
+      "build": "fd-ime-final-02",
+      "valuesChecked": 72,
+      "apkSha256": "e52bc89a640b0fa5e57de96ff44c43294ec52e508359352842eb77032d041c77"
+    }
+  },
+  "fdMetadataPassed": true,
+  "fdScriptTestsPassed": 6,
+  "cleanup": {
+    "status": "complete",
+    "removedOnlyOwnedGuest": 10,
+    "restoredOriginalUser": 0,
+    "display": {
+      "size": "1080x1920",
+      "density": 280,
+      "fontScale": 1.0,
+      "rotationLock": 1
+    },
+    "originalInputMethodRestored": "Sogou",
+    "adbdUid": 2000,
+    "reverseRemoved": true,
+    "temporaryUiDumpRemoved": true,
+    "originalOwnerDataUnchanged": true,
+    "firstGuestRemovalFailedThenStoppedStateConfirmedAndRetrySucceeded": true,
+    "localFixtureService": {
+      "pid": 55892,
+      "exactRelativeScriptAndLoopbackListenerVerified": true,
+      "stopped": true,
+      "initialAbsolutePathPrecheckRejectedRelativeInvocation": true
+    },
+    "emulator": {
+      "ownedInstanceStopped": 2,
+      "preexistingInstancesZeroAndOneRemainStopped": true,
+      "sameCreatedTimestamp": true,
+      "dataDisksRetained": true,
+      "initialShutdownSnapshotStillRunningThenStopConfirmed": true
+    },
+    "publicAvdUntouched": true,
+    "sourceReceipts": [
+      "final-device-cleanup",
+      "final-server-cleanup",
+      "final-mumu-cleanup"
+    ]
+  },
+  "historicalApkLimitation": "Old APKs are absent from their original artifact directories at final review; historical signer/package/hash uses earlier audits and installation receipts. Final APKs were directly reverified.",
+  "limits": [
+    "Synthetic data only",
+    "Android 35 emulator; x86_64 Debug and ARM64 Release through translation",
+    "Local test signing certificate and isolated application IDs",
+    "No physical ARM64/OEM/TEE/production-signer/real-cloud certification",
+    "No commit, push, tag, publication or APK delivery"
+  ],
+  "evidenceFiles": [
+    "local-pbkdf-backup-ime-327-tests.txt",
+    "local-pbkdf-backup-ime-327-artifacts.json",
+    "local-pbkdf-backup-ime-327-retention.json",
+    "local-pbkdf-backup-ime-327-failures.txt",
+    "local-pbkdf-backup-ime-327-metadata.txt",
+    "local-pbkdf-backup-ime-327-cleanup.txt"
+  ],
+  "finalCliDriverNotes": {
+    "liveConfigInitialDateFailure": "date format containing a space was not quoted for adb shell; failed before device mutation; quoted format then ran successfully",
+    "fdFirstQuickFillAttempt": "assertion failed with empty native fields; subsequent screenshot showed automatic vault lock after inter-step delay; fresh original-password authentication and a contiguous sequence filled both values and typed q",
+    "mainReauthentication": "main candidate selection also required original-password reauthentication after an inter-step delay; final contiguous fill evidence is the successful XML"
+  },
+  "originalUserDataRetainedBeforeCleanup": {
+    "takagi.ru.monica": {
+      "fileCountBefore": 31,
+      "fileCountAfter": 31,
+      "allFileContentsUnchanged": true,
+      "changedRelativePaths": [],
+      "beforeTarSha256": "d886a467ff39a228446c400cc972a0bdb7cbab03fc67eaba89172fb0470aafb1",
+      "afterTarSha256": "d886a467ff39a228446c400cc972a0bdb7cbab03fc67eaba89172fb0470aafb1"
+    },
+    "takagi.ru.monica.bwsync326fd": {
+      "fileCountBefore": 29,
+      "fileCountAfter": 29,
+      "allFileContentsUnchanged": true,
+      "changedRelativePaths": [],
+      "beforeTarSha256": "40820820ee347a1cc4567c4238737f4fe0b45ef7fa7f022ea4998dfb2cefb5f5",
+      "afterTarSha256": "40820820ee347a1cc4567c4238737f4fe0b45ef7fa7f022ea4998dfb2cefb5f5"
+    }
+  },
+  "visualReview": {
+    "performedBy": "main task",
+    "finalContactSheetImagesReviewed": 4,
+    "editions": [
+      "main",
+      "fd"
+    ],
+    "fontScales": [
+      1.0,
+      1.5
+    ],
+    "unlockAndCancelAboveKeyboard": true,
+    "imagesRemainLocalAndIgnored": true
+  }
+}

@@ -138,6 +138,55 @@ class MonicaImeSystemTest {
             automation.serviceInfo = automation.serviceInfo.apply { flags = oldFlags }
         }
     }
+    @Test fun activeKeyboardSurvivesRepeatedFontScaleChangesAndStillTypes() {
+        val serviceComponent = ComponentName(instrumentation.targetContext, MonicaInputMethodService::class.java)
+        val component = serviceComponent.flattenToShortString()
+        val process = instrumentation.targetContext.packageName + ":ime"
+        val previous = shell("settings --user $testUser get secure default_input_method")
+        val previousScale = shell("settings --user $testUser get system font_scale")
+        require(previous.matches(Regex("[A-Za-z0-9_./]+")))
+        require(previousScale == "null" || previousScale.toFloatOrNull() != null)
+        val wasEnabled = shell("settings --user $testUser get secure enabled_input_methods").split(':').any {
+            ComponentName.unflattenFromString(it.substringBefore(';')) == serviceComponent
+        }
+        val oldFlags = automation.serviceInfo.flags
+        try {
+            automation.serviceInfo = automation.serviceInfo.apply {
+                flags = flags or AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS or
+                    AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS
+            }
+            shell("ime enable --user $testUser $component")
+            shell("ime set --user $testUser $component")
+            openFixture("login")
+            tap("fixture-field-0")
+            waitFor("q")
+            val originalPid = shell("pidof $process")
+            assertTrue("The real IME process must be running", originalPid.isNotBlank())
+            listOf("1.5", "1.0", "1.5", "1.0").forEach { scale ->
+                // Keep the IME alive and visible while Android rebuilds its window.
+                shell("settings --user $testUser put system font_scale $scale")
+                android.os.SystemClock.sleep(750)
+                assertEquals("Configuration change must not restart the IME", originalPid, shell("pidof $process"))
+                openFixture("login")
+                tap("fixture-field-0")
+                waitFor("q")
+                // A newly attached view exposes semantics before its resize animation ends.
+                automation.waitForIdle(200, 5000)
+                tap("q")
+                waitFor("fixture-field-0") { it.text?.toString() == "q" }
+                assertEquals("Reattached keyboard must use the original process", originalPid, shell("pidof $process"))
+            }
+        } finally {
+            if (previousScale == "null") shell("settings --user $testUser delete system font_scale")
+            else shell("settings --user $testUser put system font_scale $previousScale")
+            shell("input keyevent KEYCODE_BACK")
+            shell("input keyevent KEYCODE_BACK")
+            shell("ime set --user $testUser $previous")
+            if (!wasEnabled) shell("ime disable --user $testUser $component")
+            automation.serviceInfo = automation.serviceInfo.apply { flags = oldFlags }
+        }
+    }
+
     @Test fun selectedProjectAccountFillsItsOwnLatestPasswordInSystemForm(): Unit = runBlocking {
         val data = takagi.ru.monica.credentialexchange.TransferFixture()
         val component = ComponentName(instrumentation.targetContext, MonicaInputMethodService::class.java).flattenToShortString()

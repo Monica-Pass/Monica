@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_protection_title">백업 보호</string>
+    <string name="zip_protection_plain">암호화하지 않은 ZIP</string>
+    <string name="zip_protection_plain_warning">이 파일을 가진 사람은 누구나 내용을 읽을 수 있습니다.</string>
+    <string name="zip_protection_required">패스키, 첨부 파일 및 Monica 설정은 암호화가 필요합니다. 암호화하지 않은 ZIP을 내보내려면 해당 항목의 선택을 해제하세요.</string>
+</resources>

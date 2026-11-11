@@ -74,7 +74,15 @@ class BackupEncryptionFormatUiTest {
             CloudBackupEncryptionSettings(enabled, password, false, { enabled = it }, { password = it }, {},
                 selected, { selected = it })
         } } } }
+        compose.onNodeWithTag("backup_format_open").performScrollTo().performClick()
         compose.onNodeWithTag("backup_format_ENHANCED_V2").performScrollTo().performClick()
+        compose.runOnIdle { assertEquals(BackupEncryptionFormat.COMPATIBLE_V1, selected) }
+        compose.onNodeWithTag("backup_format_cancel").performClick()
+        compose.runOnIdle { assertEquals(BackupEncryptionFormat.COMPATIBLE_V1, selected) }
+        compose.onNodeWithTag("backup_format_open").performScrollTo().performClick()
+        compose.onNodeWithTag("backup_format_COMPATIBLE_V1").assertIsSelected()
+        compose.onNodeWithTag("backup_format_ENHANCED_V2").performScrollTo().performClick()
+        compose.onNodeWithTag("backup_format_confirm").performClick()
         compose.runOnIdle {
             assertEquals(BackupEncryptionFormat.ENHANCED_V2, selected)
             assertEquals("Synthetic backup secret", password)
@@ -82,16 +90,80 @@ class BackupEncryptionFormatUiTest {
         }
         compose.onNodeWithTag("cloud_backup_encryption").performScrollTo().performClick().assertIsOff()
         compose.onNodeWithTag("cloud_backup_encryption").performClick().assertIsOn()
+        compose.onNodeWithTag("backup_format_open").performScrollTo().performClick()
         compose.onNodeWithTag("backup_format_ENHANCED_V2").performScrollTo().assertIsSelected()
     }
 
+    @Test fun zipStartsEncryptedV1AndSelectionNeedsConfirmation() {
+        var result: Pair<Boolean, BackupEncryptionFormat>? = null
+        show { MaterialTheme { ZipBackupProtectionDialog(false, {}, { encrypted, format -> result = encrypted to format }) } }
+        compose.onNodeWithTag("zip_protection_COMPATIBLE_V1").assertIsSelected()
+        compose.onNodeWithTag("zip_protection_ENHANCED_V2").performScrollTo().performClick().assertIsSelected()
+        compose.runOnIdle { assertEquals(null, result) }
+        capture("zip-enhanced")
+        compose.onNodeWithTag("zip_protection_continue").performClick()
+        compose.runOnIdle { assertEquals(true to BackupEncryptionFormat.ENHANCED_V2, result) }
+    }
+
+    @Test fun zipPlaintextRequiresAnExplicitChoiceAndCancelDoesNotExport() {
+        var confirms = 0
+        var dismisses = 0
+        var encrypted: Boolean? = null
+        show { MaterialTheme { ZipBackupProtectionDialog(false, { dismisses++ }, { value, _ -> confirms++; encrypted = value }) } }
+        compose.onNodeWithTag("zip_protection_plain").performScrollTo().performClick().assertIsSelected()
+        compose.onNodeWithTag("zip_protection_cancel").performClick()
+        compose.runOnIdle { assertEquals(1, dismisses); assertEquals(0, confirms) }
+        compose.onNodeWithTag("zip_protection_continue").performClick()
+        compose.runOnIdle { assertEquals(false, encrypted); assertEquals(1, confirms) }
+    }
+
+    @Test fun protectedContentDisablesPlaintextAndChangedRequirementCannotBypassIt() {
+        var required by mutableStateOf(false)
+        var encrypted: Boolean? = null
+        show { MaterialTheme { ZipBackupProtectionDialog(required, {}, { value, _ -> encrypted = value }) } }
+        compose.onNodeWithTag("zip_protection_plain").performScrollTo().performClick().assertIsSelected()
+        compose.runOnIdle { required = true }
+        compose.onNodeWithTag("zip_protection_plain").assertIsNotEnabled().assertIsNotSelected()
+        compose.onNodeWithTag("zip_protection_COMPATIBLE_V1").performScrollTo().assertIsSelected()
+        compose.onNodeWithTag("zip_protection_warning").performScrollTo().assertIsDisplayed()
+        capture("zip-required")
+        compose.onNodeWithTag("zip_protection_continue").performClick()
+        compose.runOnIdle { assertEquals(true, encrypted) }
+    }
+
+    @Test fun reopeningZipDiscardsPreviousPlaintextOrV2Choice() {
+        var shown by mutableStateOf(true)
+        show { MaterialTheme { if (shown) ZipBackupProtectionDialog(false, { shown = false }, { _, _ -> shown = false }) } }
+        compose.onNodeWithTag("zip_protection_plain").performScrollTo().performClick()
+        compose.onNodeWithTag("zip_protection_cancel").performClick()
+        compose.runOnIdle { shown = true }
+        compose.onNodeWithTag("zip_protection_COMPATIBLE_V1").assertIsSelected()
+        compose.onNodeWithTag("zip_protection_ENHANCED_V2").performScrollTo().performClick()
+        compose.onNodeWithTag("zip_protection_continue").performClick()
+        compose.runOnIdle { shown = true }
+        compose.onNodeWithTag("zip_protection_COMPATIBLE_V1").assertIsSelected()
+    }
+
+    @Test fun largeDarkZipOptionsAndConfirmationRemainReachable() {
+        show {
+            val density = LocalDensity.current
+            CompositionLocalProvider(LocalDensity provides Density(density.density, 1.5f),
+                LocalLayoutDirection provides LayoutDirection.Rtl) {
+                MaterialTheme(colorScheme = darkColorScheme()) { ZipBackupProtectionDialog(true, {}, { _, _ -> }) }
+            }
+        }
+        compose.onNodeWithTag("zip_protection_ENHANCED_V2").performScrollTo().performClick().assertIsSelected()
+        compose.onNodeWithTag("zip_protection_warning").performScrollTo().assertIsDisplayed()
+        compose.onNodeWithTag("zip_protection_continue").assertIsDisplayed()
+        capture("zip-large-dark")
+    }
+
     private fun capture(name: String) {
-        if (name !in setOf("enhanced", "dark-rtl-large")) return
         compose.waitForIdle()
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         val bitmap = checkNotNull(instrumentation.uiAutomation.takeScreenshot())
         try {
-            val dir = File(instrumentation.targetContext.filesDir, "local-password-kdf-327/ui")
+            val dir = File(instrumentation.targetContext.filesDir, "pbkdf-backup-choice-327/ui")
                 .apply { check(isDirectory || mkdirs()) }
             File(dir, "backup-$name.png").outputStream().use {
                 check(bitmap.compress(Bitmap.CompressFormat.PNG, 100, it))

@@ -479,7 +479,8 @@
         <activity
             android:name=".ime.ImeUnlockActivity"
             android:exported="false"
-            android:theme="@style/Theme.TransparentDialog"
+            android:theme="@style/Theme.ImePasswordAuth"
+            android:windowSoftInputMode="adjustResize"
             android:excludeFromRecents="true"
             android:noHistory="true"
             android:taskAffinity=":ime_unlock"

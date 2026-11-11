@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_protection_title">Protección de la copia</string>
+    <string name="zip_protection_plain">ZIP sin cifrar</string>
+    <string name="zip_protection_plain_warning">Cualquiera que tenga este archivo podrá leer su contenido.</string>
+    <string name="zip_protection_required">Las claves de acceso, los adjuntos y la configuración de Monica requieren cifrado. Desmárcalos para exportar un ZIP sin cifrar.</string>
+</resources>

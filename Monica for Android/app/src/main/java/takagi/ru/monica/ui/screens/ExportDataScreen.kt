@@ -88,7 +88,7 @@ fun ExportDataScreen(
         job?.let { sourceKey = it.sourceKey; formatKey = it.formatKey }
     }
     var preferences by remember { mutableStateOf(BackupPreferences()) }
-    var encrypt by rememberSaveable { mutableStateOf(true) }
+    var showZipProtection by remember { mutableStateOf(false) }
     var showFormats by remember { mutableStateOf(false) }
     var showPassword by remember { mutableStateOf(false) }
     var password by remember { mutableStateOf("") }
@@ -176,13 +176,21 @@ fun ExportDataScreen(
     DisposableEffect(jsonLifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_PAUSE || event == Lifecycle.Event.ON_STOP) cancelSteamIdentity()
-            if (event == Lifecycle.Event.ON_STOP) cancelJson(preservePicker = true)
+            if (event == Lifecycle.Event.ON_STOP) {
+                cancelJson(preservePicker = true)
+                showZipProtection = false
+                showPassword = false; password = ""; confirmation = ""; passwordVisible = false
+            }
         }
         jsonLifecycleOwner.lifecycle.addObserver(observer)
         onDispose {
             jsonLifecycleOwner.lifecycle.removeObserver(observer)
             jsonAlive.set(false); cancelSteamIdentity(); cancelJson()
         }
+    }
+    LaunchedEffect(source.key, option.name, jsonLockGeneration) {
+        showZipProtection = false
+        if (!jsonOption) { showPassword = false; password = ""; confirmation = ""; passwordVisible = false }
     }
     val security = remember { SecurityManager(context) }
     val biometric = remember { BiometricHelper(context) }
@@ -302,7 +310,8 @@ fun ExportDataScreen(
             showJsonIdentity = true; return
         }
         if (option == ExportOption.STEAM_MAFILE) { showSteamRisk = true; return }
-        if (option == ExportOption.KDBX || encrypt) {
+        if (option == ExportOption.ZIP_BACKUP) { showZipProtection = true; return }
+        if (option == ExportOption.KDBX) {
             password = ""; confirmation = ""; passwordError = null; showPassword = true
         } else chooseLocation()
     }
@@ -369,7 +378,7 @@ fun ExportDataScreen(
                         preferences = preferences.copy(includePasswords = it)
                     }
                     ExportScopeToggle(stringResource(R.string.backup_content_passkeys), preferences.includePasskeys, 1, 7) {
-                        preferences = preferences.copy(includePasskeys = it); if (it) encrypt = true
+                        preferences = preferences.copy(includePasskeys = it)
                     }
                     ExportScopeToggle(stringResource(R.string.backup_content_authenticators), preferences.includeAuthenticators, 2, 7) {
                         preferences = preferences.copy(includeAuthenticators = it)
@@ -381,7 +390,7 @@ fun ExportDataScreen(
                         preferences = preferences.copy(includeNotes = it)
                     }
                     ExportScopeToggle(stringResource(R.string.transfer_images_attachments), preferences.includeImages, 5, 7) {
-                        preferences = preferences.copy(includeImages = it); if (it) encrypt = true
+                        preferences = preferences.copy(includeImages = it)
                     }
                     ExportScopeToggle(stringResource(R.string.backup_content_trash), preferences.includeTrash, 6, 7) {
                         preferences = preferences.copy(includeTrash = it, includeTrashAndHistory = it,
@@ -390,16 +399,10 @@ fun ExportDataScreen(
                 }
                 ExportScopeToggle(stringResource(R.string.backup_content_webdav_config), preferences.includeWebDavConfig, 0, 1) {
                     preferences = preferences.copy(includeWebDavConfig = it)
-                    if (it) encrypt = true
                 }
                 Text(stringResource(R.string.zip_config_backup_hint), style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 4.dp))
-                ExportScopeToggle(stringResource(R.string.transfer_encrypt_backup), encrypt, 0, 1,
-                    enabled = !preferences.includePasskeys && !preferences.includeImages && !preferences.includeWebDavConfig) { encrypt = it }
-                if (encrypt) BackupEncryptionFormatSelector(preferences.encryptionFormat,
-                    onFormatChange = { preferences = preferences.copy(encryptionFormat = it) })
-                Text(stringResource(R.string.transfer_encryption_hint), style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 4.dp))
+
             }
             if (!exporting && option == ExportOption.STEAM_MAFILE) {
                 Surface(shape = RoundedCornerShape(24.dp), color = MaterialTheme.colorScheme.surfaceContainerLow) {
@@ -426,6 +429,17 @@ fun ExportDataScreen(
             }
         }
     }
+    if (showZipProtection && option == ExportOption.ZIP_BACKUP) ZipBackupProtectionDialog(
+        encryptionRequired = preferences.includePasskeys || preferences.includeImages || preferences.includeWebDavConfig,
+        onDismiss = { showZipProtection = false },
+        onConfirm = { encrypted, format ->
+            showZipProtection = false
+            preferences = preferences.copy(encryptionFormat = format)
+            if (encrypted) {
+                password = ""; confirmation = ""; passwordError = null; passwordVisible = false; showPassword = true
+            } else chooseLocation()
+        },
+    )
     if (showPassword) ZipEncryptionPasswordDialog(password, confirmation, passwordVisible, passwordError,
         title = stringResource(if (option == ExportOption.KDBX) R.string.export_option_kdbx else if (jsonOption) R.string.bw_json_encrypted_title else R.string.zip_backup_password_title),
         description = stringResource(if (option == ExportOption.KDBX) R.string.transfer_kdbx_password_description else if (jsonOption) R.string.bw_json_file_password else R.string.zip_backup_password_desc),

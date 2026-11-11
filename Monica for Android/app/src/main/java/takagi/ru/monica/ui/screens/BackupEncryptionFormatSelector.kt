@@ -10,6 +10,7 @@ import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,20 +28,20 @@ internal fun BackupEncryptionFormatSelector(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(stringResource(R.string.backup_kdf_title), style = MaterialTheme.typography.titleSmall,
-            modifier = Modifier.padding(horizontal = 12.dp))
         Column(Modifier.selectableGroup(), verticalArrangement = Arrangement.spacedBy(2.dp)) {
             BackupEncryptionFormat.entries.forEachIndexed { index, option ->
-                DatabaseManagementCard(Modifier.fillMaxWidth(), shape = settingsSectionItemShape(index, 2)) {
+                Surface(Modifier.fillMaxWidth(), shape = settingsSectionItemShape(index, 2),
+                    color = if (format == option) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainerHigh,
+                    contentColor = if (format == option) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurface) {
                     Row(Modifier.fillMaxWidth().testTag("backup_format_${option.name}")
                         .selectable(selected = format == option, role = Role.RadioButton,
-                            onClick = { onFormatChange(option) }).padding(12.dp),
+                            onClick = { onFormatChange(option) }).padding(horizontal = 16.dp, vertical = 18.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                        RadioButton(selected = format == option, onClick = null)
                         Text(stringResource(if (option == BackupEncryptionFormat.COMPATIBLE_V1)
                             R.string.backup_kdf_compatible else R.string.backup_kdf_enhanced),
-                            style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
+                            style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+                        RadioButton(selected = format == option, onClick = null)
                     }
                 }
             }

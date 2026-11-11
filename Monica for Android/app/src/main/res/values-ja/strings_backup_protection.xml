@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_protection_title">バックアップの保護</string>
+    <string name="zip_protection_plain">暗号化しない ZIP</string>
+    <string name="zip_protection_plain_warning">このファイルを持つ人は誰でも内容を読むことができます。</string>
+    <string name="zip_protection_required">パスキー、添付ファイル、Monica の設定には暗号化が必要です。暗号化しない ZIP を出力するには、これらの選択を解除してください。</string>
+</resources>

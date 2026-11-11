@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_protection_title">Защита резервной копии</string>
+    <string name="zip_protection_plain">ZIP без шифрования</string>
+    <string name="zip_protection_plain_warning">Любой, у кого есть этот файл, может прочитать его содержимое.</string>
+    <string name="zip_protection_required">Ключи доступа, вложения и настройки Monica требуют шифрования. Снимите с них выбор, чтобы экспортировать ZIP без шифрования.</string>
+</resources>

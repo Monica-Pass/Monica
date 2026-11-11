@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_protection_title">Protection de la sauvegarde</string>
+    <string name="zip_protection_plain">ZIP non chiffré</string>
+    <string name="zip_protection_plain_warning">Toute personne disposant de ce fichier peut lire son contenu.</string>
+    <string name="zip_protection_required">Les clés d’accès, pièces jointes et paramètres de Monica doivent être chiffrés. Désélectionnez-les pour exporter un ZIP non chiffré.</string>
+</resources>

@@ -39,7 +39,7 @@ class LocalPasswordCrossProcessInstrumentedTest {
                 val opened = remote.call(LocalKdfProcessTestService.OPEN)
                 assertRemote(opened)
                 assertTrue(opened.getBoolean("success"))
-                assertTrue(main.changeLocalPasswordAlgorithm(fixture.password, LocalPasswordAlgorithm.ARGON2ID,
+                assertTrue(main.resetMasterPassword(fixture.password, fixture.password,
                     SecurityManager.LocalPasswordChangeAttempt()))
                 val stale = remote.call(LocalKdfProcessTestService.READ_EXISTING)
                 assertRemote(stale)
@@ -74,7 +74,7 @@ class LocalPasswordCrossProcessInstrumentedTest {
                     val secondary = remote.send(LocalKdfProcessTestService.RACE)
                     val primary = pool.submit<Boolean> {
                         var callbacks = 0
-                        main.changeLocalPasswordAlgorithm(fixture.password, LocalPasswordAlgorithm.PBKDF2_SHA256,
+                        main.resetMasterPassword(fixture.password, fixture.password,
                             SecurityManager.LocalPasswordChangeAttempt()) {
                             if (++callbacks == 2) fixture.waitForOtherWriter("main")
                         }

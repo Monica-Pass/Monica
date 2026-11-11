@@ -24,7 +24,7 @@ import takagi.ru.monica.rustcore.RustBitwardenKdfCore
 
 /** Isolated synthetic legacy credentials, seeded independently of all new enrollment/KDF helpers. */
 class LocalPasswordUpgradeInstrumentedTest {
-    private class Fixture : AutoCloseable {
+    private class Fixture(profile: PasswordKdf.Profile = PasswordKdf.LEGACY) : AutoCloseable {
         val base = InstrumentationRegistry.getInstrumentation().targetContext
         val prefix = "local-kdf-upgrade-${UUID.randomUUID()}-"
         val root = File(base.cacheDir, prefix).apply { check(mkdirs()) }
@@ -61,7 +61,14 @@ class LocalPasswordUpgradeInstrumentedTest {
                 check(editor.commit())
             } finally { hash.fill(0); wrappingKey.fill(0) }
             record.writeText("MDK|" + seal(mdk, recordPlain.toByteArray(Charsets.UTF_8), ByteArray(12) { (it + 0x71).toByte() }))
-            check(!originalPlain.contains(PasswordKdf.METADATA_KEY))
+            if (profile != PasswordKdf.LEGACY) {
+                val editor = originalPlain.edit()
+                LocalPasswordCredentials.create(password, mdk, profile).forEach { (key, value) ->
+                    editor.putString(key, value as String)
+                }
+                check(editor.commit())
+            }
+            check(PasswordKdf.fromValues(originalPlain.all) == profile)
             check(!envelope.exists())
         }
 
@@ -198,7 +205,7 @@ class LocalPasswordUpgradeInstrumentedTest {
             assertTrue(f.originalPlain.edit().putString("mdk_password_blob", Base64.encodeToString(blob, Base64.NO_WRAP)).commit())
             val before = f.bytesSnapshot()
             assertFalse(manager.verifyMasterPassword(f.password))
-            assertFalse(manager.changeLocalPasswordAlgorithm(f.password, LocalPasswordAlgorithm.ARGON2ID,
+            assertFalse(manager.resetMasterPassword(f.password, f.password,
                 SecurityManager.LocalPasswordChangeAttempt()))
             assertEquals(before, f.bytesSnapshot())
         }
@@ -210,28 +217,25 @@ class LocalPasswordUpgradeInstrumentedTest {
             val manager = f.manager()
             val before = f.bytesSnapshot()
             assertFalse(manager.unlockVaultWithPassword(f.password))
-            assertFalse(manager.changeLocalPasswordAlgorithm(f.password, LocalPasswordAlgorithm.PBKDF2_SHA256,
+            assertFalse(manager.resetMasterPassword(f.password, f.password,
                 SecurityManager.LocalPasswordChangeAttempt()))
             assertEquals(before, f.bytesSnapshot())
             assertFalse(SecurityManager.hasRuntimeUnlockCache())
         }
     }
 
-    @Test fun algorithmChangesBothWaysAndPasswordResetRetainMdkButRevokeTheOldPasswordEverywhere() {
-        Fixture().use { f ->
+    @Test fun historicalProfilesMigrateTo600kAndResetRetainsMdkButRevokesOldPassword() {
+        for (profile in listOf(PasswordKdf.LEGACY, PasswordKdf.ARGON2ID)) Fixture(profile).use { f ->
+            val cipherBefore = f.record.readBytes()
             var manager = f.manager()
             assertTrue(manager.unlockVaultWithPassword(f.password))
-            val cipherBefore = f.record.readBytes()
-            for (algorithm in listOf(LocalPasswordAlgorithm.ARGON2ID, LocalPasswordAlgorithm.PBKDF2_SHA256)) {
-                assertTrue(manager.changeLocalPasswordAlgorithm(f.password, algorithm, SecurityManager.LocalPasswordChangeAttempt()))
-                assertEquals(algorithm, manager.getLocalPasswordAlgorithm())
-                f.assertRecordAndMdk(manager)
-                SecurityManager.clearRuntimeUnlockCache()
-                manager = f.manager()
-                assertTrue(manager.unlockVaultWithPassword(f.password))
-                f.assertRecordAndMdk(manager)
-                assertArrayEquals(cipherBefore, f.record.readBytes())
-            }
+            assertEquals(PasswordKdf.PBKDF2_600K, PasswordKdf.fromValues(f.originalPlain.all))
+            f.assertRecordAndMdk(manager)
+            SecurityManager.clearRuntimeUnlockCache()
+            manager = f.manager()
+            assertTrue(manager.unlockVaultWithPassword(f.password))
+            f.assertRecordAndMdk(manager)
+            assertArrayEquals(cipherBefore, f.record.readBytes())
             val newPassword = "New synthetic 主密码🔒 with spaces "
             assertTrue(manager.resetMasterPassword(f.password, newPassword))
             val afterReset = f.bytesSnapshot()
@@ -249,12 +253,57 @@ class LocalPasswordUpgradeInstrumentedTest {
         }
     }
 
+    @Test fun argonWrongPasswordCancellationAndLockKeepOriginalBytes() {
+        for (mode in listOf("wrong", "cancel", "lock")) Fixture(PasswordKdf.ARGON2ID).use { f ->
+            val manager = f.manager()
+            val before = f.bytesSnapshot()
+            val attempt = SecurityManager.PasswordVerificationAttempt()
+            var checks = 0
+            val accepted = manager.unlockVaultWithPassword(if (mode == "wrong") "wrong" else f.password, attempt) {
+                if (++checks == 2) {
+                    if (mode == "cancel") attempt.cancel()
+                    if (mode == "lock") SecurityManager.clearRuntimeUnlockCache()
+                }
+            }
+            assertFalse(mode, accepted)
+            assertFalse(attempt.commit())
+            assertFalse(SecurityManager.hasRuntimeUnlockCache())
+            assertEquals(mode, before, f.bytesSnapshot())
+        }
+    }
+
+    @Test fun argonPasswordResetAndAuthorizedResetAlwaysWrite600k() {
+        for (authorized in listOf(false, true)) Fixture(PasswordKdf.ARGON2ID).use { f ->
+            val manager = f.manager()
+            if (authorized) {
+                // Seed only the isolated fixture's already authorized runtime key.
+                val field = SecurityManager::class.java.getDeclaredField("processCachedMdk").apply { isAccessible = true }
+                field.set(null, f.mdk.copyOf())
+                assertTrue(manager.setMasterPassword("Replacement synthetic password"))
+            } else assertTrue(manager.resetMasterPassword(f.password, "Replacement synthetic password"))
+            assertEquals(PasswordKdf.PBKDF2_600K, PasswordKdf.fromValues(f.originalPlain.all))
+            f.assertRecordAndMdk(manager, "Replacement synthetic password")
+        }
+    }
+
+    @Test fun current600kLoginDoesNotRewrapPasswordCredentials() {
+        Fixture(PasswordKdf.PBKDF2_600K).use { f ->
+            val manager = f.manager()
+            val before = LocalPasswordCredentials.snapshot(f.originalPlain.all)
+            assertTrue(manager.unlockVaultWithPassword(f.password))
+            SecurityManager.clearRuntimeUnlockCache()
+            assertTrue(f.manager().unlockVaultWithPassword(f.password))
+            assertTrue(LocalPasswordCredentials.matches(f.originalPlain.all, before))
+            f.assertRecordAndMdk(f.manager())
+        }
+    }
+
     @Test fun cancelledChangeAndCancelledPasswordAttemptCannotWriteOrUnlock() {
         Fixture().use { f ->
             val manager = f.manager()
             val before = f.bytesSnapshot()
             val change = SecurityManager.LocalPasswordChangeAttempt().apply { cancel() }
-            assertFalse(manager.changeLocalPasswordAlgorithm(f.password, LocalPasswordAlgorithm.ARGON2ID, change))
+            assertFalse(manager.resetMasterPassword(f.password, f.password, change))
             val verification = SecurityManager.PasswordVerificationAttempt().apply { cancel() }
             assertFalse(manager.unlockVaultWithPassword(f.password, verification))
             assertFalse(verification.commit())
@@ -268,7 +317,7 @@ class LocalPasswordUpgradeInstrumentedTest {
             val manager = f.manager()
             val before = f.bytesSnapshot()
             var calls = 0
-            assertFalse(manager.changeLocalPasswordAlgorithm(f.password, LocalPasswordAlgorithm.PBKDF2_SHA256,
+            assertFalse(manager.resetMasterPassword(f.password, f.password,
                 SecurityManager.LocalPasswordChangeAttempt()) {
                 calls++
                 if (calls == 2) throw CancellationException("Synthetic caller cancelled after password authentication")
@@ -284,7 +333,7 @@ class LocalPasswordUpgradeInstrumentedTest {
             val manager = f.manager()
             val before = f.bytesSnapshot()
             var calls = 0
-            assertFalse(manager.changeLocalPasswordAlgorithm(f.password, LocalPasswordAlgorithm.PBKDF2_SHA256,
+            assertFalse(manager.resetMasterPassword(f.password, f.password,
                 SecurityManager.LocalPasswordChangeAttempt()) {
                 calls++
                 // Initial check, pre-derivation, post-derivation, then final beforeCommit callback.
@@ -308,7 +357,7 @@ class LocalPasswordUpgradeInstrumentedTest {
             assertTrue(manager.unlockVaultWithPassword(f.password, first))
             assertFalse(SecurityManager.hasRuntimeUnlockCache())
             val lockGeneration = SecurityManager.dataReadGeneration.value
-            assertTrue(manager.changeLocalPasswordAlgorithm(f.password, LocalPasswordAlgorithm.ARGON2ID,
+            assertTrue(manager.resetMasterPassword(f.password, f.password,
                 SecurityManager.LocalPasswordChangeAttempt()))
             assertEquals("This checks credential epoch, without a separate lock invalidating the attempt",
                 lockGeneration, SecurityManager.dataReadGeneration.value)

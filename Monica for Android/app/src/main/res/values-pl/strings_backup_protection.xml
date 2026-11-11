@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_protection_title">Ochrona kopii zapasowej</string>
+    <string name="zip_protection_plain">Niezaszyfrowany ZIP</string>
+    <string name="zip_protection_plain_warning">Każdy, kto ma ten plik, może odczytać jego zawartość.</string>
+    <string name="zip_protection_required">Klucze dostępu, załączniki i konfiguracja Monica wymagają szyfrowania. Odznacz je, aby wyeksportować niezaszyfrowany ZIP.</string>
+</resources>

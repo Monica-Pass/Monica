@@ -41,7 +41,7 @@ class LocalKdfProcessTestService : Service() {
                     RACE -> {
                         val current = checkNotNull(manager)
                         var callbacks = 0
-                        current.changeLocalPasswordAlgorithm(f.password, LocalPasswordAlgorithm.ARGON2ID,
+                        current.resetMasterPassword(f.password, f.password,
                             SecurityManager.LocalPasswordChangeAttempt()) {
                             if (++callbacks == 2) f.waitForOtherWriter("ime")
                         }

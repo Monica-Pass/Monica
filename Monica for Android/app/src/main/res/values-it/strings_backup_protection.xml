@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_protection_title">Protezione del backup</string>
+    <string name="zip_protection_plain">ZIP non crittografato</string>
+    <string name="zip_protection_plain_warning">Chiunque possieda questo file può leggerne il contenuto.</string>
+    <string name="zip_protection_required">Passkey, allegati e configurazione di Monica richiedono la crittografia. Deselezionali per esportare uno ZIP non crittografato.</string>
+</resources>

@@ -277,17 +277,9 @@ class SecurityManager private constructor(
 
     fun getLocalPasswordAlgorithm(): LocalPasswordAlgorithm = PasswordKdf.fromValues(sharedPreferences.all).algorithm
 
-    fun changeLocalPasswordAlgorithm(
-        password: String,
-        algorithm: LocalPasswordAlgorithm,
-        attempt: LocalPasswordChangeAttempt,
-        ensureActive: () -> Unit = {},
-    ): Boolean = changeVerifiedPassword(password, password, PasswordKdf.forAlgorithm(algorithm), attempt, ensureActive)
-
     private fun changeVerifiedPassword(
         currentPassword: String,
         newPassword: String,
-        requestedProfile: PasswordKdf.Profile?,
         attempt: LocalPasswordChangeAttempt,
         ensureActive: () -> Unit,
     ): Boolean {
@@ -299,9 +291,7 @@ class SecurityManager private constructor(
             if (!LocalPasswordCredentials.verify(currentPassword, original)) return false
             // Even a warm runtime cache cannot conceal damage to the password wrapper.
             mdk = readPasswordAuthenticatedMdk(currentPassword, original)
-            val current = PasswordKdf.fromValues(original)
-            val profile = requestedProfile ?: current.takeUnless { it == PasswordKdf.LEGACY } ?: PasswordKdf.PBKDF2_600K
-            commitLocalPassword(newPassword, mdk, original, profile, attempt, ensureActive)
+            commitLocalPassword(newPassword, mdk, original, attempt, ensureActive)
             true
         } catch (_: Exception) {
             android.util.Log.w(logTag, "Local password protection update was not confirmed")
@@ -624,12 +614,12 @@ class SecurityManager private constructor(
             attempt.ensureCurrent(); ensureActive()
             localRecovery.validate(sharedPreferences)
             val original = sharedPreferences.all
-            val current = PasswordKdf.fromValues(original)
-            val profile = current.takeUnless { it == PasswordKdf.LEGACY } ?: PasswordKdf.PBKDF2_600K
+            // Reject unknown metadata even on an otherwise authorized reset.
+            PasswordKdf.fromValues(original)
             // Initial setup and the existing authorized device/security-question reset route.
             // Normal password changes use changeVerifiedPassword and cannot reuse cached authorization.
             mdk = getOrCreateMdkBytes()
-            commitLocalPassword(password, mdk, original, profile, attempt, ensureActive)
+            commitLocalPassword(password, mdk, original, attempt, ensureActive)
             true
         } catch (_: Exception) {
             android.util.Log.w(logTag, "Master password update could not be committed")
@@ -656,7 +646,7 @@ class SecurityManager private constructor(
         newPassword: String,
         attempt: LocalPasswordChangeAttempt = LocalPasswordChangeAttempt(),
         ensureActive: () -> Unit = {},
-    ): Boolean = changeVerifiedPassword(currentPassword, newPassword, null, attempt, ensureActive)
+    ): Boolean = changeVerifiedPassword(currentPassword, newPassword, attempt, ensureActive)
 
     /**
      * Clear all security data (for complete reset scenarios)
@@ -1122,8 +1112,8 @@ class SecurityManager private constructor(
         return getOrCreateMdkBytes().also { check(it.size == 32) }
     }
 
-    private fun credentialUpdates(password: String, mdk: ByteArray, profile: PasswordKdf.Profile): Map<String, Any> =
-        LocalPasswordCredentials.create(password, mdk, profile).toMutableMap().apply {
+    private fun credentialUpdates(password: String, mdk: ByteArray): Map<String, Any> =
+        LocalPasswordCredentials.create(password, mdk, PasswordKdf.PBKDF2_600K).toMutableMap().apply {
             put(MDK_READY_KEY, true)
             if (!sharedPreferences.contains("legacy_master_key_description_v1")) {
                 put("legacy_master_key_description_v1", masterKey.toString())
@@ -1134,13 +1124,12 @@ class SecurityManager private constructor(
         password: String,
         mdk: ByteArray,
         original: Map<String, *>,
-        profile: PasswordKdf.Profile,
         attempt: LocalPasswordChangeAttempt,
         ensureActive: () -> Unit,
     ) {
         attempt.ensureCurrent(); ensureActive()
         check(mdk.size == 32)
-        val values = credentialUpdates(password, mdk, profile)
+        val values = credentialUpdates(password, mdk)
         attempt.ensureCurrent(); ensureActive()
         localRecovery.enroll(sharedPreferences, password, values, expectedCredentials = original,
             beforeCommit = { attempt.beginCommit(ensureActive) })
@@ -1166,8 +1155,9 @@ class SecurityManager private constructor(
         val mdk = readPasswordAuthenticatedMdk(password, original)
         try {
             val oldProfile = PasswordKdf.fromValues(original)
-            val upgrading = oldProfile == PasswordKdf.LEGACY
-            val values = if (upgrading) credentialUpdates(password, mdk, PasswordKdf.PBKDF2_600K)
+            // Historical Argon2id is read-only compatibility, like the legacy 100k profile.
+            val upgrading = oldProfile != PasswordKdf.PBKDF2_600K
+            val values = if (upgrading) credentialUpdates(password, mdk)
                 else emptyMap()
             fun ensureCurrent() {
                 ensureActive()

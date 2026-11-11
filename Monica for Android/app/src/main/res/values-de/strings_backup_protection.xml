@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="zip_protection_title">Sicherungsschutz</string>
+    <string name="zip_protection_plain">Unverschlüsseltes ZIP</string>
+    <string name="zip_protection_plain_warning">Jeder mit dieser Datei kann ihren Inhalt lesen.</string>
+    <string name="zip_protection_required">Passkeys, Anhänge und die Monica-Konfiguration müssen verschlüsselt werden. Wähle diese Inhalte ab, um eine unverschlüsselte ZIP-Datei zu exportieren.</string>
+</resources>

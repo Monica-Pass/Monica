@@ -1,0 +1,367 @@
+{
+  "finalOptimizedApks": {
+    "main": {
+      "label": "main-release-new-04",
+      "buildSeconds": 1317.883,
+      "apkSha256": "ed8a8519a4cca3633b34ca78039bbca9326823a602a2fb1659428be19ee59e23",
+      "mappingSha256": "84d8c6ca67da1b74006d56c71ac780a1fe1d81096535079274d7062616404558",
+      "package": "takagi.ru.monica.mainrelease327",
+      "signerSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "actualAbi": [
+        "arm64-v8a"
+      ],
+      "actualR8": true,
+      "platformXmlDependencyGate": true,
+      "frozenSourceFilesMatchingCurrent": 5265,
+      "testCertificateOnly": true,
+      "oldApkDirectlyRechecked": false,
+      "priorRecordedSignerAndPackageMatch": "main-release-old-02",
+      "limitation": "Prior APK absent from original artifact directory at independent review; historical signer/package uses preserved earlier audit, not a new read of that binary."
+    },
+    "fd": {
+      "label": "fd-release-03",
+      "buildSeconds": 1143.731,
+      "apkSha256": "5b171959bbf81f26a9edce41250f2e4966ef60f443199138d1da7290af608645",
+      "mappingSha256": "8a72623fdd7acd2e2530f303db17913547da31370852a433b28486cd0e581579",
+      "package": "takagi.ru.monica.bwsync326fd",
+      "signerSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "actualAbi": [
+        "arm64-v8a"
+      ],
+      "actualR8": true,
+      "platformXmlDependencyGate": true,
+      "frozenSourceFilesMatchingCurrent": 5258,
+      "testCertificateOnly": true,
+      "oldApkDirectlyRechecked": false,
+      "priorRecordedSignerAndPackageMatch": "fd-release-01",
+      "limitation": "Prior APK absent from original artifact directory at independent review; historical signer/package uses preserved earlier audit, not a new read of that binary."
+    }
+  },
+  "compiledResourceChecks": {
+    "main": {
+      "build": "main-ime-final-02",
+      "valuesChecked": 72,
+      "apkSha256": "edcd5e5ff1c9d26a85eab4a056444d303697cb081107aa32c8466729cf09d719"
+    },
+    "fd": {
+      "build": "fd-ime-final-02",
+      "valuesChecked": 72,
+      "apkSha256": "e52bc89a640b0fa5e57de96ff44c43294ec52e508359352842eb77032d041c77"
+    }
+  },
+  "affectedSourcePaths": [
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/ime/MonicaImeSystemTest.kt",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "2e438506f2f9d3af469dcf15fb0ef5ff8074e815ac3bbd235ca6c80c5f6ef746",
+      "fdSha256": "2e438506f2f9d3af469dcf15fb0ef5ff8074e815ac3bbd235ca6c80c5f6ef746",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/security/LocalPasswordCrossProcessInstrumentedTest.kt",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "b08e42149bbb184382699f6c93e45b49dd4c15a06d7175cf5acc78a6612b3a24",
+      "fdSha256": "b08e42149bbb184382699f6c93e45b49dd4c15a06d7175cf5acc78a6612b3a24",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/security/LocalPasswordUpgradeInstrumentedTest.kt",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "b32211a04519d04541fe1e7cac7b1738ad24e78852ac6388cea98ed33376fe14",
+      "fdSha256": "b32211a04519d04541fe1e7cac7b1738ad24e78852ac6388cea98ed33376fe14",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/ui/screens/BackupEncryptionFormatUiTest.kt",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "ae49bf8604deab429bce5fb28eebf602655896d20759cb3242b99c62c41afe19",
+      "fdSha256": "ae49bf8604deab429bce5fb28eebf602655896d20759cb3242b99c62c41afe19",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/ui/screens/LocalPasswordProtectionUiTest.kt",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "c328a85347658ce3c31c4f4bc1e035f4ad74bdb5c9f27265b0cb18cad5faab0c",
+      "fdSha256": "c328a85347658ce3c31c4f4bc1e035f4ad74bdb5c9f27265b0cb18cad5faab0c",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/debug/java/takagi/ru/monica/security/LocalKdfProcessTestService.kt",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "01aa36e68087a6aa0e1a2378f76ff4ec09375cdc62a08d83d33ff4e7b49e353a",
+      "fdSha256": "01aa36e68087a6aa0e1a2378f76ff4ec09375cdc62a08d83d33ff4e7b49e353a",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/AndroidManifest.xml",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "b0daf8645844aa72aab1c0263cc0eabd69b136837689e2407c189105d60b2286",
+      "fdSha256": "3b39603efb516d4ad4317cd2e349c721ba0824450febc057435557e88f94382c",
+      "byteEqual": false,
+      "lfEqual": false
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ime/MonicaInputMethodService.kt",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "dd4326c5e5ecb1ca12bcd8904fef7f0a93d573569889ca6bc94e6fba6053a688",
+      "fdSha256": "dd4326c5e5ecb1ca12bcd8904fef7f0a93d573569889ca6bc94e6fba6053a688",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/security/SecurityManager.kt",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "ccd6b907624d2bac4d52ba1ed4aa27437dbeeffaa43f20a5ce8807bebdd834d1",
+      "fdSha256": "ccd6b907624d2bac4d52ba1ed4aa27437dbeeffaa43f20a5ce8807bebdd834d1",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/PasswordDialogAuthScreen.kt",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "51ac541eb85f9f18c6a30eab372560cd585613c3e105b1af83f92a84e709578b",
+      "fdSha256": "51ac541eb85f9f18c6a30eab372560cd585613c3e105b1af83f92a84e709578b",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/BackupEncryptionFormatSelector.kt",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "829cb5b7522d915e979e8b90cdf5827d50af8a934da49ac0f6178ce5c9baa1af",
+      "fdSha256": "829cb5b7522d915e979e8b90cdf5827d50af8a934da49ac0f6178ce5c9baa1af",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/BackupProtectionDialogs.kt",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "5dd834f6c9a8ee98201e511b689783bf0728ee7fc3f6e8d1604ea308ef0e370d",
+      "fdSha256": "5dd834f6c9a8ee98201e511b689783bf0728ee7fc3f6e8d1604ea308ef0e370d",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/CloudBackupComponents.kt",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "811e7aa215061a19380ea85c8a184ed35104100d1670d97d29b304da29d0c675",
+      "fdSha256": "811e7aa215061a19380ea85c8a184ed35104100d1670d97d29b304da29d0c675",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/ExportDataScreen.kt",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "a373d0864ad8b0039737c1a7c0866641c9ae6a82f2cb09378d715137e7bdcf0c",
+      "fdSha256": "a373d0864ad8b0039737c1a7c0866641c9ae6a82f2cb09378d715137e7bdcf0c",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/LocalPasswordProtectionDialog.kt",
+      "mainExists": false,
+      "fdExists": false
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/MasterPasswordLockingSettingsScreen.kt",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "2ae2d7c5386898eff6ddff4ade587a60095b3b17765303a8cf1045938e188008",
+      "fdSha256": "2ae2d7c5386898eff6ddff4ade587a60095b3b17765303a8cf1045938e188008",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/res/values-b+lzh/strings_backup_protection.xml",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "d0c634cb07fd576afebde43ffff4110457dc1d8c31aa1593bce9a032c59dcaed",
+      "fdSha256": "d0c634cb07fd576afebde43ffff4110457dc1d8c31aa1593bce9a032c59dcaed",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/res/values-b+zh+Hant/strings_backup_protection.xml",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "7fca180986995edc95df18c5e057acbab3c9a3c17300f1508d0122183417be38",
+      "fdSha256": "7fca180986995edc95df18c5e057acbab3c9a3c17300f1508d0122183417be38",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/res/values-de/strings_backup_protection.xml",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "7ce1f4c5111ad47ea7fab173de1a2439f1cc846fd3836d0e08fe840a4f080341",
+      "fdSha256": "7ce1f4c5111ad47ea7fab173de1a2439f1cc846fd3836d0e08fe840a4f080341",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/res/values-es/strings_backup_protection.xml",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "c61f29086868b0d6f57d09c76161d6933dcef6c44e119b6f656f659c653ac9a1",
+      "fdSha256": "c61f29086868b0d6f57d09c76161d6933dcef6c44e119b6f656f659c653ac9a1",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/res/values-fr/strings_backup_protection.xml",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "b8bd2b9cab425d00a7cfc42f432afb8c5eff2ebf91515c7f6d3f10c202a47bce",
+      "fdSha256": "b8bd2b9cab425d00a7cfc42f432afb8c5eff2ebf91515c7f6d3f10c202a47bce",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/res/values-it/strings_backup_protection.xml",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "c2792152517b1b475d9d775b535fc9182cbd1ca790aa0456f97cde805180c6ab",
+      "fdSha256": "c2792152517b1b475d9d775b535fc9182cbd1ca790aa0456f97cde805180c6ab",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/res/values-ja/strings_backup_protection.xml",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "b120742803872be5ec7aed0126c1daf691c5ca734c0ab9b11bffc16c5ba23e8c",
+      "fdSha256": "b120742803872be5ec7aed0126c1daf691c5ca734c0ab9b11bffc16c5ba23e8c",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/res/values-ko/strings_backup_protection.xml",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "f10a63a7d0e48909dfabdf29366f1210801a03c3b78593d8bc48b55dbdff2898",
+      "fdSha256": "f10a63a7d0e48909dfabdf29366f1210801a03c3b78593d8bc48b55dbdff2898",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/res/values-pl/strings_backup_protection.xml",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "da71c1079f86db59254f3a3197cd197d039ab64442de7cc31b2348c1fde0242b",
+      "fdSha256": "da71c1079f86db59254f3a3197cd197d039ab64442de7cc31b2348c1fde0242b",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/res/values-pt-rBR/strings_backup_protection.xml",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "3d28b08e30eacf1ca2f02373bd2043b8317f285fc2071502ccc58342468a12a2",
+      "fdSha256": "3d28b08e30eacf1ca2f02373bd2043b8317f285fc2071502ccc58342468a12a2",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/res/values-pt/strings_backup_protection.xml",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "dc614cceb3209e1e78c6a5eea966ba6209d9668362ce8fd1dfad6bc8354b3082",
+      "fdSha256": "dc614cceb3209e1e78c6a5eea966ba6209d9668362ce8fd1dfad6bc8354b3082",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/res/values-ru/strings_backup_protection.xml",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "baf1bca2367d7bf64bb2fbeb58c30215d32f368d05cc241545da8b5726ed6334",
+      "fdSha256": "baf1bca2367d7bf64bb2fbeb58c30215d32f368d05cc241545da8b5726ed6334",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/res/values-vi/strings_backup_protection.xml",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "35b9a8ce69df5f18fce28d8524ff2a116345e9e471462b991bc6d144e3aaa924",
+      "fdSha256": "35b9a8ce69df5f18fce28d8524ff2a116345e9e471462b991bc6d144e3aaa924",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/res/values-zh-rCN/strings_backup_protection.xml",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "a68a2e96558eec6d559d235075dae6e6a6ab380c39d01a9f66eed08e6f0d301a",
+      "fdSha256": "a68a2e96558eec6d559d235075dae6e6a6ab380c39d01a9f66eed08e6f0d301a",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/res/values-zh-rNY/strings_backup_protection.xml",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "a68a2e96558eec6d559d235075dae6e6a6ab380c39d01a9f66eed08e6f0d301a",
+      "fdSha256": "a68a2e96558eec6d559d235075dae6e6a6ab380c39d01a9f66eed08e6f0d301a",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/res/values-zh-rXB/strings_backup_protection.xml",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "a68a2e96558eec6d559d235075dae6e6a6ab380c39d01a9f66eed08e6f0d301a",
+      "fdSha256": "a68a2e96558eec6d559d235075dae6e6a6ab380c39d01a9f66eed08e6f0d301a",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/res/values-zh/strings_backup_protection.xml",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "a68a2e96558eec6d559d235075dae6e6a6ab380c39d01a9f66eed08e6f0d301a",
+      "fdSha256": "a68a2e96558eec6d559d235075dae6e6a6ab380c39d01a9f66eed08e6f0d301a",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/res/values/strings_backup_protection.xml",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "8e826fcaa421558b10d548cc925fbee692a1c6f73ecbdebaa273800216561daf",
+      "fdSha256": "8e826fcaa421558b10d548cc925fbee692a1c6f73ecbdebaa273800216561daf",
+      "byteEqual": true,
+      "lfEqual": true
+    },
+    {
+      "path": "app/src/main/res/values/themes.xml",
+      "mainExists": true,
+      "fdExists": true,
+      "mainSha256": "804e0e4690d715a488db937501e68a495e835a6ae3bb82a9910e1a1c13f686c9",
+      "fdSha256": "804e0e4690d715a488db937501e68a495e835a6ae3bb82a9910e1a1c13f686c9",
+      "byteEqual": true,
+      "lfEqual": true
+    }
+  ],
+  "sourceReviewConclusion": "35 affected app/src paths: 33 existing files byte-equal, one deleted dialog absent in both editions, and the Manifest preserves edition differences.",
+  "sourceDeltaFromPriorRelease": "Only MonicaInputMethodService.kt and MonicaImeSystemTest.kt changed in each frozen source manifest; prior password, backup and auth-layout evidence is separately scoped."
+}

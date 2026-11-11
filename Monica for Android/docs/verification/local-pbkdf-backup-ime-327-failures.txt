@@ -1,0 +1,30 @@
+Preserved failures and scoped retests — Android 1.0.327
+
+Builds:
+- main-release-old-01: failed after 262.588 s; baseline copier omitted KeePassKotpassXmlReader.java, causing unresolved references. Original baseline SHA was checked before adding the missing file. old-02 passed after 1036.027 s.
+- main-release-new-01: failed after 54.845 s with Kotlin references missing after changing source roots. The nonincremental new-02 build passed after 1057.088 s. The final build is new-04, not new-02 or new-03.
+
+IME crash and regression:
+- final-crash-buffer: six original target IME fatal exceptions identified as a cached child still attached to its previous parent. These are separate from UIAutomator's exit-139 native probe failures.
+- main-ime-config-before-fix: intentionally old main APK with the new configuration regression; one expected failure, runner 5.002 s. Font change caused original IME PID 33476 to disappear. The old-APK negative control is retained.
+- main-ime-config-fixed-01: one pass and one failed input-value assertion, runner 22.922 s. No new target reparent crash; test tapped during changing keyboard geometry.
+- main-ime-config-portrait-02: one failed input-value assertion, runner 19.039 s. Portrait alone did not resolve the test timing.
+- The test subsequently waits for accessibility-window idle before the physical key tap; PID and exact input assertions remain unchanged. main-ime-config-settled-03 passed 2/2, runner 13.445 s; fd-ime-config-settled-01 passed 2/2, runner 14.702 s.
+
+Final Debug UI batches:
+- main-ime-final-ui-02: 17/18, runner 24.004 s. ManagedPasswordLoginUiTest.backgroundBeforeSetupConfirmationErasesFirstPasswordAndReturnsToFirstStep could not display Confirm while the emulator was in landscape. After restoring persistent portrait settings, the same APKs, source and assertion passed in main-ime-final-confirm-portrait-03, 1/1, runner 1.500 s.
+- fd-ime-final-ui-02: 13/18, runner 74.627 s. Five LocalPasswordProtectionUiTest methods failed waiting for window focus in Espresso.closeSoftKeyboard. A still-selected older Release IME separately crashed with the known reparent exception during that interval. The fixed Debug target is a different package. After restoring the original input method and portrait, the same Debug APK pair passed the whole UI group in fd-ime-final-ui-originalkeyboard-03, 18/18, runner 25.335 s.
+
+Other retained observations:
+- Initial Release unlock buttons were obscured by the soft keyboard; the later resize/inset/scroll layout was rebuilt and tested.
+- Early quick-fill attempts canceled before asynchronous completion or ran after automatic lock; empty fields were not counted as success.
+- Downloads-provider export failed URI write authorization; subsequent Documents-provider export succeeded. This is not a claim that all providers work.
+- fd-final02-after-restore was misnamed after a failed driver location step and did not contain a successful replacement. It is excluded. fd-final02-restored and fd-final02-restored-cold are the valid later snapshots.
+- UIAutomator sometimes exits 139 after writing XML. Only newly generated, parseable XML is used; its native failure is never used to dismiss a Monica IME fatal exception.
+- Independent artifact audit attempt 01 could not find the old APKs in their original directories. Mapping, logs and private synthetic snapshots remain. The final audit directly checks current APKs, while old signer/hash claims use prior real audits and install receipts. No rebuilt binary is substituted for missing old bytes.
+
+Final CLI acceptance notes:
+- The first date-format command was not quoted for the embedded space and failed before any device mutation. The corrected quoted command proceeded successfully.
+- The first final F-Droid QuickFill attempt left the native fields empty after an inter-step delay. The following screenshot showed automatic vault lock. Fresh original-password authentication and a contiguous flow produced the valid final credential-fill and software-q evidence. The empty attempt is retained and not counted as success.
+- The ordinary edition likewise required reauthentication after an inter-step delay. Its successful final fill evidence comes from the contiguous authenticated sequence.
+- The final two Release packages have completed retained-data, restoration, live-font, unlock/cancel, typing and QuickFill acceptance in the stated emulator/synthetic/test-signer scope. Cleanup completed after the retained user-removal retry, service-path precheck correction and asynchronous emulator-stop confirmation. No all-device or whole-session zero-crash claim is made.
