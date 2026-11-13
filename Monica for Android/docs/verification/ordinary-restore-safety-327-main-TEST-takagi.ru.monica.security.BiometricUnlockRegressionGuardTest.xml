@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.security.BiometricUnlockRegressionGuardTest" tests="17" skipped="0" failures="0" errors="0" timestamp="2026-11-13T06:40:28.727Z" hostname="JOYIN" time="2.228">
+  <properties/>
+  <testcase name="biometricUnlockClearsPreviousMdkCooldownBeforeReadingKeyMaterial" classname="takagi.ru.monica.security.BiometricUnlockRegressionGuardTest" time="0.051"/>
+  <testcase name="sharedDatabaseAndSyncBoundariesDoNotExportLocalOnlyTotpCiphertext" classname="takagi.ru.monica.security.BiometricUnlockRegressionGuardTest" time="0.074"/>
+  <testcase name="highTrafficTotpReadSurfacesUseEncryptedFieldCompatibleResolver" classname="takagi.ru.monica.security.BiometricUnlockRegressionGuardTest" time="0.108"/>
+  <testcase name="compatDataEncryptionDoesNotUsePredictableMasterKeyString" classname="takagi.ru.monica.security.BiometricUnlockRegressionGuardTest" time="0.002"/>
+  <testcase name="monicaCiphertextDetectionRequiresExplicitPrefix" classname="takagi.ru.monica.security.BiometricUnlockRegressionGuardTest" time="0.002"/>
+  <testcase name="totpFieldEncryptionCompatibilityReadsThroughSingleHelper" classname="takagi.ru.monica.security.BiometricUnlockRegressionGuardTest" time="0.006"/>
+  <testcase name="invalidatedAndUnrecoverableKeysRetainOriginalWrappers" classname="takagi.ru.monica.security.BiometricUnlockRegressionGuardTest" time="0.007"/>
+  <testcase name="emptyRuntimeMdkCacheCannotMaskReadableKeystoreWrapper" classname="takagi.ru.monica.security.BiometricUnlockRegressionGuardTest" time="0.004"/>
+  <testcase name="totpNewWritesStoreLocalCiphertextWithoutBreakingPortableBoundaries" classname="takagi.ru.monica.security.BiometricUnlockRegressionGuardTest" time="0.016"/>
+  <testcase name="migratedSecondaryBiometricsKeepOneUseRequestAndForegroundGates" classname="takagi.ru.monica.security.BiometricUnlockRegressionGuardTest" time="0.009"/>
+  <testcase name="bankCardAndDocumentItemDataUseEncryptedLocalStorageWithPortableBoundaries" classname="takagi.ru.monica.security.BiometricUnlockRegressionGuardTest" time="0.02"/>
+  <testcase name="productionTotpItemDataParsingIsCentralizedInResolver" classname="takagi.ru.monica.security.BiometricUnlockRegressionGuardTest" time="1.776"/>
+  <testcase name="pageSwitchHotPathsDoNotRunAuthOrBitwardenSyncWorkOnMainThread" classname="takagi.ru.monica.security.BiometricUnlockRegressionGuardTest" time="0.067"/>
+  <testcase name="autofillPasswordSelectionReturnPathDoesNotBlockMainThread" classname="takagi.ru.monica.security.BiometricUnlockRegressionGuardTest" time="0.043"/>
+  <testcase name="legacySensitiveFieldMigrationRunsAfterUnlockAndOnlyTouchesLocalRoomCache" classname="takagi.ru.monica.security.BiometricUnlockRegressionGuardTest" time="0.013"/>
+  <testcase name="mainPasswordLoginUsesFullVaultUnlockPath" classname="takagi.ru.monica.security.BiometricUnlockRegressionGuardTest" time="0.006"/>
+  <testcase name="compatDataPrefixIsRecognizedAtPasswordBoundaries" classname="takagi.ru.monica.security.BiometricUnlockRegressionGuardTest" time="0.012"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

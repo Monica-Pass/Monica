@@ -1,5 +1,9 @@
 package takagi.ru.monica.ui.screens
 
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.ComponentName
+import android.credentials.CredentialManager
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -52,17 +56,11 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExposedDropdownMenu
-import androidx.compose.material3.ExposedDropdownMenuAnchorType
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import takagi.ru.monica.ui.components.OutlinedTextField
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
@@ -83,6 +81,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import takagi.ru.monica.ui.components.SettingsPanelRow
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -91,12 +91,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import kotlinx.coroutines.launch
 import takagi.ru.monica.R
+import takagi.ru.monica.passkey.MonicaCredentialProviderService
 import takagi.ru.monica.autofill_ng.AutofillPreferences
 import takagi.ru.monica.autofill_ng.DomainMatchStrategy
 import takagi.ru.monica.autofill_ng.core.AutofillServiceChecker
 import takagi.ru.monica.autofill_ng.protection.AutofillProtectionActivity
 import takagi.ru.monica.data.PasswordDatabase
-import takagi.ru.monica.data.bitwarden.BitwardenVault
 import takagi.ru.monica.data.AppSettings
 import takagi.ru.monica.ui.components.AppInfo
 import takagi.ru.monica.ui.components.loadInstalledApps
@@ -153,14 +153,13 @@ fun AutofillSettingsV2Screen(
         initial = AutofillPreferences.AutofillDefaultSourceFilter.ALL,
     )
     val defaultKeepassDatabaseId by preferences.v2DefaultKeepassDatabaseId.collectAsState(initial = null)
-    val keepassDatabases by localKeepassDao.getAllDatabases().collectAsState(initial = emptyList())
+    val keepassFlow = remember(localKeepassDao) { localKeepassDao.getAllDatabases() }
+    val keepassDatabases by keepassFlow.collectAsState(initial = null)
     val defaultBitwardenVaultId by preferences.v2DefaultBitwardenVaultId.collectAsState(initial = null)
-    val bitwardenVaults by bitwardenVaultDao.getAllVaultsFlow().collectAsState(initial = emptyList())
+    val bitwardenFlow = remember(bitwardenVaultDao) { bitwardenVaultDao.getAllVaultsFlow() }
+    val bitwardenVaults by bitwardenFlow.collectAsState(initial = null)
 
     var serviceStatus by remember { mutableStateOf<AutofillServiceChecker.ServiceStatus?>(null) }
-    var sourceFilterMenuExpanded by remember { mutableStateOf(false) }
-    var keepassDbMenuExpanded by remember { mutableStateOf(false) }
-    var bitwardenVaultMenuExpanded by remember { mutableStateOf(false) }
     var showDomainStrategyDialog by remember { mutableStateOf(false) }
     var showBlacklistDialog by remember { mutableStateOf(false) }
     var showOtpDurationDialog by remember { mutableStateOf(false) }
@@ -189,19 +188,8 @@ fun AutofillSettingsV2Screen(
         refreshStatus()
     }
 
-    LaunchedEffect(defaultKeepassDatabaseId, keepassDatabases) {
-        val selected = defaultKeepassDatabaseId ?: return@LaunchedEffect
-        if (keepassDatabases.none { it.id == selected }) {
-            preferences.setV2DefaultKeepassDatabaseId(null)
-        }
-    }
-
-    LaunchedEffect(defaultBitwardenVaultId, bitwardenVaults) {
-        val selected = defaultBitwardenVaultId ?: return@LaunchedEffect
-        if (bitwardenVaults.none { it.id == selected }) {
-            preferences.setV2DefaultBitwardenVaultId(null)
-        }
-    }
+    // A list that has not loaded (or a missing registration) must not clear the user's
+    // stored filter. Only explicit choices below update the default source/database.
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -221,7 +209,8 @@ fun AutofillSettingsV2Screen(
         containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
         topBar = {
             TopAppBar(
-                title = { Text(text = stringResource(R.string.autofill_v2_title)) },
+                expandedHeight = 64.dp * LocalDensity.current.fontScale.coerceAtLeast(1f),
+                title = { Text(text = stringResource(R.string.autofill_passkey_settings_title)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
@@ -303,219 +292,9 @@ fun AutofillSettingsV2Screen(
                         )
                     }
                     Text(
-                        text = if (statusEnabled) {
-                            stringResource(R.string.autofill_status_enabled_desc)
-                        } else {
-                            stringResource(R.string.autofill_status_disabled_desc)
-                        },
-                        style = MaterialTheme.typography.bodySmall,
-                        color = statusContentColor.copy(alpha = 0.9f),
-                    )
-                    serviceStatus?.let { status ->
-                        Text(
-                            text = status.getSummary(context),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = statusContentColor.copy(alpha = 0.9f),
-                        )
-                    }
-                    TextButton(onClick = ::openSystemAutofillSettings) {
-                        Text(stringResource(R.string.autofill_v2_set_system_service))
-                    }
-                }
-            }
-
-            takagi.ru.monica.ui.components.SettingsPanelGroup("") {
-                takagi.ru.monica.ui.components.SettingsPanelRow(
-                    Icons.Outlined.Settings,
-                    stringResource(R.string.default_manager_title),
-                    stringResource(R.string.default_manager_entry_hint),
-                    onClick = { showDefaultManager = true }
-                )
-            }
-
-            SectionCard(
-                title = stringResource(R.string.autofill_protection_title),
-                icon = Icons.Outlined.Security,
-                iconTint = MaterialTheme.colorScheme.primary,
-            ) {
-                AutofillSettingItem(
-                    icon = Icons.Outlined.Security,
-                    title = stringResource(R.string.autofill_protection_entry_title),
-                    subtitle = stringResource(R.string.autofill_protection_entry_desc),
-                    onClick = { context.startActivity(Intent(context, AutofillProtectionActivity::class.java)) },
-                )
-            }
-
-            SectionCard(
-                title = stringResource(R.string.autofill_v2_default_scope_title),
-                icon = Icons.Outlined.AccountTree,
-                iconTint = MaterialTheme.colorScheme.tertiary,
-            ) {
-                Text(
-                    text = stringResource(R.string.autofill_v2_default_scope_desc),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = 20.dp),
-                )
-                Spacer(modifier = Modifier.size(8.dp))
-
-                ExposedDropdownMenuBox(
-                    expanded = sourceFilterMenuExpanded,
-                    onExpandedChange = { sourceFilterMenuExpanded = !sourceFilterMenuExpanded },
-                ) {
-                    OutlinedTextField(
-                        value = defaultSourceFilter.label(),
-                        onValueChange = {},
-                        readOnly = true,
-                        singleLine = true,
-                        modifier = Modifier
-                            .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
-                            .fillMaxWidth()
-                            .padding(horizontal = 20.dp),
-                        trailingIcon = {
-                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = sourceFilterMenuExpanded)
-                        },
-                        shape = RoundedCornerShape(14.dp),
-                    )
-                    ExposedDropdownMenu(
-                        expanded = sourceFilterMenuExpanded,
-                        onDismissRequest = { sourceFilterMenuExpanded = false },
-                    ) {
-                        AutofillPreferences.AutofillDefaultSourceFilter.entries.forEach { option ->
-                            DropdownMenuItem(
-                                text = { Text(option.label()) },
-                                onClick = {
-                                    sourceFilterMenuExpanded = false
-                                    scope.launch {
-                                        preferences.setV2DefaultSourceFilter(option)
-                                        if (option != AutofillPreferences.AutofillDefaultSourceFilter.KEEPASS) {
-                                            preferences.setV2DefaultKeepassDatabaseId(null)
-                                        }
-                                        if (option != AutofillPreferences.AutofillDefaultSourceFilter.BITWARDEN) {
-                                            preferences.setV2DefaultBitwardenVaultId(null)
-                                        }
-                                    }
-                                },
-                            )
-                        }
-                    }
-                }
-
-                if (defaultSourceFilter == AutofillPreferences.AutofillDefaultSourceFilter.KEEPASS) {
-                    Text(
-                        text = stringResource(R.string.autofill_v2_default_keepass_title),
+                        text = serviceStatus?.getSummary(context) ?: stringResource(R.string.loading),
                         style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(horizontal = 20.dp),
-                    )
-                    Spacer(modifier = Modifier.size(6.dp))
-                    ExposedDropdownMenuBox(
-                        expanded = keepassDbMenuExpanded,
-                        onExpandedChange = { keepassDbMenuExpanded = !keepassDbMenuExpanded },
-                    ) {
-                        val selectedDatabaseName = defaultKeepassDatabaseId
-                            ?.let { selectedId -> keepassDatabases.firstOrNull { it.id == selectedId }?.name }
-                            ?: stringResource(R.string.password_picker_all_databases)
-                        OutlinedTextField(
-                            value = selectedDatabaseName,
-                            onValueChange = {},
-                            readOnly = true,
-                            singleLine = true,
-                            modifier = Modifier
-                                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
-                                .fillMaxWidth()
-                                .padding(horizontal = 20.dp),
-                            trailingIcon = {
-                                ExposedDropdownMenuDefaults.TrailingIcon(expanded = keepassDbMenuExpanded)
-                            },
-                            shape = RoundedCornerShape(14.dp),
-                        )
-                        ExposedDropdownMenu(
-                            expanded = keepassDbMenuExpanded,
-                            onDismissRequest = { keepassDbMenuExpanded = false },
-                        ) {
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.password_picker_all_databases)) },
-                                onClick = {
-                                    keepassDbMenuExpanded = false
-                                    scope.launch { preferences.setV2DefaultKeepassDatabaseId(null) }
-                                },
-                            )
-                            keepassDatabases.forEach { database ->
-                                DropdownMenuItem(
-                                    text = { Text(database.name) },
-                                    onClick = {
-                                        keepassDbMenuExpanded = false
-                                        scope.launch { preferences.setV2DefaultKeepassDatabaseId(database.id) }
-                                    },
-                                )
-                            }
-                        }
-                    }
-                    Text(
-                        text = stringResource(R.string.autofill_v2_default_keepass_desc),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp),
-                    )
-                }
-
-                if (defaultSourceFilter == AutofillPreferences.AutofillDefaultSourceFilter.BITWARDEN) {
-                    Text(
-                        text = stringResource(R.string.autofill_v2_default_bitwarden_title),
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(horizontal = 20.dp),
-                    )
-                    Spacer(modifier = Modifier.size(6.dp))
-                    ExposedDropdownMenuBox(
-                        expanded = bitwardenVaultMenuExpanded,
-                        onExpandedChange = { bitwardenVaultMenuExpanded = !bitwardenVaultMenuExpanded },
-                    ) {
-                        val selectedVaultName = defaultBitwardenVaultId
-                            ?.let { selectedId ->
-                                bitwardenVaults.firstOrNull { it.id == selectedId }?.displayLabel()
-                            }
-                            ?: stringResource(R.string.password_picker_all_vaults)
-                        OutlinedTextField(
-                            value = selectedVaultName,
-                            onValueChange = {},
-                            readOnly = true,
-                            singleLine = true,
-                            modifier = Modifier
-                                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
-                                .fillMaxWidth()
-                                .padding(horizontal = 20.dp),
-                            trailingIcon = {
-                                ExposedDropdownMenuDefaults.TrailingIcon(expanded = bitwardenVaultMenuExpanded)
-                            },
-                            shape = RoundedCornerShape(14.dp),
-                        )
-                        ExposedDropdownMenu(
-                            expanded = bitwardenVaultMenuExpanded,
-                            onDismissRequest = { bitwardenVaultMenuExpanded = false },
-                        ) {
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.password_picker_all_vaults)) },
-                                onClick = {
-                                    bitwardenVaultMenuExpanded = false
-                                    scope.launch { preferences.setV2DefaultBitwardenVaultId(null) }
-                                },
-                            )
-                            bitwardenVaults.forEach { vault ->
-                                DropdownMenuItem(
-                                    text = { Text(vault.displayLabel()) },
-                                    onClick = {
-                                        bitwardenVaultMenuExpanded = false
-                                        scope.launch { preferences.setV2DefaultBitwardenVaultId(vault.id) }
-                                    },
-                                )
-                            }
-                        }
-                    }
-                    Text(
-                        text = stringResource(R.string.autofill_v2_default_bitwarden_desc),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp),
+                        color = statusContentColor,
                     )
                 }
             }
@@ -532,46 +311,50 @@ fun AutofillSettingsV2Screen(
                     onClick = ::openSystemAutofillSettings,
                 )
                 AutofillSettingItem(
-                    icon = Icons.Outlined.Key,
-                    title = stringResource(R.string.autofill_system_passkey_settings),
-                    subtitle = stringResource(R.string.autofill_system_passkey_settings_desc),
-                    onClick = { context.startActivity(Intent(Settings.ACTION_SETTINGS)) },
+                    icon = Icons.Outlined.Settings,
+                    title = stringResource(R.string.default_manager_title),
+                    subtitle = stringResource(R.string.default_manager_entry_hint),
+                    onClick = { showDefaultManager = true },
                 )
             }
 
             SectionCard(
-                title = stringResource(R.string.ime_settings_title),
-                icon = Icons.Outlined.Keyboard,
-                iconTint = MaterialTheme.colorScheme.tertiary,
+                title = stringResource(R.string.passkey_settings_title),
+                icon = Icons.Outlined.Key,
+                iconTint = MaterialTheme.colorScheme.primary,
             ) {
                 AutofillSettingItem(
-                    icon = Icons.Outlined.Settings,
-                    title = stringResource(R.string.ime_manage_input_methods),
-                    subtitle = stringResource(R.string.ime_manage_input_methods_desc),
-                    onClick = ::openSystemKeyboardSettings,
+                    icon = Icons.Outlined.Key,
+                    title = stringResource(R.string.autofill_system_passkey_settings),
+                    subtitle = stringResource(R.string.autofill_system_passkey_settings_desc),
+                    onClick = { openCredentialProviderSettings(context) },
                 )
-                androidx.compose.foundation.layout.Box(Modifier.testTag("ime_key_vibration_setting")) { SwitchSettingItem(
-                    icon = Icons.Outlined.Vibration,
-                    title = stringResource(R.string.ime_key_vibration_title),
-                    subtitle = stringResource(R.string.ime_key_vibration_description),
-                    checked = imeKeyboardOptions.keyVibrationEnabled,
-                    onCheckedChange = { scope.launch { preferences.setImeKeyVibrationEnabled(it) } },
-                ) }
-                androidx.compose.foundation.layout.Box(Modifier.testTag("ime_scramble_pin_setting")) { SwitchSettingItem(
-                    icon = Icons.Outlined.Keyboard,
-                    title = stringResource(R.string.ime_scramble_pin_title),
-                    subtitle = stringResource(R.string.ime_scramble_pin_description),
-                    checked = imeKeyboardOptions.scramblePin,
-                    onCheckedChange = { scope.launch { preferences.setImeScramblePin(it) } },
-                ) }
-                androidx.compose.foundation.layout.Box(Modifier.testTag("ime_hide_pin_preview_setting")) { SwitchSettingItem(
-                    icon = Icons.Outlined.VisibilityOff,
-                    title = stringResource(R.string.ime_hide_pin_preview_title),
-                    subtitle = stringResource(R.string.ime_hide_pin_preview_description),
-                    checked = imeKeyboardOptions.hidePinPreview,
-                    onCheckedChange = { scope.launch { preferences.setImeHidePinPreview(it) } },
-                ) }
+                takagi.ru.monica.passkey.hardware.HardwarePasskeySetting(inSettingsGroup = true)
             }
+
+            SectionCard(
+                title = stringResource(R.string.autofill_protection_title),
+                icon = Icons.Outlined.Security,
+                iconTint = MaterialTheme.colorScheme.primary,
+            ) {
+                AutofillSettingItem(
+                    icon = Icons.Outlined.Security,
+                    title = stringResource(R.string.autofill_protection_entry_title),
+                    subtitle = stringResource(R.string.autofill_protection_entry_desc),
+                    onClick = { context.startActivity(Intent(context, AutofillProtectionActivity::class.java)) },
+                )
+            }
+
+            AutofillSourceSettings(
+                source = defaultSourceFilter,
+                keepassId = defaultKeepassDatabaseId,
+                bitwardenId = defaultBitwardenVaultId,
+                keepassDatabases = keepassDatabases,
+                bitwardenVaults = bitwardenVaults,
+                onSourceSelected = { choice -> scope.launch { preferences.selectV2DefaultSourceFilter(choice) } },
+                onKeepassSelected = { id -> scope.launch { preferences.setV2DefaultKeepassDatabaseId(id) } },
+                onBitwardenSelected = { id -> scope.launch { preferences.setV2DefaultBitwardenVaultId(id) } },
+            )
 
             SectionCard(
                 title = stringResource(R.string.autofill_fill_behavior_title),
@@ -617,39 +400,6 @@ fun AutofillSettingsV2Screen(
                     )
                 }
                 SwitchSettingItem(
-                    icon = Icons.Outlined.Link,
-                    title = stringResource(R.string.autofill_v2_strict_match),
-                    subtitle = stringResource(R.string.autofill_v2_strict_match_desc),
-                    checked = strictMode,
-                    onCheckedChange = { enabled ->
-                        scope.launch { preferences.setBitwardenStrictModeEnabled(enabled) }
-                    },
-                )
-                SwitchSettingItem(
-                    icon = Icons.Outlined.AccountTree,
-                    title = stringResource(R.string.autofill_v2_subdomain_match),
-                    subtitle = stringResource(R.string.autofill_v2_subdomain_match_desc),
-                    checked = subdomainMatch,
-                    onCheckedChange = { enabled ->
-                        scope.launch { preferences.setBitwardenSubdomainMatchEnabled(enabled) }
-                    },
-                )
-                AutofillSettingItem(
-                    icon = Icons.Outlined.Language,
-                    title = stringResource(R.string.autofill_domain_strategy_title),
-                    subtitle = DomainMatchStrategy.getDisplayName(context, domainMatchStrategy),
-                    onClick = { showDomainStrategyDialog = true },
-                )
-                SwitchSettingItem(
-                    icon = Icons.Outlined.DoNotDisturb,
-                    title = stringResource(R.string.autofill_v2_respect_off),
-                    subtitle = stringResource(R.string.autofill_v2_respect_off_desc),
-                    checked = respectOffEnabled,
-                    onCheckedChange = { enabled ->
-                        scope.launch { preferences.setV2RespectAutofillOffEnabled(enabled) }
-                    },
-                )
-                SwitchSettingItem(
                     icon = Icons.Outlined.Input,
                     title = stringResource(R.string.autofill_inline_suggestions),
                     subtitle = stringResource(R.string.autofill_inline_suggestions_desc),
@@ -667,6 +417,54 @@ fun AutofillSettingsV2Screen(
                         scope.launch { preferences.setPasswordSuggestionEnabled(enabled) }
                     },
                 )
+            }
+
+            SectionCard(
+                title = stringResource(R.string.autofill_match_settings_title),
+                icon = Icons.Outlined.Link,
+                iconTint = MaterialTheme.colorScheme.secondary,
+            ) {
+                SwitchSettingItem(
+                    icon = Icons.Outlined.Link,
+                    title = stringResource(R.string.autofill_v2_strict_match),
+                    subtitle = stringResource(R.string.autofill_v2_strict_match_desc),
+                    checked = strictMode,
+                    onCheckedChange = { enabled ->
+                        scope.launch { preferences.setBitwardenStrictModeEnabled(enabled) }
+                    },
+                )
+                SwitchSettingItem(
+                    icon = Icons.Outlined.AccountTree,
+                    title = stringResource(R.string.autofill_v2_subdomain_match),
+                    subtitle = stringResource(R.string.autofill_v2_subdomain_match_desc),
+                    checked = subdomainMatch,
+                    onCheckedChange = { enabled ->
+                        scope.launch { preferences.setBitwardenSubdomainMatchEnabled(enabled) }
+                    },
+                )
+                SettingsPanelRow(
+                    modifier = Modifier.testTag("autofill-domain-setting"),
+                    icon = Icons.Outlined.Language,
+                    title = stringResource(R.string.autofill_domain_strategy_title),
+                    subtitle = DomainMatchStrategy.getDisplayName(context, domainMatchStrategy),
+                    onClick = { showDomainStrategyDialog = true },
+                )
+                SwitchSettingItem(
+                    icon = Icons.Outlined.DoNotDisturb,
+                    title = stringResource(R.string.autofill_v2_respect_off),
+                    subtitle = stringResource(R.string.autofill_v2_respect_off_desc),
+                    checked = respectOffEnabled,
+                    onCheckedChange = { enabled ->
+                        scope.launch { preferences.setV2RespectAutofillOffEnabled(enabled) }
+                    },
+                )
+            }
+
+            SectionCard(
+                title = stringResource(R.string.autofill_save_behavior_title),
+                icon = Icons.Outlined.AddCircleOutline,
+                iconTint = MaterialTheme.colorScheme.secondary,
+            ) {
                 SwitchSettingItem(
                     icon = Icons.Outlined.AddCircleOutline,
                     title = stringResource(R.string.autofill_save_enable),
@@ -761,7 +559,8 @@ fun AutofillSettingsV2Screen(
                         }
                     },
                 )
-                AutofillSettingItem(
+                SettingsPanelRow(
+                    modifier = Modifier.testTag("autofill-otp-duration-setting"),
                     icon = Icons.Outlined.Settings,
                     title = stringResource(R.string.autofill_otp_notification_duration),
                     subtitle = "${stringResource(R.string.autofill_otp_notification_duration_desc)}: ${otpNotificationDurationSeconds}s",
@@ -778,6 +577,40 @@ fun AutofillSettingsV2Screen(
                         scope.launch { preferences.setAutoCopyOtpEnabled(enabled) }
                     },
                 )
+            }
+
+            SectionCard(
+                title = stringResource(R.string.ime_settings_title),
+                icon = Icons.Outlined.Keyboard,
+                iconTint = MaterialTheme.colorScheme.tertiary,
+            ) {
+                AutofillSettingItem(
+                    icon = Icons.Outlined.Settings,
+                    title = stringResource(R.string.ime_manage_input_methods),
+                    subtitle = stringResource(R.string.ime_manage_input_methods_desc),
+                    onClick = ::openSystemKeyboardSettings,
+                )
+                androidx.compose.foundation.layout.Box(Modifier.testTag("ime_key_vibration_setting")) { SwitchSettingItem(
+                    icon = Icons.Outlined.Vibration,
+                    title = stringResource(R.string.ime_key_vibration_title),
+                    subtitle = stringResource(R.string.ime_key_vibration_description),
+                    checked = imeKeyboardOptions.keyVibrationEnabled,
+                    onCheckedChange = { scope.launch { preferences.setImeKeyVibrationEnabled(it) } },
+                ) }
+                androidx.compose.foundation.layout.Box(Modifier.testTag("ime_scramble_pin_setting")) { SwitchSettingItem(
+                    icon = Icons.Outlined.Keyboard,
+                    title = stringResource(R.string.ime_scramble_pin_title),
+                    subtitle = stringResource(R.string.ime_scramble_pin_description),
+                    checked = imeKeyboardOptions.scramblePin,
+                    onCheckedChange = { scope.launch { preferences.setImeScramblePin(it) } },
+                ) }
+                androidx.compose.foundation.layout.Box(Modifier.testTag("ime_hide_pin_preview_setting")) { SwitchSettingItem(
+                    icon = Icons.Outlined.VisibilityOff,
+                    title = stringResource(R.string.ime_hide_pin_preview_title),
+                    subtitle = stringResource(R.string.ime_hide_pin_preview_description),
+                    checked = imeKeyboardOptions.hidePinPreview,
+                    onCheckedChange = { scope.launch { preferences.setImeHidePinPreview(it) } },
+                ) }
             }
 
             SectionCard(
@@ -888,20 +721,33 @@ fun AutofillSettingsV2Screen(
     }
 }
 
-private fun BitwardenVault.displayLabel(): String {
-    return displayName
-        ?.takeIf { it.isNotBlank() }
-        ?.let { "$it ($email)" }
-        ?: email
-}
-
-@Composable
-private fun AutofillPreferences.AutofillDefaultSourceFilter.label(): String {
-    return when (this) {
-        AutofillPreferences.AutofillDefaultSourceFilter.ALL -> stringResource(R.string.filter_all)
-        AutofillPreferences.AutofillDefaultSourceFilter.LOCAL -> stringResource(R.string.filter_monica)
-        AutofillPreferences.AutofillDefaultSourceFilter.KEEPASS -> stringResource(R.string.filter_keepass)
-        AutofillPreferences.AutofillDefaultSourceFilter.BITWARDEN -> stringResource(R.string.filter_bitwarden)
+/** OEMs may omit or restrict individual settings activities; keep navigation safe. */
+private fun openCredentialProviderSettings(context: Context) {
+    val needsProviderEnable = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+        try {
+            context.getSystemService(CredentialManager::class.java)
+                ?.isEnabledCredentialProviderService(ComponentName(context, MonicaCredentialProviderService::class.java)) == false
+        } catch (_: RuntimeException) {
+            // Some system implementations throw for this query; unknown is not disabled.
+            false
+        }
+    } else false
+    val destinations = buildList {
+        if (needsProviderEnable) {
+            add(Intent(Settings.ACTION_CREDENTIAL_PROVIDER, Uri.parse("package:${context.packageName}")))
+        }
+        add(Intent(Settings.ACTION_SECURITY_SETTINGS))
+        add(Intent(Settings.ACTION_SETTINGS))
+    }
+    for (intent in destinations) {
+        try {
+            context.startActivity(intent)
+            return
+        } catch (_: ActivityNotFoundException) {
+            // Try the next available system settings destination.
+        } catch (_: SecurityException) {
+            // A restricted OEM entry must not crash the settings page.
+        }
     }
 }
 
@@ -912,68 +758,15 @@ private fun DomainStrategyDialog(
     onDismiss: () -> Unit,
 ) {
     val context = LocalContext.current
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(text = stringResource(R.string.autofill_domain_strategy_dialog_title)) },
-        text = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(max = 420.dp)
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                DomainMatchStrategy.values().forEach { strategy ->
-                    val selected = strategy == currentStrategy
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 1.dp)
-                            .clickable { onStrategySelected(strategy) },
-                        shape = RoundedCornerShape(12.dp),
-                        colors = CardDefaults.cardColors(
-                            containerColor = if (selected) {
-                                MaterialTheme.colorScheme.secondaryContainer
-                            } else {
-                                MaterialTheme.colorScheme.surfaceContainerLow
-                            },
-                        ),
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 10.dp, vertical = 6.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            RadioButton(
-                                selected = selected,
-                                onClick = { onStrategySelected(strategy) },
-                            )
-                            Column(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .padding(start = 4.dp),
-                            ) {
-                                Text(
-                                    text = DomainMatchStrategy.getDisplayName(context, strategy),
-                                    style = MaterialTheme.typography.bodyLarge,
-                                )
-                                Text(
-                                    text = DomainMatchStrategy.getDescription(context, strategy),
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        confirmButton = {
-            TextButton(onClick = onDismiss) {
-                Text(text = stringResource(R.string.autofill_domain_strategy_dialog_close))
-            }
-        },
+    AutofillSettingsChoiceSheet(
+        title = stringResource(R.string.autofill_domain_strategy_dialog_title),
+        description = "",
+        choices = DomainMatchStrategy.entries.map { strategy -> AutofillSettingsChoice(
+            strategy.name, DomainMatchStrategy.getDisplayName(context, strategy),
+            DomainMatchStrategy.getDescription(context, strategy)) },
+        selectedKey = currentStrategy.name,
+        onSelect = { key -> onStrategySelected(DomainMatchStrategy.valueOf(key)); onDismiss() },
+        onDismiss = onDismiss,
     )
 }
 
@@ -1144,62 +937,12 @@ private fun OtpDurationDialog(
     onDurationSelected: (Int) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    val options = listOf(15, 30, 60, 120)
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(text = stringResource(R.string.autofill_otp_notification_duration), modifier = Modifier.settingsSearchAnchor(stringResource(R.string.autofill_otp_notification_duration))) },
-        text = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                Text(
-                    text = stringResource(R.string.autofill_otp_notification_duration_desc),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                options.forEach { duration ->
-                    val selected = duration == currentDuration
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { onDurationSelected(duration) },
-                        shape = RoundedCornerShape(12.dp),
-                        colors = CardDefaults.cardColors(
-                            containerColor = if (selected) {
-                                MaterialTheme.colorScheme.secondaryContainer
-                            } else {
-                                MaterialTheme.colorScheme.surfaceContainerLow
-                            },
-                        ),
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 12.dp, vertical = 8.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            RadioButton(
-                                selected = selected,
-                                onClick = { onDurationSelected(duration) },
-                            )
-                            Text(
-                                text = "${duration}s",
-                                style = MaterialTheme.typography.bodyLarge,
-                                modifier = Modifier.padding(start = 6.dp),
-                            )
-                        }
-                    }
-                }
-            }
-        },
-        confirmButton = {
-            TextButton(onClick = onDismiss) {
-                Text(text = stringResource(R.string.autofill_domain_strategy_dialog_close))
-            }
-        },
+    AutofillSettingsChoiceSheet(
+        title = stringResource(R.string.autofill_otp_notification_duration),
+        description = stringResource(R.string.autofill_otp_notification_duration_desc),
+        choices = listOf(15, 30, 60, 120).map { AutofillSettingsChoice(it.toString(), "${it}s") },
+        selectedKey = currentDuration.toString(),
+        onSelect = { onDurationSelected(it.toInt()) },
+        onDismiss = onDismiss,
     )
 }
-

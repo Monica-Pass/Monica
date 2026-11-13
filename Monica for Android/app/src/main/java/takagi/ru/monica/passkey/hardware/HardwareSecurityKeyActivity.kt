@@ -42,6 +42,10 @@ class HardwareSecurityKeyActivity : FragmentActivity() {
     private val nfc by lazy { NfcAdapter.getDefaultAdapter(this) }
     private val providerMode get() = intent.action == ACTION_CREATE || intent.action == ACTION_GET
     private var initialNfcTag: android.nfc.Tag? = null
+    private var hardwareResumed = false
+    private var initialConnectionPending = true
+    private fun canUseHardware() = HardwarePasskeyPreferences.isEnabled(this) &&
+        hardwareResumed && !isFinishing && !isDestroyed
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, data: Intent?) {
             if (data?.action == UsbManager.ACTION_USB_DEVICE_DETACHED) {
@@ -52,9 +56,9 @@ class HardwareSecurityKeyActivity : FragmentActivity() {
             if (data?.action != permissionAction) return
             val device = data.getParcelableExtra<UsbDevice>(UsbManager.EXTRA_DEVICE) ?: return
             if (device.deviceId != awaitingDevice) return
-            awaitingDevice = null
-            if (usb.hasPermission(device)) connect { UsbTransport.connect(usb, device) }
-            else state = state.copy(error = R.string.hardware_key_permission_denied)
+            if (!HardwarePasskeyPreferences.isEnabled(this@HardwareSecurityKeyActivity)) { awaitingDevice = null; return }
+            if (usb.hasPermission(device)) connectAwaitingUsb()
+            else { awaitingDevice = null; state = state.copy(error = R.string.hardware_key_permission_denied) }
         }
     }
 
@@ -65,12 +69,23 @@ class HardwareSecurityKeyActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
-        state = HardwareKeyUiState(providerMode = providerMode)
+        state = HardwareKeyUiState(providerMode = providerMode, featureEnabled = HardwarePasskeyPreferences.isEnabled(this))
+        lifecycleScope.launch {
+            HardwarePasskeyPreferences.observe(this@HardwareSecurityKeyActivity).collect { enabled ->
+                state = state.copy(featureEnabled = enabled)
+                if (!enabled) {
+                    nfc?.let { runCatching { it.disableReaderMode(this@HardwareSecurityKeyActivity) } }
+                    disconnect()
+                    if (providerMode) cancelAndFinish()
+                } else if (lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED)) enableNfcReader()
+            }
+        }
         initialNfcTag = intent.getParcelableExtra(EXTRA_NFC_TAG)
         ContextCompat.registerReceiver(this, receiver, IntentFilter().apply {
             addAction(permissionAction); addAction(UsbManager.ACTION_USB_DEVICE_DETACHED)
         }, ContextCompat.RECEIVER_NOT_EXPORTED)
         if (providerMode) {
+            if (!state.featureEnabled) { cancelAndFinish(); return }
             if (Build.VERSION.SDK_INT >= 34) loadProviderRequest()
             else { state = state.copy(error = R.string.hardware_key_android14) }
         }
@@ -123,20 +138,22 @@ class HardwareSecurityKeyActivity : FragmentActivity() {
                     val origin = HardwareRequestOrigin.resolve(this@HardwareSecurityKeyActivity, caller, canonicalRp, hash)
                     HardwareWebAuthn(json, canonicalRp, origin, hash, create)
                 }
+                if (!HardwarePasskeyPreferences.isEnabled(this@HardwareSecurityKeyActivity)) {
+                    cancelAndFinish()
+                    return@launch
+                }
                 state = state.copy(request = request, error = null, busy = false)
                 // Release the loading job before connect/disconnect replaces the active job.
                 job = null
                 // The tag is only a connection hint. Request validation above remains authoritative.
-                val tag = initialNfcTag
-                initialNfcTag = null
-                if (tag != null) connect { NfcTransport.connect(tag) }
-                else if (UsbTransport.candidates(usb).isNotEmpty()) findUsb()
+                connectInitialProviderKey()
             } catch (e: CancellationException) { throw e }
             catch (_: Exception) { state = state.copy(error = R.string.hardware_key_invalid_request, busy = false) }
         }
     }
 
     private fun findUsb() {
+        if (!canUseHardware()) return
         if (state.busy) return
         val devices = UsbTransport.candidates(usb)
         if (devices.isEmpty()) { state = state.copy(error = R.string.hardware_key_no_usb); return }
@@ -154,6 +171,7 @@ class HardwareSecurityKeyActivity : FragmentActivity() {
     }
 
     private fun connect(open: suspend () -> FidoTransport) {
+        if (!canUseHardware()) return
         if (state.busy) return
         disconnect()
         val startedEpoch = epoch
@@ -162,16 +180,19 @@ class HardwareSecurityKeyActivity : FragmentActivity() {
             var opened: FidoTransport? = null
             try {
                 val active = withContext(Dispatchers.IO) { open().also { opened = it } }
-                if (epoch != startedEpoch) { active.close(); return@launch }
+                if (epoch != startedEpoch || !canUseHardware()) { active.close(); return@launch }
                 transport = active
                 val info = withContext(Dispatchers.IO) { readInfo(active) }
                 if (epoch == startedEpoch && transport === active) {
+                    if (!canUseHardware()) { disconnect(); return@launch }
                     state = state.copy(info = info, transport = active.transportType.value, busy = false)
                 }
             } catch (e: CancellationException) { opened?.close(); throw e }
             catch (e: Exception) {
                 opened?.close()
                 if (epoch == startedEpoch) { disconnect(); state = state.copy(error = errorString(e)) }
+            } finally {
+                if (epoch == startedEpoch && transport == null) state = state.copy(busy = false)
             }
         }
     }
@@ -179,6 +200,7 @@ class HardwareSecurityKeyActivity : FragmentActivity() {
     private suspend fun readInfo(active: FidoTransport): DeviceInfo = CTAP.parseGetInfoStructured(active.sendCtapCommand(byteArrayOf(4))).getOrThrow()
 
     private fun operation(run: suspend (FidoTransport, DeviceInfo, String) -> Unit) {
+        if (!canUseHardware()) return
         if (state.busy) return
         val active = transport ?: return
         val info = state.info ?: return
@@ -207,13 +229,13 @@ class HardwareSecurityKeyActivity : FragmentActivity() {
         operation { active, info, _ ->
             HardwarePin(active, HardwarePin.select(info)).agreement().use { it.setOrChange(new, current, info.minPinLength ?: 4) }
             val updated = readInfo(active)
-            withContext(Dispatchers.Main) { if (transport === active) state = state.copy(info = updated, pinDialog = false, status = R.string.hardware_key_pin_saved, credentials = null) }
+            withContext(Dispatchers.Main) { if (transport === active && canUseHardware()) state = state.copy(info = updated, pinDialog = false, status = R.string.hardware_key_pin_saved, credentials = null) }
         }
     }
 
     private fun readCredentials() = operation { active, info, pin ->
         val snapshot = HardwareCredentials.read(active, info, pin)
-        withContext(Dispatchers.Main) { if (transport === active) state = state.copy(credentials = snapshot) }
+        withContext(Dispatchers.Main) { if (transport === active && canUseHardware()) state = state.copy(credentials = snapshot) }
     }
 
     private fun perform() {
@@ -225,7 +247,7 @@ class HardwareSecurityKeyActivity : FragmentActivity() {
             } else {
                 val assertions = request.assertions(active, info, pin.ifEmpty { null })
                 withContext(Dispatchers.Main) {
-                    if (transport !== active) return@withContext
+                    if (transport !== active || !canUseHardware()) return@withContext
                     if (assertions.size == 1 && Build.VERSION.SDK_INT >= 34) returnCredential(request.assertionResponse(assertions.single()), false)
                     else state = state.copy(assertions = assertions)
                 }
@@ -235,6 +257,7 @@ class HardwareSecurityKeyActivity : FragmentActivity() {
 
     @RequiresApi(34)
     private fun returnCredential(json: String, create: Boolean) {
+        if (!canUseHardware()) { cancelAndFinish(); return }
         val data = Intent()
         if (create) PendingIntentHandler.setCreateCredentialResponse(data, CreatePublicKeyCredentialResponse(json))
         else PendingIntentHandler.setGetCredentialResponse(data, GetCredentialResponse(PublicKeyCredential(json)))
@@ -263,12 +286,40 @@ class HardwareSecurityKeyActivity : FragmentActivity() {
 
     override fun onResume() {
         super.onResume()
+        // FragmentActivity advances its Lifecycle registry after this callback.
+        hardwareResumed = true
+        if (!HardwarePasskeyPreferences.isEnabled(this)) {
+            if (providerMode) cancelAndFinish()
+            return
+        }
+        connectAwaitingUsb()
         if (providerMode && Build.VERSION.SDK_INT >= 34 && state.request == null && job?.isActive != true) loadProviderRequest()
-        if (nfc?.isEnabled == true) nfc?.enableReaderMode(this, { tag ->
-            lifecycleScope.launch(Dispatchers.Main) { if (!state.busy) connect { NfcTransport.connect(tag) } }
+        else if (providerMode && state.request != null && transport == null) connectInitialProviderKey()
+        enableNfcReader()
+    }
+    private fun connectAwaitingUsb() {
+        val id = awaitingDevice ?: return
+        if (!canUseHardware() || state.busy || (providerMode && state.request == null)) return
+        val device = UsbTransport.candidates(usb).firstOrNull { it.deviceId == id } ?: run { awaitingDevice = null; return }
+        if (!usb.hasPermission(device)) return
+        awaitingDevice = null
+        connect { UsbTransport.connect(usb, device) }
+    }
+    private fun connectInitialProviderKey() {
+        if (!initialConnectionPending || !canUseHardware() || state.busy || state.request == null) return
+        initialConnectionPending = false
+        val tag = initialNfcTag
+        initialNfcTag = null
+        if (tag != null) connect { NfcTransport.connect(tag) }
+        else if (UsbTransport.candidates(usb).isNotEmpty()) findUsb()
+    }
+    private fun enableNfcReader() {
+        if (nfc?.isEnabled == true && HardwarePasskeyPreferences.isEnabled(this)) nfc?.enableReaderMode(this, { tag ->
+            lifecycleScope.launch(Dispatchers.Main) { if (canUseHardware() && !state.busy) connect { NfcTransport.connect(tag) } }
         }, NfcAdapter.FLAG_READER_NFC_A or NfcAdapter.FLAG_READER_NFC_B or NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, null)
     }
     override fun onPause() {
+        hardwareResumed = false
         nfc?.disableReaderMode(this)
         state = state.copy(pin = "", currentPin = "", newPin = "", confirmPin = "")
         super.onPause()

@@ -55,6 +55,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -987,6 +988,14 @@ fun MonicaContent(
         )
     }
 
+    LaunchedEffect(isAuthenticated, mainSessionUnlocked, mainSessionLockGeneration, lifecycleOwner, sensitiveFieldMigrationManager) {
+        if (isAuthenticated && mainSessionUnlocked) {
+            lifecycleOwner.lifecycle.repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED) {
+                sensitiveFieldMigrationManager.observeWhileUnlocked()
+            }
+        }
+    }
+
     val isFirstTime = initialAuthState.isFirstTime
     val currentRoute = navBackStackEntry?.destination?.route
     var quickSetupDismissedThisSession by remember { mutableStateOf(false) }
@@ -1139,7 +1148,6 @@ fun MonicaContent(
                 }
                 runCatching {
                     delay(15_000)
-                    sensitiveFieldMigrationManager.runUnlockedSmallBatch()
                     securityManager.migrateProtectedDeviceCiphertexts()
                     takagi.ru.monica.security.PortableLocalCipherMigration.run(database, securityManager)
                     takagi.ru.monica.security.PortablePreferenceCipherMigration.run(context, securityManager)

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_passkey_settings_title">自動入力とパスキー</string>
+    <string name="hardware_key_enable">物理キーを有効にする</string>
+    <string name="hardware_key_enable_description">USB または NFC セキュリティキーを使用します。既定ではオフです。保存済みのソフトウェアパスキーには影響しません。</string>
+</resources>

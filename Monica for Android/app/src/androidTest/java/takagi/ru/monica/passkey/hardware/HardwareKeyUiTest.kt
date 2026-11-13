@@ -1,11 +1,14 @@
 package takagi.ru.monica.passkey.hardware
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
+import androidx.activity.ComponentActivity
+import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.compose.ui.test.*
-import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.junit4.AndroidComposeTestRule
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
@@ -14,6 +17,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import org.junit.Rule
 import org.junit.Test
+import org.junit.Before
+import org.junit.After
 import org.junit.Assert.*
 import takagi.ru.monica.R
 import takagi.ru.monica.ui.theme.MonicaTheme
@@ -21,8 +26,28 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
 class HardwareKeyUiTest {
-    @get:Rule val compose = createComposeRule()
+    @get:Rule val compose = createAndroidComposeRule<ComponentActivity>()
     private val context get() = InstrumentationRegistry.getInstrumentation().targetContext
+    private lateinit var preference: HardwarePasskeyPreferenceFixture
+    @Before fun optIntoHardwareForExistingHardwareTests() {
+        preference = HardwarePasskeyPreferenceFixture(context)
+        HardwarePasskeyPreferences.setEnabled(context, true)
+        // MuMu's launcher/EmptyActivity can rotate to landscape between scenarios. Install
+        // test content only after the replacement portrait host owns an attached, focused window.
+        compose.activityRule.scenario.moveToState(Lifecycle.State.RESUMED)
+        compose.runOnUiThread { compose.activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT }
+        compose.waitUntil(5_000) {
+            var ready = false
+            compose.runOnUiThread {
+                val host = compose.activity
+                ready = host.lifecycle.currentState == Lifecycle.State.RESUMED && !host.isChangingConfigurations &&
+                    !host.isDestroyed && !host.isFinishing && host.window.decorView.isAttachedToWindow &&
+                    host.hasWindowFocus() && host.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+            }
+            ready
+        }
+    }
+    @After fun restoreHardwarePreference() = preference.restore()
     private fun screen(state: HardwareKeyUiState, onConnect: () -> Unit = {}, onPerform: () -> Unit = {}) {
         compose.setContent { MonicaTheme { HardwareKeyScreen(state, {}, onConnect, {}, {}, {}, { _,_,_ -> }, {}, {}, onPerform, {}) } }
     }
@@ -86,7 +111,7 @@ class HardwareKeyUiTest {
         compose.onNodeWithText(localized.getString(R.string.hardware_key_change_pin)).assertIsNotEnabled()
         compose.onNodeWithText(localized.getString(R.string.hardware_key_registration_help)).performScrollTo().assertIsDisplayed().performClick()
         // Dialog owns an Android window: local page overrides do not change its host activity locale.
-        val dialogContext = (compose as AndroidComposeTestRule<*, *>).activity
+        val dialogContext = compose.activity
         compose.waitUntil(5000) { compose.onAllNodesWithText(dialogContext.getString(R.string.hardware_key_instructions)).fetchSemanticsNodes().isNotEmpty() }
         compose.onNodeWithText(dialogContext.getString(R.string.hardware_key_instructions)).assertExists()
         compose.onNodeWithText(dialogContext.getString(R.string.hardware_key_no_import)).performScrollTo()

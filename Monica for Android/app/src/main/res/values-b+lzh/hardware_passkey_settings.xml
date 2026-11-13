@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_passkey_settings_title">自填與通行鑰</string>
+    <string name="hardware_key_enable">啟用實體鑰</string>
+    <string name="hardware_key_enable_description">可用 USB、NFC 安全鑰。初設為關，不改已存軟體通行鑰。</string>
+</resources>

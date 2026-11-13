@@ -144,7 +144,10 @@ interface PasswordEntryDao {
         """
         SELECT * FROM password_entries
         WHERE id > :afterId
-          AND authenticatorKey != ''
+          AND authenticatorKey != '' AND length(authenticatorKey) <= 1048576
+          AND substr(ltrim(authenticatorKey), 1, 4) != 'MDK|'
+          AND substr(ltrim(authenticatorKey), 1, 3) NOT IN ('C2|', 'V2|')
+          AND keepassDatabaseId IS NULL AND mdbx_database_id IS NULL AND bitwarden_vault_id IS NULL
         ORDER BY id ASC
         LIMIT :limit
         """
@@ -447,6 +450,14 @@ interface PasswordEntryDao {
 
     @Query("UPDATE password_entries SET authenticatorKey = :replacement WHERE id = :id AND authenticatorKey = :expected")
     suspend fun compareAndSetAuthenticatorKey(id: Long, expected: String, replacement: String): Int
+
+    /** Synchronous methods are used only inside the migration's IO transaction. */
+    @Query("SELECT * FROM password_entries WHERE id = :id")
+    fun getEntryForSensitiveMigration(id: Long): PasswordEntry?
+
+    @Query("UPDATE password_entries SET authenticatorKey = :replacement WHERE id = :id AND authenticatorKey = :expected")
+    fun compareAndSetAuthenticatorKeyForSensitiveMigration(id: Long, expected: String, replacement: String): Int
+
 
     /**
      * 更新绑定的通行密钥元数据

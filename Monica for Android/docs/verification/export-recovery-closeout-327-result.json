@@ -1,0 +1,748 @@
+{
+  "status": "complete",
+  "date": "2026-11-13",
+  "version": "1.0.327 unreleased",
+  "versionCodes": {
+    "main": 12,
+    "fd": 34
+  },
+  "editions": {
+    "main": {
+      "buildWallSeconds": 325.553,
+      "jvmTests": 48,
+      "r8ApkSha256": "b1bef520ec63d90e753ab48b8ac2deacced2b7b7a81940510992d22781ee1be3",
+      "r8MappingSha256": "5151f387401a46ad1d7ce60864d892f38093de419f0912a3b5afa7ebfed286cd",
+      "package": "takagi.ru.monica.recovery327",
+      "abi": "x86_64",
+      "sourceFiles": 5377,
+      "batches": [
+        {
+          "label": "main-final-security-lifecycle-07",
+          "passed": true,
+          "expectedMethods": 44,
+          "passedMethodsInBatch": 44,
+          "runnerSeconds": 137.825,
+          "totalSeconds": 161.189,
+          "junitSeconds": 135.295,
+          "logSha256": "664564a154deb190f7f1415f85b028a339541d5c45f9999d4293a0530cf9b42e",
+          "receiptSha256": "8b57f380cdb53949e0cc2caf4b5ef8bf551704f3af5aeb01b7ef3959e7196a68"
+        },
+        {
+          "label": "main-final-transfer-07",
+          "passed": true,
+          "expectedMethods": 25,
+          "passedMethodsInBatch": 25,
+          "runnerSeconds": 208.119,
+          "totalSeconds": 231.758,
+          "junitSeconds": 205.335,
+          "logSha256": "a2b4df5f4a85077c3264c7dbfed5473660e8a6b574bd8f8ce09d2af8c32df4e2",
+          "receiptSha256": "eaf0cabbe619f6cf6635d51520395fa5212529181a1215665a268742eb36f301"
+        },
+        {
+          "label": "main-final-supplemental-07",
+          "passed": true,
+          "expectedMethods": 13,
+          "passedMethodsInBatch": 13,
+          "runnerSeconds": 19.119,
+          "totalSeconds": 42.02,
+          "junitSeconds": 16.631,
+          "logSha256": "34742a13d51aa5e9f98c091f83d5277ce6c6dbd6a5947f31e3ffe2de70f6ae88",
+          "receiptSha256": "b0e76965181cd59f6a436db7355e8cda9f23fb1ee0428a58a3a38467a8963744"
+        }
+      ],
+      "uniquePassedMethods": 82,
+      "passedMethods": [
+        "takagi.ru.monica.credentialexchange.BackgroundDataTaskTest#importSurvivesBackAndHomeAndReentryWithoutDuplicateWrites",
+        "takagi.ru.monica.credentialexchange.BackgroundDataTaskTest#serviceFailureDoesNotDeleteImportSourceOrExistingRecords",
+        "takagi.ru.monica.credentialexchange.BackgroundDataTaskTest#webDavUploadContinuesAfterItsObserverIsCancelled",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#cancellationAfterNativeCommitKeepsAcknowledgedRowsAndRetryDoesNotDuplicate",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#encryptedZipAsksBeforeCopyingAndWrongPasswordWritesNothingForEveryDestination",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#foregroundExportFinishesAfterCallerReturnsAndPreventsDuplicateJobs",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#indivisibleMdbxSyncLimitFailsWithoutCommittingAndNextImportStillWorks",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#kdbxExportScopesEverySourceAndPreservesSigningKeys",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#largeKdbxImportPreservesCustomFieldsAcrossRoomQueryBatches",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#largeMdbxImportCancelsBetweenBatchesAndRetriesWithoutDuplicates",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#malformedOrCancelledArchiveParsingRemovesStagedPlaintext",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#mdbxImportRetriesLargeTitleGroupsOnlyAfterNativeRollback",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#mdbxImportSplitsLargeUtf8PayloadsAndPreservesEscapedText",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#mdbxImportsUseOneRustBatchInsteadOfPerRowWrites",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#mdbxRejectsTitlesBeyondNativeUtf8LimitWithoutCommitting",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#nativeDatabaseExportDoesNotDependOnRoomProjection",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#nativeTokensRetainMetadataAndFavoritesAndUnsupportedTargetsReportSkipped",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#portableZipPreservesLiteralCipherPrefixesAcrossAllDestinations",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#sameLoginWithDifferentPaymentContentIsNotCollapsedByImportDeduplication",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#selectedTrashStaysDeletedAndRepeatedImportDoesNotMergeItIntoActiveRows",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#zipExportIncludesOnlySelectedDatabaseWithItsKeysFieldsAndAttachments",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferUiTest#exportOutlivesPageAndReentryShowsSelectedDatabase",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferUiTest#polishLargeTextKeepsExportLocationButtonVisible",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferUiTest#ungrantedPickerContentUriDoesNotStartWriterOrChangeSourceAndAllowsRechoose",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferUiTest#zipPasswordRetryShowsProgressAndReleasesBusyStateBeforeSnackbarDismissal",
+        "takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest#configOptInKeepsSelectedDatabaseRecordsSeparate",
+        "takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest#configOptInRequiresEncryptionAndDefaultArchiveHasNoSettings",
+        "takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest#encryptedConfigOnlyRoundTripHonorsKeepAndRestoreChoices",
+        "takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest#encryptedConnectionBackupRestoresBitwardenLockedWithoutWebDavSetup",
+        "takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest#webDavCredentialsRestoreOnlyWithOptInAndNeverReplaceExistingConnection",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#bothNewProfilesRecoverTheOriginalPasswordWrappedMdk",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#credentialCasIncludesKdfMetadata",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#failedCommitWithPublishedMemoryStaysBlockedUntilDiskAndCanonicalAgree",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#failedMirrorCommitKeepsCanonicalRecoverableAndBlocksOldMirror",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#freshPreparationReloadsExactEncryptedDiskValuesAfterStaleCache",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#genuineVersionOneRecoveryRetainsLegacyKdfAndOldApkProtectedValues",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#readDuringOwnCanonicalCommitDoesNotRevokeTheExistingSession",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#revokedCommitLeavesBothCanonicalAndMirrorUntouched",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#staleCredentialGenerationCannotWriteOrReenroll",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#staleSettingsWriterRefreshesAndMergesWithoutLosingConcurrentValues",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#unknownEnvelopeVersionIsNotTreatedAsAbsentRecovery",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#changingPasswordInLegacyClientRevokesStaleRecoveryUntilPasswordUnlock",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#concurrentProtectedWritesRemainRecoverable",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#confirmedRecoveryProviderTimeoutAndCancellationNeverPublishLateOrQueueRetries",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#confirmedRecoveryWithLostOrReplacedRealStorageKeyPreservesDataAndPreviousStore",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#deniedPublicationPreservesEnvelopeAndSelectorAfterStaging",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#failedConfirmedRecoveryDoesNotRewriteRecoveryEnvelope",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#failedRecoveryWriteDoesNotSetInitialPassword",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#interruptedCredentialMirrorBlocksOldPasswordAndRecoversNewPassword",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#interruptedLargeMigrationResumesWithoutLosingRows",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#legacyStoreStillContainsReadableCredentialsAndNewProtectedValues",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#migrationPreservesUnreadableFieldsAndSyncMetadata",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#missingEnvelopeCannotCreateReplacementStoreOrKeys",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#missingMdkDuringPasswordChangeDoesNotGenerateReplacementOrChangeVerifier",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#offlineRecoveryPreservesPasswordOtpAttachmentKeyAndNewPasskeyPreferences",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#passwordRotationRevokesOldPasswordWithoutReencryptingLocalItems",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#passwordUnlockAfterConvenienceKeyLossDoesNotSilentlyRecreateKey",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#recoveredGenerationCanSurviveLosingItsOwnKeystoreKey",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#staleManagerCannotWriteAfterRecoverySwitchesStores",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#upgradeAfterLegacyProtectedWriteRefreshesRecoverySnapshot",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#wrongPasswordAndDamagedEnvelopeNeverModifyOriginalsOrActivateAnotherStore",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#answersAloneAndCancelledChallengeDoNotAuthorize",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#authenticatedRecoveryRetainsMdkCiphertextAndMigratesActualLegacyAnswers",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#forgedOrMissingPermitNeverChangesCredentials",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#initialEnrollmentCannotReplaceExistingPasswordWithCacheOrCompatWrapper",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#lockOrAnswerReplacementRevokesPermitBeforeCredentialCommit",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#missingWrapperCannotGenerateReplacementMdkDuringRecovery",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#questionSaveDoesNotHoldRuntimeLockDuringStorageCommitAndRejectsLockBeforeGate",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#reservationsSurviveReopeningAndWrongAnswersNeverModifyLegacyHashes",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#versionedBackupRestoresVerifiersWithoutTreatingHashesAsUserAnswers",
+        "takagi.ru.monica.security.SecurityQuestionsLifecycleUiTest#setupBackAfterHashingBeforeCommitPreservesOriginalQuestionsAndRecoveryEnvelope",
+        "takagi.ru.monica.security.SecurityQuestionsLifecycleUiTest#setupPauseAfterHashingBeforeCommitPreservesOriginalQuestionsAndEndsPage",
+        "takagi.ru.monica.security.SecurityQuestionsLifecycleUiTest#setupPauseResumeEndsOldPageAndFreshEntryCanSave",
+        "takagi.ru.monica.security.SecurityQuestionsLifecycleUiTest#verificationCooldownRefreshesBackendStatusWithoutLeavingScreen",
+        "takagi.ru.monica.utils.BackupAttachmentHandoffCancellationDeviceTest#cancellationBeforeCallerReceivesParsedAttachmentRemovesPlaintext",
+        "takagi.ru.monica.utils.BackupAttachmentHandoffCancellationDeviceTest#deliveredAttachmentRemainsReadableUntilConsumerClosesPlan",
+        "takagi.ru.monica.utils.BackupPlaintextCancellationRegressionTest#cancellationAfterDeferredBankAndPasswordCsvRemovesAllPlaintext",
+        "takagi.ru.monica.utils.BackupPlaintextCancellationRegressionTest#corruptEntryDuringCopyRemovesPartialFileAndEarlierDeferredPlaintext",
+        "takagi.ru.monica.utils.LocalBackupReplacementTest#cancellationRollsBackRows",
+        "takagi.ru.monica.utils.LocalBackupReplacementTest#failureCountsRollbackRowsAndCascadedCustomFields",
+        "takagi.ru.monica.utils.LocalBackupReplacementTest#successfulReplacementOnlyReplacesLocalRowsAndSurvivesReopen",
+        "takagi.ru.monica.utils.LocalBackupReplacementTest#writeExceptionRollsBackRows"
+      ],
+      "backupSha256": "d9c311a117ede0e63964483076f3f0d7d92239d9ed3edef05585f0e1b925286e",
+      "restored": 3,
+      "skipped": 0,
+      "failed": 0,
+      "snapshotChecks": {
+        "passed": true,
+        "corpus": {
+          "password_entries": 2,
+          "secure_items": 1,
+          "custom_fields": 1
+        },
+        "backupVersion": "V2",
+        "backupSha256": "d9c311a117ede0e63964483076f3f0d7d92239d9ed3edef05585f0e1b925286e",
+        "negativeCount": 28,
+        "negativeCases": {
+          "binding-other-account": true,
+          "binding-unknown": true,
+          "binding-zero": true,
+          "binding-bool": true,
+          "binding-string": true,
+          "category-non-null": true,
+          "keepass-non-null": true,
+          "category-empty-string": true,
+          "unknown-null": true,
+          "unknown-field": true,
+          "secret-change": true,
+          "digits-change": true,
+          "period-change": true,
+          "algorithm-change": true,
+          "counter-change": true,
+          "type-change": true,
+          "binding-missing": true,
+          "custom-field-value": true,
+          "custom-field-title": true,
+          "custom-field-is_protected": true,
+          "custom-field-sort_order": true,
+          "custom-field-entry_id": true,
+          "custom-field-remove": true,
+          "custom-field-duplicate": true,
+          "unknown-change": true,
+          "unknown-removal": true,
+          "default-reader-rejects-empty": true,
+          "empty-reader-rejects-populated": true
+        },
+        "nullableDefaultPositive": true,
+        "unknownEqualPositive": true,
+        "sourceSnapshotSha256": "dd9ce3cd0ee0668fb817c120fc2ea0259b03c596658eed6ca3e678e80aadc382",
+        "restoredSnapshotSha256": "e6db9258a4ef565eeb4c6e18ba26b381fc380cadbc21f581e051169cd3192eba"
+      },
+      "keyIndependence": {
+        "passed": true,
+        "destinationInitiallyEmpty": true,
+        "destinationMdkPreserved": true,
+        "sourceAndDestinationMdksDifferent": true,
+        "allSixDestinationCredentialsPreserved": [
+          "master_password_hash",
+          "master_password_salt",
+          "local_password_kdf_v1",
+          "mdk_password_blob",
+          "mdk_password_salt",
+          "mdk_keystore_blob"
+        ],
+        "originalPasswordAuthenticatesBothIndependentEnvelopes": true,
+        "sourceArchiveSha256": "dd9ce3cd0ee0668fb817c120fc2ea0259b03c596658eed6ca3e678e80aadc382",
+        "emptyArchiveSha256": "3c216f90d91dade1fd1278c995a6002609e0ece1a53661127d1069f0e16fd3d4",
+        "restoredArchiveSha256": "e6db9258a4ef565eeb4c6e18ba26b381fc380cadbc21f581e051169cd3192eba"
+      },
+      "sourceAll30TablesAndCredentialsUnchangedAcrossExport": true,
+      "originalPasswordOldNewRecordsNoteAndTotpColdUiVerified": true
+    },
+    "fd": {
+      "buildWallSeconds": 449.994,
+      "jvmTests": 48,
+      "r8ApkSha256": "a06803bd42d550ad03c48c6bb14201f6e237d0bb355f567c913335120c04ba4b",
+      "r8MappingSha256": "4219d97bc3ece6387ed1c5520c230ceab555c7c5101dfbfa7e0605ec2a384b28",
+      "package": "takagi.ru.monica.recovery327.fdroid",
+      "abi": "x86_64",
+      "sourceFiles": 5370,
+      "batches": [
+        {
+          "label": "fd-final-security-lifecycle-06",
+          "passed": true,
+          "expectedMethods": 44,
+          "passedMethodsInBatch": 44,
+          "runnerSeconds": 137.726,
+          "totalSeconds": 160.745,
+          "junitSeconds": 135.37,
+          "logSha256": "8b0854d8cb64b59257182c668ab71d0285b6733c01c7855abe4c2cba152af12a",
+          "receiptSha256": "a03069daaf9cfdc83f8ab0d14432a53355c5f53d67fa7bf2c520f74a834fd2bc"
+        },
+        {
+          "label": "fd-final-transfer-06",
+          "passed": false,
+          "expectedMethods": 25,
+          "passedMethodsInBatch": 24,
+          "runnerSeconds": 233.301,
+          "totalSeconds": 258.675,
+          "junitSeconds": 230.572,
+          "logSha256": "2435ed820aa100a7aab1f039c78566c9b9945782c223fdd6efd330f310a538de",
+          "receiptSha256": "73282f165267ba37337f41b0ffe6eb1375ff21817349e54526afc230758da286"
+        },
+        {
+          "label": "fd-final-supplemental-06",
+          "passed": false,
+          "expectedMethods": 13,
+          "passedMethodsInBatch": 12,
+          "runnerSeconds": 12.577,
+          "totalSeconds": 53.108,
+          "junitSeconds": 9.799,
+          "logSha256": "2fff9bee08e963e7b2b12ed5233c0a8a0ee3d3337577f400e9cd55508dd48894",
+          "receiptSha256": "7c87c38d95b5eb52d2fd8f193ee0114f0b5b26a6a53b07a4ad85d2770f1bbcec"
+        },
+        {
+          "label": "fd-final-prerequisite-retest-07",
+          "passed": true,
+          "expectedMethods": 6,
+          "passedMethodsInBatch": 6,
+          "runnerSeconds": 21.842,
+          "totalSeconds": 44.236,
+          "junitSeconds": 19.591,
+          "logSha256": "677bed16cff487538f8a0c986771fb294f20d79b1b3669e7d6c90c0cc9e11160",
+          "receiptSha256": "29c1048687a8cc2545176954b7f35c969fff037fa35f5e77b28514f7cc67cc03"
+        }
+      ],
+      "uniquePassedMethods": 82,
+      "passedMethods": [
+        "takagi.ru.monica.credentialexchange.BackgroundDataTaskTest#importSurvivesBackAndHomeAndReentryWithoutDuplicateWrites",
+        "takagi.ru.monica.credentialexchange.BackgroundDataTaskTest#serviceFailureDoesNotDeleteImportSourceOrExistingRecords",
+        "takagi.ru.monica.credentialexchange.BackgroundDataTaskTest#webDavUploadContinuesAfterItsObserverIsCancelled",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#cancellationAfterNativeCommitKeepsAcknowledgedRowsAndRetryDoesNotDuplicate",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#encryptedZipAsksBeforeCopyingAndWrongPasswordWritesNothingForEveryDestination",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#foregroundExportFinishesAfterCallerReturnsAndPreventsDuplicateJobs",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#indivisibleMdbxSyncLimitFailsWithoutCommittingAndNextImportStillWorks",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#kdbxExportScopesEverySourceAndPreservesSigningKeys",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#largeKdbxImportPreservesCustomFieldsAcrossRoomQueryBatches",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#largeMdbxImportCancelsBetweenBatchesAndRetriesWithoutDuplicates",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#malformedOrCancelledArchiveParsingRemovesStagedPlaintext",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#mdbxImportRetriesLargeTitleGroupsOnlyAfterNativeRollback",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#mdbxImportSplitsLargeUtf8PayloadsAndPreservesEscapedText",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#mdbxImportsUseOneRustBatchInsteadOfPerRowWrites",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#mdbxRejectsTitlesBeyondNativeUtf8LimitWithoutCommitting",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#nativeDatabaseExportDoesNotDependOnRoomProjection",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#nativeTokensRetainMetadataAndFavoritesAndUnsupportedTargetsReportSkipped",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#portableZipPreservesLiteralCipherPrefixesAcrossAllDestinations",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#sameLoginWithDifferentPaymentContentIsNotCollapsedByImportDeduplication",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#selectedTrashStaysDeletedAndRepeatedImportDoesNotMergeItIntoActiveRows",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferInstrumentedTest#zipExportIncludesOnlySelectedDatabaseWithItsKeysFieldsAndAttachments",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferUiTest#exportOutlivesPageAndReentryShowsSelectedDatabase",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferUiTest#polishLargeTextKeepsExportLocationButtonVisible",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferUiTest#ungrantedPickerContentUriDoesNotStartWriterOrChangeSourceAndAllowsRechoose",
+        "takagi.ru.monica.credentialexchange.DatabaseTransferUiTest#zipPasswordRetryShowsProgressAndReleasesBusyStateBeforeSnackbarDismissal",
+        "takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest#configOptInKeepsSelectedDatabaseRecordsSeparate",
+        "takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest#configOptInRequiresEncryptionAndDefaultArchiveHasNoSettings",
+        "takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest#encryptedConfigOnlyRoundTripHonorsKeepAndRestoreChoices",
+        "takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest#encryptedConnectionBackupRestoresBitwardenLockedWithoutWebDavSetup",
+        "takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest#webDavCredentialsRestoreOnlyWithOptInAndNeverReplaceExistingConnection",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#bothNewProfilesRecoverTheOriginalPasswordWrappedMdk",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#credentialCasIncludesKdfMetadata",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#failedCommitWithPublishedMemoryStaysBlockedUntilDiskAndCanonicalAgree",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#failedMirrorCommitKeepsCanonicalRecoverableAndBlocksOldMirror",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#freshPreparationReloadsExactEncryptedDiskValuesAfterStaleCache",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#genuineVersionOneRecoveryRetainsLegacyKdfAndOldApkProtectedValues",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#readDuringOwnCanonicalCommitDoesNotRevokeTheExistingSession",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#revokedCommitLeavesBothCanonicalAndMirrorUntouched",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#staleCredentialGenerationCannotWriteOrReenroll",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#staleSettingsWriterRefreshesAndMergesWithoutLosingConcurrentValues",
+        "takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest#unknownEnvelopeVersionIsNotTreatedAsAbsentRecovery",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#changingPasswordInLegacyClientRevokesStaleRecoveryUntilPasswordUnlock",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#concurrentProtectedWritesRemainRecoverable",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#confirmedRecoveryProviderTimeoutAndCancellationNeverPublishLateOrQueueRetries",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#confirmedRecoveryWithLostOrReplacedRealStorageKeyPreservesDataAndPreviousStore",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#deniedPublicationPreservesEnvelopeAndSelectorAfterStaging",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#failedConfirmedRecoveryDoesNotRewriteRecoveryEnvelope",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#failedRecoveryWriteDoesNotSetInitialPassword",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#interruptedCredentialMirrorBlocksOldPasswordAndRecoversNewPassword",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#interruptedLargeMigrationResumesWithoutLosingRows",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#legacyStoreStillContainsReadableCredentialsAndNewProtectedValues",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#migrationPreservesUnreadableFieldsAndSyncMetadata",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#missingEnvelopeCannotCreateReplacementStoreOrKeys",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#missingMdkDuringPasswordChangeDoesNotGenerateReplacementOrChangeVerifier",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#offlineRecoveryPreservesPasswordOtpAttachmentKeyAndNewPasskeyPreferences",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#passwordRotationRevokesOldPasswordWithoutReencryptingLocalItems",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#passwordUnlockAfterConvenienceKeyLossDoesNotSilentlyRecreateKey",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#recoveredGenerationCanSurviveLosingItsOwnKeystoreKey",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#staleManagerCannotWriteAfterRecoverySwitchesStores",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#upgradeAfterLegacyProtectedWriteRefreshesRecoverySnapshot",
+        "takagi.ru.monica.security.LocalVaultRecoveryInstrumentedTest#wrongPasswordAndDamagedEnvelopeNeverModifyOriginalsOrActivateAnotherStore",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#answersAloneAndCancelledChallengeDoNotAuthorize",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#authenticatedRecoveryRetainsMdkCiphertextAndMigratesActualLegacyAnswers",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#forgedOrMissingPermitNeverChangesCredentials",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#initialEnrollmentCannotReplaceExistingPasswordWithCacheOrCompatWrapper",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#lockOrAnswerReplacementRevokesPermitBeforeCredentialCommit",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#missingWrapperCannotGenerateReplacementMdkDuringRecovery",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#questionSaveDoesNotHoldRuntimeLockDuringStorageCommitAndRejectsLockBeforeGate",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#reservationsSurviveReopeningAndWrongAnswersNeverModifyLegacyHashes",
+        "takagi.ru.monica.security.RecoveryAuthorizationInstrumentedTest#versionedBackupRestoresVerifiersWithoutTreatingHashesAsUserAnswers",
+        "takagi.ru.monica.security.SecurityQuestionsLifecycleUiTest#setupBackAfterHashingBeforeCommitPreservesOriginalQuestionsAndRecoveryEnvelope",
+        "takagi.ru.monica.security.SecurityQuestionsLifecycleUiTest#setupPauseAfterHashingBeforeCommitPreservesOriginalQuestionsAndEndsPage",
+        "takagi.ru.monica.security.SecurityQuestionsLifecycleUiTest#setupPauseResumeEndsOldPageAndFreshEntryCanSave",
+        "takagi.ru.monica.security.SecurityQuestionsLifecycleUiTest#verificationCooldownRefreshesBackendStatusWithoutLeavingScreen",
+        "takagi.ru.monica.utils.BackupAttachmentHandoffCancellationDeviceTest#cancellationBeforeCallerReceivesParsedAttachmentRemovesPlaintext",
+        "takagi.ru.monica.utils.BackupAttachmentHandoffCancellationDeviceTest#deliveredAttachmentRemainsReadableUntilConsumerClosesPlan",
+        "takagi.ru.monica.utils.BackupPlaintextCancellationRegressionTest#cancellationAfterDeferredBankAndPasswordCsvRemovesAllPlaintext",
+        "takagi.ru.monica.utils.BackupPlaintextCancellationRegressionTest#corruptEntryDuringCopyRemovesPartialFileAndEarlierDeferredPlaintext",
+        "takagi.ru.monica.utils.LocalBackupReplacementTest#cancellationRollsBackRows",
+        "takagi.ru.monica.utils.LocalBackupReplacementTest#failureCountsRollbackRowsAndCascadedCustomFields",
+        "takagi.ru.monica.utils.LocalBackupReplacementTest#successfulReplacementOnlyReplacesLocalRowsAndSurvivesReopen",
+        "takagi.ru.monica.utils.LocalBackupReplacementTest#writeExceptionRollsBackRows"
+      ],
+      "backupSha256": "bb40fc8515b89639b7d94f6ca8089e32ce501decd5b9a2e6312b66640a8a803c",
+      "restored": 3,
+      "skipped": 0,
+      "failed": 0,
+      "snapshotChecks": {
+        "passed": true,
+        "corpus": {
+          "password_entries": 2,
+          "secure_items": 1,
+          "custom_fields": 1
+        },
+        "backupVersion": "V2",
+        "backupSha256": "bb40fc8515b89639b7d94f6ca8089e32ce501decd5b9a2e6312b66640a8a803c",
+        "negativeCount": 28,
+        "negativeCases": {
+          "binding-other-account": true,
+          "binding-unknown": true,
+          "binding-zero": true,
+          "binding-bool": true,
+          "binding-string": true,
+          "category-non-null": true,
+          "keepass-non-null": true,
+          "category-empty-string": true,
+          "unknown-null": true,
+          "unknown-field": true,
+          "secret-change": true,
+          "digits-change": true,
+          "period-change": true,
+          "algorithm-change": true,
+          "counter-change": true,
+          "type-change": true,
+          "binding-missing": true,
+          "custom-field-value": true,
+          "custom-field-title": true,
+          "custom-field-is_protected": true,
+          "custom-field-sort_order": true,
+          "custom-field-entry_id": true,
+          "custom-field-remove": true,
+          "custom-field-duplicate": true,
+          "unknown-change": true,
+          "unknown-removal": true,
+          "default-reader-rejects-empty": true,
+          "empty-reader-rejects-populated": true
+        },
+        "nullableDefaultPositive": true,
+        "unknownEqualPositive": true,
+        "sourceSnapshotSha256": "b58145141f045555f6f589716036b60a5ac2920a6ada793ed305ed9ac8659530",
+        "restoredSnapshotSha256": "89a70d305450bfcfd5b5bc669a60486ff4907300bfc387824050c905e6ac8f37"
+      },
+      "keyIndependence": {
+        "passed": true,
+        "destinationInitiallyEmpty": true,
+        "destinationMdkPreserved": true,
+        "sourceAndDestinationMdksDifferent": true,
+        "allSixDestinationCredentialsPreserved": [
+          "master_password_hash",
+          "master_password_salt",
+          "local_password_kdf_v1",
+          "mdk_password_blob",
+          "mdk_password_salt",
+          "mdk_keystore_blob"
+        ],
+        "originalPasswordAuthenticatesBothIndependentEnvelopes": true,
+        "sourceArchiveSha256": "b58145141f045555f6f589716036b60a5ac2920a6ada793ed305ed9ac8659530",
+        "emptyArchiveSha256": "e91e5adbfc16f53ae3eb8a0a8aa6af283fa6881df782ed5058171da462b75d17",
+        "restoredArchiveSha256": "89a70d305450bfcfd5b5bc669a60486ff4907300bfc387824050c905e6ac8f37"
+      },
+      "sourceAll30TablesAndCredentialsUnchangedAcrossExport": true,
+      "originalPasswordOldNewRecordsNoteAndTotpColdUiVerified": true
+    }
+  },
+  "executionHistory": [
+    {
+      "label": "fd-final-01",
+      "passed": true,
+      "exit": 0,
+      "sha256": "9b0fe9c1b3852e668ac65ace91897c6c72906c2cdefa45e48655690259239bbf"
+    },
+    {
+      "label": "fd-final-02",
+      "passed": true,
+      "exit": 0,
+      "sha256": "5bb42e709595d212ce39222f2470c06173f18f17af3c1f05e6aa546f989a053b"
+    },
+    {
+      "label": "fd-final-06",
+      "passed": true,
+      "exit": 0,
+      "sha256": "9c431381e882fb26d58a07febd8a71121ccf93873918bbec673cbd35e065f21a"
+    },
+    {
+      "label": "fd-final-lifecycle-security-01",
+      "passed": false,
+      "exit": 0,
+      "sha256": "4934e03e8d2914ed211e7cfa8258a15c75cf84a403618d17cc7801e1b5c7e5da"
+    },
+    {
+      "label": "fd-final-prerequisite-retest-07",
+      "passed": true,
+      "exit": 0,
+      "sha256": "29c1048687a8cc2545176954b7f35c969fff037fa35f5e77b28514f7cc67cc03"
+    },
+    {
+      "label": "fd-final-protocol-02",
+      "passed": true,
+      "exit": 0,
+      "sha256": "169543ce048a365a1cffd7cfb25ce49a0277ba18828f4ce2a2bb4b6060e896b6"
+    },
+    {
+      "label": "fd-final-security-lifecycle-03",
+      "passed": false,
+      "exit": 0,
+      "sha256": "d5e42f888a9505f7bf9a9550bdf556b2e0ecd005cf946cfe7d5996ed465bb057"
+    },
+    {
+      "label": "fd-final-security-lifecycle-06",
+      "passed": true,
+      "exit": 0,
+      "sha256": "a03069daaf9cfdc83f8ab0d14432a53355c5f53d67fa7bf2c520f74a834fd2bc"
+    },
+    {
+      "label": "fd-final-supplemental-06",
+      "passed": false,
+      "exit": 0,
+      "sha256": "7c87c38d95b5eb52d2fd8f193ee0114f0b5b26a6a53b07a4ad85d2770f1bbcec"
+    },
+    {
+      "label": "fd-final-test-03",
+      "passed": true,
+      "exit": 0,
+      "sha256": "6250d3c24c45bc09a67dde48fedc4c9c5adb0b9ce54f0936b6203e4ed15e6204"
+    },
+    {
+      "label": "fd-final-test-07",
+      "passed": true,
+      "exit": 0,
+      "sha256": "2bd0a087d308d249c5d47771e311d30e6909a09c80015b4b97e9356115ec32a5"
+    },
+    {
+      "label": "fd-final-transfer-06",
+      "passed": false,
+      "exit": 0,
+      "sha256": "73282f165267ba37337f41b0ffe6eb1375ff21817349e54526afc230758da286"
+    },
+    {
+      "label": "main-final-01",
+      "passed": true,
+      "exit": 0,
+      "sha256": "34634e27630eb1efede987a9aaa796f6e3fb120827bd08ebf5a4bc312d7bed29"
+    },
+    {
+      "label": "main-final-02",
+      "passed": true,
+      "exit": 0,
+      "sha256": "35c6f5601c20122dca08030b3d7e3bcae085e6becf5e4655c46b51bb26a3100d"
+    },
+    {
+      "label": "main-final-04",
+      "passed": false,
+      "exit": 1,
+      "sha256": "7bef9c4141102da828bb4920b2b6d3387b416d8f2a882d25b4ca42368d584f82"
+    },
+    {
+      "label": "main-final-05",
+      "passed": true,
+      "exit": 0,
+      "sha256": "08fdf37b486922b0d3df6e0e62ed8b6fbd53cdf15eb882f2f629c28b97130eeb"
+    },
+    {
+      "label": "main-final-06",
+      "passed": true,
+      "exit": 0,
+      "sha256": "e815da756f7ec90488f108c8be6d61d9fbc363e68da0392323955938a7483b5c"
+    },
+    {
+      "label": "main-final-backup-supplemental-03",
+      "passed": false,
+      "exit": 0,
+      "sha256": "44841a8e1a584967f7ab9d1083eaa9c2bd8f6c684049665c5241c2db5358f5b6"
+    },
+    {
+      "label": "main-final-cleanup-proof-05",
+      "passed": false,
+      "exit": 0,
+      "sha256": "6dd0c21f771a691ec7f418c899123aa15b92ee4826bd59b4eb95f8f048c5e35e"
+    },
+    {
+      "label": "main-final-cleanup-proof-06",
+      "passed": true,
+      "exit": 0,
+      "sha256": "7ea222471d1bf9df59e1e3385bcb219276e4a4a60d91c2d1187148fee2cbe564"
+    },
+    {
+      "label": "main-final-lifecycle-01",
+      "passed": true,
+      "exit": 0,
+      "sha256": "5177dec0149ee486386c4fa37b7531c812eb47861d8cfb0d5dc602fb8cd1c39d"
+    },
+    {
+      "label": "main-final-security-01",
+      "passed": true,
+      "exit": 0,
+      "sha256": "1d91b1f9be53111e20562e86e23f0e588661b07032e8cff1d661c1756988bb2d"
+    },
+    {
+      "label": "main-final-security-lifecycle-03",
+      "passed": true,
+      "exit": 0,
+      "sha256": "ed1a620d47b99978d355809b201eeb3066b6365cace6a7657337bd9eaac9494b"
+    },
+    {
+      "label": "main-final-security-lifecycle-07",
+      "passed": true,
+      "exit": 0,
+      "sha256": "8b57f380cdb53949e0cc2caf4b5ef8bf551704f3af5aeb01b7ef3959e7196a68"
+    },
+    {
+      "label": "main-final-supplemental-07",
+      "passed": true,
+      "exit": 0,
+      "sha256": "b0e76965181cd59f6a436db7355e8cda9f23fb1ee0428a58a3a38467a8963744"
+    },
+    {
+      "label": "main-final-test-03",
+      "passed": true,
+      "exit": 0,
+      "sha256": "cabe58ba71e59afa704014cddfbe1e4afd05aae39187e55857d167a5a813ba72"
+    },
+    {
+      "label": "main-final-test-07",
+      "passed": true,
+      "exit": 0,
+      "sha256": "2ce58ec772980551eebe6284c2e4127445b15a4d59125617a8615eecc66d3b80"
+    },
+    {
+      "label": "main-final-transfer-01",
+      "passed": false,
+      "exit": 0,
+      "sha256": "f7b2d230451f7fe4fc73a1dd031675dc616fdd8f9fc5ac3821e86aa6a3752516"
+    },
+    {
+      "label": "main-final-transfer-02",
+      "passed": false,
+      "exit": 0,
+      "sha256": "33d91ca9acb3cf797ea400094a24992fcf55c8e3609558bdc5a974e32d0f813a"
+    },
+    {
+      "label": "main-final-transfer-03",
+      "passed": false,
+      "exit": 0,
+      "sha256": "af3f061e99cb826dbd52c8eaf605fae1c83a3b6c5ad7dfc2062e254191ac67f7"
+    },
+    {
+      "label": "main-final-transfer-07",
+      "passed": true,
+      "exit": 0,
+      "sha256": "eaf0cabbe619f6cf6635d51520395fa5212529181a1215665a268742eb36f301"
+    },
+    {
+      "label": "main-final-uri-negative-diagnostic-05",
+      "passed": true,
+      "exit": 0,
+      "sha256": "a6ecd06317edae02759b609cd60765dd6312a61b6c8898778814cc530fe9f72b"
+    },
+    {
+      "label": "main-green-01",
+      "passed": true,
+      "exit": 0,
+      "sha256": "9e77501353a7f5d8c7d883dbbfb882cc82796d4d528bf77c4db9d6d9d3f224b5"
+    },
+    {
+      "label": "main-green-lifecycle-01",
+      "passed": false,
+      "exit": 0,
+      "sha256": "1a627a9ed5044d775f1894a46c818cc9b94dd06d0db47542ed741111fe1fb44f"
+    },
+    {
+      "label": "main-green-test-02",
+      "passed": true,
+      "exit": 0,
+      "sha256": "6d67397792ec1b8f139e9c52e33b82eb9b9f3700176afc6c58d7d7faed1644d2"
+    },
+    {
+      "label": "main-red-01",
+      "passed": false,
+      "exit": 1,
+      "sha256": "1e3892a9ea759f996d7964cba60efa1f58bbf09318031d478cc94b4f9c58c184"
+    },
+    {
+      "label": "main-red-02",
+      "passed": true,
+      "exit": 0,
+      "sha256": "849ea4bf1e4eec0664a10633f4e5e8f38a10568737cc477a5c9201298b59cfe2"
+    },
+    {
+      "label": "main-red-device-01",
+      "passed": false,
+      "exit": 0,
+      "sha256": "1e43076e190c44d7bb3fa191e2c7382d7127e83371fd5dc1ecf0465a27cbf647"
+    },
+    {
+      "label": "main-transfer-cancellation-aot-01",
+      "passed": false,
+      "exit": null,
+      "sha256": "049285c9a905fe3add20cadaec0eb13e62355e4e29e9a7b3927cb5727f108629"
+    },
+    {
+      "label": "main-transfer-cancellation-deep-01",
+      "passed": false,
+      "exit": 0,
+      "sha256": "dc742e1842a03144e447fc5d6a8e01f574c84fbc126d67341923852e09dcbae7"
+    },
+    {
+      "label": "main-transfer-cancellation-isolated-01",
+      "passed": false,
+      "exit": 0,
+      "sha256": "82240850ab6c0afac7aa75f7054b89c38b2d5702e36bd9c3bc9cb5a00e09f948"
+    },
+    {
+      "label": "main-transfer-handoff-01",
+      "passed": false,
+      "exit": 0,
+      "sha256": "b25ec01403d1ed629efa92f751edd710eead1bfd7dac0f18ae30a37f49ef4b15"
+    }
+  ],
+  "cleanup": {
+    "ownedUsersRemoved": [
+      10,
+      11
+    ],
+    "ownedPackagesRemoved": 6,
+    "ownedMediaInodesRemoved": 10,
+    "originalOwnerPackagesAndSettingsPreserved": true,
+    "adbdUidRestored": 2000,
+    "stoppedTaskStartedMuMuInstance": 2,
+    "configurationAndDiskRetained": true,
+    "publicApi32AvdNotStarted": true,
+    "privateBackupsAndFailuresRetained": true
+  },
+  "metadataChecks": {
+    "passed": true,
+    "runs": [
+      {
+        "label": "main-diff",
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exitCode": 0,
+        "seconds": 0.263
+      },
+      {
+        "label": "fd-diff",
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exitCode": 0,
+        "seconds": 0.281
+      },
+      {
+        "label": "fd-metadata",
+        "command": [
+          "python",
+          "-B",
+          "scripts/check-fdroid-release.py"
+        ],
+        "exitCode": 0,
+        "seconds": 2.179
+      },
+      {
+        "label": "fd-six-tests",
+        "command": [
+          "python",
+          "-B",
+          "scripts/test_fdroid_release.py"
+        ],
+        "exitCode": 0,
+        "seconds": 0.504
+      }
+    ],
+    "sixReleaseNotesUnchanged": true
+  },
+  "takeoverProductionChanges": false,
+  "newBuildOrDeviceTestOnTakeover": false,
+  "committed": false,
+  "pushed": false,
+  "tagged": false,
+  "released": false,
+  "apkDelivered": false,
+  "limitations": [
+    "MuMu API35 x86_64 synthetic stores and task-specific application IDs/signature only; no physical device/OEM/Android16/real cloud or user vault.",
+    "Debug instrumentation and full-R8 native upgrade/backup/restore are separate evidence.",
+    "FD final06 batches include failed prerequisite tests later passed with test07; cold-first lifecycle timeout root cause remains unestablished.",
+    "Final R8 corpus is two logins, one bound TOTP and one plaintext credential metadata field; zero attachments, no all-format/all-field claim.",
+    "FLAG_SECURE screenshots are black and do not establish visual acceptance.",
+    "Earlier hand-written in-memory WAL reviewer failed before semantic checks; standard SQLite read-only snapshots and 28 negative checks per edition were used in final verification.",
+    "No rollback promised for already-authorized security-question writes or earlier restore side effects."
+  ]
+}

@@ -2,9 +2,12 @@ package takagi.ru.monica.credentialexchange
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Process
+import android.os.Bundle
 import android.view.ContextThemeWrapper
 import androidx.activity.compose.LocalActivityResultRegistryOwner
 import androidx.activity.result.ActivityResultRegistry
@@ -12,6 +15,8 @@ import androidx.activity.result.ActivityResultRegistryOwner
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -21,6 +26,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import java.io.File
 import java.util.Locale
+import java.util.UUID
+import java.util.concurrent.atomic.AtomicInteger
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 import kotlinx.coroutines.CompletableDeferred
@@ -45,8 +52,8 @@ import takagi.ru.monica.utils.EncryptionHelper
 class DatabaseTransferUiTest {
     @get:Rule val compose = createComposeRule()
 
-    private fun screenshot(fixture: TransferFixture, name: String) {
-        compose.waitForIdle()
+    private fun screenshot(fixture: TransferFixture, name: String, waitForIdle: Boolean = true) {
+        if (waitForIdle) compose.waitForIdle()
         val bitmap = InstrumentationRegistry.getInstrumentation().uiAutomation.takeScreenshot()
         val directory = File(fixture.context.filesDir, "database-transfer-validation").apply { mkdirs() }
         File(directory, name).outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
@@ -83,7 +90,7 @@ class DatabaseTransferUiTest {
             compose.setContent {
                 val activity = LocalContext.current
                 val context = remember { ContextThemeWrapper(activity, 0).apply { applyOverrideConfiguration(localized.resources.configuration) } }
-                if (visible.value) CompositionLocalProvider(LocalContext provides context) {
+                if (visible.value) CompositionLocalProvider(LocalContext provides context, LocalConfiguration provides localized.resources.configuration, LocalResources provides localized.resources) {
                     val progress by fixture.model.importProgress.collectAsState()
                     val summary by fixture.model.lastImportSummary.collectAsState()
                     MonicaTheme { ImportDataScreen(destination = target, onNavigateBack = {},
@@ -153,22 +160,31 @@ class DatabaseTransferUiTest {
         val started = CompletableDeferred<Unit>()
         val source = fixture.mdbx()
         fixture.importer.importExchange(fixture.decoded(), source)
-        val output = File(fixture.root, "ui-background.enc.zip")
+        val providerRoot = Uri.parse("content://${InstrumentationRegistry.getInstrumentation().context.packageName}.export-documents")
+        val outputToken = UUID.randomUUID().toString()
+        val outputUri = Uri.parse(checkNotNull(fixture.context.contentResolver.call(providerRoot, "create", outputToken,
+            Bundle().apply { putBoolean("grant", true) })?.getString("uri")))
+        val output = File(fixture.root, "ui-background-export-verification.enc.zip")
+        val grantModes = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
         val localized = fixture.context.createConfigurationContext(Configuration(fixture.context.resources.configuration).apply { setLocale(Locale.ENGLISH) })
         val registryOwner = object : ActivityResultRegistryOwner {
             override val activityResultRegistry = object : ActivityResultRegistry() {
                 override fun <I, O> onLaunch(requestCode: Int, contract: ActivityResultContract<I, O>, input: I,
                     options: ActivityOptionsCompat?) {
-                    dispatchResult(requestCode, Activity.RESULT_OK, Intent().setData(Uri.fromFile(output)))
+                    dispatchResult(requestCode, Activity.RESULT_OK, Intent().setData(outputUri).addFlags(grantModes))
                 }
             }
         }
         DatabaseExportJobs.dismiss()
         try {
+            for (mode in listOf(Intent.FLAG_GRANT_READ_URI_PERMISSION, Intent.FLAG_GRANT_WRITE_URI_PERMISSION)) {
+                assertEquals("The exact synthetic export document must have its runtime grant", PackageManager.PERMISSION_GRANTED,
+                    fixture.context.checkUriPermission(outputUri, Process.myPid(), Process.myUid(), mode))
+            }
             compose.setContent {
                 val activity = LocalContext.current
                 val context = remember { ContextThemeWrapper(activity, 0).apply { applyOverrideConfiguration(localized.resources.configuration) } }
-                if (visible.value) CompositionLocalProvider(LocalContext provides context, LocalActivityResultRegistryOwner provides registryOwner) {
+                if (visible.value) CompositionLocalProvider(LocalContext provides context, LocalConfiguration provides localized.resources.configuration, LocalResources provides localized.resources, LocalActivityResultRegistryOwner provides registryOwner) {
                     MonicaTheme { ExportDataScreen(onNavigateBack = { visible.value = false },
                         onExportZip = { uri, preferences, password, target, progress ->
                             started.complete(Unit)
@@ -188,6 +204,7 @@ class DatabaseTransferUiTest {
             compose.onNodeWithText(text(R.string.backup_content_webdav_config)).performScrollTo().performClick()
             screenshot(fixture, "zip-export-config.png")
             compose.onNodeWithText(text(R.string.transfer_choose_location)).performClick()
+            compose.onNodeWithTag("zip_protection_continue").performClick()
             compose.onAllNodes(hasSetTextAction())[0].performTextInput("export password")
             compose.onAllNodes(hasSetTextAction())[1].performTextInput("export password")
             compose.onNodeWithText(text(R.string.zip_backup_password_export)).performClick()
@@ -199,6 +216,9 @@ class DatabaseTransferUiTest {
             gate.complete(Unit)
             val result = withTimeout(60_000) { DatabaseExportJobs.state.first { it?.status != ExportJobStatus.RUNNING }!! }
             assertEquals(result.message, ExportJobStatus.SUCCEEDED, result.status)
+            fixture.context.contentResolver.openInputStream(outputUri)!!.use { input ->
+                output.outputStream().use { input.copyTo(it) }
+            }
             assertTrue(output.length() > 0)
             val decoded = File(fixture.root, "ui-config-decoded.zip")
             EncryptionHelper.decryptFile(output, decoded, "export password", AppLocaleStringResolver(fixture.context)).getOrThrow()
@@ -219,7 +239,114 @@ class DatabaseTransferUiTest {
             compose.runOnUiThread { visible.value = false }
             compose.waitForIdle()
             DatabaseExportJobs.dismiss()
+            fixture.context.contentResolver.call(providerRoot, "release", outputToken, null)
+            output.delete()
             fixture.close()
+        }
+    }
+
+    @Test fun ungrantedPickerContentUriDoesNotStartWriterOrChangeSourceAndAllowsRechoose() = runBlocking {
+        val fixture = TransferFixture()
+        val visible = mutableStateOf(true)
+        val writes = AtomicInteger()
+        val launches = AtomicInteger()
+        val source = fixture.mdbx()
+        fixture.importer.importExchange(fixture.decoded(), source)
+        val beforeDatabase = checkNotNull(fixture.db.localMdbxDatabaseDao().getDatabaseById(source.databaseId))
+        val beforeEntries = fixture.mdbx.readStoredEntries(source.databaseId)
+        assertTrue("The negative case must start with a real populated native source", beforeEntries.isNotEmpty())
+        val sourceFile = File(beforeDatabase.filePath)
+        val beforeFile = sourceFile.readBytes()
+        val localized = fixture.context.createConfigurationContext(Configuration(fixture.context.resources.configuration).apply { setLocale(Locale.ENGLISH) })
+        // The separate test-provider UID creates only this UUID cache document without a grant.
+        // Registry dispatch advertises flags, which cannot create runtime permission.
+        val authority = "${InstrumentationRegistry.getInstrumentation().context.packageName}.export-documents"
+        val providerRoot = Uri.parse("content://$authority")
+        val outputToken = UUID.randomUUID().toString()
+        val deniedUri = Uri.parse(checkNotNull(fixture.context.contentResolver.call(providerRoot, "create", outputToken,
+            Bundle().apply { putBoolean("grant", false) })?.getString("uri")))
+        val beforeOutput = checkNotNull(fixture.context.contentResolver.call(providerRoot, "inspect", outputToken, null)?.getByteArray("bytes"))
+        val provider = checkNotNull(fixture.context.packageManager.resolveContentProvider(authority, 0))
+        assertNotEquals("The URI must not be implicitly owned by the export process", Process.myUid(), provider.applicationInfo.uid)
+        val advertisedModes = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+        for (mode in listOf(Intent.FLAG_GRANT_READ_URI_PERMISSION, Intent.FLAG_GRANT_WRITE_URI_PERMISSION)) {
+            assertEquals(PackageManager.PERMISSION_DENIED,
+                fixture.context.checkUriPermission(deniedUri, Process.myPid(), Process.myUid(), mode))
+        }
+        val registryOwner = object : ActivityResultRegistryOwner {
+            override val activityResultRegistry = object : ActivityResultRegistry() {
+                override fun <I, O> onLaunch(requestCode: Int, contract: ActivityResultContract<I, O>, input: I,
+                    options: ActivityOptionsCompat?) {
+                    launches.incrementAndGet()
+                    dispatchResult(requestCode, Activity.RESULT_OK, Intent().setData(deniedUri).addFlags(advertisedModes))
+                }
+            }
+        }
+        DatabaseExportJobs.dismiss()
+        var originalFailure: Throwable? = null
+        try {
+            // The real Activity prepares its application store before mounting this screen.
+            // TransferFixture's worker-only manager does not publish that startup acceptance.
+            assertTrue("Prepare real application storage before mounting the export page",
+                takagi.ru.monica.security.SecureStorageStartup.prepareWithRetry(fixture.context) is
+                    takagi.ru.monica.security.SecureStartupResult.Ready)
+            compose.setContent {
+                val activity = LocalContext.current
+                val context = remember { ContextThemeWrapper(activity, 0).apply { applyOverrideConfiguration(localized.resources.configuration) } }
+                if (visible.value) CompositionLocalProvider(LocalContext provides context, LocalConfiguration provides localized.resources.configuration, LocalResources provides localized.resources, LocalActivityResultRegistryOwner provides registryOwner) {
+                    MonicaTheme { ExportDataScreen(onNavigateBack = { visible.value = false },
+                        onExportZip = { _, _, _, _, _ -> writes.incrementAndGet(); Result.failure(IllegalStateException("Unexpected unauthorized ZIP writer")) },
+                        onExportKdbx = { _, _, _, _ -> writes.incrementAndGet(); Result.failure(IllegalStateException("Unexpected KDBX writer")) },
+                        onLoadSteamMaFileCandidates = { Result.success(emptyList()) },
+                        onExportSteamMaFile = { _, _, _, _ -> writes.incrementAndGet(); Result.failure(IllegalStateException("Unexpected Steam writer")) }) }
+                }
+            }
+            fun text(id: Int) = localized.getString(id)
+            compose.onNodeWithText("Monica", useUnmergedTree = true).performClick()
+            compose.waitUntil(10_000) { compose.onAllNodesWithText("${fixture.prefix}-MDBX").fetchSemanticsNodes().isNotEmpty() }
+            compose.onNodeWithText("${fixture.prefix}-MDBX").performClick()
+            repeat(2) { attempt ->
+                compose.onNodeWithTag("database_export_start").assertIsEnabled().performClick()
+                compose.onNodeWithTag("zip_protection_continue").performClick()
+                compose.onAllNodes(hasSetTextAction())[0].assert(hasText("", substring = false)).performTextInput("export password")
+                compose.onAllNodes(hasSetTextAction())[1].assert(hasText("", substring = false)).performTextInput("export password")
+                compose.onNodeWithText(text(R.string.zip_backup_password_export)).performClick()
+                compose.waitUntil(10_000) { launches.get() == attempt + 1 }
+                if (attempt == 0) compose.waitUntil(10_000) {
+                    compose.onAllNodesWithText(text(R.string.export_document_permission_missing)).fetchSemanticsNodes().isNotEmpty()
+                }
+                compose.waitForIdle()
+                compose.onNodeWithTag("database_export_start").assertIsEnabled()
+                assertEquals("Returned flags must never start an unauthorized writer", 0, writes.get())
+                assertNull("Rejected picker results must not register a background export", DatabaseExportJobs.state.value)
+                assertArrayEquals("The actual denied synthetic document must remain unchanged", beforeOutput,
+                    checkNotNull(fixture.context.contentResolver.call(providerRoot, "inspect", outputToken, null)?.getByteArray("bytes")))
+                assertEquals(beforeEntries, fixture.mdbx.readStoredEntries(source.databaseId))
+                assertArrayEquals("The actual source database must remain byte-identical", beforeFile, sourceFile.readBytes())
+                assertEquals(beforeDatabase.encryptedPassword,
+                    checkNotNull(fixture.db.localMdbxDatabaseDao().getDatabaseById(source.databaseId)).encryptedPassword)
+            }
+        } catch (error: Throwable) {
+            originalFailure = error
+            runCatching { screenshot(fixture, "export-ungranted-failure.png", waitForIdle = false) }
+            throw error
+        } finally {
+            val cleanupErrors = mutableListOf<Throwable>()
+            suspend fun cleanup(action: suspend () -> Unit) {
+                try { action() } catch (error: Throwable) { cleanupErrors += error }
+            }
+            cleanup { compose.runOnUiThread { visible.value = false } }
+            cleanup { compose.waitForIdle() }
+            cleanup { DatabaseExportJobs.dismiss() }
+            cleanup { fixture.context.contentResolver.call(providerRoot, "release", outputToken, null) }
+            cleanup { fixture.close() }
+            val primary = originalFailure
+            if (primary != null) cleanupErrors.forEach(primary::addSuppressed)
+            else if (cleanupErrors.isNotEmpty()) {
+                val first = cleanupErrors.first()
+                cleanupErrors.drop(1).forEach(first::addSuppressed)
+                throw first
+            }
         }
     }
 
@@ -232,7 +359,7 @@ class DatabaseTransferUiTest {
                 val activity = LocalContext.current
                 val context = remember { ContextThemeWrapper(activity, 0).apply { applyOverrideConfiguration(localized.resources.configuration) } }
                 val density = LocalDensity.current
-                if (visible.value) CompositionLocalProvider(LocalContext provides context, LocalDensity provides Density(density.density, 1.5f)) {
+                if (visible.value) CompositionLocalProvider(LocalContext provides context, LocalConfiguration provides localized.resources.configuration, LocalResources provides localized.resources, LocalDensity provides Density(density.density, 1.5f)) {
                     MonicaTheme { ExportDataScreen(onNavigateBack = {}, onExportZip = { _, _, _, _, _ -> Result.success("") },
                         onExportKdbx = { _, _, _, _ -> Result.success("") }, onLoadSteamMaFileCandidates = { Result.success(emptyList()) },
                         onExportSteamMaFile = { _, _, _, _ -> Result.success("") }) }

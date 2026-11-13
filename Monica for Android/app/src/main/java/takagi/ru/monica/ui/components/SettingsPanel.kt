@@ -37,13 +37,14 @@ internal fun Modifier.settingsPanelSurface(): Modifier = fillMaxWidth()
 internal fun SettingsPanelRow(icon: ImageVector, title: String, subtitle: String,
     onClick: (() -> Unit)? = null, enabled: Boolean = true,
     checked: Boolean? = null, onCheckedChange: ((Boolean) -> Unit)? = null,
+    modifier: Modifier = Modifier,
     trailing: (@Composable () -> Unit)? = null,
 ) {
     val interaction = if (checked != null && onCheckedChange != null)
         Modifier.toggleable(checked, enabled = enabled, role = Role.Switch, onValueChange = onCheckedChange)
     else if (onClick != null) Modifier.clickable(enabled = enabled, role = Role.Button, onClick = onClick)
     else Modifier
-    Row(Modifier.settingsPanelSurface().settingsSearchAnchor(title).then(interaction)
+    Row(modifier.settingsPanelSurface().settingsSearchAnchor(title).then(interaction)
         .heightIn(min = 64.dp).padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         Icon(icon, null, Modifier.size(24.dp), tint = MaterialTheme.colorScheme.primary.copy(alpha = if (enabled) 1f else .38f))

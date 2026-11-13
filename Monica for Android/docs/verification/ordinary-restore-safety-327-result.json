@@ -1,0 +1,223 @@
+{
+  "status": "complete",
+  "date": "2026-11-13",
+  "version": "1.0.327",
+  "plusUnchanged": true,
+  "changedSharedPaths": {
+    "app/src/androidTest/java/takagi/ru/monica/credentialexchange/OrdinaryRestoreDuplicateSafetyTest.kt": "903c328de629be2950d3d19fd5f11188afe21b9737764260d15c4c04c850e641",
+    "app/src/androidTest/java/takagi/ru/monica/ui/screens/CredentialProviderSettingsNavigationTest.kt": "866d197ac3b6ccda95a177607a47b24f4b3352e5acd1b3843f7cdd0b4c3a4e8d",
+    "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsV2Screen.kt": "20cd3e78acb49c4076aabdb984cf1bbed86c107dc1927404304e14f0f84a6d07",
+    "app/src/main/java/takagi/ru/monica/utils/BackupRestoreApplier.kt": "2717bb6d7f71cf6b6196195bf5c6b84c3d9cc2bd34be04f40fdc0dff88d26258",
+    "app/src/main/java/takagi/ru/monica/utils/OrdinaryRestoreDuplicatePolicy.kt": "bcb8acc5a5de8211ff32146c849ab55d02322f4e7e03ae1ee9e438f94f065b45",
+    "app/src/test/java/takagi/ru/monica/utils/OrdinaryRestoreDuplicatePolicyTest.kt": "a23e3d1cc00cc16c31cc345487583dd9a2ff3ff2b696d1001c81873d714b9906"
+  },
+  "builds": {
+    "main": {
+      "seconds": 896.27,
+      "jvmPassed": 54,
+      "r8": {
+        "sha256": "ca31d9fa0d2b3b5b5976009b7807f586d56466ca91ab683a75014b2e6ec80708",
+        "mappingSha256": "a3edb623669244006a38c5e1181b1ee44ba66303d29bab3dc50f193ac3de4335",
+        "package": "takagi.ru.monica.recovery327",
+        "packageLine": "package: name='takagi.ru.monica.recovery327' versionCode='12' versionName='1.0.327-26111312-87' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+        "abi": "native-code: 'x86_64'",
+        "certificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+        "r8Markers": [
+          {
+            "backend": "dex",
+            "compilation-mode": "release",
+            "has-checksums": false,
+            "min-api": 26,
+            "pg-map-id": "d780d398304a9f46e2e0f8f86b007b7d6aa2693f9995828b923f0a1b7353073a",
+            "r8-mode": "full",
+            "version": "9.3.16"
+          },
+          {
+            "backend": "dex",
+            "compilation-mode": "release",
+            "has-checksums": false,
+            "min-api": 26,
+            "pg-map-id": "d780d398304a9f46e2e0f8f86b007b7d6aa2693f9995828b923f0a1b7353073a",
+            "r8-mode": "full",
+            "version": "9.3.16"
+          },
+          {
+            "backend": "dex",
+            "compilation-mode": "release",
+            "has-checksums": false,
+            "min-api": 26,
+            "pg-map-id": "d780d398304a9f46e2e0f8f86b007b7d6aa2693f9995828b923f0a1b7353073a",
+            "r8-mode": "full",
+            "version": "9.3.16"
+          }
+        ]
+      },
+      "sourceFrozen": true
+    },
+    "fd": {
+      "seconds": 851.032,
+      "jvmPassed": 54,
+      "r8": {
+        "sha256": "4a66271521b71ceb210f0bfc06abf7b1f498eecd279619d30a941df1aa67b7ae",
+        "mappingSha256": "29ad7fa1a225f4d25d83f5e8a0ca72bc56e956a209bd093c630f72ecdc5cf0bd",
+        "package": "takagi.ru.monica.recovery327.fdroid",
+        "packageLine": "package: name='takagi.ru.monica.recovery327.fdroid' versionCode='34' versionName='1.0.327' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+        "abi": "native-code: 'x86_64'",
+        "certificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+        "r8Markers": [
+          {
+            "backend": "dex",
+            "compilation-mode": "release",
+            "has-checksums": false,
+            "min-api": 26,
+            "pg-map-id": "24f07a2464a24c20e8bf2f044b50aee796b2e373c1303e0d542f0b4d9e511841",
+            "r8-mode": "full",
+            "version": "9.3.16"
+          },
+          {
+            "backend": "dex",
+            "compilation-mode": "release",
+            "has-checksums": false,
+            "min-api": 26,
+            "pg-map-id": "24f07a2464a24c20e8bf2f044b50aee796b2e373c1303e0d542f0b4d9e511841",
+            "r8-mode": "full",
+            "version": "9.3.16"
+          }
+        ]
+      },
+      "sourceFrozen": true
+    }
+  },
+  "device": {
+    "main-green-restore-navigation-03": {
+      "passed": true,
+      "methods": 25,
+      "seconds": 17.92229590000352
+    },
+    "main-regressions-01": {
+      "passed": true,
+      "methods": 28,
+      "seconds": 137.86503660003655
+    },
+    "fd-final-device-01": {
+      "passed": true,
+      "methods": 53,
+      "seconds": 80.77483740000753
+    }
+  },
+  "actualR8": {
+    "bothEditions": [
+      "old Release UI corpus",
+      "same-package/signature covering upgrade",
+      "original password unlock and old secret display",
+      "all30 tables/schema/MDK/authentication values unchanged",
+      "one new UI login; old rows unchanged",
+      "V2 UI export4 items; GCM/CRC validated; source unchanged"
+    ],
+    "mainIndependentRestore": {
+      "imported": 4,
+      "skipped": 0,
+      "failed": 0,
+      "differentTargetMdk": true,
+      "allColumnSemanticEquality": true,
+      "targetCredentialsPreserved": true
+    },
+    "fdIndependentRestore": {
+      "imported": 4,
+      "skipped": 0,
+      "failed": 0,
+      "differentTargetMdk": true,
+      "allColumnSemanticEquality": true,
+      "targetCredentialsPreserved": true,
+      "restoreUser": 12
+    },
+    "postRestoreColdRead": {
+      "main": {
+        "passed": true,
+        "user": 11,
+        "apkSha256": "ca31d9fa0d2b3b5b5976009b7807f586d56466ca91ab683a75014b2e6ec80708",
+        "previousPids": [
+          "18711"
+        ],
+        "newPids": [
+          "19710"
+        ],
+        "actualPasswordUnlock": true,
+        "bothRestoredLoginSecretsShown": true,
+        "bothCollisionCardsVisible": true
+      },
+      "fd": {
+        "passed": true,
+        "user": 12,
+        "apkSha256": "4a66271521b71ceb210f0bfc06abf7b1f498eecd279619d30a941df1aa67b7ae",
+        "previousPids": [
+          "15965"
+        ],
+        "newPids": [
+          "16956"
+        ],
+        "actualPasswordUnlock": true,
+        "bothRestoredLoginSecretsShown": true,
+        "bothCollisionCardsVisible": true
+      }
+    }
+  },
+  "environment": {
+    "api": 35,
+    "abi": "x86_64",
+    "emulator": "existing MuMu2",
+    "syntheticDataOnly": true,
+    "isolatedTestPackageNames": true,
+    "testCertificate": true,
+    "userStoppedEmulator": true,
+    "restarted": true,
+    "ownedUserCleanup": "complete",
+    "userRequestedFdCompletion": true,
+    "ownedUsersRemoved": [
+      10,
+      11,
+      12
+    ],
+    "originalOwnerPackagesUnchanged": true,
+    "originalDisplayAndInputRestored": true,
+    "finalAdbdUid": 2000,
+    "emulatorStopped": true,
+    "configAndDataDiskRetained": true
+  },
+  "limitations": [
+    "No physical device/OEM or real user vault/cloud account acceptance",
+    "Real R8 corpus:2 logins and2 same-number cards; attachments/notes/lock/cancel use separate Debug instrumentation",
+    "No physical hardware/TEE validation",
+    "Ordinary restore can retain partial independent rows on failure; no global atomic restore claim",
+    "Unknown/related items may produce additional copies on repeated restore",
+    "No new Plus gates",
+    "No commit/push/tag/release/APK delivery"
+  ],
+  "acceptanceComplete": true,
+  "completionEvidence": {
+    "validation-fd-independent-restore-user12-02.json": {
+      "passed": true,
+      "sha256": "0592deb30c5ab35b84c417c4bbd0dbabd837bbf81996f2892297af3f651cba31"
+    },
+    "validation-fd-independent-restored-user12-compare.json": {
+      "passed": true,
+      "sha256": "7fda6e0dc2bd1368858c74df3cd327cd2f9b1be97ba4f188f6e40ff618579c62"
+    },
+    "actual-ui-main-restored-cold-final-02.json": {
+      "passed": true,
+      "sha256": "2ba0e89b80070691dc56e076c379164919cc9348f25e1de27103d90b0ef2c02c"
+    },
+    "actual-ui-fd-restored-cold-final-02.json": {
+      "passed": true,
+      "sha256": "b674a28e1a5efd12bf102ebb9b9f64db3505cc79f4f4b5ee57ef4463feb681a3"
+    },
+    "fd-final-cleanup.json": {
+      "passed": true,
+      "sha256": "73697a0ff871f3598e7c55af77b5dc65799f090aba1a5eec662c7be00abbeb9b"
+    },
+    "fd-final-emulator-stop.json": {
+      "passed": true,
+      "sha256": "c6e7435c1854e6ee3dc649d02fae4bb74ef11df577e2bf6c3a1254a2f62f3f05"
+    }
+  }
+}

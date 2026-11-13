@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_passkey_settings_title">自动填充与通行密钥</string>
+    <string name="hardware_key_enable">启用物理密钥</string>
+    <string name="hardware_key_enable_description">使用 USB 或 NFC 安全密钥。默认关闭，不影响已保存的软件通行密钥。</string>
+</resources>

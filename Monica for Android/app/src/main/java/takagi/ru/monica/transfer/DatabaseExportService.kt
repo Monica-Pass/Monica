@@ -4,6 +4,8 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
+import android.content.ClipData
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -47,12 +49,14 @@ object DatabaseExportJobs {
     private var lastProgressUpdate = 0L
 
     fun start(context: Context, sourceKey: String, uri: Uri, formatKey: String = "ZIP_BACKUP",
+        uriGrantFlags: Int = 0,
         run: suspend (TransferProgressReporter) -> Result<String>): Boolean =
-        startTask(context, sourceKey, DataTaskKind.EXPORT, uri, formatKey, run = run)
+        startTask(context, sourceKey, DataTaskKind.EXPORT, uri, formatKey, uriGrantFlags, run = run)
 
     @Synchronized
     fun startTask(context: Context, sourceKey: String, kind: DataTaskKind,
         uri: Uri? = null, formatKey: String = "ZIP_BACKUP",
+        uriGrantFlags: Int = 0,
         onFinished: (Throwable?) -> Unit = {},
         run: suspend (TransferProgressReporter) -> Result<String>): Boolean {
         if (mutableState.value?.status == ExportJobStatus.RUNNING) return false
@@ -65,8 +69,16 @@ object DatabaseExportJobs {
             app.getSharedPreferences("data_task_marker", Context.MODE_PRIVATE).edit()
                 .putString("id", id).putString("kind", kind.name)
                 .putString("source", sourceKey).putString("format", formatKey).apply()
-            ContextCompat.startForegroundService(app,
-                Intent(app, DatabaseExportService::class.java).putExtra("operation", id))
+            val serviceIntent = Intent(app, DatabaseExportService::class.java).putExtra("operation", id)
+            if (kind == DataTaskKind.EXPORT && uri?.scheme == ContentResolver.SCHEME_CONTENT) {
+                // Transfer only the exact document and access already granted by the picker.
+                // The service owns these temporary permissions until it finishes its work.
+                serviceIntent.data = uri
+                serviceIntent.clipData = ClipData.newRawUri("export", uri)
+                serviceIntent.addFlags(uriGrantFlags and
+                    (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION))
+            }
+            ContextCompat.startForegroundService(app, serviceIntent)
         } catch (error: Exception) {
             pending = null
             app.getSharedPreferences("data_task_marker", Context.MODE_PRIVATE).edit().clear().apply()

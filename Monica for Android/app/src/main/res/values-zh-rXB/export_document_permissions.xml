@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_document_permission_missing">"系统文件选择器未授予所需的读写权限。请选择主存储中的 Download 文件夹或其他可写位置。选择器可能已创建空文件，它不是有效备份，可在文件管理器中删除。"</string>
+</resources>

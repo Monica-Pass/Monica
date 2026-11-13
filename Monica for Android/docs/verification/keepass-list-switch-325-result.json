@@ -1,0 +1,308 @@
+{
+  "edition": "main",
+  "version": "1.0.325",
+  "versionCode": 12,
+  "buildTime": "11m 17s",
+  "sourceSha256": {
+    "app/src/main/java/takagi/ru/monica/keepass/KeePassMonicaPasswordStore.kt": "ea9eedd2e80603b19717cb2e5446b0314b21f98befbd5b0178660ca284003ab4",
+    "app/src/main/java/takagi/ru/monica/viewmodel/PasswordViewModel.kt": "c89975c6dbc8185889d374b2720d140959b503f17279b4e369bdaac4c425fa95",
+    "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultV2Pane.kt": "03bfd07057a8d6b5832a1c284819d1738254de51f16cc929b07c0b45b6f28e54",
+    "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultV2ScrollEffects.kt": "c4bea58b76f31c6ccf01d267b7ad2d729e59687d64f6ca0fefdb36beaafdef6b",
+    "app/src/androidTest/java/takagi/ru/monica/ui/vaultv2/VaultOverviewPaneTest.kt": "284bdb928ff09ae119d8983148a7cefc49551022c02bb4a8a4de24c7aa56ce79",
+    "app/src/androidTest/java/takagi/ru/monica/keepass/KeePassListPresentationUiTest.kt": "69fa54f0fd38988d5fae60eb1a6cce66a813f709a6849901fe1c0d8b99542c57",
+    "app/src/test/java/takagi/ru/monica/ui/password/KeePassListPreviewCacheTest.kt": "926d9ff787c0664fb74f9b5aa3b478af1a8663698d6dd89d0ffc2a90f100028f",
+    "app/src/test/java/takagi/ru/monica/ui/password/AllVaultLoadingStateTest.kt": "eab34aed58bf0fbb036759efdbd431a7a489361c9bbe369ed3789bb21c2cd9c5",
+    "app/src/test/java/takagi/ru/monica/ui/password/PasswordStackOrderTest.kt": "abde20c53fc017f1ac3d2840489feb4243e4da2f4d559dd815a375d63535ee8c",
+    "app/src/test/java/takagi/ru/monica/ui/password/PasswordFirstFrameStackRetentionTest.kt": "76c7f5a90f438bfc8dbbd56730f5976ff6e3273802f32ac6403453190e4e828e",
+    "app/src/androidTest/java/takagi/ru/monica/keepass/AllVaultLoadingUiTest.kt": "08e4643396b2a9f6d110c61f8f5692058cb8af51212c8ae525b77ebc41eedd1c",
+    "app/src/main/java/takagi/ru/monica/ui/password/AllVaultLoadingStatus.kt": "45a2e0a950707bc96b21ac0503b790c02f1863d8841ea5abd5f6821e4912772c",
+    "app/src/main/java/takagi/ru/monica/ui/password/PasswordPageListItems.kt": "d9c39863e511be4a7ad44a5b5350b0207e55b5b87431ba51d2bdb51ff57d41ed",
+    "app/src/main/java/takagi/ru/monica/ui/password/KeePassListPreviewCache.kt": "5ca2b0938ccba704c275f48867b450228c9f28089b17392e8d94c1785bde1857",
+    "app/src/main/java/takagi/ru/monica/ui/password/KeePassListPresentation.kt": "d90f64b17d8cf7d63d7694e479689564ce0c53ef4ede86f68dc1ad8138250896",
+    "app/src/main/java/takagi/ru/monica/ui/password/KeePassFileActions.kt": "211dfb6a07f2ee9ae8224040d8fab71719ce5aec8c7f5a700ad8fddec333babe",
+    "app/src/main/java/takagi/ru/monica/ui/password/PasswordListContent.kt": "1bdac0adc5af51090c9a030dc00abdbb79ba5ad092f411708ea79feb693d4983",
+    "app/src/main/java/takagi/ru/monica/ui/password/PasswordListContentSupport.kt": "ae2bb345e61283dff5da0e2ed8e868ee27dc36824a0ac849ae7363d8d9feee66",
+    "app/src/main/java/takagi/ru/monica/ui/password/PasswordListMainPane.kt": "397616e88170b0007164e8523b6664b6b016ee08d763fd7039a6b52b5532601c",
+    "app/src/main/java/takagi/ru/monica/ui/password/PasswordQuickFolderSections.kt": "10330c289c157ea2de498adfc4003a7d62eac6f4c83be664aa3b978a64b0d441",
+    "app/src/main/res/values/strings_keepass_list.xml": "75380a0a636c2ed31965d5eb3829e7556f48048d20e93d6add8f4a219f3cbe3c",
+    "app/src/main/res/values-b+lzh/strings_keepass_list.xml": "be3fb5e97231b1703cd7ad7ddafc7264a2ebd1c1102919ae3c747a7f58dc6523",
+    "app/src/main/res/values-b+zh+Hant/strings_keepass_list.xml": "a4a05e4c90057bb3a4bd55243202b0ed8a06be77a13dff46ec1de7c58ec60999",
+    "app/src/main/res/values-de/strings_keepass_list.xml": "5f940093ead4e132bf3a5d14cd468818ef83f8199a7fc6bc6dfe1d63123827b0",
+    "app/src/main/res/values-es/strings_keepass_list.xml": "3283f3003328dd907eb1bdfd770f10a42fe0fb7c2731324dd0636c47442f1a82",
+    "app/src/main/res/values-fr/strings_keepass_list.xml": "ac520d3168c65ccc28f6bc0b866c796c848f011860223a024e87d53c5c3e7308",
+    "app/src/main/res/values-it/strings_keepass_list.xml": "616ca342f14c5bb1cbff85c1305f2437e104e75fe4a6e058d9aea6c79318fe1f",
+    "app/src/main/res/values-ja/strings_keepass_list.xml": "6683431f0d6fb73d672beebcea7cc32157dbe2961c250316fb08e9e785d903f6",
+    "app/src/main/res/values-ko/strings_keepass_list.xml": "41daad5740645b5f1875c7b35138388809bd23f88387d1617c7df08427b2b119",
+    "app/src/main/res/values-pl/strings_keepass_list.xml": "10017169ec918b3423afe2f7f0274c7ce2f5a8c1c9399811b2c23d8cbc4ac3b9",
+    "app/src/main/res/values-pt/strings_keepass_list.xml": "fd11eeaf329fc98fe61914f8de95e915755ac3018b7220801c941a900e06c9b6",
+    "app/src/main/res/values-pt-rBR/strings_keepass_list.xml": "5fc8e7ce296547cb4d762175b2202276ec07d7e8571ac7ac7524aa876e3048bc",
+    "app/src/main/res/values-ru/strings_keepass_list.xml": "73b30994cb725c970a2ea0086eb1a422c6c12075f6358615c5bfeb566fa3cf01",
+    "app/src/main/res/values-vi/strings_keepass_list.xml": "fc5ee6fac815c334ec1e4fe36c878be32fffcfbce45697a75e7acdaa128d9668",
+    "app/src/main/res/values-zh/strings_keepass_list.xml": "f1c12e622467f99b2c849b95a2e13a425b507b5d53985741e1950f4469f37719",
+    "app/src/main/res/values-zh-rCN/strings_keepass_list.xml": "f1c12e622467f99b2c849b95a2e13a425b507b5d53985741e1950f4469f37719",
+    "app/src/main/res/values-zh-rNY/strings_keepass_list.xml": "f1c12e622467f99b2c849b95a2e13a425b507b5d53985741e1950f4469f37719",
+    "app/src/main/res/values-zh-rXB/strings_keepass_list.xml": "f1c12e622467f99b2c849b95a2e13a425b507b5d53985741e1950f4469f37719"
+  },
+  "apkSha256": {
+    "Monica-Android-x86_64-1.0.325-26110612-12.APK": "ddf4b05f40bd73a3d6bae715069daeedd15751e45c18cf3378f2a959518d6529",
+    "app-debug-androidTest.apk": "163e81363529235d040ecc2588fc5aeee7136237598ed393d875b3dee5adc5e8"
+  },
+  "audit": {
+    "compiledResourceValues": 144,
+    "jvmSuites": [
+      {
+        "name": "takagi.ru.monica.autofill_ng.AutofillCancellationTest",
+        "tests": "0",
+        "skipped": "0",
+        "failures": "0",
+        "errors": "0",
+        "timestamp": "1970-01-01T00:00:00",
+        "hostname": "JOYIN",
+        "time": "0.0"
+      },
+      {
+        "name": "takagi.ru.monica.ui.password.AllVaultLoadingStateTest",
+        "tests": "3",
+        "skipped": "0",
+        "failures": "0",
+        "errors": "0",
+        "timestamp": "2026-11-06T03:34:33",
+        "hostname": "JOYIN",
+        "time": "0.063"
+      },
+      {
+        "name": "takagi.ru.monica.ui.password.KeePassListPreviewCacheTest",
+        "tests": "4",
+        "skipped": "0",
+        "failures": "0",
+        "errors": "0",
+        "timestamp": "2026-11-06T03:34:33",
+        "hostname": "JOYIN",
+        "time": "0.038"
+      },
+      {
+        "name": "takagi.ru.monica.ui.password.PasswordFirstFrameStackRetentionTest",
+        "tests": "6",
+        "skipped": "0",
+        "failures": "0",
+        "errors": "0",
+        "timestamp": "2026-11-06T03:34:33",
+        "hostname": "JOYIN",
+        "time": "0.014"
+      },
+      {
+        "name": "takagi.ru.monica.ui.password.PasswordStackOrderTest",
+        "tests": "2",
+        "skipped": "0",
+        "failures": "0",
+        "errors": "0",
+        "timestamp": "2026-11-06T03:34:33",
+        "hostname": "JOYIN",
+        "time": "0.026"
+      }
+    ]
+  },
+  "sharedPathCount": 38,
+  "byteIdenticalPaths": 37,
+  "newlineOnlyDifferences": [
+    {
+      "path": "app/src/test/java/takagi/ru/monica/ui/password/PasswordFirstFrameStackRetentionTest.kt",
+      "sha256": {
+        "main": "76c7f5a90f438bfc8dbbd56730f5976ff6e3273802f32ac6403453190e4e828e",
+        "fd": "000de96f850985ef1497be9a4e42750712c97e58f6c7aa8f6a9f3189961323f7"
+      },
+      "crlfCount": {
+        "main": 0,
+        "fd": 155
+      }
+    }
+  ],
+  "devices": {
+    "distinctPassingMethods": 52,
+    "batches": [
+      {
+        "label": "final6-ui",
+        "runnerSeconds": 50.17,
+        "testCount": 13,
+        "methods": [
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#lockingWhileReadIsPendingRejectsItsLateResult",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#delayedSelectionUsesTargetOrPreviousPreviewAndOnlyLatestSelectionBecomesLive",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#canceledQueuedPasswordCannotUnlockReopenedDialog",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#emptyNativeDatabaseFinishesLoadingWithoutAnyPasswordRows",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#backgroundClearsPreviewAndDialogBeforeReturning",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#lockRemovesPreviewAndAuthenticationReopensOriginalWithoutWrites",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#evictedDecodedDatabaseReopensWithoutBeingMislabelledLocked",
+          "takagi.ru.monica.keepass.KeePassListPresentationUiTest#failedReadCanRetryAndKeepsTheOriginalBytes",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#switchingKdbxNeverLeavesPreviousVaultActionable",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#legacySwitchWaitsForPasswordsAndSupplementaryNotesTogether",
+          "takagi.ru.monica.keepass.AllVaultLoadingUiTest#vaultBarShowsShortLargeTextStatusAndRestoresBreadcrumb",
+          "takagi.ru.monica.keepass.AllVaultLoadingUiTest#lockedAndFailedBarsMatchLoadingHeightAndWholeBarRemainsClickable",
+          "takagi.ru.monica.keepass.AllVaultLoadingUiTest#actualQueuedDatabasesDriveStatusAndCompletionRestoresPath"
+        ],
+        "driverSeconds": 53.303
+      },
+      {
+        "label": "final5-regression",
+        "runnerSeconds": 76.811,
+        "testCount": 39,
+        "methods": [
+          "takagi.ru.monica.keepass.KeePassPathStatusUiTest#realMergeMenuNeedsNoSourcePickerAndSuccessRestoresPath",
+          "takagi.ru.monica.keepass.KeePassPathStatusUiTest#vaultStatusSharesPathSpaceAndLargeTextHeightMovesListSmoothly",
+          "takagi.ru.monica.keepass.KeePassPathStatusUiTest#statusReplacesPathAndLockRemovesBothImmediately",
+          "takagi.ru.monica.keepass.KeePassPathStatusUiTest#expiredNoticeCannotDismissANewerOperationResult",
+          "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest#emptyDatabasePublishesReadinessWithoutPasswordRowChanges",
+          "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest#failedInitialReadKeepsSubscriptionForExplicitRecovery",
+          "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest#mergingSameDatabaseNeverDuplicatesItsEntries",
+          "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest#subscriptionStartedWhileLockedSurvivesUnlockAndHidesOnDatabaseLock",
+          "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest#explicitSaveWritesOnceAndPreservesDatabaseParameters",
+          "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest#ordinaryGroupNamedTrashMustStayVisible",
+          "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest#reloadedDeletionCannotBeOverwrittenByAnOldEditorDraft",
+          "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest#failedExternalReloadKeepsTheFileAndShowsFailure",
+          "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest#unchangedSourceCheckKeepsTheSameProjectionAndDoesNotWrite",
+          "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest#externalDeletionMustBeVisibleWhenReenteringTheDatabase",
+          "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest#foregroundCheckLoadsExternalDeletionAndMarksTheStatus",
+          "takagi.ru.monica.keepass.KeePassExternalReloadRegressionTest#disablingFutureRecyclingMustNotExposeExistingRecycledDescendants",
+          "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest#readOnlyCurrentFileMergeDoesNotWrite",
+          "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest#unreadableCurrentFileIsNotOverwrittenAndLastSessionIsKept",
+          "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest#currentFileMergeReadsExternalEditsAndDeletionWithoutChoosingASource",
+          "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest#eachClientsAddedEntrySurvivesCurrentFileMerge",
+          "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest#lockedCurrentFileMergeDoesNotWrite",
+          "takagi.ru.monica.keepass.KeePassCurrentFileMergeTest#sourceChangedDuringMergeIsNotOverwritten",
+          "takagi.ru.monica.keepass.KeePassMonicaUiInstrumentedTest#existingMonicaAttachmentControlsReadAndMutateOriginalVaultWithoutRoomParents",
+          "takagi.ru.monica.keepass.KeePassMonicaUiInstrumentedTest#deniedMonicaSavePreservesFileAndVisibleEntry",
+          "takagi.ru.monica.keepass.KeePassMonicaUiInstrumentedTest#originalVaultMoveToLocalCreatesAndVerifiesDestinationBeforeRemovingSource",
+          "takagi.ru.monica.keepass.KeePassMonicaUiInstrumentedTest#groupedMonicaCredentialsShareOneCommitAndPreserveLocalSentinel",
+          "takagi.ru.monica.keepass.KeePassMonicaUiInstrumentedTest#movingOriginalHistoryToAnUnsupportedDestinationPreservesOriginalFile",
+          "takagi.ru.monica.keepass.KeePassMonicaUiInstrumentedTest#lockingVaultClearsNativeRowsAndRejectsDraftWithoutReopening",
+          "takagi.ru.monica.keepass.KeePassMonicaUiInstrumentedTest#passwordWithMonicaCipherPrefixRemainsLiteralInOriginalVault",
+          "takagi.ru.monica.keepass.KeePassMonicaUiInstrumentedTest#selectedVaultUsesMonicaPasswordListWithoutRoomProjection",
+          "takagi.ru.monica.keepass.KeePassMonicaUiInstrumentedTest#movingOriginalVaultLinksWithoutDestinationReferencesLeavesSourceIntact",
+          "takagi.ru.monica.keepass.KeePassMonicaUiInstrumentedTest#batchCopyEncryptsOriginalVaultPlaintextBeforeInsertingLocalRows",
+          "takagi.ru.monica.keepass.KeePassMonicaUiInstrumentedTest#monicaFormCommitsOnceAndKeepsUuidFieldsHistoryAndOtherEntries",
+          "takagi.ru.monica.keepass.KeePassMonicaUiInstrumentedTest#originalAttachmentUploadsSupportDuplicateAndWhitespaceFileNames",
+          "takagi.ru.monica.keepass.KeePassMonicaUiInstrumentedTest#staleMonicaDraftIsRejectedEvenAfterListRefresh",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#bitwardenOverviewNavigationUsesTheHierarchicalList",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#kdbxOverviewNavigatesDuplicateParentsByUuidAndLocksWithoutWriting",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#bitwardenOverviewNavigationUsesTheClassicList",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#archiveBackKeepsScrollAndRestoresLiveItems"
+        ],
+        "driverSeconds": 80.135
+      }
+    ]
+  },
+  "cleanup": {
+    "complete": true,
+    "originalUsersRetained": [
+      0,
+      10,
+      11,
+      12
+    ],
+    "removedOwnGuest": 13,
+    "restoredUser": 0,
+    "emulatorStopped": true,
+    "canvasServerStopped": false,
+    "retainedFiles": {
+      "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\config.ini": 3908,
+      "C:\\Users\\joyins\\.android\\avd\\Monica_Issue136_API_32.ini": 109,
+      "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img": 12884901888,
+      "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata-qemu.img.qcow2": 22288924672,
+      "D:\\AndroidSDK\\codex-avd\\issue-136-vault-navigation-20260914\\userdata.img": 1048576
+    },
+    "commands": [
+      {
+        "args": [
+          "emu",
+          "avd",
+          "name"
+        ],
+        "exitCode": 0,
+        "output": "Monica_Issue136_API_32\n\nOK\n\n"
+      },
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "users"
+        ],
+        "exitCode": 0,
+        "output": "Users:\n\tUserInfo{0:Owner:c13} running\n\tUserInfo{10:Monica:410}\n\tUserInfo{11:Monica_Recovery316:410}\n\tUserInfo{12:Monica_Recovery316_Retest:410}\n\tUserInfo{13:Monica_KeePassSwitch325_Test:414} running\n"
+      },
+      {
+        "args": [
+          "shell",
+          "am",
+          "switch-user",
+          "0"
+        ],
+        "exitCode": 0,
+        "output": ""
+      },
+      {
+        "args": [
+          "shell",
+          "am",
+          "get-current-user"
+        ],
+        "exitCode": 0,
+        "output": "0\n"
+      },
+      {
+        "args": [
+          "shell",
+          "am",
+          "stop-user",
+          "-w",
+          "-f",
+          "13"
+        ],
+        "exitCode": 0,
+        "output": ""
+      },
+      {
+        "args": [
+          "shell",
+          "pm",
+          "remove-user",
+          "13"
+        ],
+        "exitCode": 0,
+        "output": "Success: removed user\n"
+      },
+      {
+        "args": [
+          "shell",
+          "pm",
+          "list",
+          "users"
+        ],
+        "exitCode": 0,
+        "output": "Users:\n\tUserInfo{0:Owner:c13} running\n\tUserInfo{10:Monica:410}\n\tUserInfo{11:Monica_Recovery316:410}\n\tUserInfo{12:Monica_Recovery316_Retest:410}\n"
+      },
+      {
+        "args": [
+          "shell",
+          "rm",
+          "-f",
+          "/data/local/tmp/keepass-switch-guest.xml"
+        ],
+        "exitCode": 0,
+        "output": ""
+      },
+      {
+        "args": [
+          "emu",
+          "kill"
+        ],
+        "exitCode": 0,
+        "output": "OK: killing emulator, bye bye\n\nOK\n\n"
+      }
+    ]
+  },
+  "scope": "Synthetic API32 x86_64 Debug; no physical/OEM/R8/real cloud account validation.",
+  "committed": false,
+  "pushed": false,
+  "released": false,
+  "apkDelivered": false
+}

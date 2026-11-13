@@ -1,0 +1,246 @@
+{
+  "date": "2026-11-12",
+  "version": "1.0.327",
+  "sharedPaths": 25,
+  "sharedSha256": {
+    "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsV2Screen.kt": "3c9b02bbf1506e287edd33a493f89b223ed86d5c7553005f131233719a2a9f30",
+    "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsChoiceSheet.kt": "ea769e00991b272e16edecde751f3da2711a3a4882bd2e44030d483083ce7122",
+    "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSourceSettings.kt": "0a3fd955532a58cbe41d60bd64fa10c4a6ee86aa82ec814bcd59745799179a4f",
+    "app/src/main/java/takagi/ru/monica/ui/components/SettingsPanel.kt": "fbde21e84b05055b442dc8c6db6d6334768f21088fbe2c70a80e10ea89abada2",
+    "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPreferences.kt": "d2efb47d1357c05018760049e6d0cfdcd56b2c30d944312ee3d7959ae8a02331",
+    "app/src/main/java/takagi/ru/monica/passkey/hardware/HardwarePasskeySetting.kt": "823da54a288ca82303d57aa2dba08f628937c26c335361196f03bbfec7de6806",
+    "app/src/main/res/values/autofill_settings_m3e.xml": "1f4b1eeeb03b79d70685f4225bca50ff76e5c336d08b57eb0f07262fd6b2ec94",
+    "app/src/main/res/values-zh/autofill_settings_m3e.xml": "8c38ebf2e986dfa18bd7bb8edfdc88d209e4fb08e5cf74302999f64b08239542",
+    "app/src/main/res/values-zh-rCN/autofill_settings_m3e.xml": "8c38ebf2e986dfa18bd7bb8edfdc88d209e4fb08e5cf74302999f64b08239542",
+    "app/src/main/res/values-zh-rXB/autofill_settings_m3e.xml": "8c38ebf2e986dfa18bd7bb8edfdc88d209e4fb08e5cf74302999f64b08239542",
+    "app/src/main/res/values-zh-rNY/autofill_settings_m3e.xml": "8c38ebf2e986dfa18bd7bb8edfdc88d209e4fb08e5cf74302999f64b08239542",
+    "app/src/main/res/values-b+zh+Hant/autofill_settings_m3e.xml": "dab1e96e0ab4be36b0874deb6c915c4b47b366e17356a6b63c1ce23e13f1a1ea",
+    "app/src/main/res/values-b+lzh/autofill_settings_m3e.xml": "f094895156586380d239804969600a84f07bb52bb3d8e8496de9da4471bb5132",
+    "app/src/main/res/values-ja/autofill_settings_m3e.xml": "d7b906fd3ff32c54f3c68c96bf0f6b7e8911e0200d66179f443c892dea3fd510",
+    "app/src/main/res/values-ko/autofill_settings_m3e.xml": "b7ef1f1d033accf5e1ae05b0410d54089df28a626b6bc06eae4cd6307947fd20",
+    "app/src/main/res/values-de/autofill_settings_m3e.xml": "962964f2f52e28e04ea1efa00329683e40df52342bc0415823c076fc958e5dba",
+    "app/src/main/res/values-fr/autofill_settings_m3e.xml": "42908c6f5d78fe44a59fa600048ddc695cf53e62ea9ecadf8ebd2b9cbcbf3232",
+    "app/src/main/res/values-es/autofill_settings_m3e.xml": "f399095f4621db38d48e73ac86886b32558c5486e046ca50760692feaa881e17",
+    "app/src/main/res/values-it/autofill_settings_m3e.xml": "b00cf8e5b2e19077f4b0c0eab38635edf4f0ef10f916dc446d14281ce6be91e5",
+    "app/src/main/res/values-ru/autofill_settings_m3e.xml": "2cfd3765416c0aef5956018e894b197db08e8b4f05d1868b6ff4bc11698d7d9c",
+    "app/src/main/res/values-pl/autofill_settings_m3e.xml": "869a4e7d14a9b34a72a833b79f37a0951d3ff49794e0e2287d41648382a903ee",
+    "app/src/main/res/values-vi/autofill_settings_m3e.xml": "0a6267f8882a3402a540d9b565bd1b0a396377ae0129f0a5a1b481be99149e86",
+    "app/src/main/res/values-pt-rBR/autofill_settings_m3e.xml": "f0eb237b3a8cda42c68114d5a9ce6a87965dcefb54010e155ccf94b2d649cc6e",
+    "app/src/main/res/values-pt/autofill_settings_m3e.xml": "632bd4d04408b66827dc88d7c886687d74663ead007c90c7dfd3f0613544165a",
+    "app/src/androidTest/java/takagi/ru/monica/ui/screens/AutofillSettingsM3eTest.kt": "95170c2750aacb4b9a804a5b6fc7192338737f95381d310f5b5ab61564e22764"
+  },
+  "builds": {
+    "main-01": {
+      "edition": "main",
+      "package": "takagi.ru.monica.autofillui327",
+      "seconds": 340.459,
+      "jvm": {
+        "name": "takagi.ru.monica.ui.screens.SettingsSearchIndexTest",
+        "tests": "5",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.04"
+      },
+      "passed": true,
+      "releaseBuilt": false,
+      "sourceSnapshotMatchesAfterBuild": true
+    },
+    "main-02": {
+      "edition": "main",
+      "package": "takagi.ru.monica.autofillui327",
+      "seconds": 6.129,
+      "jvm": {
+        "name": "takagi.ru.monica.ui.screens.SettingsSearchIndexTest",
+        "tests": "5",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.04"
+      },
+      "passed": true,
+      "releaseBuilt": false,
+      "sourceSnapshotMatchesAfterBuild": true
+    },
+    "fd-01": {
+      "edition": "fd",
+      "package": "takagi.ru.monica.autofillui327.fdroid",
+      "seconds": 349.724,
+      "jvm": {
+        "name": "takagi.ru.monica.ui.screens.SettingsSearchIndexTest",
+        "tests": "5",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0",
+        "time": "0.046"
+      },
+      "passed": true,
+      "releaseBuilt": false,
+      "sourceSnapshotMatchesAfterBuild": true
+    }
+  },
+  "installedApks": {
+    "main": [
+      {
+        "kind": "main",
+        "sha256": "9ca771eaa26e2a960549e777a1d60d72d94e954a5c1a273a0c629046bff36c2c",
+        "package": "takagi.ru.monica.autofillui327"
+      },
+      {
+        "kind": "test",
+        "sha256": "f94c664100f54cad1061c126418559970e6b0a60764f678fe55dc1c5e5e54f56",
+        "package": "takagi.ru.monica.autofillui327.test"
+      }
+    ],
+    "fd": [
+      {
+        "kind": "main",
+        "sha256": "667a80118d74b04033cdfd33574d11e751b5a10bb45370e53409d0ac7a877674",
+        "package": "takagi.ru.monica.autofillui327.fdroid"
+      },
+      {
+        "kind": "test",
+        "sha256": "7f19f3c4305cd72c8e84bfbd0954c932f809f8b2a53b8432e9479135a75dd3d3",
+        "package": "takagi.ru.monica.autofillui327.fdroid.test"
+      }
+    ]
+  },
+  "device": {
+    "main-device-01": {
+      "passed": true,
+      "completedMethods": 11,
+      "methods": [
+        "backDismissesEveryChoiceSheetWithoutWritingPreferences",
+        "bothRealPagesShareChoiceAndReturningDoesNotUndoIt",
+        "chineseBothPagesRemainReadableInLightAndDarkThemes",
+        "explicitSourceSelectionPersistsAndKeepsExistingCrossSourceClearPolicy",
+        "largeEnglishBothPagesKeepCompleteDescriptionAndReachableSwitch",
+        "longSourceNamesWrapAndRemainSelectableWithLargeTextInBothThemes",
+        "matchingAndOtpDurationsUsePersistedSingleChoiceSheets",
+        "registeredKeepassAndBitwardenChoicesPersistAcrossPageReentry",
+        "renamedEntryAndHardwareAliasesNavigateToActualSwitchWithoutToggling",
+        "systemAutofillEntryIsUniqueAndHardwareSearchStillLocatesTheSharedSwitch",
+        "unavailableDefaultIdsSurviveReadReentryAndCancelInsteadOfBecomingAll"
+      ],
+      "runnerSeconds": 28.08,
+      "driverSeconds": 32.584,
+      "actualSystemFontScale": 1.0,
+      "sourceSnapshotMatchesAfterTest": true
+    },
+    "main-device-font-01": {
+      "passed": true,
+      "completedMethods": 1,
+      "methods": [
+        "longSourceNamesWrapAndRemainSelectableWithLargeTextInBothThemes"
+      ],
+      "runnerSeconds": 4.926,
+      "driverSeconds": 8.6,
+      "actualSystemFontScale": 1.6,
+      "sourceSnapshotMatchesAfterTest": true
+    },
+    "fd-device-01": {
+      "passed": true,
+      "completedMethods": 11,
+      "methods": [
+        "backDismissesEveryChoiceSheetWithoutWritingPreferences",
+        "bothRealPagesShareChoiceAndReturningDoesNotUndoIt",
+        "chineseBothPagesRemainReadableInLightAndDarkThemes",
+        "explicitSourceSelectionPersistsAndKeepsExistingCrossSourceClearPolicy",
+        "largeEnglishBothPagesKeepCompleteDescriptionAndReachableSwitch",
+        "longSourceNamesWrapAndRemainSelectableWithLargeTextInBothThemes",
+        "matchingAndOtpDurationsUsePersistedSingleChoiceSheets",
+        "registeredKeepassAndBitwardenChoicesPersistAcrossPageReentry",
+        "renamedEntryAndHardwareAliasesNavigateToActualSwitchWithoutToggling",
+        "systemAutofillEntryIsUniqueAndHardwareSearchStillLocatesTheSharedSwitch",
+        "unavailableDefaultIdsSurviveReadReentryAndCancelInsteadOfBecomingAll"
+      ],
+      "runnerSeconds": 25.936,
+      "driverSeconds": 29.087,
+      "actualSystemFontScale": 1.0,
+      "sourceSnapshotMatchesAfterTest": true
+    },
+    "fd-device-font-01": {
+      "passed": true,
+      "completedMethods": 1,
+      "methods": [
+        "longSourceNamesWrapAndRemainSelectableWithLargeTextInBothThemes"
+      ],
+      "runnerSeconds": 4.639,
+      "driverSeconds": 7.758,
+      "actualSystemFontScale": 1.6,
+      "sourceSnapshotMatchesAfterTest": true
+    }
+  },
+  "distinctMethodsPerEdition": 11,
+  "invocationsPerEdition": 12,
+  "compiledResources": {
+    "main": {
+      "edition": "main",
+      "verifiedValues": 18,
+      "values": {
+        "": "Selected database is unavailable",
+        "lzh": "所選庫暫不可用",
+        "ja": "選択したデータベースは利用できません",
+        "de": "Die ausgewählte Datenbank ist nicht verfügbar",
+        "zh": "所选数据库暂不可用",
+        "b+zh+Hant": "所選資料庫暫時無法使用",
+        "vi": "Cơ sở dữ liệu đã chọn hiện không khả dụng",
+        "pl": "Wybrana baza danych jest niedostępna",
+        "ko": "선택한 데이터베이스를 사용할 수 없습니다",
+        "fr": "La base de données sélectionnée est indisponible",
+        "es": "La base de datos seleccionada no está disponible",
+        "it": "Il database selezionato non è disponibile",
+        "pt": "A base de dados selecionada está indisponível",
+        "ru": "Выбранная база данных недоступна",
+        "zh-rXB": "所选数据库暂不可用",
+        "zh-rCN": "所选数据库暂不可用",
+        "pt-rBR": "O banco de dados selecionado está indisponível",
+        "zh-rNY": "所选数据库暂不可用"
+      }
+    },
+    "fd": {
+      "edition": "fd",
+      "verifiedValues": 18,
+      "values": {
+        "": "Selected database is unavailable",
+        "lzh": "所選庫暫不可用",
+        "ja": "選択したデータベースは利用できません",
+        "de": "Die ausgewählte Datenbank ist nicht verfügbar",
+        "zh": "所选数据库暂不可用",
+        "b+zh+Hant": "所選資料庫暫時無法使用",
+        "vi": "Cơ sở dữ liệu đã chọn hiện không khả dụng",
+        "pl": "Wybrana baza danych jest niedostępna",
+        "ko": "선택한 데이터베이스를 사용할 수 없습니다",
+        "fr": "La base de données sélectionnée est indisponible",
+        "es": "La base de datos seleccionada no está disponible",
+        "it": "Il database selezionato non è disponibile",
+        "pt": "A base de dados selecionada está indisponível",
+        "ru": "Выбранная база данных недоступна",
+        "zh-rXB": "所选数据库暂不可用",
+        "zh-rCN": "所选数据库暂不可用",
+        "pt-rBR": "O banco de dados selecionado está indisponível",
+        "zh-rNY": "所选数据库暂不可用"
+      }
+    }
+  },
+  "fullCurrentSourceMatchesFinalBuild": true,
+  "cleanup": {
+    "complete": true,
+    "removedOnlyUser": 10,
+    "remainingUserIds": [
+      0
+    ],
+    "fontScaleRestored": 1.0,
+    "densityRestored": 280,
+    "adbUidBeforeShutdown": 2000,
+    "stoppedOnlyInstance": 2,
+    "canvasServiceStopped": false,
+    "publicAvdTouched": false
+  },
+  "releaseBuiltThisLayoutTask": false,
+  "syntheticRegistrationMetadataOnly": true,
+  "committed": false,
+  "pushed": false,
+  "published": false,
+  "apkDelivered": false
+}

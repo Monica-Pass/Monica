@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
     <application android:label="Monica Icon Fixture" android:usesCleartextTraffic="true">
+        <activity
+            android:name="takagi.ru.monica.transfer.DocumentUriGrantProbeActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Material.Light.NoActionBar" />
+        <service
+            android:name="takagi.ru.monica.transfer.DocumentUriGrantProbeService"
+            android:exported="false" />
         <provider android:name="takagi.ru.monica.util.PhotoPermissionDocumentsProvider"
             android:authorities="${applicationId}.permission-photos" android:exported="true"
             android:grantUriPermissions="true" android:permission="android.permission.MANAGE_DOCUMENTS">
@@ -60,5 +67,9 @@
             android:name="takagi.ru.monica.ui.cardwallet.CardFaceTestImageProvider"
             android:authorities="${applicationId}.cardface.images"
             android:exported="true" />
+        <provider
+            android:name="takagi.ru.monica.credentialexchange.TransferExportDocumentTestProvider"
+            android:authorities="${applicationId}.export-documents"
+            android:exported="true" android:forceUriPermissions="true" android:grantUriPermissions="true" />
     </application>
 </manifest>

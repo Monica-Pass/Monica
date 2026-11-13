@@ -64,7 +64,9 @@ import android.content.ContextWrapper
 import takagi.ru.monica.security.BoundedSecureDataRead
 import takagi.ru.monica.security.RecoveryChallenge
 import takagi.ru.monica.security.RecoveryPermit
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import takagi.ru.monica.security.RecoveryAttemptLimiter
 import java.util.concurrent.atomic.AtomicBoolean
 
 private fun android.content.Context.recoveryActivity(): FragmentActivity? = when (this) {
@@ -91,7 +93,7 @@ fun SecurityQuestionsVerificationScreen(
     var answer2 by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
-    var retryAfter by remember { mutableStateOf(0L) }
+    var retryAfter by remember { mutableStateOf(RecoveryAttemptLimiter.COOLDOWN) }
     var prompt by remember { mutableStateOf<BiometricPrompt?>(null) }
     var challenge by remember { mutableStateOf<RecoveryChallenge?>(null) }
     val back = rememberUpdatedState(onNavigateBack)
@@ -115,10 +117,18 @@ fun SecurityQuestionsVerificationScreen(
         onDispose { lifecycle.removeObserver(observer); cancel() }
     }
     LaunchedEffect(generation) { if (generation != entryGeneration) leave() }
-    LaunchedEffect(Unit) {
-        retryAfter = BoundedSecureDataRead.readChecked(isCurrent = ::current) {
-            securityManager.recoveryAttemptStatus().retryAfterMillis
-        } ?: 900_000L
+    LaunchedEffect(retryAfter > 0L) {
+        if (retryAfter == 0L) return@LaunchedEffect
+        while (current()) {
+            val remaining = BoundedSecureDataRead.readChecked(isCurrent = ::current) {
+                securityManager.recoveryAttemptStatus().retryAfterMillis
+            }
+            if (!current()) return@LaunchedEffect
+            retryAfter = remaining ?: RecoveryAttemptLimiter.COOLDOWN
+            if (retryAfter == 0L) return@LaunchedEffect
+            // Re-read the persisted limiter; a UI countdown alone never grants permission to retry.
+            delay(minOf(retryAfter, 1_000L))
+        }
     }
     if (!active.get()) return
     Scaffold(topBar = {
@@ -156,7 +166,7 @@ fun SecurityQuestionsVerificationScreen(
                     if (candidate == null) {
                         retryAfter = BoundedSecureDataRead.readChecked(isCurrent = ::current) {
                             securityManager.recoveryAttemptStatus().retryAfterMillis
-                        } ?: 900_000L
+                        } ?: RecoveryAttemptLimiter.COOLDOWN
                         errorMessage = context.getString(R.string.incorrect_answers)
                         isLoading = false
                         return@launch

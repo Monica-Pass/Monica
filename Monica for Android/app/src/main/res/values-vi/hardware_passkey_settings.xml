@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_passkey_settings_title">Tự động điền và khóa truy cập</string>
+    <string name="hardware_key_enable">Bật khóa vật lý</string>
+    <string name="hardware_key_enable_description">Dùng khóa bảo mật USB hoặc NFC với Monica. Mặc định tắt. Không ảnh hưởng đến khóa truy cập phần mềm đã lưu.</string>
+</resources>

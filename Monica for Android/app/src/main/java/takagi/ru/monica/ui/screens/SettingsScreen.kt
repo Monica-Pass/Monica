@@ -611,7 +611,7 @@ fun SettingsScreen(
                     if (showAutofillItem) {
                         SettingsItem(
                             icon = Icons.Default.VpnKey,
-                            title = context.getString(R.string.autofill),
+                            title = context.getString(R.string.autofill_passkey_settings_title),
                             subtitle = context.getString(R.string.autofill_subtitle),
                             onClick = onNavigateToAutofill,
                             modifier = getSharedModifier("autofill_settings_card"),

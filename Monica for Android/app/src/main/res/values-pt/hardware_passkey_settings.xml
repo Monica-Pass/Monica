@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_passkey_settings_title">Preenchimento automático e chaves de acesso</string>
+    <string name="hardware_key_enable">Ativar chaves físicas</string>
+    <string name="hardware_key_enable_description">Utilize chaves de segurança USB ou NFC com a Monica. Desativado por predefinição. As chaves de acesso de software guardadas não são afetadas.</string>
+</resources>

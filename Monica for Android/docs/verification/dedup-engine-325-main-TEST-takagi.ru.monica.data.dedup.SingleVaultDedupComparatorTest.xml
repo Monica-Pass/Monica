@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.data.dedup.SingleVaultDedupComparatorTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-06T12:18:27" hostname="JOYIN" time="0.019">
+  <properties/>
+  <testcase name="abcRequiresOneFinalSurvivingKeeper" classname="takagi.ru.monica.data.dedup.SingleVaultDedupComparatorTest" time="0.004"/>
+  <testcase name="workLimitDiscardsPartialCandidateListAndCancellationPropagates" classname="takagi.ru.monica.data.dedup.SingleVaultDedupComparatorTest" time="0.001"/>
+  <testcase name="bipartiteMatchingFindsAlternativeWithoutSharingOneNode" classname="takagi.ru.monica.data.dedup.SingleVaultDedupComparatorTest" time="0.001"/>
+  <testcase name="unionCoverageDoesNotAuthorizeDeletion" classname="takagi.ru.monica.data.dedup.SingleVaultDedupComparatorTest" time="0.0"/>
+  <testcase name="boundUsernameAndPasswordCannotBeCombinedAcrossAccounts" classname="takagi.ru.monica.data.dedup.SingleVaultDedupComparatorTest" time="0.0"/>
+  <testcase name="valuesNamesProtectionTypesAndControlCharactersStayExact" classname="takagi.ru.monica.data.dedup.SingleVaultDedupComparatorTest" time="0.001"/>
+  <testcase name="identicalProjectsAndContainmentChainsPointDirectlyToFinalKeeper" classname="takagi.ru.monica.data.dedup.SingleVaultDedupComparatorTest" time="0.001"/>
+  <testcase name="allSmallThreeProjectMultisetsKeepDirectCoveringSurvivors" classname="takagi.ru.monica.data.dedup.SingleVaultDedupComparatorTest" time="0.009"/>
+  <testcase name="multiplicityAndMeaningfulOrderAreNotSets" classname="takagi.ru.monica.data.dedup.SingleVaultDedupComparatorTest" time="0.0"/>
+  <testcase name="incompleteEmptyMixedSourceAndDuplicateKeysCannotGenerateCandidates" classname="takagi.ru.monica.data.dedup.SingleVaultDedupComparatorTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -26,6 +26,7 @@ import takagi.ru.monica.R
 data class HardwareKeyUiState(
     val info: DeviceInfo? = null, val transport: String = "", val busy: Boolean = false,
     val error: Int? = null, val status: Int? = null, val request: HardwareWebAuthn? = null,
+    val featureEnabled: Boolean = true,
     val providerMode: Boolean = false, val pin: String = "", val pinDialog: Boolean = false,
     val currentPin: String = "", val newPin: String = "", val confirmPin: String = "",
     val credentials: HardwareCredentials.Snapshot? = null,
@@ -42,7 +43,7 @@ fun HardwareKeyScreen(
 ) {
     var showRegistrationHelp by remember { mutableStateOf(false) }
     Scaffold(bottomBar = {
-        if (state.providerMode) Surface(color = MaterialTheme.colorScheme.surface) {
+        if (state.providerMode && state.featureEnabled) Surface(color = MaterialTheme.colorScheme.surface) {
             Column(Modifier.fillMaxWidth().navigationBarsPadding().imePadding().padding(horizontal = 12.dp, vertical = 8.dp)) {
                 Button(onClick = onPerform, enabled = !state.busy && state.request != null && state.info != null &&
                     (!state.info.clientPinSet || state.pin.isNotEmpty()), modifier = Modifier.fillMaxWidth().testTag("hardware-perform")) {
@@ -69,6 +70,8 @@ fun HardwareKeyScreen(
     }) { padding ->
         Column(Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(horizontal = 12.dp).padding(bottom = 24.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            if (!state.providerMode) HardwarePasskeySetting()
+            if (!state.featureEnabled) return@Column
             state.request?.let { request ->
                 KeyGroup {
                     SectionTitle(if (request.create) R.string.hardware_key_create else R.string.hardware_key_authenticate, Icons.Default.Language)

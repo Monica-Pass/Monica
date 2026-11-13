@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_document_permission_missing">"Die System-Dateiauswahl hat den erforderlichen Lese- und Schreibzugriff nicht gewährt. Wähle Download im Hauptspeicher des Geräts oder einen anderen beschreibbaren Speicherort. Möglicherweise wurde eine leere Datei erstellt. Sie ist keine gültige Sicherung und kann im Dateimanager gelöscht werden."</string>
+</resources>

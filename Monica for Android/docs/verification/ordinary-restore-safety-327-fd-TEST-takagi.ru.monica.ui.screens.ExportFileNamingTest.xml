@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.ui.screens.ExportFileNamingTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-13T07:01:18.019Z" hostname="JOYIN" time="0.009">
+  <properties/>
+  <testcase name="encryptedZipUsesEncZipExtension" classname="takagi.ru.monica.ui.screens.ExportFileNamingTest" time="0.007"/>
+  <testcase name="plainZipUsesRegularZipExtension" classname="takagi.ru.monica.ui.screens.ExportFileNamingTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

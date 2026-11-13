@@ -45,6 +45,7 @@ import androidx.credentials.exceptions.CreateCredentialUnknownException
 import androidx.credentials.provider.CallingAppInfo
 import androidx.credentials.provider.PendingIntentHandler
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.json.JSONArray
@@ -73,6 +74,7 @@ import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.passkey.hardware.HardwareKeyPresence
 import takagi.ru.monica.passkey.hardware.HardwareKeyPresenceMonitor
 import takagi.ru.monica.passkey.hardware.HardwareRegistrationRequest
+import takagi.ru.monica.passkey.hardware.HardwarePasskeyPreferences
 import takagi.ru.monica.passkey.hardware.PasskeyRegistrationTargetPicker
 import takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog
 import takagi.ru.monica.ui.components.PasswordEntryPickerBottomSheet
@@ -101,20 +103,21 @@ class PasskeyCreateActivity : FragmentActivity() {
     private var hardwarePresence by mutableStateOf(HardwareKeyPresence())
     private var hardwareBusy by mutableStateOf(false)
     private var hardwarePresenceMonitor: HardwareKeyPresenceMonitor? = null
+    private var hardwareRequestReady = false
     private val hardwareRegistration = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         hardwareBusy = false
         // A cancelled hardware operation returns to the chooser; no software key is generated.
         val cancelled = result.data?.let {
             PendingIntentHandler.retrieveCreateCredentialException(it) is CreateCredentialCancellationException
         } == true
-        if (result.resultCode == Activity.RESULT_OK && result.data != null && !cancelled) {
+        if (HardwarePasskeyPreferences.isEnabled(this) && result.resultCode == Activity.RESULT_OK && result.data != null && !cancelled) {
             setResult(Activity.RESULT_OK, result.data)
             finish()
         }
     }
 
     private fun registerWithHardware() {
-        if (hardwareBusy || !hardwarePresence.available || !HardwareRegistrationRequest.allowsHardware(intent)) return
+        if (!takagi.ru.monica.passkey.hardware.HardwarePasskeyPreferences.isEnabled(this) || hardwareBusy || !hardwarePresence.available || !HardwareRegistrationRequest.allowsHardware(intent)) return
         val tag = if (hardwarePresence.usbCount == 0) hardwarePresenceMonitor?.detectedNfcTag else null
         hardwareBusy = true
         try {
@@ -122,6 +125,21 @@ class PasskeyCreateActivity : FragmentActivity() {
         } catch (_: Exception) {
             hardwareBusy = false
             android.widget.Toast.makeText(this, R.string.hardware_key_failed, android.widget.Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateHardwareDiscovery()
+    }
+
+    private fun updateHardwareDiscovery() {
+        if (hardwareRequestReady && HardwarePasskeyPreferences.isEnabled(this) && HardwareRegistrationRequest.allowsHardware(intent)) {
+            if (hardwarePresenceMonitor == null) hardwarePresenceMonitor = HardwareKeyPresenceMonitor(this) { hardwarePresence = it }
+        } else {
+            hardwarePresenceMonitor?.close()
+            hardwarePresenceMonitor = null
+            hardwarePresence = HardwareKeyPresence()
         }
     }
 
@@ -222,6 +240,11 @@ class PasskeyCreateActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        lifecycleScope.launch {
+            HardwarePasskeyPreferences.observe(this@PasskeyCreateActivity).collect {
+                updateHardwareDiscovery()
+            }
+        }
         launchWithSecureStorage { onSecureCreate(savedInstanceState) }
     }
 
@@ -368,10 +391,14 @@ class PasskeyCreateActivity : FragmentActivity() {
         pendingUserName = userName
         pendingUserDisplayName = userDisplayName
         val hardwareAllowed = HardwareRegistrationRequest.allowsHardware(intent)
+        hardwareRequestReady = true
+        updateHardwareDiscovery()
         hardwareBusy = savedInstanceState?.getBoolean("hardware_registration_busy") == true
-        if (hardwareAllowed) hardwarePresenceMonitor = HardwareKeyPresenceMonitor(this) { hardwarePresence = it }
+
         
         setContent {
+            val hardwareChanges = remember { takagi.ru.monica.passkey.hardware.HardwarePasskeyPreferences.observe(this@PasskeyCreateActivity) }
+            val hardwareEnabled by hardwareChanges.collectAsState(initial = takagi.ru.monica.passkey.hardware.HardwarePasskeyPreferences.isEnabled(this@PasskeyCreateActivity))
             val settingsManager = remember { SettingsManager(this@PasskeyCreateActivity) }
             val settings by settingsManager.settingsFlow.collectAsState(
                 initial = AppSettings(biometricEnabled = false)
@@ -520,7 +547,7 @@ class PasskeyCreateActivity : FragmentActivity() {
                     },
                     getKeePassGroups = getKeePassGroups,
                     getMdbxFolders = getMdbxFolders,
-                    hardwareAllowed = hardwareAllowed,
+                    hardwareAllowed = hardwareAllowed && hardwareEnabled,
                     hardwarePresence = hardwarePresence,
                     hardwareBusy = hardwareBusy,
                     onCreateHardware = ::registerWithHardware,
@@ -1428,6 +1455,9 @@ private fun PasskeyCreateScreen(
     var showStoragePicker by remember { mutableStateOf(false) }
     var showTargetPicker by remember { mutableStateOf(false) }
     var hardwareSelected by rememberSaveable { mutableStateOf(false) }
+    LaunchedEffect(hardwareAllowed) {
+        if (!hardwareAllowed) { hardwareSelected = false; showTargetPicker = false }
+    }
     val context = LocalContext.current
     val database = remember(context) { PasswordDatabase.getDatabase(context) }
     val selectedBitwardenVault = bitwardenVaults.find { it.id == selectedBitwardenVaultId }

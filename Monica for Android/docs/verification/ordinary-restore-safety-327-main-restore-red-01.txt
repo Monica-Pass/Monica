@@ -1,0 +1,775 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest:
+INSTRUMENTATION_STATUS: test=missingWrongTypeOrAmbiguousSourceNoteNeverBindsAnExistingDestinationId
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$missingWrongTypeOrAmbiguousSourceNoteNeverBindsAnExistingDestinationId$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:245)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.missingWrongTypeOrAmbiguousSourceNoteNeverBindsAnExistingDestinationId(OrdinaryRestoreDuplicateSafetyTest.kt:236)
+
+INSTRUMENTATION_STATUS: stream=
+Error in missingWrongTypeOrAmbiguousSourceNoteNeverBindsAnExistingDestinationId(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest):
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$missingWrongTypeOrAmbiguousSourceNoteNeverBindsAnExistingDestinationId$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:245)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.missingWrongTypeOrAmbiguousSourceNoteNeverBindsAnExistingDestinationId(OrdinaryRestoreDuplicateSafetyTest.kt:236)
+
+INSTRUMENTATION_STATUS: test=missingWrongTypeOrAmbiguousSourceNoteNeverBindsAnExistingDestinationId
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sameNoteTitleWithDifferentBodyOrProtectedFieldPreservesBoth
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$sameNoteTitleWithDifferentBodyOrProtectedFieldPreservesBoth$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:144)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.sameNoteTitleWithDifferentBodyOrProtectedFieldPreservesBoth(OrdinaryRestoreDuplicateSafetyTest.kt:134)
+
+INSTRUMENTATION_STATUS: stream=
+Error in sameNoteTitleWithDifferentBodyOrProtectedFieldPreservesBoth(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest):
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$sameNoteTitleWithDifferentBodyOrProtectedFieldPreservesBoth$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:144)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.sameNoteTitleWithDifferentBodyOrProtectedFieldPreservesBoth(OrdinaryRestoreDuplicateSafetyTest.kt:134)
+
+INSTRUMENTATION_STATUS: test=sameNoteTitleWithDifferentBodyOrProtectedFieldPreservesBoth
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=incomingAttachmentGetsIndependentOwnerAndRepeatedRestoreKeepsVerifiedBytes
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$incomingAttachmentGetsIndependentOwnerAndRepeatedRestoreKeepsVerifiedBytes$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:194)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.incomingAttachmentGetsIndependentOwnerAndRepeatedRestoreKeepsVerifiedBytes(OrdinaryRestoreDuplicateSafetyTest.kt:188)
+
+INSTRUMENTATION_STATUS: stream=
+Error in incomingAttachmentGetsIndependentOwnerAndRepeatedRestoreKeepsVerifiedBytes(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest):
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$incomingAttachmentGetsIndependentOwnerAndRepeatedRestoreKeepsVerifiedBytes$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:194)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.incomingAttachmentGetsIndependentOwnerAndRepeatedRestoreKeepsVerifiedBytes(OrdinaryRestoreDuplicateSafetyTest.kt:188)
+
+INSTRUMENTATION_STATUS: test=incomingAttachmentGetsIndependentOwnerAndRepeatedRestoreKeepsVerifiedBytes
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=boundNoteCreatesIndependentPasswordAndRemapsOnlyTheNewRelationship
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$boundNoteCreatesIndependentPasswordAndRemapsOnlyTheNewRelationship$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:225)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.boundNoteCreatesIndependentPasswordAndRemapsOnlyTheNewRelationship(OrdinaryRestoreDuplicateSafetyTest.kt:214)
+
+INSTRUMENTATION_STATUS: stream=
+Error in boundNoteCreatesIndependentPasswordAndRemapsOnlyTheNewRelationship(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest):
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$boundNoteCreatesIndependentPasswordAndRemapsOnlyTheNewRelationship$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:225)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.boundNoteCreatesIndependentPasswordAndRemapsOnlyTheNewRelationship(OrdinaryRestoreDuplicateSafetyTest.kt:214)
+
+INSTRUMENTATION_STATUS: test=boundNoteCreatesIndependentPasswordAndRemapsOnlyTheNewRelationship
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cancellationBeforeNoteImportNeverPersistsTheSourceNoteIdOnNewPassword
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected null, but was:<5>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotNull(Assert.java:756)
+	at org.junit.Assert.assertNull(Assert.java:738)
+	at org.junit.Assert.assertNull(Assert.java:748)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$cancellationBeforeNoteImportNeverPersistsTheSourceNoteIdOnNewPassword$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:265)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.cancellationBeforeNoteImportNeverPersistsTheSourceNoteIdOnNewPassword(OrdinaryRestoreDuplicateSafetyTest.kt:252)
+
+INSTRUMENTATION_STATUS: stream=
+Error in cancellationBeforeNoteImportNeverPersistsTheSourceNoteIdOnNewPassword(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest):
+java.lang.AssertionError: expected null, but was:<5>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotNull(Assert.java:756)
+	at org.junit.Assert.assertNull(Assert.java:738)
+	at org.junit.Assert.assertNull(Assert.java:748)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$cancellationBeforeNoteImportNeverPersistsTheSourceNoteIdOnNewPassword$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:265)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.cancellationBeforeNoteImportNeverPersistsTheSourceNoteIdOnNewPassword(OrdinaryRestoreDuplicateSafetyTest.kt:252)
+
+INSTRUMENTATION_STATUS: test=cancellationBeforeNoteImportNeverPersistsTheSourceNoteIdOnNewPassword
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=completeScalarMetadataDifferencesNeverCollapseIntoAnExistingCard
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Distinct metadata must remain a separate row expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$completeScalarMetadataDifferencesNeverCollapseIntoAnExistingCard$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:159)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.completeScalarMetadataDifferencesNeverCollapseIntoAnExistingCard(OrdinaryRestoreDuplicateSafetyTest.kt:150)
+
+INSTRUMENTATION_STATUS: stream=
+Error in completeScalarMetadataDifferencesNeverCollapseIntoAnExistingCard(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest):
+java.lang.AssertionError: Distinct metadata must remain a separate row expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$completeScalarMetadataDifferencesNeverCollapseIntoAnExistingCard$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:159)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.completeScalarMetadataDifferencesNeverCollapseIntoAnExistingCard(OrdinaryRestoreDuplicateSafetyTest.kt:150)
+
+INSTRUMENTATION_STATUS: test=completeScalarMetadataDifferencesNeverCollapseIntoAnExistingCard
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sameDocumentNumberWithDifferentExpiryOrNamePreservesBothVersions
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$sameDocumentNumberWithDifferentExpiryOrNamePreservesBothVersions$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:128)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.sameDocumentNumberWithDifferentExpiryOrNamePreservesBothVersions(OrdinaryRestoreDuplicateSafetyTest.kt:122)
+
+INSTRUMENTATION_STATUS: stream=
+Error in sameDocumentNumberWithDifferentExpiryOrNamePreservesBothVersions(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest):
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$sameDocumentNumberWithDifferentExpiryOrNamePreservesBothVersions$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:128)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.sameDocumentNumberWithDifferentExpiryOrNamePreservesBothVersions(OrdinaryRestoreDuplicateSafetyTest.kt:122)
+
+INSTRUMENTATION_STATUS: test=sameDocumentNumberWithDifferentExpiryOrNamePreservesBothVersions
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sameCardNumberWithDifferentCvvExpiryOrHolderPreservesEveryPayload
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Changed cvv must be retained expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$sameCardNumberWithDifferentCvvExpiryOrHolderPreservesEveryPayload$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:103)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.sameCardNumberWithDifferentCvvExpiryOrHolderPreservesEveryPayload(OrdinaryRestoreDuplicateSafetyTest.kt:96)
+
+INSTRUMENTATION_STATUS: stream=
+Error in sameCardNumberWithDifferentCvvExpiryOrHolderPreservesEveryPayload(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest):
+java.lang.AssertionError: Changed cvv must be retained expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$sameCardNumberWithDifferentCvvExpiryOrHolderPreservesEveryPayload$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:103)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.sameCardNumberWithDifferentCvvExpiryOrHolderPreservesEveryPayload(OrdinaryRestoreDuplicateSafetyTest.kt:96)
+
+INSTRUMENTATION_STATUS: test=sameCardNumberWithDifferentCvvExpiryOrHolderPreservesEveryPayload
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=anExistingAttachmentPreventsCollapsingAnIncomingStandaloneItem
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$anExistingAttachmentPreventsCollapsingAnIncomingStandaloneItem$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:208)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.anExistingAttachmentPreventsCollapsingAnIncomingStandaloneItem(OrdinaryRestoreDuplicateSafetyTest.kt:203)
+
+INSTRUMENTATION_STATUS: stream=
+Error in anExistingAttachmentPreventsCollapsingAnIncomingStandaloneItem(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest):
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$anExistingAttachmentPreventsCollapsingAnIncomingStandaloneItem$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:208)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.anExistingAttachmentPreventsCollapsingAnIncomingStandaloneItem(OrdinaryRestoreDuplicateSafetyTest.kt:203)
+
+INSTRUMENTATION_STATUS: test=anExistingAttachmentPreventsCollapsingAnIncomingStandaloneItem
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=sameCardNumberWithDifferentTitleOrNotesDoesNotReplaceOriginalMetadata
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$sameCardNumberWithDifferentTitleOrNotesDoesNotReplaceOriginalMetadata$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:116)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.sameCardNumberWithDifferentTitleOrNotesDoesNotReplaceOriginalMetadata(OrdinaryRestoreDuplicateSafetyTest.kt:111)
+
+INSTRUMENTATION_STATUS: stream=
+Error in sameCardNumberWithDifferentTitleOrNotesDoesNotReplaceOriginalMetadata(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest):
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$sameCardNumberWithDifferentTitleOrNotesDoesNotReplaceOriginalMetadata$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:116)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.sameCardNumberWithDifferentTitleOrNotesDoesNotReplaceOriginalMetadata(OrdinaryRestoreDuplicateSafetyTest.kt:111)
+
+INSTRUMENTATION_STATUS: test=sameCardNumberWithDifferentTitleOrNotesDoesNotReplaceOriginalMetadata
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=identicalStandaloneCardsDocumentsAndNotesCanBeRetriedWithoutNewRows
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=identicalStandaloneCardsDocumentsAndNotesCanBeRetriedWithoutNewRows
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unknownPayloadMembersAreRetainedWithoutClaimingSafeProjectEquality
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$unknownPayloadMembersAreRetainedWithoutClaimingSafeProjectEquality$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:183)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.unknownPayloadMembersAreRetainedWithoutClaimingSafeProjectEquality(OrdinaryRestoreDuplicateSafetyTest.kt:178)
+
+INSTRUMENTATION_STATUS: stream=
+Error in unknownPayloadMembersAreRetainedWithoutClaimingSafeProjectEquality(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest):
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$unknownPayloadMembersAreRetainedWithoutClaimingSafeProjectEquality$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:183)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.unknownPayloadMembersAreRetainedWithoutClaimingSafeProjectEquality(OrdinaryRestoreDuplicateSafetyTest.kt:178)
+
+INSTRUMENTATION_STATUS: test=unknownPayloadMembersAreRetainedWithoutClaimingSafeProjectEquality
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedNoteInsertReportsIncompletePasswordAndNeverLeavesAnUnrelatedBinding
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=13
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$failedNoteInsertReportsIncompletePasswordAndNeverLeavesAnUnrelatedBinding$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:281)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:99)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.failedNoteInsertReportsIncompletePasswordAndNeverLeavesAnUnrelatedBinding(OrdinaryRestoreDuplicateSafetyTest.kt:269)
+
+INSTRUMENTATION_STATUS: stream=
+Error in failedNoteInsertReportsIncompletePasswordAndNeverLeavesAnUnrelatedBinding(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest):
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$failedNoteInsertReportsIncompletePasswordAndNeverLeavesAnUnrelatedBinding$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:281)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:99)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.failedNoteInsertReportsIncompletePasswordAndNeverLeavesAnUnrelatedBinding(OrdinaryRestoreDuplicateSafetyTest.kt:269)
+
+INSTRUMENTATION_STATUS: test=failedNoteInsertReportsIncompletePasswordAndNeverLeavesAnUnrelatedBinding
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 0.956
+There were 12 failures:
+1) missingWrongTypeOrAmbiguousSourceNoteNeverBindsAnExistingDestinationId(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest)
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$missingWrongTypeOrAmbiguousSourceNoteNeverBindsAnExistingDestinationId$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:245)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.missingWrongTypeOrAmbiguousSourceNoteNeverBindsAnExistingDestinationId(OrdinaryRestoreDuplicateSafetyTest.kt:236)
+2) sameNoteTitleWithDifferentBodyOrProtectedFieldPreservesBoth(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest)
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$sameNoteTitleWithDifferentBodyOrProtectedFieldPreservesBoth$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:144)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.sameNoteTitleWithDifferentBodyOrProtectedFieldPreservesBoth(OrdinaryRestoreDuplicateSafetyTest.kt:134)
+3) incomingAttachmentGetsIndependentOwnerAndRepeatedRestoreKeepsVerifiedBytes(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest)
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$incomingAttachmentGetsIndependentOwnerAndRepeatedRestoreKeepsVerifiedBytes$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:194)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.incomingAttachmentGetsIndependentOwnerAndRepeatedRestoreKeepsVerifiedBytes(OrdinaryRestoreDuplicateSafetyTest.kt:188)
+4) boundNoteCreatesIndependentPasswordAndRemapsOnlyTheNewRelationship(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest)
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$boundNoteCreatesIndependentPasswordAndRemapsOnlyTheNewRelationship$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:225)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.boundNoteCreatesIndependentPasswordAndRemapsOnlyTheNewRelationship(OrdinaryRestoreDuplicateSafetyTest.kt:214)
+5) cancellationBeforeNoteImportNeverPersistsTheSourceNoteIdOnNewPassword(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest)
+java.lang.AssertionError: expected null, but was:<5>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotNull(Assert.java:756)
+	at org.junit.Assert.assertNull(Assert.java:738)
+	at org.junit.Assert.assertNull(Assert.java:748)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$cancellationBeforeNoteImportNeverPersistsTheSourceNoteIdOnNewPassword$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:265)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.cancellationBeforeNoteImportNeverPersistsTheSourceNoteIdOnNewPassword(OrdinaryRestoreDuplicateSafetyTest.kt:252)
+6) completeScalarMetadataDifferencesNeverCollapseIntoAnExistingCard(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest)
+java.lang.AssertionError: Distinct metadata must remain a separate row expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$completeScalarMetadataDifferencesNeverCollapseIntoAnExistingCard$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:159)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.completeScalarMetadataDifferencesNeverCollapseIntoAnExistingCard(OrdinaryRestoreDuplicateSafetyTest.kt:150)
+7) sameDocumentNumberWithDifferentExpiryOrNamePreservesBothVersions(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest)
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$sameDocumentNumberWithDifferentExpiryOrNamePreservesBothVersions$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:128)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.sameDocumentNumberWithDifferentExpiryOrNamePreservesBothVersions(OrdinaryRestoreDuplicateSafetyTest.kt:122)
+8) sameCardNumberWithDifferentCvvExpiryOrHolderPreservesEveryPayload(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest)
+java.lang.AssertionError: Changed cvv must be retained expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$sameCardNumberWithDifferentCvvExpiryOrHolderPreservesEveryPayload$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:103)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.sameCardNumberWithDifferentCvvExpiryOrHolderPreservesEveryPayload(OrdinaryRestoreDuplicateSafetyTest.kt:96)
+9) anExistingAttachmentPreventsCollapsingAnIncomingStandaloneItem(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest)
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$anExistingAttachmentPreventsCollapsingAnIncomingStandaloneItem$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:208)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.anExistingAttachmentPreventsCollapsingAnIncomingStandaloneItem(OrdinaryRestoreDuplicateSafetyTest.kt:203)
+10) sameCardNumberWithDifferentTitleOrNotesDoesNotReplaceOriginalMetadata(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest)
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$sameCardNumberWithDifferentTitleOrNotesDoesNotReplaceOriginalMetadata$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:116)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.sameCardNumberWithDifferentTitleOrNotesDoesNotReplaceOriginalMetadata(OrdinaryRestoreDuplicateSafetyTest.kt:111)
+11) unknownPayloadMembersAreRetainedWithoutClaimingSafeProjectEquality(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest)
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$unknownPayloadMembersAreRetainedWithoutClaimingSafeProjectEquality$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:183)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.unknownPayloadMembersAreRetainedWithoutClaimingSafeProjectEquality(OrdinaryRestoreDuplicateSafetyTest.kt:178)
+12) failedNoteInsertReportsIncompletePasswordAndNeverLeavesAnUnrelatedBinding(takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest)
+java.lang.AssertionError: expected:<1> but was:<0>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest$failedNoteInsertReportsIncompletePasswordAndNeverLeavesAnUnrelatedBinding$1$1.invokeSuspend(OrdinaryRestoreDuplicateSafetyTest.kt:281)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:99)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.OrdinaryRestoreDuplicateSafetyTest.failedNoteInsertReportsIncompletePasswordAndNeverLeavesAnUnrelatedBinding(OrdinaryRestoreDuplicateSafetyTest.kt:269)
+
+FAILURES!!!
+Tests run: 13,  Failures: 12
+
+
+INSTRUMENTATION_CODE: -1

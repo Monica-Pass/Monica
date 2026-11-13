@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_passkey_settings_title">Remplissage automatique et clés d’accès</string>
+    <string name="hardware_key_enable">Activer les clés physiques</string>
+    <string name="hardware_key_enable_description">Utilisez des clés de sécurité USB ou NFC avec Monica. Désactivé par défaut. Les clés d’accès logicielles enregistrées ne sont pas affectées.</string>
+</resources>

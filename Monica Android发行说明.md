@@ -2,13 +2,22 @@
 
 ## 中文
 
+- 修复普通备份还原把同卡号、同证件号或同标题但内容不同的项目误判为重复：仅在完整内容、属性及独立关系均可确认一致时跳过；有附件、笔记绑定或未知内容的项目保守独立还原。附件来源缺失或身份不唯一时在写入前拒绝；笔记只绑定本次成功还原的对应项目，取消或锁定后不再发布旧请求的绑定。重复还原复杂项目可能产生额外副本。
+- “通行密钥和密码设置”在系统支持且确认 Monica 服务未启用时进入启用页，其他情况进入安全设置；入口不可用时逐级回退，避免只打开设置首页或崩溃。
+
+- 自动填充与通行密钥设置统一分组行和 M3E 单选底部面板，来源、默认库、匹配策略及验证码时长使用一致交互；整理系统入口、填充、匹配、保存及键盘分组。修复进入设置时数据库列表尚未加载就清空默认库的问题；缺失库保留原选择并提示不可用，仅明确选项才更改范围。
+
+- 物理密钥改为默认关闭的可选功能，可在物理密钥页或“自动填充与通行密钥”设置页切换，两处状态同步。关闭后不添加 Monica 的 USB/NFC 硬件候选并停止相关扫描，已保存的软件通行密钥不受影响；系统或其他提供方的安全密钥入口由其自身控制。
+
 - 加固主密码找回：安全问题答案之外，还需本次系统锁屏凭据确认（Android 11 及以上）；取消、后台、锁定或请求替换后授权失效。持久限制尝试次数，新答案使用带随机盐的 PBKDF2-SHA256／600000 次；旧 SHA-256 答案与备份保留兼容，仅在提供真实答案并完成找回后迁移。
-- TOTP、银行卡和证件的新本地写入缺少加密依赖时拒绝保存；历史明文兼容读取继续保留。
+- 改进安全问题设置的取消和再次进入流程：离开页面撤销尚未授权的保存请求，再次进入使用新的操作状态；答案验证页自动刷新实际冷却状态，在限制允许后重新开放尝试。
 
 - 修复从旧版本更新后可能在启动时崩溃的问题，保留原密码库和恢复材料。
 - 减小安装包：压缩赞赏码图片、无损优化内置品牌图标并复用 Monica 图标，保留已有项目的 PNG 自定义图标；精简依赖的多余语言资源，保留全部应用语言和特殊中文配置。
 - 本地主密码统一使用 PBKDF2-SHA256／600000 次派生，移除算法切换入口；兼容读取旧 PBKDF2 和 Argon2id，并在成功验证原密码后迁移，保留原数据密钥与已存内容。
 - ZIP 导出前弹窗选择加密 V1、V2 或符合条件的明文备份；Passkey、附件和 Monica 配置仍须加密。WebDAV／OneDrive 使用分组选项弹窗，确认后保存，取消不更改选择。
+- 后台导出任务持有本次所选文件的临时授权；选择器默认建议主存储的 Download 目录，仍由用户确认位置。缺少所需的实际文件授权时不启动导出，并提示重新选择有授权的位置。
+- 拆分备份恢复的独立读取和处理分支，减小单个协程的规模，保留既有恢复和错误处理规则。
 - 输入法解锁框避让软键盘，内容过高时可滚动操作，支持大字号。修复切换系统字号时重复挂载键盘视图导致的输入法崩溃。
 - 旧加密 ZIP 备份仍可读取，新备份默认使用兼容 V1；可主动选择 600000 次派生的增强 V2，但恢复端也必须支持 V2，请保留旧备份。
 - 旧 APK 无法识别新的本地主密码保护。请使用支持此保护的新版客户端，不要直接降级打开升级后的本地数据。
@@ -35,13 +44,22 @@
 
 ## English
 
+- Ordinary backup restore no longer treats different card, document or note content as a duplicate just because the number or title matches. Skipping requires complete content/metadata equality and a standalone item; related or unknown content is restored independently. Missing or ambiguous attachment owners are rejected before writes. Note bindings target only successfully restored rows and reject cancelled or locked requests. Repeating complex restores can create additional copies.
+- Passkey and password settings opens provider enablement only when supported and Monica is explicitly disabled; otherwise it opens security settings, with fallback for unavailable handlers.
+
+- Unify Autofill & passkeys settings with grouped rows and M3E single-choice sheets for sources, default vaults, matching, and OTP duration. Organize system, fill, matching, save, and keyboard settings. Opening settings no longer clears a default vault before its list loads; unavailable selections are preserved until an explicit choice is made.
+
+- Make physical security keys opt-in and off by default, with a shared switch on the physical-key page and the renamed Autofill & passkeys settings page. Turning it off removes Monica hardware candidates and stops related USB/NFC discovery without changing saved software passkeys; system and other provider entries remain under their own control.
+
 - Harden master-password recovery: security answers also require fresh device-credential confirmation on Android 11+. Cancel, background, lock or request replacement revokes authorization. Persist attempt limits, store new answers with salted PBKDF2-SHA256/600000, and keep legacy SHA-256 answers and backups readable; migrate only after actual answers and authorized recovery.
-- Reject new local TOTP, bank-card and document writes without an encryption dependency while preserving legacy plaintext reads.
+- Improve cancellation and re-entry of security-question setup: leaving revokes saves that have not yet been authorized, and reopening starts a fresh operation. The answer page refreshes the actual cooldown and permits retries when the limiter allows them.
 
 - Fix a startup crash after updating from an older version while retaining the existing vault and recovery material.
 - Reduce package size with compressed donation images, lossless bundled brand icons and a shared Monica icon. Preserve existing custom PNG icons and all app languages, including special Chinese locales, while removing unused dependency translations.
 - Standardize local master-password writes on PBKDF2-SHA256 with 600000 iterations and remove the algorithm selector. Read historical PBKDF2 and Argon2id credentials, migrating only after successful original-password verification while retaining the data key and stored content.
 - Choose encrypted V1, V2 or eligible unencrypted ZIP in a dialog before export. Passkeys, attachments and Monica configuration still require encryption. WebDAV and OneDrive use grouped format dialogs that save only on confirmation.
+- Background exports retain temporary permission for the selected file. The save dialog suggests Download in main storage and still requires the user to choose a location; missing required file access stops export and prompts selection of a location with actual access.
+- Split independent backup-restoration read and processing branches into smaller functions to reduce the size of a single coroutine while preserving existing restore and error-handling rules.
 - Keep the keyboard unlock dialog above the software keyboard, with scrolling for larger content and font sizes. Fix an IME crash caused by reattaching its view after a system font-size change.
 - Keep reading older encrypted ZIP backups and use compatible V1 for new backups by default. Enhanced V2 with 600000 iterations is optional and requires a V2-capable reader; retain earlier backups.
 - Older APKs cannot recognize the new local password protection. Use an updated client that supports it; do not directly downgrade to open upgraded local data.

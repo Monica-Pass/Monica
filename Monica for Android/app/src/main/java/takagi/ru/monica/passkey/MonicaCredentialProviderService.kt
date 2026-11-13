@@ -157,20 +157,24 @@ class MonicaCredentialProviderService : CredentialProviderService() {
                         is BeginGetPublicKeyCredentialOption -> {
                             val entries = handleBeginGetPasskeyRequest(option)
                             credentialEntries.addAll(entries)
-                            if (hardwareAvailable()) {
-                                val hardwareIntent = Intent(this@MonicaCredentialProviderService, takagi.ru.monica.passkey.hardware.HardwareSecurityKeyActivity::class.java)
-                                    .setAction(takagi.ru.monica.passkey.hardware.HardwareSecurityKeyActivity.ACTION_GET)
-                                    .setData(android.net.Uri.parse("monica-hardware://get/${option.id}"))
-                                credentialEntries.add(PublicKeyCredentialEntry.Builder(
-                                    this@MonicaCredentialProviderService, strings.get(R.string.hardware_key_title),
-                                    buildPendingIntent(hardwareIntent, option.id.hashCode()), option
-                                ).setDisplayName(strings.get(R.string.hardware_key_get_entry))
-                                    .setIcon(Icon.createWithResource(this@MonicaCredentialProviderService, R.drawable.ic_hardware_key)).build())
-                            }
                         }
                     }
                 }
                 
+                // Read the preference after all suspending software lookups complete.
+                if (hardwareAvailable()) {
+                    for (option in request.beginGetCredentialOptions.filterIsInstance<BeginGetPublicKeyCredentialOption>()) {
+                        val hardwareIntent = Intent(this@MonicaCredentialProviderService, takagi.ru.monica.passkey.hardware.HardwareSecurityKeyActivity::class.java)
+                            .setAction(takagi.ru.monica.passkey.hardware.HardwareSecurityKeyActivity.ACTION_GET)
+                            .setData(android.net.Uri.parse("monica-hardware://get/${option.id}"))
+                        credentialEntries.add(PublicKeyCredentialEntry.Builder(
+                            this@MonicaCredentialProviderService, strings.get(R.string.hardware_key_title),
+                            buildPendingIntent(hardwareIntent, option.id.hashCode()), option
+                        ).setDisplayName(strings.get(R.string.hardware_key_get_entry))
+                            .setIcon(Icon.createWithResource(this@MonicaCredentialProviderService, R.drawable.ic_hardware_key)).build())
+                    }
+                }
+
                 val response = BeginGetCredentialResponse.Builder()
                     .setCredentialEntries(credentialEntries)
                     .build()
@@ -351,8 +355,10 @@ class MonicaCredentialProviderService : CredentialProviderService() {
         )
     }
 
-    private fun hardwareAvailable(): Boolean = packageManager.hasSystemFeature(android.content.pm.PackageManager.FEATURE_USB_HOST) ||
-        packageManager.hasSystemFeature(android.content.pm.PackageManager.FEATURE_NFC)
+    private fun hardwareAvailable(): Boolean =
+        takagi.ru.monica.passkey.hardware.HardwarePasskeyPreferences.isEnabled(this) &&
+            (packageManager.hasSystemFeature(android.content.pm.PackageManager.FEATURE_USB_HOST) ||
+                packageManager.hasSystemFeature(android.content.pm.PackageManager.FEATURE_NFC))
 
     private suspend fun resolvePasskeys(
         rpId: String,

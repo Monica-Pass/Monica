@@ -9,8 +9,13 @@ import androidx.compose.ui.platform.testTag
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
+import android.content.ContentResolver
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
+import android.os.Process
+import android.provider.DocumentsContract
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
@@ -223,7 +228,25 @@ fun ExportDataScreen(
         }
         val uri = result.data?.data
         if (result.resultCode == android.app.Activity.RESULT_OK && request != null && uri != null && jsonAllowed) {
-            val started = DatabaseExportJobs.start(context.applicationContext, request.source.key, uri, request.option.name) { progress ->
+            val accessModes = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            val grantedModes = if (uri.scheme == ContentResolver.SCHEME_CONTENT) runCatching {
+                listOf(Intent.FLAG_GRANT_READ_URI_PERMISSION, Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                    .fold(0) { granted, mode ->
+                        if (context.checkUriPermission(uri, Process.myPid(), Process.myUid(), mode) == PackageManager.PERMISSION_GRANTED)
+                            granted or mode else granted
+                    }
+            }.getOrDefault(0) else 0
+            val requiredModes = if (request.option == ExportOption.ZIP_BACKUP || request.option == ExportOption.STEAM_MAFILE)
+                accessModes else Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            if ((grantedModes and requiredModes) != requiredModes) {
+                request.jsonPermit?.clear()
+                request.jsonRequest?.revoke()
+                scope.launch { snackbar.showSnackbar(context.getString(R.string.export_document_permission_missing), duration = SnackbarDuration.Long) }
+                return@rememberLauncherForActivityResult
+            }
+            val uriGrantFlags = (result.data?.flags ?: 0) and accessModes and grantedModes
+            val started = DatabaseExportJobs.start(context.applicationContext, request.source.key, uri, request.option.name,
+                uriGrantFlags = uriGrantFlags) { progress ->
                 when (request.option) {
                     ExportOption.ZIP_BACKUP -> onExportZip(uri, request.preferences, request.password, request.source, progress)
                     ExportOption.KDBX -> onExportKdbx(uri, checkNotNull(request.password), request.source, progress)
@@ -267,7 +290,14 @@ fun ExportDataScreen(
         try {
             picker.launch(Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
                 addCategory(Intent.CATEGORY_OPENABLE); type = spec.mimeType
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION or
+                    Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
                 putExtra(Intent.EXTRA_TITLE, spec.fileName)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    // This is a navigation hint; the returned document still needs an actual grant.
+                    putExtra(DocumentsContract.EXTRA_INITIAL_URI,
+                        DocumentsContract.buildDocumentUri("com.android.externalstorage.documents", "primary:Download"))
+                }
             })
         } catch (error: Exception) {
             pending?.jsonPermit?.clear(); pending = null

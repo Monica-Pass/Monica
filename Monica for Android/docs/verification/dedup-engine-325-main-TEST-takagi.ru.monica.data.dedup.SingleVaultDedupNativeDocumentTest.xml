@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.data.dedup.SingleVaultDedupNativeDocumentTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-11-06T12:18:28" hostname="JOYIN" time="4.072">
+  <properties/>
+  <testcase name="mdbxNativeRowsRetainUnknownPayloadAndDoNotClaimHistoryCompleteness" classname="takagi.ru.monica.data.dedup.SingleVaultDedupNativeDocumentTest" time="3.547"/>
+  <testcase name="bitwardenFullTypedFieldsUseSingleKeeperContainment" classname="takagi.ru.monica.data.dedup.SingleVaultDedupNativeDocumentTest" time="0.157"/>
+  <testcase name="mdbxExplicitGroupIsCountedAsOneBlockedProject" classname="takagi.ru.monica.data.dedup.SingleVaultDedupNativeDocumentTest" time="0.048"/>
+  <testcase name="bitwardenUnreadableFieldNeverFallsBackToCiphertextEquality" classname="takagi.ru.monica.data.dedup.SingleVaultDedupNativeDocumentTest" time="0.059"/>
+  <testcase name="bitwardenRepeatedFieldsAndProtectionTypeRemainSignificant" classname="takagi.ru.monica.data.dedup.SingleVaultDedupNativeDocumentTest" time="0.05"/>
+  <testcase name="bitwardenPasswordAndUriMatchBehaviorPreventFalseDuplicates" classname="takagi.ru.monica.data.dedup.SingleVaultDedupNativeDocumentTest" time="0.046"/>
+  <testcase name="bitwardenUnknownAttachmentAndHistoryContentIsNotDropped" classname="takagi.ru.monica.data.dedup.SingleVaultDedupNativeDocumentTest" time="0.057"/>
+  <testcase name="bitwardenAccountGroupAndLinkedFieldsNeedSeparateStructuralProof" classname="takagi.ru.monica.data.dedup.SingleVaultDedupNativeDocumentTest" time="0.051"/>
+  <testcase name="bitwardenNativePasskeyAndBindingFieldsAreExplicitlyPreserved" classname="takagi.ru.monica.data.dedup.SingleVaultDedupNativeDocumentTest" time="0.055"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

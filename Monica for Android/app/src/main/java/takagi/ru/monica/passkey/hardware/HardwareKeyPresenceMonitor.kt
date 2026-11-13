@@ -27,6 +27,7 @@ internal class HardwareKeyPresenceMonitor(
     private val nfc = NfcAdapter.getDefaultAdapter(activity)
     private var registered = false
     private var resumed = false
+    private var closed = false
     var detectedNfcTag: Tag? = null
         private set
     private val receiver = object : BroadcastReceiver() {
@@ -34,9 +35,15 @@ internal class HardwareKeyPresenceMonitor(
     }
     init { activity.lifecycle.addObserver(this) }
     private fun refresh() {
+        if (closed || !HardwarePasskeyPreferences.isEnabled(activity)) {
+            detectedNfcTag = null
+            onChanged(HardwareKeyPresence())
+            return
+        }
         onChanged(HardwareKeyPresence(runCatching { UsbTransport.candidates(usb).size }.getOrDefault(0), detectedNfcTag != null))
     }
     override fun onStart(owner: LifecycleOwner) {
+        if (closed || !HardwarePasskeyPreferences.isEnabled(activity)) return
         if (!registered) {
             ContextCompat.registerReceiver(activity, receiver, IntentFilter().apply {
                 addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED)
@@ -47,12 +54,13 @@ internal class HardwareKeyPresenceMonitor(
         refresh()
     }
     override fun onResume(owner: LifecycleOwner) {
+        if (closed || !HardwarePasskeyPreferences.isEnabled(activity)) return
         resumed = true
         refresh()
         if (nfc?.isEnabled == true) runCatching {
             nfc.enableReaderMode(activity, { tag ->
                 if (IsoDep::class.java.name in tag.techList) activity.runOnUiThread {
-                    if (resumed) { detectedNfcTag = tag; refresh() }
+                    if (resumed && !closed && HardwarePasskeyPreferences.isEnabled(activity)) { detectedNfcTag = tag; refresh() }
                 }
             }, NfcAdapter.FLAG_READER_NFC_A or NfcAdapter.FLAG_READER_NFC_B or NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, null)
         }
@@ -66,5 +74,11 @@ internal class HardwareKeyPresenceMonitor(
     override fun onStop(owner: LifecycleOwner) {
         if (registered) { activity.unregisterReceiver(receiver); registered = false }
     }
-    override fun onDestroy(owner: LifecycleOwner) { activity.lifecycle.removeObserver(this) }
+    fun close() {
+        closed = true
+        onPause(activity)
+        onStop(activity)
+        activity.lifecycle.removeObserver(this)
+    }
+    override fun onDestroy(owner: LifecycleOwner) { close() }
 }

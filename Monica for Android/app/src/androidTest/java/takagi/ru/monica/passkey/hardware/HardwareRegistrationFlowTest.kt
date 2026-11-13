@@ -1,7 +1,6 @@
 package takagi.ru.monica.passkey.hardware
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
@@ -17,6 +16,8 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
+import org.junit.Before
+import org.junit.After
 import takagi.ru.monica.R
 import takagi.ru.monica.data.PasswordDatabase
 import takagi.ru.monica.passkey.MonicaCredentialProviderService
@@ -26,7 +27,28 @@ import takagi.ru.monica.passkey.PasskeyCreateActivity
 class HardwareRegistrationFlowTest {
     @get:Rule val compose = createEmptyComposeRule()
     private val context get() = InstrumentationRegistry.getInstrumentation().targetContext
+    private lateinit var preference: HardwarePasskeyPreferenceFixture
+    @Before fun optIntoHardwareForExistingHardwareTests() {
+        preference = HardwarePasskeyPreferenceFixture(context)
+        HardwarePasskeyPreferences.setEnabled(context, true)
+    }
+    @After fun restoreHardwarePreference() = preference.restore()
     private val presence = PasskeyCreateActivity::class.java.getDeclaredField("hardwarePresence\$delegate").apply { isAccessible = true }
+    private val requestReady = PasskeyCreateActivity::class.java.getDeclaredField("hardwareRequestReady").apply { isAccessible = true }
+    private val monitor = PasskeyCreateActivity::class.java.getDeclaredField("hardwarePresenceMonitor").apply { isAccessible = true }
+
+    private fun awaitRegistrationPageAndDiscovery(scenario: ActivityScenario<PasskeyCreateActivity>) {
+        // Secure preparation now creates discovery asynchronously. Let its initial real-device
+        // refresh finish before supplying this test's one synthetic attachment hint.
+        compose.onNodeWithTag("passkey-save-location").performScrollTo().assertIsDisplayed()
+        scenario.onActivity { activity ->
+            assertTrue("Framework request must finish secure preparation", requestReady.getBoolean(activity))
+            val activeMonitor = monitor.get(activity) as? HardwareKeyPresenceMonitor
+            assertNotNull("Enabled registration must have created its discovery monitor", activeMonitor)
+            assertTrue("Discovery must finish its resumed-state refresh before hint injection",
+                HardwareKeyPresenceMonitor::class.java.getDeclaredField("resumed").apply { isAccessible = true }.getBoolean(activeMonitor))
+        }
+    }
 
     @Suppress("UNCHECKED_CAST")
     private fun device(activity: PasskeyCreateActivity, connected: Boolean) {
@@ -36,8 +58,7 @@ class HardwareRegistrationFlowTest {
 
     private fun source(): Intent {
         val json = """{"challenge":"AQIDBA","rp":{"id":"example.com","name":"Example"},"user":{"id":"BQYH","name":"hardware-flow-fixture","displayName":"Hardware fixture"},"pubKeyCredParams":[{"type":"public-key","alg":-7}]}"""
-        val pkg = context.packageManager.getPackageInfo("com.android.chrome", PackageManager.GET_SIGNING_CERTIFICATES)
-        val caller = android.service.credentials.CallingAppInfo("com.android.chrome", pkg.signingInfo!!, "https://login.example.com")
+        val caller = trustedHardwareBrowserCaller(context)
         val request = CreatePublicKeyCredentialRequest(json, clientDataHash = ByteArray(32) { it.toByte() })
         return Intent(context, PasskeyCreateActivity::class.java)
             .putExtra("android.service.credentials.extra.CREATE_CREDENTIAL_REQUEST", android.service.credentials.CreateCredentialRequest(caller, request.type, request.credentialData))
@@ -59,6 +80,7 @@ class HardwareRegistrationFlowTest {
         val dao = PasswordDatabase.getDatabase(context).passkeyDao()
         val before = runBlocking { dao.getAllPasskeysSync() }
         ActivityScenario.launch<PasskeyCreateActivity>(source()).use { scenario ->
+            awaitRegistrationPageAndDiscovery(scenario)
             scenario.onActivity { device(it, true) }
             compose.onNodeWithTag("passkey-save-location").performScrollTo().performClick()
             compose.onNodeWithTag("passkey-target-hardware").assertIsDisplayed()
@@ -71,6 +93,7 @@ class HardwareRegistrationFlowTest {
             scenario.recreate()
             compose.onNodeWithTag("passkey-create-confirm").assertIsNotEnabled()
             compose.onNodeWithText(context.getString(R.string.bind_password)).assertDoesNotExist()
+            awaitRegistrationPageAndDiscovery(scenario)
             scenario.onActivity { device(it, true) }
             compose.onNodeWithTag("passkey-create-confirm").performClick()
             var hardware: HardwareSecurityKeyActivity? = null
@@ -99,6 +122,7 @@ class HardwareRegistrationFlowTest {
         val before = runBlocking { dao.getAllPasskeysSync() }
         val response = """{"id":"AQI","rawId":"AQI","type":"public-key","authenticatorAttachment":"cross-platform","response":{"attestationObject":"oA"}}"""
         ActivityScenario.launchActivityForResult<PasskeyCreateActivity>(source()).use { scenario ->
+            awaitRegistrationPageAndDiscovery(scenario)
             scenario.onActivity { device(it, true) }
             compose.onNodeWithTag("passkey-save-location").performScrollTo().performClick()
             compose.onNodeWithTag("passkey-target-hardware").performClick()

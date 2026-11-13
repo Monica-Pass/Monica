@@ -1,0 +1,480 @@
+{
+  "scope": "Static source audit, not device/runtime validation",
+  "editions": {
+    "main": {
+      "app/src/main/java/takagi/ru/monica/data/dedup/DedupMergeService.kt": {
+        "sha256": "14f87720126ec28167bcacece567db1135a79df407a54b1cb35bcd65a2fe0a36",
+        "lines": {
+          "override suspend fun buildPlan": 181,
+          "override suspend fun executePlan": 343,
+          "private fun mergePasswordGroup": 410,
+          "private fun mergeCustomFields": 448,
+          "private fun conflictFields(": 518,
+          "private fun exactContentFingerprint(entry": 543,
+          "private fun buildTargetEntry": 580,
+          "private fun decryptComparablePassword": 982,
+          "private fun fingerprint": 988
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/dedup/DedupModels.kt": {
+        "sha256": "0a9a5ffcecb3602d687d8649ced3cfbb2a66a755a367ceaed101b38046c72788",
+        "lines": {
+          "sealed class DedupMergeTarget": 24
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/dedup/DedupMergeExecutor.kt": {
+        "sha256": "27e97e72d12450aa758f9676e69937ad7d97ca25b131b6454f5fbe4bed80732f",
+        "lines": {
+          "override suspend fun writePassword": 43,
+          "internal class DedupMergeExecutor": 110
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/dedup/DedupAttachmentSupport.kt": {
+        "sha256": "9fece971bb32aca0e14b5838336cffcc2c0e56e49f282116920c528b744a6a35",
+        "lines": {
+          "suspend fun snapshot": 40,
+          "suspend fun copy": 84
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/dedup/DedupPasswordIdentity.kt": {
+        "sha256": "aef4e8ce66133b9779b2ba047efe855ee132154be28f3bb6b0e3a75e0da7e7ee",
+        "lines": {
+          "fun key": 8,
+          "fun normalizeWebsite": 29
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/dedup/DedupPasskeyPlanner.kt": {
+        "sha256": "c2febd05ab835b509fe95408f71eba1fd8fa710a84b06848bb788138aff7661e",
+        "lines": {}
+      },
+      "app/src/main/java/takagi/ru/monica/data/dedup/DedupMergeOperations.kt": {
+        "sha256": "7f6061e20a69be3c601a63ee5b5303e7f5decf0848154cec9e05c53efb6a1293",
+        "lines": {}
+      },
+      "app/src/main/java/takagi/ru/monica/data/PasswordEntry.kt": {
+        "sha256": "b6854abd4abed2a18948068ae0f1bb22f417e1c0d6138bf39686fe2e9bcf7c12",
+        "lines": {
+          "data class PasswordEntry": 31
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/CustomField.kt": {
+        "sha256": "8752611ecbe7c919325d5ad321ef8951d7e9ec7a93be6819ef11ff8ded0b8221",
+        "lines": {
+          "data class CustomField(": 36
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/SecureItem.kt": {
+        "sha256": "72130d9b76ebdd84e48df3c7f1665fb21dae3d223d3c0831df15ae7d4a130cef",
+        "lines": {
+          "data class SecureItem": 28
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/model/ProjectCredentialGroup.kt": {
+        "sha256": "59b2279fa1b6fc49b0cb213e22b5f39ee5be713e20276fc84394e386fb4bb62b",
+        "lines": {
+          "fun read": 35,
+          "fun parse": 42
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/model/EntryContentFields.kt": {
+        "sha256": "3e7bc7f74c322d4c3f6aeec340b6a71e1ecfdd432553780d25ca978719078ddf",
+        "lines": {
+          "fun order": 21
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/model/PasswordContentBlocks.kt": {
+        "sha256": "a0d045a67894bc4f229fc3895872b3f8901b733cc127c5144247117dc16c4315",
+        "lines": {
+          "enum class Kind": 14,
+          "fun read": 36
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/model/EmbeddedWalletContent.kt": {
+        "sha256": "3434eb61ce9d8f551ee83dc6b2a3b44d6b2a43c461cb278067b0a6c4ab1da40e",
+        "lines": {}
+      },
+      "app/src/main/java/takagi/ru/monica/repository/PasswordRepository.kt": {
+        "sha256": "b8a1d229aa426412bbad7b274ab53ad8e0c7bc484a6581a9c2afb16ec10576e3",
+        "lines": {
+          "fun getAllPasswordEntries": 57
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/repository/CustomFieldRepository.kt": {
+        "sha256": "87bc173ab37599c2105cd8ce43a04905fa57518f7f3a90b2fb5f4d79b671900e",
+        "lines": {
+          "suspend fun getFieldsByEntryIds": 45
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/repository/SecureItemRepository.kt": {
+        "sha256": "c9ff2106ed4da6f41a66827728dab60c0ea978bdc8b2a6f07bd89cd5ee5f44b7",
+        "lines": {
+          "fun getAllItems": 94
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/repository/PasskeyRepository.kt": {
+        "sha256": "36ad774696c692b4864dd7f6ffda1c5df7c890ec68d291073037604a668315d8",
+        "lines": {
+          "suspend fun getAllPasskeysSync": 53
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/keepass/KeePassMonicaPasswordStore.kt": {
+        "sha256": "ea9eedd2e80603b19717cb2e5446b0314b21f98befbd5b0178660ca284003ab4",
+        "lines": {
+          "val attachmentRows": 86,
+          "fun fields(id": 471
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/keepass/KeePassLosslessTransfer.kt": {
+        "sha256": "1428a92a8769ed1359ae1fa95bcb7f694d29b9cb434dcc15f98a228899017277",
+        "lines": {
+          "fun entriesEquivalent": 254
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenCipherDocument.kt": {
+        "sha256": "3f716755fab159c0e010f80bde9825fbda605a46131d531367bd6e75b209e678",
+        "lines": {
+          "private val topNames": 16,
+          "private val uriNames": 18,
+          "private val fieldNames": 19
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/bitwarden/service/CipherSyncProcessor.kt": {
+        "sha256": "940047e6273c97708180d1312bc989febe319351226ffda4dcdcd54ad9e4bd00",
+        "lines": {
+          "private fun parseLoginUris": 1978,
+          "private fun decryptCustomFields": 1934
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenApi.kt": {
+        "sha256": "fb7b4469c75d5a2962a9232330098a55354d30b46bb35f22be4a91b962824592",
+        "lines": {
+          "suspend fun deleteCipher": 265
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/viewmodel/DedupEngineViewModel.kt": {
+        "sha256": "0cdec8763321020fe9078168979e75b121c04b33042dceacc6c43fbf2d0b0311",
+        "lines": {
+          "fun executeMerge": 192
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/ui/screens/DedupEngineScreen.kt": {
+        "sha256": "602fb8491dc8b91e6ebebc3d563c2b0b0f6eb537101e219371f1aa9cd1cb4158",
+        "lines": {
+          "fun DedupEngineScreen": 123
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/ui/components/PasswordContentMenu.kt": {
+        "sha256": "52146dc88ec3445066e189ddf250adeea8e7e9f340bb04e07c7666e1e765163b",
+        "lines": {
+          "enum class PasswordContentSection": 24
+        }
+      }
+    },
+    "fd": {
+      "app/src/main/java/takagi/ru/monica/data/dedup/DedupMergeService.kt": {
+        "sha256": "c5d8b700cb2f8d8e730015ad334cb430aeebdf3d236739092ed29aceb9e3033b",
+        "lines": {
+          "override suspend fun buildPlan": 181,
+          "override suspend fun executePlan": 343,
+          "private fun mergePasswordGroup": 410,
+          "private fun mergeCustomFields": 448,
+          "private fun conflictFields(": 518,
+          "private fun exactContentFingerprint(entry": 543,
+          "private fun buildTargetEntry": 580,
+          "private fun decryptComparablePassword": 982,
+          "private fun fingerprint": 988
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/dedup/DedupModels.kt": {
+        "sha256": "0a9a5ffcecb3602d687d8649ced3cfbb2a66a755a367ceaed101b38046c72788",
+        "lines": {
+          "sealed class DedupMergeTarget": 24
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/dedup/DedupMergeExecutor.kt": {
+        "sha256": "fb1c4ed070a9fc36393c9d04fbf6ad91b592a0c3a16f985d900623ea239aa5a9",
+        "lines": {
+          "override suspend fun writePassword": 43,
+          "internal class DedupMergeExecutor": 110
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/dedup/DedupAttachmentSupport.kt": {
+        "sha256": "6821f55b27f5b42f506ac75e505bb4c3581d56126d0aac40fd87d62fdf38afe2",
+        "lines": {
+          "suspend fun snapshot": 40,
+          "suspend fun copy": 84
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/dedup/DedupPasswordIdentity.kt": {
+        "sha256": "75615d301771aa14ef5a4affe9a4e736ac44c4d204c355d52ae8692d7376ad48",
+        "lines": {
+          "fun key": 8,
+          "fun normalizeWebsite": 29
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/dedup/DedupPasskeyPlanner.kt": {
+        "sha256": "c2febd05ab835b509fe95408f71eba1fd8fa710a84b06848bb788138aff7661e",
+        "lines": {}
+      },
+      "app/src/main/java/takagi/ru/monica/data/dedup/DedupMergeOperations.kt": {
+        "sha256": "99cf549d022cefa9c3c9211fe439cbc3c1889f9fef32a583f4b3c7351a385b42",
+        "lines": {}
+      },
+      "app/src/main/java/takagi/ru/monica/data/PasswordEntry.kt": {
+        "sha256": "b6854abd4abed2a18948068ae0f1bb22f417e1c0d6138bf39686fe2e9bcf7c12",
+        "lines": {
+          "data class PasswordEntry": 31
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/CustomField.kt": {
+        "sha256": "ba81f1658932f1cd88df8126e2150aed67dc72ff677741d6997cd03dddd2def9",
+        "lines": {
+          "data class CustomField(": 36
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/SecureItem.kt": {
+        "sha256": "72130d9b76ebdd84e48df3c7f1665fb21dae3d223d3c0831df15ae7d4a130cef",
+        "lines": {
+          "data class SecureItem": 28
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/model/ProjectCredentialGroup.kt": {
+        "sha256": "59b2279fa1b6fc49b0cb213e22b5f39ee5be713e20276fc84394e386fb4bb62b",
+        "lines": {
+          "fun read": 35,
+          "fun parse": 42
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/model/EntryContentFields.kt": {
+        "sha256": "3e7bc7f74c322d4c3f6aeec340b6a71e1ecfdd432553780d25ca978719078ddf",
+        "lines": {
+          "fun order": 21
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/model/PasswordContentBlocks.kt": {
+        "sha256": "a0d045a67894bc4f229fc3895872b3f8901b733cc127c5144247117dc16c4315",
+        "lines": {
+          "enum class Kind": 14,
+          "fun read": 36
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/data/model/EmbeddedWalletContent.kt": {
+        "sha256": "3434eb61ce9d8f551ee83dc6b2a3b44d6b2a43c461cb278067b0a6c4ab1da40e",
+        "lines": {}
+      },
+      "app/src/main/java/takagi/ru/monica/repository/PasswordRepository.kt": {
+        "sha256": "b8a1d229aa426412bbad7b274ab53ad8e0c7bc484a6581a9c2afb16ec10576e3",
+        "lines": {
+          "fun getAllPasswordEntries": 57
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/repository/CustomFieldRepository.kt": {
+        "sha256": "87bc173ab37599c2105cd8ce43a04905fa57518f7f3a90b2fb5f4d79b671900e",
+        "lines": {
+          "suspend fun getFieldsByEntryIds": 45
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/repository/SecureItemRepository.kt": {
+        "sha256": "c9ff2106ed4da6f41a66827728dab60c0ea978bdc8b2a6f07bd89cd5ee5f44b7",
+        "lines": {
+          "fun getAllItems": 94
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/repository/PasskeyRepository.kt": {
+        "sha256": "36ad774696c692b4864dd7f6ffda1c5df7c890ec68d291073037604a668315d8",
+        "lines": {
+          "suspend fun getAllPasskeysSync": 53
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/keepass/KeePassMonicaPasswordStore.kt": {
+        "sha256": "ea9eedd2e80603b19717cb2e5446b0314b21f98befbd5b0178660ca284003ab4",
+        "lines": {
+          "val attachmentRows": 86,
+          "fun fields(id": 471
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/keepass/KeePassLosslessTransfer.kt": {
+        "sha256": "1428a92a8769ed1359ae1fa95bcb7f694d29b9cb434dcc15f98a228899017277",
+        "lines": {
+          "fun entriesEquivalent": 254
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenCipherDocument.kt": {
+        "sha256": "3f716755fab159c0e010f80bde9825fbda605a46131d531367bd6e75b209e678",
+        "lines": {
+          "private val topNames": 16,
+          "private val uriNames": 18,
+          "private val fieldNames": 19
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/bitwarden/service/CipherSyncProcessor.kt": {
+        "sha256": "940047e6273c97708180d1312bc989febe319351226ffda4dcdcd54ad9e4bd00",
+        "lines": {
+          "private fun parseLoginUris": 1978,
+          "private fun decryptCustomFields": 1934
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenApi.kt": {
+        "sha256": "fb7b4469c75d5a2962a9232330098a55354d30b46bb35f22be4a91b962824592",
+        "lines": {
+          "suspend fun deleteCipher": 265
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/viewmodel/DedupEngineViewModel.kt": {
+        "sha256": "0cdec8763321020fe9078168979e75b121c04b33042dceacc6c43fbf2d0b0311",
+        "lines": {
+          "fun executeMerge": 192
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/ui/screens/DedupEngineScreen.kt": {
+        "sha256": "602fb8491dc8b91e6ebebc3d563c2b0b0f6eb537101e219371f1aa9cd1cb4158",
+        "lines": {
+          "fun DedupEngineScreen": 123
+        }
+      },
+      "app/src/main/java/takagi/ru/monica/ui/components/PasswordContentMenu.kt": {
+        "sha256": "955e444ec2004beb6147098881694b658e4bd37ac1976602440efb32a3ec1e0d",
+        "lines": {
+          "enum class PasswordContentSection": 24
+        }
+      }
+    }
+  },
+  "comparisons": [
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/dedup/DedupMergeService.kt",
+      "byteEqual": false,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/dedup/DedupModels.kt",
+      "byteEqual": true,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/dedup/DedupMergeExecutor.kt",
+      "byteEqual": false,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/dedup/DedupAttachmentSupport.kt",
+      "byteEqual": false,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/dedup/DedupPasswordIdentity.kt",
+      "byteEqual": false,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/dedup/DedupPasskeyPlanner.kt",
+      "byteEqual": true,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/dedup/DedupMergeOperations.kt",
+      "byteEqual": false,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/PasswordEntry.kt",
+      "byteEqual": true,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/CustomField.kt",
+      "byteEqual": false,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/SecureItem.kt",
+      "byteEqual": true,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/model/ProjectCredentialGroup.kt",
+      "byteEqual": true,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/model/EntryContentFields.kt",
+      "byteEqual": true,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/model/PasswordContentBlocks.kt",
+      "byteEqual": true,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/data/model/EmbeddedWalletContent.kt",
+      "byteEqual": true,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/repository/PasswordRepository.kt",
+      "byteEqual": true,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/repository/CustomFieldRepository.kt",
+      "byteEqual": true,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/repository/SecureItemRepository.kt",
+      "byteEqual": true,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/repository/PasskeyRepository.kt",
+      "byteEqual": true,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/keepass/KeePassMonicaPasswordStore.kt",
+      "byteEqual": true,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/keepass/KeePassLosslessTransfer.kt",
+      "byteEqual": true,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/BitwardenCipherDocument.kt",
+      "byteEqual": true,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/service/CipherSyncProcessor.kt",
+      "byteEqual": true,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenApi.kt",
+      "byteEqual": true,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/viewmodel/DedupEngineViewModel.kt",
+      "byteEqual": true,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/DedupEngineScreen.kt",
+      "byteEqual": true,
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/PasswordContentMenu.kt",
+      "byteEqual": false,
+      "normalizedEqual": true
+    }
+  ],
+  "syntheticEncodingCounterexample": {
+    "distinctTuplesShareCurrentInnerEncoding": true,
+    "typedEncodingDistinguishes": true
+  },
+  "productionCodeModified": false
+}

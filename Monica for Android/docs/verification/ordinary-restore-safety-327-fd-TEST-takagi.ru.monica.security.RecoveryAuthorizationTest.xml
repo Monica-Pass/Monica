@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.security.RecoveryAuthorizationTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-13T07:01:16.715Z" hostname="JOYIN" time="0.006">
+  <properties/>
+  <testcase name="correctConfirmationIsSingleUse" classname="takagi.ru.monica.security.RecoveryAuthorizationTest" time="0.004"/>
+  <testcase name="lockOrCredentialEpochRevokes" classname="takagi.ru.monica.security.RecoveryAuthorizationTest" time="0.0"/>
+  <testcase name="cancelBeforeAndAfterConfirmationRevokes" classname="takagi.ru.monica.security.RecoveryAuthorizationTest" time="0.001"/>
+  <testcase name="answersAndFabricatedPermitCannotAuthorize" classname="takagi.ru.monica.security.RecoveryAuthorizationTest" time="0.0"/>
+  <testcase name="expirationAndEitherClockRollbackRevokes" classname="takagi.ru.monica.security.RecoveryAuthorizationTest" time="0.0"/>
+  <testcase name="differentStorePasswordOrAnswerRevokes" classname="takagi.ru.monica.security.RecoveryAuthorizationTest" time="0.0"/>
+  <testcase name="wrongRequestCannotConfirmOrCancelReplacement" classname="takagi.ru.monica.security.RecoveryAuthorizationTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

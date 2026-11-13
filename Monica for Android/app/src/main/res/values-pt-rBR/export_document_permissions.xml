@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_document_permission_missing">"O seletor de arquivos do sistema não concedeu as permissões de leitura e gravação necessárias. Escolha Download no armazenamento principal do dispositivo ou outro local onde seja possível gravar. Um arquivo vazio pode ter sido criado. Ele não é um backup válido e pode ser excluído no gerenciador de arquivos."</string>
+</resources>

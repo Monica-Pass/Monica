@@ -515,43 +515,51 @@ class BiometricUnlockRegressionGuardTest {
         val secureItemDaoSource = projectFile(
             "app/src/main/java/takagi/ru/monica/data/SecureItemDao.kt"
         ).readSourceText()
+        val policySource = projectFile(
+            "app/src/main/java/takagi/ru/monica/security/LegacySensitiveValuePolicy.kt"
+        ).readSourceText()
 
         assertTrue(
-            "Legacy sensitive-field migration must keep resumable progress outside Room schema migrations.",
-            migrationSource.contains("getSharedPreferences(PREFS_NAME") &&
-                migrationSource.contains("KEY_VERSION") &&
-                migrationSource.contains("lastIdKey(domain)") &&
-                migrationSource.contains("completedKey(domain)") &&
-                migrationSource.contains("failureCountKey(domain)") &&
-                migrationSource.contains("blockedIdKey(domain)")
+            "Every Room change must permit a fresh scan, including restored IDs below old completion markers.",
+            migrationSource.contains("invalidationTracker.createFlow(\"secure_items\", \"password_entries\")") &&
+                migrationSource.contains(".conflate()") && migrationSource.contains(".collect {") &&
+                !migrationSource.contains(".collectLatest") && migrationSource.contains("runUnlockedSmallBatch()") &&
+                migrationSource.contains("var after = 0L") && !migrationSource.contains("getSharedPreferences(") &&
+                !migrationSource.contains("completedKey(") && !migrationSource.contains("lastIdKey(")
         )
         assertTrue(
             "Migration must be gated by usable unlocked key material and run from the authenticated main-app path.",
-            migrationSource.contains("securityManager.canAccessVaultMaterialNow()") &&
-                mainActivitySource.contains("LaunchedEffect(isAuthenticated)") &&
-                mainActivitySource.contains("if (isAuthenticated)") &&
+            migrationSource.contains("securityManager.isVaultRuntimeUnlocked()") &&
+                migrationSource.contains("SessionManager.lockGeneration.value == app") &&
+                migrationSource.contains("SecurityManager.dataReadGeneration.value == key") &&
+                migrationSource.contains("SecurityManager.hasRuntimeUnlockCache()") &&
+                mainActivitySource.contains("LaunchedEffect(isAuthenticated, mainSessionUnlocked, mainSessionLockGeneration") &&
+                mainActivitySource.contains("if (isAuthenticated && mainSessionUnlocked)") &&
                 mainActivitySource.contains("SensitiveFieldMigrationManager(") &&
-                mainActivitySource.contains("withContext(Dispatchers.IO)") &&
-                mainActivitySource.contains("delay(15_000)") &&
-                mainActivitySource.contains("runUnlockedSmallBatch()")
+                mainActivitySource.contains("repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED)") &&
+                mainActivitySource.contains("sensitiveFieldMigrationManager.observeWhileUnlocked()")
         )
         assertTrue(
-            "Migration must stay small-batch so it cannot block startup or lock the UI.",
-            migrationSource.contains("private const val BATCH_SIZE = 3") &&
-                migrationSource.contains("private const val MAX_BATCHES_PER_DOMAIN = 1") &&
+            "Migration must scan bounded pages on IO, yielding and checking cancellation between rows.",
+            migrationSource.contains("private const val BATCH_SIZE = 64") &&
+                migrationSource.contains("withContext(Dispatchers.IO)") && migrationSource.contains("yield()") &&
+                migrationSource.contains("currentCoroutineContext().ensureActive()") &&
+                migrationSource.contains("while (stamp.isCurrent())") && migrationSource.contains("after = row.id") &&
+                !migrationSource.contains("MAX_BATCHES_PER_DOMAIN") &&
                 passwordDaoSource.contains("getAuthenticatorKeyMigrationBatch") &&
                 secureItemDaoSource.contains("getItemDataMigrationBatch")
         )
         assertTrue(
-            "Migration must only rewrite confirmed plaintext legacy values into C2/MDK-compatible local ciphertext.",
-            migrationSource.contains("securityManager.looksLikeMonicaCiphertext(rawValue)") &&
-                migrationSource.contains("securityManager.encryptDataLegacyCompat(plainValue)") &&
-                migrationSource.contains("val roundTrip = securityManager.decryptData(encrypted)") &&
-                migrationSource.contains("check(roundTrip == plainValue)") &&
-                migrationSource.contains("TotpDataResolver.parseStoredItemData") &&
-                migrationSource.contains("TotpDataResolver.fromAuthenticatorKey") &&
-                migrationSource.contains("CardWalletDataCodec.parseBankCardData") &&
-                migrationSource.contains("CardWalletDataCodec.parseDocumentData")
+            "Only positively identified legacy plaintext may be wrapped, with exact roundtrip and full-row conflict checks.",
+            migrationSource.contains("LegacySensitiveValuePolicy.acceptsItem(row.itemType, row.itemData)") &&
+                migrationSource.contains("LegacySensitiveValuePolicy.acceptsAuthenticatorKey(row.authenticatorKey)") &&
+                migrationSource.contains("val encrypted = encryptor.encrypt(raw)") &&
+                migrationSource.contains("check(encrypted.startsWith(\"MDK|\") && securityManager.decryptData(encrypted) == raw)") &&
+                migrationSource.contains("latest != observed || !local(latest)") &&
+                migrationSource.contains("database.runInTransaction(Callable") &&
+                policySource.contains("CardWalletDataCodec.parseBankCardData") &&
+                policySource.contains("CardWalletDataCodec.parseDocumentData") &&
+                !policySource.contains("decryptData(")
         )
         assertTrue(
             "Migration must use DAO column updates instead of repositories, so MDBX/Bitwarden/KeePass/autofill chains do not see a user edit.",

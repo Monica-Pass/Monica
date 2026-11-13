@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_passkey_settings_title">Autorrelleno y claves de acceso</string>
+    <string name="hardware_key_enable">Activar llaves físicas</string>
+    <string name="hardware_key_enable_description">Usa llaves de seguridad USB o NFC con Monica. Desactivado por defecto. No afecta a las claves de acceso de software guardadas.</string>
+</resources>

@@ -3292,37 +3292,102 @@ class WebDavHelper(
     ): Result<RestoreResult> = BackupTemporaryFiles.deliverOnIo(
         discard = { result -> result.getOrNull()?.content?.portableAttachments?.close() },
     ) {
+        val state = RestoreReadState()
+        try {
+            val workspace = BackupTemporaryFiles.create(context.cacheDir).also { state.temporary = it }
+            readRestoreBackupFile(backupFile, decryptPassword, overwrite, restoreMonicaConfig, importDataOnly,
+                progress, workspace, state)
+        } catch (e: Exception) {
+            if (e is kotlinx.coroutines.CancellationException) throw e
+            Result.failure(Exception(strings.get(R.string.webdav_restore_failed,
+                e.message ?: strings.get(R.string.import_data_unknown_error)), e))
+        } finally {
+            state.decryptedBackup?.delete()
+            if (!state.handedOff) state.stagedAttachmentFiles.forEach { it.delete() }
+            if (state.handedOff) state.temporary?.close() else state.temporary?.discard()
+        }
+    }
+
+
+    /** Per-call ownership; cleanup stays outside the large parsing coroutine. */
+    private class RestoreReadState {
         val stagedAttachmentFiles = mutableSetOf<File>()
         var decryptedBackup: File? = null
         var handedOff = false
         var temporary: BackupTemporaryFiles.Workspace? = null
-        try {
-            val workspace = BackupTemporaryFiles.create(context.cacheDir).also { temporary = it }
-            // P0修复：错误跟踪
-            val failedItems = mutableListOf<FailedItem>()
-            val warnings = mutableListOf<String>()
-            var backupPasswordCount = 0
-            var backupNoteCount = 0
-            var backupTotpCount = 0 // 目前没有统计CSV中的TOTP，可以在CSV导入时统计，这里先保留变量
-            var backupCardCount = 0
-            var backupDocCount = 0
-            var backupBillingAddressCount = 0
-            var backupPaymentAccountCount = 0
-            var backupImageCount = 0
-            var backupPasskeyCount = 0
-            var backupSteamMaFileCount = 0
-            var restoredPasswordCount = 0
-            var restoredNoteCount = 0
-            var restoredCardCount = 0
-            var restoredDocCount = 0
-            var restoredBillingAddressCount = 0
-            var restoredPaymentAccountCount = 0
-            var restoredImageCount = 0
-            var restoredPasskeyCount = 0
-            var missingPasskeyPrivateKeyCount = 0
-            var restoredSteamMaFileCount = 0
-            var detectedMonicaConfigEntries = emptyList<String>()
+    }
 
+    private class RestoreReadCounters {
+        // P0修复：错误跟踪
+        val failedItems = mutableListOf<FailedItem>()
+        val warnings = mutableListOf<String>()
+        var backupPasswordCount = 0
+        var backupNoteCount = 0
+        var backupTotpCount = 0 // 目前没有统计CSV中的TOTP，可以在CSV导入时统计，这里先保留变量
+        var backupCardCount = 0
+        var backupDocCount = 0
+        var backupBillingAddressCount = 0
+        var backupPaymentAccountCount = 0
+        var backupImageCount = 0
+        var backupPasskeyCount = 0
+        var backupSteamMaFileCount = 0
+        var restoredPasswordCount = 0
+        var restoredNoteCount = 0
+        var restoredCardCount = 0
+        var restoredDocCount = 0
+        var restoredBillingAddressCount = 0
+        var restoredPaymentAccountCount = 0
+        var restoredImageCount = 0
+        var restoredPasskeyCount = 0
+        var missingPasskeyPrivateKeyCount = 0
+        var restoredSteamMaFileCount = 0
+        var detectedMonicaConfigEntries = emptyList<String>()
+
+    }
+
+    private class RestoreParsedEntries {
+        val passwordsWithMetadata = mutableListOf<Pair<PasswordEntry, String?>>()  // ✅ 存储密码和分类名称
+        val notesWithMetadata = mutableListOf<Pair<DataExportImportManager.ExportItem, String?>>()
+        val totpWithMetadata = mutableListOf<Pair<DataExportImportManager.ExportItem, String?>>()
+        val bankCardsWithMetadata = mutableListOf<Pair<DataExportImportManager.ExportItem, String?>>()
+        val documentsWithMetadata = mutableListOf<Pair<DataExportImportManager.ExportItem, String?>>()
+        val billingAddressesWithMetadata = mutableListOf<Pair<DataExportImportManager.ExportItem, String?>>()
+        val paymentAccountsWithMetadata = mutableListOf<Pair<DataExportImportManager.ExportItem, String?>>()
+        val passkeysWithMetadata = mutableListOf<Pair<PasskeyEntry, String?>>()
+        val passwords = mutableListOf<PasswordEntry>()
+        val secureItems = mutableListOf<DataExportImportManager.ExportItem>()
+        val passkeys = mutableListOf<PasskeyEntry>()
+        val steamMaFiles = mutableListOf<SteamMaFilePayload>()
+        val passwordHistory = mutableListOf<PasswordHistoryBackupEntry>()
+        val nativeTokens = mutableListOf<takagi.ru.monica.transfer.NativeTokenBackup>()
+        var nativeTokenFileCount = 0
+        val pendingKeePassMetadata = mutableMapOf<Long, KeePassDatabaseBackupEntry>()
+        val pendingKeePassKeyFiles = mutableMapOf<Long, ByteArray>()
+        val pendingKeePassDatabases = mutableMapOf<Long, File>()
+        val invalidKeePassRestoreIds = mutableSetOf<Long>()
+        val pendingAttachments = mutableListOf<takagi.ru.monica.attachments.backup.AttachmentBackupCodec.Entry>()
+        val pendingPortableAttachmentEntries =
+            mutableListOf<takagi.ru.monica.attachments.backup.PortableAttachmentBackup.Entry>()
+        val pendingPortableAttachmentPayloads = mutableMapOf<String, File>()
+
+        // 临时存储CSV文件路径，延后处理
+        var passwordsCsvFile: File? = null
+        val secureCsvFiles = mutableListOf<File>()
+
+    }
+
+    private suspend fun readRestoreBackupFile(
+        backupFile: File,
+        decryptPassword: String?,
+        overwrite: Boolean,
+        restoreMonicaConfig: Boolean?,
+        importDataOnly: Boolean,
+        progress: TransferProgressReporter,
+        workspace: BackupTemporaryFiles.Workspace,
+        state: RestoreReadState,
+    ): Result<RestoreResult> {
+        val counters = RestoreReadCounters()
+        return with(counters) {
             // 1. 检测是否加密
             val isEncrypted = EncryptionHelper.isEncryptedFile(backupFile)
             val resolvedDecryptPassword = if (isEncrypted) {
@@ -3330,25 +3395,25 @@ class WebDavHelper(
             } else {
                 decryptPassword
             }
-            
+
             // 2. 解密文件 (如果需要)
             val zipFile = if (isEncrypted) {
                 val password = resolvedDecryptPassword
                 if (password == null) {
-                    return@deliverOnIo Result.failure(PasswordRequiredException(strings.get(R.string.backup_password_required)))
+                    return Result.failure(PasswordRequiredException(strings.get(R.string.backup_password_required)))
                 }
-                
+
                 val decryptedFile = workspace.file("restore_decrypted_${System.nanoTime()}.zip")
-                    .also { decryptedBackup = it }
+                    .also { state.decryptedBackup = it }
                 progress.report(TransferProgress(TransferPhase.DECRYPTING))
                 val decryptResult = EncryptionHelper.decryptFile(backupFile, decryptedFile, password, strings)
-                
+
                 if (decryptResult.isFailure) {
                     decryptedFile.delete()
-                    return@deliverOnIo Result.failure(decryptResult.exceptionOrNull()
+                    return Result.failure(decryptResult.exceptionOrNull()
                         ?: Exception(strings.get(R.string.backup_decryption_failed)))
                 }
-                
+
                 android.util.Log.d("WebDavHelper", "Backup decrypted successfully")
                 decryptedFile
             } else {
@@ -3375,7 +3440,7 @@ class WebDavHelper(
             }.getOrDefault(emptyList())
 
             if (detectedMonicaConfigEntries.isNotEmpty() && restoreMonicaConfig == null) {
-                return@deliverOnIo Result.failure(
+                return Result.failure(
                     MonicaConfigDecisionRequiredException(detectedMonicaConfigEntries, strings.get(R.string.backup_config_decision))
                 )
             }
@@ -3392,1054 +3457,1073 @@ class WebDavHelper(
             )
 
             try {
-                val passwordsWithMetadata = mutableListOf<Pair<PasswordEntry, String?>>()  // ✅ 存储密码和分类名称
-                val notesWithMetadata = mutableListOf<Pair<DataExportImportManager.ExportItem, String?>>()
-                val totpWithMetadata = mutableListOf<Pair<DataExportImportManager.ExportItem, String?>>()
-                val bankCardsWithMetadata = mutableListOf<Pair<DataExportImportManager.ExportItem, String?>>()
-                val documentsWithMetadata = mutableListOf<Pair<DataExportImportManager.ExportItem, String?>>()
-                val billingAddressesWithMetadata = mutableListOf<Pair<DataExportImportManager.ExportItem, String?>>()
-                val paymentAccountsWithMetadata = mutableListOf<Pair<DataExportImportManager.ExportItem, String?>>()
-                val passkeysWithMetadata = mutableListOf<Pair<PasskeyEntry, String?>>()
-                val passwords = mutableListOf<PasswordEntry>()
-                val secureItems = mutableListOf<DataExportImportManager.ExportItem>()
-                val passkeys = mutableListOf<PasskeyEntry>()
-                val steamMaFiles = mutableListOf<SteamMaFilePayload>()
-                val passwordHistory = mutableListOf<PasswordHistoryBackupEntry>()
-                val nativeTokens = mutableListOf<takagi.ru.monica.transfer.NativeTokenBackup>()
-                var nativeTokenFileCount = 0
-                val pendingKeePassMetadata = mutableMapOf<Long, KeePassDatabaseBackupEntry>()
-                val pendingKeePassKeyFiles = mutableMapOf<Long, ByteArray>()
-                val pendingKeePassDatabases = mutableMapOf<Long, File>()
-                val invalidKeePassRestoreIds = mutableSetOf<Long>()
-                val pendingAttachments = mutableListOf<takagi.ru.monica.attachments.backup.AttachmentBackupCodec.Entry>()
-                val pendingPortableAttachmentEntries =
-                    mutableListOf<takagi.ru.monica.attachments.backup.PortableAttachmentBackup.Entry>()
-                val pendingPortableAttachmentPayloads = mutableMapOf<String, File>()
-                
-                // 临时存储CSV文件路径，延后处理
-                var passwordsCsvFile: File? = null
-                val secureCsvFiles = mutableListOf<File>()
-                
-                // 3. 解压ZIP文件并读取JSON/CSV、密码历史和图片
-                progress.report(TransferProgress(TransferPhase.READING))
-                val zipEntryCount = java.util.zip.ZipFile(zipFile).use { archive ->
-                    if (archive.getEntry("monica_partial_backup.json") != null) {
-                        if (overwrite) return@deliverOnIo Result.failure(IllegalArgumentException(strings.get(R.string.passkey_partial_replace_blocked)))
-                        warnings.add(strings.get(R.string.passkey_partial_restore_warning))
+                val entries = RestoreParsedEntries()
+                with(entries) {
+                    // 3. 解压ZIP文件并读取JSON/CSV、密码历史和图片
+                    progress.report(TransferProgress(TransferPhase.READING))
+                    val zipEntryCount = java.util.zip.ZipFile(zipFile).use { archive ->
+                        if (archive.getEntry("monica_partial_backup.json") != null) {
+                            if (overwrite) return Result.failure(IllegalArgumentException(strings.get(R.string.passkey_partial_replace_blocked)))
+                            warnings.add(strings.get(R.string.passkey_partial_restore_warning))
+                        }
+                        archive.size().toLong()
                     }
-                    archive.size().toLong()
-                }
-                var readEntries = 0L
-                ZipInputStream(FileInputStream(zipFile).buffered()).use { zipIn ->
-                    var entry = zipIn.nextEntry
-                    while (entry != null) {
-                        kotlinx.coroutines.currentCoroutineContext().ensureActive()
-                        progress.report(TransferProgress(TransferPhase.READING, readEntries++, zipEntryCount))
-                        // 防止Zip Slip漏洞
-                        val entryName = entry.name.replace('\\', '/').substringAfterLast('/')
-                        if (entryName.contains("..")) {
-                             android.util.Log.w("WebDavHelper", "Skipping unsafe zip entry: ${entry.name}")
-                             entry = zipIn.nextEntry
-                             continue
-                        }
+                    var readEntries = 0L
+                    ZipInputStream(FileInputStream(zipFile).buffered()).use { zipIn ->
+                        var entry = zipIn.nextEntry
+                        while (entry != null) {
+                            kotlinx.coroutines.currentCoroutineContext().ensureActive()
+                            progress.report(TransferProgress(TransferPhase.READING, readEntries++, zipEntryCount))
+                            // 防止Zip Slip漏洞
+                            val entryName = entry.name.replace('\\', '/').substringAfterLast('/')
+                            if (entryName.contains("..")) {
+                                 android.util.Log.w("WebDavHelper", "Skipping unsafe zip entry: ${entry.name}")
+                                 entry = zipIn.nextEntry
+                                 continue
+                            }
 
-                        val tempFile = workspace.file("restore_${System.nanoTime()}_${entryName}")
-                        FileOutputStream(tempFile).use { fileOut ->
-                            zipIn.copyTo(fileOut)
-                        }
-                        zipIn.closeEntry()
-                        
-                        try {
-                            // Normalize path separators for Windows compatibility
-                            val normalizedEntryName = entry.name.replace('\\', '/')
-                            val keePassEntry = KeePassBackupEntryPolicy.parse(normalizedEntryName)
-                            
-                            when {
-                                isDatabaseExport && entryName == "native_api_tokens.json" -> {
-                                    nativeTokenFileCount++
-                                    if (expectedNativeTokenCount != null) require(normalizedEntryName == "native_api_tokens.json") {
-                                        "Native backup token file must be at the archive root"
-                                    }
-                                    require(tempFile.length() <= takagi.ru.monica.transfer.NativeTokenBackupAssets.MAX_JSON_BYTES) {
-                                        "Native token backup exceeds the supported size"
-                                    }
-                                    nativeTokens += takagi.ru.monica.transfer.NativeTokenBackupAssets.decode(tempFile.readText(Charsets.UTF_8))
-                                    takagi.ru.monica.transfer.NativeTokenBackupAssets.validate(nativeTokens)
-                                }
-                                (isDatabaseExport || !importDataOnly) &&
-                                    (normalizedEntryName == "trash/trash_passwords.json" || normalizedEntryName.endsWith("/trash/trash_passwords.json")) -> {
-                                    // Stage trash alongside live rows so replacement commits both
-                                    // together. Older full backups also use this root-level path.
-                                    val rows = org.json.JSONArray(tempFile.readText(Charsets.UTF_8))
-                                    for (i in 0 until rows.length()) {
-                                        val row = rows.getJSONObject(i)
-                                        val backup = Json { ignoreUnknownKeys = true }.decodeFromString<PasswordBackupEntry>(row.toString())
-                                        val restored = restorePasswordAsMonicaLocal(backup).copy(isDeleted = true,
-                                            deletedAt = row.optLong("deletedAt").takeIf { it > 0L }?.let(::Date))
-                                        passwordsWithMetadata += restored to backup.categoryName
-                                        if (backup.customFields.isNotEmpty()) pendingCustomFields[backup.id] = backup.customFields
-                                        backupPasswordCount++
-                                        restoredPasswordCount++
-                                    }
-                                }
-                                (isDatabaseExport || !importDataOnly) &&
-                                    (normalizedEntryName == "trash/trash_secure_items.json" || normalizedEntryName.endsWith("/trash/trash_secure_items.json")) -> {
-                                    val rows = org.json.JSONArray(tempFile.readText(Charsets.UTF_8))
-                                    for (i in 0 until rows.length()) {
-                                        val row = rows.getJSONObject(i)
-                                        val restored = DataExportImportManager.ExportItem(
-                                            id = row.getLong("id"), itemType = row.getString("itemType"), title = row.getString("title"),
-                                            itemData = row.getString("itemData"), notes = row.optString("notes"),
-                                            isFavorite = row.optBoolean("isFavorite"), imagePaths = row.optString("imagePaths"),
-                                            createdAt = row.getLong("createdAt"), updatedAt = row.getLong("updatedAt"),
-                                            sortOrder = row.optInt("sortOrder"), isDeleted = true,
-                                            deletedAt = row.optLong("deletedAt").takeIf { it > 0L },
-                                            isArchived = row.optBoolean("isArchived"),
-                                            archivedAt = row.optLong("archivedAt").takeIf { it > 0L })
-                                        secureItems += restored
-                                    }
-                                }
-                                importDataOnly && (
-                                    entryName.equals("categories.json", true) || entryName.equals("timeline_history.json", true) ||
-                                    entryName.endsWith("_generated_history.json", true) ||
-                                    normalizedEntryName.startsWith("trash/") || normalizedEntryName.contains("/trash/") ||
-                                    keePassEntry != null
-                                ) -> Unit
-                                !shouldRestoreMonicaConfig && isMonicaConfigEntry(
-                                    normalizeBackupEntryName(normalizedEntryName),
-                                    entryName,
-                                ) -> {
-                                    // 用户选择不覆盖 Monica 配置，跳过该类条目。
-                                }
-                                // 优先收集JSON格式的密码文件
-                                normalizedEntryName.contains("/passwords/") || normalizedEntryName.startsWith("passwords/") -> {
-                                    backupPasswordCount++
-                                    val result = restorePasswordFromJson(tempFile)
-                                    if (result != null) {
-                                        passwordsWithMetadata.add(result)  // ✅ 存储密码、分类名称和TOTP密钥
-                                        restoredPasswordCount++
-                                    } else {
-                                        failedItems.add(FailedItem(
-                                            id = 0,
-                                            type = strings.get(R.string.item_type_password),
-                                            title = entryName,
-                                            reason = strings.get(R.string.backup_report_parse_failed, "JSON")
-                                        ))
-                                    }
-                                }
-                                // 保存CSV文件路径，稍后处理（向后兼容）
-                                entryName.equals("passwords.csv", ignoreCase = true) ||
-                                    (entryName.startsWith("Monica_", ignoreCase = true) && entryName.endsWith("_password.csv", ignoreCase = true)) -> {
-                                    // 只在没有JSON密码时才使用CSV
-                                    if (passwordsCsvFile == null) {
-                                        passwordsCsvFile = tempFile
-                                        // 标记不需要删除，因为要留到后面处理
-                                        // 但要注意在这个when块结束后 tempFile会被删除，所以这里需要复制一份或者不删除
-                                        // 这里的逻辑稍微调整下：如果不立即处理，就不删除 tempFile
-                                    } else {
-                                        // 已经有一个了，这个忽略
-                                        tempFile.delete()
-                                    }
-                                }
-                                entryName.equals("secure_items.csv", ignoreCase = true) ||
-                                    entryName.equals("backup.csv", ignoreCase = true) ||
-                                    (entryName.startsWith("Monica_", ignoreCase = true) && entryName.endsWith("_other.csv", ignoreCase = true)) ||
-                                    (entryName.startsWith("Monica_", ignoreCase = true) && entryName.endsWith("_totp.csv", ignoreCase = true)) ||
-                                    (entryName.startsWith("Monica_", ignoreCase = true) && entryName.endsWith("_cards_docs.csv", ignoreCase = true)) ||
-                                    (entryName.startsWith("Monica_", ignoreCase = true) && entryName.endsWith("_notes.csv", ignoreCase = true)) -> {
-                                    secureCsvFiles.add(tempFile)
-                                }
-                                normalizedEntryName.contains("/notes/") || normalizedEntryName.startsWith("notes/") -> {
-                                    backupNoteCount++
-                                    val noteItem = restoreNoteFromJson(tempFile)
-                                    if (noteItem != null) {
-                                        notesWithMetadata.add(noteItem)
-                                        restoredNoteCount++
-                                    } else {
-                                        failedItems.add(FailedItem(
-                                            id = 0,
-                                            type = strings.get(R.string.nav_notes),
-                                            title = entryName,
-                                            reason = strings.get(R.string.backup_report_parse_failed, "JSON")
-                                        ))
-                                    }
-                                }
-                                normalizedEntryName.contains("/bank_cards/") || normalizedEntryName.startsWith("bank_cards/") -> {
-                                    backupCardCount++
-                                    val bankCardItem = restoreCardWalletItemFromJson(tempFile, ItemType.BANK_CARD)
-                                    if (bankCardItem != null) {
-                                        bankCardsWithMetadata.add(bankCardItem)
-                                        restoredCardCount++
-                                    } else {
-                                        failedItems.add(FailedItem(
-                                            id = 0,
-                                            type = strings.get(R.string.item_type_bank_card),
-                                            title = entryName,
-                                            reason = strings.get(R.string.backup_report_parse_failed, "JSON")
-                                        ))
-                                    }
-                                }
-                                normalizedEntryName.contains("/documents/") || normalizedEntryName.startsWith("documents/") -> {
-                                    backupDocCount++
-                                    val documentItem = restoreCardWalletItemFromJson(tempFile, ItemType.DOCUMENT)
-                                    if (documentItem != null) {
-                                        documentsWithMetadata.add(documentItem)
-                                        restoredDocCount++
-                                    } else {
-                                        failedItems.add(FailedItem(
-                                            id = 0,
-                                            type = strings.get(R.string.item_type_document),
-                                            title = entryName,
-                                            reason = strings.get(R.string.backup_report_parse_failed, "JSON")
-                                        ))
-                                    }
-                                }
-                                normalizedEntryName.contains("/billing_addresses/") || normalizedEntryName.startsWith("billing_addresses/") -> {
-                                    backupBillingAddressCount++
-                                    val billingAddressItem = restoreCardWalletItemFromJson(tempFile, ItemType.BILLING_ADDRESS)
-                                    if (billingAddressItem != null) {
-                                        billingAddressesWithMetadata.add(billingAddressItem)
-                                        restoredBillingAddressCount++
-                                    } else {
-                                        failedItems.add(FailedItem(
-                                            id = 0,
-                                            type = strings.get(R.string.billing_address),
-                                            title = entryName,
-                                            reason = strings.get(R.string.backup_report_parse_failed, "JSON")
-                                        ))
-                                    }
-                                }
-                                normalizedEntryName.contains("/payment_accounts/") || normalizedEntryName.startsWith("payment_accounts/") -> {
-                                    backupPaymentAccountCount++
-                                    val paymentAccountItem = restoreCardWalletItemFromJson(tempFile, ItemType.PAYMENT_ACCOUNT)
-                                    if (paymentAccountItem != null) {
-                                        paymentAccountsWithMetadata.add(paymentAccountItem)
-                                        restoredPaymentAccountCount++
-                                    } else {
-                                        failedItems.add(FailedItem(
-                                            id = 0,
-                                            type = strings.get(R.string.payment_account),
-                                            title = entryName,
-                                            reason = strings.get(R.string.backup_report_parse_failed, "JSON")
-                                        ))
-                                    }
-                                }
-                                isSteamMaFileBackupEntry(normalizedEntryName) -> {
-                                    backupSteamMaFileCount++
-                                    val payload = restoreSteamMaFilePayload(tempFile)
-                                    if (payload != null) {
-                                        steamMaFiles.add(payload)
-                                        restoredSteamMaFileCount++
-                                    } else {
-                                        failedItems.add(
-                                            FailedItem(
-                                                id = 0,
-                                                type = STEAM_MAFILE_BACKUP_TYPE,
-                                                title = entryName,
-                                                reason = strings.get(R.string.backup_report_parse_failed, "maFile")
-                                            )
-                                        )
-                                    }
-                                }
-                                normalizedEntryName.contains("/authenticators/") ||
-                                    normalizedEntryName.startsWith("authenticators/") ||
-                                    normalizedEntryName.contains("/totp/") ||
-                                    normalizedEntryName.startsWith("totp/") -> {
-                                    backupTotpCount++
-                                    val totpItem = restoreTotpFromJson(tempFile)
-                                    if (totpItem != null) {
-                                        totpWithMetadata.add(totpItem)
-                                    } else {
-                                        failedItems.add(FailedItem(
-                                            id = 0,
-                                            type = strings.get(R.string.item_type_authenticator),
-                                            title = entryName,
-                                            reason = strings.get(R.string.backup_report_parse_failed, "JSON")
-                                        ))
-                                    }
-                                }
-                                normalizedEntryName.contains("/passkeys/") || normalizedEntryName.startsWith("passkeys/") -> {
-                                    backupPasskeyCount++
-                                    val passkey = restorePasskeyFromJson(tempFile)
-                                    if (passkey != null) {
-                                        passkeysWithMetadata.add(passkey)
-                                        if (passkey.first.syncStatus == "REFERENCE") {
-                                            missingPasskeyPrivateKeyCount++
-                                        } else {
-                                            restoredPasskeyCount++
-                                        }
-                                    } else {
-                                        failedItems.add(FailedItem(
-                                            id = 0,
-                                            type = strings.get(R.string.backup_content_passkeys),
-                                            title = entryName,
-                                            reason = strings.get(R.string.backup_report_parse_failed, "JSON")
-                                        ))
-                                    }
-                                }
-                                entryName.equals("password_history.json", ignoreCase = true) -> {
-                                    try {
-                                        val historyJson = tempFile.readText(Charsets.UTF_8)
-                                        val json = Json { ignoreUnknownKeys = true }
-                                        passwordHistory += json.decodeFromString(
-                                            kotlinx.serialization.builtins.ListSerializer(PasswordHistoryBackupEntry.serializer()),
-                                            historyJson
-                                        )
-                                    } catch (e: Exception) {
-                                        android.util.Log.w("WebDavHelper", "Failed to restore password history: ${e.message}")
-                                        warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.password_history_title), e.message ?: strings.get(R.string.import_data_unknown_error)))
-                                    }
-                                }
-                                entryName.endsWith("_generated_history.json", ignoreCase = true) -> {
-                                    // 恢复密码生成历史
-                                    try {
-                                        val historyJson = tempFile.readText(Charsets.UTF_8)
-                                        val json = Json { ignoreUnknownKeys = true }
-                                        val history = json.decodeFromString<List<takagi.ru.monica.data.PasswordGenerationHistory>>(historyJson)
-                                        val historyManager = PasswordHistoryManager(context)
-                                        historyManager.importHistory(history)
-                                        android.util.Log.d("WebDavHelper", "Restored ${history.size} password generation history entries")
-                                    } catch (e: Exception) {
-                                        android.util.Log.w("WebDavHelper", "Failed to restore password generation history: ${e.message}")
-                                        warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.data_type_generator_history), e.message ?: strings.get(R.string.import_data_unknown_error)))
-                                    }
-                                }
-                                // ✅ 恢复分类数据
-                                entryName.equals("categories.json", ignoreCase = true) -> {
-                                    try {
-                                        val categoriesJson = tempFile.readText(Charsets.UTF_8)
-                                        val json = Json { ignoreUnknownKeys = true }
-                                        val categoryBackups = json.decodeFromString<List<CategoryBackupEntry>>(categoriesJson)
-                                        
-                                        val database = takagi.ru.monica.data.PasswordDatabase.getDatabase(context)
-                                        val categoryDao = database.categoryDao()
-                                        
-                                        // 导入分类（保持原ID以保持与密码的关联）
-                                        categoryBackups.forEach { backup ->
-                                            try {
-                                                // 检查分类是否已存在
-                                                val existingCategories = categoryDao.getAllCategories().first()
-                                                val exists = existingCategories.any { it.id == backup.id || it.name == backup.name }
-                                                if (!exists) {
-                                                    categoryDao.insert(takagi.ru.monica.data.Category(
-                                                        id = backup.id,
-                                                        name = backup.name,
-                                                        sortOrder = backup.sortOrder
-                                                    ))
-                                                }
-                                            } catch (e: Exception) {
-                                                android.util.Log.w("WebDavHelper", "Failed to import category ${backup.name}: ${e.message}")
-                                            }
-                                        }
-                                        android.util.Log.d("WebDavHelper", "Restored ${categoryBackups.size} categories")
-                                    } catch (e: Exception) {
-                                        android.util.Log.w("WebDavHelper", "Failed to restore categories: ${e.message}")
-                                        warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.category), e.message ?: strings.get(R.string.import_data_unknown_error)))
-                                    }
-                                }
-                                // ✅ 恢复操作历史记录 (时间线)
-                                entryName.equals("timeline_history.json", ignoreCase = true) -> {
-                                    try {
-                                        val timelineJson = tempFile.readText(Charsets.UTF_8)
-                                        val json = Json { ignoreUnknownKeys = true }
-                                        val logBackups = json.decodeFromString<List<OperationLogBackupEntry>>(timelineJson)
-                                        
-                                        if (logBackups.isNotEmpty()) {
-                                            val database = takagi.ru.monica.data.PasswordDatabase.getDatabase(context)
-                                            val operationLogDao = database.operationLogDao()
-                                            
-                                            // 获取现有日志的时间戳用于去重
-                                            val existingLogs = operationLogDao.getAllLogsSync()
-                                            val existingTimestamps = existingLogs.map { it.timestamp }.toSet()
-                                            
-                                            // 只导入不存在的日志
-                                            val newLogs = logBackups.filter { backup ->
-                                                backup.timestamp !in existingTimestamps
-                                            }.map { backup ->
-                                                takagi.ru.monica.data.OperationLog(
-                                                    id = 0, // 使用新ID，避免冲突
-                                                    itemType = backup.itemType,
-                                                    itemId = backup.itemId,
-                                                    itemTitle = backup.itemTitle,
-                                                    operationType = backup.operationType,
-                                                    changesJson = backup.changesJson,
-                                                    deviceId = backup.deviceId,
-                                                    deviceName = backup.deviceName,
-                                                    timestamp = backup.timestamp,
-                                                    isReverted = backup.isReverted
-                                                )
-                                            }
-                                            
-                                            if (newLogs.isNotEmpty()) {
-                                                operationLogDao.insertAll(newLogs)
-                                                android.util.Log.d("WebDavHelper", "Restored ${newLogs.size} new timeline entries (${logBackups.size - newLogs.size} duplicates skipped)")
-                                            } else {
-                                                android.util.Log.d("WebDavHelper", "All ${logBackups.size} timeline entries already exist, skipped")
-                                            }
-                                        }
-                                    } catch (e: Exception) {
-                                        android.util.Log.w("WebDavHelper", "Failed to restore timeline: ${e.message}")
-                                        warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.backup_content_timeline), e.message ?: strings.get(R.string.import_data_unknown_error)))
-                                    }
-                                }
-                                // ✅ 恢复回收站数据 - 密码
-                                normalizedEntryName.contains("/trash/") && entryName.equals("trash_passwords.json", ignoreCase = true) -> {
-                                    try {
-                                        val trashJson = tempFile.readText(Charsets.UTF_8)
-                                        val json = Json { ignoreUnknownKeys = true }
-                                        val trashPasswordBackups = json.decodeFromString<List<TrashPasswordBackupEntry>>(trashJson)
-                                        
-                                        if (trashPasswordBackups.isNotEmpty()) {
-                                            val database = takagi.ru.monica.data.PasswordDatabase.getDatabase(context)
-                                            val passwordEntryDao = database.passwordEntryDao()
-                                            
-                                            // 获取现有的已删除密码用于去重
-                                            val existingDeletedPasswords = passwordEntryDao.getDeletedEntriesSync()
-                                            val existingTitles = existingDeletedPasswords.map { "${it.title}_${it.createdAt.time}" }.toSet()
-                                            
-                                            var importedCount = 0
-                                            trashPasswordBackups.forEach { backup ->
-                                                val key = "${backup.title}_${backup.createdAt}"
-                                                if (key !in existingTitles) {
-                                                    try {
-                                                        val entry = PasswordEntry(
-                                                            id = 0, // 使用新ID
-                                                            title = backup.title,
-                                                            username = backup.username,
-                                                            password = backup.password,
-                                                            website = backup.website,
-                                                            notes = backup.notes,
-                                                            isFavorite = backup.isFavorite,
-                                                            categoryId = backup.categoryId,
-                                                            email = backup.email,
-                                                            phone = backup.phone,
-                                                            sortOrder = backup.sortOrder, appPackageName = backup.appPackageName,
-                                                            appName = backup.appName, boundNoteId = backup.boundNoteId,
-                                                            addressLine = backup.addressLine, city = backup.city, state = backup.state,
-                                                            zipCode = backup.zipCode, country = backup.country,
-                                                            creditCardNumber = backup.creditCardNumber, creditCardHolder = backup.creditCardHolder,
-                                                            creditCardExpiry = backup.creditCardExpiry, creditCardCVV = backup.creditCardCVV,
-                                                            isArchived = backup.isArchived, archivedAt = backup.archivedAt?.let(::Date),
-                                                            wifiMetadata = backup.wifiMetadata,
-                                                            createdAt = java.util.Date(backup.createdAt),
-                                                            updatedAt = java.util.Date(backup.updatedAt),
-                                                            authenticatorKey = backup.authenticatorKey,
-                                                            passkeyBindings = backup.passkeyBindings,
-                                                            sshKeyData = backup.sshKeyData,
-                                                            passwordGroupId = backup.passwordGroupId,
-                                                            isDeleted = true,
-                                                            deletedAt = backup.deletedAt?.let { java.util.Date(it) },
-                                                            // ✅ 第三方登录(SSO)字段
-                                                            loginType = backup.loginType,
-                                                            ssoProvider = backup.ssoProvider,
-                                                            ssoRefEntryId = backup.ssoRefEntryId,
-                                                            customIconType = backup.customIconType,
-                                                            customIconValue = backup.customIconValue,
-                                                            customIconUpdatedAt = backup.customIconUpdatedAt
-                                                        )
-                                                        passwordEntryDao.insertPasswordEntry(entry)
-                                                        importedCount++
-                                                    } catch (e: Exception) {
-                                                        android.util.Log.w("WebDavHelper", "Failed to restore trash password: ${e.message}")
-                                                    }
-                                                }
-                                            }
-                                            android.util.Log.d("WebDavHelper", "Restored $importedCount trash passwords (${trashPasswordBackups.size - importedCount} duplicates skipped)")
-                                        }
-                                    } catch (e: Exception) {
-                                        android.util.Log.w("WebDavHelper", "Failed to restore trash passwords: ${e.message}")
-                                        warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.backup_component_recycle_passwords), e.message ?: strings.get(R.string.import_data_unknown_error)))
-                                    }
-                                }
-                                // ✅ 恢复回收站数据 - 安全项目
-                                normalizedEntryName.contains("/trash/") && entryName.equals("trash_secure_items.json", ignoreCase = true) -> {
-                                    try {
-                                        val trashJson = tempFile.readText(Charsets.UTF_8)
-                                        val json = Json { ignoreUnknownKeys = true }
-                                        val trashSecureItemBackups = json.decodeFromString<List<TrashSecureItemBackupEntry>>(trashJson)
-                                        
-                                        if (trashSecureItemBackups.isNotEmpty()) {
-                                            val database = takagi.ru.monica.data.PasswordDatabase.getDatabase(context)
-                                            val secureItemDao = database.secureItemDao()
-                                            
-                                            // 获取现有的已删除安全项用于去重
-                                            val existingDeletedItems = secureItemDao.getDeletedItemsSync()
-                                            val existingKeys = existingDeletedItems.map { "${it.title}_${it.createdAt.time}" }.toSet()
-                                            
-                                            var importedCount = 0
-                                            trashSecureItemBackups.forEach { backup ->
-                                                val key = "${backup.title}_${backup.createdAt}"
-                                                if (key !in existingKeys) {
-                                                    try {
-                                                        val itemType = SecureItemRestoreTypeResolver.resolve(
-                                                            rawType = backup.itemType,
-                                                            itemData = backup.itemData
-                                                        ) ?: ItemType.NOTE
-                                                        val item = SecureItem(
-                                                            id = 0, // 使用新ID
-                                                            title = backup.title,
-                                                            itemType = itemType,
-                                                            itemData = backup.itemData,
-                                                            notes = backup.notes,
-                                                            isFavorite = backup.isFavorite,
-                                                            imagePaths = backup.imagePaths,
-                                                            createdAt = java.util.Date(backup.createdAt),
-                                                            updatedAt = java.util.Date(backup.updatedAt),
-                                                            isDeleted = true,
-                                                            deletedAt = backup.deletedAt?.let { java.util.Date(it) },
-                                                            isArchived = backup.isArchived,
-                                                            archivedAt = backup.archivedAt?.let { java.util.Date(it) },
-                                                            categoryId = backup.categoryId
-                                                        )
-                                                        secureItemDao.insertItem(item)
-                                                        importedCount++
-                                                    } catch (e: Exception) {
-                                                        android.util.Log.w("WebDavHelper", "Failed to restore trash item: ${e.message}")
-                                                    }
-                                                }
-                                            }
-                                            android.util.Log.d("WebDavHelper", "Restored $importedCount trash secure items (${trashSecureItemBackups.size - importedCount} duplicates skipped)")
-                                        }
-                                    } catch (e: Exception) {
-                                        android.util.Log.w("WebDavHelper", "Failed to restore trash secure items: ${e.message}")
-                                        warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.backup_component_recycle_items), e.message ?: strings.get(R.string.import_data_unknown_error)))
-                                    }
-                                }
-                                normalizedEntryName.contains("/password_icons/") || normalizedEntryName.startsWith("password_icons/") -> {
-                                    try {
-                                        val iconDir = File(context.filesDir, "password_icons")
-                                        if (!iconDir.exists()) {
-                                            iconDir.mkdirs()
-                                        }
-                                        val destFile = File(iconDir, entryName)
-                                        tempFile.copyTo(destFile, overwrite = true)
-                                    } catch (e: Exception) {
-                                        warnings.add(strings.get(R.string.backup_report_file_restore_failed, entryName, e.message ?: strings.get(R.string.import_data_unknown_error)))
-                                    }
-                                }
-                                normalizedEntryName.startsWith(
-                                    "${takagi.ru.monica.attachments.backup.PortableAttachmentBackup.DIR_NAME}/"
-                                ) -> {
-                                    try {
-                                        if (normalizedEntryName == takagi.ru.monica.attachments.backup.PortableAttachmentBackup.MANIFEST_ENTRY) {
-                                            val manifestText = tempFile.readText(Charsets.UTF_8)
-                                            val manifest = takagi.ru.monica.attachments.backup
-                                                .PortableAttachmentBackup.decodeManifest(manifestText)
-                                            pendingPortableAttachmentEntries.addAll(manifest.entries.filter { it.isValid() })
-                                            android.util.Log.d(
-                                                "WebDavHelper",
-                                                "Collected portable attachments manifest: ${manifest.entries.size} entries"
-                                            )
-                                        } else {
-                                            pendingPortableAttachmentPayloads[normalizedEntryName] = tempFile
-                                            stagedAttachmentFiles += tempFile
-                                        }
-                                    } catch (e: Exception) {
-                                        android.util.Log.w(
-                                            "WebDavHelper",
-                                            "Failed to restore portable attachment entry $entryName: ${e.message}"
-                                        )
-                                        warnings.add(strings.get(R.string.backup_report_file_restore_failed, entryName, e.message ?: strings.get(R.string.import_data_unknown_error)))
-                                    }
-                                }
-                                normalizedEntryName.contains("/attachments/") || normalizedEntryName.startsWith("attachments/") -> {
-                                    // 附件恢复：`attachments/<uuid>.enc` + `attachments/attachments_meta.json`
-                                    // 对应 spec Requirement 9.5 / 9.6
-                                    // 注意：密码的 id 在恢复时会重新分配，因此这里只落地 blob + 收集元数据，
-                                    // 真正的 attachments 表 upsert 等 BackupRestoreApplier 拿到 passwordIdMap 后再做。
-                                    try {
-                                        val leafName = entryName.substringAfterLast('/')
-                                        if (leafName.equals("attachments_meta.json", ignoreCase = true)) {
-                                            val manifestText = tempFile.readText(Charsets.UTF_8)
-                                            val manifest = takagi.ru.monica.attachments.backup
-                                                .AttachmentBackupCodec.decode(manifestText)
-                                            pendingAttachments.addAll(manifest.entries)
-                                            android.util.Log.d(
-                                                "WebDavHelper",
-                                                "Collected attachments manifest: ${manifest.entries.size} entries"
-                                            )
-                                        } else if (leafName.endsWith(".enc")) {
-                                            val storageDir = File(context.filesDir, "secure_attachments")
-                                            if (!storageDir.exists()) storageDir.mkdirs()
-                                            val destFile = File(storageDir, leafName)
-                                            tempFile.copyTo(destFile, overwrite = true)
-                                        }
-                                    } catch (e: Exception) {
-                                        android.util.Log.w(
-                                            "WebDavHelper",
-                                            "Failed to restore attachment entry $entryName: ${e.message}"
-                                        )
-                                        warnings.add(strings.get(R.string.backup_report_file_restore_failed, entryName, e.message ?: strings.get(R.string.import_data_unknown_error)))
-                                    }
-                                }
-                                normalizedEntryName.contains("/images/") || entryName.endsWith(".enc") -> {
-                                    backupImageCount++
-                                    // 恢复图片文件
-                                    try {
-                                        val imageDir = File(context.filesDir, "secure_images")
-                                        if (!imageDir.exists()) {
-                                            imageDir.mkdirs()
-                                        }
-                                        val destFile = File(imageDir, entryName)
-                                        tempFile.copyTo(destFile, overwrite = true)
-                                        android.util.Log.d("WebDavHelper", "Restored image file: $entryName")
-                                        restoredImageCount++  // P0修复：记录成功
-                                    } catch (e: Exception) {
-                                        android.util.Log.w("WebDavHelper", "Failed to restore image file $entryName: ${e.message}")
-                                        // P0修复：记录失败
-                                        warnings.add(strings.get(R.string.backup_report_file_restore_failed, entryName, e.message ?: strings.get(R.string.import_data_unknown_error)))
-                                    }
-                                }
-                                // ✅ 恢复常用账号信息（兼容旧根目录与新的 monica_config 目录）
-                                normalizedEntryName == "monica_config/common_account.json" ||
-                                    entryName.equals("common_account.json", ignoreCase = true) -> {
-                                    restoreCommonAccountConfigEntry(tempFile, warnings)
-                                }
-                                // ✅ 恢复 Monica 自动填充屏蔽字段配置
-                                normalizedEntryName == "monica_config/autofill_blocked_fields.json" -> {
-                                    restoreAutofillBlockedFieldsEntry(tempFile, warnings)
-                                }
-                                normalizedEntryName == "monica_config/autofill_save_blocked_targets.json" -> {
-                                    restoreAutofillSaveBlockedTargetsEntry(tempFile, warnings)
-                                }
-                                normalizedEntryName == "monica_config/autofill_blacklist.json" -> {
-                                    restoreAutofillBlacklistEntry(tempFile, warnings)
-                                }
-                                normalizedEntryName == "monica_config/bitwarden_vaults.json" ||
-                                    entryName.equals("bitwarden_vaults.json", ignoreCase = true) -> {
-                                    restoreBitwardenConfigEntry(tempFile, warnings, resolvedDecryptPassword)
-                                }
-                                normalizedEntryName == "monica_config/page_adjustment_settings.json" -> {
-                                    restorePageAdjustmentEntry(tempFile, warnings)
-                                }
-                                normalizedEntryName == "monica_config/security_questions.json" -> {
-                                    restoreSecurityQuestionsEntry(tempFile, warnings)
-                                }
-                                // ✅ 恢复 Monica 旧版聚合配置（兼容 monica_config.json）
-                                normalizedEntryName == "monica_config/monica_config.json" -> {
-                                    restoreLegacyMonicaConfigEntry(tempFile, warnings, resolvedDecryptPassword)
-                                }
-                                // ✅ 恢复 WebDAV 连接配置（新文件与旧版 webdav_config.json 均兼容）
-                                normalizedEntryName == "monica_config/webdav_connection.json" ||
-                                    entryName.equals("webdav_config.json", ignoreCase = true) -> {
-                                    restoreWebDavConnectionEntry(tempFile, warnings, resolvedDecryptPassword)
-                                }
-                                entryName.equals("keepass_webdav_config.json", ignoreCase = true) -> {
-                                    // KeePass WebDAV 已下线，不再恢复该配置文件。
-                                    warnings.add(strings.get(R.string.backup_legacy_keepass_config_skipped))
-                                }
-                                // ✅ 恢复 KeePass 数据库（恢复为内部存储）
-                                keePassEntry != null -> {
-                                    try {
-                                        val dbId = keePassEntry.databaseId
-                                        if (dbId in invalidKeePassRestoreIds) {
-                                            // 同一数据库出现重复条目时拒绝整个集合，避免顺序决定最终凭据。
-                                        } else {
-                                            when (keePassEntry.kind) {
-                                                KeePassBackupEntryPolicy.Kind.METADATA -> {
-                                                    val metadata = Json { ignoreUnknownKeys = true }
-                                                        .decodeFromString<KeePassDatabaseBackupEntry>(
-                                                            tempFile.readText(Charsets.UTF_8),
-                                                        )
-                                                    if (metadata.id != 0L && metadata.id != dbId) {
-                                                        throw IllegalArgumentException(strings.get(R.string.backup_keepass_id_mismatch))
-                                                    }
-                                                    if (pendingKeePassMetadata.put(dbId, metadata) != null) {
-                                                        invalidKeePassRestoreIds += dbId
-                                                        pendingKeePassMetadata.remove(dbId)
-                                                        warnings.add(strings.get(R.string.backup_keepass_duplicate_metadata, dbId))
-                                                    }
-                                                }
+                            val tempFile = workspace.file("restore_${System.nanoTime()}_${entryName}")
+                            FileOutputStream(tempFile).use { fileOut ->
+                                zipIn.copyTo(fileOut)
+                            }
+                            zipIn.closeEntry()
 
-                                                KeePassBackupEntryPolicy.Kind.KEY_FILE -> {
-                                                    if (!isEncrypted) {
-                                                        throw SecurityException(strings.get(R.string.backup_keepass_key_encryption_required))
-                                                    }
-                                                    if (pendingKeePassKeyFiles.put(dbId, tempFile.readBytes()) != null) {
-                                                        invalidKeePassRestoreIds += dbId
-                                                        pendingKeePassKeyFiles.remove(dbId)
-                                                        warnings.add(strings.get(R.string.backup_keepass_duplicate_keys, dbId))
-                                                    }
-                                                }
-
-                                                KeePassBackupEntryPolicy.Kind.DATABASE -> {
-                                                    if (pendingKeePassDatabases.containsKey(dbId)) {
-                                                        invalidKeePassRestoreIds += dbId
-                                                        pendingKeePassDatabases.remove(dbId)?.delete()
-                                                        warnings.add(strings.get(R.string.backup_keepass_duplicate_files, dbId))
-                                                    } else {
-                                                        keepassRestoreTempDir.mkdirs()
-                                                        val stagedFile = File(
-                                                            keepassRestoreTempDir,
-                                                            "keepass_${dbId}_${System.nanoTime()}.kdbx",
-                                                        )
-                                                        tempFile.copyTo(stagedFile, overwrite = false)
-                                                        pendingKeePassDatabases[dbId] = stagedFile
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    } catch (e: Exception) {
-                                        invalidKeePassRestoreIds += keePassEntry.databaseId
-                                        android.util.Log.w("WebDavHelper", "Failed to stage KeePass file: ${e.message}")
-                                        warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.backup_component_keepass_files), e.message ?: strings.get(R.string.import_data_unknown_error)))
-                                    }
+                            try {
+                                processRestoreBackupEntry(entry, tempFile, entryName, isDatabaseExport, importDataOnly,
+                                    shouldRestoreMonicaConfig, expectedNativeTokenCount, isEncrypted, keepassRestoreTempDir,
+                                    resolvedDecryptPassword, counters, entries, state)
+                            } finally {
+                                // 只有当 tempFile 不是 passwordsCsvFile 时才删除
+                                if (
+                                    tempFile != passwordsCsvFile &&
+                                    tempFile !in secureCsvFiles &&
+                                    tempFile !in pendingPortableAttachmentPayloads.values
+                                ) {
+                                    tempFile.delete()
                                 }
                             }
-                        } finally {
-                            // 只有当 tempFile 不是 passwordsCsvFile 时才删除
-                            if (
-                                tempFile != passwordsCsvFile &&
-                                tempFile !in secureCsvFiles &&
-                                tempFile !in pendingPortableAttachmentPayloads.values
-                            ) {
-                                tempFile.delete()
+
+                            entry = zipIn.nextEntry
+                        }
+                    }
+
+                    takagi.ru.monica.transfer.NativeTokenBackupAssets.validateArchive(
+                        expectedNativeTokenCount, nativeTokenFileCount, nativeTokens)
+
+                    restoreStagedKeePassDatabases(
+                        metadataById = pendingKeePassMetadata,
+                        keyFilesById = pendingKeePassKeyFiles,
+                        databaseFilesById = pendingKeePassDatabases,
+                        invalidIds = invalidKeePassRestoreIds,
+                        backupEncrypted = isEncrypted,
+                        warnings = warnings,
+                    )
+
+                    // ✅ 解析分类并创建缺失的分类，同时处理跨类型文件夹归属
+                    if (
+                        passwordsWithMetadata.isNotEmpty() ||
+                        notesWithMetadata.isNotEmpty() ||
+                        totpWithMetadata.isNotEmpty() ||
+                        bankCardsWithMetadata.isNotEmpty() ||
+                        documentsWithMetadata.isNotEmpty() ||
+                        billingAddressesWithMetadata.isNotEmpty() ||
+                        paymentAccountsWithMetadata.isNotEmpty() ||
+                        passkeysWithMetadata.isNotEmpty()
+                    ) {
+                        val database = takagi.ru.monica.data.PasswordDatabase.getDatabase(context)
+                        val categoryDao = database.categoryDao()
+
+                        // 获取当前所有分类
+                        val existingCategories = if (importDataOnly) emptyList() else
+                            try { categoryDao.getAllCategories().first() } catch (e: Exception) { emptyList() }
+                        val categoryByName = existingCategories.associateBy { it.name }.toMutableMap()
+
+                        // 收集需要创建的分类名称
+                        val categoryNamesToCreate = (passwordsWithMetadata.mapNotNull { it.second } +
+                            notesWithMetadata.mapNotNull { it.second } +
+                            totpWithMetadata.mapNotNull { it.second } +
+                            bankCardsWithMetadata.mapNotNull { it.second } +
+                            documentsWithMetadata.mapNotNull { it.second } +
+                            billingAddressesWithMetadata.mapNotNull { it.second } +
+                            paymentAccountsWithMetadata.mapNotNull { it.second } +
+                            passkeysWithMetadata.mapNotNull { it.second })
+                            .distinct()
+                            .filter { !importDataOnly && it.isNotBlank() && !categoryByName.containsKey(it) }
+
+                        // 创建缺失的分类
+                        categoryNamesToCreate.forEach { categoryName ->
+                            try {
+                                val maxSortOrder = (categoryByName.values.maxOfOrNull { it.sortOrder } ?: 0) + 1
+                                val newCategory = takagi.ru.monica.data.Category(
+                                    name = categoryName,
+                                    sortOrder = maxSortOrder
+                                )
+                                val newId = categoryDao.insert(newCategory)
+                                val createdCategory = newCategory.copy(id = newId)
+                                categoryByName[categoryName] = createdCategory
+                                android.util.Log.d("WebDavHelper", "Created category: $categoryName (id=$newId)")
+                            } catch (e: Exception) {
+                                android.util.Log.w("WebDavHelper", "Failed to create category $categoryName: ${e.message}")
                             }
                         }
-                        
-                        entry = zipIn.nextEntry
+
+                        // 将密码与分类关联
+                        passwordsWithMetadata.forEach { (entry, categoryName) ->
+                            val categoryId = categoryName?.let { categoryByName[it]?.id }
+                            val passwordEntry = entry.copy(categoryId = categoryId)
+                            passwords.add(passwordEntry)
+                        }
+
+                        // 将笔记与分类关联
+                        notesWithMetadata.forEach { (entry, categoryName) ->
+                            val categoryId = categoryName?.let { categoryByName[it]?.id }
+                            secureItems.add(entry.copy(categoryId = categoryId))
+                        }
+
+                        // 将验证器与分类关联
+                        totpWithMetadata.forEach { (entry, categoryName) ->
+                            val categoryId = categoryName?.let { categoryByName[it]?.id }
+                            secureItems.add(entry.copy(categoryId = categoryId))
+                        }
+
+                        bankCardsWithMetadata.forEach { (entry, categoryName) ->
+                            val categoryId = categoryName?.let { categoryByName[it]?.id }
+                            secureItems.add(entry.copy(categoryId = categoryId))
+                        }
+
+                        documentsWithMetadata.forEach { (entry, categoryName) ->
+                            val categoryId = categoryName?.let { categoryByName[it]?.id }
+                            secureItems.add(entry.copy(categoryId = categoryId))
+                        }
+
+                        billingAddressesWithMetadata.forEach { (entry, categoryName) ->
+                            val categoryId = categoryName?.let { categoryByName[it]?.id }
+                            secureItems.add(entry.copy(categoryId = categoryId))
+                        }
+
+                        paymentAccountsWithMetadata.forEach { (entry, categoryName) ->
+                            val categoryId = categoryName?.let { categoryByName[it]?.id }
+                            secureItems.add(entry.copy(categoryId = categoryId))
+                        }
+
+                        // 将通行密钥与分类关联
+                        passkeysWithMetadata.forEach { (entry, categoryName) ->
+                            val categoryId = categoryName?.let { categoryByName[it]?.id }
+                            passkeys.add(entry.copy(categoryId = categoryId))
+                        }
+
+                        android.util.Log.d(
+                            "WebDavHelper",
+                            "Resolved categories for passwords=${passwords.size}, secureItems=${secureItems.size}, passkeys=${passkeys.size}"
+                        )
                     }
-                }
 
-                takagi.ru.monica.transfer.NativeTokenBackupAssets.validateArchive(
-                    expectedNativeTokenCount, nativeTokenFileCount, nativeTokens)
+                    if (notesWithMetadata.isNotEmpty() && secureItems.isEmpty()) {
+                        secureItems.addAll(notesWithMetadata.map { it.first })
+                    }
+                    if (totpWithMetadata.isNotEmpty() && secureItems.none { it.itemType == ItemType.TOTP.name }) {
+                        secureItems.addAll(totpWithMetadata.map { it.first })
+                    }
+                    if (bankCardsWithMetadata.isNotEmpty() && secureItems.none { it.itemType == ItemType.BANK_CARD.name }) {
+                        secureItems.addAll(bankCardsWithMetadata.map { it.first })
+                    }
+                    if (documentsWithMetadata.isNotEmpty() && secureItems.none { it.itemType == ItemType.DOCUMENT.name }) {
+                        secureItems.addAll(documentsWithMetadata.map { it.first })
+                    }
+                    if (billingAddressesWithMetadata.isNotEmpty() && secureItems.none { it.itemType == ItemType.BILLING_ADDRESS.name }) {
+                        secureItems.addAll(billingAddressesWithMetadata.map { it.first })
+                    }
+                    if (paymentAccountsWithMetadata.isNotEmpty() && secureItems.none { it.itemType == ItemType.PAYMENT_ACCOUNT.name }) {
+                        secureItems.addAll(paymentAccountsWithMetadata.map { it.first })
+                    }
+                    if (passkeysWithMetadata.isNotEmpty() && passkeys.isEmpty()) {
+                        passkeys.addAll(passkeysWithMetadata.map { it.first })
+                    }
 
-                restoreStagedKeePassDatabases(
-                    metadataById = pendingKeePassMetadata,
-                    keyFilesById = pendingKeePassKeyFiles,
-                    databaseFilesById = pendingKeePassDatabases,
-                    invalidIds = invalidKeePassRestoreIds,
-                    backupEncrypted = isEncrypted,
-                    warnings = warnings,
-                )
-                
-                // ✅ 解析分类并创建缺失的分类，同时处理跨类型文件夹归属
-                if (
-                    passwordsWithMetadata.isNotEmpty() ||
-                    notesWithMetadata.isNotEmpty() ||
-                    totpWithMetadata.isNotEmpty() ||
-                    bankCardsWithMetadata.isNotEmpty() ||
-                    documentsWithMetadata.isNotEmpty() ||
-                    billingAddressesWithMetadata.isNotEmpty() ||
-                    paymentAccountsWithMetadata.isNotEmpty() ||
-                    passkeysWithMetadata.isNotEmpty()
-                ) {
-                    val database = takagi.ru.monica.data.PasswordDatabase.getDatabase(context)
-                    val categoryDao = database.categoryDao()
-                    
-                    // 获取当前所有分类
-                    val existingCategories = if (importDataOnly) emptyList() else
-                        try { categoryDao.getAllCategories().first() } catch (e: Exception) { emptyList() }
-                    val categoryByName = existingCategories.associateBy { it.name }.toMutableMap()
-                    
-                    // 收集需要创建的分类名称
-                    val categoryNamesToCreate = (passwordsWithMetadata.mapNotNull { it.second } +
-                        notesWithMetadata.mapNotNull { it.second } +
-                        totpWithMetadata.mapNotNull { it.second } +
-                        bankCardsWithMetadata.mapNotNull { it.second } +
-                        documentsWithMetadata.mapNotNull { it.second } +
-                        billingAddressesWithMetadata.mapNotNull { it.second } +
-                        paymentAccountsWithMetadata.mapNotNull { it.second } +
-                        passkeysWithMetadata.mapNotNull { it.second })
-                        .distinct()
-                        .filter { !importDataOnly && it.isNotBlank() && !categoryByName.containsKey(it) }
-                    
-                    // 创建缺失的分类
-                    categoryNamesToCreate.forEach { categoryName ->
-                        try {
-                            val maxSortOrder = (categoryByName.values.maxOfOrNull { it.sortOrder } ?: 0) + 1
-                            val newCategory = takagi.ru.monica.data.Category(
-                                name = categoryName,
-                                sortOrder = maxSortOrder
+                    // 导入旧版 CSV（向后兼容）：放到扫描结束后统一处理，避免与 JSON 顺序耦合
+                    if (secureCsvFiles.isNotEmpty()) {
+                        secureCsvFiles.forEach { csvFile ->
+                            try {
+                                val role = when {
+                                    csvFile.name.endsWith("_notes.csv", ignoreCase = true) ->
+                                        LegacyMonicaSecureCsvRole.NOTES_ONLY
+                                    csvFile.name.endsWith("_totp.csv", ignoreCase = true) ->
+                                        LegacyMonicaSecureCsvRole.TOTP_ONLY
+                                    csvFile.name.endsWith("_cards_docs.csv", ignoreCase = true) ->
+                                        LegacyMonicaSecureCsvRole.CARDS_DOCS_ONLY
+                                    else ->
+                                        LegacyMonicaSecureCsvRole.GENERIC_SECURE
+                                }
+                                val parseResult = LegacyMonicaZipCsvRestoreParser.parseSecureItems(csvFile, role, strings = strings)
+                                warnings.addAll(parseResult.warnings)
+
+                                val jsonBackedTypes = buildSet {
+                                    if (notesWithMetadata.isNotEmpty()) add(ItemType.NOTE)
+                                    if (totpWithMetadata.isNotEmpty()) add(ItemType.TOTP)
+                                    if (bankCardsWithMetadata.isNotEmpty()) add(ItemType.BANK_CARD)
+                                    if (documentsWithMetadata.isNotEmpty()) add(ItemType.DOCUMENT)
+                                }
+                                val normalizedImported = parseResult.items
+                                    .map(::normalizeRestoredTotpItem)
+                                    .map { item ->
+                                        sanitizeSecureExportItemForMonicaRestore(
+                                            item = item,
+                                            sourceFileName = csvFile.name
+                                        )
+                                    }
+                                secureItems.addAll(
+                                    normalizedImported.filterNot { importedItem ->
+                                        SecureItemRestoreTypeResolver.resolve(
+                                            rawType = importedItem.itemType,
+                                            itemData = importedItem.itemData,
+                                            sourceFileName = csvFile.name
+                                        ) in jsonBackedTypes
+                                    }
+                                )
+                            } catch (e: Exception) {
+                                warnings.add(strings.get(R.string.backup_csv_import_failed, csvFile.name, e.message ?: strings.get(R.string.import_data_unknown_error)))
+                            } finally {
+                                csvFile.delete()
+                            }
+                        }
+
+                    }
+
+                    // 5. 向后兼容：如果没有JSON密码，使用CSV（支持旧版本备份）
+                    passwordsCsvFile?.let { csvFile ->
+                        if (passwords.isEmpty() && csvFile.exists()) {
+                            android.util.Log.d("WebDavHelper", "No JSON passwords found, using CSV for backward compatibility")
+                            try {
+                                val csvPasswords = importPasswordsFromCSV(csvFile)
+                                backupPasswordCount = csvPasswords.size
+                                passwords.addAll(csvPasswords)
+                                restoredPasswordCount = csvPasswords.size
+                                android.util.Log.d("WebDavHelper", "Restored ${csvPasswords.size} passwords from CSV")
+                            } catch (e: Exception) {
+                                android.util.Log.e("WebDavHelper", "Failed to import passwords from CSV: ${e.message}")
+                                warnings.add(strings.get(R.string.import_data_failed_with_reason, e.message ?: strings.get(R.string.import_data_unknown_error)))
+                            }
+                        }
+                        csvFile.delete()
+                    }
+
+                    // P0修复：生成详细报告
+                    if (backupPasswordCount == 0) {
+                        backupPasswordCount = passwords.size
+                    }
+                    val normalizedSecureItems = secureItems.map(::normalizeRestoredTotpItem)
+                    val totpItems = normalizedSecureItems.count { it.itemType == "TOTP" }
+                    val cardItems = normalizedSecureItems.count { it.itemType == "BANK_CARD" }
+                    val docItems = normalizedSecureItems.count { it.itemType == "DOCUMENT" }
+                    val billingAddressItems = normalizedSecureItems.count { it.itemType == "BILLING_ADDRESS" }
+                    val paymentAccountItems = normalizedSecureItems.count { it.itemType == "PAYMENT_ACCOUNT" }
+
+                    val backupCounts = ItemCounts(
+                        passwords = backupPasswordCount,
+                        notes = backupNoteCount,
+                        totp = totpItems,
+                        bankCards = if (backupCardCount > 0) backupCardCount else cardItems,
+                        documents = if (backupDocCount > 0) backupDocCount else docItems,
+                        billingAddresses = if (backupBillingAddressCount > 0) backupBillingAddressCount else billingAddressItems,
+                        paymentAccounts = if (backupPaymentAccountCount > 0) backupPaymentAccountCount else paymentAccountItems,
+                        passkeys = backupPasskeyCount,
+                        steamMaFiles = backupSteamMaFileCount,
+                        images = backupImageCount
+                    )
+
+                    val restoredCounts = ItemCounts(
+                        passwords = passwords.size,
+                        notes = restoredNoteCount,
+                        totp = totpItems,
+                        bankCards = if (restoredCardCount > 0) restoredCardCount else cardItems,
+                        documents = if (restoredDocCount > 0) restoredDocCount else docItems,
+                        billingAddresses = if (restoredBillingAddressCount > 0) restoredBillingAddressCount else billingAddressItems,
+                        paymentAccounts = if (restoredPaymentAccountCount > 0) restoredPaymentAccountCount else paymentAccountItems,
+                        passkeys = restoredPasskeyCount,
+                        steamMaFiles = restoredSteamMaFileCount,
+                        images = restoredImageCount
+                    )
+
+                    if (backupPasskeyCount > 0) {
+                        warnings.add(strings.get(R.string.backup_passkey_restored_count, restoredPasskeyCount, backupPasskeyCount))
+                    }
+                    if (missingPasskeyPrivateKeyCount > 0) {
+                        warnings.add(
+                            context.getString(
+                                R.string.passkey_restore_private_keys_missing,
+                                missingPasskeyPrivateKeyCount,
                             )
-                            val newId = categoryDao.insert(newCategory)
-                            val createdCategory = newCategory.copy(id = newId)
-                            categoryByName[categoryName] = createdCategory
-                            android.util.Log.d("WebDavHelper", "Created category: $categoryName (id=$newId)")
-                        } catch (e: Exception) {
-                            android.util.Log.w("WebDavHelper", "Failed to create category $categoryName: ${e.message}")
-                        }
-                    }
-                    
-                    // 将密码与分类关联
-                    passwordsWithMetadata.forEach { (entry, categoryName) ->
-                        val categoryId = categoryName?.let { categoryByName[it]?.id }
-                        val passwordEntry = entry.copy(categoryId = categoryId)
-                        passwords.add(passwordEntry)
+                        )
                     }
 
-                    // 将笔记与分类关联
-                    notesWithMetadata.forEach { (entry, categoryName) ->
-                        val categoryId = categoryName?.let { categoryByName[it]?.id }
-                        secureItems.add(entry.copy(categoryId = categoryId))
-                    }
+                    val hasRestorableCoreData =
+                        passwords.isNotEmpty() ||
+                            normalizedSecureItems.isNotEmpty() || nativeTokens.isNotEmpty() ||
+                            passkeys.any { it.syncStatus != "REFERENCE" } ||
+                            steamMaFiles.isNotEmpty()
 
-                    // 将验证器与分类关联
-                    totpWithMetadata.forEach { (entry, categoryName) ->
-                        val categoryId = categoryName?.let { categoryByName[it]?.id }
-                        secureItems.add(entry.copy(categoryId = categoryId))
-                    }
-
-                    bankCardsWithMetadata.forEach { (entry, categoryName) ->
-                        val categoryId = categoryName?.let { categoryByName[it]?.id }
-                        secureItems.add(entry.copy(categoryId = categoryId))
-                    }
-
-                    documentsWithMetadata.forEach { (entry, categoryName) ->
-                        val categoryId = categoryName?.let { categoryByName[it]?.id }
-                        secureItems.add(entry.copy(categoryId = categoryId))
-                    }
-
-                    billingAddressesWithMetadata.forEach { (entry, categoryName) ->
-                        val categoryId = categoryName?.let { categoryByName[it]?.id }
-                        secureItems.add(entry.copy(categoryId = categoryId))
-                    }
-
-                    paymentAccountsWithMetadata.forEach { (entry, categoryName) ->
-                        val categoryId = categoryName?.let { categoryByName[it]?.id }
-                        secureItems.add(entry.copy(categoryId = categoryId))
-                    }
-
-                    // 将通行密钥与分类关联
-                    passkeysWithMetadata.forEach { (entry, categoryName) ->
-                        val categoryId = categoryName?.let { categoryByName[it]?.id }
-                        passkeys.add(entry.copy(categoryId = categoryId))
-                    }
-                    
-                    android.util.Log.d(
-                        "WebDavHelper",
-                        "Resolved categories for passwords=${passwords.size}, secureItems=${secureItems.size}, passkeys=${passkeys.size}"
-                    )
-                }
-
-                if (notesWithMetadata.isNotEmpty() && secureItems.isEmpty()) {
-                    secureItems.addAll(notesWithMetadata.map { it.first })
-                }
-                if (totpWithMetadata.isNotEmpty() && secureItems.none { it.itemType == ItemType.TOTP.name }) {
-                    secureItems.addAll(totpWithMetadata.map { it.first })
-                }
-                if (bankCardsWithMetadata.isNotEmpty() && secureItems.none { it.itemType == ItemType.BANK_CARD.name }) {
-                    secureItems.addAll(bankCardsWithMetadata.map { it.first })
-                }
-                if (documentsWithMetadata.isNotEmpty() && secureItems.none { it.itemType == ItemType.DOCUMENT.name }) {
-                    secureItems.addAll(documentsWithMetadata.map { it.first })
-                }
-                if (billingAddressesWithMetadata.isNotEmpty() && secureItems.none { it.itemType == ItemType.BILLING_ADDRESS.name }) {
-                    secureItems.addAll(billingAddressesWithMetadata.map { it.first })
-                }
-                if (paymentAccountsWithMetadata.isNotEmpty() && secureItems.none { it.itemType == ItemType.PAYMENT_ACCOUNT.name }) {
-                    secureItems.addAll(paymentAccountsWithMetadata.map { it.first })
-                }
-                if (passkeysWithMetadata.isNotEmpty() && passkeys.isEmpty()) {
-                    passkeys.addAll(passkeysWithMetadata.map { it.first })
-                }
-
-                // 导入旧版 CSV（向后兼容）：放到扫描结束后统一处理，避免与 JSON 顺序耦合
-                if (secureCsvFiles.isNotEmpty()) {
-                    secureCsvFiles.forEach { csvFile ->
-                        try {
-                            val role = when {
-                                csvFile.name.endsWith("_notes.csv", ignoreCase = true) ->
-                                    LegacyMonicaSecureCsvRole.NOTES_ONLY
-                                csvFile.name.endsWith("_totp.csv", ignoreCase = true) ->
-                                    LegacyMonicaSecureCsvRole.TOTP_ONLY
-                                csvFile.name.endsWith("_cards_docs.csv", ignoreCase = true) ->
-                                    LegacyMonicaSecureCsvRole.CARDS_DOCS_ONLY
-                                else ->
-                                    LegacyMonicaSecureCsvRole.GENERIC_SECURE
-                            }
-                            val parseResult = LegacyMonicaZipCsvRestoreParser.parseSecureItems(csvFile, role, strings = strings)
-                            warnings.addAll(parseResult.warnings)
-
-                            val jsonBackedTypes = buildSet {
-                                if (notesWithMetadata.isNotEmpty()) add(ItemType.NOTE)
-                                if (totpWithMetadata.isNotEmpty()) add(ItemType.TOTP)
-                                if (bankCardsWithMetadata.isNotEmpty()) add(ItemType.BANK_CARD)
-                                if (documentsWithMetadata.isNotEmpty()) add(ItemType.DOCUMENT)
-                            }
-                            val normalizedImported = parseResult.items
-                                .map(::normalizeRestoredTotpItem)
-                                .map { item ->
-                                    sanitizeSecureExportItemForMonicaRestore(
-                                        item = item,
-                                        sourceFileName = csvFile.name
-                                    )
-                                }
-                            secureItems.addAll(
-                                normalizedImported.filterNot { importedItem ->
-                                    SecureItemRestoreTypeResolver.resolve(
-                                        rawType = importedItem.itemType,
-                                        itemData = importedItem.itemData,
-                                        sourceFileName = csvFile.name
-                                    ) in jsonBackedTypes
-                                }
+                    if (overwrite) {
+                        android.util.Log.d(
+                            "WebDavHelper",
+                            "Overwrite restore requested after parse: file=${backupFile.name}, " +
+                                "passwords=${passwords.size}, secureItems=${normalizedSecureItems.size}, " +
+                                "passkeys=${passkeys.size}, steamMaFiles=${steamMaFiles.size}, " +
+                                "failedItems=${failedItems.size}, warnings=${warnings.size}"
+                        )
+                        if (failedItems.isNotEmpty()) {
+                            return Result.failure(
+                                Exception(strings.get(R.string.backup_parse_replace_blocked))
                             )
-                        } catch (e: Exception) {
-                            warnings.add(strings.get(R.string.backup_csv_import_failed, csvFile.name, e.message ?: strings.get(R.string.import_data_unknown_error)))
-                        } finally {
-                            csvFile.delete()
                         }
-                    }
-
-                }
-                
-                // 5. 向后兼容：如果没有JSON密码，使用CSV（支持旧版本备份）
-                passwordsCsvFile?.let { csvFile ->
-                    if (passwords.isEmpty() && csvFile.exists()) {
-                        android.util.Log.d("WebDavHelper", "No JSON passwords found, using CSV for backward compatibility")
-                        try {
-                            val csvPasswords = importPasswordsFromCSV(csvFile)
-                            backupPasswordCount = csvPasswords.size
-                            passwords.addAll(csvPasswords)
-                            restoredPasswordCount = csvPasswords.size
-                            android.util.Log.d("WebDavHelper", "Restored ${csvPasswords.size} passwords from CSV")
-                        } catch (e: Exception) {
-                            android.util.Log.e("WebDavHelper", "Failed to import passwords from CSV: ${e.message}")
-                            warnings.add(strings.get(R.string.import_data_failed_with_reason, e.message ?: strings.get(R.string.import_data_unknown_error)))
+                        if (!hasRestorableCoreData) {
+                            return Result.failure(
+                                Exception(strings.get(R.string.backup_empty_replace_blocked))
+                            )
                         }
-                    }
-                    csvFile.delete()
-                }
-                
-                // P0修复：生成详细报告
-                if (backupPasswordCount == 0) {
-                    backupPasswordCount = passwords.size
-                }
-                val normalizedSecureItems = secureItems.map(::normalizeRestoredTotpItem)
-                val totpItems = normalizedSecureItems.count { it.itemType == "TOTP" }
-                val cardItems = normalizedSecureItems.count { it.itemType == "BANK_CARD" }
-                val docItems = normalizedSecureItems.count { it.itemType == "DOCUMENT" }
-                val billingAddressItems = normalizedSecureItems.count { it.itemType == "BILLING_ADDRESS" }
-                val paymentAccountItems = normalizedSecureItems.count { it.itemType == "PAYMENT_ACCOUNT" }
-                
-                val backupCounts = ItemCounts(
-                    passwords = backupPasswordCount,
-                    notes = backupNoteCount,
-                    totp = totpItems,
-                    bankCards = if (backupCardCount > 0) backupCardCount else cardItems,
-                    documents = if (backupDocCount > 0) backupDocCount else docItems,
-                    billingAddresses = if (backupBillingAddressCount > 0) backupBillingAddressCount else billingAddressItems,
-                    paymentAccounts = if (backupPaymentAccountCount > 0) backupPaymentAccountCount else paymentAccountItems,
-                    passkeys = backupPasskeyCount,
-                    steamMaFiles = backupSteamMaFileCount,
-                    images = backupImageCount
-                )
-                
-                val restoredCounts = ItemCounts(
-                    passwords = passwords.size,
-                    notes = restoredNoteCount,
-                    totp = totpItems,
-                    bankCards = if (restoredCardCount > 0) restoredCardCount else cardItems,
-                    documents = if (restoredDocCount > 0) restoredDocCount else docItems,
-                    billingAddresses = if (restoredBillingAddressCount > 0) restoredBillingAddressCount else billingAddressItems,
-                    paymentAccounts = if (restoredPaymentAccountCount > 0) restoredPaymentAccountCount else paymentAccountItems,
-                    passkeys = restoredPasskeyCount,
-                    steamMaFiles = restoredSteamMaFileCount,
-                    images = restoredImageCount
-                )
+                        // Defer all local record replacement to the transactional apply phase.
 
-                if (backupPasskeyCount > 0) {
-                    warnings.add(strings.get(R.string.backup_passkey_restored_count, restoredPasskeyCount, backupPasskeyCount))
-                }
-                if (missingPasskeyPrivateKeyCount > 0) {
-                    warnings.add(
-                        context.getString(
-                            R.string.passkey_restore_private_keys_missing,
-                            missingPasskeyPrivateKeyCount,
-                        )
+                    }
+
+                    val report = RestoreReport(
+                        success = failedItems.isEmpty(),
+                        backupContains = backupCounts,
+                        restoredSuccessfully = restoredCounts,
+                        failedItems = failedItems,
+                        warnings = warnings
                     )
-                }
 
-                val hasRestorableCoreData =
-                    passwords.isNotEmpty() ||
-                        normalizedSecureItems.isNotEmpty() || nativeTokens.isNotEmpty() ||
-                        passkeys.any { it.syncStatus != "REFERENCE" } ||
-                        steamMaFiles.isNotEmpty()
-
-                if (overwrite) {
-                    android.util.Log.d(
-                        "WebDavHelper",
-                        "Overwrite restore requested after parse: file=${backupFile.name}, " +
-                            "passwords=${passwords.size}, secureItems=${normalizedSecureItems.size}, " +
-                            "passkeys=${passkeys.size}, steamMaFiles=${steamMaFiles.size}, " +
-                            "failedItems=${failedItems.size}, warnings=${warnings.size}"
+                    val restored = RestoreResult(
+                        overwriteLocal = overwrite,
+                        content = BackupContent(
+                            passwords = if (isDatabaseExport) passwords.map { entry ->
+                                val security = takagi.ru.monica.security.SecurityManager(context)
+                                entry.copy(password = security.encryptData(entry.password),
+                                    authenticatorKey = if (entry.authenticatorKey.isEmpty()) "" else security.encryptData(entry.authenticatorKey))
+                            } else passwords,
+                            // Notes stay plain item data; the restore applier encrypts only the types that need it.
+                            secureItems = if (isDatabaseExport) normalizedSecureItems.map { item ->
+                                if (item.itemType == "TOTP" || item.itemType == "NOTE") item else item.copy(
+                                    itemData = takagi.ru.monica.security.SecurityManager(context).encryptData(item.itemData))
+                            } else normalizedSecureItems,
+                            passkeys = passkeys,
+                            steamMaFiles = steamMaFiles,
+                            customFieldsMap = pendingCustomFields.toMap(),
+                            passwordHistory = if (isDatabaseExport) passwordHistory.map { item ->
+                                item.copy(password = takagi.ru.monica.security.SecurityManager(context).encryptData(item.password))
+                            } else passwordHistory,
+                            nativeTokens = nativeTokens,
+                            attachments = pendingAttachments.toList(),
+                            portableAttachments = takagi.ru.monica.attachments.backup.PortableAttachmentBackup.RestorePlan(
+                                entries = pendingPortableAttachmentEntries.toList(),
+                                payloads = pendingPortableAttachmentPayloads.toMap()
+                            )
+                        ),
+                        report = report,
+                        monicaConfigDetected = detectedMonicaConfigEntries.isNotEmpty(),
+                        monicaConfigRestoreSkipped =
+                            !shouldRestoreMonicaConfig && detectedMonicaConfigEntries.isNotEmpty(),
+                        restoredMonicaConfigEntries =
+                            if (shouldRestoreMonicaConfig) detectedMonicaConfigEntries.size else 0,
+                        restartRecommended =
+                            shouldRestoreMonicaConfig && detectedMonicaConfigEntries.isNotEmpty(),
                     )
-                    if (failedItems.isNotEmpty()) {
-                        return@deliverOnIo Result.failure(
-                            Exception(strings.get(R.string.backup_parse_replace_blocked))
-                        )
-                    }
-                    if (!hasRestorableCoreData) {
-                        return@deliverOnIo Result.failure(
-                            Exception(strings.get(R.string.backup_empty_replace_blocked))
-                        )
-                    }
-                    // Defer all local record replacement to the transactional apply phase.
-
+                    kotlinx.coroutines.currentCoroutineContext().ensureActive()
+                    val (payloads, cleanup) = workspace.handOff(pendingPortableAttachmentPayloads)
+                    Result.success(restored.copy(content = restored.content.copy(
+                        portableAttachments = restored.content.portableAttachments.copy(
+                            payloads = payloads, temporaryFiles = cleanup))))
+                        .also { state.handedOff = true }
                 }
-                
-                val report = RestoreReport(
-                    success = failedItems.isEmpty(),
-                    backupContains = backupCounts,
-                    restoredSuccessfully = restoredCounts,
-                    failedItems = failedItems,
-                    warnings = warnings
-                )
-                
-                val restored = RestoreResult(
-                    overwriteLocal = overwrite,
-                    content = BackupContent(
-                        passwords = if (isDatabaseExport) passwords.map { entry ->
-                            val security = takagi.ru.monica.security.SecurityManager(context)
-                            entry.copy(password = security.encryptData(entry.password),
-                                authenticatorKey = if (entry.authenticatorKey.isEmpty()) "" else security.encryptData(entry.authenticatorKey))
-                        } else passwords,
-                        // Notes stay plain item data; the restore applier encrypts only the types that need it.
-                        secureItems = if (isDatabaseExport) normalizedSecureItems.map { item ->
-                            if (item.itemType == "TOTP" || item.itemType == "NOTE") item else item.copy(
-                                itemData = takagi.ru.monica.security.SecurityManager(context).encryptData(item.itemData))
-                        } else normalizedSecureItems,
-                        passkeys = passkeys,
-                        steamMaFiles = steamMaFiles,
-                        customFieldsMap = pendingCustomFields.toMap(),
-                        passwordHistory = if (isDatabaseExport) passwordHistory.map { item ->
-                            item.copy(password = takagi.ru.monica.security.SecurityManager(context).encryptData(item.password))
-                        } else passwordHistory,
-                        nativeTokens = nativeTokens,
-                        attachments = pendingAttachments.toList(),
-                        portableAttachments = takagi.ru.monica.attachments.backup.PortableAttachmentBackup.RestorePlan(
-                            entries = pendingPortableAttachmentEntries.toList(),
-                            payloads = pendingPortableAttachmentPayloads.toMap()
-                        )
-                    ),
-                    report = report,
-                    monicaConfigDetected = detectedMonicaConfigEntries.isNotEmpty(),
-                    monicaConfigRestoreSkipped =
-                        !shouldRestoreMonicaConfig && detectedMonicaConfigEntries.isNotEmpty(),
-                    restoredMonicaConfigEntries =
-                        if (shouldRestoreMonicaConfig) detectedMonicaConfigEntries.size else 0,
-                    restartRecommended =
-                        shouldRestoreMonicaConfig && detectedMonicaConfigEntries.isNotEmpty(),
-                )
-                kotlinx.coroutines.currentCoroutineContext().ensureActive()
-                val (payloads, cleanup) = workspace.handOff(pendingPortableAttachmentPayloads)
-                Result.success(restored.copy(content = restored.content.copy(
-                    portableAttachments = restored.content.portableAttachments.copy(
-                        payloads = payloads, temporaryFiles = cleanup))))
-                    .also { handedOff = true }
             } finally {
                 // 清除临时存储的自定义字段，避免内存泄漏
                 pendingCustomFields.clear()
                 // The workspace owns all deferred CSVs, partial entries and decrypted ZIPs.
             }
+        }
+    }
+
+    private suspend fun processRestoreBackupEntry(
+        entry: java.util.zip.ZipEntry,
+        tempFile: File,
+        entryName: String,
+        isDatabaseExport: Boolean,
+        importDataOnly: Boolean,
+        shouldRestoreMonicaConfig: Boolean,
+        expectedNativeTokenCount: Int?,
+        isEncrypted: Boolean,
+        keepassRestoreTempDir: File,
+        resolvedDecryptPassword: String?,
+        counters: RestoreReadCounters,
+        entries: RestoreParsedEntries,
+        state: RestoreReadState,
+    ) {
+        with(counters) {
+            with(entries) {
+                // Normalize path separators for Windows compatibility
+                val normalizedEntryName = entry.name.replace('\\', '/')
+                val keePassEntry = KeePassBackupEntryPolicy.parse(normalizedEntryName)
+
+                when {
+                    isDatabaseExport && entryName == "native_api_tokens.json" -> {
+                        nativeTokenFileCount++
+                        if (expectedNativeTokenCount != null) require(normalizedEntryName == "native_api_tokens.json") {
+                            "Native backup token file must be at the archive root"
+                        }
+                        require(tempFile.length() <= takagi.ru.monica.transfer.NativeTokenBackupAssets.MAX_JSON_BYTES) {
+                            "Native token backup exceeds the supported size"
+                        }
+                        nativeTokens += takagi.ru.monica.transfer.NativeTokenBackupAssets.decode(tempFile.readText(Charsets.UTF_8))
+                        takagi.ru.monica.transfer.NativeTokenBackupAssets.validate(nativeTokens)
+                    }
+                    (isDatabaseExport || !importDataOnly) &&
+                        (normalizedEntryName == "trash/trash_passwords.json" || normalizedEntryName.endsWith("/trash/trash_passwords.json")) -> {
+                        // Stage trash alongside live rows so replacement commits both
+                        // together. Older full backups also use this root-level path.
+                        val rows = org.json.JSONArray(tempFile.readText(Charsets.UTF_8))
+                        for (i in 0 until rows.length()) {
+                            val row = rows.getJSONObject(i)
+                            val backup = Json { ignoreUnknownKeys = true }.decodeFromString<PasswordBackupEntry>(row.toString())
+                            val restored = restorePasswordAsMonicaLocal(backup).copy(isDeleted = true,
+                                deletedAt = row.optLong("deletedAt").takeIf { it > 0L }?.let(::Date))
+                            passwordsWithMetadata += restored to backup.categoryName
+                            if (backup.customFields.isNotEmpty()) pendingCustomFields[backup.id] = backup.customFields
+                            backupPasswordCount++
+                            restoredPasswordCount++
+                        }
+                    }
+                    (isDatabaseExport || !importDataOnly) &&
+                        (normalizedEntryName == "trash/trash_secure_items.json" || normalizedEntryName.endsWith("/trash/trash_secure_items.json")) -> {
+                        val rows = org.json.JSONArray(tempFile.readText(Charsets.UTF_8))
+                        for (i in 0 until rows.length()) {
+                            val row = rows.getJSONObject(i)
+                            val restored = DataExportImportManager.ExportItem(
+                                id = row.getLong("id"), itemType = row.getString("itemType"), title = row.getString("title"),
+                                itemData = row.getString("itemData"), notes = row.optString("notes"),
+                                isFavorite = row.optBoolean("isFavorite"), imagePaths = row.optString("imagePaths"),
+                                createdAt = row.getLong("createdAt"), updatedAt = row.getLong("updatedAt"),
+                                sortOrder = row.optInt("sortOrder"), isDeleted = true,
+                                deletedAt = row.optLong("deletedAt").takeIf { it > 0L },
+                                isArchived = row.optBoolean("isArchived"),
+                                archivedAt = row.optLong("archivedAt").takeIf { it > 0L })
+                            secureItems += restored
+                        }
+                    }
+                    importDataOnly && (
+                        entryName.equals("categories.json", true) || entryName.equals("timeline_history.json", true) ||
+                        entryName.endsWith("_generated_history.json", true) ||
+                        normalizedEntryName.startsWith("trash/") || normalizedEntryName.contains("/trash/") ||
+                        keePassEntry != null
+                    ) -> Unit
+                    !shouldRestoreMonicaConfig && isMonicaConfigEntry(
+                        normalizeBackupEntryName(normalizedEntryName),
+                        entryName,
+                    ) -> {
+                        // 用户选择不覆盖 Monica 配置，跳过该类条目。
+                    }
+                    // 优先收集JSON格式的密码文件
+                    normalizedEntryName.contains("/passwords/") || normalizedEntryName.startsWith("passwords/") -> {
+                        backupPasswordCount++
+                        val result = restorePasswordFromJson(tempFile)
+                        if (result != null) {
+                            passwordsWithMetadata.add(result)  // ✅ 存储密码、分类名称和TOTP密钥
+                            restoredPasswordCount++
+                        } else {
+                            failedItems.add(FailedItem(
+                                id = 0,
+                                type = strings.get(R.string.item_type_password),
+                                title = entryName,
+                                reason = strings.get(R.string.backup_report_parse_failed, "JSON")
+                            ))
+                        }
+                    }
+                    // 保存CSV文件路径，稍后处理（向后兼容）
+                    entryName.equals("passwords.csv", ignoreCase = true) ||
+                        (entryName.startsWith("Monica_", ignoreCase = true) && entryName.endsWith("_password.csv", ignoreCase = true)) -> {
+                        // 只在没有JSON密码时才使用CSV
+                        if (passwordsCsvFile == null) {
+                            passwordsCsvFile = tempFile
+                            // 标记不需要删除，因为要留到后面处理
+                            // 但要注意在这个when块结束后 tempFile会被删除，所以这里需要复制一份或者不删除
+                            // 这里的逻辑稍微调整下：如果不立即处理，就不删除 tempFile
+                        } else {
+                            // 已经有一个了，这个忽略
+                            tempFile.delete()
+                        }
+                    }
+                    entryName.equals("secure_items.csv", ignoreCase = true) ||
+                        entryName.equals("backup.csv", ignoreCase = true) ||
+                        (entryName.startsWith("Monica_", ignoreCase = true) && entryName.endsWith("_other.csv", ignoreCase = true)) ||
+                        (entryName.startsWith("Monica_", ignoreCase = true) && entryName.endsWith("_totp.csv", ignoreCase = true)) ||
+                        (entryName.startsWith("Monica_", ignoreCase = true) && entryName.endsWith("_cards_docs.csv", ignoreCase = true)) ||
+                        (entryName.startsWith("Monica_", ignoreCase = true) && entryName.endsWith("_notes.csv", ignoreCase = true)) -> {
+                        secureCsvFiles.add(tempFile)
+                    }
+                    normalizedEntryName.contains("/notes/") || normalizedEntryName.startsWith("notes/") -> {
+                        backupNoteCount++
+                        val noteItem = restoreNoteFromJson(tempFile)
+                        if (noteItem != null) {
+                            notesWithMetadata.add(noteItem)
+                            restoredNoteCount++
+                        } else {
+                            failedItems.add(FailedItem(
+                                id = 0,
+                                type = strings.get(R.string.nav_notes),
+                                title = entryName,
+                                reason = strings.get(R.string.backup_report_parse_failed, "JSON")
+                            ))
+                        }
+                    }
+                    normalizedEntryName.contains("/bank_cards/") || normalizedEntryName.startsWith("bank_cards/") -> {
+                        backupCardCount++
+                        val bankCardItem = restoreCardWalletItemFromJson(tempFile, ItemType.BANK_CARD)
+                        if (bankCardItem != null) {
+                            bankCardsWithMetadata.add(bankCardItem)
+                            restoredCardCount++
+                        } else {
+                            failedItems.add(FailedItem(
+                                id = 0,
+                                type = strings.get(R.string.item_type_bank_card),
+                                title = entryName,
+                                reason = strings.get(R.string.backup_report_parse_failed, "JSON")
+                            ))
+                        }
+                    }
+                    normalizedEntryName.contains("/documents/") || normalizedEntryName.startsWith("documents/") -> {
+                        backupDocCount++
+                        val documentItem = restoreCardWalletItemFromJson(tempFile, ItemType.DOCUMENT)
+                        if (documentItem != null) {
+                            documentsWithMetadata.add(documentItem)
+                            restoredDocCount++
+                        } else {
+                            failedItems.add(FailedItem(
+                                id = 0,
+                                type = strings.get(R.string.item_type_document),
+                                title = entryName,
+                                reason = strings.get(R.string.backup_report_parse_failed, "JSON")
+                            ))
+                        }
+                    }
+                    normalizedEntryName.contains("/billing_addresses/") || normalizedEntryName.startsWith("billing_addresses/") -> {
+                        backupBillingAddressCount++
+                        val billingAddressItem = restoreCardWalletItemFromJson(tempFile, ItemType.BILLING_ADDRESS)
+                        if (billingAddressItem != null) {
+                            billingAddressesWithMetadata.add(billingAddressItem)
+                            restoredBillingAddressCount++
+                        } else {
+                            failedItems.add(FailedItem(
+                                id = 0,
+                                type = strings.get(R.string.billing_address),
+                                title = entryName,
+                                reason = strings.get(R.string.backup_report_parse_failed, "JSON")
+                            ))
+                        }
+                    }
+                    normalizedEntryName.contains("/payment_accounts/") || normalizedEntryName.startsWith("payment_accounts/") -> {
+                        backupPaymentAccountCount++
+                        val paymentAccountItem = restoreCardWalletItemFromJson(tempFile, ItemType.PAYMENT_ACCOUNT)
+                        if (paymentAccountItem != null) {
+                            paymentAccountsWithMetadata.add(paymentAccountItem)
+                            restoredPaymentAccountCount++
+                        } else {
+                            failedItems.add(FailedItem(
+                                id = 0,
+                                type = strings.get(R.string.payment_account),
+                                title = entryName,
+                                reason = strings.get(R.string.backup_report_parse_failed, "JSON")
+                            ))
+                        }
+                    }
+                    isSteamMaFileBackupEntry(normalizedEntryName) -> {
+                        backupSteamMaFileCount++
+                        val payload = restoreSteamMaFilePayload(tempFile)
+                        if (payload != null) {
+                            steamMaFiles.add(payload)
+                            restoredSteamMaFileCount++
+                        } else {
+                            failedItems.add(
+                                FailedItem(
+                                    id = 0,
+                                    type = STEAM_MAFILE_BACKUP_TYPE,
+                                    title = entryName,
+                                    reason = strings.get(R.string.backup_report_parse_failed, "maFile")
+                                )
+                            )
+                        }
+                    }
+                    normalizedEntryName.contains("/authenticators/") ||
+                        normalizedEntryName.startsWith("authenticators/") ||
+                        normalizedEntryName.contains("/totp/") ||
+                        normalizedEntryName.startsWith("totp/") -> {
+                        backupTotpCount++
+                        val totpItem = restoreTotpFromJson(tempFile)
+                        if (totpItem != null) {
+                            totpWithMetadata.add(totpItem)
+                        } else {
+                            failedItems.add(FailedItem(
+                                id = 0,
+                                type = strings.get(R.string.item_type_authenticator),
+                                title = entryName,
+                                reason = strings.get(R.string.backup_report_parse_failed, "JSON")
+                            ))
+                        }
+                    }
+                    normalizedEntryName.contains("/passkeys/") || normalizedEntryName.startsWith("passkeys/") -> {
+                        backupPasskeyCount++
+                        val passkey = restorePasskeyFromJson(tempFile)
+                        if (passkey != null) {
+                            passkeysWithMetadata.add(passkey)
+                            if (passkey.first.syncStatus == "REFERENCE") {
+                                missingPasskeyPrivateKeyCount++
+                            } else {
+                                restoredPasskeyCount++
+                            }
+                        } else {
+                            failedItems.add(FailedItem(
+                                id = 0,
+                                type = strings.get(R.string.backup_content_passkeys),
+                                title = entryName,
+                                reason = strings.get(R.string.backup_report_parse_failed, "JSON")
+                            ))
+                        }
+                    }
+                    entryName.equals("password_history.json", ignoreCase = true) -> {
+                        try {
+                            val historyJson = tempFile.readText(Charsets.UTF_8)
+                            val json = Json { ignoreUnknownKeys = true }
+                            passwordHistory += json.decodeFromString(
+                                kotlinx.serialization.builtins.ListSerializer(PasswordHistoryBackupEntry.serializer()),
+                                historyJson
+                            )
+                        } catch (e: Exception) {
+                            android.util.Log.w("WebDavHelper", "Failed to restore password history: ${e.message}")
+                            warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.password_history_title), e.message ?: strings.get(R.string.import_data_unknown_error)))
+                        }
+                    }
+                    entryName.endsWith("_generated_history.json", ignoreCase = true) -> {
+                        // 恢复密码生成历史
+                        try {
+                            val historyJson = tempFile.readText(Charsets.UTF_8)
+                            val json = Json { ignoreUnknownKeys = true }
+                            val history = json.decodeFromString<List<takagi.ru.monica.data.PasswordGenerationHistory>>(historyJson)
+                            val historyManager = PasswordHistoryManager(context)
+                            historyManager.importHistory(history)
+                            android.util.Log.d("WebDavHelper", "Restored ${history.size} password generation history entries")
+                        } catch (e: Exception) {
+                            android.util.Log.w("WebDavHelper", "Failed to restore password generation history: ${e.message}")
+                            warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.data_type_generator_history), e.message ?: strings.get(R.string.import_data_unknown_error)))
+                        }
+                    }
+                    // ✅ 恢复分类数据
+                    entryName.equals("categories.json", ignoreCase = true) -> {
+                        restoreCategoriesBackupEntry(tempFile, warnings)
+                    }
+                    // ✅ 恢复操作历史记录 (时间线)
+                    entryName.equals("timeline_history.json", ignoreCase = true) -> {
+                        restoreTimelineBackupEntry(tempFile, warnings)
+                    }
+                    // ✅ 恢复回收站数据 - 密码
+                    normalizedEntryName.contains("/trash/") && entryName.equals("trash_passwords.json", ignoreCase = true) -> {
+                        restoreTrashPasswordsBackupEntry(tempFile, warnings)
+                    }
+                    // ✅ 恢复回收站数据 - 安全项目
+                    normalizedEntryName.contains("/trash/") && entryName.equals("trash_secure_items.json", ignoreCase = true) -> {
+                        restoreTrashSecureItemsBackupEntry(tempFile, warnings)
+                    }
+                    normalizedEntryName.contains("/password_icons/") || normalizedEntryName.startsWith("password_icons/") -> {
+                        try {
+                            val iconDir = File(context.filesDir, "password_icons")
+                            if (!iconDir.exists()) {
+                                iconDir.mkdirs()
+                            }
+                            val destFile = File(iconDir, entryName)
+                            tempFile.copyTo(destFile, overwrite = true)
+                        } catch (e: Exception) {
+                            warnings.add(strings.get(R.string.backup_report_file_restore_failed, entryName, e.message ?: strings.get(R.string.import_data_unknown_error)))
+                        }
+                    }
+                    normalizedEntryName.startsWith(
+                        "${takagi.ru.monica.attachments.backup.PortableAttachmentBackup.DIR_NAME}/"
+                    ) -> {
+                        try {
+                            if (normalizedEntryName == takagi.ru.monica.attachments.backup.PortableAttachmentBackup.MANIFEST_ENTRY) {
+                                val manifestText = tempFile.readText(Charsets.UTF_8)
+                                val manifest = takagi.ru.monica.attachments.backup
+                                    .PortableAttachmentBackup.decodeManifest(manifestText)
+                                pendingPortableAttachmentEntries.addAll(manifest.entries.filter { it.isValid() })
+                                android.util.Log.d(
+                                    "WebDavHelper",
+                                    "Collected portable attachments manifest: ${manifest.entries.size} entries"
+                                )
+                            } else {
+                                pendingPortableAttachmentPayloads[normalizedEntryName] = tempFile
+                                state.stagedAttachmentFiles += tempFile
+                            }
+                        } catch (e: Exception) {
+                            android.util.Log.w(
+                                "WebDavHelper",
+                                "Failed to restore portable attachment entry $entryName: ${e.message}"
+                            )
+                            warnings.add(strings.get(R.string.backup_report_file_restore_failed, entryName, e.message ?: strings.get(R.string.import_data_unknown_error)))
+                        }
+                    }
+                    normalizedEntryName.contains("/attachments/") || normalizedEntryName.startsWith("attachments/") -> {
+                        // 附件恢复：`attachments/<uuid>.enc` + `attachments/attachments_meta.json`
+                        // 对应 spec Requirement 9.5 / 9.6
+                        // 注意：密码的 id 在恢复时会重新分配，因此这里只落地 blob + 收集元数据，
+                        // 真正的 attachments 表 upsert 等 BackupRestoreApplier 拿到 passwordIdMap 后再做。
+                        try {
+                            val leafName = entryName.substringAfterLast('/')
+                            if (leafName.equals("attachments_meta.json", ignoreCase = true)) {
+                                val manifestText = tempFile.readText(Charsets.UTF_8)
+                                val manifest = takagi.ru.monica.attachments.backup
+                                    .AttachmentBackupCodec.decode(manifestText)
+                                pendingAttachments.addAll(manifest.entries)
+                                android.util.Log.d(
+                                    "WebDavHelper",
+                                    "Collected attachments manifest: ${manifest.entries.size} entries"
+                                )
+                            } else if (leafName.endsWith(".enc")) {
+                                val storageDir = File(context.filesDir, "secure_attachments")
+                                if (!storageDir.exists()) storageDir.mkdirs()
+                                val destFile = File(storageDir, leafName)
+                                tempFile.copyTo(destFile, overwrite = true)
+                            }
+                        } catch (e: Exception) {
+                            android.util.Log.w(
+                                "WebDavHelper",
+                                "Failed to restore attachment entry $entryName: ${e.message}"
+                            )
+                            warnings.add(strings.get(R.string.backup_report_file_restore_failed, entryName, e.message ?: strings.get(R.string.import_data_unknown_error)))
+                        }
+                    }
+                    normalizedEntryName.contains("/images/") || entryName.endsWith(".enc") -> {
+                        backupImageCount++
+                        // 恢复图片文件
+                        try {
+                            val imageDir = File(context.filesDir, "secure_images")
+                            if (!imageDir.exists()) {
+                                imageDir.mkdirs()
+                            }
+                            val destFile = File(imageDir, entryName)
+                            tempFile.copyTo(destFile, overwrite = true)
+                            android.util.Log.d("WebDavHelper", "Restored image file: $entryName")
+                            restoredImageCount++  // P0修复：记录成功
+                        } catch (e: Exception) {
+                            android.util.Log.w("WebDavHelper", "Failed to restore image file $entryName: ${e.message}")
+                            // P0修复：记录失败
+                            warnings.add(strings.get(R.string.backup_report_file_restore_failed, entryName, e.message ?: strings.get(R.string.import_data_unknown_error)))
+                        }
+                    }
+                    // ✅ 恢复常用账号信息（兼容旧根目录与新的 monica_config 目录）
+                    normalizedEntryName == "monica_config/common_account.json" ||
+                        entryName.equals("common_account.json", ignoreCase = true) -> {
+                        restoreCommonAccountConfigEntry(tempFile, warnings)
+                    }
+                    // ✅ 恢复 Monica 自动填充屏蔽字段配置
+                    normalizedEntryName == "monica_config/autofill_blocked_fields.json" -> {
+                        restoreAutofillBlockedFieldsEntry(tempFile, warnings)
+                    }
+                    normalizedEntryName == "monica_config/autofill_save_blocked_targets.json" -> {
+                        restoreAutofillSaveBlockedTargetsEntry(tempFile, warnings)
+                    }
+                    normalizedEntryName == "monica_config/autofill_blacklist.json" -> {
+                        restoreAutofillBlacklistEntry(tempFile, warnings)
+                    }
+                    normalizedEntryName == "monica_config/bitwarden_vaults.json" ||
+                        entryName.equals("bitwarden_vaults.json", ignoreCase = true) -> {
+                        restoreBitwardenConfigEntry(tempFile, warnings, resolvedDecryptPassword)
+                    }
+                    normalizedEntryName == "monica_config/page_adjustment_settings.json" -> {
+                        restorePageAdjustmentEntry(tempFile, warnings)
+                    }
+                    normalizedEntryName == "monica_config/security_questions.json" -> {
+                        restoreSecurityQuestionsEntry(tempFile, warnings)
+                    }
+                    // ✅ 恢复 Monica 旧版聚合配置（兼容 monica_config.json）
+                    normalizedEntryName == "monica_config/monica_config.json" -> {
+                        restoreLegacyMonicaConfigEntry(tempFile, warnings, resolvedDecryptPassword)
+                    }
+                    // ✅ 恢复 WebDAV 连接配置（新文件与旧版 webdav_config.json 均兼容）
+                    normalizedEntryName == "monica_config/webdav_connection.json" ||
+                        entryName.equals("webdav_config.json", ignoreCase = true) -> {
+                        restoreWebDavConnectionEntry(tempFile, warnings, resolvedDecryptPassword)
+                    }
+                    entryName.equals("keepass_webdav_config.json", ignoreCase = true) -> {
+                        // KeePass WebDAV 已下线，不再恢复该配置文件。
+                        warnings.add(strings.get(R.string.backup_legacy_keepass_config_skipped))
+                    }
+                    // ✅ 恢复 KeePass 数据库（恢复为内部存储）
+                    keePassEntry != null -> {
+                        try {
+                            val dbId = keePassEntry.databaseId
+                            if (dbId in invalidKeePassRestoreIds) {
+                                // 同一数据库出现重复条目时拒绝整个集合，避免顺序决定最终凭据。
+                            } else {
+                                when (keePassEntry.kind) {
+                                    KeePassBackupEntryPolicy.Kind.METADATA -> {
+                                        val metadata = Json { ignoreUnknownKeys = true }
+                                            .decodeFromString<KeePassDatabaseBackupEntry>(
+                                                tempFile.readText(Charsets.UTF_8),
+                                            )
+                                        if (metadata.id != 0L && metadata.id != dbId) {
+                                            throw IllegalArgumentException(strings.get(R.string.backup_keepass_id_mismatch))
+                                        }
+                                        if (pendingKeePassMetadata.put(dbId, metadata) != null) {
+                                            invalidKeePassRestoreIds += dbId
+                                            pendingKeePassMetadata.remove(dbId)
+                                            warnings.add(strings.get(R.string.backup_keepass_duplicate_metadata, dbId))
+                                        }
+                                    }
+
+                                    KeePassBackupEntryPolicy.Kind.KEY_FILE -> {
+                                        if (!isEncrypted) {
+                                            throw SecurityException(strings.get(R.string.backup_keepass_key_encryption_required))
+                                        }
+                                        if (pendingKeePassKeyFiles.put(dbId, tempFile.readBytes()) != null) {
+                                            invalidKeePassRestoreIds += dbId
+                                            pendingKeePassKeyFiles.remove(dbId)
+                                            warnings.add(strings.get(R.string.backup_keepass_duplicate_keys, dbId))
+                                        }
+                                    }
+
+                                    KeePassBackupEntryPolicy.Kind.DATABASE -> {
+                                        if (pendingKeePassDatabases.containsKey(dbId)) {
+                                            invalidKeePassRestoreIds += dbId
+                                            pendingKeePassDatabases.remove(dbId)?.delete()
+                                            warnings.add(strings.get(R.string.backup_keepass_duplicate_files, dbId))
+                                        } else {
+                                            keepassRestoreTempDir.mkdirs()
+                                            val stagedFile = File(
+                                                keepassRestoreTempDir,
+                                                "keepass_${dbId}_${System.nanoTime()}.kdbx",
+                                            )
+                                            tempFile.copyTo(stagedFile, overwrite = false)
+                                            pendingKeePassDatabases[dbId] = stagedFile
+                                        }
+                                    }
+                                }
+                            }
+                        } catch (e: Exception) {
+                            invalidKeePassRestoreIds += keePassEntry.databaseId
+                            android.util.Log.w("WebDavHelper", "Failed to stage KeePass file: ${e.message}")
+                            warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.backup_component_keepass_files), e.message ?: strings.get(R.string.import_data_unknown_error)))
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private suspend fun restoreCategoriesBackupEntry(
+        tempFile: File,
+        warnings: MutableList<String>,
+    ) {
+        try {
+            val categoriesJson = tempFile.readText(Charsets.UTF_8)
+            val json = Json { ignoreUnknownKeys = true }
+            val categoryBackups = json.decodeFromString<List<CategoryBackupEntry>>(categoriesJson)
+
+            val database = takagi.ru.monica.data.PasswordDatabase.getDatabase(context)
+            val categoryDao = database.categoryDao()
+
+            // 导入分类（保持原ID以保持与密码的关联）
+            categoryBackups.forEach { backup ->
+                try {
+                    // 检查分类是否已存在
+                    val existingCategories = categoryDao.getAllCategories().first()
+                    val exists = existingCategories.any { it.id == backup.id || it.name == backup.name }
+                    if (!exists) {
+                        categoryDao.insert(takagi.ru.monica.data.Category(
+                            id = backup.id,
+                            name = backup.name,
+                            sortOrder = backup.sortOrder
+                        ))
+                    }
+                } catch (e: Exception) {
+                    android.util.Log.w("WebDavHelper", "Failed to import category ${backup.name}: ${e.message}")
+                }
+            }
+            android.util.Log.d("WebDavHelper", "Restored ${categoryBackups.size} categories")
         } catch (e: Exception) {
-            if (e is kotlinx.coroutines.CancellationException) throw e
-            Result.failure(Exception(strings.get(R.string.webdav_restore_failed,
-                e.message ?: strings.get(R.string.import_data_unknown_error)), e))
-        } finally {
-            decryptedBackup?.delete()
-            if (!handedOff) stagedAttachmentFiles.forEach { it.delete() }
-            if (handedOff) temporary?.close() else temporary?.discard()
+            android.util.Log.w("WebDavHelper", "Failed to restore categories: ${e.message}")
+            warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.category), e.message ?: strings.get(R.string.import_data_unknown_error)))
+        }
+    }
+
+    private suspend fun restoreTimelineBackupEntry(
+        tempFile: File,
+        warnings: MutableList<String>,
+    ) {
+        try {
+            val timelineJson = tempFile.readText(Charsets.UTF_8)
+            val json = Json { ignoreUnknownKeys = true }
+            val logBackups = json.decodeFromString<List<OperationLogBackupEntry>>(timelineJson)
+
+            if (logBackups.isNotEmpty()) {
+                val database = takagi.ru.monica.data.PasswordDatabase.getDatabase(context)
+                val operationLogDao = database.operationLogDao()
+
+                // 获取现有日志的时间戳用于去重
+                val existingLogs = operationLogDao.getAllLogsSync()
+                val existingTimestamps = existingLogs.map { it.timestamp }.toSet()
+
+                // 只导入不存在的日志
+                val newLogs = logBackups.filter { backup ->
+                    backup.timestamp !in existingTimestamps
+                }.map { backup ->
+                    takagi.ru.monica.data.OperationLog(
+                        id = 0, // 使用新ID，避免冲突
+                        itemType = backup.itemType,
+                        itemId = backup.itemId,
+                        itemTitle = backup.itemTitle,
+                        operationType = backup.operationType,
+                        changesJson = backup.changesJson,
+                        deviceId = backup.deviceId,
+                        deviceName = backup.deviceName,
+                        timestamp = backup.timestamp,
+                        isReverted = backup.isReverted
+                    )
+                }
+
+                if (newLogs.isNotEmpty()) {
+                    operationLogDao.insertAll(newLogs)
+                    android.util.Log.d("WebDavHelper", "Restored ${newLogs.size} new timeline entries (${logBackups.size - newLogs.size} duplicates skipped)")
+                } else {
+                    android.util.Log.d("WebDavHelper", "All ${logBackups.size} timeline entries already exist, skipped")
+                }
+            }
+        } catch (e: Exception) {
+            android.util.Log.w("WebDavHelper", "Failed to restore timeline: ${e.message}")
+            warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.backup_content_timeline), e.message ?: strings.get(R.string.import_data_unknown_error)))
+        }
+    }
+
+    private suspend fun restoreTrashPasswordsBackupEntry(
+        tempFile: File,
+        warnings: MutableList<String>,
+    ) {
+        try {
+            val trashJson = tempFile.readText(Charsets.UTF_8)
+            val json = Json { ignoreUnknownKeys = true }
+            val trashPasswordBackups = json.decodeFromString<List<TrashPasswordBackupEntry>>(trashJson)
+
+            if (trashPasswordBackups.isNotEmpty()) {
+                val database = takagi.ru.monica.data.PasswordDatabase.getDatabase(context)
+                val passwordEntryDao = database.passwordEntryDao()
+
+                // 获取现有的已删除密码用于去重
+                val existingDeletedPasswords = passwordEntryDao.getDeletedEntriesSync()
+                val existingTitles = existingDeletedPasswords.map { "${it.title}_${it.createdAt.time}" }.toSet()
+
+                var importedCount = 0
+                trashPasswordBackups.forEach { backup ->
+                    val key = "${backup.title}_${backup.createdAt}"
+                    if (key !in existingTitles) {
+                        try {
+                            val entry = PasswordEntry(
+                                id = 0, // 使用新ID
+                                title = backup.title,
+                                username = backup.username,
+                                password = backup.password,
+                                website = backup.website,
+                                notes = backup.notes,
+                                isFavorite = backup.isFavorite,
+                                categoryId = backup.categoryId,
+                                email = backup.email,
+                                phone = backup.phone,
+                                sortOrder = backup.sortOrder, appPackageName = backup.appPackageName,
+                                appName = backup.appName, boundNoteId = backup.boundNoteId,
+                                addressLine = backup.addressLine, city = backup.city, state = backup.state,
+                                zipCode = backup.zipCode, country = backup.country,
+                                creditCardNumber = backup.creditCardNumber, creditCardHolder = backup.creditCardHolder,
+                                creditCardExpiry = backup.creditCardExpiry, creditCardCVV = backup.creditCardCVV,
+                                isArchived = backup.isArchived, archivedAt = backup.archivedAt?.let(::Date),
+                                wifiMetadata = backup.wifiMetadata,
+                                createdAt = java.util.Date(backup.createdAt),
+                                updatedAt = java.util.Date(backup.updatedAt),
+                                authenticatorKey = backup.authenticatorKey,
+                                passkeyBindings = backup.passkeyBindings,
+                                sshKeyData = backup.sshKeyData,
+                                passwordGroupId = backup.passwordGroupId,
+                                isDeleted = true,
+                                deletedAt = backup.deletedAt?.let { java.util.Date(it) },
+                                // ✅ 第三方登录(SSO)字段
+                                loginType = backup.loginType,
+                                ssoProvider = backup.ssoProvider,
+                                ssoRefEntryId = backup.ssoRefEntryId,
+                                customIconType = backup.customIconType,
+                                customIconValue = backup.customIconValue,
+                                customIconUpdatedAt = backup.customIconUpdatedAt
+                            )
+                            passwordEntryDao.insertPasswordEntry(entry)
+                            importedCount++
+                        } catch (e: Exception) {
+                            android.util.Log.w("WebDavHelper", "Failed to restore trash password: ${e.message}")
+                        }
+                    }
+                }
+                android.util.Log.d("WebDavHelper", "Restored $importedCount trash passwords (${trashPasswordBackups.size - importedCount} duplicates skipped)")
+            }
+        } catch (e: Exception) {
+            android.util.Log.w("WebDavHelper", "Failed to restore trash passwords: ${e.message}")
+            warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.backup_component_recycle_passwords), e.message ?: strings.get(R.string.import_data_unknown_error)))
+        }
+    }
+
+    private suspend fun restoreTrashSecureItemsBackupEntry(
+        tempFile: File,
+        warnings: MutableList<String>,
+    ) {
+        try {
+            val trashJson = tempFile.readText(Charsets.UTF_8)
+            val json = Json { ignoreUnknownKeys = true }
+            val trashSecureItemBackups = json.decodeFromString<List<TrashSecureItemBackupEntry>>(trashJson)
+
+            if (trashSecureItemBackups.isNotEmpty()) {
+                val database = takagi.ru.monica.data.PasswordDatabase.getDatabase(context)
+                val secureItemDao = database.secureItemDao()
+
+                // 获取现有的已删除安全项用于去重
+                val existingDeletedItems = secureItemDao.getDeletedItemsSync()
+                val existingKeys = existingDeletedItems.map { "${it.title}_${it.createdAt.time}" }.toSet()
+
+                var importedCount = 0
+                trashSecureItemBackups.forEach { backup ->
+                    val key = "${backup.title}_${backup.createdAt}"
+                    if (key !in existingKeys) {
+                        try {
+                            val itemType = SecureItemRestoreTypeResolver.resolve(
+                                rawType = backup.itemType,
+                                itemData = backup.itemData
+                            ) ?: ItemType.NOTE
+                            val item = SecureItem(
+                                id = 0, // 使用新ID
+                                title = backup.title,
+                                itemType = itemType,
+                                itemData = backup.itemData,
+                                notes = backup.notes,
+                                isFavorite = backup.isFavorite,
+                                imagePaths = backup.imagePaths,
+                                createdAt = java.util.Date(backup.createdAt),
+                                updatedAt = java.util.Date(backup.updatedAt),
+                                isDeleted = true,
+                                deletedAt = backup.deletedAt?.let { java.util.Date(it) },
+                                isArchived = backup.isArchived,
+                                archivedAt = backup.archivedAt?.let { java.util.Date(it) },
+                                categoryId = backup.categoryId
+                            )
+                            secureItemDao.insertItem(item)
+                            importedCount++
+                        } catch (e: Exception) {
+                            android.util.Log.w("WebDavHelper", "Failed to restore trash item: ${e.message}")
+                        }
+                    }
+                }
+                android.util.Log.d("WebDavHelper", "Restored $importedCount trash secure items (${trashSecureItemBackups.size - importedCount} duplicates skipped)")
+            }
+        } catch (e: Exception) {
+            android.util.Log.w("WebDavHelper", "Failed to restore trash secure items: ${e.message}")
+            warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.backup_component_recycle_items), e.message ?: strings.get(R.string.import_data_unknown_error)))
         }
     }
 

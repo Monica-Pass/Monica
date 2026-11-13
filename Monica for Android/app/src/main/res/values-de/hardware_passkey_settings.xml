@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_passkey_settings_title">Autofill &amp; Passkeys</string>
+    <string name="hardware_key_enable">Physische Schlüssel aktivieren</string>
+    <string name="hardware_key_enable_description">USB- oder NFC-Sicherheitsschlüssel mit Monica verwenden. Standardmäßig aus. Gespeicherte Software-Passkeys bleiben unverändert.</string>
+</resources>

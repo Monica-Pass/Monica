@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_document_permission_missing">"Systemowe okno wyboru plików nie przyznało wymaganych uprawnień do odczytu i zapisu. Wybierz Download w głównej pamięci urządzenia lub inną lokalizację z możliwością zapisu. Mógł powstać pusty plik. Nie jest prawidłową kopią zapasową i można go usunąć w menedżerze plików."</string>
+</resources>

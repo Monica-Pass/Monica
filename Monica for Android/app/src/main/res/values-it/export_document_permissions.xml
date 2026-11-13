@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_document_permission_missing">"Il selettore di file del sistema non ha concesso i permessi di lettura e scrittura necessari. Scegli Download nella memoria principale del dispositivo o un’altra posizione scrivibile. Potrebbe essere stato creato un file vuoto: non è un backup valido e puoi eliminarlo nel gestore di file."</string>
+</resources>

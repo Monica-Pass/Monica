@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.sync.DefaultSyncCoordinatorTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-06T12:18:33" hostname="JOYIN" time="0.034">
+  <properties/>
+  <testcase name="throttleKeyCanDifferFromGlobalDedupeKey" classname="takagi.ru.monica.sync.DefaultSyncCoordinatorTest" time="0.015"/>
+  <testcase name="sameDedupeKeyDifferentTargetsRunSequentiallyWithoutMerging" classname="takagi.ru.monica.sync.DefaultSyncCoordinatorTest" time="0.018"/>
+  <system-out><![CDATA[MonicaSyncDiag: event=queued taskId=first-db target=keepass:7 trigger=PAGE_VISIBLE thread=Test worker @coroutine#8 detail=layer=coordinator key=<redacted> priority=PAGE_VISIBLE mode=BACKGROUND policy=ALLOWED
+MonicaSyncDiag: event=start taskId=first-db target=keepass:7 trigger=PAGE_VISIBLE thread=Test worker @coroutine#8 detail=layer=coordinator key=<redacted> priority=PAGE_VISIBLE mode=BACKGROUND policy=ALLOWED pending=0
+MonicaSyncDiag: event=success taskId=first-db target=keepass:7 trigger=PAGE_VISIBLE elapsedMs=6 thread=Test worker @coroutine#9 detail=layer=coordinator key=<redacted> priority=PAGE_VISIBLE mode=BACKGROUND policy=ALLOWED
+MonicaSyncDiag: event=queued taskId=second-db target=keepass:8 trigger=PAGE_VISIBLE thread=Test worker @coroutine#8 detail=layer=coordinator key=<redacted> priority=PAGE_VISIBLE mode=BACKGROUND policy=ALLOWED
+MonicaSyncDiag: event=start taskId=second-db target=keepass:8 trigger=PAGE_VISIBLE thread=Test worker @coroutine#8 detail=layer=coordinator key=<redacted> priority=PAGE_VISIBLE mode=BACKGROUND policy=ALLOWED pending=0
+MonicaSyncDiag: event=success taskId=second-db target=keepass:8 trigger=PAGE_VISIBLE elapsedMs=0 thread=Test worker @coroutine#10 detail=layer=coordinator key=<redacted> priority=PAGE_VISIBLE mode=BACKGROUND policy=ALLOWED
+MonicaSyncDiag: event=queued taskId=first-db-again target=keepass:7 trigger=PAGE_VISIBLE thread=Test worker @coroutine#8 detail=layer=coordinator key=<redacted> priority=PAGE_VISIBLE mode=BACKGROUND policy=ALLOWED
+MonicaSyncDiag: event=skip taskId=first-db-again target=keepass:7 trigger=PAGE_VISIBLE thread=Test worker @coroutine#8 detail=reason=throttle:25000ms layer=coordinator key=<redacted> priority=PAGE_VISIBLE mode=BACKGROUND policy=ALLOWED
+MonicaSyncDiag: event=queued taskId=cards target=keepass_compat:all:bank_card trigger=PAGE_VISIBLE thread=Test worker @coroutine#11 detail=layer=coordinator key=<redacted> priority=PAGE_VISIBLE mode=BACKGROUND policy=ALLOWED
+MonicaSyncDiag: event=start taskId=cards target=keepass_compat:all:bank_card trigger=PAGE_VISIBLE thread=Test worker @coroutine#11 detail=layer=coordinator key=<redacted> priority=PAGE_VISIBLE mode=BACKGROUND policy=ALLOWED pending=0
+MonicaSyncDiag: event=queued taskId=documents target=keepass_compat:all:document trigger=PAGE_VISIBLE thread=Test worker @coroutine#11 detail=layer=coordinator key=<redacted> priority=PAGE_VISIBLE mode=BACKGROUND policy=ALLOWED
+MonicaSyncDiag: event=queued taskId=passkeys target=keepass_compat:all:passkey trigger=PAGE_VISIBLE thread=Test worker @coroutine#11 detail=layer=coordinator key=<redacted> priority=PAGE_VISIBLE mode=BACKGROUND policy=ALLOWED
+MonicaSyncDiag: event=success taskId=cards target=keepass_compat:all:bank_card trigger=PAGE_VISIBLE elapsedMs=10 thread=Test worker @coroutine#12 detail=layer=coordinator key=<redacted> priority=PAGE_VISIBLE mode=BACKGROUND policy=ALLOWED
+MonicaSyncDiag: event=start taskId=documents target=keepass_compat:all:document trigger=PAGE_VISIBLE thread=Test worker @coroutine#12 detail=layer=coordinator key=<redacted> priority=PAGE_VISIBLE mode=BACKGROUND policy=ALLOWED pending=1
+MonicaSyncDiag: event=success taskId=documents target=keepass_compat:all:document trigger=PAGE_VISIBLE elapsedMs=3 thread=Test worker @coroutine#13 detail=layer=coordinator key=<redacted> priority=PAGE_VISIBLE mode=BACKGROUND policy=ALLOWED
+MonicaSyncDiag: event=start taskId=passkeys target=keepass_compat:all:passkey trigger=PAGE_VISIBLE thread=Test worker @coroutine#13 detail=layer=coordinator key=<redacted> priority=PAGE_VISIBLE mode=BACKGROUND policy=ALLOWED pending=0
+MonicaSyncDiag: event=success taskId=passkeys target=keepass_compat:all:passkey trigger=PAGE_VISIBLE elapsedMs=1 thread=Test worker @coroutine#14 detail=layer=coordinator key=<redacted> priority=PAGE_VISIBLE mode=BACKGROUND policy=ALLOWED
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

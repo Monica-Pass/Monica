@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_document_permission_missing">"システムのファイル選択画面から必要な読み書き権限が付与されませんでした。端末のメインストレージにある Download フォルダか、別の書き込み可能な場所を選んでください。空のファイルが作成された可能性があります。有効なバックアップではないため、ファイル管理アプリで削除できます。"</string>
+</resources>

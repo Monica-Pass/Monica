@@ -84,7 +84,10 @@ interface SecureItemDao {
         SELECT * FROM secure_items
         WHERE id > :afterId
           AND itemType = :itemType
-          AND itemData != ''
+          AND itemData != '' AND length(itemData) <= 1048576
+          AND substr(ltrim(itemData), 1, 4) != 'MDK|'
+          AND substr(ltrim(itemData), 1, 3) NOT IN ('C2|', 'V2|')
+          AND keepass_database_id IS NULL AND mdbx_database_id IS NULL AND bitwarden_vault_id IS NULL
         ORDER BY id ASC
         LIMIT :limit
         """
@@ -100,6 +103,14 @@ interface SecureItemDao {
 
     @Query("UPDATE secure_items SET itemData = :replacement WHERE id = :id AND itemData = :expected")
     suspend fun compareAndSetItemData(id: Long, expected: String, replacement: String): Int
+
+    /** Synchronous methods are used only inside the migration's IO transaction. */
+    @Query("SELECT * FROM secure_items WHERE id = :id")
+    fun getItemForSensitiveMigration(id: Long): SecureItem?
+
+    @Query("UPDATE secure_items SET itemData = :replacement WHERE id = :id AND itemData = :expected")
+    fun compareAndSetItemDataForSensitiveMigration(id: Long, expected: String, replacement: String): Int
+
 
     @Query(
         """

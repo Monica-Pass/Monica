@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.security.SecurityAnswerHashTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-13T06:40:46.366Z" hostname="JOYIN" time="1.462">
+  <properties/>
+  <testcase name="invalidVersionsAndUnboundedCostsFailClosed" classname="takagi.ru.monica.security.SecurityAnswerHashTest" time="0.01"/>
+  <testcase name="saltedNewEnrollmentMatchesIndependentPbkdfVerifier" classname="takagi.ru.monica.security.SecurityAnswerHashTest" time="1.445"/>
+  <testcase name="legacyBackupIsComparedToActualAnswerAndNotRehashedAsAnswer" classname="takagi.ru.monica.security.SecurityAnswerHashTest" time="0.006"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_document_permission_missing">"系统择文件之页未授所需读写之权。请择主存储中 Download 目录，或他可写之处。择文件之页或已建空文件；此非有效备份，可于文件管理器中删之。"</string>
+</resources>

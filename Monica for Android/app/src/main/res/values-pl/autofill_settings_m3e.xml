@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_selected_source_unavailable">Wybrana baza danych jest niedostępna</string>
+</resources>

@@ -1,6 +1,8 @@
 package takagi.ru.monica.credentialexchange
 
 import android.net.Uri
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
@@ -43,7 +45,7 @@ class ZipConfigurationBackupTest {
     }
 
     @Test fun encryptedConfigOnlyRoundTripHonorsKeepAndRestoreChoices() = runBlocking {
-        val f = TransferFixture()
+        val f = AuthenticatedConfigurationFixture.create()
         val settings = SettingsManager(f.context)
         val original = settings.exportPageAdjustmentSettings()
         val accounts = CommonAccountPreferences(f.context)
@@ -180,5 +182,81 @@ class ZipConfigurationBackupTest {
                 assertEquals("local-password", takagi.ru.monica.utils.WebDavHelper(f.context).getCurrentPasswordForEdit())
             } finally { archive.delete() }
         } finally { helper.clearConfig(); settings.importPageAdjustmentSettings(original); f.close() }
+    }
+
+    /** Authenticate only private namespaced settings; retain the application's original credentials. */
+    private class AuthenticatedConfigurationFixture private constructor(private val transfer: TransferFixture) {
+        private val base = transfer.context
+        private val prefix = "zip-config-auth-${java.util.UUID.randomUUID()}-"
+        private val names = linkedSetOf<String>()
+        val root = File(transfer.root, "authenticated-config").apply { check(mkdirs()) }
+        private val originalStores = (setOf(takagi.ru.monica.security.SecurePreferencesStore.MONICA,
+            takagi.ru.monica.security.SecurePreferencesStore.BITWARDEN) + listOfNotNull(
+            takagi.ru.monica.security.LocalVaultRecovery(base).activeStore()?.first)).associateWith {
+            base.getSharedPreferences(it, android.content.Context.MODE_PRIVATE).all.toMap()
+        }
+        val context = object : android.content.ContextWrapper(base) {
+            override fun getApplicationContext(): android.content.Context = this
+            override fun getApplicationInfo() = android.content.pm.ApplicationInfo(base.applicationInfo).apply {
+                dataDir = root.absolutePath
+            }
+            override fun getFilesDir() = File(root, "files").apply { check(isDirectory || mkdirs()) }
+            override fun getCacheDir() = File(root, "cache").apply { check(isDirectory || mkdirs()) }
+            override fun getSharedPreferences(name: String, mode: Int): android.content.SharedPreferences {
+                names += name
+                return base.getSharedPreferences(prefix + name, mode)
+            }
+        }
+        lateinit var security: takagi.ru.monica.security.SecurityManager
+            private set
+        lateinit var model: takagi.ru.monica.viewmodel.DataExportImportViewModel
+            private set
+
+        private suspend fun prepare() {
+            assertSame(context, context.applicationContext)
+            assertEquals(root.absolutePath, context.applicationContext.applicationInfo.dataDir)
+            val startup = takagi.ru.monica.security.SecureStorageStartup.prepareWithRetry(context)
+            assertTrue(startup is takagi.ru.monica.security.SecureStartupResult.Ready)
+            security = (startup as takagi.ru.monica.security.SecureStartupResult.Ready).manager
+            val password = "Synthetic ZIP configuration authentication 327!"
+            takagi.ru.monica.security.SessionManager.markLocked()
+            takagi.ru.monica.security.SecurityManager.clearRuntimeUnlockCache()
+            assertFalse("Only a fresh private synthetic store may be enrolled", security.isMasterPasswordSet())
+            assertTrue(security.setMasterPassword(password))
+            takagi.ru.monica.security.SecurityManager.clearRuntimeUnlockCache()
+            assertTrue("Security questions require actual persisted-password authentication",
+                security.verifyMasterPassword(password))
+            takagi.ru.monica.security.SessionManager.markUnlocked()
+            assertTrue(takagi.ru.monica.security.SecurityManager.hasRuntimeUnlockCache())
+            model = takagi.ru.monica.viewmodel.DataExportImportViewModel(transfer.secureItems, transfer.passwords, context)
+        }
+
+        suspend fun close() {
+            if (::model.isInitialized) model.viewModelScope.cancel()
+            takagi.ru.monica.security.SessionManager.markLocked()
+            takagi.ru.monica.security.SecurityManager.clearRuntimeUnlockCache()
+            takagi.ru.monica.security.PreparedSecureStore.invalidate()
+            names.forEach { base.deleteSharedPreferences(prefix + it) }
+            check(root.canonicalFile.parentFile == transfer.root.canonicalFile && root.name == "authenticated-config")
+            root.deleteRecursively()
+            originalStores.forEach { (name, values) ->
+                assertEquals("The original application credential preferences must remain unchanged",
+                    values, base.getSharedPreferences(name, android.content.Context.MODE_PRIVATE).all)
+            }
+            assertTrue(takagi.ru.monica.security.SecureStorageStartup.prepareWithRetry(base) is
+                takagi.ru.monica.security.SecureStartupResult.Ready)
+            transfer.close()
+        }
+
+        companion object {
+            suspend fun create(): AuthenticatedConfigurationFixture {
+                val fixture = AuthenticatedConfigurationFixture(TransferFixture())
+                try { fixture.prepare(); return fixture }
+                catch (error: Throwable) {
+                    try { fixture.close() } catch (cleanup: Throwable) { error.addSuppressed(cleanup) }
+                    throw error
+                }
+            }
+        }
     }
 }

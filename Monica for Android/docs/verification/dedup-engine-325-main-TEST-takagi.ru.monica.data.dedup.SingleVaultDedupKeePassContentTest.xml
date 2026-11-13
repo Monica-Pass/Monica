@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.data.dedup.SingleVaultDedupKeePassContentTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-11-06T12:18:27" hostname="JOYIN" time="0.55">
+  <properties/>
+  <testcase name="xmlAuditRejectsTruncatedOptionalUuidsAndBinaryTimestamps" classname="takagi.ru.monica.data.dedup.SingleVaultDedupKeePassContentTest" time="0.059"/>
+  <testcase name="permanentlyDeletedOriginalRestoresOneStableCopyWithoutChangingKeeperOrTombstones" classname="takagi.ru.monica.data.dedup.SingleVaultDedupKeePassContentTest" time="0.053"/>
+  <testcase name="nativeCustomFieldSubsetIsComparedWithoutRoomProjection" classname="takagi.ru.monica.data.dedup.SingleVaultDedupKeePassContentTest" time="0.017"/>
+  <testcase name="fullRoundTripProofIncludesUnselectedGroupsAndEntries" classname="takagi.ru.monica.data.dedup.SingleVaultDedupKeePassContentTest" time="0.001"/>
+  <testcase name="recycleAndSelectiveRecoveryPreserveUnrelatedLaterEditsAndAreIdempotent" classname="takagi.ru.monica.data.dedup.SingleVaultDedupKeePassContentTest" time="0.004"/>
+  <testcase name="credentialMetadataJsonDoesNotActAsANativeTemplateButRealFieldTemplatesStillDo" classname="takagi.ru.monica.data.dedup.SingleVaultDedupKeePassContentTest" time="0.008"/>
+  <testcase name="nativeEntryCodecCoversEveryPropertyAndPreservesAllValues" classname="takagi.ru.monica.data.dedup.SingleVaultDedupKeePassContentTest" time="0.004"/>
+  <testcase name="inheritedReferencesAndUuidBehaviorBlockAndLocalPlaceholderFieldsStayWhole" classname="takagi.ru.monica.data.dedup.SingleVaultDedupKeePassContentTest" time="0.005"/>
+  <testcase name="xmlAuditRejectsUnknownNodesAttributesAndRepeatedFields" classname="takagi.ru.monica.data.dedup.SingleVaultDedupKeePassContentTest" time="0.007"/>
+  <testcase name="payloadRoundTripPreservesBinaryBytesProtectionCompressionIconsAndHistory" classname="takagi.ru.monica.data.dedup.SingleVaultDedupKeePassContentTest" time="0.008"/>
+  <testcase name="uniqueHistoryOrAttachmentBytesPreventNativeDeletion" classname="takagi.ru.monica.data.dedup.SingleVaultDedupKeePassContentTest" time="0.003"/>
+  <testcase name="missingNativeResourcesUnknownXmlAndInboundReferencesAreNotComplete" classname="takagi.ru.monica.data.dedup.SingleVaultDedupKeePassContentTest" time="0.004"/>
+  <testcase name="recoveryRefusesChangedRecycledEntryOrMissingOriginalParent" classname="takagi.ru.monica.data.dedup.SingleVaultDedupKeePassContentTest" time="0.002"/>
+  <testcase name="nativePasskeyTypeFidoFieldsAndHistoricalCredentialsNeverBecomeCandidates" classname="takagi.ru.monica.data.dedup.SingleVaultDedupKeePassContentTest" time="0.008"/>
+  <testcase name="actualNativeWriterOptionalNullUuidsRemainCompleteWithoutAcceptingMalformedIdentity" classname="takagi.ru.monica.data.dedup.SingleVaultDedupKeePassContentTest" time="0.365"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

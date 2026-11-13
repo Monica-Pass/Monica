@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.utils.OrdinaryRestoreDuplicatePolicyTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-13T06:40:47.848Z" hostname="JOYIN" time="0.224">
+  <properties/>
+  <testcase name="assignedIdAndEncryptionEnvelopeDoNotPreventAnExactRetry" classname="takagi.ru.monica.utils.OrdinaryRestoreDuplicatePolicyTest" time="0.035"/>
+  <testcase name="identicalCardFaceReferenceStillRequiresItsIndependentAttachmentProject" classname="takagi.ru.monica.utils.OrdinaryRestoreDuplicatePolicyTest" time="0.011"/>
+  <testcase name="importedExternalOrSupplementalStateCannotBeDiscardedAsARetry" classname="takagi.ru.monica.utils.OrdinaryRestoreDuplicatePolicyTest" time="0.001"/>
+  <testcase name="formattingProtectedValueAndDuplicateFieldDifferencesRemainIndependent" classname="takagi.ru.monica.utils.OrdinaryRestoreDuplicatePolicyTest" time="0.001"/>
+  <testcase name="unknownRootAndNestedFieldsCannotProveAStandaloneProject" classname="takagi.ru.monica.utils.OrdinaryRestoreDuplicatePolicyTest" time="0.114"/>
+  <testcase name="everyStoredProvenanceAndLifecycleDifferencePreventsEquality" classname="takagi.ru.monica.utils.OrdinaryRestoreDuplicatePolicyTest" time="0.061"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

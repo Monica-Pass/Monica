@@ -2,259 +2,161 @@ package takagi.ru.monica.security
 
 import android.content.Context
 import android.util.Log
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.conflate
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.yield
 import takagi.ru.monica.data.ItemType
 import takagi.ru.monica.data.PasswordDatabase
 import takagi.ru.monica.data.PasswordEntry
+import takagi.ru.monica.data.PasswordEntryDao
 import takagi.ru.monica.data.SecureItem
-import takagi.ru.monica.data.model.CardWalletDataCodec
-import takagi.ru.monica.util.TotpDataResolver
+import takagi.ru.monica.data.SecureItemDao
+import java.util.concurrent.Callable
 
 /**
- * Incrementally wraps legacy local plaintext sensitive fields in Monica ciphertext.
- *
- * This migrates only the local Room cache shape. It intentionally updates DAO
- * columns directly instead of going through repositories, so it cannot be
- * interpreted as a user edit by MDBX, Bitwarden, KeePass, or backup sync.
+ * Upgrades confirmed local legacy values after main-app authentication. A change
+ * notification starts a fresh bounded-page scan, including restored old IDs.
+ * Old completion preferences are deliberately neither read nor reset.
  */
-class SensitiveFieldMigrationManager(
-    context: Context,
+class SensitiveFieldMigrationManager internal constructor(
+    @Suppress("UNUSED_PARAMETER") context: Context,
     private val database: PasswordDatabase,
     private val securityManager: SecurityManager,
-    private val passwordEntryDao: takagi.ru.monica.data.PasswordEntryDao = database.passwordEntryDao(),
-    private val secureItemDao: takagi.ru.monica.data.SecureItemDao = database.secureItemDao(),
+    private val passwordEntryDao: PasswordEntryDao = database.passwordEntryDao(),
+    private val secureItemDao: SecureItemDao = database.secureItemDao(),
+    private val encryptor: SensitiveValueEncryptor = SensitiveValueEncryptor(securityManager::encryptData),
+    private val beforeCommit: suspend () -> Unit = {},
 ) {
-    private val prefs = context.applicationContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    private data class SessionStamp(val app: Long, val key: Long) {
+        // Pure snapshots only: no PreparedSecureStore access while holding a DB transaction.
+        fun isCurrent(): Boolean = SessionManager.isUnlocked.value &&
+            SessionManager.lockGeneration.value == app &&
+            SecurityManager.dataReadGeneration.value == key && SecurityManager.hasRuntimeUnlockCache()
+    }
 
-    suspend fun runUnlockedSmallBatch() {
+    /** Room subscribes before its initial emission, so inserts during the first scan are retained. */
+    suspend fun observeWhileUnlocked(): Unit = withContext(Dispatchers.IO) {
+        database.invalidationTracker.createFlow("secure_items", "password_entries")
+            .conflate().catch { error ->
+                if (error is CancellationException) throw error
+                Log.w(TAG, "Local field observer deferred: ${error.javaClass.simpleName}")
+            }.collect {
+                delay(200)
+                try {
+                    runUnlockedSmallBatch()
+                } catch (cancelled: CancellationException) {
+                    throw cancelled
+                } catch (error: Exception) {
+                    Log.w(TAG, "Local field scan deferred: ${error.javaClass.simpleName}")
+                }
+            }
+    }
+
+    /** Single-pass entry point; each pass visits every page, not only three rows. */
+    suspend fun runUnlockedSmallBatch(): Unit = withContext(Dispatchers.IO) {
         migrationMutex.withLock {
-            if (!securityManager.canAccessVaultMaterialNow()) {
-                Log.d(TAG, "Sensitive field migration skipped: vault material is not available")
-                return
+            if (!SessionManager.isUnlocked.value || !securityManager.isVaultRuntimeUnlocked()) return@withLock
+            val stamp = SessionStamp(SessionManager.lockGeneration.value, SecurityManager.dataReadGeneration.value)
+            for (type in listOf(ItemType.TOTP, ItemType.BANK_CARD, ItemType.DOCUMENT)) {
+                var after = 0L
+                while (stamp.isCurrent()) {
+                    currentCoroutineContext().ensureActive()
+                    val rows = secureItemDao.getItemDataMigrationBatch(type, after, BATCH_SIZE)
+                    if (rows.isEmpty()) break
+                    for (row in rows) {
+                        currentCoroutineContext().ensureActive()
+                        if (!stamp.isCurrent()) return@withLock
+                        if (isStrictlyLocal(row) && LegacySensitiveValuePolicy.acceptsItem(row.itemType, row.itemData)) {
+                            upgrade(stamp, row.itemData, row,
+                                read = { secureItemDao.getItemForSensitiveMigration(row.id) },
+                                local = ::isStrictlyLocal,
+                                write = { replacement -> secureItemDao.compareAndSetItemDataForSensitiveMigration(row.id, row.itemData, replacement) })
+                        }
+                        after = row.id
+                    }
+                    yield()
+                }
             }
-
-            ensureCurrentVersion()
-
-            migrateSecureItemData(
-                domain = DOMAIN_TOTP_ITEM_DATA,
-                itemType = ItemType.TOTP,
-                canMigratePlainValue = { item, plainValue ->
-                    TotpDataResolver.parseStoredItemData(
-                        itemData = plainValue,
-                        fallbackIssuer = item.title,
-                        fallbackAccountName = item.title
-                    ) != null
+            var after = 0L
+            while (stamp.isCurrent()) {
+                currentCoroutineContext().ensureActive()
+                val rows = passwordEntryDao.getAuthenticatorKeyMigrationBatch(after, BATCH_SIZE)
+                if (rows.isEmpty()) break
+                for (row in rows) {
+                    currentCoroutineContext().ensureActive()
+                    if (!stamp.isCurrent()) return@withLock
+                    if (isStrictlyLocal(row) && LegacySensitiveValuePolicy.acceptsAuthenticatorKey(row.authenticatorKey)) {
+                        upgrade(stamp, row.authenticatorKey, row,
+                            read = { passwordEntryDao.getEntryForSensitiveMigration(row.id) },
+                            local = ::isStrictlyLocal,
+                            write = { replacement -> passwordEntryDao.compareAndSetAuthenticatorKeyForSensitiveMigration(row.id, row.authenticatorKey, replacement) })
+                    }
+                    after = row.id
                 }
-            )
-            migratePasswordAuthenticatorKeys()
-            migrateSecureItemData(
-                domain = DOMAIN_BANK_CARD_ITEM_DATA,
-                itemType = ItemType.BANK_CARD,
-                canMigratePlainValue = { _, plainValue ->
-                    CardWalletDataCodec.parseBankCardData(plainValue) != null
-                }
-            )
-            migrateSecureItemData(
-                domain = DOMAIN_DOCUMENT_ITEM_DATA,
-                itemType = ItemType.DOCUMENT,
-                canMigratePlainValue = { _, plainValue ->
-                    CardWalletDataCodec.parseDocumentData(plainValue) != null
-                }
-            )
+                yield()
+            }
         }
     }
 
-    private suspend fun migratePasswordAuthenticatorKeys() {
-        migrateDomain(
-            domain = DOMAIN_PASSWORD_AUTHENTICATOR_KEY,
-            loadBatch = { afterId ->
-                passwordEntryDao.getAuthenticatorKeyMigrationBatch(afterId, BATCH_SIZE)
-            },
-            processRecord = process@{ entry ->
-                val rawValue = entry.authenticatorKey
-                val encrypted = prepareEncryptedLegacyValue(
-                    domain = DOMAIN_PASSWORD_AUTHENTICATOR_KEY,
-                    id = entry.id,
-                    rawValue = rawValue,
-                    canMigratePlainValue = { plainValue ->
-                        TotpDataResolver.fromAuthenticatorKey(
-                            rawKey = plainValue,
-                            fallbackIssuer = entry.title,
-                            fallbackAccountName = entry.username
-                        ) != null
-                    }
-                ) ?: return@process MigrationRecordResult.Processed
-
-                // The batch can be stale after an edit, restore, or sync. Never replace a newer value.
-                passwordEntryDao.compareAndSetAuthenticatorKey(entry.id, rawValue, encrypted)
-                MigrationRecordResult.Processed
-            }
-        )
-    }
-
-    private suspend fun migrateSecureItemData(
-        domain: String,
-        itemType: ItemType,
-        canMigratePlainValue: (SecureItem, String) -> Boolean
+    private suspend fun <T : Any> upgrade(
+        stamp: SessionStamp, raw: String, observed: T,
+        read: () -> T?, local: (T) -> Boolean, write: (String) -> Int,
     ) {
-        migrateDomain(
-            domain = domain,
-            loadBatch = { afterId ->
-                secureItemDao.getItemDataMigrationBatch(itemType, afterId, BATCH_SIZE)
-            },
-            processRecord = process@{ item ->
-                val encrypted = prepareEncryptedLegacyValue(
-                    domain = domain,
-                    id = item.id,
-                    rawValue = item.itemData,
-                    canMigratePlainValue = { plainValue ->
-                        canMigratePlainValue(item, plainValue)
-                    }
-                ) ?: return@process MigrationRecordResult.Processed
-
-                secureItemDao.compareAndSetItemData(item.id, item.itemData, encrypted)
-                MigrationRecordResult.Processed
-            }
-        )
-    }
-
-    private suspend fun <T> migrateDomain(
-        domain: String,
-        loadBatch: suspend (afterId: Long) -> List<T>,
-        processRecord: suspend (T) -> MigrationRecordResult
-    ) where T : Any {
-        if (prefs.getBoolean(completedKey(domain), false)) return
-
-        var afterId = prefs.getLong(lastIdKey(domain), 0L)
-        repeat(MAX_BATCHES_PER_DOMAIN) {
-            val batch = loadBatch(afterId)
-            if (batch.isEmpty()) {
-                prefs.edit()
-                    .putBoolean(completedKey(domain), true)
-                    .putLong(blockedIdKey(domain), 0L)
-                    .apply()
-                Log.d(TAG, "Sensitive field migration completed domain=$domain")
-                return
-            }
-
-            for (record in batch) {
-                val id = recordId(record)
-                val result = runCatching { processRecord(record) }
-                    .getOrElse { error ->
-                        if (error is kotlinx.coroutines.CancellationException) throw error
-                        recordBlocked(domain, id, error)
-                        return
-                    }
-
-                when (result) {
-                    MigrationRecordResult.Processed -> {
-                        afterId = id
-                        prefs.edit()
-                            .putLong(lastIdKey(domain), afterId)
-                            .putLong(blockedIdKey(domain), 0L)
-                            .apply()
-                    }
-                    is MigrationRecordResult.Blocked -> {
-                        recordBlocked(domain, id, result.error)
-                        return
-                    }
-                }
-            }
+        try {
+            if (!stamp.isCurrent() || !securityManager.isDataReadCurrent(stamp.key)) return
+            val encrypted = encryptor.encrypt(raw)
+            // Preserve every original character, unknown member and escape; never reserialize.
+            check(encrypted.startsWith("MDK|") && securityManager.decryptData(encrypted) == raw)
+            beforeCommit()
+            val caller = currentCoroutineContext()
+            caller.ensureActive()
+            if (!stamp.isCurrent() || !securityManager.isDataReadCurrent(stamp.key)) return
+            database.runInTransaction(Callable {
+                caller.ensureActive()
+                check(stamp.isCurrent())
+                val latest = read()
+                if (latest == null || latest != observed || !local(latest)) return@Callable
+                check(write(encrypted) == 1)
+                caller.ensureActive()
+                check(stamp.isCurrent())
+                // No Session/runtime-key monitor inside the DB transaction. A lock after this
+                // final check may let prepared ciphertext commit; no plaintext/key is published.
+            })
+        } catch (cancelled: CancellationException) {
+            throw cancelled
+        } catch (error: Exception) {
+            Log.w(TAG, "Local field upgrade deferred: ${error.javaClass.simpleName}")
         }
     }
-
-    private fun prepareEncryptedLegacyValue(
-        domain: String,
-        id: Long,
-        rawValue: String,
-        canMigratePlainValue: (String) -> Boolean
-    ): String? {
-        if (rawValue.isBlank()) return null
-        if (securityManager.looksLikeMonicaCiphertext(rawValue)) return null
-
-        val plainValue = resolveLegacyPlainCandidate(rawValue)
-        val canMigrate = runCatching { canMigratePlainValue(plainValue) }.getOrDefault(false)
-        if (!canMigrate) {
-            Log.d(TAG, "Sensitive field migration skipped unsupported value domain=$domain id=$id")
-            return null
-        }
-
-        return runCatching {
-            val encrypted = securityManager.encryptDataLegacyCompat(plainValue)
-            val roundTrip = securityManager.decryptData(encrypted)
-            check(roundTrip == plainValue) { "ciphertext round-trip mismatch" }
-            encrypted
-        }.getOrElse { error ->
-            throw SensitiveFieldMigrationException(domain, id, error)
-        }
-    }
-
-    private fun resolveLegacyPlainCandidate(value: String): String {
-        return runCatching { securityManager.decryptData(value) }.getOrDefault(value)
-    }
-
-    private fun recordBlocked(domain: String, id: Long, error: Throwable) {
-        val failureCount = prefs.getInt(failureCountKey(domain), 0) + 1
-        prefs.edit()
-            .putLong(blockedIdKey(domain), id)
-            .putInt(failureCountKey(domain), failureCount)
-            .putString(lastErrorKey(domain), error.javaClass.simpleName)
-            .apply()
-        Log.w(
-            TAG,
-            "Sensitive field migration blocked domain=$domain id=$id failures=$failureCount error=${error.javaClass.simpleName}"
-        )
-    }
-
-    private fun ensureCurrentVersion() {
-        val storedVersion = prefs.getInt(KEY_VERSION, 0)
-        if (storedVersion == MIGRATION_VERSION) return
-
-        prefs.edit()
-            .clear()
-            .putInt(KEY_VERSION, MIGRATION_VERSION)
-            .apply()
-    }
-
-    private fun recordId(record: Any): Long {
-        return when (record) {
-            is PasswordEntry -> record.id
-            is SecureItem -> record.id
-            else -> error("Unsupported migration record type: ${record.javaClass.name}")
-        }
-    }
-
-    private fun lastIdKey(domain: String): String = "${domain}_last_id"
-    private fun completedKey(domain: String): String = "${domain}_completed"
-    private fun blockedIdKey(domain: String): String = "${domain}_blocked_id"
-    private fun failureCountKey(domain: String): String = "${domain}_failure_count"
-    private fun lastErrorKey(domain: String): String = "${domain}_last_error"
-
-    private sealed interface MigrationRecordResult {
-        object Processed : MigrationRecordResult
-        data class Blocked(val error: Throwable) : MigrationRecordResult
-    }
-
-    private class SensitiveFieldMigrationException(
-        domain: String,
-        id: Long,
-        cause: Throwable
-    ) : RuntimeException("Sensitive field migration failed for domain=$domain id=$id", cause)
 
     companion object {
         private const val TAG = "SensitiveMigration"
-        private const val PREFS_NAME = "monica_sensitive_field_migration"
-        private const val KEY_VERSION = "migration_version"
-        private const val MIGRATION_VERSION = 1
-        private const val BATCH_SIZE = 3
-        private const val MAX_BATCHES_PER_DOMAIN = 1
-
-        private const val DOMAIN_TOTP_ITEM_DATA = "totp_item_data"
-        private const val DOMAIN_PASSWORD_AUTHENTICATOR_KEY = "password_authenticator_key"
-        private const val DOMAIN_BANK_CARD_ITEM_DATA = "bank_card_item_data"
-        private const val DOMAIN_DOCUMENT_ITEM_DATA = "document_item_data"
-
+        private const val BATCH_SIZE = 64
         private val migrationMutex = Mutex()
+
+        internal fun isStrictlyLocal(item: SecureItem): Boolean = item.id > 0 &&
+            item.keepassDatabaseId == null && item.keepassEntryUuid.isNullOrEmpty() &&
+            item.keepassGroupUuid.isNullOrEmpty() && item.keepassGroupPath.isNullOrEmpty() &&
+            item.mdbxDatabaseId == null && item.mdbxFolderId.isNullOrEmpty() &&
+            item.bitwardenVaultId == null && item.bitwardenCipherId.isNullOrEmpty() &&
+            item.bitwardenFolderId.isNullOrEmpty() && item.bitwardenRevisionDate.isNullOrEmpty() &&
+            !item.bitwardenLocalModified && item.bitwardenArchiveIntent == null && item.syncStatus == "NONE"
+
+        internal fun isStrictlyLocal(entry: PasswordEntry): Boolean = entry.id > 0 &&
+            entry.keepassDatabaseId == null && entry.keepassEntryUuid.isNullOrEmpty() &&
+            entry.keepassGroupUuid.isNullOrEmpty() && entry.keepassGroupPath.isNullOrEmpty() &&
+            entry.mdbxDatabaseId == null && entry.mdbxFolderId.isNullOrEmpty() &&
+            entry.bitwardenVaultId == null && entry.bitwardenCipherId.isNullOrEmpty() &&
+            entry.bitwardenFolderId.isNullOrEmpty() && entry.bitwardenRevisionDate.isNullOrEmpty() &&
+            !entry.bitwardenLocalModified && entry.bitwardenCipherType == 1
     }
 }

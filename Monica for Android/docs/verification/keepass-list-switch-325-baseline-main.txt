@@ -1,0 +1,95 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest:
+INSTRUMENTATION_STATUS: test=switchingKdbxNeverLeavesPreviousVaultActionable
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failed to assert count of nodes.
+Reason: Did not expect any node but found '1' node that satisfies: ((OnClick is defined) && ((Text + InputText + EditableText contains 'Switch A' (ignoreCase: false)) || (hasAnyDescendantThat(Text + InputText + EditableText contains 'Switch A' (ignoreCase: false)))))
+Node found:
+Node #329 at (l=32.0, t=572.0, r=1006.0, b=719.0)px, Tag: 'vault_item_password:8003145284339316127'
+Focused = 'false'
+IsContainer = 'true'
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 20.0.dp), topEnd = CornerSize(size = 20.0.dp), bottomEnd = CornerSize(size = 20.0.dp), bottomStart = CornerSize(size = 20.0.dp))'
+Text = '[Switch A, user-0]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, OnLongClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+
+	at androidx.compose.ui.test.AssertionsKt.assertCountEquals(Assertions.kt:282)
+	at takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest$switchingKdbxNeverLeavesPreviousVaultActionable$1$2$2.invokeSuspend(VaultOverviewPaneTest.kt:683)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest.switchingKdbxNeverLeavesPreviousVaultActionable(VaultOverviewPaneTest.kt:657)
+
+INSTRUMENTATION_STATUS: stream=
+Error in switchingKdbxNeverLeavesPreviousVaultActionable(takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest):
+java.lang.AssertionError: Failed to assert count of nodes.
+Reason: Did not expect any node but found '1' node that satisfies: ((OnClick is defined) && ((Text + InputText + EditableText contains 'Switch A' (ignoreCase: false)) || (hasAnyDescendantThat(Text + InputText + EditableText contains 'Switch A' (ignoreCase: false)))))
+Node found:
+Node #329 at (l=32.0, t=572.0, r=1006.0, b=719.0)px, Tag: 'vault_item_password:8003145284339316127'
+Focused = 'false'
+IsContainer = 'true'
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 20.0.dp), topEnd = CornerSize(size = 20.0.dp), bottomEnd = CornerSize(size = 20.0.dp), bottomStart = CornerSize(size = 20.0.dp))'
+Text = '[Switch A, user-0]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, OnLongClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+
+	at androidx.compose.ui.test.AssertionsKt.assertCountEquals(Assertions.kt:282)
+	at takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest$switchingKdbxNeverLeavesPreviousVaultActionable$1$2$2.invokeSuspend(VaultOverviewPaneTest.kt:683)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest.switchingKdbxNeverLeavesPreviousVaultActionable(VaultOverviewPaneTest.kt:657)
+
+INSTRUMENTATION_STATUS: test=switchingKdbxNeverLeavesPreviousVaultActionable
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 24.413
+There was 1 failure:
+1) switchingKdbxNeverLeavesPreviousVaultActionable(takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest)
+java.lang.AssertionError: Failed to assert count of nodes.
+Reason: Did not expect any node but found '1' node that satisfies: ((OnClick is defined) && ((Text + InputText + EditableText contains 'Switch A' (ignoreCase: false)) || (hasAnyDescendantThat(Text + InputText + EditableText contains 'Switch A' (ignoreCase: false)))))
+Node found:
+Node #329 at (l=32.0, t=572.0, r=1006.0, b=719.0)px, Tag: 'vault_item_password:8003145284339316127'
+Focused = 'false'
+IsContainer = 'true'
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 20.0.dp), topEnd = CornerSize(size = 20.0.dp), bottomEnd = CornerSize(size = 20.0.dp), bottomStart = CornerSize(size = 20.0.dp))'
+Text = '[Switch A, user-0]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, OnLongClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+
+	at androidx.compose.ui.test.AssertionsKt.assertCountEquals(Assertions.kt:282)
+	at takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest$switchingKdbxNeverLeavesPreviousVaultActionable$1$2$2.invokeSuspend(VaultOverviewPaneTest.kt:683)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest.switchingKdbxNeverLeavesPreviousVaultActionable(VaultOverviewPaneTest.kt:657)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

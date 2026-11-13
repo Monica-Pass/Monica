@@ -1,0 +1,1091 @@
+{
+  "version": "1.0.327",
+  "ordinaryVersionCode": 12,
+  "fdroidVersionCode": 34,
+  "device": "MuMu instance 2, Android 15/API35, x86_64",
+  "scope": "Default-off hardware key opt-in; shared hardware/autofill page switch; software candidate/key retention; no production crypto, schema, manifest or browser allowlist change",
+  "newDeviceMethods": 13,
+  "editions": {
+    "main": {
+      "productionBuild": "main-03",
+      "buildSeconds": 258.64,
+      "testBuild": "main-test-07",
+      "testBuildSeconds": 20.982,
+      "jvmTests": 82,
+      "jvmFailures": 0,
+      "jvmSuites": [
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyBackupFlagsTest",
+          "tests": 8,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "refreshPreservesKnownEligibilityAndAcceptsBackupStateChanges",
+            "jsonFlagsDistinguishLegacyMissingValuesAndRejectMalformedValues",
+            "legacyAndroidPayloadOverridesOldSyncMarkerDerivedNativeFlags",
+            "refreshDoesNotReinterpretLegacyNullAsANewCredential",
+            "keePassPayloadAndNativeFieldsKeepAllValidFlagPairsAndKeyBytes",
+            "actualAuthenticatorDataUsesExplicitFlagsWithoutChangingKeyOrStoredCounter",
+            "bitwardenRefusesChangingImmutableEligibilityDuringTransfer",
+            "oldRecordsKeepTheirFlagsRegardlessOfLocalBackupStatus"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyBackupPortabilityPolicyTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "encrypted backup preserves real PKCS8 private key bytes",
+            "encrypted backup reports missing protected private key",
+            "encrypted backup exports resolved and normalized private key material",
+            "unencrypted backup rejects passkey private key export",
+            "legacy protected reference can still restore on original installation",
+            "legacy protected reference without local key restores as unavailable"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyBatchMoveExecutorTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "sourceCleanupFailureDoesNotUndoSavedDestinationOrSkipOtherSources",
+            "failedTargetNeverQueuesSourceDeletion",
+            "successfulTargetPrecedesAllSourceDeletions",
+            "cancellationNeverContinuesWithSourceDeletion"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyCipherFolderIntentTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "completingOldUploadCannotEraseNewerExplicitMove",
+            "failedLocalWriteRestoresPreviousMoveAndDoesNotApplyToDifferentRowState"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyCredentialDiscoveryPolicyTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "discoverable only query does not expose old non discoverable passkey",
+            "usable policy keeps private local passkeys",
+            "usable policy rejects records whose referenced private key is unavailable",
+            "allowCredentials can expose old non discoverable passkey",
+            "rpId query compatibility keeps usable old non discoverable passkey",
+            "usable policy rejects references and missing private key"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyCredentialIdCodecTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "malformedLegacyTextIsPreservedAndCannotAuthorizeARequest",
+            "uuidRepresentationRetainsNetworkByteOrder",
+            "actualEdgeRegisteredIdIsNotReinterpretedAsPrefixBytes",
+            "originalBytesSurviveAllSupportedCarriers"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyDiscoverabilityResolverTest",
+          "tests": 15,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "credProps string true is requested",
+            "missing authenticator selection is not discoverable",
+            "residentKey value tolerates case and whitespace",
+            "boolean requireResidentKey true is discoverable",
+            "false and discouraged are not discoverable",
+            "residentKey preferred is discoverable",
+            "credProps false values are not requested",
+            "credProps boolean true is requested",
+            "string requireResidentKey true is discoverable",
+            "string requireResidentKey true tolerates case and whitespace",
+            "root request json is parsed for discoverable state",
+            "root request json is parsed for credProps",
+            "publicKey wrapped request json is parsed for discoverable state",
+            "publicKey wrapped request json is parsed for credProps",
+            "residentKey required is discoverable"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyGetRequestPolicyTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "allowedOldNonDiscoverableCredentialStillWorks",
+            "unknownAllowListNeverFallsBackToAnotherCredential",
+            "finalPlatformRequestMustMatchCeremonyAndIndependentlyAllowSelection",
+            "absentAndEmptyAllowListsKeepExistingRpDiscoveryCompatibility",
+            "authenticationTitleKeepsNotesPrivateAndManagementTitleUnchanged",
+            "malformedNonemptyAllowListsAreRejectedRatherThanBecomingDiscovery"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyMoveReporterTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "allBlockedReportsEachReasonWithoutWriting",
+            "partialFailureKeepsCorrectCountsAndContinuesWithoutLeakingExceptionOrKeyMaterial",
+            "cancellationNeverBecomesSkippedItemOrContinuesTheBatch",
+            "allSuccessfulUsesMovedCountAndNoProblemDialogData"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyPageSyncPolicyTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "keepassRefreshOnlyIncludesExistingDatabasesInCurrentScope",
+            "localAndMdbxFiltersNeverUseTheActiveBitwardenAccount",
+            "cloudFolderUsesItsOwnAccountAndWaitsForRestoration"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyPortabilityCacheTest",
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "revisitingOrChangingDisplayMetadataReusesResult",
+            "invalidationDuringInspectionCannotRepopulateStaleValue",
+            "expiryKeepsBadgeVisibleWhileRefreshingAndCapacityIsBounded",
+            "keyAndCompatibilityChangesHaveDifferentCacheKeys",
+            "concurrentReadersShareOneInspection"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyPortabilityTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "onlyUsableNonexportableKeysAreLocalOnly",
+            "backupMetadataAndCounterHistoryAreRestrictionsRatherThanDeviceBinding"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyRemarkAndNavigationGuardTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "detailPrioritizesCompactAccountHeroAndMovesBindingDown",
+            "credentialSelectorUsesAccountTitleWithoutNotes",
+            "authenticatorAndPasskeyShareOneDockDestinationWithBidirectionalControls",
+            "authenticatorPasskeySwitchUsesMonicaDirectionalNavigationMotion",
+            "compactPasskeyCardNavigatesInsteadOfExpanding",
+            "remarkWinsWithoutChangingOriginalPasskeyIdentity",
+            "blankRemarkFallsBackToOriginalDisplayName"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyTransferPolicyTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "deviceBoundKeysCanBeOrganizedLocallyButCannotBeCopied",
+            "mixedBatchIsPlannedWithoutExecutingAnyWrites",
+            "copyingWithinUniqueCredentialStoresCannotOverwriteTheSource"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyUserVerificationGuardTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "sharedPasswordFallbackGrantsOnlyCurrentVerifiedCommittedAttemptAndRejectsFailures",
+            "authenticationAndCreationRequireVerificationAndRetainPasswordFallback"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.ui.screens.SettingsSearchIndexTest",
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "aliasesDoNotDiscardOtherRequiredWordsAndDuplicatesAreRemoved",
+            "specificTitleRanksBeforeDescriptionAndParentPathMatches",
+            "englishCaseAndFullWidthInputAreNormalized",
+            "wordsCanMatchASettingAndItsLocationTogether",
+            "blankAndUnmatchedQueriesDoNotReturnEverySetting"
+          ]
+        }
+      ],
+      "apks": {
+        "outputs/apk/debug/Monica-Android-x86_64-1.0.327-26111212-83.APK": "0fb3daa46dd9bf5aa7d1067bd0d5e9dceb971ab27ffaa8a45d5379879f93971a",
+        "outputs/apk/release/Monica-Android-x86_64-1.0.327-26111212-83.APK": "6aecaad7202e13edfdb5e5ba3b8dce2ae64a83f2d0496cffb5dff34a10fab0dc"
+      },
+      "device": {
+        "distinctAcceptedMethods": 51,
+        "methods": [
+          "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#cancelledNativeOpenCannotCloseOrReplaceTheNextConnection",
+          "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#chineseConnectedPageKeepsReferenceGroupsAndReadableActions",
+          "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#connectedManagementRendersActualCapabilitiesWithoutAddingNavigationDock",
+          "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#largeEnglishTextKeepsFullIdentifiersAndPinActionsReachable",
+          "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#managementActivityOpensOnApi32AndDoesNotWriteVaultData",
+          "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#noDeviceStateExplainsWebsiteRegistrationAndOffersUsbWithoutOfflineWriteButton",
+          "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#providerSubmitDisabledWithoutDeviceAndAfterMissingPin",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInLifecycleTest#defaultOffRegistrationDoesNotCreateDiscoveryMonitor",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInLifecycleTest#disabledCachedProviderDestinationsReturnCancellationForBothRequestTypes",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInLifecycleTest#disablingAnOpenRegistrationClosesDiscoveryAndDropsSelectedHardwareTarget",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInLifecycleTest#disablingRejectsACompletedHardwareResponseBeforeObserverCanRun",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInLifecycleTest#managementTogglePersistsAcrossRecreationAndBackKeepsChoice",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInTest#cancelledGetRequestPublishesNoHardwareOrSoftwareResponse",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInTest#explicitChoiceControlsBothProviderResponsesAndKeepsPlatformOnlyCreateSoftwareOnly",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInTest#missingPreferenceDefaultsOffDespiteDeviceHardwareCapability",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInTest#softwareCandidateMetadataAndRealSigningKeySurviveEnableDisable",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#bothRealPagesShareChoiceAndReturningDoesNotUndoIt",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#chineseBothPagesRemainReadableInLightAndDarkThemes",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#largeEnglishBothPagesKeepCompleteDescriptionAndReachableSwitch",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#renamedEntryAndHardwareAliasesNavigateToActualSwitchWithoutToggling",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#attestationNoneRemovesIdentifyingStatementAndAaguid",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#authenticatorCannotReturnCredentialOutsideAllowList",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#browserSuppliedHashIsUsedUnchangedAndNoFabricatedClientDataReturned",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#cborRejectsDuplicateKeysTruncationOversizedAndDeeplyNestedData",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#ctap20UsesOneUnscopedPinTokenRequestWithoutFallbackRetry",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#digitalAssetLinksRequireBothPackageAndCertificateAndRelation",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#hidReportUsageDoesNotSelectKeyboardOrOtpInterface",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#incorrectPinDoesNotRetryOrReachMakeCredential",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#invalidPinAndUnsupportedRequestsFailBeforeDeviceMutation",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#readOnlyCredentialManagementEnumeratesRpAndAccountsWithoutResetOrDelete",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#realPackedAttestationAndAssertionVerifyForPinProtocolsOneAndTwo",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#requiredVerificationAndResidentKeyAreCheckedBeforeGeneratingCredential",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#setAndChangePinReachPeerOnceAndOldPinStopsWorking",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#trustedWebOriginsRequireHttpsRpRelationshipAndNonPublicSuffix",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#wrongRpHashAndMissingUserVerificationCannotReturnSuccess",
+          "takagi.ru.monica.passkey.hardware.HardwareProviderTest#fakeDelegatedOriginWithMonicaCertificateIsRejected",
+          "takagi.ru.monica.passkey.hardware.HardwareProviderTest#forwardingPreservesFrameworkCallerAndHashAndRejectsPlatformOnlyOrMissingRequests",
+          "takagi.ru.monica.passkey.hardware.HardwareProviderTest#frameworkCreateRequestSuppliesTrustedCallerAndHashRatherThanIntentExtras",
+          "takagi.ru.monica.passkey.hardware.HardwareProviderTest#frameworkResponsesPreserveHardwareWebauthnJsonAndCancellationType",
+          "takagi.ru.monica.passkey.hardware.HardwareRegistrationFlowTest#completedHardwareResponseReturnsToFrameworkWithoutSoftwareWrite",
+          "takagi.ru.monica.passkey.hardware.HardwareRegistrationFlowTest#hardwareSelectionSurvivesRecreationAndCancellationWithoutSoftwareWrite",
+          "takagi.ru.monica.passkey.hardware.HardwareTargetPickerTest#noDeviceOffersOnlySoftwareLocation",
+          "takagi.ru.monica.passkey.hardware.HardwareTargetPickerTest#pendingRegistrationDisablesBothLocations",
+          "takagi.ru.monica.passkey.hardware.HardwareTargetPickerTest#removalKeepsChosenHardwareDisabledAndReconnectionRestoresIt",
+          "takagi.ru.monica.passkey.hardware.HardwareTransportTest#hidCancellationStopsWaitingAndClosesConnection",
+          "takagi.ru.monica.passkey.hardware.HardwareTransportTest#hidFragmentsOutgoingDataAndReassemblesIncomingWithKeepaliveAndOtherChannel",
+          "takagi.ru.monica.passkey.hardware.HardwareTransportTest#hidRejectsWrongCommandSequenceLengthAndClosesToPreventStaleResponseReuse",
+          "takagi.ru.monica.passkey.hardware.HardwareTransportTest#hidTimeoutClosesEvenWhenPeerNeverReplies",
+          "takagi.ru.monica.passkey.hardware.HardwareTransportTest#nfcCommandAndResponseChainingUseShortApdus",
+          "takagi.ru.monica.passkey.hardware.HardwareTransportTest#nfcKeepaliveUsesCtapGetResponseAndDoesNotPolluteCbor",
+          "takagi.ru.monica.passkey.hardware.HardwareTransportTest#nfcRejectsBadStatusAndInfiniteEmptyChaining"
+        ],
+        "runs": [
+          {
+            "label": "device-main-04",
+            "tests": 51,
+            "failures": 0,
+            "runnerSeconds": 161.006,
+            "driverSeconds": 163.594,
+            "methods": [
+              "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#cancelledNativeOpenCannotCloseOrReplaceTheNextConnection",
+              "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#chineseConnectedPageKeepsReferenceGroupsAndReadableActions",
+              "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#connectedManagementRendersActualCapabilitiesWithoutAddingNavigationDock",
+              "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#largeEnglishTextKeepsFullIdentifiersAndPinActionsReachable",
+              "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#managementActivityOpensOnApi32AndDoesNotWriteVaultData",
+              "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#noDeviceStateExplainsWebsiteRegistrationAndOffersUsbWithoutOfflineWriteButton",
+              "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#providerSubmitDisabledWithoutDeviceAndAfterMissingPin",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInLifecycleTest#defaultOffRegistrationDoesNotCreateDiscoveryMonitor",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInLifecycleTest#disabledCachedProviderDestinationsReturnCancellationForBothRequestTypes",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInLifecycleTest#disablingAnOpenRegistrationClosesDiscoveryAndDropsSelectedHardwareTarget",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInLifecycleTest#disablingRejectsACompletedHardwareResponseBeforeObserverCanRun",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInLifecycleTest#managementTogglePersistsAcrossRecreationAndBackKeepsChoice",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInTest#cancelledGetRequestPublishesNoHardwareOrSoftwareResponse",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInTest#explicitChoiceControlsBothProviderResponsesAndKeepsPlatformOnlyCreateSoftwareOnly",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInTest#missingPreferenceDefaultsOffDespiteDeviceHardwareCapability",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInTest#softwareCandidateMetadataAndRealSigningKeySurviveEnableDisable",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#bothRealPagesShareChoiceAndReturningDoesNotUndoIt",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#chineseBothPagesRemainReadableInLightAndDarkThemes",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#largeEnglishBothPagesKeepCompleteDescriptionAndReachableSwitch",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#renamedEntryAndHardwareAliasesNavigateToActualSwitchWithoutToggling",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#attestationNoneRemovesIdentifyingStatementAndAaguid",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#authenticatorCannotReturnCredentialOutsideAllowList",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#browserSuppliedHashIsUsedUnchangedAndNoFabricatedClientDataReturned",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#cborRejectsDuplicateKeysTruncationOversizedAndDeeplyNestedData",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#ctap20UsesOneUnscopedPinTokenRequestWithoutFallbackRetry",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#digitalAssetLinksRequireBothPackageAndCertificateAndRelation",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#hidReportUsageDoesNotSelectKeyboardOrOtpInterface",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#incorrectPinDoesNotRetryOrReachMakeCredential",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#invalidPinAndUnsupportedRequestsFailBeforeDeviceMutation",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#readOnlyCredentialManagementEnumeratesRpAndAccountsWithoutResetOrDelete",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#realPackedAttestationAndAssertionVerifyForPinProtocolsOneAndTwo",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#requiredVerificationAndResidentKeyAreCheckedBeforeGeneratingCredential",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#setAndChangePinReachPeerOnceAndOldPinStopsWorking",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#trustedWebOriginsRequireHttpsRpRelationshipAndNonPublicSuffix",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#wrongRpHashAndMissingUserVerificationCannotReturnSuccess",
+              "takagi.ru.monica.passkey.hardware.HardwareProviderTest#fakeDelegatedOriginWithMonicaCertificateIsRejected",
+              "takagi.ru.monica.passkey.hardware.HardwareProviderTest#forwardingPreservesFrameworkCallerAndHashAndRejectsPlatformOnlyOrMissingRequests",
+              "takagi.ru.monica.passkey.hardware.HardwareProviderTest#frameworkCreateRequestSuppliesTrustedCallerAndHashRatherThanIntentExtras",
+              "takagi.ru.monica.passkey.hardware.HardwareProviderTest#frameworkResponsesPreserveHardwareWebauthnJsonAndCancellationType",
+              "takagi.ru.monica.passkey.hardware.HardwareRegistrationFlowTest#completedHardwareResponseReturnsToFrameworkWithoutSoftwareWrite",
+              "takagi.ru.monica.passkey.hardware.HardwareRegistrationFlowTest#hardwareSelectionSurvivesRecreationAndCancellationWithoutSoftwareWrite",
+              "takagi.ru.monica.passkey.hardware.HardwareTargetPickerTest#noDeviceOffersOnlySoftwareLocation",
+              "takagi.ru.monica.passkey.hardware.HardwareTargetPickerTest#pendingRegistrationDisablesBothLocations",
+              "takagi.ru.monica.passkey.hardware.HardwareTargetPickerTest#removalKeepsChosenHardwareDisabledAndReconnectionRestoresIt",
+              "takagi.ru.monica.passkey.hardware.HardwareTransportTest#hidCancellationStopsWaitingAndClosesConnection",
+              "takagi.ru.monica.passkey.hardware.HardwareTransportTest#hidFragmentsOutgoingDataAndReassemblesIncomingWithKeepaliveAndOtherChannel",
+              "takagi.ru.monica.passkey.hardware.HardwareTransportTest#hidRejectsWrongCommandSequenceLengthAndClosesToPreventStaleResponseReuse",
+              "takagi.ru.monica.passkey.hardware.HardwareTransportTest#hidTimeoutClosesEvenWhenPeerNeverReplies",
+              "takagi.ru.monica.passkey.hardware.HardwareTransportTest#nfcCommandAndResponseChainingUseShortApdus",
+              "takagi.ru.monica.passkey.hardware.HardwareTransportTest#nfcKeepaliveUsesCtapGetResponseAndDoesNotPolluteCbor",
+              "takagi.ru.monica.passkey.hardware.HardwareTransportTest#nfcRejectsBadStatusAndInfiniteEmptyChaining"
+            ],
+            "failedMethods": [],
+            "installed": [
+              {
+                "filename": "Monica-Android-x86_64-1.0.327-26111212-83.APK",
+                "sha256": "0fb3daa46dd9bf5aa7d1067bd0d5e9dceb971ab27ffaa8a45d5379879f93971a"
+              },
+              {
+                "filename": "app-debug-androidTest.apk",
+                "sha256": "1844c87c50369df27f622e0a884d9a9ec2445258d94774319c996a3f4ba8d708"
+              }
+            ],
+            "rawLogSha256": "44800d1d60d199a6241104cba2c64bdf32259e59b1d754588944f7a27c8060c5"
+          },
+          {
+            "label": "device-main-05",
+            "tests": 4,
+            "failures": 0,
+            "runnerSeconds": 9.623,
+            "driverSeconds": 12.167,
+            "methods": [
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#bothRealPagesShareChoiceAndReturningDoesNotUndoIt",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#chineseBothPagesRemainReadableInLightAndDarkThemes",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#largeEnglishBothPagesKeepCompleteDescriptionAndReachableSwitch",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#renamedEntryAndHardwareAliasesNavigateToActualSwitchWithoutToggling"
+            ],
+            "failedMethods": [],
+            "installed": [
+              {
+                "filename": "Monica-Android-x86_64-1.0.327-26111212-83.APK",
+                "sha256": "0fb3daa46dd9bf5aa7d1067bd0d5e9dceb971ab27ffaa8a45d5379879f93971a"
+              },
+              {
+                "filename": "app-debug-androidTest.apk",
+                "sha256": "2b540b3ae39ef1a115eb26c129dfe5ab36bf33bf6927ebfaf08ed9e3a154dda1"
+              }
+            ],
+            "rawLogSha256": "b885b675621727f7410be60a4e24a45de468e94963d46091ec3e91c67513d4cf"
+          }
+        ],
+        "runnerSeconds": 170.629,
+        "acceptance": "Earlier complete suite plus replacement of all four UI-class methods by the final test-only build; initial failures retained."
+      },
+      "compiledResourceValuesPerVariant": 54,
+      "resourceConfigurations": 18,
+      "releaseUi": {
+        "edition": "main",
+        "passed": true,
+        "oldReleaseUiSeed": true,
+        "oldPasswordUiReadAfterUpgrade": true,
+        "defaultOffBothPages": true,
+        "toggleSequence": [
+          "hardware:on",
+          "autofill:off"
+        ],
+        "bothPagesSynchronized": true,
+        "newRecordUiSaved": true,
+        "coldOldAndNewPasswordsRead": true,
+        "coldPreferenceOff": true,
+        "pidBefore": "6924",
+        "pidAfter": "8426",
+        "hardwarePageLaunch": "explicit real Activity, no provider action",
+        "softwarePasskeyReleaseVerified": false,
+        "physicalHardwareVerified": false
+      }
+    },
+    "fd": {
+      "productionBuild": "fd-01",
+      "buildSeconds": 627.04,
+      "testBuild": "fd-test-05",
+      "testBuildSeconds": 16.657,
+      "jvmTests": 82,
+      "jvmFailures": 0,
+      "jvmSuites": [
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyBackupFlagsTest",
+          "tests": 8,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "refreshPreservesKnownEligibilityAndAcceptsBackupStateChanges",
+            "jsonFlagsDistinguishLegacyMissingValuesAndRejectMalformedValues",
+            "legacyAndroidPayloadOverridesOldSyncMarkerDerivedNativeFlags",
+            "refreshDoesNotReinterpretLegacyNullAsANewCredential",
+            "keePassPayloadAndNativeFieldsKeepAllValidFlagPairsAndKeyBytes",
+            "actualAuthenticatorDataUsesExplicitFlagsWithoutChangingKeyOrStoredCounter",
+            "bitwardenRefusesChangingImmutableEligibilityDuringTransfer",
+            "oldRecordsKeepTheirFlagsRegardlessOfLocalBackupStatus"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyBackupPortabilityPolicyTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "encrypted backup preserves real PKCS8 private key bytes",
+            "encrypted backup reports missing protected private key",
+            "encrypted backup exports resolved and normalized private key material",
+            "unencrypted backup rejects passkey private key export",
+            "legacy protected reference can still restore on original installation",
+            "legacy protected reference without local key restores as unavailable"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyBatchMoveExecutorTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "sourceCleanupFailureDoesNotUndoSavedDestinationOrSkipOtherSources",
+            "failedTargetNeverQueuesSourceDeletion",
+            "successfulTargetPrecedesAllSourceDeletions",
+            "cancellationNeverContinuesWithSourceDeletion"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyCipherFolderIntentTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "completingOldUploadCannotEraseNewerExplicitMove",
+            "failedLocalWriteRestoresPreviousMoveAndDoesNotApplyToDifferentRowState"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyCredentialDiscoveryPolicyTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "discoverable only query does not expose old non discoverable passkey",
+            "usable policy keeps private local passkeys",
+            "usable policy rejects records whose referenced private key is unavailable",
+            "allowCredentials can expose old non discoverable passkey",
+            "rpId query compatibility keeps usable old non discoverable passkey",
+            "usable policy rejects references and missing private key"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyCredentialIdCodecTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "malformedLegacyTextIsPreservedAndCannotAuthorizeARequest",
+            "uuidRepresentationRetainsNetworkByteOrder",
+            "actualEdgeRegisteredIdIsNotReinterpretedAsPrefixBytes",
+            "originalBytesSurviveAllSupportedCarriers"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyDiscoverabilityResolverTest",
+          "tests": 15,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "credProps string true is requested",
+            "missing authenticator selection is not discoverable",
+            "residentKey value tolerates case and whitespace",
+            "boolean requireResidentKey true is discoverable",
+            "false and discouraged are not discoverable",
+            "residentKey preferred is discoverable",
+            "credProps false values are not requested",
+            "credProps boolean true is requested",
+            "string requireResidentKey true is discoverable",
+            "string requireResidentKey true tolerates case and whitespace",
+            "root request json is parsed for discoverable state",
+            "root request json is parsed for credProps",
+            "publicKey wrapped request json is parsed for discoverable state",
+            "publicKey wrapped request json is parsed for credProps",
+            "residentKey required is discoverable"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyGetRequestPolicyTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "allowedOldNonDiscoverableCredentialStillWorks",
+            "unknownAllowListNeverFallsBackToAnotherCredential",
+            "finalPlatformRequestMustMatchCeremonyAndIndependentlyAllowSelection",
+            "absentAndEmptyAllowListsKeepExistingRpDiscoveryCompatibility",
+            "authenticationTitleKeepsNotesPrivateAndManagementTitleUnchanged",
+            "malformedNonemptyAllowListsAreRejectedRatherThanBecomingDiscovery"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyMoveReporterTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "allBlockedReportsEachReasonWithoutWriting",
+            "partialFailureKeepsCorrectCountsAndContinuesWithoutLeakingExceptionOrKeyMaterial",
+            "cancellationNeverBecomesSkippedItemOrContinuesTheBatch",
+            "allSuccessfulUsesMovedCountAndNoProblemDialogData"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyPageSyncPolicyTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "keepassRefreshOnlyIncludesExistingDatabasesInCurrentScope",
+            "localAndMdbxFiltersNeverUseTheActiveBitwardenAccount",
+            "cloudFolderUsesItsOwnAccountAndWaitsForRestoration"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyPortabilityCacheTest",
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "revisitingOrChangingDisplayMetadataReusesResult",
+            "invalidationDuringInspectionCannotRepopulateStaleValue",
+            "expiryKeepsBadgeVisibleWhileRefreshingAndCapacityIsBounded",
+            "keyAndCompatibilityChangesHaveDifferentCacheKeys",
+            "concurrentReadersShareOneInspection"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyPortabilityTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "onlyUsableNonexportableKeysAreLocalOnly",
+            "backupMetadataAndCounterHistoryAreRestrictionsRatherThanDeviceBinding"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyRemarkAndNavigationGuardTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "detailPrioritizesCompactAccountHeroAndMovesBindingDown",
+            "credentialSelectorUsesAccountTitleWithoutNotes",
+            "authenticatorAndPasskeyShareOneDockDestinationWithBidirectionalControls",
+            "authenticatorPasskeySwitchUsesMonicaDirectionalNavigationMotion",
+            "compactPasskeyCardNavigatesInsteadOfExpanding",
+            "remarkWinsWithoutChangingOriginalPasskeyIdentity",
+            "blankRemarkFallsBackToOriginalDisplayName"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyTransferPolicyTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "deviceBoundKeysCanBeOrganizedLocallyButCannotBeCopied",
+            "mixedBatchIsPlannedWithoutExecutingAnyWrites",
+            "copyingWithinUniqueCredentialStoresCannotOverwriteTheSource"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.passkey.PasskeyUserVerificationGuardTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "sharedPasswordFallbackGrantsOnlyCurrentVerifiedCommittedAttemptAndRejectsFailures",
+            "authenticationAndCreationRequireVerificationAndRetainPasswordFallback"
+          ]
+        },
+        {
+          "name": "takagi.ru.monica.ui.screens.SettingsSearchIndexTest",
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "methods": [
+            "aliasesDoNotDiscardOtherRequiredWordsAndDuplicatesAreRemoved",
+            "specificTitleRanksBeforeDescriptionAndParentPathMatches",
+            "englishCaseAndFullWidthInputAreNormalized",
+            "wordsCanMatchASettingAndItsLocationTogether",
+            "blankAndUnmatchedQueriesDoNotReturnEverySetting"
+          ]
+        }
+      ],
+      "apks": {
+        "outputs/apk/debug/Monica-Android-x86_64-1.0.327.apk": "40914171dc1837ebcf88839960db4030b385aa413425717e4098663eea91a70d",
+        "outputs/apk/release/Monica-Android-x86_64-1.0.327.apk": "47dd30dc2234b2a58625d8eb12e97036adbe3f4eee7f3896a0873c957760115d"
+      },
+      "device": {
+        "distinctAcceptedMethods": 51,
+        "methods": [
+          "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#cancelledNativeOpenCannotCloseOrReplaceTheNextConnection",
+          "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#chineseConnectedPageKeepsReferenceGroupsAndReadableActions",
+          "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#connectedManagementRendersActualCapabilitiesWithoutAddingNavigationDock",
+          "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#largeEnglishTextKeepsFullIdentifiersAndPinActionsReachable",
+          "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#managementActivityOpensOnApi32AndDoesNotWriteVaultData",
+          "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#noDeviceStateExplainsWebsiteRegistrationAndOffersUsbWithoutOfflineWriteButton",
+          "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#providerSubmitDisabledWithoutDeviceAndAfterMissingPin",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInLifecycleTest#defaultOffRegistrationDoesNotCreateDiscoveryMonitor",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInLifecycleTest#disabledCachedProviderDestinationsReturnCancellationForBothRequestTypes",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInLifecycleTest#disablingAnOpenRegistrationClosesDiscoveryAndDropsSelectedHardwareTarget",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInLifecycleTest#disablingRejectsACompletedHardwareResponseBeforeObserverCanRun",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInLifecycleTest#managementTogglePersistsAcrossRecreationAndBackKeepsChoice",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInTest#cancelledGetRequestPublishesNoHardwareOrSoftwareResponse",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInTest#explicitChoiceControlsBothProviderResponsesAndKeepsPlatformOnlyCreateSoftwareOnly",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInTest#missingPreferenceDefaultsOffDespiteDeviceHardwareCapability",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInTest#softwareCandidateMetadataAndRealSigningKeySurviveEnableDisable",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#bothRealPagesShareChoiceAndReturningDoesNotUndoIt",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#chineseBothPagesRemainReadableInLightAndDarkThemes",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#largeEnglishBothPagesKeepCompleteDescriptionAndReachableSwitch",
+          "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#renamedEntryAndHardwareAliasesNavigateToActualSwitchWithoutToggling",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#attestationNoneRemovesIdentifyingStatementAndAaguid",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#authenticatorCannotReturnCredentialOutsideAllowList",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#browserSuppliedHashIsUsedUnchangedAndNoFabricatedClientDataReturned",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#cborRejectsDuplicateKeysTruncationOversizedAndDeeplyNestedData",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#ctap20UsesOneUnscopedPinTokenRequestWithoutFallbackRetry",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#digitalAssetLinksRequireBothPackageAndCertificateAndRelation",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#hidReportUsageDoesNotSelectKeyboardOrOtpInterface",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#incorrectPinDoesNotRetryOrReachMakeCredential",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#invalidPinAndUnsupportedRequestsFailBeforeDeviceMutation",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#readOnlyCredentialManagementEnumeratesRpAndAccountsWithoutResetOrDelete",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#realPackedAttestationAndAssertionVerifyForPinProtocolsOneAndTwo",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#requiredVerificationAndResidentKeyAreCheckedBeforeGeneratingCredential",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#setAndChangePinReachPeerOnceAndOldPinStopsWorking",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#trustedWebOriginsRequireHttpsRpRelationshipAndNonPublicSuffix",
+          "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#wrongRpHashAndMissingUserVerificationCannotReturnSuccess",
+          "takagi.ru.monica.passkey.hardware.HardwareProviderTest#fakeDelegatedOriginWithMonicaCertificateIsRejected",
+          "takagi.ru.monica.passkey.hardware.HardwareProviderTest#forwardingPreservesFrameworkCallerAndHashAndRejectsPlatformOnlyOrMissingRequests",
+          "takagi.ru.monica.passkey.hardware.HardwareProviderTest#frameworkCreateRequestSuppliesTrustedCallerAndHashRatherThanIntentExtras",
+          "takagi.ru.monica.passkey.hardware.HardwareProviderTest#frameworkResponsesPreserveHardwareWebauthnJsonAndCancellationType",
+          "takagi.ru.monica.passkey.hardware.HardwareRegistrationFlowTest#completedHardwareResponseReturnsToFrameworkWithoutSoftwareWrite",
+          "takagi.ru.monica.passkey.hardware.HardwareRegistrationFlowTest#hardwareSelectionSurvivesRecreationAndCancellationWithoutSoftwareWrite",
+          "takagi.ru.monica.passkey.hardware.HardwareTargetPickerTest#noDeviceOffersOnlySoftwareLocation",
+          "takagi.ru.monica.passkey.hardware.HardwareTargetPickerTest#pendingRegistrationDisablesBothLocations",
+          "takagi.ru.monica.passkey.hardware.HardwareTargetPickerTest#removalKeepsChosenHardwareDisabledAndReconnectionRestoresIt",
+          "takagi.ru.monica.passkey.hardware.HardwareTransportTest#hidCancellationStopsWaitingAndClosesConnection",
+          "takagi.ru.monica.passkey.hardware.HardwareTransportTest#hidFragmentsOutgoingDataAndReassemblesIncomingWithKeepaliveAndOtherChannel",
+          "takagi.ru.monica.passkey.hardware.HardwareTransportTest#hidRejectsWrongCommandSequenceLengthAndClosesToPreventStaleResponseReuse",
+          "takagi.ru.monica.passkey.hardware.HardwareTransportTest#hidTimeoutClosesEvenWhenPeerNeverReplies",
+          "takagi.ru.monica.passkey.hardware.HardwareTransportTest#nfcCommandAndResponseChainingUseShortApdus",
+          "takagi.ru.monica.passkey.hardware.HardwareTransportTest#nfcKeepaliveUsesCtapGetResponseAndDoesNotPolluteCbor",
+          "takagi.ru.monica.passkey.hardware.HardwareTransportTest#nfcRejectsBadStatusAndInfiniteEmptyChaining"
+        ],
+        "runs": [
+          {
+            "label": "device-fd-02",
+            "tests": 51,
+            "failures": 1,
+            "runnerSeconds": 166.094,
+            "driverSeconds": 168.48,
+            "methods": [
+              "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#cancelledNativeOpenCannotCloseOrReplaceTheNextConnection",
+              "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#chineseConnectedPageKeepsReferenceGroupsAndReadableActions",
+              "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#connectedManagementRendersActualCapabilitiesWithoutAddingNavigationDock",
+              "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#largeEnglishTextKeepsFullIdentifiersAndPinActionsReachable",
+              "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#managementActivityOpensOnApi32AndDoesNotWriteVaultData",
+              "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#noDeviceStateExplainsWebsiteRegistrationAndOffersUsbWithoutOfflineWriteButton",
+              "takagi.ru.monica.passkey.hardware.HardwareKeyUiTest#providerSubmitDisabledWithoutDeviceAndAfterMissingPin",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInLifecycleTest#defaultOffRegistrationDoesNotCreateDiscoveryMonitor",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInLifecycleTest#disabledCachedProviderDestinationsReturnCancellationForBothRequestTypes",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInLifecycleTest#disablingAnOpenRegistrationClosesDiscoveryAndDropsSelectedHardwareTarget",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInLifecycleTest#disablingRejectsACompletedHardwareResponseBeforeObserverCanRun",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInLifecycleTest#managementTogglePersistsAcrossRecreationAndBackKeepsChoice",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInTest#cancelledGetRequestPublishesNoHardwareOrSoftwareResponse",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInTest#explicitChoiceControlsBothProviderResponsesAndKeepsPlatformOnlyCreateSoftwareOnly",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInTest#missingPreferenceDefaultsOffDespiteDeviceHardwareCapability",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInTest#softwareCandidateMetadataAndRealSigningKeySurviveEnableDisable",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#bothRealPagesShareChoiceAndReturningDoesNotUndoIt",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#largeEnglishBothPagesKeepCompleteDescriptionAndReachableSwitch",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#renamedEntryAndHardwareAliasesNavigateToActualSwitchWithoutToggling",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#attestationNoneRemovesIdentifyingStatementAndAaguid",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#authenticatorCannotReturnCredentialOutsideAllowList",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#browserSuppliedHashIsUsedUnchangedAndNoFabricatedClientDataReturned",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#cborRejectsDuplicateKeysTruncationOversizedAndDeeplyNestedData",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#ctap20UsesOneUnscopedPinTokenRequestWithoutFallbackRetry",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#digitalAssetLinksRequireBothPackageAndCertificateAndRelation",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#hidReportUsageDoesNotSelectKeyboardOrOtpInterface",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#incorrectPinDoesNotRetryOrReachMakeCredential",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#invalidPinAndUnsupportedRequestsFailBeforeDeviceMutation",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#readOnlyCredentialManagementEnumeratesRpAndAccountsWithoutResetOrDelete",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#realPackedAttestationAndAssertionVerifyForPinProtocolsOneAndTwo",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#requiredVerificationAndResidentKeyAreCheckedBeforeGeneratingCredential",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#setAndChangePinReachPeerOnceAndOldPinStopsWorking",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#trustedWebOriginsRequireHttpsRpRelationshipAndNonPublicSuffix",
+              "takagi.ru.monica.passkey.hardware.HardwareProtocolTest#wrongRpHashAndMissingUserVerificationCannotReturnSuccess",
+              "takagi.ru.monica.passkey.hardware.HardwareProviderTest#fakeDelegatedOriginWithMonicaCertificateIsRejected",
+              "takagi.ru.monica.passkey.hardware.HardwareProviderTest#forwardingPreservesFrameworkCallerAndHashAndRejectsPlatformOnlyOrMissingRequests",
+              "takagi.ru.monica.passkey.hardware.HardwareProviderTest#frameworkCreateRequestSuppliesTrustedCallerAndHashRatherThanIntentExtras",
+              "takagi.ru.monica.passkey.hardware.HardwareProviderTest#frameworkResponsesPreserveHardwareWebauthnJsonAndCancellationType",
+              "takagi.ru.monica.passkey.hardware.HardwareRegistrationFlowTest#completedHardwareResponseReturnsToFrameworkWithoutSoftwareWrite",
+              "takagi.ru.monica.passkey.hardware.HardwareRegistrationFlowTest#hardwareSelectionSurvivesRecreationAndCancellationWithoutSoftwareWrite",
+              "takagi.ru.monica.passkey.hardware.HardwareTargetPickerTest#noDeviceOffersOnlySoftwareLocation",
+              "takagi.ru.monica.passkey.hardware.HardwareTargetPickerTest#pendingRegistrationDisablesBothLocations",
+              "takagi.ru.monica.passkey.hardware.HardwareTargetPickerTest#removalKeepsChosenHardwareDisabledAndReconnectionRestoresIt",
+              "takagi.ru.monica.passkey.hardware.HardwareTransportTest#hidCancellationStopsWaitingAndClosesConnection",
+              "takagi.ru.monica.passkey.hardware.HardwareTransportTest#hidFragmentsOutgoingDataAndReassemblesIncomingWithKeepaliveAndOtherChannel",
+              "takagi.ru.monica.passkey.hardware.HardwareTransportTest#hidRejectsWrongCommandSequenceLengthAndClosesToPreventStaleResponseReuse",
+              "takagi.ru.monica.passkey.hardware.HardwareTransportTest#hidTimeoutClosesEvenWhenPeerNeverReplies",
+              "takagi.ru.monica.passkey.hardware.HardwareTransportTest#nfcCommandAndResponseChainingUseShortApdus",
+              "takagi.ru.monica.passkey.hardware.HardwareTransportTest#nfcKeepaliveUsesCtapGetResponseAndDoesNotPolluteCbor",
+              "takagi.ru.monica.passkey.hardware.HardwareTransportTest#nfcRejectsBadStatusAndInfiniteEmptyChaining"
+            ],
+            "failedMethods": [
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#chineseBothPagesRemainReadableInLightAndDarkThemes"
+            ],
+            "installed": [
+              {
+                "filename": "Monica-Android-x86_64-1.0.327.apk",
+                "sha256": "40914171dc1837ebcf88839960db4030b385aa413425717e4098663eea91a70d"
+              },
+              {
+                "filename": "app-debug-androidTest.apk",
+                "sha256": "c15aeea3680d3ec861094701e65f2653823210585ea74fae91acb4c9951383be"
+              }
+            ],
+            "rawLogSha256": "760cc9a0eeba1d3d4595b1fc249f694a9cefa7c8c9b6f8d84e4c8d75157e7e1d"
+          },
+          {
+            "label": "device-fd-03",
+            "tests": 4,
+            "failures": 0,
+            "runnerSeconds": 8.724,
+            "driverSeconds": 10.899,
+            "methods": [
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#bothRealPagesShareChoiceAndReturningDoesNotUndoIt",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#chineseBothPagesRemainReadableInLightAndDarkThemes",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#largeEnglishBothPagesKeepCompleteDescriptionAndReachableSwitch",
+              "takagi.ru.monica.passkey.hardware.HardwarePasskeyOptInUiTest#renamedEntryAndHardwareAliasesNavigateToActualSwitchWithoutToggling"
+            ],
+            "failedMethods": [],
+            "installed": [
+              {
+                "filename": "Monica-Android-x86_64-1.0.327.apk",
+                "sha256": "40914171dc1837ebcf88839960db4030b385aa413425717e4098663eea91a70d"
+              },
+              {
+                "filename": "app-debug-androidTest.apk",
+                "sha256": "3b82ec46ff1dea5f47dc5327ee586a9a7debaa3cc5d3308d2ea6c8f2b1a3e0b8"
+              }
+            ],
+            "rawLogSha256": "fd5a8969d77e9120c0d314d0fc1d0f198df3bc75aa1d89028b92913107ac72c1"
+          }
+        ],
+        "runnerSeconds": 174.818,
+        "acceptance": "Earlier complete suite plus replacement of all four UI-class methods by the final test-only build; initial failures retained."
+      },
+      "compiledResourceValuesPerVariant": 54,
+      "resourceConfigurations": 18,
+      "releaseUi": {
+        "edition": "fd",
+        "passed": true,
+        "oldReleaseUiSeed": true,
+        "oldPasswordUiReadAfterUpgrade": true,
+        "defaultOffBothPages": true,
+        "toggleSequence": [
+          "hardware:on",
+          "autofill:off"
+        ],
+        "bothPagesSynchronized": true,
+        "newRecordUiSaved": true,
+        "coldOldAndNewPasswordsRead": true,
+        "coldPreferenceOff": true,
+        "pidBefore": "11046",
+        "pidAfter": "12265",
+        "hardwarePageLaunch": "explicit real Activity, no provider action",
+        "softwarePasskeyReleaseVerified": false,
+        "physicalHardwareVerified": false,
+        "screenshotProtectionTemporarilyDisabledInOwnedTestVault": true
+      }
+    }
+  },
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/takagi/ru/monica/passkey/MonicaCredentialProviderService.kt",
+      "sha256": "5074f7c0ac54d71b2a5dea8cd1d02f67df950e13bd2e9109eb066e899e3b1098"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/passkey/hardware/HardwareKeyScreen.kt",
+      "sha256": "f9bcde64b6051618c3edc38e13373922e839a1f1afdca86a685e1d433b6039d3"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/passkey/hardware/HardwareSecurityKeyActivity.kt",
+      "sha256": "fcdca7974bc59c7b908e4f81038f801cc0c0798be6664835ecf0b88d0ddc0744"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/passkey/hardware/HardwareKeyPresenceMonitor.kt",
+      "sha256": "f6341a6f97f85cdc53e0e3f314d2fb4e82b57994d76a07560fd0fc55e4bc525d"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/passkey/PasskeyCreateActivity.kt",
+      "sha256": "193293a478c4918b02a6587e8eb5ef9060a07668f5fd4efabb215d855028c4d2"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsV2Screen.kt",
+      "sha256": "427bff38288ca1c54438e36d01663596c16d667aff424bd42e3ccda095038cba"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt",
+      "sha256": "9749d22d08559b621204791d059da2c3c9abf3ee4a01ecafef1e88efb78b3a37"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/passkey/hardware/HardwarePasskeyPreferences.kt",
+      "sha256": "4568bac812f06592a59e05f751fd2f3b881c6fb162e0f81776c91ec7e5c156f8"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/passkey/hardware/HardwarePasskeySetting.kt",
+      "sha256": "2ecadf2d27ce7768e5100bbe90a5f73fd189c61a4d403f86de147d8f868d2624"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/SettingsSearchCatalog.kt",
+      "sha256": "4ce57e52a78b1ec5e7ccf66d91fa768c87e3fe29813915663d95d641a908f309"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/passkey/PasskeyUserVerificationGuardTest.kt",
+      "sha256": "a2bbc9e422f035864b06d80190a1b9ae89196f64cb041c1e0db0d02e1154171d"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/passkey/hardware/HardwarePasskeyOptInTest.kt",
+      "sha256": "b372d50135e6ee43e06f4c14fc67d4ea2f55a8fa3adb35100a780d28a9e9ed86"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/passkey/hardware/HardwarePasskeyOptInUiTest.kt",
+      "sha256": "e125dbddbff3711e777a3db042e1a31d47cd6851dfedf63c2bc4787a747f5ae4"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/passkey/hardware/HardwarePasskeyOptInLifecycleTest.kt",
+      "sha256": "d2f798fd93f3012160880cf33b4fcf0ded28994cce51fc7bfb4d2ac85771224e"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/passkey/hardware/HardwarePasskeyPreferenceFixture.kt",
+      "sha256": "8d3965fd8edb2b6b98dbed5db33deedb454bafe1228bd8d7a79961d9572d9de6"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/passkey/hardware/HardwareProviderTest.kt",
+      "sha256": "bed08174972f60d021b2408c24b535dd71c13c6f886bd0729e4457e4d8f4d857"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/passkey/hardware/HardwareRegistrationFlowTest.kt",
+      "sha256": "7138e52c79084df459ffa25846813e63a5bb75ff203b11520a28c839aba22a77"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/passkey/hardware/HardwareKeyUiTest.kt",
+      "sha256": "24b8e04a25c32b9fa39443a741671e0cba323baf9f1ce1061fe093bb6ff02ba7"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/passkey/hardware/HardwareTrustedBrowserFixture.kt",
+      "sha256": "68ce3f850ac99ab9aa72659753856a70e6fb72f7ea6ed38a0b5a35d5a20ec4fd"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/passkey/hardware/HardwareTargetPickerTest.kt",
+      "sha256": "ed9397fcc4fea782c305de9e283fd2cc149551f836d366464f5f9c568948b724"
+    },
+    {
+      "path": "app/src/main/res/values/hardware_passkey_settings.xml",
+      "sha256": "b465f87b99aad9413e67d5dce2caf62829dd9f36cd050c07dc718129981cc700"
+    },
+    {
+      "path": "app/src/main/res/values-zh/hardware_passkey_settings.xml",
+      "sha256": "b9a5807b8313e766406e72991dd11547597619c33054a8a179381614f010f316"
+    },
+    {
+      "path": "app/src/main/res/values-zh-rCN/hardware_passkey_settings.xml",
+      "sha256": "b9a5807b8313e766406e72991dd11547597619c33054a8a179381614f010f316"
+    },
+    {
+      "path": "app/src/main/res/values-zh-rNY/hardware_passkey_settings.xml",
+      "sha256": "b9a5807b8313e766406e72991dd11547597619c33054a8a179381614f010f316"
+    },
+    {
+      "path": "app/src/main/res/values-zh-rXB/hardware_passkey_settings.xml",
+      "sha256": "b9a5807b8313e766406e72991dd11547597619c33054a8a179381614f010f316"
+    },
+    {
+      "path": "app/src/main/res/values-b+zh+Hant/hardware_passkey_settings.xml",
+      "sha256": "bbdc162ba9b3b28a6970550cc126f2be19dfae14c5917057beb4e82eeafe590b"
+    },
+    {
+      "path": "app/src/main/res/values-b+lzh/hardware_passkey_settings.xml",
+      "sha256": "d604dbbf94c6d13597d304310d21bbd2a400a0da76994ce77e18e53fbcdada8f"
+    },
+    {
+      "path": "app/src/main/res/values-de/hardware_passkey_settings.xml",
+      "sha256": "6558b4b17015bd8d6a5efaabfb8540be73596aa590e40ca174b12658d217f880"
+    },
+    {
+      "path": "app/src/main/res/values-es/hardware_passkey_settings.xml",
+      "sha256": "8389c9b61d21f758ee63dc8c6f2d21f561d6931c6c3e014ef896269bbb8335c4"
+    },
+    {
+      "path": "app/src/main/res/values-fr/hardware_passkey_settings.xml",
+      "sha256": "9cbfa04b687c29eaa2b49071de05086babd1ed744164320e3eee16cef9006531"
+    },
+    {
+      "path": "app/src/main/res/values-it/hardware_passkey_settings.xml",
+      "sha256": "ff645aecf75514d62621eafdc779c3af41243a660817453b2c4f1477c1f97f5b"
+    },
+    {
+      "path": "app/src/main/res/values-ja/hardware_passkey_settings.xml",
+      "sha256": "918bf4cfbd690459d55631b07f2b7d49ec2906455f6c3e60557c98219feebd24"
+    },
+    {
+      "path": "app/src/main/res/values-ko/hardware_passkey_settings.xml",
+      "sha256": "936e4fbc630495bc7ad7243943f10f435c89888c5f30f6fb8ed3ed772d2e8646"
+    },
+    {
+      "path": "app/src/main/res/values-pl/hardware_passkey_settings.xml",
+      "sha256": "1c78c81b15872cf45baacf66d804e018e968a5c383cae7471cce5ef3209f67ee"
+    },
+    {
+      "path": "app/src/main/res/values-pt/hardware_passkey_settings.xml",
+      "sha256": "35cb20078dcd2424b76e6cf8534c1609c845ef1092342c928792985898ed598a"
+    },
+    {
+      "path": "app/src/main/res/values-pt-rBR/hardware_passkey_settings.xml",
+      "sha256": "4b218be979284311073f6b174a3e8ee6de3a21c8e092c4af7aa88b962da6eb87"
+    },
+    {
+      "path": "app/src/main/res/values-ru/hardware_passkey_settings.xml",
+      "sha256": "7118ff8a7716daad500f89c32a6c1cb16c45e262a3b5e3bb4366b0810289639f"
+    },
+    {
+      "path": "app/src/main/res/values-vi/hardware_passkey_settings.xml",
+      "sha256": "e3fba7d2579d1a82e6c281f7a2af94fdf4842b296af9709b40bdb27e8dc78fed"
+    }
+  ],
+  "initialFailures": [
+    {
+      "run": "main-01",
+      "kind": "JVM",
+      "tests": 76,
+      "failures": 1,
+      "reason": "Pre-existing source guard expected removed inline password verification; replaced with current bounded verification/commit/revocation checks."
+    },
+    {
+      "run": "device-main-01",
+      "tests": 51,
+      "failures": 9,
+      "reason": "Eight missing Chrome fixture, one legacy Compose host lost content during orientation recreation."
+    },
+    {
+      "run": "device-main-02",
+      "tests": 51,
+      "failures": 1,
+      "reason": "Legacy registration test injected synthetic discovery before secure initialization constructed the real monitor."
+    },
+    {
+      "run": "device-fd-01",
+      "tests": 51,
+      "failures": 1,
+      "reason": "Legacy target picker Compose host was destroyed twice during orientation recreation; explicit portrait/current-window readiness added before setContent, with original assertions and timeout unchanged."
+    },
+    {
+      "run": "device-fd-02",
+      "tests": 51,
+      "failures": 1,
+      "reason": "The Chinese opt-in UI test lost its Compose host; the same portrait/current-window prerequisite was then added to its test class and all four UI methods were rerun."
+    }
+  ],
+  "fixtureCorrections": [
+    "Official Firefox144 x86_64 with its actual certificate matched against the unchanged production allowlist; Chrome remains preferred when installed.",
+    "Portrait host readiness before setting test content; owned user11 fixed to portrait after observed orientation churn.",
+    "Wait for real registration UI and resumed discovery monitor before one synthetic presence hint; no repeated hint injection."
+  ],
+  "limits": [
+    "Only synthetic data on MuMu API35/x86_64; no user vaults, physical USB/NFC keys, OEM or Android16 verification.",
+    "Provider tests call actual provider entry points using a test service host and real signed-browser framework caller fixtures; no real website/whole system selector login.",
+    "Release fixtures have only password records (one old, one new); no Release software Passkey, attachment, backup-restore or remote account coverage.",
+    "MuMu UIAutomator wrote fresh XML then exited139 in 113 recorded calls; retained tool failures, not claimed as Monica crashes or zero-exit successes."
+  ],
+  "commitPushReleaseApkDelivery": false,
+  "cleanup": {
+    "passed": true,
+    "removedOwnedUsers": [
+      10,
+      11
+    ],
+    "remainingUsers": [
+      0
+    ],
+    "ownerInstalledPackagesUnchanged": true,
+    "taskAddedFirefoxRemoved": true,
+    "restoredPhysicalDensity": 280,
+    "adbShellUid": 2000,
+    "stoppedOnlyTaskStartedMuMuInstance": 2,
+    "allInstancesAndDisksRetained": true,
+    "otherMuMuInstanceStatesUnchanged": true,
+    "publicAvdUntouched": true,
+    "canvasServiceLeftRunning": true,
+    "privateSyntheticArchivesRetained": true,
+    "earlierCommandFailures": [
+      {
+        "command": [
+          "uninstall",
+          "org.mozilla.firefox"
+        ],
+        "exit": 1,
+        "stdout": "Failure [not installed for 0]",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "shell",
+          "pm",
+          "remove-user",
+          "11"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "Error: couldn't remove user id 11"
+      }
+    ]
+  }
+}

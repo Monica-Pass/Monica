@@ -332,6 +332,15 @@ class AutofillPreferences(private val context: Context) {
         }
     }
 
+    /** A deliberate settings choice updates the source and its dependent filters together. */
+    suspend fun selectV2DefaultSourceFilter(filter: AutofillDefaultSourceFilter) {
+        context.dataStore.edit { preferences ->
+            preferences[KEY_V2_DEFAULT_SOURCE_FILTER] = filter.name
+            if (filter != AutofillDefaultSourceFilter.KEEPASS) preferences.remove(KEY_V2_DEFAULT_KEEPASS_DATABASE_ID)
+            if (filter != AutofillDefaultSourceFilter.BITWARDEN) preferences.remove(KEY_V2_DEFAULT_BITWARDEN_VAULT_ID)
+        }
+    }
+
     val v2DefaultKeepassDatabaseId: Flow<Long?> = context.dataStore.data.map { preferences ->
         preferences[KEY_V2_DEFAULT_KEEPASS_DATABASE_ID]
     }

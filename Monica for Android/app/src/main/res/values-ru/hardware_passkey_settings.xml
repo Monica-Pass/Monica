@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_passkey_settings_title">Автозаполнение и ключи доступа</string>
+    <string name="hardware_key_enable">Включить физические ключи</string>
+    <string name="hardware_key_enable_description">Используйте ключи безопасности USB или NFC с Monica. По умолчанию выключено. Сохранённые программные ключи доступа не затрагиваются.</string>
+</resources>

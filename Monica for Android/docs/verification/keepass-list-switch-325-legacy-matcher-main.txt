@@ -1,0 +1,213 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.keepass.KeePassListPresentationUiTest:
+INSTRUMENTATION_STATUS: test=lockingWhileReadIsPendingRejectsItsLateResult
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockingWhileReadIsPendingRejectsItsLateResult
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=delayedSelectionUsesTargetOrPreviousPreviewAndOnlyLatestSelectionBecomesLive
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=delayedSelectionUsesTargetOrPreviousPreviewAndOnlyLatestSelectionBecomesLive
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=backgroundClearsPreviewAndDialogBeforeReturning
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=backgroundClearsPreviewAndDialogBeforeReturning
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockRemovesPreviewAndAuthenticationReopensOriginalWithoutWrites
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockRemovesPreviewAndAuthenticationReopensOriginalWithoutWrites
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedReadCanRetryAndKeepsTheOriginalBytes
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassListPresentationUiTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedReadCanRetryAndKeepsTheOriginalBytes
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest:
+INSTRUMENTATION_STATUS: test=switchingKdbxNeverLeavesPreviousVaultActionable
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=switchingKdbxNeverLeavesPreviousVaultActionable
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=legacySwitchWaitsForPasswordsAndSupplementaryNotesTogether
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failed to assert count of nodes.
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: ((OnClick is defined) && ((Text + InputText + EditableText contains 'Legacy A' (ignoreCase: false)) || (hasAnyDescendantThat(Text + InputText + EditableText contains 'Legacy A' (ignoreCase: false)))))
+Nodes found:
+1) Node #878 at (l=0.0, t=310.0, r=1080.0, b=2058.0)px
+CollectionInfo = 'CollectionInfo(rowCount=3, columnCount=1)'
+IsContainer = 'true'
+IsTraversalGroup = 'true'
+VerticalScrollAxisRange = 'ScrollAxisRange(value=0.0, maxValue=0.0, reverseScrolling=false)'
+[Disabled]
+Actions = [GetScrollViewportLength, IndexForKey, OnClick, ScrollBy, ScrollByOffset, ScrollToIndex]
+MergeDescendants = 'true'
+Has 2 children, 2 siblings
+2) Node #1037 at (l=42.0, t=310.0, r=1038.0, b=595.0)px
+ContentDescription = '[KeePass]'
+Focused = 'false'
+IsContainer = 'true'
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+Text = '[Legacy A, user-0]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, OnLongClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 1 child, 1 sibling
+
+	at androidx.compose.ui.test.AssertionsKt.assertCountEquals(Assertions.kt:282)
+	at takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest$legacySwitchWaitsForPasswordsAndSupplementaryNotesTogether$1$2$2.invokeSuspend(VaultOverviewPaneTest.kt:689)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest.legacySwitchWaitsForPasswordsAndSupplementaryNotesTogether(VaultOverviewPaneTest.kt:669)
+
+INSTRUMENTATION_STATUS: stream=
+Error in legacySwitchWaitsForPasswordsAndSupplementaryNotesTogether(takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest):
+java.lang.AssertionError: Failed to assert count of nodes.
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: ((OnClick is defined) && ((Text + InputText + EditableText contains 'Legacy A' (ignoreCase: false)) || (hasAnyDescendantThat(Text + InputText + EditableText contains 'Legacy A' (ignoreCase: false)))))
+Nodes found:
+1) Node #878 at (l=0.0, t=310.0, r=1080.0, b=2058.0)px
+CollectionInfo = 'CollectionInfo(rowCount=3, columnCount=1)'
+IsContainer = 'true'
+IsTraversalGroup = 'true'
+VerticalScrollAxisRange = 'ScrollAxisRange(value=0.0, maxValue=0.0, reverseScrolling=false)'
+[Disabled]
+Actions = [GetScrollViewportLength, IndexForKey, OnClick, ScrollBy, ScrollByOffset, ScrollToIndex]
+MergeDescendants = 'true'
+Has 2 children, 2 siblings
+2) Node #1037 at (l=42.0, t=310.0, r=1038.0, b=595.0)px
+ContentDescription = '[KeePass]'
+Focused = 'false'
+IsContainer = 'true'
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+Text = '[Legacy A, user-0]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, OnLongClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 1 child, 1 sibling
+
+	at androidx.compose.ui.test.AssertionsKt.assertCountEquals(Assertions.kt:282)
+	at takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest$legacySwitchWaitsForPasswordsAndSupplementaryNotesTogether$1$2$2.invokeSuspend(VaultOverviewPaneTest.kt:689)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest.legacySwitchWaitsForPasswordsAndSupplementaryNotesTogether(VaultOverviewPaneTest.kt:669)
+
+INSTRUMENTATION_STATUS: test=legacySwitchWaitsForPasswordsAndSupplementaryNotesTogether
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 82.35
+There was 1 failure:
+1) legacySwitchWaitsForPasswordsAndSupplementaryNotesTogether(takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest)
+java.lang.AssertionError: Failed to assert count of nodes.
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: ((OnClick is defined) && ((Text + InputText + EditableText contains 'Legacy A' (ignoreCase: false)) || (hasAnyDescendantThat(Text + InputText + EditableText contains 'Legacy A' (ignoreCase: false)))))
+Nodes found:
+1) Node #878 at (l=0.0, t=310.0, r=1080.0, b=2058.0)px
+CollectionInfo = 'CollectionInfo(rowCount=3, columnCount=1)'
+IsContainer = 'true'
+IsTraversalGroup = 'true'
+VerticalScrollAxisRange = 'ScrollAxisRange(value=0.0, maxValue=0.0, reverseScrolling=false)'
+[Disabled]
+Actions = [GetScrollViewportLength, IndexForKey, OnClick, ScrollBy, ScrollByOffset, ScrollToIndex]
+MergeDescendants = 'true'
+Has 2 children, 2 siblings
+2) Node #1037 at (l=42.0, t=310.0, r=1038.0, b=595.0)px
+ContentDescription = '[KeePass]'
+Focused = 'false'
+IsContainer = 'true'
+Shape = 'RoundedCornerShape(topStart = CornerSize(size = 16.0.dp), topEnd = CornerSize(size = 16.0.dp), bottomEnd = CornerSize(size = 16.0.dp), bottomStart = CornerSize(size = 16.0.dp))'
+Text = '[Legacy A, user-0]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, OnLongClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 1 child, 1 sibling
+
+	at androidx.compose.ui.test.AssertionsKt.assertCountEquals(Assertions.kt:282)
+	at takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest$legacySwitchWaitsForPasswordsAndSupplementaryNotesTogether$1$2$2.invokeSuspend(VaultOverviewPaneTest.kt:689)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest.legacySwitchWaitsForPasswordsAndSupplementaryNotesTogether(VaultOverviewPaneTest.kt:669)
+
+FAILURES!!!
+Tests run: 7,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

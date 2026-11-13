@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.viewmodel.SensitiveWriteDependencyTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-13T06:41:02.407Z" hostname="JOYIN" time="0.529">
+  <properties/>
+  <testcase name="explicitEncryptionFailureCannotFallBackToPlaintext" classname="takagi.ru.monica.viewmodel.SensitiveWriteDependencyTest" time="0.184"/>
+  <testcase name="missingDocumentEncryptionDependencyRejectsBeforeInsert" classname="takagi.ru.monica.viewmodel.SensitiveWriteDependencyTest" time="0.135"/>
+  <testcase name="missingCardEncryptionDependencyRejectsBeforeInsert" classname="takagi.ru.monica.viewmodel.SensitiveWriteDependencyTest" time="0.097"/>
+  <testcase name="missingTotpEncryptionDependencyReportsFailureWithoutInsert" classname="takagi.ru.monica.viewmodel.SensitiveWriteDependencyTest" time="0.105"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

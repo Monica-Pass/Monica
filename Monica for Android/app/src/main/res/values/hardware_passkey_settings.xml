@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_passkey_settings_title">Autofill &amp; passkeys</string>
+    <string name="hardware_key_enable">Enable physical keys</string>
+    <string name="hardware_key_enable_description">Use USB or NFC security keys with Monica. Off by default. Saved software passkeys are unaffected.</string>
+</resources>

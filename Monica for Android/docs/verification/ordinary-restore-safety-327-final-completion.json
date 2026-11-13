@@ -1,0 +1,91 @@
+{
+  "passed": true,
+  "restore": {
+    "imported": 4,
+    "skipped": 0,
+    "failed": 0,
+    "differentTargetMdk": true,
+    "allColumnSemanticEquality": true,
+    "targetCredentialsPreserved": true,
+    "restoreUser": 12
+  },
+  "coldReads": {
+    "main": {
+      "passed": true,
+      "user": 11,
+      "apkSha256": "ca31d9fa0d2b3b5b5976009b7807f586d56466ca91ab683a75014b2e6ec80708",
+      "previousPids": [
+        "18711"
+      ],
+      "newPids": [
+        "19710"
+      ],
+      "actualPasswordUnlock": true,
+      "bothRestoredLoginSecretsShown": true,
+      "bothCollisionCardsVisible": true
+    },
+    "fd": {
+      "passed": true,
+      "user": 12,
+      "apkSha256": "4a66271521b71ceb210f0bfc06abf7b1f498eecd279619d30a941df1aa67b7ae",
+      "previousPids": [
+        "15965"
+      ],
+      "newPids": [
+        "16956"
+      ],
+      "actualPasswordUnlock": true,
+      "bothRestoredLoginSecretsShown": true,
+      "bothCollisionCardsVisible": true
+    }
+  },
+  "cleanup": {
+    "api": 35,
+    "abi": "x86_64",
+    "emulator": "existing MuMu2",
+    "syntheticDataOnly": true,
+    "isolatedTestPackageNames": true,
+    "testCertificate": true,
+    "userStoppedEmulator": true,
+    "restarted": true,
+    "ownedUserCleanup": "complete",
+    "userRequestedFdCompletion": true,
+    "ownedUsersRemoved": [
+      10,
+      11,
+      12
+    ],
+    "originalOwnerPackagesUnchanged": true,
+    "originalDisplayAndInputRestored": true,
+    "finalAdbdUid": 2000,
+    "emulatorStopped": true,
+    "configAndDataDiskRetained": true
+  },
+  "sourceInventoriesMatchFinalBuilds": true,
+  "evidence": {
+    "validation-fd-independent-restore-user12-02.json": {
+      "passed": true,
+      "sha256": "0592deb30c5ab35b84c417c4bbd0dbabd837bbf81996f2892297af3f651cba31"
+    },
+    "validation-fd-independent-restored-user12-compare.json": {
+      "passed": true,
+      "sha256": "7fda6e0dc2bd1368858c74df3cd327cd2f9b1be97ba4f188f6e40ff618579c62"
+    },
+    "actual-ui-main-restored-cold-final-02.json": {
+      "passed": true,
+      "sha256": "2ba0e89b80070691dc56e076c379164919cc9348f25e1de27103d90b0ef2c02c"
+    },
+    "actual-ui-fd-restored-cold-final-02.json": {
+      "passed": true,
+      "sha256": "b674a28e1a5efd12bf102ebb9b9f64db3505cc79f4f4b5ee57ef4463feb681a3"
+    },
+    "fd-final-cleanup.json": {
+      "passed": true,
+      "sha256": "73697a0ff871f3598e7c55af77b5dc65799f090aba1a5eec662c7be00abbeb9b"
+    },
+    "fd-final-emulator-stop.json": {
+      "passed": true,
+      "sha256": "c6e7435c1854e6ee3dc649d02fae4bb74ef11df577e2bf6c3a1254a2f62f3f05"
+    }
+  }
+}

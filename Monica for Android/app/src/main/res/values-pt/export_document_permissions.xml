@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_document_permission_missing">"O seletor de ficheiros do sistema não concedeu as permissões de leitura e escrita necessárias. Escolha Download no armazenamento principal do dispositivo ou outro local onde seja possível escrever. Pode ter sido criado um ficheiro vazio. Não é uma cópia de segurança válida e pode eliminá-lo no gestor de ficheiros."</string>
+</resources>

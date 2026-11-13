@@ -1,6 +1,10 @@
 package takagi.ru.monica.utils
 
 import android.content.Context
+import androidx.room.withTransaction
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
+import takagi.ru.monica.security.SessionManager
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.withContext
@@ -57,7 +61,20 @@ object BackupRestoreApplier {
         destinationWriter: ImportDestinationWriter? = null,
         progress: TransferProgressReporter = TransferProgressReporter.None,
     ): RestoreApplyStats = ChangeTriggeredBackupScheduler.withoutTriggering {
+        val bindingGeneration = SessionManager.lockGeneration.value
+        val bindingStartedUnlocked = SessionManager.isUnlocked.value
         try {
+            if (destinationWriter == null) {
+                val content = restoreResult.content
+                val sourceCounts = content.secureItems.groupingBy { it.id }.eachCount()
+                val owners = content.portableAttachments.entries.mapNotNull { it.parentSecureItemId } +
+                    content.attachments.mapNotNull { it.parentSecureItemId }
+                // Check before entering even the replacement transaction: an owner is not
+                // recoverable by guessing between source rows or consulting destination ids.
+                require(owners.all { sourceCounts[it] == 1 }) {
+                    "Backup attachment has a missing or ambiguous secure-item owner"
+                }
+            }
             destinationWriter?.validate()
             suspend fun apply(): RestoreApplyStats = applyRestoreResultInternal(
                 context = context,
@@ -67,6 +84,8 @@ object BackupRestoreApplier {
                 localOnlyDedup = localOnlyDedup || restoreResult.overwriteLocal,
                 logTag = logTag,
                 destinationWriter = destinationWriter,
+                bindingGeneration = bindingGeneration,
+                bindingStartedUnlocked = bindingStartedUnlocked,
                 progress = progress,
             )
             val stats = if (restoreResult.overwriteLocal) {
@@ -110,6 +129,8 @@ object BackupRestoreApplier {
         localOnlyDedup: Boolean,
         logTag: String,
         destinationWriter: ImportDestinationWriter?,
+        bindingGeneration: Long,
+        bindingStartedUnlocked: Boolean,
         progress: TransferProgressReporter,
     ): RestoreApplyStats {
         fun supplementalFailure() {
@@ -135,6 +156,14 @@ object BackupRestoreApplier {
         android.util.Log.d(logTag, "报告: ${restoreResult.report.getSummary(context)}")
 
         val passwordIdMap = mutableMapOf<Long, Long>()
+        val database = PasswordDatabase.getDatabase(context)
+        val sourcePasswordCounts = passwords.groupingBy { it.id }.eachCount()
+        val sourceSecureItemCounts = secureItems.groupingBy { it.id }.eachCount()
+        val sourceNotes = secureItems.filter { it.itemType == ItemType.NOTE.name }.associateBy { it.id }
+        val ordinaryBoundPasswords = mutableMapOf<Long, takagi.ru.monica.data.PasswordEntry>()
+        val attachedSecureItemIds = content.portableAttachments.entries.mapNotNull { it.parentSecureItemId }.toSet() +
+            content.attachments.mapNotNull { it.parentSecureItemId }
+        val relatedSecureItemIds = passwords.mapNotNull { it.boundNoteId }.toSet() + attachedSecureItemIds
         var passwordCount = 0
         var passwordSkipped = 0
         var passwordFailed = 0
@@ -148,6 +177,15 @@ object BackupRestoreApplier {
                     return@forEach
                 }
                 val originalId = password.id
+                if (destinationWriter == null && password.boundNoteId != null) {
+                    require(password.keepassDatabaseId == null && password.mdbxDatabaseId == null &&
+                        password.bitwardenVaultId == null) { "Ordinary note binding requires a local password" }
+                    require(sourcePasswordCounts[originalId] == 1 &&
+                        sourceSecureItemCounts[password.boundNoteId] == 1 &&
+                        sourceNotes.containsKey(password.boundNoteId)) {
+                        "Bound note is missing, has the wrong type, or has an ambiguous source identity"
+                    }
+                }
                 val snapshot = ImportedPasswordSnapshot(
                         title = password.title,
                         username = password.username,
@@ -164,6 +202,9 @@ object BackupRestoreApplier {
                     )
                 val importedFields = content.customFieldsMap[password.id].orEmpty()
                 val existingEntry = if (destinationWriter != null) destinationWriter.findPassword(snapshot, importedFields, isDeleted = password.isDeleted)
+                    // A linked backup project needs its own password and note; never append a
+                    // restored relationship to a pre-existing password selected by scalar matching.
+                    else if (password.boundNoteId != null) null
                     else PasswordImportDuplicateResolver.findMatchingEntry(passwordRepository, securityManager, snapshot, localOnlyDedup)
                 val encryptedImportedPassword = encryptImportedPasswordForDisplay(password.password, securityManager, logTag)
                 val encryptedImportedAuthenticatorKey = encryptImportedAuthenticatorKey(
@@ -175,13 +216,17 @@ object BackupRestoreApplier {
                     val importedEntry = password.copy(
                             id = 0,
                             password = encryptedImportedPassword,
-                            authenticatorKey = encryptedImportedAuthenticatorKey
+                            authenticatorKey = encryptedImportedAuthenticatorKey,
+                            // A backup id is never a valid destination relationship, even briefly.
+                            boundNoteId = if (destinationWriter == null) null else password.boundNoteId,
                         )
                     val newId = destinationWriter?.insertPassword(importedEntry, importedFields)
                         ?: passwordRepository.insertPasswordEntry(importedEntry)
                     if (newId > 0) {
                         passwordIdMap[originalId] = newId
-                        passwordCount++
+                        if (destinationWriter == null && password.boundNoteId != null) {
+                            ordinaryBoundPasswords[newId] = password
+                        } else passwordCount++
                     } else {
                         passwordFailed++
                         android.util.Log.e(logTag, "Failed to insert password, returned ID <= 0")
@@ -473,7 +518,15 @@ object BackupRestoreApplier {
                         ?: throw IllegalArgumentException("Unable to parse TOTP data")
                     PortableTotpBackupCodec.withBindings(portable, data.copy(categoryId = null, keepassDatabaseId = null))
                 } else exportItem.itemData
-                val existingItem = secureItemRepository.findDuplicateSecureItem(
+                val existingItem = if (destinationWriter == null && itemType != ItemType.TOTP) {
+                    OrdinaryRestoreDuplicatePolicy.findMatchingItem(
+                        database = database,
+                        securityManager = securityManager,
+                        incoming = exportItem,
+                        hasIncomingRelations = exportItem.id in relatedSecureItemIds ||
+                            sourceSecureItemCounts[exportItem.id] != 1,
+                    )
+                } else secureItemRepository.findDuplicateSecureItem(
                     itemType,
                     importedItemData,
                     exportItem.title,
@@ -545,6 +598,7 @@ object BackupRestoreApplier {
                     )
                     val newId = destinationWriter?.insertSecureItem(secureItem)
                         ?: secureItemRepository.insertItem(secureItem)
+                    if (destinationWriter == null) check(newId > 0L) { "Secure item insert returned no row" }
                     if (newId > 0L) {
                         secureItemIdMap[exportItem.id] = newId
                     }
@@ -562,6 +616,58 @@ object BackupRestoreApplier {
                 val detail = "${exportItem.title} (${exportItem.itemType}): ${e.message}"
                 failedSecureItemDetails.add(detail)
                 android.util.Log.e(logTag, "Failed to import secure item: ${e.message}")
+            }
+        }
+
+        // Publish only the successfully mapped NOTE into the newly inserted password. Until
+        // this point cancellation or a failed note write leaves an independent, unbound row.
+        ordinaryBoundPasswords.forEach { (id, source) ->
+            try {
+                val sourceNoteId = requireNotNull(source.boundNoteId)
+                val noteId = requireNotNull(secureItemIdMap[sourceNoteId]) {
+                    "Bound note was not restored; the new password remains unbound"
+                }
+                database.withTransaction {
+                    val importingContext = currentCoroutineContext()
+                    importingContext.ensureActive()
+                    if (!bindingStartedUnlocked) throw CancellationException("Restore note binding was not authorized")
+                    val note = requireNotNull(database.secureItemDao().getItemById(noteId))
+                    check(note.itemType == ItemType.NOTE) { "Restored relationship is not a note" }
+                    val entry = requireNotNull(passwordRepository.getPasswordEntryById(id))
+                    check(entry.boundNoteId == null) { "New password binding changed during restore" }
+                    check(entry.keepassDatabaseId == null && entry.mdbxDatabaseId == null &&
+                        entry.bitwardenVaultId == null) { "New password ownership changed during restore" }
+                    val statement = database.openHelper.writableDatabase.compileStatement(
+                        "UPDATE password_entries SET boundNoteId = ? WHERE id = ? AND boundNoteId IS NULL " +
+                            "AND keepassDatabaseId IS NULL AND mdbx_database_id IS NULL AND bitwarden_vault_id IS NULL " +
+                            "AND EXISTS (SELECT 1 FROM secure_items WHERE id = ? AND itemType = 'NOTE')"
+                    )
+                    statement.use {
+                        it.bindLong(1, noteId)
+                        it.bindLong(2, id)
+                        it.bindLong(3, noteId)
+                        // Keep only the single local SQL publication under the session monitor.
+                        // Local boundNoteId has no remote mutation/mirror side effects.
+                        val published = SessionManager.publishAtGeneration(bindingGeneration) {
+                            importingContext.ensureActive()
+                            check(it.executeUpdateDelete() == 1) { "New password binding changed during restore" }
+                            importingContext.ensureActive()
+                            true
+                        }
+                        if (published != true) throw CancellationException("Restore note binding session changed")
+                    }
+                    // A lock/cancel while preparing or updating this row rolls back the transaction.
+                    if (SessionManager.publishAtGeneration(bindingGeneration) {
+                            importingContext.ensureActive()
+                            true
+                        } != true) throw CancellationException("Restore note binding session changed")
+                }
+                passwordCount++
+            } catch (error: Exception) {
+                if (error is CancellationException || restoreResult.overwriteLocal) throw error
+                passwordFailed++
+                failedPasswordDetails.add("${source.title} (${source.username}): ${error.message}")
+                android.util.Log.w(logTag, "Failed to restore password note binding: ${error.message}")
             }
         }
 

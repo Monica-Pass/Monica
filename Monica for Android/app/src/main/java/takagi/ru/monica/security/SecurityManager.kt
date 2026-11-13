@@ -802,8 +802,10 @@ class SecurityManager private constructor(
         question2Id: Int,
         answer2: String,
         question1Text: String? = null,
-        question2Text: String? = null
+        question2Text: String? = null,
+        ensureActive: () -> Unit = {},
     ) {
+        ensureActive()
         check(SessionManager.isUnlocked.value && hasRuntimeUnlockCache()) { "Security question setup requires authentication" }
         require(isValidSecurityQuestionId(question1Id) && isValidSecurityQuestionId(question2Id))
         val generation = runtimeKeyGeneration.get()
@@ -818,8 +820,10 @@ class SecurityManager private constructor(
             SECURITY_QUESTION_2_ANSWER_KEY to hashedAnswer2,
             SECURITY_QUESTION_2_TEXT_KEY to question2Text.takeIf { PredefinedSecurityQuestions.isCustomQuestion(question2Id) },
         )
+        ensureActive()
         check(localRecovery.commitAuthenticatedSettings(sharedPreferences, updates) {
             synchronized(runtimeKeyLock) {
+                ensureActive()
                 check(runtimeKeyGeneration.get() == generation && SessionManager.isUnlocked.value && recoveryBinding() == original)
                 cancelRecovery()
             }

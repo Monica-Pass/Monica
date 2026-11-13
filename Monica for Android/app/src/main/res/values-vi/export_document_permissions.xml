@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_document_permission_missing">"Trình chọn tệp hệ thống không cấp quyền đọc và ghi cần thiết. Hãy chọn Download trong bộ nhớ chính của thiết bị hoặc vị trí khác có thể ghi. Một tệp trống có thể đã được tạo. Đây không phải bản sao lưu hợp lệ và bạn có thể xóa tệp bằng trình quản lý tệp."</string>
+</resources>

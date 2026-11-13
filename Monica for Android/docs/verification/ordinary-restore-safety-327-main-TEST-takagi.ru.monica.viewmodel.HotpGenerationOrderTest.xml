@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="takagi.ru.monica.viewmodel.HotpGenerationOrderTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-13T06:40:48.710Z" hostname="JOYIN" time="13.629">
+  <properties/>
+  <testcase name="searchAndCategoryFilterRetainCounterPosition" classname="takagi.ru.monica.viewmodel.HotpGenerationOrderTest" time="12.412"/>
+  <testcase name="otherItemTypesRetainMostRecentlyModifiedOrdering" classname="takagi.ru.monica.viewmodel.HotpGenerationOrderTest" time="0.18"/>
+  <testcase name="identicalCreationTimesUseStableIdsAndBothDaoStreamsAgree" classname="takagi.ru.monica.viewmodel.HotpGenerationOrderTest" time="0.155"/>
+  <testcase name="favoritePriorityRemainsAboveOrdinaryRows" classname="takagi.ru.monica.viewmodel.HotpGenerationOrderTest" time="0.155"/>
+  <testcase name="generatingRepeatedlyKeepsDefaultPositionAndAdvancesModificationTime" classname="takagi.ru.monica.viewmodel.HotpGenerationOrderTest" time="0.203"/>
+  <testcase name="savedDragRanksRemainPrimaryWhenCounterChanges" classname="takagi.ru.monica.viewmodel.HotpGenerationOrderTest" time="0.163"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

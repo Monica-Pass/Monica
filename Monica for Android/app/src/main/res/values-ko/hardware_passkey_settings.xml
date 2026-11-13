@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_passkey_settings_title">자동 완성 및 패스키</string>
+    <string name="hardware_key_enable">물리 키 사용</string>
+    <string name="hardware_key_enable_description">USB 또는 NFC 보안 키를 사용합니다. 기본적으로 꺼져 있으며 저장된 소프트웨어 패스키에는 영향을 주지 않습니다.</string>
+</resources>

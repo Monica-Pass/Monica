@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_document_permission_missing">"The system file picker did not grant the required read/write access. Choose Download in the device’s main storage or another writable location. The picker may have created an empty file; it is not a valid backup and can be deleted in your file manager."</string>
+</resources>

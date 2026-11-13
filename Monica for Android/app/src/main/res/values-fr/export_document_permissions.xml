@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_document_permission_missing">"Le sélecteur de fichiers du système n’a pas accordé les accès en lecture et écriture nécessaires. Choisissez Download dans le stockage principal de l’appareil ou un autre emplacement accessible en écriture. Un fichier vide a peut-être été créé. Ce n’est pas une sauvegarde valide ; vous pouvez le supprimer dans le gestionnaire de fichiers."</string>
+</resources>

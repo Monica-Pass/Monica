@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_passkey_settings_title">Autouzupełnianie i klucze dostępu</string>
+    <string name="hardware_key_enable">Włącz klucze fizyczne</string>
+    <string name="hardware_key_enable_description">Używaj kluczy bezpieczeństwa USB lub NFC z Monicą. Domyślnie wyłączone. Nie wpływa na zapisane programowe klucze dostępu.</string>
+</resources>

@@ -8,17 +8,24 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.filters.SdkSuppress
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Test
+import org.junit.Before
+import org.junit.After
 import org.junit.Assert.*
 import org.json.JSONObject
 
 @SdkSuppress(minSdkVersion = 34)
 class HardwareProviderTest {
     private val context get() = InstrumentationRegistry.getInstrumentation().targetContext
+    private lateinit var preference: HardwarePasskeyPreferenceFixture
+    @Before fun optIntoHardwareForExistingHardwareTests() {
+        preference = HardwarePasskeyPreferenceFixture(context)
+        HardwarePasskeyPreferences.setEnabled(context, true)
+    }
+    @After fun restoreHardwarePreference() = preference.restore()
     private val json = """{"challenge":"AQIDBA","rp":{"id":"example.com","name":"Example"},"user":{"id":"BQYH","name":"fixture","displayName":"Fixture"},"pubKeyCredParams":[{"type":"public-key","alg":-7}]}"""
 
     @Test fun frameworkCreateRequestSuppliesTrustedCallerAndHashRatherThanIntentExtras() {
-        val pkg = context.packageManager.getPackageInfo("com.android.chrome", PackageManager.GET_SIGNING_CERTIFICATES)
-        val caller = android.service.credentials.CallingAppInfo("com.android.chrome", pkg.signingInfo!!, "https://login.example.com")
+        val caller = trustedHardwareBrowserCaller(context)
         val hash = ByteArray(32) { it.toByte() }
         val request = CreatePublicKeyCredentialRequest(json, clientDataHash = hash)
         val intent = Intent().putExtra("android.service.credentials.extra.CREATE_CREDENTIAL_REQUEST",
@@ -52,8 +59,7 @@ class HardwareProviderTest {
     }
 
     @Test fun forwardingPreservesFrameworkCallerAndHashAndRejectsPlatformOnlyOrMissingRequests() {
-        val pkg = context.packageManager.getPackageInfo("com.android.chrome", PackageManager.GET_SIGNING_CERTIFICATES)
-        val caller = android.service.credentials.CallingAppInfo("com.android.chrome", pkg.signingInfo!!, "https://login.example.com")
+        val caller = trustedHardwareBrowserCaller(context)
         val hash = ByteArray(32) { (it + 4).toByte() }
         fun source(json: String): Intent {
             val request = CreatePublicKeyCredentialRequest(json, clientDataHash = hash)
@@ -68,7 +74,7 @@ class HardwareProviderTest {
         val request = provider.callingRequest as CreatePublicKeyCredentialRequest
         assertEquals(json, request.requestJson)
         assertArrayEquals(hash, request.clientDataHash)
-        assertEquals("com.android.chrome", provider.callingAppInfo.packageName)
+        assertEquals(caller.packageName, provider.callingAppInfo.packageName)
         assertEquals("https://login.example.com", HardwareRequestOrigin.resolve(context, provider.callingAppInfo, "example.com", request.clientDataHash))
         assertEquals(HardwareSecurityKeyActivity.ACTION_CREATE, forwarded.action)
         assertEquals(0, forwarded.flags)

@@ -43,7 +43,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -80,14 +83,10 @@ fun SecurityQuestionsSetupScreen(
     val scope = rememberCoroutineScope()
     val active = remember { AtomicBoolean(true) }
     val entryGeneration = remember { SecurityManager.dataReadGeneration.value }
+    val generation by SecurityManager.dataReadGeneration.collectAsState()
     val lifecycle = LocalLifecycleOwner.current.lifecycle
-    DisposableEffect(lifecycle) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_PAUSE || event == Lifecycle.Event.ON_STOP) active.set(false)
-        }
-        lifecycle.addObserver(observer)
-        onDispose { active.set(false); lifecycle.removeObserver(observer) }
-    }
+    val back = rememberUpdatedState(onNavigateBack)
+    val complete = rememberUpdatedState(onSetupComplete)
     val questionIds = remember { PredefinedSecurityQuestions.questions.map { it.id } }
     val questions = questionIds.map { id ->
         SecurityQuestion(id, stringResource(PredefinedSecurityQuestions.textResIdFor(id)))
@@ -105,7 +104,29 @@ fun SecurityQuestionsSetupScreen(
     var errorMessage by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
 
+    fun current() = active.get() && securityManager.isDataReadCurrent(entryGeneration)
+    fun cancel() {
+        active.set(false)
+        selectedQuestion1 = null; selectedQuestion2 = null
+        customQuestion1Text = ""; customQuestion2Text = ""
+        answer1 = ""; answer2 = ""
+        showQuestion1Dropdown = false; showQuestion2Dropdown = false
+        errorMessage = ""
+        isLoading = false
+    }
+    fun leave() { if (active.get()) { cancel(); back.value() } }
+    BackHandler(onBack = ::leave)
+    DisposableEffect(lifecycle) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_PAUSE || event == Lifecycle.Event.ON_STOP) leave()
+        }
+        lifecycle.addObserver(observer)
+        onDispose { cancel(); lifecycle.removeObserver(observer) }
+    }
+    LaunchedEffect(generation) { if (generation != entryGeneration) leave() }
+
     LaunchedEffect(Unit) {
+        if (!current()) return@LaunchedEffect
         if (isExistingSetup) {
             val question1Id = securityManager.getSecurityQuestion1Id()
             val question2Id = securityManager.getSecurityQuestion2Id()
@@ -134,6 +155,7 @@ fun SecurityQuestionsSetupScreen(
         }
     }
 
+    if (!active.get()) return
     Scaffold(
         modifier = sharedModifier,
         topBar = {
@@ -148,7 +170,7 @@ fun SecurityQuestionsSetupScreen(
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
+                    IconButton(onClick = ::leave) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.back)
@@ -232,6 +254,7 @@ fun SecurityQuestionsSetupScreen(
 
             Button(
                 onClick = {
+                    if (!current()) return@Button
                     val customQuestion1 = customQuestion1Text.trim()
                     val customQuestion2 = customQuestion2Text.trim()
                     when {
@@ -280,35 +303,39 @@ fun SecurityQuestionsSetupScreen(
                             val secondAnswer = answer2.trim()
                             answer1 = ""; answer2 = ""
                             scope.launch {
-                                val saved = BoundedSecureDataRead.readChecked(isCurrent = {
-                                    active.get() && securityManager.isDataReadCurrent(entryGeneration)
-                                }) {
-                            securityManager.setSecurityQuestions(
-                                question1Id = firstId,
-                                answer1 = firstAnswer,
-                                question2Id = secondId,
-                                answer2 = secondAnswer,
-                                question1Text = customQuestion1.takeIf {
-                                    PredefinedSecurityQuestions.isCustomQuestion(firstId)
-                                },
-                                question2Text = customQuestion2.takeIf {
-                                    PredefinedSecurityQuestions.isCustomQuestion(secondId)
+                                try {
+                                    val saved = BoundedSecureDataRead.readChecked(isCurrent = ::current) {
+                                        securityManager.setSecurityQuestions(
+                                            question1Id = firstId,
+                                            answer1 = firstAnswer,
+                                            question2Id = secondId,
+                                            answer2 = secondAnswer,
+                                            question1Text = customQuestion1.takeIf {
+                                                PredefinedSecurityQuestions.isCustomQuestion(firstId)
+                                            },
+                                            question2Text = customQuestion2.takeIf {
+                                                PredefinedSecurityQuestions.isCustomQuestion(secondId)
+                                            },
+                                            ensureActive = { ensureActive() },
+                                        )
+                                        true
+                                    }
+                                    if (!current()) return@launch
+                                    if (saved == true) {
+                                        cancel()
+                                        complete.value()
+                                    }
+                                    else errorMessage = context.getString(R.string.recovery_authorization_expired)
+                                } finally {
+                                    isLoading = false
                                 }
-                            )
-
-                                    true
-                                }
-                                if (!active.get() || !securityManager.isDataReadCurrent(entryGeneration)) return@launch
-                                isLoading = false
-                                if (saved == true) onSetupComplete()
-                                else errorMessage = context.getString(R.string.recovery_authorization_expired)
                             }
                         }
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(24.dp),
-                enabled = !isLoading &&
+                enabled = active.get() && generation == entryGeneration && !isLoading &&
                     selectedQuestion1 != null &&
                     selectedQuestion2 != null &&
                     answer1.trim().isNotEmpty() &&

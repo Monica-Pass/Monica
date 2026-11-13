@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autofill_passkey_settings_title">Compilazione automatica e passkey</string>
+    <string name="hardware_key_enable">Abilita chiavi fisiche</string>
+    <string name="hardware_key_enable_description">Usa chiavi di sicurezza USB o NFC con Monica. Disattivato per impostazione predefinita. Le passkey software salvate non sono interessate.</string>
+</resources>
