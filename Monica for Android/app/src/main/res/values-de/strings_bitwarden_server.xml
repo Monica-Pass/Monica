@@ -6,7 +6,7 @@
     <string name="bitwarden_server_base_hint">Meist genügt die Serveradresse.</string>
     <string name="bitwarden_server_ca">Eigenes CA-Zertifikat (PEM)</string>
     <string name="bitwarden_server_certificates">Zertifikate und Verbindung</string>
-    <string name="bitwarden_server_certificates_hint">Eine leere CA verwendet das Systemvertrauen. mTLS benötigt einen nutzbaren privaten PKCS#12-Schlüssel. Leerzeichen im Zertifikatpasswort bleiben erhalten.</string>
+    <string name="bitwarden_server_certificates_hint">Selbst gehostete Server vertrauen CAs aus den Android-Einstellungen; gültige Erneuerungen derselben CA erfordern keinen erneuten Import. Offizielle Bitwarden-Domains verwenden nur System-CAs. PEM kann ohne zusätzliche Konto-CA leer bleiben. mTLS benötigt einen privaten PKCS#12-Schlüssel. Leerzeichen im Zertifikatspasswort bleiben erhalten.</string>
     <string name="bitwarden_server_deployment_clears">Ein Wechsel löscht abweichende Dienstadressen, Header und Zertifikate.</string>
     <string name="bitwarden_server_discovery_title">Gefundene Server</string>
     <string name="bitwarden_server_done">Fertig</string>

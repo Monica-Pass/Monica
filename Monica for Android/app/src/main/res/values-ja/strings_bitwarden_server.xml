@@ -6,7 +6,7 @@
     <string name="bitwarden_server_base_hint">通常はサーバーアドレスの入力だけで利用できます。</string>
     <string name="bitwarden_server_ca">カスタム CA 証明書（PEM）</string>
     <string name="bitwarden_server_certificates">証明書と接続</string>
-    <string name="bitwarden_server_certificates_hint">CA が空ならシステムの信頼設定を使用します。mTLS には使用可能な PKCS#12 秘密鍵が必要です。証明書パスワードの空白はすべて保持されます。</string>
+    <string name="bitwarden_server_certificates_hint">セルフホストサーバーでは Android 設定にインストールした CA を信頼し、同じ CA による有効な証明書更新では再インポートは不要です。Bitwarden 公式ドメインはシステム CA のみを使用します。このアカウントに追加 CA が不要なら PEM は空欄にしてください。mTLS には PKCS#12 秘密鍵が必要です。証明書パスワードの空白は保持されます。</string>
     <string name="bitwarden_server_deployment_clears">接続先を変更すると、個別サービスアドレス、ヘッダー、証明書が消去されます。</string>
     <string name="bitwarden_server_discovery_title">検出されたサーバー</string>
     <string name="bitwarden_server_done">完了</string>

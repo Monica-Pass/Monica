@@ -6,7 +6,7 @@
     <string name="bitwarden_server_base_hint">Zwykle wystarczy adres serwera.</string>
     <string name="bitwarden_server_ca">Własny certyfikat CA (PEM)</string>
     <string name="bitwarden_server_certificates">Certyfikaty i połączenie</string>
-    <string name="bitwarden_server_certificates_hint">Puste CA oznacza zaufanie systemowe. mTLS wymaga użytecznego klucza prywatnego PKCS#12. Wszystkie spacje w haśle certyfikatu są zachowywane.</string>
+    <string name="bitwarden_server_certificates_hint">Własne serwery ufają CA zainstalowanym w ustawieniach Androida; poprawne odnowienie przez tę samą CA nie wymaga ponownego importu. Oficjalne domeny Bitwarden używają tylko systemowych CA. Pozostaw PEM puste, jeśli konto nie wymaga dodatkowej CA. mTLS wymaga klucza prywatnego PKCS#12. Spacje w haśle certyfikatu są zachowywane.</string>
     <string name="bitwarden_server_deployment_clears">Zmiana wdrożenia usuwa własne adresy usług, nagłówki i certyfikaty.</string>
     <string name="bitwarden_server_discovery_title">Znalezione serwery</string>
     <string name="bitwarden_server_done">Gotowe</string>

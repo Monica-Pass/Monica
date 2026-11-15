@@ -328,8 +328,7 @@ class BitwardenServerConfigurationUiInstrumentedTest {
             startDiscovery()
             waitText(CANDIDATE)
             candidateAction().performScrollTo().performClick()
-            val captured = requireNotNull(compose.onNodeWithTag(USE).performScrollTo()
-                .fetchSemanticsNode().config[SemanticsActions.OnClick].action)
+            val captured = capturedCandidateBusinessAction()
             onMain { if (change == "email") email = "changed@example.org" else baseLocked = true }
             settle()
             onMain { captured() }
@@ -340,6 +339,19 @@ class BitwardenServerConfigurationUiInstrumentedTest {
             back()
             waitAbsent(DIALOG)
         }
+    }
+
+    private fun capturedCandidateBusinessAction(): () -> Unit {
+        // Compose 1.12's semantics action first plays a click sound via an attached node.
+        // The email change intentionally removes that node. Inject the original business
+        // callback instead, so this still tests both late-action guards after disposal.
+        // This Debug-only fixture fails explicitly if Compose changes its modifier shape.
+        val element = compose.onNodeWithTag(USE).performScrollTo().fetchSemanticsNode()
+            .layoutInfo.getModifierInfo().map { it.modifier }
+            .single { it.javaClass.name == "androidx.compose.foundation.ClickableElement" }
+        val callback = element.javaClass.getDeclaredField("onClick").apply { isAccessible = true }.get(element)
+        @Suppress("UNCHECKED_CAST")
+        return callback as () -> Unit
     }
 
     @Test fun largeTextKeepsRealDialogControlsReadableInEnglishChinesePortugueseAndRtl() {
@@ -365,6 +377,12 @@ class BitwardenServerConfigurationUiInstrumentedTest {
                 section(sectionId)
                 if (sectionId == R.string.bitwarden_server_headers) screenshotIfRequested("$name-headers")
                 assertTitleAndActionFit(sectionId, R.string.bitwarden_server_done)
+                if (sectionId == R.string.bitwarden_server_certificates) {
+                    val hint = compose.onNodeWithText(text(R.string.bitwarden_server_certificates_hint))
+                    hint.performScrollTo()
+                    assertTextFits(hint, 1.5f)
+                    screenshotIfRequested("$name-certificates")
+                }
                 when (sectionId) {
                     R.string.bitwarden_server_endpoints -> field("notifications").performScrollTo().assertIsDisplayed()
                     R.string.bitwarden_server_headers -> field("header_0_value").performScrollTo().assertIsDisplayed()

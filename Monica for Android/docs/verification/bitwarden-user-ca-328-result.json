@@ -1,0 +1,659 @@
+{
+  "schemaVersion": 1,
+  "task": "bitwarden-user-ca-328",
+  "completedDate": "2026-11-14",
+  "status": "complete_with_documented_validation_scope",
+  "releaseStatus": "unreleased",
+  "scope": {
+    "feature": "Reuse Android user-installed CAs for configured self-hosted Bitwarden HTTPS hosts.",
+    "officialDomainsSystemTrustOnly": [
+      "bitwarden.com",
+      "bitwarden.eu",
+      "bitwarden.pw",
+      "bitwarden-gov.com"
+    ],
+    "officialSubdomainsIncluded": true,
+    "preserved": [
+      "account PEM and mTLS",
+      "account request scope and lease gates",
+      "foreign transport isolation",
+      "other application network clients"
+    ],
+    "resumeChanges": [
+      "local Release platform probe and driver",
+      "verification reports and result records"
+    ],
+    "productionSourcesOrRepositoryTestsChangedOnResume": false
+  },
+  "environment": {
+    "androidApi": 32,
+    "abi": "x86_64",
+    "syntheticDataOnly": true,
+    "independentApplicationIds": true,
+    "signing": "debug test certificate",
+    "androidUser": 0
+  },
+  "editions": {
+    "main": {
+      "versionName": "1.0.328",
+      "versionCode": 12,
+      "baseHead": "600ece857d544ee493f83cb2f93d382c8b6509d6",
+      "jvm": {
+        "passed": 36,
+        "reusedPriorResults": true,
+        "receipt": "main-jvm.json",
+        "suites": [
+          {
+            "name": "takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolverTest",
+            "tests": "14",
+            "failures": "0",
+            "errors": "0",
+            "skipped": "0"
+          },
+          {
+            "name": "takagi.ru.monica.bitwarden.api.BitwardenEnvironmentTlsTest",
+            "tests": "10",
+            "failures": "0",
+            "errors": "0",
+            "skipped": "0"
+          },
+          {
+            "name": "takagi.ru.monica.bitwarden.api.BitwardenTransportTlsHandshakeTest",
+            "tests": "7",
+            "failures": "0",
+            "errors": "0",
+            "skipped": "0"
+          },
+          {
+            "name": "takagi.ru.monica.bitwarden.BitwardenVaultEnvironmentStoreTest",
+            "tests": "5",
+            "failures": "0",
+            "errors": "0",
+            "skipped": "0"
+          }
+        ]
+      },
+      "successfulBuilds": [
+        {
+          "receipt": "main-debug-02.json",
+          "exit": 0,
+          "driverSeconds": 278.931
+        },
+        {
+          "receipt": "main-ui-fixture-debug-04.json",
+          "exit": 0,
+          "driverSeconds": 53.122
+        },
+        {
+          "receipt": "main-release-platform-04.json",
+          "exit": 0,
+          "driverSeconds": 175.635
+        },
+        {
+          "receipt": "main-release-platform-resume-05.json",
+          "exit": 0,
+          "driverSeconds": 41.545
+        }
+      ],
+      "debugDeviceDistinctMethodsPassed": 33,
+      "debugDeviceBatches": [
+        {
+          "receipt": "main-user-ca-debug-01.json",
+          "exit": 0,
+          "driverSeconds": 25.524,
+          "log": "main-user-ca-debug-01.txt",
+          "logSha256": "c2acafab843f5d54709a54bb625b8d37e80c48b3a2eafd7c0c76d561c261df72",
+          "passed": 11,
+          "unit": "JUnit methods",
+          "completionCode": -1,
+          "runnerSeconds": 10.619,
+          "methods": [
+            "expiredServerCertificateIsRejected",
+            "foreignTransfersDoNotInheritAndroidUserCa",
+            "hostnameMismatchIsRejected",
+            "http2CannotCarryUserCaTrustToOfficialHost",
+            "installedUserCaWorksWithoutAccountPem",
+            "officialHostRejectsUserAndAccountCa",
+            "officialLookingSuffixIsStillASelfHostedHost",
+            "ordinaryNetworkClientsKeepSystemTrust",
+            "renewalUnderTheSameCaNeedsNoAccountChange",
+            "revokedSessionCannotSendHttp",
+            "uninstalledCaIsRejected"
+          ]
+        },
+        {
+          "receipt": "main-regression-debug-02.json",
+          "exit": 0,
+          "driverSeconds": 196.998,
+          "log": "main-regression-debug-02.txt",
+          "logSha256": "7cfad9b6faad487d2f0477cc96ebd43db5971ade92f7801e1015d5bba2a69584",
+          "passed": 21,
+          "unit": "JUnit methods",
+          "completionCode": -1,
+          "runnerSeconds": 190.087,
+          "methods": [
+            "cancelledAndEditedSearchesRejectNonCooperativeLateDnsResults",
+            "capturedCandidateActionCannotRetargetAfterEmailOrBaseLockChanges",
+            "changedEndpointMustVerifyTheKnownProfileBeforeReplacingProtectedConfiguration",
+            "changedFingerprintAndMissingProtectedReferenceFailBeforeAnyHttp",
+            "delayedCandidateProfileCannotReplaceAccountAfterForceLock",
+            "delayedPrimaryLoginCannotPublishAcrossGlobalLockAndUnlock",
+            "delayedRefreshCannotOverwriteAReopenedSessionWithTheSameOldToken",
+            "discoveryQueriesOnlyDomainAndRequiresExplicitCrossDomainSelection",
+            "dismissAndLockDiscardButBackgroundOnlyCancelsLateDiscovery",
+            "editsRealServiceFieldsAndPreservesHeaderAndCertificatePasswordSpaces",
+            "enabledMtlsRejectsMissingAndUnreadablePrivateKeyWithoutApplying",
+            "existingAccountCannotRetargetBaseOrDiscoverButCanEditServiceOverride",
+            "expiredReauthenticationContextRejectsLoginBeforeAnyHttp",
+            "failedProtectedReadbackPreservesExistingAccountAndLeavesNewReservationInert",
+            "forceLockAfterReauthenticationMfaRejectsContinuationBeforeAnyHttp",
+            "fullSyncIdentityPromotionAndReloginKeepTheSameProtectedVault",
+            "largeTextKeepsRealDialogControlsReadableInEnglishChinesePortugueseAndRtl",
+            "recoveredKeyWaitingAtPublicationCannotCrossGlobalLockGeneration",
+            "reservedHeadersControlCharactersAndInvalidServiceUrlCannotApply",
+            "resetPresetAndBaseChangesRemovePreviousOverridesHeadersAndTls",
+            "validReauthenticationUpdatesSameVaultAcrossItsOwnPublicationGeneration"
+          ]
+        },
+        {
+          "receipt": "main-debug-removed-ca-01.json",
+          "exit": 0,
+          "driverSeconds": 4.946,
+          "log": "main-debug-removed-ca-01.txt",
+          "logSha256": "145ed79847dca7d54495035fef4886c67a92333deb29bd6e030644e7ccd4fc78",
+          "passed": 1,
+          "unit": "JUnit methods",
+          "completionCode": -1,
+          "runnerSeconds": 0.863,
+          "methods": [
+            "removedUserCaIsRejected"
+          ]
+        }
+      ],
+      "releasePlatformChecksPassed": 10,
+      "releasePlatformBatches": [
+        {
+          "receipt": "main-release-probe-resume-02.json",
+          "exit": 0,
+          "driverSeconds": 5.82,
+          "log": "main-release-probe-resume-02.txt",
+          "logSha256": "c316ed4cb5fb7219a62c6117fe8252e3c4eefdfb22154d374f0dbc5c06d1eeef",
+          "passed": 8,
+          "unit": "platform checks",
+          "completionCode": -1
+        },
+        {
+          "receipt": "main-release-watch-removal-01.json",
+          "exit": 0,
+          "driverSeconds": 79.286,
+          "log": "main-release-watch-removal-01.txt",
+          "logSha256": "493483e12cd7bb39e9412af285f489d78489466c62a67498c38004fa4b14ab73",
+          "passed": 1,
+          "unit": "platform checks",
+          "completionCode": -1
+        },
+        {
+          "receipt": "main-release-removed-ca-01.json",
+          "exit": 0,
+          "driverSeconds": 1.655,
+          "log": "main-release-removed-ca-01.txt",
+          "logSha256": "dbdfed4de1f610c2c3cbfdb560692e1157d48604f0745c40a2122dd62ebf8cc5",
+          "passed": 1,
+          "unit": "platform checks",
+          "completionCode": -1
+        }
+      ],
+      "artifacts": [
+        {
+          "variant": "debug",
+          "sha256": "af88791ae635eb2ae40a56f084e59993428d3f413bbac5a2a425949becbd62d3",
+          "bytes": 95343473,
+          "applicationId": "takagi.ru.monica.bwca328main",
+          "signerSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "abis": [
+            "x86_64"
+          ],
+          "unchangedFromResume": true
+        },
+        {
+          "variant": "release",
+          "sha256": "3bb0658ac798d357a1f2ee9d2eff553333d2c3543c1ff43e8ee6730ae4a39bcb",
+          "bytes": 38397779,
+          "applicationId": "takagi.ru.monica.bwca328main",
+          "signerSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "abis": [
+            "x86_64"
+          ],
+          "unchangedFromResume": true
+        },
+        {
+          "variant": "androidTest/debug",
+          "sha256": "388c3cbd8b35b8e418416cb6f53bbfed0b24fda98661487dc339889e45374155",
+          "bytes": 10785061,
+          "applicationId": "takagi.ru.monica.bwca328main.test",
+          "signerSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "abis": [],
+          "unchangedFromResume": true
+        },
+        {
+          "variant": "androidTest/release",
+          "sha256": "0b05b5231ec1e8627f291e88cc5fd6b4c660f93b0ba254dd20986028f7e5d811",
+          "bytes": 1002729,
+          "applicationId": "takagi.ru.monica.bwca328main.test",
+          "signerSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "abis": [],
+          "unchangedFromResume": false
+        }
+      ]
+    },
+    "fd": {
+      "versionName": "1.0.328",
+      "versionCode": 35,
+      "baseHead": "3d2bd7040c393eb4bd66660ed182fb59f449ad23",
+      "jvm": {
+        "passed": 36,
+        "reusedPriorResults": true,
+        "receipt": "fd-jvm.json",
+        "suites": [
+          {
+            "name": "takagi.ru.monica.bitwarden.api.BitwardenEnvironmentResolverTest",
+            "tests": "14",
+            "failures": "0",
+            "errors": "0",
+            "skipped": "0"
+          },
+          {
+            "name": "takagi.ru.monica.bitwarden.api.BitwardenEnvironmentTlsTest",
+            "tests": "10",
+            "failures": "0",
+            "errors": "0",
+            "skipped": "0"
+          },
+          {
+            "name": "takagi.ru.monica.bitwarden.api.BitwardenTransportTlsHandshakeTest",
+            "tests": "7",
+            "failures": "0",
+            "errors": "0",
+            "skipped": "0"
+          },
+          {
+            "name": "takagi.ru.monica.bitwarden.BitwardenVaultEnvironmentStoreTest",
+            "tests": "5",
+            "failures": "0",
+            "errors": "0",
+            "skipped": "0"
+          }
+        ]
+      },
+      "successfulBuilds": [
+        {
+          "receipt": "fd-debug-01.json",
+          "exit": 0,
+          "driverSeconds": 525.613
+        },
+        {
+          "receipt": "fd-ui-fixture-debug-04.json",
+          "exit": 0,
+          "driverSeconds": 81.549
+        },
+        {
+          "receipt": "fd-release-platform-01.json",
+          "exit": 0,
+          "driverSeconds": 441.089
+        },
+        {
+          "receipt": "fd-release-platform-resume-02.json",
+          "exit": 0,
+          "driverSeconds": 26.333
+        }
+      ],
+      "debugDeviceDistinctMethodsPassed": 33,
+      "debugDeviceBatches": [
+        {
+          "receipt": "fd-user-ca-debug-01.json",
+          "exit": 0,
+          "driverSeconds": 87.704,
+          "log": "fd-user-ca-debug-01.txt",
+          "logSha256": "583e9d78b77fa825d18a4cf3efe95be2af4ec59138113a1e9148aa30e2dc9853",
+          "passed": 11,
+          "unit": "JUnit methods",
+          "completionCode": -1,
+          "runnerSeconds": 55.29,
+          "methods": [
+            "expiredServerCertificateIsRejected",
+            "foreignTransfersDoNotInheritAndroidUserCa",
+            "hostnameMismatchIsRejected",
+            "http2CannotCarryUserCaTrustToOfficialHost",
+            "installedUserCaWorksWithoutAccountPem",
+            "officialHostRejectsUserAndAccountCa",
+            "officialLookingSuffixIsStillASelfHostedHost",
+            "ordinaryNetworkClientsKeepSystemTrust",
+            "renewalUnderTheSameCaNeedsNoAccountChange",
+            "revokedSessionCannotSendHttp",
+            "uninstalledCaIsRejected"
+          ]
+        },
+        {
+          "receipt": "fd-regression-debug-02.json",
+          "exit": 0,
+          "driverSeconds": 76.037,
+          "log": "fd-regression-debug-02.txt",
+          "logSha256": "fb1312ad1e5ee815e2bd5e88905883cd566895b45c3f0a358bf5b9dfecbc268a",
+          "passed": 21,
+          "unit": "JUnit methods",
+          "completionCode": -1,
+          "runnerSeconds": 71.984,
+          "methods": [
+            "cancelledAndEditedSearchesRejectNonCooperativeLateDnsResults",
+            "capturedCandidateActionCannotRetargetAfterEmailOrBaseLockChanges",
+            "changedEndpointMustVerifyTheKnownProfileBeforeReplacingProtectedConfiguration",
+            "changedFingerprintAndMissingProtectedReferenceFailBeforeAnyHttp",
+            "delayedCandidateProfileCannotReplaceAccountAfterForceLock",
+            "delayedPrimaryLoginCannotPublishAcrossGlobalLockAndUnlock",
+            "delayedRefreshCannotOverwriteAReopenedSessionWithTheSameOldToken",
+            "discoveryQueriesOnlyDomainAndRequiresExplicitCrossDomainSelection",
+            "dismissAndLockDiscardButBackgroundOnlyCancelsLateDiscovery",
+            "editsRealServiceFieldsAndPreservesHeaderAndCertificatePasswordSpaces",
+            "enabledMtlsRejectsMissingAndUnreadablePrivateKeyWithoutApplying",
+            "existingAccountCannotRetargetBaseOrDiscoverButCanEditServiceOverride",
+            "expiredReauthenticationContextRejectsLoginBeforeAnyHttp",
+            "failedProtectedReadbackPreservesExistingAccountAndLeavesNewReservationInert",
+            "forceLockAfterReauthenticationMfaRejectsContinuationBeforeAnyHttp",
+            "fullSyncIdentityPromotionAndReloginKeepTheSameProtectedVault",
+            "largeTextKeepsRealDialogControlsReadableInEnglishChinesePortugueseAndRtl",
+            "recoveredKeyWaitingAtPublicationCannotCrossGlobalLockGeneration",
+            "reservedHeadersControlCharactersAndInvalidServiceUrlCannotApply",
+            "resetPresetAndBaseChangesRemovePreviousOverridesHeadersAndTls",
+            "validReauthenticationUpdatesSameVaultAcrossItsOwnPublicationGeneration"
+          ]
+        },
+        {
+          "receipt": "fd-debug-removed-ca-01.json",
+          "exit": 0,
+          "driverSeconds": 4.067,
+          "log": "fd-debug-removed-ca-01.txt",
+          "logSha256": "cec73fba285838ec25e5a1c74e9ef687e7df5e9a323d07fc611bf825181171e3",
+          "passed": 1,
+          "unit": "JUnit methods",
+          "completionCode": -1,
+          "runnerSeconds": 0.763,
+          "methods": [
+            "removedUserCaIsRejected"
+          ]
+        }
+      ],
+      "releasePlatformChecksPassed": 10,
+      "releasePlatformBatches": [
+        {
+          "receipt": "fd-release-probe-resume-01.json",
+          "exit": 0,
+          "driverSeconds": 5.049,
+          "log": "fd-release-probe-resume-01.txt",
+          "logSha256": "c316ed4cb5fb7219a62c6117fe8252e3c4eefdfb22154d374f0dbc5c06d1eeef",
+          "passed": 8,
+          "unit": "platform checks",
+          "completionCode": -1
+        },
+        {
+          "receipt": "fd-release-watch-removal-01.json",
+          "exit": 0,
+          "driverSeconds": 79.278,
+          "log": "fd-release-watch-removal-01.txt",
+          "logSha256": "493483e12cd7bb39e9412af285f489d78489466c62a67498c38004fa4b14ab73",
+          "passed": 1,
+          "unit": "platform checks",
+          "completionCode": -1
+        },
+        {
+          "receipt": "fd-release-removed-ca-01.json",
+          "exit": 0,
+          "driverSeconds": 1.658,
+          "log": "fd-release-removed-ca-01.txt",
+          "logSha256": "dbdfed4de1f610c2c3cbfdb560692e1157d48604f0745c40a2122dd62ebf8cc5",
+          "passed": 1,
+          "unit": "platform checks",
+          "completionCode": -1
+        }
+      ],
+      "artifacts": [
+        {
+          "variant": "debug",
+          "sha256": "54f2a960a0be041d7f6c3ebf079f4283d100958dc125c6a3a2c593b5a06e834d",
+          "bytes": 83622688,
+          "applicationId": "takagi.ru.monica.bwca328fd",
+          "signerSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "abis": [
+            "x86_64"
+          ],
+          "unchangedFromResume": true
+        },
+        {
+          "variant": "release",
+          "sha256": "87bdd5d9b035c67cb798093328261e913cfc7b2da227a88a1f028ced42481ea4",
+          "bytes": 35965279,
+          "applicationId": "takagi.ru.monica.bwca328fd",
+          "signerSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "abis": [
+            "x86_64"
+          ],
+          "unchangedFromResume": true
+        },
+        {
+          "variant": "androidTest/debug",
+          "sha256": "dcf37bfb9487397312b204308d41363dd0e49333384ef414c9f7c7a9da028ae9",
+          "bytes": 10611261,
+          "applicationId": "takagi.ru.monica.bwca328fd.test",
+          "signerSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "abis": [],
+          "unchangedFromResume": true
+        },
+        {
+          "variant": "androidTest/release",
+          "sha256": "2c581b1715c17acc57efc0902149437f0767f932e648bdc8f87c81c5d6fde85b",
+          "bytes": 1002577,
+          "applicationId": "takagi.ru.monica.bwca328fd.test",
+          "signerSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "abis": [],
+          "unchangedFromResume": false
+        }
+      ]
+    }
+  },
+  "sharedFrozenFiles": [
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenApiFactory.kt",
+      "sha256": "b74b27665bc05943a9c635cb5c3ab2baea0b5d46afa79bdac68c159c87709f0c"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/bitwarden/api/BitwardenHostTrustManager.kt",
+      "sha256": "6ad3895b359bbb03ebf364f96a57a0c433ddac22788952578674885e4a92e59f"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenUserCaInstrumentedTest.kt",
+      "sha256": "62e181a6bfa93b116224b547ad33b64b53c708b5532161a420776a31446b7845"
+    },
+    {
+      "path": "app/src/main/res/values/strings_bitwarden_server.xml",
+      "sha256": "b56e5bedde37357e393ed6c99b14b82e21a0184a222190edd679f2201a93ae1e"
+    },
+    {
+      "path": "app/src/main/res/values-b+lzh/strings_bitwarden_server.xml",
+      "sha256": "e7484fe52e28aec693984a9a1a8eb5c64984a7ccb493896f865df943483cf938"
+    },
+    {
+      "path": "app/src/main/res/values-b+zh+Hant/strings_bitwarden_server.xml",
+      "sha256": "0d0bcc06c6a1f836e11ac35f7cff1036016063aaa1ef75a516d67b0b69ac2fb6"
+    },
+    {
+      "path": "app/src/main/res/values-de/strings_bitwarden_server.xml",
+      "sha256": "be6b1faf691c746fd6b3e9ab0f6948f054679b5e86a489f3ca1eda7ccedc00b9"
+    },
+    {
+      "path": "app/src/main/res/values-es/strings_bitwarden_server.xml",
+      "sha256": "aacd778aeb5956112daed66b1062c826d26192a3880cc67069bf15b22b7a1dff"
+    },
+    {
+      "path": "app/src/main/res/values-fr/strings_bitwarden_server.xml",
+      "sha256": "7b6385c8fd39bbd35436a6898e5e7bd0e8561d15c813f8083cac6df17d20ca8b"
+    },
+    {
+      "path": "app/src/main/res/values-it/strings_bitwarden_server.xml",
+      "sha256": "f6310b45d6963c2d259e8ecb847db72bef893be3d3b3254176a4a9db7cd299b6"
+    },
+    {
+      "path": "app/src/main/res/values-ja/strings_bitwarden_server.xml",
+      "sha256": "417e7348ecf601c12a6c1a6f2d8182824f116cc4861aa461e72a5ecbd50c5635"
+    },
+    {
+      "path": "app/src/main/res/values-ko/strings_bitwarden_server.xml",
+      "sha256": "fd10ca7948425044b5598dbe600662b617b83a54fa412662f272ec58e33c8658"
+    },
+    {
+      "path": "app/src/main/res/values-pl/strings_bitwarden_server.xml",
+      "sha256": "5bc934d62ef44f4451f813f7c5b5c556da8c0d3670e99732f5886491fc45809e"
+    },
+    {
+      "path": "app/src/main/res/values-pt/strings_bitwarden_server.xml",
+      "sha256": "2f02663159336d6a86e2e9dd976c7334a766d3a1351dae150a5cea81982c241c"
+    },
+    {
+      "path": "app/src/main/res/values-pt-rBR/strings_bitwarden_server.xml",
+      "sha256": "79f60924d419546e909e8e886c06f057cca2f4d97a4a1c162c52d7b394428a2c"
+    },
+    {
+      "path": "app/src/main/res/values-ru/strings_bitwarden_server.xml",
+      "sha256": "495d748afa44d3d1d7c80078af9f7f8f5a2ea7676959b4f630c24beda1246ab8"
+    },
+    {
+      "path": "app/src/main/res/values-vi/strings_bitwarden_server.xml",
+      "sha256": "26a034f5f66fa883136cafdc38337c661039e5e7fee67ab558c4ca30c62ef8a6"
+    },
+    {
+      "path": "app/src/main/res/values-zh/strings_bitwarden_server.xml",
+      "sha256": "50c3983cfb7060abc1eada821a90208e7ce19f06f2197b4bf391572f2616b352"
+    },
+    {
+      "path": "app/src/main/res/values-zh-rCN/strings_bitwarden_server.xml",
+      "sha256": "50c3983cfb7060abc1eada821a90208e7ce19f06f2197b4bf391572f2616b352"
+    },
+    {
+      "path": "app/src/main/res/values-zh-rNY/strings_bitwarden_server.xml",
+      "sha256": "8e56eda3b9487e562eaef8d629589cf4519e9deda052e90e22fb8d6934ce401a"
+    },
+    {
+      "path": "app/src/main/res/values-zh-rXB/strings_bitwarden_server.xml",
+      "sha256": "9238e692a97166dca6ea1eb0c45ddafee0b2e3546370c95ad634cb2fe55fca8a"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/bitwarden/BitwardenServerConfigurationUiInstrumentedTest.kt",
+      "sha256": "6418266179a37ad31c0b959afb058859415bd2464024ec72e74542a83d434c39"
+    }
+  ],
+  "localeConfigurationsPerEdition": 18,
+  "fdMetadata": {
+    "check": {
+      "exit": 0,
+      "seconds": 2.3
+    },
+    "scriptTests": {
+      "exit": 0,
+      "seconds": 0.494
+    },
+    "scriptTestsPassed": 6
+  },
+  "cleanup": {
+    "syntheticCaRemovedByExactFingerprint": true,
+    "syntheticCaSha256": "f4dd61e449a34b49aaa8991c9ba32f0bef86771880709f2220f4d81dd8050f79",
+    "userCaTabEmptyEvidence": {
+      "file": "ui-030.xml",
+      "sha256": "6a8215c79bc8226344f0da3d6f49756ef3468696a2fc3f72f4a912b5ea7009cf"
+    },
+    "clearCredentialsUsed": false,
+    "uninstalledPackages": [
+      "takagi.ru.monica.bwca328fd",
+      "takagi.ru.monica.bwca328fd.test",
+      "takagi.ru.monica.bwca328main",
+      "takagi.ru.monica.bwca328main.test"
+    ],
+    "ownPublicCaAndUiDumpRemovedAfterHashCheck": true,
+    "otherOwnerPackagesUnchanged": true,
+    "originalAndroidUsersRetained": [
+      0,
+      10,
+      11,
+      12,
+      14
+    ],
+    "usersUnchanged": true,
+    "currentUser": 0,
+    "fontScalePreservedFromResume": "1.5",
+    "publicAvdStopped": true,
+    "avdConfigAndRegistrationHashesUnchanged": true,
+    "dataDisksRetained": true,
+    "otherDevicesTouched": false,
+    "receipt": "cleanup-resume.json"
+  },
+  "visualReview": {
+    "imagesPerEdition": 12,
+    "contactSheetPagesReviewedPerEdition": 4,
+    "configurations": [
+      "Chinese",
+      "English",
+      "Brazilian Portuguese",
+      "English RTL layout"
+    ],
+    "componentFontScale": 1.5,
+    "imagesKeptOnlyInIgnoredLocalDesignDirectories": true
+  },
+  "retainedEarlierFailures": [
+    {
+      "evidence": "main-debug-01",
+      "seconds": 391.642,
+      "reason": "Dns lambda test compilation error; subsequently changed to explicit object."
+    },
+    {
+      "evidence": "original conversation output",
+      "reason": "Initial isolated test provider authority conflict; no separate raw failure receipt."
+    },
+    {
+      "evidence": "main-release-01",
+      "seconds": 1086.586,
+      "reason": "Debug-only AndroidTest sources included; joint build failed despite main APK generation."
+    },
+    {
+      "evidence": "main-release-02",
+      "seconds": 505.944,
+      "reason": "Changing Java source directories alone retained Debug-only Kotlin tests."
+    },
+    {
+      "evidence": "main-user-ca-release-01",
+      "reason": "AndroidJUnitRunner crashed before certificate methods due to missing androidx.tracing.Trace; ADB exit zero was not a test pass."
+    },
+    {
+      "evidence": "fd-regression-debug-01",
+      "passed": 20,
+      "total": 21,
+      "reason": "Detached Compose semantics callback wrapper failed before business callback; final corrected 21-method batches passed."
+    },
+    {
+      "evidence": "original device logs and conversation",
+      "reason": "First AVD disappeared for undetermined reason; user creation, root and user limit attempts failed; original users retained."
+    }
+  ],
+  "limitations": [
+    "Release checks exercise the production trust manager, Android reflective chain cleaning and platform HTTPS, not the complete Release OkHttp factory, HTTP/2 or mTLS flows. Full-client evidence is Debug/JVM.",
+    "CA removal checks cover new complete TLS handshakes, not immediate closure of existing connections or invalidation of TLS session resumption.",
+    "API32/x86_64 synthetic local-server tests with isolated app IDs and debug signing; no real accounts, remote services, OEM/physical devices, other APIs or TLS providers.",
+    "The two Release test APKs were rebuilt on resume. Existing main APK R8/package tasks were UP-TO-DATE; six other APKs retained their resume hashes.",
+    "Prior JVM results have edition-specific JSON/build receipts, but raw same-named TEST XML exists as only one set; JVM was not rerun on resume.",
+    "Representative light-theme configuration UI only; no full-language, full-theme or native-speaker certification."
+  ],
+  "actions": {
+    "committed": false,
+    "pushed": false,
+    "tagged": false,
+    "published": false,
+    "apkDelivered": false
+  },
+  "report": "bitwarden-user-ca-328.md"
+}

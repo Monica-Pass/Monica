@@ -79,7 +79,8 @@ object BitwardenApiFactory {
         enableLogging: Boolean = false,
         refererUrl: String? = null,
         headerProfile: HeaderProfile = HeaderProfile.MONICA_DEFAULT,
-        tlsConfig: BitwardenTlsConfig? = null
+        tlsConfig: BitwardenTlsConfig? = null,
+        accountHosts: Set<String> = emptySet(),
     ): OkHttpClient {
         val headerSpec = getHeaderSpec(headerProfile)
         val builder = OkHttpClient.Builder()
@@ -115,7 +116,7 @@ object BitwardenApiFactory {
                 }
             }
 
-        configureTls(builder, tlsConfig)
+        configureTls(builder, tlsConfig, accountHosts)
         return builder.build()
     }
 
@@ -131,8 +132,14 @@ object BitwardenApiFactory {
         requestIsCurrent: () -> Boolean = { true },
     ): OkHttpClient {
         // This freshly created base owns its pool. No account or foreign client shares it.
-        val builder = createOkHttpClient(headerProfile = headerProfile, tlsConfig = environment.tls)
-            .newBuilder().followRedirects(false).followSslRedirects(false).retryOnConnectionFailure(false)
+        val baseClient = createOkHttpClient(headerProfile = headerProfile, tlsConfig = environment.tls,
+            accountHosts = listOf(environment.base, environment.api, environment.identity, environment.notifications)
+                .filter { it.isHttps }.map { it.host }.toSet())
+        val builder = baseClient.newBuilder().followRedirects(false).followSslRedirects(false).retryOnConnectionFailure(false)
+            // OkHttp 4.12 coalesces HTTP/2 across hosts only with its verifier singleton.
+            // Delegate unchanged verification through a distinct instance so each host performs
+            // its own trust handshake (a user-CA connection must never serve an official host).
+            .hostnameVerifier { host, session -> baseClient.hostnameVerifier.verify(host, session) }
         builder.interceptors().add(0, okhttp3.Interceptor { chain ->
             if (!requestIsCurrent()) throw java.io.IOException("Bitwarden transport session changed")
             if (!BitwardenTransportPolicy.canUseAccountTransport(environment, chain.request().url.toString())) {
@@ -314,15 +321,18 @@ object BitwardenApiFactory {
 
     private fun configureTls(
         builder: OkHttpClient.Builder,
-        tlsConfig: BitwardenTlsConfig?
+        tlsConfig: BitwardenTlsConfig?,
+        accountHosts: Set<String>,
     ) {
-        if (tlsConfig == null || tlsConfig.isEmpty()) return
+        if ((tlsConfig == null || tlsConfig.isEmpty()) && accountHosts.isEmpty()) return
 
-        val trustManager = buildTrustManager(tlsConfig.caCertificatePem)
+        val trustManager = if (accountHosts.isEmpty()) buildTrustManager(tlsConfig?.caCertificatePem) else
+            BitwardenHostTrustManager(systemDefaultTrustManager(), accountHosts,
+                tlsConfig?.caCertificatePem?.takeIf { it.isNotBlank() }?.let(::customCaTrustManager))
         val keyManagers = buildClientKeyManagers(
-            enabled = tlsConfig.mtlsEnabled,
-            pkcs12Base64 = tlsConfig.clientCertPkcs12Base64,
-            password = tlsConfig.clientCertPassword
+            enabled = tlsConfig?.mtlsEnabled == true,
+            pkcs12Base64 = tlsConfig?.clientCertPkcs12Base64,
+            password = tlsConfig?.clientCertPassword
         )
 
         val sslContext = SSLContext.getInstance("TLS")

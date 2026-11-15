@@ -6,6 +6,7 @@ import takagi.ru.monica.credentialexchange.ImportDestination
 import takagi.ru.monica.repository.DatabaseManagerLocation
 import takagi.ru.monica.repository.DatabaseManagerSnapshot
 import takagi.ru.monica.repository.databaseManagerSelectionRange
+import takagi.ru.monica.repository.resolveLocalFolderId
 
 @Stable
 internal class DatabaseManagerPane(initial: String? = null) {
@@ -29,6 +30,11 @@ internal class DatabaseManagerPane(initial: String? = null) {
     val location get() = databaseKey?.let { DatabaseManagerLocation(ImportDestination.fromKey(it), folderId) }
     val isReady get() = location != null && !loading && error == null && snapshot?.location?.database == location?.database
     private fun route() = listOf(databaseKey.orEmpty(), folderId.orEmpty())
+
+    fun installSnapshot(value: DatabaseManagerSnapshot) {
+        snapshot = value
+        if (value.location.database.key == databaseKey) folderId = value.resolveLocalFolderId(folderId)
+    }
 
     fun clearSelection() { selected = emptySet(); selectionAnchor = null; selectionMode = false }
     fun toggleSelection(id: String) {
@@ -58,6 +64,7 @@ internal class DatabaseManagerPane(initial: String? = null) {
     }
     private fun showRoute(route: List<String>) {
         databaseKey = route[0].ifBlank { null }; folderId = route[1].ifBlank { null }
+        snapshot?.takeIf { it.location.database.key == databaseKey }?.let { folderId = it.resolveLocalFolderId(folderId) }
         query = ""; clearSelection(); error = null
     }
     fun goBack() {

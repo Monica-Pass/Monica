@@ -6,7 +6,7 @@
     <string name="bitwarden_server_base_hint">Thông thường, chỉ cần địa chỉ máy chủ.</string>
     <string name="bitwarden_server_ca">Chứng chỉ CA tùy chỉnh (PEM)</string>
     <string name="bitwarden_server_certificates">Chứng chỉ và kết nối</string>
-    <string name="bitwarden_server_certificates_hint">Để trống CA để dùng kho tin cậy của hệ thống. Bật mTLS yêu cầu khóa riêng PKCS#12 có thể sử dụng. Mật khẩu chứng chỉ giữ nguyên mọi dấu cách.</string>
+    <string name="bitwarden_server_certificates_hint">Máy chủ tự lưu trữ tin cậy CA đã cài trong cài đặt Android; chứng chỉ gia hạn hợp lệ từ cùng CA không cần nhập lại. Tên miền chính thức của Bitwarden chỉ dùng CA hệ thống. Để trống PEM nếu tài khoản không cần CA bổ sung. mTLS cần khóa riêng PKCS#12. Khoảng trắng trong mật khẩu chứng chỉ được giữ nguyên.</string>
     <string name="bitwarden_server_deployment_clears">Thay đổi môi trường triển khai sẽ xóa địa chỉ dịch vụ tùy chỉnh, tiêu đề và chứng chỉ.</string>
     <string name="bitwarden_server_discovery_title">Máy chủ tìm thấy</string>
     <string name="bitwarden_server_done">Xong</string>

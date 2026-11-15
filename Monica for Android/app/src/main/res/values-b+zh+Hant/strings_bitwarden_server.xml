@@ -6,7 +6,7 @@
     <string name="bitwarden_server_base_hint">通常只需填寫伺服器位址。</string>
     <string name="bitwarden_server_ca">自訂 CA 憑證（PEM）</string>
     <string name="bitwarden_server_certificates">憑證與連線</string>
-    <string name="bitwarden_server_certificates_hint">CA 留空使用系統信任。啟用 mTLS 需要可用的 PKCS#12 私密金鑰。憑證密碼中的空格會完整保留。</string>
+    <string name="bitwarden_server_certificates_hint">自架伺服器可使用 Android 設定中安裝的 CA，同一受信任 CA 簽發的有效續期憑證無須重新匯入。Bitwarden 官方網域僅使用系統 CA。此帳號不需要額外 CA 時可留空 PEM。mTLS 需要 PKCS#12 私密金鑰，憑證密碼中的空格會完整保留。</string>
     <string name="bitwarden_server_deployment_clears">更換部署會清除獨立服務位址、請求標頭與憑證。</string>
     <string name="bitwarden_server_discovery_title">找到的伺服器</string>
     <string name="bitwarden_server_done">完成</string>

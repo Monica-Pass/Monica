@@ -13,6 +13,8 @@ internal suspend fun managerDeleteLocal(repo: DatabaseManagerRepository, snapsho
     repo.db.withTransaction {
         check(SessionManager.isUnlocked.value) { "The vault is locked." }
         check(managerLocalRevision(repo) == snapshot.revision) { "The source changed. Refresh and select again." }
+        val localFolders = repo.localFolders()
+        roots.filter { it.type == MdbxStructureNodeType.FOLDER }.forEach { localFolders.descendants(it.id) }
         val affected = roots.flatMap { databaseManagerDescendants(snapshot.nodes, it) }.map { it.id }.toSet()
         val folders = affected.filter { it.startsWith("folder:") }.map { it.substringAfter(':').toLong() }.toSet()
         val passwords = repo.db.passwordEntryDao().getDeviceSyncLocalPasswords()

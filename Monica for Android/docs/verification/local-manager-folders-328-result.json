@@ -1,0 +1,349 @@
+{
+  "schemaVersion": 1,
+  "completedAt": "2026-11-15T12:16:33+08:00",
+  "status": "manager-hierarchy-complete-with-separate-existing-targeted-import-limitation",
+  "scope": "Local hierarchy in Manage original information; Android 328 metadata and previously completed user CA work retained",
+  "takeoverProductionFilesEdited": false,
+  "sharedFrozenFiles": [
+    {
+      "path": "app/src/main/java/takagi/ru/monica/repository/DatabaseManagerLocalFolders.kt",
+      "sha256": "d7085c2b3151e749cb517aaeb5b2d36326ec4da1d34f291ac23d143d1277c4b3"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/repository/DatabaseManagerRepository.kt",
+      "sha256": "6d33947b875d00444942e0913168e123c34509b282c57eba9d3fedf12894fbf7"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/repository/DatabaseManagerPortable.kt",
+      "sha256": "fe6e4b9cba019d4f1678e5a7eeb66b1d552ebded7935adcc8b7c5f26b8e7ff69"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/repository/DatabaseManagerDeletion.kt",
+      "sha256": "57d7761c6b687db03509d8621fdea8b141b70eb86da67ccfd8b02721b808657e"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/DatabaseManagerPaneState.kt",
+      "sha256": "81dc5d952a3590a5e807b3d143f7e0d5e5608ed12d80bd2a197bd944be3851a8"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/DatabaseManagerScreen.kt",
+      "sha256": "2d9c79324fb38bcd11871bbdb30fb63176c6d5dd5d60c510884b6b937091f418"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/repository/DatabaseManagerLocalFoldersTest.kt",
+      "sha256": "29ee2363f1edaa000a9e52bc516f318357ee8acab2b108c98100cdcdcfed4d88"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/repository/DatabaseManagerLocalHierarchyTest.kt",
+      "sha256": "d26739523c027a4884c85582379ca97bbd6624b30e3a4c4e4f939fae4dfc615f"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/ui/screens/DatabaseManagerLocalHierarchyUiTest.kt",
+      "sha256": "d749f120a79397258bc7f19ebff30bfec2498fa78f63368ce882698c74e1c2ec"
+    }
+  ],
+  "editions": {
+    "main": {
+      "versionName": "1.0.328",
+      "versionCode": 12,
+      "debugBuildSeconds": 127.77,
+      "jvm": [
+        {
+          "name": "takagi.ru.monica.repository.DatabaseManagerLocalFoldersTest",
+          "tests": 6,
+          "seconds": 0.097
+        },
+        {
+          "name": "takagi.ru.monica.repository.DatabaseManagerSelectionTest",
+          "tests": 3,
+          "seconds": 0.006
+        },
+        {
+          "name": "takagi.ru.monica.ui.screens.DatabaseManagerPaneStateTest",
+          "tests": 5,
+          "seconds": 0.055
+        }
+      ],
+      "devicePassed": 34,
+      "deviceRunnerSeconds": 52.91,
+      "deviceMethods": [
+        "takagi.ru.monica.repository.DatabaseManagerDeletionTest#changedMissingAndLockedSelectionsCannotDeleteLocalData",
+        "takagi.ru.monica.repository.DatabaseManagerDeletionTest#keepassMixedSelectionUsesUuidAndOneVerifiedWrite",
+        "takagi.ru.monica.repository.DatabaseManagerDeletionTest#localFolderDeletionTrashesContentRemovesPasskeysAndKeepsOtherItems",
+        "takagi.ru.monica.repository.DatabaseManagerDeletionTest#localFolderSharedByExternalItemsStopsBeforeAnyWrite",
+        "takagi.ru.monica.repository.DatabaseManagerDeletionTest#mdbxMixedSelectionDeletesNativeTreeOnceAndPersistsOtherObjects",
+        "takagi.ru.monica.repository.DatabaseManagerLocalHierarchyTest#browseBuildsMissingAncestorsWithoutWritingCategories",
+        "takagi.ru.monica.repository.DatabaseManagerLocalHierarchyTest#createAndRenameNestedFoldersPreserveDescendantIds",
+        "takagi.ru.monica.repository.DatabaseManagerLocalHierarchyTest#implicitFolderDeletionIncludesDescendantsAndRejectsExternalOwnership",
+        "takagi.ru.monica.repository.DatabaseManagerLocalHierarchyTest#moveSubtreeRebasesPathsAndRejectsCyclesAndCollisions",
+        "takagi.ru.monica.repository.DatabaseManagerLocalHierarchyTest#movingEntryToImplicitFolderMaterializesOnlyDuringAuthorizedWrite",
+        "takagi.ru.monica.repository.DatabaseManagerLocalHierarchyTest#unsupportedNestedCopiesRejectBeforeCreatingLocalDestinationFolders",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#keePassFolderCopyPreservesItsNativeProfile",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#keePassNoteWithUnmappedNativeFieldCannotLoseItInPortableMove",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#keePassSparseAndLegacyDefaultNotesTransferButUnknownEmptyFieldDoesNot",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#keepassNativeEntriesCopyAcrossDatabasesAndMoveIntoOppositeGroup",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#localNoteAttachmentsRoundTripThroughMdbxAndKeePass",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#localPasswordWithAdditionalFieldsCopiesIntoMdbxFolderThenBackToLocal",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#nativeCopyPreservesFutureSchemaUnknownJsonAndAttachmentBytes",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#nativeFavoriteAndCreationDateTransferWithoutARoomProjection",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#nativePasswordCopyGetsIndependentIdentityAndFolderMetadata",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#sourceChangeBetweenBatchItemsInvalidatesThePortableSnapshot",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#staleNativeSourceCannotBeDeletedAfterCopy",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#twoNativeFoldersMoveCompletelyWithoutInvalidatingTheNextSelection",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#unknownFieldInKnownSchemaStillBlocksPortableMove",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#unsupportedPortableSchemaKeepsSourceAndDoesNotCreateDestinationRecords",
+        "takagi.ru.monica.ui.screens.DatabaseManagerLocalHierarchyUiTest#actualLocalScreenNavigatesParentsChildrenAndHistory",
+        "takagi.ru.monica.ui.screens.DatabaseManagerLocalHierarchyUiTest#refreshAfterImplicitFolderMaterializationPreservesLocationAndOldHistory",
+        "takagi.ru.monica.ui.screens.DatabaseManagerPaneTest#actualScreenCopiesSelectionRightAndMovesOneItemLeftIntoFocusedFolders",
+        "takagi.ru.monica.ui.screens.DatabaseManagerPaneTest#dualPanesNavigateAndScrollIndependently",
+        "takagi.ru.monica.ui.screens.DatabaseManagerPaneTest#landscapeDarkLargeTextKeepsBothPathsIndependent",
+        "takagi.ru.monica.ui.screens.DatabaseManagerPaneTest#longPressUsesTheTouchedPanesSingleOrMultipleItemsAndNeverOpensThem",
+        "takagi.ru.monica.ui.screens.DatabaseManagerPaneTest#longTitlesWrapWithinPaneAndKeepMenuVisibleWithoutHorizontalScrolling",
+        "takagi.ru.monica.ui.screens.DatabaseManagerPaneTest#paneRestorationRetainsItsOwnFolderSearchAndSelection",
+        "takagi.ru.monica.ui.screens.DatabaseManagerPaneTest#swipeEntersSelectionTapTogglesOnlyOneAndAnotherSwipeSelectsRange"
+      ],
+      "deviceRawSha256": "e8b9709c642dfa720129877f3a9902d39605454faa630325be51fde8accb9f8b",
+      "releaseBuildSeconds": 435.154,
+      "releaseMinifierActuallyExecuted": true,
+      "releaseCoveringUpdate": {
+        "oldSha256": "3bb0658ac798d357a1f2ee9d2eff553333d2c3543c1ff43e8ee6730ae4a39bcb",
+        "newSha256": "3a5ec55a2bdd1122dd2a0e80ce48f8a8716b8e2995676c205f26810a4126f9bc",
+        "samePackageSameSigner": true,
+        "uninstalledOrClearedDuringUpgrade": false
+      },
+      "originalPasswordCiphertextCategoryPreservedBeforeRestoreFixture": true,
+      "actualReleaseUiCreatedNestedFolderAndColdReadPassed": true,
+      "encryptedUiBackupRecordRestored": true,
+      "targetedBackupRestoreRetainedCategory": false,
+      "debugApks": [
+        {
+          "sha256": "8b252be776ff3ac8918df6b869086b1e7c3028e398acd2348e9c7a9059b6c0a8",
+          "bytes": 89816914
+        },
+        {
+          "sha256": "5b4e6b990dd245619f6c135944cc1cf3bcd7659d96255d24315b1b0e7e7d1824",
+          "bytes": 10894732
+        }
+      ]
+    },
+    "fd": {
+      "versionName": "1.0.328",
+      "versionCode": 35,
+      "debugBuildSeconds": 263.175,
+      "jvm": [
+        {
+          "name": "takagi.ru.monica.repository.DatabaseManagerLocalFoldersTest",
+          "tests": 6,
+          "seconds": 0.086
+        },
+        {
+          "name": "takagi.ru.monica.repository.DatabaseManagerSelectionTest",
+          "tests": 3,
+          "seconds": 0.004
+        },
+        {
+          "name": "takagi.ru.monica.ui.screens.DatabaseManagerPaneStateTest",
+          "tests": 5,
+          "seconds": 0.057
+        }
+      ],
+      "devicePassed": 34,
+      "deviceRunnerSeconds": 123.686,
+      "deviceMethods": [
+        "takagi.ru.monica.repository.DatabaseManagerDeletionTest#changedMissingAndLockedSelectionsCannotDeleteLocalData",
+        "takagi.ru.monica.repository.DatabaseManagerDeletionTest#keepassMixedSelectionUsesUuidAndOneVerifiedWrite",
+        "takagi.ru.monica.repository.DatabaseManagerDeletionTest#localFolderDeletionTrashesContentRemovesPasskeysAndKeepsOtherItems",
+        "takagi.ru.monica.repository.DatabaseManagerDeletionTest#localFolderSharedByExternalItemsStopsBeforeAnyWrite",
+        "takagi.ru.monica.repository.DatabaseManagerDeletionTest#mdbxMixedSelectionDeletesNativeTreeOnceAndPersistsOtherObjects",
+        "takagi.ru.monica.repository.DatabaseManagerLocalHierarchyTest#browseBuildsMissingAncestorsWithoutWritingCategories",
+        "takagi.ru.monica.repository.DatabaseManagerLocalHierarchyTest#createAndRenameNestedFoldersPreserveDescendantIds",
+        "takagi.ru.monica.repository.DatabaseManagerLocalHierarchyTest#implicitFolderDeletionIncludesDescendantsAndRejectsExternalOwnership",
+        "takagi.ru.monica.repository.DatabaseManagerLocalHierarchyTest#moveSubtreeRebasesPathsAndRejectsCyclesAndCollisions",
+        "takagi.ru.monica.repository.DatabaseManagerLocalHierarchyTest#movingEntryToImplicitFolderMaterializesOnlyDuringAuthorizedWrite",
+        "takagi.ru.monica.repository.DatabaseManagerLocalHierarchyTest#unsupportedNestedCopiesRejectBeforeCreatingLocalDestinationFolders",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#keePassFolderCopyPreservesItsNativeProfile",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#keePassNoteWithUnmappedNativeFieldCannotLoseItInPortableMove",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#keePassSparseAndLegacyDefaultNotesTransferButUnknownEmptyFieldDoesNot",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#keepassNativeEntriesCopyAcrossDatabasesAndMoveIntoOppositeGroup",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#localNoteAttachmentsRoundTripThroughMdbxAndKeePass",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#localPasswordWithAdditionalFieldsCopiesIntoMdbxFolderThenBackToLocal",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#nativeCopyPreservesFutureSchemaUnknownJsonAndAttachmentBytes",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#nativeFavoriteAndCreationDateTransferWithoutARoomProjection",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#nativePasswordCopyGetsIndependentIdentityAndFolderMetadata",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#sourceChangeBetweenBatchItemsInvalidatesThePortableSnapshot",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#staleNativeSourceCannotBeDeletedAfterCopy",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#twoNativeFoldersMoveCompletelyWithoutInvalidatingTheNextSelection",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#unknownFieldInKnownSchemaStillBlocksPortableMove",
+        "takagi.ru.monica.repository.DatabaseManagerTransferTest#unsupportedPortableSchemaKeepsSourceAndDoesNotCreateDestinationRecords",
+        "takagi.ru.monica.ui.screens.DatabaseManagerLocalHierarchyUiTest#actualLocalScreenNavigatesParentsChildrenAndHistory",
+        "takagi.ru.monica.ui.screens.DatabaseManagerLocalHierarchyUiTest#refreshAfterImplicitFolderMaterializationPreservesLocationAndOldHistory",
+        "takagi.ru.monica.ui.screens.DatabaseManagerPaneTest#actualScreenCopiesSelectionRightAndMovesOneItemLeftIntoFocusedFolders",
+        "takagi.ru.monica.ui.screens.DatabaseManagerPaneTest#dualPanesNavigateAndScrollIndependently",
+        "takagi.ru.monica.ui.screens.DatabaseManagerPaneTest#landscapeDarkLargeTextKeepsBothPathsIndependent",
+        "takagi.ru.monica.ui.screens.DatabaseManagerPaneTest#longPressUsesTheTouchedPanesSingleOrMultipleItemsAndNeverOpensThem",
+        "takagi.ru.monica.ui.screens.DatabaseManagerPaneTest#longTitlesWrapWithinPaneAndKeepMenuVisibleWithoutHorizontalScrolling",
+        "takagi.ru.monica.ui.screens.DatabaseManagerPaneTest#paneRestorationRetainsItsOwnFolderSearchAndSelection",
+        "takagi.ru.monica.ui.screens.DatabaseManagerPaneTest#swipeEntersSelectionTapTogglesOnlyOneAndAnotherSwipeSelectsRange"
+      ],
+      "deviceRawSha256": "00b9736ad6086917f609b6fd818dc24b7c7ed3e67d2992b11c867e226181c126",
+      "releaseBuildSeconds": 327.393,
+      "releaseMinifierActuallyExecuted": true,
+      "releaseCoveringUpdate": {
+        "oldSha256": "87bdd5d9b035c67cb798093328261e913cfc7b2da227a88a1f028ced42481ea4",
+        "newSha256": "4e8a9dc0cd1b1e6dba2547c1db9f97c6ab0dbeb65b8ce3828d5916895c438638",
+        "samePackageSameSigner": true,
+        "uninstalledOrClearedDuringUpgrade": false
+      },
+      "originalPasswordCiphertextCategoryPreservedBeforeRestoreFixture": true,
+      "actualReleaseUiCreatedNestedFolderAndColdReadPassed": true,
+      "encryptedUiBackupRecordRestored": true,
+      "targetedBackupRestoreRetainedCategory": false,
+      "debugApks": [
+        {
+          "sha256": "95a96f39ccf96af51d65079f20457e3bafc47a1b79febaca9f08bfc7d2892a3f",
+          "bytes": 83639076
+        },
+        {
+          "sha256": "889dd2e8eb22c224996e54afecc8a85211ea097f025e5d512f253b14c30de281",
+          "bytes": 9564740
+        }
+      ]
+    }
+  },
+  "releaseArtifacts": [
+    {
+      "edition": "main",
+      "version": "old",
+      "sha256": "3bb0658ac798d357a1f2ee9d2eff553333d2c3543c1ff43e8ee6730ae4a39bcb",
+      "signerSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "packageLine": "package: name='takagi.ru.monica.bwca328main' versionCode='12' versionName='1.0.328-26111412-01' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+      "abis": [
+        "x86_64"
+      ],
+      "mappingSha256": "64db03796ef97e33398c329f2569a94fefd26aaf4290e4f8163183c895ede08e"
+    },
+    {
+      "edition": "main",
+      "version": "new",
+      "sha256": "3a5ec55a2bdd1122dd2a0e80ce48f8a8716b8e2995676c205f26810a4126f9bc",
+      "signerSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "packageLine": "package: name='takagi.ru.monica.bwca328main' versionCode='12' versionName='1.0.328-26111512-01' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+      "abis": [
+        "x86_64"
+      ],
+      "mappingSha256": "64d76026e5d34e8bec5d31a37cd55814fa22cf73a205d1788e1b487ed96b8ce1"
+    },
+    {
+      "edition": "fd",
+      "version": "old",
+      "sha256": "87bdd5d9b035c67cb798093328261e913cfc7b2da227a88a1f028ced42481ea4",
+      "signerSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "packageLine": "package: name='takagi.ru.monica.bwca328fd' versionCode='35' versionName='1.0.328' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+      "abis": [
+        "x86_64"
+      ],
+      "mappingSha256": "c4a7dd7937b90e9d4ae4c9740a1f2b7ed7530e3abcbc7445d7b200a0e4bde24b"
+    },
+    {
+      "edition": "fd",
+      "version": "new",
+      "sha256": "4e8a9dc0cd1b1e6dba2547c1db9f97c6ab0dbeb65b8ce3828d5916895c438638",
+      "signerSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "packageLine": "package: name='takagi.ru.monica.bwca328fd' versionCode='35' versionName='1.0.328' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'",
+      "abis": [
+        "x86_64"
+      ],
+      "mappingSha256": "580467d271125ddaf1c0ad532b0f25ef82e3001028b045075f8bed1e223ad37a"
+    }
+  ],
+  "historicalFilesUnchanged": 57,
+  "fdMetadataChecksPassed": true,
+  "fdCheckerTestsPassed": 6,
+  "knownIndependentIssue": {
+    "title": "Targeted ZIP import places restored records at root",
+    "directoryRestorationPassed": false,
+    "restoredPasswordContentsPassedBothEditions": true,
+    "strictFailureReceipts": [
+      "main-release-restored-01.txt",
+      "main-release-restored-02.txt"
+    ],
+    "productionChangedForThisIssue": false,
+    "source": [
+      "DataExportImportViewModel.importZipBackupOnIo: importDataOnly for explicit destination",
+      "WebDavHelper.restoreFromBackupFile: no categoryByName in importDataOnly mode",
+      "ImportDestinationWriter: local category uses explicit destinationFolder only"
+    ]
+  },
+  "visual": {
+    "debugContactSheetsViewed": 2,
+    "debugScreenshotsViewed": 8,
+    "fontScale": 1.5,
+    "releaseScreenshotAccepted": false
+  },
+  "cleanup": {
+    "ownedPackagesRemoved": [
+      "local.folders328.probefd",
+      "local.folders328.probemain",
+      "takagi.ru.monica.bwca328fd",
+      "takagi.ru.monica.bwca328main",
+      "takagi.ru.monica.localfolders328fd",
+      "takagi.ru.monica.localfolders328fd.test",
+      "takagi.ru.monica.localfolders328main",
+      "takagi.ru.monica.localfolders328main.test"
+    ],
+    "ownedPublicFilesRemoved": [
+      "/sdcard/Download/monica_backup_20261115_040010.enc.zip",
+      "/sdcard/Download/monica_backup_20261115_040931.enc.zip",
+      "/sdcard/localfolders328-window.xml"
+    ],
+    "originalOwnerPackagesRetained": true,
+    "originalUsersRetained": [
+      0,
+      10,
+      11,
+      12,
+      14
+    ],
+    "originalFontDensityImeRetained": true,
+    "currentUser": 0,
+    "retainedPrivateEncryptedBackups": true,
+    "taskStartedEmulatorStopped": true,
+    "retainedDisks": [
+      {
+        "name": "cache.img.qcow2",
+        "bytes": 197120
+      },
+      {
+        "name": "encryptionkey.img.qcow2",
+        "bytes": 2555904
+      },
+      {
+        "name": "userdata-qemu.img",
+        "bytes": 12884901888
+      },
+      {
+        "name": "userdata-qemu.img.qcow2",
+        "bytes": 22455386112
+      },
+      {
+        "name": "userdata.img",
+        "bytes": 1048576
+      }
+    ]
+  },
+  "limitations": [
+    "Synthetic API32 x86_64 only",
+    "Independent test package IDs and debug signing, with actual R8 optimization",
+    "No user vault, physical device, OEM or remote account verification",
+    "Nested folder copy into Local remains rejected",
+    "Strict ZIP folder-preserving restore failed; existing targeted import mapping is a separate unresolved limitation"
+  ],
+  "actions": {
+    "committed": false,
+    "pushed": false,
+    "tagged": false,
+    "published": false,
+    "apkDelivered": false
+  },
+  "report": "local-manager-folders-328.md"
+}

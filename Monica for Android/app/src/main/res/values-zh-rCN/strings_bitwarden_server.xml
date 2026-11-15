@@ -6,7 +6,7 @@
     <string name="bitwarden_server_base_hint">通常只需填写服务器地址。</string>
     <string name="bitwarden_server_ca">自定义 CA 证书（PEM）</string>
     <string name="bitwarden_server_certificates">证书与连接</string>
-    <string name="bitwarden_server_certificates_hint">CA 留空使用系统信任。启用 mTLS 需要可用的 PKCS#12 私钥。证书密码中的空格会完整保留。</string>
+    <string name="bitwarden_server_certificates_hint">自托管服务器可使用 Android 设置中安装的 CA，同一可信 CA 签发的有效续期证书无需重新导入。Bitwarden 官方域名仅使用系统 CA。此账号不需要额外 CA 时可留空 PEM。mTLS 需要 PKCS#12 私钥，证书密码中的空格会完整保留。</string>
     <string name="bitwarden_server_deployment_clears">更换部署会清除独立服务地址、请求头和证书。</string>
     <string name="bitwarden_server_discovery_title">找到的服务器</string>
     <string name="bitwarden_server_done">完成</string>

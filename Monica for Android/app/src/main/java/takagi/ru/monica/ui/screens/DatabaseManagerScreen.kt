@@ -104,7 +104,7 @@ internal fun DatabaseManagerScreen(initialDatabaseKey: String?, mdbxViewModel: M
                     takagi.ru.monica.repository.MdbxClientModePolicy.isEnvelope(it.encryptedPassword))
             })) return@LaunchedEffect
             pane.loading = true; pane.error = null
-            try { pane.snapshot = repo.browse(location) }
+            try { pane.installSnapshot(repo.browse(location)) }
             catch (cancelled: CancellationException) { throw cancelled }
             catch (error: Exception) { pane.error = error.message.orEmpty() }
             finally { pane.loading = false }

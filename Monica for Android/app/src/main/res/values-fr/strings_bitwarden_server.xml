@@ -6,7 +6,7 @@
     <string name="bitwarden_server_base_hint">L’adresse du serveur suffit généralement.</string>
     <string name="bitwarden_server_ca">Certificat d’AC personnalisé (PEM)</string>
     <string name="bitwarden_server_certificates">Certificats et connexion</string>
-    <string name="bitwarden_server_certificates_hint">Laissez l’AC vide pour utiliser la confiance du système. mTLS exige une clé privée PKCS#12 utilisable. Tous les espaces du mot de passe du certificat sont conservés.</string>
+    <string name="bitwarden_server_certificates_hint">Les serveurs auto-hébergés acceptent les CA installées dans les paramètres Android ; les renouvellements valides de la même CA ne nécessitent aucune réimportation. Les domaines officiels Bitwarden utilisent uniquement les CA système. Laissez PEM vide si le compte ne nécessite pas de CA supplémentaire. mTLS exige une clé privée PKCS#12. Les espaces du mot de passe du certificat sont conservés.</string>
     <string name="bitwarden_server_deployment_clears">Changer de déploiement efface les adresses de service personnalisées, les en-têtes et les certificats.</string>
     <string name="bitwarden_server_discovery_title">Serveurs trouvés</string>
     <string name="bitwarden_server_done">Terminé</string>

@@ -6,7 +6,7 @@
     <string name="bitwarden_server_base_hint">Обычно достаточно указать адрес сервера.</string>
     <string name="bitwarden_server_ca">Собственный сертификат УЦ (PEM)</string>
     <string name="bitwarden_server_certificates">Сертификаты и подключение</string>
-    <string name="bitwarden_server_certificates_hint">Оставьте поле УЦ пустым, чтобы использовать системное хранилище доверия. Для mTLS нужен пригодный закрытый ключ PKCS#12. Все пробелы в паролях сертификатов сохраняются.</string>
+    <string name="bitwarden_server_certificates_hint">Собственные серверы доверяют CA, установленным в настройках Android; действительные обновления сертификатов от той же CA не требуют повторного импорта. Официальные домены Bitwarden используют только системные CA. Оставьте PEM пустым, если аккаунту не нужна дополнительная CA. mTLS требует закрытый ключ PKCS#12. Пробелы в пароле сертификата сохраняются.</string>
     <string name="bitwarden_server_deployment_clears">Смена развёртывания очищает отдельные адреса служб, заголовки и сертификаты.</string>
     <string name="bitwarden_server_discovery_title">Найденные серверы</string>
     <string name="bitwarden_server_done">Готово</string>

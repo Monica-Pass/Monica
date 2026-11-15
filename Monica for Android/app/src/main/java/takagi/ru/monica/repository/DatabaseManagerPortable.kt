@@ -61,26 +61,24 @@ internal suspend fun managerPreflightPortable(repo: DatabaseManagerRepository, s
 }
 
 internal suspend fun managerMoveLocal(repo: DatabaseManagerRepository, row: MdbxStructureNode, folderId: String?) {
-    val category = folderId?.removePrefix("folder:")?.toLong()
     repo.db.withTransaction {
         check(SessionManager.isUnlocked.value) { "The vault is locked." }
-        if (category != null) check(repo.db.categoryDao().getCategoryById(category)?.let { it.mdbxDatabaseId == null && it.bitwardenVaultId == null } == true)
         val id = row.id.substringAfter(':').toLong()
         when (row.id.substringBefore(':')) {
             "password" -> {
                 val value = requireNotNull(repo.db.passwordEntryDao().getPasswordEntryById(id))
                 check(ImportDestination.Local.contains(value) && !value.isDeleted)
-                repo.db.passwordEntryDao().updatePasswordEntry(value.copy(categoryId = category))
+                repo.db.passwordEntryDao().updatePasswordEntry(value.copy(categoryId = repo.localDestinationCategory(folderId)))
             }
             "item" -> {
                 val value = requireNotNull(repo.db.secureItemDao().getItemById(id))
                 check(ImportDestination.Local.contains(value) && !value.isDeleted)
-                repo.db.secureItemDao().updateItem(value.copy(categoryId = category))
+                repo.db.secureItemDao().updateItem(value.copy(categoryId = repo.localDestinationCategory(folderId)))
             }
             "passkey" -> {
                 val value = requireNotNull(repo.db.passkeyDao().getPasskeyByRecordId(id))
                 check(ImportDestination.Local.contains(value))
-                repo.db.passkeyDao().update(value.copy(categoryId = category))
+                repo.db.passkeyDao().update(value.copy(categoryId = repo.localDestinationCategory(folderId)))
             }
             else -> error("Unsupported record type")
         }
@@ -142,7 +140,7 @@ internal suspend fun managerTransferPortable(repo: DatabaseManagerRepository, so
         // Validate all attachment bytes before creating a destination entry.
         assets.forEach { attachmentBytes += it to it.read() }
         val targetFolder = when (target.database.kind) {
-            ImportDestinationKind.LOCAL -> target.folderId?.removePrefix("folder:")
+            ImportDestinationKind.LOCAL -> repo.localDestinationCategory(target.folderId)?.toString()
             ImportDestinationKind.KEEPASS -> target.folderId?.let { id ->
                 repo.keepass.openNativeBrowser(target.database.databaseId).getOrThrow().groups.single { it.identity.groupUuid.toString() == id }.legacyPath
             }

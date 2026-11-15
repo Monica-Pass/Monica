@@ -6,7 +6,7 @@
     <string name="bitwarden_server_base_hint">대부분 서버 주소만 입력하면 됩니다.</string>
     <string name="bitwarden_server_ca">사용자 지정 CA 인증서(PEM)</string>
     <string name="bitwarden_server_certificates">인증서 및 연결</string>
-    <string name="bitwarden_server_certificates_hint">CA를 비우면 시스템 신뢰 설정을 사용합니다. mTLS에는 사용 가능한 PKCS#12 개인 키가 필요합니다. 인증서 비밀번호의 모든 공백이 유지됩니다.</string>
+    <string name="bitwarden_server_certificates_hint">자체 호스팅 서버는 Android 설정에 설치한 CA를 신뢰하며, 같은 CA가 발급한 유효한 갱신 인증서는 다시 가져올 필요가 없습니다. Bitwarden 공식 도메인은 시스템 CA만 사용합니다. 계정에 추가 CA가 필요 없으면 PEM을 비워 두세요. mTLS에는 PKCS#12 개인 키가 필요합니다. 인증서 비밀번호의 공백은 유지됩니다.</string>
     <string name="bitwarden_server_deployment_clears">배포를 변경하면 개별 서비스 주소, 헤더 및 인증서가 지워집니다.</string>
     <string name="bitwarden_server_discovery_title">찾은 서버</string>
     <string name="bitwarden_server_done">완료</string>

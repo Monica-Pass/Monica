@@ -61,10 +61,9 @@ internal class DatabaseManagerRepository(context: Context, databaseOverride: Pas
                 DatabaseManagerSnapshot(location, title, nodes, native.sourceRevision.sha256)
             }
             ImportDestinationKind.LOCAL -> {
-                val folders = db.categoryDao().getAllCategories().first().filter { it.mdbxDatabaseId == null && it.bitwardenVaultId == null }
-                val folderIds = folders.map { it.id }.toSet()
-                fun parent(id: Long?) = id?.takeIf { it in folderIds }?.let { "folder:$it" }
-                val nodes = folders.map { node("folder:${it.id}", null, it.name, true) } +
+                val folders = localFolders()
+                fun parent(id: Long?) = folders.parentForEntry(id)
+                val nodes = folders.nodes +
                     db.passwordEntryDao().getAllPasswordEntriesSync().filter { source.contains(it) && !it.isDeleted }.map {
                         node("password:${it.id}", parent(it.categoryId), it.title, false, it.loginType.lowercase())
                     } + db.secureItemDao().getAllItemsIncludingArchived().first().filter { source.contains(it) && !it.isDeleted }.map {
@@ -90,9 +89,12 @@ internal class DatabaseManagerRepository(context: Context, databaseOverride: Pas
                     location.folderId?.let(UUID::fromString) ?: native.rootGroup.identity.groupUuid, name, native.sourceRevision.sha256)
                     .getOrThrow().identity.groupUuid.toString()
             }
-            ImportDestinationKind.LOCAL -> {
-                check(location.folderId == null) { "Monica local categories do not support nested folders." }
-                "folder:${db.categoryDao().insert(Category(name = name))}"
+            ImportDestinationKind.LOCAL -> db.withTransaction {
+                check(SessionManager.isUnlocked.value) { "The vault is locked." }
+                val folders = localFolders()
+                val path = folders.nestedPath(location.folderId, name)
+                folders.requireNewPath(path)
+                "folder:${db.categoryDao().insert(Category(name = path))}"
             }
             else -> error("Unsupported database")
         }
@@ -116,9 +118,12 @@ internal class DatabaseManagerRepository(context: Context, databaseOverride: Pas
                 }
             }
             ImportDestinationKind.LOCAL -> db.withTransaction {
+                if (row.type == MdbxStructureNodeType.FOLDER) {
+                    rebaseLocalFolder(row, row.parentId, name)
+                    return@withTransaction
+                }
                 val key = row.id.substringAfter(':').toLong()
                 when (row.id.substringBefore(':')) {
-                    "folder" -> db.categoryDao().update(requireNotNull(db.categoryDao().getCategoryById(key)).copy(name = name))
                     "password" -> db.passwordEntryDao().updatePasswordEntry(requireNotNull(db.passwordEntryDao().getPasswordEntryById(key)).copy(title = name))
                     "item" -> db.secureItemDao().updateItem(requireNotNull(db.secureItemDao().getItemById(key)).copy(title = name))
                     else -> error("Use the entry detail page to rename this item.")
@@ -137,7 +142,8 @@ internal class DatabaseManagerRepository(context: Context, databaseOverride: Pas
             val snapshot = browse(source)
             check(expectedRevision == null || expectedRevision == snapshot.revision) { "The source changed. Refresh and select again." }
             val destination = browse(target)
-            check(target.folderId == null || target.folderId in destination.index.folders) { "Destination folder missing" }
+            val resolvedTarget = target.copy(folderId = destination.resolveLocalFolderId(target.folderId))
+            check(resolvedTarget.folderId == null || resolvedTarget.folderId in destination.index.folders) { "Destination folder missing" }
             val roots = databaseManagerSelectionRoots(snapshot.nodes, selected)
             val failures = mutableListOf<DatabaseManagerFailure>()
             val batch = DatabaseManagerTransferContext()
@@ -150,13 +156,13 @@ internal class DatabaseManagerRepository(context: Context, databaseOverride: Pas
                 }
                 try {
                     check(!(source.database == target.database && row.type == MdbxStructureNodeType.FOLDER &&
-                        !snapshot.index.canMoveFolder(row.id, target.folderId))) { "A folder cannot be copied or moved into itself or its descendants." }
-                    check(copy || source.database != target.database || snapshot.index.parent(row) != target.folderId) { "Already in the destination folder." }
+                        !snapshot.index.canMoveFolder(row.id, resolvedTarget.folderId))) { "A folder cannot be copied or moved into itself or its descendants." }
+                    check(copy || source.database != target.database || snapshot.index.parent(row) != resolvedTarget.folderId) { "Already in the destination folder." }
                     val refreshed = browse(source)
                     check(refreshed.nodes.any { it.id == row.id && it.name == row.name && it.parentId == row.parentId }) {
                         "The source changed. Refresh and select again."
                     }
-                    transferNode(source, target, refreshed, row, copy, batch)
+                    transferNode(source, resolvedTarget, refreshed, row, copy, batch)
                     completed++
                 } catch (cancelled: CancellationException) { throw cancelled }
                 catch (error: Exception) { failures += DatabaseManagerFailure(row.name,
@@ -181,7 +187,8 @@ internal class DatabaseManagerRepository(context: Context, databaseOverride: Pas
                     keepass.moveNativeGroup(from.databaseId, UUID.fromString(row.id),
                         target.folderId?.let(UUID::fromString) ?: native.rootGroup.identity.groupUuid, native.sourceRevision.sha256).getOrThrow()
                 }
-                else -> error("Local categories cannot be nested.")
+                ImportDestinationKind.LOCAL -> rebaseLocalFolder(row, target.folderId, row.name)
+                else -> error("Unsupported database")
             }
             return
         }
@@ -255,11 +262,11 @@ internal class DatabaseManagerRepository(context: Context, databaseOverride: Pas
             ImportDestinationKind.KEEPASS -> keepass.deleteNativeGroup(source.database.databaseId, UUID.fromString(folder.id), snapshot.revision).getOrThrow()
             ImportDestinationKind.LOCAL -> db.withTransaction {
                 check(managerLocalRevision(this@DatabaseManagerRepository) == snapshot.revision) { "The source changed; both copies were retained." }
-                val category = requireNotNull(db.categoryDao().getCategoryById(folder.id.substringAfter(':').toLong()))
-                db.passwordEntryDao().getAllPasswordEntriesSync().filter { ImportDestination.Local.contains(it) && it.categoryId == category.id }.forEach {
+                val categoryIds = localFolders().descendants(folder.id).map { it.id }.toSet()
+                db.passwordEntryDao().getAllPasswordEntriesSync().filter { ImportDestination.Local.contains(it) && it.categoryId in categoryIds }.forEach {
                     db.passwordEntryDao().updatePasswordEntry(it.copy(isDeleted = true, deletedAt = java.util.Date()))
                 }
-                db.secureItemDao().getAllItemsIncludingArchived().first().filter { ImportDestination.Local.contains(it) && it.categoryId == category.id }.forEach {
+                db.secureItemDao().getAllItemsIncludingArchived().first().filter { ImportDestination.Local.contains(it) && it.categoryId in categoryIds }.forEach {
                     db.secureItemDao().updateItem(it.copy(isDeleted = true, deletedAt = java.util.Date()))
                 }
                 // Keep the category while its recoverable items are in trash.

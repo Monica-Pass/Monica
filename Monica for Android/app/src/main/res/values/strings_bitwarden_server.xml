@@ -6,7 +6,7 @@
     <string name="bitwarden_server_base_hint">Usually, only the server address is needed.</string>
     <string name="bitwarden_server_ca">Custom CA certificate (PEM)</string>
     <string name="bitwarden_server_certificates">Certificates and connection</string>
-    <string name="bitwarden_server_certificates_hint">Leave CA blank to use system trust. Enabling mTLS requires a usable PKCS#12 private key. Certificate passwords keep all spaces.</string>
+    <string name="bitwarden_server_certificates_hint">Self-hosted servers trust CAs installed in Android settings; valid renewals under the same CA need no reimport. Official Bitwarden domains use system CAs only. Leave PEM blank unless this account needs another CA. mTLS requires a PKCS#12 private key. Spaces in certificate passwords are preserved.</string>
     <string name="bitwarden_server_deployment_clears">Changing deployment clears service overrides, headers and certificates.</string>
     <string name="bitwarden_server_discovery_title">Discovered servers</string>
     <string name="bitwarden_server_done">Done</string>
