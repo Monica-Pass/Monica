@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.net.Uri
@@ -77,12 +78,14 @@ import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.security.SessionManager
 import takagi.ru.monica.utils.KeePassKdbxService
 import takagi.ru.monica.utils.SettingsManager
+import takagi.ru.monica.utils.LocaleHelper
 import takagi.ru.monica.utils.buildKeePassPathKey
 
 /** Real KDBX plus actual V2/framework entry points; only an explicitly owned secondary user. */
 class KeePassAutofillInstrumentedTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
     private val context = instrumentation.targetContext
+    private lateinit var uiStrings: Context
     private val fixturePackage = instrumentation.context.packageName
     private val user = android.os.Process.myUid() / 100000
     private val database by lazy { PasswordDatabase.getDatabase(context) }
@@ -120,6 +123,12 @@ class KeePassAutofillInstrumentedTest {
         oldIme = Settings.Secure.getString(context.contentResolver, Settings.Secure.DEFAULT_INPUT_METHOD)
         oldAutofillService = Settings.Secure.getString(context.contentResolver, "autofill_service")
         oldSettings = settings.settingsFlow.first()
+        // Match the Activity locale without changing the application or system language setting.
+        uiStrings = LocaleHelper.setLocale(context, requireNotNull(oldSettings).language)
+        android.util.Log.i("AutofillLocale328",
+            "target=${context.resources.configuration.locales.toLanguageTags()} " +
+                "ui=${uiStrings.resources.configuration.locales.toLanguageTags()} " +
+                "language=${requireNotNull(oldSettings).language}")
         oldSource = preferences.v2DefaultSourceFilter.first()
         oldKeePassId = preferences.v2DefaultKeepassDatabaseId.first()
         oldBitwardenId = preferences.v2DefaultBitwardenVaultId.first()
@@ -507,7 +516,8 @@ class KeePassAutofillInstrumentedTest {
 
     @Test fun directDatasetWithMissingRoomOwnerIsCancelled() = runBlocking {
         val id = android.widget.EditText(context).autofillId
-        val missingId = -179L
+        // Negative IDs now identify native MDBX capabilities, not missing Room rows.
+        val missingId = 179_000_000L
         assertNull(database.passwordEntryDao().getPasswordEntryById(missingId))
         val callback = AutofillCipherCallbackActivity.getIntent(context, AutofillCipherCallbackActivity.Args(
             passwordId = missingId, applicationId = fixturePackage,
@@ -554,7 +564,7 @@ class KeePassAutofillInstrumentedTest {
                 assertAbsent { it.text?.toString() == "stale-shadow-must-not-fill" ||
                     it.text?.toString() == "stale-direct-must-not-fill" }
                 hideResumedPickerIme()
-                tap(waitText(context.getString(R.string.cancel)))
+                tap(waitText(uiStrings.getString(R.string.cancel)))
                 val result = scenario.result
                 assertEquals(android.app.Activity.RESULT_CANCELED, result.resultCode)
                 assertFalse(result.resultData?.hasExtra(android.view.autofill.AutofillManager.EXTRA_AUTHENTICATION_RESULT) == true)
@@ -739,7 +749,7 @@ class KeePassAutofillInstrumentedTest {
                 assertNull(oldSource.getSelected(oldSelection))
                 if (replacementStage.get() != Stage.DESTROYED) {
                     waitNode { (it.isEditable && it.isPassword) ||
-                        it.text?.toString() == context.getString(R.string.keepass_native_load_failed) }
+                        it.text?.toString() == uiStrings.getString(R.string.keepass_native_load_failed) }
                 }
                 assertAbsent { it.text?.toString() in PASSWORDS.indices.map(::title) }
                 assertFalse(SessionManager.isUnlocked.value)
@@ -822,23 +832,23 @@ class KeePassAutofillInstrumentedTest {
             waitText(title(0))
             // ACTION_SET_TEXT may not open an IME; Back could dismiss the picker itself.
             hidePickerIme(scenario)
-            tapPickerControl(context.getString(R.string.filter_title))
-            tapPickerControl(context.getString(R.string.filter_keepass))
-            tapPickerControl(context.getString(R.string.password_picker_all_databases), editable = true)
+            tapPickerControl(uiStrings.getString(R.string.filter_title))
+            tapPickerControl(uiStrings.getString(R.string.filter_keepass))
+            tapPickerControl(uiStrings.getString(R.string.password_picker_all_databases), editable = true)
             tapPickerControl(DATABASE_NAME, editable = false)
-            tapPickerControl(context.getString(R.string.password_picker_all_folders), editable = true)
+            tapPickerControl(uiStrings.getString(R.string.password_picker_all_folders), editable = true)
             waitText(EMPTY_FOLDER)
             assertAbsent(requirePickerWindow = true, expectedVisibleText = EMPTY_FOLDER) {
                 it.text?.toString() in setOf(buildKeePassPathKey(null, FOLDER), buildKeePassPathKey(null, EMPTY_FOLDER))
             }
             screenshotIfRequested("picker-folders")
             tapPickerControl(EMPTY_FOLDER, editable = false)
-            tapPickerControl(context.getString(R.string.filter_title))
+            tapPickerControl(uiStrings.getString(R.string.filter_title))
             assertAbsent(requirePickerWindow = true) { it.text?.toString() in PASSWORDS.indices.map(::title) }
-            tapPickerControl(context.getString(R.string.filter_title))
+            tapPickerControl(uiStrings.getString(R.string.filter_title))
             tapPickerControl(EMPTY_FOLDER, editable = true)
             tapPickerControl(FOLDER, editable = false)
-            tapPickerControl(context.getString(R.string.filter_title))
+            tapPickerControl(uiStrings.getString(R.string.filter_title))
             waitText(title(0))
             scenario.recreate()
             waitText(title(0))
@@ -852,10 +862,10 @@ class KeePassAutofillInstrumentedTest {
         enableFramework()
         openForm(0)
         focusForm()
-        tap(waitText(context.getString(R.string.autofill_manual_entry_title)))
+        tap(waitText(uiStrings.getString(R.string.autofill_manual_entry_title)))
         verifyMasterPassword()
         tap(waitText(title(0)))
-        tap(waitText(context.getString(R.string.autofill)))
+        tap(waitText(uiStrings.getString(R.string.autofill)))
         expectForm("user=OK password=OK")
         assertFalse(SessionManager.isUnlocked.value)
         assertNoRoomMirror()
@@ -901,10 +911,10 @@ class KeePassAutofillInstrumentedTest {
         enableFramework()
         openForm(0)
         focusForm()
-        tap(waitText(context.getString(R.string.autofill_manual_entry_title)))
+        tap(waitText(uiStrings.getString(R.string.autofill_manual_entry_title)))
         verifyMasterPassword()
         tap(waitText(title(0)))
-        tap(waitText(context.getString(R.string.autofill_and_save_uri)))
+        tap(waitText(uiStrings.getString(R.string.autofill_and_save_uri)))
         expectForm("user=OK password=OK")
         val reopened = context.contentResolver.openInputStream(uri)!!.use { KeePassDatabase.decode(it, credentials) }
         val after = allNativeEntries(reopened).single { it.fields["Title"]?.content == title(0) }
@@ -922,11 +932,11 @@ class KeePassAutofillInstrumentedTest {
         enableFramework()
         openForm(0)
         focusForm()
-        tap(waitText(context.getString(R.string.autofill_manual_entry_title)))
+        tap(waitText(uiStrings.getString(R.string.autofill_manual_entry_title)))
         waitNode { it.isEditable && it.isPassword }
         awaitFocusedPasswordIme()
         hideResumedPickerIme()
-        tap(waitText(context.getString(R.string.cancel)))
+        tap(waitText(uiStrings.getString(R.string.cancel)))
         expectForm("user=EMPTY password=EMPTY")
         assertFalse(AutofillSessionGrants.isGranted(AutofillGrantContext(fixturePackage, null, null, null)))
         assertFalse(SessionManager.isUnlocked.value)
@@ -1030,7 +1040,7 @@ class KeePassAutofillInstrumentedTest {
             putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, MASTER_PASSWORD)
         }))
         hideResumedPickerIme()
-        tap(waitText(context.getString(R.string.confirm)))
+        tap(waitText(uiStrings.getString(R.string.confirm)))
         waitText(title(0))
         assertFalse("Autofill verification must keep main session locked", SessionManager.isUnlocked.value)
     }

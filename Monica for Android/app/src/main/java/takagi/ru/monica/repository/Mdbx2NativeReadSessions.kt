@@ -16,8 +16,15 @@ import uniffi.mdbx_ffi.MdbxVault
 
 /** Policy-bounded Rust handles only; list reads never prefetch or cache token plaintext. */
 internal object Mdbx2NativeReadSessions {
+    private val revocationListeners = java.util.concurrent.CopyOnWriteArrayList<() -> Unit>()
+    internal fun onRevoke(listener: () -> Unit): AutoCloseable {
+        revocationListeners += listener
+        return AutoCloseable { revocationListeners -= listener }
+    }
     @Volatile
     var isForeground = false
+        private set
+    @Volatile var foregroundGeneration = 0L
         private set
 
     private data class FileStamp(val identity: String?, val size: Long, val modified: FileTime)
@@ -79,10 +86,11 @@ internal object Mdbx2NativeReadSessions {
 
     fun updateForeground(foreground: Boolean) {
         isForeground = foreground
-        if (!foreground) clear()
+        if (!foreground) { foregroundGeneration++; clear() }
     }
 
     fun clear() {
+        revocationListeners.forEach { it() }
         if (cacheHolder.isInitialized()) cache.clear()
     }
 }

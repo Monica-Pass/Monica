@@ -241,14 +241,16 @@ fun InlinePasswordDetailContent(
                     Text(stringResource(R.string.autofill_accessibility_fill))
                 }
             }
-            OutlinedButton(
-                onClick = { if (canUseSecrets()) onAutofillAndSaveUri() },
-                enabled = readable,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Icon(Icons.Outlined.Save, contentDescription = null)
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(stringResource(R.string.autofill_and_save_uri))
+            if (password.mdbxDatabaseId == null) {
+                OutlinedButton(
+                    onClick = { if (canUseSecrets()) onAutofillAndSaveUri() },
+                    enabled = readable,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Icon(Icons.Outlined.Save, contentDescription = null)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(stringResource(R.string.autofill_and_save_uri))
+                }
             }
         }
     }

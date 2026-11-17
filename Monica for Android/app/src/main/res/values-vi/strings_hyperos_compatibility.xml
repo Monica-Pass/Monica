@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_compatibility_title">"Tương thích HyperOS"</string>
+    <string name="hyperos_compatibility_subtitle">"Passkey, lời nhắc lưu và hoạt ảnh trong ứng dụng"</string>
+    <string name="hyperos_compatibility_shared_settings_note">"Các tùy chọn này dùng chung giá trị với cài đặt chung. Giảm hoạt ảnh chỉ ảnh hưởng đến hoạt ảnh bên trong Monica."</string>
+</resources>

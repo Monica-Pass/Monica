@@ -1,0 +1,52 @@
+pickerAuth01
+FAILURES!!!
+await generation=1 interactive=true keyguard=false
+lifecycle=created
+created generation=1 interactive=true keyguard=false activity=takagi.ru.monica.autofill_ng.AutofillPickerActivityV2 finishing=false destroyed=false changing=false requestRevoked=false source=false
+lifecycle=started
+lifecycle=resumed
+clicked-package=takagi.ru.monica.bwca328main class=android.view.View text=null
+await generation=2 interactive=true keyguard=false activity=takagi.ru.monica.autofill_ng.AutofillPickerActivityV2 finishing=false destroyed=false changing=false requestRevoked=false source=false
+lifecycle=paused
+paused generation=2 interactive=true keyguard=false activity=takagi.ru.monica.autofill_ng.AutofillPickerActivityV2 finishing=true destroyed=false changing=false requestRevoked=false source=false
+lifecycle=stopped
+lifecycle=destroyed
+destroyed generation=2 interactive=true keyguard=false activity=takagi.ru.monica.autofill_ng.AutofillPickerActivityV2 finishing=true destroyed=true changing=false requestRevoked=false source=false
+java.lang.AssertionError: Missing expected entry node: Folder upgrade retained record
+INSTRUMENTATION_CODE: 0
+pickerAuth02
+await generation=1 interactive=true keyguard=false
+lifecycle=created
+created generation=1 interactive=true keyguard=false activity=takagi.ru.monica.autofill_ng.AutofillPickerActivityV2 finishing=false destroyed=false changing=false requestRevoked=false source=false
+lifecycle=started
+lifecycle=resumed
+clicked-package=takagi.ru.monica.bwca328main class=android.view.View text=null
+await generation=1 interactive=true keyguard=false activity=takagi.ru.monica.autofill_ng.AutofillPickerActivityV2 finishing=false destroyed=false changing=false requestRevoked=false source=true sourceGeneration=1 sourceRevoked=false loaded=true
+R8_ENTRY_TARGET {"package":"takagi.ru.monica.bwca328main","apk_sha256":"d1ca3cb0acdf04329332e1ab5cf4ba7e84c4b17338a069e227a23bc6b65508ac","mapping_sha256":"d3a5487a3089745d9aae73d65a96cecfa831707991a588e8b44594ed3da23c35"}
+OK (R8 entry pickerAuth) instrumentationPid=15492
+INSTRUMENTATION_CODE: -1
+pickerCancel01
+await generation=1 interactive=true keyguard=false
+lifecycle=created
+created generation=1 interactive=true keyguard=false activity=takagi.ru.monica.autofill_ng.AutofillPickerActivityV2 finishing=false destroyed=false changing=false requestRevoked=false source=false
+lifecycle=started
+lifecycle=resumed
+lifecycle=paused
+paused generation=1 interactive=true keyguard=false activity=takagi.ru.monica.autofill_ng.AutofillPickerActivityV2 finishing=true destroyed=false changing=false requestRevoked=false source=false
+lifecycle=stopped
+lifecycle=destroyed
+destroyed generation=1 interactive=true keyguard=false activity=takagi.ru.monica.autofill_ng.AutofillPickerActivityV2 finishing=true destroyed=true changing=false requestRevoked=false source=false
+R8_ENTRY_TARGET {"package":"takagi.ru.monica.bwca328main","apk_sha256":"d1ca3cb0acdf04329332e1ab5cf4ba7e84c4b17338a069e227a23bc6b65508ac","mapping_sha256":"d3a5487a3089745d9aae73d65a96cecfa831707991a588e8b44594ed3da23c35"}
+OK (R8 entry pickerCancel) instrumentationPid=15681
+INSTRUMENTATION_CODE: -1
+imeAuth01
+await generation=1 interactive=true keyguard=false
+clicked-package=takagi.ru.monica.bwca328main class=android.view.View text=null
+R8_ENTRY_TARGET {"package":"takagi.ru.monica.bwca328main","apk_sha256":"d1ca3cb0acdf04329332e1ab5cf4ba7e84c4b17338a069e227a23bc6b65508ac","mapping_sha256":"d3a5487a3089745d9aae73d65a96cecfa831707991a588e8b44594ed3da23c35"}
+OK (R8 entry imeAuth) instrumentationPid=15838
+INSTRUMENTATION_CODE: -1
+imeCancel01
+await generation=1 interactive=true keyguard=false
+R8_ENTRY_TARGET {"package":"takagi.ru.monica.bwca328main","apk_sha256":"d1ca3cb0acdf04329332e1ab5cf4ba7e84c4b17338a069e227a23bc6b65508ac","mapping_sha256":"d3a5487a3089745d9aae73d65a96cecfa831707991a588e8b44594ed3da23c35"}
+OK (R8 entry imeCancel) instrumentationPid=16016
+INSTRUMENTATION_CODE: -1

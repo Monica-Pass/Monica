@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_diagnostics_title">"설정 진단"</string>
+    <string name="hyperos_diagnostics_note">"서비스 선언과 선택을 확인하며 패스키 동작 성공을 뜻하지 않습니다. 보안 설정 읽기에는 승인된 Shizuku 또는 root가 필요합니다."</string>
+    <string name="hyperos_diag_declaration">"Monica 서비스 및 패스키 기능 유효"</string>
+    <string name="hyperos_diag_feature">"시스템 자격 증명 기능 사용 가능"</string>
+    <string name="hyperos_diag_unrestricted">"이 Android 사용자에게 자동 완성 허용"</string>
+    <string name="hyperos_diag_framework">"시스템이 Monica 활성화를 인식"</string>
+    <string name="hyperos_diag_registered">"Monica가 자격 증명 서비스로 등록됨"</string>
+    <string name="hyperos_drift_title">"복구 후 변경 감지"</string>
+    <string name="hyperos_drift_note">"이 페이지가 보이는 동안 30초마다, 다시 열 때 확인합니다. 설정을 자동으로 다시 쓰지 않습니다."</string>
+    <string name="hyperos_drift_result">"마지막으로 확인된 복구 결과와 비교"</string>
+    <string name="hyperos_drift_off">"감지 꺼짐"</string>
+    <string name="hyperos_drift_no_baseline">"비교 기준을 만들려면 먼저 설정을 적용하세요."</string>
+    <string name="hyperos_drift_unchanged">"설정 변경 없음"</string>
+    <string name="hyperos_drift_changed">"설정이 변경되었습니다. 직접 관리자를 바꾼 것일 수도 있으니 복원 전에 확인하세요."</string>
+    <string name="hyperos_update_failed">"저장하지 못했습니다. 새로 고친 뒤 상태를 확인하세요."</string>
+    <string name="hyperos_check_yes">"예"</string>
+    <string name="hyperos_check_no">"아니요"</string>
+    <string name="hyperos_check_unsupported">"지원하지 않음"</string>
+    <string name="hyperos_module_title">"선택적 호환성 모듈"</string>
+    <string name="hyperos_module_requirements">"호환 LSPosed API 102+, Android 14–16 및 Xiaomi/Redmi/POCO 소유자 사용자가 필요합니다. 프레임워크에서 Monica와 필요한 범위를 활성화하세요. 기본값은 모두 꺼짐입니다."</string>
+    <string name="hyperos_module_connected">"프레임워크 연결됨. Hook 작동을 증명하지는 않습니다."</string>
+    <string name="hyperos_module_disconnected">"호환 프레임워크 사용 불가"</string>
+    <string name="hyperos_module_scope">"승인된 범위: %1$s"</string>
+    <string name="hyperos_hook_reset">"보안 센터 초기화 차단"</string>
+    <string name="hyperos_hook_reset_note">"식별된 자격 증명 설정 메서드만 가로챕니다."</string>
+    <string name="hyperos_hook_settings">"시스템 선택 화면 호환성"</string>
+    <string name="hyperos_hook_settings_note">"식별된 설정 컨트롤러를 조정하며 호환되지 않는 메서드는 기존 동작을 유지합니다."</string>
+    <string name="hyperos_hook_chooser">"Google 자격 증명 선택 화면"</string>
+    <string name="hyperos_hook_chooser_note">"활성화된 시스템 Google Play 서비스 선택 화면이 필요합니다."</string>
+    <string name="hyperos_hook_hybrid">"기기 간 자격 증명 호환성"</string>
+    <string name="hyperos_hook_hybrid_note">"검증된 Google 하이브리드 서비스와 Xiaomi 스캐너 경로를 사용합니다."</string>
+    <string name="hyperos_module_restart">"활성화 후 해당 프로세스나 기기를 직접 재시작하세요. 끄면 프레임워크가 변경을 전달할 때 적용된 Hook의 덮어쓰기가 중지됩니다. 자동 재시작하지 않습니다."</string>
+    <string name="hyperos_physical_feedback">"HyperOS 실물 기기에서는 테스트하지 않았습니다. ROM 버전과 재현 단계를 GitHub issue로 알려주세요. 비밀번호나 키는 제외하세요."</string>
+    <string name="hyperos_reference_projects">"참고 프로젝트 및 라이선스"</string>
+    <string name="hyperos_module_confirmation">"실험적인 시스템 동작 변경을 활성화할까요? 호환 프레임워크와 대상 구성 요소가 필요하며 다른 비밀번호 관리자에 영향을 줄 수 있습니다. 여기 또는 프레임워크에서 끌 수 있습니다."</string>
+    <string name="hyperos_feedback_action">"호환성 문제 신고"</string>
+    <string name="hyperos_module_entry_note">"기본값 꺼짐 · 호환 LSPosed 필요"</string>
+</resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_diagnostics_title">"配置診斷"</string>
+    <string name="hyperos_diagnostics_note">"檢視服務聲明與所選，未能證實通行密鑰路由有效。讀取系統配置須先授權 Shizuku 或 root。"</string>
+    <string name="hyperos_diag_declaration">"Monica 服務及通行密鑰能力有效"</string>
+    <string name="hyperos_diag_feature">"系統具憑據功能"</string>
+    <string name="hyperos_diag_unrestricted">"此 Android 用戶允許自動填充"</string>
+    <string name="hyperos_diag_framework">"系統框架已識別 Monica 啟用"</string>
+    <string name="hyperos_diag_registered">"Monica 已登記為憑據服務"</string>
+    <string name="hyperos_drift_title">"察驗修復後之變"</string>
+    <string name="hyperos_drift_note">"此頁可見時每三十秒及重開時察驗，絕不自動改寫配置。"</string>
+    <string name="hyperos_drift_result">"與上次核驗之修復結果相比"</string>
+    <string name="hyperos_drift_off">"察驗已關"</string>
+    <string name="hyperos_drift_no_baseline">"請先應用一次配置，以立比較之據。"</string>
+    <string name="hyperos_drift_unchanged">"配置未變"</string>
+    <string name="hyperos_drift_changed">"配置已變，亦可能因君主動更換管理器；恢復前請先審閱。"</string>
+    <string name="hyperos_update_failed">"未能保存，請刷新以核當前狀態。"</string>
+    <string name="hyperos_check_yes">"是"</string>
+    <string name="hyperos_check_no">"否"</string>
+    <string name="hyperos_check_unsupported">"不支援"</string>
+    <string name="hyperos_module_title">"可選相容模組"</string>
+    <string name="hyperos_module_requirements">"須有相容之 LSPosed API 102+、Android 14–16，且為 Xiaomi／Redmi／POCO 主用戶。請於框架啟用 Monica 並授所需作用域。諸選項預設皆關。"</string>
+    <string name="hyperos_module_connected">"框架已連，尚不代表 Hook 已生效。"</string>
+    <string name="hyperos_module_disconnected">"相容框架不可用"</string>
+    <string name="hyperos_module_scope">"已授權作用域：%1$s"</string>
+    <string name="hyperos_hook_reset">"阻止安全中心重置"</string>
+    <string name="hyperos_hook_reset_note">"僅攔截已識別之憑據配置方法。"</string>
+    <string name="hyperos_hook_settings">"系統選擇頁相容"</string>
+    <string name="hyperos_hook_settings_note">"調整已識別之設置控制器；不相容之方法仍從系統原行為。"</string>
+    <string name="hyperos_hook_chooser">"Google 憑據選擇頁"</string>
+    <string name="hyperos_hook_chooser_note">"須有已啟用之系統 Google Play 服務選擇頁。"</string>
+    <string name="hyperos_hook_hybrid">"跨裝置憑據相容"</string>
+    <string name="hyperos_hook_hybrid_note">"使用已核驗之 Google 混合服務及小米掃碼路由。"</string>
+    <string name="hyperos_module_restart">"啟用後須自行重啟相關行程或裝置；關閉後，俟框架傳遞變更，已載入之 Hook 即止覆寫。不自動重啟。"</string>
+    <string name="hyperos_physical_feedback">"尚未經 HyperOS 實機測試。歡迎以 GitHub issue 告知 ROM 版本及重現步驟，勿附密碼或密鑰。"</string>
+    <string name="hyperos_reference_projects">"參考專案與授權"</string>
+    <string name="hyperos_module_confirmation">"欲啟用此實驗性系統行為修改乎？須有相容框架及目標元件，或影響其他密碼管理器。可於此處或框架關閉。"</string>
+    <string name="hyperos_feedback_action">"回報相容問題"</string>
+    <string name="hyperos_module_entry_note">"預設關閉 · 須有相容之 LSPosed"</string>
+</resources>

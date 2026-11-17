@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="filter_mdbx">MDBX</string>
+    <string name="autofill_v2_default_mdbx_title">기본 MDBX 데이터베이스</string>
+    <string name="autofill_v2_default_mdbx_desc">기본 추천과 목록 항목을 하나의 MDBX 데이터베이스로 제한합니다.</string>
+</resources>

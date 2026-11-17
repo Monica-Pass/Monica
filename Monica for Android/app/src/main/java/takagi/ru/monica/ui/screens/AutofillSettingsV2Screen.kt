@@ -92,6 +92,9 @@ import androidx.lifecycle.LifecycleEventObserver
 import kotlinx.coroutines.launch
 import takagi.ru.monica.R
 import takagi.ru.monica.passkey.MonicaCredentialProviderService
+import takagi.ru.monica.autofill_ng.AutofillScope
+import takagi.ru.monica.autofill_ng.toDefaultSourceFilter
+import takagi.ru.monica.data.isUsable
 import takagi.ru.monica.autofill_ng.AutofillPreferences
 import takagi.ru.monica.autofill_ng.DomainMatchStrategy
 import takagi.ru.monica.autofill_ng.core.AutofillServiceChecker
@@ -133,7 +136,6 @@ fun AutofillSettingsV2Screen(
     val subdomainMatch by preferences.isBitwardenSubdomainMatchEnabled.collectAsState(initial = true)
     val domainMatchStrategy by preferences.domainMatchStrategy.collectAsState(initial = DomainMatchStrategy.BASE_DOMAIN)
     val savePromptEnabled by preferences.isRequestSaveDataEnabled.collectAsState(initial = true)
-    val hyperOsSaveCompatibility by preferences.isHyperOsSaveCompatibilityEnabled.collectAsState(initial = false)
     val autoUpdateDuplicatePasswordsEnabled by preferences.isAutoUpdateDuplicatePasswordsEnabled.collectAsState(initial = false)
     val showSaveNotificationEnabled by preferences.isShowSaveNotificationEnabled.collectAsState(initial = true)
     val smartTitleGenerationEnabled by preferences.isSmartTitleGenerationEnabled.collectAsState(initial = true)
@@ -149,13 +151,18 @@ fun AutofillSettingsV2Screen(
     val blacklistPackages by preferences.blacklistPackages.collectAsState(initial = emptySet())
     val saveBlockedTargetRecords by preferences.saveBlockedTargetRecords.collectAsState(initial = emptyList())
     val blockedFieldSignatureRecords by preferences.blockedFieldSignatureRecords.collectAsState(initial = emptyList())
-    val defaultSourceFilter by preferences.v2DefaultSourceFilter.collectAsState(
-        initial = AutofillPreferences.AutofillDefaultSourceFilter.ALL,
-    )
-    val defaultKeepassDatabaseId by preferences.v2DefaultKeepassDatabaseId.collectAsState(initial = null)
+    val defaultScope by preferences.v2DefaultScope.collectAsState(initial = null)
+    val defaultSourceFilter = defaultScope?.toDefaultSourceFilter() ?: AutofillPreferences.AutofillDefaultSourceFilter.ALL
+    val defaultKeepassDatabaseId = (defaultScope as? AutofillScope.KeePass)?.databaseId
+    val defaultBitwardenVaultId = (defaultScope as? AutofillScope.Bitwarden)?.vaultId
+    val defaultMdbxDatabaseId = (defaultScope as? AutofillScope.Mdbx)?.databaseId
+    val mdbxFlow = remember(context.applicationContext) {
+        PasswordDatabase.getDatabase(context.applicationContext).localMdbxDatabaseDao().getAvailableDatabases()
+    }
+    val mdbxRegistrations by mdbxFlow.collectAsState(initial = null)
+    val mdbxDatabases = remember(mdbxRegistrations) { mdbxRegistrations?.filter { it.isUsable } }
     val keepassFlow = remember(localKeepassDao) { localKeepassDao.getAllDatabases() }
     val keepassDatabases by keepassFlow.collectAsState(initial = null)
-    val defaultBitwardenVaultId by preferences.v2DefaultBitwardenVaultId.collectAsState(initial = null)
     val bitwardenFlow = remember(bitwardenVaultDao) { bitwardenVaultDao.getAllVaultsFlow() }
     val bitwardenVaults by bitwardenFlow.collectAsState(initial = null)
 
@@ -352,8 +359,12 @@ fun AutofillSettingsV2Screen(
                 keepassDatabases = keepassDatabases,
                 bitwardenVaults = bitwardenVaults,
                 onSourceSelected = { choice -> scope.launch { preferences.selectV2DefaultSourceFilter(choice) } },
-                onKeepassSelected = { id -> scope.launch { preferences.setV2DefaultKeepassDatabaseId(id) } },
-                onBitwardenSelected = { id -> scope.launch { preferences.setV2DefaultBitwardenVaultId(id) } },
+                onKeepassSelected = { id -> scope.launch { preferences.selectV2DefaultDatabase(AutofillPreferences.AutofillDefaultSourceFilter.KEEPASS, id) } },
+                onBitwardenSelected = { id -> scope.launch { preferences.selectV2DefaultDatabase(AutofillPreferences.AutofillDefaultSourceFilter.BITWARDEN, id) } },
+                mdbxId = defaultMdbxDatabaseId,
+                mdbxDatabases = mdbxDatabases,
+                onMdbxSelected = { id -> scope.launch { preferences.selectV2DefaultDatabase(AutofillPreferences.AutofillDefaultSourceFilter.MDBX, id) } },
+                defaultsReady = defaultScope != null,
             )
 
             SectionCard(
@@ -474,16 +485,6 @@ fun AutofillSettingsV2Screen(
                         scope.launch { preferences.setRequestSaveDataEnabled(enabled) }
                     },
                 )
-                Box(Modifier.testTag("hyperos_save_compatibility_setting")) { SwitchSettingItem(
-                    icon = Icons.Outlined.Settings,
-                    title = stringResource(R.string.autofill_hyperos_save_compatibility),
-                    subtitle = stringResource(R.string.autofill_hyperos_save_compatibility_desc),
-                    checked = hyperOsSaveCompatibility,
-                    onCheckedChange = { enabled ->
-                        scope.launch { preferences.setHyperOsSaveCompatibilityEnabled(enabled) }
-                    },
-                ) }
-                takagi.ru.monica.autofill_ng.HyperOsSaveOverlayPermission(hyperOsSaveCompatibility)
                 SwitchSettingItem(
                     icon = Icons.Outlined.Refresh,
                     title = stringResource(R.string.autofill_save_update_duplicate),

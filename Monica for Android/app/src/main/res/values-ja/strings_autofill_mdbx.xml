@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="filter_mdbx">MDBX</string>
+    <string name="autofill_v2_default_mdbx_title">既定の MDBX データベース</string>
+    <string name="autofill_v2_default_mdbx_desc">既定の候補と一覧の項目を 1 つの MDBX データベースに限定します。</string>
+</resources>

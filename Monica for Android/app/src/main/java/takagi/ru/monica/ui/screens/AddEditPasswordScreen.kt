@@ -63,6 +63,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.selected
 import takagi.ru.monica.data.model.EntryContentFields
 import takagi.ru.monica.ui.components.EntrySupplementalSpecs
@@ -369,9 +370,11 @@ fun AddEditPasswordScreen(
         }
     }
     DisposableEffect(passwordId, nativeCreationTarget?.databaseId) {
+        val nativeMdbxEditor = viewModel.beginNativePasswordEditor()
         val nativeRead = if (nativeCreationTarget != null) viewModel.holdNativeKeePassRead(nativeCreationTarget.databaseId)
             else passwordId?.let { viewModel.holdNativeKeePassEntryRead(it) }
         onDispose {
+            nativeMdbxEditor?.close()
             nativeRead?.close()
             nativeCreationTarget?.let { viewModel.refreshKeePassOverviewAfterNativeRead(it.databaseId) }
         }
@@ -524,6 +527,9 @@ private fun PasswordEntryEditor(
         mutableStateListOf("")
     }
     var originalIds by remember { mutableStateOf<List<Long>>(emptyList()) }
+    // Identity alone is insufficient: later reads restore fields and native save baselines.
+    // Never restore this flag with the form after Activity recreation.
+    var sourceLoadComplete by remember(passwordId) { mutableStateOf(false) }
     var allProjectOriginalIds by remember { mutableStateOf<List<Long>>(emptyList()) }
     var primaryProjectGroup by remember { mutableStateOf(ProjectCredentialGroup.Group()) }
     val extraCredentialGroups = remember { mutableStateListOf<ProjectCredentialGroup.Group>() }
@@ -2233,9 +2239,10 @@ private fun PasswordEntryEditor(
 
     // Load existing password data (including siblings)
     LaunchedEffect(passwordId) {
+        sourceLoadComplete = false
         resetPasswordFieldTransientState()
         if (passwordId != null) {
-            coroutineScope.launch {
+            try {
                 val actualId = if (passwordId < 0) -passwordId else passwordId
                 withContext(Dispatchers.IO) {
                     viewModel.getRawPasswordEntryById(actualId, forEdit = true)
@@ -2560,11 +2567,16 @@ private fun PasswordEntryEditor(
                         passwords.add("")
                         Unit
                     }
-                } ?: run {
-                     // Fallback if entry not found or new
-                     hasOwnershipConflict = false
-                     unreadablePasswordIds = emptySet()
-                     if (passwords.isEmpty()) passwords.add("")
+                } ?: error("Password editor source is unavailable")
+                sourceLoadComplete = true
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (error: Exception) {
+                // Keep the draft unsaveable; missing/failed edits must never become creates.
+                takagi.ru.monica.security.RuntimeDiagnostics.credentialLoadFailure(
+                    takagi.ru.monica.security.RuntimeDiagnostics.CredentialLoadStage.RESTORE, error)
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, R.string.save_failed, Toast.LENGTH_LONG).show()
                 }
             }
         } else {
@@ -2596,10 +2608,15 @@ private fun PasswordEntryEditor(
                  initialDraftApplied = true
              }
              username = credentialUsernames.firstOrNull().orEmpty()
+             sourceLoadComplete = true
         }
     }
 
-    val canSave = !urlRulesLoadFailed && !templateLoadFailed && (templateDraft?.valid() != false) && title.isNotEmpty() &&
+    val hasLoadedEditIdentity = !isEditing ||
+        (originalIds.isNotEmpty() && passwordId in
+            (if (hasProjectCredentialMetadata) allProjectOriginalIds else originalIds))
+    val canSave = sourceLoadComplete && hasLoadedEditIdentity && !projectCredentialLoadFailed &&
+        !urlRulesLoadFailed && !templateLoadFailed && (templateDraft?.valid() != false) && title.isNotEmpty() &&
         (!isBarcodeMode || barcodePayload.isNotBlank()) &&
         !isSaving &&
         !hasOwnershipConflict
@@ -3556,7 +3573,7 @@ private fun PasswordEntryEditor(
 
                     ExtendedFloatingActionButton(
                         onClick = { if (canSave) handleSave() },
-                        modifier = Modifier.testTag("password_editor_save"),
+                        modifier = Modifier.testTag("password_editor_save").semantics { if (!canSave) disabled() },
                         text = { Text(stringResource(R.string.save)) },
                         icon = {
                             if (isSaving) CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.dp)

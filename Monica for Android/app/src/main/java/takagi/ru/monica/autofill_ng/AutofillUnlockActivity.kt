@@ -166,7 +166,7 @@ class AutofillUnlockActivity : AppCompatActivity() {
         if (rejectBlockedRequest(pendingRequest.request)) return
 
         lifecycle.withResumed { Unit }
-        val needsNative = pendingRequest.passwordIds.any(takagi.ru.monica.keepass.KeePassMonicaPasswordStore::isUiId)
+        val needsNative = pendingRequest.passwordIds.any(AutofillPasswordSource::isNativeId)
         nativeReadStarted = needsNative
         val source = if (needsNative) AutofillPasswordSource(
             context = applicationContext, security = securityManager, generation = generation,

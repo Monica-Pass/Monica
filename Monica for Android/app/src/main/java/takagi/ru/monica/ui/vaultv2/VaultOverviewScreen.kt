@@ -230,6 +230,7 @@ internal fun VaultOverviewScreen(
                 listState = searchListState, onOpenItem = onOpenItem,
                 selection = selection, isDetailVisible = isDetailVisible,
                 onRequestDeleteItem = onRequestDeleteItem,
+                reduceAnimations = reduceAnimations,
                 modifier = Modifier.weight(1f),
             )
         } else {

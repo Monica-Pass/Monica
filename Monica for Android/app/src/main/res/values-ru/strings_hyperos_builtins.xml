@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_diagnostics_title">"Диагностика настроек"</string>
+    <string name="hyperos_diagnostics_note">"Проверяет службы и выбор, но не успешность работы ключей доступа. Для чтения защищённых настроек нужен разрешённый Shizuku или root."</string>
+    <string name="hyperos_diag_declaration">"Служба Monica и поддержка ключей доступа корректны"</string>
+    <string name="hyperos_diag_feature">"Системная функция учётных данных доступна"</string>
+    <string name="hyperos_diag_unrestricted">"Автозаполнение разрешено этому пользователю Android"</string>
+    <string name="hyperos_diag_framework">"Система распознаёт Monica как включённую"</string>
+    <string name="hyperos_diag_registered">"Monica зарегистрирована как служба учётных данных"</string>
+    <string name="hyperos_drift_title">"Выявлять изменения после исправления"</string>
+    <string name="hyperos_drift_note">"Проверяет каждые 30 секунд, пока страница видна, и при повторном открытии. Никогда не перезаписывает настройки автоматически."</string>
+    <string name="hyperos_drift_result">"Сравнение с последним проверенным исправлением"</string>
+    <string name="hyperos_drift_off">"Проверка отключена"</string>
+    <string name="hyperos_drift_no_baseline">"Сначала примените настройки для создания образца сравнения."</string>
+    <string name="hyperos_drift_unchanged">"Настройки не изменились"</string>
+    <string name="hyperos_drift_changed">"Настройки изменились. Возможно, вы сами сменили менеджер; проверьте перед восстановлением."</string>
+    <string name="hyperos_update_failed">"Не удалось сохранить. Обновите и проверьте состояние."</string>
+    <string name="hyperos_check_yes">"Да"</string>
+    <string name="hyperos_check_no">"Нет"</string>
+    <string name="hyperos_check_unsupported">"Не поддерживается"</string>
+    <string name="hyperos_module_title">"Необязательный модуль совместимости"</string>
+    <string name="hyperos_module_requirements">"Требуется совместимый LSPosed API 102+, Android 14–16 и основной пользователь Xiaomi/Redmi/POCO. Включите Monica и нужные области во фреймворке. По умолчанию всё отключено."</string>
+    <string name="hyperos_module_connected">"Фреймворк подключён; это не подтверждает работу перехватов."</string>
+    <string name="hyperos_module_disconnected">"Совместимый фреймворк недоступен"</string>
+    <string name="hyperos_module_scope">"Разрешённые области: %1$s"</string>
+    <string name="hyperos_hook_reset">"Блокировать сброс Центром безопасности"</string>
+    <string name="hyperos_hook_reset_note">"Перехватывает только распознанные методы настройки учётных данных."</string>
+    <string name="hyperos_hook_settings">"Совместимость системного выбора"</string>
+    <string name="hyperos_hook_settings_note">"Меняет распознанные контроллеры настроек; несовместимые методы сохраняют исходное поведение."</string>
+    <string name="hyperos_hook_chooser">"Выбор учётных данных Google"</string>
+    <string name="hyperos_hook_chooser_note">"Требуется включённый системный интерфейс сервисов Google Play."</string>
+    <string name="hyperos_hook_hybrid">"Учётные данные между устройствами"</string>
+    <string name="hyperos_hook_hybrid_note">"Использует проверенную гибридную службу Google и маршрут сканера Xiaomi."</string>
+    <string name="hyperos_module_restart">"После включения самостоятельно перезапустите нужные процессы или устройство. Отключение прекращает изменения после передачи настройки фреймворком. Автоперезапуска нет."</string>
+    <string name="hyperos_physical_feedback">"На физических устройствах HyperOS не проверено. Укажите версию ROM и шаги воспроизведения в GitHub issue, без паролей и ключей."</string>
+    <string name="hyperos_reference_projects">"Исходный проект и лицензия"</string>
+    <string name="hyperos_module_confirmation">"Включить экспериментальное изменение системы? Нужны совместимые фреймворк и компоненты. Возможно влияние на другие менеджеры. Отключить можно здесь или во фреймворке."</string>
+    <string name="hyperos_feedback_action">"Сообщить о несовместимости"</string>
+    <string name="hyperos_module_entry_note">"По умолчанию выключен · Требуется совместимый LSPosed"</string>
+</resources>

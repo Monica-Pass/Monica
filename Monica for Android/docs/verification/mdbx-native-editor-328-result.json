@@ -1,0 +1,500 @@
+{
+  "version": "1.0.328",
+  "published": false,
+  "scope": "ordinary MDBX login editor native integration and history audit",
+  "jvm": {
+    "main-debug-05": {
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "fd-debug-03": {
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "device": {
+    "main-device07": {
+      "tests": 11,
+      "runner_seconds": 11.555,
+      "driver_seconds": 14.699507800047286,
+      "apks": [
+        {
+          "file": "Monica-Android-x86_64-1.0.328-26111712-02.APK",
+          "sha256": "9dbd5a5c32f836b21fa7dcd86d36ceebe3780ae07eaa62c721ed16cf823447ee"
+        },
+        {
+          "file": "app-debug-androidTest.apk",
+          "sha256": "78b29e73699393cea4662ccd55aae4a3dd36983db150a99bbfb136d06fb19798"
+        }
+      ]
+    },
+    "main-device08": {
+      "tests": 26,
+      "runner_seconds": 98.047,
+      "driver_seconds": 102.2578221000731,
+      "apks": [
+        {
+          "file": "Monica-Android-x86_64-1.0.328-26111712-02.APK",
+          "sha256": "9dbd5a5c32f836b21fa7dcd86d36ceebe3780ae07eaa62c721ed16cf823447ee"
+        },
+        {
+          "file": "app-debug-androidTest.apk",
+          "sha256": "78b29e73699393cea4662ccd55aae4a3dd36983db150a99bbfb136d06fb19798"
+        }
+      ]
+    },
+    "fd-device03": {
+      "tests": 37,
+      "runner_seconds": 106.69,
+      "driver_seconds": 111.25572749995627,
+      "apks": [
+        {
+          "file": "Monica-Android-x86_64-1.0.328.apk",
+          "sha256": "b13941859c3bf0a4342389a5e7ec91c7ced0d9599d4e954ace63a31e9ee5a6ce"
+        },
+        {
+          "file": "app-debug-androidTest.apk",
+          "sha256": "072c1c862871f5b48c92a372b58301f7051de74beb21d967a9e2ea9f85894152"
+        }
+      ]
+    }
+  },
+  "rust": {
+    "ffi_lib_passed": 63,
+    "ffi_lib_seconds": 524.98,
+    "independent_connection_passed": 1,
+    "independent_connection_seconds": 0.72
+  },
+  "release": {
+    "main": {
+      "build": "main-release-03",
+      "seconds": 373,
+      "mapping_sha256": "fac17a67353ffdbefc1f5397c288cfe350ba455198a194dc6daf0b335af2389f",
+      "source_inputs": 5508,
+      "apks": [
+        {
+          "apk_sha256": "8596d83531558907058c9cdf224375e7f63122645a80bb5e62afa71444835a61",
+          "bytes": 37195919,
+          "abi": "arm64-v8a",
+          "native": {
+            "sha256": "448eb753441444701ab4aebd04348450ad93caf796ee58b4538bff5016d20e65",
+            "bytes": 7665160,
+            "build_id": "65b80352c6beeda3aa9b7b86a0241eeb2baec060"
+          },
+          "packaged_native_sha256": "0d4478b8c9c045577b8d7c567f491d75e0dc80f6c6a1f9d83177e9308c637466",
+          "packaged_native_bytes": 7665152,
+          "independent_strip_matches": true,
+          "build_id_preserved": true,
+          "signer_sha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "debuggable": false
+        },
+        {
+          "apk_sha256": "209685f18e1b3fed36c25c2e669891a9d21b721259bb94df473602db38e77f0e",
+          "bytes": 34687751,
+          "abi": "armeabi-v7a",
+          "native": {
+            "sha256": "3165fb0b032b5aabb12d58c263081bb13df6ad136f2348e8e708f7749d4cdc94",
+            "bytes": 5893316,
+            "build_id": "bead8254adc2c6657759341c24806c9f370ab5d1"
+          },
+          "packaged_native_sha256": "eb344b6687717ab1bc83b028155b067429efe95f58f3bfd7c7ad4559422085ec",
+          "packaged_native_bytes": 5893312,
+          "independent_strip_matches": true,
+          "build_id_preserved": true,
+          "signer_sha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "debuggable": false
+        },
+        {
+          "apk_sha256": "a4ee55b4aa7d2c3b8fa78ffd90a209fdd9c02f0073bd6f5fe1a1b2e9c92c6333",
+          "bytes": 39030913,
+          "abi": "x86_64",
+          "native": {
+            "sha256": "9a7e274f50ed558d03a001c5118915455453fd77510f56af19699efa92dd5e58",
+            "bytes": 9142616,
+            "build_id": "7fabcee50351e91dfd0a6d9e53ca09e6a1101502"
+          },
+          "packaged_native_sha256": "4e1170e9043098eef9fe449141537b04bf22777a50f88696d49997127721d3c4",
+          "packaged_native_bytes": 9142608,
+          "independent_strip_matches": true,
+          "build_id_preserved": true,
+          "signer_sha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "debuggable": false
+        }
+      ],
+      "upgrade_pids": [
+        6777,
+        9094,
+        9184
+      ],
+      "upgrade_phases_passed": [
+        "old seed",
+        "new guarded write and backup",
+        "cold read and independent backup restore"
+      ]
+    },
+    "fd": {
+      "build": "fd-release-02",
+      "seconds": 453.672,
+      "mapping_sha256": "f320a4b580397e40d0671345c08000101e50bf701a8a6329c1ca7bb3f8d90ae9",
+      "source_inputs": 5502,
+      "apks": [
+        {
+          "apk_sha256": "1fc1d0990074c6767e965135639189f33a3147169171fe1980fbfcbf32935c83",
+          "bytes": 34763407,
+          "abi": "arm64-v8a",
+          "native": {
+            "sha256": "30ce48b257e08ba64a9268a12fdae367cf357b65b4cf227da0562e34e52b3b71",
+            "bytes": 7665224,
+            "build_id": "f08c9651d946d943c0f696ca2ad9b4afa9cad5ad"
+          },
+          "packaged_native_sha256": "54cde21a744baabeaf798615622aefe6961d9261e7437ba9d69dca5f49f93f73",
+          "packaged_native_bytes": 7665216,
+          "independent_strip_matches": true,
+          "build_id_preserved": true,
+          "signer_sha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "debuggable": false
+        },
+        {
+          "apk_sha256": "832e5d6eaf97ab1626aedcf1ec208f47483861d724ec3865aafa683030ea8f0d",
+          "bytes": 32255239,
+          "abi": "armeabi-v7a",
+          "native": {
+            "sha256": "8af26d872503c6aafefb457bffd0446cc9c2bad7824fabf2a0dd497347b8d829",
+            "bytes": 5893316,
+            "build_id": "60fb8707bf3bb377b8c425c66c0f20a772bd20a9"
+          },
+          "packaged_native_sha256": "80d3b3689f8ed7a8fa7b77a2e8f4a39347639cc2b8e134c672e9af29906f282d",
+          "packaged_native_bytes": 5893312,
+          "independent_strip_matches": true,
+          "build_id_preserved": true,
+          "signer_sha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "debuggable": false
+        },
+        {
+          "apk_sha256": "6726a74d1145ed66d0daa0e8c149f20f2c1fb20afb61fe79e677141e5e6f294c",
+          "bytes": 36598401,
+          "abi": "x86_64",
+          "native": {
+            "sha256": "50d8bf3a231afa55c8283811a78db0ebceacc7b495a739484913c5d564c56f68",
+            "bytes": 9142680,
+            "build_id": "e1a02abd52da4afb69e480738a686ad0e8ceb634"
+          },
+          "packaged_native_sha256": "108cd53ffcedcb77841f491e26fdfecafaacde1a314ec58a263aee38de6241a7",
+          "packaged_native_bytes": 9142672,
+          "independent_strip_matches": true,
+          "build_id_preserved": true,
+          "signer_sha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "debuggable": false
+        }
+      ],
+      "upgrade_pids": [
+        4347,
+        9500,
+        9594
+      ],
+      "upgrade_phases_passed": [
+        "old seed",
+        "new guarded write and backup",
+        "cold read and independent backup restore"
+      ]
+    }
+  },
+  "upgrade_phases": {
+    "main": [
+      {
+        "phase": "seed",
+        "pid": 6777,
+        "passed": true,
+        "fixture_sha256": "52cbece77a7a7ef35437d84f4192ad11b18d04167f7713745ce61f6ff1511ad3"
+      },
+      {
+        "phase": "write",
+        "pid": 9094,
+        "passed": true,
+        "fixture_sha256": "d83ac552c318ac24c0e00a0c716b0033c3a5817669440fd21abbe9db072ccc89"
+      },
+      {
+        "phase": "cold",
+        "pid": 9184,
+        "passed": true,
+        "fixture_sha256": "d83ac552c318ac24c0e00a0c716b0033c3a5817669440fd21abbe9db072ccc89"
+      }
+    ],
+    "fd": [
+      {
+        "phase": "seed",
+        "pid": 4347,
+        "passed": true,
+        "fixture_sha256": "5384841eccf65dfc2c90b309fcb645c313a4bbf30180191d0a4d5a39276c8f7c"
+      },
+      {
+        "phase": "write",
+        "pid": 9500,
+        "passed": true,
+        "fixture_sha256": "7fde0f5578f4c4803555699f7384bfaf198b00e2649151ae4d6ea86661055355"
+      },
+      {
+        "phase": "cold",
+        "pid": 9594,
+        "passed": true,
+        "fixture_sha256": "7fde0f5578f4c4803555699f7384bfaf198b00e2649151ae4d6ea86661055355"
+      }
+    ]
+  },
+  "source_audit": {
+    "manifest_files_verified": 200,
+    "shared_files": [
+      {
+        "path": "app/src/androidTest/java/takagi/ru/monica/repository/MdbxPasswordEditorInstrumentedTest.kt",
+        "main_sha256": "10f5d04919b916cbb88e4b1cb28636af43cfbf1c92eba73749b2380b1828fd50",
+        "fd_sha256": "10f5d04919b916cbb88e4b1cb28636af43cfbf1c92eba73749b2380b1828fd50",
+        "normalized_sha256": "10f5d04919b916cbb88e4b1cb28636af43cfbf1c92eba73749b2380b1828fd50"
+      },
+      {
+        "path": "app/src/androidTest/java/takagi/ru/monica/ui/MdbxOrdinaryEditorUiTest.kt",
+        "main_sha256": "8994aef6c706e17baa96cdb85383bbe188cee5eb6b1aaa5fc25d50d2e94cc904",
+        "fd_sha256": "8994aef6c706e17baa96cdb85383bbe188cee5eb6b1aaa5fc25d50d2e94cc904",
+        "normalized_sha256": "061aa556f12e3ea48865bfb15f184935ebb51d81d26d0faa2ac49ade8e18233f"
+      },
+      {
+        "path": "app/src/main/java/takagi/ru/monica/repository/Mdbx2NativeReadSessions.kt",
+        "main_sha256": "2a5c1a9202fc2f6df7885108ee1183e40d245daebb090199040a0d8877ecd1d7",
+        "fd_sha256": "2a5c1a9202fc2f6df7885108ee1183e40d245daebb090199040a0d8877ecd1d7",
+        "normalized_sha256": "adecd657f405c93b776a5dc7a851e02c9816c64e169435272795b7a6372af3e7"
+      },
+      {
+        "path": "app/src/main/java/takagi/ru/monica/repository/Mdbx2VaultSessionExecutor.kt",
+        "main_sha256": "fc3c37abd2258c14cb97c454a5d2fa4f1b2ba1eb4db3e2cd6b2e4f28bec95924",
+        "fd_sha256": "fc3c37abd2258c14cb97c454a5d2fa4f1b2ba1eb4db3e2cd6b2e4f28bec95924",
+        "normalized_sha256": "17034c4b699334863bb4372acc2a06a9e81bb2cd65c25ce85adca60c77e27ff6"
+      },
+      {
+        "path": "app/src/main/java/takagi/ru/monica/repository/MdbxPasswordEditor.kt",
+        "main_sha256": "40b440061bc0060805ece5bf7c04c6a83d4c7ec7b177866364868d418003d3a7",
+        "fd_sha256": "40b440061bc0060805ece5bf7c04c6a83d4c7ec7b177866364868d418003d3a7",
+        "normalized_sha256": "40b440061bc0060805ece5bf7c04c6a83d4c7ec7b177866364868d418003d3a7"
+      },
+      {
+        "path": "app/src/main/java/takagi/ru/monica/repository/MdbxPasswordEditorPayload.kt",
+        "main_sha256": "f4601dd34fb3a05780df913991038cc8b3bf4aa94dba2a2d18e491eb4259f4b2",
+        "fd_sha256": "f4601dd34fb3a05780df913991038cc8b3bf4aa94dba2a2d18e491eb4259f4b2",
+        "normalized_sha256": "f760a72d2d2178f306cfe9676743b73008b5c31761326d32ad81d044a071952e"
+      },
+      {
+        "path": "app/src/main/java/takagi/ru/monica/repository/MdbxRepositoryFactory.kt",
+        "main_sha256": "3fad9826807a761874c9e03ab5c71a969d55635d78611016c6c268defc831d75",
+        "fd_sha256": "3fad9826807a761874c9e03ab5c71a969d55635d78611016c6c268defc831d75",
+        "normalized_sha256": "f3e1520123ca3f35126f8076143a2727331d5255c82cad8b93803cf8e3249738"
+      },
+      {
+        "path": "app/src/main/java/takagi/ru/monica/repository/PasswordRepository.kt",
+        "main_sha256": "ac0c8bc1f96c44072a84a0d019425da33a7bb55c6bc53fce85fd8b104abbb40b",
+        "fd_sha256": "ac0c8bc1f96c44072a84a0d019425da33a7bb55c6bc53fce85fd8b104abbb40b",
+        "normalized_sha256": "0f9f065b3224f779b0f436b2b282b6b1cc70aa72b455474b6137e1ead6797761"
+      },
+      {
+        "path": "app/src/main/java/takagi/ru/monica/ui/screens/AddEditPasswordScreen.kt",
+        "main_sha256": "d560f737d4455d13e1bd7655a3d54d6d4795a8dfcb1f25a8aabd7dc237db97a0",
+        "fd_sha256": "d560f737d4455d13e1bd7655a3d54d6d4795a8dfcb1f25a8aabd7dc237db97a0",
+        "normalized_sha256": "bff9fcd1e42b9d4a0578084e074783c6a64d2b87eb1cf340f861435435e45df1"
+      },
+      {
+        "path": "app/src/main/java/takagi/ru/monica/viewmodel/MdbxViewModel.kt",
+        "main_sha256": "48af0c5801c86e52a89eced5f1b3c67673cd571a1e9e41c68ac32fc7146a15e5",
+        "fd_sha256": "48af0c5801c86e52a89eced5f1b3c67673cd571a1e9e41c68ac32fc7146a15e5",
+        "normalized_sha256": "d5f41c15627b6590fd1bd8c2edb55cd55aeee19197bbec2dc81af3dd44b4f437"
+      },
+      {
+        "path": "app/src/main/java/takagi/ru/monica/viewmodel/PasswordViewModel.kt",
+        "main_sha256": "920076b330a427c303bea1770ed08adce2b45597d2702dbde64a6231e482e702",
+        "fd_sha256": "920076b330a427c303bea1770ed08adce2b45597d2702dbde64a6231e482e702",
+        "normalized_sha256": "edb9ef0e4cd6a01ac5919fa7e302676d074d6a3d59ed8927aba872166beebb11"
+      },
+      {
+        "path": "app/src/test/java/takagi/ru/monica/repository/MdbxPasswordEditorPayloadTest.kt",
+        "main_sha256": "1994631e39f8017898f7c95df7b1b06fc525f24a63211caac08a390ddbfac01f",
+        "fd_sha256": "1994631e39f8017898f7c95df7b1b06fc525f24a63211caac08a390ddbfac01f",
+        "normalized_sha256": "579c7e7b391612ea262dce09aa172795b5794f360bb1e0623c53fb70d38346f5"
+      },
+      {
+        "path": "app/src/test/java/takagi/ru/monica/viewmodel/MdbxPasswordObjectIdRegressionGuardTest.kt",
+        "main_sha256": "aaa65cc35716377dbb743cd403d3c6baa51c698840e41e7a3d507b4314deb419",
+        "fd_sha256": "aaa65cc35716377dbb743cd403d3c6baa51c698840e41e7a3d507b4314deb419",
+        "normalized_sha256": "300ce3bb14e254aebdb9febc1027da85ef8be2abf68b2c301b18fa1e2d8bb201"
+      },
+      {
+        "path": "app/src/test/java/takagi/ru/monica/viewmodel/MultiPasswordSaveRegressionGuardTest.kt",
+        "main_sha256": "63e345b64c1d497178be1765a115cc9f0152e4b0e7b217092d56ccbc1418b60c",
+        "fd_sha256": "63e345b64c1d497178be1765a115cc9f0152e4b0e7b217092d56ccbc1418b60c",
+        "normalized_sha256": "e93571caaed86dba438d02af6193de94a7375db4d33e8d86ffbb9f03d94e7b0e"
+      },
+      {
+        "path": "mdbx-engine/src/main/java/uniffi/mdbx_ffi/mdbx_ffi.kt",
+        "main_sha256": "e27bb26dc7da9e8e8c4461c2d12665e2d432f30b67c79b60f5d8358c8205600e",
+        "fd_sha256": "e27bb26dc7da9e8e8c4461c2d12665e2d432f30b67c79b60f5d8358c8205600e",
+        "normalized_sha256": "e27bb26dc7da9e8e8c4461c2d12665e2d432f30b67c79b60f5d8358c8205600e"
+      },
+      {
+        "path": "mdbx-engine/patches/native-editor-328.patch",
+        "main_sha256": "663540935cd222a4c38c1b74594e4c247bc85d2ddbe247c2d2eb9a049105ab95",
+        "fd_sha256": "663540935cd222a4c38c1b74594e4c247bc85d2ddbe247c2d2eb9a049105ab95",
+        "normalized_sha256": "663540935cd222a4c38c1b74594e4c247bc85d2ddbe247c2d2eb9a049105ab95"
+      },
+      {
+        "path": "mdbx-engine/MDBX3_RUNTIME_PROVENANCE.json",
+        "main_sha256": "acae6745cd50cd18a1b641dadbe6e2ba9f4c0e7903879068230fe345a93068ff",
+        "fd_sha256": "acae6745cd50cd18a1b641dadbe6e2ba9f4c0e7903879068230fe345a93068ff",
+        "normalized_sha256": "4598271ec1000b9cbf7d40007a318ec220004a46a81af123b0241ab306da3dbc"
+      }
+    ],
+    "patch_applies_and_matches": [
+      "crates/mdbx-ffi/src/lib.rs",
+      "crates/mdbx-ffi/src/tests.rs",
+      "crates/mdbx-ffi/src/write_facade.rs",
+      "crates/mdbx-ffi/src/guarded_write_facade.rs",
+      "crates/mdbx-ffi/tests/guarded_editor.rs"
+    ],
+    "debug_input_differences": {
+      "main": [],
+      "fd": []
+    },
+    "binding_difference": "Both final Debug and Release builds use unchanged final production/test/binding/provenance inputs."
+  },
+  "metadata_scripts_passed": 6,
+  "cleanup": {
+    "complete": true,
+    "current_user": 0,
+    "owned_user_removed": 10,
+    "original_user_package_list_unchanged": true,
+    "original_release_apk_hashes_restored": {
+      "takagi.ru.monica.bwca328main": "d1ca3cb0acdf04329332e1ab5cf4ba7e84c4b17338a069e227a23bc6b65508ac",
+      "takagi.ru.monica.bwca328fd": "709fc45f061f3feb8cf0e0c369063635e90206d9381fcb031e1bdf257af33eff"
+    },
+    "vm_index": 2,
+    "vm_stopped": true,
+    "vm_disks_preserved": true,
+    "public_avd_configuration_preserved": true,
+    "original_user_data_cleared": false,
+    "initial_remove_user_failed": true,
+    "cleanup_retry": "Confirmed current user0 and stopped user10, then retry succeeded; initial18.txt retained"
+  },
+  "limitations": [
+    "synthetic API35 x86_64 only; ARM build and symbol/hash verification only",
+    "Release crypto/native API probe, Debug ordinary editor UI",
+    "nine historical source guard failures retained",
+    "no physical device, OEM, real cloud or power-cut verification",
+    "no all-mutation-route redesign or large-vault performance claim"
+  ],
+  "builds": {
+    "main-debug-05": {
+      "seconds": 99.983,
+      "timing_basis": "driver wall time",
+      "receipt_recovered": false,
+      "exit": 0,
+      "inputsUnchanged": true,
+      "artifacts": [
+        {
+          "file": "Monica-Android-arm64-v8a-1.0.328-26111712-02.APK",
+          "sha256": "3dcd885f90992bf4517073559478f6452d9466e9fb4e5ee83e654ae36d9edfbc",
+          "bytes": 94631855
+        },
+        {
+          "file": "Monica-Android-armeabi-v7a-1.0.328-26111712-02.APK",
+          "sha256": "e86df9f108822605c7ebe6d207ff5f97682a4294035d8b530c70f99f16b6e609",
+          "bytes": 92123687
+        },
+        {
+          "file": "Monica-Android-x86_64-1.0.328-26111712-02.APK",
+          "sha256": "9dbd5a5c32f836b21fa7dcd86d36ceebe3780ae07eaa62c721ed16cf823447ee",
+          "bytes": 96466849
+        },
+        {
+          "file": "app-debug-androidTest.apk",
+          "sha256": "78b29e73699393cea4662ccd55aae4a3dd36983db150a99bbfb136d06fb19798",
+          "bytes": 12228049
+        }
+      ]
+    },
+    "fd-debug-03": {
+      "seconds": 135.978,
+      "timing_basis": "driver wall time",
+      "receipt_recovered": false,
+      "exit": 0,
+      "inputsUnchanged": true,
+      "artifacts": [
+        {
+          "file": "Monica-Android-arm64-v8a-1.0.328.apk",
+          "sha256": "d01a06f330004705c187eecd7c08a0230fadcdb912c898bffbd602bffd948c91",
+          "bytes": 90496199
+        },
+        {
+          "file": "Monica-Android-armeabi-v7a-1.0.328.apk",
+          "sha256": "f3304bc63bae49d7c982d5b48c0c01d04bae44dd9b17acec5ccc22fb4eb0c383",
+          "bytes": 93475675
+        },
+        {
+          "file": "Monica-Android-x86_64-1.0.328.apk",
+          "sha256": "b13941859c3bf0a4342389a5e7ec91c7ced0d9599d4e954ace63a31e9ee5a6ce",
+          "bytes": 93792249
+        },
+        {
+          "file": "app-debug-androidTest.apk",
+          "sha256": "072c1c862871f5b48c92a372b58301f7051de74beb21d967a9e2ea9f85894152",
+          "bytes": 11320563
+        }
+      ]
+    },
+    "main-release-03": {
+      "seconds": 373,
+      "timing_basis": "Gradle BUILD SUCCESSFUL duration; driver total unavailable after disk-full evidence copy",
+      "receipt_recovered": true,
+      "exit": 0,
+      "inputsUnchanged": true,
+      "artifacts": [
+        {
+          "file": "Monica-Android-arm64-v8a-1.0.328-26111712-02.APK",
+          "sha256": "8596d83531558907058c9cdf224375e7f63122645a80bb5e62afa71444835a61",
+          "bytes": 37195919
+        },
+        {
+          "file": "Monica-Android-armeabi-v7a-1.0.328-26111712-02.APK",
+          "sha256": "209685f18e1b3fed36c25c2e669891a9d21b721259bb94df473602db38e77f0e",
+          "bytes": 34687751
+        },
+        {
+          "file": "Monica-Android-x86_64-1.0.328-26111712-02.APK",
+          "sha256": "a4ee55b4aa7d2c3b8fa78ffd90a209fdd9c02f0073bd6f5fe1a1b2e9c92c6333",
+          "bytes": 39030913
+        }
+      ]
+    },
+    "fd-release-02": {
+      "seconds": 453.672,
+      "timing_basis": "driver wall time",
+      "receipt_recovered": false,
+      "exit": 0,
+      "inputsUnchanged": true,
+      "artifacts": [
+        {
+          "file": "Monica-Android-arm64-v8a-1.0.328.apk",
+          "sha256": "1fc1d0990074c6767e965135639189f33a3147169171fe1980fbfcbf32935c83",
+          "bytes": 34763407
+        },
+        {
+          "file": "Monica-Android-armeabi-v7a-1.0.328.apk",
+          "sha256": "832e5d6eaf97ab1626aedcf1ec208f47483861d724ec3865aafa683030ea8f0d",
+          "bytes": 32255239
+        },
+        {
+          "file": "Monica-Android-x86_64-1.0.328.apk",
+          "sha256": "6726a74d1145ed66d0daa0e8c149f20f2c1fb20afb61fe79e677141e5e6f294c",
+          "bytes": 36598401
+        }
+      ]
+    }
+  }
+}

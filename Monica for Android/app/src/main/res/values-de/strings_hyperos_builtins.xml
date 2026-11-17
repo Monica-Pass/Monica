@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_diagnostics_title">"Konfiguration prüfen"</string>
+    <string name="hyperos_diagnostics_note">"Prüft Dienste und Auswahl, nicht die erfolgreiche Passkey-Nutzung. Sichere Einstellungen erfordern autorisiertes Shizuku oder root."</string>
+    <string name="hyperos_diag_declaration">"Gültiger Monica-Dienst mit Passkey-Unterstützung"</string>
+    <string name="hyperos_diag_feature">"Anmeldedatenfunktion des Systems verfügbar"</string>
+    <string name="hyperos_diag_unrestricted">"Autofill für diesen Android-Nutzer erlaubt"</string>
+    <string name="hyperos_diag_framework">"System erkennt Monica als aktiviert"</string>
+    <string name="hyperos_diag_registered">"Monica als Anmeldedatendienst eingetragen"</string>
+    <string name="hyperos_drift_title">"Änderungen nach Reparatur erkennen"</string>
+    <string name="hyperos_drift_note">"Prüft alle 30 Sekunden bei sichtbarer Seite und beim erneuten Öffnen. Schreibt niemals automatisch Einstellungen."</string>
+    <string name="hyperos_drift_result">"Vergleich mit letzter geprüfter Reparatur"</string>
+    <string name="hyperos_drift_off">"Erkennung aus"</string>
+    <string name="hyperos_drift_no_baseline">"Zuerst eine Konfiguration anwenden, um einen Vergleichswert zu speichern."</string>
+    <string name="hyperos_drift_unchanged">"Konfiguration unverändert"</string>
+    <string name="hyperos_drift_changed">"Konfiguration geändert. Vielleicht haben Sie den Manager selbst gewechselt. Vor Wiederherstellung prüfen."</string>
+    <string name="hyperos_update_failed">"Speichern fehlgeschlagen. Aktualisieren und Zustand prüfen."</string>
+    <string name="hyperos_check_yes">"Ja"</string>
+    <string name="hyperos_check_no">"Nein"</string>
+    <string name="hyperos_check_unsupported">"Nicht unterstützt"</string>
+    <string name="hyperos_module_title">"Optionales Kompatibilitätsmodul"</string>
+    <string name="hyperos_module_requirements">"Benötigt kompatibles LSPosed API 102+, Android 14–16 und den Hauptnutzer eines Xiaomi/Redmi/POCO. Monica und benötigte Bereiche im Framework aktivieren. Alle Optionen sind anfangs aus."</string>
+    <string name="hyperos_module_connected">"Framework verbunden; dies beweist keine funktionierenden Hooks."</string>
+    <string name="hyperos_module_disconnected">"Kompatibles Framework nicht verfügbar"</string>
+    <string name="hyperos_module_scope">"Freigegebene Bereiche: %1$s"</string>
+    <string name="hyperos_hook_reset">"Zurücksetzen durch Sicherheitscenter blockieren"</string>
+    <string name="hyperos_hook_reset_note">"Fängt nur erkannte Konfigurationsmethoden für Anmeldedaten ab."</string>
+    <string name="hyperos_hook_settings">"Systemauswahl kompatibel machen"</string>
+    <string name="hyperos_hook_settings_note">"Passt erkannte Einstellungscontroller an; inkompatible Methoden behalten das Systemverhalten."</string>
+    <string name="hyperos_hook_chooser">"Google-Anmeldedatenauswahl"</string>
+    <string name="hyperos_hook_chooser_note">"Benötigt eine aktivierte Systemauswahl der Google Play-Dienste."</string>
+    <string name="hyperos_hook_hybrid">"Geräteübergreifende Anmeldedaten"</string>
+    <string name="hyperos_hook_hybrid_note">"Verwendet den geprüften Google-Hybriddienst und die Xiaomi-Scannerroute."</string>
+    <string name="hyperos_module_restart">"Nach Aktivierung betroffene Prozesse oder das Gerät selbst neu starten. Beim Ausschalten enden Eingriffe, sobald das Framework die Änderung liefert. Kein automatischer Neustart."</string>
+    <string name="hyperos_physical_feedback">"Nicht auf physischen HyperOS-Geräten getestet. ROM-Version und Schritte bitte als GitHub-Issue melden; keine Passwörter oder Schlüssel."</string>
+    <string name="hyperos_reference_projects">"Referenzprojekt und Lizenz"</string>
+    <string name="hyperos_module_confirmation">"Experimentelle Änderung des Systemverhaltens aktivieren? Kompatibles Framework und Zielkomponenten erforderlich. Kann andere Passwortmanager beeinflussen. Hier oder im Framework deaktivierbar."</string>
+    <string name="hyperos_feedback_action">"Kompatibilitätsproblem melden"</string>
+    <string name="hyperos_module_entry_note">"Standardmäßig aus · Kompatibles LSPosed erforderlich"</string>
+</resources>

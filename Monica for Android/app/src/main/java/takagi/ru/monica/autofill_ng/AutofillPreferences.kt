@@ -31,6 +31,7 @@ class AutofillPreferences(private val context: Context) {
         LOCAL,
         KEEPASS,
         BITWARDEN,
+        MDBX,
     }
 
     
@@ -63,6 +64,7 @@ class AutofillPreferences(private val context: Context) {
         private val KEY_V2_DEFAULT_SOURCE_FILTER = stringPreferencesKey("v2_default_source_filter")
         private val KEY_V2_DEFAULT_KEEPASS_DATABASE_ID = longPreferencesKey("v2_default_keepass_database_id")
         private val KEY_V2_DEFAULT_BITWARDEN_VAULT_ID = longPreferencesKey("v2_default_bitwarden_vault_id")
+        private val KEY_V2_DEFAULT_MDBX_DATABASE_ID = longPreferencesKey("v2_default_mdbx_database_id")
 
         // 内联建议（输入法候选栏内嵌自动填充）
         private val KEY_INLINE_SUGGESTIONS_ENABLED = booleanPreferencesKey("inline_suggestions_enabled")
@@ -320,6 +322,48 @@ class AutofillPreferences(private val context: Context) {
         }
     }
 
+    /** Read source and its ID from one DataStore version, including legacy keys. */
+    val v2DefaultScope: Flow<AutofillScope> = context.dataStore.data.map(::readV2DefaultScope)
+
+    private fun readV2DefaultScope(preferences: Preferences): AutofillScope {
+        val source = runCatching {
+            AutofillDefaultSourceFilter.valueOf(preferences[KEY_V2_DEFAULT_SOURCE_FILTER].orEmpty())
+        }.getOrDefault(AutofillDefaultSourceFilter.ALL)
+        return source.toAutofillScope(preferences[KEY_V2_DEFAULT_KEEPASS_DATABASE_ID],
+            preferences[KEY_V2_DEFAULT_BITWARDEN_VAULT_ID], preferences[KEY_V2_DEFAULT_MDBX_DATABASE_ID])
+    }
+
+    suspend fun setV2DefaultScope(scope: AutofillScope) {
+        context.dataStore.edit { preferences ->
+            writeV2DefaultScope(preferences, scope)
+        }
+    }
+
+    private fun writeV2DefaultScope(preferences: androidx.datastore.preferences.core.MutablePreferences,
+        scope: AutofillScope) {
+        preferences[KEY_V2_DEFAULT_SOURCE_FILTER] = scope.toDefaultSourceFilter().name
+        preferences.remove(KEY_V2_DEFAULT_KEEPASS_DATABASE_ID)
+        preferences.remove(KEY_V2_DEFAULT_BITWARDEN_VAULT_ID)
+        preferences.remove(KEY_V2_DEFAULT_MDBX_DATABASE_ID)
+        when (scope) {
+            is AutofillScope.KeePass -> scope.databaseId?.let { preferences[KEY_V2_DEFAULT_KEEPASS_DATABASE_ID] = it }
+            is AutofillScope.Bitwarden -> scope.vaultId?.let { preferences[KEY_V2_DEFAULT_BITWARDEN_VAULT_ID] = it }
+            is AutofillScope.Mdbx -> scope.databaseId?.let { preferences[KEY_V2_DEFAULT_MDBX_DATABASE_ID] = it }
+            AutofillScope.All, AutofillScope.Local -> Unit
+        }
+    }
+
+    /** A late database callback must not restore a source the user has already left. */
+    suspend fun selectV2DefaultDatabase(source: AutofillDefaultSourceFilter, databaseId: Long?) {
+        context.dataStore.edit { preferences ->
+            if (readV2DefaultScope(preferences).toDefaultSourceFilter() == source) {
+                writeV2DefaultScope(preferences, source.toAutofillScope(databaseId, databaseId, databaseId))
+            }
+        }
+    }
+
+    val v2DefaultMdbxDatabaseId: Flow<Long?> = context.dataStore.data.map { it[KEY_V2_DEFAULT_MDBX_DATABASE_ID] }
+
     val v2DefaultSourceFilter: Flow<AutofillDefaultSourceFilter> = context.dataStore.data.map { preferences ->
         val name = preferences[KEY_V2_DEFAULT_SOURCE_FILTER] ?: AutofillDefaultSourceFilter.ALL.name
         runCatching { AutofillDefaultSourceFilter.valueOf(name) }
@@ -335,9 +379,9 @@ class AutofillPreferences(private val context: Context) {
     /** A deliberate settings choice updates the source and its dependent filters together. */
     suspend fun selectV2DefaultSourceFilter(filter: AutofillDefaultSourceFilter) {
         context.dataStore.edit { preferences ->
-            preferences[KEY_V2_DEFAULT_SOURCE_FILTER] = filter.name
-            if (filter != AutofillDefaultSourceFilter.KEEPASS) preferences.remove(KEY_V2_DEFAULT_KEEPASS_DATABASE_ID)
-            if (filter != AutofillDefaultSourceFilter.BITWARDEN) preferences.remove(KEY_V2_DEFAULT_BITWARDEN_VAULT_ID)
+            writeV2DefaultScope(preferences, filter.toAutofillScope(
+                preferences[KEY_V2_DEFAULT_KEEPASS_DATABASE_ID], preferences[KEY_V2_DEFAULT_BITWARDEN_VAULT_ID],
+                preferences[KEY_V2_DEFAULT_MDBX_DATABASE_ID]))
         }
     }
 

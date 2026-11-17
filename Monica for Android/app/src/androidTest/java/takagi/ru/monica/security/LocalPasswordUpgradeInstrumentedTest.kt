@@ -24,7 +24,10 @@ import takagi.ru.monica.rustcore.RustBitwardenKdfCore
 
 /** Isolated synthetic legacy credentials, seeded independently of all new enrollment/KDF helpers. */
 class LocalPasswordUpgradeInstrumentedTest {
-    private class Fixture(profile: PasswordKdf.Profile = PasswordKdf.LEGACY) : AutoCloseable {
+    internal class Fixture(
+        profile: PasswordKdf.Profile = PasswordKdf.LEGACY,
+        val password: String = "  Synthetic 旧密码🔑e\u0301  ",
+    ) : AutoCloseable {
         val base = InstrumentationRegistry.getInstrumentation().targetContext
         val prefix = "local-kdf-upgrade-${UUID.randomUUID()}-"
         val root = File(base.cacheDir, prefix).apply { check(mkdirs()) }
@@ -39,7 +42,6 @@ class LocalPasswordUpgradeInstrumentedTest {
             }
         }
         val recovery = LocalVaultRecovery(context)
-        val password = "  Synthetic 旧密码🔑e\u0301  "
         val mdk = ByteArray(32) { (it + 0x41).toByte() }
         val recordPlain = "Synthetic existing record\u0000密码/OTP"
         val record = File(root, "record.ciphertext")

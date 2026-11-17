@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="filter_mdbx">MDBX</string>
+    <string name="autofill_v2_default_mdbx_title">Cơ sở dữ liệu MDBX mặc định</string>
+    <string name="autofill_v2_default_mdbx_desc">Giới hạn các gợi ý mặc định và mục trong danh sách trong một cơ sở dữ liệu MDBX.</string>
+</resources>

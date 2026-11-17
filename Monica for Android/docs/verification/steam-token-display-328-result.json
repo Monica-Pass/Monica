@@ -1,0 +1,187 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.328",
+  "published": false,
+  "rootCause": "steam:// parsers trimmed legal Base64 '/' characters, changing the key used by the actual Steam card adapter and shared OTP renderer while direct Steam copying used the intact key.",
+  "fix": "Preserve the full Base64 payload in the shared resolver and maFile steam:// parser; no alphabet, algorithm, URI priority, database format or encryption changes.",
+  "sharedFiles": [
+    {
+      "path": "app/src/main/java/takagi/ru/monica/util/TotpDataResolver.kt",
+      "sha256": "da972a8e557afb1966315106fb867cf8d625e53f4728e83c928b56bb9ee1a1e9"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/steam/importer/SteamMaFileParser.kt",
+      "sha256": "bff7e979dd2e407f636ad46e710dcacca047cc89c4f73d1d89836c4d58a2e14c"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/steam/SteamTokenDisplayParityTest.kt",
+      "sha256": "4981ed269cea8b21888ec8ce94656958795a6de5a791bdbaa83f0a72b78c3451"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/steam/SteamTokenDisplayInstrumentedTest.kt",
+      "sha256": "55c63c30c5e32d01ae6733429d827e799150dce053b7c4a9f591ae752eb7bb95"
+    }
+  ],
+  "editions": {
+    "main": {
+      "jvm": [
+        {
+          "class": "takagi.ru.monica.steam.SteamCoreAlgorithmsTest",
+          "tests": 3,
+          "seconds": 0.047
+        },
+        {
+          "class": "takagi.ru.monica.steam.SteamMaFileParserTest",
+          "tests": 17,
+          "seconds": 0.457
+        },
+        {
+          "class": "takagi.ru.monica.steam.SteamTokenDisplayParityTest",
+          "tests": 5,
+          "seconds": 3.212
+        },
+        {
+          "class": "takagi.ru.monica.util.TotpDataResolverTest",
+          "tests": 8,
+          "seconds": 0.018
+        }
+      ],
+      "jvmTotal": 33,
+      "buildSeconds": 78.107,
+      "deviceMethods": 1,
+      "device": {
+        "command": [
+          "D:/AndroidSDK/platform-tools/adb.exe",
+          "-s",
+          "127.0.0.1:16448",
+          "shell",
+          "am",
+          "instrument",
+          "--user",
+          "10",
+          "-w",
+          "-r",
+          "-e",
+          "issue179User",
+          "10",
+          "-e",
+          "class",
+          "takagi.ru.monica.steam.SteamTokenDisplayInstrumentedTest",
+          "takagi.ru.monica.perf328main.test/androidx.test.runner.AndroidJUnitRunner"
+        ],
+        "passed": true,
+        "appSha256": "f0c9725c1c449883b90b1f51c1398a85bd401df5d146c154cf1e92372c9a189a",
+        "testSha256": "9045aa920cb642df64cd959a854813853a1a387f369481c898127200d0e3dcb0",
+        "seconds": 5.007
+      }
+    },
+    "fd": {
+      "jvm": [
+        {
+          "class": "takagi.ru.monica.steam.SteamCoreAlgorithmsTest",
+          "tests": 3,
+          "seconds": 0.054
+        },
+        {
+          "class": "takagi.ru.monica.steam.SteamMaFileParserTest",
+          "tests": 17,
+          "seconds": 0.489
+        },
+        {
+          "class": "takagi.ru.monica.steam.SteamTokenDisplayParityTest",
+          "tests": 5,
+          "seconds": 4.442
+        },
+        {
+          "class": "takagi.ru.monica.util.TotpDataResolverTest",
+          "tests": 8,
+          "seconds": 0.021
+        }
+      ],
+      "jvmTotal": 33,
+      "buildSeconds": 116.129,
+      "deviceMethods": 1,
+      "device": {
+        "command": [
+          "D:/AndroidSDK/platform-tools/adb.exe",
+          "-s",
+          "127.0.0.1:16448",
+          "shell",
+          "am",
+          "instrument",
+          "--user",
+          "10",
+          "-w",
+          "-r",
+          "-e",
+          "issue179User",
+          "10",
+          "-e",
+          "class",
+          "takagi.ru.monica.steam.SteamTokenDisplayInstrumentedTest",
+          "takagi.ru.monica.perf328fd.test/androidx.test.runner.AndroidJUnitRunner"
+        ],
+        "passed": true,
+        "appSha256": "e7c4247a3e30d0941c112e92241acbf973aeba94d55d35952ab3b3137611745d",
+        "testSha256": "2730fbd792c5030b9b0f0be86131995519f93deaf9d73a119fac1e627c8ef67a",
+        "seconds": 4.479
+      }
+    }
+  },
+  "independentSyntheticVectors": [
+    {
+      "base64": "/wECAwQFBgcICQoLDA0ODxAREhM=",
+      "base32": "74AQEAYEAUDAOCAJBIFQYDIOB4IBCEQT",
+      "unixSeconds": 1700000000,
+      "code": "PMRRM",
+      "nextCode": "433DY"
+    },
+    {
+      "base64": "//8CAwQFBgcICQoLDA0ODxAREhM=",
+      "unixSeconds": 1700000000,
+      "code": "CKKRC"
+    },
+    {
+      "base64": "AQIDBAUGBwgJCgsMDQ4PEBESExT/",
+      "unixSeconds": 1700000000,
+      "code": "8QWVM"
+    }
+  ],
+  "originalFailures": [
+    "main-jvm-red01/red01.xml: actual SteamScreen adapter produced FTHVB instead of independently calculated PMRRM; direct Steam generator returned PMRRM.",
+    "main-device-red01: previous frozen production APK with new test APK failed the expected PM RRM display assertion after actual synthetic maFile import; same test APK passed after replacing only the application APK."
+  ],
+  "limitations": [
+    "Synthetic keys only; reported specific codes and lowercase lettering were not independently reproduced. User said the lowercase code was probably transcribed; complete user version is unknown.",
+    "MuMu API35/x86_64/Debug only; no real maFile, Watt Toolkit execution, Steam account/network, physical/OEM device or new R8 upgrade validation.",
+    "Device test invokes the production import ViewModel with a file URI, encrypted repository reload and actual private card adapters. It renders two real TotpCodeCard components with fixed time. It does not cover the complete SteamScreen route or system file picker.",
+    "Copy assertions inspect component callback values and a long-click callback using the production SteamTotp algorithm; OS clipboard contents are not independently tested.",
+    "Imported Session:null/fully_enrolled:false remains code-only; this fix does not create login approval or confirmation permissions."
+  ],
+  "cleanup": {
+    "originalUser0Preserved": true,
+    "ownedUser10Removed": true,
+    "vmStopped": true,
+    "vmDiskDirectoryPreserved": true
+  },
+  "noCommitPushReleaseApkDelivery": true,
+  "validation": {
+    "fdroidMetadata": {
+      "passed": true,
+      "command": "python scripts/check-fdroid-release.py",
+      "version": "1.0.328",
+      "versionCode": 35
+    },
+    "releaseScriptTests": {
+      "passed": true,
+      "command": "python scripts/test_fdroid_release.py",
+      "tests": 6,
+      "seconds": 0.06
+    },
+    "gitDiffCheck": {
+      "main": true,
+      "fd": true
+    },
+    "newFilesTrailingWhitespace": true
+  }
+}

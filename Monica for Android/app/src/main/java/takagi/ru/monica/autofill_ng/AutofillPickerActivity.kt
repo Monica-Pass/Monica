@@ -13,6 +13,8 @@ import android.view.autofill.AutofillId
 import android.view.autofill.AutofillValue
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -36,11 +38,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import takagi.ru.monica.data.PasswordDatabase
 import takagi.ru.monica.data.PasswordEntry
-import takagi.ru.monica.repository.PasswordRepository
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.ui.theme.MonicaTheme
 
 class AutofillPickerActivity : ComponentActivity() {
+    private var selectionReadStarted = false
+    private var requestRevoked = false
 
     companion object {
         const val EXTRA_PASSWORD_IDS = "extra_password_ids"
@@ -76,7 +79,6 @@ class AutofillPickerActivity : ComponentActivity() {
 
         val passwordIds = intent.getLongArrayExtra(EXTRA_PASSWORD_IDS) ?: longArrayOf()
         val database = PasswordDatabase.getDatabase(applicationContext)
-        val repository = PasswordRepository(database.passwordEntryDao())
 
         setContent {
             MonicaTheme {
@@ -84,7 +86,10 @@ class AutofillPickerActivity : ComponentActivity() {
                 var loading by remember { mutableStateOf(true) }
 
                 LaunchedEffect(passwordIds.contentHashCode()) {
-                    passwords = repository.getPasswordsByIds(passwordIds.toList())
+                    passwords = passwordIds.distinct().mapNotNull { id ->
+                        (AutofillRoomCredentialReader.read(database, id)
+                            as? AutofillRoomCredentialReader.Result.Available)?.entry
+                    }
                     loading = false
                 }
 
@@ -101,6 +106,30 @@ class AutofillPickerActivity : ComponentActivity() {
     }
 
     private fun handleSelection(password: PasswordEntry) {
+        if (AutofillPasswordSource.isNativeId(password.id) || password.mdbxDatabaseId != null) {
+            setResult(Activity.RESULT_CANCELED)
+            finish()
+            return
+        }
+        if (selectionReadStarted || requestRevoked) return
+        selectionReadStarted = true
+        val generation = SecurityManager.dataReadGeneration.value
+        lifecycleScope.launch {
+            val current = (AutofillRoomCredentialReader.read(
+                PasswordDatabase.getDatabase(applicationContext), password.id)
+                as? AutofillRoomCredentialReader.Result.Available)?.entry
+            if (current == null || current != password || requestRevoked || isFinishing || isDestroyed ||
+                SecurityManager.dataReadGeneration.value != generation ||
+                !lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED)) {
+                setResult(Activity.RESULT_CANCELED)
+                finish()
+                return@launch
+            }
+            publishSelection(current)
+        }
+    }
+
+    private fun publishSelection(password: PasswordEntry) {
         val responseAuthMode = intent.getBooleanExtra("extra_response_auth_mode", false)
         val dataset = createDatasetForPassword(password)
         val authResult: android.os.Parcelable = if (responseAuthMode) {
@@ -116,6 +145,18 @@ class AutofillPickerActivity : ComponentActivity() {
             putExtra(RESULT_PASSWORD_ID, password.id)
         }
         setResult(Activity.RESULT_OK, resultIntent)
+        finish()
+    }
+
+    override fun onStop() {
+        if (selectionReadStarted) requestRevoked = true
+        super.onStop()
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        requestRevoked = true
+        setResult(Activity.RESULT_CANCELED)
         finish()
     }
 

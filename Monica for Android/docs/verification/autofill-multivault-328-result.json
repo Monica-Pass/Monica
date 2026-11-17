@@ -1,0 +1,1432 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.328",
+  "edition": "main",
+  "versionCode": 12,
+  "releaseStatus": "unreleased",
+  "verificationStatus": "All listed functional, upgrade and entry phases have passing evidence; original failures retained; environment cleanup pending root confirmation",
+  "generatedUtc": "2026-11-16T05:25:40.865267+00:00",
+  "environment": {
+    "kind": "isolated synthetic MuMu emulator",
+    "api": 35,
+    "abi": "x86_64",
+    "userVaultsUsed": false,
+    "realCloudUsed": false,
+    "productionSignedUpgrade": false
+  },
+  "jvm": [
+    {
+      "label": "main-debug-02",
+      "suites": 161,
+      "tests": 865,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "failuresDetail": [],
+      "casesSha256": "0c1019ca5c0d39c67c948d5324d55e03f47b40f1597c7d02a914b7b102bedbe4",
+      "summarySha256": "2f19b5ab8faa0aec3863452a1d366d464fce5707083b5199f98ae415db24a1a3",
+      "xmlManifestSha256": "2cf06d2e2af91cb283ea578d0c0749fe8e509f99344332e7cd3ea8eb55758c52"
+    },
+    {
+      "label": "main-debug-03",
+      "suites": 161,
+      "tests": 867,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "failuresDetail": [],
+      "casesSha256": "7c4a686fabfc8a4a1111d36f9423839f9ce558c61f3423d0c3a4784d300f94b1",
+      "summarySha256": "f6c92dca9bd8d588ff572400ec72420a85676279ef36d31cc33562339d698426",
+      "xmlManifestSha256": "d77c9db81ceacc2244707d3165f2dab96195898eb88f00c2f5a1b062f4e9ca24"
+    },
+    {
+      "label": "main-jvm-final01",
+      "suites": 211,
+      "tests": 1097,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "failuresDetail": [],
+      "casesSha256": "65a5f0b117d2661edabae27e88a471b652b454b9aa62f121cd6df21ee33d4aed",
+      "summarySha256": "c9a6abf156b5f6ef561305cbbaf263c9d1bfd2caca17fe8c53abb6f876305c6e",
+      "xmlManifestSha256": "4c59dddc187e97c50d9de1872d1c6b3df1cc700fedca81a04efe0a9eea8f7a50"
+    }
+  ],
+  "builds": [
+    {
+      "label": "main-debug-01",
+      "edition": "main",
+      "exit": 1,
+      "seconds": 423.407,
+      "tasks": [
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:testDebugUnitTest"
+      ],
+      "testFilterArgs": [
+        "--tests",
+        "*Autofill*",
+        "--tests",
+        "*Mdbx*",
+        "--tests",
+        "*Wallet*",
+        "--tests",
+        "*Structured*",
+        "--tests",
+        "*KeePass*",
+        "--tests",
+        "*Keepass*"
+      ],
+      "receiptSha256": "7c1d1866e2dee5b65706daf0baa5fc83adcfe162153179e8025807eb1f2c9937",
+      "logSha256": "c814ccbc28b8325f884357269bb1310f3ee8aeda9d1229f3235de6188a0ed064"
+    },
+    {
+      "label": "main-debug-02",
+      "edition": "main",
+      "exit": 0,
+      "seconds": 487.089,
+      "tasks": [
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:testDebugUnitTest"
+      ],
+      "testFilterArgs": [
+        "--tests",
+        "*Autofill*",
+        "--tests",
+        "*Mdbx*",
+        "--tests",
+        "*Wallet*",
+        "--tests",
+        "*Structured*",
+        "--tests",
+        "*KeePass*",
+        "--tests",
+        "*Keepass*"
+      ],
+      "receiptSha256": "a295ce44d3c1d47a1db840c622d87bdc9486ebc6e760f514fea9bf08ade52bfd",
+      "logSha256": "426acc192b3a0036b194274099b726940426f65909b835021c24eda3b5087512"
+    },
+    {
+      "label": "main-debug-03",
+      "edition": "main",
+      "exit": 0,
+      "seconds": 183.605,
+      "tasks": [
+        ":app:assembleDebug",
+        ":app:assembleDebugAndroidTest",
+        ":app:testDebugUnitTest"
+      ],
+      "testFilterArgs": [
+        "--tests",
+        "*Autofill*",
+        "--tests",
+        "*Mdbx*",
+        "--tests",
+        "*Wallet*",
+        "--tests",
+        "*Structured*",
+        "--tests",
+        "*KeePass*",
+        "--tests",
+        "*Keepass*"
+      ],
+      "receiptSha256": "4462fdc0f08f1865747351c9369308e56f7c11f8354fb59dd4fe9afaf1d92e06",
+      "logSha256": "6bd63988f544a683810a35b22024bb22326f14c0e9d1da92dbb2e5f09c78d059"
+    },
+    {
+      "label": "main-jvm-final01",
+      "edition": "main",
+      "exit": 0,
+      "seconds": 72.932,
+      "tasks": [
+        ":app:testDebugUnitTest"
+      ],
+      "testFilterArgs": [
+        "--tests=*Autofill*",
+        "--tests=*Mdbx*",
+        "--tests=*Wallet*",
+        "--tests=*Structured*",
+        "--tests=*KeePass*",
+        "--tests=*Keepass*"
+      ],
+      "receiptSha256": "2f39c07963ff02430ea3086ac6429ff95a1c9f39996fea932df1d34aa498d190",
+      "logSha256": "b1a4704b9673fff6c85809045c4667e29afa91c20ca0a91d50f1d672560251ff"
+    },
+    {
+      "label": "main-r8-01",
+      "edition": "main",
+      "exit": 0,
+      "seconds": 405.955,
+      "tasks": [
+        ":app:assembleRelease"
+      ],
+      "testFilterArgs": [],
+      "receiptSha256": "4a890ffa05776b53c1f6cbccc379fae314822823412eca463bd79ae271f3ba20",
+      "logSha256": "7998433c5cf6ba4c52b8849a9589f61605d578e4bc3e18b00551c9cfd9c41538"
+    },
+    {
+      "label": "main-test-04",
+      "edition": "main",
+      "exit": 0,
+      "seconds": 121.605,
+      "tasks": [
+        ":app:assembleDebugAndroidTest"
+      ],
+      "testFilterArgs": [],
+      "receiptSha256": "99a9b8bceac10e00baea7ce499c87e07e52e0a6cec79c455f912117e9eaae780",
+      "logSha256": "fa36b293fbccccde5759103c2771e0fc3563b6908109846ddafce5b045482431"
+    },
+    {
+      "label": "main-test-05",
+      "edition": "main",
+      "exit": 0,
+      "seconds": 11.848,
+      "tasks": [
+        ":app:assembleDebugAndroidTest"
+      ],
+      "testFilterArgs": [],
+      "receiptSha256": "9fc03beda2b0af220e06296855cd8192890fd67a6940903169eeac2f152479d0",
+      "logSha256": "08671babfa5db2ea550b5e905c0d69d0351f6605650ab0b684b0d2df495578a8"
+    }
+  ],
+  "deviceRuns": [
+    {
+      "label": "main-keepass-02",
+      "passed": false,
+      "count": 30,
+      "failed": 11,
+      "runnerSeconds": 284.122,
+      "driverSeconds": 289.608,
+      "appSha256": "2363e8bfa96f00f4be698b285c3fa28b363b4e0fc77bcafd2ee9a634953cd219",
+      "testSha256": "9c2a46928c28861639d6e23a48271bc1072d80f7a4e022962210044c421f4fe0",
+      "receiptSha256": "69b98d58b0b63980a4b5b00f55d32252a700be6dea9a1363b875d2719bee041e",
+      "rawOutputSha256": "b8c77636180e56bd166e9d56284904263c8491cfc6203415d6828a5712c437ea",
+      "failedMethods": [
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "lowIdNativeMirrorCipherCallbackRequiresFreshPickerSelection",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "cancellingNativePickerAuthenticationLeavesFrameworkFormEmpty",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "frameworkSuggestionsResolveAllLiteralNativePasswordsAfterPickerAuthentication",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "lowIdNativeMirrorDirectDatasetRequiresFreshPickerSelection",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "frameworkManualPickerAuthenticatesAndFillsNativePrefixPassword",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "frameworkFillAndBindCommitsNativeBindingAndStillReturnsBothValues",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "immediatePickerRecreationRetainsAuthenticationWithinDuplicateWindow",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "genuineDuplicatePickerLaunchStillFinishesOnlySecondActivity",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "realNativeSmartCopyNotificationResolvesAfterSourceClosesAndRejectsLockedVault",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "nativeLockDuringPickerRecreationCannotRestoreVerification",
+          "code": -2
+        }
+      ]
+    },
+    {
+      "label": "main-keepass-03",
+      "passed": false,
+      "count": 30,
+      "failed": 11,
+      "runnerSeconds": 328.785,
+      "driverSeconds": 333.462,
+      "appSha256": "2363e8bfa96f00f4be698b285c3fa28b363b4e0fc77bcafd2ee9a634953cd219",
+      "testSha256": "75b8f2a49e51d6974d8a5839aae8cdaaeea7f484cc814ab93c29f7cecf6cd481",
+      "receiptSha256": "4e19d959cf0be0d2c3b72d66ac6a9e69ca7176514b922bf1d374d2ac44f5df6c",
+      "rawOutputSha256": "a256f832068ffd78c36baf973da8eb8a1d651e4ab5a57e57d0ec3c7e6405bc5e",
+      "failedMethods": [
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "lowIdNativeMirrorCipherCallbackRequiresFreshPickerSelection",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "cancellingNativePickerAuthenticationLeavesFrameworkFormEmpty",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "frameworkSuggestionsResolveAllLiteralNativePasswordsAfterPickerAuthentication",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "lowIdNativeMirrorDirectDatasetRequiresFreshPickerSelection",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "frameworkManualPickerAuthenticatesAndFillsNativePrefixPassword",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "frameworkFillAndBindCommitsNativeBindingAndStillReturnsBothValues",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "immediatePickerRecreationRetainsAuthenticationWithinDuplicateWindow",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "directDatasetWithMissingRoomOwnerIsCancelled",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "genuineDuplicatePickerLaunchStillFinishesOnlySecondActivity",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "realNativeSmartCopyNotificationResolvesAfterSourceClosesAndRejectsLockedVault",
+          "code": -2
+        }
+      ]
+    },
+    {
+      "label": "main-keepass-04",
+      "passed": false,
+      "count": 30,
+      "failed": 2,
+      "runnerSeconds": 148.339,
+      "driverSeconds": 152.709,
+      "appSha256": "2363e8bfa96f00f4be698b285c3fa28b363b4e0fc77bcafd2ee9a634953cd219",
+      "testSha256": "75b8f2a49e51d6974d8a5839aae8cdaaeea7f484cc814ab93c29f7cecf6cd481",
+      "receiptSha256": "99eda419bf57c0e3b5dd1e1b73a89adec816b05bf7e3e8a6198a7f48a5ca4d38",
+      "rawOutputSha256": "4e3536f1c50200a48407918b1f95125b871c994ce7622f40bc0ed0ed1e601095",
+      "failedMethods": [
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "directDatasetWithMissingRoomOwnerIsCancelled",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "realNativeSmartCopyNotificationResolvesAfterSourceClosesAndRejectsLockedVault",
+          "code": -2
+        }
+      ]
+    },
+    {
+      "label": "main-keepass-06",
+      "passed": false,
+      "count": 30,
+      "failed": 1,
+      "runnerSeconds": 141.848,
+      "driverSeconds": 144.475,
+      "appSha256": "2363e8bfa96f00f4be698b285c3fa28b363b4e0fc77bcafd2ee9a634953cd219",
+      "testSha256": "78bb9cf221c8a8c612b65f12e26c045f2487a4c4313993dbfac4c5047055ef87",
+      "receiptSha256": "be87f51ccebbf09cc5c1cee348ce60c649f76634132b8a135442453ff21e66ca",
+      "rawOutputSha256": "a3fb3b78335e3470b41ce526f988c858467560fed542b2893eb4291111de7146",
+      "failedMethods": [
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders",
+          "code": -2
+        }
+      ]
+    },
+    {
+      "label": "main-keepass-notification-05",
+      "passed": true,
+      "count": 1,
+      "failed": 0,
+      "runnerSeconds": 4.173,
+      "driverSeconds": 6.793,
+      "appSha256": "2363e8bfa96f00f4be698b285c3fa28b363b4e0fc77bcafd2ee9a634953cd219",
+      "testSha256": "75b8f2a49e51d6974d8a5839aae8cdaaeea7f484cc814ab93c29f7cecf6cd481",
+      "receiptSha256": "82af4862295491b9c0f6a400a2fe359c7128e528a6390ca6289f43b75560ff2b",
+      "rawOutputSha256": "57ab58cdc24329ce470edecef83d93132a261c3dbb4e66f510eaebb438495190",
+      "failedMethods": []
+    },
+    {
+      "label": "main-legacy-gap-red01",
+      "passed": false,
+      "count": 2,
+      "failed": 2,
+      "runnerSeconds": 1.202,
+      "driverSeconds": 4.425,
+      "appSha256": "c6afd304c5a1b3ada0047f9b7e6bb52288aa5d8705a0d2bac4a175f58423ba42",
+      "testSha256": "76e601ff1937e74945351ee650441f8bdadc6c01cf47da4d35d503d96e1d4ca5",
+      "receiptSha256": "620bef377f1a5797fa097c1b7c3c9961ac88a4beae46ceb3e506371df4845610",
+      "rawOutputSha256": "fac67c388f175b5a81bf95dc9875cf1968601be2b147556e5fb3b85930781fd6",
+      "failedMethods": [
+        {
+          "class": "takagi.ru.monica.autofill_ng.MdbxAutofillLegacyGapInstrumentedTest",
+          "method": "unavailableNativeVaultNeverFallsBackToRoomMirror",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.MdbxAutofillLegacyGapInstrumentedTest",
+          "method": "originalNativeRecordWithoutRoomMirrorIsAvailable",
+          "code": -2
+        }
+      ]
+    },
+    {
+      "label": "main-native-02",
+      "passed": true,
+      "count": 32,
+      "failed": 0,
+      "runnerSeconds": 13.003,
+      "driverSeconds": 17.583,
+      "appSha256": "2363e8bfa96f00f4be698b285c3fa28b363b4e0fc77bcafd2ee9a634953cd219",
+      "testSha256": "9c2a46928c28861639d6e23a48271bc1072d80f7a4e022962210044c421f4fe0",
+      "receiptSha256": "a62b6301272111f090a8761b28c9575298b6571f4f345c3d2d0cb2262b3d7f71",
+      "rawOutputSha256": "0299f867cba01117e7e25cf2a7da82c4028d26f3ab4559e0a09cf81e49862ba8",
+      "failedMethods": []
+    },
+    {
+      "label": "main-native-preliminary01",
+      "passed": false,
+      "count": 30,
+      "failed": 3,
+      "runnerSeconds": 10.972,
+      "driverSeconds": 13.269,
+      "appSha256": "156d89022c28d4acf8b9bb01314a6299c728869a200bfceeb85dc56f24ede085",
+      "testSha256": "76e601ff1937e74945351ee650441f8bdadc6c01cf47da4d35d503d96e1d4ca5",
+      "receiptSha256": "28b3dfe687b1a51e920c445b81bb704f6d3f791c3e30f719d4e52c2c898827ea",
+      "rawOutputSha256": "53dfd3e602bba297dd30c6d0204375f0b00ebdf1e2f901a6fc3177dbe9f376ff",
+      "failedMethods": [
+        {
+          "class": "takagi.ru.monica.autofill_ng.MdbxAutofillSourceInstrumentedTest",
+          "method": "nativeWalletResolvesCurrentObjectAndRejectsChanges",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.repository.MdbxAutofillInstrumentedTest",
+          "method": "unknownFutureAndConflictingPayloadsAreNeverLoginSuggestions",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.repository.MdbxAutofillInstrumentedTest",
+          "method": "selectionRejectsPasswordTypeVersionMoveAndDeletionChanges",
+          "code": -2
+        }
+      ]
+    },
+    {
+      "label": "main-picker-visibility-diagnosis01",
+      "passed": true,
+      "count": 1,
+      "failed": 0,
+      "runnerSeconds": 14.523,
+      "driverSeconds": 17.263,
+      "appSha256": "2363e8bfa96f00f4be698b285c3fa28b363b4e0fc77bcafd2ee9a634953cd219",
+      "testSha256": "78bb9cf221c8a8c612b65f12e26c045f2487a4c4313993dbfac4c5047055ef87",
+      "receiptSha256": "08e613fc3eaad60b42b6be548421d79cd525750ec8948487045762f3cafd1876",
+      "rawOutputSha256": "041fea7fd4f7528dcbbc06c5b80d1f430c5e1de64480715cfac1af0445a87e4b",
+      "failedMethods": []
+    },
+    {
+      "label": "main-regression-01",
+      "passed": false,
+      "count": 60,
+      "failed": 31,
+      "runnerSeconds": 51.498,
+      "driverSeconds": 54.114,
+      "appSha256": "2363e8bfa96f00f4be698b285c3fa28b363b4e0fc77bcafd2ee9a634953cd219",
+      "testSha256": "9c2a46928c28861639d6e23a48271bc1072d80f7a4e022962210044c421f4fe0",
+      "receiptSha256": "fb80b8da937f88acfa64f0583247b950b1761ab454b544b0904137199ab9e62f",
+      "rawOutputSha256": "9ecf028304487e54d556cf716888c6a67b8c12437d5cf1cc5848a0ec0ccfe91c",
+      "failedMethods": [
+        {
+          "class": "takagi.ru.monica.autofill_ng.AutofillBatchValidationInstrumentedTest",
+          "method": "changedDeletedArchivedAndForgedUiRowsMatchOriginalRejection",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "lowIdNativeMirrorCipherCallbackRequiresFreshPickerSelection",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "readOnlyNativeFileCanFillButCannotBind",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "runtimeGenerationRevocationCannotBeRevivedByReloadingTheKey",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "cancellingNativePickerAuthenticationLeavesFrameworkFormEmpty",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "frameworkSuggestionsResolveAllLiteralNativePasswordsAfterPickerAuthentication",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "nativeDeferredActionRejectsExternalRevisionAfterPickerSourceWasCleared",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "referencedNativeBindingFieldsAreNotExpandedOrOverwritten",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "lowIdNativeMirrorDirectDatasetRequiresFreshPickerSelection",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "frameworkManualPickerAuthenticatesAndFillsNativePrefixPassword",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "bindingPreservesUnknownProtectedFieldsHistoryAttachmentsAndSibling",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "realScreenOffThenWakeCannotReviveDeferredNativeAction",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "frameworkFillAndBindCommitsNativeBindingAndStillReturnsBothValues",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "immediatePickerRecreationRetainsAuthenticationWithinDuplicateWindow",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "revocationDuringFinalSourceHashPreventsNativeBindingCommit",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "nativeDeferredActionRejectsNativeLockAndReauthenticationCannotReviveOldGeneration",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "directDatasetWithMissingRoomOwnerIsCancelled",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "genuineDuplicatePickerLaunchStillFinishesOnlySecondActivity",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "realNativeSmartCopyNotificationResolvesAfterSourceClosesAndRejectsLockedVault",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "originalKdbxLoadsWithoutRoomOrMainSessionAndNewSourceResolvesStableIds",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "targetAuthorizationRevocationRejectsLoadedAndNewSelections",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "externalRevisionChangeRejectsSelectedValueAndBindingWithoutWriting",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "clearedRequestRejectsLateNativeReadAfterProviderUnblocks",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "nativeCiphertextLookingValuesRemainLiteralAtAccountAndSecretBoundary",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "nativeDeferredActionReopensAfterSourceClosesButCannotOutliveReplacementOrExpiry",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "nativeLockDuringPickerRecreationCannotRestoreVerification",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "unreadableNativeFileDoesNotLeakStaleRoomProjection",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "revokedAuthorizationRejectsLateNativeReadAfterProviderUnblocks",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "clearingRequestPermanentlyRevokesItWithoutRevokingAnotherNewRequest",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest",
+          "method": "explicitNativeLockRejectsSelectionsAndDoesNotFallBackToRoomMirror",
+          "code": -2
+        }
+      ]
+    },
+    {
+      "label": "main-resume-callback-diagnosis01",
+      "passed": false,
+      "count": 1,
+      "failed": 1,
+      "runnerSeconds": 4.168,
+      "driverSeconds": 6.941,
+      "appSha256": "2363e8bfa96f00f4be698b285c3fa28b363b4e0fc77bcafd2ee9a634953cd219",
+      "testSha256": "75b8f2a49e51d6974d8a5839aae8cdaaeea7f484cc814ab93c29f7cecf6cd481",
+      "receiptSha256": "4975edfc9cf7d30815c250d85754e6486e435f45595a6b2004a82b5b36e96342",
+      "rawOutputSha256": "393812dfe969d1be504c0a49c060d51fdfa58e1a3826849c690c4ad9dfd28616",
+      "failedMethods": [
+        {
+          "class": "takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest",
+          "method": "frameworkSuggestionsOpenRealMdbxCallbacksAndFillLiteralValues",
+          "code": -2
+        }
+      ]
+    },
+    {
+      "label": "main-resume-picker-diagnosis01",
+      "passed": false,
+      "count": 1,
+      "failed": 1,
+      "runnerSeconds": 25.271,
+      "driverSeconds": 27.699,
+      "appSha256": "2363e8bfa96f00f4be698b285c3fa28b363b4e0fc77bcafd2ee9a634953cd219",
+      "testSha256": "75b8f2a49e51d6974d8a5839aae8cdaaeea7f484cc814ab93c29f7cecf6cd481",
+      "receiptSha256": "6f16369ad35adc4fbe8eb8e28bceb31b77b4e2c169d2ae5deb494ed5140de928",
+      "rawOutputSha256": "e5b4b0f1800b121e7bafe3351f05e0a58d2fc94b4a0cb3bb5d431e2e00eaa600",
+      "failedMethods": [
+        {
+          "class": "takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest",
+          "method": "mdbxDatabaseMenuSelectsExactNativeLoginAndReturnsLiteralDataset",
+          "code": -2
+        }
+      ]
+    },
+    {
+      "label": "main-ui-02",
+      "passed": false,
+      "count": 11,
+      "failed": 3,
+      "runnerSeconds": 27.463,
+      "driverSeconds": 29.961,
+      "appSha256": "2363e8bfa96f00f4be698b285c3fa28b363b4e0fc77bcafd2ee9a634953cd219",
+      "testSha256": "9c2a46928c28861639d6e23a48271bc1072d80f7a4e022962210044c421f4fe0",
+      "receiptSha256": "36895174f834e3a635cf54cc6778ca671355551aeba869687eb31e736fbc99ae",
+      "rawOutputSha256": "7b27a0f7a067ce3eaac181c99bec3c9bf2588667bffdf0bc7e215c0c25ddc017",
+      "failedMethods": [
+        {
+          "class": "takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest",
+          "method": "concreteOfflineBitwardenVaultChangesKeepOnlySelectedMirrorAndReturnDataset",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest",
+          "method": "concreteKeePassDatabaseChangesExcludePreviousRowsAndReturnSelectedDataset",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest",
+          "method": "mdbxDatabaseMenuSelectsExactNativeLoginAndReturnsLiteralDataset",
+          "code": -2
+        }
+      ]
+    },
+    {
+      "label": "main-ui-batch-framework-03",
+      "passed": false,
+      "count": 31,
+      "failed": 5,
+      "runnerSeconds": 107.356,
+      "driverSeconds": 110.326,
+      "appSha256": "2363e8bfa96f00f4be698b285c3fa28b363b4e0fc77bcafd2ee9a634953cd219",
+      "testSha256": "75b8f2a49e51d6974d8a5839aae8cdaaeea7f484cc814ab93c29f7cecf6cd481",
+      "receiptSha256": "b402c605cf76e1fcd04ad367f2a7f14a79417335024521480824f8cffb97c2b1",
+      "rawOutputSha256": "2c4908123701112d2eb1361e9b4dd6767bc7eead395a4f6093cf8d5de1a6f4bb",
+      "failedMethods": [
+        {
+          "class": "takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest",
+          "method": "concreteOfflineBitwardenVaultChangesKeepOnlySelectedMirrorAndReturnDataset",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest",
+          "method": "concreteKeePassDatabaseChangesExcludePreviousRowsAndReturnSelectedDataset",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest",
+          "method": "mdbxDatabaseMenuSelectsExactNativeLoginAndReturnsLiteralDataset",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest",
+          "method": "frameworkSuggestionsOpenRealMdbxCallbacksAndFillLiteralValues",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest",
+          "method": "cachedFrameworkSuggestionRejectsExternalNativeRevision",
+          "code": -2
+        }
+      ]
+    },
+    {
+      "label": "main-ui-batch-framework-04",
+      "passed": true,
+      "count": 31,
+      "failed": 0,
+      "runnerSeconds": 46.902,
+      "driverSeconds": 49.282,
+      "appSha256": "2363e8bfa96f00f4be698b285c3fa28b363b4e0fc77bcafd2ee9a634953cd219",
+      "testSha256": "78bb9cf221c8a8c612b65f12e26c045f2487a4c4313993dbfac4c5047055ef87",
+      "receiptSha256": "248d6f351a990d7f33443de9a67714fe41f3f5af196ff93e2f0385abfbc70e9e",
+      "rawOutputSha256": "f503673281611ae31e39ec75396548048e3ed93616808c2551351ab6a557b180",
+      "failedMethods": []
+    },
+    {
+      "label": "main-ui-preliminary01",
+      "passed": false,
+      "count": 9,
+      "failed": 3,
+      "runnerSeconds": 17.808,
+      "driverSeconds": 20.199,
+      "appSha256": "156d89022c28d4acf8b9bb01314a6299c728869a200bfceeb85dc56f24ede085",
+      "testSha256": "76e601ff1937e74945351ee650441f8bdadc6c01cf47da4d35d503d96e1d4ca5",
+      "receiptSha256": "3fe49dd9431dfca52375f3869cdb9cfb38620ef2477667fbf7f62f41416e6b94",
+      "rawOutputSha256": "65abf8b4a9b9f1aa87779e51a6e71a0e5029bb2fe0497eed5191138f6c84f15c",
+      "failedMethods": [
+        {
+          "class": "takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest",
+          "method": "concreteOfflineBitwardenVaultChangesKeepOnlySelectedMirrorAndReturnDataset",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest",
+          "method": "concreteKeePassDatabaseChangesExcludePreviousRowsAndReturnSelectedDataset",
+          "code": -2
+        },
+        {
+          "class": "takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest",
+          "method": "mdbxDatabaseMenuSelectsExactNativeLoginAndReturnsLiteralDataset",
+          "code": -2
+        }
+      ]
+    }
+  ],
+  "distinctDeviceMethods": {
+    "count": 106,
+    "sameMethodSetAcrossEditions": true,
+    "identities": [
+      "takagi.ru.monica.autofill_ng.AutofillBatchValidationInstrumentedTest#authorizationRevokedDuringTraversalRejectsResolutionAndWrite",
+      "takagi.ru.monica.autofill_ng.AutofillBatchValidationInstrumentedTest#changedDeletedArchivedAndForgedUiRowsMatchOriginalRejection",
+      "takagi.ru.monica.autofill_ng.AutofillBatchValidationInstrumentedTest#clearDuringTraversalCompletesImmediatelyAndCannotReviveRequest",
+      "takagi.ru.monica.autofill_ng.AutofillBatchValidationInstrumentedTest#clearInsideFinalAuthorizationIsCheckedBeforeAcceptingBatch",
+      "takagi.ru.monica.autofill_ng.AutofillBatchValidationInstrumentedTest#emptyBatchIsTrueBeforeLoadAndAfterRevocationWithoutAuthorization",
+      "takagi.ru.monica.autofill_ng.AutofillBatchValidationInstrumentedTest#equalRoomMapReloadDuringTraversalRejectsCrossSnapshotBatch",
+      "takagi.ru.monica.autofill_ng.AutofillBatchValidationInstrumentedTest#generationChangeDuringUrlSqlCannotBroadenDefaultWebsiteMatching",
+      "takagi.ru.monica.autofill_ng.AutofillBatchValidationInstrumentedTest#generationRevocationThenPasswordUnlockDoesNotReviveOldBatch",
+      "takagi.ru.monica.autofill_ng.AutofillBatchValidationInstrumentedTest#localOnlyAvoidsSlowAndUnreadableRegisteredKdbxWhileDefaultStillReads",
+      "takagi.ru.monica.autofill_ng.AutofillBatchValidationInstrumentedTest#localOnlyExcludesOtherOwnersAndRetainsLegacyBlankBitwardenBinding",
+      "takagi.ru.monica.autofill_ng.AutofillBatchValidationInstrumentedTest#nativeAndMixedBatchPreserveClassificationAndOnlyRelevantLocks",
+      "takagi.ru.monica.autofill_ng.AutofillBatchValidationInstrumentedTest#nativeLockDuringUrlSqlDeniesMixedResultsAndKeepsFileUnchanged",
+      "takagi.ru.monica.autofill_ng.AutofillBatchValidationInstrumentedTest#nativeMapRefreshDuringTraversalRejectsCrossSnapshotBatch",
+      "takagi.ru.monica.autofill_ng.AutofillBatchValidationInstrumentedTest#revocationInsideSecondUrlSqlChunkExplicitlyDeniesAll801Rows",
+      "takagi.ru.monica.autofill_ng.AutofillBatchValidationInstrumentedTest#roomMapReloadDuringUrlSqlExplicitlyDeniesFormerSnapshot",
+      "takagi.ru.monica.autofill_ng.AutofillBatchValidationInstrumentedTest#stable550RowsMatchSingleChecksWithConstantAuthorizationCost",
+      "takagi.ru.monica.autofill_ng.AutofillBatchValidationInstrumentedTest#urlRulesPreserveAbsentVersusDeniedAndRejectDuplicateInvalidId",
+      "takagi.ru.monica.autofill_ng.AutofillMultivaultScopeInstrumentedTest#allResultsEqualIndependentScopesWithoutDuplicatingMirrors",
+      "takagi.ru.monica.autofill_ng.AutofillMultivaultScopeInstrumentedTest#clearingSourceDuringScopedNativeReadCannotPublishOrReviveIt",
+      "takagi.ru.monica.autofill_ng.AutofillMultivaultScopeInstrumentedTest#explicitLibraryLockAndGlobalRelockNeverAuthorizeOldScope",
+      "takagi.ru.monica.autofill_ng.AutofillMultivaultScopeInstrumentedTest#nativeLiteralPrefixesSurviveScopedLoadResolutionAndCapability",
+      "takagi.ru.monica.autofill_ng.AutofillMultivaultScopeInstrumentedTest#selectedBitwardenUsesScopedSqlAndPerformsZeroKdbxReads",
+      "takagi.ru.monica.autofill_ng.AutofillMultivaultScopeInstrumentedTest#selectedKdbxNeverReadsAnotherRegisteredFileOrReturnsItsMirror",
+      "takagi.ru.monica.autofill_ng.AutofillPickerScopeUiTest#cancellingEachAddTypeReturnsToLocalListWithoutWritingItems",
+      "takagi.ru.monica.autofill_ng.AutofillPickerScopeUiTest#closeWhileAllLoadIsBlockedReturnsCancelledAndRejectsLateRows",
+      "takagi.ru.monica.autofill_ng.AutofillPickerScopeUiTest#globalRelockDuringAllLoadClosesAndReauthenticationCannotReviveActivity",
+      "takagi.ru.monica.autofill_ng.AutofillPickerScopeUiTest#localAllLocalSwitchRetiresBlockedResultsAndCanLoadAllAgain",
+      "takagi.ru.monica.autofill_ng.AutofillPickerScopeUiTest#nativeLockWhileShowingLocalCannotBeReauthorizedByAFilterChange",
+      "takagi.ru.monica.autofill_ng.AutofillPickerScopeUiTest#savedLocalDefaultDisplaysWithoutOpeningSlowOrUnreadableNativeVault",
+      "takagi.ru.monica.autofill_ng.AutofillPickerScopeUiTest#savingBankCardReturnsToReloadedLocalListAndReadsStoredCard",
+      "takagi.ru.monica.autofill_ng.AutofillPickerScopeUiTest#savingNewPasswordReturnsExactFrameworkDatasetAfterEditorNavigation",
+      "takagi.ru.monica.autofill_ng.AutofillPickerScopeUiTest#twoSourceClicksInOneFrameKeepFinalLocalScopeUsable",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#actualPickerAuthenticatesSearchesNativeRowsAndShowsEmptyFolders",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#bindingPreservesUnknownProtectedFieldsHistoryAttachmentsAndSibling",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#cancellingNativePickerAuthenticationLeavesFrameworkFormEmpty",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#clearedRequestRejectsLateNativeReadAfterProviderUnblocks",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#clearingRequestPermanentlyRevokesItWithoutRevokingAnotherNewRequest",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#directDatasetWithMissingRoomOwnerIsCancelled",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#explicitNativeLockRejectsSelectionsAndDoesNotFallBackToRoomMirror",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#externalRevisionChangeRejectsSelectedValueAndBindingWithoutWriting",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#frameworkFillAndBindCommitsNativeBindingAndStillReturnsBothValues",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#frameworkManualPickerAuthenticatesAndFillsNativePrefixPassword",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#frameworkSuggestionsResolveAllLiteralNativePasswordsAfterPickerAuthentication",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#genuineDuplicatePickerLaunchStillFinishesOnlySecondActivity",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#immediatePickerRecreationRetainsAuthenticationWithinDuplicateWindow",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#lowIdNativeMirrorCipherCallbackRequiresFreshPickerSelection",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#lowIdNativeMirrorDirectDatasetRequiresFreshPickerSelection",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#nativeCiphertextLookingValuesRemainLiteralAtAccountAndSecretBoundary",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#nativeDeferredActionRejectsExternalRevisionAfterPickerSourceWasCleared",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#nativeDeferredActionRejectsNativeLockAndReauthenticationCannotReviveOldGeneration",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#nativeDeferredActionReopensAfterSourceClosesButCannotOutliveReplacementOrExpiry",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#nativeLockDuringPickerRecreationCannotRestoreVerification",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#originalKdbxLoadsWithoutRoomOrMainSessionAndNewSourceResolvesStableIds",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#readOnlyNativeFileCanFillButCannotBind",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#realNativeSmartCopyNotificationResolvesAfterSourceClosesAndRejectsLockedVault",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#realScreenOffThenWakeCannotReviveDeferredNativeAction",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#referencedNativeBindingFieldsAreNotExpandedOrOverwritten",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#revocationDuringFinalSourceHashPreventsNativeBindingCommit",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#revokedAuthorizationRejectsLateNativeReadAfterProviderUnblocks",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#runtimeGenerationRevocationCannotBeRevivedByReloadingTheKey",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#targetAuthorizationRevocationRejectsLoadedAndNewSelections",
+      "takagi.ru.monica.autofill_ng.KeePassAutofillInstrumentedTest#unreadableNativeFileDoesNotLeakStaleRoomProjection",
+      "takagi.ru.monica.autofill_ng.MdbxAutofillLegacyGapInstrumentedTest#originalNativeRecordWithoutRoomMirrorIsAvailable",
+      "takagi.ru.monica.autofill_ng.MdbxAutofillLegacyGapInstrumentedTest#unavailableNativeVaultNeverFallsBackToRoomMirror",
+      "takagi.ru.monica.autofill_ng.MdbxAutofillLocalArchiveInstrumentedTest#actualAndroidWriterArchiveSuppressesOnlyPhysicallyProvenLogicalEntry",
+      "takagi.ru.monica.autofill_ng.MdbxAutofillLocalArchiveInstrumentedTest#archivedWalletWithRemovedPayloadIdentityRejectsFreshLoadAndCurrentSelection",
+      "takagi.ru.monica.autofill_ng.MdbxAutofillSourceInstrumentedTest#fillCanReadWhileUnsafeBindingPatchDoesNotWriteAnything",
+      "takagi.ru.monica.autofill_ng.MdbxAutofillSourceInstrumentedTest#localAndBitwardenScopesDoNotOpenUnreadableMdbxVault",
+      "takagi.ru.monica.autofill_ng.MdbxAutofillSourceInstrumentedTest#lockCancellationAndWrongStorageRejectCapabilities",
+      "takagi.ru.monica.autofill_ng.MdbxAutofillSourceInstrumentedTest#nativeWalletResolvesCurrentObjectAndRejectsChanges",
+      "takagi.ru.monica.autofill_ng.MdbxAutofillSourceInstrumentedTest#selectedMdbxDoesNotReadAnotherBrokenMdbxOrReturnItsMirror",
+      "takagi.ru.monica.autofill_ng.MdbxAutofillSourceInstrumentedTest#selectionResolvesExactNativeObjectAndRejectsExternalRevision",
+      "takagi.ru.monica.autofill_ng.MdbxAutofillSourceInstrumentedTest#unsupportedNativeTypesStayUnchangedAndDoNotFill",
+      "takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest#cachedFrameworkSuggestionRejectsExternalNativeRevision",
+      "takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest#cancellingFrameworkMdbxPickerAuthenticationLeavesFormEmpty",
+      "takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest#frameworkSuggestionsOpenRealMdbxCallbacksAndFillLiteralValues",
+      "takagi.ru.monica.autofill_ng.MdbxPickerSaveUiTest#cancellingMdbxEditorReturnsCancelledAndKeepsNativeAndRoomData",
+      "takagi.ru.monica.autofill_ng.MdbxPickerSaveUiTest#savingToMdbxReturnsTheNewNativeObjectDespiteSameTitleAndAccount",
+      "takagi.ru.monica.autofill_ng.NativeAutofillEntryTransportInstrumentedTest#absentCallbackStorageIsLegacyButUnknownOrNullStorageIsRejected",
+      "takagi.ru.monica.autofill_ng.NativeAutofillEntryTransportInstrumentedTest#callbackKeePassAndMdbxSelectionsSurviveFrameworkParcel",
+      "takagi.ru.monica.autofill_ng.NativeAutofillEntryTransportInstrumentedTest#deferredActionPreservesStorageAndRejectsUnknownDiscriminators",
+      "takagi.ru.monica.autofill_ng.NativeAutofillEntryTransportInstrumentedTest#nativeCallbackIdentityCannotCrossStorageNamespaces",
+      "takagi.ru.monica.autofill_ng.NativeAutofillEntryTransportInstrumentedTest#roomReaderRejectsMdbxMirrorEvenWithoutARegistrationAndKeepsItsBytes",
+      "takagi.ru.monica.autofill_ng.NativeAutofillEntryTransportInstrumentedTest#virtualRoomRowsAreRejectedWhileLocalAndOfflineBitwardenStayReadable",
+      "takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest#concreteKeePassDatabaseChangesExcludePreviousRowsAndReturnSelectedDataset",
+      "takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest#concreteOfflineBitwardenVaultChangesKeepOnlySelectedMirrorAndReturnDataset",
+      "takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest#mdbxBankCardSelectionReturnsEveryRequestedNativeValue",
+      "takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest#mdbxBillingAddressSelectionReturnsEveryRequestedNativeValue",
+      "takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest#mdbxDatabaseMenuSelectsExactNativeLoginAndReturnsLiteralDataset",
+      "takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest#mdbxDocumentSelectionReturnsEveryRequestedNativeValue",
+      "takagi.ru.monica.autofill_ng.WalletAutofillLocalScopeInstrumentedTest#emptyBitwardenBindingKeepsOriginalLocalOwnershipAndDualOwnersStayExcluded",
+      "takagi.ru.monica.autofill_ng.WalletAutofillLocalScopeInstrumentedTest#localEmbeddedFiltersBeforeDecryptAndDefaultIncludesOtherSources",
+      "takagi.ru.monica.autofill_ng.WalletAutofillLocalScopeInstrumentedTest#localLegacyWalletSkipsExternalOwnersBeforeFieldDecrypt",
+      "takagi.ru.monica.autofill_ng.WalletAutofillLocalScopeInstrumentedTest#unreadableLocalSnapshotStillSuppressesLegacyWithoutWriting",
+      "takagi.ru.monica.repository.MdbxAutofillInstrumentedTest#bindingRefusesMutationAndPreservesUnknownPayloadAndAttachment",
+      "takagi.ru.monica.repository.MdbxAutofillInstrumentedTest#changingRegisteredCredentialsRevokesSelectionAndMidReadConfiguration",
+      "takagi.ru.monica.repository.MdbxAutofillInstrumentedTest#nativeDuplicateKeyCanonicalizationIsObservedBeforeAutofillParsing",
+      "takagi.ru.monica.repository.MdbxAutofillInstrumentedTest#pagedSnapshotReadsEveryNativeLoginWithoutMirrorWrites",
+      "takagi.ru.monica.repository.MdbxAutofillInstrumentedTest#realNativeLoginAndWalletReadWithoutRoomMirrorsOrMainUnlock",
+      "takagi.ru.monica.repository.MdbxAutofillInstrumentedTest#replacingVaultAtSameRegisteredPathRejectsOldSelection",
+      "takagi.ru.monica.repository.MdbxAutofillInstrumentedTest#requestCancellationAndGlobalLockRevokeInFlightResults",
+      "takagi.ru.monica.repository.MdbxAutofillInstrumentedTest#selectionRejectsPasswordTypeVersionMoveAndDeletionChanges",
+      "takagi.ru.monica.repository.MdbxAutofillInstrumentedTest#unknownFutureAndConflictingPayloadsAreNeverLoginSuggestions",
+      "takagi.ru.monica.ui.screens.AutofillMdbxScopeUiTest#mdbxSourceAndExactDatabaseCanBeSelected",
+      "takagi.ru.monica.ui.screens.AutofillMdbxScopeUiTest#missingSelectedDatabaseIsNotShownAsAllDatabases",
+      "takagi.ru.monica.ui.screens.AutofillMdbxScopeUiTest#nativeMdbxKeepsFillAndCopyButDoesNotOfferUriBinding"
+    ],
+    "countingRule": "Only successful methods under this edition's final Debug application APK; deduplicate class#method across retained batches. Reruns are not additional methods."
+  },
+  "compiledResources": {
+    "configurations": 18,
+    "valuesMatched": 54,
+    "sourceAndRetainedCompiledDumpMatch": true,
+    "apkSha256": "2363e8bfa96f00f4be698b285c3fa28b363b4e0fc77bcafd2ee9a634953cd219",
+    "dumpSha256": "c003b7ab446c421dd65ee0c465e4858b6b234e8593f75017746dfb3ace74a73b"
+  },
+  "sourceFreeze": {
+    "sharedPaths": 75,
+    "sharedPathsByteIdentical": true,
+    "releaseInputCount": 4280,
+    "allDefinedInputsMatchCurrentAtAudit": true,
+    "inventoryCoverage": "Defined release-validation input inventory, not the entire repository or external toolchain",
+    "currentInputsDigest": "b89ddd1731cc8dacfa4524f0fa88fa0ea5ea233045929293d22942a180d8c3cf",
+    "freezeReceiptSha256": "14d937bf35142cfdb47bdf580747f7eafe5ad99c53a224ce89055649bc6e0729",
+    "checks": {
+      "currentInputsMatch": true,
+      "prebuildSnapshotChronology": true,
+      "snapshotShaMatches": true,
+      "buildReceiptShaMatches": true,
+      "buildLogShaMatches": true,
+      "apkShaMatches": true,
+      "mappingShaMatches": true,
+      "mappingHeaderR8": true,
+      "actualAbisMatch": true,
+      "actualProfilesMatch": true,
+      "recordedInspectionAllExitZero": true
+    },
+    "auditPhase": "autofill phase before subsequent hardware and HyperOS UI edits",
+    "subsequentTreeEqualityClaimed": false,
+    "temporalInterpretation": "allDefinedInputsMatchCurrentAtAudit and checks.currentInputsMatch describe the autofill audit instant, not the later working tree"
+  },
+  "scopeObservations": [
+    {
+      "label": "local",
+      "elapsedMs": 3.276318,
+      "resultCount": 1,
+      "providerReads": [
+        {
+          "fixtureOrdinal": 1,
+          "readsBefore": 0,
+          "readsAfter": 0,
+          "readsDelta": 0
+        },
+        {
+          "fixtureOrdinal": 2,
+          "readsBefore": 0,
+          "readsAfter": 0,
+          "readsDelta": 0
+        }
+      ],
+      "comparison": "Sequential same-fixture scope observations; synthetic BW Room mirrors; no cold/warm benchmark claim"
+    },
+    {
+      "label": "kdbx-1",
+      "elapsedMs": 66.261675,
+      "resultCount": 1,
+      "providerReads": [
+        {
+          "fixtureOrdinal": 1,
+          "readsBefore": 0,
+          "readsAfter": 2,
+          "readsDelta": 2
+        },
+        {
+          "fixtureOrdinal": 2,
+          "readsBefore": 0,
+          "readsAfter": 0,
+          "readsDelta": 0
+        }
+      ],
+      "comparison": "Sequential same-fixture scope observations; synthetic BW Room mirrors; no cold/warm benchmark claim"
+    },
+    {
+      "label": "kdbx-2",
+      "elapsedMs": 33.558157,
+      "resultCount": 1,
+      "providerReads": [
+        {
+          "fixtureOrdinal": 1,
+          "readsBefore": 2,
+          "readsAfter": 2,
+          "readsDelta": 0
+        },
+        {
+          "fixtureOrdinal": 2,
+          "readsBefore": 0,
+          "readsAfter": 2,
+          "readsDelta": 2
+        }
+      ],
+      "comparison": "Sequential same-fixture scope observations; synthetic BW Room mirrors; no cold/warm benchmark claim"
+    },
+    {
+      "label": "bitwarden-1",
+      "elapsedMs": 2.820011,
+      "resultCount": 1,
+      "providerReads": [
+        {
+          "fixtureOrdinal": 1,
+          "readsBefore": 2,
+          "readsAfter": 2,
+          "readsDelta": 0
+        },
+        {
+          "fixtureOrdinal": 2,
+          "readsBefore": 2,
+          "readsAfter": 2,
+          "readsDelta": 0
+        }
+      ],
+      "comparison": "Sequential same-fixture scope observations; synthetic BW Room mirrors; no cold/warm benchmark claim"
+    },
+    {
+      "label": "bitwarden-2",
+      "elapsedMs": 2.265013,
+      "resultCount": 1,
+      "providerReads": [
+        {
+          "fixtureOrdinal": 1,
+          "readsBefore": 2,
+          "readsAfter": 2,
+          "readsDelta": 0
+        },
+        {
+          "fixtureOrdinal": 2,
+          "readsBefore": 2,
+          "readsAfter": 2,
+          "readsDelta": 0
+        }
+      ],
+      "comparison": "Sequential same-fixture scope observations; synthetic BW Room mirrors; no cold/warm benchmark claim"
+    },
+    {
+      "label": "all-after-scoped",
+      "elapsedMs": 29.26001,
+      "resultCount": 5,
+      "providerReads": [
+        {
+          "fixtureOrdinal": 1,
+          "readsBefore": 2,
+          "readsAfter": 3,
+          "readsDelta": 1
+        },
+        {
+          "fixtureOrdinal": 2,
+          "readsBefore": 2,
+          "readsAfter": 3,
+          "readsDelta": 1
+        }
+      ],
+      "comparison": "Sequential same-fixture scope observations; synthetic BW Room mirrors; no cold/warm benchmark claim"
+    },
+    {
+      "label": "selected-kdbx",
+      "elapsedMs": 31.446743,
+      "resultCount": 1,
+      "providerReads": [
+        {
+          "fixtureOrdinal": 1,
+          "readsBefore": 0,
+          "readsAfter": 2,
+          "readsDelta": 2
+        },
+        {
+          "fixtureOrdinal": 2,
+          "readsBefore": 0,
+          "readsAfter": 0,
+          "readsDelta": 0
+        }
+      ],
+      "comparison": "Sequential same-fixture scope observations; synthetic BW Room mirrors; no cold/warm benchmark claim"
+    },
+    {
+      "label": "selected-bitwarden",
+      "elapsedMs": 2.262303,
+      "resultCount": 1,
+      "providerReads": [
+        {
+          "fixtureOrdinal": 1,
+          "readsBefore": 0,
+          "readsAfter": 0,
+          "readsDelta": 0
+        },
+        {
+          "fixtureOrdinal": 2,
+          "readsBefore": 0,
+          "readsAfter": 0,
+          "readsDelta": 0
+        }
+      ],
+      "comparison": "Sequential same-fixture scope observations; synthetic BW Room mirrors; no cold/warm benchmark claim"
+    }
+  ],
+  "r8": {
+    "artifact": {
+      "version": "new",
+      "sha256": "dc16bb95bffe90c33a0fef74b8e5a8230f3b903d96f702008a42092fd7895d24",
+      "mappingSha256": "ea14baba8c4bed930e2da530eac40915019f3bfa7be7ffac83d2b2cee921ae17",
+      "certificate": "Signer #1 certificate SHA-256 digest: 6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "package": "takagi.ru.monica.bwca328main",
+      "versionCode": 12,
+      "versionName": "1.0.328-26111612-02",
+      "abis": [
+        "x86_64"
+      ],
+      "profiles": {
+        "assets/dexopt/baseline.prof": 20643,
+        "assets/dexopt/baseline.profm": 2553
+      }
+    },
+    "buildSeconds": 405.955,
+    "upgradePhases": [
+      {
+        "label": "upgrade01",
+        "phase": "upgrade",
+        "passed": true,
+        "driverSeconds": 4.251,
+        "receiptSha256": "3178216de90e713306fa52e7d463054e6bbb9f624190bf6368e1f0997b235817"
+      },
+      {
+        "label": "four01",
+        "phase": "checkFour",
+        "passed": true,
+        "driverSeconds": 2.39,
+        "receiptSha256": "a112a060b72e071272e27d58768ada6dbcf3450ce051246c9bf2a5a1ea9bcad4",
+        "rawOutputSha256": "ab67804511eedf42173333ee5e48b1310310629c0e432a46010ee651ab887f84",
+        "instrumentationSeconds": 0.905,
+        "pid": 27425,
+        "owner_status": null,
+        "originals_readable": 4,
+        "password_rows": 4,
+        "all_preexisting_rows_preserved": null,
+        "previous_all_rows_preserved": true,
+        "round_trip_verified": null,
+        "retained_id_cipher_category_preserved": true
+      },
+      {
+        "label": "write01",
+        "phase": "write",
+        "passed": true,
+        "driverSeconds": 2.168,
+        "receiptSha256": "6d800d2df72bd3470a9b7da0a88ee2b87d3197e3bf3c7077fd335fe19c17466a",
+        "rawOutputSha256": "82120b4ebc5ee5ecc1bec8a7040fb0d62319ec1729083e96abcefbc5b8f35f97",
+        "instrumentationSeconds": 0.68,
+        "pid": 27514,
+        "owner_status": "active",
+        "originals_readable": 4,
+        "password_rows": 5,
+        "all_preexisting_rows_preserved": true,
+        "previous_all_rows_preserved": true,
+        "round_trip_verified": null,
+        "retained_id_cipher_category_preserved": true
+      },
+      {
+        "label": "coldFive01",
+        "phase": "check",
+        "passed": true,
+        "driverSeconds": 1.96,
+        "receiptSha256": "5ecea2795db8c7bc1bd5677e1fc38ff8da551f5cf96a3b830d2609561c9a6173",
+        "rawOutputSha256": "7e5ceb5d0500832be551a1701aadb956976e24c538ddd3db8862405911cfe81d",
+        "instrumentationSeconds": 0.618,
+        "pid": 27607,
+        "owner_status": "active",
+        "originals_readable": 4,
+        "password_rows": 5,
+        "all_preexisting_rows_preserved": true,
+        "previous_all_rows_preserved": true,
+        "round_trip_verified": null,
+        "retained_id_cipher_category_preserved": null
+      },
+      {
+        "label": "prepare01",
+        "phase": "prepareRestore",
+        "passed": true,
+        "driverSeconds": 2.522,
+        "receiptSha256": "62eb1b85fe484a8d3e46fda12bd14d78de48c9a6df73d0b2daa91cde2c2ca753",
+        "rawOutputSha256": "83c593843306104fd18dc7ba62741f816e5083b7e82ce7758f438ef248528db0",
+        "instrumentationSeconds": 0.855,
+        "pid": 29567,
+        "owner_status": "awaiting_restore",
+        "originals_readable": 4,
+        "password_rows": 4,
+        "all_preexisting_rows_preserved": true,
+        "previous_all_rows_preserved": true,
+        "round_trip_verified": null,
+        "retained_id_cipher_category_preserved": null
+      },
+      {
+        "label": "restored01",
+        "phase": "restored",
+        "passed": true,
+        "driverSeconds": 2.035,
+        "receiptSha256": "638ba3a7c3061157d6e54d66dbfb980cdffe9d75cd2d5f5e69eacb2d5210b1f8",
+        "rawOutputSha256": "97d4eb4ae3998423131a636741a704e31a2f1b1324509c95c9f07ce30687515c",
+        "instrumentationSeconds": 0.641,
+        "pid": 31398,
+        "owner_status": "restored",
+        "originals_readable": 4,
+        "password_rows": 5,
+        "all_preexisting_rows_preserved": true,
+        "previous_all_rows_preserved": true,
+        "round_trip_verified": true,
+        "retained_id_cipher_category_preserved": null
+      },
+      {
+        "label": "restoredCold01",
+        "phase": "check",
+        "passed": true,
+        "driverSeconds": 1.9,
+        "receiptSha256": "2d4aa032c7f077c68ae2b2014f49d4aad56c8e7b91ab26a6de4515b45810f5b4",
+        "rawOutputSha256": "ef0a92acd64fc2d53b3a9e7daf26fdb1f9623c66eac049127873f5c2729e9d6c",
+        "instrumentationSeconds": 0.551,
+        "pid": 31539,
+        "owner_status": "restored",
+        "originals_readable": 4,
+        "password_rows": 5,
+        "all_preexisting_rows_preserved": true,
+        "previous_all_rows_preserved": true,
+        "round_trip_verified": null,
+        "retained_id_cipher_category_preserved": null
+      },
+      {
+        "label": "cleanup01",
+        "phase": "cleanup",
+        "passed": true,
+        "driverSeconds": 1.916,
+        "receiptSha256": "2b5a3c80320bd3e0b2e42eee37a71ba16e21a54ddc057f5df907b33bfa4e7f2e",
+        "rawOutputSha256": "76aa87508429b9da1ec8ad7ae065cfb41b26a94ce4ca527cd98e935f55236592",
+        "instrumentationSeconds": 0.563,
+        "pid": 31623,
+        "owner_status": "cleaned",
+        "originals_readable": 4,
+        "password_rows": 4,
+        "all_preexisting_rows_preserved": true,
+        "previous_all_rows_preserved": true,
+        "round_trip_verified": true,
+        "retained_id_cipher_category_preserved": null
+      },
+      {
+        "label": "finalFour01",
+        "phase": "checkFour",
+        "passed": true,
+        "driverSeconds": 1.889,
+        "receiptSha256": "bc9719d6e72be0dd0a4c77a4612119e58a1264c1bc8e774bf2beed2c8b3a13b8",
+        "rawOutputSha256": "3d6f92a07ecce99c21aa8e67851e893c2888096950fc68a19bf06abaa79f0a28",
+        "instrumentationSeconds": 0.55,
+        "pid": 31710,
+        "owner_status": "cleaned",
+        "originals_readable": 4,
+        "password_rows": 4,
+        "all_preexisting_rows_preserved": true,
+        "previous_all_rows_preserved": true,
+        "round_trip_verified": null,
+        "retained_id_cipher_category_preserved": true
+      }
+    ],
+    "entryPhases": [
+      {
+        "label": "imeAuth01",
+        "phase": "imeAuth",
+        "passed": true,
+        "instrumentationPid": 32406,
+        "instrumentationSeconds": 1.015,
+        "driverSeconds": 1.551,
+        "reportedFailure": null,
+        "originalFailure": null,
+        "receiptSha256": "4b8d27e1f2ab84300ec46ea70a51a6ae9549feddb805f7d9a34d9d31c7fee26d",
+        "rawOutputSha256": "41a11ece52efa2009cfaf9e72abcd27e4434aac2e981e7e2d4622fcceaffe49f",
+        "probeSha256": "662269eabb51288dc1e7e5c167dba53732fe692291710d6e83275c80d8a89a13",
+        "driverSha256": "15734e1ef1776bb50c352c33ac2a6beb5f6e082f7e6ba24dcea793572acba9c1"
+      },
+      {
+        "label": "imeCancel01",
+        "phase": "imeCancel",
+        "passed": true,
+        "instrumentationPid": 32548,
+        "instrumentationSeconds": 1.007,
+        "driverSeconds": 1.557,
+        "reportedFailure": null,
+        "originalFailure": null,
+        "receiptSha256": "14b5945bbe84cf46b61d8b2e9b692587a0b6f20e0e2e9977181ba4ef1126f841",
+        "rawOutputSha256": "704f06af8b7b51f61efc5fba6a7c1aacdd46a72f6844cf0864fba7a6b6cb1fee",
+        "probeSha256": "662269eabb51288dc1e7e5c167dba53732fe692291710d6e83275c80d8a89a13",
+        "driverSha256": "15734e1ef1776bb50c352c33ac2a6beb5f6e082f7e6ba24dcea793572acba9c1"
+      },
+      {
+        "label": "pickerAuth01",
+        "phase": "pickerAuth",
+        "passed": false,
+        "instrumentationPid": null,
+        "instrumentationSeconds": 20.873,
+        "driverSeconds": 21.464,
+        "reportedFailure": "Entry runtime frozen target mismatch",
+        "originalFailure": "Missing expected retained-record UI node; original cause unresolved",
+        "receiptSha256": "2c262316dd6a0ea3dcd7c184e2a29161e6b9433ca373058fb3e5067b82234383",
+        "rawOutputSha256": "064dc319b2366c187a47dae39a6780702ab52003c93f26b4a15b43b74ede5a09",
+        "probeSha256": "662269eabb51288dc1e7e5c167dba53732fe692291710d6e83275c80d8a89a13",
+        "driverSha256": "15734e1ef1776bb50c352c33ac2a6beb5f6e082f7e6ba24dcea793572acba9c1"
+      },
+      {
+        "label": "pickerAuth02-diagnostic",
+        "phase": "pickerAuth",
+        "passed": true,
+        "instrumentationPid": 31994,
+        "instrumentationSeconds": 1.176,
+        "driverSeconds": 1.763,
+        "reportedFailure": null,
+        "originalFailure": null,
+        "receiptSha256": "13d32c19db779e2351b716e708d5e95d47aae0c8d9c4a9b7f58f7fa5fde75732",
+        "rawOutputSha256": "126540ee9a76e12e37acab9d0c58d42b19ab6d841fd96c9bf82a611e711930f8",
+        "probeSha256": "662269eabb51288dc1e7e5c167dba53732fe692291710d6e83275c80d8a89a13",
+        "driverSha256": "15734e1ef1776bb50c352c33ac2a6beb5f6e082f7e6ba24dcea793572acba9c1"
+      },
+      {
+        "label": "pickerCancel01",
+        "phase": "pickerCancel",
+        "passed": true,
+        "instrumentationPid": 32238,
+        "instrumentationSeconds": 0.978,
+        "driverSeconds": 1.653,
+        "reportedFailure": null,
+        "originalFailure": null,
+        "receiptSha256": "c4eca51e733a29d63175e4f96b7bd1359530832e947a9bdf76398ee0528c7da0",
+        "rawOutputSha256": "58511e1a2ddbac9f616d252fb742929b77716d093d2513ef4411a033b4ac206a",
+        "probeSha256": "662269eabb51288dc1e7e5c167dba53732fe692291710d6e83275c80d8a89a13",
+        "driverSha256": "15734e1ef1776bb50c352c33ac2a6beb5f6e082f7e6ba24dcea793572acba9c1"
+      }
+    ],
+    "fifthWriteMethod": "SQL plus production SecurityManager encryption; not editor save",
+    "backupRestore": "Actual product export/import UI followed by retained-record probe and different-PID cold read",
+    "uiRestoreCounts": {
+      "countsNotIndependentlyRecoveredFromSavedUiSnapshot": true,
+      "probeRestoredFiveAndFinalFourVerified": true
+    },
+    "finalOwnedFifthRemoved": true,
+    "finalOriginalRows": 4,
+    "artifactScope": "Autofill frozen-input phase only; later hardware and HyperOS UI Debug builds have separate evidence"
+  },
+  "uiDriverFailures": [
+    {
+      "edition": "main",
+      "label": "ui-import01",
+      "reportedFailure": "UI dump failed without the known post-write SIGSEGV status",
+      "receiptSha256": "45f4130970ab6fda69a1f2b6c5c08450a8f3853c0057ead2a02139bb4f939a73"
+    },
+    {
+      "edition": "main",
+      "label": "ui-save-backup01",
+      "reportedFailure": "Expected target app or DocumentsUI foreground",
+      "receiptSha256": "3e01e7ce383eb9086fe451f7beb72f8836091c593f9f7f48845e1919cc661801"
+    },
+    {
+      "edition": "fd",
+      "label": "ui-backup-encrypt01",
+      "reportedFailure": "Expected target app or DocumentsUI foreground",
+      "receiptSha256": "182cdc170f99fd9f4d13ddd9d846d329e5a794d0196bfb2a3cb53f9737e1decc"
+    },
+    {
+      "edition": "fd",
+      "label": "ui-export-continue01",
+      "reportedFailure": "UI dump failed without the known post-write SIGSEGV status",
+      "receiptSha256": "79634b2725720742a4d09bee5699afc3c9ab63cd6c3d7b17652f26876b9eb25f"
+    },
+    {
+      "edition": "fd",
+      "label": "ui-save-backup01",
+      "reportedFailure": "Expected target app or DocumentsUI foreground",
+      "receiptSha256": "0ecce53f98d6c0b333aa26caae51dee1e34dd1eb72dd7c9e50433c51a8705101"
+    }
+  ],
+  "failureGroups": [
+    "Old native-only MDBX/mirror fallback negative controls",
+    "Native payload and immutable-type fixtures, parser/source fixes",
+    "Dropdown scroll and duplicate UI node matching",
+    "Missing Fill action after login dialog",
+    "ActivityMonitor outbound hits mistaken for incoming system callback creation",
+    "Virtual-ID expectations and separate synthetic master-password preconditions",
+    "KeePass locale and notification prerequisites",
+    "Ordinary visible-row timeout: same-package independent pass, original cause unknown",
+    "F-Droid broader JVM: three historical source-shape guards updated, production unchanged",
+    "Both R8 picker first attempts missed retained UI row; same-package/probe reruns pass; original causes unknown",
+    "UI foreground/dump failures retained; uiautomator exit code is not application-crash proof"
+  ],
+  "fdOneDrive": {
+    "providedByThisTask": false,
+    "existingUnconditionalMenu": true,
+    "authentication": "Unsupported F-Droid stub; MSAL removed",
+    "applicationIdExplanation": "Menu is not enabled by this test's isolated application ID"
+  },
+  "cleanup": {
+    "passed": true,
+    "removedUsers": [
+      10,
+      11,
+      12
+    ],
+    "restoredCurrentUser": 0,
+    "originalRecordsPerEdition": 4,
+    "removedUser0Probes": [
+      "local.multivaultentry328.main",
+      "local.multivaultentry328.fd",
+      "local.multivaultupgrade328.main",
+      "local.multivaultupgrade328.fd"
+    ],
+    "removedTaskXmlCount": 144,
+    "muMu2Stopped": true,
+    "muMuDisksAndConfigurationPreserved": true,
+    "publicAvdConfigurationsUnchanged": true,
+    "publicAvdDiskPreserved": true,
+    "publicAvdTestsPerformed": false,
+    "receiptSha256": "b7087688578367c55bcff090c7ab93658ade98d0502f75148463b0a8d1582bb0",
+    "ownedFifthFixture": "removed after true product restore and cold read; original four preserved and verified again after HyperOS testing"
+  },
+  "limits": [
+    "Scope acceleration covers V2 picker credential preparation, not all service or wallet queries or cloud sync.",
+    "Single sequential measurements have cache/order effects; no cold/warm benchmark or speed percentage claim.",
+    "Native MDBX support covers known login/card/document/address payloads; unknown/unreadable/archived/conflicting objects never fall back to mirrors.",
+    "New MDBX URL binding remains unavailable; separate :ime native MDBX integration is not implemented.",
+    "Final native reread and Android fill are not a cross-process atomic transaction.",
+    "R8 isolated packages use the same debug signing certificate for Release upgrade, not store signing.",
+    "Entry probes launch real Activities directly; authentication/cancel is not complete framework or full keyboard filling. Debug MDBX framework tests are separate evidence.",
+    "Synthetic API35/x86_64 only: no user data, real cloud, hardware key, physical OEM or other API/ABI validation.",
+    "First failures and same-package reruns do not prove a production timing fix or deterministic stability.",
+    "No screenshots, raw UI snapshots, passwords or machine-private paths are included."
+  ],
+  "followUpEvidence": {
+    "hardwareInsetsReport": "hardware-insets-328.md",
+    "hardwareInsetsResult": "hardware-insets-328-result.json",
+    "extendsPriorR8Coverage": false,
+    "hardwareWholeWindowVisualAccepted": false,
+    "hyperOsSettingsReport": "hyperos-settings-328.md",
+    "hyperOsSettingsResult": "hyperos-settings-328-result.json"
+  }
+}

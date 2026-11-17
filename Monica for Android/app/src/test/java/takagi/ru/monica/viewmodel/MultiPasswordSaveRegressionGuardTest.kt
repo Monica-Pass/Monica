@@ -269,6 +269,19 @@ class MultiPasswordSaveRegressionGuardTest {
             "app/src/main/java/takagi/ru/monica/ui/MainScreenFab.kt"
         ).readSourceText()
 
+        val targetResolver = projectFile(
+            "app/src/main/java/takagi/ru/monica/ui/screens/MdbxPasswordCreationRoute.kt"
+        ).readSourceText().substringAfter("internal fun passwordCreationTargets(", missingDelimiterValue = "")
+            .substringBefore("/** Old unsupported targets")
+        val creationTargetCall = addPasswordSource
+            .substringAfter("passwordCreationTargets(creationFilter, inheritedCreationTargets, initialStorageExplicit,", missingDelimiterValue = "")
+            .substringBefore("if ((passwordId == null")
+        val initialTargetEffect = addPasswordSource
+            .substringAfter("LaunchedEffect(isEditing, creationTargets) {", missingDelimiterValue = "")
+            .substringBefore("val topBarTitle = stringResource(")
+        val targetSelection = addPasswordSource.substringAfter("fun setSelectedStorageTargets(", missingDelimiterValue = "")
+            .substringBefore("fun addSelectedStorageTarget(")
+
         assertTrue(
             "New-item defaults must carry the selected MDBX folder from a folder filter, otherwise Add Password falls back to the vault root or Monica local.",
             helpersSource.contains("val mdbxFolderId: String? = null") &&
@@ -285,8 +298,13 @@ class MultiPasswordSaveRegressionGuardTest {
             "Add Password must initialize and save a concrete MDBX folder target, not just the database id.",
             addPasswordSource.contains("initialMdbxFolderId: String? = null") &&
                 addPasswordSource.contains("var mdbxFolderId by rememberSaveable") &&
-                addPasswordSource.contains("mdbxFolderId = initialMdbxFolderId") &&
-                addPasswordSource.contains("is CategoryFilter.MdbxFolderFilter -> StorageTarget.Mdbx(filter.databaseId, filter.folderId)") &&
+                Regex("initialMdbxDatabaseId,\\s*initialMdbxFolderId,").containsMatchIn(creationTargetCall) &&
+                targetResolver.contains("mdbxDatabaseId = mdbxId, mdbxFolderId = mdbxFolder") &&
+                targetResolver.contains("is CategoryFilter.MdbxFolderFilter -> StorageTarget.Mdbx(filter.databaseId, filter.folderId)") &&
+                initialTargetEffect.contains("if (!isEditing)") &&
+                initialTargetEffect.contains("setSelectedStorageTargets(creationTargets)") &&
+                targetSelection.contains("selectedStorageTargets.addAll(normalizedTargets)") &&
+                targetSelection.contains("syncLegacyStorageState(normalizedTargets)") &&
                 addPasswordSource.contains("mdbxFolderId = primaryTarget.folderId") &&
                 addPasswordSource.contains("mdbxFolderId = mdbxFolderId")
         )
@@ -2137,7 +2155,8 @@ class MultiPasswordSaveRegressionGuardTest {
         assertTrue(
             "MDBX password object ids must reuse imported MDBX entry ids across clients, while tombstoning the broken local Room-id object written by older builds.",
             mdbxRepositoryFactorySource.contains("fun mdbxPasswordObjectId(entry: PasswordEntry): String") &&
-                mdbxRepositoryFactorySource.contains("?.takeIf { it.startsWith(\"password:\")") &&
+                mdbxRepositoryFactorySource.contains("it.startsWith(\"password:\")") &&
+                mdbxRepositoryFactorySource.contains("UUID.fromString(it).toString() == it") &&
                 mdbxRepositoryFactorySource.contains("?: \"password:${'$'}{entry.id}\"") &&
                 mdbxStoreSource.contains("mdbxPasswordObjectId(entry)") &&
                 mdbx2RepositorySource.contains("mdbxPasswordObjectId(entry)") &&
@@ -2157,7 +2176,7 @@ class MultiPasswordSaveRegressionGuardTest {
                 markLegacyEntryDeletedBody.contains("head_commit_id = ?") &&
                 passwordRepositorySource.contains("replicaGroupId = entry.mdbxPasswordObjectId()") &&
                 passwordRepositorySource.contains("passwordEntryDao.updatePasswordEntries(entriesForMdbx)") &&
-                passwordRepositorySource.contains("private fun PasswordEntry.mdbxPasswordObjectId(): String") &&
+                passwordRepositorySource.contains("private suspend fun PasswordEntry.mdbxPasswordObjectId(): String") &&
                 passwordRepositorySource.contains("?.takeIf { it.isMdbxPasswordObjectId() }") &&
                 passwordRepositorySource.contains("?: id.takeIf { it > 0 }?.let { \"password:${'$'}it\" }") &&
                 passwordRepositorySource.contains("private fun String.isMdbxPasswordObjectId(): Boolean") &&

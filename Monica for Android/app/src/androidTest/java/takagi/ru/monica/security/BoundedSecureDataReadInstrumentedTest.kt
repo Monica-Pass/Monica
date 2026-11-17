@@ -12,6 +12,41 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 
 class BoundedSecureDataReadInstrumentedTest {
+    @Test fun privateBatchStillRequiresFullAuthorizationAtReturn() = runBlocking {
+        val current = java.util.concurrent.atomic.AtomicBoolean(true)
+        val checks = AtomicInteger()
+        val result = BoundedSecureDataRead.readChecked(isCurrent = { checks.incrementAndGet(); current.get() }) {
+            repeat(300) { ensureNotCancelled() }
+            current.set(false)
+            "must-not-publish"
+        }
+        assertNull(result)
+        assertTrue("Full authorization must run again after private traversal", checks.get() >= 3)
+    }
+
+    @Test fun cancellationDuringPrivateTraversalCannotReturnLateResult() = runBlocking {
+        val entered = CountDownLatch(1)
+        val release = CountDownLatch(1)
+        val completed = java.util.concurrent.atomic.AtomicBoolean(false)
+        try {
+            val pending = async {
+                BoundedSecureDataRead.readChecked(isCurrent = { true }) {
+                    entered.countDown()
+                    check(release.await(10, TimeUnit.SECONDS))
+                    ensureNotCancelled()
+                    completed.set(true)
+                    "must-not-publish"
+                }
+            }
+            withTimeout(5_000) { while (entered.count != 0L) delay(10) }
+            pending.cancel()
+            pending.join()
+            release.countDown()
+            assertEquals("fresh", BoundedSecureDataRead.readChecked(isCurrent = { true }) { "fresh" })
+            assertFalse(completed.get())
+        } finally { release.countDown() }
+    }
+
     private suspend fun preparedManager(): SecurityManager {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         assertTrue(SecureStorageStartup.prepareWithRetry(context) is SecureStartupResult.Ready)

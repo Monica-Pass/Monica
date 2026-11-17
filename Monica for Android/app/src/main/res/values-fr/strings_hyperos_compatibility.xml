@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_compatibility_title">"Compatibilité HyperOS"</string>
+    <string name="hyperos_compatibility_subtitle">"Passkeys, invites de sauvegarde et animations de l’application"</string>
+    <string name="hyperos_compatibility_shared_settings_note">"Ces options partagent leurs valeurs avec les paramètres généraux. La réduction des animations concerne les animations dans Monica."</string>
+</resources>

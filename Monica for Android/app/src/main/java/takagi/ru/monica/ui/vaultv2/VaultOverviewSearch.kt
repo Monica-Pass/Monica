@@ -1,5 +1,8 @@
 package takagi.ru.monica.ui.vaultv2
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -10,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
@@ -27,6 +31,26 @@ private class OverviewSearchResult(val rows: List<OverviewPickerEntry>) {
     val items = rows.map { it.item }
 }
 
+/** One entrance per search opening, even when its first result arrives asynchronously. */
+@Composable
+internal fun rememberOverviewSearchEntrance(ready: Boolean, reduceAnimations: Boolean): Modifier {
+    val progress = remember { Animatable(if (reduceAnimations) 1f else 0f) }
+    LaunchedEffect(ready, reduceAnimations) {
+        if (reduceAnimations) progress.snapTo(1f)
+        else if (ready && progress.value < 1f) {
+            // Animatable also follows the system's motion duration scale.
+            progress.animateTo(1f, tween(220, easing = LinearOutSlowInEasing))
+        }
+    }
+    return Modifier.graphicsLayer {
+        // Keep loading visible and read frames only in the layer, away from index/list work.
+        // No outgoing composition is retained when search closes or its source is revoked.
+        val fraction = if (ready && !reduceAnimations) progress.value else 1f
+        alpha = fraction
+        translationY = (1f - fraction) * 24.dp.toPx()
+    }
+}
+
 /** Owns one reusable Rust index for the active search; no work runs in animation callbacks. */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -41,6 +65,7 @@ internal fun VaultOverviewSearchResults(
     selection: VaultOverviewSelectionState,
     isDetailVisible: Boolean,
     onRequestDeleteItem: (VaultV2Item) -> Unit,
+    reduceAnimations: Boolean,
     modifier: Modifier = Modifier,
 ) {
     val focusManager = LocalFocusManager.current
@@ -69,9 +94,10 @@ internal fun VaultOverviewSearchResults(
     LaunchedEffect(result) { selection.updateSearchResults(result?.items.orEmpty()) }
     DisposableEffect(selection) { onDispose { selection.exitSearch() } }
     val results = result?.rows
+    val entrance = rememberOverviewSearchEntrance(results != null, reduceAnimations)
     LazyColumn(
         state = listState,
-        modifier = modifier.fillMaxSize().imePadding().testTag("overview_search_results"),
+        modifier = modifier.fillMaxSize().imePadding().then(entrance).testTag("overview_search_results"),
         contentPadding = PaddingValues(
             start = 20.dp, end = 20.dp, top = 6.dp,
             bottom = if (WindowInsets.isImeVisible) 16.dp else 116.dp,

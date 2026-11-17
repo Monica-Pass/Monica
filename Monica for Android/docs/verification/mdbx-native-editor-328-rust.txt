@@ -1,0 +1,84 @@
+rust-all-01
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.48s
+     Running unittests src\lib.rs (Monica-main\fdroid\Mdbx-ffi\target\debug\deps\mdbx_ffi-3c1524a99fadbc86.exe)
+
+running 63 tests
+test runtime_facade::tests::runtime_manifest_freezes_mdbx3_identity_and_mdbx2_storage ... ok
+test tests::attachment_batch_is_atomic_idempotent_and_mixes_content_metadata ... ok
+test tests::attachment_batch_rejects_partial_failures_bounds_and_missing_capability ... ok
+test tests::attachment_facade_enforces_stream_limits_and_detects_tampering ... ok
+test tests::attachment_facade_honors_collection_capability_trimming ... ok
+test tests::attachment_facade_rejects_oversized_content_without_side_effects ... ok
+test tests::attachment_facade_roundtrips_and_coalesces_content_commits ... ok
+test tests::attachment_summary_facade_pages_without_chunk_reads_and_binds_cursors ... ok
+test tests::attachment_tiga_scope_roundtrips_through_ffi_types ... ok
+test tests::authenticated_manual_bundle_round_trip_replay_and_tamper_guard ... ok
+test tests::bounded_write_operation_limits_and_streaming_intent_hash_are_stable ... ok
+test tests::bounded_write_operation_rejects_without_database_side_effects ... ok
+test tests::build_capability_manifest_is_available_without_a_vault ... ok
+test tests::collection_profile_facade_registers_capabilities_and_guards_object_types ... ok
+test tests::collection_summary_ffi_discovers_profiles_pages_tombstones_and_limits ... ok
+test tests::composite_write_operation_creates_parent_and_attachment_in_one_commit ... ok
+test tests::conflict_facade_applies_typed_project_and_attachment_custom_merges ... ok
+test tests::conflict_facade_lists_and_resolves_generic_metadata ... ok
+test tests::conflict_summary_facade_fails_closed_for_oversized_and_malformed_fields ... ok
+test tests::conflict_summary_facade_pages_filters_binds_cursors_and_exposes_limits ... ok
+test tests::content_manifest_ffi_roundtrips_and_rejects_stale_state ... ok
+test tests::diagnostics_summary_matches_storage_counts ... ok
+test tests::every_write_command_has_a_typed_change_summary ... ok
+test tests::extension_profile_registry_is_canonical_idempotent_and_atomic ... ok
+test object_facade::glitter_legacy_tests::glitter_legacy_payload_getters_fail_closed_and_explicit_reveal_respects_scope ... ok
+test tests::ffi_blob_sync_session_negotiates_and_advances_only_after_ack ... ok
+test tests::ffi_blob_sync_session_restores_resume_and_rejects_partial_negotiation ... ok
+test tests::ffi_deleted_object_summary_pages_are_bounded_and_query_bound ... ok
+test tests::ffi_external_blob_transfer_pages_chunks_resumes_and_aborts ... ok
+test tests::ffi_incremental_segment_files_are_authenticated_atomic_and_idempotent ... ok
+test tests::ffi_metadata_disclosure_denial_precedes_corrupted_payloads ... ok
+test tests::ffi_metadata_disclosure_returns_typed_scopes_payloads_and_limits ... ok
+test tests::ffi_metadata_summary_pages_are_bounded_payload_free_and_compatible ... ok
+test tests::ffi_object_disclosure_limits_are_discoverable_and_validated ... ok
+test tests::ffi_object_disclosure_power_denial_precedes_oversized_payload ... ok
+test tests::ffi_object_disclosure_rejects_oversized_ciphertext_before_decryption ... ok
+test tests::ffi_object_disclosure_returns_typed_allow_and_missing_session_decisions ... ok
+test tests::ffi_object_summary_by_id_is_payload_free_and_tombstone_visible ... ok
+test tests::ffi_wire_session_restores_sequence_state_and_rejects_wrong_types ... ok
+test tests::ffi_wire_session_roundtrips_blob_messages_and_sequences ... ok
+test tests::generic_metadata_write_operation_is_atomic_idempotent_and_lifecycle_complete ... ok
+test tests::generic_metadata_write_operation_rolls_back_and_enforces_bounds ... ok
+test tests::guarded_editor_commit_is_atomic_stale_safe_and_idempotent ... ok
+test tests::health_check_returns_structured_tombstone_issues ... ok
+test tests::health_repair_plan_and_conflict_choices_are_available_to_native_clients ... ok
+test tests::integrity_root_checkpoint_ffi_authenticates_negotiates_and_roundtrips_wire ... ok
+test tests::external_attachment_facade_accepts_hard_max_content_with_bounded_sync_delta has been running for over 60 seconds
+test tests::integrity_root_ffi_exposes_metadata_only_status_and_locked_inspection ... ok
+test tests::managed_snapshot_and_commit_actions_round_trip_through_ffi ... ok
+test tests::metadata_benchmark_is_bounded_and_appends_only_requested_commits ... ok
+test tests::native_composite_move_keeps_identity_permissions_and_assets_in_one_commit ... ok
+test tests::payload_migration_facade_exposes_adapter_bytes_and_one_commit_result ... ok
+test tests::payload_migration_facade_requires_session_and_supports_device_context ... ok
+test tests::registered_extension_profile_constrains_collection_profile_writes ... ok
+test tests::rollback_anchor_ffi_roundtrips_opaque_tokens_and_reports_advancement ... ok
+test tests::runtime_manifest_is_available_without_a_vault_and_preserves_mdbx2_storage ... ok
+test tests::external_attachment_facade_accepts_hard_max_content_with_bounded_sync_delta ... ok
+test tests::shared_ffi_vault_uses_one_runtime_writer_gate ... ok
+test tests::snapshot_summary_facade_pages_without_loading_payload_and_preserves_legacy_reads ... ok
+test tests::tombstone_purge_eligibility_is_available_to_native_clients ... ok
+test tests::write_operation_is_atomic_single_commit_and_idempotent_across_limit_apis ... ok
+test tests::snapshot_lifecycle_facade_keeps_legacy_manual_and_prunes_automatic_idempotently ... ok
+test vault_facade::glitter_tests::glitter_rejects_unsupported_creation_without_files ... ok
+test vault_facade::glitter_tests::glitter_real_portable_roundtrip_enforces_both_factors has been running for over 60 seconds
+test vault_facade::glitter_tests::glitter_real_portable_roundtrip_enforces_both_factors ... ok
+
+test result: ok. 63 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 524.98s
+
+
+
+rust-concurrency-02
+   Compiling mdbx-ffi v0.2.0 (C:\Users\joyins\Desktop\Monica-all\Monica-main\fdroid\Mdbx-ffi\crates\mdbx-ffi)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.62s
+     Running tests\guarded_editor.rs (target\debug\deps\guarded_editor-61392c0c3ffd020d.exe)
+
+running 1 test
+test independent_native_connections_cannot_both_commit_the_same_editor_baseline ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.72s

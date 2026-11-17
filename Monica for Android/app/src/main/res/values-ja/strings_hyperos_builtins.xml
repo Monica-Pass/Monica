@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_diagnostics_title">"設定の診断"</string>
+    <string name="hyperos_diagnostics_note">"サービスの宣言と選択を確認します。パスキーの動作成功を示すものではありません。保護された設定の読み取りには承認済みの Shizuku または root が必要です。"</string>
+    <string name="hyperos_diag_declaration">"Monica のサービスとパスキー機能が有効"</string>
+    <string name="hyperos_diag_feature">"システムの認証情報機能が利用可能"</string>
+    <string name="hyperos_diag_unrestricted">"この Android ユーザーで自動入力が許可"</string>
+    <string name="hyperos_diag_framework">"システムが Monica の有効化を認識"</string>
+    <string name="hyperos_diag_registered">"Monica が認証情報サービスに登録済み"</string>
+    <string name="hyperos_drift_title">"修復後の変更を検出"</string>
+    <string name="hyperos_drift_note">"このページの表示中は 30 秒ごと、再表示時にも確認します。設定を自動で書き戻すことはありません。"</string>
+    <string name="hyperos_drift_result">"最後に確認した修復結果との比較"</string>
+    <string name="hyperos_drift_off">"検出はオフ"</string>
+    <string name="hyperos_drift_no_baseline">"比較の基準を作るには、先に設定を適用してください。"</string>
+    <string name="hyperos_drift_unchanged">"設定に変更なし"</string>
+    <string name="hyperos_drift_changed">"設定が変更されました。ご自身で管理アプリを切り替えた可能性もあります。復元前に確認してください。"</string>
+    <string name="hyperos_update_failed">"保存できませんでした。更新して現在の状態を確認してください。"</string>
+    <string name="hyperos_check_yes">"はい"</string>
+    <string name="hyperos_check_no">"いいえ"</string>
+    <string name="hyperos_check_unsupported">"非対応"</string>
+    <string name="hyperos_module_title">"任意の互換モジュール"</string>
+    <string name="hyperos_module_requirements">"対応する LSPosed API 102+、Android 14–16、Xiaomi／Redmi／POCO の所有者ユーザーが必要です。フレームワークで Monica と必要な対象を有効にしてください。すべて初期状態ではオフです。"</string>
+    <string name="hyperos_module_connected">"フレームワークに接続済み。Hook の動作確認ではありません。"</string>
+    <string name="hyperos_module_disconnected">"対応フレームワークを利用できません"</string>
+    <string name="hyperos_module_scope">"許可済みの対象：%1$s"</string>
+    <string name="hyperos_hook_reset">"セキュリティセンターのリセットを阻止"</string>
+    <string name="hyperos_hook_reset_note">"識別できた認証情報設定メソッドのみを対象にします。"</string>
+    <string name="hyperos_hook_settings">"システム選択画面の互換性"</string>
+    <string name="hyperos_hook_settings_note">"識別済みの設定コントローラーを調整し、非対応メソッドは元の動作を維持します。"</string>
+    <string name="hyperos_hook_chooser">"Google 認証情報選択画面"</string>
+    <string name="hyperos_hook_chooser_note">"有効なシステム Google Play 開発者サービスの選択画面が必要です。"</string>
+    <string name="hyperos_hook_hybrid">"デバイス間の認証情報互換性"</string>
+    <string name="hyperos_hook_hybrid_note">"確認済みの Google ハイブリッドサービスと Xiaomi スキャナーの経路を使います。"</string>
+    <string name="hyperos_module_restart">"有効化後は対象プロセスまたは端末を手動で再起動してください。無効化はフレームワークが変更を配信すると反映されます。自動再起動はしません。"</string>
+    <string name="hyperos_physical_feedback">"HyperOS 実機では未検証です。ROM バージョンと再現手順を GitHub issue にお寄せください。パスワードや鍵は含めないでください。"</string>
+    <string name="hyperos_reference_projects">"参考プロジェクトとライセンス"</string>
+    <string name="hyperos_module_confirmation">"実験的なシステム動作変更を有効にしますか？対応するフレームワークと対象コンポーネントが必要です。他のパスワード管理アプリに影響する場合があります。ここかフレームワークで無効にできます。"</string>
+    <string name="hyperos_feedback_action">"互換性の問題を報告"</string>
+    <string name="hyperos_module_entry_note">"初期状態はオフ · 対応する LSPosed が必要"</string>
+</resources>

@@ -284,12 +284,12 @@ object TotpDataResolver {
     private fun parseBitwardenSteamUri(raw: String): TotpData? {
         val normalized = raw.trim()
         if (!normalized.startsWith("steam://", ignoreCase = true)) return null
+        // '/' belongs to the Base64 key, including immediately after the scheme.
         val secretPart = normalized
             .substringAfter("://", "")
             .substringBefore("?")
             .substringBefore("#")
             .trim()
-            .trim('/')
             .takeIf { it.isNotBlank() }
             ?: return null
         val decodedSecret = runCatching {

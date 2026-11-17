@@ -3461,6 +3461,8 @@ class MdbxViewModel(
             }
             entries = vaultStore.readStoredEntries(databaseId)
         }
+        val nativeFolderIds = if (database.engineTypeEnum == MdbxEngineType.RUST_MDBX2)
+            vaultStore.listFolders(databaseId).mapTo(mutableSetOf()) { it.folderId } else null
         val payloadByEntryId = mutableMapOf<String, JSONObject>()
         val importedPasswordIds = mutableMapOf<String, Long>()
         val importedSecureItemIds = mutableMapOf<String, Long>()
@@ -3476,7 +3478,8 @@ class MdbxViewModel(
             .toMap()
         val existingPasswordsByEntryId = normalizeLegacyMdbxPasswordRows(
             databaseId = databaseId,
-            remoteRoomIdsByEntryId = remotePasswordRoomIdsByEntryId
+            remoteRoomIdsByEntryId = remotePasswordRoomIdsByEntryId,
+            nativeEntryIds = entries.mapTo(mutableSetOf()) { it.entryId }
         )
             .dedupeMdbxPasswordRowsByEntryId()
             .mapNotNull { entry -> entry.replicaGroupId?.let { it to entry } }
@@ -3539,7 +3542,8 @@ class MdbxViewModel(
                         databaseId = databaseId,
                         stored = stored,
                         payload = payload,
-                        existing = existingPasswordsByEntryId[stored.entryId]
+                        existing = existingPasswordsByEntryId[stored.entryId],
+                        nativeFolderIds = nativeFolderIds
                     )
                     importedPasswordIds[stored.entryId] = passwordId
                 }
@@ -3581,8 +3585,14 @@ class MdbxViewModel(
                     orphanedRows.filter(MdbxUnknownEntry::isProjection).forEach {
                         passwordEntryDao.deletePasswordEntryById(it.id)
                     }
+                    // Confirmed native UUID projections follow the engine's deletion/type
+                    // state. They must never be rescued as newly generated legacy objects.
+                    val nativeRows = orphanedRows.filter { row -> row.replicaGroupId?.let { id ->
+                        id in entries.map { it.entryId } && runCatching { UUID.fromString(id).toString() == id }.getOrDefault(false)
+                    } == true }
+                    applyRemoteStateToOrphanedMdbxPasswordRows(database, nativeRows, "native_source_changed")
                     val (remoteDeletedRows, missingRemoteRows) = orphanedRows
-                        .filterNot(MdbxUnknownEntry::isProjection).partition {
+                        .filterNot { MdbxUnknownEntry.isProjection(it) || it in nativeRows }.partition {
                         it.replicaGroupId in deletedPasswordEntryIds
                     }
                     if (orphanedRows.isNotEmpty()) {
@@ -3964,12 +3974,15 @@ class MdbxViewModel(
 
     private suspend fun normalizeLegacyMdbxPasswordRows(
         databaseId: Long,
-        remoteRoomIdsByEntryId: Map<String, Long>
+        remoteRoomIdsByEntryId: Map<String, Long>,
+        nativeEntryIds: Set<String>
     ): List<PasswordEntry> {
         val rows = passwordEntryDao.getByMdbxDatabaseIdSync(databaseId)
         if (rows.isEmpty()) return rows
 
-        val normalizedRows = rows.map { it.withNormalizedMdbxPasswordEntryId() }
+        val normalizedRows = rows.map { row ->
+            if (row.replicaGroupId in nativeEntryIds) row else row.withNormalizedMdbxPasswordEntryId()
+        }
         val rowsNeedingReplicaUpdate = normalizedRows.filterIndexed { index, row ->
             row.replicaGroupId != rows[index].replicaGroupId
         }
@@ -4108,7 +4121,8 @@ class MdbxViewModel(
         databaseId: Long,
         stored: MdbxStoredVaultEntry,
         payload: JSONObject,
-        existing: PasswordEntry?
+        existing: PasswordEntry?,
+        nativeFolderIds: Set<String>?
     ): Long {
         val plainPassword = if (payload.has("password_plain") && !payload.isNull("password_plain")) {
             payload.getString("password_plain")
@@ -4136,7 +4150,8 @@ class MdbxViewModel(
             ),
             categoryId = existing?.categoryId,
             mdbxDatabaseId = databaseId,
-            mdbxFolderId = payload.optMdbxFolderId(),
+            mdbxFolderId = if (nativeFolderIds != null) stored.collectionId?.takeIf { it in nativeFolderIds }
+                else payload.optMdbxFolderId(),
             replicaGroupId = stored.entryId,
             authenticatorKey = encodeMdbxSensitiveValueForLocalStorage(
                 value = payload.optString("authenticator_key"),

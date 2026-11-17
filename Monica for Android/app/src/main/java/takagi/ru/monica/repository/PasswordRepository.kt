@@ -521,11 +521,24 @@ class PasswordRepository(
         )
     }
 
-    private fun PasswordEntry.mdbxPasswordObjectId(): String =
-        replicaGroupId
+    private suspend fun PasswordEntry.mdbxPasswordObjectId(): String {
+        // A native UUID is an object identity only when the source confirms it;
+        // old unrelated replica UUIDs still follow the legacy repair path.
+        val nativeId = replicaGroupId?.takeIf {
+            runCatching { UUID.fromString(it).toString() == it }.getOrDefault(false)
+        }
+        if (nativeId != null && mdbxDatabaseId != null && mdbxRepository != null) {
+            val source = mdbxRepository.readStoredEntries(mdbxDatabaseId).firstOrNull { it.entryId == nativeId }
+            if (source != null) {
+                require(!source.deleted && source.entryType == "login") { "MDBX native password is unavailable" }
+                return nativeId
+            }
+        }
+        return replicaGroupId
             ?.takeIf { it.isMdbxPasswordObjectId() }
             ?: id.takeIf { it > 0 }?.let { "password:$it" }
             ?: "password:${UUID.randomUUID()}"
+    }
 
     private fun String.isMdbxPasswordObjectId(): Boolean =
         startsWith("password:") && length > "password:".length

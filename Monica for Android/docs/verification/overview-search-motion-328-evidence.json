@@ -1,0 +1,47 @@
+{
+  "date": "2026-11-17",
+  "version": "1.0.328",
+  "device": "MuMu2 API35 x86_64; isolated synthetic user10",
+  "durationMs": 220,
+  "offsetDp": 24,
+  "sharedSha256": {
+    "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultOverviewSearch.kt": "37b20b21e65bea1b3f140267587468fd661e8ee31e627db8a0f567dad9665d5c",
+    "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultOverviewScreen.kt": "c53c173b3221ddf43edafc8e09f1dddda43e8bdbd04345cbe4a185911c86300b",
+    "app/src/androidTest/java/takagi/ru/monica/ui/vaultv2/VaultOverviewSearchMotionTest.kt": "ddd1fb5959bb684b1c9fbaf76ee3699a74793de446e3751e80abc3a4bf88fbd2"
+  },
+  "main": "6/7 batch (13.118s), same-APK missing lock method 1/1 (2.350s); all 7 distinct methods passed",
+  "fd": "7/7 batch (11.722s)",
+  "limits": "Compose screen/pane fixtures; no physical OEM or release/R8 validation; no database changes",
+  "apks": {
+    "main-device04": [
+      {
+        "sha256": "73e67940cc3032375d53d72bd51b289bc0a68bb5a215387e6900db87cb6a40cc",
+        "file": "Monica-Android-x86_64-1.0.328-26111712-03.APK"
+      },
+      {
+        "sha256": "38adaed8aa1f1ea9c7a1e97c55608f9c22530e8c6795fd4c004438683d0bd4ef",
+        "file": "app-debug-androidTest.apk"
+      }
+    ],
+    "main-device05": [
+      {
+        "sha256": "73e67940cc3032375d53d72bd51b289bc0a68bb5a215387e6900db87cb6a40cc",
+        "file": "Monica-Android-x86_64-1.0.328-26111712-03.APK"
+      },
+      {
+        "sha256": "38adaed8aa1f1ea9c7a1e97c55608f9c22530e8c6795fd4c004438683d0bd4ef",
+        "file": "app-debug-androidTest.apk"
+      }
+    ],
+    "fd-device01": [
+      {
+        "sha256": "d519127c34b251b1adfb0972d44751a5bfc56d8b94d90f9dc234a0eb3aea0bec",
+        "file": "Monica-Android-x86_64-1.0.328.apk"
+      },
+      {
+        "sha256": "af3d6bf28110a7fee4b94c07ce83fa6baf31d7cb514d124a00c1aa23a5bdd556",
+        "file": "app-debug-androidTest.apk"
+      }
+    ]
+  }
+}

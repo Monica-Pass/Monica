@@ -13,10 +13,14 @@ import takagi.ru.monica.ui.components.MonicaPasswordDialogAuthScreen
 class MasterPasswordFallbackUiTest {
     @get:Rule val compose = createComposeRule()
 
-    private lateinit var fixture: KeystoreDataFailureInstrumentedTest.Fixture
+    private lateinit var fixture: LocalPasswordUpgradeInstrumentedTest.Fixture
+    private lateinit var manager: SecurityManager
     @org.junit.Before fun preparePassword() {
-        fixture = KeystoreDataFailureInstrumentedTest.Fixture()
-        fixture.savePasswordCiphertext("a")
+        // Seed historical credentials independently; current enrollment rejects short passwords.
+        fixture = LocalPasswordUpgradeInstrumentedTest.Fixture(password = "a")
+        manager = fixture.manager()
+        assertTrue(manager.unlockVaultWithPassword("a"))
+        fixture.assertRecordAndMdk(manager)
         SecurityManager.clearRuntimeUnlockCache()
     }
     @org.junit.After fun closeFixture() { if (::fixture.isInitialized) fixture.close() }
@@ -29,8 +33,8 @@ class MasterPasswordFallbackUiTest {
                 confirmText = "Confirm", cancelText = "Cancel", emptyError = "Empty",
                 unsupportedCharacterError = "Unsupported", minLengthError = "Too short",
                 incorrectError = "Incorrect", verifyPassword = { input, attempt ->
-                    if (stageBeforeVerify) fixture.manager.unlockVaultWithPassword(input, attempt) && verify(input)
-                    else verify(input) && fixture.manager.unlockVaultWithPassword(input, attempt)
+                    if (stageBeforeVerify) manager.unlockVaultWithPassword(input, attempt) && verify(input)
+                    else verify(input) && manager.unlockVaultWithPassword(input, attempt)
                 }, onSuccess = { success() }, onCancel = cancel,
             )
         }

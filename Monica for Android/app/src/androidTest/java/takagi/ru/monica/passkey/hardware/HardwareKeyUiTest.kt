@@ -1,6 +1,16 @@
 package takagi.ru.monica.passkey.hardware
 
 import android.content.Intent
+import android.app.Activity
+import android.os.Build
+import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.credentials.exceptions.CreateCredentialCancellationException
+import androidx.credentials.exceptions.GetCredentialCancellationException
+import androidx.credentials.provider.PendingIntentHandler
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import androidx.activity.ComponentActivity
@@ -85,6 +95,123 @@ class HardwareKeyUiTest {
             }
         }
     }
+
+    @Test fun managementActivityDrawsToWindowTopWithSafeHeaderAndClose() {
+        ActivityScenario.launchActivityForResult<HardwareSecurityKeyActivity>(
+            Intent(context, HardwareSecurityKeyActivity::class.java)
+        ).use { scenario ->
+            assertHardwareWindowGeometry(scenario)
+            scenario.recreate()
+            val labels = assertHardwareWindowGeometry(scenario)
+            compose.onNodeWithContentDescription(labels.back).assertHasClickAction().performClick()
+            compose.waitUntil(5_000) { scenario.state == Lifecycle.State.DESTROYED }
+            assertEquals(Activity.RESULT_CANCELED, scenario.result.resultCode)
+        }
+    }
+
+    @Test fun bothProviderWindowsKeepSafeHeaderAndExplicitCancellation() {
+        // A missing synthetic provider request cannot open a hardware credential operation.
+        // This checks the real provider window and cancellation, not successful USB/NFC auth.
+        for (action in listOf(HardwareSecurityKeyActivity.ACTION_CREATE, HardwareSecurityKeyActivity.ACTION_GET)) {
+            ActivityScenario.launchActivityForResult<HardwareSecurityKeyActivity>(
+                Intent(context, HardwareSecurityKeyActivity::class.java).setAction(action)
+            ).use { scenario ->
+                val labels = assertHardwareWindowGeometry(scenario)
+                compose.onNodeWithTag("hardware-perform").assertIsDisplayed().assertIsNotEnabled()
+                compose.onNodeWithText(labels.cancel).assertIsDisplayed().performClick()
+                compose.waitUntil(5_000) { scenario.state == Lifecycle.State.DESTROYED }
+                val result = scenario.result
+                assertEquals(Activity.RESULT_CANCELED, result.resultCode)
+                if (Build.VERSION.SDK_INT >= 34) {
+                    if (action == HardwareSecurityKeyActivity.ACTION_CREATE) {
+                        assertTrue(PendingIntentHandler.retrieveCreateCredentialException(result.resultData)
+                            is CreateCredentialCancellationException)
+                    } else {
+                        assertTrue(PendingIntentHandler.retrieveGetCredentialException(result.resultData)
+                            is GetCredentialCancellationException)
+                    }
+                }
+            }
+        }
+    }
+
+    private data class HardwareWindowLabels(val title: String, val back: String, val cancel: String)
+
+    private data class HardwareWindowGeometry(
+        val contentTop: Int,
+        val contentLeft: Int,
+        val contentRight: Int,
+        val contentBottom: Int,
+        val windowHeight: Int,
+        val statusTop: Int,
+        val navigationBottom: Int,
+        val density: Float,
+    )
+
+    private fun assertHardwareWindowGeometry(
+        scenario: ActivityScenario<HardwareSecurityKeyActivity>,
+    ): HardwareWindowLabels {
+        lateinit var labels: HardwareWindowLabels
+        scenario.onActivity { activity ->
+            activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            labels = HardwareWindowLabels(activity.getString(R.string.hardware_key_title),
+                activity.getString(R.string.hardware_key_back), activity.getString(R.string.hardware_key_cancel))
+        }
+        compose.waitUntil(5_000) {
+            var ready = false
+            scenario.onActivity { activity ->
+                val decor = activity.window.decorView
+                val content = activity.findViewById<View>(android.R.id.content)
+                val insets = ViewCompat.getRootWindowInsets(decor)
+                ready = activity.lifecycle.currentState == Lifecycle.State.RESUMED &&
+                    !activity.isChangingConfigurations && !activity.isFinishing && !activity.isDestroyed &&
+                    decor.isAttachedToWindow && activity.hasWindowFocus() && content.width > 0 &&
+                    decor.height > decor.width &&
+                    activity.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT &&
+                    insets != null && insets.isVisible(WindowInsetsCompat.Type.statusBars()) &&
+                    insets.getInsets(WindowInsetsCompat.Type.statusBars()).top > 0
+            }
+            ready
+        }
+        compose.onNodeWithText(labels.title).assertIsDisplayed()
+        compose.onNodeWithContentDescription(labels.back).assertIsDisplayed().assertHasClickAction()
+        compose.waitForIdle()
+        lateinit var geometry: HardwareWindowGeometry
+        scenario.onActivity { activity ->
+            val decor = activity.window.decorView
+            val content = activity.findViewById<View>(android.R.id.content)
+            val insets = requireNotNull(ViewCompat.getRootWindowInsets(decor))
+            val position = IntArray(2).also(content::getLocationInWindow)
+            geometry = HardwareWindowGeometry(position[1], position[0], position[0] + content.width,
+                position[1] + content.height, decor.height,
+                insets.getInsets(WindowInsetsCompat.Type.statusBars()).top,
+                insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom,
+                activity.resources.displayMetrics.density)
+            assertTrue("Actual hardware window must retain FLAG_SECURE",
+                activity.window.attributes.flags and WindowManager.LayoutParams.FLAG_SECURE != 0)
+            assertTrue("Status bar must really be present for this regression", geometry.statusTop > 0)
+        }
+        val title = compose.onNodeWithText(labels.title).fetchSemanticsNode().boundsInWindow
+        val back = compose.onNodeWithContentDescription(labels.back).fetchSemanticsNode().boundsInWindow
+        InstrumentationRegistry.getInstrumentation().sendStatus(2, Bundle().apply {
+            putString("stream", "HARDWARE_INSETS_328 contentTop=${geometry.contentTop} " +
+                "statusTop=${geometry.statusTop} titleTop=${title.top} backTop=${back.top} " +
+                "backBottom=${back.bottom} windowHeight=${geometry.windowHeight}\n")
+        })
+        assertEquals("Real Activity content must extend behind the status bar to window top", 0, geometry.contentTop)
+        assertTrue("Title must avoid the actual status-bar region", title.top >= geometry.statusTop - 1f)
+        assertTrue("Header must not reserve a second status-bar-sized blank band",
+            title.top - geometry.statusTop <= 24f * geometry.density + 1f)
+        assertTrue("Close hit area must avoid status-bar icons", back.top >= geometry.statusTop - 1f)
+        assertTrue("Close hit area must remain inside the visible content width",
+            back.left >= geometry.contentLeft - 1f && back.right <= geometry.contentRight + 1f)
+        assertTrue("Close hit area must remain above the navigation bar",
+            back.bottom <= geometry.windowHeight - geometry.navigationBottom + 1f)
+        assertTrue("Title must be fully inside the current Activity content",
+            title.height > 0f && title.bottom <= geometry.contentBottom + 1f)
+        return labels
+    }
+
 
     private fun renderReference(locale: String, fontScale: Float, filename: String) {
         val config = android.content.res.Configuration(context.resources.configuration).apply {

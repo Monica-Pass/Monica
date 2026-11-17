@@ -663,15 +663,8 @@ class MonicaAutofillServiceNg : AutofillService() {
             val allPasswords = (if (canReadNative) nativeSource.load()
                 else AutofillPasswordSource.loadRoomEntries(PasswordDatabase.getDatabase(applicationContext)))
                 .filterNot { it.isKeyCredential() }
-            val sourceFilter = autofillPreferences.v2DefaultSourceFilter.first()
-            val defaultKeepassDatabaseId = autofillPreferences.v2DefaultKeepassDatabaseId.first()
-            val defaultBitwardenVaultId = autofillPreferences.v2DefaultBitwardenVaultId.first()
-            val scopedPasswords = AutofillSuggestionPolicy.applyDefaultSourceFilter(
-                entries = allPasswords,
-                sourceFilter = sourceFilter,
-                keepassDatabaseId = defaultKeepassDatabaseId,
-                bitwardenVaultId = defaultBitwardenVaultId,
-            )
+            val defaultScope = autofillPreferences.v2DefaultScope.first()
+            val scopedPasswords = allPasswords.filter { it.matchesAutofillScope(defaultScope) }
             candidatePasswordCount = scopedPasswords.size
             currentCandidates = scopedPasswords
             val strictOnly = autofillPreferences.isBitwardenStrictModeEnabled.first()

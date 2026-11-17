@@ -38,8 +38,18 @@ import androidx.credentials.exceptions.GetCredentialUnknownException
 import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.credentials.provider.CallingAppInfo
 import androidx.credentials.provider.PendingIntentHandler
+import androidx.credentials.provider.ProviderGetCredentialRequest
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.withResumed
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeout
 import org.json.JSONObject
 import takagi.ru.monica.R
 import takagi.ru.monica.data.AppSettings
@@ -49,6 +59,10 @@ import takagi.ru.monica.data.ThemeMode
 import takagi.ru.monica.repository.MdbxRepositoryFactory
 import takagi.ru.monica.repository.PasskeyRepository
 import takagi.ru.monica.security.SecurityManager
+import takagi.ru.monica.security.SessionManager
+import takagi.ru.monica.security.SecureStorageUnavailableException
+import takagi.ru.monica.security.SecureStartupResult
+import takagi.ru.monica.security.showSecureStorageBlocked
 import takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog
 import takagi.ru.monica.ui.theme.MonicaTheme
 import takagi.ru.monica.utils.BiometricAuthHelper
@@ -68,6 +82,7 @@ class PasskeyAuthActivity : FragmentActivity() {
     companion object {
         private const val TAG = "PasskeyAuthActivity"
         private const val KEYSTORE_PROVIDER = "AndroidKeyStore"
+        private const val LOOKUP_TIMEOUT_MILLIS = 15_000L
     }
     
     private val database: PasswordDatabase by lazy {
@@ -96,6 +111,10 @@ class PasskeyAuthActivity : FragmentActivity() {
 
     private val showMasterPasswordDialog = mutableStateOf(false)
     
+    // Pending from construction: a stop during secure startup must also revoke this request.
+    private var lookupPending = true
+    private var lookupRevoked = false
+    private var lookupJob: Job? = null
     private var resultFinished = false
     private var signingStarted = false
     private var biometricInFlight = false
@@ -111,12 +130,14 @@ class PasskeyAuthActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        launchWithSecureStorage { onSecureCreate(savedInstanceState) }
+        onBackPressedDispatcher.addCallback(this) { cancelAuthentication() }
+        launchWithSecureStorage {
+            if (!lookupRevoked && !resultFinished) onSecureCreate(savedInstanceState)
+        }
     }
 
     private fun onSecureCreate(savedInstanceState: Bundle?) {
         
-        onBackPressedDispatcher.addCallback(this) { cancelAuthentication() }
         Log.i(TAG, "PasskeyAuthActivity onCreate")
         
         // 首先尝试从 PendingIntentHandler 获取请求（这是正确的方式）
@@ -140,7 +161,7 @@ class PasskeyAuthActivity : FragmentActivity() {
 
         }
         
-        var requestJson = intent.getStringExtra(MonicaCredentialProviderService.EXTRA_REQUEST_JSON) ?: ""
+        val requestJson = intent.getStringExtra(MonicaCredentialProviderService.EXTRA_REQUEST_JSON) ?: ""
         val credentialId = intent.getStringExtra(MonicaCredentialProviderService.EXTRA_CREDENTIAL_ID) ?: ""
         val recordId = intent.getLongExtra(MonicaCredentialProviderService.EXTRA_RECORD_ID, 0L)
 
@@ -194,29 +215,94 @@ class PasskeyAuthActivity : FragmentActivity() {
             return
         }
         
-        // 加载 Passkey 信息。Credential Provider 的候选项按 recordId 精确传递，
-        // 避免同一 RP/用户名相近或同步引用数据存在时误取到另一条 credential。
-        runBlocking {
-            passkey = recordId
-                .takeIf { it > 0L }
-                ?.let { database.passkeyDao().getPasskeyByRecordId(it) }
-                ?.takeIf { it.credentialId == credentialId }
-            if (passkey == null && recordId <= 0L) {
-                passkey = database.passkeyDao().getPasskeyById(credentialId)
-            }
-            if (passkey == null) {
-                val normalizedId = normalizeCredentialId(credentialId)
-                if (normalizedId != null) {
-                    val all = database.passkeyDao().getAllPasskeysSync()
-                    passkey = all.firstOrNull {
-                        (recordId <= 0L || it.id == recordId) &&
-                            normalizeCredentialId(it.credentialId) == normalizedId
+        val lockGeneration = SessionManager.lockGeneration.value
+        lookupJob = lifecycleScope.launch {
+            try {
+                // Room suspends its query; the IO context also keeps synchronous DAO setup and
+                // credential-ID fallback traversal off main. Cancellation is not a hard stop
+                // for an uncooperative provider, so admission is checked again on main.
+                val selected = withTimeout(LOOKUP_TIMEOUT_MILLIS) {
+                    withContext(Dispatchers.IO) { loadSelectedPasskey(recordId, credentialId) }
+                }
+                lifecycle.withResumed {
+                    if (!isLookupCurrent(lockGeneration)) {
+                        cancelAuthentication()
+                        return@withResumed
                     }
+                    lookupPending = false
+                    passkey = selected
+                    showAuthentication(selected, requestJson, credentialId, providerRequest)
+                }
+            } catch (_: TimeoutCancellationException) {
+                failLookup(lockGeneration)
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (failure: SecureStorageUnavailableException) {
+                lifecycle.withResumed {
+                    if (!isRequestCurrent(lockGeneration)) {
+                        cancelAuthentication()
+                        return@withResumed
+                    }
+                    lookupPending = false
+                    showSecureStorageBlocked(SecureStartupResult.Blocked(failure))
+                }
+            } catch (_: Exception) {
+                failLookup(lockGeneration)
+            }
+        }
+    }
+
+    private fun isRequestCurrent(lockGeneration: Long): Boolean =
+        !lookupRevoked && !resultFinished && !isFinishing && !isDestroyed &&
+            SessionManager.lockGeneration.value == lockGeneration
+
+    private fun isLookupCurrent(lockGeneration: Long): Boolean =
+        lookupPending && isRequestCurrent(lockGeneration)
+
+    private suspend fun failLookup(lockGeneration: Long) {
+        lifecycle.withResumed {
+            if (!isLookupCurrent(lockGeneration)) {
+                cancelAuthentication()
+                return@withResumed
+            }
+            lookupPending = false
+            resultFinished = true
+            val resultIntent = Intent()
+            PendingIntentHandler.setGetCredentialException(
+                resultIntent, GetCredentialUnknownException("Unable to load selected passkey")
+            )
+            setResult(Activity.RESULT_OK, resultIntent)
+            finish()
+        }
+    }
+
+    private suspend fun loadSelectedPasskey(recordId: Long, credentialId: String): PasskeyEntry? {
+        // Preserve exact record selection, including normalized-ID compatibility. A positive
+        // recordId must never fall back to another row with the same credential ID.
+        val dao = database.passkeyDao()
+        var selected = recordId.takeIf { it > 0L }
+            ?.let { dao.getPasskeyByRecordId(it) }
+            ?.takeIf { it.credentialId == credentialId }
+        if (selected == null && recordId <= 0L) selected = dao.getPasskeyById(credentialId)
+        if (selected == null) {
+            val normalizedId = normalizeCredentialId(credentialId)
+            if (normalizedId != null) {
+                selected = dao.getAllPasskeysSync().firstOrNull {
+                    (recordId <= 0L || it.id == recordId) &&
+                        normalizeCredentialId(it.credentialId) == normalizedId
                 }
             }
         }
-        
-        val currentPasskey = passkey
+        return selected
+    }
+
+    private fun showAuthentication(
+        currentPasskey: PasskeyEntry?,
+        initialRequestJson: String,
+        credentialId: String,
+        providerRequest: ProviderGetCredentialRequest?,
+    ) {
+        var requestJson = initialRequestJson
         if (currentPasskey == null) {
             Log.e(TAG, "Passkey not found")
             recordPasskeyEvent(
@@ -393,6 +479,9 @@ class PasskeyAuthActivity : FragmentActivity() {
     private fun cancelAuthentication() {
         if (resultFinished || signingStarted) return
         resultFinished = true
+        lookupPending = false
+        lookupRevoked = true
+        lookupJob?.cancel()
         verificationAttempt++
         biometricInFlight = false
         showMasterPasswordDialog.value = false
@@ -403,7 +492,18 @@ class PasskeyAuthActivity : FragmentActivity() {
         finish()
     }
 
+    override fun onStop() {
+        if (lookupPending) {
+            lookupRevoked = true
+            lookupJob?.cancel()
+            if (!isChangingConfigurations && !isFinishing) cancelAuthentication()
+        }
+        super.onStop()
+    }
+
     override fun onDestroy() {
+        lookupRevoked = true
+        lookupJob?.cancel()
         verificationAttempt++
         biometricHelper.cancelAuthentication()
         super.onDestroy()

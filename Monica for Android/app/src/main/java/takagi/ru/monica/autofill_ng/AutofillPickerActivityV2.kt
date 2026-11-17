@@ -1,6 +1,7 @@
 package takagi.ru.monica.autofill_ng
 
 import takagi.ru.monica.security.launchWithSecureStorage
+import takagi.ru.monica.security.showSecureStorageBlocked
 
 import takagi.ru.monica.utils.AppLocaleStringResolver
 
@@ -79,6 +80,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
@@ -100,6 +105,8 @@ import takagi.ru.monica.data.toSymbolPasswordGeneratorOptions
 import takagi.ru.monica.data.GeneratorPreferencesManager
 import takagi.ru.monica.data.ItemType
 import takagi.ru.monica.data.isLocalPasswordOwnership
+import takagi.ru.monica.data.isLocalOnlyItem
+import takagi.ru.monica.data.isUsable
 import takagi.ru.monica.data.PasswordDatabase
 import takagi.ru.monica.data.PasswordEntry
 import takagi.ru.monica.data.addOrReplaceLinkedAppBinding
@@ -108,6 +115,7 @@ import takagi.ru.monica.data.bitwarden.BitwardenFolder
 import takagi.ru.monica.data.bitwarden.BitwardenVault
 import takagi.ru.monica.repository.CustomFieldRepository
 import takagi.ru.monica.repository.PasswordRepository
+import takagi.ru.monica.repository.MdbxRepositoryFactory
 import takagi.ru.monica.repository.SecureItemRepository
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.security.DeveloperVerificationPolicy
@@ -412,8 +420,11 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState) // BaseMonicaActivity 已调用 enableEdgeToEdge()
+        entrySettings = takagi.ru.monica.security.ForegroundEntrySettings(lifecycle)
         launchWithSecureStorage { onSecureCreate(savedInstanceState) }
     }
+
+    private lateinit var entrySettings: takagi.ru.monica.security.ForegroundEntrySettings
 
     private fun onSecureCreate(savedInstanceState: Bundle?) {
         AutofillLogger.initialize(applicationContext)
@@ -476,6 +487,7 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
             )
         }
         
+        val entryGeneration = SecurityManager.dataReadGeneration.value
         lifecycleScope.launch {
             if (!isManualMode && !args.isSaveMode &&
                 isAutofillRequestBlocked(applicationContext, args.fieldSignatureKey)
@@ -483,36 +495,37 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
                 finishBlockedAutofillRequest(args.autofillIds.orEmpty())
                 return@launch
             }
-            showPickerContent()
+            try {
+                val delivered = entrySettings.deliver(settingsManager.settingsFlow,
+                    isCurrent = { !requestRevoked && !isFinishing && !isDestroyed &&
+                        SecurityManager.dataReadGeneration.value == entryGeneration },
+                    onReady = ::showPickerContent)
+                if (!delivered && !isChangingConfigurations && !isDestroyed) {
+                    setResult(Activity.RESULT_CANCELED)
+                    finish()
+                }
+            } catch (failure: takagi.ru.monica.security.SecureStorageUnavailableException) {
+                showSecureStorageBlocked(takagi.ru.monica.security.SecureStartupResult.Blocked(failure))
+            }
         }
     }
 
-    private fun showPickerContent() {
+    private fun showPickerContent(startupSettings: takagi.ru.monica.data.AppSettings) {
         val database = PasswordDatabase.getDatabase(applicationContext)
+        val securityManager = SecurityManager(applicationContext)
         val repository = PasswordRepository(
             passwordEntryDao = database.passwordEntryDao(),
             categoryDao = database.categoryDao(),
+            mdbxRepository = MdbxRepositoryFactory.create(applicationContext, database, securityManager),
         )
         val localKeePassDao = database.localKeePassDatabaseDao()
-        val securityManager = SecurityManager(applicationContext)
         // settingsManager 已由 BaseMonicaActivity 初始化
         val localSettingsManager = settingsManager
         val generatorPreferencesManager = GeneratorPreferencesManager(applicationContext)
 
-        runCatching {
-            val autoLockMinutes = runBlocking {
-                localSettingsManager.settingsFlow.first().autoLockMinutes
-            }
-            SessionManager.updateAutoLockTimeout(autoLockMinutes)
-        }.onFailure { error ->
-            AutofillLogger.w(
-                "PICKER",
-                "Failed to sync auto-lock timeout before verification: ${error.message}"
-            )
-        }
+        SessionManager.updateAutoLockTimeout(startupSettings.autoLockMinutes)
         
         // Reuse only this target's autofill grant; do not write the main app session.
-        val startupSettings = cachedSettings ?: runBlocking { localSettingsManager.settingsFlow.first() }
         val developerBypass = DeveloperVerificationPolicy.bypassesIdentityVerification(startupSettings)
         if (developerBypass) {
             securityManager.unlockVaultForDeveloperBypass(startupSettings.autoLockMinutes)
@@ -530,7 +543,7 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
             }
             // 读取截图保护设置（截图保护已由 BaseMonicaActivity 统一处理）
             val settings by localSettingsManager.settingsFlow.collectAsState(
-                initial = takagi.ru.monica.data.AppSettings()
+                initial = startupSettings
             )
             
             // 获取 KeePass 数据库列表
@@ -633,14 +646,19 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
     private var nativePasswordSource: AutofillPasswordSource? = null
     private var nativeSourceGeneration = Long.MIN_VALUE
     private var nativeSourceFreshVerification = false
+    private var nativeSourceScope: AutofillScope = AutofillScope.All
+    private var nativeSourceScopeRevision = Int.MIN_VALUE
 
     // Called only after this picker request passes its existing verification gate.
-    private fun authorizedPasswordSource(generation: Long, freshVerification: Boolean): AutofillPasswordSource {
+    private fun authorizedPasswordSource(generation: Long, freshVerification: Boolean, scope: AutofillScope, scopeRevision: Int): AutofillPasswordSource {
         if (nativePasswordSource == null || nativeSourceGeneration != generation ||
-            nativeSourceFreshVerification != freshVerification) {
+            nativeSourceFreshVerification != freshVerification || nativeSourceScope != scope ||
+            nativeSourceScopeRevision != scopeRevision) {
             nativePasswordSource?.clear()
             nativeSourceGeneration = generation
             nativeSourceFreshVerification = freshVerification
+            nativeSourceScope = scope
+            nativeSourceScopeRevision = scopeRevision
             nativePasswordSource = AutofillPasswordSource(applicationContext,
                 SecurityManager(applicationContext), generation, ::canPublishCredentials,
                 allowLockedDatabases = freshVerification)
@@ -1410,7 +1428,8 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
     private fun handleBankCardAutofill(item: SecureItem) {
         val (_, data) = parseBankCardCandidate(
             item,
-            decryptIfNeeded = SecurityManager(applicationContext)::decryptDataIfMonicaCiphertext
+            decryptIfNeeded = if (item.mdbxDatabaseId != null) { value -> value }
+                else SecurityManager(applicationContext)::decryptDataIfMonicaCiphertext
         ) ?: run {
             setResult(Activity.RESULT_CANCELED)
             finish()
@@ -1482,7 +1501,8 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
     private fun handleDocumentAutofill(item: SecureItem) {
         val (_, data) = parseDocumentCandidate(
             item,
-            decryptIfNeeded = SecurityManager(applicationContext)::decryptDataIfMonicaCiphertext
+            decryptIfNeeded = if (item.mdbxDatabaseId != null) { value -> value }
+                else SecurityManager(applicationContext)::decryptDataIfMonicaCiphertext
         ) ?: run {
             setResult(Activity.RESULT_CANCELED)
             finish()
@@ -1563,7 +1583,8 @@ class AutofillPickerActivityV2 : BaseMonicaActivity() {
     private fun handleBillingAddressAutofill(item: SecureItem) {
         val (_, data) = parseBillingAddressCandidate(
             item,
-            decryptIfNeeded = SecurityManager(applicationContext)::decryptDataIfMonicaCiphertext
+            decryptIfNeeded = if (item.mdbxDatabaseId != null) { value -> value }
+                else SecurityManager(applicationContext)::decryptDataIfMonicaCiphertext
         ) ?: run {
             setResult(Activity.RESULT_CANCELED)
             finish()
@@ -1773,28 +1794,48 @@ private fun AutofillPickerContent(
     onFillGeneratedPassword: (String) -> Unit,
     onCopy: (String, String, Boolean) -> Unit,
     canPublishCredentials: () -> Boolean,
-    passwordSourceFor: (Long, Boolean) -> AutofillPasswordSource,
+    passwordSourceFor: (Long, Boolean, AutofillScope, Int) -> AutofillPasswordSource,
     onClose: () -> Unit,
     onMarkAsNonAutofill: () -> Unit,
     onSmartCopy: suspend (PasswordEntry, Boolean, Long) -> Unit
 ) {
+    var selectedScope by remember { mutableStateOf<AutofillScope>(AutofillScope.All) }
+    val sourceFilter = selectedScope.toDefaultSourceFilter().toUiFilter()
+    val selectedKeePassDatabaseId = (selectedScope as? AutofillScope.KeePass)?.databaseId
+    val selectedVaultId = (selectedScope as? AutofillScope.Bitwarden)?.vaultId
+    val selectedMdbxDatabaseId = (selectedScope as? AutofillScope.Mdbx)?.databaseId
+    val scopeAtComposition = selectedScope
+    var pickerDefaultsRestored by remember { mutableStateOf(false) }
+    var sourceScopeRevision by remember { mutableIntStateOf(0) }
+    var reloadRevision by remember { mutableIntStateOf(0) }
+    val sourceRevisionAtComposition = sourceScopeRevision
+    val reloadRevisionAtComposition = reloadRevision
+    val loadScopeToken = remember(selectedScope, sourceScopeRevision, reloadRevision) { Any() }
+    val latestLoadScopeToken by rememberUpdatedState(loadScopeToken)
+    val activeDataLoadJob = remember { java.util.concurrent.atomic.AtomicReference<kotlinx.coroutines.Job?>() }
+    var walletParseRevision by remember(loadScopeToken) { mutableIntStateOf(0) }
+    fun isCurrentLoadScope() = latestLoadScopeToken === loadScopeToken &&
+        sourceScopeRevision == sourceRevisionAtComposition && reloadRevision == reloadRevisionAtComposition &&
+        selectedScope == scopeAtComposition
+
     // 导航状态: "list", "detail", "add"
     var currentScreen by remember { mutableStateOf("list") }
-    var selectedPassword by remember { mutableStateOf<PasswordEntry?>(null) }
+    var selectedPassword by remember(loadScopeToken) { mutableStateOf<PasswordEntry?>(null) }
     
-    var nativeGroups by remember { mutableStateOf<Map<Long, List<String>>>(emptyMap()) }
-    var unavailableNativeDatabases by remember { mutableStateOf<Set<Long>>(emptySet()) }
-    var allPasswords by remember { mutableStateOf<List<PasswordEntry>>(emptyList()) }
-    var displayUsernames by remember { mutableStateOf<Map<Long, String>>(emptyMap()) }
-    var suggestedPasswords by remember { mutableStateOf<List<PasswordEntry>>(emptyList()) }
-    var searchedPasswords by remember { mutableStateOf<List<PasswordEntry>>(emptyList()) }
-    var allBankCards by remember { mutableStateOf<List<SecureItem>>(emptyList()) }
-    var allDocuments by remember { mutableStateOf<List<SecureItem>>(emptyList()) }
-    var allBillingAddresses by remember { mutableStateOf<List<SecureItem>>(emptyList()) }
+    var nativeGroups by remember(loadScopeToken) { mutableStateOf<Map<Long, List<String>>>(emptyMap()) }
+    var unavailableNativeDatabases by remember(loadScopeToken) { mutableStateOf<Set<Long>>(emptySet()) }
+    var unavailableMdbxDatabases by remember(loadScopeToken) { mutableStateOf<Set<Long>>(emptySet()) }
+    var allPasswords by remember(loadScopeToken) { mutableStateOf<List<PasswordEntry>>(emptyList()) }
+    var displayUsernames by remember(loadScopeToken) { mutableStateOf<Map<Long, String>>(emptyMap()) }
+    var suggestedPasswords by remember(loadScopeToken) { mutableStateOf<List<PasswordEntry>>(emptyList()) }
+    var searchedPasswords by remember(loadScopeToken) { mutableStateOf<List<PasswordEntry>>(emptyList()) }
+    var allBankCards by remember(loadScopeToken) { mutableStateOf<List<SecureItem>>(emptyList()) }
+    var allDocuments by remember(loadScopeToken) { mutableStateOf<List<SecureItem>>(emptyList()) }
+    var allBillingAddresses by remember(loadScopeToken) { mutableStateOf<List<SecureItem>>(emptyList()) }
     var searchQuery by remember { mutableStateOf("") }
-    var isSearchLoading by remember { mutableStateOf(false) }
+    var isSearchLoading by remember(loadScopeToken) { mutableStateOf(false) }
     var showMarkAsNonAutofillDialog by remember { mutableStateOf(false) }
-    var structuredCopyDialog by remember { mutableStateOf<StructuredAutofillCopyDialogState?>(null) }
+    var structuredCopyDialog by remember(loadScopeToken) { mutableStateOf<StructuredAutofillCopyDialogState?>(null) }
     var showGeneratedPasswordSheet by rememberSaveable { mutableStateOf(false) }
     val defaultGeneratedPasswordOptions = remember { AutofillPasswordGeneratorOptions() }
     var generatedPasswordLength by rememberSaveable { mutableIntStateOf(defaultGeneratedPasswordOptions.length) }
@@ -1845,13 +1886,10 @@ private fun AutofillPickerContent(
         generatorPreferencesApplied = true
     }
     var useGeneratedPasswordForNextAdd by rememberSaveable { mutableStateOf(false) }
-    var sourceFilter by remember { mutableStateOf(AutofillStorageSourceFilter.ALL) }
-    var selectedKeePassDatabaseId by remember { mutableStateOf<Long?>(null) }
     var selectedKeePassGroupPath by remember { mutableStateOf<String?>(null) }
-    var selectedVaultId by remember { mutableStateOf<Long?>(null) }
     var selectedFolderId by remember { mutableStateOf<String?>(null) }
     var isFilterExpanded by remember { mutableStateOf(false) }
-    var isLoading by remember { mutableStateOf(true) }
+    var isLoading by remember(loadScopeToken) { mutableStateOf(true) }
     val coroutineScope = rememberCoroutineScope()
     
     // 检查通知权限 - 用于决定是否显示智能复制选项
@@ -1897,12 +1935,16 @@ private fun AutofillPickerContent(
     }
     var pendingAddTarget by rememberSaveable { mutableStateOf<AutofillAddTarget?>(null) }
     val appDb = remember(context) { PasswordDatabase.getDatabase(context.applicationContext) }
-    val walletFillRepository = remember(appDb, securityManager) {
+    val walletFillRepository = remember(appDb, securityManager, loadScopeToken) {
         WalletAutofillRepository(appDb, securityManager::decryptDataIfMonicaCiphertext)
+    }
+    DisposableEffect(walletFillRepository) {
+        onDispose { walletFillRepository.clear() }
     }
     val secureItemRepository = remember(appDb, securityManager) {
         SecureItemRepository(
             appDb.secureItemDao(),
+            mdbxRepository = MdbxRepositoryFactory.create(context.applicationContext, appDb, securityManager),
             decryptSensitiveValue = securityManager::decryptDataIfMonicaCiphertext
         )
     }
@@ -1942,20 +1984,31 @@ private fun AutofillPickerContent(
     // Recreated requests must not restore permission to reopen newly locked databases.
     var freshVerification by remember { mutableStateOf(false) }
     var copyJob by remember { mutableStateOf<kotlinx.coroutines.Job?>(null) }
-    fun authorizedForRead() = isAuthenticated && securityManager.isDataReadCurrent(authorizationGeneration)
-    val passwordSource = if (isAuthenticated) remember(authorizationGeneration, freshVerification) {
-        passwordSourceFor(authorizationGeneration, freshVerification)
-    } else null
     val nativeLockVersions by takagi.ru.monica.utils.KeePassKdbxService.nativeLockVersions.collectAsState()
-    if (isAuthenticated && allPasswords.any { !requireNotNull(passwordSource).isCurrent(it) }) {
+    // Scope changes do not grant permission to reopen a database locked after this authentication.
+    val authorizedNativeLockVersions = if (isAuthenticated) remember(authorizationGeneration, freshVerification) {
+        takagi.ru.monica.utils.KeePassKdbxService.nativeLockVersions.value.toMap()
+    } else null
+    fun authorizedForRead() = isAuthenticated &&
+        authorizedNativeLockVersions == takagi.ru.monica.utils.KeePassKdbxService.nativeLockVersions.value &&
+        securityManager.isDataReadCurrent(authorizationGeneration)
+    if (isAuthenticated && authorizedNativeLockVersions != takagi.ru.monica.utils.KeePassKdbxService.nativeLockVersions.value) {
+        LaunchedEffect(nativeLockVersions) { copyJob?.cancel(); onClose() }
+        return
+    }
+    val passwordSource = if (isAuthenticated && pickerDefaultsRestored) remember(authorizationGeneration, freshVerification, selectedScope, sourceScopeRevision) {
+        passwordSourceFor(authorizationGeneration, freshVerification, selectedScope, sourceScopeRevision)
+    } else null
+    if (isAuthenticated && passwordSource != null && !passwordSource.areCurrent(allPasswords)) {
         LaunchedEffect(nativeLockVersions) { copyJob?.cancel(); onClose() }
         return
     }
     val onAutofill: (PasswordEntry, Boolean) -> Unit = { password, saveUri ->
-        if (authorizedForRead()) onAutofillRequested(password, saveUri, authorizationGeneration)
+        if (isCurrentLoadScope() && authorizedForRead() && (!saveUri || !AutofillPasswordSource.isMdbx(password)))
+            onAutofillRequested(password, saveUri, authorizationGeneration)
     }
     val onAccessibilityFill: (PasswordEntry) -> Unit = { password ->
-        if (authorizedForRead()) onAccessibilityFillRequested(password, authorizationGeneration)
+        if (isCurrentLoadScope() && authorizedForRead()) onAccessibilityFillRequested(password, authorizationGeneration)
     }
     // A lock revokes this picker request. Returning to its list must not mint a new authorization.
     if (isAuthenticated && currentReadGeneration != authorizationGeneration) {
@@ -1982,7 +2035,8 @@ private fun AutofillPickerContent(
             } },
         )
     }
-    val handlePasswordAction: (PasswordItemAction) -> Unit = { action ->
+    val handlePasswordAction: (PasswordItemAction) -> Unit = action@{ action ->
+        if (!isCurrentLoadScope() || !authorizedForRead()) return@action
         copyJob?.cancel()
         when (action) {
             is PasswordItemAction.Autofill -> onAutofill(action.password, false)
@@ -2064,28 +2118,45 @@ private fun AutofillPickerContent(
     }
 
     LaunchedEffect(Unit) {
-        runCatching {
-            val savedSource = autofillPreferences.v2DefaultSourceFilter.first()
-            sourceFilter = savedSource.toUiFilter()
-            selectedKeePassDatabaseId = autofillPreferences.v2DefaultKeepassDatabaseId.first()
-            selectedVaultId = autofillPreferences.v2DefaultBitwardenVaultId.first()
-        }.onFailure {
-            android.util.Log.w("AutofillPickerV2", "Failed to restore picker defaults: ${it.message}")
+        try {
+            selectedScope = autofillPreferences.v2DefaultScope.first()
+        } catch (cancelled: CancellationException) {
+            throw cancelled
+        } catch (error: Exception) {
+            android.util.Log.w("AutofillPickerV2", "Failed to restore picker defaults: ${error.message}")
         }
+        pickerDefaultsRestored = true
     }
 
-    fun persistPickerDefaults() {
-        coroutineScope.launch {
-            runCatching {
-                autofillPreferences.setV2DefaultSourceFilter(sourceFilter.toPreferenceFilter())
-                autofillPreferences.setV2DefaultKeepassDatabaseId(selectedKeePassDatabaseId)
-                autofillPreferences.setV2DefaultBitwardenVaultId(selectedVaultId)
-            }.onFailure {
-                android.util.Log.w("AutofillPickerV2", "Failed to persist picker defaults: ${it.message}")
+    // One writer preserves event order; each event captures its complete immutable selection.
+    val scopeWrites = remember { kotlinx.coroutines.channels.Channel<AutofillScope>(kotlinx.coroutines.channels.Channel.CONFLATED) }
+    LaunchedEffect(autofillPreferences, scopeWrites) {
+        for (scope in scopeWrites) {
+            try {
+                autofillPreferences.setV2DefaultScope(scope)
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (error: Exception) {
+                android.util.Log.w("AutofillPickerV2", "Failed to persist picker defaults", error)
             }
         }
     }
-    
+    DisposableEffect(scopeWrites) { onDispose { scopeWrites.close() } }
+    fun changeScope(next: AutofillScope) {
+        if (next == selectedScope) return
+        activeDataLoadJob.get()?.cancel()
+        copyJob?.cancel()
+        passwordSource?.clear()
+        walletFillRepository.clear()
+        sourceScopeRevision++
+        selectedScope = next
+        selectedKeePassGroupPath = null
+        selectedFolderId = null
+        selectedPassword = null
+        structuredCopyDialog = null
+        scopeWrites.trySend(next)
+    }
+
     val (appIcon, appName) = remember(args.applicationId) {
         args.applicationId?.let { packageName ->
             try {
@@ -2106,6 +2177,11 @@ private fun AutofillPickerContent(
             ?: ""
     }
     
+    val mdbxRegistrations by remember(appDb) { appDb.localMdbxDatabaseDao().getAvailableDatabases() }
+        .collectAsState(initial = emptyList())
+    val mdbxDatabases = remember(mdbxRegistrations) { mdbxRegistrations.filter { it.isUsable } }
+    val mdbxNameById = remember(mdbxDatabases) { mdbxDatabases.associate { it.id to it.name } }
+
     val bitwardenVaults by appDb.bitwardenVaultDao().getAllVaultsFlow().collectAsState(initial = emptyList())
     val selectedVaultFolders by remember(appDb, selectedVaultId) {
         if (selectedVaultId != null) {
@@ -2166,33 +2242,46 @@ private fun AutofillPickerContent(
         )
     }
 
-    // 加载密码
-    LaunchedEffect(Unit) {
+    // Wait for the saved scope before loading; each scope owns its results and loading state.
+    LaunchedEffect(pickerDefaultsRestored, passwordSource, loadScopeToken) {
+        if (!pickerDefaultsRestored) return@LaunchedEffect
+        val source = passwordSource ?: return@LaunchedEffect
+        val loadJob = currentCoroutineContext()[kotlinx.coroutines.Job]
+        activeDataLoadJob.set(loadJob)
         val start = System.currentTimeMillis()
+        isLoading = true
         try {
             val loadedData = withContext(Dispatchers.IO) {
-                val embeddedWallet = walletFillRepository.loadEmbeddedItems()
-                val entries = requireNotNull(passwordSource).load().filterNot { it.isKeyCredential() }
+                val embeddedWallet = walletFillRepository.loadEmbeddedItems(scopeAtComposition)
+                val entries = source.load(scopeAtComposition).filterNot { it.isKeyCredential() }
+                val urlRules = if (args.suggestedPasswordIds != null ||
+                    (args.applicationId.isNullOrBlank() && args.webDomain.isNullOrBlank())) emptyMap()
+                    else source.urlRules(entries)
                 AutofillPickerLoadedData(
                     suggestedPasswords = AutofillPickerSuggestions.load(entries, args, autofillPreferences, appName,
-                        requireNotNull(passwordSource).urlRules(entries)),
+                        urlRules, activeScope = scopeAtComposition),
                     allPasswords = entries,
                     // Resolve legacy encrypted usernames once on IO. Presentation must never
                     // replace the original record passed to copy/fill/save actions.
                     displayUsernames = entries.associate { entry -> entry.id to
                         runCatching { AccountFillPolicy.resolveAccountIdentifier(entry, securityManager) }.getOrDefault("") },
-                    allBankCards = secureItemRepository.getActiveItemsByType(ItemType.BANK_CARD).first() +
-                        embeddedWallet.filter { it.itemType == ItemType.BANK_CARD },
-                    allDocuments = secureItemRepository.getActiveItemsByType(ItemType.DOCUMENT).first() +
-                        embeddedWallet.filter { it.itemType == ItemType.DOCUMENT },
-                    allBillingAddresses = secureItemRepository.getActiveItemsByType(ItemType.BILLING_ADDRESS).first() +
-                        embeddedWallet.filter { it.itemType == ItemType.BILLING_ADDRESS }
+                    allBankCards = secureItemRepository.getActiveItemsByType(ItemType.BANK_CARD).first()
+                        .filter { it.mdbxDatabaseId == null && it.matchesWalletAutofillScope(scopeAtComposition) } +
+                        (embeddedWallet + source.nativeWalletItems).filter { it.itemType == ItemType.BANK_CARD },
+                    allDocuments = secureItemRepository.getActiveItemsByType(ItemType.DOCUMENT).first()
+                        .filter { it.mdbxDatabaseId == null && it.matchesWalletAutofillScope(scopeAtComposition) } +
+                        (embeddedWallet + source.nativeWalletItems).filter { it.itemType == ItemType.DOCUMENT },
+                    allBillingAddresses = secureItemRepository.getActiveItemsByType(ItemType.BILLING_ADDRESS).first()
+                        .filter { it.mdbxDatabaseId == null && it.matchesWalletAutofillScope(scopeAtComposition) } +
+                        (embeddedWallet + source.nativeWalletItems).filter { it.itemType == ItemType.BILLING_ADDRESS }
                 )
             }
-            if (!authorizedForRead() || !canPublishCredentials() ||
-                loadedData.allPasswords.any { !requireNotNull(passwordSource).isCurrent(it) }) return@LaunchedEffect
-            nativeGroups = requireNotNull(passwordSource).groups
-            unavailableNativeDatabases = requireNotNull(passwordSource).unavailableDatabaseIds
+            currentCoroutineContext().ensureActive()
+            if (!isCurrentLoadScope() || !authorizedForRead() || !canPublishCredentials() ||
+                !source.areCurrent(loadedData.allPasswords)) return@LaunchedEffect
+            nativeGroups = source.groups
+            unavailableNativeDatabases = source.unavailableDatabaseIds
+            unavailableMdbxDatabases = source.unavailableMdbxDatabaseIds
             suggestedPasswords = loadedData.suggestedPasswords
             allPasswords = loadedData.allPasswords
             displayUsernames = loadedData.displayUsernames
@@ -2212,6 +2301,8 @@ private fun AutofillPickerContent(
                     "elapsedMs" to (System.currentTimeMillis() - start)
                 )
             )
+        } catch (cancelled: CancellationException) {
+            throw cancelled
         } catch (e: Exception) {
             android.util.Log.e("AutofillPickerV2", "Error loading passwords", e)
             AutofillLogger.e(
@@ -2221,7 +2312,8 @@ private fun AutofillPickerContent(
                 metadata = mapOf("elapsedMs" to (System.currentTimeMillis() - start))
             )
         } finally {
-            isLoading = false
+            if (isCurrentLoadScope() && currentCoroutineContext().isActive) isLoading = false
+            activeDataLoadJob.compareAndSet(loadJob, null)
         }
     }
 
@@ -2299,25 +2391,37 @@ private fun AutofillPickerContent(
         )
     }
 
-    val parsedBankCards by produceState<List<Pair<SecureItem, BankCardData>>>(emptyList(), allBankCards, securityManager) {
-        value = withContext(Dispatchers.IO) {
-            allBankCards.mapNotNull { item ->
-                parseBankCardCandidate(item, securityManager::decryptDataIfMonicaCiphertext)
+    val parsedBankCards by key(loadScopeToken, walletParseRevision) {
+        produceState<List<Pair<SecureItem, BankCardData>>>(emptyList(), allBankCards, securityManager) {
+            value = emptyList()
+            val parsed = withContext(Dispatchers.IO) {
+                allBankCards.mapNotNull { item ->
+                    parseBankCardCandidate(item, walletValueDecoder(item, securityManager))
+                }
             }
+            if (isCurrentLoadScope() && authorizedForRead() && canPublishCredentials()) value = parsed
         }
     }
-    val parsedDocuments by produceState<List<Pair<SecureItem, DocumentData>>>(emptyList(), allDocuments, securityManager) {
-        value = withContext(Dispatchers.IO) {
-            allDocuments.mapNotNull { item ->
-                parseDocumentCandidate(item, securityManager::decryptDataIfMonicaCiphertext)
+    val parsedDocuments by key(loadScopeToken, walletParseRevision) {
+        produceState<List<Pair<SecureItem, DocumentData>>>(emptyList(), allDocuments, securityManager) {
+            value = emptyList()
+            val parsed = withContext(Dispatchers.IO) {
+                allDocuments.mapNotNull { item ->
+                    parseDocumentCandidate(item, walletValueDecoder(item, securityManager))
+                }
             }
+            if (isCurrentLoadScope() && authorizedForRead() && canPublishCredentials()) value = parsed
         }
     }
-    val parsedBillingAddresses by produceState<List<Pair<SecureItem, BillingAddressData>>>(emptyList(), allBillingAddresses, securityManager) {
-        value = withContext(Dispatchers.IO) {
-            allBillingAddresses.mapNotNull { item ->
-                parseBillingAddressCandidate(item, securityManager::decryptDataIfMonicaCiphertext)
+    val parsedBillingAddresses by key(loadScopeToken, walletParseRevision) {
+        produceState<List<Pair<SecureItem, BillingAddressData>>>(emptyList(), allBillingAddresses, securityManager) {
+            value = emptyList()
+            val parsed = withContext(Dispatchers.IO) {
+                allBillingAddresses.mapNotNull { item ->
+                    parseBillingAddressCandidate(item, walletValueDecoder(item, securityManager))
+                }
             }
+            if (isCurrentLoadScope() && authorizedForRead() && canPublishCredentials()) value = parsed
         }
     }
 
@@ -2332,6 +2436,7 @@ private fun AutofillPickerContent(
     val sourceFilteredPasswords by remember(
         basePasswords,
         sourceFilter,
+        selectedMdbxDatabaseId,
         selectedKeePassDatabaseId,
         selectedKeePassGroupPath,
         selectedVaultId,
@@ -2353,6 +2458,7 @@ private fun AutofillPickerContent(
                                 else -> entry.keepassGroupPath == selectedKeePassGroupPath
                             }
                     }
+                    AutofillStorageSourceFilter.MDBX -> entry.matchesAutofillScope(scopeAtComposition)
                     AutofillStorageSourceFilter.BITWARDEN -> {
                         val vaultId = entry.bitwardenVaultId
                         vaultId != null &&
@@ -2381,6 +2487,7 @@ private fun AutofillPickerContent(
     val filteredBankCards by remember(
         parsedBankCards,
         sourceFilter,
+        selectedMdbxDatabaseId,
         selectedKeePassDatabaseId,
         selectedKeePassGroupPath,
         selectedVaultId,
@@ -2394,7 +2501,8 @@ private fun AutofillPickerContent(
                     selectedKeePassDatabaseId = selectedKeePassDatabaseId,
                     selectedKeePassGroupPath = selectedKeePassGroupPath,
                     selectedVaultId = selectedVaultId,
-                    selectedFolderId = selectedFolderId
+                    selectedFolderId = selectedFolderId,
+                    selectedMdbxDatabaseId = selectedMdbxDatabaseId
                 ) && (searchQuery.isBlank() || item.title.contains(searchQuery.trim(), ignoreCase = true) || data.matchesAutofillSearch(searchQuery))
             }
         }
@@ -2403,6 +2511,7 @@ private fun AutofillPickerContent(
     val filteredDocuments by remember(
         parsedDocuments,
         sourceFilter,
+        selectedMdbxDatabaseId,
         selectedKeePassDatabaseId,
         selectedKeePassGroupPath,
         selectedVaultId,
@@ -2416,7 +2525,8 @@ private fun AutofillPickerContent(
                     selectedKeePassDatabaseId = selectedKeePassDatabaseId,
                     selectedKeePassGroupPath = selectedKeePassGroupPath,
                     selectedVaultId = selectedVaultId,
-                    selectedFolderId = selectedFolderId
+                    selectedFolderId = selectedFolderId,
+                    selectedMdbxDatabaseId = selectedMdbxDatabaseId
                 ) && (searchQuery.isBlank() || item.title.contains(searchQuery.trim(), ignoreCase = true) || data.matchesAutofillSearch(searchQuery))
             }
         }
@@ -2425,6 +2535,7 @@ private fun AutofillPickerContent(
     val filteredBillingAddresses by remember(
         parsedBillingAddresses,
         sourceFilter,
+        selectedMdbxDatabaseId,
         selectedKeePassDatabaseId,
         selectedKeePassGroupPath,
         selectedVaultId,
@@ -2438,7 +2549,8 @@ private fun AutofillPickerContent(
                     selectedKeePassDatabaseId = selectedKeePassDatabaseId,
                     selectedKeePassGroupPath = selectedKeePassGroupPath,
                     selectedVaultId = selectedVaultId,
-                    selectedFolderId = selectedFolderId
+                    selectedFolderId = selectedFolderId,
+                    selectedMdbxDatabaseId = selectedMdbxDatabaseId
                 ) && (searchQuery.isBlank() || item.title.contains(searchQuery.trim(), ignoreCase = true) || data.matchesAutofillSearch(searchQuery))
             }
         }
@@ -2460,8 +2572,8 @@ private fun AutofillPickerContent(
         AutofillStorageSourceFilter.ALL -> stringResource(R.string.filter_all)
         AutofillStorageSourceFilter.LOCAL -> stringResource(R.string.filter_local_only)
         AutofillStorageSourceFilter.KEEPASS -> {
-            val databaseLabel = selectedKeePassDatabaseId?.let { keepassNameById[it] }
-                ?: stringResource(R.string.password_picker_all_databases)
+            val databaseLabel = if (selectedKeePassDatabaseId == null) stringResource(R.string.password_picker_all_databases)
+                else keepassNameById[selectedKeePassDatabaseId] ?: stringResource(R.string.autofill_selected_source_unavailable)
             val groupLabel = when (selectedKeePassGroupPath) {
                 null -> null
                 KEEPASS_GROUP_UNCATEGORIZED -> stringResource(R.string.category_none)
@@ -2473,9 +2585,14 @@ private fun AutofillPickerContent(
                 "${stringResource(R.string.filter_keepass)} · $databaseLabel · $groupLabel"
             }
         }
+        AutofillStorageSourceFilter.MDBX -> {
+            val databaseLabel = if (selectedMdbxDatabaseId == null) stringResource(R.string.password_picker_all_databases)
+                else mdbxNameById[selectedMdbxDatabaseId] ?: stringResource(R.string.autofill_selected_source_unavailable)
+            "${stringResource(R.string.filter_mdbx)} · $databaseLabel"
+        }
         AutofillStorageSourceFilter.BITWARDEN -> {
-            val vaultLabel = selectedVaultId?.let { vaultLabelById[it] }
-                ?: stringResource(R.string.password_picker_all_vaults)
+            val vaultLabel = if (selectedVaultId == null) stringResource(R.string.password_picker_all_vaults)
+                else vaultLabelById[selectedVaultId] ?: stringResource(R.string.autofill_selected_source_unavailable)
             val folderLabel = when (selectedFolderId) {
                 null -> null
                 BITWARDEN_FOLDER_UNCATEGORIZED -> stringResource(R.string.category_none)
@@ -2492,6 +2609,7 @@ private fun AutofillPickerContent(
     val activeFilterCount = when (sourceFilter) {
         AutofillStorageSourceFilter.ALL -> 0
         AutofillStorageSourceFilter.LOCAL -> 1
+        AutofillStorageSourceFilter.MDBX -> 1 + (if (selectedMdbxDatabaseId != null) 1 else 0)
         AutofillStorageSourceFilter.KEEPASS -> 1 +
             (if (selectedKeePassDatabaseId != null) 1 else 0) +
             (if (selectedKeePassGroupPath != null) 1 else 0)
@@ -2511,6 +2629,11 @@ private fun AutofillPickerContent(
                 KEEPASS_GROUP_UNCATEGORIZED -> add(stringResource(R.string.category_none))
                 else -> selectedKeePassGroupPath?.let { add(decodeKeePassPathForDisplay(it)) }
             }
+        }
+        AutofillStorageSourceFilter.MDBX -> buildList {
+            add(stringResource(R.string.filter_mdbx))
+            if (selectedMdbxDatabaseId != null) add(mdbxNameById[selectedMdbxDatabaseId]
+                ?: stringResource(R.string.autofill_selected_source_unavailable))
         }
         AutofillStorageSourceFilter.BITWARDEN -> buildList {
             add(stringResource(sourceFilter.labelResId()))
@@ -2532,6 +2655,7 @@ private fun AutofillPickerContent(
         isLoading,
         isSearchLoading,
         sourceFilter,
+        selectedMdbxDatabaseId,
         selectedKeePassDatabaseId,
         selectedKeePassGroupPath,
         selectedVaultId,
@@ -2577,99 +2701,6 @@ private fun AutofillPickerContent(
     }
 
     val application = context.applicationContext as Application
-    val autofillPasswordViewModel: PasswordViewModel = viewModel(
-        factory = remember(repository, securityManager, secureItemRepository, customFieldRepository, appDb, context) {
-            object : ViewModelProvider.Factory {
-                @Suppress("UNCHECKED_CAST")
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    if (modelClass.isAssignableFrom(PasswordViewModel::class.java)) {
-                        return PasswordViewModel(
-                            repository = repository,
-                            securityManager = securityManager,
-                            secureItemRepository = secureItemRepository,
-                            customFieldRepository = customFieldRepository,
-                            context = context.applicationContext,
-                            localKeePassDatabaseDao = appDb.localKeePassDatabaseDao(),
-                            strings = AppLocaleStringResolver(context),
-                        ) as T
-                    }
-                    throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
-                }
-            }
-        }
-    )
-    val autofillLocalKeePassViewModel: LocalKeePassViewModel = viewModel(
-        factory = remember(appDb, securityManager, application) {
-            object : ViewModelProvider.Factory {
-                @Suppress("UNCHECKED_CAST")
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    if (modelClass.isAssignableFrom(LocalKeePassViewModel::class.java)) {
-                        return LocalKeePassViewModel(
-                            application = application,
-                            dao = appDb.localKeePassDatabaseDao(),
-                            securityManager = securityManager,
-                        ) as T
-                    }
-                    throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
-                }
-            }
-        }
-    )
-    val autofillBankCardViewModel: BankCardViewModel = viewModel(
-        factory = remember(secureItemRepository, appDb, securityManager, context) {
-            object : ViewModelProvider.Factory {
-                @Suppress("UNCHECKED_CAST")
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    if (modelClass.isAssignableFrom(BankCardViewModel::class.java)) {
-                        return BankCardViewModel(
-                            repository = secureItemRepository,
-                            context = context.applicationContext,
-                            localKeePassDatabaseDao = appDb.localKeePassDatabaseDao(),
-                            securityManager = securityManager,
-                            strings = AppLocaleStringResolver(context),
-                        ) as T
-                    }
-                    throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
-                }
-            }
-        }
-    )
-    val autofillDocumentViewModel: DocumentViewModel = viewModel(
-        factory = remember(secureItemRepository, appDb, securityManager, context) {
-            object : ViewModelProvider.Factory {
-                @Suppress("UNCHECKED_CAST")
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    if (modelClass.isAssignableFrom(DocumentViewModel::class.java)) {
-                        return DocumentViewModel(
-                            repository = secureItemRepository,
-                            context = context.applicationContext,
-                            localKeePassDatabaseDao = appDb.localKeePassDatabaseDao(),
-                            securityManager = securityManager,
-                            strings = AppLocaleStringResolver(context),
-                        ) as T
-                    }
-                    throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
-                }
-            }
-        }
-    )
-    val autofillBillingAddressViewModel: BillingAddressViewModel = viewModel(
-        factory = remember(secureItemRepository, securityManager) {
-            object : ViewModelProvider.Factory {
-                @Suppress("UNCHECKED_CAST")
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    if (modelClass.isAssignableFrom(BillingAddressViewModel::class.java)) {
-                        return BillingAddressViewModel(
-                            repository = secureItemRepository,
-                            securityManager = securityManager,
-                            context = context.applicationContext,
-                        ) as T
-                    }
-                    throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
-                }
-            }
-        }
-    )
     val addMenuActions = remember(addTargets, generatedPasswordOptions) {
         buildList {
             add(
@@ -2715,8 +2746,11 @@ private fun AutofillPickerContent(
     }
     val handleBankCardClick: (SecureItem, BankCardData) -> Unit = { item, _ ->
         coroutineScope.launch {
-            val current = walletFillRepository.resolveCurrent(item)
-            val parsed = current?.let { parseBankCardCandidate(it, securityManager::decryptDataIfMonicaCiphertext) }
+            val current = if (item.mdbxDatabaseId != null) passwordSource?.resolveCurrentWallet(item)
+                else walletFillRepository.resolveCurrent(item)
+            val parsed = current?.let { parseBankCardCandidate(it, walletValueDecoder(it, securityManager)) }
+            if (!isCurrentLoadScope() || !authorizedForRead() || !canPublishCredentials() ||
+                (current?.mdbxDatabaseId != null && passwordSource?.isWalletCurrent(current) != true)) return@launch
             if (parsed == null) {
                 android.widget.Toast.makeText(context, R.string.ime_custom_field_unavailable, android.widget.Toast.LENGTH_SHORT).show()
             } else if (canDirectFillBankCard) {
@@ -2728,8 +2762,11 @@ private fun AutofillPickerContent(
     }
     val handleDocumentClick: (SecureItem, DocumentData) -> Unit = { item, _ ->
         coroutineScope.launch {
-            val current = walletFillRepository.resolveCurrent(item)
-            val parsed = current?.let { parseDocumentCandidate(it, securityManager::decryptDataIfMonicaCiphertext) }
+            val current = if (item.mdbxDatabaseId != null) passwordSource?.resolveCurrentWallet(item)
+                else walletFillRepository.resolveCurrent(item)
+            val parsed = current?.let { parseDocumentCandidate(it, walletValueDecoder(it, securityManager)) }
+            if (!isCurrentLoadScope() || !authorizedForRead() || !canPublishCredentials() ||
+                (current?.mdbxDatabaseId != null && passwordSource?.isWalletCurrent(current) != true)) return@launch
             if (parsed == null) {
                 android.widget.Toast.makeText(context, R.string.ime_custom_field_unavailable, android.widget.Toast.LENGTH_SHORT).show()
             } else if (canDirectFillDocument) {
@@ -2741,8 +2778,11 @@ private fun AutofillPickerContent(
     }
     val handleBillingAddressClick: (SecureItem, BillingAddressData) -> Unit = { item, _ ->
         coroutineScope.launch {
-            val current = walletFillRepository.resolveCurrent(item)
-            val parsed = current?.let { parseBillingAddressCandidate(it, securityManager::decryptDataIfMonicaCiphertext) }
+            val current = if (item.mdbxDatabaseId != null) passwordSource?.resolveCurrentWallet(item)
+                else walletFillRepository.resolveCurrent(item)
+            val parsed = current?.let { parseBillingAddressCandidate(it, walletValueDecoder(it, securityManager)) }
+            if (!isCurrentLoadScope() || !authorizedForRead() || !canPublishCredentials() ||
+                (current?.mdbxDatabaseId != null && passwordSource?.isWalletCurrent(current) != true)) return@launch
             if (parsed == null) {
                 android.widget.Toast.makeText(context, R.string.ime_custom_field_unavailable, android.widget.Toast.LENGTH_SHORT).show()
             } else if (canDirectFillBillingAddress) {
@@ -2754,6 +2794,7 @@ private fun AutofillPickerContent(
     }
     val navigateBackToList: () -> Unit = {
         pendingAddTarget = null
+        reloadRevision++
         currentScreen = "list"
     }
 
@@ -2799,7 +2840,19 @@ private fun AutofillPickerContent(
             detectedTypeLabel = detectedAutofillTypeLabel,
             onCopy = { action ->
                 structuredCopyDialog = null
-                onCopy(action.label, action.value, action.sensitive)
+                val item = when (dialogState) {
+                    is StructuredAutofillCopyDialogState.BankCard -> dialogState.item
+                    is StructuredAutofillCopyDialogState.Document -> dialogState.item
+                    is StructuredAutofillCopyDialogState.BillingAddress -> dialogState.item
+                }
+                copyJob?.cancel()
+                copyJob = coroutineScope.launch {
+                    val current = if (item.mdbxDatabaseId != null) passwordSource?.resolveCurrentWallet(item)
+                        else walletFillRepository.resolveCurrent(item)
+                    if (current != item || !isCurrentLoadScope() || !authorizedForRead() || !canPublishCredentials() ||
+                        (item.mdbxDatabaseId != null && passwordSource?.isWalletCurrent(item) != true)) return@launch
+                    onCopy(action.label, action.value, action.sensitive)
+                }
             },
             onDismiss = { structuredCopyDialog = null }
         )
@@ -2915,7 +2968,7 @@ private fun AutofillPickerContent(
                             chips = filterTokens,
                             activeFilterCount = activeFilterCount,
                             expanded = isFilterExpanded,
-                            onClick = { isFilterExpanded = !isFilterExpanded },
+                            onClick = { if (pickerDefaultsRestored) isFilterExpanded = !isFilterExpanded },
                             panelContent = {
                                 AutofillFilterPanelBody(
                                     sourceFilter = sourceFilter,
@@ -2933,51 +2986,18 @@ private fun AutofillPickerContent(
                                     selectedVaultFolders = selectedVaultFolders,
                                     folderNameById = folderNameById,
                                     hasUncategorizedBitwardenEntries = hasUncategorizedBitwardenEntries,
-                                    onSourceFilterChange = { newSource ->
-                                        sourceFilter = newSource
-                                        when (newSource) {
-                                            AutofillStorageSourceFilter.ALL,
-                                            AutofillStorageSourceFilter.LOCAL -> {
-                                                selectedKeePassDatabaseId = null
-                                                selectedKeePassGroupPath = null
-                                                selectedVaultId = null
-                                                selectedFolderId = null
-                                            }
-                                            AutofillStorageSourceFilter.KEEPASS -> {
-                                                selectedVaultId = null
-                                                selectedFolderId = null
-                                            }
-                                            AutofillStorageSourceFilter.BITWARDEN -> {
-                                                selectedKeePassDatabaseId = null
-                                                selectedKeePassGroupPath = null
-                                            }
-                                        }
-                                        persistPickerDefaults()
+                                    mdbxDatabases = mdbxDatabases,
+                                    mdbxNameById = mdbxNameById,
+                                    selectedMdbxDatabaseId = selectedMdbxDatabaseId,
+                                    onSourceFilterChange = { next ->
+                                        if (next != selectedScope.toDefaultSourceFilter().toUiFilter()) changeScope(next.toPreferenceFilter().toAutofillScope())
                                     },
-                                    onSelectKeePassDatabase = { databaseId ->
-                                        selectedKeePassDatabaseId = databaseId
-                                        selectedKeePassGroupPath = null
-                                        persistPickerDefaults()
-                                    },
-                                    onSelectKeePassGroup = { groupPath ->
-                                        selectedKeePassGroupPath = groupPath
-                                    },
-                                    onSelectVault = { vaultId ->
-                                        selectedVaultId = vaultId
-                                        selectedFolderId = null
-                                        persistPickerDefaults()
-                                    },
-                                    onSelectFolder = { folderId ->
-                                        selectedFolderId = folderId
-                                    },
-                                    onResetAllFilters = {
-                                        sourceFilter = AutofillStorageSourceFilter.ALL
-                                        selectedKeePassDatabaseId = null
-                                        selectedKeePassGroupPath = null
-                                        selectedVaultId = null
-                                        selectedFolderId = null
-                                        persistPickerDefaults()
-                                    }
+                                    onSelectKeePassDatabase = { changeScope(AutofillScope.KeePass(it)) },
+                                    onSelectKeePassGroup = { selectedKeePassGroupPath = it; copyJob?.cancel(); structuredCopyDialog = null },
+                                    onSelectVault = { changeScope(AutofillScope.Bitwarden(it)) },
+                                    onSelectFolder = { selectedFolderId = it; copyJob?.cancel(); structuredCopyDialog = null },
+                                    onSelectMdbxDatabase = { changeScope(AutofillScope.Mdbx(it)) },
+                                    onResetAllFilters = { changeScope(AutofillScope.All) }
                                 )
                             },
                             modifier = Modifier
@@ -3002,6 +3022,11 @@ private fun AutofillPickerContent(
                                 sourceFilter == AutofillStorageSourceFilter.KEEPASS &&
                                 (selectedKeePassDatabaseId == null || selectedKeePassDatabaseId in unavailableNativeDatabases))) {
                             Text(stringResource(R.string.keepass_native_load_failed),
+                                modifier = Modifier.padding(horizontal = 16.dp), color = MaterialTheme.colorScheme.error)
+                        }
+                        if (unavailableMdbxDatabases.isNotEmpty() ||
+                            (selectedMdbxDatabaseId != null && selectedMdbxDatabaseId !in mdbxNameById)) {
+                            Text(stringResource(R.string.autofill_selected_source_unavailable),
                                 modifier = Modifier.padding(horizontal = 16.dp), color = MaterialTheme.colorScheme.error)
                         }
                         if (isLoading) {
@@ -3102,6 +3127,7 @@ private fun AutofillPickerContent(
                                                             AutofillStorageSourceFilter.LOCAL -> stringResource(R.string.filter_local_only)
                                                             AutofillStorageSourceFilter.KEEPASS -> stringResource(R.string.filter_keepass)
                                                             AutofillStorageSourceFilter.BITWARDEN -> stringResource(R.string.filter_bitwarden)
+                                                            AutofillStorageSourceFilter.MDBX -> stringResource(R.string.filter_mdbx)
                                                         }
                                                     },
                                                     style = MaterialTheme.typography.labelMedium,
@@ -3303,6 +3329,47 @@ private fun AutofillPickerContent(
             }.orEmpty()
             when (pendingAddTarget ?: defaultAddTarget) {
                 AutofillAddTarget.PASSWORD -> {
+                    var passwordSaveNavigationPending by remember(loadScopeToken) {
+                        mutableStateOf(false)
+                    }
+                    val autofillPasswordViewModel: PasswordViewModel = viewModel(
+                        factory = remember(repository, securityManager, secureItemRepository, customFieldRepository, appDb, context) {
+                            object : ViewModelProvider.Factory {
+                                @Suppress("UNCHECKED_CAST")
+                                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                                    if (modelClass.isAssignableFrom(PasswordViewModel::class.java)) {
+                                        return PasswordViewModel(
+                                            repository = repository,
+                                            securityManager = securityManager,
+                                            secureItemRepository = secureItemRepository,
+                                            customFieldRepository = customFieldRepository,
+                                            context = context.applicationContext,
+                                            localKeePassDatabaseDao = appDb.localKeePassDatabaseDao(),
+                                            strings = AppLocaleStringResolver(context),
+                                        ) as T
+                                    }
+                                    throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
+                                }
+                            }
+                        }
+                    )
+                    val autofillLocalKeePassViewModel: LocalKeePassViewModel = viewModel(
+                        factory = remember(appDb, securityManager, application) {
+                            object : ViewModelProvider.Factory {
+                                @Suppress("UNCHECKED_CAST")
+                                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                                    if (modelClass.isAssignableFrom(LocalKeePassViewModel::class.java)) {
+                                        return LocalKeePassViewModel(
+                                            application = application,
+                                            dao = appDb.localKeePassDatabaseDao(),
+                                            securityManager = securityManager,
+                                        ) as T
+                                    }
+                                    throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
+                                }
+                            }
+                        }
+                    )
                     AddEditPasswordScreen(
                         viewModel = autofillPasswordViewModel,
                         localKeePassViewModel = autofillLocalKeePassViewModel,
@@ -3324,20 +3391,72 @@ private fun AutofillPickerContent(
                                 navigateBackToList()
                                 return@AddEditPasswordScreen
                             }
+                            // The editor immediately invokes onNavigateBack after this callback.
+                            // That paired navigation must preserve this explicit save-result read.
+                            passwordSaveNavigationPending = true
                             coroutineScope.launch {
-                                passwordSource?.load()
-                                val savedEntry = passwordSource?.get(firstPasswordId)
-                                if (savedEntry != null) {
-                                    onAutofill(savedEntry, true)
-                                } else {
+                                val source = passwordSource ?: run {
+                                    navigateBackToList()
+                                    return@launch
+                                }
+                                if (!isCurrentLoadScope() || !authorizedForRead()) return@launch
+                                // This explicit save refreshes ALL for its selected result. Retire the
+                                // previous list before replacing source maps so it cannot veto that refresh.
+                                activeDataLoadJob.get()?.cancel()
+                                walletParseRevision++
+                                nativeGroups = emptyMap()
+                                unavailableNativeDatabases = emptySet()
+                                allPasswords = emptyList()
+                                suggestedPasswords = emptyList()
+                                displayUsernames = emptyMap()
+                                searchedPasswords = emptyList()
+                                allBankCards = emptyList()
+                                allDocuments = emptyList()
+                                allBillingAddresses = emptyList()
+                                selectedPassword = null
+                                structuredCopyDialog = null
+                                isLoading = true
+                                source.load()
+                                if (!isCurrentLoadScope() || !authorizedForRead() || !canPublishCredentials()) return@launch
+                                val savedEntry = source.getSavedRoomEntry(firstPasswordId)
+                                if (savedEntry != null && isCurrentLoadScope()) {
+                                    onAutofill(savedEntry, !AutofillPasswordSource.isMdbx(savedEntry))
+                                } else if (isCurrentLoadScope()) {
                                     navigateBackToList()
                                 }
                             }
                         },
-                        onNavigateBack = navigateBackToList
+                        onNavigateBack = {
+                            if (passwordSaveNavigationPending) {
+                                passwordSaveNavigationPending = false
+                                pendingAddTarget = null
+                                currentScreen = "list"
+                            } else {
+                                navigateBackToList()
+                            }
+                        }
                     )
                 }
                 AutofillAddTarget.DOCUMENT -> {
+                    val autofillDocumentViewModel: DocumentViewModel = viewModel(
+                        factory = remember(secureItemRepository, appDb, securityManager, context) {
+                            object : ViewModelProvider.Factory {
+                                @Suppress("UNCHECKED_CAST")
+                                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                                    if (modelClass.isAssignableFrom(DocumentViewModel::class.java)) {
+                                        return DocumentViewModel(
+                                            repository = secureItemRepository,
+                                            context = context.applicationContext,
+                                            localKeePassDatabaseDao = appDb.localKeePassDatabaseDao(),
+                                            securityManager = securityManager,
+                                            strings = AppLocaleStringResolver(context),
+                                        ) as T
+                                    }
+                                    throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
+                                }
+                            }
+                        }
+                    )
                     AddEditDocumentScreen(
                         viewModel = autofillDocumentViewModel,
                         documentId = null,
@@ -3345,6 +3464,25 @@ private fun AutofillPickerContent(
                     )
                 }
                 AutofillAddTarget.BANK_CARD -> {
+                    val autofillBankCardViewModel: BankCardViewModel = viewModel(
+                        factory = remember(secureItemRepository, appDb, securityManager, context) {
+                            object : ViewModelProvider.Factory {
+                                @Suppress("UNCHECKED_CAST")
+                                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                                    if (modelClass.isAssignableFrom(BankCardViewModel::class.java)) {
+                                        return BankCardViewModel(
+                                            repository = secureItemRepository,
+                                            context = context.applicationContext,
+                                            localKeePassDatabaseDao = appDb.localKeePassDatabaseDao(),
+                                            securityManager = securityManager,
+                                            strings = AppLocaleStringResolver(context),
+                                        ) as T
+                                    }
+                                    throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
+                                }
+                            }
+                        }
+                    )
                     AddEditBankCardScreen(
                         viewModel = autofillBankCardViewModel,
                         cardId = null,
@@ -3352,6 +3490,23 @@ private fun AutofillPickerContent(
                     )
                 }
                 AutofillAddTarget.BILLING_ADDRESS -> {
+                    val autofillBillingAddressViewModel: BillingAddressViewModel = viewModel(
+                        factory = remember(secureItemRepository, securityManager) {
+                            object : ViewModelProvider.Factory {
+                                @Suppress("UNCHECKED_CAST")
+                                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                                    if (modelClass.isAssignableFrom(BillingAddressViewModel::class.java)) {
+                                        return BillingAddressViewModel(
+                                            repository = secureItemRepository,
+                                            securityManager = securityManager,
+                                            context = context.applicationContext,
+                                        ) as T
+                                    }
+                                    throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
+                                }
+                            }
+                        }
+                    )
                     AddEditBillingAddressScreen(
                         viewModel = autofillBillingAddressViewModel,
                         addressId = null,
@@ -3428,7 +3583,8 @@ private enum class AutofillStorageSourceFilter {
     ALL,
     LOCAL,
     KEEPASS,
-    BITWARDEN
+    BITWARDEN,
+    MDBX
 }
 
 private enum class AutofillPickerContentType {
@@ -3517,6 +3673,7 @@ private fun AutofillStorageSourceFilter.toPreferenceFilter(): AutofillPreference
         AutofillStorageSourceFilter.LOCAL -> AutofillPreferences.AutofillDefaultSourceFilter.LOCAL
         AutofillStorageSourceFilter.KEEPASS -> AutofillPreferences.AutofillDefaultSourceFilter.KEEPASS
         AutofillStorageSourceFilter.BITWARDEN -> AutofillPreferences.AutofillDefaultSourceFilter.BITWARDEN
+        AutofillStorageSourceFilter.MDBX -> AutofillPreferences.AutofillDefaultSourceFilter.MDBX
     }
 }
 
@@ -3526,6 +3683,7 @@ private fun AutofillPreferences.AutofillDefaultSourceFilter.toUiFilter(): Autofi
         AutofillPreferences.AutofillDefaultSourceFilter.LOCAL -> AutofillStorageSourceFilter.LOCAL
         AutofillPreferences.AutofillDefaultSourceFilter.KEEPASS -> AutofillStorageSourceFilter.KEEPASS
         AutofillPreferences.AutofillDefaultSourceFilter.BITWARDEN -> AutofillStorageSourceFilter.BITWARDEN
+        AutofillPreferences.AutofillDefaultSourceFilter.MDBX -> AutofillStorageSourceFilter.MDBX
     }
 }
 
@@ -4243,6 +4401,7 @@ private fun SecureItem.matchesAutofillSourceFilter(
     selectedKeePassGroupPath: String?,
     selectedVaultId: Long?,
     selectedFolderId: String?,
+    selectedMdbxDatabaseId: Long?,
 ): Boolean {
     return when (sourceFilter) {
         AutofillStorageSourceFilter.ALL -> true
@@ -4258,6 +4417,8 @@ private fun SecureItem.matchesAutofillSourceFilter(
                     else -> keepassGroupPath == selectedKeePassGroupPath
                 }
         }
+        AutofillStorageSourceFilter.MDBX -> mdbxDatabaseId != null &&
+            (selectedMdbxDatabaseId == null || mdbxDatabaseId == selectedMdbxDatabaseId)
         AutofillStorageSourceFilter.BITWARDEN -> {
             val vaultId = bitwardenVaultId
             vaultId != null &&
@@ -4287,6 +4448,7 @@ private fun AutofillStorageSourceFilter.labelResId(): Int = when (this) {
     AutofillStorageSourceFilter.LOCAL -> R.string.filter_monica
     AutofillStorageSourceFilter.KEEPASS -> R.string.filter_keepass
     AutofillStorageSourceFilter.BITWARDEN -> R.string.filter_bitwarden
+    AutofillStorageSourceFilter.MDBX -> R.string.filter_mdbx
 }
 
 private fun AutofillStorageSourceFilter.icon(): ImageVector = when (this) {
@@ -4294,6 +4456,7 @@ private fun AutofillStorageSourceFilter.icon(): ImageVector = when (this) {
     AutofillStorageSourceFilter.LOCAL -> Icons.Default.Smartphone
     AutofillStorageSourceFilter.KEEPASS -> Icons.Default.Storage
     AutofillStorageSourceFilter.BITWARDEN -> Icons.Default.CloudSync
+    AutofillStorageSourceFilter.MDBX -> Icons.Default.Storage
 }
 
 private fun PasswordEntry.matchesSearchQuery(query: String): Boolean {
@@ -4620,9 +4783,14 @@ private fun AutofillFilterPanelBody(
     onSelectKeePassGroup: (String?) -> Unit,
     onSelectVault: (Long?) -> Unit,
     onSelectFolder: (String?) -> Unit,
-    onResetAllFilters: () -> Unit
+    onResetAllFilters: () -> Unit,
+    mdbxDatabases: List<takagi.ru.monica.data.LocalMdbxDatabase>,
+    mdbxNameById: Map<Long, String>,
+    selectedMdbxDatabaseId: Long?,
+    onSelectMdbxDatabase: (Long?) -> Unit,
 ) {
     var keepassMenuExpanded by remember { mutableStateOf(false) }
+    var mdbxMenuExpanded by remember { mutableStateOf(false) }
     var keepassGroupMenuExpanded by remember { mutableStateOf(false) }
     var vaultMenuExpanded by remember { mutableStateOf(false) }
     var folderMenuExpanded by remember { mutableStateOf(false) }
@@ -4676,8 +4844,8 @@ private fun AutofillFilterPanelBody(
                 ) {
                     TextField(
                         readOnly = true,
-                        value = selectedKeePassDatabaseId?.let { keepassNameById[it] }
-                            ?: stringResource(R.string.password_picker_all_databases),
+                        value = if (selectedKeePassDatabaseId == null) stringResource(R.string.password_picker_all_databases)
+                            else keepassNameById[selectedKeePassDatabaseId] ?: stringResource(R.string.autofill_selected_source_unavailable),
                         onValueChange = {},
                         leadingIcon = { Icon(Icons.Default.Storage, contentDescription = null) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = keepassMenuExpanded) },
@@ -4775,6 +4943,31 @@ private fun AutofillFilterPanelBody(
             }
         }
 
+        if (sourceFilter == AutofillStorageSourceFilter.MDBX) {
+            FilterScopeCard(title = stringResource(R.string.filter_mdbx)) {
+                Text(stringResource(R.string.password_picker_filter_database),
+                    style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                ExposedDropdownMenuBox(expanded = mdbxMenuExpanded,
+                    onExpandedChange = { mdbxMenuExpanded = !mdbxMenuExpanded }) {
+                    TextField(readOnly = true,
+                        value = if (selectedMdbxDatabaseId == null) stringResource(R.string.password_picker_all_databases)
+                            else mdbxNameById[selectedMdbxDatabaseId] ?: stringResource(R.string.autofill_selected_source_unavailable),
+                        onValueChange = {}, leadingIcon = { Icon(Icons.Default.Storage, contentDescription = null) },
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = mdbxMenuExpanded) },
+                        modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable).fillMaxWidth(),
+                        singleLine = true, shape = RoundedCornerShape(16.dp), colors = dropdownFieldColors)
+                    ExposedDropdownMenu(expanded = mdbxMenuExpanded, onDismissRequest = { mdbxMenuExpanded = false }) {
+                        DropdownMenuItem(text = { Text(stringResource(R.string.password_picker_all_databases)) },
+                            onClick = { onSelectMdbxDatabase(null); mdbxMenuExpanded = false })
+                        mdbxDatabases.forEach { database ->
+                            DropdownMenuItem(text = { Text(database.name) },
+                                onClick = { onSelectMdbxDatabase(database.id); mdbxMenuExpanded = false })
+                        }
+                    }
+                }
+            }
+        }
+
         if (sourceFilter == AutofillStorageSourceFilter.BITWARDEN) {
             FilterScopeCard(title = stringResource(R.string.filter_bitwarden)) {
                 Text(
@@ -4788,8 +4981,8 @@ private fun AutofillFilterPanelBody(
                 ) {
                     TextField(
                         readOnly = true,
-                        value = selectedVaultId?.let { vaultLabelById[it] }
-                            ?: stringResource(R.string.password_picker_all_vaults),
+                        value = if (selectedVaultId == null) stringResource(R.string.password_picker_all_vaults)
+                            else vaultLabelById[selectedVaultId] ?: stringResource(R.string.autofill_selected_source_unavailable),
                         onValueChange = {},
                         leadingIcon = { Icon(Icons.Default.CloudSync, contentDescription = null) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = vaultMenuExpanded) },
@@ -4901,3 +5094,7 @@ private fun AutofillFilterPanelBody(
 
 
 
+
+/** MDBX native disclosure returns literal values; Monica ciphertext markers there are plain text. */
+private fun walletValueDecoder(item: SecureItem, security: SecurityManager): (String) -> String =
+    if (item.mdbxDatabaseId != null) { value -> value } else security::decryptDataIfMonicaCiphertext

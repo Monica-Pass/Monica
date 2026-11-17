@@ -57,7 +57,7 @@
     "crates/mdbx-ffi/src/history_action_facade.rs": "a15a9f0e288a5590aae027b52235adb186b5032055c4b5c76b89160f656da235",
     "crates/mdbx-ffi/src/history_facade.rs": "1cdc4f0ee8af5f1b3a2fcedd1db8c9360cc99420d8189b7fb922b080abe4ad50",
     "crates/mdbx-ffi/src/integrity_root_facade.rs": "ce3f8ad87b1c42c7bb3d454598b9c7adcdb0bcb60f9bde61f26622fee44c957b",
-    "crates/mdbx-ffi/src/lib.rs": "6a50190e4f1ffdbe8c86cdd89a1d3c723593e93cfac85abaa4752448afadabfa",
+    "crates/mdbx-ffi/src/lib.rs": "f48849b9ac4fc4bc3ccc119e8ac55a96b9ee8c1e7ce9767437995fbe8ed6fbf1",
     "crates/mdbx-ffi/src/lifecycle_facade.rs": "f48131231d526f07efa78e016571053587f8ef5778ac5796c8e57e087815e08e",
     "crates/mdbx-ffi/src/object_facade.rs": "d68053092cafd55eb23c6d8820bff3c41491ae6bcfc42360a08c150c91ae1112",
     "crates/mdbx-ffi/src/runtime_facade.rs": "5187363f8fa873ecfed4b66461124026c65352ae60b08555005b6b38c2c5b783",
@@ -67,9 +67,9 @@
     "crates/mdbx-ffi/src/snapshot_management_facade.rs": "2e452a54cf5b4fb554a190fa32b750f8511bf518cce15d7898528911e9bafd44",
     "crates/mdbx-ffi/src/snapshot_summary_facade.rs": "f5c5b0d3b0c20f8d05f186b77ac89fc5a9dc20b8f16aba559b07038a45ff308b",
     "crates/mdbx-ffi/src/sync_facade.rs": "cad7ec6a4e89eb04821f6c6ab5a6a7e3c947d048a64e64dfd068f980cb81f791",
-    "crates/mdbx-ffi/src/tests.rs": "042fe0fbdbe8e0141db669a72f3737b9a16cd61abadd1674c973cd837a157cc0",
+    "crates/mdbx-ffi/src/tests.rs": "29efa9d3e805ba7a1508da9a67911926d9f5213f0dca5eaa96300338f30684d6",
     "crates/mdbx-ffi/src/vault_facade.rs": "f0de7e15c6921a0973185aabbfe9d7e478d015c3f537f2c23664dcdf5900d3e0",
-    "crates/mdbx-ffi/src/write_facade.rs": "6ec6b1f641a739d88cc4759bc0c1bac6b13d444db2a5a9ca9b729b3153203a2e",
+    "crates/mdbx-ffi/src/write_facade.rs": "45a60459332fe944db0d3bfa3f9d65484b439a460e17711751b0879ee2c2bd6d",
     "crates/mdbx-ffi/tests/batch_performance.rs": "f67f08049d79dbcaab0840888153d71473ec9fcb0f874927ac4c360a02259939",
     "crates/mdbx-ffi/tests/ffi_smoke.rs": "13bdc022c845f557182749c7e035553812736dbfaa6704b2f867be00d5c3876e",
     "crates/mdbx-ffi/tests/local_external_divergence.rs": "e859ac7de526730a0b55b8cfdece9c4b3fa786fdd96f6828f009b1a9ad1859ad",
@@ -203,7 +203,9 @@
     "scripts/run-mdbx3-android-loader-smoke.ps1": "c3a512f1436243ce4affbc2debe4656109b919bcd109d5a6c4bfd6c785749ac9",
     "scripts/verify-mdbx3-android-abi-splits.py": "48159e2e66b2108e8401ed37bbaed8a1175c29ba36c1939036aa418f51a66348",
     "scripts/verify-mdbx3-ffi-abi.py": "0e9d27af01a70f5ee8a87b2a91f9b2fb2873a19f006225bfc1c95779aea07057",
-    "scripts/verify-mdbx3-release.py": "21fd7f37bfd94dceec460fd57025c1c9d43f171bfc7a337779c4363f4a4f87e2"
+    "scripts/verify-mdbx3-release.py": "21fd7f37bfd94dceec460fd57025c1c9d43f171bfc7a337779c4363f4a4f87e2",
+    "crates/mdbx-ffi/src/guarded_write_facade.rs": "c1439f9f34eda26f62bbef62ca8b01b3bfbdec05efc513845e3167f59a255a4a",
+    "crates/mdbx-ffi/tests/guarded_editor.rs": "bf010687bcd5e469520d37424e00d25e00babbf8e907dc08a3f1e5cd3840faea"
   },
   "preserved_overlays": [
     "read-session-lifetime",
@@ -212,5 +214,12 @@
     "json-literal-keys",
     "composite-commit-kind"
   ],
-  "patch_sha256": "b16464c19e9afa7d60d7c3cc5c074294a656a52431c880569b4445bc1b82d477"
+  "patch_sha256": "b16464c19e9afa7d60d7c3cc5c074294a656a52431c880569b4445bc1b82d477",
+  "additional_patches": [
+    {
+      "path": "patches/native-editor-328.patch",
+      "sha256": "663540935cd222a4c38c1b74594e4c247bc85d2ddbe247c2d2eb9a049105ab95",
+      "purpose": "Transaction-bound causal frontier guard; preserve existing operation coordinator semantics."
+    }
+  ]
 }

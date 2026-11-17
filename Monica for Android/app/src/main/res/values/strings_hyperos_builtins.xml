@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_diagnostics_title">"Configuration diagnostics"</string>
+    <string name="hyperos_diagnostics_note">"Checks service declarations and selection, not successful passkey routing. Secure settings require authorized Shizuku or root."</string>
+    <string name="hyperos_diag_declaration">"Valid Monica service and passkey capability"</string>
+    <string name="hyperos_diag_feature">"Credential system feature available"</string>
+    <string name="hyperos_diag_unrestricted">"Autofill allowed for this Android user"</string>
+    <string name="hyperos_diag_framework">"Framework recognizes Monica as enabled"</string>
+    <string name="hyperos_diag_registered">"Monica in enabled credential services"</string>
+    <string name="hyperos_drift_title">"Detect changes after repair"</string>
+    <string name="hyperos_drift_note">"Checks every 30 seconds while this page is visible and when reopened. Never writes settings automatically."</string>
+    <string name="hyperos_drift_result">"Compared with last verified repair"</string>
+    <string name="hyperos_drift_off">"Detection off"</string>
+    <string name="hyperos_drift_no_baseline">"Apply a configuration first to establish a baseline."</string>
+    <string name="hyperos_drift_unchanged">"Configuration unchanged"</string>
+    <string name="hyperos_drift_changed">"Configuration changed. You may have switched managers yourself; review before restoring."</string>
+    <string name="hyperos_update_failed">"Could not save. Refresh and check the current state."</string>
+    <string name="hyperos_check_yes">"Yes"</string>
+    <string name="hyperos_check_no">"No"</string>
+    <string name="hyperos_check_unsupported">"Unsupported"</string>
+    <string name="hyperos_module_title">"Optional compatibility module"</string>
+    <string name="hyperos_module_requirements">"Requires compatible LSPosed API 102+, Android 14–16, and a Xiaomi/Redmi/POCO owner user. Enable Monica and the required scopes in the framework. All options default off."</string>
+    <string name="hyperos_module_connected">"Framework connected; this does not prove hooks work."</string>
+    <string name="hyperos_module_disconnected">"Compatible framework unavailable"</string>
+    <string name="hyperos_module_scope">"Granted scopes: %1$s"</string>
+    <string name="hyperos_hook_reset">"Block Security Center resets"</string>
+    <string name="hyperos_hook_reset_note">"Intercept only identified credential configuration methods."</string>
+    <string name="hyperos_hook_settings">"System selection page compatibility"</string>
+    <string name="hyperos_hook_settings_note">"Adjust identified Settings controllers; incompatible methods keep system behavior."</string>
+    <string name="hyperos_hook_chooser">"Google credential chooser"</string>
+    <string name="hyperos_hook_chooser_note">"Requires an enabled system Google Play services chooser."</string>
+    <string name="hyperos_hook_hybrid">"Cross-device credential compatibility"</string>
+    <string name="hyperos_hook_hybrid_note">"Use the validated Google hybrid service and Xiaomi scanner route."</string>
+    <string name="hyperos_module_restart">"Enabling requires restarting affected processes or the device yourself. Disabling stops overrides in loaded hooks when the framework delivers the change. No automatic restart."</string>
+    <string name="hyperos_physical_feedback">"Not tested on physical HyperOS devices. Please report your ROM version and reproduction steps in a GitHub issue; omit passwords and keys."</string>
+    <string name="hyperos_reference_projects">"Reference project and license"</string>
+    <string name="hyperos_module_confirmation">"Enable this experimental system behavior change? A compatible framework and target components are required. It may affect other password managers. You can disable it here or in the framework."</string>
+    <string name="hyperos_feedback_action">"Report compatibility issue"</string>
+    <string name="hyperos_module_entry_note">"Default off · Requires compatible LSPosed"</string>
+</resources>

@@ -1,0 +1,716 @@
+{
+  "scope": "Baseline Profile tooling and candidate evaluation; no Passkey or list change is covered",
+  "status": "completed-candidate-not-adopted",
+  "decision": "Do not include measured candidate rules in default builds; retain original 27 manual baseline app rules, unchanged tracked 14-rule legacy startup source and dependency profiles. Legacy startup source retention does not establish startup-layout consumption.",
+  "environment": {
+    "emulator": "MuMu",
+    "api": 35,
+    "abi": "x86_64",
+    "syntheticDataOnly": true,
+    "suppressedBenchmarkChecks": [
+      "EMULATOR",
+      "NOT-PROFILEABLE"
+    ]
+  },
+  "metric": "timeToInitialDisplayMs to authentication surface, not unlock latency or frame time",
+  "successfulMeasurementRuns": 10,
+  "coldStarts": 70,
+  "measurements": [
+    {
+      "run": "profile-fd-new-none-01",
+      "edition": "fd",
+      "version": "new",
+      "compilation": "None",
+      "iterations": 7,
+      "ttidMs": {
+        "max": 541.059609,
+        "median": 526.951,
+        "min": 440.244168,
+        "stddev": 39.95163723648392
+      },
+      "apkSha256": "d3b5512b5761cef84b9b9c75b9858bf611e5a806a4cea533da157d55bd543001",
+      "receiptSha256": "9d54bbbb9e2921e266e6091197ba234ebe71437b51f2fbd7ad73622237536305",
+      "outputSha256": "51590f05b4d7c87c2879f6ae78b9cb5bbdecee0203dd0975eb2941ad917bd19d",
+      "traces": [
+        {
+          "file": "ProfileReleaseBenchmark_withoutAot_iter000_2026-11-15-07-38-33.perfetto-trace",
+          "sha256": "426ec2bdf0c8c77a46b9c093c88001ddbf8281307350b9f4f31f05bb36c9fbb5"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withoutAot_iter001_2026-11-15-07-38-38.perfetto-trace",
+          "sha256": "a7268f9f943997137d18c12ad927ad24600e2156c05f7c0f117219660e1c3e63"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withoutAot_iter002_2026-11-15-07-38-41.perfetto-trace",
+          "sha256": "2beac6d119da4387fcdf7604eb88e8b134fb6db02747f9e0604f3198891431ea"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withoutAot_iter003_2026-11-15-07-38-44.perfetto-trace",
+          "sha256": "33eba8d09a98ffa96ae42b681889dfcdf175095936eb9a42825650e35db7a457"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withoutAot_iter004_2026-11-15-07-38-48.perfetto-trace",
+          "sha256": "cd31d9e6972982beef75622f90a7448dca2e9d4907d97d1ccfa3b7b1a9120b3a"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withoutAot_iter005_2026-11-15-07-38-51.perfetto-trace",
+          "sha256": "16f27aa86aacfdd287e9a568dfdc14242b3be32c83eecd379ce2b0f887637ff3"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withoutAot_iter006_2026-11-15-07-38-55.perfetto-trace",
+          "sha256": "e47113299fe538bddf2d8b676cb3310b948138e3fcf06799c16b7d6dba83e724"
+        }
+      ]
+    },
+    {
+      "run": "profile-fd-new-partial-01",
+      "edition": "fd",
+      "version": "new",
+      "compilation": "Partial(Require,warmupIterations=0)",
+      "iterations": 7,
+      "ttidMs": {
+        "max": 491.64238,
+        "median": 433.148071,
+        "min": 395.758819,
+        "stddev": 34.718123736573034
+      },
+      "apkSha256": "d3b5512b5761cef84b9b9c75b9858bf611e5a806a4cea533da157d55bd543001",
+      "receiptSha256": "f75c9ff76dbaaa2a45b6ecc84690fee4bb45795ebd9818d7da8a7b44e48af5cc",
+      "outputSha256": "79bbab77f3eb32cc2bd6c89eb5d96135d87f68cef536f05c7af53658827dfe7b",
+      "traces": [
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter000_2026-11-15-07-38-06.perfetto-trace",
+          "sha256": "d971b1b9307b144a3ce4c047bed69d8cc268f0d3fa80d16d73b9da89f0b63b53"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter001_2026-11-15-07-38-09.perfetto-trace",
+          "sha256": "72ca11bbb4acd2eb3a045b0b5ab43d2cd0913ef34d76a75a034f891a69155383"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter002_2026-11-15-07-38-11.perfetto-trace",
+          "sha256": "bf753c6cd0e526c4f6f5d73d090bc16cb09e758869fe7c997c660517e432a7f5"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter003_2026-11-15-07-38-14.perfetto-trace",
+          "sha256": "b44a005d51b98e3f9dd8312a85663d7af791c49b489c34485428564f8162e225"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter004_2026-11-15-07-38-17.perfetto-trace",
+          "sha256": "dda9d6b37b9de3cdf50f49ec5e3ebd5d3986f8d36256e9360b3027f23bf6c05e"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter005_2026-11-15-07-38-19.perfetto-trace",
+          "sha256": "4f34720b347d9d2ee3f0084d459913f2e4814dfb920cc1b713d75fa75adacc11"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter006_2026-11-15-07-38-22.perfetto-trace",
+          "sha256": "0ea756c43dfdd7126a39cd6bafc3385896a82561d7065793a70b01e423b98619"
+        }
+      ]
+    },
+    {
+      "run": "profile-fd-new-partial-02",
+      "edition": "fd",
+      "version": "new",
+      "compilation": "Partial(Require,warmupIterations=0)",
+      "iterations": 7,
+      "ttidMs": {
+        "max": 514.336479,
+        "median": 489.283533,
+        "min": 419.183312,
+        "stddev": 37.36684376254293
+      },
+      "apkSha256": "d3b5512b5761cef84b9b9c75b9858bf611e5a806a4cea533da157d55bd543001",
+      "receiptSha256": "cd967376592187943f3b53c9f03e9141d0f80db7ea6118e39e7597857df866a6",
+      "outputSha256": "e7e4b221e1a5ac9de587da7d472fbb6f10156606b73f2a573ce91a5c129309bd",
+      "traces": [
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter000_2026-11-15-07-42-45.perfetto-trace",
+          "sha256": "4cf11648f02bca018d38b4378124491010ecd17a396bc5595f1d183c425d6484"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter001_2026-11-15-07-42-48.perfetto-trace",
+          "sha256": "b643dac74b6a9aa7230e27c9f5af728a9356e0f017eebb9686e757cb229d50fb"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter002_2026-11-15-07-42-51.perfetto-trace",
+          "sha256": "946b989b6950d5a3549edc23d6270022b9675e386f3643e2a13503bee9c1e550"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter003_2026-11-15-07-42-54.perfetto-trace",
+          "sha256": "738e1ae2e9db79852163583cdeac483a6bbab1029d26ef8380118cb39282b109"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter004_2026-11-15-07-42-57.perfetto-trace",
+          "sha256": "50e3b31e726c680dd6e19d94d276d182532afdc033f49a75e19229e491c53252"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter005_2026-11-15-07-43-00.perfetto-trace",
+          "sha256": "848ee432c8a1f1707b504950856e3fa3df38af93430ba0b48d71c94e56ab9e9f"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter006_2026-11-15-07-43-03.perfetto-trace",
+          "sha256": "c8936da210aa6e9600eb63c7ac4cc8bdb3c766d77e2dae76e883f6d4f62323e0"
+        }
+      ]
+    },
+    {
+      "run": "profile-fd-old-partial-01",
+      "edition": "fd",
+      "version": "old",
+      "compilation": "Partial(Require,warmupIterations=0)",
+      "iterations": 7,
+      "ttidMs": {
+        "max": 564.407035,
+        "median": 473.104754,
+        "min": 452.181892,
+        "stddev": 39.529580363959795
+      },
+      "apkSha256": "0458479768831c154533ae41e8c8182fb17d06ac870db7566070c57c367740b0",
+      "receiptSha256": "9f735da4fbb488ae603c0881ffa5e28cf5eeeccf82667bd962b00a3dbb5faf5a",
+      "outputSha256": "8f9fd5c64820bdc55d2624dde7247b5c261fe4e6182e84756f1ea79cea571edf",
+      "traces": [
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter000_2026-11-15-07-33-50.perfetto-trace",
+          "sha256": "91ab475b135352642442af74c396c03627fa1ebf58dff81f748f3fd8d0c1094e"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter001_2026-11-15-07-33-53.perfetto-trace",
+          "sha256": "080fd690c37a048eb274e61e75fe76110b077b6b20ae0a30e6b1c030f68a72ba"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter002_2026-11-15-07-33-56.perfetto-trace",
+          "sha256": "a460659c2716f239f994335e66280885ab4d337bf73854de48ce1d22effc78c7"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter003_2026-11-15-07-33-59.perfetto-trace",
+          "sha256": "311a4e471edeecf66ab504c28240a9cddef32afa763e0157b8aa9901fe549264"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter004_2026-11-15-07-34-01.perfetto-trace",
+          "sha256": "19c50532c70437ae0dc00f9f7a8a6bb065009d88cbe0a2417aeb360ce320e8d5"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter005_2026-11-15-07-34-04.perfetto-trace",
+          "sha256": "945e7e7fdc52a8ae281ab061922ad8fd03bc5acae9547ea299da0734d0928f30"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter006_2026-11-15-07-34-07.perfetto-trace",
+          "sha256": "6155e74495bdda54e1806606f743752b87be2a8e7e48ccf8c7ad0afe04d495ee"
+        }
+      ]
+    },
+    {
+      "run": "profile-fd-old-partial-02",
+      "edition": "fd",
+      "version": "old",
+      "compilation": "Partial(Require,warmupIterations=0)",
+      "iterations": 7,
+      "ttidMs": {
+        "max": 433.883309,
+        "median": 416.981352,
+        "min": 397.07528,
+        "stddev": 11.65846055464079
+      },
+      "apkSha256": "0458479768831c154533ae41e8c8182fb17d06ac870db7566070c57c367740b0",
+      "receiptSha256": "a98ae111cac0448b55e5fd6b4085fcb0176596d11439c76f737454100d09fc88",
+      "outputSha256": "d82dac56e8d028865178c1860fc0d202b211f2eea4cc4138c29629126fd90b2d",
+      "traces": [
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter000_2026-11-15-07-42-11.perfetto-trace",
+          "sha256": "cf2abb24992ebca74ec342e95cbb7d372cd6f5e90da02d0989772be6781f1f39"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter001_2026-11-15-07-42-14.perfetto-trace",
+          "sha256": "6defdc2aa4c4c6aa7ba0a94e8e5cf273a903dfa22efa5ffcd13eb87024db8eef"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter002_2026-11-15-07-42-17.perfetto-trace",
+          "sha256": "bd34aad47cbed25734d8e3103ed9f06fc4bbc1392185686a18f0e40fde0419b1"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter003_2026-11-15-07-42-20.perfetto-trace",
+          "sha256": "484d060c4da8bfedb2aacd2bd53650dfe96baa3c6658ff3434328bc91ba1bb2c"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter004_2026-11-15-07-42-22.perfetto-trace",
+          "sha256": "c36bc647149302fdf51a1afa2adfd00e86444ab150e66bb0598dac400bc154ea"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter005_2026-11-15-07-42-26.perfetto-trace",
+          "sha256": "59f44853f7e80192ef78ef45063192238043e82c344a0b6dd714dcc7f09d11bf"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter006_2026-11-15-07-42-29.perfetto-trace",
+          "sha256": "afd74f467bbbbc5068b0c07412ba3532e3f5d5933ef7abeb553404840ebe0555"
+        }
+      ]
+    },
+    {
+      "run": "profile-main-new-none-01",
+      "edition": "main",
+      "version": "new",
+      "compilation": "None",
+      "iterations": 7,
+      "ttidMs": {
+        "max": 564.94784,
+        "median": 490.857002,
+        "min": 471.729515,
+        "stddev": 32.25141636164274
+      },
+      "apkSha256": "d1b76db275c569ab3fac030cefd95d48e897ea49487b1a5b3bbde17dc8aafff2",
+      "receiptSha256": "751a3dc3cb9dfd389e0975207b7396c4eb71fec508f5bccf462e6847ac3bb07d",
+      "outputSha256": "32045b76929c4ebbff815debf37dc0d629e81de4a4b78107337efe92559d5dee",
+      "traces": [
+        {
+          "file": "ProfileReleaseBenchmark_withoutAot_iter000_2026-11-15-07-37-31.perfetto-trace",
+          "sha256": "d106e4c17a5c46c857d0f1cb067df3b49880329cc89965754d979576c2f75bcf"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withoutAot_iter001_2026-11-15-07-37-35.perfetto-trace",
+          "sha256": "a1738f8e54fbd696a2c954f594be2718ed8acabea7c16e0ffbb0107b7dfe7c6a"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withoutAot_iter002_2026-11-15-07-37-38.perfetto-trace",
+          "sha256": "9a7626250273f1deda282bff028f6264b18fffc6946954a46d89e294d190c55e"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withoutAot_iter003_2026-11-15-07-37-41.perfetto-trace",
+          "sha256": "e845459d9f762765ce89e3a8906a5c71992439232574eb7c0db207cea56eccdd"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withoutAot_iter004_2026-11-15-07-37-45.perfetto-trace",
+          "sha256": "594e130ad9f3c920d3f711640abd3e9406554efaa4191fd5e490ff4bd67e1eda"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withoutAot_iter005_2026-11-15-07-37-49.perfetto-trace",
+          "sha256": "9d18b63f32d4c8a52b685c64d35fc21e3ce88c5c052f316a1f20b1e30009f988"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withoutAot_iter006_2026-11-15-07-37-52.perfetto-trace",
+          "sha256": "e8e666e8d911b9d6278444f7e959876ba1d494992ed64a10cc97ef8313278f78"
+        }
+      ]
+    },
+    {
+      "run": "profile-main-new-partial-01",
+      "edition": "main",
+      "version": "new",
+      "compilation": "Partial(Require,warmupIterations=0)",
+      "iterations": 7,
+      "ttidMs": {
+        "max": 506.321751,
+        "median": 468.02241,
+        "min": 454.513613,
+        "stddev": 18.521059610216742
+      },
+      "apkSha256": "d1b76db275c569ab3fac030cefd95d48e897ea49487b1a5b3bbde17dc8aafff2",
+      "receiptSha256": "056a47388501d0b1ef6bbee63c4eb08eb29b3002813baf6194d4d8ef6b17bd43",
+      "outputSha256": "1724302b90ee3254ba60b162c3cec002d8e60cbfbc0e45bc2eb69cbe256d012e",
+      "traces": [
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter000_2026-11-15-07-37-02.perfetto-trace",
+          "sha256": "b7612df1a5303cf71183351b72c81043a3c31e2cbe481858244b97d912dcd933"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter001_2026-11-15-07-37-06.perfetto-trace",
+          "sha256": "530843e06d14382e9f5967038a729a9212e1643118f6cae55a1ab368c99b2575"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter002_2026-11-15-07-37-08.perfetto-trace",
+          "sha256": "166224c30a63844ebbc13197115bd97aa545a824b9d2b245274467c3562535bc"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter003_2026-11-15-07-37-11.perfetto-trace",
+          "sha256": "27ccb7e1bcbc4e689f1a1e2329e3cb85a03191c4b639fcedefd2a74ceb2372ab"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter004_2026-11-15-07-37-14.perfetto-trace",
+          "sha256": "4b933ae44f5808b1fe59dab892ca619e445c73bca49bbbe29d2f7fce39e6dfc1"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter005_2026-11-15-07-37-17.perfetto-trace",
+          "sha256": "ef36ef01ff1897d659f0d306694c618250d0995e2263a0d47f24add5201e80f2"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter006_2026-11-15-07-37-20.perfetto-trace",
+          "sha256": "198aab782a0982a4ed91d7e2957bc93d17ae7d9cd0d50e0a03fcc6fefa2f511b"
+        }
+      ]
+    },
+    {
+      "run": "profile-main-new-partial-02",
+      "edition": "main",
+      "version": "new",
+      "compilation": "Partial(Require,warmupIterations=0)",
+      "iterations": 7,
+      "ttidMs": {
+        "max": 461.214544,
+        "median": 416.489426,
+        "min": 397.741476,
+        "stddev": 22.287088290512568
+      },
+      "apkSha256": "d1b76db275c569ab3fac030cefd95d48e897ea49487b1a5b3bbde17dc8aafff2",
+      "receiptSha256": "e25d7c26ad7dc6a0e73bdf29ca55c165b5c071d8f732e9935c4f133b9dc942f1",
+      "outputSha256": "a81586ae0c53acde3d48f0f0a03bee11f61b859ca1d227654f3daa157db5c04e",
+      "traces": [
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter000_2026-11-15-07-41-38.perfetto-trace",
+          "sha256": "44636faf1d0882583c382a29174e420e68dd084f7ace9ea60c127fc78c2da9ce"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter001_2026-11-15-07-41-41.perfetto-trace",
+          "sha256": "a9260d9e884a3167d60e5e4b75467b8a945006da151a57d3c7196edc3eaa2269"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter002_2026-11-15-07-41-45.perfetto-trace",
+          "sha256": "82a67ae1a4ab50b65290a34e46145f3bb2458af5195d73c6e434aaf34be84be5"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter003_2026-11-15-07-41-47.perfetto-trace",
+          "sha256": "4de1f05fa3d1e8f008a2988ca40e5cb17a06dad8a978a2a71ee24c7ef21716a1"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter004_2026-11-15-07-41-50.perfetto-trace",
+          "sha256": "3a4979507889351299ae2a1105dbab9dcbfedad7318d9f415b5ce9676554fa15"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter005_2026-11-15-07-41-52.perfetto-trace",
+          "sha256": "22b8d836938759f110a04766cf53f21c32f3d7b05fa429b4fbd10f1b41fa669e"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter006_2026-11-15-07-41-56.perfetto-trace",
+          "sha256": "fd37748fc12ab9e13fbd767b805718c87a77d90ac9674e70985b71faee0389bc"
+        }
+      ]
+    },
+    {
+      "run": "profile-main-old-partial-02",
+      "edition": "main",
+      "version": "old",
+      "compilation": "Partial(Require,warmupIterations=0)",
+      "iterations": 7,
+      "ttidMs": {
+        "max": 665.783816,
+        "median": 560.463032,
+        "min": 483.376278,
+        "stddev": 58.973379031900976
+      },
+      "apkSha256": "188bf2e62eb7321b5a7b025edd8cd12d59bab41a1b6f446a8fd6d627c4af7e1f",
+      "receiptSha256": "71ecf619a70aff20a18be0389a36b390c29c3af7592887d6f30bd533d3a40e56",
+      "outputSha256": "09b03c3439a8f0689cf362aba5c48cc5ae9f96c343439568d3d701cee3893d5a",
+      "traces": [
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter000_2026-11-15-07-31-07.perfetto-trace",
+          "sha256": "6edcf4faeac6ffa3130196b071b5d57121eded0d584033073c7f6d2f3335be32"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter001_2026-11-15-07-31-10.perfetto-trace",
+          "sha256": "5f0cff775ae1a92323acf0e54629ff08d5c35bcfc31c929a0e54c8fe39bd55c1"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter002_2026-11-15-07-31-13.perfetto-trace",
+          "sha256": "5195b4f5e34bebcff9272e11966c1c500d592002d084aee76f5624fc0bf3105a"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter003_2026-11-15-07-31-16.perfetto-trace",
+          "sha256": "326cebc3839b6a66cc6d8f2715a7f2edbf0e45de3bf9d3fbebb0263262fe3f56"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter004_2026-11-15-07-31-19.perfetto-trace",
+          "sha256": "2404ef25da117ea1b8d92c75e302839b3a167dd3f8d72392ad0fff1e838f6d06"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter005_2026-11-15-07-31-22.perfetto-trace",
+          "sha256": "6b76384d92b17afb51c30c1c7437c40885065cf382e68b25f5af33e61215f8eb"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter006_2026-11-15-07-31-25.perfetto-trace",
+          "sha256": "ab0ce204b2534c7a642858c0f06e5d02bf404efdddc370bacf32f0d0c4cb692a"
+        }
+      ]
+    },
+    {
+      "run": "profile-main-old-partial-03",
+      "edition": "main",
+      "version": "old",
+      "compilation": "Partial(Require,warmupIterations=0)",
+      "iterations": 7,
+      "ttidMs": {
+        "max": 519.945921,
+        "median": 442.760488,
+        "min": 414.085796,
+        "stddev": 36.27207770520808
+      },
+      "apkSha256": "188bf2e62eb7321b5a7b025edd8cd12d59bab41a1b6f446a8fd6d627c4af7e1f",
+      "receiptSha256": "c3133da0f44c86b2506ab63a6a56a9f68f7bdb263af5b55f0eeba0e020b2b0af",
+      "outputSha256": "1f6cb9537bc375211b13e7c4085b8ed889939ca44f9e747f5230c9f2c2fbd2b8",
+      "traces": [
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter000_2026-11-15-07-41-05.perfetto-trace",
+          "sha256": "5e8954335fff6d973e528ec245bdf7f40ad8292851f80047430427332647efa4"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter001_2026-11-15-07-41-08.perfetto-trace",
+          "sha256": "a69b51ead46613cf03242d9d90de07bf1ac40b5836d63d011229cc0946abc96b"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter002_2026-11-15-07-41-10.perfetto-trace",
+          "sha256": "a6f2acd7315396f76de87fe5a37f148922dbba7e6199344b3923c89ff1a63532"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter003_2026-11-15-07-41-13.perfetto-trace",
+          "sha256": "80813c3dba0ef58c5d2311ec348b62a212cf0dc9daace004aef68011f11bec42"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter004_2026-11-15-07-41-16.perfetto-trace",
+          "sha256": "20263f933c8466497e863afc24849c392d961a306bf98a7efad8e60e27be2a9f"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter005_2026-11-15-07-41-18.perfetto-trace",
+          "sha256": "dfc74b3b1653f971163231443ae70d100a4ee1b47150e40f37e22eccea6fcd26"
+        },
+        {
+          "file": "ProfileReleaseBenchmark_withBundledProfile_iter006_2026-11-15-07-41-22.perfetto-trace",
+          "sha256": "a40546bcb7e6794a08b0767279a256ea3db732d5b0e5c979653b5497107535a2"
+        }
+      ]
+    }
+  ],
+  "editions": {
+    "main": {
+      "versionName": "1.0.328",
+      "versionCode": 12,
+      "candidateRules": [
+        {
+          "name": "baseline-prof.txt",
+          "lines": 10639,
+          "sha256": "dfc80eed6b33927721c9632069f08774f4e9ba063d21378ef112fe0676e0a686"
+        },
+        {
+          "name": "startup-prof.txt",
+          "lines": 6273,
+          "sha256": "8db1697ac182268067e4d96487830608189c55d956b4c2d48536fd5a5b0d4ef1"
+        }
+      ],
+      "defaultInputs": {
+        "ownRules": 27,
+        "matchesOriginalManualRules": true,
+        "mergedProfileSha256": "3bfdf53ba5da0544608ad526ba3b60961f31572c3f82c743a2009d0815f9822a",
+        "trackedStartupSourceFiles": 1,
+        "trackedStartupSourceRules": 14,
+        "trackedStartupSource": {
+          "file": "app/src/main/startup-prof.txt",
+          "sha256": "8dcab18fe142d2c57b9a1df3a1ccb2d2abddb17b53208bdcbb640964d366e5ae",
+          "gitBlobSha1": "77ba9010f8fb7e7b812f58915d0685fe8a3bbb7d",
+          "matchesHeadGitContent": true,
+          "rulesSubsetOfManualBaseline": true,
+          "history": "62bba2aed500324621078e945488d64d828eafaf 2026-08-06T17:02:57+08:00 feat(android): prepare 1.0.299 release"
+        },
+        "generatedCandidateStartupSourceFiles": 0,
+        "observedMergedStartupOutputFiles": 0,
+        "mergedReleaseDirectoryExists": true,
+        "startupConsumption": "Legacy src/main/startup-prof.txt retained unchanged; no evidence it was consumed as a startup-layout input. AGP9.3.1 reads startup-prof.txt from baselineProfiles source directories; no merged startup file observed. Its 14 rules are also present in the consumed 27-rule manual baseline profile.",
+        "observationScope": "Read-only final disk/source/log audit; no new Gradle model/configuration run and no per-build archived merged-startup snapshot, so historical startup input is not claimed directly observed",
+        "agpVersion": "9.3.1",
+        "agpSourcesJarSha256": "f59c3f650bb7bf558c8757dd1bec7d202f358baa222239e5402f0294be0774c7",
+        "agpSourceReferences": [
+          {
+            "source": "com/android/build/gradle/internal/api/DefaultAndroidSourceSet.kt",
+            "sha256": "5a1b4b96eb2a0aebdf1ce812b29de84d85495a822c07fa6d8467a153df899cd3",
+            "relevantLines": [
+              259
+            ]
+          },
+          {
+            "source": "com/android/build/gradle/internal/tasks/MergeStartupProfileTask.kt",
+            "sha256": "a32663e422fbda7085ad135dd190c05e1827d1bc677768ea8f4b29c524f837be",
+            "relevantLines": [
+              79,
+              81
+            ]
+          },
+          {
+            "source": "com/android/build/gradle/internal/tasks/BaseR8Task.kt",
+            "sha256": "4899635507fca0029a15e3be0ae4c81e5ddad7f9bf16d8f4223232ce68ff1be2",
+            "relevantLines": [
+              188
+            ]
+          }
+        ],
+        "retainedBuildLogEvidence": [
+          {
+            "file": "raw/profile-main-default-build-01.txt",
+            "sha256": "f81ce8c44418e4e95350ffb8efe3106f3cb14d82b245a1db09b269f68218e59e",
+            "taskLine": "> Task :app:mergeReleaseStartupProfile"
+          },
+          {
+            "file": "raw/runtime-main-r8-build-01.txt",
+            "sha256": "c469bd6b122b9b267b3b97a20aee9b63e879a95cfdce62360ee9c17b51245072",
+            "taskLine": "> Task :app:mergeReleaseStartupProfile UP-TO-DATE"
+          }
+        ],
+        "correction": "Earlier startupProfileFiles=0 conflated an empty merged output with absence of tracked source; corrected without production/source/profile changes"
+      },
+      "collectionTestsPassed": 2,
+      "collectionOutputSha256": "19870e666e79961bbef124ea46503c8c6d2146714219b50b6107b93b596d6400",
+      "candidateApks": [
+        {
+          "version": "old",
+          "sha256": "188bf2e62eb7321b5a7b025edd8cd12d59bab41a1b6f446a8fd6d627c4af7e1f",
+          "cert": "Signer #1 certificate SHA-256 digest: 6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "abis": [
+            "x86_64"
+          ],
+          "profiles": {
+            "assets/dexopt/baseline.prof": {
+              "bytes": 20493,
+              "sha256": "4e34d3bc816b045c6aa1237e58260b44d3414f11b3057a3a47fcba1891f50d4b"
+            },
+            "assets/dexopt/baseline.profm": {
+              "bytes": 2552,
+              "sha256": "96204d8c361642fd98deff32eb6e1986bb3ee2776839aa86cf15bdb5b4842b0f"
+            }
+          }
+        },
+        {
+          "version": "new",
+          "sha256": "d1b76db275c569ab3fac030cefd95d48e897ea49487b1a5b3bbde17dc8aafff2",
+          "cert": "Signer #1 certificate SHA-256 digest: 6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "abis": [
+            "x86_64"
+          ],
+          "profiles": {
+            "assets/dexopt/baseline.prof": {
+              "bytes": 24051,
+              "sha256": "dafa16992da5cc3ad64ea5e687de74a546b4f09e9182a0de63ff8c394954d453"
+            },
+            "assets/dexopt/baseline.profm": {
+              "bytes": 3102,
+              "sha256": "f91d94fa3dd23691628ef51e74e43253214a587b7cd927d102072518eec1f035"
+            }
+          }
+        }
+      ],
+      "defaultApks": [
+        {
+          "version": "old",
+          "sha256": "d1b76db275c569ab3fac030cefd95d48e897ea49487b1a5b3bbde17dc8aafff2",
+          "cert": "Signer #1 certificate SHA-256 digest: 6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "abis": [
+            "x86_64"
+          ],
+          "profiles": {
+            "assets/dexopt/baseline.prof": {
+              "bytes": 24051,
+              "sha256": "dafa16992da5cc3ad64ea5e687de74a546b4f09e9182a0de63ff8c394954d453"
+            },
+            "assets/dexopt/baseline.profm": {
+              "bytes": 3102,
+              "sha256": "f91d94fa3dd23691628ef51e74e43253214a587b7cd927d102072518eec1f035"
+            }
+          }
+        },
+        {
+          "version": "new",
+          "sha256": "a736ee55daf7f20b70c5276936a6e42b532df41616e9eef17c2d2221c6c808ca",
+          "cert": "Signer #1 certificate SHA-256 digest: 6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "abis": [
+            "x86_64"
+          ],
+          "profiles": {
+            "assets/dexopt/baseline.prof": {
+              "bytes": 20493,
+              "sha256": "0788d85fe008470c9ced0eec4bd0b3d5bfd782feda230342655c75ff675c3e96"
+            },
+            "assets/dexopt/baseline.profm": {
+              "bytes": 2552,
+              "sha256": "96204d8c361642fd98deff32eb6e1986bb3ee2776839aa86cf15bdb5b4842b0f"
+            }
+          }
+        }
+      ],
+      "defaultReleaseBuildSeconds": 685.429,
+      "coveringUpdate": true,
+      "oldCiphertextAndCategoryPreserved": true,
+      "newEncryptedRecordAndDifferentProcessReadPassed": true,
+      "processIds": {
+        "write": 48417,
+        "cold": 48498
+      },
+      "entryChecks": [
+        {
+          "phase": "pickerAuth",
+          "passed": true,
+          "seconds": 1.723
+        },
+        {
+          "phase": "pickerCancel",
+          "passed": true,
+          "seconds": 1.126
+        },
+        {
+          "phase": "imeAuth",
+          "passed": true,
+          "seconds": 1.257
+        },
+        {
+          "phase": "imeCancel",
+          "passed": true,
+          "seconds": 1.302
+        }
+      ],
+      "realUiBackupRestore": {
+        "passed": true,
+        "backupFile": "monica_backup_20261115_161840.enc.zip",
+        "restoredRecords": 1,
+        "removedFixtureRecordOnly": "Performance new record",
+        "originalAndThirdRecordRetainedAfterRestore": true,
+        "restoredProcessId": 52452,
+        "successUiXml": {
+          "file": "ui-main-1794731394830263700.xml",
+          "sha256": "36a6246a3c38f273ada673eb3dc8e231a8c6f109625af6a16675bb590fc8c2d2"
+        },
+        "selectedBackupUiXml": {
+          "file": "ui-main-1794731381636387800.xml",
+          "sha256": "fadb621fbc94f4cec4ddf2bf1899aff0d4e9e83d52d323ee672ed95f0225ffc4"
+        },
+        "restoredProbe": {
+          "file": "profile-main-default-restored-01.json",
+          "sha256": "3764e37fb63769e12a35e73e98dc4a6efaff8e83980d8241df40e022191f040a"
+        },
+        "prepareRestoreProbe": {
+          "file": "profile-main-default-prepare-restore-01.json",
+          "sha256": "d9f084f32cdbec4cfbaa71706dbd0dbf2c7e3d236d3d7d82144c9ccee1d848ba"
+        }
+      }
+    }
+  },
+  "failuresRetained": [
+    {
+      "run": "root-final-audit-startup-source-check",
+      "reason": "Report audit conflated empty merged startup output with no tracked startup source; root final audit rejected the inaccurate startupProfileFiles=0 claim. The unchanged legacy14-rule source is retained, reporting corrected without a production/profile change."
+    },
+    {
+      "run": "profile-main-r8-build-01",
+      "reason": "Task-owned R8 process stopped to recover host memory during parallel builds; subsequent builds serial"
+    },
+    {
+      "run": "profile-main-old-partial-01",
+      "reason": "Local Kotlin benchmark class missing from runner; fixed local Kotlin source-set registration before successful build03"
+    },
+    {
+      "run": "default-fd-import-ui-navigation",
+      "reason": "Local driver expected a File tab but F-Droid opens the file import page directly; precondition rejected the absent target before clicking, then actual UI path completed"
+    }
+  ],
+  "limitations": [
+    "Exploratory emulator TTID only; no physical-device or OEM performance acceptance",
+    "Normal Release manifest remains non-profileable; benchmark environmental checks explicitly suppressed",
+    "Synthetic same-signer package-suffixed R8 fixtures, not production-user installs",
+    "Ordinary test Release BUILD_TIME fixed by local init script to control build input",
+    "Data writes use production encryption with a local instrumentation SQL fixture; not full editor-flow acceptance",
+    "No stable speed gain established; F-Droid repeat moved in the opposite direction"
+  ],
+  "edition": "main"
+}

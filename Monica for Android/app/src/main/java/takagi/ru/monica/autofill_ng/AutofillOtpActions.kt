@@ -145,7 +145,7 @@ internal class AutofillOtpActions(context: Context, private val bindingCache: Au
 
         /** Like the full picker: finish the system fill immediately, then perform optional work. */
         fun launchAfterFill(context: Context, passwordId: Long) {
-            if (takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(passwordId)) return
+            if (AutofillPasswordSource.isNativeId(passwordId)) return
             val appContext = context.applicationContext
             postFillScope.launch {
                 try {

@@ -767,6 +767,69 @@ class VaultOverviewPaneTest {
         }
     }
 
+    @Test fun importedKdbxFoldersKeepCountsAndTargetsThroughNativeReread() = runBlocking {
+        val a = UUID.randomUUID(); val b = UUID.randomUUID()
+        KeePassDeleteInvestigationTest().scenario(databaseTransform = { file ->
+            file.modifyParentGroup {
+                val fixture = entries.take(3).mapIndexed { index, entry ->
+                    entry.copy(fields = entry.fields + ("Title" to app.keemobile.kotpass.models.EntryValue.Plain("Imported layer $index")))
+                }
+                copy(entries = emptyList(), groups = listOf(
+                    Group(a, "合成分组", entries = fixture.take(2)),
+                    Group(b, "A/B+%20", entries = fixture.drop(2))))
+            }
+        }) { _, service, id, _, uri ->
+            val original = context.contentResolver.openInputStream(uri)!!.use { it.readBytes() }
+            val appDb = PasswordDatabase.getDatabase(context)
+            try {
+                assertEquals(3, takagi.ru.monica.ui.screens.KeePassKdbxViewModel().importFromLocalKdbx(
+                    context, uri, "Synthetic KDBX deletion test").getOrThrow())
+                val imported = appDb.passwordEntryDao().getPasswordEntriesByKeePassDatabaseSync(id)
+                val groups = service.listGroups(id).getOrThrow()
+                val snapshot = buildVaultOverviewSnapshot(buildVaultV2PasswordItems(imported),
+                    listOf(VaultOverviewSource("keepass:$id", "Import fixture", "KeePass")), "keepass:$id",
+                    VaultOverviewConfig(), emptyMap(), emptyMap(), emptyList(), emptyList(), emptyMap(), emptyList(),
+                    mapOf(id to groups), aggregate = ::aggregateVaultOverviewKotlin)
+                assertEquals("Import must not create a raw-path shadow folder", 2, snapshot.folders.size)
+                assertEquals(setOf(a.toString(), b.toString()), imported.map { it.keepassGroupUuid }.toSet())
+                assertTrue(imported.all { !it.keepassEntryUuid.isNullOrBlank() })
+                database.passwordEntryDao().deleteAllPasswordEntries()
+                imported.forEach { database.passwordEntryDao().insertPasswordEntry(it) }
+                val config = VaultOverviewConfig(scope = "keepass:$id", order = listOf(VaultOverviewModule.FOLDERS.name))
+                settings.updateVaultOverviewConfig { config }
+                appSettings = appSettings.copy(vaultV2LayoutMode = VaultV2LayoutMode.CLASSIC, vaultOverviewConfig = config)
+                testKeePassDatabases = listOf(appDb.localKeePassDatabaseDao().getDatabaseById(id)!!)
+                showPane(expectedOverviewCount = 3)
+                compose.waitUntil(15_000) { state.overviewSnapshot?.folders?.size == 2 }
+                compose.runOnIdle {
+                    assertEquals(2, state.overviewSnapshot!!.folders.single { it.key == "keepass:$id/$a" }.count)
+                    assertEquals(1, state.overviewSnapshot!!.folders.single { it.key == "keepass:$id/$b" }.count)
+                }
+                capture("kdbx-import-identity-overview.png")
+                openOverviewNode("overview_folder_keepass:$id/$a")
+                awaitListText("Imported layer 0")
+                awaitListText("Imported layer 1")
+                compose.onNodeWithText("Imported layer 2").assertDoesNotExist()
+                Espresso.pressBack()
+                openOverviewNode("overview_folder_keepass:$id/$b")
+                awaitListText("Imported layer 2")
+                compose.onNodeWithText("Imported layer 0").assertDoesNotExist()
+                capture("kdbx-import-identity-second-folder.png")
+                Espresso.pressBack()
+                openOverviewNode("overview_folder_keepass:$id/$a")
+                awaitListText("Imported layer 0")
+                compose.runOnIdle { testKeepassModel.lockKeePassDatabase(id) }
+                compose.waitUntil(15_000) { compose.onAllNodesWithText("Imported layer 0").fetchSemanticsNodes().isEmpty() }
+                assertArrayEquals(original, context.contentResolver.openInputStream(uri)!!.use { it.readBytes() })
+            } finally {
+                appDb.passwordEntryDao().getPasswordEntriesByKeePassDatabaseSync(id).forEach {
+                    appDb.customFieldDao().deleteByEntryId(it.id)
+                    appDb.passwordEntryDao().deletePasswordEntry(it)
+                }
+            }
+        }
+    }
+
     @Test fun kdbxOverviewNavigatesDuplicateParentsByUuidAndLocksWithoutWriting() = runBlocking {
         val a = UUID.randomUUID(); val b = UUID.randomUUID()
         val ac = UUID.randomUUID(); val bc = UUID.randomUUID()

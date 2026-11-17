@@ -1,0 +1,528 @@
+{
+  "schemaVersion": 1,
+  "task": "autofill-switch-performance-328",
+  "version": "1.0.328-unreleased",
+  "edition": "main",
+  "status": "verified_synthetic_scope_with_recorded_entry_failure",
+  "environment": {
+    "sdk": 35,
+    "abi": "x86_64",
+    "emulator": "MuMu index2",
+    "debug_user": 10
+  },
+  "checks": {
+    "debugBuild": {
+      "exit": 0,
+      "seconds": 239.52420119999442,
+      "apks": [
+        {
+          "sha256": "96240749b280b618790c3358a8cd5c6f8475f98bd9b0945149894b98e3a8a526",
+          "filename": "Monica-Android-x86_64-1.0.328-26111712-04.APK"
+        },
+        {
+          "sha256": "1b6ce17dec4ab05df78b45877e3c381f615587327a91342843069a28c0e65d95",
+          "filename": "app-debug-androidTest.apk"
+        }
+      ]
+    },
+    "releaseBuild": {
+      "edition": "main",
+      "exit": 0,
+      "seconds": 656.849,
+      "inputsUnchanged": true,
+      "artifacts": [
+        {
+          "path": "builds\\main-release01\\release\\Monica-Android-arm64-v8a-1.0.328-26111712-02.APK",
+          "bytes": 37163151,
+          "sha256": "70e4da29da234e272a97083f308fc8841047c6996dff7b8306a928e7ef97fe09"
+        },
+        {
+          "path": "builds\\main-release01\\release\\Monica-Android-armeabi-v7a-1.0.328-26111712-02.APK",
+          "bytes": 34671367,
+          "sha256": "938f122a8f54974330b9904a56ca5697e4e20f4bd9146d1b78af45701396e041"
+        },
+        {
+          "path": "builds\\main-release01\\release\\Monica-Android-x86_64-1.0.328-26111712-02.APK",
+          "bytes": 38981761,
+          "sha256": "d1ca3cb0acdf04329332e1ab5cf4ba7e84c4b17338a069e227a23bc6b65508ac"
+        }
+      ]
+    },
+    "device": {
+      "edition": "main",
+      "classes": "takagi.ru.monica.autofill_ng.NativeAutofillLoadPerformanceTest,takagi.ru.monica.autofill_ng.AutofillMultivaultScopeInstrumentedTest,takagi.ru.monica.autofill_ng.AutofillBatchValidationInstrumentedTest,takagi.ru.monica.autofill_ng.MdbxAutofillSourceInstrumentedTest,takagi.ru.monica.security.BoundedSecureDataReadInstrumentedTest,takagi.ru.monica.autofill_ng.NativeMultivaultPickerUiTest,takagi.ru.monica.autofill_ng.MdbxFrameworkAutofillInstrumentedTest,takagi.ru.monica.autofill_ng.AutofillPickerScopeUiTest",
+      "seconds": 115.5329184998991,
+      "ok": true,
+      "apks": [
+        {
+          "sha256": "96240749b280b618790c3358a8cd5c6f8475f98bd9b0945149894b98e3a8a526",
+          "filename": "Monica-Android-x86_64-1.0.328-26111712-04.APK"
+        },
+        {
+          "sha256": "1b6ce17dec4ab05df78b45877e3c381f615587327a91342843069a28c0e65d95",
+          "filename": "app-debug-androidTest.apk"
+        }
+      ]
+    },
+    "jvm": {
+      "tests": 28,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "nativePerformance": [
+      "kind=kdbx round=0 rows=300 loadMs=630.917162 prepareMs=103.477176 checks=14 systemCheckMs=5.105146 suggested=300",
+      "kind=kdbx round=1 rows=300 loadMs=95.479463 prepareMs=81.774917 checks=14 systemCheckMs=4.140618 suggested=300",
+      "kind=kdbx round=2 rows=300 loadMs=88.604361 prepareMs=49.356405 checks=14 systemCheckMs=3.490376 suggested=300",
+      "kind=kdbx diagnosticDirectReadMs=31.655919",
+      "kind=mdbx round=0 rows=300 loadMs=1131.522837 prepareMs=57.020494 checks=12 systemCheckMs=3.065844 suggested=300",
+      "kind=mdbx round=1 rows=300 loadMs=779.253577 prepareMs=58.788805 checks=12 systemCheckMs=3.054726 suggested=300",
+      "kind=mdbx round=2 rows=300 loadMs=680.160355 prepareMs=49.738845 checks=12 systemCheckMs=3.42829 suggested=300",
+      "kind=mdbx diagnosticDirectReadMs=731.738838"
+    ],
+    "instrumentation": "112.127",
+    "methods": 53,
+    "releaseUpgrade": [
+      {
+        "phase": "upgrade",
+        "label": "upgrade02",
+        "receiptSha256": "645e5fb08f54a4453390eaea84aa6fcbb6e3d4d677f0a576c2c8800ff5efaeb9",
+        "seconds": 5.171,
+        "results": [],
+        "instrumentationPid": null
+      },
+      {
+        "phase": "checkFour",
+        "label": "four02",
+        "receiptSha256": "9021df6766669b8d6a4584ddc8695c1dda47ece9fa1ee6fad3f1f12000ac5ccb",
+        "seconds": 2.914,
+        "results": [
+          {
+            "phase": "checkFour",
+            "target_package": "takagi.ru.monica.bwca328main",
+            "target_apk_sha256": "d1ca3cb0acdf04329332e1ab5cf4ba7e84c4b17338a069e227a23bc6b65508ac",
+            "mapping_sha256": "d3a5487a3089745d9aae73d65a96cecfa831707991a588e8b44594ed3da23c35",
+            "sdk": 35,
+            "abi": "x86_64",
+            "pid": 9948,
+            "process_name": "takagi.ru.monica.bwca328main",
+            "write_method": "SQL with production SecurityManager encryption; not a real editor",
+            "originals_readable": 4,
+            "password_rows": 4,
+            "retained_id_cipher_category_preserved": true,
+            "previous_owner_sha256": "2759db3302c0aad6debbdc93a54c358b199c81f722a38f551ffee1d1683c47ae",
+            "previous_all_rows_preserved": true,
+            "passed": true
+          }
+        ],
+        "instrumentationPid": null
+      },
+      {
+        "phase": "write",
+        "label": "write02",
+        "receiptSha256": "ad01a42f2202c8de6fe4932284d3e9ea3d3f1c8939f8ff17c76e454e3488e877",
+        "seconds": 2.299,
+        "results": [
+          {
+            "phase": "write",
+            "target_package": "takagi.ru.monica.bwca328main",
+            "target_apk_sha256": "d1ca3cb0acdf04329332e1ab5cf4ba7e84c4b17338a069e227a23bc6b65508ac",
+            "mapping_sha256": "d3a5487a3089745d9aae73d65a96cecfa831707991a588e8b44594ed3da23c35",
+            "sdk": 35,
+            "abi": "x86_64",
+            "pid": 10025,
+            "process_name": "takagi.ru.monica.bwca328main",
+            "write_method": "SQL with production SecurityManager encryption; not a real editor",
+            "originals_readable": 4,
+            "password_rows": 5,
+            "retained_id_cipher_category_preserved": true,
+            "fixture_id": "70cc86ba-d2f7-4431-a43b-8dd9f1658ce3",
+            "owner_status": "active",
+            "current_owned_id": 8,
+            "owned_ids": [
+              8
+            ],
+            "all_preexisting_rows_preserved": true,
+            "previous_owner_sha256": "2759db3302c0aad6debbdc93a54c358b199c81f722a38f551ffee1d1683c47ae",
+            "previous_all_rows_preserved": true,
+            "passed": true
+          }
+        ],
+        "instrumentationPid": null
+      },
+      {
+        "phase": "check",
+        "label": "coldFive02",
+        "receiptSha256": "a15b4c282af3aeaac5150a8b26f5e73c533119912526aec53a94bb46adbf0389",
+        "seconds": 2.088,
+        "results": [
+          {
+            "phase": "check",
+            "target_package": "takagi.ru.monica.bwca328main",
+            "target_apk_sha256": "d1ca3cb0acdf04329332e1ab5cf4ba7e84c4b17338a069e227a23bc6b65508ac",
+            "mapping_sha256": "d3a5487a3089745d9aae73d65a96cecfa831707991a588e8b44594ed3da23c35",
+            "sdk": 35,
+            "abi": "x86_64",
+            "pid": 10113,
+            "process_name": "takagi.ru.monica.bwca328main",
+            "write_method": "SQL with production SecurityManager encryption; not a real editor",
+            "fixture_id": "70cc86ba-d2f7-4431-a43b-8dd9f1658ce3",
+            "owner_status": "active",
+            "current_owned_id": 8,
+            "owned_ids": [
+              8
+            ],
+            "all_preexisting_rows_preserved": true,
+            "originals_readable": 4,
+            "password_rows": 5,
+            "previous_owner_sha256": "2759db3302c0aad6debbdc93a54c358b199c81f722a38f551ffee1d1683c47ae",
+            "previous_all_rows_preserved": true,
+            "passed": true
+          }
+        ],
+        "instrumentationPid": null
+      },
+      {
+        "phase": "prepareRestore",
+        "label": "prepareRestore01",
+        "receiptSha256": "5fa385b92b8afb6b4d03dc99de39c99133d78ff59ac63925c747a355f660accc",
+        "seconds": 4.451,
+        "results": [
+          {
+            "phase": "prepareRestore",
+            "target_package": "takagi.ru.monica.bwca328main",
+            "target_apk_sha256": "d1ca3cb0acdf04329332e1ab5cf4ba7e84c4b17338a069e227a23bc6b65508ac",
+            "mapping_sha256": "d3a5487a3089745d9aae73d65a96cecfa831707991a588e8b44594ed3da23c35",
+            "sdk": 35,
+            "abi": "x86_64",
+            "pid": 13077,
+            "process_name": "takagi.ru.monica.bwca328main",
+            "write_method": "SQL with production SecurityManager encryption; not a real editor",
+            "fixture_id": "70cc86ba-d2f7-4431-a43b-8dd9f1658ce3",
+            "owner_status": "awaiting_restore",
+            "current_owned_id": 8,
+            "owned_ids": [
+              8
+            ],
+            "all_preexisting_rows_preserved": true,
+            "originals_readable": 4,
+            "password_rows": 4,
+            "backup_sha256": "7d2b17454ab090d4d651883e31bcba91997308a137963d77df1fe46b6f30a017",
+            "backup_name": "monica_backup_20261117_100044.enc.zip",
+            "previous_owner_sha256": "2759db3302c0aad6debbdc93a54c358b199c81f722a38f551ffee1d1683c47ae",
+            "previous_all_rows_preserved": true,
+            "passed": true
+          }
+        ],
+        "instrumentationPid": null
+      },
+      {
+        "phase": "restored",
+        "label": "restored01",
+        "receiptSha256": "954538191b5fd5731c56af1c76a200fcfe766f6628b0711a32e6f0f61d21da20",
+        "seconds": 4.434,
+        "results": [
+          {
+            "phase": "restored",
+            "target_package": "takagi.ru.monica.bwca328main",
+            "target_apk_sha256": "d1ca3cb0acdf04329332e1ab5cf4ba7e84c4b17338a069e227a23bc6b65508ac",
+            "mapping_sha256": "d3a5487a3089745d9aae73d65a96cecfa831707991a588e8b44594ed3da23c35",
+            "sdk": 35,
+            "abi": "x86_64",
+            "pid": 14842,
+            "process_name": "takagi.ru.monica.bwca328main",
+            "write_method": "SQL with production SecurityManager encryption; not a real editor",
+            "fixture_id": "70cc86ba-d2f7-4431-a43b-8dd9f1658ce3",
+            "owner_status": "restored",
+            "current_owned_id": 561,
+            "owned_ids": [
+              8,
+              561
+            ],
+            "all_preexisting_rows_preserved": true,
+            "originals_readable": 4,
+            "password_rows": 5,
+            "round_trip_verified": true,
+            "previous_owner_sha256": "2759db3302c0aad6debbdc93a54c358b199c81f722a38f551ffee1d1683c47ae",
+            "previous_all_rows_preserved": true,
+            "passed": true
+          }
+        ],
+        "instrumentationPid": null
+      },
+      {
+        "phase": "check",
+        "label": "restoredCold01",
+        "receiptSha256": "d2b191d9519afb0bbe8d8130da607a1e231676402076cab93cba25ad571ed4b1",
+        "seconds": 3.615,
+        "results": [
+          {
+            "phase": "check",
+            "target_package": "takagi.ru.monica.bwca328main",
+            "target_apk_sha256": "d1ca3cb0acdf04329332e1ab5cf4ba7e84c4b17338a069e227a23bc6b65508ac",
+            "mapping_sha256": "d3a5487a3089745d9aae73d65a96cecfa831707991a588e8b44594ed3da23c35",
+            "sdk": 35,
+            "abi": "x86_64",
+            "pid": 14945,
+            "process_name": "takagi.ru.monica.bwca328main",
+            "write_method": "SQL with production SecurityManager encryption; not a real editor",
+            "fixture_id": "70cc86ba-d2f7-4431-a43b-8dd9f1658ce3",
+            "owner_status": "restored",
+            "current_owned_id": 561,
+            "owned_ids": [
+              8,
+              561
+            ],
+            "all_preexisting_rows_preserved": true,
+            "originals_readable": 4,
+            "password_rows": 5,
+            "previous_owner_sha256": "2759db3302c0aad6debbdc93a54c358b199c81f722a38f551ffee1d1683c47ae",
+            "previous_all_rows_preserved": true,
+            "passed": true
+          }
+        ],
+        "instrumentationPid": null
+      },
+      {
+        "phase": "cleanup",
+        "label": "cleanup01",
+        "receiptSha256": "b507bff24783fba4ba542e3b2c7ed8ccb188642443089eeccf2848838b9f867c",
+        "seconds": 3.566,
+        "results": [
+          {
+            "phase": "cleanup",
+            "target_package": "takagi.ru.monica.bwca328main",
+            "target_apk_sha256": "d1ca3cb0acdf04329332e1ab5cf4ba7e84c4b17338a069e227a23bc6b65508ac",
+            "mapping_sha256": "d3a5487a3089745d9aae73d65a96cecfa831707991a588e8b44594ed3da23c35",
+            "sdk": 35,
+            "abi": "x86_64",
+            "pid": 15063,
+            "process_name": "takagi.ru.monica.bwca328main",
+            "write_method": "SQL with production SecurityManager encryption; not a real editor",
+            "fixture_id": "70cc86ba-d2f7-4431-a43b-8dd9f1658ce3",
+            "owner_status": "cleaned",
+            "current_owned_id": 561,
+            "owned_ids": [
+              8,
+              561
+            ],
+            "all_preexisting_rows_preserved": true,
+            "originals_readable": 4,
+            "owned_rows_removed": 1,
+            "password_rows": 4,
+            "round_trip_verified": true,
+            "previous_owner_sha256": "2759db3302c0aad6debbdc93a54c358b199c81f722a38f551ffee1d1683c47ae",
+            "previous_all_rows_preserved": true,
+            "passed": true
+          }
+        ],
+        "instrumentationPid": null
+      },
+      {
+        "phase": "checkFour",
+        "label": "finalFour01",
+        "receiptSha256": "897bd31ea25954bcd465b9de9b95c0042175ad4db7b439978efe3184faf9e72d",
+        "seconds": 3.747,
+        "results": [
+          {
+            "phase": "checkFour",
+            "target_package": "takagi.ru.monica.bwca328main",
+            "target_apk_sha256": "d1ca3cb0acdf04329332e1ab5cf4ba7e84c4b17338a069e227a23bc6b65508ac",
+            "mapping_sha256": "d3a5487a3089745d9aae73d65a96cecfa831707991a588e8b44594ed3da23c35",
+            "sdk": 35,
+            "abi": "x86_64",
+            "pid": 15192,
+            "process_name": "takagi.ru.monica.bwca328main",
+            "write_method": "SQL with production SecurityManager encryption; not a real editor",
+            "fixture_id": "70cc86ba-d2f7-4431-a43b-8dd9f1658ce3",
+            "owner_status": "cleaned",
+            "current_owned_id": 561,
+            "owned_ids": [
+              8,
+              561
+            ],
+            "all_preexisting_rows_preserved": true,
+            "originals_readable": 4,
+            "password_rows": 4,
+            "retained_id_cipher_category_preserved": true,
+            "previous_owner_sha256": "2759db3302c0aad6debbdc93a54c358b199c81f722a38f551ffee1d1683c47ae",
+            "previous_all_rows_preserved": true,
+            "passed": true
+          }
+        ],
+        "instrumentationPid": null
+      }
+    ],
+    "releaseEntries": [
+      {
+        "phase": "pickerAuth",
+        "label": "pickerAuth02",
+        "receiptSha256": "33edddf12a1c467a01f21fae080bf693bc2f7ece5137eb1a646e1d0c4b185761",
+        "seconds": 3.225,
+        "results": null,
+        "instrumentationPid": 15492
+      },
+      {
+        "phase": "pickerCancel",
+        "label": "pickerCancel01",
+        "receiptSha256": "c6dc735839b2cbb98cdf19d46ff0f9c98259beeb9730da3e7ed8927bf005a81c",
+        "seconds": 2.526,
+        "results": null,
+        "instrumentationPid": 15681
+      },
+      {
+        "phase": "imeAuth",
+        "label": "imeAuth01",
+        "receiptSha256": "3ea11dc45f07959faa2117c023437bd3e4459af13f7845cc0e03443bfee96c8b",
+        "seconds": 2.911,
+        "results": null,
+        "instrumentationPid": 15838
+      },
+      {
+        "phase": "imeCancel",
+        "label": "imeCancel01",
+        "receiptSha256": "384288702bb780742eae6c7440d693b57d916312ca817344b8fce4b8368c33b4",
+        "seconds": 2.703,
+        "results": null,
+        "instrumentationPid": 16016
+      }
+    ],
+    "releaseFirstPickerFailure": {
+      "receiptSha256": "c69295f2bdbb772f98b9dd247725a32f82a78ad5b78abb6931f3ec0a5fb97a04",
+      "label": "pickerAuth01",
+      "reason": "Entry phase did not pass",
+      "fixed": false,
+      "retryChangedProductionOrProbe": false
+    },
+    "releaseInputsFinalCheck": {
+      "count": 5502,
+      "unchanged": true
+    },
+    "releaseArtifacts": [
+      {
+        "version": "old",
+        "package": "takagi.ru.monica.bwca328main",
+        "versionCode": 12,
+        "versionName": "1.0.328-26111712-02",
+        "abis": [
+          "x86_64"
+        ],
+        "certificate": "Signer #1 certificate SHA-256 digest: 6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+        "sha256": "d811f137b7dab2e32bbea4021bc100d844cbf97078da49158ea7fe5efa53fafd",
+        "mappingSha256": "a41ceeb8f9456ce1c5d1dbbcfab42f3551fba28d6ac274e5527083d06c797dd2",
+        "bytes": 38965197
+      },
+      {
+        "version": "new",
+        "package": "takagi.ru.monica.bwca328main",
+        "versionCode": 12,
+        "versionName": "1.0.328-26111712-02",
+        "abis": [
+          "x86_64"
+        ],
+        "certificate": "Signer #1 certificate SHA-256 digest: 6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+        "sha256": "d1ca3cb0acdf04329332e1ab5cf4ba7e84c4b17338a069e227a23bc6b65508ac",
+        "mappingSha256": "d3a5487a3089745d9aae73d65a96cecfa831707991a588e8b44594ed3da23c35",
+        "bytes": 38981761
+      }
+    ],
+    "backup": {
+      "filename": "monica_backup_20261117_100044.enc.zip",
+      "bytes": 2781,
+      "sha256": "7d2b17454ab090d4d651883e31bcba91997308a137963d77df1fe46b6f30a017",
+      "write_receipt_sha256": "ad01a42f2202c8de6fe4932284d3e9ea3d3f1c8939f8ff17c76e454e3488e877",
+      "new_since_fifth_write": true,
+      "contents_decrypted_by_driver": false,
+      "ui_export_observation_required": true
+    }
+  },
+  "sharedFiles": {
+    "app/src/main/java/takagi/ru/monica/security/BoundedSecureDataRead.kt": "19a33e3e57991d87e860814a2dfe8a69071b7c1961004d32c602e5409cdf39e5",
+    "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPasswordSource.kt": "723e5bfb5483f94c1b764ed6ce08e2419303116738df52dd23d7a7df0a9b9098",
+    "app/src/androidTest/java/takagi/ru/monica/security/BoundedSecureDataReadInstrumentedTest.kt": "c77613194e76b1659eb23937f9685462441d2f9d1d7b38d7553f1acdd832c4c1",
+    "app/src/androidTest/java/takagi/ru/monica/autofill_ng/NativeAutofillLoadPerformanceTest.kt": "3cc5d084118445a1f35c3fd64c318608a3d145c9dd12316fd764aa2ec0aeafa6"
+  },
+  "cleanup": {
+    "passed": true,
+    "preservedUsers": [
+      0
+    ],
+    "removedOwnedUser": 10,
+    "historicalSyntheticVaultsAndBackupsPreserved": true,
+    "publicAvdUntouched": true,
+    "removedProbePackages": [
+      "local.switchloadentry328.main",
+      "local.switchloadentry328.fd",
+      "local.switchloadupgrade328.main",
+      "local.switchloadupgrade328.fd",
+      "local.hyperosupgrade328.main",
+      "local.hyperosupgrade328.fd"
+    ],
+    "allOtherUser0PackagesPreserved": true,
+    "ownedXmlPathsRemoved": 153,
+    "shutdownRequestedOwnedMuMuIndex": 2,
+    "cleanupBeforeShutdownPassed": true,
+    "ownedMuMuStopped": true,
+    "configurationAndDataDiskPreserved": true,
+    "finalAndroidUser": 0
+  },
+  "unresolved": [
+    "First R8 picker authentication closes before source creation in both editions; identical APK/probe second run passes. Existing issue, not fixed by this change."
+  ],
+  "publication": {
+    "committed": false,
+    "pushed": false,
+    "released": false,
+    "apkDelivered": false
+  },
+  "performanceEvidence": {
+    "syntheticRowsPerLibrary": 300,
+    "measurements": {
+      "main-devicebaseline02": [
+        "kind=kdbx round=0 rows=300 loadMs=617.137918 prepareMs=77.676653 checks=319 systemCheckMs=40.476539 suggested=300",
+        "kind=kdbx round=1 rows=300 loadMs=302.095995 prepareMs=40.904491 checks=319 systemCheckMs=36.343784 suggested=300",
+        "kind=kdbx round=2 rows=300 loadMs=262.755634 prepareMs=36.749615 checks=319 systemCheckMs=22.585517 suggested=300",
+        "kind=kdbx diagnosticDirectReadMs=23.880268",
+        "kind=mdbx round=0 rows=300 loadMs=1779.254798 prepareMs=37.177273 checks=1521 systemCheckMs=122.47576 suggested=300",
+        "kind=mdbx round=1 rows=300 loadMs=1611.596866 prepareMs=36.781763 checks=1521 systemCheckMs=130.510349 suggested=300",
+        "kind=mdbx round=2 rows=300 loadMs=1445.93103 prepareMs=35.367701 checks=1521 systemCheckMs=105.033124 suggested=300",
+        "kind=mdbx diagnosticDirectReadMs=372.558321"
+      ],
+      "main-devicefixed01": [
+        "kind=kdbx round=0 rows=300 loadMs=339.337137 prepareMs=69.283713 checks=14 systemCheckMs=3.150542 suggested=300",
+        "kind=kdbx round=1 rows=300 loadMs=69.654807 prepareMs=38.065452 checks=14 systemCheckMs=4.75254 suggested=300",
+        "kind=kdbx round=2 rows=300 loadMs=45.567924 prepareMs=31.156729 checks=14 systemCheckMs=1.863318 suggested=300",
+        "kind=kdbx diagnosticDirectReadMs=22.916651",
+        "kind=mdbx round=0 rows=300 loadMs=583.174357 prepareMs=36.493047 checks=12 systemCheckMs=1.694376 suggested=300",
+        "kind=mdbx round=1 rows=300 loadMs=384.136256 prepareMs=33.435794 checks=12 systemCheckMs=1.928922 suggested=300",
+        "kind=mdbx round=2 rows=300 loadMs=421.425237 prepareMs=34.174425 checks=12 systemCheckMs=2.459746 suggested=300",
+        "kind=mdbx diagnosticDirectReadMs=372.90898"
+      ],
+      "main-devicefinal01": [
+        "kind=kdbx round=0 rows=300 loadMs=630.917162 prepareMs=103.477176 checks=14 systemCheckMs=5.105146 suggested=300",
+        "kind=kdbx round=1 rows=300 loadMs=95.479463 prepareMs=81.774917 checks=14 systemCheckMs=4.140618 suggested=300",
+        "kind=kdbx round=2 rows=300 loadMs=88.604361 prepareMs=49.356405 checks=14 systemCheckMs=3.490376 suggested=300",
+        "kind=kdbx diagnosticDirectReadMs=31.655919",
+        "kind=mdbx round=0 rows=300 loadMs=1131.522837 prepareMs=57.020494 checks=12 systemCheckMs=3.065844 suggested=300",
+        "kind=mdbx round=1 rows=300 loadMs=779.253577 prepareMs=58.788805 checks=12 systemCheckMs=3.054726 suggested=300",
+        "kind=mdbx round=2 rows=300 loadMs=680.160355 prepareMs=49.738845 checks=12 systemCheckMs=3.42829 suggested=300",
+        "kind=mdbx diagnosticDirectReadMs=731.738838"
+      ],
+      "fd-devicefinal01": [
+        "kind=kdbx round=0 rows=300 loadMs=330.6068 prepareMs=67.313446 checks=14 systemCheckMs=2.079657 suggested=300",
+        "kind=kdbx round=1 rows=300 loadMs=54.472703 prepareMs=42.58074 checks=14 systemCheckMs=1.372332 suggested=300",
+        "kind=kdbx round=2 rows=300 loadMs=42.742056 prepareMs=37.572463 checks=14 systemCheckMs=1.883423 suggested=300",
+        "kind=kdbx diagnosticDirectReadMs=21.173003",
+        "kind=mdbx round=0 rows=300 loadMs=578.43189 prepareMs=39.916878 checks=12 systemCheckMs=1.674612 suggested=300",
+        "kind=mdbx round=1 rows=300 loadMs=359.261098 prepareMs=33.883435 checks=12 systemCheckMs=1.729538 suggested=300",
+        "kind=mdbx round=2 rows=300 loadMs=363.95567 prepareMs=26.711475 checks=12 systemCheckMs=1.647948 suggested=300",
+        "kind=mdbx diagnosticDirectReadMs=335.425261"
+      ]
+    },
+    "negativeControl": {
+      "oldAppWithNewTest": true,
+      "expectedFailure": true,
+      "reason": "319 full checks exceeded per-batch bound"
+    }
+  }
+}

@@ -2,7 +2,9 @@ package takagi.ru.monica.autofill_ng
 
 import android.app.Application
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.first
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -69,6 +71,25 @@ class AutofillPickerSuggestionsTest {
         assertEquals(listOf(5L), suggestions(sibling, web))
         preferences.setDomainMatchStrategy(DomainMatchStrategy.EXACT_MATCH)
         assertEquals(emptyList<Long>(), suggestions(sibling, web))
+    }
+
+    @Test fun activeSelectionWinsWhilePersistedDefaultIsStillOld(): Unit = runBlocking {
+        preferences.setV2DefaultScope(AutofillScope.Local)
+        val values = listOf(entries[1].copy(id = 20, bitwardenVaultId = 81, bitwardenCipherId = "a"),
+            entries[1].copy(id = 21, bitwardenVaultId = 82, bitwardenCipherId = "b"))
+        assertEquals(listOf(21L), AutofillPickerSuggestions.load(values, native, preferences, null,
+            activeScope = AutofillScope.Bitwarden(82)).map { it.id })
+        assertEquals(AutofillScope.Local, preferences.v2DefaultScope.first())
+    }
+
+    @Test fun suppliedIdsStayOrderedAndCannotEscapeActiveMdbxScope(): Unit = runBlocking {
+        val values = listOf(entries[0].copy(id = -20, mdbxDatabaseId = 81),
+            entries[0].copy(id = -21, mdbxDatabaseId = 82))
+        assertEquals(listOf(-21L), AutofillPickerSuggestions.load(values,
+            web.copy(suggestedPasswordIds = longArrayOf(-20, -21, -21)), preferences, null,
+            activeScope = AutofillScope.Mdbx(82)).map { it.id })
+        assertTrue(AutofillPickerSuggestions.load(values, web.copy(suggestedPasswordIds = longArrayOf()),
+            preferences, null, activeScope = AutofillScope.Mdbx()).isEmpty())
     }
 
     private suspend fun suggestions(values: List<PasswordEntry>, args: AutofillPickerActivityV2.Args) =

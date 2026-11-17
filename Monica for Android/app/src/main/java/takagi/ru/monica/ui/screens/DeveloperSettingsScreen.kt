@@ -49,6 +49,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -97,6 +99,7 @@ fun DeveloperSettingsScreen(
     var clearingLogs by remember { mutableStateOf(false) }
 
     var disablePasswordVerification by remember { mutableStateOf(settings.disablePasswordVerification) }
+    var showHyperOsCompatibility by rememberSaveable { mutableStateOf(false) }
     var showDefaultManager by remember { mutableStateOf(false) }
     if (showDefaultManager) DefaultPasswordManagerSheet { showDefaultManager = false }
     var bitwardenSyncForensicsEnabled by remember {
@@ -123,6 +126,13 @@ fun DeveloperSettingsScreen(
         bitwardenSyncForensicsDirectoryUri = settings.bitwardenSyncForensicsDirectoryUri
         bitwardenSyncForensicsRawCaptureEnabled = settings.bitwardenSyncForensicsRawCaptureEnabled
         appLauncherLabel = settings.appLauncherLabel
+    }
+
+    if (showHyperOsCompatibility) {
+        takagi.ru.monica.ui.navigation.MonicaPageContent("hyperos-compatibility", animateInitial = true) {
+            HyperOsCompatibilitySettingsScreen(onNavigateBack = { showHyperOsCompatibility = false })
+        }
+        return
     }
 
     val forensicsDirectoryPickerLauncher = rememberLauncherForActivityResult(
@@ -300,6 +310,13 @@ fun DeveloperSettingsScreen(
                 )
             }
             SettingsPanelGroup(stringResource(R.string.developer_functions)) {
+                SettingsPanelRow(
+                    icon = Icons.Default.Science,
+                    title = stringResource(R.string.hyperos_compatibility_title),
+                    subtitle = stringResource(R.string.hyperos_compatibility_subtitle),
+                    onClick = { showHyperOsCompatibility = true },
+                    modifier = Modifier.testTag("developer_hyperos_compatibility_entry")
+                )
                 SettingsPanelRow(
                     icon = Icons.Default.AutoAwesome,
                     title = stringResource(R.string.developer_launcher_name_use_pass),

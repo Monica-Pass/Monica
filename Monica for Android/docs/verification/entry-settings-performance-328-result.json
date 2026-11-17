@@ -1,0 +1,94 @@
+{
+  "date": "2026-11-15",
+  "edition": "main",
+  "version": "1.0.328",
+  "baselineCheckpoint": "ae3f33e66a8e83f7f50c710a5d7815f4c1a43ddd",
+  "sourceSha256": {
+    "app/src/main/java/takagi/ru/monica/security/ForegroundEntrySettings.kt": "dc57f23e17c3c0c114808c8837c1f42ff4e63573a83c46b23ee06006f097425e",
+    "app/src/main/java/takagi/ru/monica/autofill_ng/AutofillPickerActivityV2.kt": "64b062f49e913fcce08133a70d54b208e8f5f6d7065834df1dbd53e4c8742ecc",
+    "app/src/main/java/takagi/ru/monica/ime/ImeUnlockActivity.kt": "da5a2a88874c37b36fd8feab0cfe627fbc6730b01ebad7564ea612c2c0e78a54",
+    "app/src/androidTest/java/takagi/ru/monica/security/EntrySettingsActivityTest.kt": "04b06b3d8c6e6f83942f068ed71d350f48b05650985d37bb8a66931650ca5927",
+    "app/src/androidTest/java/takagi/ru/monica/security/EntrySettingsLifecycleActivityTest.kt": "35f72f2d59975632977be10bb71658fff0babc2ab1dd69f98623f09018ac6d01",
+    "app/src/androidTest/java/takagi/ru/monica/security/ForegroundEntrySettingsTest.kt": "4a811f9f2718e6612c54395ad2e3db753b40e3b69a7d20c049b11096dffd5c16",
+    "app/src/androidTest/java/takagi/ru/monica/security/LocalPasswordUpgradeInstrumentedTest.kt": "345c7e4fe9dd75b9f04165f2d16549c0273d5af16dbfb661549bdec17d1ddb8d",
+    "app/src/androidTest/java/takagi/ru/monica/security/MasterPasswordFallbackUiTest.kt": "e3990a5bc3a17a907c2b6f376a1732074c00e65914eb70a809e645d1a91aec2d",
+    "app/src/test/java/takagi/ru/monica/ime/MonicaImeRegressionGuardTest.kt": "5359b2587ebc8f4ec8bc68a0a9cd83fee7e48c283a52a747266fc8e91c96fd89"
+  },
+  "jvm": {
+    "tests": 134,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "device": {
+    "environment": "MuMu Android 35 / x86_64 / isolated synthetic package",
+    "differentDebugMethodsPassed": 28,
+    "realR8EntryChecks": [
+      {
+        "phase": "pickerAuth",
+        "passed": true,
+        "exit": 0,
+        "seconds": 2.206
+      },
+      {
+        "phase": "pickerCancel",
+        "passed": true,
+        "exit": 0,
+        "seconds": 2.035
+      },
+      {
+        "phase": "imeAuth",
+        "passed": true,
+        "exit": 0,
+        "seconds": 1.743
+      },
+      {
+        "phase": "imeCancel",
+        "passed": true,
+        "exit": 0,
+        "seconds": 1.591
+      }
+    ]
+  },
+  "releasePackages": [
+    {
+      "version": "old",
+      "sha256": "3a5ec55a2bdd1122dd2a0e80ce48f8a8716b8e2995676c205f26810a4126f9bc",
+      "cert": "Signer #1 certificate SHA-256 digest: 6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "abis": [
+        "x86_64"
+      ],
+      "profiles": {
+        "assets/dexopt/baseline.prof": 21500,
+        "assets/dexopt/baseline.profm": 2556
+      }
+    },
+    {
+      "version": "new",
+      "sha256": "188bf2e62eb7321b5a7b025edd8cd12d59bab41a1b6f446a8fd6d627c4af7e1f",
+      "cert": "Signer #1 certificate SHA-256 digest: 6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "abis": [
+        "x86_64"
+      ],
+      "profiles": {
+        "assets/dexopt/baseline.prof": 20493,
+        "assets/dexopt/baseline.profm": 2552
+      }
+    }
+  ],
+  "upgrade": {
+    "samePackageAndSigner": true,
+    "clearedDataOrUninstalledBetweenVersions": false,
+    "originalPasswordAndCiphertextVerified": true,
+    "newEncryptedWriteAndColdRead": true,
+    "actualUiEncryptedBackupAndRestore": true,
+    "restoredNewRecords": 1,
+    "originalCiphertextPreservedAfterRestore": true
+  },
+  "limits": [
+    "Emulator and synthetic data only; no physical/OEM/TEE/biometric hardware claim.",
+    "Targeted entry responsiveness; no overall launch or frame-rate speedup claim.",
+    "R8 entry tests drive internal Activities and actual password UI, not a third-party browser autofill end-to-end test.",
+    "The helper timeout/error paths are tested independently; real Activities tested for delay/Back/stop/lock/recreate/settings."
+  ]
+}

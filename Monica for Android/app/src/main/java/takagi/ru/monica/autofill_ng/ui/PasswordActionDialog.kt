@@ -31,6 +31,8 @@ internal fun PasswordActionDialog(
     onDismiss: () -> Unit,
     onAction: (PasswordItemAction) -> Unit,
 ) {
+    val allowsUriBinding = password.mdbxDatabaseId == null
+    val fillActionCount = if (allowsUriBinding) 3 else 2
     fun select(action: PasswordItemAction) { onDismiss(); onAction(action) }
     Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false)) {
         BoxWithConstraints(Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 24.dp),
@@ -64,15 +66,17 @@ internal fun PasswordActionDialog(
                         .padding(horizontal = 12.dp).padding(bottom = 16.dp),
                         verticalArrangement = Arrangement.spacedBy(12.dp)) {
                         ActionSection(stringResource(R.string.autofill_action_fill_methods)) {
-                            ActionRow(R.string.autofill, Icons.Outlined.AutoAwesome, "autofill_action_default", 0, 3,
+                            ActionRow(R.string.autofill, Icons.Outlined.AutoAwesome, "autofill_action_default", 0, fillActionCount,
                                 emphasized = true) { select(PasswordItemAction.Autofill(password)) }
                             ActionRow(R.string.autofill_accessibility_fill, Icons.Outlined.AccessibilityNew,
-                                "autofill_action_accessibility", 1, 3,
+                                "autofill_action_accessibility", 1, fillActionCount,
                                 supporting = stringResource(R.string.autofill_accessibility_fill_hint)) {
                                 select(PasswordItemAction.AccessibilityFill(password))
                             }
-                            ActionRow(R.string.autofill_and_save_uri, Icons.Outlined.Link, "autofill_action_bind", 2, 3) {
-                                select(PasswordItemAction.AutofillAndSaveUri(password))
+                            if (allowsUriBinding) {
+                                ActionRow(R.string.autofill_and_save_uri, Icons.Outlined.Link, "autofill_action_bind", 2, fillActionCount) {
+                                    select(PasswordItemAction.AutofillAndSaveUri(password))
+                                }
                             }
                         }
                         ActionSection(stringResource(R.string.autofill_action_copy)) {

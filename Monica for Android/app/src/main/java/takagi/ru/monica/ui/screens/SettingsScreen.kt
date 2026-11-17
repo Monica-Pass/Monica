@@ -1032,6 +1032,11 @@ fun SettingsScreen(
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
+                    Text(
+                        text = stringResource(R.string.version_info_codename),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                     Spacer(modifier = Modifier.height(4.dp))
                     VersionLinkButton(
                         title = stringResource(R.string.version_info_github_label),

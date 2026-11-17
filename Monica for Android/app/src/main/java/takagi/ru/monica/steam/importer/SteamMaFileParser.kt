@@ -265,11 +265,11 @@ class SteamMaFileParser(
     private fun String.extractSharedSecretFromUri(): Pair<String, SharedSecretSource>? {
         val normalized = trim()
         if (normalized.startsWith("steam://", ignoreCase = true)) {
+            // Preserve Base64 '/' characters; this payload is a key, not a path.
             val secret = normalized
                 .substringAfter("://", "")
                 .substringBefore("?")
                 .substringBefore("#")
-                .trim('/')
                 .trim()
                 .decodeUriComponent()
                 .takeIf { it.isNotBlank() }

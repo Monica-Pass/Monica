@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_compatibility_title">"HyperOS 兼容设置"</string>
+    <string name="hyperos_compatibility_subtitle">"通行密钥、保存提示与应用内动画"</string>
+    <string name="hyperos_compatibility_shared_settings_note">"这些选项与通用设置使用同一份配置。减少动画只调整 Monica 应用内的动画。"</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="filter_mdbx">MDBX</string>
+    <string name="autofill_v2_default_mdbx_title">Banco de dados MDBX padrão</string>
+    <string name="autofill_v2_default_mdbx_desc">Limitar as sugestões padrão e os itens da lista a um banco de dados MDBX.</string>
+</resources>

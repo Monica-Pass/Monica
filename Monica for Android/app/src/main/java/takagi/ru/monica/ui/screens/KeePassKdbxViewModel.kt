@@ -43,6 +43,7 @@ import takagi.ru.monica.utils.KeePassFieldReferenceResolver
 import takagi.ru.monica.utils.KeePassOperationException
 import takagi.ru.monica.utils.KeePassFormatInspector
 import takagi.ru.monica.utils.KeePassKdbxService
+import takagi.ru.monica.keepass.KeePassTreeNavigation
 import takagi.ru.monica.utils.KeePassPortableSecretExportException
 import takagi.ru.monica.utils.KeePassPortableSecretExportPolicy
 import takagi.ru.monica.utils.toKeePassOperationException
@@ -486,9 +487,8 @@ class KeePassKdbxViewModel {
             }
             
             // 3. 获取所有条目（保留分组路径）
-            val allEntries = mutableListOf<Pair<Entry, String?>>()
-            collectEntriesWithGroupPath(keePassDatabase.content.group, null, allEntries)
-            val resolutionContext = KeePassFieldReferenceResolver.buildContext(allEntries.map { it.first })
+            val allEntries = KeePassTreeNavigation.collectEntryContexts(keePassDatabase).first
+            val resolutionContext = KeePassFieldReferenceResolver.buildContext(allEntries.map { it.entry })
             Log.d(TAG, "Found ${allEntries.size} entries in KDBX file")
             
             // 4. 准备数据库和安全管理器
@@ -516,7 +516,7 @@ class KeePassKdbxViewModel {
             var passwordImportedCount = 0
             var totpImportedCount = 0
             
-            allEntries.forEach { (entry, groupPath) ->
+            allEntries.forEach { (entry, groupPath, groupUuid) ->
                 try {
                     // 安全获取字段值的辅助函数
                     fun getFieldValue(key: String): String {
@@ -555,13 +555,10 @@ class KeePassKdbxViewModel {
                             plainPassword = normalizedPassword,
                             securityManager = securityManager
                         )
-                        val existingEntry = passwordDao.findDuplicateEntryInKeePass(
-                            databaseId = keepassDatabaseId,
-                            title = title,
-                            username = username,
-                            website = url,
-                            groupPath = groupPath
-                        )
+                        // Native identities distinguish legal same-named groups and entries.
+                        // UUID-less old projections are repaired by the normal native reload;
+                        // a name/content guess here could overwrite a different source entry.
+                        val existingEntry = passwordDao.findByKeePassEntryUuid(keepassDatabaseId, entry.uuid.toString())
                         val sshKeyData = resolveSshKeyData(entry, resolutionContext)
                         val (wifiLoginType, wifiMetadataJson) = resolveWifiMetadata(
                             entry = entry,
@@ -582,6 +579,8 @@ class KeePassKdbxViewModel {
                                 notes = notes,
                                 keepassDatabaseId = keepassDatabaseId,
                                 keepassGroupPath = groupPath,
+                                keepassEntryUuid = entry.uuid.toString(),
+                                keepassGroupUuid = groupUuid?.toString(),
                                 sshKeyData = sshKeyData,
                                 loginType = wifiLoginType,
                                 wifiMetadata = wifiMetadataJson,
@@ -604,6 +603,8 @@ class KeePassKdbxViewModel {
                                 updatedAt = sourceDates.second,
                                 keepassDatabaseId = keepassDatabaseId,
                                 keepassGroupPath = groupPath,
+                                keepassEntryUuid = entry.uuid.toString(),
+                                keepassGroupUuid = groupUuid?.toString(),
                                 sshKeyData = sshKeyData,
                                 loginType = wifiLoginType,
                                 wifiMetadata = wifiMetadataJson
@@ -705,11 +706,7 @@ class KeePassKdbxViewModel {
                                 totpData
                             }
                             val normalizedTitle = title.ifEmpty { totpData.issuer }
-                            val duplicateByTitle = secureItemDao.findDuplicateItem(ItemType.TOTP, normalizedTitle)
-                            val existingItem = duplicateByTitle?.takeIf { candidate ->
-                                (candidate.keepassDatabaseId == keepassDatabaseId && candidate.keepassGroupPath == groupPath) ||
-                                    candidate.isLocalOnlyItem()
-                            }
+                            val existingItem = secureItemDao.findByKeePassEntryUuid(keepassDatabaseId, entry.uuid.toString())
                             if (existingItem != null) {
                                 val updatedItem = existingItem.copy(
                                     title = normalizedTitle,
@@ -717,6 +714,8 @@ class KeePassKdbxViewModel {
                                     itemData = Json.encodeToString(TotpData.serializer(), boundTotpData),
                                     keepassDatabaseId = keepassDatabaseId,
                                     keepassGroupPath = groupPath,
+                                    keepassEntryUuid = entry.uuid.toString(),
+                                    keepassGroupUuid = groupUuid?.toString(),
                                     isDeleted = false,
                                     deletedAt = null,
                                     updatedAt = Date()
@@ -732,7 +731,9 @@ class KeePassKdbxViewModel {
                                     createdAt = Date(),
                                     updatedAt = Date(),
                                     keepassDatabaseId = keepassDatabaseId,
-                                    keepassGroupPath = groupPath
+                                    keepassGroupPath = groupPath,
+                                    keepassEntryUuid = entry.uuid.toString(),
+                                    keepassGroupUuid = groupUuid?.toString()
                                 )
                                 
                                 secureItemDao.insertItem(secureItem)
@@ -762,24 +763,6 @@ class KeePassKdbxViewModel {
         entries.addAll(group.entries)
         group.groups.forEach { subGroup ->
             collectEntries(subGroup, entries)
-        }
-    }
-
-    private fun collectEntriesWithGroupPath(
-        group: Group,
-        currentPath: String?,
-        entries: MutableList<Pair<Entry, String?>>
-    ) {
-        group.entries.forEach { entry ->
-            entries.add(entry to currentPath)
-        }
-        group.groups.forEach { subGroup ->
-            val nextPath = if (currentPath.isNullOrBlank()) {
-                subGroup.name
-            } else {
-                "$currentPath/${subGroup.name}"
-            }
-            collectEntriesWithGroupPath(subGroup, nextPath, entries)
         }
     }
 

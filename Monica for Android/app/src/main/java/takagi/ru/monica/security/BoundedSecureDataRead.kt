@@ -20,7 +20,13 @@ internal object BoundedSecureDataRead {
         private val result: CompletableDeferred<*>,
     ) {
         fun ensureActive() {
-            check(result.isActive && isCurrent()) { "Secure read was revoked" }
+            ensureNotCancelled()
+            check(isCurrent()) { "Secure read was revoked" }
+        }
+
+        /** For private batch traversal only; readChecked still fully validates both boundaries. */
+        fun ensureNotCancelled() {
+            check(result.isActive) { "Secure read was revoked" }
         }
     }
 

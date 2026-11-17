@@ -1,0 +1,26 @@
+{
+  "sameFailures": false,
+  "previous": {
+    "mdbxDatabaseViewsExposePathNavigationAndSyncAction": "java.lang.AssertionError: MDBX database pages must expose sync as a quick status action beside, not inside, the breadcrumb path.",
+    "webDavBackupScreenManualCreateSharesCoordinatorQueue": "java.lang.AssertionError: WebDAV screen manual create must share the same backup:webdav coordinator queue as AutoBackupWorker.",
+    "mdbxManagerLivesUnderDatabaseBackupAndUsesStandalonePages": "java.lang.AssertionError: Database and backup settings must expose MDBX as its own category.",
+    "addPasswordAuthenticatorKeyFieldHasInlineScanAction": "java.lang.AssertionError: The Add Password authenticator key field should expose QR scanning as the field trailing action so scanned secrets fill the same form directly.",
+    "inlineTotpPreviewMatchesSimplePasswordPreviewAndKeepsCountdownInSync": "java.lang.AssertionError: Inline TOTP previews should keep the compact code plus a one-second Material Expressive shape animation while the number uses the synchronized countdown.",
+    "normalPasswordPageShowsBatchTransferInQuickStatusBar": "java.lang.AssertionError: MDBX password object ids must reuse imported MDBX entry ids across clients, while tombstoning the broken local Room-id object written by older builds.",
+    "deletingPasswordBoundAuthenticatorWarnsAndStillDeletesPersistedTotp": "java.lang.AssertionError: The authenticator page must warn before deleting password-bound authenticators, including multi-select batches.",
+    "webDavBackupsUseMonicaLocalContentScope": "java.lang.AssertionError: Manual WebDAV backup must use the Monica-local scope so external caches are not exported as Monica-local entries.",
+    "mdbxHistoryAndSnapshotViewsUseStaleWhileRevalidateCache": "java.lang.AssertionError: MDBX password imports must preserve the existing Room row identity and sort metadata when refreshing an already imported entry.",
+    "normalPasswordPageRunsBatchDeleteThroughQuickStatusBar": "java.lang.AssertionError: After confirming batch delete, the page must snapshot the selection before clearing multi-select so background deletion does not lose selected items."
+  },
+  "headBaseline": {
+    "mdbxDatabaseViewsExposePathNavigationAndSyncAction": "java.lang.AssertionError: MDBX database pages must expose sync as a quick status action beside, not inside, the breadcrumb path.",
+    "webDavBackupScreenManualCreateSharesCoordinatorQueue": "java.lang.AssertionError: WebDAV screen manual create must share the same backup:webdav coordinator queue as AutoBackupWorker.",
+    "mdbxManagerLivesUnderDatabaseBackupAndUsesStandalonePages": "java.lang.AssertionError: Database and backup settings must expose MDBX as its own category.",
+    "addPasswordAuthenticatorKeyFieldHasInlineScanAction": "java.lang.AssertionError: The Add Password authenticator key field should expose QR scanning as the field trailing action so scanned secrets fill the same form directly.",
+    "inlineTotpPreviewMatchesSimplePasswordPreviewAndKeepsCountdownInSync": "java.lang.AssertionError: Inline TOTP previews should keep the compact code plus a one-second Material Expressive shape animation while the number uses the synchronized countdown.",
+    "deletingPasswordBoundAuthenticatorWarnsAndStillDeletesPersistedTotp": "java.lang.AssertionError: The authenticator page must warn before deleting password-bound authenticators, including multi-select batches.",
+    "webDavBackupsUseMonicaLocalContentScope": "java.lang.AssertionError: Manual WebDAV backup must use the Monica-local scope so external caches are not exported as Monica-local entries.",
+    "mdbxHistoryAndSnapshotViewsUseStaleWhileRevalidateCache": "java.lang.AssertionError: MDBX password imports must preserve the existing Room row identity and sort metadata when refreshing an already imported entry.",
+    "normalPasswordPageRunsBatchDeleteThroughQuickStatusBar": "java.lang.AssertionError: After confirming batch delete, the page must snapshot the selection before clearing multi-select so background deletion does not lose selected items."
+  }
+}

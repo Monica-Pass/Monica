@@ -18,6 +18,7 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.withResumed
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -104,6 +105,8 @@ class AutofillAuthenticationActivity : AppCompatActivity() {
     private var passwordValue: String? = null
     private var autofillIds: ArrayList<AutofillId>? = null
     private var fieldTypes: ArrayList<String>? = null
+    private var credentialReadStarted = false
+    private var requestRevoked = false
     
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleHelper.setLocale(newBase, StartupLanguageCache.read(newBase)))
@@ -240,6 +243,25 @@ class AutofillAuthenticationActivity : AppCompatActivity() {
      * 验证成功,返回填充数据
      */
     private fun onAuthenticationSuccess() {
+        if (credentialReadStarted || requestRevoked) return
+        lifecycleScope.launch {
+            lifecycle.withResumed { Unit }
+            if (credentialReadStarted || requestRevoked || isFinishing || isDestroyed) return@launch
+            credentialReadStarted = true
+            val generation = SecurityManager.dataReadGeneration.value
+            val owner = AutofillRoomCredentialReader.read(
+                takagi.ru.monica.data.PasswordDatabase.getDatabase(applicationContext), passwordEntryId)
+            if (owner !is AutofillRoomCredentialReader.Result.Available || requestRevoked || isFinishing || isDestroyed ||
+                !lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED) ||
+                !securityManager.isDataReadCurrent(generation)) {
+                onAuthenticationCancelled()
+                return@launch
+            }
+            publishAuthenticationResult()
+        }
+    }
+
+    private fun publishAuthenticationResult() {
         Log.d(TAG, "Authentication success, creating dataset")
         
         try {
@@ -298,9 +320,20 @@ class AutofillAuthenticationActivity : AppCompatActivity() {
      * 用户取消验证
      */
     private fun onAuthenticationCancelled() {
+        requestRevoked = true
         Log.d(TAG, "Authentication cancelled by user")
         setResult(Activity.RESULT_CANCELED)
         finish()
+    }
+
+    override fun onStop() {
+        if (credentialReadStarted) requestRevoked = true
+        super.onStop()
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        onAuthenticationCancelled()
     }
 }
 

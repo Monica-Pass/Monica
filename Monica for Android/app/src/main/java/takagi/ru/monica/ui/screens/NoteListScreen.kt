@@ -184,11 +184,20 @@ fun NoteListScreen(
     val database = remember { PasswordDatabase.getDatabase(context) }
     val settingsManager = remember { SettingsManager(context) }
     val scope = rememberCoroutineScope()
-    val categories by database.categoryDao().getAllCategories().collectAsState(initial = emptyList())
-    val keepassDatabases by database.localKeePassDatabaseDao().getAllDatabases().collectAsState(initial = emptyList())
-    val mdbxDatabases by database.localMdbxDatabaseDao().getAvailableDatabases().collectAsState(initial = emptyList())
+    // Room returns a new cold Flow for each call. Keep these subscriptions across UI recompositions.
+    val categories by remember(database) {
+        database.categoryDao().getAllCategories()
+    }.collectAsState(initial = emptyList())
+    val keepassDatabases by remember(database) {
+        database.localKeePassDatabaseDao().getAllDatabases()
+    }.collectAsState(initial = emptyList())
+    val mdbxDatabases by remember(database) {
+        database.localMdbxDatabaseDao().getAvailableDatabases()
+    }.collectAsState(initial = emptyList())
     val bitwardenRepository = remember { BitwardenRepository.getInstance(context) }
-    val bitwardenVaults by database.bitwardenVaultDao().getAllVaultsFlow().collectAsState(initial = emptyList())
+    val bitwardenVaults by remember(database) {
+        database.bitwardenVaultDao().getAllVaultsFlow()
+    }.collectAsState(initial = emptyList())
     val keepassBridge = remember {
         KeePassCompatibilityBridge(
             KeePassWorkspaceRepository(

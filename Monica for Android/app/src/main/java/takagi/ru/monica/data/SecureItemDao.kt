@@ -15,6 +15,17 @@ private const val SECURE_ITEM_TYPED_DISPLAY_ORDER =
  */
 @Dao
 interface SecureItemDao {
+    /** Only local visibility metadata, never a source of native wallet values. */
+    @Query("""
+        SELECT CASE
+            WHEN itemType = 'BANK_CARD' THEN CASE WHEN replica_group_id GLOB 'card:*' AND LENGTH(replica_group_id) > 5 THEN replica_group_id ELSE 'card:' || id END
+            WHEN itemType = 'DOCUMENT' THEN CASE WHEN replica_group_id GLOB 'document-ref:*' AND LENGTH(replica_group_id) > 13 THEN replica_group_id ELSE 'document-ref:' || id END
+            WHEN itemType = 'BILLING_ADDRESS' THEN CASE WHEN replica_group_id GLOB 'billing-address:*' AND LENGTH(replica_group_id) > 16 THEN replica_group_id ELSE 'billing-address:' || id END
+            ELSE '' END
+        FROM secure_items WHERE mdbx_database_id = :databaseId AND (isDeleted = 1 OR isArchived = 1)
+    """)
+    suspend fun getSuppressedMdbxAutofillObjectIds(databaseId: Long): List<String>
+
     @Query("SELECT * FROM secure_items WHERE mdbx_database_id IS NULL AND bitwarden_vault_id IS NULL AND keepass_database_id IS NULL ORDER BY id")
     suspend fun getDeviceSyncLocalItems(): List<SecureItem>
     

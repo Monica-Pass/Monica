@@ -62,21 +62,10 @@ internal object AutofillSuggestionPolicy {
         sourceFilter: AutofillPreferences.AutofillDefaultSourceFilter,
         keepassDatabaseId: Long?,
         bitwardenVaultId: Long?,
+        mdbxDatabaseId: Long? = null,
     ): List<PasswordEntry> {
-        return when (sourceFilter) {
-            AutofillPreferences.AutofillDefaultSourceFilter.ALL -> entries
-            AutofillPreferences.AutofillDefaultSourceFilter.LOCAL -> entries.filter { entry ->
-                entry.isLocalOnlyEntry()
-            }
-            AutofillPreferences.AutofillDefaultSourceFilter.KEEPASS -> entries.filter { entry ->
-                entry.keepassDatabaseId != null &&
-                    (keepassDatabaseId == null || entry.keepassDatabaseId == keepassDatabaseId)
-            }
-            AutofillPreferences.AutofillDefaultSourceFilter.BITWARDEN -> entries.filter { entry ->
-                entry.bitwardenVaultId != null &&
-                    (bitwardenVaultId == null || entry.bitwardenVaultId == bitwardenVaultId)
-            }
-        }
+        val scope = sourceFilter.toAutofillScope(keepassDatabaseId, bitwardenVaultId, mdbxDatabaseId)
+        return entries.filter { it.matchesAutofillScope(scope) }
     }
 
 }

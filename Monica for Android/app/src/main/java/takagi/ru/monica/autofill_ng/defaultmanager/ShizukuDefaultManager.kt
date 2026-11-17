@@ -80,19 +80,20 @@ object ShizukuDefaultManager {
             check(current.equivalentTo(expected)) { "System selection changed" }
             val desired = expected.withSelection(MonicaDefaultServices.credential,
                 MonicaDefaultServices.autofill.takeIf { includeAutofill }, keepOthers)
-            if (current.equivalentTo(desired)) current
+            (if (current.equivalentTo(desired)) current
             else {
                 // Persist before the first write. Only component names; no vault or credential contents.
                 check(preferences(context).edit().putString(BACKUP, current.toJson()).commit())
                 check(access(context) == DefaultManagerAccess.READY)
                 service.apply(expected.toBundle(), includeAutofill, keepOthers).checkedSnapshot()
-            }
+            }).also { HyperOsDiagnostics.verified(context, it) }
         }
 
     suspend fun restore(context: Context, expected: SettingsSnapshot): SettingsSnapshot = withService(context) { service ->
         val target = requireNotNull(previous(context))
         service.restore(expected.toBundle(), target.toBundle()).checkedSnapshot().also {
             check(preferences(context).edit().remove(BACKUP).commit())
+            HyperOsDiagnostics.clearVerified(context)
         }
     }
 

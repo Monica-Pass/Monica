@@ -1,0 +1,24 @@
+HyperOS built-ins — attribution and scope
+
+Monica optional hooks are adapted from Howard20181/HyperPasskey,
+https://github.com/Howard20181/HyperPasskey
+revision da8569a9e955b9d361f08c11c73f42b044e9cdde (development 1.5.0-beta3),
+licensed GPL-3.0. Copyright belongs to the upstream contributors.
+Source comparison also used v1.4.0, 48ebac7d088c79f61fcacbfb2c31f56bc101a9c0.
+
+Changes: separate default-off consent switches, framework-managed boolean-only preferences,
+root/system-only binder delivery, Android 14-16 and primary-user Xiaomi-family gates,
+validated GMS destinations, exact class/method lookup, no ART memory offsets or Unsafe,
+no Android 17 beta adaptation, no hot reload, no vault/data access. Failure to identify a
+method leaves that behavior unchanged. Physical HyperOS devices have not been tested.
+
+Diagnostic design also references dingwen07/CredentialProviderManager v0.1.1,
+c7eb00934327b54fb39753d7bacd14e4a955e1f3, GPL-3.0:
+https://github.com/dingwen07/CredentialProviderManager
+No testOnly flag or direct hidden-settings access was copied.
+Existing configuration backend remains adapted from cr-zhichen/password-manager-switch (MIT).
+
+Dependencies: io.github.libxposed:api:102.0.0 (compile only) and
+io.github.libxposed:service:102.0.0 and io.github.libxposed:interface:102.0.0, Apache-2.0, https://github.com/libxposed;
+org.luckypray:dexkit:2.2.0, Apache-2.0, https://github.com/LuckyPray/DexKit.
+No Google library or framework is bundled by this feature.

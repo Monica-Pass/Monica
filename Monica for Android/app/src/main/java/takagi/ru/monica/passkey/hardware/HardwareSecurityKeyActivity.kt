@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.credentials.*
@@ -67,6 +68,7 @@ class HardwareSecurityKeyActivity : FragmentActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         state = HardwareKeyUiState(providerMode = providerMode, featureEnabled = HardwarePasskeyPreferences.isEnabled(this))

@@ -83,10 +83,17 @@ class MonicaImeRegressionGuardTest {
             "The keyboard row must retain the stored value for on-demand fill resolution.",
             projectionBlock.contains("password = password")
         )
-        assertTrue(
-            "Smart fill must resolve the stored password immediately before committing it.",
-            smartFillBlock.contains("val password = resolveFillableField(entry.password).orEmpty()")
-        )
+        assertTrue("Smart fill must dispatch the selected row for a fresh read.",
+            smartFillBlock.startsWith("entry: MonicaImePasswordEntry) = insertCurrentCredential(entry, null)"))
+        val selectedRead = smartFillBlock.substringAfter("private fun insertCurrentCredential(")
+        assertTrue(selectedRead.contains("withContext(Dispatchers.IO)"))
+        assertTrue(selectedRead.contains("getImePasswordRowById(entry.id) ?: return@withContext emptyList()"))
+        assertTrue(selectedRead.contains("\"password\" -> listOf(current.password)"))
+        assertTrue(selectedRead.contains("selected.mapNotNull(::resolveFillableField)"))
+        assertTrue(selectedRead.contains("target != inputGeneration || !inputViewVisible || currentInputConnection !== connection"))
+        assertTrue(selectedRead.contains("!updateUnlockState(settings)) return@launch"))
+        assertTrue(selectedRead.indexOf("selected.mapNotNull(::resolveFillableField)") < selectedRead.indexOf("connection.commitText("))
+        assertFalse("Stale cached passwords must not replace the current row.", selectedRead.contains("resolveFillableField(entry.password)"))
     }
 
     @Test

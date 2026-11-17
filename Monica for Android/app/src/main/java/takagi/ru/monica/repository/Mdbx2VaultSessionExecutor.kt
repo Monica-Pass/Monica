@@ -8,6 +8,7 @@ import java.text.Normalizer
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
@@ -191,6 +192,49 @@ internal class Mdbx2VaultSessionExecutor(
         block: suspend (LocalMdbxDatabase, MdbxVault) -> T
     ): T = withVaultInternal(databaseId, mutating = true, block)
 
+    /** A fresh request-owned native handle; never opens the main UI or IME authorization session. */
+    suspend fun <T> withAutofillReadVault(
+        databaseId: Long,
+        checkActive: () -> Unit,
+        block: (LocalMdbxDatabase, MdbxVault, String, () -> Unit) -> T,
+    ): T = withContext(Dispatchers.IO) {
+        val generation = SecurityManager.dataReadGeneration.value
+        val requestContext = kotlinx.coroutines.currentCoroutineContext()
+        fun checkRequest() {
+            requestContext.ensureActive()
+            checkActive()
+            check(SecurityManager.dataReadGeneration.value == generation) { "MDBX autofill request expired" }
+        }
+        checkRequest()
+        Mdbx2NativeRuntime.ensureLoaded()
+        vaultLocks.getOrPut(databaseId) { Mutex() }.withLock {
+            checkRequest()
+            val database = requireDatabase(databaseId)
+            val file = resolveLocalFile(database)
+            fun identity(current: LocalMdbxDatabase): String {
+                val target = resolveLocalFile(current).canonicalFile
+                val attrs = java.nio.file.Files.readAttributes(target.toPath(),
+                    java.nio.file.attribute.BasicFileAttributes::class.java)
+                val inode = checkNotNull(attrs.fileKey()) { "MDBX file identity unavailable" }.toString()
+                return mdbxAutofillDigest(listOf(current.id.toString(), target.path, inode,
+                    current.engineType, current.sourceType, current.sourceId?.toString(), current.filePath,
+                    current.workingCopyPath, current.externalTreeUri, current.encryptedPassword,
+                    current.unlockMethod, current.keyFileUri, current.keyFileFingerprint, current.tigaMode,
+                    current.lastSyncedAt?.toString()))
+            }
+            val namespace = identity(database)
+            checkRequest()
+            val vault = openVaultForRead(database, file)
+            try {
+                checkRequest()
+                val result = block(database, vault, namespace, ::checkRequest)
+                check(namespace == identity(requireDatabase(databaseId))) { "MDBX source changed" }
+                checkRequest()
+                result
+            } finally { vault.close() }
+        }
+    }
+
     /** Do not clear edits made during network I/O or while the UI imports the result. */
     suspend fun completeRemoteSync(databaseId: Long, report: Mdbx2RemoteSyncReport): MdbxSyncStatus =
         withContext(Dispatchers.IO) {
@@ -328,18 +372,24 @@ internal class Mdbx2VaultSessionExecutor(
             val database = requireDatabase(databaseId)
             val file = resolveLocalFile(database)
             if (!file.isFile) throw Mdbx2ErrorMapper.fileMissing()
-            var changed = false
-            val operation: suspend (MdbxVault) -> T = { vault ->
-                val before = if (mutating) vault.incrementalSyncCheckpoint().commitInventory else null
-                block(database, vault).also {
-                    changed = mutating && before != vault.incrementalSyncCheckpoint().commitInventory
-                }
-            }
             Mdbx2NativeReadSessions.invalidate(databaseId)
             val vault = openVaultForRead(database, file)
-            val result = try { operation(vault) } finally { vault.close() }
-            if (changed) finalizeMutation(database, file)
-            result
+            var failure: Throwable? = null
+            val before = try { if (mutating) vault.incrementalSyncCheckpoint().commitInventory else null }
+                catch (error: Throwable) { vault.close(); throw error }
+            try { block(database, vault) }
+            catch (error: Throwable) { failure = error; throw error }
+            finally {
+                // A successful native commit must remain pending for publication even if
+                // subsequent readback or coroutine cancellation fails the caller.
+                try {
+                    val changed = try { mutating && before != vault.incrementalSyncCheckpoint().commitInventory }
+                        finally { vault.close() }
+                    if (changed) withContext(kotlinx.coroutines.NonCancellable) { finalizeMutation(database, file) }
+                } catch (finalizeError: Throwable) {
+                    if (failure != null) failure.addSuppressed(finalizeError) else throw finalizeError
+                }
+            }
         }
     }
 

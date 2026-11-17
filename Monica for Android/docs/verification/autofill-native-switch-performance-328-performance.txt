@@ -1,0 +1,46 @@
+main-devicebaseline02
+kind=kdbx round=0 rows=300 loadMs=617.137918 prepareMs=77.676653 checks=319 systemCheckMs=40.476539 suggested=300
+kind=kdbx round=1 rows=300 loadMs=302.095995 prepareMs=40.904491 checks=319 systemCheckMs=36.343784 suggested=300
+kind=kdbx round=2 rows=300 loadMs=262.755634 prepareMs=36.749615 checks=319 systemCheckMs=22.585517 suggested=300
+kind=kdbx diagnosticDirectReadMs=23.880268
+kind=mdbx round=0 rows=300 loadMs=1779.254798 prepareMs=37.177273 checks=1521 systemCheckMs=122.47576 suggested=300
+kind=mdbx round=1 rows=300 loadMs=1611.596866 prepareMs=36.781763 checks=1521 systemCheckMs=130.510349 suggested=300
+kind=mdbx round=2 rows=300 loadMs=1445.93103 prepareMs=35.367701 checks=1521 systemCheckMs=105.033124 suggested=300
+kind=mdbx diagnosticDirectReadMs=372.558321
+
+main-devicefixed01
+kind=kdbx round=0 rows=300 loadMs=339.337137 prepareMs=69.283713 checks=14 systemCheckMs=3.150542 suggested=300
+kind=kdbx round=1 rows=300 loadMs=69.654807 prepareMs=38.065452 checks=14 systemCheckMs=4.75254 suggested=300
+kind=kdbx round=2 rows=300 loadMs=45.567924 prepareMs=31.156729 checks=14 systemCheckMs=1.863318 suggested=300
+kind=kdbx diagnosticDirectReadMs=22.916651
+kind=mdbx round=0 rows=300 loadMs=583.174357 prepareMs=36.493047 checks=12 systemCheckMs=1.694376 suggested=300
+kind=mdbx round=1 rows=300 loadMs=384.136256 prepareMs=33.435794 checks=12 systemCheckMs=1.928922 suggested=300
+kind=mdbx round=2 rows=300 loadMs=421.425237 prepareMs=34.174425 checks=12 systemCheckMs=2.459746 suggested=300
+kind=mdbx diagnosticDirectReadMs=372.90898
+
+main-devicefinal01
+kind=kdbx round=0 rows=300 loadMs=630.917162 prepareMs=103.477176 checks=14 systemCheckMs=5.105146 suggested=300
+kind=kdbx round=1 rows=300 loadMs=95.479463 prepareMs=81.774917 checks=14 systemCheckMs=4.140618 suggested=300
+kind=kdbx round=2 rows=300 loadMs=88.604361 prepareMs=49.356405 checks=14 systemCheckMs=3.490376 suggested=300
+kind=kdbx diagnosticDirectReadMs=31.655919
+kind=mdbx round=0 rows=300 loadMs=1131.522837 prepareMs=57.020494 checks=12 systemCheckMs=3.065844 suggested=300
+kind=mdbx round=1 rows=300 loadMs=779.253577 prepareMs=58.788805 checks=12 systemCheckMs=3.054726 suggested=300
+kind=mdbx round=2 rows=300 loadMs=680.160355 prepareMs=49.738845 checks=12 systemCheckMs=3.42829 suggested=300
+kind=mdbx diagnosticDirectReadMs=731.738838
+
+fd-devicefinal01
+kind=kdbx round=0 rows=300 loadMs=330.6068 prepareMs=67.313446 checks=14 systemCheckMs=2.079657 suggested=300
+kind=kdbx round=1 rows=300 loadMs=54.472703 prepareMs=42.58074 checks=14 systemCheckMs=1.372332 suggested=300
+kind=kdbx round=2 rows=300 loadMs=42.742056 prepareMs=37.572463 checks=14 systemCheckMs=1.883423 suggested=300
+kind=kdbx diagnosticDirectReadMs=21.173003
+kind=mdbx round=0 rows=300 loadMs=578.43189 prepareMs=39.916878 checks=12 systemCheckMs=1.674612 suggested=300
+kind=mdbx round=1 rows=300 loadMs=359.261098 prepareMs=33.883435 checks=12 systemCheckMs=1.729538 suggested=300
+kind=mdbx round=2 rows=300 loadMs=363.95567 prepareMs=26.711475 checks=12 systemCheckMs=1.647948 suggested=300
+kind=mdbx diagnosticDirectReadMs=335.425261
+
+Expected negative control failure
+INSTRUMENTATION_STATUS: stream=NATIVE_LOAD328 kind=kdbx round=0 rows=300 loadMs=599.356116 prepareMs=79.294265 checks=319 systemCheckMs=56.246244 suggested=300
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Full external authorization must be bounded per native batch
+java.lang.AssertionError: Full external authorization must be bounded per native batch
+java.lang.AssertionError: Full external authorization must be bounded per native batch
+Tests run: 1,  Failures: 1

@@ -363,6 +363,10 @@ class MdbxAndroidIntegrationGuardTest {
             "app/src/main/java/takagi/ru/monica/viewmodel/PasskeyViewModel.kt"
         ).readText()
 
+        val persistence = listSource
+            .substringAfter("suspend fun persistStorageTarget(", missingDelimiterValue = "")
+            .substringBefore("fun executeTransfer(")
+
         assertTrue(
             "Passkey creation must use PasskeyRepository so selected MDBX targets are written to the MDBX vault, not only Room.",
             createSource.contains("insertPasskey = repository::savePasskey") &&
@@ -381,7 +385,19 @@ class MdbxAndroidIntegrationGuardTest {
                 listSource.contains("is UnifiedMoveCategoryTarget.MdbxDatabaseTarget -> passkey.copy(") &&
                 listSource.contains("is UnifiedMoveCategoryTarget.MdbxFolderTarget -> passkey.copy(") &&
                 listSource.contains("mdbxFolderId = target.folderId") &&
-                listSource.contains("val persisted = viewModel.updatePasskey(moved)")
+                persistence.contains("val updateResult = applyStorageTarget(passkey, target)") &&
+                persistence.contains("val moved = updateResult.getOrThrow()") &&
+                persistence.contains("val persisted = if (action == UnifiedMoveAction.COPY) viewModel.copyPasskey(moved) else viewModel.updatePasskey(moved)")
+        )
+        val persistenceFailure = persistence.substringAfter("if (persisted.isFailure) {", missingDelimiterValue = "")
+            .substringBefore("if (action == UnifiedMoveAction.COPY) return Result.success(Unit)")
+        assertTrue(
+            "A failed native persistence result must stop before source cleanup, and copying must preserve its source.",
+            persistenceFailure.contains("return Result.failure(") &&
+                persistenceFailure.contains("persisted.exceptionOrNull()") &&
+                persistence.contains("if (action == UnifiedMoveAction.COPY) return Result.success(Unit)") &&
+                persistence.indexOf("if (action == UnifiedMoveAction.COPY) return Result.success(Unit)") <
+                    persistence.indexOf("queueSourceBitwardenDeleteAfterPasskeyMove(passkey, target)")
         )
     }
 

@@ -2,7 +2,7 @@
   "schema": "monica-mdbx-glitter-portable-provenance-v2",
   "status": "portable-implemented-validation-in-progress",
   "source_manifest": "GLITTER_SOURCE_MANIFEST.json",
-  "source_manifest_sha256": "0c5104cc8335f36df2757f24b0d137bccbc05ae36796733996ced2a646287221",
+  "source_manifest_sha256": "32b57b6885e857ab941753031fe0d00c7306e91b41fb5cbee5105f9792ffd64f",
   "historical_provenance": "MDBX3_RUNTIME_PROVENANCE.pre-glitter.json",
   "historical_validation_applies_to_current_binary": false,
   "runtime": {
@@ -23,26 +23,26 @@
     "strip": "llvm-strip --strip-all --keep-section=.note.gnu.build-id"
   },
   "binding": {
-    "sha256": "40a8b503e05581b32360314b8c1b53ab42105d4bd337d383e3cebc4c5f818c70",
+    "sha256": "e27bb26dc7da9e8e8c4461c2d12665e2d432f30b67c79b60f5d8358c8205600e",
     "uniffi_contract_version": 30,
     "symbols": 545,
     "checksums": 242
   },
   "main_native_artifacts": {
     "arm64-v8a": {
-      "sha256": "f01631271414004264add1b071a7e7d1572ef6cd34152ac9547088c7589dd54f",
-      "bytes": 7631680,
-      "build_id": "8fd4c0a631e1c5f29859ac96e0d867dcc0cd1232"
+      "sha256": "448eb753441444701ab4aebd04348450ad93caf796ee58b4538bff5016d20e65",
+      "bytes": 7665160,
+      "build_id": "65b80352c6beeda3aa9b7b86a0241eeb2baec060"
     },
     "armeabi-v7a": {
-      "sha256": "3ca25b5ce0b35806bf20b66ad37912ed08286a26e1fbd0c2d84fbefac8b0cfbc",
-      "bytes": 5869024,
-      "build_id": "9b9e3c2dad9da68c568714f2c50884e5df91e02e"
+      "sha256": "3165fb0b032b5aabb12d58c263081bb13df6ad136f2348e8e708f7749d4cdc94",
+      "bytes": 5893316,
+      "build_id": "bead8254adc2c6657759341c24806c9f370ab5d1"
     },
     "x86_64": {
-      "sha256": "c56646f1d020dfc3b30f8acc66e3a76c00ab1f3e43d128019ce023127115c83e",
-      "bytes": 9093776,
-      "build_id": "81cbb30a0fae3f1f6adc125c088503f20f8b5b6e"
+      "sha256": "9a7e274f50ed558d03a001c5118915455453fd77510f56af19699efa92dd5e58",
+      "bytes": 9142616,
+      "build_id": "7fabcee50351e91dfd0a6d9e53ca09e6a1101502"
     }
   },
   "fdroid_build": "Vendored source; Gradle cargo-ndk build required. No prebuilt libraries added to F-Droid source.",
@@ -50,5 +50,28 @@
     "authentication": "Standard context; no hardware attestation required",
     "physical_device": "not-run",
     "report": "Portable Glitter verification pending"
+  },
+  "fdroid_native_artifacts": {
+    "arm64-v8a": {
+      "sha256": "30ce48b257e08ba64a9268a12fdae367cf357b65b4cf227da0562e34e52b3b71",
+      "bytes": 7665224,
+      "build_id": "f08c9651d946d943c0f696ca2ad9b4afa9cad5ad"
+    },
+    "armeabi-v7a": {
+      "sha256": "8af26d872503c6aafefb457bffd0446cc9c2bad7824fabf2a0dd497347b8d829",
+      "bytes": 5893316,
+      "build_id": "60fb8707bf3bb377b8c425c66c0f20a772bd20a9"
+    },
+    "x86_64": {
+      "sha256": "50d8bf3a231afa55c8283811a78db0ebceacc7b495a739484913c5d564c56f68",
+      "bytes": 9142680,
+      "build_id": "e1a02abd52da4afb69e480738a686ad0e8ceb634"
+    }
+  },
+  "native_editor_328": {
+    "patch": "patches/native-editor-328.patch",
+    "format_change": false,
+    "report": "../docs/verification/mdbx-native-editor-328.md",
+    "scope": "Guarded ordinary login editor writes; original source manifest and Glitter validation caveats retained."
   }
 }

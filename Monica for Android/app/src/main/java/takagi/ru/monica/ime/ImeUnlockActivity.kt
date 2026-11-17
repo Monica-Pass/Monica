@@ -1,6 +1,10 @@
 package takagi.ru.monica.ime
 
 import takagi.ru.monica.security.launchWithSecureStorage
+import takagi.ru.monica.security.showSecureStorageBlocked
+import takagi.ru.monica.security.ForegroundEntrySettings
+import takagi.ru.monica.security.SecureStartupResult
+import takagi.ru.monica.security.SecureStorageUnavailableException
 
 import android.content.Context
 import android.content.Intent
@@ -10,8 +14,6 @@ import android.view.View
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import takagi.ru.monica.R
 import takagi.ru.monica.security.SecurityManager
@@ -31,6 +33,7 @@ class ImeUnlockActivity : AppCompatActivity() {
     private lateinit var securityManager: SecurityManager
     private lateinit var settingsManager: SettingsManager
     private lateinit var biometricAuthHelper: BiometricAuthHelper
+    private lateinit var entrySettings: ForegroundEntrySettings
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(LocaleHelper.setLocale(newBase, StartupLanguageCache.read(newBase)))
@@ -38,10 +41,27 @@ class ImeUnlockActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        launchWithSecureStorage { onSecureCreate(savedInstanceState) }
+        entrySettings = ForegroundEntrySettings(lifecycle)
+        launchWithSecureStorage {
+            settingsManager = SettingsManager(applicationContext)
+            val entryGeneration = SecurityManager.dataReadGeneration.value
+            lifecycleScope.launch {
+                try {
+                    val delivered = entrySettings.deliver(settingsManager.settingsFlow,
+                        isCurrent = { !resultPublished && !isFinishing && !isDestroyed &&
+                            SecurityManager.dataReadGeneration.value == entryGeneration },
+                        onReady = ::onSecureCreate)
+                    if (!delivered && !isChangingConfigurations && !isDestroyed) {
+                        publishResult(success = false, errorMessage = null)
+                    }
+                } catch (failure: SecureStorageUnavailableException) {
+                    showSecureStorageBlocked(SecureStartupResult.Blocked(failure))
+                }
+            }
+        }
     }
 
-    private fun onSecureCreate(savedInstanceState: Bundle?) {
+    private fun onSecureCreate(startupSettings: takagi.ru.monica.data.AppSettings) {
 
         window?.setBackgroundDrawableResource(android.R.color.transparent)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -51,12 +71,8 @@ class ImeUnlockActivity : AppCompatActivity() {
         }
 
         securityManager = SecurityManager(applicationContext)
-        settingsManager = SettingsManager(applicationContext)
         biometricAuthHelper = BiometricAuthHelper(this)
 
-        val startupSettings = runCatching {
-            runBlocking { settingsManager.settingsFlow.first() }
-        }.getOrDefault(takagi.ru.monica.data.AppSettings())
         startupAutoLockMinutes = startupSettings.autoLockMinutes
         if (DeveloperVerificationPolicy.bypassesIdentityVerification(startupSettings)) {
             securityManager.unlockVaultForDeveloperBypass(startupAutoLockMinutes)
@@ -70,13 +86,10 @@ class ImeUnlockActivity : AppCompatActivity() {
             return
         }
 
-        lifecycleScope.launch {
-            val settings = settingsManager.settingsFlow.first()
-            if (settings.biometricEnabled && biometricAuthHelper.isBiometricAvailable()) {
-                showBiometricAuthentication()
-            } else {
-                showPasswordAuthentication()
-            }
+        if (startupSettings.biometricEnabled && biometricAuthHelper.isBiometricAvailable()) {
+            showBiometricAuthentication()
+        } else {
+            showPasswordAuthentication()
         }
     }
 

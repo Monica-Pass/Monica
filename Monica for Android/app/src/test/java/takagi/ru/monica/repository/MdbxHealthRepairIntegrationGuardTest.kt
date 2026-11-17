@@ -59,6 +59,17 @@ class MdbxHealthRepairIntegrationGuardTest {
             "app/src/main/java/takagi/ru/monica/ui/screens/MdbxDashboardDetailPages.kt"
         ).readText()
 
+        val verification = projectFile(
+            "app/src/main/java/takagi/ru/monica/ui/components/SecondaryPasswordVerificationDialog.kt"
+        ).readText()
+        val deleteVerification = manager
+            .substringAfter("if (showHealthRepairDeleteVerification) {", missingDelimiterValue = "")
+            .substringBefore("MdbxMigrationDialog(")
+        val completion = deleteVerification.substringAfter("val completeDeleteChoice = {", missingDelimiterValue = "")
+            .substringBefore("val biometricAction")
+        val passwordAttempt = verification.substringAfter("val submitted = password", missingDelimiterValue = "")
+            .substringBefore("confirmText = confirmText,")
+
         assertTrue(repository.contains("vault.planHealthRepair()"))
         assertTrue(repository.contains("sessions.withMutatingVault(databaseId)"))
         assertTrue(repository.contains("vault.applyHealthRepair(planToken, operationId, nativeDecisions)"))
@@ -72,10 +83,32 @@ class MdbxHealthRepairIntegrationGuardTest {
             viewModel.indexOf("plan.repairableItemCount == 0") <
                 viewModel.indexOf("!plan.canApply")
         )
-        assertTrue(manager.contains("M3IdentityVerifyDialog("))
-        assertTrue(manager.contains("verifyMasterPassword(healthRepairMasterPassword)"))
-        assertTrue(manager.contains("onSuccess = completeDeleteChoice"))
-        assertTrue(manager.contains("chooseHealthRepairConflict(MdbxHealthRepairChoice.DELETE_OBJECT)"))
+        assertTrue("Health repair must use the shared password verifier with the current repair request.",
+            deleteVerification.contains("SecondaryPasswordVerificationDialog(") &&
+                deleteVerification.contains("manager = manager") &&
+                deleteVerification.contains("onSuccess = { completeDeleteChoice() }") &&
+                deleteVerification.contains("isRequestCurrent = { showHealthRepairDeleteVerification && healthRepairState == targetRepair }") &&
+                deleteVerification.contains("destructiveConfirm = true") &&
+                !Regex("requirePassword\\s*=\\s*false").containsMatchIn(deleteVerification))
+        listOf("showHealthRepairDeleteVerification && latestRepair.value == targetRepair",
+            "manager.isDataReadCurrent(generation)", "lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED)",
+            "isInteractive == true", "isKeyguardLocked == false", "active.compareAndSet(true, false)",
+            "viewModel.chooseHealthRepairConflict(MdbxHealthRepairChoice.DELETE_OBJECT)").forEach { gate ->
+            assertTrue("Repair deletion must retain its final gate: $gate", completion.contains(gate))
+        }
+        assertTrue("Biometric success must share the same final repair gate.",
+            deleteVerification.contains("onSuccess = completeDeleteChoice"))
+        assertTrue("The shared verifier must preserve real password confirmation and bounded cancellable verification.",
+            verification.contains("requirePassword: Boolean = true") && verification.contains("M3IdentityVerifyDialog(") &&
+                passwordAttempt.contains("BoundedSecureDataRead.readChecked(isCurrent = {") &&
+                passwordAttempt.contains("current() && attempt.isCurrent()") &&
+                passwordAttempt.contains("manager.verifyMasterPassword(submitted, attempt) { ensureActive() }") &&
+                passwordAttempt.contains("if (!current() || pending !== attempt) return@launch") &&
+                passwordAttempt.contains("if (!foreground() || !requestCurrent.value()) { close(); return@launch }") &&
+                passwordAttempt.contains("if (verified == true && attempt.commit())") &&
+                passwordAttempt.contains("success.value(entryGeneration)") &&
+                passwordAttempt.indexOf("if (verified == true && attempt.commit())") <
+                    passwordAttempt.indexOf("success.value(entryGeneration)"))
         assertTrue(detail.contains("R.string.mdbx_ui_repair_keep_content"))
         assertTrue(detail.contains("R.string.mdbx_ui_repair_delete_content"))
         assertTrue(detail.contains("R.string.mdbx_ui_repair_cancel_description"))

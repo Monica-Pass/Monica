@@ -91,6 +91,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Monica"
         tools:targetApi="31">
+        <!-- The library's unrestricted binder receiver is replaced by a caller-checked adapter.
+             Do not start the vault Application before user unlock for module configuration. -->
+        <provider android:name="io.github.libxposed.service.XposedProvider" tools:node="remove" />
+        <provider android:name=".hyperos.HyperOsModuleProvider"
+            android:authorities="${applicationId}.XposedService"
+            android:exported="true" android:directBootAware="false" />
+
         <activity
             android:name=".credentialexchange.CredentialExportActivity"
             android:exported="true"

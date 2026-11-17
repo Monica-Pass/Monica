@@ -372,6 +372,7 @@ class FillResponseBuilderNg(
             nativeLockVersion = partition.autofillCipher.nativeSelection?.lockVersion,
             nativeProcessNonce = partition.autofillCipher.nativeSelection?.processNonce,
             nativeGeneration = partition.autofillCipher.nativeSelection?.generation,
+            nativeStorage = partition.autofillCipher.nativeSelection?.storage ?: takagi.ru.monica.autofill_ng.NativeAutofillStorage.KEEPASS,
         )
         val pickerIntent = AutofillCipherCallbackActivity.getIntent(context, args).apply {
             if (directDataset != null) {

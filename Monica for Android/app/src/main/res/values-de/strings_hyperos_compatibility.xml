@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_compatibility_title">"HyperOS-Kompatibilität"</string>
+    <string name="hyperos_compatibility_subtitle">"Passkeys, Speicherhinweise und Animationen in der App"</string>
+    <string name="hyperos_compatibility_shared_settings_note">"Diese Optionen verwenden dieselben Werte wie die allgemeinen Einstellungen. Weniger Bewegung betrifft Animationen innerhalb von Monica."</string>
+</resources>

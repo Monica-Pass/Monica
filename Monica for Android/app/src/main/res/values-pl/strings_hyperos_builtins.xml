@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_diagnostics_title">"Diagnostyka konfiguracji"</string>
+    <string name="hyperos_diagnostics_note">"Sprawdza usługi i wybór, nie poprawne działanie kluczy dostępu. Odczyt ustawień wymaga autoryzowanego Shizuku lub root."</string>
+    <string name="hyperos_diag_declaration">"Prawidłowa usługa Monica i obsługa kluczy dostępu"</string>
+    <string name="hyperos_diag_feature">"Systemowa funkcja poświadczeń dostępna"</string>
+    <string name="hyperos_diag_unrestricted">"Autouzupełnianie dozwolone dla tego użytkownika Androida"</string>
+    <string name="hyperos_diag_framework">"System rozpoznaje Monikę jako włączoną"</string>
+    <string name="hyperos_diag_registered">"Monica zarejestrowana jako usługa poświadczeń"</string>
+    <string name="hyperos_drift_title">"Wykrywaj zmiany po naprawie"</string>
+    <string name="hyperos_drift_note">"Sprawdza co 30 sekund, gdy strona jest widoczna, i po ponownym otwarciu. Nigdy nie zapisuje ustawień automatycznie."</string>
+    <string name="hyperos_drift_result">"Porównanie z ostatnią zweryfikowaną naprawą"</string>
+    <string name="hyperos_drift_off">"Wykrywanie wyłączone"</string>
+    <string name="hyperos_drift_no_baseline">"Najpierw zastosuj konfigurację, aby utworzyć punkt odniesienia."</string>
+    <string name="hyperos_drift_unchanged">"Konfiguracja bez zmian"</string>
+    <string name="hyperos_drift_changed">"Konfiguracja zmieniona. Być może zmieniono menedżer ręcznie; sprawdź przed przywróceniem."</string>
+    <string name="hyperos_update_failed">"Nie można zapisać. Odśwież i sprawdź stan."</string>
+    <string name="hyperos_check_yes">"Tak"</string>
+    <string name="hyperos_check_no">"Nie"</string>
+    <string name="hyperos_check_unsupported">"Nieobsługiwane"</string>
+    <string name="hyperos_module_title">"Opcjonalny moduł zgodności"</string>
+    <string name="hyperos_module_requirements">"Wymaga zgodnego LSPosed API 102+, Androida 14–16 i głównego użytkownika Xiaomi/Redmi/POCO. Włącz Monikę i wymagane zakresy we frameworku. Domyślnie wszystko wyłączone."</string>
+    <string name="hyperos_module_connected">"Framework połączony; nie dowodzi to działania hooków."</string>
+    <string name="hyperos_module_disconnected">"Zgodny framework niedostępny"</string>
+    <string name="hyperos_module_scope">"Przyznane zakresy: %1$s"</string>
+    <string name="hyperos_hook_reset">"Blokuj resetowanie przez Centrum bezpieczeństwa"</string>
+    <string name="hyperos_hook_reset_note">"Przechwytuje tylko rozpoznane metody konfiguracji poświadczeń."</string>
+    <string name="hyperos_hook_settings">"Zgodność systemowego wyboru"</string>
+    <string name="hyperos_hook_settings_note">"Dostosowuje rozpoznane kontrolery; niezgodne metody zachowują działanie systemu."</string>
+    <string name="hyperos_hook_chooser">"Wybór poświadczeń Google"</string>
+    <string name="hyperos_hook_chooser_note">"Wymaga włączonego systemowego selektora Usług Google Play."</string>
+    <string name="hyperos_hook_hybrid">"Poświadczenia między urządzeniami"</string>
+    <string name="hyperos_hook_hybrid_note">"Korzysta ze sprawdzonej usługi hybrydowej Google i skanera Xiaomi."</string>
+    <string name="hyperos_module_restart">"Po włączeniu samodzielnie uruchom ponownie procesy lub urządzenie. Wyłączenie kończy modyfikacje po przekazaniu zmiany przez framework. Bez automatycznego restartu."</string>
+    <string name="hyperos_physical_feedback">"Nie testowano na fizycznych urządzeniach HyperOS. Zgłoś wersję ROM i kroki odtworzenia w GitHub issue; bez haseł i kluczy."</string>
+    <string name="hyperos_reference_projects">"Projekt źródłowy i licencja"</string>
+    <string name="hyperos_module_confirmation">"Włączyć eksperymentalną zmianę działania systemu? Wymaga zgodnego frameworka i komponentów. Może wpływać na inne menedżery. Można wyłączyć tutaj lub we frameworku."</string>
+    <string name="hyperos_feedback_action">"Zgłoś problem zgodności"</string>
+    <string name="hyperos_module_entry_note">"Domyślnie wyłączony · Wymaga zgodnego LSPosed"</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_compatibility_title">"HyperOS 互換設定"</string>
+    <string name="hyperos_compatibility_subtitle">"パスキー、保存通知、アプリ内アニメーション"</string>
+    <string name="hyperos_compatibility_shared_settings_note">"これらの項目は一般設定と同じ値を使用します。アニメーションの軽減は Monica 内のアニメーションに適用されます。"</string>
+</resources>

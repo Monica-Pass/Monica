@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_compatibility_title">"HyperOS 호환 설정"</string>
+    <string name="hyperos_compatibility_subtitle">"패스키, 저장 알림 및 앱 내 애니메이션"</string>
+    <string name="hyperos_compatibility_shared_settings_note">"이 옵션은 일반 설정과 같은 값을 사용합니다. 애니메이션 줄이기는 Monica 내부의 애니메이션에 적용됩니다."</string>
+</resources>

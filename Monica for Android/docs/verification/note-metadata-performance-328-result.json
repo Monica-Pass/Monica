@@ -1,0 +1,1346 @@
+{
+  "edition": "main",
+  "versionName": "1.0.328",
+  "versionCode": 12,
+  "status": "verified",
+  "environment": {
+    "device": "MuMu",
+    "api": 35,
+    "abi": "x86_64",
+    "syntheticOnly": true
+  },
+  "sharedJvm": {
+    "counts": {
+      "tests": 129,
+      "passed": 128,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1
+    },
+    "skipped": [
+      {
+        "class": "takagi.ru.monica.lansync.DeviceNativePasskeyPreparationTest",
+        "method": "classMethod",
+        "reason": "org.junit.AssumptionViolatedException: The host engine must match the Android binding; set MONICA_MDBX_HOST_LIBRARY",
+        "source": {
+          "file": "runtime-jvm/main/TEST-takagi.ru.monica.lansync.DeviceNativePasskeyPreparationTest.xml",
+          "sha256": "4450e3c6e9064921a9300220b2fb7a72fcc0c95543e40cc3cbfa03b45f07262c"
+        }
+      }
+    ],
+    "files": [
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.bitwarden.BitwardenOrganizationKeysTest.xml",
+        "sha256": "6b78b419a4cec15e22743f319bd912065d3ac5e175c6662656ba2efba86bff2f"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.bitwarden.export.BitwardenJsonCodecTest.xml",
+        "sha256": "0fe8e109e0951a1c61d60b36d938eee169a31df36d151c21f117c22400de0216"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.bitwarden.mapper.PasskeyMapperInteropTest.xml",
+        "sha256": "cd0cd1d830b3804bbaf3e7d1173e7e919a7a462ff508f5131ca179dd9bf60762"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.bitwarden.mapper.PasskeyNotesCodecTest.xml",
+        "sha256": "2f852a33736484578d330fdb1c94526cec913fb563f6becbf0fc0fac32fe251b"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.bitwarden.service.BitwardenFolderTransferTest.xml",
+        "sha256": "64fdb84b2dbff1186eb843986a09787207b44f98b035a6932fdffeee010dfdca"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.bitwarden.service.PasskeyCipherUpdateTest.xml",
+        "sha256": "4fe1ee9a346066ffbd7aefcb1ca18840bf242eeec66b01f92d964e7870bf6135"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.credentialexchange.CxfCredentialCodecTest.xml",
+        "sha256": "3727077702110e74af4f21981cffcd6634c308bf0144ac40b56c8c028b7275e4"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.data.PasskeyBackupFlagsMigrationTest.xml",
+        "sha256": "8f79282e18f5aeb5a19b7956c1517acab396760d8e20c16eceb6d94c4bc9f444"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.data.QuickSetupPresetTest.xml",
+        "sha256": "0c8ee71ba065431f7bdeddf2b60704c22327e0cb685827f98d3b1619f8172a72"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.ime.MonicaImeRegressionGuardTest.xml",
+        "sha256": "73f244cf11148cead88170686952119cd7bca9e6a898f3498975eb40161c330a"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.keepass.KeePassDxPasskeyCodecTest.xml",
+        "sha256": "94fa296c9e20da72fc0210e4833036d99819033815a65432bcc911be695b4b13"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.keepass.KeePassFieldRegistryTest.xml",
+        "sha256": "3402d95523f276ef64223e01aa1b4cc5e061c5e0b6d7c12bfea01cdfa8bdfc5e"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.lansync.DeviceNativePasskeyPreparationTest.xml",
+        "sha256": "4450e3c6e9064921a9300220b2fb7a72fcc0c95543e40cc3cbfa03b45f07262c"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.lansync.DevicePasskeyShapeTest.xml",
+        "sha256": "647d27779dec960c7d4e59e404c90d8314a01ad5b784ee0e395f47259bb8558d"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.lansync.DevicePasskeySyncConsentTest.xml",
+        "sha256": "836981d58d3818cc206b555584338c7519d2685d5c2cca3fa899663e727cfa6e"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.passkey.PasskeyBackupFlagsTest.xml",
+        "sha256": "0e1cc39d3ede4ea66d79dbde1f6d8b032e52c46690b032a88e950f0b8c50e080"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.passkey.PasskeyBackupPortabilityPolicyTest.xml",
+        "sha256": "4dba42cf6576f0a64fae93632483506337c494df340ddaed2d3629506408e3c4"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.passkey.PasskeyBatchMoveExecutorTest.xml",
+        "sha256": "f9f9ffe221bf7a7c4e78fca6c1e3c7ebe560aaa04bdccfaab7d5dd4339d6baaf"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.passkey.PasskeyCipherFolderIntentTest.xml",
+        "sha256": "cd58dd7ee94d1492fdf2713858b43e776db0934b6e08b5dd99a4dd104e29f04f"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.passkey.PasskeyCredentialDiscoveryPolicyTest.xml",
+        "sha256": "aa64fa62edd6582c295d2ffe661f5d1030003c226fcbed37e1047af8742ea63c"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.passkey.PasskeyCredentialIdCodecTest.xml",
+        "sha256": "35fc80dcdd8ed3dbe0bec2b88ca07c786fb98c465b807b3617b5981ecf69e8f4"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.passkey.PasskeyDiscoverabilityResolverTest.xml",
+        "sha256": "7a80b350be0504381b8e9018e3c25e749a811c77700181db71a5b8036c7b2889"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.passkey.PasskeyGetRequestPolicyTest.xml",
+        "sha256": "abea960f118ba314ba9c1cff8c9fe2fc52b936b1ccd27a53ca7b3823324fca03"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.passkey.PasskeyMoveReporterTest.xml",
+        "sha256": "765eb6582e7039684acd0ff2bd9d3d5a3e5b04e0b5e61d50d5417e49a408a281"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.passkey.PasskeyPageSyncPolicyTest.xml",
+        "sha256": "d6154d7c3167fa1c1e5b185183abedc76ce01d8e69d220dfc85afa1e64caa32e"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.passkey.PasskeyPortabilityCacheTest.xml",
+        "sha256": "19b74a4136d80928bcbd70c02dfc21845cd080e3f07ded436a9eb3356d3b2b0e"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.passkey.PasskeyPortabilityTest.xml",
+        "sha256": "da694a509391ca32b2a6abb639103191e47a0a5c246afc9c035aaf84a9fd2669"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.passkey.PasskeyRemarkAndNavigationGuardTest.xml",
+        "sha256": "865e0cbffa6b677418feccde0664270f0374c54fb47736d3e2c6bcd7a01f97e7"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.passkey.PasskeyTransferPolicyTest.xml",
+        "sha256": "8da794a00e19e4dcec4e3a8b5e49be103a02f5949d46b056cf421f8baa9d184d"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.passkey.PasskeyUserVerificationGuardTest.xml",
+        "sha256": "d396a31a7f67c4de794237b36da3a9aafc58564c85358cea8310f3dfcdf78862"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.repository.KeePassPasskeySyncMergeTest.xml",
+        "sha256": "8d2a2b6b5ed416bfdc180e6b13ac68a98517184cf0ba3178cdc0d21b7d4e6a4f"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.repository.MdbxAndroidIntegrationGuardTest.xml",
+        "sha256": "34b168e0fc1cef05e62b875f7df5c29ffd29e67597891a18e8872195f1f24a77"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.ui.password.PasswordAggregateMdbxFilterTest.xml",
+        "sha256": "25fd9ec3dc3a2b2c9acaa9a52c67562aed066d68003e34af0c607f403ff9fba5"
+      },
+      {
+        "file": "runtime-jvm/main/TEST-takagi.ru.monica.utils.BackupContentPolicyTest.xml",
+        "sha256": "14c9772b8e551763cb90addb67a47ee867a2ba73a76cf7fe0b19abac339458ce"
+      }
+    ],
+    "scope": "Shared Runtime JVM batch; the same results are referenced by both reports, not additive"
+  },
+  "builds": [
+    {
+      "run": "runtime-main-build-01",
+      "edition": "main",
+      "exit": 1,
+      "seconds": 233.344,
+      "receipt": {
+        "file": "raw/runtime-main-build-01.json",
+        "sha256": "1844287aaf91d869878b1afc109e46a91f301981b30b5dc60a11b6bf90c2e6bd"
+      }
+    },
+    {
+      "run": "runtime-main-build-02",
+      "edition": "main",
+      "exit": 0,
+      "seconds": 73.281,
+      "receipt": {
+        "file": "raw/runtime-main-build-02.json",
+        "sha256": "0a6bc906cd2088155ec1f8066c831faf57fadb106681c97698a6daf5ca884801"
+      }
+    },
+    {
+      "run": "runtime-main-r8-build-01",
+      "edition": "main",
+      "exit": 0,
+      "seconds": 357.723,
+      "receipt": {
+        "file": "raw/runtime-main-r8-build-01.json",
+        "sha256": "f3806d262ca0f751556d6fc819995963b33ac1fb2f252ed83963c89913b5f621"
+      }
+    },
+    {
+      "run": "runtime-main-tests-03",
+      "edition": "main",
+      "exit": 0,
+      "seconds": 45.096,
+      "receipt": {
+        "file": "raw/runtime-main-tests-03.json",
+        "sha256": "27d6bd4a238183f1aa58b275f1368e59f8b0b521ac543771d66de9319bb2a65f"
+      }
+    },
+    {
+      "run": "runtime-main-tests-04",
+      "edition": "main",
+      "exit": 0,
+      "seconds": 23.393,
+      "receipt": {
+        "file": "raw/runtime-main-tests-04.json",
+        "sha256": "102e788209d4f242dd494b8f462a01c788385fb80bac47b85e9dab355996ced7"
+      }
+    },
+    {
+      "run": "runtime-main-tests-05",
+      "edition": "main",
+      "exit": 0,
+      "seconds": 31.751,
+      "receipt": {
+        "file": "raw/runtime-main-tests-05.json",
+        "sha256": "98ec4983df980c1bd20e2dce33275d8a8ef655be590a1000fa57445c8429e476"
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "receipt": {
+        "file": "raw/runtime-main-apk-01.json",
+        "sha256": "5491faf507c039d6a50294253d10d64913e553193cf93135464ae31db1161fca"
+      },
+      "checkedArtifacts": [
+        {
+          "file": "artifacts/runtime-main-apk-01/app.apk",
+          "sha256": "6d1bed53311b5b03274c4b501cf7b54c67af18d1efcfd0151d7b0dc0af1d82c7"
+        },
+        {
+          "file": "artifacts/runtime-main-apk-01/test.apk",
+          "sha256": "afbc11eb8285a89202c16e68d981ce846cd62d59bac318add113e6e28114b2cc"
+        }
+      ],
+      "oldAppSha256": "5aaf665ec863886ad3c5c1035d9025804bba03bf708a5b2571bda5d0c706d54f"
+    },
+    {
+      "receipt": {
+        "file": "raw/runtime-main-apk-02.json",
+        "sha256": "f35144be18a8edeb491635bfbcd88382e1db0b38ef749b2c78313f8e72ca0094"
+      },
+      "checkedArtifacts": [
+        {
+          "file": "artifacts/runtime-main-apk-02/app.apk",
+          "sha256": "6d1bed53311b5b03274c4b501cf7b54c67af18d1efcfd0151d7b0dc0af1d82c7"
+        },
+        {
+          "file": "artifacts/runtime-main-apk-02/test.apk",
+          "sha256": "b2b00969fc53dae4556fb922c19203444c095da5ec7d7ebeaa1d763d3deed678"
+        }
+      ],
+      "oldAppSha256": "6d1bed53311b5b03274c4b501cf7b54c67af18d1efcfd0151d7b0dc0af1d82c7"
+    },
+    {
+      "receipt": {
+        "file": "raw/runtime-main-apk-03.json",
+        "sha256": "0757019f0c7a729e97a2a440f58f41d2bec3615ba911e40d7baee473cb387859"
+      },
+      "checkedArtifacts": [
+        {
+          "file": "artifacts/runtime-main-apk-03/app.apk",
+          "sha256": "6d1bed53311b5b03274c4b501cf7b54c67af18d1efcfd0151d7b0dc0af1d82c7"
+        },
+        {
+          "file": "artifacts/runtime-main-apk-03/test.apk",
+          "sha256": "48abe4d6b7f810993964a7cc2cdb64b6c8d1015fe76f3c8cc172c5b01aada8a3"
+        }
+      ],
+      "oldAppSha256": "6d1bed53311b5b03274c4b501cf7b54c67af18d1efcfd0151d7b0dc0af1d82c7"
+    },
+    {
+      "receipt": {
+        "file": "raw/runtime-main-apk-04.json",
+        "sha256": "669001c56c307c0bb088ebeea9606acd7badd7fb37d17ded0cff4a14dfe6d01c"
+      },
+      "checkedArtifacts": [
+        {
+          "file": "artifacts/runtime-main-apk-04/app.apk",
+          "sha256": "6d1bed53311b5b03274c4b501cf7b54c67af18d1efcfd0151d7b0dc0af1d82c7"
+        },
+        {
+          "file": "artifacts/runtime-main-apk-04/test.apk",
+          "sha256": "50df0c116877313103e4dd5f24a8cf1a9672b600509d13ae9652679cba82626e"
+        }
+      ],
+      "oldAppSha256": "6d1bed53311b5b03274c4b501cf7b54c67af18d1efcfd0151d7b0dc0af1d82c7"
+    }
+  ],
+  "deviceRuns": [
+    {
+      "run": "flow-main-green-02",
+      "edition": "main",
+      "appSha256": "6d1bed53311b5b03274c4b501cf7b54c67af18d1efcfd0151d7b0dc0af1d82c7",
+      "runnerCompleted": true,
+      "wholeRunPassed": true,
+      "seconds": 16.749,
+      "runnerSeconds": 13.518,
+      "methods": [
+        {
+          "class": "takagi.ru.monica.ui.note.NoteMetadataSubscriptionTest",
+          "method": "backgroundLockKeepsTheCachedNoteHiddenOnReturn",
+          "statusCode": 0,
+          "passed": true
+        },
+        {
+          "class": "takagi.ru.monica.ui.note.NoteMetadataSubscriptionTest",
+          "method": "searchRecompositionKeepsOneSubscriptionPerMetadataQuery",
+          "statusCode": 0,
+          "passed": true
+        },
+        {
+          "class": "takagi.ru.monica.ui.note.NoteMetadataSubscriptionTest",
+          "method": "roomEditsRefreshVisibleMetadataAndReenteringDoesNotLeakCollectors",
+          "statusCode": 0,
+          "passed": true
+        }
+      ],
+      "output": {
+        "file": "raw/flow-main-green-02.txt",
+        "sha256": "af2d5c0fe8a0432dd89f75a0f8e73bf6953711649c81cde7b7c0f95082a16634"
+      },
+      "receipt": {
+        "file": "raw/flow-main-green-02.json",
+        "sha256": "2912768a7f344fef60c6a6e98a0d35574543c1c5b1cb0f3ecdad8d10cd8c2df3"
+      }
+    },
+    {
+      "run": "flow-main-red-01",
+      "edition": "main",
+      "appSha256": "5aaf665ec863886ad3c5c1035d9025804bba03bf708a5b2571bda5d0c706d54f",
+      "runnerCompleted": true,
+      "wholeRunPassed": false,
+      "seconds": 9.561,
+      "runnerSeconds": 6.411,
+      "methods": [
+        {
+          "class": "takagi.ru.monica.ui.note.NoteMetadataSubscriptionTest",
+          "method": "searchRecompositionKeepsOneSubscriptionPerMetadataQuery",
+          "statusCode": -2,
+          "passed": false
+        }
+      ],
+      "output": {
+        "file": "raw/flow-main-red-01.txt",
+        "sha256": "493ad4a8f9eed438e3ecfa6679043e6d4df8c30e1f9bea959ffc26df338c05e8"
+      },
+      "receipt": {
+        "file": "raw/flow-main-red-01.json",
+        "sha256": "ba810f866a8aeeb5246fce0a62c2717ac217ea3b4885535790f97a66238943bb"
+      }
+    },
+    {
+      "run": "runtime-main-diagnostic-02",
+      "edition": "main",
+      "appSha256": "6d1bed53311b5b03274c4b501cf7b54c67af18d1efcfd0151d7b0dc0af1d82c7",
+      "runnerCompleted": true,
+      "wholeRunPassed": false,
+      "seconds": 17.43,
+      "runnerSeconds": 14.496,
+      "methods": [
+        {
+          "class": "takagi.ru.monica.ui.note.NoteMetadataSubscriptionTest",
+          "method": "backgroundLockKeepsTheCachedNoteHiddenOnReturn",
+          "statusCode": -2,
+          "passed": false
+        }
+      ],
+      "output": {
+        "file": "raw/runtime-main-diagnostic-02.txt",
+        "sha256": "ce595f0911223251ee6df83d42c0f9592fc17234c7a07a71fe94390dfae5bca4"
+      },
+      "receipt": {
+        "file": "raw/runtime-main-diagnostic-02.json",
+        "sha256": "6f6ba94abf3e72ea1d8ab8ce1e986f4c545efa7c1ca1b54ebe6607804c3ceb47"
+      }
+    },
+    {
+      "run": "runtime-main-diagnostic-03",
+      "edition": "main",
+      "appSha256": "6d1bed53311b5b03274c4b501cf7b54c67af18d1efcfd0151d7b0dc0af1d82c7",
+      "runnerCompleted": true,
+      "wholeRunPassed": false,
+      "seconds": 7.936,
+      "runnerSeconds": 4.74,
+      "methods": [
+        {
+          "class": "takagi.ru.monica.ui.note.NoteMetadataSubscriptionTest",
+          "method": "backgroundLockKeepsTheCachedNoteHiddenOnReturn",
+          "statusCode": -2,
+          "passed": false
+        }
+      ],
+      "output": {
+        "file": "raw/runtime-main-diagnostic-03.txt",
+        "sha256": "e303a1dec32c8ecca4e632eb9fd1302b8b1ccfd89d7583adcfb6d303b0db73d5"
+      },
+      "receipt": {
+        "file": "raw/runtime-main-diagnostic-03.json",
+        "sha256": "228abe44d0332a41ab13106dcaa9716074223786a6b950327add8ed70b79383c"
+      }
+    },
+    {
+      "run": "runtime-main-green-01",
+      "edition": "main",
+      "appSha256": "6d1bed53311b5b03274c4b501cf7b54c67af18d1efcfd0151d7b0dc0af1d82c7",
+      "runnerCompleted": true,
+      "wholeRunPassed": false,
+      "seconds": 400.459,
+      "runnerSeconds": 397.541,
+      "methods": [
+        {
+          "class": "takagi.ru.monica.ui.note.NoteMetadataSubscriptionTest",
+          "method": "backgroundLockKeepsTheCachedNoteHiddenOnReturn",
+          "statusCode": -2,
+          "passed": false
+        },
+        {
+          "class": "takagi.ru.monica.ui.note.NoteMetadataSubscriptionTest",
+          "method": "searchRecompositionKeepsOneSubscriptionPerMetadataQuery",
+          "statusCode": 0,
+          "passed": true
+        },
+        {
+          "class": "takagi.ru.monica.ui.note.NoteMetadataSubscriptionTest",
+          "method": "roomEditsRefreshVisibleMetadataAndReenteringDoesNotLeakCollectors",
+          "statusCode": 0,
+          "passed": true
+        }
+      ],
+      "output": {
+        "file": "raw/runtime-main-green-01.txt",
+        "sha256": "e78c9794d6c2a9187ec124b2458816385489a39560c9b73588aaee82e05d54f6"
+      },
+      "receipt": {
+        "file": "raw/runtime-main-green-01.json",
+        "sha256": "fa5f255582b7e2a571bb63314030cc011512831420091166f375ed6043df7679"
+      }
+    }
+  ],
+  "observedMetrics": [
+    {
+      "source": {
+        "file": "raw/runtime-main-red-metrics.txt",
+        "sha256": "d66057a500c13f05a1b016d3db3af95b61189a5376d14fd7b20915629e17d22c"
+      },
+      "lines": [
+        "1794732306.900 55099 55115 I System.out: PASSKEY_LOOKUP main_heartbeat_ms=1000 query_on_main=true",
+        "1794732334.421 55228 55244 I System.out: note_metadata_search_12={category=factory=27,start=27,active=1, keepass=factory=27,start=27,active=1, mdbx=factory=27,start=27,active=1, bitwarden=factory=27,start=27,active=1}"
+      ]
+    },
+    {
+      "source": {
+        "file": "raw/runtime-main-green-metrics-01.txt",
+        "sha256": "987c3c76ab152622e835e5fdbce38ac161dddf1c18849324204d826f5fbdced8"
+      },
+      "lines": [
+        "1794732306.900 55099 55115 I System.out: PASSKEY_LOOKUP main_heartbeat_ms=1000 query_on_main=true",
+        "1794732334.421 55228 55244 I System.out: note_metadata_search_12={category=factory=27,start=27,active=1, keepass=factory=27,start=27,active=1, mdbx=factory=27,start=27,active=1, bitwarden=factory=27,start=27,active=1}",
+        "1794732680.607 55479 55495 I System.out: PASSKEY_LOOKUP main_heartbeat_ms=5 query_on_main=false",
+        "1794732787.824 55479 55495 I System.out: note_metadata_search_12={category=factory=1,start=1,active=1, keepass=factory=1,start=1,active=1, mdbx=factory=1,start=1,active=1, bitwarden=factory=1,start=1,active=1}",
+        "1794732789.941 55479 55495 I System.out: note_metadata_reentry={category=factory=2,start=2,active=1, keepass=factory=2,start=2,active=1, mdbx=factory=2,start=2,active=1, bitwarden=factory=2,start=2,active=1}"
+      ]
+    },
+    {
+      "source": {
+        "file": "raw/runtime-diagnostic-02-logcat.txt",
+        "sha256": "2d906aab80802ae10f08c05ab02114ee8d5c9e8d1ed87199f8c3bce295e19cc4"
+      },
+      "lines": [
+        "I/System.out(55479): note_metadata_search_12={category=factory=1,start=1,active=1, keepass=factory=1,start=1,active=1, mdbx=factory=1,start=1,active=1, bitwarden=factory=1,start=1,active=1}",
+        "I/System.out(55479): note_metadata_reentry={category=factory=2,start=2,active=1, keepass=factory=2,start=2,active=1, mdbx=factory=2,start=2,active=1, bitwarden=factory=2,start=2,active=1}",
+        "I/System.out(56486): PASSKEY_LOOKUP main_heartbeat_ms=1000 query_on_main=true",
+        "I/System.out(56486): note_metadata_search_12={category=factory=28,start=28,active=1, keepass=factory=28,start=28,active=1, mdbx=factory=28,start=28,active=1, bitwarden=factory=28,start=28,active=1}",
+        "I/System.out(57788): PASSKEY_LOOKUP main_heartbeat_ms=9 query_on_main=false"
+      ]
+    }
+  ],
+  "finalR8": {
+    "status": "passed",
+    "frozenArtifacts": {
+      "artifacts": [
+        {
+          "version": "old",
+          "sha256": "a736ee55daf7f20b70c5276936a6e42b532df41616e9eef17c2d2221c6c808ca",
+          "mappingSha256": "f14658cff8bf47a9046a72a6fefd6108a35c1cf20cf03bdaa322021ddd3dfea2",
+          "package": "takagi.ru.monica.bwca328main",
+          "versionCode": 12,
+          "versionName": "1.0.328-26111512-02",
+          "cert": "Signer #1 certificate SHA-256 digest: 6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "abis": [
+            "x86_64"
+          ],
+          "profiles": {
+            "assets/dexopt/baseline.prof": {
+              "bytes": 20493,
+              "sha256": "0788d85fe008470c9ced0eec4bd0b3d5bfd782feda230342655c75ff675c3e96"
+            },
+            "assets/dexopt/baseline.profm": {
+              "bytes": 2552,
+              "sha256": "96204d8c361642fd98deff32eb6e1986bb3ee2776839aa86cf15bdb5b4842b0f"
+            }
+          }
+        },
+        {
+          "version": "new",
+          "sha256": "cfd465e7d085575e1280f77cf2dd084ed3a65540315cf7f07ced18fbbbca6858",
+          "mappingSha256": "e1181a0d36b3447b4cd7e69f5a71e545ca8565d25c4444d6da97fa104df25b41",
+          "package": "takagi.ru.monica.bwca328main",
+          "versionCode": 12,
+          "versionName": "1.0.328-26111512-02",
+          "cert": "Signer #1 certificate SHA-256 digest: 6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "abis": [
+            "x86_64"
+          ],
+          "profiles": {
+            "assets/dexopt/baseline.prof": {
+              "bytes": 21393,
+              "sha256": "762f11e5c094039a5d76111a273c464a2a87f1cdbddd43b88c866d5e0931c257"
+            },
+            "assets/dexopt/baseline.profm": {
+              "bytes": 2556,
+              "sha256": "90164efc433826bde5f75883c8771f6a0ed2a8ab278b2c7e9776b71a4d6a5ea4"
+            }
+          }
+        }
+      ],
+      "receipt": {
+        "file": "runtime-release/raw/main-apks.json",
+        "sha256": "4d5e384f282015233e121a8b7169e07c503ff9a050729c22a8600abb039201a7"
+      },
+      "freezeReceipt": {
+        "file": "runtime-release/raw/main-freeze.json",
+        "sha256": "cb0b5b27302ac20857f6ce9545708a45938505de8f419aa88d2d47aa668c5c63"
+      }
+    },
+    "build": {
+      "driverSeconds": 357.723,
+      "receipt": {
+        "file": "raw/runtime-main-r8-build-01.json",
+        "sha256": "f3806d262ca0f751556d6fc819995963b33ac1fb2f252ed83963c89913b5f621"
+      },
+      "output": {
+        "file": "raw/runtime-main-r8-build-01.txt",
+        "sha256": "c469bd6b122b9b267b3b97a20aee9b63e879a95cfdce62360ee9c17b51245072"
+      },
+      "r8TaskExecuted": true,
+      "isolationInitScript": {
+        "file": "upgrade.init.gradle",
+        "sha256": "3344b076afc04d4c9d50c826b9ef36b66035c57aac6028c1bf82d8a37823314b"
+      },
+      "isolation": "Separate applicationId and local debug signer; actual Release minification retained"
+    },
+    "buildGradleIdentity": {
+      "r8BuildInputSha256": "303ab9526168fb16c6c7a095d8624a9196516833e0693867b06a4743b55fdd5f",
+      "currentSha256": "60be72e90695a575945c71bc30f894b69d70b1e08f55bedac960b8c0f4aa1a5d",
+      "subsequentChange": "Opt-in stableDebugBuild=true and debug variant only; Release/profiling defaults unchanged",
+      "applyReceipt": {
+        "file": "tasks/06-build/apply-result.json",
+        "sha256": "448b95f28477b7d97aa1cddb301e3b8a54f71875e8c3037f460efe36b0995da2"
+      },
+      "buildInputSnapshot": {
+        "file": "tasks/06-build/app-build-before-apply.gradle",
+        "sha256": "303ab9526168fb16c6c7a095d8624a9196516833e0693867b06a4743b55fdd5f"
+      },
+      "patch": {
+        "file": "tasks/06-build/stable-debug.patch",
+        "sha256": "692ebae3c20e017b6635c5aed637ef4ad63da92fa5d0ab4a8a3ba130cc9f8e4a"
+      }
+    },
+    "sameSignerUpgrade": {
+      "passed": true,
+      "receipt": {
+        "file": "runtime-release/raw/runtime-main-upgrade.json",
+        "sha256": "38294721dd86b866bd24eb20dd678ca42ca53a7b5cc69b3e8c3ad213ce335542"
+      }
+    },
+    "oldDataNewWriteColdRead": {
+      "passed": true,
+      "stages": {
+        "before": {
+          "passed": true,
+          "phase": "profile",
+          "pid": 61028,
+          "driverSeconds": 0.793,
+          "receipt": {
+            "file": "runtime-release/raw/runtime-main-before.json",
+            "sha256": "3c77904c31aebd96d09ef950feecc0505518f39e386b76c5156c979e8735c2d1"
+          },
+          "output": {
+            "file": "runtime-release/raw/runtime-main-before.txt",
+            "sha256": "c6d338139ff265cffa0a68a69f9a71b3dbaefe07818555d7a8cd7993be54f11e"
+          }
+        },
+        "after-upgrade": {
+          "passed": true,
+          "phase": "profile",
+          "pid": 61219,
+          "driverSeconds": 0.718,
+          "receipt": {
+            "file": "runtime-release/raw/runtime-main-after-upgrade.json",
+            "sha256": "0ef4a652ef131ea83df3dde0577d0022fb9b4f25003dbc2296520b59713e21fd"
+          },
+          "output": {
+            "file": "runtime-release/raw/runtime-main-after-upgrade.txt",
+            "sha256": "5e8705fbca0fedfe59eecc6b3556066743ba6b9c8b8bc31fccdc19e1f6d4b29b"
+          }
+        },
+        "write": {
+          "passed": true,
+          "phase": "writeRuntime",
+          "pid": 61298,
+          "driverSeconds": 0.614,
+          "receipt": {
+            "file": "runtime-release/raw/runtime-main-write.json",
+            "sha256": "c29914c247a91da3843ff7dfa8f19fd7c229e6dc3a20b5123837b2da22453919"
+          },
+          "output": {
+            "file": "runtime-release/raw/runtime-main-write.txt",
+            "sha256": "30e375cccccd2526adf934daddcde0a893da8f887784af9fa76813742f77304b"
+          }
+        },
+        "cold": {
+          "passed": true,
+          "phase": "runtime",
+          "pid": 61380,
+          "driverSeconds": 0.606,
+          "receipt": {
+            "file": "runtime-release/raw/runtime-main-cold.json",
+            "sha256": "a2db2710e05c453c901981e721a5c608a22bf32288a82dc1e25d77e7506e1ac6"
+          },
+          "output": {
+            "file": "runtime-release/raw/runtime-main-cold.txt",
+            "sha256": "9dc3ae1800c2bcff19de4dfe996fe622b31ad80b2882ee9ae9f36445f2303d28"
+          }
+        }
+      },
+      "differentWriteAndColdPids": true,
+      "scope": "Production password crypto and repository browse plus direct SQL fixture writes/reads; not full editor save UI"
+    },
+    "realUiBackupRestore": {
+      "status": "passed",
+      "preparation": {
+        "passed": true,
+        "phase": "prepareRestore",
+        "pid": 63072,
+        "driverSeconds": 0.735,
+        "receipt": {
+          "file": "runtime-release/raw/runtime-main-prepare-restore.json",
+          "sha256": "5ea5ca994749af9ed1974715337c46885f6a43e183ab75549659f5b49c6e3487"
+        },
+        "output": {
+          "file": "runtime-release/raw/runtime-main-prepare-restore.txt",
+          "sha256": "b7b2d2573155fe5c8c064a410790659d2d0b3962c3fec1a74f04e4d6ec99d12f"
+        }
+      },
+      "restoredData": {
+        "passed": true,
+        "phase": "runtime",
+        "pid": 64356,
+        "driverSeconds": 0.634,
+        "receipt": {
+          "file": "runtime-release/raw/runtime-main-restored.json",
+          "sha256": "903f045079af8618effc20cc796b611d1da4e7dc69f36033b14c2a3547a6242a"
+        },
+        "output": {
+          "file": "runtime-release/raw/runtime-main-restored.txt",
+          "sha256": "b21207c46b5bb86c47adebd5539bac5de47c22ac58bc98f60706efec0140ff5d"
+        }
+      },
+      "actualUiImportedRecords": 1,
+      "scope": "Real export and file-picker restore UI; only owned Performance new record removed, other three retained, then all four verified with production crypto plus SQL fixture probe",
+      "backupFilename": "monica_backup_20261115_180648.enc.zip",
+      "uiSuccessFrames": [
+        {
+          "file": "runtime-release/raw/ui-main-1794738015434881300.xml",
+          "sha256": "c5c7a2917b80313d9fba667115ba002bad21daaeca1fe4dd66fbba4bf89e2088"
+        }
+      ],
+      "selectedBackupConfirmationFrames": [
+        {
+          "file": "runtime-release/raw/ui-main-1794737996067257300.xml",
+          "sha256": "cf5127bb726b1ea5af216a93de06593dc7789a2e747c9e7e4ac7614a89fa3a7d"
+        },
+        {
+          "file": "runtime-release/raw/ui-main-1794738000145299500.xml",
+          "sha256": "cf5127bb726b1ea5af216a93de06593dc7789a2e747c9e7e4ac7614a89fa3a7d"
+        }
+      ],
+      "exportListingFrames": [
+        {
+          "file": "runtime-release/raw/ui-main-1794737211396052400.xml",
+          "sha256": "5efe52254245f0cda14b8d58a1269b3477902d99d450b2180cf16da1b6e510f4"
+        },
+        {
+          "file": "runtime-release/raw/ui-main-1794737577716919300.xml",
+          "sha256": "5efe52254245f0cda14b8d58a1269b3477902d99d450b2180cf16da1b6e510f4"
+        },
+        {
+          "file": "runtime-release/raw/ui-main-1794737896106011200.xml",
+          "sha256": "502a1460b6024c51fe18d36252e9b5a29c911074ebf5d1554829393fa41c7bfe"
+        },
+        {
+          "file": "runtime-release/raw/ui-main-1794737987324487600.xml",
+          "sha256": "502a1460b6024c51fe18d36252e9b5a29c911074ebf5d1554829393fa41c7bfe"
+        }
+      ],
+      "exportDrivers": [
+        {
+          "receipt": {
+            "file": "runtime-release/raw/runtime-main-export.json",
+            "sha256": "44433f319ce0b344a1ebb647ecab2e16a2453bfa5c3ce1bebed18aa2bd93a29d"
+          },
+          "output": {
+            "file": "runtime-release/raw/runtime-main-export.txt",
+            "sha256": "6549ad16c0fd696717c55ea3d89127b20a933f11ec67aa37d4aae74400d238fa"
+          },
+          "driverSuccessAloneDoesNotEstablishRestore": true
+        }
+      ],
+      "importDrivers": [
+        {
+          "receipt": {
+            "file": "runtime-release/raw/runtime-main-import.json",
+            "sha256": "c2a5e00f0fd49bc9d02950a176e2d63bbab8ccee7f12812a4c8f41303281a449"
+          },
+          "output": {
+            "file": "runtime-release/raw/runtime-main-import.txt",
+            "sha256": "28aacf21e38bb1e1512aa359cc18b5e795fb2b7e73792c504d4e9107e0dd186f"
+          },
+          "driverSuccessAloneDoesNotEstablishRestore": true
+        }
+      ]
+    },
+    "passkeySystemCeremony": {
+      "status": "passed",
+      "probeSource": {
+        "file": "tasks/04-passkey/PasskeyReleaseProbe.java",
+        "sha256": "80febda730a7113a6564d3acf608472fddb45df48144e5c39c63ba6e472c3653"
+      },
+      "probeApk": {
+        "file": "tasks/04-passkey/release-signing/passkey-final-01/main/probe.apk",
+        "sha256": "4461af4836f443b0097c6858a3ae69302b2ae933a301035d909c62ef5be0321c"
+      },
+      "buildReceipt": {
+        "file": "tasks/04-passkey/release-signing/passkey-final-01/main/build.json",
+        "sha256": "7cf1f3befb13fb69b92981897682d6660037ac82c5d893cc8334d331e0acc345"
+      },
+      "phases": {
+        "success": {
+          "passed": true,
+          "driverSeconds": 1.834,
+          "pid": 61493,
+          "receipt": {
+            "file": "tasks/04-passkey/release-signing/passkey-final-01/main/success.json",
+            "sha256": "e9be3953639cd88b49214373ce30fa8e98acdb84df99672c3b8e7c32802c50c4"
+          },
+          "output": {
+            "file": "tasks/04-passkey/release-signing/passkey-final-01/main/success.txt",
+            "sha256": "4eed8408c1652429738a70afb97346f5a443bb73e32baf87ec7bccc52d1497b4"
+          }
+        },
+        "cancel": {
+          "passed": true,
+          "driverSeconds": 1.413,
+          "pid": 61759,
+          "receipt": {
+            "file": "tasks/04-passkey/release-signing/passkey-final-01/main/cancel.json",
+            "sha256": "c85a55bb48fb4dd91eef7e455eeb1fd4f78980059a9500fd19679fb0c099f0f1"
+          },
+          "output": {
+            "file": "tasks/04-passkey/release-signing/passkey-final-01/main/cancel.txt",
+            "sha256": "ba119735388b84ab087d3d6cb66174ac9601790707f1be40907ccf4021a870fb"
+          }
+        }
+      },
+      "scope": [
+        "Native synthetic caller through framework GetCredentialRequest and target-UID PendingIntent",
+        "Real password authentication, independent ES256 assertion verification, platform result and one usage increment",
+        "Cancel has no assertion or usage change; existing password/passkey row hashes retained",
+        "Late-completion reflection is a negative check after the real result, not a duplicated biometric callback",
+        "No browser website/DAL, actual biometrics, physical device or OEM acceptance"
+      ]
+    },
+    "relatedSystemEntries": {
+      "status": "passed",
+      "phases": {
+        "imeAuth": [
+          {
+            "passed": true,
+            "driverSeconds": 0.909,
+            "receipt": {
+              "file": "runtime-release/raw/runtime-main-imeAuth.json",
+              "sha256": "a79db82cddfe715e68df1abb8924c8a616906516da5477e9f960212893c80c77"
+            },
+            "output": {
+              "file": "runtime-release/raw/runtime-main-imeAuth.txt",
+              "sha256": "87094bdf7596299a84d7a78b476a15ff780549dced4a812e2062ced0e65c0e39"
+            }
+          }
+        ],
+        "imeCancel": [
+          {
+            "passed": true,
+            "driverSeconds": 0.938,
+            "receipt": {
+              "file": "runtime-release/raw/runtime-main-imeCancel.json",
+              "sha256": "58fda49913f11ce178f3e639c19d034545e3a2b2a33e42793a7e9724aa3fd023"
+            },
+            "output": {
+              "file": "runtime-release/raw/runtime-main-imeCancel.txt",
+              "sha256": "eb1d8743ae702665120bfaf27455c5eb3aa568dff39c6504661d465b412d1a1e"
+            }
+          }
+        ],
+        "pickerAuth": [
+          {
+            "passed": true,
+            "driverSeconds": 1.175,
+            "receipt": {
+              "file": "runtime-release/raw/runtime-main-pickerAuth.json",
+              "sha256": "c49d100cc2b7aad707909e5371db08dab3893c11d4999828bf4d6bdf78d2418f"
+            },
+            "output": {
+              "file": "runtime-release/raw/runtime-main-pickerAuth.txt",
+              "sha256": "a73fa3c20447515e126adb862a0357de06d0c248c957a1ed32c0c782a866d7f3"
+            }
+          }
+        ],
+        "pickerCancel": [
+          {
+            "passed": true,
+            "driverSeconds": 0.91,
+            "receipt": {
+              "file": "runtime-release/raw/runtime-main-pickerCancel.json",
+              "sha256": "eae090a0c57276bc0a831cf67214fd796c3a1d5c452fc03e0fce88f50a2daa9c"
+            },
+            "output": {
+              "file": "runtime-release/raw/runtime-main-pickerCancel.txt",
+              "sha256": "5cfbc4d67715ab5eab8c31ca24e6693c8fd29426fdcdcfedc390d804d237fcc1"
+            }
+          }
+        ]
+      },
+      "probeSource": {
+        "file": "runtime-release/EntryReleaseProbe.java",
+        "sha256": "f399e529b70e484709b7b54ca68766e979d3dbd166d390282cb627440c7d7d7b"
+      },
+      "probeApk": {
+        "file": "runtime-release/entry-probe/main/probe.apk",
+        "sha256": "af4740ec2ed79105e7a2206bd2ebbd2f36fc4726371b7005b72010964d47025f"
+      },
+      "driver": {
+        "file": "runtime-release/entry_release_probe.py",
+        "sha256": "c7e3f059eef3e149cf338a63f4c5f68aff91b533a1eef0f1a276d0ac6fc6cda8"
+      },
+      "bindingBasis": "Driver verifies installed APK SHA against frozen new artifact before every run; original run receipts contain phase/result/time, not APK hash",
+      "scope": [
+        "Real AutofillPickerActivityV2 password UI, retained-record listing and Back cancellation",
+        "Real ImeUnlockActivity in distinct :ime process with authenticated-result broadcast and cancellation",
+        "Direct target-context Activity launches; not a full OS autofill dataset session or actual keyboard field insertion"
+      ]
+    },
+    "probeSource": {
+      "file": "runtime-release/upgrade/FolderUpgradeProbe.java",
+      "sha256": "0c57fa8c5681e36642eeaf1e2ceebd19b4465030854d1faad0d5f02b5603e3d6"
+    },
+    "probePreparationReceipt": {
+      "file": "runtime-release/raw/preparation-check.json",
+      "sha256": "126f8595c6947a29204c7bb18d6dd87db28e0eba4bd865633e38f193251354e3"
+    },
+    "dataBindingBasis": "Upgrade driver checks installed APK against frozen old/new artifact before each run; original probe receipt records command/phase but not APK hash"
+  },
+  "failuresRetained": [
+    {
+      "run": "runtime-main-build-01",
+      "reason": "AndroidTest referenced absent AndroidX UiAutomator; changed fixture to existing platform UiAutomation, production had compiled"
+    },
+    {
+      "run": "runtime-main-green-01",
+      "tests": 15,
+      "passed": 12,
+      "failed": 3,
+      "failures": [
+        "Home caller Bootstrap not foreground for Activity result delivery",
+        "Selected username clipped in existing landscape provider layout",
+        "Internal Compose tree note remained beneath opaque lock/loading surface"
+      ]
+    },
+    {
+      "run": "runtime-main-diagnostic-02",
+      "tests": 3,
+      "passed": 1,
+      "failed": 2,
+      "note": "Home caller restoration passed; original username/internal-tree assertions still failed; secure screenshot not visual acceptance"
+    },
+    {
+      "run": "runtime-main-diagnostic-03",
+      "tests": 2,
+      "passed": 1,
+      "failed": 1,
+      "note": "Visible unique account display title passed; original internal-tree absence assertion still failed; actual surface/system accessibility captured"
+    }
+  ],
+  "limitations": [
+    "No physical-device/OEM/user-vault acceptance",
+    "JVM host-native assumption remains skipped; not reported as passed",
+    "Performance counts and synthetic heartbeat measurements do not establish end-to-end login or frame-time gains",
+    "R8 data probe uses production crypto plus SQL fixture operations; does not establish full editor-save coverage",
+    "R8 Passkey uses a native synthetic caller; no actual website/DAL or biometric ceremony",
+    "See finalR8 per-stage status for remaining validation"
+  ],
+  "scope": "flow",
+  "source": {
+    "file": "app/src/main/java/takagi/ru/monica/ui/screens/NoteListScreen.kt",
+    "sha256": "947f36613a0a4a8423594526131114052cd0e615b6789d3c43ca10da9f64ca08",
+    "editionsByteIdentical": true
+  },
+  "testSource": {
+    "file": "app/src/androidTest/java/takagi/ru/monica/ui/note/NoteMetadataSubscriptionTest.kt",
+    "sha256": "77cb4850f566ba95cbb013e58e7420bf15424c761243337ad42b31519aa075b0",
+    "editionsByteIdentical": true,
+    "snapshot": {
+      "file": "tasks/runtime-debug-final/flow-test.kt",
+      "sha256": "77cb4850f566ba95cbb013e58e7420bf15424c761243337ad42b31519aa075b0"
+    }
+  },
+  "finalDebug": {
+    "passed": true,
+    "run": "flow-main-green-02",
+    "tests": 3,
+    "runnerSeconds": 13.518,
+    "driverSeconds": 16.749,
+    "output": {
+      "file": "raw/flow-main-green-02.txt",
+      "sha256": "af2d5c0fe8a0432dd89f75a0f8e73bf6953711649c81cde7b7c0f95082a16634"
+    },
+    "runReceipt": {
+      "file": "raw/flow-main-green-02.json",
+      "sha256": "2912768a7f344fef60c6a6e98a0d35574543c1c5b1cb0f3ecdad8d10cd8c2df3"
+    },
+    "artifacts": {
+      "app.apk": {
+        "file": "artifacts/runtime-main-apk-04/app.apk",
+        "sha256": "6d1bed53311b5b03274c4b501cf7b54c67af18d1efcfd0151d7b0dc0af1d82c7"
+      },
+      "test.apk": {
+        "file": "artifacts/runtime-main-apk-04/test.apk",
+        "sha256": "50df0c116877313103e4dd5f24a8cf1a9672b600509d13ae9652679cba82626e"
+      }
+    },
+    "artifactReceipt": {
+      "file": "raw/runtime-main-apk-04.json",
+      "sha256": "669001c56c307c0bb088ebeea9606acd7badd7fb37d17ded0cff4a14dfe6d01c"
+    },
+    "bindingBasis": "Root confirmed exact installation order and freeze-current receipt; original run receipt records app hash but not test hash",
+    "source": {
+      "file": "app/src/main/java/takagi/ru/monica/ui/screens/NoteListScreen.kt",
+      "sha256": "947f36613a0a4a8423594526131114052cd0e615b6789d3c43ca10da9f64ca08",
+      "editionsByteIdentical": true
+    },
+    "testSource": {
+      "file": "app/src/androidTest/java/takagi/ru/monica/ui/note/NoteMetadataSubscriptionTest.kt",
+      "sha256": "77cb4850f566ba95cbb013e58e7420bf15424c761243337ad42b31519aa075b0",
+      "editionsByteIdentical": true,
+      "snapshot": {
+        "file": "tasks/runtime-debug-final/flow-test.kt",
+        "sha256": "77cb4850f566ba95cbb013e58e7420bf15424c761243337ad42b31519aa075b0"
+      }
+    },
+    "assertedMetadataCounts": {
+      "after12SearchEditsEach": {
+        "factory": 1,
+        "start": 1,
+        "active": 1
+      },
+      "afterReentryEach": {
+        "factory": 2,
+        "start": 2,
+        "active": 1
+      },
+      "offPageActive": 0
+    }
+  },
+  "distinctMethodsWithAtLeastOnePass": [
+    "backgroundLockKeepsTheCachedNoteHiddenOnReturn",
+    "roomEditsRefreshVisibleMetadataAndReenteringDoesNotLeakCollectors",
+    "searchRecompositionKeepsOneSubscriptionPerMetadataQuery"
+  ],
+  "lockFrameDiagnosis": {
+    "run": "runtime-main-diagnostic-03",
+    "frame": 0,
+    "systemAccessibilitySensitiveNodeMatches": 0,
+    "progressNodes": 1,
+    "internalComposeTreeStillContainsCoveredNote": true,
+    "screenshotVisuallyInspected": true,
+    "visualObservation": "Opaque full-screen loading surface and spinner; no visible note content",
+    "main02SecureFlagBlackCaptureCountsAsVisualAcceptance": false,
+    "scope": "Observed diagnostic frame, not proof of every frame or every device",
+    "evidence": [
+      {
+        "file": "tasks/05-flow/diagnostics-main-03/summary.txt",
+        "sha256": "4b85a6f0bfa9e05792a188057c70c65b628fcc1308a17b9c3f8bd37aa0352f12"
+      },
+      {
+        "file": "tasks/05-flow/diagnostics-main-03/accessibility.txt",
+        "sha256": "d26e763376fabb3c1dafb19cef73469d0320b74d2207304eed05f55ab7eab1f5"
+      },
+      {
+        "file": "tasks/05-flow/diagnostics-main-03/compose.txt",
+        "sha256": "c9d1cd5d45ee2b3af0d9096885439518459aa7171b975114c2688a6953fa5860"
+      },
+      {
+        "file": "tasks/05-flow/diagnostics-main-03/frame-0.png",
+        "sha256": "df303bab1f51300251a1c64ce698e4cd3e23869d1315367d3a8e4dc1a6a74a10"
+      }
+    ]
+  },
+  "finalVisibleContractBatch": {
+    "passed": true,
+    "observedCommittedFrames": 12,
+    "eachObservationWaitsForNativeFrameCommit": true,
+    "allTwelveFrameImagesVisuallyReviewedViaContactSheet": true,
+    "notContinuousCaptureOfEveryPhysicalFrame": true,
+    "internalNodesClaimedInstantlyRemoved": false,
+    "contactSheet": {
+      "file": "tasks/05-flow/privacy-main-final/contact.png",
+      "sha256": "6fa655818a6618aa39e4ea852994bd9a39a9bedc8b0e10e2d705a7e7075c7cf4"
+    },
+    "frames": [
+      {
+        "index": 0,
+        "surface": "opaque-loading-spinner",
+        "sensitiveSystemNodeMatches": 0,
+        "virtualTime": 1696,
+        "internalNotePresent": true,
+        "files": [
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-0-summary.txt",
+            "sha256": "798bbb5be1a76f53e972112e6961f683440da41e8e06ee4c5df27433daa3c914"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-0-accessibility.txt",
+            "sha256": "d26e763376fabb3c1dafb19cef73469d0320b74d2207304eed05f55ab7eab1f5"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-0-compose.txt",
+            "sha256": "16d14a52680f224dcc9e226f6ddae8a9c51f16448bc5749fe28e4b817704ec11"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-0.png",
+            "sha256": "cf7da3b61725488959a5471bab7ec7cb1d9b98325fb1b79be28a02303e6b8d25"
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "surface": "opaque-loading-spinner",
+        "sensitiveSystemNodeMatches": 0,
+        "virtualTime": 1712,
+        "internalNotePresent": true,
+        "files": [
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-1-summary.txt",
+            "sha256": "f046783e7fdd5cca7549fa846a3313b6a9be83937aaefad427b5dadcd9dd0ea8"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-1-accessibility.txt",
+            "sha256": "d26e763376fabb3c1dafb19cef73469d0320b74d2207304eed05f55ab7eab1f5"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-1-compose.txt",
+            "sha256": "16d14a52680f224dcc9e226f6ddae8a9c51f16448bc5749fe28e4b817704ec11"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-1.png",
+            "sha256": "3192cb1b58e68c5ace4325e7c41eb2064e31abe2b0e770522d9f77dd9cc46c32"
+          }
+        ]
+      },
+      {
+        "index": 2,
+        "surface": "opaque-loading-spinner",
+        "sensitiveSystemNodeMatches": 0,
+        "virtualTime": 1728,
+        "internalNotePresent": true,
+        "files": [
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-2-summary.txt",
+            "sha256": "1b2f031d22d1ac43c4c2f81f78661050b5107166c310a986ecb54d5638250ca1"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-2-accessibility.txt",
+            "sha256": "d26e763376fabb3c1dafb19cef73469d0320b74d2207304eed05f55ab7eab1f5"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-2-compose.txt",
+            "sha256": "975d79c711003ad6b8d8f66a1031abe3083a151a29a639e99c8c1321cac27148"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-2.png",
+            "sha256": "0214429a20063ef850be72850d9577d831dc7d2c590f3e20f4da75938586175b"
+          }
+        ]
+      },
+      {
+        "index": 3,
+        "surface": "opaque-loading-spinner",
+        "sensitiveSystemNodeMatches": 0,
+        "virtualTime": 1744,
+        "internalNotePresent": true,
+        "files": [
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-3-summary.txt",
+            "sha256": "d6c1c5d213cc4bd366459e7f0ee27ca1d65d5f6464f018667951446612329e46"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-3-accessibility.txt",
+            "sha256": "d26e763376fabb3c1dafb19cef73469d0320b74d2207304eed05f55ab7eab1f5"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-3-compose.txt",
+            "sha256": "5a60cea8d190a2d162f0f001a92f93f3733109f5aa6fb81f5ebae8f9080e5f56"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-3.png",
+            "sha256": "2b4c3ec66a9541b144d0be252ade077123e60a70ea4cf8229ca55e8ebaa339f4"
+          }
+        ]
+      },
+      {
+        "index": 4,
+        "surface": "master-password-authentication",
+        "sensitiveSystemNodeMatches": 0,
+        "virtualTime": 1760,
+        "internalNotePresent": true,
+        "files": [
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-4-summary.txt",
+            "sha256": "6f09efee6782e555e83ef53908243915b9c1eee97b292cf15f12d55232ae3e8e"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-4-accessibility.txt",
+            "sha256": "263e7a58fb0ff567a678a1d13205b3512526d447cb9cce26b8e08397a717bc97"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-4-compose.txt",
+            "sha256": "87bb2f06c16dc328704f693faf76cdaa1e15c65b8b3f90b4851788ed59d6ef7a"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-4.png",
+            "sha256": "087f1f562f9463454d2eb6722a916518a240156906da230bdd4dd78cde284c9b"
+          }
+        ]
+      },
+      {
+        "index": 5,
+        "surface": "master-password-authentication",
+        "sensitiveSystemNodeMatches": 0,
+        "virtualTime": 1776,
+        "internalNotePresent": true,
+        "files": [
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-5-summary.txt",
+            "sha256": "f1242e0c2088ba7ed477aa99850e75da941953df45bd9c659fde157679993920"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-5-accessibility.txt",
+            "sha256": "263e7a58fb0ff567a678a1d13205b3512526d447cb9cce26b8e08397a717bc97"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-5-compose.txt",
+            "sha256": "6e95df50b2a1c8492cae27db4c6e7fc17da61839dd678b1b0903d95b7ec3b024"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-5.png",
+            "sha256": "087f1f562f9463454d2eb6722a916518a240156906da230bdd4dd78cde284c9b"
+          }
+        ]
+      },
+      {
+        "index": 6,
+        "surface": "master-password-authentication",
+        "sensitiveSystemNodeMatches": 0,
+        "virtualTime": 1792,
+        "internalNotePresent": true,
+        "files": [
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-6-summary.txt",
+            "sha256": "277fc508847108fd92652a07986adb05571568e55c37a70886ffd4f7faedc196"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-6-accessibility.txt",
+            "sha256": "263e7a58fb0ff567a678a1d13205b3512526d447cb9cce26b8e08397a717bc97"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-6-compose.txt",
+            "sha256": "964bf8b899b027ce3496d479783b02595b4f30b6177ec9390a8f4dba5fd4e37a"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-6.png",
+            "sha256": "087f1f562f9463454d2eb6722a916518a240156906da230bdd4dd78cde284c9b"
+          }
+        ]
+      },
+      {
+        "index": 7,
+        "surface": "master-password-authentication",
+        "sensitiveSystemNodeMatches": 0,
+        "virtualTime": 1808,
+        "internalNotePresent": true,
+        "files": [
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-7-summary.txt",
+            "sha256": "a06ebcaf7b3485dcb851f95fa6f64aa233579c87a9a98a24a7d68224c110d022"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-7-accessibility.txt",
+            "sha256": "263e7a58fb0ff567a678a1d13205b3512526d447cb9cce26b8e08397a717bc97"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-7-compose.txt",
+            "sha256": "4dcd47f7ca35a6e2f6c66b7c9509f5e2e058796b00dcb6017bbd078ff2ee59e6"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-7.png",
+            "sha256": "087f1f562f9463454d2eb6722a916518a240156906da230bdd4dd78cde284c9b"
+          }
+        ]
+      },
+      {
+        "index": 8,
+        "surface": "master-password-authentication",
+        "sensitiveSystemNodeMatches": 0,
+        "virtualTime": 1824,
+        "internalNotePresent": true,
+        "files": [
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-8-summary.txt",
+            "sha256": "9aa31f3c8bd7b4e3e02f44d3282db0e468a76d69a867b0b002e4927786fa6228"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-8-accessibility.txt",
+            "sha256": "263e7a58fb0ff567a678a1d13205b3512526d447cb9cce26b8e08397a717bc97"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-8-compose.txt",
+            "sha256": "e46d37a01c80db54342b6b463839c851d5b4344815561a3613c06731393fc29d"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-8.png",
+            "sha256": "087f1f562f9463454d2eb6722a916518a240156906da230bdd4dd78cde284c9b"
+          }
+        ]
+      },
+      {
+        "index": 9,
+        "surface": "master-password-authentication",
+        "sensitiveSystemNodeMatches": 0,
+        "virtualTime": 1840,
+        "internalNotePresent": true,
+        "files": [
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-9-summary.txt",
+            "sha256": "8e916605960959983c46201477e9b30dbc613965f56abb267915ae623bb44612"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-9-accessibility.txt",
+            "sha256": "263e7a58fb0ff567a678a1d13205b3512526d447cb9cce26b8e08397a717bc97"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-9-compose.txt",
+            "sha256": "a4335ef2a336788530ebdb17fc58499c90d92fad3ae717cca3044e0e3145240e"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-9.png",
+            "sha256": "087f1f562f9463454d2eb6722a916518a240156906da230bdd4dd78cde284c9b"
+          }
+        ]
+      },
+      {
+        "index": 10,
+        "surface": "master-password-authentication",
+        "sensitiveSystemNodeMatches": 0,
+        "virtualTime": 1856,
+        "internalNotePresent": true,
+        "files": [
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-10-summary.txt",
+            "sha256": "229c8fcd33345498a40d89197c62b6409fb0b78027339917df0e0f6c177e78df"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-10-accessibility.txt",
+            "sha256": "263e7a58fb0ff567a678a1d13205b3512526d447cb9cce26b8e08397a717bc97"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-10-compose.txt",
+            "sha256": "c2719a37ccb78b0283d88e11a7dd456dca59ba81f29fd3cc276562a42be0bdb5"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-10.png",
+            "sha256": "087f1f562f9463454d2eb6722a916518a240156906da230bdd4dd78cde284c9b"
+          }
+        ]
+      },
+      {
+        "index": 11,
+        "surface": "master-password-authentication",
+        "sensitiveSystemNodeMatches": 0,
+        "virtualTime": 1872,
+        "internalNotePresent": true,
+        "files": [
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-11-summary.txt",
+            "sha256": "ef6cb74c48cf4c8cb053d6d0574c8639d1f5b18809b83dbfcef33f859a532965"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-11-accessibility.txt",
+            "sha256": "263e7a58fb0ff567a678a1d13205b3512526d447cb9cce26b8e08397a717bc97"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-11-compose.txt",
+            "sha256": "85c0c2cb99efa5c5760b73c4836b77e1051c25fb804ae1334569f69f3ca2ce85"
+          },
+          {
+            "file": "tasks/05-flow/privacy-main-final/frame-11.png",
+            "sha256": "087f1f562f9463454d2eb6722a916518a240156906da230bdd4dd78cde284c9b"
+          }
+        ]
+      }
+    ]
+  }
+}

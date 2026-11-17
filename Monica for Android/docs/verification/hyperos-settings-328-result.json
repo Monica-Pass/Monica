@@ -1,0 +1,171 @@
+{
+  "edition": "main",
+  "version": "1.0.328 unreleased",
+  "scope": "Developer HyperOS compatibility subpage; existing tool/preferences preserved",
+  "sharedPaths": [
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/DeveloperSettingsScreen.kt",
+      "sha256": "47709ab8d78588493c6dedce10a73065cd5bbd3517228cce5f4b74c57f7c475b"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/HyperOsCompatibilitySettingsScreen.kt",
+      "sha256": "2e6d41624cc82729bb7efc07817c5c8ed218740cd4deef7c72497f903ba96556"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsScreen.kt",
+      "sha256": "021bc5168e2689cfd166d7512f6e8b28176cbe083f624c6c3d7d99daec4ff160"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsV2Screen.kt",
+      "sha256": "84a599507e7351ddfe28617ff9fa50d800d5b15615fa79ab5804f70304439ae4"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/autofill_ng/HyperOsSaveCompatibilitySettingsTest.kt",
+      "sha256": "5b19ebc3f8a0276f792c5f362362df828a433e4d3ee59622d839dc7777a37642"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/ui/screens/HyperOsDeveloperSettingsUiTest.kt",
+      "sha256": "5e3b8563371e1a256266995f03abb9a4499a9dcc5b5e7547b6972a102c61c81f"
+    },
+    {
+      "path": "app/src/main/res/values/strings_hyperos_compatibility.xml",
+      "sha256": "e338f91a1ec5d0ce01931a24d79e9652a5af7067dfe17579b4ca11ad2440558b"
+    },
+    {
+      "path": "app/src/main/res/values-b+lzh/strings_hyperos_compatibility.xml",
+      "sha256": "3057974293918422fc0e7e4e4616d8d8073968bb59a52b95d75b44f4625326c5"
+    },
+    {
+      "path": "app/src/main/res/values-b+zh+Hant/strings_hyperos_compatibility.xml",
+      "sha256": "c941c6b920dd3cd33c2e498ae91b38590228d47fc61b70d4743b68926a1e99d9"
+    },
+    {
+      "path": "app/src/main/res/values-de/strings_hyperos_compatibility.xml",
+      "sha256": "d0b34650c20a485b1df5e7b744d45bf92c1f8f803147d35b68b768ed0ca0cf5c"
+    },
+    {
+      "path": "app/src/main/res/values-es/strings_hyperos_compatibility.xml",
+      "sha256": "1f6109bbcfbb56a4bd98fe97fe1ee7f600aff8de26210ab64ea635f309cb38fa"
+    },
+    {
+      "path": "app/src/main/res/values-fr/strings_hyperos_compatibility.xml",
+      "sha256": "ef3274469f6a70b5fa73f244a2a9201123189da425f041328a75386a63ed8d90"
+    },
+    {
+      "path": "app/src/main/res/values-it/strings_hyperos_compatibility.xml",
+      "sha256": "41ce0821ca9b923083d5fcdffbcdfed71ebb388c21b3f636dbe9af542e5406d9"
+    },
+    {
+      "path": "app/src/main/res/values-ja/strings_hyperos_compatibility.xml",
+      "sha256": "81a2833f9967ceea6ff77a1b831eb666d126714adc4876d479f7288c4e9da083"
+    },
+    {
+      "path": "app/src/main/res/values-ko/strings_hyperos_compatibility.xml",
+      "sha256": "6dc2c84017113670f32d75d441f27e0c703b25c00493dc231397e9259d9444b9"
+    },
+    {
+      "path": "app/src/main/res/values-pl/strings_hyperos_compatibility.xml",
+      "sha256": "56809dd96604178bdfd8a1502d4f5ed1aa162b5cae489a2283908767127cbcf1"
+    },
+    {
+      "path": "app/src/main/res/values-pt/strings_hyperos_compatibility.xml",
+      "sha256": "6652dd3974649530a3c30dcd58446fdcf000af13f7d696ebf56f5dd07e29da57"
+    },
+    {
+      "path": "app/src/main/res/values-pt-rBR/strings_hyperos_compatibility.xml",
+      "sha256": "c7c3b99baae351d225ecaab2dd30c2848e0b7374d069eaa6f31923ab2e25a854"
+    },
+    {
+      "path": "app/src/main/res/values-ru/strings_hyperos_compatibility.xml",
+      "sha256": "434e95f01b4d2bbb992932290793e931add406c267688ebe1f05f9f7192317b3"
+    },
+    {
+      "path": "app/src/main/res/values-vi/strings_hyperos_compatibility.xml",
+      "sha256": "35f344fdff7b20b61c441dc9ce6afb15dc9f5f27bf96a3d751e64241637a27ad"
+    },
+    {
+      "path": "app/src/main/res/values-zh/strings_hyperos_compatibility.xml",
+      "sha256": "cdf14fff900a9e7562e7f6433d919de2558ce4eb1c9e67f8ac1dfafd704a5060"
+    },
+    {
+      "path": "app/src/main/res/values-zh-rCN/strings_hyperos_compatibility.xml",
+      "sha256": "cdf14fff900a9e7562e7f6433d919de2558ce4eb1c9e67f8ac1dfafd704a5060"
+    },
+    {
+      "path": "app/src/main/res/values-zh-rNY/strings_hyperos_compatibility.xml",
+      "sha256": "cdf14fff900a9e7562e7f6433d919de2558ce4eb1c9e67f8ac1dfafd704a5060"
+    },
+    {
+      "path": "app/src/main/res/values-zh-rXB/strings_hyperos_compatibility.xml",
+      "sha256": "cdf14fff900a9e7562e7f6433d919de2558ce4eb1c9e67f8ac1dfafd704a5060"
+    }
+  ],
+  "validation": {
+    "apkSha256": "57b0a87c19a7414f663029f139ddcbeda86322464b8f60f654deb76628dcaa47",
+    "testSha256": "76d3ca352de42490723e31c6f0193e8b28225526259cb821adfc888ac9f87059",
+    "configs": 18,
+    "compiledValues": 54,
+    "deviceMethods": 4,
+    "runnerSeconds": 4.406,
+    "runReceiptSha256": "a4ad740a337b7bbb6fa65075c0782c720ae792e378e38a5878dc49170dfa3fc2"
+  },
+  "buildSeconds": 271.086,
+  "article": {
+    "url": "https://www.coolapk.com/feed/74851349",
+    "title": "HyperOS4第三方通行密钥无法使用？",
+    "actualBodyRead": true,
+    "reportedKeys": [
+      "autofill_service",
+      "credential_service",
+      "credential_service_primary"
+    ],
+    "existingBackendCoversKeys": true,
+    "hyperOs4DeviceVerified": false
+  },
+  "failures": {
+    "ordinaryInitial": "Invalid JUnit return type: class initialization failure; save toggle passed",
+    "ordinarySecond": "2/4: hidden settings app read rejected and localized test context missed ActivityResultRegistryOwner",
+    "fix": "Test-only explicit Unit return, preserved registry owner, read-only per-user shell settings comparison; same production APK",
+    "fdFirstBehaviorBatch": "4/4 passed"
+  },
+  "visual": "Four local component screenshots pulled; representative normal-light English and 320dp/LocalDensity1.6 dark Chinese inspected. This is not full Activity/system-font/OEM validation.",
+  "cleanup": {
+    "passed": true,
+    "removedUsers": [
+      10,
+      11,
+      12
+    ],
+    "restoredCurrentUser": 0,
+    "originalRecordsPerEdition": 4,
+    "removedUser0Probes": [
+      "local.multivaultentry328.main",
+      "local.multivaultentry328.fd",
+      "local.multivaultupgrade328.main",
+      "local.multivaultupgrade328.fd"
+    ],
+    "removedTaskXmlCount": 144,
+    "muMu2Stopped": true,
+    "muMuDisksAndConfigurationPreserved": true,
+    "publicAvdConfigurationsUnchanged": true,
+    "publicAvdDiskPreserved": true,
+    "publicAvdTestsPerformed": false,
+    "receiptSha256": "b7087688578367c55bcff090c7ab93658ade98d0502f75148463b0a8d1582bb0"
+  },
+  "fdMetadata": [
+    {
+      "script": "check-fdroid-release.py",
+      "exit": 0
+    },
+    {
+      "script": "test_fdroid_release.py",
+      "exit": 0
+    }
+  ],
+  "limits": [
+    "API35/x86_64 synthetic MuMu Debug only; no HyperOS4 physical device or LSPosed validation",
+    "Opening existing manager tool does not verify privileged service writes; no new privileged backend or permission",
+    "General aliases and original preferences/defaults retained; no new R8 or vault/crypto/storage changes",
+    "No commit, push, tag, release or APK delivery"
+  ]
+}

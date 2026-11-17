@@ -262,6 +262,16 @@ Monica 基于 [GNU General Public License v3.0](LICENSE) 开源发布。
 For F-Droid metadata or packaging issues, contact: joyin8888@foxmail.com
 
 
+## HyperOS 参考项目与致谢
+
+感谢以下开源项目对 Monica 的 HyperOS 兼容适配提供帮助：
+
+- [Howard20181/HyperPasskey](https://github.com/Howard20181/HyperPasskey)（GPL-3.0）：内置可选模块的部分 Hook 实现来源，包括安全中心配置重置拦截、系统设置页、凭据选择界面及跨设备兼容。
+- [dingwen07/CredentialProviderManager](https://github.com/dingwen07/CredentialProviderManager)（GPL-3.0）：凭据提供方、自动填充服务及系统配置诊断的设计参考。
+- [cr-zhichen/password-manager-switch](https://github.com/cr-zhichen/password-manager-switch)（MIT）：默认密码管理器配置工具的系统设置读写、校验与恢复逻辑来源。
+
+具体参考版本与适配范围见[HyperOS 来源说明](Monica%20for%20Android/app/src/main/assets/licenses/hyperos-builtins.txt)；随包保留 [HyperPasskey GPL-3.0 许可证](Monica%20for%20Android/app/src/main/assets/licenses/HyperPasskey-GPL-3.0.txt)及 [password-manager-switch MIT 声明](Monica%20for%20Android/app/src/main/assets/licenses/password-manager-switch.txt)。1.0.328（未发布）的内置模块为实验功能，默认关闭，需要兼容的模块框架，尚未经过 HyperOS 实体机验证。
+
 ### Shizuku default password manager / 默认密码管理器
 
 The Android 14+ helper in developer and autofill settings adapts the secure-settings transaction logic from [cr-zhichen/password-manager-switch](https://github.com/cr-zhichen/password-manager-switch) (MIT, copyright 2026 cr-zhichen). It targets the installed Monica edition for the current Android user, verifies writes, and supports restoring the previous configuration. The original MIT notice is included in [MIT notice](Monica%20for%20Android/app/src/main/assets/licenses/password-manager-switch.txt).

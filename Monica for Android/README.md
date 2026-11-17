@@ -188,6 +188,16 @@ Copyright © 2025 JoyinJoester.
 Licensed under the **GNU General Public License v3.0**.
 
 
+## HyperOS references and acknowledgments
+
+Monica's HyperOS compatibility work benefits from these open-source projects:
+
+- [Howard20181/HyperPasskey](https://github.com/Howard20181/HyperPasskey) (GPL-3.0): source for parts of the optional built-in hooks covering Security Center configuration resets, system settings pages, credential selection and cross-device compatibility.
+- [dingwen07/CredentialProviderManager](https://github.com/dingwen07/CredentialProviderManager) (GPL-3.0): design reference for credential-provider, autofill-service and system-configuration diagnostics.
+- [cr-zhichen/password-manager-switch](https://github.com/cr-zhichen/password-manager-switch) (MIT): source for the default password manager helper's secure-settings read/write, verification and restoration logic.
+
+See the [HyperOS attribution notice](app/src/main/assets/licenses/hyperos-builtins.txt) for the referenced revisions and adaptation scope. The [HyperPasskey GPL-3.0 license](app/src/main/assets/licenses/HyperPasskey-GPL-3.0.txt) and [password-manager-switch MIT notice](app/src/main/assets/licenses/password-manager-switch.txt) are bundled with the app. The built-in module in unreleased 1.0.328 is experimental, disabled by default, requires a compatible module framework and has not been tested on physical HyperOS devices.
+
 ### Shizuku default password manager / 默认密码管理器
 
 The Android 14+ helper in developer and autofill settings adapts the secure-settings transaction logic from [cr-zhichen/password-manager-switch](https://github.com/cr-zhichen/password-manager-switch) (MIT, copyright 2026 cr-zhichen). It targets the installed Monica edition for the current Android user, verifies writes, and supports restoring the previous configuration. The original MIT notice is included in `app/src/main/assets/licenses/password-manager-switch.txt`.

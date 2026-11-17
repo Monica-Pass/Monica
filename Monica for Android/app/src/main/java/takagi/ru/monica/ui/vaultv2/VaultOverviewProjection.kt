@@ -151,7 +151,7 @@ internal fun prepareVaultOverview(
     // same folder identity before assigning numeric indices to Kotlin/Rust aggregation.
     val ambiguousKeePassPaths = keepassGroups.flatMap { (id, groups) ->
         groups.groupBy { it.path }.filterValues { it.size > 1 }.keys.map { id to it }
-    }.toSet()
+    }.toMutableSet()
     val keepassFolderKeysByPath = mutableMapOf<Pair<Long, String>, String>()
     keepassGroups.forEach { (databaseId, groups) -> groups.filter { it.path.isNotBlank() }.forEach { group ->
         val source = "keepass:$databaseId"
@@ -161,13 +161,36 @@ internal fun prepareVaultOverview(
             UnifiedCategoryFilterSelection.KeePassGroupFilter(databaseId, group.path, group.uuid),
             isTopLevel = !group.path.trim('/').contains('/')))
     } }
+    // Older imports used raw names joined by '/'. Resolve these projection-only
+    // aliases from the authenticated catalogue, never by a displayed leaf name.
+    // Literal slashes/percent encodings can collide with another path: keep those
+    // UUID-less rows unassigned rather than choosing one of the native groups.
+    keepassGroups.forEach { (databaseId, groups) ->
+        val canonicalPaths = groups.mapTo(hashSetOf()) { it.path }
+        groups.filter { it.path.isNotBlank() }.mapNotNull { group ->
+            val legacyPath = runCatching { group.path.split('/').joinToString("/") {
+                java.net.URLDecoder.decode(it.replace("+", "%2B"), "UTF-8").trim()
+            } }.getOrNull() ?: return@mapNotNull null
+            legacyPath to group
+        }.groupBy({ it.first }, { it.second }).forEach { (legacyPath, candidates) ->
+            val group = candidates.singleOrNull()
+            if (group == null || (legacyPath in canonicalPaths && legacyPath != group.path)) {
+                ambiguousKeePassPaths += databaseId to legacyPath
+                keepassFolderKeysByPath.remove(databaseId to legacyPath)
+            } else if ((databaseId to group.path) !in ambiguousKeePassPaths) {
+                keepassFolderKeysByPath.putIfAbsent(databaseId to legacyPath,
+                    "keepass:$databaseId/${group.uuid?.takeIf(String::isNotBlank) ?: group.path}")
+            }
+        }
+    }
     // Also cover the initial snapshot before the group catalogue has loaded. A
     // two-pass lookup makes identity independent of password/passkey item order.
     allItems.forEach { item ->
         val databaseId = item.keepassDatabaseId() ?: return@forEach
         val path = item.keepassGroupPath()?.takeIf(String::isNotBlank) ?: return@forEach
         val uuid = item.keepassGroupUuid()?.takeIf(String::isNotBlank) ?: return@forEach
-        keepassFolderKeysByPath.putIfAbsent(databaseId to path, "keepass:$databaseId/$uuid")
+        if ((databaseId to path) !in ambiguousKeePassPaths)
+            keepassFolderKeysByPath.putIfAbsent(databaseId to path, "keepass:$databaseId/$uuid")
     }
     // Resolve paths and identities once in the background. Native code only sees numeric indices.
     val itemSources = Array(allItems.size) { allItems[it].overviewSource() }

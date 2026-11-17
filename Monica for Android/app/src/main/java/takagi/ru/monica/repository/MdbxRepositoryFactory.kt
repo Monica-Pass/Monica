@@ -39,7 +39,8 @@ object MdbxRepositoryFactory {
 
 fun mdbxPasswordObjectId(entry: PasswordEntry): String =
     entry.replicaGroupId
-        ?.takeIf { it.startsWith("password:") && it.length > "password:".length }
+        ?.takeIf { (it.startsWith("password:") && it.length > "password:".length) ||
+            runCatching { UUID.fromString(it).toString() == it }.getOrDefault(false) }
         ?: "password:${entry.id}"
 
 fun mdbxSecureItemObjectId(item: SecureItem): String {
@@ -58,7 +59,7 @@ fun mdbxSecureItemObjectId(item: SecureItem): String {
 }
 
 internal fun mdbx2PhysicalEntryId(vaultId: String, logicalEntryId: String): String =
-    UUID.nameUUIDFromBytes(
+    if (runCatching { UUID.fromString(logicalEntryId).toString() == logicalEntryId }.getOrDefault(false)) logicalEntryId else UUID.nameUUIDFromBytes(
         "monica-entry:$vaultId:$logicalEntryId".toByteArray(Charsets.UTF_8)
     ).toString()
 

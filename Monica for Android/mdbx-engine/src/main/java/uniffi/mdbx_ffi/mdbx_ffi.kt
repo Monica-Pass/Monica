@@ -778,6 +778,8 @@ external fun uniffi_mdbx_ffi_checksum_method_mdbxvault_set_extension_capabilitie
 ): Short
 external fun uniffi_mdbx_ffi_checksum_method_mdbxvault_unregister_extension_profile(
 ): Short
+external fun uniffi_mdbx_ffi_checksum_method_mdbxvault_execute_guarded_write_operation(
+): Short
 external fun uniffi_mdbx_ffi_checksum_method_mdbxvault_list_commit_diff(
 ): Short
 external fun uniffi_mdbx_ffi_checksum_method_mdbxvault_revert_commit(
@@ -1223,6 +1225,8 @@ external fun uniffi_mdbx_ffi_fn_method_mdbxvault_set_collection_profile(`ptr`: L
 external fun uniffi_mdbx_ffi_fn_method_mdbxvault_set_extension_capabilities(`ptr`: Long,`capabilityIds`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
 ): Unit
 external fun uniffi_mdbx_ffi_fn_method_mdbxvault_unregister_extension_profile(`ptr`: Long,`extensionId`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+): RustBuffer.ByValue
+external fun uniffi_mdbx_ffi_fn_method_mdbxvault_execute_guarded_write_operation(`ptr`: Long,`expectedVaultId`: RustBuffer.ByValue,`expectedBranches`: RustBuffer.ByValue,`operationId`: RustBuffer.ByValue,`commands`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus,
 ): RustBuffer.ByValue
 external fun uniffi_mdbx_ffi_fn_method_mdbxvault_list_commit_diff(`ptr`: Long,`commitId`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
 ): RustBuffer.ByValue
@@ -1967,6 +1971,9 @@ private fun uniffiCheckApiChecksums(lib: IntegrityCheckingUniffiLib) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_mdbx_ffi_checksum_method_mdbxvault_unregister_extension_profile() != 62848.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_mdbx_ffi_checksum_method_mdbxvault_execute_guarded_write_operation() != 47992.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_mdbx_ffi_checksum_method_mdbxvault_list_commit_diff() != 16054.toShort()) {
@@ -4403,6 +4410,12 @@ public interface MdbxVaultInterface {
     
     fun `unregisterExtensionProfile`(`extensionId`: kotlin.String): MdbxExtensionProfile?
     
+    /**
+     * A stale editor never overwrites an intervening commit, including a commit
+     * on another branch. Replaying the same operation ID and intent is idempotent.
+     */
+    fun `executeGuardedWriteOperation`(`expectedVaultId`: kotlin.String, `expectedBranches`: List<MdbxBranchInfo>, `operationId`: kotlin.String, `commands`: List<MdbxWriteCommand>): MdbxWriteOperationResult
+
     fun `listCommitDiff`(`commitId`: kotlin.String): List<MdbxCommitDiffItem>
     
     fun `revertCommit`(`commitId`: kotlin.String, `operationId`: kotlin.String, `device`: MdbxDeviceContext): MdbxCommitRevertResult
@@ -5484,6 +5497,24 @@ open class MdbxVault: Disposable, AutoCloseable, MdbxVaultInterface
     
 
     
+    /**
+     * A stale editor never overwrites an intervening commit, including a commit
+     * on another branch. Replaying the same operation ID and intent is idempotent.
+     */
+    @Throws(MdbxFfiException::class)override fun `executeGuardedWriteOperation`(`expectedVaultId`: kotlin.String, `expectedBranches`: List<MdbxBranchInfo>, `operationId`: kotlin.String, `commands`: List<MdbxWriteCommand>): MdbxWriteOperationResult {
+            return FfiConverterTypeMdbxWriteOperationResult.lift(
+    callWithHandle {
+    uniffiRustCallWithError(MdbxFfiException) { _status ->
+    UniffiLib.uniffi_mdbx_ffi_fn_method_mdbxvault_execute_guarded_write_operation(
+        it,
+        FfiConverterString.lower(`expectedVaultId`),FfiConverterSequenceTypeMdbxBranchInfo.lower(`expectedBranches`),FfiConverterString.lower(`operationId`),FfiConverterSequenceTypeMdbxWriteCommand.lower(`commands`),_status)
+}
+    }
+    )
+    }
+
+
+
     @Throws(MdbxFfiException::class)override fun `listCommitDiff`(`commitId`: kotlin.String): List<MdbxCommitDiffItem> {
             return FfiConverterSequenceTypeMdbxCommitDiffItem.lift(
     callWithHandle {

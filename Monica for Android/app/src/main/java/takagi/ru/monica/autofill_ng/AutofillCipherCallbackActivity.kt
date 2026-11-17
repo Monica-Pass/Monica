@@ -76,6 +76,7 @@ class AutofillCipherCallbackActivity : AppCompatActivity() {
                         args.nativeLockVersion?.let { putLong("native_lock_version", it) }
                         putString("native_process_nonce", args.nativeProcessNonce)
                         args.nativeGeneration?.let { putLong("native_generation", it) }
+                        putString("native_storage", args.nativeStorage.name)
                     }
                 )
             }
@@ -100,12 +101,19 @@ class AutofillCipherCallbackActivity : AppCompatActivity() {
         val nativeLockVersion: Long? = null,
         val nativeProcessNonce: String? = null,
         val nativeGeneration: Long? = null,
+        val nativeStorage: NativeAutofillStorage = NativeAutofillStorage.KEEPASS,
     ) : Parcelable {
         fun nativeSelection(): NativeAutofillSelection? {
+            val idMatchesStorage = when (nativeStorage) {
+                NativeAutofillStorage.KEEPASS -> takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(passwordId)
+                NativeAutofillStorage.MDBX -> passwordId < 0L
+            }
+            if (!idMatchesStorage) return null
             return NativeAutofillSelection(
                 nativeDatabaseId ?: return null, nativeEntryUuid ?: return null,
                 nativeRevision ?: return null, nativeLockVersion ?: return null,
                 nativeProcessNonce ?: return null, nativeGeneration ?: return null,
+                nativeStorage,
             )
         }
     }
@@ -422,6 +430,7 @@ class AutofillCipherCallbackActivity : AppCompatActivity() {
             ?.apply { classLoader = Args::class.java.classLoader }
             ?.let { bundle ->
                 if (bundle.containsKey("password_id")) {
+                    val storage = bundle.nativeAutofillStorage("native_storage") ?: return null
                     @Suppress("DEPRECATION")
                     return Args(
                         passwordId = bundle.getLong("password_id"),
@@ -440,6 +449,7 @@ class AutofillCipherCallbackActivity : AppCompatActivity() {
                         nativeLockVersion = bundle.takeIf { it.containsKey("native_lock_version") }?.getLong("native_lock_version"),
                         nativeProcessNonce = bundle.getString("native_process_nonce"),
                         nativeGeneration = bundle.takeIf { it.containsKey("native_generation") }?.getLong("native_generation"),
+                        nativeStorage = storage,
                     )
                 }
                 // Compatibility with callbacks already issued by an older process.
@@ -618,7 +628,7 @@ class AutofillCipherCallbackActivity : AppCompatActivity() {
         AutofillPreferences(applicationContext).markFieldSignatureLearned(signatureKey)
     }
 
-    private fun isNativeId(id: Long): Boolean = takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(id)
+    private fun isNativeId(id: Long): Boolean = AutofillPasswordSource.isNativeId(id)
 
     override fun onStop() {
         if (credentialReadStarted && !resultPublished) requestRevoked = true

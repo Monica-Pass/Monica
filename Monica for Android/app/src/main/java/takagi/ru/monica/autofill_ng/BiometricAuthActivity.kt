@@ -24,7 +24,6 @@ import kotlinx.coroutines.launch
 import takagi.ru.monica.R
 import takagi.ru.monica.data.PasswordDatabase
 import takagi.ru.monica.data.PasswordEntry
-import takagi.ru.monica.repository.PasswordRepository
 import takagi.ru.monica.security.DeveloperVerificationPolicy
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.utils.BiometricHelper
@@ -143,8 +142,8 @@ class BiometricAuthActivity : AppCompatActivity() {
                 
                 // 从数据库查询密码条目
                 val database = PasswordDatabase.getDatabase(applicationContext)
-                val repository = PasswordRepository(database.passwordEntryDao())
-                val passwordEntry = repository.getPasswordEntryById(passwordId)
+                val passwordEntry = (AutofillRoomCredentialReader.read(database, passwordId)
+                    as? AutofillRoomCredentialReader.Result.Available)?.entry
                 
                 if (passwordEntry == null) {
                     android.util.Log.e("BiometricAuth", "Password entry not found")

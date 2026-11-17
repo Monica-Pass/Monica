@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_diagnostics_title">"Chẩn đoán cấu hình"</string>
+    <string name="hyperos_diagnostics_note">"Kiểm tra khai báo và lựa chọn dịch vụ, không xác nhận passkey hoạt động. Đọc cài đặt bảo mật cần Shizuku hoặc root đã được cấp quyền."</string>
+    <string name="hyperos_diag_declaration">"Dịch vụ Monica và khả năng passkey hợp lệ"</string>
+    <string name="hyperos_diag_feature">"Tính năng thông tin đăng nhập của hệ thống khả dụng"</string>
+    <string name="hyperos_diag_unrestricted">"Cho phép tự động điền cho người dùng Android này"</string>
+    <string name="hyperos_diag_framework">"Hệ thống nhận diện Monica đã bật"</string>
+    <string name="hyperos_diag_registered">"Monica được đăng ký làm dịch vụ thông tin đăng nhập"</string>
+    <string name="hyperos_drift_title">"Phát hiện thay đổi sau khi sửa"</string>
+    <string name="hyperos_drift_note">"Kiểm tra mỗi 30 giây khi trang này hiển thị và khi mở lại. Không bao giờ tự động ghi lại cài đặt."</string>
+    <string name="hyperos_drift_result">"So với lần sửa đã xác minh gần nhất"</string>
+    <string name="hyperos_drift_off">"Đã tắt phát hiện"</string>
+    <string name="hyperos_drift_no_baseline">"Hãy áp dụng cấu hình trước để tạo mốc so sánh."</string>
+    <string name="hyperos_drift_unchanged">"Cấu hình không đổi"</string>
+    <string name="hyperos_drift_changed">"Cấu hình đã đổi. Có thể bạn tự đổi trình quản lý; hãy xem lại trước khi khôi phục."</string>
+    <string name="hyperos_update_failed">"Không thể lưu. Làm mới và kiểm tra trạng thái."</string>
+    <string name="hyperos_check_yes">"Có"</string>
+    <string name="hyperos_check_no">"Không"</string>
+    <string name="hyperos_check_unsupported">"Không hỗ trợ"</string>
+    <string name="hyperos_module_title">"Mô-đun tương thích tùy chọn"</string>
+    <string name="hyperos_module_requirements">"Cần LSPosed API 102+ tương thích, Android 14–16 và người dùng chủ sở hữu Xiaomi/Redmi/POCO. Bật Monica và cấp phạm vi cần thiết trong framework. Mặc định tất cả đều tắt."</string>
+    <string name="hyperos_module_connected">"Framework đã kết nối; điều này không chứng minh hook hoạt động."</string>
+    <string name="hyperos_module_disconnected">"Không có framework tương thích"</string>
+    <string name="hyperos_module_scope">"Phạm vi đã cấp: %1$s"</string>
+    <string name="hyperos_hook_reset">"Chặn Trung tâm bảo mật đặt lại"</string>
+    <string name="hyperos_hook_reset_note">"Chỉ chặn các phương thức cấu hình thông tin đăng nhập đã nhận diện."</string>
+    <string name="hyperos_hook_settings">"Tương thích trang lựa chọn hệ thống"</string>
+    <string name="hyperos_hook_settings_note">"Điều chỉnh bộ điều khiển đã nhận diện; phương thức không tương thích giữ hành vi gốc."</string>
+    <string name="hyperos_hook_chooser">"Trình chọn thông tin đăng nhập Google"</string>
+    <string name="hyperos_hook_chooser_note">"Cần trình chọn Google Play services hệ thống đang bật."</string>
+    <string name="hyperos_hook_hybrid">"Thông tin đăng nhập giữa thiết bị"</string>
+    <string name="hyperos_hook_hybrid_note">"Dùng dịch vụ lai Google đã kiểm tra và tuyến quét Xiaomi."</string>
+    <string name="hyperos_module_restart">"Sau khi bật, tự khởi động lại tiến trình liên quan hoặc thiết bị. Khi tắt, hook dừng ghi đè sau khi framework truyền thay đổi. Không tự khởi động lại."</string>
+    <string name="hyperos_physical_feedback">"Chưa thử trên thiết bị HyperOS thật. Hãy gửi phiên bản ROM và bước tái hiện qua GitHub issue; không gửi mật khẩu hay khóa."</string>
+    <string name="hyperos_reference_projects">"Dự án tham khảo và giấy phép"</string>
+    <string name="hyperos_module_confirmation">"Bật thay đổi hành vi hệ thống thử nghiệm này? Cần framework và thành phần tương thích, có thể ảnh hưởng trình quản lý khác. Có thể tắt tại đây hoặc trong framework."</string>
+    <string name="hyperos_feedback_action">"Báo lỗi tương thích"</string>
+    <string name="hyperos_module_entry_note">"Mặc định tắt · Cần LSPosed tương thích"</string>
+</resources>

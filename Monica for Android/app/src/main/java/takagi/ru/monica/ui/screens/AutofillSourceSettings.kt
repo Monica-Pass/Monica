@@ -10,11 +10,12 @@ import androidx.compose.ui.res.stringResource
 import takagi.ru.monica.R
 import takagi.ru.monica.autofill_ng.AutofillPreferences.AutofillDefaultSourceFilter
 import takagi.ru.monica.data.LocalKeePassDatabase
+import takagi.ru.monica.data.LocalMdbxDatabase
 import takagi.ru.monica.data.bitwarden.BitwardenVault
 import takagi.ru.monica.ui.components.SettingsPanelGroup
 import takagi.ru.monica.ui.components.SettingsPanelRow
 
-private enum class AutofillSourcePicker { SOURCE, KEEPASS, BITWARDEN }
+private enum class AutofillSourcePicker { SOURCE, KEEPASS, BITWARDEN, MDBX }
 
 @Composable
 internal fun AutofillSourceSettings(
@@ -26,6 +27,10 @@ internal fun AutofillSourceSettings(
     onSourceSelected: (AutofillDefaultSourceFilter) -> Unit,
     onKeepassSelected: (Long?) -> Unit,
     onBitwardenSelected: (Long?) -> Unit,
+    mdbxId: Long? = null,
+    mdbxDatabases: List<LocalMdbxDatabase>? = emptyList(),
+    onMdbxSelected: (Long?) -> Unit = {},
+    defaultsReady: Boolean = true,
 ) {
     var picker by remember { mutableStateOf<AutofillSourcePicker?>(null) }
     val allDatabases = stringResource(R.string.password_picker_all_databases)
@@ -42,25 +47,37 @@ internal fun AutofillSourceSettings(
         bitwardenId == null -> allVaults
         else -> bitwardenVaults.firstOrNull { it.id == bitwardenId }?.displayLabel() ?: unavailable
     }
+    val mdbxLabel = when {
+        mdbxDatabases == null -> loading
+        mdbxId == null -> allDatabases
+        else -> mdbxDatabases.firstOrNull { it.id == mdbxId }?.name ?: unavailable
+    }
     SettingsPanelGroup("") {
             SettingsPanelRow(Icons.Outlined.AccountTree,
                 stringResource(R.string.autofill_v2_default_scope_title),
                 source.label() + "\n" + stringResource(R.string.autofill_v2_default_scope_desc),
-                onClick = { picker = AutofillSourcePicker.SOURCE },
+                enabled = defaultsReady, onClick = { picker = AutofillSourcePicker.SOURCE },
                 modifier = Modifier.testTag("autofill-source-setting"))
         if (source == AutofillDefaultSourceFilter.KEEPASS) {
                 SettingsPanelRow(Icons.Outlined.Storage,
                     stringResource(R.string.autofill_v2_default_keepass_title),
                     keepassLabel + "\n" + stringResource(R.string.autofill_v2_default_keepass_desc),
-                    enabled = keepassDatabases != null, onClick = { picker = AutofillSourcePicker.KEEPASS },
+                    enabled = defaultsReady && keepassDatabases != null, onClick = { picker = AutofillSourcePicker.KEEPASS },
                     modifier = Modifier.testTag("autofill-keepass-setting"))
         }
         if (source == AutofillDefaultSourceFilter.BITWARDEN) {
                 SettingsPanelRow(Icons.Outlined.Storage,
                     stringResource(R.string.autofill_v2_default_bitwarden_title),
                     bitwardenLabel + "\n" + stringResource(R.string.autofill_v2_default_bitwarden_desc),
-                    enabled = bitwardenVaults != null, onClick = { picker = AutofillSourcePicker.BITWARDEN },
+                    enabled = defaultsReady && bitwardenVaults != null, onClick = { picker = AutofillSourcePicker.BITWARDEN },
                     modifier = Modifier.testTag("autofill-bitwarden-setting"))
+        }
+        if (source == AutofillDefaultSourceFilter.MDBX) {
+            SettingsPanelRow(Icons.Outlined.Storage,
+                stringResource(R.string.autofill_v2_default_mdbx_title),
+                mdbxLabel + "\n" + stringResource(R.string.autofill_v2_default_mdbx_desc),
+                enabled = defaultsReady && mdbxDatabases != null, onClick = { picker = AutofillSourcePicker.MDBX },
+                modifier = Modifier.testTag("autofill-mdbx-setting"))
         }
     }
     when (picker) {
@@ -81,6 +98,12 @@ internal fun AutofillSourceSettings(
             bitwardenId?.toString() ?: "all",
             onSelect = { key -> onBitwardenSelected(if (key == "all") null else key.toLong()); picker = null },
             onDismiss = { picker = null })
+        AutofillSourcePicker.MDBX -> AutofillSettingsChoiceSheet(
+            stringResource(R.string.autofill_v2_default_mdbx_title), stringResource(R.string.autofill_v2_default_mdbx_desc),
+            listOf(AutofillSettingsChoice("all", allDatabases)) + mdbxDatabases.orEmpty().map { AutofillSettingsChoice(it.id.toString(), it.name) },
+            mdbxId?.toString() ?: "all",
+            onSelect = { key -> onMdbxSelected(if (key == "all") null else key.toLong()); picker = null },
+            onDismiss = { picker = null })
         null -> Unit
     }
 }
@@ -91,6 +114,7 @@ private fun AutofillDefaultSourceFilter.label(): String = stringResource(when (t
     AutofillDefaultSourceFilter.LOCAL -> R.string.filter_monica
     AutofillDefaultSourceFilter.KEEPASS -> R.string.filter_keepass
     AutofillDefaultSourceFilter.BITWARDEN -> R.string.filter_bitwarden
+    AutofillDefaultSourceFilter.MDBX -> R.string.filter_mdbx
 })
 
 private fun BitwardenVault.displayLabel(): String = displayName?.takeIf { it.isNotBlank() }?.let { "$it ($email)" } ?: email

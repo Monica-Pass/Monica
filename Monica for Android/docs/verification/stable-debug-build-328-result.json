@@ -1,0 +1,288 @@
+{
+  "feature": "Opt-in stable ordinary Debug build identity",
+  "version": "1.0.328",
+  "version_code": 12,
+  "date": "2026-11-15",
+  "status": "validated",
+  "scope": "Ordinary Android application Debug variants only",
+  "activation": "-PstableDebugBuild=true",
+  "stable_identity": {
+    "application_id": "takagi.ru.monica",
+    "version_name": "1.0.328-local-stable",
+    "full_version_name": "1.0.328-local-stable",
+    "build_detail_tag": "local-stable",
+    "build_time": "local-stable (timestamp omitted)",
+    "base_version_name": "1.0.328",
+    "git_sha": "ae3f33e66a"
+  },
+  "implementation": {
+    "api": "AGP 9.3.1 public Variant API",
+    "application_build_gradle_sha256": "60be72e90695a575945c71bc30f894b69d70b1e08f55bedac960b8c0f4aa1a5d",
+    "debug_only_condition": "stableDebugBuild && variant.buildType == 'debug'",
+    "changed_production_files": [
+      "app/build.gradle"
+    ],
+    "runtime_code_changes": false
+  },
+  "validation": {
+    "complete_builds": [
+      {
+        "id": "stable-debug-01",
+        "exit": 0,
+        "elapsed_seconds": 178.716,
+        "interpretation": "First build after changing to the opted-in local-stable identity"
+      },
+      {
+        "id": "stable-debug-02",
+        "exit": 0,
+        "elapsed_seconds": 2.522,
+        "interpretation": "Unchanged second complete assembleDebug invocation; compilation and packaging reused"
+      }
+    ],
+    "build_targets": [
+      ":app:assembleDebug",
+      ":app:recordPerformanceBuildModel"
+    ],
+    "abi_option": "-PincludeX86TestAbi",
+    "manual_daily_sequence_override": false,
+    "fixed_timestamp_init_script": false,
+    "excluded_compilation_or_test_tasks": false,
+    "second_task_summary": "63 actionable tasks: 1 executed (local metadata diagnostic), 62 up-to-date",
+    "second_reused_tasks": [
+      "generateDebugBuildConfig",
+      "kspDebugKotlin",
+      "compileDebugKotlin",
+      "compileDebugJavaWithJavac",
+      "processDebugMainManifest",
+      "processDebugManifest",
+      "processDebugManifestForPackage",
+      "dexBuilderDebug",
+      "packageDebug",
+      "assembleDebug"
+    ],
+    "generated_build_config_sha256": "370054c2d5e368bef6f515a1e35203ff169d358ba25d3c5aece5bcdfb9c7dcd3",
+    "generated_build_config_identical": true,
+    "apk_bytes_identical_between_builds": true,
+    "variant_metadata_checked": [
+      "benchmarkRelease",
+      "debug",
+      "nonMinifiedRelease",
+      "release"
+    ],
+    "default_debug_identity_preserved": true,
+    "release_and_profile_variant_identity_preserved": true,
+    "release_comparison_note": "Both same-date model captures used dailySeq=02; normal wall-clock BUILD_TIME advanced from 18:39:30 to 18:41:08 CST and remained a real timestamp. All other non-Debug identity fields and output metadata matched.",
+    "independent_read_only_audit": true,
+    "unit_or_instrumentation_tests_run_for_this_configuration_batch": false
+  },
+  "artifacts": [
+    {
+      "name": "Monica-Android-armeabi-v7a-1.0.328-local-stable.APK",
+      "sha256": "81494b0b2fdd0d33506e1d0c32f6ea852165d807ff1176817aefa3c38c9605f8",
+      "package": "takagi.ru.monica",
+      "version_code": 12,
+      "version_name": "1.0.328-local-stable",
+      "abi": "armeabi-v7a",
+      "signer_sha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "signature_verified": true,
+      "native_libraries_checked": 9,
+      "native_files": [
+        {
+          "name": "lib/armeabi-v7a/libandroidx.graphics.path.so",
+          "elf_machine": 40,
+          "elf_class": 1
+        },
+        {
+          "name": "lib/armeabi-v7a/libargon2jni.so",
+          "elf_machine": 40,
+          "elf_class": 1
+        },
+        {
+          "name": "lib/armeabi-v7a/libargon2native.so",
+          "elf_machine": 40,
+          "elf_class": 1
+        },
+        {
+          "name": "lib/armeabi-v7a/libdatastore_shared_counter.so",
+          "elf_machine": 40,
+          "elf_class": 1
+        },
+        {
+          "name": "lib/armeabi-v7a/libimage_processing_util_jni.so",
+          "elf_machine": 40,
+          "elf_class": 1
+        },
+        {
+          "name": "lib/armeabi-v7a/libjnidispatch.so",
+          "elf_machine": 40,
+          "elf_class": 1
+        },
+        {
+          "name": "lib/armeabi-v7a/libmdbx_ffi.so",
+          "elf_machine": 40,
+          "elf_class": 1
+        },
+        {
+          "name": "lib/armeabi-v7a/libmonica_rust_jni.so",
+          "elf_machine": 40,
+          "elf_class": 1
+        },
+        {
+          "name": "lib/armeabi-v7a/libsurface_util_jni.so",
+          "elf_machine": 40,
+          "elf_class": 1
+        }
+      ]
+    },
+    {
+      "name": "Monica-Android-x86_64-1.0.328-local-stable.APK",
+      "sha256": "f52d74248b129a4e0569376bef23d18b24b1305796935ac4e2c108791f0e5323",
+      "package": "takagi.ru.monica",
+      "version_code": 12,
+      "version_name": "1.0.328-local-stable",
+      "abi": "x86_64",
+      "signer_sha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "signature_verified": true,
+      "native_libraries_checked": 9,
+      "native_files": [
+        {
+          "name": "lib/x86_64/libandroidx.graphics.path.so",
+          "elf_machine": 62,
+          "elf_class": 2
+        },
+        {
+          "name": "lib/x86_64/libargon2jni.so",
+          "elf_machine": 62,
+          "elf_class": 2
+        },
+        {
+          "name": "lib/x86_64/libargon2native.so",
+          "elf_machine": 62,
+          "elf_class": 2
+        },
+        {
+          "name": "lib/x86_64/libdatastore_shared_counter.so",
+          "elf_machine": 62,
+          "elf_class": 2
+        },
+        {
+          "name": "lib/x86_64/libimage_processing_util_jni.so",
+          "elf_machine": 62,
+          "elf_class": 2
+        },
+        {
+          "name": "lib/x86_64/libjnidispatch.so",
+          "elf_machine": 62,
+          "elf_class": 2
+        },
+        {
+          "name": "lib/x86_64/libmdbx_ffi.so",
+          "elf_machine": 62,
+          "elf_class": 2
+        },
+        {
+          "name": "lib/x86_64/libmonica_rust_jni.so",
+          "elf_machine": 62,
+          "elf_class": 2
+        },
+        {
+          "name": "lib/x86_64/libsurface_util_jni.so",
+          "elf_machine": 62,
+          "elf_class": 2
+        }
+      ]
+    },
+    {
+      "name": "Monica-Android-arm64-v8a-1.0.328-local-stable.APK",
+      "sha256": "9fcf0b124f31528452c7613bdcb0be05c2a22b6acae27d3fa678762925c9e404",
+      "package": "takagi.ru.monica",
+      "version_code": 12,
+      "version_name": "1.0.328-local-stable",
+      "abi": "arm64-v8a",
+      "signer_sha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "signature_verified": true,
+      "native_libraries_checked": 9,
+      "native_files": [
+        {
+          "name": "lib/arm64-v8a/libandroidx.graphics.path.so",
+          "elf_machine": 183,
+          "elf_class": 2
+        },
+        {
+          "name": "lib/arm64-v8a/libargon2jni.so",
+          "elf_machine": 183,
+          "elf_class": 2
+        },
+        {
+          "name": "lib/arm64-v8a/libargon2native.so",
+          "elf_machine": 183,
+          "elf_class": 2
+        },
+        {
+          "name": "lib/arm64-v8a/libdatastore_shared_counter.so",
+          "elf_machine": 183,
+          "elf_class": 2
+        },
+        {
+          "name": "lib/arm64-v8a/libimage_processing_util_jni.so",
+          "elf_machine": 183,
+          "elf_class": 2
+        },
+        {
+          "name": "lib/arm64-v8a/libjnidispatch.so",
+          "elf_machine": 183,
+          "elf_class": 2
+        },
+        {
+          "name": "lib/arm64-v8a/libmdbx_ffi.so",
+          "elf_machine": 183,
+          "elf_class": 2
+        },
+        {
+          "name": "lib/arm64-v8a/libmonica_rust_jni.so",
+          "elf_machine": 183,
+          "elf_class": 2
+        },
+        {
+          "name": "lib/arm64-v8a/libsurface_util_jni.so",
+          "elf_machine": 183,
+          "elf_class": 2
+        }
+      ]
+    }
+  ],
+  "signature_reference": {
+    "kind": "Previously retained ordinary Debug APK; certificate comparison only, not a covering-install test",
+    "apk_sha256": "c134844e1c561dea4d779345698331654b95240fb33fc9b45dbb3fb894e42284",
+    "certificate_sha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0"
+  },
+  "untouched_by_this_change": {
+    "fdroid_build_config": true,
+    "fdroid_existing_static_inputs": true,
+    "linux_rust_ci": true,
+    "workflow_and_native_gradle_scripts": true,
+    "signing_and_abi_configuration": true,
+    "default_debug_and_all_release_variants": true
+  },
+  "limitations": [
+    "Two local build observations, not a controlled old-default versus new-mode benchmark or a universal speedup ratio.",
+    "No claim of application runtime speed improvement.",
+    "No new Release binary build, installation or device test for this configuration-only batch; Release behavior checked at configuration level.",
+    "AndroidTest component dynamic metadata is outside this application-only change; instrumentation test packaging reuse was not validated.",
+    "No Linux CI execution or cache optimization validated.",
+    "The opt-in Debug marker omits per-build timestamps and sequence; GIT_SHA identifies the committed revision but is not a hash of uncommitted changes."
+  ],
+  "delivery": {
+    "committed": false,
+    "pushed": false,
+    "published": false,
+    "apk_delivered": false
+  },
+  "evidence_sha256": {
+    "stable-debug-01.json": "caee8634f37ae82b4ae1ad1145f6784de5ad8abb58cf45f87b8ea270c9d48cd3",
+    "stable-debug-02.json": "d9f5571094404aa48dd61b543f65745dc9375a034e968c3f5f97e53e6e6a5513",
+    "default-model.json": "0bd73cc315c0a14ca0cfa01ea3c2450bb17716803d7538cbb1556e36717eee5e",
+    "stable-model.json": "34dbc6fcd5ff6504f5f59661390c9cc7fdcc9ac320806510b836a5c8abe9b180",
+    "independent-artifact-review.json": "86a5de3ad2697c00c05383d674f05ddd05fe8197b9416124a2a80484a785f85d"
+  }
+}

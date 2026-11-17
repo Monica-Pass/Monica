@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.328",
+  "published": false,
+  "rootCause": "Raw import group names versus segment-encoded native catalogue paths, plus missing import entry/group UUIDs.",
+  "fix": "Use the native traversal for new imports and uniquely resolve old raw projection paths using the authenticated catalogue. Keep ambiguous UUID-less rows unassigned and preserve them in the vault item list.",
+  "sharedFiles": [
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/KeePassKdbxViewModel.kt",
+      "sha256": "abaa84cc0577eb9535bb80959dccfd5387d68e3b45da32044c7581e576d9eb3b"
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultOverviewProjection.kt",
+      "sha256": "c71f8c8eea87bd4f79d23100d0158c65dc69701c4197d568ef3375ad96fd9f98"
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/ui/vaultv2/KdbxImportFolderIdentityTest.kt",
+      "sha256": "2af4236d1162560b350f90ca71dfe2c403b8c735d9791ec80a5c17d7e0ecc1f4"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/ui/vaultv2/VaultOverviewPaneTest.kt",
+      "sha256": "0ef73a2f7df9097a9dd93ac5a10311c8e34814f8142e089c81b70292c528e917"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/ui/vaultv2/KdbxImportIdentityInstrumentedTest.kt",
+      "sha256": "a41aa9cce5cc71cd9bdb26701bae1b45c14aa95b24baf62a21b1bd90847d189d"
+    }
+  ],
+  "editions": {
+    "main": {
+      "jvm": [
+        {
+          "class": "KdbxImportFolderIdentityTest",
+          "tests": 6,
+          "seconds": 3.17
+        },
+        {
+          "class": "VaultOverviewKeePassFolderTest",
+          "tests": 6,
+          "seconds": 0.203
+        },
+        {
+          "class": "VaultFolderNavigationTest",
+          "tests": 9,
+          "seconds": 0.185
+        },
+        {
+          "class": "VaultOverviewProjectionTest",
+          "tests": 8,
+          "seconds": 0.103
+        }
+      ],
+      "jvmTotal": 29,
+      "deviceMethods": 4,
+      "device": {
+        "command": [
+          "D:/AndroidSDK/platform-tools/adb.exe",
+          "-s",
+          "127.0.0.1:16448",
+          "shell",
+          "am",
+          "instrument",
+          "--user",
+          "10",
+          "-w",
+          "-r",
+          "-e",
+          "issue179User",
+          "10",
+          "-e",
+          "class",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#importedKdbxFoldersKeepCountsAndTargetsThroughNativeReread,takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#kdbxOverviewNavigatesDuplicateParentsByUuidAndLocksWithoutWriting,takagi.ru.monica.ui.vaultv2.KdbxImportIdentityInstrumentedTest",
+          "takagi.ru.monica.perf328main.test/androidx.test.runner.AndroidJUnitRunner"
+        ],
+        "passed": true,
+        "appSha256": "7d6d67ada583bc615bbf2df5838680e7594625f3e8bac7c5cebd3eddc62b7e28",
+        "testSha256": "5501c16d757bf767a04dc92d580729226ca2f48249e0281ea1c28fff1118e798",
+        "seconds": 23.553
+      },
+      "buildSeconds": 18.744
+    },
+    "fd": {
+      "jvm": [
+        {
+          "class": "KdbxImportFolderIdentityTest",
+          "tests": 6,
+          "seconds": 3.17
+        },
+        {
+          "class": "VaultOverviewKeePassFolderTest",
+          "tests": 6,
+          "seconds": 0.205
+        },
+        {
+          "class": "VaultFolderNavigationTest",
+          "tests": 9,
+          "seconds": 0.212
+        },
+        {
+          "class": "VaultOverviewProjectionTest",
+          "tests": 8,
+          "seconds": 0.099
+        }
+      ],
+      "jvmTotal": 29,
+      "deviceMethods": 4,
+      "device": {
+        "command": [
+          "D:/AndroidSDK/platform-tools/adb.exe",
+          "-s",
+          "127.0.0.1:16448",
+          "shell",
+          "am",
+          "instrument",
+          "--user",
+          "10",
+          "-w",
+          "-r",
+          "-e",
+          "issue179User",
+          "10",
+          "-e",
+          "class",
+          "takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#importedKdbxFoldersKeepCountsAndTargetsThroughNativeReread,takagi.ru.monica.ui.vaultv2.VaultOverviewPaneTest#kdbxOverviewNavigatesDuplicateParentsByUuidAndLocksWithoutWriting,takagi.ru.monica.ui.vaultv2.KdbxImportIdentityInstrumentedTest",
+          "takagi.ru.monica.perf328fd.test/androidx.test.runner.AndroidJUnitRunner"
+        ],
+        "passed": true,
+        "appSha256": "3f0f9a19b0264355697f8f7c85a24b4e860eb959e3d61c1efe2669165ea6776f",
+        "testSha256": "c2a367ac1e98c13bcc74e9446350707583733dd795b2973c9ffc018571f6053b",
+        "seconds": 19.933
+      },
+      "buildSeconds": 44.701
+    }
+  },
+  "limitations": [
+    "Synthetic KDBX4, MuMu API35/x86_64/Debug only.",
+    "No user vault, physical/OEM device, new R8 upgrade, external provider or cloud roundtrip validation.",
+    "No database schema, cipher/KDF, startup or R8 configuration changes. UUID-less old projections are not rewritten by a name guess; normal native reload remains authoritative.",
+    "UI tests invoke the production import callback with a provider URI; system file-picker selection is not independently tested."
+  ],
+  "originalFailures": [
+    "main-jvm-red01: test constructor type error, no bug verdict",
+    "main-jvm-red02/red02.xml: exact 0/1 versus opened 1/0 reproduction",
+    "main-native-red01: previous frozen production APK and new test APK; 2 native groups produced 4 overview rows",
+    "main-debug-green01: 21/24 JVM, three Android Uri stub failures from alias decoding",
+    "fd-debug-green01 and main-debug-final03: 28/29 JVM, test incorrectly assumed encoded-name lexical order; key-specific count assertions corrected",
+    "F-Droid English metadata exceeded 500 characters; shortened to 499 and rechecked",
+    "First image extraction used wrong run-as option order; 32-byte error output discarded and replaced by validated PNGs"
+  ],
+  "noCommitPushReleaseApkDelivery": true,
+  "cleanup": {
+    "originalUser0Preserved": true,
+    "user0DataNotModifiedOrRecounted": true,
+    "ownedUser10Removed": true,
+    "users": "Users:\r\n\tUserInfo{0:擁有者:4c13} running\r\n",
+    "currentUser": "0",
+    "firstRemovalRefused": true,
+    "cleanupRestartUsed": true,
+    "vmDiskDirectoryPreserved": true,
+    "vmStopped": true,
+    "vmInfo": {
+      "android_version": "15.0",
+      "created_timestamp": 1794331605453974,
+      "disk_size_bytes": 12671355474,
+      "error_code": 0,
+      "hyperv_enabled": true,
+      "index": "2",
+      "info_source": "rpc",
+      "is_android_started": false,
+      "is_main": false,
+      "is_process_started": false,
+      "name": "Monica Release Upgrade Test"
+    }
+  },
+  "checks": {
+    "repositoryConfiguredDiffCheck": [
+      0,
+      0
+    ],
+    "fdroidMetadata": "passed",
+    "fdroidScriptTests": 6,
+    "englishChangelogCharacters": 499,
+    "newFilesWhitespace": "passed",
+    "baselineWholeFileWhitespace": "Existing importer whitespace kept; repository configured diff passes. Wrong autocrlf override failure excluded."
+  }
+}

@@ -21,7 +21,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Assume.assumeTrue
 import org.junit.Rule
 import org.junit.Test
-import takagi.ru.monica.ui.screens.AutofillSettingsV2Screen
+import takagi.ru.monica.ui.screens.HyperOsCompatibilitySettingsScreen
 import takagi.ru.monica.ui.theme.MonicaTheme
 
 class HyperOsSaveCompatibilitySettingsTest {
@@ -38,7 +38,7 @@ class HyperOsSaveCompatibilitySettingsTest {
             .setHyperOsSaveCompatibilityEnabled(mode.toBoolean())
     }
 
-    @Test fun compatibilityCanBeEnabledAndDisabledFromSaveSettings() = runBlocking {
+    @Test fun compatibilityCanBeEnabledAndDisabledFromDeveloperCompatibilitySettings() = runBlocking {
         val args = InstrumentationRegistry.getArguments()
         assumeTrue(android.os.Process.myUid() / 100000 > 0 && args.getString("autofillIsolatedUser") == "true")
         val context = InstrumentationRegistry.getInstrumentation().targetContext
@@ -52,7 +52,7 @@ class HyperOsSaveCompatibilitySettingsTest {
                 CompositionLocalProvider(LocalConfiguration provides config,
                     LocalContext provides LocalContext.current.createConfigurationContext(config)) {
                     MonicaTheme(darkTheme = false) {
-                        AutofillSettingsV2Screen(onNavigateBack = {}, onNavigateToBlockedFields = {}, onNavigateToSaveBlockedTargets = {})
+                        HyperOsCompatibilitySettingsScreen(onNavigateBack = {})
                     }
                 }
             }

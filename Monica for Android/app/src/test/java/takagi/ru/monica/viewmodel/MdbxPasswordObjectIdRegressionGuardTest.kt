@@ -17,7 +17,7 @@ class MdbxPasswordObjectIdRegressionGuardTest {
         ).readText()
 
         val mdbxObjectIdBody = passwordRepositorySource
-            .substringAfter("private fun PasswordEntry.mdbxPasswordObjectId(): String")
+            .substringAfter("private suspend fun PasswordEntry.mdbxPasswordObjectId(): String")
             .substringBefore("suspend fun archivePasswordById")
 
         assertTrue(

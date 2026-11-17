@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_compatibility_title">"HyperOS 相容設置"</string>
+    <string name="hyperos_compatibility_subtitle">"通行密鑰、存密提示與程式動效"</string>
+    <string name="hyperos_compatibility_shared_settings_note">"諸選項與常設共用其值。減少動效僅及 Monica 程式之內。"</string>
+</resources>

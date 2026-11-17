@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.baseline.profile)
     id 'kotlin-parcelize'
 }
 
@@ -158,16 +159,38 @@ android {
         aidl true
     }
 
+    // Opt-in local Debug builds omit time/sequence inputs so unchanged code can reuse work.
+    // Keep the normal Debug and every Release/profiling variant's build identity unchanged.
+    def stableDebugBuild = project.providers.gradleProperty('stableDebugBuild')
+            .map { it.trim().equalsIgnoreCase('true') }.getOrElse(false)
+
     // Keep the existing naming helpers while using AGP's public Variant API.
     def components = project.extensions.getByName('androidComponents')
     components.onVariants(components.selector().all()) { variant ->
+        def stableDebug = stableDebugBuild && variant.buildType == 'debug'
+        if (stableDebug) {
+            def stableVersionName = "${baseVersionName}-local-stable".toString()
+            [
+                FULL_VERSION_NAME: stableVersionName,
+                BUILD_DETAIL_TAG: 'local-stable',
+                BUILD_TIME: 'local-stable (timestamp omitted)'
+            ].each { name, value ->
+                variant.buildConfigFields.put(name, new com.android.build.api.variant.BuildConfigField(
+                        'String', groovy.json.JsonOutput.toJson(value), 'Opt-in local Debug identity'))
+            }
+        }
         variant.outputs.each { output ->
             // 目标格式: Monica-Android-[架构]-[版本号]-yyMMddVV-SS.APK
             def apkPrefix = 'Monica'
             def archTag = resolveArchTag(output)
             def versionNameTag = sanitizeTag(project.findProperty('apkVersionName') ?: baseVersionName, '0.0.0')
-            def namePrefix = "${apkPrefix}-Android-${archTag}-${versionNameTag}-${buildDateTag}${buildVersionTag}"
-            output.outputFileName.set("${namePrefix}-${buildDailySeq}.APK".toString())
+            if (stableDebug) {
+                output.versionName.set("${baseVersionName}-local-stable".toString())
+                output.outputFileName.set("${apkPrefix}-Android-${archTag}-${versionNameTag}-local-stable.APK".toString())
+            } else {
+                def namePrefix = "${apkPrefix}-Android-${archTag}-${versionNameTag}-${buildDateTag}${buildVersionTag}"
+                output.outputFileName.set("${namePrefix}-${buildDailySeq}.APK".toString())
+            }
         }
     }
 
@@ -230,6 +253,10 @@ ksp {
 }
 
 dependencies {
+    implementation project(':hyperos-hooks')
+    implementation 'io.github.libxposed:service:102.0.0'
+    implementation 'io.github.libxposed:interface:102.0.0'
+    baselineProfile project(':baselineprofile')
     // Offline phone parsing with country-specific numbering metadata (Apache-2.0).
     implementation "com.googlecode.libphonenumber:libphonenumber:9.0.17"
     // Align application runtimes without forcing the compiler/processor classpaths.
@@ -400,4 +427,21 @@ dependencies {
     androidTestImplementation libs.androidx.ui.test.junit4
     debugImplementation libs.androidx.ui.tooling
     debugImplementation libs.androidx.ui.test.manifest
+}
+
+
+// Generation is explicit; normal builds consume reviewed rules without needing a device.
+baselineProfile {
+    automaticGenerationDuringBuild = false
+    saveInSrc = true
+    mergeIntoMain = true
+    // Dependencies already supply their own profiles; keep generated rules scoped to Monica.
+    filter { include "takagi.ru.monica.**" }
+}
+
+// Synthetic profiling variants must never replace the user's normal installation.
+androidComponents.finalizeDsl { dsl ->
+    dsl.buildTypes.matching { it.name.startsWith('nonMinified') || it.name.startsWith('benchmark') }.configureEach {
+        applicationIdSuffix = '.benchmark'
+    }
 }

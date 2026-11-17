@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_diagnostics_title">"Diagnosi della configurazione"</string>
+    <string name="hyperos_diagnostics_note">"Controlla servizi e selezione, non il funzionamento delle passkey. La lettura delle impostazioni sicure richiede Shizuku o root autorizzato."</string>
+    <string name="hyperos_diag_declaration">"Servizio Monica e capacità passkey validi"</string>
+    <string name="hyperos_diag_feature">"Funzione credenziali del sistema disponibile"</string>
+    <string name="hyperos_diag_unrestricted">"Compilazione consentita per questo utente Android"</string>
+    <string name="hyperos_diag_framework">"Il sistema riconosce Monica come attivo"</string>
+    <string name="hyperos_diag_registered">"Monica registrato come servizio credenziali"</string>
+    <string name="hyperos_drift_title">"Rileva modifiche dopo la riparazione"</string>
+    <string name="hyperos_drift_note">"Controlla ogni 30 secondi quando la pagina è visibile e alla riapertura. Non riscrive mai le impostazioni automaticamente."</string>
+    <string name="hyperos_drift_result">"Confronto con l’ultima riparazione verificata"</string>
+    <string name="hyperos_drift_off">"Rilevamento disattivato"</string>
+    <string name="hyperos_drift_no_baseline">"Applica prima una configurazione per creare un riferimento."</string>
+    <string name="hyperos_drift_unchanged">"Configurazione invariata"</string>
+    <string name="hyperos_drift_changed">"Configurazione modificata. Potresti aver cambiato gestore; verifica prima di ripristinare."</string>
+    <string name="hyperos_update_failed">"Salvataggio non riuscito. Aggiorna e controlla lo stato."</string>
+    <string name="hyperos_check_yes">"Sì"</string>
+    <string name="hyperos_check_no">"No"</string>
+    <string name="hyperos_check_unsupported">"Non supportato"</string>
+    <string name="hyperos_module_title">"Modulo di compatibilità facoltativo"</string>
+    <string name="hyperos_module_requirements">"Richiede LSPosed API 102+ compatibile, Android 14–16 e utente proprietario Xiaomi/Redmi/POCO. Attiva Monica e gli ambiti necessari nel framework. Tutte le opzioni sono inizialmente disattivate."</string>
+    <string name="hyperos_module_connected">"Framework connesso; non dimostra che gli hook funzionino."</string>
+    <string name="hyperos_module_disconnected">"Framework compatibile non disponibile"</string>
+    <string name="hyperos_module_scope">"Ambiti autorizzati: %1$s"</string>
+    <string name="hyperos_hook_reset">"Blocca i ripristini del Centro sicurezza"</string>
+    <string name="hyperos_hook_reset_note">"Intercetta solo metodi identificati di configurazione delle credenziali."</string>
+    <string name="hyperos_hook_settings">"Compatibilità della selezione di sistema"</string>
+    <string name="hyperos_hook_settings_note">"Adatta i controller identificati; i metodi incompatibili mantengono il comportamento originale."</string>
+    <string name="hyperos_hook_chooser">"Selettore credenziali Google"</string>
+    <string name="hyperos_hook_chooser_note">"Richiede il selettore di sistema Google Play services attivo."</string>
+    <string name="hyperos_hook_hybrid">"Credenziali tra dispositivi"</string>
+    <string name="hyperos_hook_hybrid_note">"Usa il servizio ibrido Google verificato e il percorso dello scanner Xiaomi."</string>
+    <string name="hyperos_module_restart">"Dopo l’attivazione riavvia i processi interessati o il dispositivo. La disattivazione interrompe le modifiche quando il framework comunica il cambiamento. Nessun riavvio automatico."</string>
+    <string name="hyperos_physical_feedback">"Non testato su dispositivi HyperOS fisici. Segnala versione ROM e passaggi in una issue GitHub, senza password o chiavi."</string>
+    <string name="hyperos_reference_projects">"Progetto di riferimento e licenza"</string>
+    <string name="hyperos_module_confirmation">"Attivare questa modifica sperimentale del sistema? Richiede framework e componenti compatibili. Può influire su altri gestori. Puoi disattivarla qui o nel framework."</string>
+    <string name="hyperos_feedback_action">"Segnala incompatibilità"</string>
+    <string name="hyperos_module_entry_note">"Disattivato inizialmente · Richiede LSPosed compatibile"</string>
+</resources>

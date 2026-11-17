@@ -25,10 +25,18 @@ internal class WalletAutofillRepository(
     )
 
     @Volatile private var origins: Map<Long, Origin> = emptyMap()
+    @Volatile private var nativeMdbxSource = false
 
     fun clear() { origins = emptyMap() }
 
-    suspend fun loadEmbeddedItems(): List<SecureItem> = withContext(Dispatchers.IO) {
+    suspend fun loadEmbeddedItems(localOnly: Boolean = false): List<SecureItem> =
+        loadEmbeddedItems(if (localOnly) AutofillScope.Local else AutofillScope.All, nativeMdbx = false)
+
+    /** Scoped picker reads pair with AutofillPasswordSource's actual native MDBX wallets. */
+    suspend fun loadEmbeddedItems(scope: AutofillScope): List<SecureItem> = loadEmbeddedItems(scope, nativeMdbx = true)
+
+    private suspend fun loadEmbeddedItems(scope: AutofillScope, nativeMdbx: Boolean): List<SecureItem> = withContext(Dispatchers.IO) {
+        nativeMdbxSource = nativeMdbx
         val loaded = database.withTransaction {
             val owners = database.passwordEntryDao().getWalletPasswordRows().associateBy { it.id }
             val fields = database.customFieldDao().getWalletFields().groupBy { it.entryId }
@@ -36,6 +44,12 @@ internal class WalletAutofillRepository(
                 owners.values.forEach { owner ->
                     currentCoroutineContext().ensureActive()
                     if (!owner.hasSingleOwner()) return@forEach
+                    if (nativeMdbx && owner.mdbxDatabaseId != null) return@forEach
+                    // The decorated metadata has the same ownership as every resulting wallet item.
+                    // Apply the existing predicate before decoding any out-of-scope secret.
+                    if (!owner.decorate(SecureItem(
+                            itemType = ItemType.BANK_CARD, title = "", itemData = ""
+                        )).matchesWalletAutofillScope(scope)) return@forEach
                     val ownerFields = fields[owner.id].orEmpty()
                     ownerFields.forEach { field ->
                         safely { embedded(owner, field) }?.let(::add)
@@ -50,12 +64,14 @@ internal class WalletAutofillRepository(
             }
         }
         currentCoroutineContext().ensureActive()
-        origins = loaded.associateBy { it.item.id }
-        loaded.map { it.item }
+        val visible = loaded.filter { it.item.matchesWalletAutofillScope(scope) }
+        origins = visible.associateBy { it.item.id }
+        visible.map { it.item }
     }
 
     /** Resolve at selection time: deletion, moving vaults and editing must not fill a stale secret. */
     suspend fun resolveCurrent(expected: SecureItem): SecureItem? = withContext(Dispatchers.IO) {
+        if (nativeMdbxSource && expected.mdbxDatabaseId != null) return@withContext null
         val origin = if (expected.id < 0) origins[expected.id]?.takeIf { it.item == expected }
             ?: return@withContext null else null
         safely {

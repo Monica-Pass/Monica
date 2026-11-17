@@ -662,6 +662,50 @@ interface PasswordEntryDao {
     @Query("SELECT * FROM password_entries WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND (isDeleted = 0 AND isArchived = 0) ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")
     fun getActiveEntries(): Flow<List<PasswordEntry>>
 
+    /**
+     * Local-picker candidates without opening original vaults. Legacy empty Bitwarden bindings
+     * can still represent local ownership; the caller must apply isLocalOnlyEntry() so Kotlin's
+     * full blank-string semantics remain authoritative. Registered KeePass mirrors stay excluded.
+     */
+    @Transaction
+    @Query("""
+        SELECT * FROM password_entries
+        WHERE isDeleted = 0 AND isArchived = 0 AND mdbx_database_id IS NULL
+          AND (bitwarden_vault_id IS NULL OR bitwarden_local_modified = 0)
+          AND (keepassDatabaseId IS NULL OR (
+              bitwarden_vault_id IS NOT NULL AND NOT EXISTS (
+                  SELECT 1 FROM local_keepass_databases WHERE id = password_entries.keepassDatabaseId
+              )
+          ))
+        ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC
+    """)
+    suspend fun getActiveLocalAutofillCandidates(): List<PasswordEntry>
+
+    /** Native vaults are read from their originals, even when an old mirror still exists. */
+    @Transaction
+    @Query("""
+        SELECT * FROM password_entries
+        WHERE isDeleted = 0 AND isArchived = 0 AND mdbx_database_id IS NULL
+          AND NOT EXISTS (
+              SELECT 1 FROM local_keepass_databases WHERE id = password_entries.keepassDatabaseId
+          )
+          AND (:source = 'ALL'
+            OR (:source = 'KEEPASS' AND keepassDatabaseId IS NOT NULL
+                AND (:databaseId IS NULL OR keepassDatabaseId = :databaseId))
+            OR (:source = 'BITWARDEN' AND bitwarden_vault_id IS NOT NULL
+                AND (:databaseId IS NULL OR bitwarden_vault_id = :databaseId)))
+        ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC
+    """)
+    suspend fun getScopedRoomAutofillCandidates(source: String, databaseId: Long?): List<PasswordEntry>
+
+    /** Local hide state only; native credentials and their revision never come from this projection. */
+    @Query("""
+        SELECT CASE WHEN replica_group_id GLOB 'password:*' AND LENGTH(replica_group_id) > 9
+            THEN replica_group_id ELSE 'password:' || id END
+        FROM password_entries WHERE mdbx_database_id = :databaseId AND (isDeleted = 1 OR isArchived = 1)
+    """)
+    suspend fun getSuppressedMdbxAutofillObjectIds(databaseId: Long): List<String>
+
     /** Same visibility and ordering as getActiveEntries, restricted to one save's owners. */
     @Transaction
     @Query("SELECT * FROM password_entries WHERE $MDBX_AVAILABLE_ENTRY_FILTER AND isDeleted = 0 AND isArchived = 0 AND (id IN (:originalIds) OR replica_group_id = :replicaGroupId) ORDER BY isFavorite DESC, sortOrder ASC, updatedAt DESC")

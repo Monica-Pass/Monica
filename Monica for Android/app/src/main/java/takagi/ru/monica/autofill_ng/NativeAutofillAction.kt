@@ -41,7 +41,13 @@ internal class NativeAutofillAction private constructor(
             now in issuedAt until expiresAt && expiresAt - issuedAt in 1..MAX_TTL_MS &&
             AutofillPasswordSource.isSelectionFromCurrentProcess(selection) &&
             SecurityManager.dataReadGeneration.value == selection.generation &&
-            (KeePassKdbxService.nativeLockVersions.value[selection.databaseId] ?: 0L) == selection.lockVersion
+            when (selection.storage) {
+                NativeAutofillStorage.KEEPASS ->
+                    (KeePassKdbxService.nativeLockVersions.value[selection.databaseId] ?: 0L) == selection.lockVersion
+                // MDBX has a separate ID namespace. Its disclosure and current head are
+                // revalidated by getSelected; a same-numbered KDBX lock is unrelated.
+                NativeAutofillStorage.MDBX -> true
+            }
     }
 
     suspend fun resolve(context: Context): PasswordEntry? = withContext(Dispatchers.IO) {
@@ -72,6 +78,7 @@ internal class NativeAutofillAction private constructor(
         putLong("lock", selection.lockVersion)
         putString("process", selection.processNonce)
         putLong("generation", selection.generation)
+        putString("storage", selection.storage.name)
         putString("target", targetPackage)
         putString("domain", webDomain)
         putLong("issued", issuedAt)
@@ -98,9 +105,10 @@ internal class NativeAutofillAction private constructor(
 
         fun fromBundle(bundle: Bundle?): NativeAutofillAction? = runCatching {
             bundle ?: return@runCatching null
+            val storage = bundle.nativeAutofillStorage("storage") ?: return@runCatching null
             val selection = NativeAutofillSelection(bundle.getLong("database"),
                 requireNotNull(bundle.getString("entry")), requireNotNull(bundle.getString("revision")),
-                bundle.getLong("lock"), requireNotNull(bundle.getString("process")), bundle.getLong("generation"))
+                bundle.getLong("lock"), requireNotNull(bundle.getString("process")), bundle.getLong("generation"), storage)
             NativeAutofillAction(selection, bundle.getString("target"), bundle.getString("domain"),
                 bundle.getLong("issued"), bundle.getLong("expires"), bundle.getLong("operation"),
                 bundle.getBoolean("target_valid", false))

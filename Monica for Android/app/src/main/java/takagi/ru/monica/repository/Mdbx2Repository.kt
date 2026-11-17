@@ -98,6 +98,34 @@ class Mdbx2Repository(
 
     override suspend fun requiresStrictMutationConsistency(databaseId: Long): Boolean = true
 
+    internal suspend fun readAutofillSnapshot(databaseId: Long, checkActive: () -> Unit): MdbxAutofillSnapshot =
+        sessions.withAutofillReadVault(databaseId, checkActive) { _, vault, namespace, checkRequest ->
+            MdbxAutofillReader.snapshot(vault, databaseId, namespace, securityManager::decryptDataIfMonicaCiphertext, checkRequest)
+        }
+
+    internal suspend fun readAutofillCredential(databaseId: Long, objectId: String, expectedRevision: String,
+        checkActive: () -> Unit): MdbxAutofillCredential? =
+        sessions.withAutofillReadVault(databaseId, checkActive) { _, vault, namespace, checkRequest ->
+            MdbxAutofillReader.credential(vault, databaseId, namespace, objectId, expectedRevision,
+                securityManager::decryptDataIfMonicaCiphertext, checkRequest)
+        }
+
+    internal suspend fun readAutofillWallet(databaseId: Long, objectId: String, expectedRevision: String,
+        checkActive: () -> Unit): MdbxAutofillWallet? =
+        sessions.withAutofillReadVault(databaseId, checkActive) { _, vault, namespace, checkRequest ->
+            MdbxAutofillReader.wallet(vault, databaseId, namespace, objectId, expectedRevision, checkRequest)
+        }
+
+    /** No native compare-and-swap API is available: confirm existing bindings, never overwrite. */
+    internal suspend fun patchAutofillUriBinding(databaseId: Long, objectId: String, expectedRevision: String,
+        website: String?, appPackageName: String?, appName: String?, checkActive: () -> Unit): Boolean {
+        val current = readAutofillCredential(databaseId, objectId, expectedRevision, checkActive)?.entry ?: return false
+        checkActive()
+        return (website == null || website == current.website) &&
+            (appPackageName == null || appPackageName == current.appPackageName) &&
+            (appName == null || appName == current.appName)
+    }
+
     override suspend fun requireRoomMirrorAllowed(databaseId: Long) {
         val database = databaseDao.getDatabaseById(databaseId) ?: error("MDBX database not found")
         requireMdbxAppReplicaAllowed(database)

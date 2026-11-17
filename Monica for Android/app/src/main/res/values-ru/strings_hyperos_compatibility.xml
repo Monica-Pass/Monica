@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hyperos_compatibility_title">"Совместимость с HyperOS"</string>
+    <string name="hyperos_compatibility_subtitle">"Ключи доступа, запросы сохранения и анимации приложения"</string>
+    <string name="hyperos_compatibility_shared_settings_note">"Эти параметры используют те же значения, что и общие настройки. Уменьшение анимаций влияет на анимации внутри Monica."</string>
+</resources>

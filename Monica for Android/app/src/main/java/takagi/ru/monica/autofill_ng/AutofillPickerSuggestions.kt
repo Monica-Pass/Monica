@@ -11,18 +11,18 @@ internal object AutofillPickerSuggestions {
         preferences: AutofillPreferences,
         appName: String?,
         urlRules: Map<Long, List<takagi.ru.monica.data.model.PasswordUrlRules.Rule>> = emptyMap(),
+        activeScope: AutofillScope? = null,
     ): List<PasswordEntry> {
+        val scope = activeScope ?: if (args.suggestedPasswordIds == null) preferences.v2DefaultScope.first() else null
+        val scoped = if (scope == null) entries else entries.filter { it.matchesAutofillScope(scope) }
         args.suggestedPasswordIds?.let { ids ->
-            val byId = entries.associateBy { it.id }
+            val byId = scoped.associateBy { it.id }
             return ids.distinct().mapNotNull(byId::get)
         }
         val packageName = args.applicationId.orEmpty()
         if (packageName.isBlank() && args.webDomain.isNullOrBlank()) return emptyList()
         val uri = AutofillSuggestionPolicy.resolveUriStrategyConfig(
             preferences.domainMatchStrategy.first(), preferences.isBitwardenSubdomainMatchEnabled.first())
-        val scoped = AutofillSuggestionPolicy.applyDefaultSourceFilter(entries,
-            preferences.v2DefaultSourceFilter.first(), preferences.v2DefaultKeepassDatabaseId.first(),
-            preferences.v2DefaultBitwardenVaultId.first())
         val matcher = BitwardenLikeAutofillMatcherNg()
         return try {
             matcher.match(scoped, packageName, args.webDomain, appName,
