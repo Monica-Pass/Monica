@@ -11,7 +11,7 @@
 
 **一个用于管理密码、验证码、卡片与笔记的 Android 应用**
 
-当前源码为 **1.0.328 未发布开发版本**；功能与依赖更新不代表已正式发布。
+当前版本为 **1.0.328**，完整更新内容见仓库根目录发行说明。
 
 [功能特性](#-功能特性) • [安装说明](#-安装说明) • [使用指南](#-使用指南) • [技术栈](#-技术栈) • [截图展示](#-截图展示) • [贡献指南](#-贡献指南)
 
@@ -380,7 +380,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 - [dingwen07/CredentialProviderManager](https://github.com/dingwen07/CredentialProviderManager)（GPL-3.0）：凭据提供方、自动填充服务及系统配置诊断的设计参考。
 - [cr-zhichen/password-manager-switch](https://github.com/cr-zhichen/password-manager-switch)（MIT）：默认密码管理器配置工具的系统设置读写、校验与恢复逻辑来源。
 
-具体参考版本与适配范围见[HyperOS 来源说明](app/src/main/assets/licenses/hyperos-builtins.txt)；随包保留 [HyperPasskey GPL-3.0 许可证](app/src/main/assets/licenses/HyperPasskey-GPL-3.0.txt)及 [password-manager-switch MIT 声明](app/src/main/assets/licenses/password-manager-switch.txt)。1.0.328（未发布）的内置模块为实验功能，默认关闭，需要兼容的模块框架，尚未经过 HyperOS 实体机验证。
+具体参考版本与适配范围见[HyperOS 来源说明](app/src/main/assets/licenses/hyperos-builtins.txt)；随包保留 [HyperPasskey GPL-3.0 许可证](app/src/main/assets/licenses/HyperPasskey-GPL-3.0.txt)及 [password-manager-switch MIT 声明](app/src/main/assets/licenses/password-manager-switch.txt)。1.0.328 的内置模块为实验功能，默认关闭，需要兼容的模块框架，尚未经过 HyperOS 实体机验证。
 
 ### Shizuku default password manager / 默认密码管理器
 

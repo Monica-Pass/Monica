@@ -270,7 +270,7 @@ For F-Droid metadata or packaging issues, contact: joyin8888@foxmail.com
 - [dingwen07/CredentialProviderManager](https://github.com/dingwen07/CredentialProviderManager)（GPL-3.0）：凭据提供方、自动填充服务及系统配置诊断的设计参考。
 - [cr-zhichen/password-manager-switch](https://github.com/cr-zhichen/password-manager-switch)（MIT）：默认密码管理器配置工具的系统设置读写、校验与恢复逻辑来源。
 
-具体参考版本与适配范围见[HyperOS 来源说明](Monica%20for%20Android/app/src/main/assets/licenses/hyperos-builtins.txt)；随包保留 [HyperPasskey GPL-3.0 许可证](Monica%20for%20Android/app/src/main/assets/licenses/HyperPasskey-GPL-3.0.txt)及 [password-manager-switch MIT 声明](Monica%20for%20Android/app/src/main/assets/licenses/password-manager-switch.txt)。1.0.328（未发布）的内置模块为实验功能，默认关闭，需要兼容的模块框架，尚未经过 HyperOS 实体机验证。
+具体参考版本与适配范围见[HyperOS 来源说明](Monica%20for%20Android/app/src/main/assets/licenses/hyperos-builtins.txt)；随包保留 [HyperPasskey GPL-3.0 许可证](Monica%20for%20Android/app/src/main/assets/licenses/HyperPasskey-GPL-3.0.txt)及 [password-manager-switch MIT 声明](Monica%20for%20Android/app/src/main/assets/licenses/password-manager-switch.txt)。1.0.328 的内置模块为实验功能，默认关闭，需要兼容的模块框架，尚未经过 HyperOS 实体机验证。
 
 ### Shizuku default password manager / 默认密码管理器
 

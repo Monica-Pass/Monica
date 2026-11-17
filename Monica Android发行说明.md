@@ -1,10 +1,6 @@
-# 未发布 / Unreleased
-
 # Monica Android 1.0.328
 
 ## 中文
-
-- 密码库概览搜索结果新增轻快的上滑淡入，首次就绪后约 220 毫秒落位；输入时不重复播放，支持减少动画和系统动画设置。关闭搜索或锁库立即隐藏结果。
 
 - 普通密码编辑与新建现在直接提交到 MDBX 原生引擎，保留对象身份、未知字段与附件；账号组修改和删除使用同一次原生提交，继续保留历史、撤销、快照与增量同步。旧表单遇到外部修订会拒绝覆盖，保存后回读失败可安全重试；锁定或离开前台撤销编辑会话。
 
@@ -32,8 +28,6 @@
 - 修复“管理原始信息”中本地多层文件夹被平铺显示的问题，可逐层进入并返回上级；新建、重命名和移动正确保留子目录关系。
 
 ## English
-
-- Vault overview search results now slide up and fade in over about 220 ms when first ready. Typing does not replay the entrance; reduced motion and system animation settings are respected, and closing search or locking removes results immediately.
 
 - Ordinary password creation and editing now commit directly through the native MDBX engine, preserving object identity, unknown fields and attachments. Credential-group edits and removals share one native commit with history, revert, snapshots and incremental sync retained. Stale forms reject intervening revisions, failed post-commit reads can be retried safely, and locking or leaving the foreground revokes the editor session.
 

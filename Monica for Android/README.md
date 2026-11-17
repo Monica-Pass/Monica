@@ -21,7 +21,7 @@
 
 **Monica for Android** manages passwords, authenticators, cards and notes, with local storage and optional connections to Bitwarden/Vaultwarden, KeePass and cloud backup providers. Sensitive local fields use AES-GCM; connected vaults retain their own encryption and storage formats.
 
-The current checkout is **1.0.328, unreleased**. Development changes and dependency versions do not indicate that a release has been published.
+The current version is **1.0.328**. See the root release notes for the complete changes.
 
 With a stunning **Material You** interface, seamless **Autofill** integration, and advanced features like **KeePass support** and **TOTP generation**, Monica brings desktop-class power to your mobile device.
 
@@ -196,7 +196,7 @@ Monica's HyperOS compatibility work benefits from these open-source projects:
 - [dingwen07/CredentialProviderManager](https://github.com/dingwen07/CredentialProviderManager) (GPL-3.0): design reference for credential-provider, autofill-service and system-configuration diagnostics.
 - [cr-zhichen/password-manager-switch](https://github.com/cr-zhichen/password-manager-switch) (MIT): source for the default password manager helper's secure-settings read/write, verification and restoration logic.
 
-See the [HyperOS attribution notice](app/src/main/assets/licenses/hyperos-builtins.txt) for the referenced revisions and adaptation scope. The [HyperPasskey GPL-3.0 license](app/src/main/assets/licenses/HyperPasskey-GPL-3.0.txt) and [password-manager-switch MIT notice](app/src/main/assets/licenses/password-manager-switch.txt) are bundled with the app. The built-in module in unreleased 1.0.328 is experimental, disabled by default, requires a compatible module framework and has not been tested on physical HyperOS devices.
+See the [HyperOS attribution notice](app/src/main/assets/licenses/hyperos-builtins.txt) for the referenced revisions and adaptation scope. The [HyperPasskey GPL-3.0 license](app/src/main/assets/licenses/HyperPasskey-GPL-3.0.txt) and [password-manager-switch MIT notice](app/src/main/assets/licenses/password-manager-switch.txt) are bundled with the app. The built-in module in 1.0.328 is experimental, disabled by default, requires a compatible module framework and has not been tested on physical HyperOS devices.
 
 ### Shizuku default password manager / 默认密码管理器
 
