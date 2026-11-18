@@ -1209,6 +1209,7 @@
     <string name="settings_import_data">纳数据</string>
     <string name="settings_import_data_description">自备份文件复原</string>
     <string name="settings_version_info">版本之识</string>
+    <string name="version_info_internal_codename">內部代號：%1$s</string>
     <string name="version_info_dialog_title">版本与链接</string>
     <string name="version_info_github_label">GitHub</string>
     <string name="version_info_website_label">官网</string>

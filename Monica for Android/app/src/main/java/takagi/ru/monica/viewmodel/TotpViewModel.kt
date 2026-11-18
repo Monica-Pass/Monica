@@ -368,6 +368,11 @@ class TotpViewModel internal constructor(
                 keepassEntryUuid = password.keepassEntryUuid,
                 keepassGroupUuid = password.keepassGroupUuid,
                 bitwardenVaultId = password.bitwardenVaultId,
+                // A folder is optional. Retain the source identity/state so root-level
+                // password authenticators are not mistaken for detached local items.
+                bitwardenCipherId = password.bitwardenCipherId,
+                bitwardenRevisionDate = password.bitwardenRevisionDate,
+                bitwardenLocalModified = password.bitwardenLocalModified,
                 bitwardenFolderId = password.bitwardenFolderId,
                 mdbxDatabaseId = password.mdbxDatabaseId
             ).also { nextParsed[it.id] = it to resolvedTotpData }

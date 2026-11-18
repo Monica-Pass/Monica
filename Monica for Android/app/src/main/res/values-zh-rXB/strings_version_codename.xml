@@ -1,0 +1,3 @@
+<resources>
+    <string name="version_info_internal_codename">内部代号：%1$s</string>
+</resources>

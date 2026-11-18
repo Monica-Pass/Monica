@@ -171,18 +171,22 @@ class AppUpdateDialogTest {
 
     @Test fun fdroidOffersItsStoreInsteadOfApkInstallText() {
         var store = 0
+        var details = 0
         show {
             MaterialTheme(colorScheme = lightColorScheme()) {
-                AppUpdateDialog(availableState("## F-Droid release", fdroid = true),
-                    onDismiss = {}, onUpdate = { store++ }, onSkip = {}, onDetails = {}, onOpenLink = {})
+                AppUpdateDialog(availableState("", fdroid = true).let { state ->
+                    state.copy(result = state.result!!.copy(releaseName = null, releaseNotes = null))
+                },
+                    onDismiss = {}, onUpdate = { store++ }, onSkip = {}, onDetails = { details++ }, onOpenLink = {})
             }
         }
-        awaitText("F-Droid release")
+        awaitText(context.getString(R.string.update_notes_unavailable))
         compose.onNodeWithText(context.getString(R.string.update_fdroid_source)).assertIsDisplayed()
         compose.onNodeWithText(context.getString(R.string.update_now)).assertDoesNotExist()
         compose.onNodeWithText(context.getString(R.string.update_download_and_install)).assertDoesNotExist()
         compose.onNodeWithText(context.getString(R.string.update_open_fdroid)).assertIsDisplayed().performClick()
-        compose.runOnIdle { assertEquals(1, store) }
+        compose.onNodeWithTag("app-update-details").assertIsDisplayed().performClick()
+        compose.runOnIdle { assertEquals(1, store); assertEquals(1, details) }
         capture("fdroid-source")
     }
 

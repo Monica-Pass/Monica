@@ -15,6 +15,9 @@ import takagi.ru.monica.viewmodel.*
 
 class BitwardenCredentialCreateAtomicityTest {
     private suspend fun scenario(block: suspend TransferFixture.() -> Unit) {
+        val context = androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext
+        assertTrue(takagi.ru.monica.security.SecureStorageStartup.prepareForEntry(context) is
+            takagi.ru.monica.security.SecureStartupResult.Ready)
         val field = SecurityManager::class.java.getDeclaredField("processCachedMdk").apply { isAccessible = true }
         val previous = field.get(null)
         val synthetic = ByteArray(32) { (it + 19).toByte() }

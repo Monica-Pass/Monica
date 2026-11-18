@@ -948,6 +948,7 @@
     <string name="settings_import_data">Импорт данных</string>
     <string name="settings_import_data_description">Восстановление из резервной копии</string>
     <string name="settings_version_info">Информация о версии</string>
+    <string name="version_info_internal_codename">Внутреннее кодовое имя: %1$s</string>
     <string name="version_info_dialog_title">Версия и ссылки</string>
     <string name="version_info_github_label">GitHub</string>
     <string name="version_info_website_label">Сайт</string>

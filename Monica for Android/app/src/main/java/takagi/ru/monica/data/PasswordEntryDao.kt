@@ -172,6 +172,12 @@ interface PasswordEntryDao {
     @Update
     suspend fun updatePasswordEntries(entries: List<PasswordEntry>)
 
+    /** Commit local password rows and fields together; never wrap native/provider writes here. */
+    @Transaction
+    suspend fun commitLocalPasswordSave(block: suspend () -> Unit) {
+        block()
+    }
+
     /** Publish a native KDBX snapshot as one list change, including its custom fields. */
     @Transaction
     suspend fun applyKeePassProjection(block: suspend () -> Unit) {

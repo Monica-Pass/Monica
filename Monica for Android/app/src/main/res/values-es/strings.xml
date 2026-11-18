@@ -1329,6 +1329,7 @@
     <string name="settings_import_data">Importar datos</string>
     <string name="settings_import_data_description">Restaurar desde un archivo de copia de seguridad</string>
     <string name="settings_version_info">Información de la versión</string>
+    <string name="version_info_internal_codename">Nombre en clave interno: %1$s</string>
     <string name="version_info_dialog_title">Enlaces de la versión &amp;</string>
     <string name="version_info_github_label">GitHub</string>
     <string name="version_info_website_label">Sitio web</string>

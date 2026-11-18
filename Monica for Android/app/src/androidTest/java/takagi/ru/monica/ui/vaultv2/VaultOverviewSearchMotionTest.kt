@@ -11,14 +11,11 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.MotionDurationScale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.dp
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import java.io.File
@@ -32,7 +29,7 @@ import takagi.ru.monica.data.PasswordEntry
 import takagi.ru.monica.data.VaultOverviewConfig
 import takagi.ru.monica.security.SecurityManager
 
-/** Real overview/search rendering plus a controlled late-result boundary. Synthetic titles only. */
+/** Drives the real overview/search transition with synthetic entries. */
 @RunWith(AndroidJUnit4::class)
 class VaultOverviewSearchMotionTest {
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
@@ -95,36 +92,37 @@ class VaultOverviewSearchMotionTest {
         bitmap.recycle()
     }
 
-    @Test fun searchSlidesQuicklyThenTypingDoesNotReplayAndCloseRemovesRows() {
+    @Test fun searchRisesAndOverviewReturnsInPlaceWithSteamMotion() {
         showOverview()
+        fun overviewWidth() = compose.onNodeWithTag("overview_modules").fetchSemanticsNode().boundsInRoot.width
+        val overviewWidthAtRest = overviewWidth()
+
+        compose.mainClock.autoAdvance = false
         openAtFirstResult()
         val initial = top()
         compose.mainClock.advanceTimeBy(64)
         val middle = top()
         capture("light-middle")
-        compose.mainClock.advanceTimeBy(192)
+        compose.mainClock.advanceTimeBy(240)
         val settled = top()
+        assertTrue("Search should rise: $initial -> $middle -> $settled", initial > middle && middle > settled)
         capture("light-settled")
-        assertTrue("Rows must rise from below: $initial -> $middle -> $settled", initial > middle && middle > settled)
-        compose.mainClock.advanceTimeBy(160)
-        assertEquals("Entrance must already be settled within 256ms", settled, top(), 0.5f)
-        compose.onNode(hasSetTextAction()).performTextReplacement("demo 1")
-        compose.mainClock.advanceTimeBy(96)
-        compose.waitUntil(5_000) {
-            compose.mainClock.advanceTimeByFrame()
-            compose.onAllNodesWithTag("vault_item_password:2").fetchSemanticsNodes().isEmpty()
-        }
-        assertEquals("Typing must not replay the entrance", settled, top(), 0.5f)
         compose.onNodeWithTag(rowTag).performClick()
         compose.runOnIdle { assertEquals("password:1", opened) }
+
         compose.onNodeWithContentDescription(context.getString(R.string.topbar_close_search)).performClick()
         compose.mainClock.advanceTimeByFrame()
         compose.onNodeWithTag("overview_search_results").assertDoesNotExist()
         compose.onNodeWithTag(rowTag).assertDoesNotExist()
-        // A new search opening has its own entrance.
-        compose.mainClock.advanceTimeBy(300)
-        openAtFirstResult()
-        assertTrue("Reopening must enter from below again", top() > settled + 1f)
+        val returning = overviewWidth()
+        assertTrue("Overview must return with a slight scale-in", returning < overviewWidthAtRest)
+        compose.mainClock.advanceTimeBy(64)
+        val returnMiddle = overviewWidth()
+        assertTrue("Returning overview should grow: $returning -> $returnMiddle", returnMiddle > returning)
+        capture("return-middle")
+        compose.mainClock.advanceTimeBy(240)
+        assertEquals(overviewWidthAtRest, overviewWidth(), 0.5f)
+        capture("return-settled")
     }
 
     @Test fun lockingDuringEntranceRemovesRowsImmediatelyAtLargeFontInDarkTheme() {
@@ -151,38 +149,55 @@ class VaultOverviewSearchMotionTest {
         capture("dark-large-reduced")
     }
 
-    @Test fun delayedReadinessStartsEntranceAndLaterRefreshDoesNotReplay() {
-        var ready by mutableStateOf(false)
-        compose.setContent {
-            Box(Modifier.fillMaxSize().background(Color.White)) {
-                Box(Modifier.padding(top = 48.dp).then(rememberOverviewSearchEntrance(ready, reduce))) {
-                    if (ready) Box(Modifier.size(80.dp).background(Color.Blue).testTag("ready"))
-                    else Box(Modifier.size(80.dp).background(Color.Gray).testTag("loading"))
-                }
-            }
+    @Test fun closeAndReopenDuringMotionDoesNotKeepOldQueryOrRows() {
+        showOverview()
+        openAtFirstResult()
+        compose.mainClock.advanceTimeBy(230)
+        compose.onNode(hasSetTextAction()).performTextReplacement("absent")
+        compose.onNodeWithContentDescription(context.getString(R.string.topbar_close_search)).performClick()
+        compose.mainClock.advanceTimeByFrame()
+        compose.onNodeWithTag("overview_search_results").assertDoesNotExist()
+        // Interrupt the overview entrance with another explicit search opening.
+        compose.onNodeWithTag("overview_search").performClick()
+        compose.waitUntil(10_000) {
+            compose.mainClock.advanceTimeByFrame()
+            compose.onAllNodesWithTag(rowTag).fetchSemanticsNodes().isNotEmpty()
         }
-        compose.mainClock.autoAdvance = false
+        compose.mainClock.advanceTimeBy(240)
+        compose.onNodeWithTag(rowTag).assertIsDisplayed()
+        compose.onNodeWithText("absent").assertDoesNotExist()
+    }
+
+    @Test fun filteringMovesTheSurvivingRowAndClearingRestoresMatches() {
+        showOverview()
+        openAtFirstResult()
+        compose.mainClock.advanceTimeBy(420)
+        val target = compose.onNodeWithTag("vault_item_password:2")
+        val startY = target.fetchSemanticsNode().boundsInRoot.top
+        val endY = top()
+        compose.onNode(hasSetTextAction()).performTextReplacement("demo 2")
+        compose.waitUntil(5_000) {
+            compose.mainClock.advanceTimeByFrame()
+            val y = target.fetchSemanticsNode().boundsInRoot.top
+            y < startY - 1f && y > endY + 1f
+        }
+        capture("filter-moving")
         compose.mainClock.advanceTimeBy(800)
-        compose.onNodeWithTag("loading").assertIsDisplayed()
-        compose.runOnUiThread { ready = true }
-        compose.mainClock.advanceTimeByFrame()
-        fun readyTop() = compose.onNodeWithTag("ready").fetchSemanticsNode().boundsInRoot.top
-        val first = readyTop()
-        compose.mainClock.advanceTimeBy(64)
-        val middle = readyTop()
-        val image = compose.onRoot().captureToImage().asAndroidBitmap()
-        val color = image.getPixel(with(compose.density) { 40.dp.roundToPx() }, middle.toInt() + with(compose.density) { 40.dp.roundToPx() })
-        image.recycle()
-        assertTrue("Intermediate frame must blend blue with the white background", android.graphics.Color.red(color) in 1..254)
-        compose.mainClock.advanceTimeBy(192)
-        val end = readyTop()
-        assertTrue("Slow data must still animate when ready", first > middle && middle > end)
-        compose.runOnUiThread { ready = false }
-        compose.mainClock.advanceTimeByFrame()
-        compose.onNodeWithTag("ready").assertDoesNotExist()
-        compose.runOnUiThread { ready = true }
-        compose.mainClock.advanceTimeByFrame()
-        assertEquals("Refreshing results must not restart", end, readyTop(), 0.5f)
+        assertEquals(endY, target.fetchSemanticsNode().boundsInRoot.top, 1f)
+        compose.onNode(hasSetTextAction()).performTextReplacement("absent")
+        compose.waitUntil(5_000) {
+            compose.mainClock.advanceTimeByFrame()
+            compose.onAllNodesWithText(context.getString(R.string.no_results)).fetchSemanticsNodes().isNotEmpty()
+        }
+        compose.onNode(hasSetTextAction()).performTextReplacement("demo 4")
+        compose.onNode(hasSetTextAction()).performTextClearance()
+        compose.waitUntil(5_000) {
+            compose.mainClock.advanceTimeByFrame()
+            compose.onAllNodesWithTag(rowTag).fetchSemanticsNodes().isNotEmpty()
+        }
+        compose.mainClock.advanceTimeBy(800)
+        compose.onNodeWithTag(rowTag).assertIsDisplayed()
+        target.assertIsDisplayed()
     }
 
     @Test fun systemDisabledMotionSettlesWithoutTimedFrames() {

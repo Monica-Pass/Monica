@@ -162,7 +162,6 @@ object UpdateChecker {
 internal data class UpdateEndpoints(
     val standardRelease: String = "https://api.github.com/repos/Monica-Pass/Monica/releases/latest",
     val fdroidPackage: String = "https://f-droid.org/api/v1/packages/takagi.ru.monica.fdroid",
-    val fdroidReleaseTags: String = "https://api.github.com/repos/Monica-Pass/Monica-Fdroid/releases/tags/",
 )
 
 /** Endpoints are injectable for local transport tests; production defaults are fixed HTTPS. */
@@ -183,7 +182,7 @@ internal class UpdateReleaseClient(
     }
 
     private suspend fun standard(currentVersion: String, supportedAbis: List<String>): UpdateCheckResult {
-        val release = json.decodeFromString(GitHubRelease.serializer(), readJson(endpoints.standardRelease))
+        val release = json.decodeFromString(GitHubRelease.serializer(), readJson(endpoints.standardRelease, "application/vnd.github+json"))
         val tag = release.tagName.trim()
         require(!release.draft && !release.prerelease) { "Expected a stable published release" }
         require(tag.length <= 128) { "Invalid release version" }
@@ -206,23 +205,15 @@ internal class UpdateReleaseClient(
             "Invalid F-Droid version"
         }
         val available = metadata.suggestedVersionCode > currentVersionCode
-        val tag = "v" + latest.versionName.removePrefix("v").removePrefix("V")
-        val details = "https://github.com/Monica-Pass/Monica-Fdroid/releases/tag/$tag"
-        // Official availability is authoritative. Release notes are optional and must
-        // match this exact version, never the newest source release awaiting publication.
-        val release = if (available) updateResult {
-            val tagUrl = requireNotNull(endpoints.fdroidReleaseTags.toHttpUrlOrNull()).newBuilder().addPathSegment(tag).build()
-            json.decodeFromString(GitHubRelease.serializer(), readJson(tagUrl.toString())).also {
-                require(it.tagName == tag && !it.draft && !it.prerelease) { "Mismatched F-Droid release notes" }
-            }
-        }.getOrNull() else null
-        return UpdateCheckResult(currentVersion, latest.versionName, release?.name,
-            FDROID_APP_URL, null, null, release?.body?.takeIf { it.isNotBlank() }, available,
-            releaseIdentity = "fdroid:${latest.versionCode}", isFdroid = true, detailsUrl = details)
+        // F-Droid's recommended published version is the sole update source.
+        // Its package API has no release notes; both actions open the official page.
+        return UpdateCheckResult(currentVersion, latest.versionName, null,
+            FDROID_APP_URL, null, null, null, available,
+            releaseIdentity = "fdroid:${latest.versionCode}", isFdroid = true, detailsUrl = FDROID_APP_URL)
     }
 
-    private suspend fun readJson(url: String): String {
-        val request = Request.Builder().url(url).header("Accept", "application/vnd.github+json")
+    private suspend fun readJson(url: String, accept: String = "application/json"): String {
+        val request = Request.Builder().url(url).header("Accept", accept)
             .header("User-Agent", "Monica-Android").build()
         return withUpdateCall(client.newCall(request)) { response ->
             if (!response.isSuccessful) throw IOException("Update request failed: HTTP ${response.code}")

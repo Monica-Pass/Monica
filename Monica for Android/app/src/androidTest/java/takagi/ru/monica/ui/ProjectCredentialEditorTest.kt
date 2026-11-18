@@ -51,6 +51,10 @@ class ProjectCredentialEditorTest {
 
     @Before fun setup() {
         runBlocking {
+            assertTrue(takagi.ru.monica.security.SecureStorageStartup.prepareForEntry(context) is
+                takagi.ru.monica.security.SecureStartupResult.Ready)
+        }
+        runBlocking {
             val settings = takagi.ru.monica.utils.SettingsManager(context)
             previousContent = settings.settingsFlow.first().passwordContentEditorEnabled
             settings.updatePasswordContentEditorEnabled(true)

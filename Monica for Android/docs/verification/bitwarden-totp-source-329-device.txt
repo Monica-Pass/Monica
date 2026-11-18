@@ -1,0 +1,273 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.BitwardenTotpSourceTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.ui.BitwardenTotpSourceTest:
+
+INSTRUMENTATION_STATUS: test=matchingStoredCipherCollapsesVirtualOtpButKeepsIndependentLocalCopy
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.BitwardenTotpSourceTest
+
+INSTRUMENTATION_STATUS: current=1
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=matchingStoredCipherCollapsesVirtualOtpButKeepsIndependentLocalCopy
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.BitwardenTotpSourceTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=pendingRootPasswordRetainsRemoteOwnershipBeforeCipherIdExists
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.BitwardenTotpSourceTest
+
+INSTRUMENTATION_STATUS: current=2
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=pendingRootPasswordRetainsRemoteOwnershipBeforeCipherIdExists
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.BitwardenTotpSourceTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=localAndKeePassPasswordsRemainInTheirOwnSources
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.BitwardenTotpSourceTest
+
+INSTRUMENTATION_STATUS: current=3
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=localAndKeePassPasswordsRemainInTheirOwnSources
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.BitwardenTotpSourceTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=standaloneSyncedRootAuthenticatorAlreadyHasCorrectOwnership
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.BitwardenTotpSourceTest
+
+INSTRUMENTATION_STATUS: current=4
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=standaloneSyncedRootAuthenticatorAlreadyHasCorrectOwnership
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.BitwardenTotpSourceTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=folderPasswordRetainsCipherIdentityAndFolderFilter
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.BitwardenTotpSourceTest
+
+INSTRUMENTATION_STATUS: current=5
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=folderPasswordRetainsCipherIdentityAndFolderFilter
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.BitwardenTotpSourceTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=rootPasswordAuthenticatorIsBitwardenRatherThanLocal
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.BitwardenTotpSourceTest
+
+INSTRUMENTATION_STATUS: current=6
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=rootPasswordAuthenticatorIsBitwardenRatherThanLocal
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.BitwardenTotpSourceUiTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.ui.BitwardenTotpSourceUiTest:
+
+INSTRUMENTATION_STATUS: test=rootOtpCardFollowsBitwardenSource
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.BitwardenTotpSourceUiTest
+
+INSTRUMENTATION_STATUS: current=7
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=rootOtpCardFollowsBitwardenSource
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.BitwardenTotpSourceUiTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=
+
+INSTRUMENTATION_STATUS: test=rootOtpCardFollowsBitwardenSourceWithLargeText
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.BitwardenTotpSourceUiTest
+
+INSTRUMENTATION_STATUS: current=8
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=rootOtpCardFollowsBitwardenSourceWithLargeText
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.TotpFilterNavigationTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=
+
+takagi.ru.monica.ui.TotpFilterNavigationTest:
+
+INSTRUMENTATION_STATUS: test=returningAndRecreatingAuthenticatorKeepDatabaseFilter
+
+INSTRUMENTATION_STATUS_CODE: 1
+
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.TotpFilterNavigationTest
+
+INSTRUMENTATION_STATUS: current=9
+
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+
+INSTRUMENTATION_STATUS: numtests=9
+
+INSTRUMENTATION_STATUS: stream=.
+
+INSTRUMENTATION_STATUS: test=returningAndRecreatingAuthenticatorKeepDatabaseFilter
+
+INSTRUMENTATION_STATUS_CODE: 0
+
+INSTRUMENTATION_RESULT: stream=
+
+
+
+Time: 6.154
+
+
+
+OK (9 tests)
+
+
+
+
+
+INSTRUMENTATION_CODE: -1

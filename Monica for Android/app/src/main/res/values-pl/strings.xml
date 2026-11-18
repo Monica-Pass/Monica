@@ -1208,6 +1208,7 @@
     <string name="settings_import_data">Import danych</string>
     <string name="settings_import_data_description">Przywróć z kopii zapasowej</string>
     <string name="settings_version_info">Informacje o wersji</string>
+    <string name="version_info_internal_codename">Wewnętrzna nazwa kodowa: %1$s</string>
     <string name="version_info_dialog_title">Wersja i linki</string>
     <string name="version_info_github_label">GitHub</string>
     <string name="version_info_website_label">Strona</string>

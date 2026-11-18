@@ -1,19 +1,21 @@
 package takagi.ru.monica.ui.vaultv2
 
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
@@ -26,29 +28,12 @@ import takagi.ru.monica.R
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.ui.components.GroupedItemDefaults
 import takagi.ru.monica.ui.gestures.SwipeActions
+import takagi.ru.monica.ui.navigation.EASY_NOTES_SCALE_DURATION
+import takagi.ru.monica.ui.navigation.MonicaPageContent
+import takagi.ru.monica.ui.navigation.easyNotesScreenEnter
 
 private class OverviewSearchResult(val rows: List<OverviewPickerEntry>) {
     val items = rows.map { it.item }
-}
-
-/** One entrance per search opening, even when its first result arrives asynchronously. */
-@Composable
-internal fun rememberOverviewSearchEntrance(ready: Boolean, reduceAnimations: Boolean): Modifier {
-    val progress = remember { Animatable(if (reduceAnimations) 1f else 0f) }
-    LaunchedEffect(ready, reduceAnimations) {
-        if (reduceAnimations) progress.snapTo(1f)
-        else if (ready && progress.value < 1f) {
-            // Animatable also follows the system's motion duration scale.
-            progress.animateTo(1f, tween(220, easing = LinearOutSlowInEasing))
-        }
-    }
-    return Modifier.graphicsLayer {
-        // Keep loading visible and read frames only in the layer, away from index/list work.
-        // No outgoing composition is retained when search closes or its source is revoked.
-        val fraction = if (ready && !reduceAnimations) progress.value else 1f
-        alpha = fraction
-        translationY = (1f - fraction) * 24.dp.toPx()
-    }
 }
 
 /** Owns one reusable Rust index for the active search; no work runs in animation callbacks. */
@@ -60,13 +45,11 @@ internal fun VaultOverviewSearchResults(
     currentScope: String,
     query: String,
     securityManager: SecurityManager,
-    listState: LazyListState,
     onOpenItem: (VaultV2Item) -> Unit,
     selection: VaultOverviewSelectionState,
     isDetailVisible: Boolean,
     onRequestDeleteItem: (VaultV2Item) -> Unit,
     reduceAnimations: Boolean,
-    modifier: Modifier = Modifier,
 ) {
     val focusManager = LocalFocusManager.current
     val keyboard = LocalSoftwareKeyboardController.current
@@ -89,15 +72,59 @@ internal fun VaultOverviewSearchResults(
         if (query.isNotBlank()) delay(80)
         resultState.value = withContext(Dispatchers.Default) { OverviewSearchResult(index.filter(query, currentScope)) }
     }
-    LaunchedEffect(query, currentScope) { selection.clear(); listState.scrollToItem(0) }
+    LaunchedEffect(query, currentScope) { selection.clear() }
     val result = resultState.value
     LaunchedEffect(result) { selection.updateSearchResults(result?.items.orEmpty()) }
     DisposableEffect(selection) { onDispose { selection.exitSearch() } }
     val results = result?.rows
-    val entrance = rememberOverviewSearchEntrance(results != null, reduceAnimations)
+    Box(Modifier.fillMaxSize().imePadding().clipToBounds()) {
+        // Disposing the lazy list also releases any outgoing item animation layers.
+        key(prepared, currentScope) {
+            if (results == null) {
+                Box(Modifier.fillMaxWidth().padding(40.dp), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator(Modifier.size(28.dp))
+                }
+            } else {
+                val lift = with(LocalDensity.current) { 24.dp.roundToPx() }
+                // The index can finish after the keyboard appears. Animate the first batch
+                // when it is ready, and keep this layer mounted while the query changes.
+                MonicaPageContent(
+                    pageKey = Unit,
+                    modifier = Modifier.fillMaxSize(),
+                    animateInitial = true,
+                    animate = !reduceAnimations,
+                    enter = easyNotesScreenEnter() +
+                        slideInVertically(animationSpec = tween(EASY_NOTES_SCALE_DURATION)) { lift },
+                ) {
+                    OverviewSearchList(results, query, onOpenItem, selection, isDetailVisible, onRequestDeleteItem, reduceAnimations)
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalLayoutApi::class)
+@Composable
+private fun OverviewSearchList(
+    results: List<OverviewPickerEntry>,
+    query: String,
+    onOpenItem: (VaultV2Item) -> Unit,
+    selection: VaultOverviewSelectionState,
+    isDetailVisible: Boolean,
+    onRequestDeleteItem: (VaultV2Item) -> Unit,
+    reduceAnimations: Boolean,
+) {
+    val listState = rememberLazyListState()
+    LaunchedEffect(query) {
+        if (listState.firstVisibleItemIndex != 0 || listState.firstVisibleItemScrollOffset != 0) listState.scrollToItem(0)
+    }
+    val effects = MaterialTheme.motionScheme.fastEffectsSpec<Float>()
+    val movement = MaterialTheme.motionScheme.fastSpatialSpec<IntOffset>()
+    val fade = effects.takeUnless { reduceAnimations }
+    val placement = movement.takeUnless { reduceAnimations }
     LazyColumn(
         state = listState,
-        modifier = modifier.fillMaxSize().imePadding().then(entrance).testTag("overview_search_results"),
+        modifier = Modifier.fillMaxSize().testTag("overview_search_results"),
         contentPadding = PaddingValues(
             start = 20.dp, end = 20.dp, top = 6.dp,
             bottom = if (WindowInsets.isImeVisible) 16.dp else 116.dp,
@@ -105,14 +132,9 @@ internal fun VaultOverviewSearchResults(
         verticalArrangement = Arrangement.spacedBy(GroupedItemDefaults.Spacing),
     ) {
         when {
-            results == null -> item(key = "loading") {
-                Box(Modifier.fillMaxWidth().padding(40.dp), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(Modifier.size(28.dp))
-                }
-            }
             results.isEmpty() -> item(key = "empty") {
                 Text(stringResource(R.string.no_results),
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 32.dp),
+                    modifier = Modifier.animateItem(fade, placement, fade).fillMaxWidth().padding(vertical = 32.dp),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
@@ -120,6 +142,7 @@ internal fun VaultOverviewSearchResults(
                 val shape = GroupedItemDefaults.shape(index, results.size)
                 val selecting = selection.keys.isNotEmpty()
                 SwipeActions(
+                    modifier = Modifier.animateItem(fade, placement, fade),
                     onSwipeLeft = { onRequestDeleteItem(row.item) },
                     onSwipeRight = { selection.toggleSearch(row.item.key) },
                     enabled = !isDetailVisible,

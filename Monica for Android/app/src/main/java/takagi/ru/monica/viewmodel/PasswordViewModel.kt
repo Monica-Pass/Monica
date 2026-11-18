@@ -90,6 +90,8 @@ import kotlinx.serialization.json.Json
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -5138,6 +5140,7 @@ class PasswordViewModel internal constructor(
         customFields: List<CustomFieldDraft> = emptyList(), // 自定义字段
         onComplete: (firstPasswordId: Long?) -> Unit = {}
     ) {
+        val expectedLocalGeneration = SessionManager.lockGeneration.value
         viewModelScope.launch {
             val firstPasswordId = withContext(Dispatchers.IO) {
                 saveGroupedPasswordsInternal(
@@ -5145,7 +5148,8 @@ class PasswordViewModel internal constructor(
                     requestedEntry = commonEntry,
                     passwords = passwords,
                     requestedCustomFields = customFields,
-                    skipCategoryBinding = false
+                    skipCategoryBinding = false,
+                    expectedLocalGeneration = expectedLocalGeneration
                 )
             }
             onComplete(firstPasswordId)
@@ -5163,6 +5167,7 @@ class PasswordViewModel internal constructor(
         projectCredentials: List<takagi.ru.monica.data.model.ProjectCredentialGroup.Group>? = null,
         onComplete: (firstPasswordId: Long?) -> Unit = {}
     ) {
+        val expectedLocalGeneration = SessionManager.lockGeneration.value
         viewModelScope.launch {
             if (projectCredentials != null) {
                 val result = saveProjectCredentials(originalIds, commonEntry, projectCredentials, targets, customFields, embeddedContentSave)
@@ -5174,145 +5179,174 @@ class PasswordViewModel internal constructor(
                 .map(StorageTarget::stableKey)
             val saveResult = try {
                 withContext(Dispatchers.IO) {
-                    val distinctTargets = targets.distinctBy(StorageTarget::stableKey)
-                    if (distinctTargets.isEmpty()) {
-                        Log.w("PasswordViewModel", "savePasswordsAcrossTargets blocked because target list is empty")
-                        return@withContext PasswordSaveAcrossTargetsResult(null, emptyList())
-                    }
-                    if (!canWriteKeePassTargets(distinctTargets)) {
-                        Log.w(
-                            "PasswordViewModel",
-                            "savePasswordsAcrossTargets blocked because a KeePass target is unavailable targets=$requestedTargetKeys"
-                        )
-                        return@withContext PasswordSaveAcrossTargetsResult(null, emptyList())
-                    }
-
-                val currentEntry = originalIds.firstOrNull()?.let { repository.getPasswordEntryById(it) }
-                val replicaGroupId = currentEntry?.replicaGroupId
-                    ?.takeIf { it.isNotBlank() }
-                    ?: commonEntry.replicaGroupId?.takeIf { it.isNotBlank() }
-                    ?: UUID.randomUUID().toString()
-                val selectedTargetKeys = distinctTargets
-                    .map(StorageTarget::stableKey)
-                    .toSet()
-                val allEntries = repository.getActiveSaveCandidates(originalIds, replicaGroupId)
-                val originalEntries = originalIds.mapNotNull { id ->
-                    allEntries.firstOrNull { it.id == id }
-                }
-                val existingReplicasByKey = allEntries
-                    .filter {
-                        it.replicaGroupId == replicaGroupId &&
-                            !it.isDeleted &&
-                            !it.isArchived
-                    }
-                    .groupBy { it.toStorageTarget().stableKey }
-                val currentEntryTarget = currentEntry?.toStorageTarget()
-                val currentTarget = currentEntryTarget
-                    ?.takeIf { it.stableKey in selectedTargetKeys }
-                    ?: distinctTargets.first()
-                val currentTargetOriginalIds = originalEntries
-                    .filter {
-                        it.toStorageTarget().stableKey == currentTarget.stableKey
-                    }
-                    .map { it.id }
-                    .ifEmpty {
-                        existingReplicasByKey[currentTarget.stableKey]
-                            .orEmpty()
-                            .sortedBy { it.id }
-                            .map { it.id }
-                    }
-                    .ifEmpty {
-                        if (currentEntryTarget?.stableKey in selectedTargetKeys && currentEntry != null) {
-                            listOf(currentEntry.id)
-                        } else {
-                            emptyList()
+                    val save: suspend () -> PasswordSaveAcrossTargetsResult = save@ {
+                        val distinctTargets = targets.distinctBy(StorageTarget::stableKey)
+                        if (distinctTargets.isEmpty()) {
+                            Log.w("PasswordViewModel", "savePasswordsAcrossTargets blocked because target list is empty")
+                            return@save PasswordSaveAcrossTargetsResult(null, emptyList())
                         }
-                    }
+                        if (!canWriteKeePassTargets(distinctTargets)) {
+                            Log.w(
+                                "PasswordViewModel",
+                                "savePasswordsAcrossTargets blocked because a KeePass target is unavailable targets=$requestedTargetKeys"
+                            )
+                            return@save PasswordSaveAcrossTargetsResult(null, emptyList())
+                        }
 
-                val updatedCurrentEntry = currentTarget.applyToPasswordEntry(
-                    commonEntry,
-                    replicaGroupId = replicaGroupId
-                )
-                val initialId = saveGroupedPasswordsInternal(
-                    originalIds = currentTargetOriginalIds.ifEmpty { originalIds },
-                    requestedEntry = updatedCurrentEntry,
-                    passwords = passwords,
-                    requestedCustomFields = customFields,
-                    skipCategoryBinding = true,
-                    embeddedContentSave = embeddedContentSave
-                )
-
-                if (initialId == null) {
-                    Log.e(
-                        "PasswordViewModel",
-                        "savePasswordsAcrossTargets failed current target=${currentTarget.stableKey} originalIds=$originalIds targets=$requestedTargetKeys"
-                    )
-                    return@withContext PasswordSaveAcrossTargetsResult(null, emptyList())
-                }
-                val savedTargetFirstIds = mutableListOf(initialId)
-
-                distinctTargets
-                    .filter { target ->
-                        target.stableKey != currentTarget.stableKey &&
-                            target.stableKey in selectedTargetKeys
-                    }
-                    .forEach { target ->
-                        val existingTargetIds = existingReplicasByKey[target.stableKey]
-                            .orEmpty()
-                            .sortedBy { it.id }
+                        val currentEntry = originalIds.firstOrNull()?.let { repository.getPasswordEntryById(it) }
+                        val replicaGroupId = currentEntry?.replicaGroupId
+                            ?.takeIf { it.isNotBlank() }
+                            ?: commonEntry.replicaGroupId?.takeIf { it.isNotBlank() }
+                            ?: UUID.randomUUID().toString()
+                        val selectedTargetKeys = distinctTargets
+                            .map(StorageTarget::stableKey)
+                            .toSet()
+                        val allEntries = repository.getActiveSaveCandidates(originalIds, replicaGroupId)
+                        val originalEntries = originalIds.mapNotNull { id ->
+                            allEntries.firstOrNull { it.id == id }
+                        }
+                        val existingReplicasByKey = allEntries
+                            .filter {
+                                it.replicaGroupId == replicaGroupId &&
+                                    !it.isDeleted &&
+                                    !it.isArchived
+                            }
+                            .groupBy { it.toStorageTarget().stableKey }
+                        val currentEntryTarget = currentEntry?.toStorageTarget()
+                        val currentTarget = currentEntryTarget
+                            ?.takeIf { it.stableKey in selectedTargetKeys }
+                            ?: distinctTargets.first()
+                        val currentTargetOriginalIds = originalEntries
+                            .filter {
+                                it.toStorageTarget().stableKey == currentTarget.stableKey
+                            }
                             .map { it.id }
-                        val replicaEntry = target.applyToPasswordEntry(
+                            .ifEmpty {
+                                existingReplicasByKey[currentTarget.stableKey]
+                                    .orEmpty()
+                                    .sortedBy { it.id }
+                                    .map { it.id }
+                            }
+                            .ifEmpty {
+                                if (currentEntryTarget?.stableKey in selectedTargetKeys && currentEntry != null) {
+                                    listOf(currentEntry.id)
+                                } else {
+                                    emptyList()
+                                }
+                            }
+
+                        val onlyLocalFolders = distinctTargets.all { it is StorageTarget.MonicaLocal }
+                        val updatedCurrentEntry = currentTarget.applyToPasswordEntry(
                             commonEntry,
                             replicaGroupId = replicaGroupId
-                        )
-                        val createdId = saveGroupedPasswordsInternal(
-                            originalIds = existingTargetIds,
-                            requestedEntry = replicaEntry,
+                        ).let { entry ->
+                            // A replica set can contain several distinct local projects.
+                            val existing = currentEntry?.takeIf { it.isLocalOnlyEntry() && it.id in currentTargetOriginalIds }
+                            if (onlyLocalFolders && existing != null)
+                                entry.copy(passwordGroupId = existing.explicitPasswordGroupId() ?: entry.passwordGroupId)
+                            else entry
+                        }
+                        val initialId = saveGroupedPasswordsInternal(
+                            originalIds = currentTargetOriginalIds.ifEmpty { originalIds },
+                            requestedEntry = updatedCurrentEntry,
                             passwords = passwords,
                             requestedCustomFields = customFields,
                             skipCategoryBinding = true,
-                    embeddedContentSave = embeddedContentSave
+                            embeddedContentSave = embeddedContentSave,
+                            expectedLocalGeneration = expectedLocalGeneration
                         )
-                        if (createdId == null) {
+
+                        if (initialId == null) {
                             Log.e(
                                 "PasswordViewModel",
-                                "savePasswordsAcrossTargets skipped failed target=${target.stableKey}"
+                                "savePasswordsAcrossTargets failed current target=${currentTarget.stableKey} originalIds=$originalIds targets=$requestedTargetKeys"
                             )
-                        } else {
-                            savedTargetFirstIds += createdId
+                            return@save PasswordSaveAcrossTargetsResult(null, emptyList())
                         }
-                    }
+                        val savedTargetFirstIds = mutableListOf(initialId)
 
-                val activeReplicas = repository.getActiveSaveCandidates(emptyList(), replicaGroupId)
-                    .filter {
-                        it.replicaGroupId == replicaGroupId &&
-                            !it.isDeleted &&
-                            !it.isArchived
-                    }
-                val staleReplicas = activeReplicas.filter {
-                    it.toStorageTarget().stableKey !in selectedTargetKeys
-                }
-                if (staleReplicas.isNotEmpty()) {
-                    if (distinctTargets.size == 1 && originalIds.isNotEmpty()) {
-                        repository.deletePasswordEntries(staleReplicas)
-                        Log.i(
-                            "PasswordViewModel",
-                            "Moved edited password entry by removing ${staleReplicas.size} old storage replicas: ids=${staleReplicas.map { it.id }}"
-                        )
-                    } else {
-                        Log.w(
-                            "PasswordViewModel",
-                            "Preserving ${staleReplicas.size} existing password replicas not present in the edited target selection: ids=${staleReplicas.map { it.id }}"
-                        )
-                    }
-                }
+                        distinctTargets
+                            .filter { target ->
+                                target.stableKey != currentTarget.stableKey &&
+                                    target.stableKey in selectedTargetKeys
+                            }
+                            .forEach { target ->
+                                val existingTargetIds = existingReplicasByKey[target.stableKey]
+                                    .orEmpty()
+                                    .sortedBy { it.id }
+                                    .map { it.id }
+                                val replicaEntry = target.applyToPasswordEntry(
+                                    commonEntry,
+                                    replicaGroupId = replicaGroupId
+                                ).let { entry ->
+                                    if (onlyLocalFolders) entry.copy(passwordGroupId = existingReplicasByKey[target.stableKey]
+                                        ?.firstOrNull()?.explicitPasswordGroupId() ?: UUID.randomUUID().toString())
+                                    else entry
+                                }
+                                val createdId = saveGroupedPasswordsInternal(
+                                    originalIds = existingTargetIds,
+                                    requestedEntry = replicaEntry,
+                                    passwords = passwords,
+                                    requestedCustomFields = customFields,
+                                    skipCategoryBinding = true,
+                                    embeddedContentSave = embeddedContentSave,
+                                    expectedLocalGeneration = expectedLocalGeneration
+                                )
+                                if (createdId == null) {
+                                    Log.e(
+                                        "PasswordViewModel",
+                                        "savePasswordsAcrossTargets skipped failed target=${target.stableKey}"
+                                    )
+                                } else {
+                                    savedTargetFirstIds += createdId
+                                }
+                            }
 
-                    PasswordSaveAcrossTargetsResult(
-                        firstPasswordId = initialId,
-                        savedPasswordIds = savedTargetFirstIds.distinct()
-                    )
+                        val activeReplicas = repository.getActiveSaveCandidates(emptyList(), replicaGroupId)
+                            .filter {
+                                it.replicaGroupId == replicaGroupId &&
+                                    !it.isDeleted &&
+                                    !it.isArchived
+                            }
+                        val staleReplicas = activeReplicas.filter {
+                            it.toStorageTarget().stableKey !in selectedTargetKeys
+                        }
+                        if (staleReplicas.isNotEmpty()) {
+                            if (distinctTargets.size == 1 && originalIds.isNotEmpty()) {
+                                repository.deletePasswordEntries(staleReplicas)
+                                Log.i(
+                                    "PasswordViewModel",
+                                    "Moved edited password entry by removing ${staleReplicas.size} old storage replicas: ids=${staleReplicas.map { it.id }}"
+                                )
+                            } else {
+                                Log.w(
+                                    "PasswordViewModel",
+                                    "Preserving ${staleReplicas.size} existing password replicas not present in the edited target selection: ids=${staleReplicas.map { it.id }}"
+                                )
+                            }
+                        }
+
+                        PasswordSaveAcrossTargetsResult(
+                            firstPasswordId = initialId,
+                            savedPasswordIds = savedTargetFirstIds.distinct()
+                        )
+                    }
+                    // Fresh local copies into multiple folders must not lose earlier destinations
+                    // when a later field write fails. Existing cross-provider replicas stay separate.
+                    if (originalIds.isEmpty() && commonEntry.replicaGroupId.isNullOrBlank() &&
+                        targets.isNotEmpty() && targets.all { it is StorageTarget.MonicaLocal }) {
+                        commitLocalPasswordSave(expectedGeneration = expectedLocalGeneration) {
+                            save().also { result ->
+                                check(result.firstPasswordId != null &&
+                                    result.savedPasswordIds.size == targets.distinctBy(StorageTarget::stableKey).size) {
+                                    "Incomplete local password create"
+                                }
+                            }
+                        }
+                    } else save()
                 }
             } catch (e: Exception) {
+                if (e is CancellationException) throw e
                 Log.e(
                     "PasswordViewModel",
                     "savePasswordsAcrossTargets crashed originalIds=$originalIds targets=$requestedTargetKeys error=${e::class.java.simpleName}: ${e.message}",
@@ -5334,6 +5368,7 @@ class PasswordViewModel internal constructor(
         embeddedContentSave: takagi.ru.monica.data.model.DeferredEmbeddedContentSave? = null,
         onComplete: (List<SavedPasswordCredential>) -> Unit = {}
     ) {
+        val expectedLocalGeneration = SessionManager.lockGeneration.value
         viewModelScope.launch {
             val distinctTargets = targets.distinctBy(StorageTarget::stableKey)
             val normalizedCredentials = credentials.map {
@@ -5358,7 +5393,8 @@ class PasswordViewModel internal constructor(
                             credentials = normalizedCredentials,
                             targets = distinctTargets,
                             customFields = customFields,
-                            embeddedContentSave = embeddedContentSave
+                            embeddedContentSave = embeddedContentSave,
+                            expectedLocalGeneration = expectedLocalGeneration
                         )
                     }
                 }
@@ -5381,7 +5417,23 @@ class PasswordViewModel internal constructor(
         credentials: List<PasswordCredentialDraft>,
         targets: List<StorageTarget>,
         customFields: List<CustomFieldDraft>,
-        embeddedContentSave: takagi.ru.monica.data.model.DeferredEmbeddedContentSave? = null
+        embeddedContentSave: takagi.ru.monica.data.model.DeferredEmbeddedContentSave? = null,
+        expectedLocalGeneration: Long = SessionManager.lockGeneration.value
+    ): List<SavedPasswordCredential> {
+        return if (targets.all { it is StorageTarget.MonicaLocal }) {
+            commitLocalPasswordSave(expectedGeneration = expectedLocalGeneration) {
+                saveIndependentCredentialContents(commonEntry, credentials, targets, customFields, embeddedContentSave, expectedLocalGeneration)
+            }
+        } else saveIndependentCredentialContents(commonEntry, credentials, targets, customFields, embeddedContentSave, expectedLocalGeneration)
+    }
+
+    private suspend fun saveIndependentCredentialContents(
+        commonEntry: PasswordEntry,
+        credentials: List<PasswordCredentialDraft>,
+        targets: List<StorageTarget>,
+        customFields: List<CustomFieldDraft>,
+        embeddedContentSave: takagi.ru.monica.data.model.DeferredEmbeddedContentSave? = null,
+        expectedLocalGeneration: Long = SessionManager.lockGeneration.value
     ): List<SavedPasswordCredential> {
         val templates = buildIndependentPasswordCredentialTemplates(commonEntry, credentials)
         val savedCredentials = mutableListOf<SavedPasswordCredential>()
@@ -5406,7 +5458,8 @@ class PasswordViewModel internal constructor(
                     passwords = listOf(credentialTemplate.password),
                     requestedCustomFields = credentialCustomFields,
                     skipCategoryBinding = true,
-                    embeddedContentSave = embeddedContentSave
+                    embeddedContentSave = embeddedContentSave,
+                    expectedLocalGeneration = expectedLocalGeneration
                 )
                 if (savedId == null) {
                     Log.e(
@@ -5723,14 +5776,48 @@ class PasswordViewModel internal constructor(
         check(copied == count) { "All credential attachments must be copied before deleting the source" }
     }
 
+    private suspend fun <T> commitLocalPasswordSave(
+        expectedGeneration: Long = SessionManager.lockGeneration.value,
+        save: suspend () -> T
+    ): T {
+        val generation = expectedGeneration
+        val wasUnlocked = SessionManager.isUnlocked.value
+        fun verifySession() {
+            check(SessionManager.lockGeneration.value == generation &&
+                (!wasUnlocked || SessionManager.isUnlocked.value)) { "Local password save session changed" }
+        }
+        return repository.commitLocalPasswordSave {
+            currentCoroutineContext().ensureActive()
+            verifySession()
+            val result = save()
+            currentCoroutineContext().ensureActive()
+            verifySession()
+            result
+        }
+    }
+
     private suspend fun saveGroupedPasswordsInternal(
         originalIds: List<Long>,
         requestedEntry: PasswordEntry,
         passwords: List<String>,
         requestedCustomFields: List<CustomFieldDraft> = emptyList(),
         skipCategoryBinding: Boolean,
-        embeddedContentSave: takagi.ru.monica.data.model.DeferredEmbeddedContentSave? = null
+        embeddedContentSave: takagi.ru.monica.data.model.DeferredEmbeddedContentSave? = null,
+        expectedLocalGeneration: Long = SessionManager.lockGeneration.value
     ): Long? {
+        val localEntry = requestedEntry.takeIf { it.isLocalOnlyEntry() }?.let {
+            if (skipCategoryBinding) it else applyCategoryBinding(it).takeIf { bound -> bound.isLocalOnlyEntry() }
+        }
+        if (localEntry != null && originalIds.all { repository.getPasswordEntryById(it)?.isLocalOnlyEntry() == true }) {
+            return commitLocalPasswordSave(expectedGeneration = expectedLocalGeneration) {
+                // Recheck ownership within the transaction; do not enclose native/provider writes.
+                check(originalIds.all { repository.getPasswordEntryById(it)?.isLocalOnlyEntry() == true })
+                requireNotNull(saveGroupedPasswordContents(originalIds, localEntry, passwords,
+                    requestedCustomFields, skipCategoryBinding = true, embeddedContentSave = embeddedContentSave)) {
+                    "Incomplete local password save"
+                }
+            }
+        }
         val vaultId = requestedEntry.bitwardenVaultId
         if (originalIds.isEmpty() && vaultId != null && requestedEntry.keepassDatabaseId == null &&
             requestedEntry.mdbxDatabaseId == null) {
@@ -5922,6 +6009,7 @@ class PasswordViewModel internal constructor(
                     )
                     if (newId == null) {
                         Log.e("PasswordViewModel", "saveGroupedPasswords aborted due to KeePass write failure")
+                        if (groupedCommonEntry.isLocalOnlyEntry()) return null
                         return firstId ?: originalIds.firstOrNull()
                     }
                     if (index == 0) firstId = newId

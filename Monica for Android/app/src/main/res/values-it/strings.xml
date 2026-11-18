@@ -1208,6 +1208,7 @@
     <string name="settings_import_data">"Importa dati"</string>
     <string name="settings_import_data_description">"Ripristina dal file di backup"</string>
     <string name="settings_version_info">"Informazioni sulla versione"</string>
+    <string name="version_info_internal_codename">Nome in codice interno: %1$s</string>
     <string name="version_info_dialog_title">"Versione &amp; Links"</string>
     <string name="version_info_github_label">"GitHub"</string>
     <string name="version_info_website_label">"Sito web"</string>

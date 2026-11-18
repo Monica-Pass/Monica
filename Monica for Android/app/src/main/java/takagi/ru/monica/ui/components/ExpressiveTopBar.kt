@@ -84,6 +84,7 @@ fun ExpressiveTopBar(
     onActionPillBoundsChanged: ((Rect) -> Unit)? = null,
     collapsedTitleEndPadding: Dp = 180.dp,
     searchBackEnabled: Boolean = true,
+    searchTransitionMillis: Int? = null,
     actions: @Composable RowScope.() -> Unit = {}
 ) {
     val startupSearchRequest = LocalStartupSearchRequest.current
@@ -139,10 +140,18 @@ fun ExpressiveTopBar(
         }
     }
 
+    val pillDuration = searchTransitionMillis ?: 300
+    // A short handoff keeps the action icons from drawing over the incoming search hint.
+    val handoff = searchTransitionMillis?.let { it * 2 / 5 } ?: 0
+
     // 动画状态：使用 Alpha 而不是 Visibility，避免布局重排导致挤压搜索框
     val titleAlpha by animateFloatAsState(
         targetValue = if (isSearchExpanded) 0f else 1f,
-        animationSpec = tween(200),
+        animationSpec = when {
+            searchTransitionMillis == null -> tween(200)
+            isSearchExpanded -> tween(handoff)
+            else -> tween(pillDuration - handoff, delayMillis = handoff)
+        },
         label = "TitleAlpha"
     )
 
@@ -226,14 +235,15 @@ fun ExpressiveTopBar(
                 // 内容切换
                 AnimatedContent(
                     targetState = isSearchExpanded,
+                    contentAlignment = if (searchTransitionMillis == null) Alignment.TopStart else Alignment.CenterEnd,
                     transitionSpec = {
-                        fadeIn(animationSpec = tween(300))
-                            .togetherWith(fadeOut(animationSpec = tween(300)))
+                        fadeIn(animationSpec = tween(pillDuration - handoff, delayMillis = handoff))
+                            .togetherWith(fadeOut(animationSpec = tween(if (searchTransitionMillis == null) pillDuration else handoff)))
                             .using(
                                 SizeTransform(
-                                    clip = false,
+                                    clip = searchTransitionMillis != null,
                                     sizeAnimationSpec = { _, _ ->
-                                        tween(300, easing = FastOutSlowInEasing)
+                                        tween(pillDuration, easing = FastOutSlowInEasing)
                                     }
                                 )
                             )
@@ -264,6 +274,7 @@ fun ExpressiveTopBar(
                                 }
                                 BasicTextField(
                                     value = searchFieldValue,
+                                    enabled = isSearchExpanded,
                                     onValueChange = { newValue ->
                                         searchFieldValueState = newValue
                                         if (newValue.text != searchQuery) {
@@ -311,9 +322,11 @@ fun ExpressiveTopBar(
                             }
                         }
                         
-                         LaunchedEffect(Unit) {
-                            focusRequester.requestFocus()
-                            keyboardController?.show()
+                        LaunchedEffect(isSearchExpanded) {
+                            if (isSearchExpanded) {
+                                focusRequester.requestFocus()
+                                keyboardController?.show()
+                            }
                         }
                     } else {
                         // 折叠状态：Action Buttons

@@ -1329,6 +1329,7 @@
     <string name="settings_import_data">데이터 가져오기</string>
     <string name="settings_import_data_description">백업 파일에서 복원</string>
     <string name="settings_version_info">버전 정보</string>
+    <string name="version_info_internal_codename">내부 코드명: %1$s</string>
     <string name="version_info_dialog_title">버전 &amp; 링크</string>
     <string name="version_info_github_label">GitHub</string>
     <string name="version_info_website_label">웹사이트</string>

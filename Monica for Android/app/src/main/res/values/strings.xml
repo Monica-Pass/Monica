@@ -1332,6 +1332,7 @@
     <string name="settings_import_data">Import Data</string>
     <string name="settings_import_data_description">Restore from backup file</string>
     <string name="settings_version_info">Version Info</string>
+    <string name="version_info_internal_codename">Internal codename: %1$s</string>
     <string name="version_info_dialog_title">Version &amp; Links</string>
     <string name="version_info_github_label">GitHub</string>
     <string name="version_info_website_label">Website</string>

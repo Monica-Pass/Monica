@@ -40,7 +40,7 @@ class UpdateReleaseClientTest {
     }
 
     private fun releaseClient(http: OkHttpClient) = UpdateReleaseClient(http, UpdateEndpoints(
-        server.url("/standard/latest").toString(), server.url("/fdroid/package").toString(), server.url("/fdroid/tags/").toString()))
+        server.url("/standard/latest").toString(), server.url("/fdroid/package").toString()))
 
     private fun release(tag: String = "v1.0.328", assets: String = "", extra: String = ""): String = """
         {"tag_name":"$tag","html_url":"https://github.com/Monica-Pass/Monica/releases/tag/$tag",
@@ -60,6 +60,7 @@ class UpdateReleaseClientTest {
         assertEquals("## Changes\n\n**Synthetic** note", result.releaseNotes)
         val request = server.takeRequest()
         assertEquals("/standard/latest", request.path)
+        assertEquals("application/vnd.github+json", request.getHeader("Accept"))
         assertEquals("Monica-Android", request.getHeader("User-Agent"))
         assertNull(request.getHeader("Authorization"))
         assertNull(request.getHeader("Cookie"))
@@ -101,43 +102,66 @@ class UpdateReleaseClientTest {
         assertTrue(updates.check("1.0.327", UpdateChannel.STANDARD, 12L, emptyList()).isFailure)
     }
 
-    @Test fun fdroidUsesSuggestedVersionCodeAndMatchingNotesWithoutOfferingOrdinaryApks() = runBlocking {
+    @Test fun productionEndpointsUseOfficialFdroidPackageApi() {
+        val endpoints = UpdateEndpoints()
+        assertEquals("https://f-droid.org/api/v1/packages/takagi.ru.monica.fdroid", endpoints.fdroidPackage)
+        assertEquals("https://api.github.com/repos/Monica-Pass/Monica/releases/latest", endpoints.standardRelease)
+    }
+
+    @Test fun fdroidUsesOnlyOfficialSuggestedVersionAndStoreForBothActions() = runBlocking {
         server.enqueue(MockResponse().setBody("""{"packageName":"takagi.ru.monica.fdroid","suggestedVersionCode":35,"packages":[{"versionName":"1.0.328","versionCode":35},{"versionName":"1.0.329","versionCode":36}]}"""))
-        server.enqueue(MockResponse().setBody(release(assets = asset("Monica-arm64-v8a.apk"))))
         val result = updates.check("1.0.327", UpdateChannel.FDROID, 34L, listOf("arm64-v8a")).getOrThrow()
         assertTrue(result.isFdroid)
         assertTrue(result.isUpdateAvailable)
         assertEquals("1.0.328", result.latestVersion)
         assertEquals("fdroid:35", result.releaseIdentity)
         assertEquals("https://f-droid.org/packages/takagi.ru.monica.fdroid/", result.releaseUrl)
-        assertEquals("https://github.com/Monica-Pass/Monica-Fdroid/releases/tag/v1.0.328", result.detailsUrl)
+        assertEquals(result.releaseUrl, result.detailsUrl)
         assertNull(result.apkDownloadUrl)
         assertNull(result.apkAssetName)
-        assertNotNull(result.releaseNotes)
-        assertEquals("/fdroid/package", server.takeRequest().path)
-        assertEquals("/fdroid/tags/v1.0.328", server.takeRequest().path)
-    }
-
-    @Test fun fdroidSourceReleaseNotesFailureDoesNotEraseOfficialAvailability() = runBlocking {
-        server.enqueue(MockResponse().setBody("""{"packageName":"takagi.ru.monica.fdroid","suggestedVersionCode":35,"packages":[{"versionName":"1.0.328","versionCode":35}]}"""))
-        server.enqueue(MockResponse().setResponseCode(404))
-        val result = updates.check("1.0.327", UpdateChannel.FDROID, 34L, emptyList()).getOrThrow()
-        assertTrue(result.isUpdateAvailable)
+        assertNull(result.releaseName)
         assertNull(result.releaseNotes)
-        assertNull(result.apkDownloadUrl)
+        val request = server.takeRequest()
+        assertEquals("/fdroid/package", request.path)
+        assertEquals("application/json", request.getHeader("Accept"))
+        assertNull(request.getHeader("Authorization"))
+        assertNull(request.getHeader("Cookie"))
+        assertEquals(1, server.requestCount)
     }
 
-    @Test fun fdroidRejectsWrongPackageOrMissingSuggestedVersionAndDoesNotCheckNewerSourceTags() = runBlocking {
-        for (body in listOf(
+    @Test fun fdroidComparesVersionCodeEvenWhenVersionNameIsUnchanged() = runBlocking {
+        for (installed in listOf(34L, 35L, 36L)) {
+            server.enqueue(MockResponse().setBody("""{"packageName":"takagi.ru.monica.fdroid","suggestedVersionCode":35,"packages":[{"versionName":"1.0.328","versionCode":35}]}"""))
+            val result = updates.check("1.0.328", UpdateChannel.FDROID, installed, emptyList()).getOrThrow()
+            assertEquals(installed < 35L, result.isUpdateAvailable)
+            assertEquals(result.releaseUrl, result.detailsUrl)
+        }
+        assertEquals(3, server.requestCount)
+    }
+
+    @Test fun fdroidRejectsInvalidMetadataWithoutFallingBackToGithub() = runBlocking {
+        val invalid = listOf(
             """{"packageName":"takagi.ru.monica","suggestedVersionCode":35,"packages":[]}""",
             """{"packageName":"takagi.ru.monica.fdroid","suggestedVersionCode":35,"packages":[{"versionName":"1.0.329","versionCode":36}]}""",
-        )) {
+            """{"packageName":"takagi.ru.monica.fdroid","suggestedVersionCode":35,"packages":[{"versionName":"1.0.328","versionCode":35},{"versionName":"1.0.328","versionCode":35}]}""",
+            """{"packageName":"takagi.ru.monica.fdroid","suggestedVersionCode":0,"packages":[]}""",
+            """{"packageName":"takagi.ru.monica.fdroid","suggestedVersionCode":35,"packages":[{"versionName":"nightly","versionCode":35}]}""",
+        )
+        for (body in invalid) {
             server.enqueue(MockResponse().setBody(body))
             assertTrue(updates.check("1.0.327", UpdateChannel.FDROID, 34L, emptyList()).isFailure)
+            assertEquals("/fdroid/package", server.takeRequest().path)
         }
-        server.enqueue(MockResponse().setBody("""{"packageName":"takagi.ru.monica.fdroid","suggestedVersionCode":33,"packages":[{"versionName":"1.0.326","versionCode":33}]}"""))
-        assertFalse(updates.check("1.0.327", UpdateChannel.FDROID, 34L, emptyList()).getOrThrow().isUpdateAvailable)
-        assertEquals(3, server.requestCount)
+        assertEquals(invalid.size, server.requestCount)
+    }
+
+    @Test fun fdroidNetworkOrJsonFailureDoesNotFallBackToSourceReleases() = runBlocking {
+        for (response in listOf(MockResponse().setResponseCode(503), MockResponse().setBody("not json"))) {
+            server.enqueue(response)
+            assertTrue(updates.check("1.0.327", UpdateChannel.FDROID, 34L, emptyList()).isFailure)
+            assertEquals("/fdroid/package", server.takeRequest().path)
+        }
+        assertEquals(2, server.requestCount)
     }
 
     @Test fun metadataLimitRejectsKnownLengthAndChunkedOverflow() = runBlocking {

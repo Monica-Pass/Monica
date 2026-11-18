@@ -1,0 +1,142 @@
+{
+  "date": "2026-11-18",
+  "version": "1.0.329",
+  "fdroidVersionCode": 36,
+  "officialSuggestedVersionCode": 33,
+  "jvm": {
+    "main": {
+      "tests": 47,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "name": "takagi.ru.monica.update.AppUpdateControllerTest",
+          "tests": "9",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "0.261"
+        },
+        {
+          "name": "takagi.ru.monica.update.AppUpdatePolicyTest",
+          "tests": "5",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "0.002"
+        },
+        {
+          "name": "takagi.ru.monica.update.ReleaseNotesMarkdownTest",
+          "tests": "8",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "0.147"
+        },
+        {
+          "name": "takagi.ru.monica.update.UpdatePreferencesTest",
+          "tests": "2",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "2.899"
+        },
+        {
+          "name": "takagi.ru.monica.utils.UpdateCheckerTest",
+          "tests": "6",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "0.107"
+        },
+        {
+          "name": "takagi.ru.monica.utils.UpdateReleaseClientTest",
+          "tests": "17",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "2.7"
+        }
+      ],
+      "buildSeconds": 153.246
+    },
+    "fd": {
+      "tests": 47,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "name": "takagi.ru.monica.update.AppUpdateControllerTest",
+          "tests": "9",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "0.253"
+        },
+        {
+          "name": "takagi.ru.monica.update.AppUpdatePolicyTest",
+          "tests": "5",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "0.003"
+        },
+        {
+          "name": "takagi.ru.monica.update.ReleaseNotesMarkdownTest",
+          "tests": "8",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "0.145"
+        },
+        {
+          "name": "takagi.ru.monica.update.UpdatePreferencesTest",
+          "tests": "2",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "3.375"
+        },
+        {
+          "name": "takagi.ru.monica.utils.UpdateCheckerTest",
+          "tests": "6",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "0.108"
+        },
+        {
+          "name": "takagi.ru.monica.utils.UpdateReleaseClientTest",
+          "tests": "17",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0",
+          "time": "2.78"
+        }
+      ],
+      "buildSeconds": 164.954
+    }
+  },
+  "device": {
+    "edition": "FD isolated applicationId",
+    "api": 32,
+    "abi": "x86_64",
+    "tests": 8,
+    "failures": 0,
+    "runnerSeconds": 18.273,
+    "driverSeconds": 23.862
+  },
+  "finalFdCanonicalBuildSeconds": 67.672,
+  "sharedSourceSha256": {
+    "app/src/main/java/takagi/ru/monica/utils/UpdateChecker.kt": "e765608c7b9d3ce0c2ad55ba8fa6bfad4e78f1727368d55c6e59db221c70e10c",
+    "app/src/test/java/takagi/ru/monica/utils/UpdateReleaseClientTest.kt": "e669aeff15745dc2307f97b902b1f9314bbefe16d01a2cfec0bba299ff147cab",
+    "app/src/androidTest/java/takagi/ru/monica/update/AppUpdateDialogTest.kt": "e854d1b6f9d372f2711285417dfff20622a9f6c55ceee06bf2cb75519a4598b6"
+  },
+  "sourceFrozenThroughValidation": true,
+  "committed": false,
+  "pushed": false,
+  "released": false,
+  "apkDelivered": false
+}

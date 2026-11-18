@@ -2386,6 +2386,7 @@
     <string name="note_bitwarden_move_warning_title">Bitwarden イメージの互換性に関するお知らせ</string>
     <string name="note_bitwarden_move_warning_message">選択したノート %1$d 件に画像があります。画像はローカルに残り、Bitwarden には同期されません。続行しますか？</string>
     <string name="continue_action">続く</string>
+    <string name="version_info_internal_codename">内部コードネーム：%1$s</string>
     <string name="version_info_dialog_title">バージョンとリンク</string>
     <string name="version_info_github_label">GitHub</string>
     <string name="version_info_website_label">Webサイト</string>

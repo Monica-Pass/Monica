@@ -21,7 +21,7 @@
 
 **Monica for Android** manages passwords, authenticators, cards and notes, with local storage and optional connections to Bitwarden/Vaultwarden, KeePass and cloud backup providers. Sensitive local fields use AES-GCM; connected vaults retain their own encryption and storage formats.
 
-The current version is **1.0.328**. See the root release notes for the complete changes.
+The development version is **1.0.329 (unreleased)**. See the root release notes for the complete changes.
 
 With a stunning **Material You** interface, seamless **Autofill** integration, and advanced features like **KeePass support** and **TOTP generation**, Monica brings desktop-class power to your mobile device.
 

@@ -77,4 +77,5 @@
     <string name="local_recovery_confirm_title">确认恢复本机安全存储？</string>
     <string name="local_recovery_confirm_description">将验证主密码并创建新的本机存储密钥。原文件会保留，生物识别解锁需重新开启。取消不会更改数据。</string>
     <string name="local_recovery_confirm_action">确认恢复</string>
+    <string name="version_info_internal_codename">内部代号：%1$s</string>
 </resources>

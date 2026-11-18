@@ -1,6 +1,7 @@
 package takagi.ru.monica.ui.navigation
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.runtime.Composable
@@ -22,6 +23,7 @@ internal fun MonicaPageContent(
     modifier: Modifier = Modifier,
     animateInitial: Boolean = false,
     animate: Boolean = true,
+    enter: EnterTransition = easyNotesScreenEnter(),
     content: @Composable () -> Unit,
 ) {
     var firstComposition by remember { mutableStateOf(true) }
@@ -33,7 +35,7 @@ internal fun MonicaPageContent(
             MutableTransitionState(!animate || (firstComposition && !animateInitial)).apply { targetState = true }
         }
         AnimatedVisibility(visibleState = visible, modifier = modifier,
-            enter = easyNotesScreenEnter(), exit = ExitTransition.None) {
+            enter = enter, exit = ExitTransition.None) {
             content()
         }
     }

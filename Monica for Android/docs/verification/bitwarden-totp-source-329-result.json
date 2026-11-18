@@ -1,0 +1,155 @@
+{
+  "date": "2026-11-18",
+  "version": "1.0.329-unreleased",
+  "issue": "https://github.com/Monica-Pass/Monica/issues/185",
+  "conclusion": "Reproduced source classification defect in password-derived root-folder Bitwarden TOTP display rows.",
+  "change": "Retain bitwardenCipherId, bitwardenRevisionDate and bitwardenLocalModified in the existing transient SecureItem projection.",
+  "forcedBitwardenOptionAdded": false,
+  "persistentStorageChanges": false,
+  "device": {
+    "emulator": "MuMu existing index 2",
+    "api": 35,
+    "abi": "x86_64",
+    "syntheticUser": 10
+  },
+  "baseline": {
+    "tests": 6,
+    "failures": 3,
+    "runnerSeconds": 0.334,
+    "productionMatchesPublished328ExceptThreeFieldFix": true
+  },
+  "sharedFiles": [
+    {
+      "path": "app/src/main/java/takagi/ru/monica/viewmodel/TotpViewModel.kt",
+      "sha256": "f8aaf764090fa983ac2157b0ff320b74b6b8918c9c0c0f5daab7fbbed1c524bd"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/ui/BitwardenTotpSourceTest.kt",
+      "sha256": "d7c11344f93e5c187e963707129a457ee8d7b88182ea1e2e729d3bfaaf12b359"
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/ui/BitwardenTotpSourceUiTest.kt",
+      "sha256": "8355b82f309a10b50287391c04d90061aa2e7d11e157fe916b56e90d46266632"
+    }
+  ],
+  "editions": {
+    "main": {
+      "versionCode": 12,
+      "buildSeconds": 79.962,
+      "jvm": {
+        "tests": 13,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "jvmSuites": [
+        {
+          "name": "takagi.ru.monica.data.PasswordOwnershipTest",
+          "tests": 2
+        },
+        {
+          "name": "takagi.ru.monica.keepass.KeePassTotpDisplaySourceTest",
+          "tests": 6
+        },
+        {
+          "name": "takagi.ru.monica.ui.screens.TotpEditorIdentityRegressionGuardTest",
+          "tests": 2
+        },
+        {
+          "name": "takagi.ru.monica.ui.TotpPasswordMetadataStreamGuardTest",
+          "tests": 2
+        },
+        {
+          "name": "takagi.ru.monica.viewmodel.TotpPasswordBindingRegressionGuardTest",
+          "tests": 1
+        }
+      ],
+      "jvmReusedAfterUiFixtureOnlyChange": false,
+      "deviceTests": 9,
+      "deviceRunnerSeconds": 6.154,
+      "artifacts": [
+        {
+          "name": "Monica-Android-x86_64-1.0.329-26111812-01.APK",
+          "sha256": "473389cb1754054ca315cddccf4a5ad12a1e9393f5f06ec6190a0d95bf718aa8"
+        },
+        {
+          "name": "app-debug-androidTest.apk",
+          "sha256": "c4f0fb5a7e5af7344fb4a981c5db2cad4a2f1dcf1e269a2a623dc2a0073efcf7"
+        }
+      ]
+    },
+    "fd": {
+      "versionCode": 36,
+      "buildSeconds": 21.24,
+      "jvm": {
+        "tests": 13,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "jvmSuites": [
+        {
+          "name": "takagi.ru.monica.data.PasswordOwnershipTest",
+          "tests": 2
+        },
+        {
+          "name": "takagi.ru.monica.keepass.KeePassTotpDisplaySourceTest",
+          "tests": 6
+        },
+        {
+          "name": "takagi.ru.monica.ui.screens.TotpEditorIdentityRegressionGuardTest",
+          "tests": 2
+        },
+        {
+          "name": "takagi.ru.monica.ui.TotpPasswordMetadataStreamGuardTest",
+          "tests": 2
+        },
+        {
+          "name": "takagi.ru.monica.viewmodel.TotpPasswordBindingRegressionGuardTest",
+          "tests": 1
+        }
+      ],
+      "jvmReusedAfterUiFixtureOnlyChange": true,
+      "deviceTests": 9,
+      "deviceRunnerSeconds": 5.586,
+      "artifacts": [
+        {
+          "name": "Monica-Android-x86_64-1.0.329.apk",
+          "sha256": "76e945ebd08d0ce442d2e33961f64c441b3acf30f41be5300d36d7e823a9acae"
+        },
+        {
+          "name": "app-debug-androidTest.apk",
+          "sha256": "46374fa68beded283dd6e0fcedf94a854d7698b999d84584b4aae50f779b7ea0"
+        }
+      ]
+    }
+  },
+  "limits": [
+    "Synthetic Room and mapper inputs; no live account or user-vault reproduction.",
+    "Actual Compose list and 1.5 font scale exercised; source chosen by ViewModel in new UI tests.",
+    "No physical device, OEM, network sync, minified Release or wrong-destination write demonstrated."
+  ],
+  "priorFailures": [
+    "Public AVD full-secondary user limit; no user created. Switched to MuMu as user directed.",
+    "Original-package Debug install rejected by existing Release signing key; existing main package retained. Independent test package used.",
+    "First F-Droid metadata check rejected version heading with unreleased suffix. Moved unreleased marker to its own heading; metadata and six checker tests passed.",
+    "First F-Droid 329 batch: 8/9 passed; first normal-size UI fixture omitted accepted secure-startup preparation and failed SECURE_STORAGE_NOT_READY. Added existing prepareForEntry readiness precondition to both UI fixtures; no production security changes. Final batches rerun."
+  ],
+  "publication": {
+    "committed": false,
+    "pushed": false,
+    "released": false,
+    "issueCommentPosted": false
+  },
+  "cleanup": {
+    "passed": true,
+    "ownedMuMuInstance": 2,
+    "removedSyntheticUser": 10,
+    "originalUserRestored": 0,
+    "otherMuMuInstancesPreserved": true,
+    "existingFormalAppPreserved": true,
+    "sharedAvdStoppedAndRetained": true,
+    "ownedMuMuStopped": true
+  },
+  "preserved328History": true
+}

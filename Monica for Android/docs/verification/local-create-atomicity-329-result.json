@@ -1,0 +1,115 @@
+{
+  "version": "1.0.329",
+  "date": "2026-11-18",
+  "device": "MuMu index 0 API 35 x86_64, synthetic data",
+  "editions": {
+    "main": {
+      "jvmPassed": 9,
+      "devicePassed": 22,
+      "runnerSeconds": 26.8,
+      "testedAppSha256": "095e151523e226d7c07855bd82085e1f6bd80c9b16703b8615e8ae4b30d4c88d",
+      "testedInstrumentationSha256": "742699163f31698bdb12a49f00ae6f3971fc41aebed5a95de048c3283bc5091e",
+      "isolatedBuildSeconds": 211.236,
+      "standardBuildSeconds": 88.042,
+      "standardOutputs": [
+        {
+          "file": "Monica-Android-arm64-v8a-1.0.329-26111812-95.APK",
+          "package": "takagi.ru.monica",
+          "sha256": "1d753402d599fd0c240a40c56e8b6ab97806473264b7223d0e9689a39ba268fb"
+        },
+        {
+          "file": "Monica-Android-armeabi-v7a-1.0.329-26111812-95.APK",
+          "package": "takagi.ru.monica",
+          "sha256": "f910249f79cc691cc91765e1ab334c6918fadf09be90b83107b08f3d91c1f236"
+        },
+        {
+          "file": "Monica-Android-x86_64-1.0.329-26111812-95.APK",
+          "package": "takagi.ru.monica",
+          "sha256": "213c20eee1b3fcbb8dd427f609a8d65d03cc1b53c36f02be6d350ade8645e93b"
+        },
+        {
+          "file": "app-debug-androidTest.apk",
+          "package": "takagi.ru.monica.test",
+          "sha256": "fbe68af20e436523bd58ed889f3ae58acedf8acf455df0a7f1c85a2a1c513edc"
+        }
+      ],
+      "coldFixture": {
+        "firstId": 1,
+        "secondId": 2,
+        "ciphertextHash": "5494511c11f85256217be099a5e1dda136014d5d6fec8512a50ab078660a18a8",
+        "seedPid": 2285,
+        "newId": 3,
+        "upgradePid": 2989,
+        "coldPid": 4869,
+        "rows": 3,
+        "oldCiphertextUnchanged": true
+      },
+      "seedBuild": "pre-fix baseline2"
+    },
+    "fd": {
+      "jvmPassed": 9,
+      "devicePassed": 22,
+      "runnerSeconds": 24.531,
+      "testedAppSha256": "a0adbf30e082ea576fb46da81fb63d687eb2134b736a43d4769bd59c21636924",
+      "testedInstrumentationSha256": "7375f5fc2a34ec908a8cfb2ec41c32dbca813f547ef211577de6ca0f248115ca",
+      "isolatedBuildSeconds": 135.543,
+      "standardBuildSeconds": 90.822,
+      "standardOutputs": [
+        {
+          "file": "Monica-Android-arm64-v8a-1.0.329.apk",
+          "package": "takagi.ru.monica.fdroid",
+          "sha256": "c5174f7d178263a29fffd25528139a374ab8e48308784e2ddb342ec16f707afb"
+        },
+        {
+          "file": "Monica-Android-armeabi-v7a-1.0.329.apk",
+          "package": "takagi.ru.monica.fdroid",
+          "sha256": "2f07a9a1b71866e7405c69b916611ee41309248716155f5ff1b8b0f90f18ec45"
+        },
+        {
+          "file": "Monica-Android-x86_64-1.0.329.apk",
+          "package": "takagi.ru.monica.fdroid",
+          "sha256": "6ea5ee458ee5c2195523e7f13afec1fd1e35ab688a4adad758bd31a8c25c40f3"
+        },
+        {
+          "file": "app-debug-androidTest.apk",
+          "package": "takagi.ru.monica.fdroid.test",
+          "sha256": "593aaf310133ce69b98ebcc528c644852fd79e1b9d4b43b430ab365c238af40d"
+        }
+      ],
+      "coldFixture": {
+        "firstId": 1,
+        "secondId": 2,
+        "ciphertextHash": "df4106938073af0f993cc73f4f5f37c79e09d91bf826adce920e58a11f33e23f",
+        "seedPid": 4582,
+        "newId": 3,
+        "upgradePid": 5325,
+        "coldPid": 5394,
+        "rows": 3,
+        "oldCiphertextUnchanged": true
+      },
+      "seedBuild": "intermediate fix final3"
+    }
+  },
+  "sharedFileSha256": {
+    "app/src/main/java/takagi/ru/monica/data/PasswordEntryDao.kt": "fb32e17a812a39b96dd4b14be5ed8696c1718656d14c539f5cc938ff3165b6f7",
+    "app/src/main/java/takagi/ru/monica/repository/PasswordRepository.kt": "8f5d87f4d5cead86e7dd1f0dec80ef18c4303cbbd1b0013debfbff1e86613ff9",
+    "app/src/main/java/takagi/ru/monica/viewmodel/PasswordViewModel.kt": "e4b158a727154b0921f40fb4a1f3e43ca2d148fe7addda587aef2e72537d4eba",
+    "app/src/androidTest/java/takagi/ru/monica/credentialexchange/LocalCredentialCreateAtomicityTest.kt": "0e90f0ab052307bf291e602e8c79a7afb495dd6f2b0c5365585757330c0aadb8",
+    "app/src/androidTest/java/takagi/ru/monica/credentialexchange/LocalCredentialCreateColdStartTest.kt": "41cec8e9257ee55a2aea5bbd3a150140af2c8aa64dfdba2315d44ad22a9af3e9",
+    "app/src/androidTest/java/takagi/ru/monica/ui/LocalCredentialCreateRetryUiTest.kt": "a31f6f61d61dd4b52698a77f2f6a056813beef2134cda4f769fbc559e21cf199",
+    "app/src/androidTest/java/takagi/ru/monica/ui/ProjectCredentialEditorTest.kt": "31e1cc9d4964b229c2cc1b489cd8e52624b51df240ed8a80f60249400cdb2613",
+    "app/src/androidTest/java/takagi/ru/monica/credentialexchange/BitwardenCredentialCreateAtomicityTest.kt": "9b04ab0481d7ee5552d7ac0175016d146ca8d9c7d5506c4c3d98c90f3a319793"
+  },
+  "cleanup": {
+    "removed": [
+      "takagi.ru.monica.localcreatefix329.main",
+      "takagi.ru.monica.localcreatefix329.main.test",
+      "takagi.ru.monica.localcreatefix329.fd",
+      "takagi.ru.monica.localcreatefix329.fd.test"
+    ],
+    "user0PackageSetPreserved": true,
+    "usersPreserved": true,
+    "currentUser": 0,
+    "taskStartedInstance0Stopped": true
+  }
+}

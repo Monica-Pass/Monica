@@ -2388,6 +2388,7 @@
     <string name="note_bitwarden_move_warning_title">Thông báo tương thích hình ảnh Bitwarden</string>
     <string name="note_bitwarden_move_warning_message">%1$d ghi chú đã chọn có hình ảnh. Hình ảnh vẫn ở cục bộ và sẽ không đồng bộ với Bitwarden. Tiếp tục?</string>
     <string name="continue_action">Tiếp tục</string>
+    <string name="version_info_internal_codename">Tên mã nội bộ: %1$s</string>
     <string name="version_info_dialog_title">Phiên bản &amp; Liên kết</string>
     <string name="version_info_github_label">GitHub</string>
     <string name="version_info_website_label">Trang web</string>

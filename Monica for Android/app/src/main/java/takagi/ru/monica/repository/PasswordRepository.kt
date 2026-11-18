@@ -40,6 +40,13 @@ class PasswordRepository(
     private val bitwardenSyncRawEntryRecordDao: BitwardenSyncRawEntryRecordDao? = null,
     private val mdbxRepository: MdbxRepository? = null
 ) {
+    /** The DAO owns the same Room transaction as the password's custom fields. Local writes only. */
+    suspend fun <T> commitLocalPasswordSave(save: suspend () -> T): T {
+        var result: Result<T>? = null
+        passwordEntryDao.commitLocalPasswordSave { result = Result.success(save()) }
+        return requireNotNull(result).getOrThrow()
+    }
+
     internal var monicaKeePassStore: takagi.ru.monica.keepass.KeePassMonicaPasswordStore? = null
     private fun requireRoomIds(ids: List<Long>) {
         require(ids.none(takagi.ru.monica.keepass.KeePassMonicaPasswordStore::isUiId)) { "Original KeePass ownership changes require verified copies" }

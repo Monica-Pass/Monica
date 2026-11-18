@@ -1329,6 +1329,7 @@
     <string name="settings_import_data">Daten importieren</string>
     <string name="settings_import_data_description">Aus Sicherungsdatei wiederherstellen</string>
     <string name="settings_version_info">Versionsinformationen</string>
+    <string name="version_info_internal_codename">Interner Codename: %1$s</string>
     <string name="version_info_dialog_title">Version &amp; Links</string>
     <string name="version_info_github_label">GitHub</string>
     <string name="version_info_website_label">Webseite</string>

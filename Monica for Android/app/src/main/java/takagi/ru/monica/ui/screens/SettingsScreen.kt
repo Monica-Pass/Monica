@@ -68,25 +68,6 @@ import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 import takagi.ru.monica.ui.components.OutlinedTextField
 
-@Composable
-private fun VersionLinkButton(
-    title: String,
-    onClick: () -> Unit
-) {
-    OutlinedButton(
-        onClick = onClick,
-        modifier = Modifier
-            .fillMaxWidth()
-            .heightIn(min = 48.dp),
-        shape = RoundedCornerShape(14.dp)
-    ) {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.labelLarge
-        )
-    }
-}
-
 private class DeveloperSettingsVerificationRequest(val generation: Long)
 
 private val LocalSettingsSectionContent = compositionLocalOf { false }
@@ -1004,69 +985,10 @@ fun SettingsScreen(
     }
 
     if (showVersionInfoDialog) {
-        AlertDialog(
-            onDismissRequest = { showVersionInfoDialog = false },
-            icon = {
-                Icon(
-                    Icons.Default.Info,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary
-                )
-            },
-            title = { Text(stringResource(R.string.version_info_dialog_title)) },
-            text = {
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    val githubUrl = "https://github.com/Monica-Pass/Monica"
-                    val websiteUrl = "https://monica-pass.github.io/MonicaDocs/"
-                    val iconSourceUrl = "https://github.com/stratumauth/app/tree/v1.4.0/icons"
-                    val iconReleaseUrl = "https://github.com/stratumauth/app/releases/tag/v1.4.0"
-                    val fullVersion = BuildConfig.FULL_VERSION_NAME.ifBlank { BuildConfig.VERSION_NAME }
-
-                    Text(
-                        text = stringResource(R.string.version_info_full_version_label),
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                    Text(
-                        text = fullVersion,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Text(
-                        text = stringResource(R.string.version_info_codename),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    VersionLinkButton(
-                        title = stringResource(R.string.version_info_github_label),
-                        onClick = { openExternalLink(githubUrl) }
-                    )
-                    VersionLinkButton(
-                        title = stringResource(R.string.version_info_website_label),
-                        onClick = { openExternalLink(websiteUrl) }
-                    )
-                    VersionLinkButton(
-                        title = stringResource(R.string.version_info_icon_source_label),
-                        onClick = { openExternalLink(iconSourceUrl) }
-                    )
-                    VersionLinkButton(
-                        title = stringResource(R.string.version_info_icon_release_label),
-                        onClick = { openExternalLink(iconReleaseUrl) }
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = stringResource(R.string.version_info_simple_icons_note),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            },
-            confirmButton = {
-                TextButton(onClick = { showVersionInfoDialog = false }) {
-                    Text(stringResource(R.string.close))
-                }
-            }
+        VersionInfoDialog(
+            fullVersion = BuildConfig.FULL_VERSION_NAME.ifBlank { BuildConfig.VERSION_NAME },
+            onOpenLink = openExternalLink,
+            onDismiss = { showVersionInfoDialog = false },
         )
     }
 
