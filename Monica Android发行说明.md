@@ -1,6 +1,6 @@
 # 未发布 / Unreleased
 
-# Monica Android 1.0.329
+# Monica Android 1.0.329 · 千石抚子（SengokuNadeko）
 
 ## 中文
 
