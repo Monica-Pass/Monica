@@ -98,7 +98,7 @@ class VaultOverviewPaneTest {
         database.close()
     }
 
-    private fun showPane(followOverviewSettings: Boolean = false, expectedOverviewCount: Int? = 24, legacy: Boolean = false) {
+    private fun showPane(followOverviewSettings: Boolean = false, expectedOverviewCount: Int? = 24, legacy: Boolean = false, reduceFolderMotion: Boolean = false) {
         val security = SecurityManager(context)
         val passwords = PasswordRepository(database.passwordEntryDao(), categoryDao = database.categoryDao(),
             bitwardenFolderDao = database.bitwardenFolderDao(), passwordArchiveSyncMetaDao = database.passwordArchiveSyncMetaDao())
@@ -130,7 +130,10 @@ class VaultOverviewPaneTest {
                     appSettings = appSettings.copy(vaultOverviewConfig = persisted.vaultOverviewConfig, vaultListSort = persisted.vaultListSort)
                 }
             }
-            CompositionLocalProvider(LocalDensity provides androidx.compose.ui.unit.Density(LocalDensity.current.density, fixtureFontScale)) {
+            CompositionLocalProvider(
+                LocalDensity provides androidx.compose.ui.unit.Density(LocalDensity.current.density, fixtureFontScale),
+                takagi.ru.monica.ui.components.LocalExpansionAnimationsEnabled provides !reduceFolderMotion,
+            ) {
             MaterialTheme(colorScheme = if (darkTheme) darkColorScheme() else lightColorScheme()) {
                 state = rememberVaultV2PaneState(remember { VaultV2RetainedState() })
                 if (legacy) androidx.compose.foundation.layout.Column(Modifier.fillMaxSize()) {
@@ -570,6 +573,86 @@ class VaultOverviewPaneTest {
         runBlocking {
             assertEquals(3000L, database.passwordEntryDao().getPasswordEntryById(1)!!.createdAt.time)
             assertEquals(1000L, database.passwordEntryDao().getPasswordEntryById(1)!!.updatedAt.time)
+        }
+    }
+
+    @Test fun passwordSearchMovesCardsUpWhenFolderChipsDisappear() =
+        checkPasswordFolderMotion()
+
+    @Test fun passwordSearchFolderHeightSnapsWithReducedMotion() =
+        checkPasswordFolderMotion(reduceMotion = true)
+
+    private fun checkPasswordFolderMotion(reduceMotion: Boolean = false) {
+        runBlocking {
+            check(takagi.ru.monica.security.SecureStorageStartup.prepareForEntry(context) is
+                takagi.ru.monica.security.SecureStartupResult.Ready)
+            database.passwordEntryDao().deleteAllPasswordEntries()
+            database.categoryDao().insert(Category(id = 432, name = "Motion folder"))
+            database.passwordEntryDao().insertPasswordEntry(
+                PasswordEntry(id = 1, title = "Latte match", website = "", username = "", password = "",
+                    createdAt = java.util.Date(2_000L), updatedAt = java.util.Date(2_000L))
+            )
+            database.passwordEntryDao().insertPasswordEntry(
+                PasswordEntry(id = 2, title = "Espresso sample", website = "", username = "", password = "", categoryId = 432,
+                    createdAt = java.util.Date(1_000L), updatedAt = java.util.Date(1_000L))
+            )
+            settings.updatePasswordListQuickFiltersEnabled(true)
+            settings.updatePasswordListCategoryQuickFiltersEnabled(true)
+        }
+        showPane(legacy = true, reduceFolderMotion = reduceMotion)
+        compose.runOnIdle { testPasswordModel.setCategoryFilter(CategoryFilter.Local) }
+        compose.waitUntil(10_000) {
+            compose.onAllNodesWithText("Motion folder").fetchSemanticsNodes().isNotEmpty() &&
+                compose.onAllNodesWithText("Latte match").fetchSemanticsNodes().isNotEmpty()
+        }
+        compose.onNodeWithContentDescription(context.getString(R.string.search)).performClick()
+        val search = compose.onNode(hasSetTextAction())
+        val card = compose.onNodeWithText("Latte match")
+        val folder = compose.onNodeWithText("Motion folder")
+        fun cardTop() = card.fetchSemanticsNode().boundsInRoot.top
+        val espresso = compose.onNodeWithText("Espresso sample")
+        assertTrue("The item that survives the query must start at the top of the results",
+            cardTop() < espresso.fetchSemanticsNode().boundsInRoot.top)
+        val before = cardTop()
+        if (!reduceMotion) capture("password-folder-collapse-before.png")
+        compose.mainClock.autoAdvance = false
+        try {
+            search.performTextReplacement("Latte")
+            compose.waitUntil(10_000) {
+                compose.mainClock.advanceTimeByFrame()
+                compose.onAllNodesWithText("Motion folder").fetchSemanticsNodes().isEmpty()
+            }
+            val first = cardTop()
+            compose.mainClock.advanceTimeBy(80)
+            val middle = cardTop()
+            if (!reduceMotion) capture("password-folder-collapse-middle.png")
+            compose.mainClock.advanceTimeBy(550)
+            val settled = cardTop()
+            if (!reduceMotion) capture("password-folder-collapse-settled.png")
+            assertTrue("Removing the folder must move the same card up: $before -> $settled", before > settled)
+            if (reduceMotion) {
+                assertEquals(settled, first, 1f)
+            } else {
+                assertTrue("The visible card must move through an intermediate position: $first -> $middle -> $settled",
+                    first > middle && middle > settled)
+            }
+
+            search.performTextClearance()
+            compose.waitUntil(10_000) {
+                compose.mainClock.advanceTimeByFrame()
+                compose.onAllNodesWithText("Motion folder").fetchSemanticsNodes().isNotEmpty()
+            }
+            val reopening = cardTop()
+            compose.waitUntil(10_000) {
+                compose.mainClock.advanceTimeByFrame()
+                compose.onAllNodesWithText("Espresso sample").fetchSemanticsNodes().isNotEmpty()
+            }
+            compose.mainClock.advanceTimeBy(550)
+            folder.assertIsDisplayed()
+            assertEquals("Clearing search restores the original card position", before, cardTop(), 1f)
+            if (!reduceMotion) assertTrue("Folder return should expand from the collapsed height", reopening < before)
+        } finally {
+            compose.mainClock.autoAdvance = true
         }
     }
 

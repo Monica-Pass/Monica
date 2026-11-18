@@ -11,6 +11,7 @@ import takagi.ru.monica.ui.password.LocalKeePassListInteraction
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,6 +29,7 @@ import androidx.compose.material.icons.filled.Wifi
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -37,6 +39,7 @@ import takagi.ru.monica.data.AppSettings
 import takagi.ru.monica.data.PasswordListQuickFilterItem
 import takagi.ru.monica.data.PasswordListQuickFolderStyle
 import takagi.ru.monica.data.PasswordPageContentType
+import takagi.ru.monica.ui.components.animateMonicaContentSize
 import takagi.ru.monica.viewmodel.CategoryFilter
 
 internal const val PASSWORD_LIST_QUICK_FILTERS_KEY = "quick_filters"
@@ -102,6 +105,10 @@ internal fun PasswordListScrollableContent(
     val interactionEnabled = canInteract()
     LaunchedEffect(interactionEnabled) { if (!interactionEnabled) listState.stopScroll() }
     val categoryQuickFilterScrollState = rememberScrollState()
+    val animateFolderHeight = interactionEnabled && !appSettings.reduceAnimations
+    // Keep the folder chip row mounted through searches that yield zero matching folders. The
+    // folder content is removed immediately while the empty slot shrinks underneath it.
+    val keepFolderChipSlot = appSettings.passwordListCategoryQuickFiltersEnabled && currentFilter.supportsQuickFolders()
 
     LazyColumn(
         userScrollEnabled = interactionEnabled,
@@ -109,89 +116,80 @@ internal fun PasswordListScrollableContent(
         modifier = modifier,
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
-        if (hasVisibleQuickFilters || hasVisibleCategoryQuickFilters) {
+        if (hasVisibleQuickFilters || hasVisibleCategoryQuickFilters || keepFolderChipSlot) {
             item(key = PASSWORD_LIST_QUICK_FILTERS_KEY) {
-                val filterSectionSpacing =
-                    if (hasVisibleQuickFilters && hasVisibleCategoryQuickFilters) 0.dp else 0.dp
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 0.dp, bottom = 4.dp)
-                ) {
-                    androidx.compose.foundation.layout.Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalArrangement = Arrangement.spacedBy(filterSectionSpacing)
-                    ) {
-                        if (hasVisibleQuickFilters) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .horizontalScroll(rememberScrollState()),
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
-                            ) {
+                Column(Modifier.fillMaxWidth()) {
+                    if (hasVisibleQuickFilters) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .horizontalScroll(rememberScrollState()),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
 
-                                if (appSettings.passwordListQuickFiltersEnabled) {
-                                    configuredQuickFilterItems.forEach { item ->
-                                        if (shouldShowQuickFilterItem(item, aggregateUiState.visibleContentTypes)) {
-                                            PasswordQuickFilterChipItem(
-                                                item = item,
-                                                categoryEditMode = false,
-                                                quickFilterFavorite = quickFilterFavorite,
-                                                onQuickFilterFavoriteChange = onQuickFilterFavoriteChange,
-                                                quickFilter2fa = quickFilter2fa,
-                                                onQuickFilter2faChange = onQuickFilter2faChange,
-                                                quickFilterNotes = quickFilterNotes,
-                                                onQuickFilterNotesChange = onQuickFilterNotesChange,
-                                                quickFilterPasskey = quickFilterPasskey,
-                                                onQuickFilterPasskeyChange = onQuickFilterPasskeyChange,
-                                                quickFilterBoundNote = quickFilterBoundNote,
-                                                onQuickFilterBoundNoteChange = onQuickFilterBoundNoteChange,
-                                                quickFilterAttachments = quickFilterAttachments,
-                                                onQuickFilterAttachmentsChange = onQuickFilterAttachmentsChange,
-                                                quickFilterUncategorized = quickFilterUncategorized,
-                                                onQuickFilterUncategorizedChange = onQuickFilterUncategorizedChange,
-                                                quickFilterLocalOnly = quickFilterLocalOnly,
-                                                onQuickFilterLocalOnlyChange = onQuickFilterLocalOnlyChange,
-                                                quickFilterManualStackOnly = quickFilterManualStackOnly,
-                                                onQuickFilterManualStackOnlyChange = onQuickFilterManualStackOnlyChange,
-                                                quickFilterNeverStack = quickFilterNeverStack,
-                                                onQuickFilterNeverStackChange = onQuickFilterNeverStackChange,
-                                                quickFilterUnstacked = quickFilterUnstacked,
-                                                onQuickFilterUnstackedChange = onQuickFilterUnstackedChange,
-                                                aggregateSelectedTypes = aggregateUiState.selectedContentTypes,
-                                                aggregateVisibleTypes = aggregateUiState.visibleContentTypes,
-                                                onToggleAggregateType = onToggleAggregateType
-                                            )
-                                        }
+                            if (appSettings.passwordListQuickFiltersEnabled) {
+                                configuredQuickFilterItems.forEach { item ->
+                                    if (shouldShowQuickFilterItem(item, aggregateUiState.visibleContentTypes)) {
+                                        PasswordQuickFilterChipItem(
+                                            item = item,
+                                            categoryEditMode = false,
+                                            quickFilterFavorite = quickFilterFavorite,
+                                            onQuickFilterFavoriteChange = onQuickFilterFavoriteChange,
+                                            quickFilter2fa = quickFilter2fa,
+                                            onQuickFilter2faChange = onQuickFilter2faChange,
+                                            quickFilterNotes = quickFilterNotes,
+                                            onQuickFilterNotesChange = onQuickFilterNotesChange,
+                                            quickFilterPasskey = quickFilterPasskey,
+                                            onQuickFilterPasskeyChange = onQuickFilterPasskeyChange,
+                                            quickFilterBoundNote = quickFilterBoundNote,
+                                            onQuickFilterBoundNoteChange = onQuickFilterBoundNoteChange,
+                                            quickFilterAttachments = quickFilterAttachments,
+                                            onQuickFilterAttachmentsChange = onQuickFilterAttachmentsChange,
+                                            quickFilterUncategorized = quickFilterUncategorized,
+                                            onQuickFilterUncategorizedChange = onQuickFilterUncategorizedChange,
+                                            quickFilterLocalOnly = quickFilterLocalOnly,
+                                            onQuickFilterLocalOnlyChange = onQuickFilterLocalOnlyChange,
+                                            quickFilterManualStackOnly = quickFilterManualStackOnly,
+                                            onQuickFilterManualStackOnlyChange = onQuickFilterManualStackOnlyChange,
+                                            quickFilterNeverStack = quickFilterNeverStack,
+                                            onQuickFilterNeverStackChange = onQuickFilterNeverStackChange,
+                                            quickFilterUnstacked = quickFilterUnstacked,
+                                            onQuickFilterUnstackedChange = onQuickFilterUnstackedChange,
+                                            aggregateSelectedTypes = aggregateUiState.selectedContentTypes,
+                                            aggregateVisibleTypes = aggregateUiState.visibleContentTypes,
+                                            onToggleAggregateType = onToggleAggregateType
+                                        )
                                     }
                                 }
-                                if (wifiQuickFilterVisible) {
-                                    PasswordQuickFilterChip(
-                                        selected = quickFilterWifi,
-                                        onClick = { onQuickFilterWifiChange(!quickFilterWifi) },
-                                        label = stringResource(R.string.entry_type_wifi),
-                                        leadingIcon = Icons.Default.Wifi
-                                    )
-                                }
-                                if (sshKeyQuickFilterVisible) {
-                                    PasswordQuickFilterChip(
-                                        selected = quickFilterSshKey,
-                                        onClick = { onQuickFilterSshKeyChange(!quickFilterSshKey) },
-                                        label = stringResource(R.string.password_list_quick_filter_ssh_key),
-                                        leadingIcon = Icons.Default.Key
-                                    )
-                                }
-                                if (barcodeQuickFilterVisible) {
-                                    PasswordQuickFilterChip(
-                                        selected = quickFilterBarcode,
-                                        onClick = { onQuickFilterBarcodeChange(!quickFilterBarcode) },
-                                        label = stringResource(R.string.password_list_quick_filter_barcode),
-                                        leadingIcon = Icons.Default.QrCode2
-                                    )
-                                }
+                            }
+                            if (wifiQuickFilterVisible) {
+                                PasswordQuickFilterChip(
+                                    selected = quickFilterWifi,
+                                    onClick = { onQuickFilterWifiChange(!quickFilterWifi) },
+                                    label = stringResource(R.string.entry_type_wifi),
+                                    leadingIcon = Icons.Default.Wifi
+                                )
+                            }
+                            if (sshKeyQuickFilterVisible) {
+                                PasswordQuickFilterChip(
+                                    selected = quickFilterSshKey,
+                                    onClick = { onQuickFilterSshKeyChange(!quickFilterSshKey) },
+                                    label = stringResource(R.string.password_list_quick_filter_ssh_key),
+                                    leadingIcon = Icons.Default.Key
+                                )
+                            }
+                            if (barcodeQuickFilterVisible) {
+                                PasswordQuickFilterChip(
+                                    selected = quickFilterBarcode,
+                                    onClick = { onQuickFilterBarcodeChange(!quickFilterBarcode) },
+                                    label = stringResource(R.string.password_list_quick_filter_barcode),
+                                    leadingIcon = Icons.Default.QrCode2
+                                )
                             }
                         }
+                    }
 
+                    PasswordFolderHeightSlot(currentFilter, animateFolderHeight) {
                         if (hasVisibleCategoryQuickFilters) {
                             PasswordQuickFolderChipRow(
                                 params = PasswordQuickFolderChipRowParams(
@@ -199,10 +197,12 @@ internal fun PasswordListScrollableContent(
                                     quickFolderShortcuts = categoryQuickFilterShortcuts,
                                     onSelectFilter = onNavigateFilter
                                 ),
-                                scrollState = categoryQuickFilterScrollState
+                                scrollState = categoryQuickFilterScrollState,
+                                modifier = Modifier.padding(bottom = if (hasVisibleQuickFilters) 0.dp else 4.dp)
                             )
                         }
                     }
+                    if (hasVisibleQuickFilters) Spacer(Modifier.height(4.dp))
                 }
             }
         }
@@ -248,6 +248,21 @@ internal fun PasswordListScrollableContent(
 
         item(key = PASSWORD_LIST_BOTTOM_SPACER_KEY) {
             Spacer(modifier = Modifier.height(80.dp))
+        }
+    }
+}
+
+@Composable
+private fun PasswordFolderHeightSlot(
+    currentFilter: CategoryFilter,
+    animate: Boolean,
+    content: @Composable () -> Unit,
+) {
+    // A database/filter switch must not inherit the previous scope's measured height.
+    key(currentFilter, animate) {
+        val modifier = Modifier.fillMaxWidth()
+        Box(if (animate) modifier.animateMonicaContentSize() else modifier) {
+            content()
         }
     }
 }
