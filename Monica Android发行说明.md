@@ -4,6 +4,7 @@
 
 ## 中文
 
+- 在密码列表搜索时，没有匹配项的文件夹快捷入口会平滑收起，下方结果随之上移。清空搜索后，快捷入口和列表平滑回到原位。
 - 设置中的「版本与链接」沿用检查更新弹窗的背景模糊，显示内部代号，并按屏宽和字体大小排列项目链接。
 
 - 修复 Monica 本地多密码和批量创建失败后重试会多出项目的问题。每次纯本地创建的密码与字段一起保存；同时保存到两个本地文件夹时，各副本在重开编辑后仍保留自己的项目标识。已有项目不会自动去重。
@@ -12,6 +13,7 @@
 
 ## English
 
+- During password list search, folder shortcuts without matches collapse smoothly and the results slide up. Clearing the search brings the shortcuts and list back into place.
 - The Version & Links dialog shares the update dialog’s background blur, labels the internal codename, and adapts its links to the screen width and font size.
 - Retrying a failed multi-password or batch save in Monica Local no longer creates extra projects. Passwords and fields are saved together. Copies saved to two local folders keep their own project IDs when reopened for editing. Existing projects are not automatically deduplicated.
 - F-Droid update checks and details now use only the official F-Droid package API and app page, comparing the recommended published version code. Removed GitHub release-note requests; API failures remain check failures and release details are available on the F-Droid app page. The ordinary edition keeps its GitHub update flow.
