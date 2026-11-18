@@ -2,7 +2,7 @@
   "schema": "monica-mdbx-glitter-portable-provenance-v2",
   "status": "portable-implemented-validation-in-progress",
   "source_manifest": "GLITTER_SOURCE_MANIFEST.json",
-  "source_manifest_sha256": "32b57b6885e857ab941753031fe0d00c7306e91b41fb5cbee5105f9792ffd64f",
+  "source_manifest_sha256": "c0c30b8ac9b4cb531f0ab30d2d345de4bd0b1797866fac8d9a15a13efd5b6a59",
   "historical_provenance": "MDBX3_RUNTIME_PROVENANCE.pre-glitter.json",
   "historical_validation_applies_to_current_binary": false,
   "runtime": {
