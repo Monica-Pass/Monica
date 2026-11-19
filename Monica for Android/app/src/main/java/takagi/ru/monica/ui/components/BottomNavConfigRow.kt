@@ -16,6 +16,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import takagi.ru.monica.ui.screens.Setting
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,8 +27,8 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun BottomNavConfigRow(
     icon: ImageVector,
-    title: String,
-    subtitle: String,
+    setting: Setting,
+    subtitle: String = setting.summary(),
     checked: Boolean,
     switchEnabled: Boolean,
     onCheckedChange: (Boolean) -> Unit,
@@ -36,6 +37,7 @@ fun BottomNavConfigRow(
     modifier: Modifier = Modifier,
     switchModifier: Modifier = Modifier,
 ) {
+    val title = setting.title()
     Card(
         modifier = Modifier.fillMaxWidth().then(modifier),
         colors = CardDefaults.cardColors(

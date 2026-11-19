@@ -86,8 +86,8 @@ internal fun decodePasswordGrouping(
             members.add(entries[index])
         }
         covered += count
-        if (expanded) members.forEach { groups["entry_${it.id}"] = listOf(it) }
-        else groups[outerKeys[key]] = members
+        groups[outerKeys[key]] = members
     }
-    return groups.takeIf { cursor == output.size && covered == entries.size }
+    if (cursor != output.size || covered != entries.size) return null
+    return if (expanded) buildUnstackedPasswordProjectGroups(groups.values.flatten()) else groups
 }

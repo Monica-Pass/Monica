@@ -55,6 +55,7 @@ class CustomizationChildrenInstrumentedTest {
         runBlocking {
             manager.presetCustomFieldsFlow.first().filter { it.fieldName == fixtureName || it.fieldName == "$fixtureName edited" }
                 .forEach { manager.deletePresetCustomField(it.id) }
+            manager.updateSeparateUsernameAccountEnabled(initial.separateUsernameAccountEnabled)
             manager.updatePasswordCardShowAuthenticator(initial.passwordCardShowAuthenticator)
             manager.updateIconCardsEnabled(initial.iconCardsEnabled)
             manager.updateAddButtonBehaviorMode(initial.addButtonBehaviorMode)
@@ -156,15 +157,10 @@ class CustomizationChildrenInstrumentedTest {
         compose.onNodeWithTag("customization_toggle_PASSWORD").performScrollTo().assertIsNotEnabled().assertIsOn()
         val before = settingsModel.settings.value.addButtonMenuOrder
         val first = before.first()
-        val label = when(first) {
-            AddButtonMenuAction.PASSWORD -> R.string.item_type_password
-            AddButtonMenuAction.NOTE -> R.string.v2_create_note
-            AddButtonMenuAction.AUTHENTICATOR -> R.string.item_type_authenticator
-            AddButtonMenuAction.BANK_CARD -> R.string.add_button_action_card
-        }
-        compose.onNodeWithTag("customization_order_$first")
-            .onChildren().filter(hasContentDescription(localized.getString(R.string.move_down) + " " + localized.getString(label)))
-            .onFirst().performScrollTo().performClick()
+        val moving = compose.onNodeWithTag("customization_order_$first").performScrollTo()
+        val moveDown = moving.fetchSemanticsNode().config[SemanticsActions.CustomActions]
+            .single { it.label == localized.getString(R.string.move_down) }
+        compose.runOnIdle { assertTrue(moveDown.action()) }
         compose.waitUntil(10_000) { settingsModel.settings.value.addButtonMenuOrder != before }
         assertEquals(before.toMutableList().apply { add(1, removeAt(0)) }, runBlocking { SettingsManager(context).settingsFlow.first() }.addButtonMenuOrder)
         capture("add-order")
@@ -193,7 +189,8 @@ class CustomizationChildrenInstrumentedTest {
         compose.waitUntil(10_000) { settingsModel.settings.value.separateUsernameAccountEnabled != initial.separateUsernameAccountEnabled }
         capture("fields-dark-large")
         row(R.string.add).performScrollTo().performClick()
-        row(R.string.password_field_customization_placeholder_optional).performScrollTo().assertIsDisplayed()
+        compose.onNodeWithTag("preset_more_options").performScrollTo().performClick()
+        compose.onNodeWithTag("preset_placeholder").performScrollTo().assertIsDisplayed()
         captureDialog("preset-dialog-large")
         row(R.string.cancel).assertIsDisplayed().performClick()
         row(R.string.password_field_customization_reset_system_fields).assertDoesNotExist()
@@ -251,7 +248,7 @@ class CustomizationChildrenInstrumentedTest {
     @Test fun wholeRowReordersNaturalHeightRows() {
         var order by mutableStateOf(listOf("First", "Second", "Third"))
         show {
-            takagi.ru.monica.ui.components.CustomizationOrderGroup(order, order,
+            takagi.ru.monica.ui.components.CustomizationOrderGroup(takagi.ru.monica.ui.screens.Setting.ADD_BUTTON_ACTIONS_TITLE, order, order,
                 label = { it }, icon = { androidx.compose.material.icons.Icons.Default.Tune },
                 onOrder = { order = it }, onToggle = { _, _ -> })
         }

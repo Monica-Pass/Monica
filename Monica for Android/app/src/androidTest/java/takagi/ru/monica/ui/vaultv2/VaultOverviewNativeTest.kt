@@ -15,6 +15,37 @@ import takagi.ru.monica.rustcore.RustVaultOverviewCore
 
 @RunWith(AndroidJUnit4::class)
 class VaultOverviewNativeTest {
+    @Test fun realNativeProjectionCountsProjectsAndKeepsSecondaryPin() {
+        val entries = (1L..602L).map { id -> PasswordEntry(id = id, title = "Project ${id / 2}",
+            username = "synthetic", password = "", website = "", passwordGroupId = "group-${(id - 1) / 2}",
+            bitwardenVaultId = if ((id - 1) / 2 % 2 == 0L) null else 2L, isFavorite = id < 5) }
+        val rows = buildVaultV2PasswordItems(entries)
+        val sources = listOf(VaultOverviewSource("local", "Local", "Monica"), VaultOverviewSource("bitwarden:2", "Work", "Bitwarden"))
+        val prepared = prepareVaultOverview(rows, sources, VaultOverviewConfig(pinnedItems = listOf(rows[1].overviewIdentity())),
+            emptyMap(), emptyMap(), emptyList(), emptyList(), emptyMap(), emptyList())
+        for (scope in listOf("all", "local", "bitwarden:2")) {
+            val expected = projectVaultOverview(prepared, scope, aggregate = ::aggregateVaultOverviewKotlin)
+            val actual = projectVaultOverview(prepared, scope, aggregate = this::native)
+            assertEquals(expected, actual)
+            assertEquals(if (scope == "all") 301 else if (scope == "local") 151 else 150, actual.items.size)
+        }
+        assertEquals("password:2", projectVaultOverview(prepared, "local", aggregate = this::native).frequentItems.first().key)
+    }
+
+    @Test fun nativePickerSearchesSecondaryAccountWithinOneProjectRow() {
+        val rows = buildVaultV2PasswordItems((1L..1204L).map { id -> PasswordEntry(id = id,
+            title = "Project ${(id - 1) / 2}", username = "account-$id", password = "", website = "",
+            passwordGroupId = "project-${(id - 1) / 2}") })
+        prepareOverviewPicker(rows, listOf(VaultOverviewSource("local", "Local", "Monica")), cards = false).use { picker ->
+            assertTrue(picker.usesNative)
+            assertEquals(602, picker.rows.size)
+            for (query in listOf("account-2", "account-1204", "project", "missing")) {
+                assertEquals(picker.filterKotlin(query, "all"), picker.filter(query, "all"))
+            }
+            assertEquals("password:1203", picker.filter("account-1204", "local").single().item.key)
+        }
+    }
+
     private fun batch(size: Int, random: Random, selected: Int = -1, recommendations: Int = 3): LongArray {
         val data = LongArray(OVERVIEW_HEADER + size * OVERVIEW_ROW_WIDTH)
         longArrayOf(1, 4, 32, selected.toLong(), recommendations.toLong(), 7).copyInto(data)

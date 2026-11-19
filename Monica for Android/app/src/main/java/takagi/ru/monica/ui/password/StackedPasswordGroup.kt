@@ -61,26 +61,29 @@ fun StackedPasswordGroup(
     val summary = remember(passwords) { summarizePasswordStack(passwords) }
     val isMergedPasswordCard = summary.isMergedPasswordCard
     
-    // 如果选择“始终展开”，则直接平铺展示，不使用堆叠容器
-    if (stackCardMode == StackCardMode.ALWAYS_EXPANDED) {
-        passwords.forEach { password ->
-            key(password.id) {
-                PasswordListSingleCardItem(
-                    entry = password,
-                    onClick = {
-                        if (isSelectionMode) {
-                            onToggleSelection(password.id)
-                        } else {
-                            onPasswordClick(password)
-                        }
-                    },
-                    onLongClick = { onLongClick(password) },
-                    onSwipeLeft = { onSwipeLeft(password) },
-                    onSwipeRight = { onSwipeRight(password) },
-                    isSwiped = password.id == swipedItemId,
+    // Expand stacks between projects; each project's password rows still form one card.
+    if (stackCardMode == StackCardMode.ALWAYS_EXPANDED && passwords.size > 1 && !isMergedPasswordCard) {
+        val projects = remember(passwords) { passwords.groupBy(::getPasswordInfoKey) }
+        projects.forEach { (projectKey, projectPasswords) ->
+            key(projectKey) {
+                // AUTO terminates this expansion: this child is one project or one singleton.
+                StackedPasswordGroup(
+                    passwords = projectPasswords,
+                    isExpanded = false,
+                    stackCardMode = StackCardMode.AUTO,
+                    onToggleExpand = onToggleExpand,
+                    onPasswordClick = onPasswordClick,
+                    onSwipeLeft = onSwipeLeft,
+                    onSwipeRight = onSwipeRight,
+                    onGroupSwipeRight = onGroupSwipeRight,
+                    onToggleFavorite = onToggleFavorite,
+                    onToggleGroupCover = onToggleGroupCover,
                     isSelectionMode = isSelectionMode,
-                    isSelected = selectedPasswords.contains(password.id),
-                    onToggleFavorite = { onToggleFavorite(password) },
+                    selectedPasswords = selectedPasswords,
+                    swipedItemId = swipedItemId,
+                    onToggleSelection = onToggleSelection,
+                    onOpenMultiPasswordDialog = onOpenMultiPasswordDialog,
+                    onLongClick = onLongClick,
                     unmatchedIconHandlingStrategy = unmatchedIconHandlingStrategy,
                     passwordCardDisplayMode = passwordCardDisplayMode,
                     passwordCardDisplayFields = passwordCardDisplayFields,

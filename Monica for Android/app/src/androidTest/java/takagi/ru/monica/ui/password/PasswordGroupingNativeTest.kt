@@ -12,11 +12,38 @@ import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import takagi.ru.monica.data.PasswordEntry
+import takagi.ru.monica.data.passwordProjectKey
 import takagi.ru.monica.rustcore.RustPasswordGroupingCore
 import takagi.ru.monica.ui.password.StackCardMode
 
 @RunWith(AndroidJUnit4::class)
 class PasswordGroupingNativeTest {
+    @Test fun expandedNativeAndFallbackPreserveProjectsAndSourceBoundaries() {
+        val entries = (0 until 600).map { index ->
+            val pair = index / 2
+            PasswordEntry(id = index + 1L, title = "Same title", username = "same-account",
+                password = "unused", website = "https://example.invalid", sortOrder = index,
+                passwordGroupId = "project-${pair / 2}",
+                bitwardenVaultId = if (pair % 2 == 0) null else 7L)
+        } + listOf(PasswordEntry(id = 601, title = "Same title", username = "same-account", password = "unused", website = ""),
+            PasswordEntry(id = 602, title = "Same title", username = "same-account", password = "unused", website = ""))
+        for (mode in listOf("smart", "title", "website", "folder", "note", "app")) {
+            val config = config(mode).copy(effectiveStackCardMode = StackCardMode.ALWAYS_EXPANDED,
+                effectiveNoStackEntryIds = setOf(1L, 4L), effectiveManualStackGroupByEntryId = mapOf(2L to "manual"))
+            val fallback = buildKotlinPasswordGroups(entries, config)
+            val native = requireNotNull(tryBuildNativePasswordGroups(entries, config))
+            assertEquals(snapshot(fallback), snapshot(native))
+            assertEquals(snapshot(native), snapshot(buildGroupedPasswordsForEntries(entries, config)))
+            assertEquals(302, native.size)
+            assertEquals(entries.map { it.id }.toSet(), native.values.flatten().map { it.id }.toSet())
+            assertTrue(native.values.all { group -> group.map { it.passwordProjectKey() }.distinct().size == 1 })
+            assertEquals(300, native.values.count { it.size == 2 })
+        }
+        val local = buildGroupedPasswordsForEntries(entries, config("smart").copy(isLocalOnlyView = true))
+        assertEquals(302, local.size)
+        assertEquals(600, local.values.filter { it.size == 2 }.sumOf { it.size })
+    }
+
     @Test fun nativeAndFallbackKeepTheOriginalGroupingAndOrder() {
         for (count in listOf(1, 64, 513)) {
             val entries = fixture(count)

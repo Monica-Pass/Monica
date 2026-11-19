@@ -534,7 +534,7 @@ fun SettingsScreen(
                     if (showMasterPasswordLockingItem) {
                         SettingsItem(
                             icon = Icons.Default.Lock,
-                            title = masterPasswordLockingTitle,
+                            setting = Setting.MASTER_PASSWORD_AND_LOCKING,
                             subtitle = masterPasswordLockingDescription,
                             onClick = onNavigateToMasterPasswordLocking,
                             modifier = getSharedModifier("master_password_locking_card"),
@@ -545,7 +545,7 @@ fun SettingsScreen(
                     if (showScreenshotProtectionItem) {
                         SettingsItem(
                             icon = Icons.Default.Security,
-                            title = context.getString(R.string.screenshot_protection),
+                            setting = Setting.SCREENSHOT_PROTECTION,
                             subtitle = screenshotProtectionSubtitle,
                             onClick = {
                                 viewModel.updateScreenshotProtectionEnabled(!settings.screenshotProtectionEnabled)
@@ -560,8 +560,7 @@ fun SettingsScreen(
                     if (showPermissionManagementItem) {
                         SettingsItem(
                             icon = Icons.Default.AdminPanelSettings,
-                            title = context.getString(R.string.permission_management_title),
-                            subtitle = context.getString(R.string.permission_management_subtitle),
+                            setting = Setting.PERMISSION_MANAGEMENT_TITLE,
                             onClick = onNavigateToPermissionManagement,
                             modifier = getSharedModifier("permission_settings_card"),
                             sectionShape = settingsSectionItemShape(
@@ -581,8 +580,7 @@ fun SettingsScreen(
                     if (showSyncBackupItem) {
                         SettingsItem(
                             icon = Icons.Default.Sync,
-                            title = context.getString(R.string.sync_backup_title),
-                            subtitle = context.getString(R.string.sync_backup_description),
+                            setting = Setting.SYNC_BACKUP_TITLE,
                             onClick = onNavigateToSyncBackup,
                             modifier = getSharedModifier("sync_settings_card"),
                             sectionShape = settingsSectionItemShape(0, dataManagementItemCount)
@@ -592,8 +590,7 @@ fun SettingsScreen(
                     if (showAutofillItem) {
                         SettingsItem(
                             icon = Icons.Default.VpnKey,
-                            title = context.getString(R.string.autofill_passkey_settings_title),
-                            subtitle = context.getString(R.string.autofill_subtitle),
+                            setting = Setting.AUTOFILL_PASSKEY_SETTINGS_TITLE,
                             onClick = onNavigateToAutofill,
                             modifier = getSharedModifier("autofill_settings_card"),
                             sectionShape = settingsSectionItemShape(
@@ -623,8 +620,7 @@ fun SettingsScreen(
                     if (showClearDataItem) {
                         SettingsItem(
                             icon = Icons.Default.DeleteForever,
-                            title = context.getString(R.string.clear_all_data),
-                            subtitle = context.getString(R.string.clear_all_data_subtitle),
+                            setting = Setting.CLEAR_ALL_DATA,
                             onClick = { showClearDataDialog = true },
                             iconTint = MaterialTheme.colorScheme.error,
                             sectionShape = settingsSectionItemShape(
@@ -645,7 +641,7 @@ fun SettingsScreen(
                     if (showThemeItem) {
                         SettingsItem(
                             icon = Icons.Default.Palette,
-                            title = context.getString(R.string.theme),
+                            setting = Setting.THEME,
                             subtitle = themeSubtitle,
                             onClick = { showThemeDialog = true },
                             sectionShape = settingsSectionItemShape(0, appearanceItemCount)
@@ -655,7 +651,7 @@ fun SettingsScreen(
                     if (showColorSchemeItem) {
                         SettingsItem(
                             icon = Icons.Default.Colorize,
-                            title = context.getString(R.string.color_scheme),
+                            setting = Setting.COLOR_SCHEME,
                             subtitle = colorSchemeSubtitle,
                             onClick = { onNavigateToColorScheme() },
                             modifier = getSharedModifier("color_scheme_card"),
@@ -680,7 +676,7 @@ fun SettingsScreen(
                     if (showLanguageItem) {
                         SettingsItem(
                             icon = Icons.Default.Language,
-                            title = context.getString(R.string.language),
+                            setting = Setting.LANGUAGE,
                             subtitle = languageSubtitle,
                             onClick = { showLanguageDialog = true },
                             sectionShape = settingsSectionItemShape(
@@ -697,8 +693,7 @@ fun SettingsScreen(
                     if (showBottomNavItem) {
                         SettingsItem(
                             icon = Icons.Default.ViewWeek,
-                            title = context.getString(R.string.bottom_nav_settings),
-                            subtitle = context.getString(R.string.bottom_nav_settings_entry_subtitle),
+                            setting = Setting.BOTTOM_NAV_SETTINGS,
                             onClick = onNavigateToBottomNavSettings,
                             modifier = getSharedModifier("bottom_nav_settings_card"),
                             sectionShape = settingsSectionItemShape(
@@ -716,8 +711,7 @@ fun SettingsScreen(
                     if (showExtensionsItem) {
                         SettingsItem(
                             icon = Icons.Default.Extension,
-                            title = context.getString(R.string.extensions_title),
-                            subtitle = context.getString(R.string.extensions_description),
+                            setting = Setting.EXTENSIONS_TITLE,
                             onClick = onNavigateToExtensions,
                             modifier = getSharedModifier("extensions_settings_card"),
                             sectionShape = settingsSectionItemShape(
@@ -736,8 +730,7 @@ fun SettingsScreen(
                     if (showPageCustomizationItem) {
                         SettingsItem(
                             icon = Icons.Default.Tune,
-                            title = context.getString(R.string.page_adjust_custom_title),
-                            subtitle = context.getString(R.string.page_adjust_custom_subtitle),
+                            setting = Setting.PAGE_ADJUST_CUSTOM_TITLE,
                             onClick = onNavigateToPageCustomization,
                             sectionShape = settingsSectionItemShape(
                                 visibleSettingsIndex(
@@ -760,7 +753,7 @@ fun SettingsScreen(
                     if (showVersionItem) {
                         SettingsItem(
                             icon = Icons.Default.Info,
-                            title = context.getString(R.string.version),
+                            setting = Setting.VERSION,
                             subtitle = installedVersion,
                             onClick = { showVersionInfoDialog = true },
                             sectionShape = settingsSectionItemShape(0, aboutItemCount)
@@ -770,7 +763,7 @@ fun SettingsScreen(
                     if (showUpdateCheckItem) {
                         SettingsItem(
                             icon = Icons.Default.Update,
-                            title = context.getString(R.string.update_check_title),
+                            setting = Setting.UPDATE_CHECK_TITLE,
                             subtitle = if (isCheckingUpdate) {
                                 context.getString(R.string.update_check_checking)
                             } else {
@@ -799,8 +792,7 @@ fun SettingsScreen(
                     }
                     SettingsItemWithSwitch(
                         icon = Icons.Default.Update,
-                        title = stringResource(R.string.update_auto_check),
-                        subtitle = stringResource(R.string.update_auto_check_summary),
+                        setting = Setting.UPDATE_AUTO_CHECK,
                         checked = updateState.preferences.autoCheckEnabled,
                         enabled = updateState.loaded,
                         onCheckedChange = { updateController?.setAutoCheckEnabled(it) },
@@ -814,8 +806,7 @@ fun SettingsScreen(
                     if (showPreviewFeaturesItem) {
                         SettingsItem(
                             icon = Icons.Default.Science,
-                            title = stringResource(R.string.preview_features_title),
-                            subtitle = stringResource(R.string.preview_features_description),
+                            setting = Setting.PREVIEW_FEATURES_TITLE,
                             onClick = { previewFeaturesExpanded = true },
                             sectionShape = settingsSectionItemShape(0, developerItemCount)
                         )
@@ -824,8 +815,7 @@ fun SettingsScreen(
                     if (showDeveloperSettingsItem) {
                         SettingsItem(
                             icon = Icons.Default.Code,
-                            title = stringResource(R.string.developer_settings),
-                            subtitle = stringResource(R.string.developer_settings_subtitle),
+                            setting = Setting.DEVELOPER_SETTINGS,
                             modifier = getSharedModifier("developer_settings_card"),
                             sectionShape = settingsSectionItemShape(
                                 visibleSettingsIndex(showPreviewFeaturesItem),
@@ -1186,14 +1176,15 @@ fun SettingsSection(
 @Composable
 fun SettingsItem(
     icon: androidx.compose.ui.graphics.vector.ImageVector,
-    title: String,
-    subtitle: String,
+    setting: Setting,
+    subtitle: String = setting.summary(),
     onClick: () -> Unit,
     iconTint: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.primary,
     trailingContent: (@Composable () -> Unit)? = null,
     modifier: Modifier = Modifier,
     sectionShape: androidx.compose.ui.graphics.Shape? = null
 ) {
+    val title = setting.title()
     val isInSection = LocalSettingsSectionContent.current
     Card(
         onClick = onClick,
@@ -1254,14 +1245,15 @@ fun SettingsItem(
 @Composable
 fun SettingsItemWithSwitch(
     icon: androidx.compose.ui.graphics.vector.ImageVector,
-    title: String,
-    subtitle: String,
+    setting: Setting,
+    subtitle: String = setting.summary(),
     checked: Boolean,
     enabled: Boolean = true,
     onCheckedChange: (Boolean) -> Unit,
     iconTint: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.primary,
     sectionShape: androidx.compose.ui.graphics.Shape? = null,
 ) {
+    val title = setting.title()
     val isInSection = LocalSettingsSectionContent.current
     Card(
         modifier = Modifier
@@ -1743,7 +1735,7 @@ fun BottomNavSettingsScreen(
                         val switchEnabled = !isVisible || bottomNavVisibility.visibleCount() > 1
                         BottomNavConfigRow(
                             icon = tab.toIcon(),
-                            title = context.getString(tab.toLabelRes()),
+                            setting = bottomNavSetting(tab),
                             subtitle = context.getString(R.string.bottom_nav_toggle_subtitle),
                             checked = isVisible,
                             switchEnabled = switchEnabled,
@@ -1759,8 +1751,8 @@ fun BottomNavSettingsScreen(
                 item(key = "bottom_nav_auto_hide_single_tab") {
                     BottomNavConfigRow(
                         icon = Icons.Default.VisibilityOff,
-                        title = context.getString(R.string.bottom_nav_auto_hide_single_tab_title),
-                        subtitle = context.getString(R.string.bottom_nav_auto_hide_single_tab_subtitle),
+                        setting = Setting.BOTTOM_NAV_AUTO_HIDE_SINGLE_TAB_TITLE,
+                        subtitle = Setting.BOTTOM_NAV_AUTO_HIDE_SINGLE_TAB_TITLE.summary(),
                         checked = settings.autoHideBottomNavWhenSingleTab,
                         switchEnabled = true,
                         onCheckedChange = viewModel::updateAutoHideBottomNavWhenSingleTab,
@@ -1954,7 +1946,7 @@ private fun SettingsItemWithTrashConfig(
 
     SettingsItem(
         icon = Icons.Default.Delete,
-        title = stringResource(R.string.trash_bin),
+        setting = Setting.TRASH_BIN,
         subtitle = subtitleText,
         onClick = { showTrashSettingsSheet = true },
         sectionShape = sectionShape

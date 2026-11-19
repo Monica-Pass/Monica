@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.components
 
+import takagi.ru.monica.ui.screens.Setting
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.layout.*
@@ -41,7 +42,8 @@ internal fun CustomizationPage(title: String, onBack: () -> Unit, content: @Comp
 }
 
 @Composable
-internal fun CustomizationSection(title: String, subtitle: String = "", anchor: Boolean = true, content: @Composable ColumnScope.() -> Unit) {
+internal fun CustomizationSection(setting: Setting, subtitle: String = setting.summary(), anchor: Boolean = true, content: @Composable ColumnScope.() -> Unit) {
+    val title = setting.title()
     Column(Modifier.fillMaxWidth().then(if (anchor) Modifier.settingsSearchAnchor(title) else Modifier)) {
         SettingsSubpageHeading(title)
         if (subtitle.isNotBlank()) {
@@ -65,9 +67,10 @@ internal fun CustomizationPreview(title: String, content: @Composable ColumnScop
 }
 
 @Composable
-internal fun CustomizationToggle(title: String, subtitle: String, checked: Boolean,
+internal fun CustomizationToggle(setting: Setting, subtitle: String = setting.summary(), checked: Boolean,
     onCheckedChange: (Boolean) -> Unit, index: Int = 0, count: Int = 1,
     icon: ImageVector = Icons.Default.Tune, enabled: Boolean = true) {
+    val title = setting.title()
     val shape = settingsSectionItemShape(index, count)
     Surface(Modifier.fillMaxWidth().settingsSearchAnchor(title).clip(shape)
         .toggleable(value = checked, enabled = enabled, role = Role.Switch, onValueChange = onCheckedChange),
@@ -89,10 +92,10 @@ internal fun CustomizationToggle(title: String, subtitle: String, checked: Boole
 }
 
 @Composable
-internal fun CustomizationChoice(title: String, subtitle: String = "", selected: Boolean,
+internal fun CustomizationChoice(setting: Setting, title: String, subtitle: String = "", selected: Boolean,
     onClick: () -> Unit, index: Int, count: Int, modifier: Modifier = Modifier) {
     val shape = settingsSectionItemShape(index, count)
-    Surface(modifier.fillMaxWidth().clip(shape).selectable(selected, role = Role.RadioButton, onClick = onClick),
+    Surface(modifier.testTag("setting_choice_${setting.name}").fillMaxWidth().clip(shape).selectable(selected, role = Role.RadioButton, onClick = onClick),
         shape = shape, color = if (selected) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainer) {
         Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -107,8 +110,9 @@ internal fun CustomizationChoice(title: String, subtitle: String = "", selected:
 }
 
 @Composable
-internal fun CustomizationDisclosure(title: String, subtitle: String, expanded: Boolean,
+internal fun CustomizationDisclosure(setting: Setting, subtitle: String = setting.summary(), expanded: Boolean,
     onExpand: () -> Unit, content: @Composable ColumnScope.() -> Unit) {
+    val title = setting.title()
     val searchFocus = takagi.ru.monica.ui.screens.LocalSettingsSearchNavigation.current?.focusTitleRes ?: 0
     LaunchedEffect(searchFocus) {
         if (searchFocus != 0 && !expanded) onExpand()
@@ -128,7 +132,7 @@ internal fun CustomizationDisclosure(title: String, subtitle: String, expanded: 
 
 /** Natural-height rows share one scroll container. Reordering never changes the enabled set. */
 @Composable
-internal fun <T> CustomizationOrderGroup(items: List<T>, selected: List<T>,
+internal fun <T> CustomizationOrderGroup(setting: Setting, items: List<T>, selected: List<T>,
     label: @Composable (T) -> String, icon: (T) -> ImageVector,
     onOrder: (List<T>) -> Unit, onToggle: (T, Boolean) -> Unit, required: (T) -> Boolean = { false }) {
     var sourceIndex by remember { mutableIntStateOf(-1) }
@@ -143,7 +147,7 @@ internal fun <T> CustomizationOrderGroup(items: List<T>, selected: List<T>,
         }
     }
     ReorderableColumn(list = items, onSettle = ::move, onMove = { haptics.performLightClick() },
-        modifier = Modifier.pointerInput(items) {
+        modifier = Modifier.testTag("setting_order_${setting.name}").pointerInput(items) {
             awaitPointerEventScope {
                 var downY = 0f
                 while (true) {

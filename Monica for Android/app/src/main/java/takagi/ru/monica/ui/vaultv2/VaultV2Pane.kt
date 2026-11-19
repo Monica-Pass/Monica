@@ -1452,7 +1452,7 @@ internal fun buildVaultV2VisibleListState(
 			value.contains(config.normalizedQuery, ignoreCase = true)
 		}
 	}.toList()
-	val sortedItems = sortVaultV2Items(filteredItems, config.sort)
+	val sortedItems = collapseVaultV2PasswordProjects(sortVaultV2Items(filteredItems, config.sort))
 	val sectionedItems = buildVaultV2SortedSections(sortedItems, config.sort)
 	var itemStartIndex = 0
 	var lazyIndex = 0
@@ -3188,10 +3188,10 @@ fun VaultV2Pane(
 		overviewSelection.searchResults
 			?: state.overviewSnapshot?.selectablePreview(overviewSelection.module, appSettings.vaultOverviewConfig).orEmpty()
 	} else allItems
-	val selectedItems by remember(selectionCandidates) {
+	val selectedItems by remember(selectionCandidates, allItems) {
 		derivedStateOf {
 			val keySet = selectedKeys.toSet()
-			selectionCandidates.filter { it.key in keySet }
+			expandVaultV2ProjectSelection(selectionCandidates.filter { it.key in keySet }, allItems)
 		}
 	}
     if (showStackDialog) takagi.ru.monica.ui.PasswordStackModeDialog(
@@ -4329,7 +4329,7 @@ fun VaultV2Pane(
 					}
 				},
 				onMoveToCategory = { showVaultMoveSheet = true },
-                onStack = if (!showOverview && selectedItems.size >= 2 && selectedItems.all { it.type == VaultV2ItemType.PASSWORD }) ({
+                onStack = if (!showOverview && selectedCount >= 2 && selectedItems.all { it.type == VaultV2ItemType.PASSWORD }) ({
                     selectedStackMode = takagi.ru.monica.ui.ManualStackDialogMode.STACK
                     showStackDialog = true
                 }) else null,

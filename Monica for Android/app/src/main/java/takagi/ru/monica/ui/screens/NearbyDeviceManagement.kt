@@ -24,6 +24,7 @@ import takagi.ru.monica.R
 import takagi.ru.monica.lansync.*
 import takagi.ru.monica.ui.components.GroupedItemDefaults
 import takagi.ru.monica.ui.components.SettingsPanelRow
+import takagi.ru.monica.ui.components.SettingsContentRow
 import takagi.ru.monica.ui.gestures.SwipeActions
 import java.text.DateFormat
 import java.util.Date
@@ -104,7 +105,7 @@ internal fun NearbyPairedDevices(peers: List<DeviceSyncPeerState>, forget: (Set<
             }
         }
         Column(verticalArrangement = Arrangement.spacedBy(GroupedItemDefaults.Spacing)) {
-            if (peers.isEmpty()) SettingsPanelRow(Icons.Default.Devices, stringResource(R.string.nearby_no_devices_title), stringResource(R.string.device_sync_no_devices))
+            if (peers.isEmpty()) SettingsContentRow(Icons.Default.Devices, stringResource(R.string.nearby_no_devices_title), stringResource(R.string.device_sync_no_devices))
             peers.forEachIndexed { index, peer -> key(peer.deviceId) {
                 val shape = GroupedItemDefaults.shape(index, peers.size)
                 SwipeActions(onSwipeLeft = { forgetting = listOf(peer.deviceId) }, onSwipeRight = { toggle(peer.deviceId) },

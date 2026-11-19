@@ -121,9 +121,13 @@ internal fun prepareOverviewPicker(
             if (identity in priorities) priorityRows[identity] = row else add(row)
         }
     }
-    val rows = if (priorityRows.isEmpty()) remainingRows else buildList(priorityRows.size + remainingRows.size) {
+    val orderedRows = if (priorityRows.isEmpty()) remainingRows else buildList(priorityRows.size + remainingRows.size) {
         priorities.forEach { identity -> priorityRows[identity]?.let { add(it) } }
         addAll(remainingRows)
+    }
+    val rows = orderedRows.groupBy { it.item.projectDisplayIdentity() }.values.map { project ->
+        if (project.size == 1) project.single() else project.first().copy(
+            searchText = project.joinToString("\u0000") { it.searchText })
     }
     checkActive()
     val handle = if (rows.size in nativeThreshold..100_000) openNative(encodeOverviewPickerMetadata(rows)) else null

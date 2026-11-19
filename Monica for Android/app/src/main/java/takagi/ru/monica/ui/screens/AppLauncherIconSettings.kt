@@ -37,10 +37,10 @@ internal fun AppLauncherIconSettings(
 ) {
     val context = LocalContext.current
     val previewSizePx = with(LocalDensity.current) { 56.dp.roundToPx() }
-    Column(modifier = Modifier.settingsSearchAnchor(stringResource(R.string.icon_settings_app_icon_title)), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        takagi.ru.monica.ui.components.SettingsSubpageHeading(stringResource(R.string.icon_settings_app_icon_title))
+    Column(modifier = Modifier.settingsSearchAnchor(Setting.ICON_SETTINGS_APP_ICON_TITLE.title()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        takagi.ru.monica.ui.components.SettingsSubpageHeading(Setting.ICON_SETTINGS_APP_ICON_TITLE.title())
         Text(
-            text = stringResource(R.string.launcher_icon_selection_description),
+            text = Setting.ICON_SETTINGS_APP_ICON_TITLE.summary(),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(horizontal = 12.dp),

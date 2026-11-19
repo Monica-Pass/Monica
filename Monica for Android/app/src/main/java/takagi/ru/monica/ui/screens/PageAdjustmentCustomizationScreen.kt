@@ -114,8 +114,7 @@ fun PageAdjustmentCustomizationScreen(
             )
             SettingsSubpageHeading(stringResource(R.string.startup_behavior_title))
             SettingsSubpageRow(
-                title = stringResource(R.string.auto_focus_search_on_startup_title),
-                subtitle = stringResource(R.string.auto_focus_search_on_startup_desc),
+                setting = Setting.AUTO_FOCUS_SEARCH_ON_STARTUP_TITLE,
                 icon = Icons.Default.Search, index = 0, count = 1,
                 checked = settings.autoFocusSearchOnStartup,
                 onCheckedChange = viewModel::updateAutoFocusSearchOnStartup,
@@ -123,8 +122,7 @@ fun PageAdjustmentCustomizationScreen(
             )
             SettingsSubpageHeading(stringResource(R.string.customization_group_library))
             SettingsSubpageRow(
-                title = stringResource(R.string.vault_v2_hierarchical_layout_title),
-                subtitle = stringResource(R.string.vault_v2_hierarchical_layout_desc),
+                setting = Setting.VAULT_V2_HIERARCHICAL_LAYOUT_TITLE,
                 icon = Icons.Default.Folder, index = 0, count = 3,
                 checked = settings.vaultV2LayoutMode == takagi.ru.monica.data.VaultV2LayoutMode.HIERARCHICAL,
                 onCheckedChange = { enabled ->
@@ -135,34 +133,29 @@ fun PageAdjustmentCustomizationScreen(
                 }
             )
             SettingsSubpageRow(
-                title = stringResource(R.string.vault_overview_enabled_title),
-                subtitle = stringResource(R.string.vault_overview_enabled_desc),
+                setting = Setting.VAULT_OVERVIEW_ENABLED_TITLE,
                 icon = Icons.Default.GridView, index = 1, count = 3,
                 checked = settings.vaultOverviewEnabled,
                 onCheckedChange = viewModel::updateVaultOverviewEnabled
             )
             SettingsSubpageRow(
-                title = stringResource(R.string.password_list_customization_title),
-                subtitle = stringResource(R.string.password_list_customization_subtitle),
+                setting = Setting.PASSWORD_LIST_CUSTOMIZATION_TITLE,
                 icon = Icons.Default.FilterList, index = 2, count = 3,
                 onClick = onNavigateToPasswordListCustomization
             )
             SettingsSubpageHeading(stringResource(R.string.customization_group_cards))
             SettingsSubpageRow(
-                title = stringResource(R.string.password_card_adjust_title),
-                subtitle = stringResource(R.string.password_card_adjust_subtitle),
+                setting = Setting.PASSWORD_CARD_ADJUST_TITLE,
                 icon = Icons.Default.Apps, index = 0, count = 3,
                 onClick = onNavigateToPasswordCardAdjustment
             )
             SettingsSubpageRow(
-                title = stringResource(R.string.authenticator_card_adjust_title),
-                subtitle = stringResource(R.string.authenticator_card_adjust_subtitle),
+                setting = Setting.AUTHENTICATOR_CARD_ADJUST_TITLE,
                 icon = Icons.Default.Security, index = 1, count = 3,
                 onClick = onNavigateToAuthenticatorCardAdjustment
             )
             SettingsSubpageRow(
-                title = stringResource(R.string.wallet_stack_loop_title),
-                subtitle = stringResource(R.string.wallet_stack_loop_desc),
+                setting = Setting.WALLET_STACK_LOOP_TITLE,
                 icon = Icons.Default.CreditCard, index = 2, count = 3,
                 checked = settings.walletStackLoopEnabled,
                 onCheckedChange = viewModel::updateWalletStackLoopEnabled,
@@ -170,14 +163,12 @@ fun PageAdjustmentCustomizationScreen(
             )
             SettingsSubpageHeading(stringResource(R.string.customization_group_fields_icons))
             SettingsSubpageRow(
-                title = stringResource(R.string.password_field_customization_title),
-                subtitle = stringResource(R.string.extensions_password_field_customization_desc),
+                setting = Setting.PASSWORD_FIELD_CUSTOMIZATION_TITLE,
                 icon = Icons.Default.Tune, index = 0, count = 2,
                 onClick = onNavigateToPasswordFieldCustomization
             )
             SettingsSubpageRow(
-                title = stringResource(R.string.icon_settings_title),
-                subtitle = stringResource(R.string.icon_settings_subtitle),
+                setting = Setting.ICON_SETTINGS_TITLE,
                 icon = androidx.compose.material.icons.Icons.Default.Palette, index = 1, count = 2,
                 onClick = onNavigateToIconSettings
             )
@@ -249,15 +240,15 @@ fun AddButtonCustomizationScreen(
                 }
             }
         }
-        CustomizationSection(stringResource(R.string.add_button_mode_title), stringResource(R.string.add_button_mode_subtitle)) {
+        CustomizationSection(Setting.ADD_BUTTON_MODE_TITLE, Setting.ADD_BUTTON_MODE_TITLE.summary()) {
             listOf(AddButtonBehaviorMode.DIRECT_PASSWORD, AddButtonBehaviorMode.EXPANDABLE_MENU).forEachIndexed { index, mode ->
-                CustomizationChoice(stringResource(if (index == 0) R.string.add_button_mode_direct else R.string.add_button_mode_expand),
+                CustomizationChoice(Setting.ADD_BUTTON_MODE_TITLE, stringResource(if (index == 0) R.string.add_button_mode_direct else R.string.add_button_mode_expand),
                     selected = settings.addButtonBehaviorMode == mode, onClick = { viewModel.updateAddButtonBehaviorMode(mode) }, index = index, count = 2)
             }
         }
         if (settings.addButtonBehaviorMode == AddButtonBehaviorMode.EXPANDABLE_MENU) {
-            CustomizationSection(stringResource(R.string.add_button_actions_title), stringResource(R.string.add_button_actions_desc)) {
-                CustomizationOrderGroup(actionOrder, enabledActions.toList(), label = { stringResource(it.toLabelRes()) }, icon = { it.toIcon() },
+            CustomizationSection(Setting.ADD_BUTTON_ACTIONS_TITLE, Setting.ADD_BUTTON_ACTIONS_TITLE.summary()) {
+                CustomizationOrderGroup(Setting.ADD_BUTTON_ACTIONS_TITLE, actionOrder, enabledActions.toList(), label = { stringResource(it.toLabelRes()) }, icon = { it.toIcon() },
                     onOrder = { actionOrder = it; viewModel.updateAddButtonMenuOrder(it) },
                     onToggle = { action, checked ->
                         val values = actionOrder.filter { if (it == action) checked else it in enabledActions }
@@ -417,7 +408,7 @@ fun PasswordListCustomizationScreen(
             if (previewQuickAccessEnabled) Text(stringResource(R.string.password_list_quick_access_switch_title), style = MaterialTheme.typography.labelLarge)
         }
         Column(Modifier.padding(top = 24.dp)) {
-            CustomizationToggle(stringResource(R.string.password_page_aggregate_switch_title), stringResource(R.string.password_page_aggregate_switch_desc), previewAggregateEnabled,
+            CustomizationToggle(Setting.PASSWORD_PAGE_AGGREGATE_SWITCH_TITLE, Setting.PASSWORD_PAGE_AGGREGATE_SWITCH_TITLE.summary(), previewAggregateEnabled,
                 { checked ->
                     previewAggregateEnabled = checked
                     viewModel.updatePasswordPageAggregateEnabled(checked)
@@ -425,8 +416,8 @@ fun PasswordListCustomizationScreen(
                 }, icon = Icons.Default.Dashboard)
         }
         if (previewAggregateEnabled) {
-            CustomizationSection(stringResource(R.string.password_page_aggregate_content_title), stringResource(R.string.password_page_aggregate_content_desc)) {
-                CustomizationOrderGroup(contentTypeOrder, selectedContentTypes.toList(), label = { stringResource(it.toLabelRes()) }, icon = { it.toIcon() },
+            CustomizationSection(Setting.PASSWORD_PAGE_AGGREGATE_CONTENT_TITLE, Setting.PASSWORD_PAGE_AGGREGATE_CONTENT_TITLE.summary()) {
+                CustomizationOrderGroup(Setting.PASSWORD_PAGE_AGGREGATE_CONTENT_TITLE, contentTypeOrder, selectedContentTypes.toList(), label = { stringResource(it.toLabelRes()) }, icon = { it.toIcon() },
                     onOrder = { order ->
                         contentTypeOrder = order
                         val values = order.filter { it in selectedContentTypes }
@@ -441,12 +432,12 @@ fun PasswordListCustomizationScreen(
                     }, required = { it == PasswordPageContentType.PASSWORD })
             }
         }
-        CustomizationSection(stringResource(R.string.customization_filters_navigation)) {
-            CustomizationToggle(stringResource(R.string.password_list_quick_filters_switch_title), stringResource(R.string.password_list_quick_filters_switch_desc), previewQuickFiltersEnabled, { checked -> previewQuickFiltersEnabled = checked; viewModel.updatePasswordListQuickFiltersEnabled(checked) }, index = 0, count = 5)
-            CustomizationToggle(stringResource(R.string.password_list_category_quick_filters_switch_title), stringResource(R.string.password_list_category_quick_filters_switch_desc), previewCategoryQuickFiltersEnabled, { checked -> previewCategoryQuickFiltersEnabled = checked; viewModel.updatePasswordListCategoryQuickFiltersEnabled(checked) }, index = 1, count = 5)
-            CustomizationToggle(stringResource(R.string.password_list_quick_folder_path_banner_switch_title), stringResource(R.string.password_list_quick_folder_path_banner_switch_desc), previewQuickFolderPathBannerEnabled, { checked -> previewQuickFolderPathBannerEnabled = checked; viewModel.updatePasswordListQuickFolderPathBannerEnabled(checked) }, index = 2, count = 5)
-            CustomizationToggle(stringResource(R.string.password_list_system_back_to_parent_folder_switch_title), stringResource(R.string.password_list_system_back_to_parent_folder_switch_desc), previewSystemBackToParentFolderEnabled, { checked -> previewSystemBackToParentFolderEnabled = checked; viewModel.updatePasswordListSystemBackToParentFolderEnabled(checked) }, index = 3, count = 5)
-            CustomizationToggle(stringResource(R.string.password_list_quick_access_switch_title), stringResource(R.string.password_list_quick_access_switch_desc), previewQuickAccessEnabled, { checked -> previewQuickAccessEnabled = checked; viewModel.updatePasswordListQuickAccessEnabled(checked) }, index = 4, count = 5)
+        CustomizationSection(Setting.CUSTOMIZATION_FILTERS_NAVIGATION) {
+            CustomizationToggle(Setting.PASSWORD_LIST_QUICK_FILTERS_SWITCH_TITLE, Setting.PASSWORD_LIST_QUICK_FILTERS_SWITCH_TITLE.summary(), previewQuickFiltersEnabled, { checked -> previewQuickFiltersEnabled = checked; viewModel.updatePasswordListQuickFiltersEnabled(checked) }, index = 0, count = 5)
+            CustomizationToggle(Setting.PASSWORD_LIST_CATEGORY_QUICK_FILTERS_SWITCH_TITLE, Setting.PASSWORD_LIST_CATEGORY_QUICK_FILTERS_SWITCH_TITLE.summary(), previewCategoryQuickFiltersEnabled, { checked -> previewCategoryQuickFiltersEnabled = checked; viewModel.updatePasswordListCategoryQuickFiltersEnabled(checked) }, index = 1, count = 5)
+            CustomizationToggle(Setting.PASSWORD_LIST_QUICK_FOLDER_PATH_BANNER_SWITCH_TITLE, Setting.PASSWORD_LIST_QUICK_FOLDER_PATH_BANNER_SWITCH_TITLE.summary(), previewQuickFolderPathBannerEnabled, { checked -> previewQuickFolderPathBannerEnabled = checked; viewModel.updatePasswordListQuickFolderPathBannerEnabled(checked) }, index = 2, count = 5)
+            CustomizationToggle(Setting.PASSWORD_LIST_SYSTEM_BACK_TO_PARENT_FOLDER_SWITCH_TITLE, Setting.PASSWORD_LIST_SYSTEM_BACK_TO_PARENT_FOLDER_SWITCH_TITLE.summary(), previewSystemBackToParentFolderEnabled, { checked -> previewSystemBackToParentFolderEnabled = checked; viewModel.updatePasswordListSystemBackToParentFolderEnabled(checked) }, index = 3, count = 5)
+            CustomizationToggle(Setting.PASSWORD_LIST_QUICK_ACCESS_SWITCH_TITLE, Setting.PASSWORD_LIST_QUICK_ACCESS_SWITCH_TITLE.summary(), previewQuickAccessEnabled, { checked -> previewQuickAccessEnabled = checked; viewModel.updatePasswordListQuickAccessEnabled(checked) }, index = 4, count = 5)
         }
     }
 }
@@ -605,17 +596,17 @@ fun PasswordCardAdjustmentScreen(
                 totpTimeOffsetSeconds = settings.totpTimeOffset, smoothAuthenticatorProgress = settings.validatorSmoothProgress,
                 enableSharedBounds = false)
         }
-        CustomizationSection(stringResource(R.string.password_card_show_authenticator_title)) {
-            CustomizationToggle(stringResource(R.string.password_card_show_authenticator_switch_label),
-                stringResource(R.string.password_card_show_authenticator_desc), settings.passwordCardShowAuthenticator,
+        CustomizationSection(Setting.PASSWORD_CARD_SHOW_AUTHENTICATOR_TITLE) {
+            CustomizationToggle(Setting.PASSWORD_CARD_SHOW_AUTHENTICATOR_SWITCH_LABEL,
+                Setting.PASSWORD_CARD_SHOW_AUTHENTICATOR_SWITCH_LABEL.summary(), settings.passwordCardShowAuthenticator,
                 viewModel::updatePasswordCardShowAuthenticator, 0, 2, Icons.Default.Security)
-            CustomizationToggle(stringResource(R.string.password_card_hide_other_content_when_authenticator_title),
-                stringResource(R.string.password_card_hide_other_content_when_authenticator_desc), settings.passwordCardHideOtherContentWhenAuthenticator,
+            CustomizationToggle(Setting.PASSWORD_CARD_HIDE_OTHER_CONTENT_WHEN_AUTHENTICATOR_TITLE,
+                Setting.PASSWORD_CARD_HIDE_OTHER_CONTENT_WHEN_AUTHENTICATOR_TITLE.summary(), settings.passwordCardHideOtherContentWhenAuthenticator,
                 viewModel::updatePasswordCardHideOtherContentWhenAuthenticator, 1, 2, Icons.Default.Description,
                 enabled = settings.passwordCardShowAuthenticator)
         }
-        CustomizationSection(stringResource(R.string.password_card_display_mode_title), stringResource(R.string.password_card_display_field_desc)) {
-            CustomizationOrderGroup(fieldOrder, selectedFields.toList(),
+        CustomizationSection(Setting.PASSWORD_CARD_DISPLAY_MODE_TITLE, Setting.PASSWORD_CARD_DISPLAY_MODE_TITLE.summary()) {
+            CustomizationOrderGroup(Setting.PASSWORD_CARD_DISPLAY_MODE_TITLE, fieldOrder, selectedFields.toList(),
                 label = { field -> availableFields.first { it.field == field }.title },
                 icon = { field -> availableFields.first { it.field == field }.icon },
                 onOrder = { order ->
@@ -625,22 +616,22 @@ fun PasswordCardAdjustmentScreen(
                     viewModel.updatePasswordCardDisplayFields(fieldOrder.filter { if (it == field) checked else it in selectedFields })
                 })
         }
-        CustomizationSection(stringResource(R.string.stack_mode_menu_title)) {
+        CustomizationSection(Setting.STACK_MODE_MENU_TITLE) {
             listOf(StackCardMode.AUTO, StackCardMode.ALWAYS_EXPANDED).forEachIndexed { index, mode ->
-                CustomizationChoice(stringResource(if (mode == StackCardMode.AUTO) R.string.stack_mode_auto else R.string.stack_mode_expand),
+                CustomizationChoice(Setting.STACK_MODE_MENU_TITLE, stringResource(if (mode == StackCardMode.AUTO) R.string.stack_mode_auto else R.string.stack_mode_expand),
                     selected = settings.stackCardMode == mode.name, onClick = { viewModel.updateStackCardMode(mode.name) }, index = index, count = 2)
             }
         }
-        CustomizationDisclosure(stringResource(R.string.group_mode_menu_title), selectedGroupOption.title,
+        CustomizationDisclosure(Setting.GROUP_MODE_MENU_TITLE, selectedGroupOption.title,
             groupModeExpanded, { groupModeExpanded = !groupModeExpanded }) {
             groupOptions.forEachIndexed { index, option ->
-                CustomizationChoice(option.title, option.description, settings.passwordGroupMode == option.mode,
+                CustomizationChoice(Setting.GROUP_MODE_MENU_TITLE, option.title, option.description, settings.passwordGroupMode == option.mode,
                     { viewModel.updatePasswordGroupMode(option.mode) }, index, groupOptions.size)
             }
         }
-        CustomizationSection(stringResource(R.string.website_stack_match_mode_title), stringResource(R.string.website_stack_match_mode_desc)) {
+        CustomizationSection(Setting.WEBSITE_STACK_MATCH_MODE_TITLE, Setting.WEBSITE_STACK_MATCH_MODE_TITLE.summary()) {
             listOf("strict", "relaxed").forEachIndexed { index, mode ->
-                CustomizationChoice(stringResource(if (mode == "strict") R.string.website_stack_match_mode_strict else R.string.website_stack_match_mode_relaxed),
+                CustomizationChoice(Setting.WEBSITE_STACK_MATCH_MODE_TITLE, stringResource(if (mode == "strict") R.string.website_stack_match_mode_strict else R.string.website_stack_match_mode_relaxed),
                     selected = websiteStackMatchMode == mode, onClick = { viewModel.updatePasswordWebsiteStackMatchMode(mode) }, index = index, count = 2)
             }
         }
@@ -727,42 +718,42 @@ fun AuthenticatorCardAdjustmentScreen(
                 appSettings = settings.copy(authenticatorCardDisplayFields = selectedFields.toList(),
                     iconCardsEnabled = settings.iconCardsEnabled && settings.authenticatorPageIconEnabled))
         }
-        CustomizationSection(stringResource(R.string.authenticator_layout_title), stringResource(R.string.authenticator_layout_description)) {
+        CustomizationSection(Setting.AUTHENTICATOR_LAYOUT_TITLE, Setting.AUTHENTICATOR_LAYOUT_TITLE.summary()) {
             listOf(AuthenticatorLayoutMode.STANDARD, AuthenticatorLayoutMode.TILE).forEachIndexed { index, mode ->
-                CustomizationChoice(stringResource(if (mode == AuthenticatorLayoutMode.STANDARD) R.string.authenticator_layout_standard else R.string.authenticator_layout_tile),
+                CustomizationChoice(Setting.AUTHENTICATOR_LAYOUT_TITLE, stringResource(if (mode == AuthenticatorLayoutMode.STANDARD) R.string.authenticator_layout_standard else R.string.authenticator_layout_tile),
                     selected = settings.authenticatorLayoutMode == mode, onClick = { viewModel.updateAuthenticatorLayoutMode(mode) }, index = index, count = 2)
             }
         }
-        CustomizationSection(stringResource(R.string.authenticator_card_display_content_title), stringResource(R.string.authenticator_card_display_field_desc)) {
-            CustomizationOrderGroup(fieldOrder, selectedFields.toList(),
+        CustomizationSection(Setting.AUTHENTICATOR_CARD_DISPLAY_CONTENT_TITLE, Setting.AUTHENTICATOR_CARD_DISPLAY_CONTENT_TITLE.summary()) {
+            CustomizationOrderGroup(Setting.AUTHENTICATOR_CARD_DISPLAY_CONTENT_TITLE, fieldOrder, selectedFields.toList(),
                 label = { field -> availableFields.first { it.field == field }.title },
                 icon = { field -> availableFields.first { it.field == field }.icon },
                 onOrder = { order -> fieldOrder = order; viewModel.updateAuthenticatorCardDisplayFields(order.filter { it in selectedFields }) },
                 onToggle = { field, checked -> viewModel.updateAuthenticatorCardDisplayFields(fieldOrder.filter { if (it == field) checked else it in selectedFields }) })
         }
-        CustomizationSection(stringResource(R.string.validator_settings_section)) {
-            CustomizationToggle(stringResource(R.string.authenticator_card_hide_code_title), stringResource(R.string.authenticator_card_hide_code_description),
+        CustomizationSection(Setting.VALIDATOR_SETTINGS_SECTION) {
+            CustomizationToggle(Setting.AUTHENTICATOR_CARD_HIDE_CODE_TITLE, Setting.AUTHENTICATOR_CARD_HIDE_CODE_TITLE.summary(),
                 settings.authenticatorCardHideCodeByDefault, viewModel::updateAuthenticatorCardHideCodeByDefault, 0, 3, Icons.Default.VisibilityOff)
-            CustomizationToggle(stringResource(R.string.unified_progress_bar_title), stringResource(R.string.unified_progress_bar_description),
+            CustomizationToggle(Setting.UNIFIED_PROGRESS_BAR_TITLE, Setting.UNIFIED_PROGRESS_BAR_TITLE.summary(),
                 settings.validatorUnifiedProgressBar == UnifiedProgressBarMode.ENABLED,
                 { viewModel.updateValidatorUnifiedProgressBar(if (it) UnifiedProgressBarMode.ENABLED else UnifiedProgressBarMode.DISABLED) }, 1, 3, Icons.Default.LinearScale)
-            CustomizationToggle(stringResource(R.string.smooth_progress_bar_title), stringResource(R.string.smooth_progress_bar_description),
+            CustomizationToggle(Setting.SMOOTH_PROGRESS_BAR_TITLE, Setting.SMOOTH_PROGRESS_BAR_TITLE.summary(),
                 settings.validatorSmoothProgress, viewModel::updateValidatorSmoothProgress, 2, 3, Icons.Default.Speed)
         }
-        CustomizationSection(stringResource(R.string.validator_progress_bar_style)) {
+        CustomizationSection(Setting.VALIDATOR_PROGRESS_BAR_STYLE) {
             ProgressBarStyle.entries.forEachIndexed { index, style ->
-                CustomizationChoice(validatorProgressBarStyleDisplayName(style), selected = settings.validatorProgressBarStyle == style,
+                CustomizationChoice(Setting.VALIDATOR_PROGRESS_BAR_STYLE, validatorProgressBarStyleDisplayName(style), selected = settings.validatorProgressBarStyle == style,
                     onClick = { viewModel.updateValidatorProgressBarStyle(style) }, index = index, count = ProgressBarStyle.entries.size)
             }
         }
         Column(Modifier.padding(top = 24.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            CustomizationToggle(stringResource(R.string.haptic_feedback), stringResource(R.string.haptic_feedback_description),
+            CustomizationToggle(Setting.HAPTIC_FEEDBACK, Setting.HAPTIC_FEEDBACK.summary(),
                 settings.hapticFeedbackEnabled, viewModel::updateHapticFeedbackEnabled, 0, if (settings.isPlusActivated) 3 else 1, Icons.Default.Vibration)
             if (settings.isPlusActivated) {
-                CustomizationToggle(stringResource(R.string.validator_vibration), stringResource(R.string.validator_vibration_description),
+                CustomizationToggle(Setting.VALIDATOR_VIBRATION, Setting.VALIDATOR_VIBRATION.summary(),
                     settings.validatorVibrationEnabled, viewModel::updateValidatorVibrationEnabled, 1, 3, Icons.Default.Vibration,
                     enabled = settings.hapticFeedbackEnabled)
-                CustomizationToggle(stringResource(R.string.copy_next_code_when_expiring), stringResource(R.string.copy_next_code_when_expiring_description),
+                CustomizationToggle(Setting.COPY_NEXT_CODE_WHEN_EXPIRING, Setting.COPY_NEXT_CODE_WHEN_EXPIRING.summary(),
                     settings.copyNextCodeWhenExpiring, viewModel::updateCopyNextCodeWhenExpiring, 2, 3, Icons.Default.Update)
             }
         }
@@ -780,8 +771,7 @@ private fun validatorProgressBarStyleDisplayName(style: ProgressBarStyle): Strin
 
 
 private data class IconSettingOption(
-    val title: String,
-    val subtitle: String,
+    val setting: Setting,
     val icon: ImageVector,
     val checked: Boolean,
     val onCheckedChange: (Boolean) -> Unit
@@ -809,22 +799,19 @@ fun IconSettingsScreen(
 
     val options = listOf(
         IconSettingOption(
-            title = stringResource(R.string.icon_settings_password_page_title),
-            subtitle = stringResource(R.string.icon_settings_password_page_subtitle),
+            setting = Setting.ICON_SETTINGS_PASSWORD_PAGE_TITLE,
             icon = Icons.Default.Key,
             checked = settings.passwordPageIconEnabled,
             onCheckedChange = viewModel::updatePasswordPageIconEnabled
         ),
         IconSettingOption(
-            title = stringResource(R.string.icon_settings_authenticator_page_title),
-            subtitle = stringResource(R.string.icon_settings_authenticator_page_subtitle),
+            setting = Setting.ICON_SETTINGS_AUTHENTICATOR_PAGE_TITLE,
             icon = Icons.Default.Security,
             checked = settings.authenticatorPageIconEnabled,
             onCheckedChange = viewModel::updateAuthenticatorPageIconEnabled
         ),
         IconSettingOption(
-            title = stringResource(R.string.icon_settings_passkey_page_title),
-            subtitle = stringResource(R.string.icon_settings_passkey_page_subtitle),
+            setting = Setting.ICON_SETTINGS_PASSKEY_PAGE_TITLE,
             icon = Icons.Default.VpnKey,
             checked = settings.passkeyPageIconEnabled,
             onCheckedChange = viewModel::updatePasskeyPageIconEnabled
@@ -835,7 +822,7 @@ fun IconSettingsScreen(
     var sourceExpanded by rememberSaveable { mutableStateOf(false) }
     CustomizationPage(stringResource(R.string.icon_settings_title), onNavigateBack) {
         AppLauncherIconSettings(settings.appLauncherIcon, viewModel::updateAppLauncherIcon)
-        CustomizationSection(stringResource(R.string.image_sources_title)) {
+        CustomizationSection(Setting.IMAGE_SOURCES_TITLE) {
             Surface(onClick = { showImageSources = true }, shape = settingsSectionItemShape(0, 1), color = MaterialTheme.colorScheme.surfaceContainer) {
                 androidx.compose.material3.ListItem(headlineContent = { Text(stringResource(R.string.image_sources_title)) },
                     supportingContent = { Text(stringResource(R.string.image_sources_settings_hint)) },
@@ -843,23 +830,23 @@ fun IconSettingsScreen(
                     colors = androidx.compose.material3.ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainer))
             }
         }
-        CustomizationSection(stringResource(R.string.icon_settings_master_title), stringResource(R.string.icon_settings_master_desc)) {
-            CustomizationToggle(stringResource(R.string.icon_settings_master_switch), "", settings.iconCardsEnabled, viewModel::updateIconCardsEnabled,
+        CustomizationSection(Setting.ICON_SETTINGS_MASTER_TITLE, Setting.ICON_SETTINGS_MASTER_TITLE.summary()) {
+            CustomizationToggle(Setting.ICON_SETTINGS_MASTER_SWITCH, "", settings.iconCardsEnabled, viewModel::updateIconCardsEnabled,
                 icon = Icons.Default.Image)
         }
-        CustomizationSection(stringResource(R.string.icon_settings_page_switches_title), stringResource(R.string.icon_settings_page_switches_desc)) {
+        CustomizationSection(Setting.ICON_SETTINGS_PAGE_SWITCHES_TITLE, Setting.ICON_SETTINGS_PAGE_SWITCHES_TITLE.summary()) {
             options.forEachIndexed { index, option ->
-                CustomizationToggle(option.title, option.subtitle, option.checked, option.onCheckedChange,
+                CustomizationToggle(option.setting, option.setting.summary(), option.checked, option.onCheckedChange,
                     index, options.size, option.icon, enabled = settings.iconCardsEnabled)
             }
         }
-        CustomizationSection(stringResource(R.string.icon_settings_unmatched_strategy_title)) {
+        CustomizationSection(Setting.ICON_SETTINGS_UNMATCHED_STRATEGY_TITLE) {
             unmatchedStrategyOptions.forEachIndexed { index, (strategy, label) ->
-                CustomizationChoice(label, selected = settings.unmatchedIconHandlingStrategy == strategy,
+                CustomizationChoice(Setting.ICON_SETTINGS_UNMATCHED_STRATEGY_TITLE, label, selected = settings.unmatchedIconHandlingStrategy == strategy,
                     onClick = { viewModel.updateUnmatchedIconHandlingStrategy(strategy) }, index = index, count = unmatchedStrategyOptions.size)
             }
         }
-        CustomizationDisclosure(stringResource(R.string.icon_settings_source_title), stringResource(R.string.icon_settings_source_desc),
+        CustomizationDisclosure(Setting.ICON_SETTINGS_SOURCE_TITLE, Setting.ICON_SETTINGS_SOURCE_TITLE.summary(),
             sourceExpanded, { sourceExpanded = !sourceExpanded }) {
             Surface(shape = settingsSectionItemShape(1, 2), color = MaterialTheme.colorScheme.surfaceContainer) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {

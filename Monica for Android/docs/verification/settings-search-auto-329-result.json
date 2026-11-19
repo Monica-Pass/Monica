@@ -1,0 +1,413 @@
+{
+  "version": "1.0.329",
+  "date": "2026-11-19",
+  "editions": {
+    "main": {
+      "buildLabel": "main03",
+      "buildSeconds": 136.233,
+      "searchLabel": "main03",
+      "searchMethods": 17,
+      "searchSeconds": 75.392,
+      "regressionLabel": "main03-regression",
+      "regressionMethods": 27,
+      "regressionSeconds": 63.305,
+      "regressionWholeBatchPassed": true,
+      "regressionRuns": [
+        {
+          "label": "main03-regression",
+          "passed": [
+            "takagi.ru.monica.ui.components.DirectReorderDeviceTest#customizationWholeRowDragKeepsSwitchAndAccessibleActions",
+            "takagi.ru.monica.ui.screens.AutofillSettingsM3eTest#backDismissesEveryChoiceSheetWithoutWritingPreferences",
+            "takagi.ru.monica.ui.screens.AutofillSettingsM3eTest#explicitSourceSelectionPersistsAndKeepsExistingCrossSourceClearPolicy",
+            "takagi.ru.monica.ui.screens.AutofillSettingsM3eTest#longSourceNamesWrapAndRemainSelectableWithLargeTextInBothThemes",
+            "takagi.ru.monica.ui.screens.AutofillSettingsM3eTest#matchingAndOtpDurationsUsePersistedSingleChoiceSheets",
+            "takagi.ru.monica.ui.screens.AutofillSettingsM3eTest#registeredKeepassAndBitwardenChoicesPersistAcrossPageReentry",
+            "takagi.ru.monica.ui.screens.AutofillSettingsM3eTest#systemAutofillEntryIsUniqueAndHardwareSearchStillLocatesTheSharedSwitch",
+            "takagi.ru.monica.ui.screens.AutofillSettingsM3eTest#unavailableDefaultIdsSurviveReadReentryAndCancelInsteadOfBecomingAll",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#addMenuOrderAndRequiredPasswordSurviveReopeningSettings",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#allChildrenRenderAtNarrowDoubleFontWithoutClipping",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#allChildrenRenderWithNormalChineseText",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#fieldsHavePersistentTogglesAndScrollablePresetDialog",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#iconDependenciesAndCollapsedSearchWork",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#passwordPreviewAndAuthenticatorDependencyPersist",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#presetCanBeCreatedEditedAndDeletedWithoutExposingSensitiveDefault",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#presetSheetEditsAllPropertiesWithoutLosingIdentity",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#presetSheetLargeTextKeepsSaveReachableAndRejectsBlankName",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#wholeRowReordersNaturalHeightRows",
+            "takagi.ru.monica.ui.screens.SettingsSubpagesInstrumentedTest#customizationPreservesThreePersistentTogglesAndFiveDestinations",
+            "takagi.ru.monica.ui.screens.SettingsSubpagesInstrumentedTest#customizationSearchLocatesWalletWithoutChangingPreferenceAtLargeFont",
+            "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#autofillSettingsRetainStrategyDialog",
+            "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#clearSelectionAndAuthenticationGatesStayVisible",
+            "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#clearWithNoSelectionCannotSubmitEvenWithoutPasswordVerification",
+            "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#compactStatusDoesNotClaimDisabledAppIsOperational",
+            "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#databaseRoutesRemainDistinct",
+            "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#extensionRowsToggleOnceAndKeepChoices",
+            "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#unavailablePlusRouteStaysDisabledAtLargeText"
+          ],
+          "failed": [],
+          "runnerSeconds": 63.305,
+          "completed": true,
+          "allPassed": true
+        }
+      ],
+      "searchRun": {
+        "label": "main03",
+        "passed": [
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#aliasSearchAndIconNavigationWorkInDarkNarrowLargeText",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#backClosesSearchBeforeDelegatingToTheParentPage",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#destructiveResultOnlyLocatesTheOriginalEntry",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#editorStyleSearchOnlyNavigatesAndPreservesPreferenceInLargeText",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#emptyFocusedSearchAndWhitespaceCanBeClosedWithoutLeavingSettings",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyDefinitionIsSearchableInEverySupportedLanguageWithoutReadingUserData",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyIndexedSpecificSettingHasOneVisibleTargetOnItsRealPage",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#firstSystemFieldStillReceivesSearchFocusAfterStylePickerIsInserted",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#hiddenConditionalSettingLocatesItsParentWithoutEnablingIt",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#hyperOsCatalogIncludesAliasesAndLocalizedChildTitles",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#hyperOsSearchLocatesProtectedEntryAndCancelPreservesQuery",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#hyperOsSearchReachesRealPageAfterPasswordVerificationInLargeText",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#keyboardResultNavigatesToSpecificRowWithoutTogglingAndReturnsToQuery",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#lazyPasswordFieldSettingsLocateTheRequestedField",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#previouslyOmittedSettingsAndProtectedChildHaveTheirOwnResults",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#searchBackArrowRemainsReachableInDarkNarrowLargeText"
+        ],
+        "failed": [],
+        "runnerSeconds": 75.392,
+        "completed": true,
+        "allPassed": true
+      },
+      "uniqueDeviceMethods": 44,
+      "jvm": {
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "jvmExecutedIn": "main03",
+      "definitions": 183,
+      "activeWithPlus": 177,
+      "baseDefinitions": 175,
+      "navigationTargets": 153,
+      "apks": [
+        {
+          "file": "Monica-Android-x86_64-1.0.329-26111912-89.APK",
+          "sha256": "c24f79b6193ba4c547982c1d4bd13b7ae98b1814e3e2f64e7d7653ed90912c68"
+        },
+        {
+          "file": "app-debug-androidTest.apk",
+          "sha256": "c0a0bb5d2d416d1cea6ddd33fd9fdcf0bd31f8e4f8ae2a06869e08981a080a3b"
+        }
+      ]
+    },
+    "fd": {
+      "buildLabel": "fd02",
+      "buildSeconds": 54.393,
+      "searchLabel": "fd01",
+      "searchMethods": 17,
+      "searchSeconds": 96.458,
+      "regressionLabel": "fd03-regression",
+      "regressionMethods": 27,
+      "regressionSeconds": 61.011,
+      "regressionWholeBatchPassed": false,
+      "regressionRuns": [
+        {
+          "label": "fd02-regression",
+          "passed": [
+            "takagi.ru.monica.ui.screens.AutofillSettingsM3eTest#backDismissesEveryChoiceSheetWithoutWritingPreferences",
+            "takagi.ru.monica.ui.screens.AutofillSettingsM3eTest#explicitSourceSelectionPersistsAndKeepsExistingCrossSourceClearPolicy",
+            "takagi.ru.monica.ui.screens.AutofillSettingsM3eTest#longSourceNamesWrapAndRemainSelectableWithLargeTextInBothThemes",
+            "takagi.ru.monica.ui.screens.AutofillSettingsM3eTest#matchingAndOtpDurationsUsePersistedSingleChoiceSheets",
+            "takagi.ru.monica.ui.screens.AutofillSettingsM3eTest#registeredKeepassAndBitwardenChoicesPersistAcrossPageReentry",
+            "takagi.ru.monica.ui.screens.AutofillSettingsM3eTest#systemAutofillEntryIsUniqueAndHardwareSearchStillLocatesTheSharedSwitch",
+            "takagi.ru.monica.ui.screens.AutofillSettingsM3eTest#unavailableDefaultIdsSurviveReadReentryAndCancelInsteadOfBecomingAll",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#addMenuOrderAndRequiredPasswordSurviveReopeningSettings",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#allChildrenRenderAtNarrowDoubleFontWithoutClipping",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#allChildrenRenderWithNormalChineseText",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#fieldsHavePersistentTogglesAndScrollablePresetDialog",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#iconDependenciesAndCollapsedSearchWork",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#passwordPreviewAndAuthenticatorDependencyPersist",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#presetCanBeCreatedEditedAndDeletedWithoutExposingSensitiveDefault",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#presetSheetEditsAllPropertiesWithoutLosingIdentity",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#presetSheetLargeTextKeepsSaveReachableAndRejectsBlankName",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#wholeRowReordersNaturalHeightRows",
+            "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#compactStatusDoesNotClaimDisabledAppIsOperational",
+            "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#databaseRoutesRemainDistinct",
+            "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#unavailablePlusRouteStaysDisabledAtLargeText"
+          ],
+          "failed": [],
+          "runnerSeconds": null,
+          "completed": false,
+          "allPassed": false
+        },
+        {
+          "label": "fd03-regression",
+          "passed": [
+            "takagi.ru.monica.ui.components.DirectReorderDeviceTest#customizationWholeRowDragKeepsSwitchAndAccessibleActions",
+            "takagi.ru.monica.ui.screens.AutofillSettingsM3eTest#backDismissesEveryChoiceSheetWithoutWritingPreferences",
+            "takagi.ru.monica.ui.screens.AutofillSettingsM3eTest#explicitSourceSelectionPersistsAndKeepsExistingCrossSourceClearPolicy",
+            "takagi.ru.monica.ui.screens.AutofillSettingsM3eTest#longSourceNamesWrapAndRemainSelectableWithLargeTextInBothThemes",
+            "takagi.ru.monica.ui.screens.AutofillSettingsM3eTest#matchingAndOtpDurationsUsePersistedSingleChoiceSheets",
+            "takagi.ru.monica.ui.screens.AutofillSettingsM3eTest#registeredKeepassAndBitwardenChoicesPersistAcrossPageReentry",
+            "takagi.ru.monica.ui.screens.AutofillSettingsM3eTest#systemAutofillEntryIsUniqueAndHardwareSearchStillLocatesTheSharedSwitch",
+            "takagi.ru.monica.ui.screens.AutofillSettingsM3eTest#unavailableDefaultIdsSurviveReadReentryAndCancelInsteadOfBecomingAll",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#addMenuOrderAndRequiredPasswordSurviveReopeningSettings",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#allChildrenRenderAtNarrowDoubleFontWithoutClipping",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#allChildrenRenderWithNormalChineseText",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#fieldsHavePersistentTogglesAndScrollablePresetDialog",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#iconDependenciesAndCollapsedSearchWork",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#passwordPreviewAndAuthenticatorDependencyPersist",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#presetCanBeCreatedEditedAndDeletedWithoutExposingSensitiveDefault",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#presetSheetEditsAllPropertiesWithoutLosingIdentity",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#presetSheetLargeTextKeepsSaveReachableAndRejectsBlankName",
+            "takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest#wholeRowReordersNaturalHeightRows",
+            "takagi.ru.monica.ui.screens.SettingsSubpagesInstrumentedTest#customizationPreservesThreePersistentTogglesAndFiveDestinations",
+            "takagi.ru.monica.ui.screens.SettingsSubpagesInstrumentedTest#customizationSearchLocatesWalletWithoutChangingPreferenceAtLargeFont",
+            "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#autofillSettingsRetainStrategyDialog",
+            "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#clearSelectionAndAuthenticationGatesStayVisible",
+            "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#clearWithNoSelectionCannotSubmitEvenWithoutPasswordVerification",
+            "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#compactStatusDoesNotClaimDisabledAppIsOperational",
+            "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#databaseRoutesRemainDistinct",
+            "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#extensionRowsToggleOnceAndKeepChoices"
+          ],
+          "failed": [
+            "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#unavailablePlusRouteStaysDisabledAtLargeText"
+          ],
+          "runnerSeconds": 61.011,
+          "completed": true,
+          "allPassed": false
+        },
+        {
+          "label": "fd04-focused",
+          "passed": [
+            "takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest#unavailablePlusRouteStaysDisabledAtLargeText"
+          ],
+          "failed": [],
+          "runnerSeconds": 0.784,
+          "completed": true,
+          "allPassed": true
+        }
+      ],
+      "searchRun": {
+        "label": "fd01",
+        "passed": [
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#aliasSearchAndIconNavigationWorkInDarkNarrowLargeText",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#backClosesSearchBeforeDelegatingToTheParentPage",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#destructiveResultOnlyLocatesTheOriginalEntry",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#editorStyleSearchOnlyNavigatesAndPreservesPreferenceInLargeText",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#emptyFocusedSearchAndWhitespaceCanBeClosedWithoutLeavingSettings",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyDefinitionIsSearchableInEverySupportedLanguageWithoutReadingUserData",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyIndexedSpecificSettingHasOneVisibleTargetOnItsRealPage",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#firstSystemFieldStillReceivesSearchFocusAfterStylePickerIsInserted",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#hiddenConditionalSettingLocatesItsParentWithoutEnablingIt",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#hyperOsCatalogIncludesAliasesAndLocalizedChildTitles",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#hyperOsSearchLocatesProtectedEntryAndCancelPreservesQuery",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#hyperOsSearchReachesRealPageAfterPasswordVerificationInLargeText",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#keyboardResultNavigatesToSpecificRowWithoutTogglingAndReturnsToQuery",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#lazyPasswordFieldSettingsLocateTheRequestedField",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#previouslyOmittedSettingsAndProtectedChildHaveTheirOwnResults",
+          "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#searchBackArrowRemainsReachableInDarkNarrowLargeText"
+        ],
+        "failed": [],
+        "runnerSeconds": 96.458,
+        "completed": true,
+        "allPassed": true
+      },
+      "uniqueDeviceMethods": 44,
+      "jvm": {
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "jvmExecutedIn": "fd01",
+      "definitions": 182,
+      "activeWithPlus": 176,
+      "baseDefinitions": 174,
+      "navigationTargets": 152,
+      "apks": [
+        {
+          "file": "Monica-Android-x86_64-1.0.329.apk",
+          "sha256": "2482222cccde2e2918efa4f9fd87f8ce959601b03b6113cae34c62d6235ae515"
+        },
+        {
+          "file": "app-debug-androidTest.apk",
+          "sha256": "a96e53d6e393f67bf83c2ab95b554bbe170ae5cf1a2ae764ab0fb2577584c681"
+        }
+      ]
+    }
+  },
+  "sources": {
+    "main": {
+      "changedKotlinPaths": {
+        "app/src/main/java/takagi/ru/monica/autofill_ng/HyperOsSaveOverlayPermission.kt": "300b0cb5afbf4838af983c414b45c8d036b5e7f64fda6857536c9517ea3b1214",
+        "app/src/main/java/takagi/ru/monica/ui/components/AutofillStatusCard.kt": "d966fc23ad1c36c4d48a6cc4a7777672379d7fe520dec8f2e6d8ce8d1ce6bf52",
+        "app/src/main/java/takagi/ru/monica/ui/components/BottomNavConfigRow.kt": "24cb0131071c31c527751010c5f07479cd5f987b279183dd4bb66f9c0875ca72",
+        "app/src/main/java/takagi/ru/monica/ui/components/CustomizationComponents.kt": "e3f44ad121be851a2b66621040a9ec341306fefad7aeb69250cc6c08116ad3a8",
+        "app/src/main/java/takagi/ru/monica/ui/components/SettingsPanel.kt": "ee93a32da7072f40b41514179e70edc303b4b182c6af074731a603fcc39266f5",
+        "app/src/main/java/takagi/ru/monica/ui/components/SettingsSubpageComponents.kt": "f0c8234d6a4f981cfa3f9b3f19be946cefe2a894bd079cfa7ca261dc47d4752f",
+        "app/src/main/java/takagi/ru/monica/ui/components/TrashSettingsSheet.kt": "80e7a4122dacf51bdf6656c160faaae19953323dd7cc3e1b14702783702aa738",
+        "app/src/main/java/takagi/ru/monica/ui/screens/AppLauncherIconSettings.kt": "bd58e62206c4995a8c66bc5f32033ba870a8d557c0cfed78b9f1f696273698f5",
+        "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsScreen.kt": "8ddafa2a98347c5476e3679917ce455b684262e0c1d95163e6908d6ad47a5794",
+        "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsV2Screen.kt": "b28f82546657aa4840da17da70e0ba8dc09be87f60a9d0bee297c179b59c08ec",
+        "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSourceSettings.kt": "e6ad58bf96869eafaf4ff36706a9fd6d005d4e084cb0e161e6a241f1b4607bd7",
+        "app/src/main/java/takagi/ru/monica/ui/screens/DefaultPasswordManagerSheet.kt": "dfa586929728b2fa55c2138b03fbd580c3fde2f7ffa752703c67af2209bfbbc4",
+        "app/src/main/java/takagi/ru/monica/ui/screens/DeveloperSettingsScreen.kt": "58ccff899d4146e9925e9a1a882b2bad06f6f298bc429bcf6c42481b41b16550",
+        "app/src/main/java/takagi/ru/monica/ui/screens/ExtensionsScreen.kt": "b74c1e5aa060063f458d12b2a112e32f53e49bd35c7c3379f0fc641dc01832da",
+        "app/src/main/java/takagi/ru/monica/ui/screens/HyperOsCompatibilitySettingsScreen.kt": "8fb6ff65623ffef1e882ffb60298b4c0911819074e1200f8e11aec1f47dc21c1",
+        "app/src/main/java/takagi/ru/monica/ui/screens/HyperOsDiagnosticsScreen.kt": "a0bba9de47370f6c571abfd1edcc4d87d5e1ff60f814551e0f79dc1e5134caac",
+        "app/src/main/java/takagi/ru/monica/ui/screens/HyperOsModuleSettingsScreen.kt": "964bc471ecf1b684ad0b5dec9d02cf5f23d939e3dcf402319443b1b8fe036a6e",
+        "app/src/main/java/takagi/ru/monica/ui/screens/InterfaceScaleSettingsContent.kt": "a288912729986ca07a98f761bf0a11568892b9f08d9df1fdbfc194894dbbb96f",
+        "app/src/main/java/takagi/ru/monica/ui/screens/MasterPasswordLockingSettingsScreen.kt": "53cf7ebf8a06cfd278848cdabb829c6cde1d67928d1e9d1e4038230f867ef4c9",
+        "app/src/main/java/takagi/ru/monica/ui/screens/NearbyDeviceManagement.kt": "92995129950fa01543af4103c359c2852884558254bf8706a8a00f4f3f0923e2",
+        "app/src/main/java/takagi/ru/monica/ui/screens/NearbySyncScreen.kt": "d97f731986a6200d9aa20defec0323c114f3eaba733ea4b6ae662aa291b5a5a6",
+        "app/src/main/java/takagi/ru/monica/ui/screens/NearbySyncStatus.kt": "d7d07d16bc240ef26c39a11f4453cee40843b9582cec4e526faae29e3717a0e8",
+        "app/src/main/java/takagi/ru/monica/ui/screens/PageAdjustmentCustomizationScreen.kt": "f713de769902fb341766582b18c4e012bdc4b113e82728475879486415da9e3f",
+        "app/src/main/java/takagi/ru/monica/ui/screens/PasswordFieldCustomizationScreen.kt": "a55cf9914231d9275b9c03c4e3c4dfd4e3b011d1f4edd4536bf857874d33e6c1",
+        "app/src/main/java/takagi/ru/monica/ui/screens/PreviewFeaturesDialog.kt": "6e2e872ce9aab368868eb52433ee2affe031f8fe644bcbc40d740fba24a0592e",
+        "app/src/main/java/takagi/ru/monica/ui/screens/QuickSetupScreen.kt": "6afc95a82ffdc363d99890106881e2fde5cb07ee10ba2017006f5df934d34e7c",
+        "app/src/main/java/takagi/ru/monica/ui/screens/Setting.kt": "4dffb742789ee8c97e72db8460ac57176a7bc00b21e50ae0606bf4d01c33f753",
+        "app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt": "e13639063ff3daab94e095872ce8aed2702445f37d271dcc6f1258931a6e47d0",
+        "app/src/main/java/takagi/ru/monica/ui/screens/SettingsSearchCatalog.kt": "e838a16fdc9e149c17b3abb23675972bad78e9806407c989ea1f6a50a221bd06",
+        "app/src/main/java/takagi/ru/monica/ui/screens/SyncBackupScreen.kt": "164668781394888a8776e143d1d06ca5c55df9aedc3c62b1d0d9d7150a1c7e3c",
+        "app/src/main/java/takagi/ru/monica/passkey/hardware/HardwarePasskeySetting.kt": "1625343e6a7866ff4bb4f22523d7067f089f22bd3f890f65eb786c6fd6fb428f",
+        "app/src/androidTest/java/takagi/ru/monica/ui/components/DirectReorderDeviceTest.kt": "3853bc670b6572f74601f93885d0a461895ca8c505b68f477593eee71b1880ae",
+        "app/src/androidTest/java/takagi/ru/monica/ui/screens/CustomizationChildrenInstrumentedTest.kt": "fa7c64a4a5c7f5fb96e0b30b9b103aaf671ed04f958f588399602d50e56389cf",
+        "app/src/androidTest/java/takagi/ru/monica/ui/screens/SettingsSearchInstrumentedTest.kt": "cc37727875caf11527b75e34882b66f72496a6e3312ec035cf42ae04d4ab229b"
+      },
+      "allOtherKotlinSourcesUnchanged": true,
+      "productionUnchangedSinceFirstSuccessfulSearchTests": true
+    },
+    "fd": {
+      "changedKotlinPaths": {
+        "app/src/main/java/takagi/ru/monica/autofill_ng/HyperOsSaveOverlayPermission.kt": "300b0cb5afbf4838af983c414b45c8d036b5e7f64fda6857536c9517ea3b1214",
+        "app/src/main/java/takagi/ru/monica/ui/components/AutofillStatusCard.kt": "d966fc23ad1c36c4d48a6cc4a7777672379d7fe520dec8f2e6d8ce8d1ce6bf52",
+        "app/src/main/java/takagi/ru/monica/ui/components/BottomNavConfigRow.kt": "24cb0131071c31c527751010c5f07479cd5f987b279183dd4bb66f9c0875ca72",
+        "app/src/main/java/takagi/ru/monica/ui/components/CustomizationComponents.kt": "e3f44ad121be851a2b66621040a9ec341306fefad7aeb69250cc6c08116ad3a8",
+        "app/src/main/java/takagi/ru/monica/ui/components/SettingsPanel.kt": "ee93a32da7072f40b41514179e70edc303b4b182c6af074731a603fcc39266f5",
+        "app/src/main/java/takagi/ru/monica/ui/components/SettingsSubpageComponents.kt": "f0c8234d6a4f981cfa3f9b3f19be946cefe2a894bd079cfa7ca261dc47d4752f",
+        "app/src/main/java/takagi/ru/monica/ui/components/TrashSettingsSheet.kt": "80e7a4122dacf51bdf6656c160faaae19953323dd7cc3e1b14702783702aa738",
+        "app/src/main/java/takagi/ru/monica/ui/screens/AppLauncherIconSettings.kt": "bd58e62206c4995a8c66bc5f32033ba870a8d557c0cfed78b9f1f696273698f5",
+        "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsScreen.kt": "8ddafa2a98347c5476e3679917ce455b684262e0c1d95163e6908d6ad47a5794",
+        "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsV2Screen.kt": "b28f82546657aa4840da17da70e0ba8dc09be87f60a9d0bee297c179b59c08ec",
+        "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSourceSettings.kt": "e6ad58bf96869eafaf4ff36706a9fd6d005d4e084cb0e161e6a241f1b4607bd7",
+        "app/src/main/java/takagi/ru/monica/ui/screens/DefaultPasswordManagerSheet.kt": "dfa586929728b2fa55c2138b03fbd580c3fde2f7ffa752703c67af2209bfbbc4",
+        "app/src/main/java/takagi/ru/monica/ui/screens/DeveloperSettingsScreen.kt": "58ccff899d4146e9925e9a1a882b2bad06f6f298bc429bcf6c42481b41b16550",
+        "app/src/main/java/takagi/ru/monica/ui/screens/ExtensionsScreen.kt": "b74c1e5aa060063f458d12b2a112e32f53e49bd35c7c3379f0fc641dc01832da",
+        "app/src/main/java/takagi/ru/monica/ui/screens/HyperOsCompatibilitySettingsScreen.kt": "8fb6ff65623ffef1e882ffb60298b4c0911819074e1200f8e11aec1f47dc21c1",
+        "app/src/main/java/takagi/ru/monica/ui/screens/HyperOsDiagnosticsScreen.kt": "a0bba9de47370f6c571abfd1edcc4d87d5e1ff60f814551e0f79dc1e5134caac",
+        "app/src/main/java/takagi/ru/monica/ui/screens/HyperOsModuleSettingsScreen.kt": "964bc471ecf1b684ad0b5dec9d02cf5f23d939e3dcf402319443b1b8fe036a6e",
+        "app/src/main/java/takagi/ru/monica/ui/screens/InterfaceScaleSettingsContent.kt": "a288912729986ca07a98f761bf0a11568892b9f08d9df1fdbfc194894dbbb96f",
+        "app/src/main/java/takagi/ru/monica/ui/screens/MasterPasswordLockingSettingsScreen.kt": "53cf7ebf8a06cfd278848cdabb829c6cde1d67928d1e9d1e4038230f867ef4c9",
+        "app/src/main/java/takagi/ru/monica/ui/screens/NearbyDeviceManagement.kt": "92995129950fa01543af4103c359c2852884558254bf8706a8a00f4f3f0923e2",
+        "app/src/main/java/takagi/ru/monica/ui/screens/NearbySyncScreen.kt": "d97f731986a6200d9aa20defec0323c114f3eaba733ea4b6ae662aa291b5a5a6",
+        "app/src/main/java/takagi/ru/monica/ui/screens/NearbySyncStatus.kt": "d7d07d16bc240ef26c39a11f4453cee40843b9582cec4e526faae29e3717a0e8",
+        "app/src/main/java/takagi/ru/monica/ui/screens/PageAdjustmentCustomizationScreen.kt": "f713de769902fb341766582b18c4e012bdc4b113e82728475879486415da9e3f",
+        "app/src/main/java/takagi/ru/monica/ui/screens/PasswordFieldCustomizationScreen.kt": "a55cf9914231d9275b9c03c4e3c4dfd4e3b011d1f4edd4536bf857874d33e6c1",
+        "app/src/main/java/takagi/ru/monica/ui/screens/PreviewFeaturesDialog.kt": "6e2e872ce9aab368868eb52433ee2affe031f8fe644bcbc40d740fba24a0592e",
+        "app/src/main/java/takagi/ru/monica/ui/screens/QuickSetupScreen.kt": "f551937dffe7f0b7aac4658269e483dd7221cc6421e91048078005af43ff7541",
+        "app/src/main/java/takagi/ru/monica/ui/screens/Setting.kt": "f1aa9336e720dee23a55324b4d8182344fa4b8b9bf19ff68c2591b19551f3496",
+        "app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt": "e13639063ff3daab94e095872ce8aed2702445f37d271dcc6f1258931a6e47d0",
+        "app/src/main/java/takagi/ru/monica/ui/screens/SettingsSearchCatalog.kt": "e838a16fdc9e149c17b3abb23675972bad78e9806407c989ea1f6a50a221bd06",
+        "app/src/main/java/takagi/ru/monica/ui/screens/SyncBackupScreen.kt": "600b29f17edb57e6ffb80f9a96ceb12f57a75f9255607dabdf96b397c3679ea5",
+        "app/src/main/java/takagi/ru/monica/passkey/hardware/HardwarePasskeySetting.kt": "1625343e6a7866ff4bb4f22523d7067f089f22bd3f890f65eb786c6fd6fb428f",
+        "app/src/androidTest/java/takagi/ru/monica/ui/components/DirectReorderDeviceTest.kt": "3853bc670b6572f74601f93885d0a461895ca8c505b68f477593eee71b1880ae",
+        "app/src/androidTest/java/takagi/ru/monica/ui/screens/CustomizationChildrenInstrumentedTest.kt": "fa7c64a4a5c7f5fb96e0b30b9b103aaf671ed04f958f588399602d50e56389cf",
+        "app/src/androidTest/java/takagi/ru/monica/ui/screens/SettingsSearchInstrumentedTest.kt": "c7bc6dadd8165f5c1dd59603fc1f84e4e8c46d8b4332835c831f0e856c1539f0",
+        "app/src/androidTest/java/takagi/ru/monica/ui/screens/UnifiedSettingsInstrumentedTest.kt": "7e749b7b965adc06bb923166dd68cefe60b7d8917d49265339127dae29e1df49"
+      },
+      "allOtherKotlinSourcesUnchanged": true,
+      "productionUnchangedSinceFirstSuccessfulSearchTests": true
+    }
+  },
+  "cleanup": {
+    "results": {
+      "takagi.ru.monica.settingssearchfixauto20261119.test": "Success",
+      "takagi.ru.monica.settingssearchfixauto20261119": "Success",
+      "takagi.ru.monica.settingssearchfixautofd20261119.test": "Success",
+      "takagi.ru.monica.settingssearchfixautofd20261119": "Success"
+    },
+    "usersUnchanged": true,
+    "packagesUnchanged": true,
+    "currentUser": "0",
+    "preexistingMuMuLeftRunning": true
+  },
+  "metadataChecks": [
+    {
+      "command": [
+        "C:/Program Files/Python313/python.exe",
+        "scripts/check-fdroid-release.py"
+      ],
+      "exit": 0,
+      "seconds": 2.1582553386688232
+    },
+    {
+      "command": [
+        "C:/Program Files/Python313/python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts",
+        "-p",
+        "test_*.py"
+      ],
+      "exit": 0,
+      "seconds": 0.3321850299835205
+    }
+  ],
+  "scope": "Shared immutable setting definitions required by standard controls; automatic static resource indexing, safe parent navigation.",
+  "limits": [
+    "MuMu API35/x86_64; isolated Debug application packages on the preexisting user 0.",
+    "Real Compose settings pages in a test NavHost, not the complete MainActivity flow.",
+    "No physical HyperOS device, compatibility-hook behavior, R8 Release or foldable testing.",
+    "Arbitrary hand-written controls must follow the shared definition contract; dynamic user data and retired legacy-only settings are excluded."
+  ],
+  "preservedFailures": [
+    "main01 Android test compilation failed because two reorder fixtures still used the old untyped signature; fixture calls were migrated.",
+    "main02-regression: 25/27 passed. Two preexisting selectors expected removed reorder arrow buttons and an already-expanded preset placeholder. Baseline code already used accessibility actions and collapsed more options. Test actions were updated without changing production behavior or weakening order/persistence/cancel assertions.",
+    "fd02-regression was aborted after 20 passes when MuMu system_server PID 833 crashed with SIGSEGV in TaskUtils.shouldIgnoreDesktopHomeOcclusion. The Android framework recovered as PID 63291. No source, APK, system configuration or user data was changed before the full fd03-regression rerun.",
+    "fd03-regression completed 26/27 in 61.011 seconds. unavailablePlusRouteStaysDisabledAtLargeText failed with No compose hierarchies found. Logcat records a portrait-to-landscape configuration change during transition from the preceding fixture; this does not prove the complete cause. The unchanged APK and test method passed in isolation as fd04-focused (1/1, 0.784 seconds). No full F-Droid regression batch is claimed green; no production or fixture changes were made for this rerun.",
+    "The focused-run driver initially failed before instrumentation because adb shell split the date format; corrected shell quoting and then executed the single focused run.",
+    "Initial prepare driver compared old shared catalogs after ordinary migration and stopped on the expected mismatch. Device baseline and isolated manifests were already captured; no device mutation had occurred.",
+    "Earlier manual HyperOS phase retains the original 2/2 failing negative control and its own fixture failures; see settings-search-hyperos-329.md."
+  ],
+  "sharedIdenticalPaths": [
+    "app/src/androidTest/java/takagi/ru/monica/ui/components/DirectReorderDeviceTest.kt",
+    "app/src/androidTest/java/takagi/ru/monica/ui/screens/CustomizationChildrenInstrumentedTest.kt",
+    "app/src/main/java/takagi/ru/monica/autofill_ng/HyperOsSaveOverlayPermission.kt",
+    "app/src/main/java/takagi/ru/monica/passkey/hardware/HardwarePasskeySetting.kt",
+    "app/src/main/java/takagi/ru/monica/ui/components/AutofillStatusCard.kt",
+    "app/src/main/java/takagi/ru/monica/ui/components/BottomNavConfigRow.kt",
+    "app/src/main/java/takagi/ru/monica/ui/components/CustomizationComponents.kt",
+    "app/src/main/java/takagi/ru/monica/ui/components/SettingsPanel.kt",
+    "app/src/main/java/takagi/ru/monica/ui/components/SettingsSubpageComponents.kt",
+    "app/src/main/java/takagi/ru/monica/ui/components/TrashSettingsSheet.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/AppLauncherIconSettings.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsScreen.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSettingsV2Screen.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/AutofillSourceSettings.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/DefaultPasswordManagerSheet.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/DeveloperSettingsScreen.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/ExtensionsScreen.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/HyperOsCompatibilitySettingsScreen.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/HyperOsDiagnosticsScreen.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/HyperOsModuleSettingsScreen.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/InterfaceScaleSettingsContent.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/MasterPasswordLockingSettingsScreen.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/NearbyDeviceManagement.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/NearbySyncScreen.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/NearbySyncStatus.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/PageAdjustmentCustomizationScreen.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/PasswordFieldCustomizationScreen.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/PreviewFeaturesDialog.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/SettingsSearchCatalog.kt"
+  ],
+  "intentionalDifferences": [
+    "app/src/androidTest/java/takagi/ru/monica/ui/screens/SettingsSearchInstrumentedTest.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/QuickSetupScreen.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/Setting.kt",
+    "app/src/main/java/takagi/ru/monica/ui/screens/SyncBackupScreen.kt"
+  ]
+}

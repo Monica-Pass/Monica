@@ -1,0 +1,79 @@
+11-19 20:57:46.984   833  2964 F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x6c in tid 2964 (binder:833_E), pid 833 (system_server)
+11-19 20:57:47.673 63179 63179 F DEBUG   : *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+11-19 20:57:47.673 63179 63179 F DEBUG   : Build fingerprint: 'Samsung/a53x/a53x:15/V417IR/248:user/release-keys'
+11-19 20:57:47.673 63179 63179 F DEBUG   : Revision: '0'
+11-19 20:57:47.673 63179 63179 F DEBUG   : ABI: 'x86_64'
+11-19 20:57:47.673 63179 63179 F DEBUG   : Timestamp: 2026-11-19 20:57:47.091147985+0800
+11-19 20:57:47.673 63179 63179 F DEBUG   : Process uptime: 77149s
+11-19 20:57:47.673 63179 63179 F DEBUG   : Cmdline: system_server
+11-19 20:57:47.673 63179 63179 F DEBUG   : pid: 833, tid: 2964, name: binder:833_E  >>> system_server <<<
+11-19 20:57:47.673 63179 63179 F DEBUG   : uid: 1000
+11-19 20:57:47.673 63179 63179 F DEBUG   : signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x000000000000006c
+11-19 20:57:47.673 63179 63179 F DEBUG   : Cause: null pointer dereference
+11-19 20:57:47.673 63179 63179 F DEBUG   :     rax 000000004509b4e0  rbx 0000000000000000  rcx 000000004509b4e0  rdx 00000000029361a8
+11-19 20:57:47.673 63179 63179 F DEBUG   :     r8  0000000000000000  r9  0000000045107b58  r10 0000000000000004  r11 00000000021c3998
+11-19 20:57:47.673 63179 63179 F DEBUG   :     r12 00000000705c47c0  r13 00000000029361a8  r14 0000000045107b58  r15 0000000003a00f68
+11-19 20:57:47.673 63179 63179 F DEBUG   :     rdi 00007315c01bd7f0  rsi 0000000003a00f68
+11-19 20:57:47.673 63179 63179 F DEBUG   :     rbp 000000004509b4e0  rsp 000073156ec083e0  rip 000000004757162b
+11-19 20:57:47.673 63179 63179 F DEBUG   : 38 total frames
+11-19 20:57:47.673 63179 63179 F DEBUG   : backtrace:
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #00 pc 00000000022c262b  /memfd:jit-cache (deleted) (offset 0x2000000) (com.android.server.wm.TaskUtils.shouldIgnoreDesktopHomeOcclusion+91)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #01 pc 000000000043a65e  /system/framework/oat/x86_64/services.odex (com.android.server.wm.TaskFragment.getVisibility+2686) (BuildId: 71fba9baac02a28af1d0c3cab6f30519ab025e0f)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #02 pc 0000000002125772  /memfd:jit-cache (deleted) (offset 0x2000000) (com.android.server.wm.TaskFragment.shouldBeVisible+98)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #03 pc 000000000210cfff  /memfd:jit-cache (deleted) (offset 0x2000000) (com.android.server.wm.TaskFragment.isFocusableAndVisible+143)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #04 pc 0000000002144802  /memfd:jit-cache (deleted) (offset 0x2000000) (com.android.server.wm.RootWindowContainer.$r8$lambda$PwCcrdMj0pQ9-CVKpa3VvQFzEcQ+162)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #05 pc 00000000020ebba3  /memfd:jit-cache (deleted) (offset 0x2000000) (com.android.server.wm.RootWindowContainer$$ExternalSyntheticLambda24.accept+131)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #06 pc 00000000022afa4a  /memfd:jit-cache (deleted) (offset 0x2000000) (com.android.server.wm.Task.forAllRootTasks+186)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #07 pc 00000000003ffbbd  /system/framework/oat/x86_64/services.odex (com.android.server.wm.WindowContainer.forAllRootTasks+365) (BuildId: 71fba9baac02a28af1d0c3cab6f30519ab025e0f)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #08 pc 00000000003ffbbd  /system/framework/oat/x86_64/services.odex (com.android.server.wm.WindowContainer.forAllRootTasks+365) (BuildId: 71fba9baac02a28af1d0c3cab6f30519ab025e0f)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #09 pc 00000000003ffbbd  /system/framework/oat/x86_64/services.odex (com.android.server.wm.WindowContainer.forAllRootTasks+365) (BuildId: 71fba9baac02a28af1d0c3cab6f30519ab025e0f)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #10 pc 00000000003ffbbd  /system/framework/oat/x86_64/services.odex (com.android.server.wm.WindowContainer.forAllRootTasks+365) (BuildId: 71fba9baac02a28af1d0c3cab6f30519ab025e0f)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #11 pc 00000000003ffbbd  /system/framework/oat/x86_64/services.odex (com.android.server.wm.WindowContainer.forAllRootTasks+365) (BuildId: 71fba9baac02a28af1d0c3cab6f30519ab025e0f)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #12 pc 00000000003ffbbd  /system/framework/oat/x86_64/services.odex (com.android.server.wm.WindowContainer.forAllRootTasks+365) (BuildId: 71fba9baac02a28af1d0c3cab6f30519ab025e0f)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #13 pc 0000000002192427  /memfd:jit-cache (deleted) (offset 0x2000000) (com.android.server.wm.WindowContainer.forAllRootTasks+103)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #14 pc 00000000020cb08c  /memfd:jit-cache (deleted) (offset 0x2000000) (com.android.server.wm.RootWindowContainer.resumeFocusedTasksTopActivities+668)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #15 pc 00000000002097ed  /apex/com.android.art/lib64/libart.so (nterp_helper+3837) (BuildId: 7f5fe1677703f25adf853dccb65f9da7)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #16 pc 00000000000fc6d8  /system/framework/services.jar (com.android.server.wm.RootWindowContainer.resumeFocusedTasksTopActivities+4)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #17 pc 0000000002162d04  /memfd:jit-cache (deleted) (offset 0x2000000) (com.android.server.wm.ActivityRecord.destroyed+676)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #18 pc 00000000021814a6  /memfd:jit-cache (deleted) (offset 0x2000000) (com.android.server.wm.ActivityClientController.activityDestroyed+358)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #19 pc 00000000002097ed  /apex/com.android.art/lib64/libart.so (nterp_helper+3837) (BuildId: 7f5fe1677703f25adf853dccb65f9da7)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #20 pc 00000000002367b0  /system/framework/framework.jar (android.app.IActivityClientController$Stub.onTransact+2664)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #21 pc 000000000217ab2d  /memfd:jit-cache (deleted) (offset 0x2000000) (com.android.server.wm.ActivityClientController.onTransact+77)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #22 pc 00000000004af08e  /system/framework/x86_64/boot-framework.oat (android.os.Binder.execTransactInternal+846) (BuildId: 11dbde63d95087318fc8df445b6e6abd5f3a9f5b)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #23 pc 00000000004aeb83  /system/framework/x86_64/boot-framework.oat (android.os.Binder.execTransact+371) (BuildId: 11dbde63d95087318fc8df445b6e6abd5f3a9f5b)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #24 pc 0000000000211dd4  /apex/com.android.art/lib64/libart.so (art_quick_invoke_stub+756) (BuildId: 7f5fe1677703f25adf853dccb65f9da7)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #25 pc 00000000005557e5  /apex/com.android.art/lib64/libart.so (art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*)+181) (BuildId: 7f5fe1677703f25adf853dccb65f9da7)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #26 pc 0000000000967748  /apex/com.android.art/lib64/libart.so (art::JValue art::InvokeVirtualOrInterfaceWithVarArgs<_jmethodID*>(art::ScopedObjectAccessAlreadyRunnable const&, _jobject*, _jmethodID*, __va_list_tag*)+584) (BuildId: 7f5fe1677703f25adf853dccb65f9da7)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #27 pc 0000000000779194  /apex/com.android.art/lib64/libart.so (art::JNI<false>::CallBooleanMethodV(_JNIEnv*, _jobject*, _jmethodID*, __va_list_tag*)+660) (BuildId: 7f5fe1677703f25adf853dccb65f9da7)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #28 pc 00000000000ff8fb  /system/lib64/libandroid_runtime.so (_JNIEnv::CallBooleanMethod(_jobject*, _jmethodID*, ...)+139) (BuildId: a474bd0505570f142640e8a0ed34f4c9)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #29 pc 00000000001b96a2  /system/lib64/libandroid_runtime.so (JavaBBinder::onTransact(unsigned int, android::Parcel const&, android::Parcel*, unsigned int)+162) (BuildId: a474bd0505570f142640e8a0ed34f4c9)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #30 pc 0000000000044feb  /system/lib64/libbinder.so (android::IPCThreadState::executeCommand(int)+1371) (BuildId: d957cf25ab0e6f29f8295e128d1ac78c)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #31 pc 000000000005bff2  /system/lib64/libbinder.so (android::IPCThreadState::joinThreadPool(bool)+498) (BuildId: d957cf25ab0e6f29f8295e128d1ac78c)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #32 pc 000000000005bdec  /system/lib64/libbinder.so (android::PoolThread::threadLoop()+28) (BuildId: d957cf25ab0e6f29f8295e128d1ac78c)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #33 pc 00000000000142ff  /system/lib64/libutils.so (android::Thread::_threadLoop(void*)+159) (BuildId: 58a35a0b61eb69f752a1b3d414792c61)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #34 pc 00000000001151ee  /system/lib64/libandroid_runtime.so (android::AndroidRuntime::javaThreadShell(void*)+142) (BuildId: a474bd0505570f142640e8a0ed34f4c9)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #35 pc 00000000000176af  /system/lib64/libutils.so (libutil_thread_trampoline(void*) (.__uniq.226528677032898775202282855395389835431)+15) (BuildId: 58a35a0b61eb69f752a1b3d414792c61)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #36 pc 000000000006788f  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*)+63) (BuildId: 52bc34193ef6f6311bbb44f2305d1b1d)
+11-19 20:57:47.673 63179 63179 F DEBUG   :       #37 pc 000000000005a80d  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+61) (BuildId: 52bc34193ef6f6311bbb44f2305d1b1d)
+11-19 20:57:48.801 62519 62519 F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x76b21dadad80 in tid 62519 (Shutdown thread), pid 62519 (Shutdown thread)
+11-19 20:57:48.876 63253 63253 F DEBUG   : *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+11-19 20:57:48.876 63253 63253 F DEBUG   : Build fingerprint: 'Samsung/a53x/a53x:15/V417IR/248:user/release-keys'
+11-19 20:57:48.876 63253 63253 F DEBUG   : Revision: '0'
+11-19 20:57:48.876 63253 63253 F DEBUG   : ABI: 'x86_64'
+11-19 20:57:48.876 63253 63253 F DEBUG   : Timestamp: 2026-11-19 20:57:48.821577604+0800
+11-19 20:57:48.876 63253 63253 F DEBUG   : Process uptime: 57s
+11-19 20:57:48.876 63253 63253 F DEBUG   : Cmdline: app_process /system/bin com.android.commands.am.Am instrument --user 0 -w -r -e class takagi.ru.monica.ui.screens.CustomizationChildrenInstrumentedTest,takagi.ru.monica.ui.screens.AutofillSettingsM3eTest,takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest,takagi.ru.monica.ui.screens.SettingsSubpagesInstrumentedTest#customizationPreservesThreePersistentTogglesAndFiveDestinations,takagi.ru.monica.ui.screens.SettingsSubpagesInstrumentedTest#customizationSearchLocatesWalletWithoutChangingPreferenceAtLargeFont,takagi.ru.monica.ui.components.DirectReorderDeviceTest#customizationWholeRowDragKeepsSwitchAndAccessibleActions takagi.ru.monica.settingssearchfixautofd20261119.test/androidx.test.runner.AndroidJUnitRunner
+11-19 20:57:48.876 63253 63253 F DEBUG   : pid: 62519, tid: 62519, name: Shutdown thread  >>> app_process <<<
+11-19 20:57:48.876 63253 63253 F DEBUG   : uid: 2000
+11-19 20:57:48.876 63253 63253 F DEBUG   : signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x000076b21dadad80
+11-19 20:57:48.876 63253 63253 F DEBUG   :     rax 0000000000000000  rbx 000076b4e62f689c  rcx 0000000000000001  rdx 0000000000000002
+11-19 20:57:48.876 63253 63253 F DEBUG   :     r8  0000000000000338  r9  0000000000338010  r10 0000000000000000  r11 0000000000000206
+11-19 20:57:48.876 63253 63253 F DEBUG   :     r12 0000000000001000  r13 00000000000005b7  r14 000076b21dadad80  r15 0000000000008928
+11-19 20:57:48.876 63253 63253 F DEBUG   :     rdi 000076b21dea1c08  rsi 0000000000001000
+11-19 20:57:48.876 63253 63253 F DEBUG   :     rbp 00007fffbc777e30  rsp 00007fffbc777dc8  rip 000076b21dadad80
+11-19 20:57:48.876 63253 63253 F DEBUG   : 4 total frames
+11-19 20:57:48.876 63253 63253 F DEBUG   : backtrace:
+11-19 20:57:48.876 63253 63253 F DEBUG   :       #00 pc 000076b21dadad80  <unknown>
+11-19 20:57:48.876 63253 63253 F DEBUG   :       #01 pc 000000000005846f  /apex/com.android.runtime/lib64/bionic/libc.so (__cxa_finalize+287) (BuildId: 52bc34193ef6f6311bbb44f2305d1b1d)
+11-19 20:57:48.876 63253 63253 F DEBUG   :       #02 pc 000000000005c83f  /apex/com.android.runtime/lib64/bionic/libc.so (exit+31) (BuildId: 52bc34193ef6f6311bbb44f2305d1b1d)
+11-19 20:57:48.876 63253 63253 F DEBUG   :       #03 pc 00000000000520dc  /apex/com.android.runtime/lib64/bionic/libc.so (__libc_init+124) (BuildId: 52bc34193ef6f6311bbb44f2305d1b1d)

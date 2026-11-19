@@ -1,0 +1,107 @@
+{
+  "date": "2026-11-19",
+  "version": "1.0.329",
+  "editions": {
+    "main": {
+      "label": "main03",
+      "buildSeconds": 114.663,
+      "jvm": {
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "deviceTests": 14,
+      "runnerSeconds": 43.967,
+      "apks": [
+        {
+          "file": "Monica-Android-x86_64-1.0.329-26111912-89.APK",
+          "sha256": "8bb19a9355730563e91da12856b19dfa890dfff2c4b13f605b6eb0447cd745e6"
+        },
+        {
+          "file": "app-debug-androidTest.apk",
+          "sha256": "13d6065fae3d2dc90d547e3cfeb3135e48d3faad3e5b725b3c82f5d7824733c5"
+        }
+      ]
+    },
+    "fd": {
+      "label": "fd02",
+      "buildSeconds": 45.562,
+      "jvm": {
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "deviceTests": 14,
+      "runnerSeconds": 45.783,
+      "apks": [
+        {
+          "file": "Monica-Android-x86_64-1.0.329.apk",
+          "sha256": "cfbf91393fae3f77e9c129c122f5e2b88b365a6cb2d1427e6b5a5935b90ff458"
+        },
+        {
+          "file": "app-debug-androidTest.apk",
+          "sha256": "5d009789411bb247d6dfd0eca39dc68dacaed1333c2e126b70c2533186e022d0"
+        }
+      ],
+      "jvmExecutedIn": "fd01; fd02 reuses unchanged JVM inputs/results"
+    }
+  },
+  "negativeControl": {
+    "tests": 2,
+    "missingHyperOsFailures": 2,
+    "runnerSeconds": 4.074
+  },
+  "sharedSources": {
+    "app/src/main/java/takagi/ru/monica/ui/screens/SettingsSearchCatalog.kt": "74c4b71486759df61f5e6510b8ed2adb0b89d937e072a12d8e591f1283c7a8d9",
+    "app/src/androidTest/java/takagi/ru/monica/ui/screens/SettingsSearchInstrumentedTest.kt": "7da23189e2dcc70ed8c5918a44e17ae00d681e4747ed07f31780438bb2ebee14"
+  },
+  "metadata": {
+    "normalMetadataCheck": {
+      "exit": 0,
+      "output": "Metadata checked: `v1.0.329` / `takagi.ru.monica.fdroid`, versionCode `36`.\n\nStatic version fields, existing tags and F-Droid changelog files checked. No APK build, tag creation or Release publication was performed. F-Droid builds and publication are handled separately by F-Droid.\n\n"
+    },
+    "scriptsTests": {
+      "tests": 6,
+      "passed": 6,
+      "seconds": 0.081
+    },
+    "previousTagCheck": {
+      "command": "python scripts/check-fdroid-release.py --tag v1.0.329",
+      "exit": 1,
+      "output": "F-Droid release check failed: Finalize the unreleased notes under the new version heading before tagging.",
+      "reason": "Tag-readiness mode was inappropriate for this unreleased change; no tag or release was requested or created."
+    }
+  },
+  "cleanup": {
+    "results": {
+      "takagi.ru.monica.settingssearchfix20261119.test": "Success",
+      "takagi.ru.monica.settingssearchfix20261119": "Success",
+      "takagi.ru.monica.settingssearchfixfd20261119.test": "Success",
+      "takagi.ru.monica.settingssearchfixfd20261119": "Success"
+    },
+    "usersUnchanged": true,
+    "packagesUnchanged": true,
+    "currentUser": "0",
+    "preexistingMuMuLeftRunning": true
+  },
+  "preservedFailures": {
+    "main01": "Search result and protected-entry assertions reached the real confirmation dialog. Cancel lookup expected Chinese but the dialog-owned cancel label is English in the localized-context test harness. A later developer-route lifecycle crash interrupted the remaining batch.",
+    "probe01": "Dialog semantics confirms Chinese passed-in title and English Cancel/Password labels. The second test stopped because setMasterPassword refuses to overwrite the previously created synthetic password.",
+    "fixtureRepairs": [
+      "Use host Activity resource for the dialog-owned Cancel label.",
+      "Preserve ActivityResultRegistryOwner across the test-only localized Context provider, as the existing HyperOsDeveloperSettingsUiTest already does.",
+      "Reuse and verify an existing task-owned synthetic master password instead of trying to overwrite it.",
+      "Use the Compose v2 test rule so asynchronous verification resumes through scheduled UI test effects instead of the deprecated unconfined test dispatcher. All original assertions retained."
+    ],
+    "productionChanges": "None after the catalog fix. Authentication, navigation and lifecycle production files remain unchanged.",
+    "main02": "Cancel now passed. Captured original exception proves the deprecated Compose test rule resumed the verification callback on the bounded worker thread; NavController required the main thread. Teardown then produced the secondary lifecycle crash. Migrated this test class to the already-used Compose v2 rule (StandardTestDispatcher); no production callback or dispatcher changed."
+  },
+  "limits": [
+    "MuMu API35 x86_64, preexisting user 0, isolated Debug package names and synthetic password.",
+    "Actual SettingsScreen and DeveloperSettingsScreen navigation in a test NavHost, not full MainActivity navigation.",
+    "Search discovers the nested HyperOS page via its protected parent entry; it does not deep-link past identity verification.",
+    "No HyperOS physical hardware, compatibility-hook functionality, foldable adaptation or R8 Release testing."
+  ]
+}

@@ -2,6 +2,7 @@ package takagi.ru.monica.ui.vaultv2
 
 import takagi.ru.monica.data.Category
 import takagi.ru.monica.data.PasswordEntry
+import takagi.ru.monica.data.passwordProjectKey
 import takagi.ru.monica.data.PasswordQuickAccessRecord
 import takagi.ru.monica.data.VaultOverviewConfig
 import takagi.ru.monica.data.VaultOverviewUsage
@@ -41,6 +42,7 @@ internal data class VaultOverviewSnapshot(
     val sourceCounts: Map<String, Int> = emptyMap(),
     val folders: List<VaultOverviewFolder> = emptyList(),
     val archiveCount: Int = 0,
+    val searchItems: List<VaultV2Item> = items,
 )
 
 /** Read-only metadata shared by scope changes; no strings or item decoding cross JNI. */
@@ -52,7 +54,10 @@ internal class VaultOverviewPreparedData(
     val folders: List<VaultOverviewFolder>,
     val metadata: LongArray,
     val archiveCounts: IntArray,
+    val projectCounts: VaultOverviewProjectCounts? = null,
 )
+
+internal data class VaultOverviewProjectCounts(val sources: IntArray, val folders: IntArray)
 
 internal val overviewCardTypes = setOf(VaultV2ItemType.BANK_CARD, VaultV2ItemType.DOCUMENT, VaultV2ItemType.BILLING_ADDRESS)
 
@@ -223,6 +228,22 @@ internal fun prepareVaultOverview(
     }
     val folderList = folders.values.sortedWith(compareBy<VaultOverviewFolder> { it.sourceKey }.thenBy { it.name })
     val folderIndices = folderList.withIndex().associate { it.value.key to it.index }
+    // Retain every row in the ranker so pins and usage attached to a sibling ID still work.
+    // Only display counts and the resulting cards use project identity.
+    val projectCounts = if (collapseVaultV2PasswordProjects(allItems).size == allItems.size) null else {
+        val seenSources = Array(sources.size) { hashSetOf<String>() }
+        val seenFolders = Array(folderList.size) { hashSetOf<String>() }
+        allItems.forEachIndexed { index, item ->
+            val source = itemSources[index]
+            if (source in availableSources) {
+                val identity = item.projectDisplayIdentity()
+                sourceIndices[source]?.let { seenSources[it].add(identity) }
+                itemFolderKeys[index]?.let(folderIndices::get)?.let { seenFolders[it].add(identity) }
+            }
+        }
+        VaultOverviewProjectCounts(IntArray(sources.size) { seenSources[it].size },
+            IntArray(folderList.size) { seenFolders[it].size })
+    }
     val cardPins = config.pinnedCards.withIndex().associate { it.value to it.index }
     val itemPins = config.pinnedItems.withIndex().associate { it.value to it.index }
     val batch = LongArray(OVERVIEW_HEADER + allItems.size * OVERVIEW_ROW_WIDTH)
@@ -252,7 +273,7 @@ internal fun prepareVaultOverview(
         batch[offset + 7] = if (card) 1 else 0
     }
     val archiveCounts = IntArray(sources.size)
-    archivedPasswords.forEach {
+    archivedPasswords.distinctBy { it.passwordProjectKey() }.forEach {
         val source = vaultOverviewSourceKey(it.bitwardenVaultId, it.keepassDatabaseId, it.mdbxDatabaseId)
         if (source in availableSources) sourceIndices[source]?.let { index -> archiveCounts[index]++ }
     }
@@ -260,7 +281,7 @@ internal fun prepareVaultOverview(
         val source = vaultOverviewSourceKey(it.bitwardenVaultId, it.keepassDatabaseId, it.mdbxDatabaseId)
         if (source in availableSources) sourceIndices[source]?.let { index -> archiveCounts[index]++ }
     }
-    return VaultOverviewPreparedData(allItems, sources, availableSources, sourceIndices, folderList, batch, archiveCounts)
+    return VaultOverviewPreparedData(allItems, sources, availableSources, sourceIndices, folderList, batch, archiveCounts, projectCounts)
 }
 
 internal fun projectVaultOverview(
@@ -275,20 +296,27 @@ internal fun projectVaultOverview(
     val batch = if (selected == -1) prepared.metadata else prepared.metadata.copyOf().apply { this[3] = selected.toLong() }
     val result = aggregate(batch)
     fun IntArray.rows(): List<VaultV2Item> = map(prepared.items::get)
+    val visibleProjects = collapseVaultV2PasswordProjects(result.visible.rows())
     return VaultOverviewSnapshot(
-        scope = scope, accessibleSources = prepared.accessibleSources, items = result.visible.rows(),
+        scope = scope, accessibleSources = prepared.accessibleSources, items = visibleProjects,
         recentItems = recentVaultOverviewItems(result.visible.rows()),
-        cards = result.cards.rows(), frequentItems = result.items.rows(), favorites = result.favorites.rows(),
-        typeCounts = VaultV2ItemType.entries.associateWith { result.typeCounts[it.ordinal] },
-        sourceCounts = prepared.sources.mapIndexed { index, source -> source.key to result.sourceCounts[index] }.toMap(),
+        cards = result.cards.rows(), frequentItems = collapseVaultV2PasswordProjects(result.items.rows()),
+        favorites = collapseVaultV2PasswordProjects(result.favorites.rows()),
+        typeCounts = VaultV2ItemType.entries.associateWith { type -> visibleProjects.count { it.type == type } },
+        sourceCounts = prepared.sources.mapIndexed { index, source ->
+            source.key to (prepared.projectCounts?.sources ?: result.sourceCounts)[index]
+        }.toMap(),
         folders = prepared.folders.mapIndexedNotNull { index, folder ->
-            if (scope == "all" || folder.sourceKey == scope) folder.copy(count = result.folderCounts[index]) else null
+            if (scope == "all" || folder.sourceKey == scope)
+                folder.copy(count = (prepared.projectCounts?.folders ?: result.folderCounts)[index]) else null
         },
         archiveCount = if (selected == -1) prepared.archiveCounts.sum() else prepared.archiveCounts[selected],
+        searchItems = result.visible.rows(),
     )
 }
 
 /** Uses only already scoped, unlocked and non-archived rows. Does not mutate entry dates. */
 internal fun recentVaultOverviewItems(items: List<VaultV2Item>): List<VaultV2Item> =
-    sortVaultV2Items(items.filter { it.sortTimestamp(takagi.ru.monica.data.VaultListSort.RECENT_DESC) != null },
-        takagi.ru.monica.data.VaultListSort.RECENT_DESC).take(OVERVIEW_PREVIEW_LIMIT)
+    collapseVaultV2PasswordProjects(sortVaultV2Items(
+        items.filter { it.sortTimestamp(takagi.ru.monica.data.VaultListSort.RECENT_DESC) != null },
+        takagi.ru.monica.data.VaultListSort.RECENT_DESC)).take(OVERVIEW_PREVIEW_LIMIT)

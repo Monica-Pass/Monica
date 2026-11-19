@@ -51,19 +51,18 @@ fun PasswordFieldCustomizationScreen(
     var editingPresetField by remember { mutableStateOf<PresetCustomField?>(null) }
 
     CustomizationPage(stringResource(R.string.password_field_customization_title), onNavigateBack) {
-        CustomizationSection(stringResource(R.string.password_field_customization_system_fields)) {
+        CustomizationSection(Setting.PASSWORD_FIELD_CUSTOMIZATION_SYSTEM_FIELDS) {
             CustomizationToggle(
                 icon = Icons.Default.AlternateEmail,
-                title = stringResource(R.string.separate_username_account_title),
-                subtitle = stringResource(R.string.separate_username_account_desc),
+                setting = Setting.SEPARATE_USERNAME_ACCOUNT_TITLE,
                 checked = settings.separateUsernameAccountEnabled,
                 onCheckedChange = {
                     viewModel.updateSeparateUsernameAccountEnabled(it)
                 }, index = 0, count = 1)
 
         }
-        CustomizationSection(stringResource(R.string.password_field_customization_preset_section_title),
-            stringResource(R.string.password_field_customization_preset_section_subtitle)) {
+        CustomizationSection(Setting.PASSWORD_FIELD_CUSTOMIZATION_PRESET_SECTION_TITLE,
+            Setting.PASSWORD_FIELD_CUSTOMIZATION_PRESET_SECTION_TITLE.summary()) {
             Text(stringResource(R.string.password_field_customization_preset_notice),
                 style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(16.dp))
             FilledTonalButton(onClick = { showAddPresetDialog = true }, modifier = Modifier.fillMaxWidth()) {
@@ -90,10 +89,10 @@ fun PasswordFieldCustomizationScreen(
         if (presetFields.isNotEmpty()) {
             var confirmClear by remember { mutableStateOf(false) }
             TextButton(onClick = { confirmClear = true }, modifier = Modifier.fillMaxWidth()) {
-                Text(stringResource(R.string.password_field_customization_clear_preset_fields), color = MaterialTheme.colorScheme.error)
+                Text(Setting.PASSWORD_FIELD_CUSTOMIZATION_CLEAR_PRESET_FIELDS.title(), color = MaterialTheme.colorScheme.error)
             }
             if (confirmClear) AlertDialog(onDismissRequest = { confirmClear = false },
-                title = { Text(stringResource(R.string.password_field_customization_clear_preset_fields)) },
+                title = { Text(Setting.PASSWORD_FIELD_CUSTOMIZATION_CLEAR_PRESET_FIELDS.title()) },
                 text = { Text(stringResource(R.string.customization_clear_presets_message)) },
                 confirmButton = { TextButton(onClick = { viewModel.clearAllPresetCustomFields(); confirmClear = false }) { Text(stringResource(R.string.delete)) } },
                 dismissButton = { TextButton(onClick = { confirmClear = false }) { Text(stringResource(R.string.cancel)) } })

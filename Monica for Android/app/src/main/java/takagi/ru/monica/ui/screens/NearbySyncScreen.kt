@@ -51,6 +51,7 @@ import takagi.ru.monica.ui.components.NearbyPasskeyPreflightDialog
 import takagi.ru.monica.ui.components.NearbyPasskeyRestrictionsDialog
 import takagi.ru.monica.ui.components.SettingsPanelGroup
 import takagi.ru.monica.ui.components.SettingsPanelRow
+import takagi.ru.monica.ui.components.SettingsContentRow
 import java.text.DateFormat
 import java.util.Date
 
@@ -309,7 +310,7 @@ internal fun NearbySyncContent(state: DeviceSyncState, actions: NearbySyncAction
                     Text(stringResource(R.string.device_sync_direction), style = MaterialTheme.typography.headlineSmall)
                     Text(stringResource(R.string.device_sync_direction_hint))
                     SettingsPanelGroup("") { DeviceSyncMode.entries.forEach { mode ->
-                        SettingsPanelRow(Icons.Default.SyncAlt, modeName(mode), "", onClick = { actions.mode(mode); sheet = null },
+                        SettingsContentRow(Icons.Default.SyncAlt, modeName(mode), "", onClick = { actions.mode(mode); sheet = null },
                             enabled = !state.pairing, trailing = { RadioButton(state.mode == mode, onClick = null) })
                     } }
                 }
@@ -317,10 +318,10 @@ internal fun NearbySyncContent(state: DeviceSyncState, actions: NearbySyncAction
                     Text(stringResource(R.string.nearby_database), style = MaterialTheme.typography.headlineSmall)
                     Text(stringResource(R.string.nearby_database_hint))
                     SettingsPanelGroup("") {
-                        SettingsPanelRow(Icons.Default.Storage, stringResource(R.string.nearby_local), stringResource(R.string.nearby_local_hint),
+                        SettingsPanelRow(Icons.Default.Storage, Setting.NEARBY_LOCAL, Setting.NEARBY_LOCAL.summary(),
                             onClick = { actions.database(null); sheet = null }, trailing = { RadioButton(state.databaseId == null, onClick = null) })
                         databases.forEach { database ->
-                            SettingsPanelRow(Icons.Default.Storage, database.name, "MDBX · ${database.tigaModeEnum.label}",
+                            SettingsContentRow(Icons.Default.Storage, database.name, "MDBX · ${database.tigaModeEnum.label}",
                                 onClick = { actions.database(database.id); sheet = null }, trailing = { RadioButton(state.databaseId == database.id, onClick = null) })
                         }
                     }
@@ -331,10 +332,10 @@ internal fun NearbySyncContent(state: DeviceSyncState, actions: NearbySyncAction
                     Text(stringResource(R.string.device_sync_frequency_hint))
                     SettingsPanelGroup("") {
                         listOf(0, 60, 300, 900, 1800).forEach { seconds ->
-                            SettingsPanelRow(Icons.Default.Schedule, frequencyName(seconds), "", onClick = { actions.interval(seconds); sheet = null },
+                            SettingsContentRow(Icons.Default.Schedule, frequencyName(seconds), "", onClick = { actions.interval(seconds); sheet = null },
                                 trailing = { RadioButton(state.intervalSeconds == seconds, onClick = null) })
                         }
-                        SettingsPanelRow(Icons.Default.Edit, stringResource(R.string.device_sync_custom), "", onClick = {
+                        SettingsPanelRow(Icons.Default.Edit, Setting.DEVICE_SYNC_CUSTOM, "", onClick = {
                             minutes = (state.intervalSeconds / 60).coerceAtLeast(1).toString(); custom = true
                         })
                     }
@@ -355,13 +356,13 @@ internal fun NearbySyncContent(state: DeviceSyncState, actions: NearbySyncAction
             Text(stringResource(R.string.nearby_intro), Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
                 style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             SettingsPanelGroup(stringResource(R.string.nearby_settings)) {
-                SettingsPanelRow(Icons.Default.Storage, stringResource(R.string.nearby_database), databaseName,
+                SettingsPanelRow(Icons.Default.Storage, Setting.NEARBY_DATABASE, databaseName,
                     onClick = { sheet = "database" }, enabled = !state.pairing && !state.manualSync)
-                SettingsPanelRow(Icons.Default.Sync, stringResource(R.string.device_sync_automatic),
+                SettingsPanelRow(Icons.Default.Sync, Setting.DEVICE_SYNC_AUTOMATIC,
                     stringResource(if (state.enabled) R.string.nearby_automatic_hint else R.string.nearby_manual_hint),
                     checked = state.enabled, onCheckedChange = actions.enabled)
-                SettingsPanelRow(Icons.Default.SyncAlt, stringResource(R.string.device_sync_direction), modeName(state.mode), onClick = { sheet = "mode" }, enabled = !state.pairing && !state.manualSync)
-                SettingsPanelRow(Icons.Default.Schedule, stringResource(R.string.nearby_auto_frequency),
+                SettingsPanelRow(Icons.Default.SyncAlt, Setting.DEVICE_SYNC_DIRECTION, modeName(state.mode), onClick = { sheet = "mode" }, enabled = !state.pairing && !state.manualSync)
+                SettingsPanelRow(Icons.Default.Schedule, Setting.NEARBY_AUTO_FREQUENCY,
                     if (state.enabled) frequencyName(state.intervalSeconds) else stringResource(R.string.nearby_frequency_disabled),
                     onClick = { sheet = "frequency" }, enabled = state.enabled)
             }
@@ -369,21 +370,21 @@ internal fun NearbySyncContent(state: DeviceSyncState, actions: NearbySyncAction
                 actions.forgetDevices?.invoke(ids) ?: ids.forEach(actions.forget)
             }
             SettingsPanelGroup(stringResource(R.string.nearby_add_device)) {
-                SettingsPanelRow(Icons.Default.QrCode2, stringResource(R.string.device_sync_show_qr), stringResource(R.string.nearby_generate_hint),
+                SettingsPanelRow(Icons.Default.QrCode2, Setting.DEVICE_SYNC_SHOW_QR, Setting.DEVICE_SYNC_SHOW_QR.summary(),
                     onClick = { sheet = "qr"; actions.showQr() }, enabled = !state.pairing)
-                SettingsPanelRow(Icons.Default.QrCodeScanner, stringResource(R.string.lan_scan), stringResource(R.string.nearby_scan_subtitle),
+                SettingsPanelRow(Icons.Default.QrCodeScanner, Setting.LAN_SCAN, Setting.LAN_SCAN.summary(),
                     onClick = actions.scan, enabled = !state.pairing)
-                SettingsPanelRow(Icons.Default.Link, stringResource(R.string.device_sync_use_link), stringResource(R.string.nearby_paste_hint),
+                SettingsPanelRow(Icons.Default.Link, Setting.DEVICE_SYNC_USE_LINK, Setting.DEVICE_SYNC_USE_LINK.summary(),
                     onClick = { sheet = "link" }, enabled = !state.pairing)
                 actions.createHotspot?.let { create ->
-                    SettingsPanelRow(Icons.Default.WifiTethering, stringResource(if (hotspot.hosting) R.string.nearby_hotspot_active else R.string.nearby_hotspot_create),
-                        stringResource(R.string.nearby_hotspot_create_hint), onClick = {
+                    SettingsContentRow(Icons.Default.WifiTethering, stringResource(if (hotspot.hosting) R.string.nearby_hotspot_active else Setting.NEARBY_HOTSPOT_CREATE.titleRes),
+                        Setting.NEARBY_HOTSPOT_CREATE.summary(), onClick = {
                             sheet = "hotspot"; if (!hotspot.hosting) create()
                         }, enabled = hotspot.hosting || !state.pairing && !state.manualSync)
                 }
             }
             SettingsPanelGroup("") {
-                SettingsPanelRow(Icons.Default.Info, stringResource(R.string.nearby_details), nearbyStageLabel(context, state), onClick = { sheet = "details" })
+                SettingsPanelRow(Icons.Default.Info, Setting.NEARBY_DETAILS, nearbyStageLabel(context, state), onClick = { sheet = "details" })
             }
             Spacer(Modifier.height(20.dp))
         }

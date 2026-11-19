@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import takagi.ru.monica.ui.screens.Setting
 import takagi.ru.monica.R
 
 @Composable
@@ -33,5 +34,5 @@ fun HyperOsSaveOverlayPermission(enabled: Boolean) {
         val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:${context.packageName}"))
         try { context.startActivity(intent) }
         catch (_: Exception) { Toast.makeText(context, R.string.autofill_save_overlay_permission_required, Toast.LENGTH_LONG).show() }
-    }) { Text(stringResource(R.string.autofill_save_overlay_permission_action)) }
+    }) { Text(Setting.AUTOFILL_SAVE_OVERLAY_PERMISSION_ACTION.title()) }
 }

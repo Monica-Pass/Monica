@@ -29,6 +29,7 @@ import takagi.ru.monica.R
 import takagi.ru.monica.lansync.*
 import takagi.ru.monica.ui.components.SettingsPanelGroup
 import takagi.ru.monica.ui.components.SettingsPanelRow
+import takagi.ru.monica.ui.components.SettingsContentRow
 import java.text.DateFormat
 import java.util.Date
 
@@ -268,7 +269,7 @@ internal fun ColumnScope.NearbySyncDetails(state: DeviceSyncState, database: Str
     val diagnostics = nearbyDiagnostics(context, state, database, stringResource(network))
     Button({ copy(diagnostics) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.device_sync_copy_diagnostics)) }
     SettingsPanelGroup(stringResource(R.string.device_sync_passkey_title)) {
-        SettingsPanelRow(Icons.Default.Info, stringResource(R.string.nearby_passkey_view),
+        SettingsPanelRow(Icons.Default.Info, Setting.NEARBY_PASSKEY_VIEW,
             stringResource(when {
                 state.checkingPasskeys -> R.string.nearby_passkey_checking
                 state.passkeyDiagnosticFailed -> R.string.nearby_passkey_check_failed
@@ -277,7 +278,7 @@ internal fun ColumnScope.NearbySyncDetails(state: DeviceSyncState, database: Str
                 else -> R.string.nearby_passkey_count
             }, state.passkeyDiagnosticIssues?.size ?: 0),
             enabled = !state.checkingPasskeys && !state.passkeyDiagnosticIssues.isNullOrEmpty(), onClick = viewPasskeys)
-        SettingsPanelRow(Icons.Default.Info, stringResource(R.string.nearby_passkey_prompt),
+        SettingsPanelRow(Icons.Default.Info, Setting.NEARBY_PASSKEY_PROMPT,
             stringResource(if (state.passkeyNoticeSuppressed) R.string.nearby_passkey_prompt_off else R.string.nearby_passkey_prompt_on),
             checked = !state.passkeyNoticeSuppressed, onCheckedChange = { suppressPasskeyNotice(!it) })
     }
@@ -287,7 +288,7 @@ internal fun ColumnScope.NearbySyncDetails(state: DeviceSyncState, database: Str
     }
     SettingsPanelGroup("") {
         nearbyDiagnosticRows(context, state, database, stringResource(network)).forEach { (label, value) ->
-            SettingsPanelRow(Icons.Default.Info, label, value)
+            SettingsContentRow(Icons.Default.Info, label, value)
         }
     }
     Text(stringResource(R.string.nearby_network_note), style = MaterialTheme.typography.bodySmall)

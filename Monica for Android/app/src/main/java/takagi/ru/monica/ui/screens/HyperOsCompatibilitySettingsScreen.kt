@@ -103,26 +103,26 @@ internal fun HyperOsCompatibilitySettingsContent(
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
             SettingsPanelGroup("") {
                 SettingsPanelRow(Icons.Default.FactCheck,
-                    stringResource(R.string.hyperos_diagnostics_title),
-                    stringResource(R.string.hyperos_diagnostics_note),
+                    Setting.HYPEROS_DIAGNOSTICS_TITLE,
+                    Setting.HYPEROS_DIAGNOSTICS_TITLE.summary(),
                     onClick = onShowDiagnostics,
                     modifier = Modifier.testTag("hyperos_diagnostics_entry"))
                 SettingsPanelRow(Icons.Default.Extension,
-                    stringResource(R.string.hyperos_module_title),
-                    stringResource(R.string.hyperos_module_entry_note),
+                    Setting.HYPEROS_MODULE_TITLE,
+                    Setting.HYPEROS_MODULE_TITLE.summary(),
                     onClick = onShowModule,
                     modifier = Modifier.testTag("hyperos_module_entry"))
             }
             SettingsPanelGroup("") {
                 SettingsPanelRow(Icons.Default.Key,
-                    stringResource(R.string.default_manager_title),
-                    stringResource(R.string.default_manager_entry_hint),
+                    Setting.DEFAULT_MANAGER_TITLE,
+                    Setting.DEFAULT_MANAGER_TITLE.summary(),
                     onClick = onShowDefaultManager,
                     modifier = Modifier.testTag("hyperos_default_manager_entry"))
                 Box(Modifier.testTag("hyperos_save_compatibility_setting")) {
                     SettingsPanelRow(Icons.Default.Save,
-                        stringResource(R.string.autofill_hyperos_save_compatibility),
-                        stringResource(R.string.autofill_hyperos_save_compatibility_desc),
+                        Setting.AUTOFILL_HYPEROS_SAVE_COMPATIBILITY,
+                        Setting.AUTOFILL_HYPEROS_SAVE_COMPATIBILITY.summary(),
                         checked = saveCompatibility,
                         onCheckedChange = onSaveCompatibilityChanged)
                 }
@@ -130,8 +130,8 @@ internal fun HyperOsCompatibilitySettingsContent(
             overlayPermission()
             SettingsPanelGroup("") {
                 SettingsPanelRow(Icons.Default.Speed,
-                    stringResource(R.string.reduce_animations),
-                    stringResource(R.string.reduce_animations_description),
+                    Setting.REDUCE_ANIMATIONS,
+                    Setting.REDUCE_ANIMATIONS.summary(),
                     checked = reduceAnimations,
                     onCheckedChange = onReduceAnimationsChanged,
                     modifier = Modifier.testTag("hyperos_reduce_animations_setting"))

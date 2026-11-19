@@ -40,6 +40,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.Surface
 import takagi.ru.monica.ui.components.SettingsPanelGroup
 import takagi.ru.monica.ui.components.SettingsPanelRow
+import takagi.ru.monica.ui.components.SettingsContentRow
 import takagi.ru.monica.ui.components.SettingsSubpageTopBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -199,19 +200,18 @@ fun DeveloperSettingsScreen(
             .padding(horizontal = 12.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             SettingsPanelGroup(stringResource(R.string.developer_log_debugging)) {
                 SettingsPanelRow(Icons.Default.BugReport,
-                    stringResource(R.string.developer_view_logs),
-                    stringResource(R.string.developer_logs_entry_description), onClick = onNavigateToLogs)
+                    Setting.DEVELOPER_VIEW_LOGS,
+                    Setting.DEVELOPER_VIEW_LOGS.summary(), onClick = onNavigateToLogs)
                 SettingsPanelRow(Icons.Default.DeleteSweep,
-                    stringResource(R.string.developer_clear_log_buffer),
-                    stringResource(R.string.developer_clear_log_buffer_desc),
+                    Setting.DEVELOPER_CLEAR_LOG_BUFFER,
+                    Setting.DEVELOPER_CLEAR_LOG_BUFFER.summary(),
                     onClick = { confirmClearLogs = true }, enabled = !clearingLogs)
 
             }
             SettingsPanelGroup(stringResource(R.string.developer_verification_group)) {
                 SettingsPanelRow(
                     icon = Icons.Default.Lock,
-                    title = stringResource(R.string.developer_disable_password_verification),
-                    subtitle = stringResource(R.string.developer_disable_password_verification_desc),
+                    setting = Setting.DEVELOPER_DISABLE_PASSWORD_VERIFICATION,
                     checked = disablePasswordVerification,
                     onCheckedChange = { enabled ->
                         android.util.Log.d("DeveloperSettings", "Toggling password verification: $enabled")
@@ -238,16 +238,14 @@ fun DeveloperSettingsScreen(
 
                 SettingsPanelRow(
                     icon = Icons.Default.Lock,
-                    title = stringResource(R.string.default_manager_title),
-                    subtitle = stringResource(R.string.default_manager_entry_hint),
+                    setting = Setting.DEFAULT_MANAGER_TITLE,
                     onClick = { showDefaultManager = true }
                 )
             }
             SettingsPanelGroup(stringResource(R.string.developer_forensics_group)) {
                 SettingsPanelRow(
                     icon = Icons.Default.BugReport,
-                    title = stringResource(R.string.developer_bitwarden_forensics_toggle),
-                    subtitle = stringResource(R.string.developer_bitwarden_forensics_toggle_desc),
+                    setting = Setting.DEVELOPER_BITWARDEN_FORENSICS_TOGGLE,
                     checked = bitwardenSyncForensicsEnabled,
                     onCheckedChange = { enabled ->
                         bitwardenSyncForensicsEnabled = enabled
@@ -259,8 +257,7 @@ fun DeveloperSettingsScreen(
 
                 SettingsPanelRow(
                     icon = Icons.Default.WarningAmber,
-                    title = stringResource(R.string.developer_bitwarden_forensics_raw_toggle),
-                    subtitle = stringResource(R.string.developer_bitwarden_forensics_raw_toggle_desc),
+                    setting = Setting.DEVELOPER_BITWARDEN_FORENSICS_RAW_TOGGLE,
                     checked = bitwardenSyncForensicsRawCaptureEnabled,
                     onCheckedChange = { enabled ->
                         bitwardenSyncForensicsRawCaptureEnabled = enabled
@@ -282,7 +279,7 @@ fun DeveloperSettingsScreen(
 
                 SettingsPanelRow(
                     icon = Icons.Default.Share,
-                    title = stringResource(R.string.developer_bitwarden_forensics_dir),
+                    setting = Setting.DEVELOPER_BITWARDEN_FORENSICS_DIR,
                     subtitle = directorySubtitle,
                     onClick = {
                         val initialUri = bitwardenSyncForensicsDirectoryUri
@@ -294,8 +291,7 @@ fun DeveloperSettingsScreen(
 
                 SettingsPanelRow(
                     icon = Icons.Default.DeleteSweep,
-                    title = stringResource(R.string.developer_bitwarden_forensics_clear_dir),
-                    subtitle = stringResource(R.string.developer_bitwarden_forensics_clear_dir_desc),
+                    setting = Setting.DEVELOPER_BITWARDEN_FORENSICS_CLEAR_DIR,
                     onClick = {
                         bitwardenSyncForensicsDirectoryUri = null
                         scope.launch {
@@ -312,15 +308,13 @@ fun DeveloperSettingsScreen(
             SettingsPanelGroup(stringResource(R.string.developer_functions)) {
                 SettingsPanelRow(
                     icon = Icons.Default.Science,
-                    title = stringResource(R.string.hyperos_compatibility_title),
-                    subtitle = stringResource(R.string.hyperos_compatibility_subtitle),
+                    setting = Setting.HYPEROS_COMPATIBILITY_TITLE,
                     onClick = { showHyperOsCompatibility = true },
                     modifier = Modifier.testTag("developer_hyperos_compatibility_entry")
                 )
                 SettingsPanelRow(
                     icon = Icons.Default.AutoAwesome,
-                    title = stringResource(R.string.developer_launcher_name_use_pass),
-                    subtitle = stringResource(R.string.developer_launcher_name_use_pass_desc),
+                    setting = Setting.DEVELOPER_LAUNCHER_NAME_USE_PASS,
                     checked = appLauncherLabel == AppLauncherLabel.MONICA_PASS,
                     onCheckedChange = { enabled ->
                         val nextLabel = if (enabled) {
@@ -336,8 +330,7 @@ fun DeveloperSettingsScreen(
                 )
                 SettingsPanelRow(
                     icon = Icons.Default.Science,
-                    title = stringResource(R.string.mdbx_format_title),
-                    subtitle = stringResource(R.string.mdbx_format_description),
+                    setting = Setting.MDBX_FORMAT_TITLE,
                     onClick = onNavigateToMdbx
                 )
                 // 显示会话状态
@@ -345,9 +338,8 @@ fun DeveloperSettingsScreen(
                     val sessionUnlocked by SessionManager.isUnlocked.collectAsState()
                     val remainingMinutes = SessionManager.getRemainingMinutes()
 
-                    SettingsPanelRow(
-                        icon = if (sessionUnlocked) Icons.Default.LockOpen else Icons.Default.Lock,
-                        title = stringResource(R.string.developer_session_status),
+                    SettingsContentRow(
+                        icon = if (sessionUnlocked) Icons.Default.LockOpen else Icons.Default.Lock, title = stringResource(R.string.developer_session_status),
                         subtitle = if (sessionUnlocked) {
                             stringResource(R.string.developer_session_unlocked_remaining, remainingMinutes)
                         } else {

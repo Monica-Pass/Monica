@@ -82,11 +82,11 @@ internal fun PreviewFeaturesDialog(
                     Spacer(modifier = Modifier.width(12.dp))
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = stringResource(R.string.hide_fab_on_scroll_title),
+                            text = Setting.HIDE_FAB_ON_SCROLL_TITLE.title(),
                             style = MaterialTheme.typography.bodyLarge
                         )
                         Text(
-                            text = stringResource(R.string.hide_fab_on_scroll_description),
+                            text = Setting.HIDE_FAB_ON_SCROLL_TITLE.summary(),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -119,11 +119,11 @@ internal fun PreviewFeaturesDialog(
                     Spacer(modifier = Modifier.width(12.dp))
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = stringResource(R.string.bitwarden_bottom_status_bar_title),
+                            text = Setting.BITWARDEN_BOTTOM_STATUS_BAR_TITLE.title(),
                             style = MaterialTheme.typography.bodyLarge
                         )
                         Text(
-                            text = stringResource(R.string.bitwarden_bottom_status_bar_description),
+                            text = Setting.BITWARDEN_BOTTOM_STATUS_BAR_TITLE.summary(),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -152,11 +152,11 @@ internal fun PreviewFeaturesDialog(
                     Spacer(modifier = Modifier.width(12.dp))
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = stringResource(R.string.reduce_animations),
+                            text = Setting.REDUCE_ANIMATIONS.title(),
                             style = MaterialTheme.typography.bodyLarge
                         )
                         Text(
-                            text = stringResource(R.string.reduce_animations_description),
+                            text = Setting.REDUCE_ANIMATIONS.summary(),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )

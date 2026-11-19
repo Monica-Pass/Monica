@@ -54,27 +54,27 @@ internal fun AutofillSourceSettings(
     }
     SettingsPanelGroup("") {
             SettingsPanelRow(Icons.Outlined.AccountTree,
-                stringResource(R.string.autofill_v2_default_scope_title),
+                Setting.AUTOFILL_V2_DEFAULT_SCOPE_TITLE,
                 source.label() + "\n" + stringResource(R.string.autofill_v2_default_scope_desc),
                 enabled = defaultsReady, onClick = { picker = AutofillSourcePicker.SOURCE },
                 modifier = Modifier.testTag("autofill-source-setting"))
         if (source == AutofillDefaultSourceFilter.KEEPASS) {
                 SettingsPanelRow(Icons.Outlined.Storage,
-                    stringResource(R.string.autofill_v2_default_keepass_title),
+                    Setting.AUTOFILL_V2_DEFAULT_KEEPASS_TITLE,
                     keepassLabel + "\n" + stringResource(R.string.autofill_v2_default_keepass_desc),
                     enabled = defaultsReady && keepassDatabases != null, onClick = { picker = AutofillSourcePicker.KEEPASS },
                     modifier = Modifier.testTag("autofill-keepass-setting"))
         }
         if (source == AutofillDefaultSourceFilter.BITWARDEN) {
                 SettingsPanelRow(Icons.Outlined.Storage,
-                    stringResource(R.string.autofill_v2_default_bitwarden_title),
+                    Setting.AUTOFILL_V2_DEFAULT_BITWARDEN_TITLE,
                     bitwardenLabel + "\n" + stringResource(R.string.autofill_v2_default_bitwarden_desc),
                     enabled = defaultsReady && bitwardenVaults != null, onClick = { picker = AutofillSourcePicker.BITWARDEN },
                     modifier = Modifier.testTag("autofill-bitwarden-setting"))
         }
         if (source == AutofillDefaultSourceFilter.MDBX) {
             SettingsPanelRow(Icons.Outlined.Storage,
-                stringResource(R.string.autofill_v2_default_mdbx_title),
+                Setting.AUTOFILL_V2_DEFAULT_MDBX_TITLE,
                 mdbxLabel + "\n" + stringResource(R.string.autofill_v2_default_mdbx_desc),
                 enabled = defaultsReady && mdbxDatabases != null, onClick = { picker = AutofillSourcePicker.MDBX },
                 modifier = Modifier.testTag("autofill-mdbx-setting"))

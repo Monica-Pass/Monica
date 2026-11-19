@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
+import androidx.activity.compose.LocalActivityResultRegistryOwner
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.width
@@ -25,8 +26,13 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
-import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.hasSetTextAction
+import androidx.compose.ui.test.hasAnyAncestor
+import androidx.compose.ui.test.isDialog
+import androidx.compose.ui.test.printToString
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTextReplacement
@@ -76,6 +82,7 @@ class SettingsSearchInstrumentedTest {
             onResetPassword = { destructiveCalls++ },
             onSecurityQuestions = { destructiveCalls++ },
             onNavigateToMasterPasswordLocking = {},
+            onNavigateToDeveloperSettings = { nav.navigate(Screen.DeveloperSettings.route) },
             onClearAllData = { _, _, _, _, _, _ -> destructiveCalls++ },
             showTopBar = showTopBar,
         )
@@ -91,7 +98,9 @@ class SettingsSearchInstrumentedTest {
             val navigation = rememberSettingsSearchNavigation(nav)
             searchNavigation = navigation
             val density = LocalDensity.current.density
+            val resultRegistryOwner = checkNotNull(LocalActivityResultRegistryOwner.current)
             CompositionLocalProvider(
+                LocalActivityResultRegistryOwner provides resultRegistryOwner,
                 LocalContext provides localized,
                 LocalConfiguration provides configuration,
                 LocalDensity provides Density(density, if (large) 1.5f else 1f),
@@ -102,6 +111,9 @@ class SettingsSearchInstrumentedTest {
                         NavHost(navController = nav, startDestination = "search-test") {
                             composable("search-test") { Root(showTopBar) }
                             composable(Screen.Settings.route) { Root(showTopBar) }
+                            composable(Screen.DeveloperSettings.route) {
+                                DeveloperSettingsScreen(model, onNavigateBack = { nav.popBackStack() }, onNavigateToLogs = {})
+                            }
                             composable(Screen.AutofillSettings.route) {
                                 AutofillSettingsV2Screen(
                                     onNavigateBack = { nav.popBackStack() },
@@ -114,11 +126,13 @@ class SettingsSearchInstrumentedTest {
                             composable(Screen.MasterPasswordLockingSettings.route) {
                                 MasterPasswordLockingSettingsScreen(model, { nav.popBackStack() }, {}, {})
                             }
+                            composable(Screen.BottomNavSettings.route) { BottomNavSettingsScreen(model, { nav.popBackStack() }) }
                             composable(Screen.Extensions.route) { ExtensionsScreen(onNavigateBack = { nav.popBackStack() }, isPlusActivated = plus) }
                             composable(Screen.SyncBackup.route) { SyncBackupScreen(onNavigateBack = { nav.popBackStack() }) }
                             composable(Screen.PageAdjustmentCustomization.route) {
                                 PageAdjustmentCustomizationScreen(model, { nav.popBackStack() }, {}, {}, {}, {}, {})
                             }
+                            composable(Screen.AddButtonCustomization.route) { AddButtonCustomizationScreen(model, { nav.popBackStack() }) }
                             composable(Screen.PasswordListCustomization.route) { PasswordListCustomizationScreen(model, { nav.popBackStack() }) }
                             composable(Screen.PasswordCardAdjustment.route) { PasswordCardAdjustmentScreen(model, { nav.popBackStack() }) }
                             composable(Screen.AuthenticatorCardAdjustment.route) { AuthenticatorCardAdjustmentScreen(model, { nav.popBackStack() }) }
@@ -134,6 +148,155 @@ class SettingsSearchInstrumentedTest {
     }
 
     private fun hasToggleableState() = SemanticsMatcher.keyIsDefined(SemanticsProperties.ToggleableState)
+
+    private fun recordSearchFailure(label: String, block: () -> Unit) {
+        try { block() } catch (error: Throwable) {
+            File(context.filesDir, "settings-search-failure-$label.txt").writeText(error.stackTraceToString())
+            throw error
+        }
+    }
+
+
+    @Test fun everyDefinitionIsSearchableInEverySupportedLanguageWithoutReadingUserData() {
+        val tags = listOf("en", "zh-CN", "zh-Hant-HK", "lzh", "vi", "ja", "ko", "de", "fr", "es", "it", "ru", "pl", "pt-BR", "pt-PT")
+        for (tag in tags) {
+            val localized = context.createConfigurationContext(Configuration(context.resources.configuration).apply {
+                setLocale(Locale.forLanguageTag(tag))
+            })
+            val resourcesOnly = object : android.content.ContextWrapper(localized) {
+                override fun getSharedPreferences(name: String, mode: Int): android.content.SharedPreferences =
+                    error("Search must not read preferences: $name")
+                override fun getFilesDir(): File = error("Search must not read stored user data")
+                override fun getDatabasePath(name: String): File = error("Search must not read databases: $name")
+            }
+            for (plus in listOf(false, true)) {
+                val entries = settingsSearchEntries(resourcesOnly, plus)
+                val definitions = Setting.entries.filter { !it.legacyOnly && (!it.plusOnly || plus) }
+                assertEquals("$tag: every UI definition must be indexed", definitions.size, entries.size)
+                assertEquals(entries.size, entries.distinctBy { it.id }.size)
+                for (setting in definitions) {
+                    val id = localized.resources.getResourceEntryName(setting.titleRes)
+                    val title = localized.getString(setting.titleRes)
+                    val result = entries.single { it.id == id }
+                    assertEquals(title, result.title)
+                    assertTrue("$tag: missing title $id", searchSettings(entries, title).any { it.id == id })
+                    if (result.summary.isNotBlank()) assertTrue("$tag: missing description $id",
+                        searchSettings(entries, result.summary).any { it.id == id })
+                    assertTrue(result.route.isNotBlank())
+                }
+            }
+        }
+    }
+
+    @Test fun previouslyOmittedSettingsAndProtectedChildHaveTheirOwnResults() {
+        val entries = settingsSearchEntries(context)
+        for (id in listOf("autofill_keep_unlocked", "autofill_v2_blacklist", "autofill_v2_default_keepass_title",
+            "autofill_v2_default_bitwarden_title", "autofill_v2_default_mdbx_title", "lan_title",
+            "hyperos_hook_reset", "hyperos_drift_title", "update_auto_check", "icon_settings_password_page_title")) {
+            val entry = entries.singleOrNull { it.id == id }
+            assertTrue("Missing setting: $id", entry != null)
+            assertTrue(searchSettings(entries, entry!!.title).any { it.id == id })
+        }
+        assertEquals(R.string.developer_settings, entries.single { it.id == "hyperos_hook_reset" }.focusTitleRes)
+        assertEquals(Screen.Settings.route, entries.single { it.id == "hyperos_hook_reset" }.route)
+    }
+
+    @Test fun hiddenConditionalSettingLocatesItsParentWithoutEnablingIt() {
+        val before = runBlocking { manager.settingsFlow.first() }.autofillAuthRequired
+        try {
+            runBlocking { manager.updateAutofillAuthRequired(false) }
+            show()
+            val zh = context.createConfigurationContext(Configuration(context.resources.configuration).apply { setLocale(Locale.SIMPLIFIED_CHINESE) })
+            query(zh.getString(R.string.autofill_keep_unlocked))
+            compose.onNodeWithTag("settings_search_result_autofill_keep_unlocked").performScrollTo().performClick()
+            compose.waitUntil(10_000) { nav.currentDestination?.route == Screen.AutofillSettings.route }
+            compose.onNode(SemanticsMatcher.expectValue(SettingsSearchTarget, true), useUnmergedTree = true).assertIsDisplayed()
+            assertEquals(false, runBlocking { manager.settingsFlow.first() }.autofillAuthRequired)
+            capture("settings-search-hidden-child.png")
+            compose.runOnIdle { nav.popBackStack() }
+            compose.onNodeWithTag("settings_search_input").assertTextContains(zh.getString(R.string.autofill_keep_unlocked))
+        } finally { runBlocking { manager.updateAutofillAuthRequired(before) } }
+    }
+
+    @Test fun hyperOsCatalogIncludesAliasesAndLocalizedChildTitles() {
+        val childTitles = listOf(R.string.hyperos_diagnostics_title, R.string.hyperos_module_title,
+            R.string.default_manager_title, R.string.autofill_hyperos_save_compatibility,
+            R.string.reduce_animations, R.string.hyperos_hook_reset, R.string.hyperos_hook_settings,
+            R.string.hyperos_hook_chooser, R.string.hyperos_hook_hybrid, R.string.hyperos_drift_title)
+        for (tag in listOf("en", "zh-CN", "zh-Hant-HK", "lzh", "vi", "ja", "ko", "de", "fr", "es", "it", "ru", "pl", "pt-BR", "pt-PT")) {
+            val localized = context.createConfigurationContext(Configuration(context.resources.configuration).apply {
+                setLocale(Locale.forLanguageTag(tag))
+            })
+            val entries = settingsSearchEntries(localized)
+            val target = entries.singleOrNull { it.id == "hyperos_compatibility_title" }
+            assertTrue("$tag: HyperOS compatibility is missing from the search catalog", target != null)
+            assertEquals(Screen.Settings.route, target!!.route)
+            assertEquals(R.string.developer_settings, target.focusTitleRes)
+            assertTrue(target.path.contains(localized.getString(R.string.developer_settings)))
+            val queries = listOf("hyperos", "  ＨＹＰＥＲＯＳ  ", "澎湃", "小米", "Xiaomi", "Redmi", "POCO", "LSPosed") +
+                childTitles.map(localized::getString)
+            for (query in queries) assertTrue("$tag: $query must find the protected HyperOS entry",
+                searchSettings(entries, query).any { it.id == target.id })
+            assertTrue(searchSettings(entries, "HyperOS nonexistent-setting-329").isEmpty())
+        }
+    }
+
+    @Test fun hyperOsSearchLocatesProtectedEntryAndCancelPreservesQuery() = recordSearchFailure("cancel") {
+        val before = runBlocking { manager.settingsFlow.first() }
+        show()
+        query("hyperos")
+        compose.onNodeWithTag("settings_search_result_hyperos_compatibility_title").assertIsDisplayed()
+        compose.onAllNodes(hasToggleableState()).assertCountEquals(0)
+        capture("settings-search-hyperos-results.png")
+        compose.onNodeWithTag("settings_search_result_hyperos_compatibility_title").performClick()
+        compose.waitUntil(10_000) { nav.currentDestination?.route == Screen.Settings.route }
+        val target = compose.onNode(SemanticsMatcher.expectValue(SettingsSearchTarget, true), useUnmergedTree = true)
+        target.assertIsDisplayed().performClick()
+        val localized = context.createConfigurationContext(Configuration(context.resources.configuration).apply { setLocale(Locale.SIMPLIFIED_CHINESE) })
+        compose.onNodeWithText(localized.getString(R.string.verify_identity)).assertIsDisplayed()
+        File(context.filesDir, "settings-search-dialog.txt").writeText(compose.onNode(isDialog()).printToString())
+        assertEquals(Screen.Settings.route, nav.currentDestination?.route)
+        compose.onNodeWithTag("hyperos_compatibility_screen").assertDoesNotExist()
+        // Dialog-owned resources use the host Activity locale; the page context is localized above.
+        compose.onNodeWithText(context.getString(R.string.cancel)).performClick()
+        assertEquals(before, runBlocking { manager.settingsFlow.first() })
+        compose.runOnIdle { backDispatcher.onBackPressed() }
+        compose.onNodeWithTag("settings_search_input").assertTextContains("hyperos")
+    }
+
+    @Test fun hyperOsSearchReachesRealPageAfterPasswordVerificationInLargeText() = recordSearchFailure("verified") {
+        check(context.packageName.contains("settingssearchfix")) { "Isolated search fixture required" }
+        val security = takagi.ru.monica.security.SecurityManager(context)
+        if (security.isMasterPasswordSet()) {
+            assertTrue(security.verifyMasterPassword("SyntheticSearchPassword329"))
+        } else {
+            assertTrue(security.setMasterPassword("SyntheticSearchPassword329"))
+        }
+        val before = runBlocking { manager.settingsFlow.first() }
+        val preferences = takagi.ru.monica.autofill_ng.AutofillPreferences(context)
+        val saveBefore = runBlocking { preferences.isHyperOsSaveCompatibilityEnabled.first() }
+        val localized = context.createConfigurationContext(Configuration(context.resources.configuration).apply { setLocale(Locale.SIMPLIFIED_CHINESE) })
+        show(dark = true, large = true)
+        query("澎湃 兼容")
+        compose.onNodeWithTag("settings_search_result_hyperos_compatibility_title").assertIsDisplayed().performClick()
+        compose.onNode(SemanticsMatcher.expectValue(SettingsSearchTarget, true), useUnmergedTree = true).assertIsDisplayed().performClick()
+        compose.onNodeWithText(localized.getString(R.string.verify_identity)).assertIsDisplayed()
+        File(context.filesDir, "settings-search-dialog.txt").writeText(compose.onNode(isDialog()).printToString())
+        compose.onNode(hasSetTextAction() and hasAnyAncestor(isDialog())).performTextReplacement("SyntheticSearchPassword329")
+        compose.onNodeWithText(localized.getString(R.string.confirm)).performClick()
+        compose.waitUntil(20_000) { nav.currentDestination?.route == Screen.DeveloperSettings.route }
+        compose.onNodeWithTag("developer_hyperos_compatibility_entry").performScrollTo().performClick()
+        compose.onNodeWithTag("hyperos_compatibility_screen").assertIsDisplayed()
+        compose.onNodeWithTag("hyperos_save_compatibility_setting").performScrollTo().assertIsDisplayed()
+        capture("settings-search-hyperos-dark-large-target.png")
+        assertEquals(before, runBlocking { manager.settingsFlow.first() })
+        assertEquals(saveBefore, runBlocking { preferences.isHyperOsSaveCompatibilityEnabled.first() })
+        compose.runOnIdle { backDispatcher.onBackPressed() }
+        compose.onNodeWithTag("developer_hyperos_compatibility_entry").performScrollTo().assertIsDisplayed()
+        compose.runOnIdle { nav.popBackStack() }
+        compose.runOnIdle { backDispatcher.onBackPressed() }
+        compose.onNodeWithTag("settings_search_input").assertTextContains("澎湃 兼容")
+    }
 
     private fun capture(name: String) {
         val bitmap = compose.onRoot().captureToImage().asAndroidBitmap()

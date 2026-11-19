@@ -32,6 +32,7 @@ import takagi.ru.monica.R
 import takagi.ru.monica.autofill_ng.defaultmanager.*
 import takagi.ru.monica.ui.components.SettingsPanelGroup
 import takagi.ru.monica.ui.components.SettingsPanelRow
+import takagi.ru.monica.ui.components.SettingsContentRow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -135,15 +136,15 @@ internal fun DefaultPasswordManagerSheet(onDismiss: () -> Unit) {
                 refresh++
             }
             SettingsPanelGroup("") {
-                if (!useRoot) SettingsPanelRow(Icons.Default.Security, "Shizuku", stringResource(when (access) {
+                if (!useRoot) SettingsContentRow(Icons.Default.Security, "Shizuku", stringResource(when (access) {
                     DefaultManagerAccess.READY -> R.string.default_manager_ready
                     DefaultManagerAccess.PERMISSION -> R.string.default_manager_permission
                     DefaultManagerAccess.STOPPED -> R.string.default_manager_stopped
                     DefaultManagerAccess.UNSUPPORTED -> R.string.default_manager_unsupported
                 }))
-                SettingsPanelRow(Icons.Default.Key, stringResource(R.string.default_manager_credential),
+                SettingsPanelRow(Icons.Default.Key, Setting.DEFAULT_MANAGER_CREDENTIAL,
                     snapshot?.let { serviceLabel(it[SettingKey.PRIMARY]) } ?: stringResource(R.string.default_manager_unknown))
-                SettingsPanelRow(Icons.Default.Settings, stringResource(R.string.default_manager_autofill),
+                SettingsPanelRow(Icons.Default.Settings, Setting.DEFAULT_MANAGER_AUTOFILL,
                     snapshot?.let { serviceLabel(it[SettingKey.AUTOFILL]) } ?: stringResource(R.string.default_manager_unknown))
             }
             if (!useRoot && (access == DefaultManagerAccess.PERMISSION || access == DefaultManagerAccess.STOPPED)) {
@@ -158,11 +159,11 @@ internal fun DefaultPasswordManagerSheet(onDismiss: () -> Unit) {
                 }) { Text(stringResource(if (access == DefaultManagerAccess.PERMISSION) R.string.default_manager_grant else R.string.default_manager_open_shizuku)) }
             }
             SettingsPanelGroup("") {
-                SettingsPanelRow(Icons.Default.Settings, stringResource(R.string.default_manager_include_autofill),
-                    stringResource(R.string.default_manager_include_autofill_hint), enabled = !busy,
+                SettingsPanelRow(Icons.Default.Settings, Setting.DEFAULT_MANAGER_INCLUDE_AUTOFILL,
+                    Setting.DEFAULT_MANAGER_INCLUDE_AUTOFILL.summary(), enabled = !busy,
                     checked = includeAutofill, onCheckedChange = { includeAutofill = it })
-                SettingsPanelRow(Icons.Default.Security, stringResource(R.string.default_manager_keep_others),
-                    stringResource(R.string.default_manager_keep_others_hint), enabled = !busy,
+                SettingsPanelRow(Icons.Default.Security, Setting.DEFAULT_MANAGER_KEEP_OTHERS,
+                    Setting.DEFAULT_MANAGER_KEEP_OTHERS.summary(), enabled = !busy,
                     checked = keepOthers, onCheckedChange = { keepOthers = it })
             }
             if (useRoot && access == DefaultManagerAccess.UNSUPPORTED) Text(stringResource(R.string.privilege_default_requires_android14))

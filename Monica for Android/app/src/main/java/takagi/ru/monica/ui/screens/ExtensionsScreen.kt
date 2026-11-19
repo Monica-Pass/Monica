@@ -206,8 +206,7 @@ fun ExtensionsScreen(
             ExtensionSection(title = stringResource(R.string.quick_init_section_title)) {
                 ExtensionClickableItem(
                     icon = Icons.Default.SettingsSuggest,
-                    title = stringResource(R.string.re_quick_init_title),
-                    description = stringResource(R.string.re_quick_init_desc),
+                    setting = Setting.RE_QUICK_INIT_TITLE,
                     onClick = onNavigateToQuickSetup
                 )
             }
@@ -215,8 +214,7 @@ fun ExtensionsScreen(
             ExtensionSection(title = stringResource(R.string.extensions_security_settings)) {
                 ExtensionChoiceItem(
                     icon = Icons.Default.ContentPaste,
-                    title = stringResource(R.string.clipboard_auto_clear_title),
-                    description = stringResource(R.string.clipboard_auto_clear_description),
+                    setting = Setting.CLIPBOARD_AUTO_CLEAR_TITLE,
                     value = clipboardAutoClearLabel(clipboardAutoClearSeconds),
                     onClick = { showClipboardAutoClearDialog = true }
                 )
@@ -224,7 +222,7 @@ fun ExtensionsScreen(
             
             ExtensionSection(title = stringResource(R.string.display_options_menu_title)) {
                 ExtensionChoiceItem(Icons.Default.Dns,
-                    stringResource(R.string.password_card_display_mode_title), "",
+                    Setting.PASSWORD_CARD_DISPLAY_MODE_TITLE, "",
                     stringResource(when (passwordCardDisplayMode) {
                         takagi.ru.monica.data.PasswordCardDisplayMode.SHOW_ALL -> R.string.display_mode_all
                         takagi.ru.monica.data.PasswordCardDisplayMode.TITLE_USERNAME -> R.string.display_mode_title_username
@@ -232,24 +230,21 @@ fun ExtensionsScreen(
                     }), { showDisplayModeDialog = true })
                 ExtensionSwitchItem(
                     icon = Icons.Default.CallMerge,
-                    title = stringResource(R.string.smart_deduplication),
-                    description = stringResource(R.string.smart_deduplication_desc),
+                    setting = Setting.SMART_DEDUPLICATION,
                     checked = smartDeduplicationEnabled,
                     onCheckedChange = onSmartDeduplicationEnabledChange
                 )
 
                 ExtensionSwitchItem(
                     icon = Icons.Default.Security,
-                    title = stringResource(R.string.password_detail_security_analysis_title),
-                    description = stringResource(R.string.password_detail_security_analysis_desc),
+                    setting = Setting.PASSWORD_DETAIL_SECURITY_ANALYSIS_TITLE,
                     checked = passwordDetailSecurityAnalysisEnabled,
                     onCheckedChange = onPasswordDetailSecurityAnalysisEnabledChange
                 )
 
                 ExtensionSegmentedItem(
                     icon = Icons.Default.Swipe,
-                    title = stringResource(R.string.swipe_selection_mode),
-                    description = stringResource(R.string.swipe_selection_mode_desc),
+                    setting = Setting.SWIPE_SELECTION_MODE,
                     selectedMode = passwordSwipeSelectionMode,
                     onModeChange = onPasswordSwipeSelectionModeChange
                 )
@@ -259,8 +254,7 @@ fun ExtensionsScreen(
             ExtensionSection(title = stringResource(R.string.extensions_steam_settings)) {
                 ExtensionSwitchItem(
                     icon = Icons.Default.Wallpaper,
-                    title = stringResource(R.string.steam_mini_profile_background_title),
-                    description = stringResource(R.string.steam_mini_profile_background_description),
+                    setting = Setting.STEAM_MINI_PROFILE_BACKGROUND_TITLE,
                     checked = steamMiniProfileBackgroundEnabled,
                     onCheckedChange = onSteamMiniProfileBackgroundEnabledChange
                 )
@@ -270,8 +264,7 @@ fun ExtensionsScreen(
             ExtensionSection(title = stringResource(R.string.haptic_feedback)) {
                 ExtensionSwitchItem(
                     icon = Icons.Default.Vibration,
-                    title = stringResource(R.string.haptic_feedback),
-                    description = stringResource(R.string.haptic_feedback_description),
+                    setting = Setting.HAPTIC_FEEDBACK,
                     checked = hapticFeedbackEnabled,
                     onCheckedChange = onHapticFeedbackChange
                 )
@@ -283,8 +276,7 @@ fun ExtensionsScreen(
                 ExtensionSection(title = stringResource(R.string.extensions_totp_settings)) {
                     ExtensionSwitchItem(
                         icon = Icons.Default.Vibration,
-                        title = stringResource(R.string.validator_vibration),
-                        description = stringResource(R.string.validator_vibration_description),
+                        setting = Setting.VALIDATOR_VIBRATION,
                         checked = validatorVibrationEnabled,
                         enabled = hapticFeedbackEnabled,
                         onCheckedChange = onValidatorVibrationChange
@@ -292,8 +284,7 @@ fun ExtensionsScreen(
 
                     ExtensionSwitchItem(
                         icon = Icons.Default.Update,
-                        title = stringResource(R.string.copy_next_code_when_expiring),
-                        description = stringResource(R.string.copy_next_code_when_expiring_description),
+                        setting = Setting.COPY_NEXT_CODE_WHEN_EXPIRING,
                         checked = copyNextCodeWhenExpiring,
                         onCheckedChange = onCopyNextCodeWhenExpiringChange
                     )
@@ -362,33 +353,36 @@ private fun ExtensionSection(
 @Composable
 private fun ExtensionClickableItem(
     icon: ImageVector,
-    title: String,
-    description: String,
+    setting: Setting,
+    description: String = setting.summary(),
     onClick: () -> Unit
 ) {
-    SettingsPanelRow(icon, title, description, onClick = onClick)
+    val title = setting.title()
+    SettingsPanelRow(icon, setting, description, onClick = onClick)
 }
 
 @Composable
 private fun ExtensionChoiceItem(
     icon: ImageVector,
-    title: String,
-    description: String,
+    setting: Setting,
+    description: String = setting.summary(),
     value: String,
     onClick: () -> Unit
 ) {
-    SettingsPanelRow(icon, title, "$value\n$description", onClick = onClick)
+    val title = setting.title()
+    SettingsPanelRow(icon, setting, "$value\n$description", onClick = onClick)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ExtensionSegmentedItem(
     icon: ImageVector,
-    title: String,
-    description: String,
+    setting: Setting,
+    description: String = setting.summary(),
     selectedMode: PasswordSwipeSelectionMode,
     onModeChange: (PasswordSwipeSelectionMode) -> Unit
 ) {
+    val title = setting.title()
     Column(
         modifier = Modifier
             .settingsPanelSurface().settingsSearchAnchor(title)
@@ -444,13 +438,14 @@ private fun ExtensionSegmentedItem(
 @Composable
 private fun ExtensionSwitchItem(
     icon: ImageVector,
-    title: String,
-    description: String,
+    setting: Setting,
+    description: String = setting.summary(),
     checked: Boolean,
     enabled: Boolean = true,
     onCheckedChange: (Boolean) -> Unit
 ) {
-    SettingsPanelRow(icon, title, description, enabled = enabled, checked = checked, onCheckedChange = onCheckedChange)
+    val title = setting.title()
+    SettingsPanelRow(icon, setting, description, enabled = enabled, checked = checked, onCheckedChange = onCheckedChange)
 }
 
 /**

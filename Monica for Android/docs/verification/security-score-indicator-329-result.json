@@ -1,0 +1,90 @@
+{
+  "date": "2026-11-19",
+  "version": "1.0.329",
+  "editions": {
+    "main": {
+      "buildLabel": "main02",
+      "buildSeconds": 115.441,
+      "jvm": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "deviceMethods": 4,
+      "deviceRunnerSeconds": 4.985,
+      "changedKotlinPaths": {
+        "app/src/test/java/takagi/ru/monica/ui/SecurityAnalysisUiRegressionGuardTest.kt": "90843fde84db2c1092f5e6ee3df50afc56c58408ca4f273171253668da4d3128",
+        "app/src/main/java/takagi/ru/monica/ui/screens/SecurityAnalysisScreen.kt": "21c9718398d1173acf2c1ae7df1bc631d7b7c2cff5770157f4977ed400cc1ea9",
+        "app/src/androidTest/java/takagi/ru/monica/ui/screens/SecurityScoreIndicatorTest.kt": "8c54ee64e1f245ca5b1439908edf6ad0fbef57c59c097d619c9fef9a9bd08e4e"
+      },
+      "otherKotlinSourcesUnchanged": true,
+      "apks": [
+        {
+          "file": "Monica-Android-x86_64-1.0.329-26111912-90.APK",
+          "sha256": "d1049b4c2776f09ac1d1ff427ec4607c0374c5f75bcfc1191611d80cc02a3a04"
+        },
+        {
+          "file": "app-debug-androidTest.apk",
+          "sha256": "7bc90629fa6ad82a5aedc69148520e027fe97ff765c02abf021e52fa2d279368"
+        }
+      ]
+    },
+    "fd": {
+      "buildLabel": "fd01",
+      "buildSeconds": 197.636,
+      "jvm": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "deviceMethods": 4,
+      "deviceRunnerSeconds": 3.962,
+      "changedKotlinPaths": {
+        "app/src/test/java/takagi/ru/monica/ui/SecurityAnalysisUiRegressionGuardTest.kt": "90843fde84db2c1092f5e6ee3df50afc56c58408ca4f273171253668da4d3128",
+        "app/src/main/java/takagi/ru/monica/ui/screens/SecurityAnalysisScreen.kt": "21c9718398d1173acf2c1ae7df1bc631d7b7c2cff5770157f4977ed400cc1ea9",
+        "app/src/androidTest/java/takagi/ru/monica/ui/screens/SecurityScoreIndicatorTest.kt": "8c54ee64e1f245ca5b1439908edf6ad0fbef57c59c097d619c9fef9a9bd08e4e"
+      },
+      "otherKotlinSourcesUnchanged": true,
+      "apks": [
+        {
+          "file": "Monica-Android-x86_64-1.0.329.apk",
+          "sha256": "392142a8975173be41486335c646dc9cfd38b83e3c0d03e3231afbdaae15175d"
+        },
+        {
+          "file": "app-debug-androidTest.apk",
+          "sha256": "4d490aa13051cad18ba5c7a03b6921c2137a47e20e55b0f2ebeb6a611f631c2e"
+        }
+      ]
+    }
+  },
+  "sharedFiles": {
+    "app/src/main/java/takagi/ru/monica/ui/screens/SecurityAnalysisScreen.kt": "21c9718398d1173acf2c1ae7df1bc631d7b7c2cff5770157f4977ed400cc1ea9",
+    "app/src/test/java/takagi/ru/monica/ui/SecurityAnalysisUiRegressionGuardTest.kt": "90843fde84db2c1092f5e6ee3df50afc56c58408ca4f273171253668da4d3128",
+    "app/src/androidTest/java/takagi/ru/monica/ui/screens/SecurityScoreIndicatorTest.kt": "8c54ee64e1f245ca5b1439908edf6ad0fbef57c59c097d619c9fef9a9bd08e4e"
+  },
+  "cleanup": {
+    "results": {
+      "takagi.ru.monica.securityscore20261119.test": "Success",
+      "takagi.ru.monica.securityscore20261119": "Success",
+      "takagi.ru.monica.securityscorefd20261119.test": "Success",
+      "takagi.ru.monica.securityscorefd20261119": "Success"
+    },
+    "usersUnchanged": true,
+    "packagesUnchanged": true,
+    "currentUser": "0",
+    "preexistingMuMuLeftRunning": true
+  },
+  "limits": [
+    "MuMu API35/x86_64; isolated Debug packages on existing user0; synthetic empty analysis data and injected display states.",
+    "Actual SecurityAnalysisScreen composable, not a full MainActivity/backend analysis flow or physical device test.",
+    "No scoring, analysis algorithms, storage, synchronization, authentication or previous settings-search/password fixes changed.",
+    "System animator-scale behavior is inherited from Material3 LoadingIndicator; system animation settings were not changed or separately tested."
+  ],
+  "preservedFailures": [
+    "main01 produced both APKs but its combined Gradle command failed because the driver used the wrong package in --tests. Corrected only the driver; main02 ran all four JVM tests and succeeded.",
+    "The initial English fastlane edit exceeded 500 characters and was rejected by the local assertion before writing. The final text is 494 characters.",
+    "The initial hand-copied Canvas URL was malformed; the tab was navigated to the exact saved local URL before inspection and implementation."
+  ]
+}

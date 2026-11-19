@@ -166,7 +166,7 @@ class DirectReorderDeviceTest {
         var items by mutableStateOf(listOf("Account", "Website", "Notes"))
         var selected by mutableStateOf(items)
         compose.setContent { MaterialTheme { Surface { Column(Modifier.width(360.dp).padding(12.dp)) {
-            CustomizationOrderGroup(items, selected, { it }, { Icons.Default.Tune }, { items = it },
+            CustomizationOrderGroup(takagi.ru.monica.ui.screens.Setting.ADD_BUTTON_ACTIONS_TITLE, items, selected, { it }, { Icons.Default.Tune }, { items = it },
                 { item, enabled -> selected = if (enabled) selected + item else selected - item })
         } } } }
         compose.onNodeWithTag("customization_drag_Account").assertDoesNotExist()

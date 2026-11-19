@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.components
 
+import takagi.ru.monica.ui.screens.Setting
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.toggleable
@@ -54,8 +55,8 @@ internal fun SettingsSubpageHeading(title: String) {
 
 @Composable
 internal fun SettingsSubpageRow(
-    title: String,
-    subtitle: String,
+    setting: Setting,
+    subtitle: String = setting.summary(),
     icon: ImageVector,
     index: Int,
     count: Int,
@@ -64,6 +65,7 @@ internal fun SettingsSubpageRow(
     onCheckedChange: (Boolean) -> Unit = {},
     onClick: () -> Unit = {},
 ) {
+    val title = setting.title()
     val shape = settingsSectionItemShape(index, count)
     val interaction = if (checked != null) {
         Modifier.toggleable(value = checked, role = Role.Switch, onValueChange = onCheckedChange)

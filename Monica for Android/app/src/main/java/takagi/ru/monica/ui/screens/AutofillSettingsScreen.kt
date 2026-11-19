@@ -218,8 +218,8 @@ fun AutofillSettingsScreen(
             takagi.ru.monica.ui.components.SettingsPanelGroup("") {
                 takagi.ru.monica.ui.components.SettingsPanelRow(
                     Icons.Outlined.Settings,
-                    stringResource(R.string.default_manager_title),
-                    stringResource(R.string.default_manager_entry_hint),
+                    Setting.DEFAULT_MANAGER_TITLE,
+                    Setting.DEFAULT_MANAGER_TITLE.summary(),
                     onClick = { showDefaultManager = true }
                 )
             }
@@ -231,8 +231,7 @@ fun AutofillSettingsScreen(
             ) {
                 AutofillSettingItem(
                     icon = Icons.Outlined.Smartphone,
-                    title = stringResource(R.string.autofill_system_set_provider),
-                    subtitle = stringResource(R.string.autofill_system_set_provider_desc),
+                    setting = Setting.AUTOFILL_SYSTEM_SET_PROVIDER,
                     onClick = {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             val intent = Intent(Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE)
@@ -246,8 +245,7 @@ fun AutofillSettingsScreen(
 
                     AutofillSettingItem(
                         icon = Icons.Outlined.Key,
-                        title = stringResource(R.string.autofill_system_passkey_settings),
-                        subtitle = stringResource(R.string.autofill_system_passkey_settings_desc),
+                        setting = Setting.AUTOFILL_SYSTEM_PASSKEY_SETTINGS,
                         onClick = {
                             val intent = Intent(Settings.ACTION_SETTINGS)
                             context.startActivity(intent)
@@ -258,8 +256,7 @@ fun AutofillSettingsScreen(
 
                 AutofillSettingItem(
                     icon = Icons.Outlined.Language,
-                    title = stringResource(R.string.autofill_system_chrome_settings),
-                    subtitle = stringResource(R.string.autofill_system_chrome_settings_desc),
+                    setting = Setting.AUTOFILL_SYSTEM_CHROME_SETTINGS,
                     onClick = {
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://passwords.google.com/options"))
                         try {
@@ -282,7 +279,7 @@ fun AutofillSettingsScreen(
             ) {
                 AutofillSettingItem(
                     icon = Icons.Outlined.AccountTree,
-                    title = stringResource(R.string.autofill_domain_strategy_title),
+                    setting = Setting.AUTOFILL_DOMAIN_STRATEGY_TITLE,
                     subtitle = DomainMatchStrategy.getDisplayName(context, domainMatchStrategy),
                     trailingIcon = Icons.Default.ChevronRight,
                     onClick = { showStrategyDialog = true }
@@ -298,8 +295,7 @@ fun AutofillSettingsScreen(
 
                 SwitchSettingItem(
                     icon = Icons.Outlined.AutoAwesome,
-                    title = stringResource(R.string.autofill_fill_suggestions),
-                    subtitle = stringResource(R.string.autofill_fill_suggestions_desc),
+                    setting = Setting.AUTOFILL_FILL_SUGGESTIONS,
                     checked = fillSuggestionsEnabled,
                     onCheckedChange = {
                         scope.launch {
@@ -311,8 +307,7 @@ fun AutofillSettingsScreen(
 
                 SwitchSettingItem(
                     icon = Icons.Outlined.TouchApp,
-                    title = stringResource(R.string.autofill_fill_manual_selection),
-                    subtitle = stringResource(R.string.autofill_fill_manual_selection_desc),
+                    setting = Setting.AUTOFILL_FILL_MANUAL_SELECTION,
                     checked = manualSelectionEnabled,
                     onCheckedChange = {
                         scope.launch {
@@ -325,8 +320,7 @@ fun AutofillSettingsScreen(
                 val respectAutofillDisabled by autofillPreferences.isRespectAutofillDisabledEnabled.collectAsState(initial = false)
                 SwitchSettingItem(
                     icon = Icons.Outlined.DoNotDisturb,
-                    title = stringResource(R.string.autofill_respect_disabled_flag_title),
-                    subtitle = stringResource(R.string.autofill_respect_disabled_flag_desc),
+                    setting = Setting.AUTOFILL_RESPECT_DISABLED_FLAG_TITLE,
                     checked = respectAutofillDisabled,
                     onCheckedChange = {
                         scope.launch {
@@ -348,8 +342,7 @@ fun AutofillSettingsScreen(
 
                 SwitchSettingItem(
                     icon = Icons.Outlined.Notifications,
-                    title = stringResource(R.string.autofill_show_otp_notification),
-                    subtitle = stringResource(R.string.autofill_show_otp_notification_desc),
+                    setting = Setting.AUTOFILL_SHOW_OTP_NOTIFICATION,
                     checked = showOtpNotification,
                     onCheckedChange = {  enabled ->
                         scope.launch {
@@ -368,8 +361,7 @@ fun AutofillSettingsScreen(
 
                 SwitchSettingItem(
                     icon = Icons.Outlined.ContentCopy,
-                    title = stringResource(R.string.autofill_auto_copy_otp),
-                    subtitle = stringResource(R.string.autofill_auto_copy_otp_desc),
+                    setting = Setting.AUTOFILL_AUTO_COPY_OTP,
                     checked = autoCopyOtp,
                     onCheckedChange = {
                         scope.launch {
@@ -386,7 +378,7 @@ fun AutofillSettingsScreen(
 
                  AutofillSettingItem(
                     icon = Icons.Outlined.Timer,
-                    title = stringResource(R.string.autofill_otp_notification_duration),
+                    setting = Setting.AUTOFILL_OTP_NOTIFICATION_DURATION,
                     subtitle = "${otpDuration}s",
                     onClick = {
                         // Cycle through values 15 -> 30 -> 60 -> 120 -> 15
@@ -411,8 +403,7 @@ fun AutofillSettingsScreen(
             ) {
                 SwitchSettingItem(
                     icon = Icons.Outlined.AddCircleOutline,
-                    title = stringResource(R.string.autofill_save_enable),
-                    subtitle = stringResource(R.string.autofill_save_enable_desc),
+                    setting = Setting.AUTOFILL_SAVE_ENABLE,
                     checked = requestSaveDataEnabled,
                     onCheckedChange = {
                         scope.launch {
@@ -424,8 +415,7 @@ fun AutofillSettingsScreen(
 
                 SwitchSettingItem(
                     icon = Icons.Outlined.Sync,
-                    title = stringResource(R.string.autofill_save_update_duplicate),
-                    subtitle = stringResource(R.string.autofill_save_update_duplicate_desc),
+                    setting = Setting.AUTOFILL_SAVE_UPDATE_DUPLICATE,
                     checked = autoUpdateDuplicatePasswordsEnabled,
                     onCheckedChange = {
                         scope.launch {
@@ -437,8 +427,7 @@ fun AutofillSettingsScreen(
 
                 SwitchSettingItem(
                     icon = Icons.Outlined.Notifications,
-                    title = stringResource(R.string.autofill_save_show_notification),
-                    subtitle = stringResource(R.string.autofill_save_show_notification_desc),
+                    setting = Setting.AUTOFILL_SAVE_SHOW_NOTIFICATION,
                     checked = showSaveNotificationEnabled,
                     onCheckedChange = {
                         scope.launch {
@@ -450,8 +439,7 @@ fun AutofillSettingsScreen(
 
                 SwitchSettingItem(
                     icon = Icons.Outlined.AutoAwesome,
-                    title = stringResource(R.string.autofill_save_smart_title),
-                    subtitle = stringResource(R.string.autofill_save_smart_title_desc),
+                    setting = Setting.AUTOFILL_SAVE_SMART_TITLE,
                     checked = smartTitleGenerationEnabled,
                     onCheckedChange = {
                         scope.launch {
@@ -463,8 +451,7 @@ fun AutofillSettingsScreen(
 
                 SwitchSettingItem(
                     icon = Icons.Outlined.PhoneAndroid,
-                    title = stringResource(R.string.autofill_save_app_info),
-                    subtitle = stringResource(R.string.autofill_save_app_info_desc),
+                    setting = Setting.AUTOFILL_SAVE_APP_INFO,
                     checked = autoSaveAppInfoEnabled,
                     onCheckedChange = {
                         scope.launch {
@@ -476,8 +463,7 @@ fun AutofillSettingsScreen(
 
                 SwitchSettingItem(
                     icon = Icons.Outlined.Public,
-                    title = stringResource(R.string.autofill_save_website_info),
-                    subtitle = stringResource(R.string.autofill_save_website_info_desc),
+                    setting = Setting.AUTOFILL_SAVE_WEBSITE_INFO,
                     checked = autoSaveWebsiteInfoEnabled,
                     onCheckedChange = {
                         scope.launch {
@@ -495,8 +481,7 @@ fun AutofillSettingsScreen(
             ) {
                 SwitchSettingItem(
                     icon = Icons.Outlined.Block,
-                    title = stringResource(R.string.autofill_blacklist_enable),
-                    subtitle = stringResource(R.string.autofill_blacklist_enable_desc),
+                    setting = Setting.AUTOFILL_BLACKLIST_ENABLE,
                     checked = blacklistEnabled,
                     onCheckedChange = {
                         scope.launch {
@@ -509,7 +494,7 @@ fun AutofillSettingsScreen(
 
                     AutofillSettingItem(
                         icon = Icons.Outlined.Apps,
-                        title = stringResource(R.string.autofill_blacklist_manage),
+                        setting = Setting.AUTOFILL_BLACKLIST_MANAGE,
                         subtitle = stringResource(R.string.autofill_blacklist_manage_desc, blacklistPackages.size),
                         trailingIcon = Icons.Default.ChevronRight,
                         onClick = { showBlacklistDialog = true }
@@ -651,35 +636,38 @@ fun SectionCard(
 @Composable
 fun AutofillSettingItem(
     icon: ImageVector,
-    title: String,
-    subtitle: String,
+    setting: Setting,
+    subtitle: String = setting.summary(),
     trailingIcon: ImageVector = Icons.Outlined.OpenInNew,
     onClick: () -> Unit
 ) {
-    SettingsPanelRow(icon, title, subtitle, onClick = onClick)
+    val title = setting.title()
+    SettingsPanelRow(icon, setting, subtitle, onClick = onClick)
 }
 
 // 开关设置项组件
 @Composable
 fun SwitchSettingItem(
     icon: ImageVector,
-    title: String,
-    subtitle: String,
+    setting: Setting,
+    subtitle: String = setting.summary(),
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit
 ) {
-    SettingsPanelRow(icon, title, subtitle, checked = checked, onCheckedChange = onCheckedChange)
+    val title = setting.title()
+    SettingsPanelRow(icon, setting, subtitle, checked = checked, onCheckedChange = onCheckedChange)
 }
 
 // 普通设置项组件
 @Composable
 fun AutofillSettingItem(
     icon: ImageVector,
-    title: String,
-    subtitle: String,
+    setting: Setting,
+    subtitle: String = setting.summary(),
     onClick: () -> Unit
 ) {
-    SettingsPanelRow(icon, title, subtitle, onClick = onClick)
+    val title = setting.title()
+    SettingsPanelRow(icon, setting, subtitle, onClick = onClick)
 }
 
 // 策略选择对话框

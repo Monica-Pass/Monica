@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import takagi.ru.monica.ui.screens.Setting
 import takagi.ru.monica.R
 import takagi.ru.monica.viewmodel.TrashSettings
 
@@ -70,8 +71,8 @@ fun TrashSettingsSheet(
             
             // 启用/禁用开关
             ListItem(
-                headlineContent = { Text(stringResource(R.string.trash_enable)) },
-                supportingContent = { Text(stringResource(R.string.trash_enable_desc)) },
+                headlineContent = { Text(Setting.TRASH_ENABLE.title()) },
+                supportingContent = { Text(Setting.TRASH_ENABLE.summary()) },
                 trailingContent = {
                     Switch(
                         checked = enabled,
@@ -89,7 +90,7 @@ fun TrashSettingsSheet(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
-                        text = stringResource(R.string.trash_auto_clear_time),
+                        text = Setting.TRASH_AUTO_CLEAR_TIME.title(),
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.onSurface
                     )

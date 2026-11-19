@@ -28,6 +28,7 @@ import takagi.ru.monica.R
 import takagi.ru.monica.autofill_ng.defaultmanager.*
 import takagi.ru.monica.ui.components.SettingsPanelGroup
 import takagi.ru.monica.ui.components.SettingsPanelRow
+import takagi.ru.monica.ui.components.SettingsContentRow
 import takagi.ru.monica.ui.components.SettingsSubpageTopBar
 
 @Composable internal fun HyperOsDiagnosticsScreen(onBack: () -> Unit) {
@@ -69,15 +70,15 @@ import takagi.ru.monica.ui.components.SettingsSubpageTopBar
                 DiagnosticRow(R.string.default_manager_autofill, report?.configuration?.autofill)
             }
             SettingsPanelGroup("") {
-                SettingsPanelRow(Icons.Default.Visibility, stringResource(R.string.hyperos_drift_title),
-                    stringResource(R.string.hyperos_drift_note), checked = monitor,
+                SettingsPanelRow(Icons.Default.Visibility, Setting.HYPEROS_DRIFT_TITLE,
+                    Setting.HYPEROS_DRIFT_TITLE.summary(), checked = monitor,
                     onCheckedChange = { value -> scope.launch {
                         failed = false
                         try { withContext(Dispatchers.IO) { HyperOsDiagnostics.setMonitoring(context, value) }; monitor = value }
                         catch (e: kotlinx.coroutines.CancellationException) { throw e }
                         catch (_: Exception) { failed = true }
                     } }, modifier = Modifier.testTag("hyperos_drift_toggle"))
-                SettingsPanelRow(Icons.Default.Security, stringResource(R.string.hyperos_drift_result),
+                SettingsContentRow(Icons.Default.Security, stringResource(R.string.hyperos_drift_result),
                     stringResource(when (report?.configuration?.drift) {
                         HyperOsDrift.OFF -> R.string.hyperos_drift_off
                         HyperOsDrift.NO_BASELINE -> R.string.hyperos_drift_no_baseline
@@ -99,7 +100,7 @@ import takagi.ru.monica.ui.components.SettingsSubpageTopBar
 }
 
 @Composable private fun DiagnosticRow(title: Int, value: HyperOsCheck?) {
-    SettingsPanelRow(Icons.Default.Security, stringResource(title), stringResource(when (value) {
+    SettingsContentRow(Icons.Default.Security, stringResource(title), stringResource(when (value) {
         HyperOsCheck.YES -> R.string.hyperos_check_yes
         HyperOsCheck.NO -> R.string.hyperos_check_no
         HyperOsCheck.UNSUPPORTED -> R.string.hyperos_check_unsupported

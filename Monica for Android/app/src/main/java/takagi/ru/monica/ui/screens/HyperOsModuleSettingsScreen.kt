@@ -60,10 +60,10 @@ import takagi.ru.monica.ui.components.SettingsSubpageTopBar
     val context = LocalContext.current
     var pending by rememberSaveable { mutableStateOf<String?>(null) }
     val labels = listOf(
-        Triple(HookPolicy.RESET, R.string.hyperos_hook_reset, R.string.hyperos_hook_reset_note),
-        Triple(HookPolicy.SETTINGS, R.string.hyperos_hook_settings, R.string.hyperos_hook_settings_note),
-        Triple(HookPolicy.CHOOSER, R.string.hyperos_hook_chooser, R.string.hyperos_hook_chooser_note),
-        Triple(HookPolicy.HYBRID, R.string.hyperos_hook_hybrid, R.string.hyperos_hook_hybrid_note),
+        HookPolicy.RESET to Setting.HYPEROS_HOOK_RESET,
+        HookPolicy.SETTINGS to Setting.HYPEROS_HOOK_SETTINGS,
+        HookPolicy.CHOOSER to Setting.HYPEROS_HOOK_CHOOSER,
+        HookPolicy.HYBRID to Setting.HYPEROS_HOOK_HYBRID,
     )
     BackHandler(onBack = onBack)
     Scaffold(Modifier.testTag("hyperos_module_screen"), topBar = {
@@ -76,8 +76,8 @@ import takagi.ru.monica.ui.components.SettingsSubpageTopBar
                 modifier = Modifier.testTag("hyperos_module_status"))
             if (state.connected) Text(stringResource(R.string.hyperos_module_scope, state.scopes.sorted().joinToString(", ").ifEmpty { "—" }))
             SettingsPanelGroup("") {
-                labels.forEach { (key, title, description) ->
-                    SettingsPanelRow(Icons.Default.Extension, stringResource(title), stringResource(description),
+                labels.forEach { (key, setting) ->
+                    SettingsPanelRow(Icons.Default.Extension, setting, setting.summary(),
                         checked = key in state.options,
                         enabled = state.connected && !busy && (state.supported || key in state.options),
                         onCheckedChange = { enable -> if (enable) pending = key else onChange(key, false) },
@@ -96,7 +96,7 @@ import takagi.ru.monica.ui.components.SettingsSubpageTopBar
     }
     pending?.let { key ->
         AlertDialog(onDismissRequest = { pending = null },
-            title = { Text(stringResource(labels.first { it.first == key }.second)) },
+            title = { Text(labels.first { it.first == key }.second.title()) },
             text = { Text(stringResource(R.string.hyperos_module_confirmation)) },
             confirmButton = { TextButton(enabled = state.connected && state.supported && !busy,
                 modifier = Modifier.testTag("hyperos_hook_confirm"),

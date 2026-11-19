@@ -78,27 +78,27 @@ fun SyncBackupScreen(
                 .verticalScroll(scrollState)
         ) {
             SyncBackupSection(title = stringResource(R.string.sync_backup_database_tools)) {
-                SyncBackupItem(Icons.Default.Storage, stringResource(R.string.mdbx_ui_manager_entry_title),
-                    stringResource(R.string.mdbx_ui_manager_entry_description), onNavigateToMdbx)
-                SyncBackupItem(Icons.Default.Key, stringResource(R.string.local_keepass_database),
-                    stringResource(R.string.local_keepass_database_description), onNavigateToLocalKeePass)
+                SyncBackupItem(Icons.Default.Storage, Setting.MDBX_UI_MANAGER_ENTRY_TITLE,
+                    Setting.MDBX_UI_MANAGER_ENTRY_TITLE.summary(), onNavigateToMdbx)
+                SyncBackupItem(Icons.Default.Key, Setting.LOCAL_KEEPASS_DATABASE,
+                    Setting.LOCAL_KEEPASS_DATABASE.summary(), onNavigateToLocalKeePass)
             }
             SyncBackupSection(title = stringResource(R.string.sync_backup_common_sync)) {
-                SyncBackupItem(Icons.Default.Wifi, stringResource(R.string.lan_title),
-                    stringResource(R.string.device_sync_description), onNavigateToLanSync)
-                SyncBackupItem(Icons.Default.Cloud, stringResource(R.string.webdav_backup),
-                    stringResource(R.string.webdav_backup_description), onNavigateToWebDav)
-                SyncBackupItem(Icons.Default.CloudSync, stringResource(R.string.onedrive_backup_title),
-                    stringResource(R.string.onedrive_backup_description), onNavigateToOneDrive)
-                SyncBackupItem(Icons.Default.CloudSync, stringResource(R.string.sync_backup_bitwarden_sync_title),
-                    stringResource(R.string.sync_backup_bitwarden_sync_desc), onNavigateToBitwarden,
+                SyncBackupItem(Icons.Default.Wifi, Setting.LAN_TITLE,
+                    Setting.LAN_TITLE.summary(), onNavigateToLanSync)
+                SyncBackupItem(Icons.Default.Cloud, Setting.WEBDAV_BACKUP,
+                    Setting.WEBDAV_BACKUP.summary(), onNavigateToWebDav)
+                SyncBackupItem(Icons.Default.CloudSync, Setting.ONEDRIVE_BACKUP_TITLE,
+                    Setting.ONEDRIVE_BACKUP_TITLE.summary(), onNavigateToOneDrive)
+                SyncBackupItem(Icons.Default.CloudSync, Setting.SYNC_BACKUP_BITWARDEN_SYNC_TITLE,
+                    Setting.SYNC_BACKUP_BITWARDEN_SYNC_TITLE.summary(), onNavigateToBitwarden,
                     enabled = isPlusActivated, badge = if (isPlusActivated) null else "Plus")
             }
             SyncBackupSection(title = stringResource(R.string.sync_backup_import_export_low_freq)) {
-                SyncBackupItem(Icons.Default.Download, stringResource(R.string.export_data),
-                    stringResource(R.string.export_data_description), onNavigateToExportData)
-                SyncBackupItem(Icons.Default.Upload, stringResource(R.string.import_data),
-                    stringResource(R.string.import_data_description), onNavigateToImportData)
+                SyncBackupItem(Icons.Default.Download, Setting.EXPORT_DATA,
+                    Setting.EXPORT_DATA.summary(), onNavigateToExportData)
+                SyncBackupItem(Icons.Default.Upload, Setting.IMPORT_DATA,
+                    Setting.IMPORT_DATA.summary(), onNavigateToImportData)
             }
             // 提示卡片
             if (!isPlusActivated) {
@@ -154,13 +154,14 @@ private fun SyncBackupSection(
 @Composable
 private fun SyncBackupItem(
     icon: ImageVector,
-    title: String,
-    description: String,
+    setting: Setting,
+    description: String = setting.summary(),
     onClick: () -> Unit,
     enabled: Boolean = true,
     badge: String? = null
 ) {
-    SettingsPanelRow(icon, title, description, onClick, enabled,
+    val title = setting.title()
+    SettingsPanelRow(icon, setting, description, onClick, enabled,
         trailing = if (badge != null) {{ Text(badge, style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant) }} else null)
 }

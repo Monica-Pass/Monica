@@ -1,0 +1,25 @@
+FD03 failed-run observations; concurrent rotation does not prove the complete failure cause.
+11-19 21:01:00.068 63291 63381 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10000000 cmp=takagi.ru.monica.settingssearchfixautofd20261119.test/androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity} with LAUNCH_MULTIPLE from uid 10090 (BAL_ALLOW_VISIBLE_WINDOW) result code=0
+11-19 21:01:00.102 63291 63316 I ActivityTaskManager: Displayed takagi.ru.monica.settingssearchfixautofd20261119.test/androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity for user 0: +38ms
+11-19 21:01:00.136 65165 65186 I TestRunner: finished: unavailableDefaultIdsSurviveReadReentryAndCancelInsteadOfBecomingAll(takagi.ru.monica.ui.screens.AutofillSettingsM3eTest)
+11-19 21:01:00.137 65165 65186 I TestRunner: started: unavailablePlusRouteStaysDisabledAtLargeText(takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest)
+11-19 21:01:00.138 63291 63319 I ActivityTaskManager: Config changes=20000480 {1.0 460mcc?mnc [en_US] ldltr sw617dp w1097dp h617dp 280dpi lrg long land night finger -keyb/v/v dpad/v winConfig={ mBounds=Rect(0, 0 - 1920, 1080) mAppBounds=Rect(0, 0 - 1920, 1080) mMaxBounds=Rect(0, 0 - 1920, 1080) mDisplayRotation=ROTATION_90 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_90} s.217 fontWeightAdjustment=0}
+11-19 21:01:00.164 63291 63910 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10008000 cmp=takagi.ru.monica.settingssearchfixautofd20261119/androidx.activity.ComponentActivity} with LAUNCH_MULTIPLE from uid 10090 (BAL_ALLOW_PERMISSION) result code=0
+11-19 21:01:00.174 63291 64837 W ActivityTaskManager: Finishing task with all activities already finished
+11-19 21:01:00.174 63291 64837 W ActivityTaskManager: Duplicate finish request for r=ActivityRecord{20528894 u0 takagi.ru.monica.settingssearchfixautofd20261119.test/androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity t531 f}}
+11-19 21:01:00.253 63291 63316 I ActivityTaskManager: Displayed takagi.ru.monica.settingssearchfixautofd20261119/androidx.activity.ComponentActivity for user 0: +34ms
+11-19 21:01:00.300 63291 63913 W ActivityTaskManager: takeTaskSnapshot: taskId=531 not found or not visible
+11-19 21:01:02.442 65165 65186 E TestRunner: failed: unavailablePlusRouteStaysDisabledAtLargeText(takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest)
+11-19 21:01:02.442 65165 65186 E TestRunner: java.lang.IllegalStateException: No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
+
+FD04 unchanged-APK focused rerun:
+--------- beginning of main
+11-19 21:04:58.275  1617  1634 I TestRunner: run started: 1 tests
+11-19 21:04:58.275  1617  1634 I TestRunner: started: unavailablePlusRouteStaysDisabledAtLargeText(takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest)
+--------- beginning of system
+11-19 21:04:58.330 63291 63913 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10008000 cmp=takagi.ru.monica.settingssearchfixautofd20261119/androidx.activity.ComponentActivity} with LAUNCH_MULTIPLE from uid 10090 (BAL_ALLOW_PERMISSION) result code=0
+11-19 21:04:58.425 63291 63316 I ActivityTaskManager: Displayed takagi.ru.monica.settingssearchfixautofd20261119/androidx.activity.ComponentActivity for user 0: +100ms
+11-19 21:04:58.996 63291 63381 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10000000 cmp=takagi.ru.monica.settingssearchfixautofd20261119.test/androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity} with LAUNCH_MULTIPLE from uid 10090 (BAL_ALLOW_VISIBLE_WINDOW) result code=0
+11-19 21:04:59.033 63291 63316 I ActivityTaskManager: Displayed takagi.ru.monica.settingssearchfixautofd20261119.test/androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity for user 0: +41ms
+11-19 21:04:59.058  1617  1634 I TestRunner: finished: unavailablePlusRouteStaysDisabledAtLargeText(takagi.ru.monica.ui.screens.UnifiedSettingsInstrumentedTest)
+11-19 21:04:59.059  1617  1634 I TestRunner: run finished: 1 tests, 0 failed, 0 ignored

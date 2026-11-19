@@ -1,0 +1,214 @@
+{
+  "date": "2026-11-19",
+  "version": "1.0.329",
+  "device": "Preexisting MuMu API 35 x86_64, user 0, task-specific Debug application IDs",
+  "editions": {
+    "main": {
+      "label": "main03",
+      "buildSeconds": 168.852,
+      "jvm": {
+        "tests": 123,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "deviceTests": 19,
+      "runnerSeconds": 34.915,
+      "apks": [
+        {
+          "file": "Monica-Android-x86_64-1.0.329-26111912-88.APK",
+          "sha256": "d3930dafdbae7204a9cb18da9d2d5f69648391a73ce5994d03bf105ed66ce90c"
+        },
+        {
+          "file": "app-debug-androidTest.apk",
+          "sha256": "2f23c9e807b137a475998de65e96bca66718c26e3301f4026985126dc9df5d49"
+        }
+      ],
+      "observations": [
+        {
+          "cardCount": 1,
+          "databaseRows": 2,
+          "projectCount": 1,
+          "targetProjectRows": 2,
+          "openedIdsPerCard": [
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "cardCount": 1,
+          "databaseRows": 2,
+          "projectCount": 1,
+          "targetProjectRows": 2,
+          "openedIdsPerCard": [
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "cardCount": 1,
+          "databaseRows": 3,
+          "projectCount": 2,
+          "targetProjectRows": 2,
+          "openedIdsPerCard": [
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "cardCount": 1,
+          "databaseRows": 2,
+          "projectCount": 1,
+          "targetProjectRows": 2,
+          "openedIdsPerCard": [
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "cardCount": 1,
+          "databaseRows": 2,
+          "projectCount": 1,
+          "targetProjectRows": 2,
+          "openedIdsPerCard": [
+            [
+              1,
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    "fd": {
+      "label": "fd01",
+      "buildSeconds": 274.652,
+      "jvm": {
+        "tests": 123,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "deviceTests": 19,
+      "runnerSeconds": 31.132,
+      "apks": [
+        {
+          "file": "Monica-Android-x86_64-1.0.329.apk",
+          "sha256": "81a502624b51b57bf46f58aa17e9ed3cd7b41fa44e309277ae14f2b4cc8ce894"
+        },
+        {
+          "file": "app-debug-androidTest.apk",
+          "sha256": "19d030f9844fee6da367e9ca8bba567254cd42af7ce213d7a7b1f3cca8618557"
+        }
+      ],
+      "observations": [
+        {
+          "cardCount": 1,
+          "databaseRows": 2,
+          "projectCount": 1,
+          "targetProjectRows": 2,
+          "openedIdsPerCard": [
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "cardCount": 1,
+          "databaseRows": 2,
+          "projectCount": 1,
+          "targetProjectRows": 2,
+          "openedIdsPerCard": [
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "cardCount": 1,
+          "databaseRows": 3,
+          "projectCount": 2,
+          "targetProjectRows": 2,
+          "openedIdsPerCard": [
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "cardCount": 1,
+          "databaseRows": 2,
+          "projectCount": 1,
+          "targetProjectRows": 2,
+          "openedIdsPerCard": [
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "cardCount": 1,
+          "databaseRows": 2,
+          "projectCount": 1,
+          "targetProjectRows": 2,
+          "openedIdsPerCard": [
+            [
+              1,
+              2
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  "sharedSources": {
+    "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultV2PasswordProjects.kt": "b969f0ad583c92a08164f6ea7b1076ec2de200a328abd9310808692286520a48",
+    "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultV2Pane.kt": "665a4b9f535ce9e6e53b41311e407123964a4738d6be5ba521fbf37b0fa11c89",
+    "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultOverviewProjection.kt": "ad60a8997cd3972c48bc227c2159951fd78eaadcddf7443d935dfdbd20485ef0",
+    "app/src/test/java/takagi/ru/monica/ui/vaultv2/VaultPasswordProjectsTest.kt": "8498d058d41d64351b78502f8c0327365488f08f6523b1c08ab1867e97740077",
+    "app/src/androidTest/java/takagi/ru/monica/ui/VaultProjectCardTest.kt": "94d26cdfc594979e95ee4e1dfda7744960f69c0b64c1684605924d6d11596c06",
+    "app/src/androidTest/java/takagi/ru/monica/ui/vaultv2/VaultOverviewNativeTest.kt": "e080d8e5919a3b66760ee44d3be05fee2d566b8a68f6680618709d1bbc179d73",
+    "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultOverviewScreen.kt": "1b1ae9940b8395a2acd82d1dd304554f3c235f9eb563f92846c426b81f06e7c7",
+    "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultOverviewPickerData.kt": "1023ca14d2e58f116c9dc1dafb4f91ad1666891b915bbf20a28256e08513c562"
+  },
+  "negativeControl": {
+    "tests": 3,
+    "duplicateCardFailures": 3,
+    "runnerSeconds": 12.892
+  },
+  "cleanup": {
+    "results": {
+      "takagi.ru.monica.vaultprojectfix20261119.test": "Success",
+      "takagi.ru.monica.vaultprojectfix20261119": "Success",
+      "takagi.ru.monica.vaultprojectfixfd20261119.test": "Success",
+      "takagi.ru.monica.vaultprojectfixfd20261119": "Success"
+    },
+    "usersUnchanged": true,
+    "packagesUnchanged": true,
+    "currentUser": "0",
+    "preexistingMuMuLeftRunning": true
+  },
+  "preservedFailures": {
+    "main01Jvm": "123/124 passed. Existing security source-text guard expects obsolete inline unlock code absent from the before-source too. Guard and security production code remain unchanged; subsequent focused suites omit this two-method class.",
+    "main02Device": "18/19 passed in 48.735s. Independent control mistakenly retained the legacy replicaGroupId of the multi-password project. Fixture now clears both identity fields and asserts two projects before opening the pane. Production unchanged for this repair."
+  },
+  "metadata": "F-Droid v1.0.329 / 36 metadata check and six Python tests passed.",
+  "limitations": [
+    "Synthetic local Room records in isolated Debug apps; no reporter hardware, HyperOS, R8 Release or live remote databases.",
+    "Actual editor, full VaultV2Pane, overview-to-list and PasswordDetailScreen; not complete MainActivity navigation.",
+    "Actions test uses the existing disablePasswordVerification test setting; it validates selection, cancel and soft-delete scope, not authentication.",
+    "Move membership tested through the production move plan; no new remote transfer or physical deletion test.",
+    "Earlier APK artifacts were not separately retained before later builds overwrote outputs; their hashes and all original logs remain."
+  ]
+}

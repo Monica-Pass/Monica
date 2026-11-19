@@ -2,11 +2,6 @@ package takagi.ru.monica.ui.screens
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -18,6 +13,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -53,7 +50,9 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.LoadingIndicator
+import androidx.compose.material3.LoadingIndicatorDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
@@ -71,14 +70,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.ProgressBarRangeInfo
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.progressBarRangeInfo
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import takagi.ru.monica.R
 import takagi.ru.monica.ui.components.MonicaExpandableContent
 import takagi.ru.monica.ui.components.MonicaExpansionChevron
@@ -143,54 +151,29 @@ fun SecurityAnalysisScreen(
             showAnalyzingUi = false
         }
     }
-    val analyzingTransition = rememberInfiniteTransition(label = "security_analysis_progress")
-    val loopingProgress by analyzingTransition.animateFloat(
-        initialValue = 0.12f,
-        targetValue = 0.92f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 1200, easing = LinearEasing),
-            repeatMode = RepeatMode.Reverse
-        ),
-        label = "security_analysis_looping_progress"
-    )
-    val effectiveProgress = if (analysisData.analysisProgress in 1..99) {
-        analysisData.analysisProgress / 100f
-    } else {
-        loopingProgress
-    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Scaffold(
             topBar = {
-                Column {
-                    TopAppBar(
-                        title = { Text(stringResource(R.string.security_analysis)) },
-                        navigationIcon = {
-                            IconButton(onClick = onNavigateBack) {
-                                Icon(
-                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                    contentDescription = stringResource(R.string.back)
-                                )
-                            }
-                        },
-                        actions = {
-                            IconButton(onClick = onStartAnalysis) {
-                                Icon(
-                                    imageVector = Icons.Default.Refresh,
-                                    contentDescription = stringResource(R.string.refresh)
-                                )
-                            }
+                TopAppBar(
+                    title = { Text(stringResource(R.string.security_analysis)) },
+                    navigationIcon = {
+                        IconButton(onClick = onNavigateBack) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = stringResource(R.string.back)
+                            )
                         }
-                    )
-                    if (showAnalyzingUi) {
-                        LinearProgressIndicator(
-                            progress = { effectiveProgress },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(2.dp)
-                        )
+                    },
+                    actions = {
+                        IconButton(onClick = onStartAnalysis) {
+                            Icon(
+                                imageVector = Icons.Default.Refresh,
+                                contentDescription = stringResource(R.string.refresh)
+                            )
+                        }
                     }
-                }
+                )
             }
         ) { paddingValues ->
             LazyColumn(
@@ -359,56 +342,102 @@ private fun SecurityOverviewHeader(
     Card(
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = colorScheme.surfaceVariant.copy(alpha = 0.22f)),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth().testTag("security-overview")
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(20.dp)
-        ) {
-            Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                Text(
-                    text = if (isAnalyzing) "—" else score.coerceIn(0, 100).toString(),
-                    style = MaterialTheme.typography.displayMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = if (isAnalyzing) colorScheme.onSurfaceVariant else scoreColor
-                )
-                Text(
-                    text = stringResource(R.string.security_score_out_of_100),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = colorScheme.onSurfaceVariant
-                )
-            }
-            Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                Text(
-                    text = if (isAnalyzing) {
-                        stringResource(R.string.security_analysis_in_progress_short)
-                    } else {
-                        stringResource(
-                            when {
-                                score >= 80 -> R.string.security_score_good
-                                score >= 55 -> R.string.security_score_fair
-                                else -> R.string.security_score_needs_attention
-                            }
-                        )
-                    },
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.SemiBold
-                )
-                Text(
-                    text = if (affectedAccountCount == 0) {
-                        stringResource(R.string.security_no_accounts_need_attention)
-                    } else {
-                        stringResource(R.string.security_accounts_need_attention, affectedAccountCount)
-                    },
-                    style = MaterialTheme.typography.bodySmall,
-                    color = colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.End
-                )
+        BoxWithConstraints(Modifier.fillMaxWidth().padding(20.dp)) {
+            if (maxWidth < 280.dp || LocalDensity.current.fontScale >= 1.5f) {
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    SecurityScoreIndicator(score, isAnalyzing, scoreColor)
+                    SecurityOverviewSummary(score, affectedAccountCount, isAnalyzing)
+                }
+            } else {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    SecurityScoreIndicator(score, isAnalyzing, scoreColor)
+                    SecurityOverviewSummary(score, affectedAccountCount, isAnalyzing, Modifier.weight(1f))
+                }
             }
         }
+    }
+}
+
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+private fun SecurityScoreIndicator(score: Int, isAnalyzing: Boolean, scoreColor: Color) {
+    val indicatorColor = if (isAnalyzing) MaterialTheme.colorScheme.primary else scoreColor
+    val labelColor = if (indicatorColor.luminance() > 0.179f) Color.Black else Color.White
+    val description = stringResource(
+        if (isAnalyzing) R.string.security_analysis_in_progress_short else R.string.security_score_out_of_100
+    )
+    Box(
+        Modifier.size(120.dp).testTag("security-score-indicator").semantics(mergeDescendants = true) {
+            contentDescription = description
+            if (isAnalyzing) progressBarRangeInfo = ProgressBarRangeInfo.Indeterminate
+        },
+        contentAlignment = Alignment.Center
+    ) {
+        if (isAnalyzing) {
+            LoadingIndicator(Modifier.size(112.dp).clearAndSetSemantics {}, color = indicatorColor)
+        } else {
+            LoadingIndicator(
+                progress = { 0f },
+                modifier = Modifier.size(112.dp).clearAndSetSemantics {},
+                color = indicatorColor,
+                polygons = LoadingIndicatorDefaults.IndeterminateIndicatorPolygons
+            )
+        }
+        // analysisProgress may already be 100 while breach checks are pending.
+        // Keep the busy state indeterminate; only the completed score is numeric.
+        Text(
+            text = if (isAnalyzing) "…" else score.coerceIn(0, 100).toString(),
+            modifier = Modifier.width(72.dp),
+            style = MaterialTheme.typography.headlineSmall,
+            autoSize = TextAutoSize.StepBased(minFontSize = 12.sp, maxFontSize = 24.sp),
+            fontWeight = FontWeight.Bold,
+            color = labelColor,
+            textAlign = TextAlign.Center,
+            maxLines = 1,
+            softWrap = false
+        )
+    }
+}
+
+@Composable
+private fun SecurityOverviewSummary(
+    score: Int,
+    affectedAccountCount: Int,
+    isAnalyzing: Boolean,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier.testTag("security-score-summary"), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Text(
+            text = stringResource(
+                if (isAnalyzing) R.string.security_analysis_in_progress_short
+                else when {
+                    score >= 80 -> R.string.security_score_good
+                    score >= 55 -> R.string.security_score_fair
+                    else -> R.string.security_score_needs_attention
+                }
+            ),
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.SemiBold
+        )
+        Text(
+            text = stringResource(R.string.security_score_out_of_100),
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Text(
+            text = if (affectedAccountCount == 0) {
+                stringResource(R.string.security_no_accounts_need_attention)
+            } else {
+                stringResource(R.string.security_accounts_need_attention, affectedAccountCount)
+            },
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
 }
 

@@ -1,5 +1,6 @@
 package takagi.ru.monica.passkey.hardware
 
+import takagi.ru.monica.ui.screens.Setting
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Usb
 import androidx.compose.runtime.*
@@ -20,8 +21,7 @@ internal fun HardwarePasskeySetting(inSettingsGroup: Boolean = false) {
     if (inSettingsGroup) {
         SettingsPanelRow(
             icon = Icons.Default.Usb,
-            title = stringResource(R.string.hardware_key_enable),
-            subtitle = stringResource(R.string.hardware_key_enable_description),
+            setting = Setting.HARDWARE_KEY_ENABLE,
             checked = enabled,
             onCheckedChange = { HardwarePasskeyPreferences.setEnabled(context, it) },
             modifier = Modifier.testTag("hardware-passkey-enabled"),
@@ -29,8 +29,7 @@ internal fun HardwarePasskeySetting(inSettingsGroup: Boolean = false) {
         return
     }
     SettingsSubpageRow(
-        title = stringResource(R.string.hardware_key_enable),
-        subtitle = stringResource(R.string.hardware_key_enable_description),
+        setting = Setting.HARDWARE_KEY_ENABLE,
         icon = Icons.Default.Usb, index = 0, count = 1,
         checked = enabled,
         onCheckedChange = { HardwarePasskeyPreferences.setEnabled(context, it) },

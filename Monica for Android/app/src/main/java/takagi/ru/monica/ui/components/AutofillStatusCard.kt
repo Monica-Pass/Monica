@@ -40,7 +40,7 @@ fun AutofillStatusCard(
         Surface(modifier.fillMaxWidth(), shape = RoundedCornerShape(24.dp),
             color = MaterialTheme.colorScheme.surfaceContainer) {
             Column {
-                SettingsPanelRow(
+                SettingsContentRow(
                     if (status.isSystemEnabled) Icons.Default.CheckCircle else Icons.Default.Warning,
                     status.getSummary(context),
                     when {

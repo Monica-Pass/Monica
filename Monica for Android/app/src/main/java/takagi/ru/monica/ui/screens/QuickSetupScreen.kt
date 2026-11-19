@@ -660,7 +660,7 @@ private fun BottomNavStep(
                 val title = stringResource(tabLabelRes(tab))
                 BottomNavConfigRow(
                     icon = tabIcon(tab),
-                    title = title,
+                    setting = bottomNavSetting(tab),
                     subtitle = stringResource(if (shown) R.string.bottom_nav_toggle_subtitle else R.string.hidden),
                     checked = shown,
                     switchEnabled = canToggle,
@@ -694,7 +694,7 @@ private fun BottomNavStep(
         item(key = "dock_settings") {
             BottomNavConfigRow(
                 icon = Icons.Default.Settings,
-                title = stringResource(R.string.nav_settings),
+                setting = Setting.NAV_SETTINGS,
                 subtitle = stringResource(R.string.qs_settings_kept),
                 checked = true,
                 switchEnabled = false,

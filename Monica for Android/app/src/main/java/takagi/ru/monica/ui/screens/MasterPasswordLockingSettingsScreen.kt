@@ -146,7 +146,7 @@ fun MasterPasswordLockingSettingsScreen(
 
             SettingsItemWithSwitch(
                 icon = Icons.Default.Fingerprint,
-                title = stringResource(R.string.biometric_unlock),
+                setting = Setting.BIOMETRIC_UNLOCK,
                 subtitle = biometricSubtitle,
                 checked = biometricSwitchState,
                 enabled = isBiometricAvailable,
@@ -171,22 +171,20 @@ fun MasterPasswordLockingSettingsScreen(
 
             SettingsItem(
                 icon = Icons.Default.Timer,
-                title = stringResource(R.string.auto_lock),
+                setting = Setting.AUTO_LOCK,
                 subtitle = getAutoLockDisplayName(settings.autoLockMinutes, context),
                 onClick = { showAutoLockDialog = true }
             )
 
             SettingsItem(
                 icon = Icons.Default.Security,
-                title = stringResource(R.string.security_questions),
-                subtitle = stringResource(R.string.security_questions_description),
+                setting = Setting.SECURITY_QUESTIONS,
                 onClick = onSecurityQuestions
             )
 
             SettingsItem(
                 icon = Icons.Default.VpnKey,
-                title = stringResource(R.string.reset_master_password),
-                subtitle = stringResource(R.string.reset_password_description),
+                setting = Setting.RESET_MASTER_PASSWORD,
                 onClick = onResetPassword
             )
 

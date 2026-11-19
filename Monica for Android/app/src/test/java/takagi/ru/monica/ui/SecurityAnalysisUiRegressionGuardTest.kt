@@ -1,7 +1,6 @@
 package takagi.ru.monica.ui
 
 import java.io.File
-import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -9,10 +8,10 @@ import org.junit.Test
 class SecurityAnalysisUiRegressionGuardTest {
 
     @Test
-    fun pageUsesOneLoadingProgressAndNoDecorativeScoreRing() {
+    fun pageKeepsLoadingInsideTheScoreCardWithoutATopProgressBar() {
         val source = screenSource()
 
-        assertEquals(1, source.split("LinearProgressIndicator(").size - 1)
+        assertFalse(source.contains("LinearProgressIndicator("))
         assertFalse(source.contains("Brush.linearGradient"))
         assertFalse(source.contains("Brush.sweepGradient"))
         assertFalse(source.contains("OverviewPill"))

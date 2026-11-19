@@ -313,14 +313,12 @@ fun AutofillSettingsV2Screen(
             ) {
                 AutofillSettingItem(
                     icon = Icons.Outlined.Smartphone,
-                    title = stringResource(R.string.autofill_v2_set_system_service),
-                    subtitle = stringResource(R.string.autofill_v2_set_system_service_desc),
+                    setting = Setting.AUTOFILL_V2_SET_SYSTEM_SERVICE,
                     onClick = ::openSystemAutofillSettings,
                 )
                 AutofillSettingItem(
                     icon = Icons.Outlined.Settings,
-                    title = stringResource(R.string.default_manager_title),
-                    subtitle = stringResource(R.string.default_manager_entry_hint),
+                    setting = Setting.DEFAULT_MANAGER_TITLE,
                     onClick = { showDefaultManager = true },
                 )
             }
@@ -332,8 +330,7 @@ fun AutofillSettingsV2Screen(
             ) {
                 AutofillSettingItem(
                     icon = Icons.Outlined.Key,
-                    title = stringResource(R.string.autofill_system_passkey_settings),
-                    subtitle = stringResource(R.string.autofill_system_passkey_settings_desc),
+                    setting = Setting.AUTOFILL_SYSTEM_PASSKEY_SETTINGS,
                     onClick = { openCredentialProviderSettings(context) },
                 )
                 takagi.ru.monica.passkey.hardware.HardwarePasskeySetting(inSettingsGroup = true)
@@ -346,8 +343,7 @@ fun AutofillSettingsV2Screen(
             ) {
                 AutofillSettingItem(
                     icon = Icons.Outlined.Security,
-                    title = stringResource(R.string.autofill_protection_entry_title),
-                    subtitle = stringResource(R.string.autofill_protection_entry_desc),
+                    setting = Setting.AUTOFILL_PROTECTION_ENTRY_TITLE,
                     onClick = { context.startActivity(Intent(context, AutofillProtectionActivity::class.java)) },
                 )
             }
@@ -374,8 +370,7 @@ fun AutofillSettingsV2Screen(
             ) {
                 SwitchSettingItem(
                     icon = Icons.Outlined.Input,
-                    title = stringResource(R.string.autofill_v2_enable_service),
-                    subtitle = stringResource(R.string.autofill_v2_enable_service_desc),
+                    setting = Setting.AUTOFILL_V2_ENABLE_SERVICE,
                     checked = autofillEnabled,
                     onCheckedChange = { enabled ->
                         scope.launch { preferences.setAutofillEnabled(enabled) }
@@ -383,8 +378,7 @@ fun AutofillSettingsV2Screen(
                 )
                 SwitchSettingItem(
                     icon = Icons.Outlined.Notifications,
-                    title = stringResource(R.string.autofill_active_fill_notification_title),
-                    subtitle = stringResource(R.string.autofill_active_fill_notification_desc),
+                    setting = Setting.AUTOFILL_ACTIVE_FILL_NOTIFICATION_TITLE,
                     checked = activeFillNotificationEnabled,
                     onCheckedChange = { enabled ->
                         scope.launch { preferences.setActiveFillNotificationEnabled(enabled) }
@@ -392,8 +386,7 @@ fun AutofillSettingsV2Screen(
                 )
                 SwitchSettingItem(
                     icon = Icons.Outlined.Lock,
-                    title = stringResource(R.string.autofill_auth_required),
-                    subtitle = stringResource(R.string.autofill_auth_required_desc),
+                    setting = Setting.AUTOFILL_AUTH_REQUIRED,
                     checked = autofillAuthRequired,
                     onCheckedChange = { enabled ->
                         scope.launch { settingsManager.updateAutofillAuthRequired(enabled) }
@@ -402,8 +395,7 @@ fun AutofillSettingsV2Screen(
                 if (autofillAuthRequired) {
                     SwitchSettingItem(
                         icon = Icons.Outlined.Lock,
-                        title = stringResource(R.string.autofill_keep_unlocked),
-                        subtitle = stringResource(R.string.autofill_keep_unlocked_desc),
+                        setting = Setting.AUTOFILL_KEEP_UNLOCKED,
                         checked = appSettings.autofillKeepUnlocked,
                         onCheckedChange = { enabled ->
                             scope.launch { settingsManager.updateAutofillKeepUnlocked(enabled) }
@@ -412,8 +404,7 @@ fun AutofillSettingsV2Screen(
                 }
                 SwitchSettingItem(
                     icon = Icons.Outlined.Input,
-                    title = stringResource(R.string.autofill_inline_suggestions),
-                    subtitle = stringResource(R.string.autofill_inline_suggestions_desc),
+                    setting = Setting.AUTOFILL_INLINE_SUGGESTIONS,
                     checked = inlineSuggestionsEnabled,
                     onCheckedChange = { enabled ->
                         scope.launch { preferences.setInlineSuggestionsEnabled(enabled) }
@@ -421,8 +412,7 @@ fun AutofillSettingsV2Screen(
                 )
                 SwitchSettingItem(
                     icon = Icons.Outlined.AutoAwesome,
-                    title = stringResource(R.string.password_suggestion_title),
-                    subtitle = stringResource(R.string.autofill_password_suggestion_setting_desc),
+                    setting = Setting.PASSWORD_SUGGESTION_TITLE,
                     checked = passwordSuggestionEnabled,
                     onCheckedChange = { enabled ->
                         scope.launch { preferences.setPasswordSuggestionEnabled(enabled) }
@@ -437,8 +427,7 @@ fun AutofillSettingsV2Screen(
             ) {
                 SwitchSettingItem(
                     icon = Icons.Outlined.Link,
-                    title = stringResource(R.string.autofill_v2_strict_match),
-                    subtitle = stringResource(R.string.autofill_v2_strict_match_desc),
+                    setting = Setting.AUTOFILL_V2_STRICT_MATCH,
                     checked = strictMode,
                     onCheckedChange = { enabled ->
                         scope.launch { preferences.setBitwardenStrictModeEnabled(enabled) }
@@ -446,8 +435,7 @@ fun AutofillSettingsV2Screen(
                 )
                 SwitchSettingItem(
                     icon = Icons.Outlined.AccountTree,
-                    title = stringResource(R.string.autofill_v2_subdomain_match),
-                    subtitle = stringResource(R.string.autofill_v2_subdomain_match_desc),
+                    setting = Setting.AUTOFILL_V2_SUBDOMAIN_MATCH,
                     checked = subdomainMatch,
                     onCheckedChange = { enabled ->
                         scope.launch { preferences.setBitwardenSubdomainMatchEnabled(enabled) }
@@ -456,14 +444,13 @@ fun AutofillSettingsV2Screen(
                 SettingsPanelRow(
                     modifier = Modifier.testTag("autofill-domain-setting"),
                     icon = Icons.Outlined.Language,
-                    title = stringResource(R.string.autofill_domain_strategy_title),
+                    setting = Setting.AUTOFILL_DOMAIN_STRATEGY_TITLE,
                     subtitle = DomainMatchStrategy.getDisplayName(context, domainMatchStrategy),
                     onClick = { showDomainStrategyDialog = true },
                 )
                 SwitchSettingItem(
                     icon = Icons.Outlined.DoNotDisturb,
-                    title = stringResource(R.string.autofill_v2_respect_off),
-                    subtitle = stringResource(R.string.autofill_v2_respect_off_desc),
+                    setting = Setting.AUTOFILL_V2_RESPECT_OFF,
                     checked = respectOffEnabled,
                     onCheckedChange = { enabled ->
                         scope.launch { preferences.setV2RespectAutofillOffEnabled(enabled) }
@@ -478,8 +465,7 @@ fun AutofillSettingsV2Screen(
             ) {
                 SwitchSettingItem(
                     icon = Icons.Outlined.AddCircleOutline,
-                    title = stringResource(R.string.autofill_save_enable),
-                    subtitle = stringResource(R.string.autofill_save_enable_desc),
+                    setting = Setting.AUTOFILL_SAVE_ENABLE,
                     checked = savePromptEnabled,
                     onCheckedChange = { enabled ->
                         scope.launch { preferences.setRequestSaveDataEnabled(enabled) }
@@ -487,8 +473,7 @@ fun AutofillSettingsV2Screen(
                 )
                 SwitchSettingItem(
                     icon = Icons.Outlined.Refresh,
-                    title = stringResource(R.string.autofill_save_update_duplicate),
-                    subtitle = stringResource(R.string.autofill_save_update_duplicate_desc),
+                    setting = Setting.AUTOFILL_SAVE_UPDATE_DUPLICATE,
                     checked = autoUpdateDuplicatePasswordsEnabled,
                     onCheckedChange = { enabled ->
                         scope.launch { preferences.setAutoUpdateDuplicatePasswordsEnabled(enabled) }
@@ -496,8 +481,7 @@ fun AutofillSettingsV2Screen(
                 )
                 SwitchSettingItem(
                     icon = Icons.Outlined.Settings,
-                    title = stringResource(R.string.autofill_save_show_notification),
-                    subtitle = stringResource(R.string.autofill_save_show_notification_desc),
+                    setting = Setting.AUTOFILL_SAVE_SHOW_NOTIFICATION,
                     checked = showSaveNotificationEnabled,
                     onCheckedChange = { enabled ->
                         scope.launch { preferences.setShowSaveNotificationEnabled(enabled) }
@@ -505,8 +489,7 @@ fun AutofillSettingsV2Screen(
                 )
                 SwitchSettingItem(
                     icon = Icons.Outlined.Link,
-                    title = stringResource(R.string.autofill_save_smart_title),
-                    subtitle = stringResource(R.string.autofill_save_smart_title_desc),
+                    setting = Setting.AUTOFILL_SAVE_SMART_TITLE,
                     checked = smartTitleGenerationEnabled,
                     onCheckedChange = { enabled ->
                         scope.launch { preferences.setSmartTitleGenerationEnabled(enabled) }
@@ -514,8 +497,7 @@ fun AutofillSettingsV2Screen(
                 )
                 SwitchSettingItem(
                     icon = Icons.Outlined.Apps,
-                    title = stringResource(R.string.autofill_save_app_info),
-                    subtitle = stringResource(R.string.autofill_save_app_info_desc),
+                    setting = Setting.AUTOFILL_SAVE_APP_INFO,
                     checked = autoSaveAppInfoEnabled,
                     onCheckedChange = { enabled ->
                         scope.launch { preferences.setAutoSaveAppInfoEnabled(enabled) }
@@ -523,8 +505,7 @@ fun AutofillSettingsV2Screen(
                 )
                 SwitchSettingItem(
                     icon = Icons.Outlined.Language,
-                    title = stringResource(R.string.autofill_save_website_info),
-                    subtitle = stringResource(R.string.autofill_save_website_info_desc),
+                    setting = Setting.AUTOFILL_SAVE_WEBSITE_INFO,
                     checked = autoSaveWebsiteInfoEnabled,
                     onCheckedChange = { enabled ->
                         scope.launch { preferences.setAutoSaveWebsiteInfoEnabled(enabled) }
@@ -539,8 +520,7 @@ fun AutofillSettingsV2Screen(
             ) {
                 SwitchSettingItem(
                     icon = Icons.Outlined.Smartphone,
-                    title = stringResource(R.string.autofill_show_otp_notification),
-                    subtitle = stringResource(R.string.autofill_show_otp_notification_desc),
+                    setting = Setting.AUTOFILL_SHOW_OTP_NOTIFICATION,
                     checked = showOtpNotificationEnabled,
                     onCheckedChange = { enabled ->
                         scope.launch { preferences.setOtpNotificationEnabled(enabled) }
@@ -563,7 +543,7 @@ fun AutofillSettingsV2Screen(
                 SettingsPanelRow(
                     modifier = Modifier.testTag("autofill-otp-duration-setting"),
                     icon = Icons.Outlined.Settings,
-                    title = stringResource(R.string.autofill_otp_notification_duration),
+                    setting = Setting.AUTOFILL_OTP_NOTIFICATION_DURATION,
                     subtitle = "${stringResource(R.string.autofill_otp_notification_duration_desc)}: ${otpNotificationDurationSeconds}s",
                     onClick = {
                         showOtpDurationDialog = true
@@ -571,8 +551,7 @@ fun AutofillSettingsV2Screen(
                 )
                 SwitchSettingItem(
                     icon = Icons.Outlined.ContentCopy,
-                    title = stringResource(R.string.autofill_auto_copy_otp),
-                    subtitle = stringResource(R.string.autofill_auto_copy_otp_desc),
+                    setting = Setting.AUTOFILL_AUTO_COPY_OTP,
                     checked = autoCopyOtpEnabled,
                     onCheckedChange = { enabled ->
                         scope.launch { preferences.setAutoCopyOtpEnabled(enabled) }
@@ -587,28 +566,24 @@ fun AutofillSettingsV2Screen(
             ) {
                 AutofillSettingItem(
                     icon = Icons.Outlined.Settings,
-                    title = stringResource(R.string.ime_manage_input_methods),
-                    subtitle = stringResource(R.string.ime_manage_input_methods_desc),
+                    setting = Setting.IME_MANAGE_INPUT_METHODS,
                     onClick = ::openSystemKeyboardSettings,
                 )
                 androidx.compose.foundation.layout.Box(Modifier.testTag("ime_key_vibration_setting")) { SwitchSettingItem(
                     icon = Icons.Outlined.Vibration,
-                    title = stringResource(R.string.ime_key_vibration_title),
-                    subtitle = stringResource(R.string.ime_key_vibration_description),
+                    setting = Setting.IME_KEY_VIBRATION_TITLE,
                     checked = imeKeyboardOptions.keyVibrationEnabled,
                     onCheckedChange = { scope.launch { preferences.setImeKeyVibrationEnabled(it) } },
                 ) }
                 androidx.compose.foundation.layout.Box(Modifier.testTag("ime_scramble_pin_setting")) { SwitchSettingItem(
                     icon = Icons.Outlined.Keyboard,
-                    title = stringResource(R.string.ime_scramble_pin_title),
-                    subtitle = stringResource(R.string.ime_scramble_pin_description),
+                    setting = Setting.IME_SCRAMBLE_PIN_TITLE,
                     checked = imeKeyboardOptions.scramblePin,
                     onCheckedChange = { scope.launch { preferences.setImeScramblePin(it) } },
                 ) }
                 androidx.compose.foundation.layout.Box(Modifier.testTag("ime_hide_pin_preview_setting")) { SwitchSettingItem(
                     icon = Icons.Outlined.VisibilityOff,
-                    title = stringResource(R.string.ime_hide_pin_preview_title),
-                    subtitle = stringResource(R.string.ime_hide_pin_preview_description),
+                    setting = Setting.IME_HIDE_PIN_PREVIEW_TITLE,
                     checked = imeKeyboardOptions.hidePinPreview,
                     onCheckedChange = { scope.launch { preferences.setImeHidePinPreview(it) } },
                 ) }
@@ -621,7 +596,7 @@ fun AutofillSettingsV2Screen(
             ) {
                 AutofillSettingItem(
                     icon = Icons.Outlined.Block,
-                    title = stringResource(R.string.autofill_save_blocked_targets_manage),
+                    setting = Setting.AUTOFILL_SAVE_BLOCKED_TARGETS_MANAGE,
                     subtitle = stringResource(
                         R.string.autofill_save_blocked_targets_manage_desc,
                         saveBlockedTargetRecords.size,
@@ -637,7 +612,7 @@ fun AutofillSettingsV2Screen(
             ) {
                 SwitchSettingItem(
                     icon = Icons.Outlined.Block,
-                    title = stringResource(R.string.autofill_v2_blacklist),
+                    setting = Setting.AUTOFILL_V2_BLACKLIST,
                     subtitle = stringResource(R.string.autofill_v2_blacklist_desc, blacklistPackages.size),
                     checked = blacklistEnabled,
                     onCheckedChange = { enabled ->
@@ -646,7 +621,7 @@ fun AutofillSettingsV2Screen(
                 )
                 AutofillSettingItem(
                     icon = Icons.Outlined.Apps,
-                    title = stringResource(R.string.autofill_blacklist_manage),
+                    setting = Setting.AUTOFILL_BLACKLIST_MANAGE,
                     subtitle = stringResource(R.string.autofill_blacklist_manage_desc, blacklistPackages.size),
                     onClick = { showBlacklistDialog = true },
                 )
@@ -659,7 +634,7 @@ fun AutofillSettingsV2Screen(
             ) {
                 AutofillSettingItem(
                     icon = Icons.Outlined.DoNotDisturb,
-                    title = stringResource(R.string.autofill_blocked_fields_manage),
+                    setting = Setting.AUTOFILL_BLOCKED_FIELDS_MANAGE,
                     subtitle = stringResource(
                         R.string.autofill_blocked_fields_manage_desc,
                         blockedFieldSignatureRecords.size,

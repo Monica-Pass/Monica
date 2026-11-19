@@ -239,7 +239,7 @@ internal fun VaultOverviewScreen(
                     ) {
                         if (searchExpanded) {
                             VaultOverviewSearchResults(
-                                items = snapshot.items, sources = sources, currentScope = currentScope,
+                                items = snapshot.searchItems, sources = sources, currentScope = currentScope,
                                 query = searchQuery, securityManager = securityManager,
                                 onOpenItem = onOpenItem,
                                 selection = selection, isDetailVisible = isDetailVisible,
@@ -407,7 +407,7 @@ internal fun VaultOverviewScreen(
     if (pinModule != null && snapshot != null) {
         VaultOverviewPickerSheet(
             cards = pinModule == VaultOverviewModule.CARDS.name,
-            items = snapshot.items,
+            items = snapshot.searchItems,
             currentFrequentItems = if (pinModule == VaultOverviewModule.CARDS.name) snapshot.cards else frequentPreview,
             sources = sources,
             currentScope = currentScope,

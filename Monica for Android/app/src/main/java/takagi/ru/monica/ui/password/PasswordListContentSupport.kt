@@ -1119,7 +1119,7 @@ internal fun buildKotlinPasswordGroups(
     config: PasswordGroupingConfig,
 ): Map<String, List<PasswordEntry>> {
     if (config.isLocalOnlyView) {
-        return sourceEntries.sortedBy { it.sortOrder }.associate { "entry_${it.id}" to listOf(it) }
+        return buildUnstackedPasswordProjectGroups(sourceEntries.sortedBy { it.sortOrder })
     }
     val scoreCache = java.util.IdentityHashMap<List<PasswordEntry>, Int>()
     fun score(passwords: List<PasswordEntry>): Int = scoreCache.getOrPut(passwords) {
@@ -1199,9 +1199,7 @@ internal fun buildKotlinPasswordGroups(
     }
 
     return if (config.effectiveStackCardMode == StackCardMode.ALWAYS_EXPANDED) {
-        groupedAndSorted.values.flatten()
-            .map { entry -> "entry_${entry.id}" to listOf(entry) }
-            .toMap()
+        buildUnstackedPasswordProjectGroups(groupedAndSorted.values.flatten())
     } else {
         groupedAndSorted
     }

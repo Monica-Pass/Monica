@@ -60,7 +60,7 @@ fun InterfaceScaleSettingsItem(
 
     SettingsItem(
         icon = Icons.Default.Tune,
-        title = stringResource(R.string.interface_scale_title),
+        setting = Setting.INTERFACE_SCALE_TITLE,
         subtitle = stringResource(
             R.string.interface_scale_current,
             normalizedPercent,
