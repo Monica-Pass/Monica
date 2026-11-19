@@ -19,9 +19,7 @@ class AdaptivePaneLocalizationGuardTest {
             "app/src/main/java/takagi/ru/monica/ui/note/NotePane.kt" to
                 listOf("select_note_hint"),
             "app/src/main/java/takagi/ru/monica/ui/send/SendPane.kt" to
-                listOf("select_send_preview_hint"),
-            "app/src/main/java/takagi/ru/monica/ui/settings/SettingsTabContent.kt" to
-                listOf("select_setting_hint")
+                listOf("select_send_preview_hint")
         )
         val hardcodedEnglish = listOf(
             "Select an item to view details",

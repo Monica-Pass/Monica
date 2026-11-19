@@ -1,15 +1,13 @@
 package takagi.ru.monica.ui
 
+import takagi.ru.monica.ui.common.layout.AdaptiveListDetailLayout
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -18,8 +16,6 @@ import androidx.compose.ui.unit.Dp
 import takagi.ru.monica.R
 import takagi.ru.monica.bitwarden.viewmodel.BitwardenViewModel
 import takagi.ru.monica.data.bitwarden.BitwardenSend
-import takagi.ru.monica.ui.common.layout.DetailPane
-import takagi.ru.monica.ui.common.layout.ListPane
 import takagi.ru.monica.ui.screens.AddEditSendScreen
 import takagi.ru.monica.ui.screens.SendScreen
 
@@ -64,35 +60,21 @@ internal fun SendPane(
     val unlockStateByVault by bitwardenViewModel.unlockStateByVault.collectAsState()
     val sendCreateSuccessVersion by bitwardenViewModel.sendCreateSuccessVersion.collectAsState()
 
-    if (isCompactWidth) {
-        SendScreen(
-            bitwardenViewModel = bitwardenViewModel,
-            onBitwardenEvent = onBitwardenEvent,
-            showStandaloneSettingsEntry = showStandaloneSettingsEntry,
-            onOpenStandaloneSettings = onOpenStandaloneSettings
-        )
-    } else {
-        Row(modifier = Modifier.fillMaxSize()) {
-            ListPane(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .width(wideListPaneWidth)
-            ) {
-                SendScreen(
-                    onSendClick = onSendClick,
+    val hasAdaptiveDetail = isAddingSendInline || selectedSend != null
+
+    AdaptiveListDetailLayout(
+        compact = isCompactWidth,
+        listWidth = wideListPaneWidth,
+        hasDetail = hasAdaptiveDetail,
+        list = { SendScreen(
+                    onSendClick = if (isCompactWidth) ({ _ -> }) else onSendClick,
                     selectedSendId = selectedSend?.bitwardenSendId,
                     bitwardenViewModel = bitwardenViewModel,
                     onBitwardenEvent = onBitwardenEvent,
                     showStandaloneSettingsEntry = showStandaloneSettingsEntry,
                     onOpenStandaloneSettings = onOpenStandaloneSettings
-                )
-            }
-            DetailPane(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-            ) {
-                if (isAddingSendInline) {
+                ) },
+        detail = { if (isAddingSendInline) {
                     AddEditSendScreen(
                         sendState = sendState,
                         sendCreateSuccessVersion = sendCreateSuccessVersion,
@@ -135,8 +117,6 @@ internal fun SendPane(
                         modifier = Modifier.fillMaxSize(),
                         vaultLabel = vaultLabel
                     )
-                }
-            }
-        }
-    }
+                } }
+    )
 }

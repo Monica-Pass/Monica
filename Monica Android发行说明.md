@@ -4,6 +4,10 @@
 
 ## 中文
 
+- 时间线新增「变更／可恢复／同步」视图、密码库与日期筛选、分页和字段差异。纯本地多密码保存按操作记录；支持预览并恢复有完整校验的旧字段，拒绝覆盖后续修改，恢复形成新记录。旧日志继续可读，敏感值默认隐藏，过期或缺失材料不开放恢复。
+
+- 折叠屏与大屏布局按当前窗口切换：中等宽度使用侧边导航，宽屏列表与详情分栏；缩回窄屏保留正在查看和编辑的内容。登录、设置和独立内容页限制阅读宽度，矮窗口与大字号可滚动，避开系统报告的分隔铰链。
+
 - 安全分析移除顶部细进度条，评分位置采用更大的变形图形：分析中显示省略号，完成后显示评分；窄屏和大字号下文字自动换到下方。
 
 - 设置搜索与界面共用设置定义，新增设置自动加入搜索；补齐 HyperOS 兼容、默认填充库、导航和预览开关等遗漏项。搜索保留原有身份验证，条件项定位到父入口，不自动修改设置，也不收录用户数据。
@@ -19,6 +23,10 @@
 - 修复 Bitwarden 密码条目生成的验证码在没有文件夹时误显示于 Monica 本地筛选的问题；保留来源记录标识、修订及待同步状态，验证码沿原有 Bitwarden 账号与文件夹筛选显示。
 
 ## English
+
+- Timeline adds Changes, Recoverable and Sync views, vault/date filters, paging and field differences. Local multi-password saves are recorded as operations. Preview and restore verified previous fields without overwriting later edits; recovery creates a new event. Legacy logs remain readable, values are hidden by default, and expired or missing material cannot be restored.
+
+- Foldable and large-screen layouts follow the current window: medium windows use a navigation rail, expanded windows show list and detail panes, and shrinking keeps the current item and draft. Login, settings and standalone content use readable widths, short windows and large text scroll, and content avoids reported separating hinges.
 
 - Security Analysis replaces the thin top progress bar with a larger morphing indicator in the score card. It shows an ellipsis while checking and the score when finished, with stacked text on narrow screens or at large font sizes.
 

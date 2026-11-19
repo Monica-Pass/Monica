@@ -30,10 +30,10 @@ class AdaptiveLandscapeLayoutGuardTest {
             "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultV2TabPane.kt"
         ).readSourceText()
 
-        assertTrue(source.contains("if (isCompactWidth)"))
-        assertTrue(source.contains(".width(wideListPaneWidth)"))
+        assertTrue(source.contains("AdaptiveListDetailLayout(compact = isCompactWidth"))
+        assertTrue(source.contains("listWidth = wideListPaneWidth"))
         assertTrue(source.contains("VaultV2DetailPaneContent("))
-        assertTrue(source.contains("DetailPane("))
+        assertTrue(source.contains("hasDetail = hasWideDetail"))
     }
 
     @Test

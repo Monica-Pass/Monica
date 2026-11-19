@@ -1,10 +1,9 @@
 package takagi.ru.monica.ui
 
+import takagi.ru.monica.ui.common.layout.AdaptiveListDetailLayout
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,8 +13,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import takagi.ru.monica.R
 import takagi.ru.monica.security.SecurityManager
-import takagi.ru.monica.ui.common.layout.DetailPane
-import takagi.ru.monica.ui.common.layout.ListPane
 import takagi.ru.monica.ui.screens.AddEditNoteScreen
 import takagi.ru.monica.ui.screens.NoteListScreen
 import takagi.ru.monica.viewmodel.NoteViewModel
@@ -47,28 +44,13 @@ internal fun NotePane(
     showStandaloneSettingsEntry: Boolean = false,
     onOpenStandaloneSettings: () -> Unit = {}
 ) {
-    if (isCompactWidth) {
-        NoteListScreen(
-            viewModel = noteViewModel,
-            settingsViewModel = settingsViewModel,
-            onNavigateToAddNote = onNavigateToAddNote,
-            onNavigateToSearchedNote = onNavigateToSearchedNote,
-            securityManager = securityManager,
-            passwordViewModel = passwordViewModel,
-            bitwardenViewModel = bitwardenViewModel,
-            onSelectionModeChange = onSelectionModeChange,
-            onBitwardenScopeChanged = onBitwardenScopeChanged,
-            showStandaloneSettingsEntry = showStandaloneSettingsEntry,
-            onOpenStandaloneSettings = onOpenStandaloneSettings
-        )
-    } else {
-        Row(modifier = Modifier.fillMaxSize()) {
-            ListPane(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .width(wideListPaneWidth)
-            ) {
-                NoteListScreen(
+    val hasAdaptiveDetail = isAddingNoteInline || inlineNoteEditorId != null
+    BackHandler(enabled = isCompactWidth && hasAdaptiveDetail) { onInlineNoteEditorBack() }
+    AdaptiveListDetailLayout(
+        compact = isCompactWidth,
+        listWidth = wideListPaneWidth,
+        hasDetail = hasAdaptiveDetail,
+        list = { NoteListScreen(
                     viewModel = noteViewModel,
                     settingsViewModel = settingsViewModel,
                     onNavigateToAddNote = onNavigateToAddNote,
@@ -80,15 +62,8 @@ internal fun NotePane(
                     onBitwardenScopeChanged = onBitwardenScopeChanged,
                     showStandaloneSettingsEntry = showStandaloneSettingsEntry,
                     onOpenStandaloneSettings = onOpenStandaloneSettings
-                )
-            }
-
-            DetailPane(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-            ) {
-                NoteDetailPaneContent(
+                ) },
+        detail = { NoteDetailPaneContent(
                     noteViewModel = noteViewModel,
                     isAddingNoteInline = isAddingNoteInline,
                     inlineNoteEditorId = inlineNoteEditorId,
@@ -100,10 +75,8 @@ internal fun NotePane(
                     initialMdbxDatabaseId = initialMdbxDatabaseId,
                     initialBitwardenVaultId = initialBitwardenVaultId,
                     initialBitwardenFolderId = initialBitwardenFolderId
-                )
-            }
-        }
-    }
+                ) }
+    )
 }
 
 @Composable

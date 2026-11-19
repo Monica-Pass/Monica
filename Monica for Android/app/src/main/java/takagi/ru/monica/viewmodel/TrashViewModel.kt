@@ -228,6 +228,30 @@ class TrashViewModel(application: Application) : AndroidViewModel(application) {
     fun restoreItem(item: TrashItem, onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
             try {
+                val local = when (val data = item.originalData) {
+                    is PasswordEntry -> data.isLocalOnlyEntry()
+                    is SecureItem -> data.keepassDatabaseId == null && data.mdbxDatabaseId == null && data.bitwardenVaultId == null
+                    else -> false
+                }
+                if (local) {
+                    val generation = takagi.ru.monica.security.SessionManager.lockGeneration.value
+                    check(takagi.ru.monica.security.SessionManager.isUnlocked.value) { "Vault is locked" }
+                    database.timelineJournal.operation {
+                        check(takagi.ru.monica.security.SessionManager.isUnlocked.value &&
+                            takagi.ru.monica.security.SessionManager.lockGeneration.value == generation) { "Vault is locked" }
+                        val unchanged = when (val data = item.originalData) {
+                            is PasswordEntry -> data.isDeleted && database.passwordEntryDao().getPasswordEntryById(data.id) == data
+                            is SecureItem -> data.isDeleted && database.secureItemDao().getItemById(data.id) == data
+                            else -> false
+                        }
+                        check(unchanged) { "The recycle bin item changed; reopen its recovery preview" }
+                        applyLocalRestore(item.originalData)
+                        check(takagi.ru.monica.security.SessionManager.isUnlocked.value &&
+                            takagi.ru.monica.security.SessionManager.lockGeneration.value == generation) { "Vault is locked" }
+                    }
+                    onResult(true)
+                    return@launch
+                }
                 val restoreOutcome = queueRemoteRestoreIfNeeded(item.originalData).getOrElse {
                     android.util.Log.e("TrashViewModel", "Queue remote restore failed for item id=${item.id}", it)
                     onResult(false)
@@ -249,6 +273,8 @@ class TrashViewModel(application: Application) : AndroidViewModel(application) {
                 )
                 logTrashRestore(item)
                 onResult(true)
+            } catch (e: CancellationException) {
+                throw e
             } catch (e: Exception) {
                 android.util.Log.e("TrashViewModel", "Failed to restore item", e)
                 onResult(false)

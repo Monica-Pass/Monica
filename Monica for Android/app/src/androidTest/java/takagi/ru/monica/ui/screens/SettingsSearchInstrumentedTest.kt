@@ -265,12 +265,15 @@ class SettingsSearchInstrumentedTest {
     }
 
     @Test fun hyperOsSearchReachesRealPageAfterPasswordVerificationInLargeText() = recordSearchFailure("verified") {
-        check(context.packageName.contains("settingssearchfix")) { "Isolated search fixture required" }
+        val adaptiveFixture = context.packageName in setOf(
+            "takagi.ru.monica.adaptive20261119", "takagi.ru.monica.adaptivefd20261119")
+        check(context.packageName.contains("settingssearchfix") || adaptiveFixture) { "Isolated search fixture required" }
+        val fixturePassword = if (adaptiveFixture) "SyntheticAdaptive329" else "SyntheticSearchPassword329"
         val security = takagi.ru.monica.security.SecurityManager(context)
         if (security.isMasterPasswordSet()) {
-            assertTrue(security.verifyMasterPassword("SyntheticSearchPassword329"))
+            assertTrue(security.verifyMasterPassword(fixturePassword))
         } else {
-            assertTrue(security.setMasterPassword("SyntheticSearchPassword329"))
+            assertTrue(security.setMasterPassword(fixturePassword))
         }
         val before = runBlocking { manager.settingsFlow.first() }
         val preferences = takagi.ru.monica.autofill_ng.AutofillPreferences(context)
@@ -282,7 +285,7 @@ class SettingsSearchInstrumentedTest {
         compose.onNode(SemanticsMatcher.expectValue(SettingsSearchTarget, true), useUnmergedTree = true).assertIsDisplayed().performClick()
         compose.onNodeWithText(localized.getString(R.string.verify_identity)).assertIsDisplayed()
         File(context.filesDir, "settings-search-dialog.txt").writeText(compose.onNode(isDialog()).printToString())
-        compose.onNode(hasSetTextAction() and hasAnyAncestor(isDialog())).performTextReplacement("SyntheticSearchPassword329")
+        compose.onNode(hasSetTextAction() and hasAnyAncestor(isDialog())).performTextReplacement(fixturePassword)
         compose.onNodeWithText(localized.getString(R.string.confirm)).performClick()
         compose.waitUntil(20_000) { nav.currentDestination?.route == Screen.DeveloperSettings.route }
         compose.onNodeWithTag("developer_hyperos_compatibility_entry").performScrollTo().performClick()

@@ -1,6 +1,9 @@
 package takagi.ru.monica.ui.components
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import takagi.ru.monica.ui.common.layout.readableWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Fingerprint
@@ -301,10 +304,14 @@ fun PasswordVerificationContent(
         }
     }
     
+    BoxWithConstraints(modifier.fillMaxSize()
+        .windowInsetsPadding(WindowInsets.safeDrawing).imePadding()) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(32.dp),
+        modifier = Modifier.fillMaxWidth()
+            .readableWidth(544.dp)
+            .verticalScroll(rememberScrollState())
+            .heightIn(min = maxHeight)
+            .padding(horizontal = 32.dp, vertical = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -471,5 +478,6 @@ fun PasswordVerificationContent(
                 )
             }
         }
+    }
     }
 }

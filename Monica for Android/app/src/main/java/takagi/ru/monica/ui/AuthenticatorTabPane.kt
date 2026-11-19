@@ -1,5 +1,8 @@
 package takagi.ru.monica.ui
 
+import takagi.ru.monica.ui.common.layout.AdaptiveListDetailLayout
+import androidx.compose.foundation.layout.Column
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -7,12 +10,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
 import takagi.ru.monica.data.AppSettings
 import takagi.ru.monica.data.AuthenticatorLayoutMode
-import takagi.ru.monica.ui.common.layout.DetailPane
-import takagi.ru.monica.ui.common.layout.ListPane
 import takagi.ru.monica.ui.screens.AddEditTotpScreen
 import takagi.ru.monica.viewmodel.PasswordViewModel
 
@@ -61,25 +61,14 @@ internal fun AuthenticatorTabPane(
         )
     }
 
-    if (isCompactWidth) {
-        ListPane(
-            modifier = Modifier.fillMaxSize(),
-            content = listPaneContent
-        )
-    } else {
-        Row(modifier = Modifier.fillMaxSize()) {
-            ListPane(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .width(wideListPaneWidth),
-                content = listPaneContent
-            )
-            DetailPane(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-            ) {
-                AuthenticatorDetailPaneContent(
+    val hasAdaptiveDetail = isAddingTotpInline || selectedTotpId != null
+    BackHandler(enabled = isCompactWidth && hasAdaptiveDetail) { onInlineTotpEditorBack() }
+    AdaptiveListDetailLayout(
+        compact = isCompactWidth,
+        listWidth = wideListPaneWidth,
+        hasDetail = hasAdaptiveDetail,
+        list = { Column { listPaneContent() } },
+        detail = { AuthenticatorDetailPaneContent(
                     totpViewModel = totpViewModel,
                     passwordViewModel = passwordViewModel,
                     localKeePassViewModel = localKeePassViewModel,
@@ -88,10 +77,8 @@ internal fun AuthenticatorTabPane(
                     totpNewItemDefaults = totpNewItemDefaults,
                     onInlineTotpEditorBack = onInlineTotpEditorBack,
                     onNavigateToQuickTotpScan = onNavigateToQuickTotpScan
-                )
-            }
-        }
-    }
+                ) }
+    )
 }
 
 @Composable

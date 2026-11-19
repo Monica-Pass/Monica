@@ -154,7 +154,7 @@ sealed class TimelineDisplayItem {
  */
 @Composable
 fun TimelineScreen(
-    viewModel: TimelineViewModel = viewModel(),
+    viewModel: TimelineViewModel? = null,
     trashViewModel: TrashViewModel = viewModel(),
     onLogSelected: (TimelineEvent.StandardLog) -> Unit = {},
     splitPaneMode: Boolean = false,
@@ -164,118 +164,41 @@ fun TimelineScreen(
     showBackButton: Boolean = false,
     onNavigateBack: () -> Unit = {},
     showReturnFab: Boolean = true,
-    onTrashSelectionModeChange: (Boolean) -> Unit = {}
+    onTrashSelectionModeChange: (Boolean) -> Unit = {},
+    onMdbxHistory: ((Long) -> Unit)? = null
 ) {
-    if (splitPaneMode) {
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-        ) {
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-            ) {
-                SplitPaneHeader(
-                    title = stringResource(R.string.timeline_title),
-                    subtitle = stringResource(R.string.timeline_subtitle),
-                    icon = Icons.Default.History
-                )
-                TimelineContent(
-                    viewModel = viewModel,
-                    onLogSelected = onLogSelected,
-                    embeddedInSplitPane = true
-                )
-            }
-
-            VerticalDivider(
-                modifier = Modifier.fillMaxHeight(),
-                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.35f)
-            )
-
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-            ) {
-                SplitPaneHeader(
-                    title = stringResource(R.string.timeline_trash_title),
-                    subtitle = stringResource(R.string.timeline_trash_subtitle),
-                    icon = Icons.Default.Delete
-                )
-                TrashContent(
-                    viewModel = trashViewModel,
-                    embeddedInSplitPane = true,
-                    initialSelectedScopeKey = initialTrashScopeKey,
-                    onSelectionModeChange = onTrashSelectionModeChange
-                )
-            }
-        }
-        return
-    }
-
     var currentTab by rememberSaveable(initialTab) { mutableStateOf(initialTab) }
-    var isTrashSelectionMode by remember { mutableStateOf(false) }
-    val hideLegacyTopBar = !enableTabSwitch
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-    ) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            if (!hideLegacyTopBar) {
-                // M3E 风格的顶部标题栏
-                HistoryTopBar(
-                    currentTab = currentTab,
-                    onTabSelected = { selectedTab ->
-                        if (enableTabSwitch) {
-                            currentTab = selectedTab
-                        }
-                    },
-                    enableTabSwitch = enableTabSwitch,
-                    showBackButton = showBackButton,
-                    onNavigateBack = onNavigateBack
-                )
-            }
-
-            // 内容区域，带有切换动画
-            AnimatedContent(
-                targetState = currentTab,
-                label = "HistoryTabContent",
-                transitionSpec = {
-                    (fadeIn(animationSpec = tween(300))).togetherWith(fadeOut(animationSpec = tween(300)))
-                },
-                modifier = Modifier.weight(1f)
-            ) { targetTab ->
-                when (targetTab) {
-                    HistoryTab.TIMELINE -> TimelineContent(
-                        viewModel = viewModel,
-                        onLogSelected = onLogSelected,
-                        showStandaloneHeader = !enableTabSwitch
-                    )
-                    HistoryTab.TRASH -> TrashContent(
-                        viewModel = trashViewModel,
-                        embeddedInSplitPane = false,
-                        initialSelectedScopeKey = initialTrashScopeKey,
-                        hasReturnAction = !enableTabSwitch && showBackButton,
-                        onSelectionModeChange = { selecting ->
-                            isTrashSelectionMode = selecting
-                            onTrashSelectionModeChange(selecting)
-                        }
-                    )
+    var selectingTrash by remember { mutableStateOf(false) }
+    var trashTarget by remember { mutableStateOf<takagi.ru.monica.timeline.TimelineTarget?>(null) }
+    BackHandler(currentTab == HistoryTab.TRASH && initialTab != HistoryTab.TRASH) { currentTab = HistoryTab.TIMELINE }
+    if (currentTab == HistoryTab.TIMELINE) {
+        TimelineJournalScreen(
+            onTrash = { target -> trashTarget = target; currentTab = HistoryTab.TRASH },
+            onMdbxHistory = onMdbxHistory,
+            bottomActionInset = if (showBackButton && !showReturnFab) 104.dp else 0.dp,
+            onBack = if (showBackButton && (enableTabSwitch || showReturnFab)) onNavigateBack else null
+        )
+    } else {
+        Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+            Column(Modifier.fillMaxSize()) {
+                if (enableTabSwitch) Row(Modifier.fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(onClick = { if (initialTab == HistoryTab.TRASH) onNavigateBack() else currentTab = HistoryTab.TIMELINE }) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back))
+                    }
+                    Text(stringResource(R.string.timeline_trash_title), style = MaterialTheme.typography.headlineSmall)
                 }
+                TrashContent(viewModel = trashViewModel, initialSelectedScopeKey = initialTrashScopeKey,
+                    embeddedInSplitPane = false, initialTarget = trashTarget,
+                    hasReturnAction = !enableTabSwitch && showBackButton,
+                    onSelectionModeChange = { selecting ->
+                        selectingTrash = selecting
+                        onTrashSelectionModeChange(selecting)
+                    })
             }
-        }
-        if (showReturnFab && !enableTabSwitch && showBackButton && !isTrashSelectionMode) {
-            SwipeableAddFab(
-                fabBottomOffset = 24.dp,
-                onClick = onNavigateBack,
-                fabContent = {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
-                }
-            )
+            if (showReturnFab && !enableTabSwitch && showBackButton && !selectingTrash) {
+                SwipeableAddFab(fabBottomOffset = 24.dp, onClick = onNavigateBack,
+                    fabContent = { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back)) })
+            }
         }
     }
 }
@@ -2288,6 +2211,7 @@ private fun TrashContent(
     embeddedInSplitPane: Boolean = false,
     initialSelectedScopeKey: String? = null,
     hasReturnAction: Boolean = false,
+    initialTarget: takagi.ru.monica.timeline.TimelineTarget? = null,
     onSelectionModeChange: (Boolean) -> Unit = {}
 ) {
     val context = LocalContext.current
@@ -2327,6 +2251,32 @@ private fun TrashContent(
     // 扁平化所有条目，按删除时间排序
     val allItems = remember(trashCategories) {
         trashCategories.flatMap { it.items }.sortedByDescending { it.deletedAt.time }
+    }
+    var targetOpened by remember(initialTarget) { mutableStateOf(false) }
+    LaunchedEffect(allItems, initialTarget) {
+        val target = initialTarget
+        if (target != null && !targetOpened) {
+            val exact = allItems.singleOrNull { item ->
+                item.id == target.itemId &&
+                    (if (target.kind == "PASSWORD") item.originalData is PasswordEntry else item.originalData is SecureItem) &&
+                    when (val data = item.originalData) {
+                        is PasswordEntry -> target.scopeKey == when {
+                            data.keepassDatabaseId != null -> "keepass:${data.keepassDatabaseId}"
+                            data.mdbxDatabaseId != null -> "mdbx:${data.mdbxDatabaseId}"
+                            data.bitwardenVaultId != null -> "bitwarden:${data.bitwardenVaultId}"
+                            else -> "local"
+                        }
+                        is SecureItem -> target.scopeKey == when {
+                            data.keepassDatabaseId != null -> "keepass:${data.keepassDatabaseId}"
+                            data.mdbxDatabaseId != null -> "mdbx:${data.mdbxDatabaseId}"
+                            data.bitwardenVaultId != null -> "bitwarden:${data.bitwardenVaultId}"
+                            else -> "local"
+                        }
+                        else -> false
+                    }
+            }
+            if (exact != null) { selectedItem = exact; targetOpened = true }
+        }
     }
     val scopedItems = remember(allItems, selectedScope) {
         allItems.filter { selectedScope.matches(it) }

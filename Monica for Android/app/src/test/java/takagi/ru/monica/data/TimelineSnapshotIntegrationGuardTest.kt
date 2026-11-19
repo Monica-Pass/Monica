@@ -56,16 +56,14 @@ class TimelineSnapshotIntegrationGuardTest {
     }
 
     @Test
-    fun loggerSeparatesRedactedAuditFromEncryptedSnapshot() {
-        val source = projectFile(
-            "app/src/main/java/takagi/ru/monica/utils/OperationLogger.kt"
-        ).readSourceText()
-
-        assertTrue(source.contains("val immutableChanges = changes.toList()"))
-        assertTrue(source.contains("val sanitizedChanges = sanitizeChanges(itemType, immutableChanges)"))
-        assertTrue(source.contains("snapshotChanges: List<FieldChange> = changes"))
-        assertTrue(source.contains("encryptTimelineSnapshot"))
-        assertTrue(source.contains("Skipped incomplete encrypted timeline snapshot"))
+    fun loggerUsesJournalAndRecoveryMaterialsRemainEncrypted() {
+        val logger = projectFile("app/src/main/java/takagi/ru/monica/utils/OperationLogger.kt").readSourceText()
+        val journal = projectFile("app/src/main/java/takagi/ru/monica/timeline/TimelineJournal.kt").readSourceText()
+        assertTrue(logger.contains("db.timelineJournal.observe("))
+        assertTrue(logger.contains("snapshotChanges: List<FieldChange> = changes"))
+        assertFalse(logger.contains("operationLogDao().insert"))
+        assertTrue(journal.contains("security.encryptTimelineSnapshot"))
+        assertTrue(journal.contains("sealedDetails"))
     }
 
     @Test

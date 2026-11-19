@@ -1,0 +1,167 @@
+{
+  "status": "completed",
+  "version": "1.0.329 unpublished",
+  "scope": "Local timeline journal, field recovery and read-only provider observations; native unified recovery deferred",
+  "frozenSharedPaths": 40,
+  "sourceHashes": {
+    "app/src/test/java/takagi/ru/monica/data/TimelineSnapshotIntegrationGuardTest.kt": "a93d0fb042afd6744f2c84ea6a938cda664f42b668082fae6645aed10a6495bb",
+    "app/src/test/java/takagi/ru/monica/timeline/TimelinePolicyTest.kt": "edfac0d0d63e7a32433dee900af5be3432b7060da53789e5a490ba01585caf02",
+    "app/src/main/res/values/strings_timeline_journal.xml": "fb981f065aaa5a098ade9954574a192bb377e8acc27e5a5a7fae8b5760625e43",
+    "app/src/main/res/values-b+lzh/strings_timeline_journal.xml": "8112ebf01fb44d5258e064e6f1c7992045e3f242e86c44bf78c426f37a74f304",
+    "app/src/main/res/values-b+zh+Hant/strings_timeline_journal.xml": "871f6ed194fdb68c3d9718108985578817beab3eac0f82a235a7bdb785110f3c",
+    "app/src/main/res/values-de/strings_timeline_journal.xml": "0c1c3c66183de76a7fedc3e2a1da3112d3de59bf6b8b3bbdc2f11cbc32b94a5a",
+    "app/src/main/res/values-es/strings_timeline_journal.xml": "032cd77cf4472aec4d08a2d4b1198c22456a5ffd9e21a40ae472183a5690dbd4",
+    "app/src/main/res/values-fr/strings_timeline_journal.xml": "4a13d74621831ccd562c988a89282be26022a9cc4c7c4df2d011e90c16caa355",
+    "app/src/main/res/values-it/strings_timeline_journal.xml": "e86f9d7b9a7b1ed4cffc58ddad8e57203da093bdc06cece47dc8a4b9a1cdee3e",
+    "app/src/main/res/values-ja/strings_timeline_journal.xml": "e77d092bca22d6430f966fca8390b2d4499d19f8e687c0f15a70c8c957ba7023",
+    "app/src/main/res/values-ko/strings_timeline_journal.xml": "c22d21ad32f497d805eef853d9df35047d23ebf45412687334e30ca63faa3322",
+    "app/src/main/res/values-pl/strings_timeline_journal.xml": "ef10f9b64a3081f38909868101378958f6529ce2cf6d72af83cecb84792b7c86",
+    "app/src/main/res/values-pt/strings_timeline_journal.xml": "25bdcc4902558dbf5449b12d121c29cf72e9856cf2dbf1485c0ce97300e73794",
+    "app/src/main/res/values-pt-rBR/strings_timeline_journal.xml": "30260f0f0629c63c71adffda720acd7460ee67c58f9fbecde8d3a3fe3832d987",
+    "app/src/main/res/values-ru/strings_timeline_journal.xml": "a10602bbd5e7d36885b86e574d50548f9bcf6d2b05933bf4492a3bef364f06b6",
+    "app/src/main/res/values-vi/strings_timeline_journal.xml": "ae658aaed0c953a56f3740a75648b660c24ec76316cc0ca90c6270045ade8798",
+    "app/src/main/res/values-zh/strings_timeline_journal.xml": "8112ebf01fb44d5258e064e6f1c7992045e3f242e86c44bf78c426f37a74f304",
+    "app/src/main/res/values-zh-rCN/strings_timeline_journal.xml": "8112ebf01fb44d5258e064e6f1c7992045e3f242e86c44bf78c426f37a74f304",
+    "app/src/main/res/values-zh-rNY/strings_timeline_journal.xml": "8112ebf01fb44d5258e064e6f1c7992045e3f242e86c44bf78c426f37a74f304",
+    "app/src/main/res/values-zh-rXB/strings_timeline_journal.xml": "8112ebf01fb44d5258e064e6f1c7992045e3f242e86c44bf78c426f37a74f304",
+    "app/src/main/java/takagi/ru/monica/data/PasswordDatabase.kt": "f9ea9abb2158af53b6a6be1e3d55b2377d2940aa7c877509ba52a7c5686fe7a5",
+    "app/src/main/java/takagi/ru/monica/timeline/JournalDaos.kt": "2f8791c9dfaab223a57c570252f339a813e2356995fd52ef7f7216dd50c0637f",
+    "app/src/main/java/takagi/ru/monica/timeline/TimelineJournal.kt": "32bbd3d4a26c3b1d4a5969d1cdfd8034acc4192becb99b685b1f9d021cd780d9",
+    "app/src/main/java/takagi/ru/monica/timeline/TimelineLabels.kt": "145617c625f858857ad889bc1d8ecd0ef1a32fbd682074db1c1165146cbe9f9f",
+    "app/src/main/java/takagi/ru/monica/timeline/TimelineReader.kt": "3508abdffded7e7fc4915e2754510bb471e3ecbc4e0f7540ada67c9b5c6dc704",
+    "app/src/main/java/takagi/ru/monica/timeline/TimelineRecord.kt": "329713b7791481ffe286bd374cdc2874c96afd4f156dd57f6aa572297cc003ff",
+    "app/src/main/java/takagi/ru/monica/timeline/TimelineRecoveryPolicy.kt": "2ab380ce9605793d5b1cd5f59e5396038a41580b5e36294d9581f1b3ad0b6aef",
+    "app/src/main/java/takagi/ru/monica/ui/PasswordTabPane.kt": "7d80b7417ed3b116df9e16e6047a71612966c72af3a200554c8ecdbbe9b0e3b7",
+    "app/src/main/java/takagi/ru/monica/ui/SimpleMainScreen.kt": "fd8c2fb0d978eaf516af41c02350524907f58d7cfbcd1062c33ffc49fafe81ef",
+    "app/src/main/java/takagi/ru/monica/utils/OperationLogger.kt": "6f34769627da8ed31c23f98b6fa0281f0a39d5a4a8622cc671ae21f5507ca372",
+    "app/src/main/java/takagi/ru/monica/viewmodel/TimelineJournalViewModel.kt": "7559aaacb327c7f391d8f45a25cad1b7be48d7c1b55940a1f5e322032b8c9ccb",
+    "app/src/main/java/takagi/ru/monica/viewmodel/TrashViewModel.kt": "18ee2a981cd569e89176e6b7d5240f681623a09e8692b732485963f8527f9d36",
+    "app/src/main/java/takagi/ru/monica/ui/screens/TimelineJournalScreen.kt": "8c5dc168dfdd20c949503a63ccf2ca8960553b95233bdf469d2b31ffeb384b54",
+    "app/src/main/java/takagi/ru/monica/ui/screens/TimelineScreen.kt": "193d7af7e3ea88794a36bcce4cfea522cf936429bdcb0b554300ebd5813d7081",
+    "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultV2Pane.kt": "99d3fb9ef246492addb99178dd8fb06d9b2b8ea48f2f3b3c4f4c0c50e49e90f9",
+    "app/src/main/java/takagi/ru/monica/bitwarden/viewmodel/BitwardenViewModel.kt": "704124f37d96420838079bfe7d0b2f86cec3f50a98a2120ee81d475c16720c49",
+    "app/src/androidTest/java/takagi/ru/monica/credentialexchange/LocalCredentialCreateAtomicityTest.kt": "f34153294fd4335d58fe91c2198c93c59735196874017d28c03580252d507242",
+    "app/src/androidTest/java/takagi/ru/monica/timeline/TimelineJournalInstrumentedTest.kt": "dd76e44d2acbda3f918e7958457984e9f681e9d8b8acd35960cf0d5a47e53e9c",
+    "app/src/androidTest/java/takagi/ru/monica/timeline/TimelineJournalUiTest.kt": "a30420d39c04372ce845ec76ef4ed84c3df4154c8527de42a6306fcdcc1ad131",
+    "app/src/androidTest/java/takagi/ru/monica/ui/TrashNavigationTest.kt": "5ab18ca23492a2721c49f5491183e7a1e35a03371727186fdd9d23c1ed870f48"
+  },
+  "editions": {
+    "main": {
+      "debugBuildSeconds": 156.3737349510193,
+      "jvm": {
+        "tests": 32,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "deviceTests": 47,
+      "deviceRunnerSeconds": 22.517,
+      "deviceDriverSeconds": 25.57064652442932,
+      "debugApkHashes": [
+        "48599fa634f13dc6649367324d796f84243be2e9d7075a0f53c07abf778e12ce",
+        "73af4850913fcdba88ec9717b6c9537a968ed6f1c95e91261f2b77c6fe39c18b"
+      ],
+      "releaseBuildSeconds": 328.66748332977295,
+      "releaseSha256": "24c3db89fce820a3cef1d7c201ccec5a699fe638064a649d66c26fd387279d1f",
+      "installedFrom": "4e55a75f6925c666f02326c8b859bba0d1573d9f968089246f52cd2d8375487d",
+      "certificate": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "ui": {
+        "edition": "main",
+        "passed": true,
+        "originalPassword": true,
+        "oldRecord": true,
+        "usernameOnlyEventExcludesPassword": true,
+        "cancelPreservesEdit": true,
+        "confirmedRestore": true,
+        "linkedRecoveryEvent": true,
+        "newRecord": true,
+        "coldPids": [
+          "51222",
+          "53112",
+          "54520"
+        ],
+        "sourceFreeze": "main10-source-hashes.json",
+        "backupRestoration": {
+          "items": 1,
+          "encryptedOldBackup": true,
+          "source": "Documents/timeline-main-old329.enc.zip",
+          "restoredRecordRead": true,
+          "newRecordRetained": true
+        }
+      },
+      "compiledValues": 882
+    },
+    "fd": {
+      "debugBuildSeconds": 129.61850786209106,
+      "jvm": {
+        "tests": 32,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "deviceTests": 47,
+      "deviceRunnerSeconds": 22.024,
+      "deviceDriverSeconds": 24.71300172805786,
+      "debugApkHashes": [
+        "68dd1ad58ee9d799ee54117b81c5ceb316fee8ef021edf6dd2f2372a5d9b1762",
+        "94366b90ddb589fe1cd7cff05abb595fe2a6198f0ed6c6ebb3c25d46c6eca9c1"
+      ],
+      "releaseBuildSeconds": 317.14415669441223,
+      "releaseSha256": "153ca428999ab44cf1c3c5cc5a4792b664769ea0b62b4884df08b49f4ea05ca0",
+      "installedFrom": "f35d238747169afba0caabecbd2fdd6f74e62e01b7a0783c2d9e5d4405cf6adb",
+      "certificate": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "ui": {
+        "edition": "fd",
+        "passed": true,
+        "originalPassword": true,
+        "oldRecord": true,
+        "usernameOnlyEventExcludesPassword": true,
+        "cancelPreservesEdit": true,
+        "confirmedRestore": true,
+        "linkedRecoveryEvent": true,
+        "newRecord": true,
+        "coldPids": [
+          "55081",
+          "57015",
+          "58390"
+        ],
+        "sourceFreeze": "main10-source-hashes.json",
+        "backupRestoration": {
+          "items": 1,
+          "encryptedOldBackup": true,
+          "source": "Documents/timeline-fd-old329.enc.zip",
+          "restoredRecordRead": true,
+          "newRecordRetained": true
+        }
+      },
+      "compiledValues": 882
+    }
+  },
+  "cleanup": {
+    "results": {
+      "takagi.ru.monica.adaptivereleasemain20261119": "Success",
+      "takagi.ru.monica.adaptivereleasefd20261119": "Success",
+      "takagi.ru.monica.timeline20261120.test": "Success",
+      "takagi.ru.monica.timeline20261120": "Success",
+      "takagi.ru.monica.timelinefd20261120.test": "Success",
+      "takagi.ru.monica.timelinefd20261120": "Success"
+    },
+    "removedOwnedBackups": [
+      "/sdcard/Documents/timeline-main-old329.enc.zip",
+      "/sdcard/Documents/timeline-fd-old329.enc.zip"
+    ],
+    "ownedPackagesAbsent": true,
+    "usersUnchanged": true,
+    "currentUser": "0",
+    "originalPackageSetUnchanged": true,
+    "unrelatedAdded": [],
+    "unrelatedRemoved": [],
+    "originalSettings": {
+      "font_scale": "1.0",
+      "accelerometer_rotation": "1",
+      "user_rotation": "0"
+    },
+    "originalDisplayUnchanged": true,
+    "preexistingMuMuLeftRunning": true
+  }
+}

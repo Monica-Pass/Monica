@@ -1,0 +1,128 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.timeline.TimelineJournalInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.timeline.TimelineJournalInstrumentedTest:
+INSTRUMENTATION_STATUS: test=reencryptedUnchangedValuesAreNotEditsAndTheirRawBytesStillGuardRecovery
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.timeline.TimelineJournalInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Re-encryption alone is not a user edit expected:<1> but was:<2>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at takagi.ru.monica.timeline.TimelineJournalInstrumentedTest$reencryptedUnchangedValuesAreNotEditsAndTheirRawBytesStillGuardRecovery$1.invokeSuspend(TimelineJournalInstrumentedTest.kt:116)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.timeline.TimelineJournalInstrumentedTest.reencryptedUnchangedValuesAreNotEditsAndTheirRawBytesStillGuardRecovery(TimelineJournalInstrumentedTest.kt:109)
+
+INSTRUMENTATION_STATUS: stream=
+Error in reencryptedUnchangedValuesAreNotEditsAndTheirRawBytesStillGuardRecovery(takagi.ru.monica.timeline.TimelineJournalInstrumentedTest):
+java.lang.AssertionError: Re-encryption alone is not a user edit expected:<1> but was:<2>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at takagi.ru.monica.timeline.TimelineJournalInstrumentedTest$reencryptedUnchangedValuesAreNotEditsAndTheirRawBytesStillGuardRecovery$1.invokeSuspend(TimelineJournalInstrumentedTest.kt:116)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.timeline.TimelineJournalInstrumentedTest.reencryptedUnchangedValuesAreNotEditsAndTheirRawBytesStillGuardRecovery(TimelineJournalInstrumentedTest.kt:109)
+
+INSTRUMENTATION_STATUS: test=reencryptedUnchangedValuesAreNotEditsAndTheirRawBytesStillGuardRecovery
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.timeline.TimelineJournalInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=reencryptedCustomValueIsPreservedWhenRestoringAnotherField
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.timeline.TimelineJournalInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=org.junit.ComparisonFailure: expected:<C2|[UtoaQDuqYuExi747/U8+TOSjC1hFfFSv6+9TEv/6P8kVVu3bav]Y=> but was:<C2|[x0rzXPZ8vq2ZgLgw13qTloOIx3oSXllexIT97n6cKx9BlfrUZj]Y=>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.timeline.TimelineJournalInstrumentedTest$reencryptedCustomValueIsPreservedWhenRestoringAnotherField$1.invokeSuspend(TimelineJournalInstrumentedTest.kt:152)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.timeline.TimelineJournalInstrumentedTest.reencryptedCustomValueIsPreservedWhenRestoringAnotherField(TimelineJournalInstrumentedTest.kt:136)
+
+INSTRUMENTATION_STATUS: stream=
+Error in reencryptedCustomValueIsPreservedWhenRestoringAnotherField(takagi.ru.monica.timeline.TimelineJournalInstrumentedTest):
+org.junit.ComparisonFailure: expected:<C2|[UtoaQDuqYuExi747/U8+TOSjC1hFfFSv6+9TEv/6P8kVVu3bav]Y=> but was:<C2|[x0rzXPZ8vq2ZgLgw13qTloOIx3oSXllexIT97n6cKx9BlfrUZj]Y=>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.timeline.TimelineJournalInstrumentedTest$reencryptedCustomValueIsPreservedWhenRestoringAnotherField$1.invokeSuspend(TimelineJournalInstrumentedTest.kt:152)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.timeline.TimelineJournalInstrumentedTest.reencryptedCustomValueIsPreservedWhenRestoringAnotherField(TimelineJournalInstrumentedTest.kt:136)
+
+INSTRUMENTATION_STATUS: test=reencryptedCustomValueIsPreservedWhenRestoringAnotherField
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 0.438
+There were 2 failures:
+1) reencryptedUnchangedValuesAreNotEditsAndTheirRawBytesStillGuardRecovery(takagi.ru.monica.timeline.TimelineJournalInstrumentedTest)
+java.lang.AssertionError: Re-encryption alone is not a user edit expected:<1> but was:<2>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at takagi.ru.monica.timeline.TimelineJournalInstrumentedTest$reencryptedUnchangedValuesAreNotEditsAndTheirRawBytesStillGuardRecovery$1.invokeSuspend(TimelineJournalInstrumentedTest.kt:116)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.timeline.TimelineJournalInstrumentedTest.reencryptedUnchangedValuesAreNotEditsAndTheirRawBytesStillGuardRecovery(TimelineJournalInstrumentedTest.kt:109)
+2) reencryptedCustomValueIsPreservedWhenRestoringAnotherField(takagi.ru.monica.timeline.TimelineJournalInstrumentedTest)
+org.junit.ComparisonFailure: expected:<C2|[UtoaQDuqYuExi747/U8+TOSjC1hFfFSv6+9TEv/6P8kVVu3bav]Y=> but was:<C2|[x0rzXPZ8vq2ZgLgw13qTloOIx3oSXllexIT97n6cKx9BlfrUZj]Y=>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.timeline.TimelineJournalInstrumentedTest$reencryptedCustomValueIsPreservedWhenRestoringAnotherField$1.invokeSuspend(TimelineJournalInstrumentedTest.kt:152)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.timeline.TimelineJournalInstrumentedTest.reencryptedCustomValueIsPreservedWhenRestoringAnotherField(TimelineJournalInstrumentedTest.kt:136)
+
+FAILURES!!!
+Tests run: 2,  Failures: 2
+
+
+INSTRUMENTATION_CODE: -1

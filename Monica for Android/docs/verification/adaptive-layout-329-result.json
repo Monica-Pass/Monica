@@ -1,0 +1,556 @@
+{
+  "version": "1.0.329",
+  "device": {
+    "emulator": "existing MuMu",
+    "api": 35,
+    "abi": "x86_64",
+    "syntheticDataOnly": true
+  },
+  "sourceFiles": [
+    {
+      "path": "app/build.gradle",
+      "main": "a9eed574a443e091a3fed273130bfed99efd7150353a0e6d6e549bf69345281e",
+      "fd": "ef7499e2687da21f03f2b4db0a3a9af1ff4b185c5cdabc1e2fb7aa389df44b9a",
+      "normalizedEqual": false
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/ui/common/layout/AdaptiveLayoutUiTest.kt",
+      "main": "094d9a7dd378d3f6ea98080c09f3386bbcd0930b0eff181014e1f6fa3533363b",
+      "fd": "094d9a7dd378d3f6ea98080c09f3386bbcd0930b0eff181014e1f6fa3533363b",
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/ui/common/layout/AdaptiveMainActivityTest.kt",
+      "main": "a5fdb5babe3e04093ad4df50b443c1d83c02ca64440f14d94a3db5c30e3cd010",
+      "fd": "a5fdb5babe3e04093ad4df50b443c1d83c02ca64440f14d94a3db5c30e3cd010",
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/androidTest/java/takagi/ru/monica/ui/screens/SettingsSearchInstrumentedTest.kt",
+      "main": "ebc9729fbf15ac7c1e09ecd3412308c1856db1bb3cfb1a2fa6ea5319c5b0f747",
+      "fd": "2809d30e9be06561fb4bda922e1280e793ed56519e41ca72175f9e5b89d2cd67",
+      "normalizedEqual": false
+    },
+    {
+      "path": "app/src/main/AndroidManifest.xml",
+      "main": "8920f5a6170971579edef18fa347a6b056e4d2b0f1995a8b455e82b7fc8cf515",
+      "fd": "e37fef1db652c18ddd096cfcc8a0a1a40d3595e71b5b1092db1b77d6b0bceb8f",
+      "normalizedEqual": false
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/MainActivity.kt",
+      "main": "3fb5212219ea308915c16ea646d83844544b1b28be709b472c854a587e252dea",
+      "fd": "f329bbdb571d5f1edaad693c12351430e719ea4d9592cc1d678fe01de7cdeab1",
+      "normalizedEqual": false
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/AuthenticatorTabPane.kt",
+      "main": "cff681ea961ffe0251dd9c540d7f78f09315b03c994e67b4224c5fd642e1d69f",
+      "fd": "cff681ea961ffe0251dd9c540d7f78f09315b03c994e67b4224c5fd642e1d69f",
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/MainScreenFab.kt",
+      "main": "9dd46a6022ff662a269bf98086b91647953ed2ca2b16bf00cd32ba2fd7307a06",
+      "fd": "9dd46a6022ff662a269bf98086b91647953ed2ca2b16bf00cd32ba2fd7307a06",
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/PasswordTabPane.kt",
+      "main": "e93333753d09da6788539286a35db355524fdcaee5401a75cbd01e7c936deeec",
+      "fd": "e93333753d09da6788539286a35db355524fdcaee5401a75cbd01e7c936deeec",
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/SimpleMainScreen.kt",
+      "main": "78bf43b486cdba2360dca43081f9a3a13b1cb31e78b6017f7c3cabe057c8969f",
+      "fd": "78bf43b486cdba2360dca43081f9a3a13b1cb31e78b6017f7c3cabe057c8969f",
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/cardwallet/CardWalletPane.kt",
+      "main": "7c0129092b09314c3b321864be8adc207da9e4064c966e36814ec4cecbb87fad",
+      "fd": "7c0129092b09314c3b321864be8adc207da9e4064c966e36814ec4cecbb87fad",
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/common/layout/AdaptiveLayout.kt",
+      "main": "fe27543a21cc1fded1e713ff9f53ab3e7ac9d349c0cfb7ef41dbd70de2da0e72",
+      "fd": "fe27543a21cc1fded1e713ff9f53ab3e7ac9d349c0cfb7ef41dbd70de2da0e72",
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/common/layout/PanePrimitives.kt",
+      "main": "fb292bef87c2fb9e77142cb4edab3335d8a400ef5b18874313996b37a9bc7908",
+      "fd": "650d4f4da4a7f98044ce5de7a281c435b8991016af887801ace88d839c719014",
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/AuthComponents.kt",
+      "main": "ae492e06147d8ec7482165046df44bc414de2b8ac185ceccefc86f45ce1b1db3",
+      "fd": "ae492e06147d8ec7482165046df44bc414de2b8ac185ceccefc86f45ce1b1db3",
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/components/EntryContentPanel.kt",
+      "main": "933af5195e327703e485015c6766ad8081fdc21180b2f2a53c5eb2cb20493a96",
+      "fd": "933af5195e327703e485015c6766ad8081fdc21180b2f2a53c5eb2cb20493a96",
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/generator/GeneratorPane.kt",
+      "main": "066b8916a5c36767271574b3cf617514105a53b288151f0e919c84886d299541",
+      "fd": "066b8916a5c36767271574b3cf617514105a53b288151f0e919c84886d299541",
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/note/NotePane.kt",
+      "main": "8d4c717ccb7061383996cff7ea08dd14859210651511d61a44b45422f838fbba",
+      "fd": "8d4c717ccb7061383996cff7ea08dd14859210651511d61a44b45422f838fbba",
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/passkey/PasskeyPane.kt",
+      "main": "3c91e34b5c7ecf593864cadbe716dda0b01038b99d34d2611a0daa6da251b4af",
+      "fd": "3c91e34b5c7ecf593864cadbe716dda0b01038b99d34d2611a0daa6da251b4af",
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/screens/SettingsScreen.kt",
+      "main": "4efbd43e0e819fb1f1316881f16b83b0cc2d05e1efacdb93eeacde28967a1f3b",
+      "fd": "4efbd43e0e819fb1f1316881f16b83b0cc2d05e1efacdb93eeacde28967a1f3b",
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/send/SendPane.kt",
+      "main": "ed9aa47b8d184ce11858f618a4dd9a2ed1a2571fe6b88b27c068db35d39f2914",
+      "fd": "ed9aa47b8d184ce11858f618a4dd9a2ed1a2571fe6b88b27c068db35d39f2914",
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/settings/SettingsTabContent.kt",
+      "main": "9fe571ee3faf667eac35aff4a4a94b43a0dd97299908a0299cc670aabf9b4792",
+      "fd": "9fe571ee3faf667eac35aff4a4a94b43a0dd97299908a0299cc670aabf9b4792",
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/main/java/takagi/ru/monica/ui/vaultv2/VaultV2TabPane.kt",
+      "main": "f33eb697c7e12da518bcc585300cdda1a13d02ac8242d0deb1b079ffa47f6d0c",
+      "fd": "f33eb697c7e12da518bcc585300cdda1a13d02ac8242d0deb1b079ffa47f6d0c",
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/ui/AdaptiveLandscapeLayoutGuardTest.kt",
+      "main": "b7dc3dd82ccec614c595df9f3da2d5ca83fa9cc82f111ac2ccf56d72a7fecda0",
+      "fd": "b7dc3dd82ccec614c595df9f3da2d5ca83fa9cc82f111ac2ccf56d72a7fecda0",
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/ui/AdaptivePaneLocalizationGuardTest.kt",
+      "main": "fcc0e38cc601fc1fdfb4844f67650749a3acec3c224f8e0d429f8b2471db309d",
+      "fd": "fcc0e38cc601fc1fdfb4844f67650749a3acec3c224f8e0d429f8b2471db309d",
+      "normalizedEqual": true
+    },
+    {
+      "path": "app/src/test/java/takagi/ru/monica/ui/common/layout/AdaptiveLayoutPolicyTest.kt",
+      "main": "04830804958d012f342caffcb588b18f9f284aa70dd03acce2d2bbcc7e1c2feb",
+      "fd": "04830804958d012f342caffcb588b18f9f284aa70dd03acce2d2bbcc7e1c2feb",
+      "normalizedEqual": true
+    }
+  ],
+  "debugBuilds": {
+    "main": {
+      "label": "main09",
+      "seconds": 132.43517231941223,
+      "jvmTests": 14,
+      "jvmFailures": 0,
+      "jvmSkipped": 0,
+      "apks": [
+        {
+          "file": "Monica-Android-x86_64-1.0.329-26112012-90.APK",
+          "sha256": "415b7a58558e3652260ef09ae7b0a60a29a94c1ab12e259c66b20d93501cb43b"
+        },
+        {
+          "file": "app-debug-androidTest.apk",
+          "sha256": "b8218b1af48f1c9002458f12d1214fa021f490746c4c4f012178a3ef0c0a1880"
+        }
+      ]
+    },
+    "fd": {
+      "label": "fd02",
+      "seconds": 49.30236482620239,
+      "jvmTests": 14,
+      "jvmFailures": 0,
+      "jvmSkipped": 0,
+      "apks": [
+        {
+          "file": "Monica-Android-x86_64-1.0.329.apk",
+          "sha256": "77bd5545b676ee50d964262621b59dc6d3b1484b4ff05dccd57bc79207025be8"
+        },
+        {
+          "file": "app-debug-androidTest.apk",
+          "sha256": "d2399e71523dc492b55b8260896eb41786e5d7c708d3c2ac72369740baa6d348"
+        }
+      ]
+    }
+  },
+  "deviceTests": {
+    "main": {
+      "distinctPassedMethods": [
+        "takagi.ru.monica.ui.EntryContentWindowStabilityTest#addingNotesFromPasswordMenuCreatesOnlyOneEditorWindow",
+        "takagi.ru.monica.ui.EntryContentWindowStabilityTest#noteWindowSurvivesItsCardLeavingTheViewport",
+        "takagi.ru.monica.ui.common.layout.AdaptiveLayoutUiTest#loginIsBoundedAndStillSubmitsAfterWidthChange",
+        "takagi.ru.monica.ui.common.layout.AdaptiveLayoutUiTest#resizingKeepsDraftAndListScrollWithoutRemountingSlots",
+        "takagi.ru.monica.ui.common.layout.AdaptiveLayoutUiTest#shortWindowAndLargeTextKeepUnlockReachable",
+        "takagi.ru.monica.ui.common.layout.AdaptiveLayoutUiTest#syntheticFoldRegionsAvoidHingeAndKeepContentState",
+        "takagi.ru.monica.ui.common.layout.AdaptiveMainActivityTest#actualLoginEditResizeSaveSettingsRotationAndLock",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#backgroundBeforeSetupConfirmationErasesFirstPasswordAndReturnsToFirstStep",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#changePasswordScreenBackgroundClearsInputsAndKeepsTheOriginalCredentials",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#changePasswordScreenRejectsWrongPasswordThenConfirmsOnlyACommittedReplacement",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#existingPasswordRejectsWrongThenCommitsVerifiedRuntimeKey",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#firstSetupRunsOnceAndNewPasswordCanUnlockAfterColdManagerOpen",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#aliasSearchAndIconNavigationWorkInDarkNarrowLargeText",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#backClosesSearchBeforeDelegatingToTheParentPage",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#destructiveResultOnlyLocatesTheOriginalEntry",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#editorStyleSearchOnlyNavigatesAndPreservesPreferenceInLargeText",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#emptyFocusedSearchAndWhitespaceCanBeClosedWithoutLeavingSettings",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyDefinitionIsSearchableInEverySupportedLanguageWithoutReadingUserData",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyIndexedSpecificSettingHasOneVisibleTargetOnItsRealPage",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#firstSystemFieldStillReceivesSearchFocusAfterStylePickerIsInserted",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#hiddenConditionalSettingLocatesItsParentWithoutEnablingIt",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#hyperOsCatalogIncludesAliasesAndLocalizedChildTitles",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#hyperOsSearchLocatesProtectedEntryAndCancelPreservesQuery",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#hyperOsSearchReachesRealPageAfterPasswordVerificationInLargeText",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#keyboardResultNavigatesToSpecificRowWithoutTogglingAndReturnsToQuery",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#lazyPasswordFieldSettingsLocateTheRequestedField",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#previouslyOmittedSettingsAndProtectedChildHaveTheirOwnResults",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#searchBackArrowRemainsReachableInDarkNarrowLargeText"
+      ],
+      "batches": [
+        {
+          "label": "main07-regression",
+          "passed": false,
+          "runnerSeconds": 119.701,
+          "sha256": "125f5549d7f95b89bc7e7b9db0f6417f0229a700f2c548c9a8670d2b6db62026"
+        },
+        {
+          "label": "main08-protected-search",
+          "passed": true,
+          "runnerSeconds": 5.459,
+          "sha256": "5b6f482d2bf548af3f750bafe38e67e3f97e46e256bc441239f7905736004d72"
+        },
+        {
+          "label": "main09-native",
+          "passed": true,
+          "runnerSeconds": 16.281,
+          "sha256": "877df061d8018495b0a8c1047554f492e3e5cf568453201b60c594d1fa26afaa"
+        }
+      ]
+    },
+    "fd": {
+      "distinctPassedMethods": [
+        "takagi.ru.monica.ui.EntryContentWindowStabilityTest#addingNotesFromPasswordMenuCreatesOnlyOneEditorWindow",
+        "takagi.ru.monica.ui.EntryContentWindowStabilityTest#noteWindowSurvivesItsCardLeavingTheViewport",
+        "takagi.ru.monica.ui.common.layout.AdaptiveLayoutUiTest#loginIsBoundedAndStillSubmitsAfterWidthChange",
+        "takagi.ru.monica.ui.common.layout.AdaptiveLayoutUiTest#resizingKeepsDraftAndListScrollWithoutRemountingSlots",
+        "takagi.ru.monica.ui.common.layout.AdaptiveLayoutUiTest#shortWindowAndLargeTextKeepUnlockReachable",
+        "takagi.ru.monica.ui.common.layout.AdaptiveLayoutUiTest#syntheticFoldRegionsAvoidHingeAndKeepContentState",
+        "takagi.ru.monica.ui.common.layout.AdaptiveMainActivityTest#actualLoginEditResizeSaveSettingsRotationAndLock",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#backgroundBeforeSetupConfirmationErasesFirstPasswordAndReturnsToFirstStep",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#changePasswordScreenBackgroundClearsInputsAndKeepsTheOriginalCredentials",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#changePasswordScreenRejectsWrongPasswordThenConfirmsOnlyACommittedReplacement",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#existingPasswordRejectsWrongThenCommitsVerifiedRuntimeKey",
+        "takagi.ru.monica.ui.screens.ManagedPasswordLoginUiTest#firstSetupRunsOnceAndNewPasswordCanUnlockAfterColdManagerOpen",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#aliasSearchAndIconNavigationWorkInDarkNarrowLargeText",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#backClosesSearchBeforeDelegatingToTheParentPage",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#destructiveResultOnlyLocatesTheOriginalEntry",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#editorStyleSearchOnlyNavigatesAndPreservesPreferenceInLargeText",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#emptyFocusedSearchAndWhitespaceCanBeClosedWithoutLeavingSettings",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyDefinitionIsSearchableInEverySupportedLanguageWithoutReadingUserData",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#everyIndexedSpecificSettingHasOneVisibleTargetOnItsRealPage",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#firstSystemFieldStillReceivesSearchFocusAfterStylePickerIsInserted",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#hiddenConditionalSettingLocatesItsParentWithoutEnablingIt",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#hyperOsCatalogIncludesAliasesAndLocalizedChildTitles",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#hyperOsSearchLocatesProtectedEntryAndCancelPreservesQuery",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#hyperOsSearchReachesRealPageAfterPasswordVerificationInLargeText",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#keyboardResultNavigatesToSpecificRowWithoutTogglingAndReturnsToQuery",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#lazyPasswordFieldSettingsLocateTheRequestedField",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#localizedCatalogContainsUniqueConcreteItemsAndEmptySearchHasNoControls",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#previouslyOmittedSettingsAndProtectedChildHaveTheirOwnResults",
+        "takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest#searchBackArrowRemainsReachableInDarkNarrowLargeText"
+      ],
+      "batches": [
+        {
+          "label": "fd02-regression",
+          "passed": true,
+          "runnerSeconds": 125.626,
+          "sha256": "694308c781a7a53e0a8ad4358131f5ab5bb9628619d102cb7f74c19f9283ce33"
+        },
+        {
+          "label": "fd02-native",
+          "passed": true,
+          "runnerSeconds": 20.177,
+          "sha256": "477f569bb6e44200b8f862830f1fb610c5bfd0838b8f7648e745e2983613f7fd"
+        }
+      ]
+    }
+  },
+  "releaseUpgrade": {
+    "main": {
+      "builds": [
+        {
+          "stage": "old",
+          "seconds": 887.4298052787781,
+          "package": "takagi.ru.monica.adaptivereleasemain20261119",
+          "sha256": "f40e677dc91f1d50317e2421c4d6f2fe5cb4675ff5c3a133c8926bcaeeb5c0b9",
+          "certificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "abis": [
+            "x86_64"
+          ],
+          "minified": true,
+          "resourceShrinking": true,
+          "debuggable": false,
+          "mappingSha256": "39645c05f2849ceddffe55c4671439bb9b30cf4e10e8c7ad78a201ae1cfab098",
+          "mainActivityConfigChanges": null
+        },
+        {
+          "stage": "new",
+          "seconds": 492.2312219142914,
+          "package": "takagi.ru.monica.adaptivereleasemain20261119",
+          "sha256": "3158b099d8db4f725e1a59e1cb36284a753e97fd3819a89375a2d2d831bff88a",
+          "certificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "abis": [
+            "x86_64"
+          ],
+          "minified": true,
+          "resourceShrinking": true,
+          "debuggable": false,
+          "mappingSha256": "813cee6f1822fdaeb01fa67e5bcdbdc444d47833a14dad31073d2334c095fd6b",
+          "mainActivityConfigChanges": "0xd80"
+        }
+      ],
+      "runtime": {
+        "actualUi": true,
+        "coveringUpgrade": true,
+        "originalPassword": true,
+        "oldRecordColdRead": true,
+        "newRecordColdRead": true,
+        "encryptedOldBackupRestored": true,
+        "restoredRecordColdRead": true,
+        "newRecordPreservedAfterRestore": true
+      },
+      "evidenceCount": 10
+    },
+    "fd": {
+      "builds": [
+        {
+          "stage": "old",
+          "seconds": 1197.7232892513275,
+          "package": "takagi.ru.monica.adaptivereleasefd20261119",
+          "sha256": "0a565bcf9f4a8142b439086a40e5ca440cdfcf4bebb0d70684e665831a3d2009",
+          "certificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "abis": [
+            "x86_64"
+          ],
+          "minified": true,
+          "resourceShrinking": true,
+          "debuggable": false,
+          "mappingSha256": "253301597c08c3b2db81d4f7ac1fb36ac622c1c4c18433638be113d998f5078f",
+          "mainActivityConfigChanges": null
+        },
+        {
+          "stage": "new",
+          "seconds": 565.7414894104004,
+          "package": "takagi.ru.monica.adaptivereleasefd20261119",
+          "sha256": "f35d238747169afba0caabecbd2fdd6f74e62e01b7a0783c2d9e5d4405cf6adb",
+          "certificateSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+          "abis": [
+            "x86_64"
+          ],
+          "minified": true,
+          "resourceShrinking": true,
+          "debuggable": false,
+          "mappingSha256": "f426da6f58c87fc5f7fd7f2777edf478d22798607eaa94b4f9142b64848e2a44",
+          "mainActivityConfigChanges": "0xd80"
+        }
+      ],
+      "runtime": {
+        "actualUi": true,
+        "coveringUpgrade": true,
+        "originalPassword": true,
+        "oldRecordColdRead": true,
+        "newRecordColdRead": true,
+        "encryptedOldBackupRestored": true,
+        "restoredRecordColdRead": true,
+        "newRecordPreservedAfterRestore": true
+      },
+      "evidenceCount": 10
+    }
+  },
+  "screenshots": {
+    "main": [
+      {
+        "name": "main09-adaptive-native-editor-outer.png",
+        "sha256": "5b84e27e3936011f0457b5ae25dcb02531693237ae04d4c8cd446cf6cc6712b6"
+      },
+      {
+        "name": "main09-adaptive-native-editor-square.png",
+        "sha256": "040ac3281f2824ecb18f51898db11e2dfaecaad3b19539f5e8002a6aa2f1d4e1"
+      },
+      {
+        "name": "main09-adaptive-native-editor-wide.png",
+        "sha256": "fbafa451d1f0da3bedabd190971eafa3927ce4c1b7cf7015d2795fc280bdec95"
+      },
+      {
+        "name": "main09-adaptive-native-list-short-large-text-light.png",
+        "sha256": "782320ff887a71df16732b7408e8266ec419dc13aec59d1772b59fe46aeb8ec4"
+      },
+      {
+        "name": "main09-adaptive-native-locked-square.png",
+        "sha256": "4e757c09508cf176035369e33133db2f90f5802a425e4b3b418a3dc529885554"
+      },
+      {
+        "name": "main09-adaptive-native-login-4x3.png",
+        "sha256": "c47c8d1860a5cb2971378b0fc1021497eeed7e75fa511c231035e8a23797efbf"
+      },
+      {
+        "name": "main09-adaptive-native-login-outer.png",
+        "sha256": "10265eed7e5fd502a5d42473b9f9a09c380450829bd0ece9ff387b2f1b31a203"
+      },
+      {
+        "name": "main09-adaptive-native-login-short-large-text-light.png",
+        "sha256": "51bb6f4c641ff73a389d40e874ab54b51eb5a77d9e10faaf4c1cec2c85b004ec"
+      },
+      {
+        "name": "main09-adaptive-native-medium-window.png",
+        "sha256": "d33f445d523f28a7a17ac346a89a08f15a658fcdec6ebc0d6f5beb242b848a45"
+      },
+      {
+        "name": "main09-adaptive-native-password-detail-4x3.png",
+        "sha256": "e26d5c8a79c5b6beb294482f44406a2c4d7addd04f6849790dd19be1651cdfab"
+      },
+      {
+        "name": "main09-adaptive-native-password-detail-outer.png",
+        "sha256": "3955730de23351855087995c37b37a3240946670120c89c979ac5c623747789b"
+      },
+      {
+        "name": "main09-adaptive-native-settings-4x3.png",
+        "sha256": "c62892ef9249652e6820ace92bee34ffdce1d118b0a8129a91f0a59482ebe708"
+      },
+      {
+        "name": "main09-adaptive-native-settings-medium.png",
+        "sha256": "d6ba52724e92bc50997fe9e8f20c8689c5674e13e3bcbb5d3595358e27c0cfe0"
+      },
+      {
+        "name": "main09-adaptive-native-settings-rotated.png",
+        "sha256": "6b0b9e7f7a576014336ffc3571975894b29658d2517fe3d90d15cf712cb99724"
+      },
+      {
+        "name": "main09-adaptive-native-settings-search-square.png",
+        "sha256": "31f8c3eea9d8f92ea210ab9cd3a257352210706b253c01d1ea199372138429f4"
+      },
+      {
+        "name": "main09-adaptive-native-settings-short-large-text-light.png",
+        "sha256": "95453b9bc5f9d155cd58cd0618adb807e8f2c83be057f522410d52da8ec24394"
+      }
+    ],
+    "fd": [
+      {
+        "name": "fd02-adaptive-native-editor-outer.png",
+        "sha256": "18c6d3928da9e88f020e0aca2fd0b953627ac7d8fdef6c37e928f1931f142afe"
+      },
+      {
+        "name": "fd02-adaptive-native-editor-square.png",
+        "sha256": "97ebbec4c63f25e444f289a844293093b1edeb35a5f288a0520efbe4ad9b0722"
+      },
+      {
+        "name": "fd02-adaptive-native-editor-wide.png",
+        "sha256": "9fccd532cd3dfa9508f0dc27eeefe010657143c9d3b8b17c087f398bb18ece14"
+      },
+      {
+        "name": "fd02-adaptive-native-list-short-large-text-light.png",
+        "sha256": "b625b164a48eba48fb3571369fc0b25494e5dd62014b157b02fa9cc8ce6c07c4"
+      },
+      {
+        "name": "fd02-adaptive-native-locked-square.png",
+        "sha256": "9666453836f4aa218c4d7007ef89e2ec0d4d19ba2fe4263f79396aed8f784cc1"
+      },
+      {
+        "name": "fd02-adaptive-native-login-4x3.png",
+        "sha256": "a2af84f581046da7300e66d569503ab79b5f846742208acc82073731a67e8495"
+      },
+      {
+        "name": "fd02-adaptive-native-login-outer.png",
+        "sha256": "89e741e07d719d46215fa9a919f73c654a6ef62c99b134886adee5be339d8505"
+      },
+      {
+        "name": "fd02-adaptive-native-login-short-large-text-light.png",
+        "sha256": "a73302ea756727eaa27054e006915127ab30c3765c434f85004223def1b810fb"
+      },
+      {
+        "name": "fd02-adaptive-native-medium-window.png",
+        "sha256": "54f620eb9b99b21dcb32333eb63063e4bff1b411c9cf867439df91121ac0388b"
+      },
+      {
+        "name": "fd02-adaptive-native-password-detail-4x3.png",
+        "sha256": "ce83d6f0d9e6c98530258a3907374936cf56307e4426b5cedfd827d329e093eb"
+      },
+      {
+        "name": "fd02-adaptive-native-password-detail-outer.png",
+        "sha256": "6687ba0367f69b5912c3f082a8f11b1b892fc15c17ae4991b07327bab8bcc41f"
+      },
+      {
+        "name": "fd02-adaptive-native-settings-4x3.png",
+        "sha256": "7787476c3995abe35f820028b86be90f002e92db7dedead4de236d30f4adf868"
+      },
+      {
+        "name": "fd02-adaptive-native-settings-medium.png",
+        "sha256": "53251c8682c62ec83080ea40a048b32195874600967112c52e567874743c4cd1"
+      },
+      {
+        "name": "fd02-adaptive-native-settings-rotated.png",
+        "sha256": "d104499f433a6a0bcd5a25f5b648e2201946d0ec9f8009d94785ffec31d0a976"
+      },
+      {
+        "name": "fd02-adaptive-native-settings-search-square.png",
+        "sha256": "92c8d25192e338c6b165c38325f20014648cca1ab9d52a224e5c62fbd4716b70"
+      },
+      {
+        "name": "fd02-adaptive-native-settings-short-large-text-light.png",
+        "sha256": "11023ab76c10e2e797560e1cebd933bfd2847c91e7fd376558ac045954695b71"
+      }
+    ]
+  },
+  "metadataTests": 6,
+  "cleanup": {
+    "usersUnchanged": true,
+    "packagesUnchanged": true,
+    "settingsRestored": true,
+    "settings": {
+      "size": "Physical size: 1080x1920",
+      "density": "Physical density: 280",
+      "font": "1.0",
+      "accelerometer": "1",
+      "rotation": "0"
+    },
+    "externalSyntheticBackupsRemoved": [
+      "/sdcard/Documents/adaptive-main-old-20261119.enc.zip",
+      "/sdcard/Documents/adaptive-fd-old-20261119.enc.zip",
+      "/sdcard/Download/adaptive-main-old-20261119.enc.zip"
+    ],
+    "currentUser": "0",
+    "preexistingMuMuLeftRunning": true
+  },
+  "limits": [
+    "No physical foldable or OEM hinge callback verification",
+    "No actual split/freeform window: MuMu retained fullscreen bounds",
+    "Hinge placement covered with synthetic geometry",
+    "Local test certificate and isolated application IDs, not production signing",
+    "Representative pages and synthetic records, not every screen or user vault",
+    "targetSdk remains 34; no Play compliance certification"
+  ],
+  "initialFailuresRetained": true,
+  "postImplementationCommitOrPush": false,
+  "apkDelivery": false
+}

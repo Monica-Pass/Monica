@@ -1,16 +1,12 @@
 package takagi.ru.monica.ui
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
+import takagi.ru.monica.ui.common.layout.AdaptiveListDetailLayout
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import takagi.ru.monica.data.PasskeyEntry
 import takagi.ru.monica.passkey.managementRecordIdOrNull
-import takagi.ru.monica.ui.common.layout.DetailPane
-import takagi.ru.monica.ui.common.layout.ListPane
 import takagi.ru.monica.ui.screens.PasskeyListScreen
 import takagi.ru.monica.viewmodel.PasskeyViewModel
 import takagi.ru.monica.viewmodel.PasswordViewModel
@@ -36,43 +32,22 @@ internal fun PasskeyPane(
     onScanFidoQr: () -> Unit,
     onNavigateToAuthenticator: () -> Unit
 ) {
-    if (isCompactWidth) {
-        PasskeyListScreen(
-            viewModel = passkeyViewModel,
-            passwordViewModel = passwordViewModel,
-            onNavigateToPasswordDetail = onNavigateToPasswordDetail,
-            onPasskeyClick = { passkey ->
-                passkey.managementRecordIdOrNull()?.let(onNavigateToPasskeyDetail)
-            },
-            showStandaloneSettingsEntry = showStandaloneSettingsEntry,
-            onOpenStandaloneSettings = onOpenStandaloneSettings,
-            onScanFidoQr = onScanFidoQr,
-            onNavigateToAuthenticator = onNavigateToAuthenticator
-        )
-    } else {
-        Row(modifier = Modifier.fillMaxSize()) {
-            ListPane(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .width(wideListPaneWidth)
-            ) {
-                PasskeyListScreen(
+    val hasAdaptiveDetail = selectedPasskey != null
+    AdaptiveListDetailLayout(
+        compact = isCompactWidth,
+        listWidth = wideListPaneWidth,
+        hasDetail = hasAdaptiveDetail,
+        list = { PasskeyListScreen(
                     viewModel = passkeyViewModel,
                     passwordViewModel = passwordViewModel,
                     onNavigateToPasswordDetail = onNavigateToPasswordDetail,
-                    onPasskeyClick = onPasskeyOpen,
+                    onPasskeyClick = { item -> if (isCompactWidth) item.managementRecordIdOrNull()?.let(onNavigateToPasskeyDetail) else onPasskeyOpen(item) },
                     showStandaloneSettingsEntry = showStandaloneSettingsEntry,
                     onOpenStandaloneSettings = onOpenStandaloneSettings,
                     onScanFidoQr = onScanFidoQr,
                     onNavigateToAuthenticator = onNavigateToAuthenticator
-                )
-            }
-            DetailPane(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-            ) {
-                PasskeyDetailPaneContent(
+                ) },
+        detail = { PasskeyDetailPaneContent(
                     selectedPasskey = selectedPasskey,
                     passkeyTotalCount = passkeyTotalCount,
                     passkeyBoundCount = passkeyBoundCount,
@@ -80,10 +55,8 @@ internal fun PasskeyPane(
                     onOpenPasswordDetail = onOpenPasswordDetail,
                     onUnbindPasskey = onUnbindPasskey,
                     onDeletePasskey = onDeletePasskey
-                )
-            }
-        }
-    }
+                ) }
+    )
 }
 
 @Composable

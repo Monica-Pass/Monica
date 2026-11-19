@@ -1,0 +1,131 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.nfc.card.NfcCardEntryUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.nfc.card.NfcCardEntryUiTest:
+INSTRUMENTATION_STATUS: test=coldOrLockedTagIntentDropsSensitiveExtrasAndRequiresANewTap
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.nfc.card.NfcCardEntryUiTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Use the task-owned synthetic Android user
+	at takagi.ru.monica.nfc.card.NfcCardEntryUiTest.prepareIsolatedHost(NfcCardEntryUiTest.kt:168)
+
+INSTRUMENTATION_STATUS: stream=
+Error in coldOrLockedTagIntentDropsSensitiveExtrasAndRequiresANewTap(takagi.ru.monica.nfc.card.NfcCardEntryUiTest):
+java.lang.IllegalStateException: Use the task-owned synthetic Android user
+	at takagi.ru.monica.nfc.card.NfcCardEntryUiTest.prepareIsolatedHost(NfcCardEntryUiTest.kt:168)
+
+INSTRUMENTATION_STATUS: test=coldOrLockedTagIntentDropsSensitiveExtrasAndRequiresANewTap
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.nfc.card.NfcCardEntryUiTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=hostDisposalRevokesPendingAndFutureResultsWhileEditorStillExists
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.nfc.card.NfcCardEntryUiTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Use the task-owned synthetic Android user
+	at takagi.ru.monica.nfc.card.NfcCardEntryUiTest.prepareIsolatedHost(NfcCardEntryUiTest.kt:168)
+
+INSTRUMENTATION_STATUS: stream=
+Error in hostDisposalRevokesPendingAndFutureResultsWhileEditorStillExists(takagi.ru.monica.nfc.card.NfcCardEntryUiTest):
+java.lang.IllegalStateException: Use the task-owned synthetic Android user
+	at takagi.ru.monica.nfc.card.NfcCardEntryUiTest.prepareIsolatedHost(NfcCardEntryUiTest.kt:168)
+
+INSTRUMENTATION_STATUS: test=hostDisposalRevokesPendingAndFutureResultsWhileEditorStillExists
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.nfc.card.NfcCardEntryUiTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=warmTagWaitsThroughActivityResumeUntilItsEditorLifecycleRegisters
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.nfc.card.NfcCardEntryUiTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Use the task-owned synthetic Android user
+	at takagi.ru.monica.nfc.card.NfcCardEntryUiTest.prepareIsolatedHost(NfcCardEntryUiTest.kt:168)
+
+INSTRUMENTATION_STATUS: stream=
+Error in warmTagWaitsThroughActivityResumeUntilItsEditorLifecycleRegisters(takagi.ru.monica.nfc.card.NfcCardEntryUiTest):
+java.lang.IllegalStateException: Use the task-owned synthetic Android user
+	at takagi.ru.monica.nfc.card.NfcCardEntryUiTest.prepareIsolatedHost(NfcCardEntryUiTest.kt:168)
+
+INSTRUMENTATION_STATUS: test=warmTagWaitsThroughActivityResumeUntilItsEditorLifecycleRegisters
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.nfc.card.NfcCardEntryUiTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockRevokesPromptAndRejectsResultFromPreviousGenerationAfterUnlock
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.nfc.card.NfcCardEntryUiTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Use the task-owned synthetic Android user
+	at takagi.ru.monica.nfc.card.NfcCardEntryUiTest.prepareIsolatedHost(NfcCardEntryUiTest.kt:168)
+
+INSTRUMENTATION_STATUS: stream=
+Error in lockRevokesPromptAndRejectsResultFromPreviousGenerationAfterUnlock(takagi.ru.monica.nfc.card.NfcCardEntryUiTest):
+java.lang.IllegalStateException: Use the task-owned synthetic Android user
+	at takagi.ru.monica.nfc.card.NfcCardEntryUiTest.prepareIsolatedHost(NfcCardEntryUiTest.kt:168)
+
+INSTRUMENTATION_STATUS: test=lockRevokesPromptAndRejectsResultFromPreviousGenerationAfterUnlock
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.nfc.card.NfcCardEntryUiTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=activityBackgroundDiscardsPromptAndRejectsDeliveryUntilResume
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.nfc.card.NfcCardEntryUiTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=5
+INSTRUMENTATION_STATUS: stack=java.lang.IllegalStateException: Use the task-owned synthetic Android user
+	at takagi.ru.monica.nfc.card.NfcCardEntryUiTest.prepareIsolatedHost(NfcCardEntryUiTest.kt:168)
+
+INSTRUMENTATION_STATUS: stream=
+Error in activityBackgroundDiscardsPromptAndRejectsDeliveryUntilResume(takagi.ru.monica.nfc.card.NfcCardEntryUiTest):
+java.lang.IllegalStateException: Use the task-owned synthetic Android user
+	at takagi.ru.monica.nfc.card.NfcCardEntryUiTest.prepareIsolatedHost(NfcCardEntryUiTest.kt:168)
+
+INSTRUMENTATION_STATUS: test=activityBackgroundDiscardsPromptAndRejectsDeliveryUntilResume
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 1.109
+There were 5 failures:
+1) coldOrLockedTagIntentDropsSensitiveExtrasAndRequiresANewTap(takagi.ru.monica.nfc.card.NfcCardEntryUiTest)
+java.lang.IllegalStateException: Use the task-owned synthetic Android user
+	at takagi.ru.monica.nfc.card.NfcCardEntryUiTest.prepareIsolatedHost(NfcCardEntryUiTest.kt:168)
+2) hostDisposalRevokesPendingAndFutureResultsWhileEditorStillExists(takagi.ru.monica.nfc.card.NfcCardEntryUiTest)
+java.lang.IllegalStateException: Use the task-owned synthetic Android user
+	at takagi.ru.monica.nfc.card.NfcCardEntryUiTest.prepareIsolatedHost(NfcCardEntryUiTest.kt:168)
+3) warmTagWaitsThroughActivityResumeUntilItsEditorLifecycleRegisters(takagi.ru.monica.nfc.card.NfcCardEntryUiTest)
+java.lang.IllegalStateException: Use the task-owned synthetic Android user
+	at takagi.ru.monica.nfc.card.NfcCardEntryUiTest.prepareIsolatedHost(NfcCardEntryUiTest.kt:168)
+4) lockRevokesPromptAndRejectsResultFromPreviousGenerationAfterUnlock(takagi.ru.monica.nfc.card.NfcCardEntryUiTest)
+java.lang.IllegalStateException: Use the task-owned synthetic Android user
+	at takagi.ru.monica.nfc.card.NfcCardEntryUiTest.prepareIsolatedHost(NfcCardEntryUiTest.kt:168)
+5) activityBackgroundDiscardsPromptAndRejectsDeliveryUntilResume(takagi.ru.monica.nfc.card.NfcCardEntryUiTest)
+java.lang.IllegalStateException: Use the task-owned synthetic Android user
+	at takagi.ru.monica.nfc.card.NfcCardEntryUiTest.prepareIsolatedHost(NfcCardEntryUiTest.kt:168)
+
+FAILURES!!!
+Tests run: 5,  Failures: 5
+
+
+INSTRUMENTATION_CODE: -1

@@ -70,6 +70,7 @@ internal fun BoxScope.MainScreenFabOverlay(
     isAnySelectionMode: Boolean,
     isAddingPasswordInline: Boolean,
     inlinePasswordEditorId: Long?,
+    selectedPasswordId: Long?,
     isAddingTotpInline: Boolean,
     selectedTotpId: Long?,
     isAddingBankCardInline: Boolean,
@@ -84,6 +85,7 @@ internal fun BoxScope.MainScreenFabOverlay(
     isAddingNoteInline: Boolean,
     inlineNoteEditorId: Long?,
     isAddingSendInline: Boolean,
+    hasSelectedSend: Boolean,
     isFabVisible: Boolean,
     isFabExpanded: Boolean,
     onFabExpandedChange: (Boolean) -> Unit,
@@ -140,9 +142,10 @@ internal fun BoxScope.MainScreenFabOverlay(
 ) {
     // FAB visibility is computed from tab context + selection mode + detail pane occupancy.
     // This avoids conflicting gestures between fast-scroll, quick access, and expandable add menu.
-    val hasWideDetailSelection = !isCompactWidth && when (currentTab) {
+    val hasWideDetailSelection = when (currentTab) {
         BottomNavItem.VaultV2 -> vaultV2HasWideDetail
-        BottomNavItem.Passwords -> isAddingPasswordInline || inlinePasswordEditorId != null
+        BottomNavItem.Passwords -> isAddingPasswordInline || inlinePasswordEditorId != null ||
+            (isCompactWidth && selectedPasswordId != null)
         BottomNavItem.Authenticator -> isAddingTotpInline || selectedTotpId != null
         BottomNavItem.CardWallet -> isAddingBankCardInline ||
             inlineBankCardEditorId != null ||
@@ -154,7 +157,7 @@ internal fun BoxScope.MainScreenFabOverlay(
             inlineBillingAddressEditorId != null ||
             selectedBillingAddressId != null
         BottomNavItem.Notes -> isAddingNoteInline || inlineNoteEditorId != null
-        BottomNavItem.Send -> isAddingSendInline
+        BottomNavItem.Send -> isAddingSendInline || (isCompactWidth && hasSelectedSend)
         else -> false
     }
 
@@ -190,7 +193,8 @@ internal fun BoxScope.MainScreenFabOverlay(
     val fabIconTint = MaterialTheme.colorScheme.onPrimaryContainer
     val navBarInsetBottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
     val fabBottomOffset = when {
-        !isCompactWidth -> 24.dp
+        takagi.ru.monica.ui.common.layout.adaptivePanePolicy(
+            takagi.ru.monica.ui.common.layout.adaptiveWindowWidth().value.toInt()).navigationRail -> 24.dp
         shouldHideBottomNavigation -> 24.dp + navBarInsetBottom
         else -> 116.dp
     }

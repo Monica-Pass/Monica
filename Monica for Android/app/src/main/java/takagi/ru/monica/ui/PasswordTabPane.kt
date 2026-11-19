@@ -1,5 +1,8 @@
 package takagi.ru.monica.ui
 
+import takagi.ru.monica.ui.common.layout.AdaptiveListDetailLayout
+import androidx.compose.foundation.layout.Column
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -7,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import takagi.ru.monica.R
 import takagi.ru.monica.data.PasswordPageContentType
 import takagi.ru.monica.data.UnmatchedIconHandlingStrategy
@@ -16,8 +18,6 @@ import takagi.ru.monica.data.LocalKeePassDatabase
 import takagi.ru.monica.data.LocalMdbxDatabase
 import takagi.ru.monica.data.model.TimelineEvent
 import takagi.ru.monica.security.SecurityManager
-import takagi.ru.monica.ui.common.layout.DetailPane
-import takagi.ru.monica.ui.common.layout.ListPane
 import takagi.ru.monica.ui.password.PasswordListAggregateConfig
 import takagi.ru.monica.ui.password.StackCardMode
 import takagi.ru.monica.ui.screens.AddEditPasswordScreen
@@ -47,7 +47,7 @@ internal fun PasswordTabPane(
     bitwardenVaults: List<BitwardenVault>,
     localKeePassViewModel: takagi.ru.monica.viewmodel.LocalKeePassViewModel,
     mdbxViewModel: MdbxViewModel? = null,
-    timelineViewModel: TimelineViewModel,
+    timelineViewModel: TimelineViewModel?,
     groupMode: String,
     stackCardMode: StackCardMode,
     visibleContentTypes: List<PasswordPageContentType>,
@@ -165,6 +165,7 @@ internal fun PasswordTabPane(
 
     if (passwordHistoryPageMode.isVisible) {
         TimelineScreen(
+            onMdbxHistory = onOpenMdbxCommitHistory,
             viewModel = timelineViewModel,
             onLogSelected = onTimelineLogSelected,
             splitPaneMode = false,
@@ -179,25 +180,14 @@ internal fun PasswordTabPane(
         return
     }
 
-    if (isCompactWidth) {
-        ListPane(
-            modifier = Modifier.fillMaxSize(),
-            content = listPaneContent
-        )
-    } else {
-        Row(modifier = Modifier.fillMaxSize()) {
-            ListPane(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .width(wideListPaneWidth),
-                content = listPaneContent
-            )
-            DetailPane(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-            ) {
-                PasswordDetailPaneContent(
+    val hasAdaptiveDetail = isAddingPasswordInline || inlinePasswordEditorId != null || selectedPasswordId != null
+    BackHandler(enabled = isCompactWidth && hasAdaptiveDetail) { if (isAddingPasswordInline || inlinePasswordEditorId != null) onInlinePasswordEditorBack() else onClearSelectedPassword() }
+    AdaptiveListDetailLayout(
+        compact = isCompactWidth,
+        listWidth = wideListPaneWidth,
+        hasDetail = hasAdaptiveDetail,
+        list = { Column { listPaneContent() } },
+        detail = { PasswordDetailPaneContent(
                     onCreateApiToken = onCreateApiToken,
                     isAddingPasswordInline = isAddingPasswordInline,
                     inlinePasswordEditorId = inlinePasswordEditorId,
@@ -223,10 +213,8 @@ internal fun PasswordTabPane(
                     onClearSelectedPassword = onClearSelectedPassword,
                     onNavigateToNoteDetail = onNavigateToNoteDetail,
                     onEditPassword = onEditPassword
-                )
-            }
-        }
-    }
+                ) }
+    )
 }
 
 @Composable

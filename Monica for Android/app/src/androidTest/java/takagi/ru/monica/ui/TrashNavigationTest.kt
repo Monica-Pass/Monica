@@ -55,12 +55,16 @@ class TrashNavigationTest {
     private lateinit var originalVaultFilter: SavedCategoryFilterState
     private val models = mutableListOf<ViewModel>()
     private val insertedPasswords = mutableListOf<Long>()
+    private val insertedMdbxDatabases = mutableListOf<LocalMdbxDatabase>()
     private val prefix = "Trash regression ${UUID.randomUUID()}"
     private lateinit var passwordModel: PasswordViewModel
     private lateinit var settingsModel: SettingsViewModel
     private var darkTheme by mutableStateOf(false)
+    private var previouslyUnlocked = false
 
     @Before fun prepare() = runBlocking {
+        previouslyUnlocked = takagi.ru.monica.security.SessionManager.isUnlocked.value
+        takagi.ru.monica.security.SessionManager.markUnlocked()
         originalSettings = settings.settingsFlow.first()
         originalVaultFilter = settings.categoryFilterStateFlow("vault_v2").first()
         settings.updateCategoryFilterState("vault_v2", SavedCategoryFilterState(type = "local"))
@@ -77,6 +81,7 @@ class TrashNavigationTest {
         models.forEach { it.viewModelScope.cancel() }
         runBlocking {
             insertedPasswords.forEach { database.passwordEntryDao().deletePasswordEntryById(it) }
+            insertedMdbxDatabases.forEach { database.localMdbxDatabaseDao().deleteDatabase(it) }
             settings.updateTrashEnabled(originalSettings.trashEnabled)
             settings.updateTrashAutoDeleteDays(originalSettings.trashAutoDeleteDays)
             BottomNavContentTab.entries.forEach { tab ->
@@ -88,6 +93,7 @@ class TrashNavigationTest {
             settings.updateBottomNavOrder(originalSettings.bottomNavOrder)
             settings.updateCategoryFilterState("vault_v2", originalVaultFilter)
         }
+        if (!previouslyUnlocked) takagi.ru.monica.security.SessionManager.markLocked()
     }
 
     @Test fun classicPasswordMenuKeepsTheLocalDatabaseWhenOpeningTrash() {
@@ -107,7 +113,11 @@ class TrashNavigationTest {
         addDeletedPassword("local")
         addDeletedPassword("bitwarden", bitwardenVaultId = Long.MAX_VALUE)
         addDeletedPassword("keepass", keepassDatabaseId = Long.MAX_VALUE)
-        addDeletedPassword("mdbx", mdbxDatabaseId = Long.MAX_VALUE)
+        // MDBX projections require a supported catalog row; a missing row is deliberately hidden.
+        val mdbx = LocalMdbxDatabase(name = prefix, filePath = "synthetic-unopened-path", engineType = "RUST_MDBX2")
+        val mdbxId = runBlocking { database.localMdbxDatabaseDao().insertDatabase(mdbx) }
+        insertedMdbxDatabases += mdbx.copy(id = mdbxId)
+        addDeletedPassword("mdbx", mdbxDatabaseId = mdbxId)
         val timeline = keep(TimelineViewModel(application))
         val trash = keep(TrashViewModel(application))
         var scopeKey by mutableStateOf("bitwarden_${Long.MAX_VALUE}")
@@ -119,7 +129,11 @@ class TrashNavigationTest {
             }
         }
         listOf("bitwarden", "keepass", "mdbx", "local").forEach { source ->
-            compose.runOnIdle { scopeKey = if (source == "local") "local" else "${source}_${Long.MAX_VALUE}" }
+            compose.runOnIdle { scopeKey = when (source) {
+                "local" -> "local"
+                "mdbx" -> "mdbx_$mdbxId"
+                else -> "${source}_${Long.MAX_VALUE}"
+            } }
             awaitText("$prefix $source")
             listOf("local", "bitwarden", "keepass", "mdbx").filter { it != source }.forEach {
                 compose.onNodeWithText("$prefix $it").assertDoesNotExist()
@@ -159,9 +173,12 @@ class TrashNavigationTest {
         val vault = nav(R.string.nav_v2_vault_short)
         val password = nav(R.string.nav_passwords_short)
         password.assertIsSelected()
-        assertTrue(vault.fetchSemanticsNode().boundsInRoot.left < password.fetchSemanticsNode().boundsInRoot.left)
+        val vaultBounds = vault.fetchSemanticsNode().boundsInRoot
+        val passwordBounds = password.fetchSemanticsNode().boundsInRoot
+        val rail = vaultBounds.top < passwordBounds.top
+        assertTrue(if (rail) vaultBounds.bottom <= passwordBounds.top else vaultBounds.left < passwordBounds.left)
         val fab = action(R.string.add).fetchSemanticsNode().boundsInRoot
-        assertTrue("FAB must stay above navigation", fab.bottom <= password.fetchSemanticsNode().boundsInRoot.top)
+        assertTrue("FAB must not overlap navigation", if (rail) fab.left >= passwordBounds.right else fab.bottom <= passwordBounds.top)
         capture("ordinary-navigation")
         step("navigation and FAB verified")
         vault.performClick()

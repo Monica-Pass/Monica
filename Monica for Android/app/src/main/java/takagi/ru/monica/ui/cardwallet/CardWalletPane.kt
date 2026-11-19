@@ -1,16 +1,12 @@
 package takagi.ru.monica.ui
 
+import takagi.ru.monica.ui.common.layout.AdaptiveListDetailLayout
+import androidx.compose.foundation.layout.Column
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.SaveableStateHolder
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import takagi.ru.monica.ui.common.layout.DetailPane
-import takagi.ru.monica.ui.common.layout.ListPane
 import takagi.ru.monica.viewmodel.BankCardViewModel
 import takagi.ru.monica.viewmodel.BillingAddressViewModel
 import takagi.ru.monica.viewmodel.DocumentViewModel
@@ -69,25 +65,14 @@ internal fun CardWalletPane(
         )
     }
 
-    if (isCompactWidth) {
-        ListPane(
-            modifier = Modifier.fillMaxSize(),
-            content = listPaneContent
-        )
-    } else {
-        Row(modifier = Modifier.fillMaxSize()) {
-            ListPane(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .width(wideListPaneWidth),
-                content = listPaneContent
-            )
-            DetailPane(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-            ) {
-                CardWalletDetailPaneContent(
+    val hasAdaptiveDetail = isAddingBankCardInline || inlineBankCardEditorId != null || selectedBankCardId != null || isAddingDocumentInline || inlineDocumentEditorId != null || selectedDocumentId != null || isAddingBillingAddressInline || inlineBillingAddressEditorId != null || selectedBillingAddressId != null
+    BackHandler(enabled = isCompactWidth && hasAdaptiveDetail) { when { isAddingBankCardInline || inlineBankCardEditorId != null -> onInlineBankCardEditorBack(); isAddingDocumentInline || inlineDocumentEditorId != null -> onInlineDocumentEditorBack(); isAddingBillingAddressInline || inlineBillingAddressEditorId != null -> onInlineBillingAddressEditorBack(); selectedBankCardId != null -> onClearSelectedBankCard(); selectedDocumentId != null -> onClearSelectedDocument(); else -> onClearSelectedBillingAddress() } }
+    AdaptiveListDetailLayout(
+        compact = isCompactWidth,
+        listWidth = wideListPaneWidth,
+        hasDetail = hasAdaptiveDetail,
+        list = { Column { listPaneContent() } },
+        detail = { CardWalletDetailPaneContent(
                     bankCardViewModel = bankCardViewModel,
                     documentViewModel = documentViewModel,
                     billingAddressViewModel = billingAddressViewModel,
@@ -117,8 +102,6 @@ internal fun CardWalletPane(
                     initialMdbxFolderId = initialMdbxFolderId,
                     initialBitwardenVaultId = initialBitwardenVaultId,
                     initialBitwardenFolderId = initialBitwardenFolderId
-                )
-            }
-        }
-    }
+                ) }
+    )
 }

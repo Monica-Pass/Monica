@@ -1,5 +1,6 @@
 package takagi.ru.monica.ui.components
 
+import takagi.ru.monica.ui.common.layout.readableWidth
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -115,7 +116,7 @@ fun EntryContentPanel(
                 }
             }
         }
-        Scaffold(modifier = Modifier.fillMaxSize().testTag("content_detail_${section.name}"),
+        Scaffold(modifier = Modifier.fillMaxSize().readableWidth().testTag("content_detail_${section.name}"),
             topBar = { TopAppBar(title = {
                 Text(stringResource(section.title), maxLines = if (section == PasswordContentSection.ATTACHMENTS) 1 else Int.MAX_VALUE,
                     overflow = TextOverflow.Ellipsis)

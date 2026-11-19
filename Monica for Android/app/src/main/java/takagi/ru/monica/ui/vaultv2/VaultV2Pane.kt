@@ -1593,7 +1593,7 @@ fun VaultV2Pane(
 	val overviewListState = rememberLazyListState(state.overviewScrollIndex, state.overviewScrollOffset)
 	var vaultHistoryPageMode by rememberSaveable { mutableStateOf(0) }
 	var vaultHistoryTrashScope by rememberSaveable { mutableStateOf<String?>(null) }
-	val timelineViewModel: takagi.ru.monica.viewmodel.TimelineViewModel = viewModel()
+	val timelineViewModel: takagi.ru.monica.viewmodel.TimelineViewModel? = null
 	BackHandler(enabled = vaultHistoryPageMode != 0) {
 		vaultHistoryPageMode = 0
 	}
@@ -1601,6 +1601,7 @@ fun VaultV2Pane(
 	// 历史/回收站页面优先渲染，覆盖整个 VaultV2Pane
 	if (useEmbeddedHistoryPages && vaultHistoryPageMode != 0) {
 		takagi.ru.monica.ui.screens.TimelineScreen(
+            onMdbxHistory = onOpenMdbxCommitHistory,
 			viewModel = timelineViewModel,
 			onLogSelected = {},
 			splitPaneMode = false,

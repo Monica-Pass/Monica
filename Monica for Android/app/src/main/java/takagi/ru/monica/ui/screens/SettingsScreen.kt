@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import takagi.ru.monica.ui.common.layout.readableWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -47,7 +48,6 @@ import takagi.ru.monica.data.InterfaceScale
 import takagi.ru.monica.data.Language
 import takagi.ru.monica.ui.components.TrashSettingsSheet
 import takagi.ru.monica.data.ThemeMode
-import takagi.ru.monica.ui.components.M3IdentityVerifyDialog
 import takagi.ru.monica.ui.components.UnifiedMoveAction
 import takagi.ru.monica.ui.common.pull.rememberPullToActionState
 import takagi.ru.monica.ui.main.navigation.SteamDockIcon
@@ -476,6 +476,7 @@ fun SettingsScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .readableWidth()
                 .nestedScroll(securityPullState.nestedScrollConnection)
                 .verticalScroll(scrollState)
         ) {

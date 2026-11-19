@@ -1813,17 +1813,21 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
             itemType = OperationLogItemType.BITWARDEN_SYNC,
             itemId = System.currentTimeMillis(),
             itemTitle = "Bitwarden Vault #$vaultId",
+            scopeKey = "bitwarden:$vaultId",
+            automaticEmptySync = silent && appliedChangeCount == 0 && remoteAddedCount == 0 &&
+                remoteUpdatedCount == 0 && uploadedCount == 0 && deletedCount == 0 &&
+                conflictCount == 0 && uploadFailedCount == 0 && skippedDueToLocalDirtyCount == 0,
             details = listOf(
                 FieldChange("模式", "", if (silent) "静默同步" else "手动同步"),
-                FieldChange("本次变更", "", appliedChangeCount.toString()),
-                FieldChange("离线可查看总数", "", availableOfflineCount.toString()),
-                FieldChange("远端新增", "", remoteAddedCount.toString()),
-                FieldChange("远端更新", "", remoteUpdatedCount.toString()),
-                FieldChange("本地上传", "", uploadedCount.toString()),
-                FieldChange("删除处理", "", deletedCount.toString()),
-                FieldChange("冲突数", "", conflictCount.toString()),
-                FieldChange("上传失败", "", uploadFailedCount.toString()),
-                FieldChange("本地待上传阻塞", "", skippedDueToLocalDirtyCount.toString())
+                FieldChange("sync.changed", "", appliedChangeCount.toString()),
+                FieldChange("sync.offline", "", availableOfflineCount.toString()),
+                FieldChange("sync.added", "", remoteAddedCount.toString()),
+                FieldChange("sync.updated", "", remoteUpdatedCount.toString()),
+                FieldChange("sync.uploaded", "", uploadedCount.toString()),
+                FieldChange("sync.deleted", "", deletedCount.toString()),
+                FieldChange("sync.conflicts", "", conflictCount.toString()),
+                FieldChange("sync.failed", "", uploadFailedCount.toString()),
+                FieldChange("sync.pending", "", skippedDueToLocalDirtyCount.toString())
             )
         )
     }

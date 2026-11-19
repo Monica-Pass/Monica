@@ -282,6 +282,8 @@ dependencies {
     implementation libs.androidx.ui.tooling.preview
     implementation libs.androidx.material3
     implementation libs.androidx.material3.window.size
+    // Already packaged transitively; declared for the posture API used by adaptive layouts.
+    implementation "androidx.window:window:1.5.0"
     implementation "androidx.compose.animation:animation"
     implementation "androidx.compose.animation:animation-graphics"
     

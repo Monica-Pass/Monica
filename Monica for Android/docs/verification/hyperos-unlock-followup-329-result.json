@@ -1,0 +1,230 @@
+{
+  "scope": "Investigation, not confirmed HyperOS fix",
+  "muMu": "API35 x86_64; no HyperOS ROM",
+  "sourceReceipt": {
+    "ui/components/AuthComponents.kt": {
+      "V1.0.326": {
+        "sha256": "ddf92fa33082088e5af7ba7eeaf7c7dbab79505472cd6f96a63d018b33c97b44",
+        "bytes": 15255
+      },
+      "V1.0.327": {
+        "sha256": "c924beca863f073803777dd313a789215bcbca4510346d606c454f47eb482051",
+        "bytes": 20497
+      },
+      "HEAD": {
+        "sha256": "c924beca863f073803777dd313a789215bcbca4510346d606c454f47eb482051",
+        "bytes": 20497
+      }
+    },
+    "ui/screens/LoginScreen.kt": {
+      "V1.0.326": {
+        "sha256": "39a15a3d80b28fb1698012ceb2aee552f58d7648ba7b80edd0cfd60e0aa18e8f",
+        "bytes": 1976
+      },
+      "V1.0.327": {
+        "sha256": "6c438ec03609c7712cb5ca358dd6ef3488005f569332c1ce211cc9e5b19898ed",
+        "bytes": 2155
+      },
+      "HEAD": {
+        "sha256": "6c438ec03609c7712cb5ca358dd6ef3488005f569332c1ce211cc9e5b19898ed",
+        "bytes": 2155
+      }
+    },
+    "security/SecurityManager.kt": {
+      "V1.0.326": {
+        "sha256": "17cdb6d20f87aa2be5641e2641d1bd619a2c155dc2bc229f677a29c203f5d536",
+        "bytes": 76174
+      },
+      "V1.0.327": {
+        "sha256": "de21e3dd0fba030aaa54d389f5358ce1ce638f0af48db832c5fa6ba2cb708fa2",
+        "bytes": 86434
+      },
+      "HEAD": {
+        "sha256": "de21e3dd0fba030aaa54d389f5358ce1ce638f0af48db832c5fa6ba2cb708fa2",
+        "bytes": 86434
+      }
+    },
+    "security/PasswordKdf.kt": {
+      "V1.0.326": {
+        "missing": true
+      },
+      "V1.0.327": {
+        "sha256": "3ca98e931cd324b23392b82d85474b729e74fd93d62310772a3205cec2d5f2c3",
+        "bytes": 5846
+      },
+      "HEAD": {
+        "sha256": "3ca98e931cd324b23392b82d85474b729e74fd93d62310772a3205cec2d5f2c3",
+        "bytes": 5846
+      }
+    },
+    "security/LocalPasswordCredentials.kt": {
+      "V1.0.326": {
+        "missing": true
+      },
+      "V1.0.327": {
+        "sha256": "a4301b6c202d0777a6b963bdb2b248bc7a469a202323129ee6a3f2f2eba331bd",
+        "bytes": 3662
+      },
+      "HEAD": {
+        "sha256": "a4301b6c202d0777a6b963bdb2b248bc7a469a202323129ee6a3f2f2eba331bd",
+        "bytes": 3662
+      }
+    },
+    "security/LocalVaultRecovery.kt": {
+      "V1.0.326": {
+        "sha256": "16a5494db57b2efb703fa3b49595e52a668f4832f925cbdb3f2eb69a73b685c5",
+        "bytes": 19346
+      },
+      "V1.0.327": {
+        "sha256": "64068b3f48b4543812d6e81fe1fe9ce8e4d380370f3ac480e274b4853d5fe688",
+        "bytes": 32547
+      },
+      "HEAD": {
+        "sha256": "64068b3f48b4543812d6e81fe1fe9ce8e4d380370f3ac480e274b4853d5fe688",
+        "bytes": 32547
+      }
+    },
+    "utils/BiometricAuthHelper.kt": {
+      "V1.0.326": {
+        "sha256": "93c9a1250b7746b051a1b8e0ae5483c2879ccc1747053458261fdafa0d90667f",
+        "bytes": 8928
+      },
+      "V1.0.327": {
+        "sha256": "93c9a1250b7746b051a1b8e0ae5483c2879ccc1747053458261fdafa0d90667f",
+        "bytes": 8928
+      },
+      "HEAD": {
+        "sha256": "93c9a1250b7746b051a1b8e0ae5483c2879ccc1747053458261fdafa0d90667f",
+        "bytes": 8928
+      }
+    },
+    "nfc/card/NfcCardEntryController.kt": {
+      "V1.0.326": {
+        "missing": true
+      },
+      "V1.0.327": {
+        "sha256": "6672fa06ec872c174db4dd659152ebe154256f8b1c9400092d76196436a060b9",
+        "bytes": 13755
+      },
+      "HEAD": {
+        "sha256": "6672fa06ec872c174db4dd659152ebe154256f8b1c9400092d76196436a060b9",
+        "bytes": 13755
+      }
+    }
+  },
+  "probe": {
+    "exit": 0,
+    "seconds": 6.882,
+    "scope": "Current working source reader/button and bounded helper; synthetic platform latch verifies synchronous call sites, not a HyperOS reproduction.",
+    "reference_tag_commit": "600ece857d544ee493f83cb2f93d382c8b6509d6",
+    "source_sha256": {
+      "current-source\\security\\BoundedSecureDataRead.kt": "19a33e3e57991d87e860814a2dfe8a69071b7c1961004d32c602e5409cdf39e5",
+      "current-source\\ui\\components\\AuthComponents.kt": "ae492e06147d8ec7482165046df44bc414de2b8ac185ceccefc86f45ce1b1db3",
+      "current-source\\nfc\\card\\NfcCardEntryController.kt": "6199e850da42c2219053e3b6367da496bac2d14aaf88a2bfe9639f7512be7c51"
+    }
+  },
+  "nfc": [
+    {
+      "edition": "main",
+      "passed": true,
+      "seconds": 19.82770299911499,
+      "exit": 0,
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16384",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "13",
+        "-w",
+        "-r",
+        "-e",
+        "legacyVaultwardenUser",
+        "13",
+        "-e",
+        "class",
+        "takagi.ru.monica.nfc.card.NfcCardEntryUiTest#lockRevokesPromptAndRejectsResultFromPreviousGenerationAfterUnlock,takagi.ru.monica.nfc.card.NfcCardEntryUiTest#activityBackgroundDiscardsPromptAndRejectsDeliveryUntilResume,takagi.ru.monica.nfc.card.NfcCardEntryUiTest#coldOrLockedTagIntentDropsSensitiveExtrasAndRequiresANewTap,takagi.ru.monica.nfc.card.NfcCardEntryUiTest#warmTagWaitsThroughActivityResumeUntilItsEditorLifecycleRegisters,takagi.ru.monica.nfc.card.NfcCardEntryUiTest#hostDisposalRevokesPendingAndFutureResultsWhileEditorStillExists",
+        "takagi.ru.monica.timeline20261120.test/androidx.test.runner.AndroidJUnitRunner"
+      ]
+    },
+    {
+      "edition": "fd",
+      "passed": true,
+      "seconds": 17.067001581192017,
+      "exit": 0,
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16384",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "13",
+        "-w",
+        "-r",
+        "-e",
+        "legacyVaultwardenUser",
+        "13",
+        "-e",
+        "class",
+        "takagi.ru.monica.nfc.card.NfcCardEntryUiTest#lockRevokesPromptAndRejectsResultFromPreviousGenerationAfterUnlock,takagi.ru.monica.nfc.card.NfcCardEntryUiTest#activityBackgroundDiscardsPromptAndRejectsDeliveryUntilResume,takagi.ru.monica.nfc.card.NfcCardEntryUiTest#coldOrLockedTagIntentDropsSensitiveExtrasAndRequiresANewTap,takagi.ru.monica.nfc.card.NfcCardEntryUiTest#warmTagWaitsThroughActivityResumeUntilItsEditorLifecycleRegisters,takagi.ru.monica.nfc.card.NfcCardEntryUiTest#hostDisposalRevokesPendingAndFutureResultsWhileEditorStillExists",
+        "takagi.ru.monica.timelinefd20261120.test/androidx.test.runner.AndroidJUnitRunner"
+      ]
+    }
+  ],
+  "cleanup": {
+    "firstRemoval": "failed after switch; original error retained in execution log",
+    "stopped": "",
+    "removed": "Success: removed user",
+    "after": "Users:\n\tUserInfo{0:Owner:4c13} running\n\tUserInfo{10:Monica_KMP_Migration_20261108:1030}\n\tUserInfo{11:Monica_Harmony_Bridge_20261111:1030}\n\tUserInfo{12:Monica_Harmony_Return_20261112:1030}",
+    "usersUnchanged": true,
+    "currentUser": "0"
+  },
+  "passwordRuns": {
+    "main": {
+      "exit": 0,
+      "passed": true,
+      "seconds": 95.22839045524597,
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16384",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "0",
+        "-w",
+        "-r",
+        "-e",
+        "class",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest,takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest,takagi.ru.monica.security.MasterPasswordFallbackUiTest,takagi.ru.monica.security.BoundedSecureDataReadInstrumentedTest",
+        "takagi.ru.monica.timeline20261120.test/androidx.test.runner.AndroidJUnitRunner"
+      ]
+    },
+    "fd": {
+      "exit": 0,
+      "passed": true,
+      "seconds": 107.24444460868835,
+      "command": [
+        "D:/AndroidSDK/platform-tools/adb.exe",
+        "-s",
+        "127.0.0.1:16384",
+        "shell",
+        "am",
+        "instrument",
+        "--user",
+        "0",
+        "-w",
+        "-r",
+        "-e",
+        "class",
+        "takagi.ru.monica.security.LocalPasswordUpgradeInstrumentedTest,takagi.ru.monica.security.LocalPasswordRecoveryProtocolInstrumentedTest,takagi.ru.monica.security.MasterPasswordFallbackUiTest,takagi.ru.monica.security.BoundedSecureDataReadInstrumentedTest",
+        "takagi.ru.monica.timelinefd20261120.test/androidx.test.runner.AndroidJUnitRunner"
+      ]
+    }
+  }
+}
