@@ -1,0 +1,118 @@
+{
+  "edition": "main",
+  "baseline": "22810a53bfd1eb2a62c12e2b51e7762ebe7f9266",
+  "jvm": {
+    "tests": 23,
+    "failures": 0,
+    "skipped": 0
+  },
+  "device": {
+    "edition": "main",
+    "package": "takagi.ru.monica.immediatedebugmain20261120",
+    "user": 15,
+    "seconds": 102.29788810003083,
+    "classes": [
+      "ImmediateLockLoginInstrumentedTest",
+      "MasterPasswordFallbackUiTest",
+      "LocalPasswordUpgradeInstrumentedTest"
+    ],
+    "passed": true,
+    "tests": 20
+  },
+  "deviceMethods": [
+    "realLoginSurvivesSyncAndReentryStillRequiresPassword",
+    "existingPasswordIsVerifiedWithoutApplyingNewPasswordLengthRules",
+    "slowPasswordVerificationKeepsMainResponsive",
+    "cancellingPendingVerificationRejectsItsLateSuccess",
+    "cancellingDoesNotVerifyOrAuthorize",
+    "brokenPasswordWrapperIsNotRepairedFromAWarmRuntimeKey",
+    "argonWrongPasswordCancellationAndLockKeepOriginalBytes",
+    "lockAtTheFinalCommitGatePreventsCredentialAndRecoveryWrites",
+    "missingVerifierWithRemainingCredentialMaterialNeverBecomesAnUnprotectedVault",
+    "cancelledChangeAndCancelledPasswordAttemptCannotWriteOrUnlock",
+    "legacyLoginAutomaticallyUpgradesAndFreshManagerReadsTheSameMdkAndCiphertext",
+    "argonPasswordResetAndAuthorizedResetAlwaysWrite600k",
+    "historicalProfilesMigrateTo600kAndResetRetainsMdkButRevokesOldPassword",
+    "malformedUtf16KeepsHistoricalJceOutcomeForBothPbkdf2Costs",
+    "wrongLegacyPasswordChangesNoEncryptedFileBytes",
+    "androidAndNativeDerivationsMatchAllIndependentVectorsWithMeasuredDurations",
+    "stagedPasswordAttemptsCannotCommitAcrossAlgorithmOrPasswordReplacement",
+    "activityCancellationAfterAuthenticationKeepsAllOriginalBytes",
+    "unknownStoredProfileCannotFallBackToLegacyOrWriteReplacement",
+    "current600kLoginDoesNotRewrapPasswordCredentials"
+  ],
+  "debug": {
+    "package": "takagi.ru.monica.immediatedebugmain20261120",
+    "exit": 0,
+    "seconds": 152.89389260008465,
+    "apkSha256": [
+      "13764ed45e1df4e836641bbba43f1635584b26b3a2339994e68f79a36836d337",
+      "cbdf45362fbcee30419cac665546c40d53e81832e567752e3dd106d2660029d3"
+    ]
+  },
+  "release": {
+    "package": "takagi.ru.monica.adaptivereleasemain20261119",
+    "exit": 0,
+    "seconds": 749.5739740000572,
+    "apkSha256": [
+      "7777430cb2d0b020204dae06d9b982157885b88c0608112b016f09b2e2ad3991"
+    ]
+  },
+  "upgradeArtifact": {
+    "package": "takagi.ru.monica.adaptivereleasemain20261119",
+    "apkSha256": "7777430cb2d0b020204dae06d9b982157885b88c0608112b016f09b2e2ad3991",
+    "signature": "Signer #1 certificate DN: C=US, O=Android, CN=Android Debug\nSigner #1 certificate SHA-256 digest: 6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0\nSigner #1 certificate SHA-1 digest: 6db4c41982d788cc6b71b6730fcbd7d44377d401\nSigner #1 certificate MD5 digest: 8f0ea32085c3a5873dca15bcf33f771b\n",
+    "abi": "x86_64",
+    "minifiedRelease": true,
+    "debuggable": false,
+    "install": "Performing Streamed Install\nSuccess: streamed 38921169 bytes\nSuccess",
+    "beforePid": "",
+    "user": 0
+  },
+  "releaseCore": {
+    "edition": "main",
+    "originalPassword": true,
+    "wrongPasswordRejected": true,
+    "stableOverSyncInterval": true,
+    "backgroundRequiresReauthentication": true,
+    "oldRecordReadable": true,
+    "newRecordWrittenAndColdReadable": true,
+    "coldPids": [
+      "12936",
+      "16588"
+    ]
+  },
+  "releaseBackup": {
+    "edition": "main",
+    "originalPassword": true,
+    "wrongPasswordRejected": true,
+    "stableOverSyncInterval": true,
+    "backgroundRequiresReauthentication": true,
+    "oldRecordReadable": true,
+    "newRecordWrittenAndColdReadable": true,
+    "coldPids": [
+      "12936",
+      "16588",
+      "38431"
+    ],
+    "passed": true,
+    "backupTimeoutMinutes": 5,
+    "immediateRestoredAndLoginVerified": true,
+    "backupRestoration": {
+      "items": 1,
+      "encryptedOldBackup": true,
+      "source": "Documents/immediate-main-old329.enc.zip",
+      "restoredRecordRead": true,
+      "newRecordRetained": true
+    }
+  },
+  "sourceHashes": {
+    "app/src/main/java/takagi/ru/monica/security/SessionManager.kt": "6a396c11a5bdbfdadbd07833e498f8f10de353278f2336b232c08552a0b0d9de",
+    "app/src/main/java/takagi/ru/monica/lansync/DeviceSyncCoordinator.kt": "61e33bc1792d823cbdbe6c47ac335ddc6aa3b88a6536eb3e3fc2f827e9e8e488",
+    "app/src/test/java/takagi/ru/monica/lansync/DeviceSyncImmediateLockTest.kt": "ca20bf90f58523c80350eddcebbaa1f26bf30c482aa77dd568ec78decf93381e",
+    "app/src/androidTest/java/takagi/ru/monica/security/ImmediateLockLoginInstrumentedTest.kt": "3d3d1da9ae5dc81881368487d137b826655a50df10728e8f1edf64df070bffc7",
+    "app/src/main/java/takagi/ru/monica/MainActivity.kt": "3ff7cc7a87a4634abdb7034e42743ae54bf21119ead2f672589cf1beda73f547"
+  },
+  "scope": "MuMu API35 x86_64, synthetic data, isolated application IDs, local test certificate; not HyperOS physical-device acceptance",
+  "status": "fixed and verified locally; not committed, pushed, tagged, published or delivered"
+}

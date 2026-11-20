@@ -112,7 +112,7 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
 
     // This callback must not wait for gate: receive holds gate while awaiting it.
     fun confirmReceivedDeletions(review: DeviceDeletionReview, include: Boolean) {
-        if (SessionManager.isSessionExpired()) { SessionManager.markLocked(); return }
+        if (isSessionExpiredForSync()) { SessionManager.markLocked(); return }
         if (!SessionManager.isUnlocked.value || !appVisible.value || cancellationRequested.get()) return
         val pending = deletionDecision.get() ?: return
         if (pending.first == review) pending.second.complete(include)
@@ -237,8 +237,14 @@ internal class DeviceSyncCoordinator private constructor(context: Context) {
         dataProgress = progress; phase = progress.stage; publish()
     }
 
+    private fun isSessionExpiredForSync(): Boolean = if (appVisible.value) {
+        SessionManager.isSessionExpiredForForegroundWork()
+    } else {
+        SessionManager.isSessionExpired()
+    }
+
     private fun settings(): DeviceSyncPreferences {
-        if (SessionManager.isSessionExpired()) {
+        if (isSessionExpiredForSync()) {
             if (SessionManager.isUnlocked.value) SessionManager.markLocked()
             throw CancellationException("device_sync_locked")
         }

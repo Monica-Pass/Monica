@@ -1007,30 +1007,25 @@ fun MonicaContent(
         )
     }
     var hasRenderedLoginFirstFrame by remember { mutableStateOf(false) }
-    val authenticatedAccessState = remember {
-        MainAppAccessState(
-            isFirstTime = false,
-            bypassEnabled = false,
-            canRestoreSession = true,
-            reason = "already_authenticated"
-        )
-    }
-    val mainAppAccessState = remember(
-        isAuthenticated,
-        mainSessionUnlocked,
-        mainSessionLockGeneration,
-        settings.autoLockMinutes,
-        developerBypassEnabled,
-        initialAuthState
-    ) {
-        if (isAuthenticated) {
-            authenticatedAccessState
-        } else {
+    // Session unlock is emitted before the login callback acknowledges UI authentication.
+    // Rendering that intermediate state must not run the mutating re-entry policy: timeout
+    // zero would revoke the new session. Bootstrap and ON_START own session restoration.
+    val mainAppAccessState = remember(isAuthenticated, developerBypassEnabled, isFirstTime) {
+        if (!isAuthenticated && developerBypassEnabled) {
+            // Re-read setup/storage state for the explicit bypass, including after first-time
+            // setup in this Activity. This branch returns before any session-restoration check.
             MainAppLockPolicy.resolveAccessState(
                 securityManager,
                 context.applicationContext,
                 settings.autoLockMinutes,
-                developerBypassEnabled
+                disablePasswordVerification = true
+            )
+        } else {
+            MainAppAccessState(
+                isFirstTime = isFirstTime,
+                bypassEnabled = false,
+                canRestoreSession = isAuthenticated,
+                reason = if (isAuthenticated) "already_authenticated" else "authentication_required"
             )
         }
     }
@@ -1171,14 +1166,6 @@ fun MonicaContent(
                     "Auth effect allowed via ${mainAppAccessState.reason}"
                 )
                 viewModel.markAuthenticatedForBypass()
-                return@LaunchedEffect
-            }
-            if (mainAppAccessState.canRestoreSession) {
-                android.util.Log.d(
-                    "MonicaAuthGate",
-                    "Auth effect restored via ${mainAppAccessState.reason}"
-                )
-                viewModel.restoreAuthenticatedUiState()
                 return@LaunchedEffect
             }
             if (!lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {

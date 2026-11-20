@@ -266,6 +266,24 @@ object SessionManager {
         )
     }
 
+    /**
+     * Work already admitted in the visible app can use its freshly authenticated session.
+     * "Immediately" requires authentication on re-entry; it is not a zero-duration grant.
+     * Callers must separately enforce visibility and cancellation. Lifecycle/re-entry checks
+     * continue to use isSessionExpired()/canSkipVerification(), including for timeout zero.
+     */
+    @Synchronized
+    internal fun isSessionExpiredForForegroundWork(): Boolean {
+        if (autoLockMinutes != 0) return isSessionExpired()
+        if (!_isUnlocked.value) return true
+        return persistedSessionAgeMillisOrNull(
+            unlockElapsedRealtime = unlockElapsedTimestamp,
+            nowElapsedRealtime = SystemClock.elapsedRealtime(),
+            unlockWallTime = unlockWallTimestamp,
+            nowWallTime = System.currentTimeMillis(),
+        ) == null
+    }
+
     fun getRemainingMinutes(): Int {
         if (!_isUnlocked.value) return 0
         if (autoLockMinutes == -1) return -1
