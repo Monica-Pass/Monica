@@ -9,7 +9,8 @@ class AdaptiveLayoutPolicyTest {
         assertEquals(AdaptivePanePolicy(true, false, 320), adaptivePanePolicy(600))
         assertFalse(adaptivePanePolicy(839).twoPanes)
         assertTrue(adaptivePanePolicy(840).twoPanes)
-        assertFalse(adaptivePanePolicy(1000, 400).twoPanes)
+        assertTrue(adaptivePanePolicy(960).twoPanes)
+        assertTrue(adaptivePanePolicy(1000).twoPanes)
         assertEquals(420, adaptivePanePolicy(1600).listWidth)
     }
 

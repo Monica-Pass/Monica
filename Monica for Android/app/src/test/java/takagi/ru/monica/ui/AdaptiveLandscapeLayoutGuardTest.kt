@@ -58,7 +58,7 @@ class AdaptiveLandscapeLayoutGuardTest {
     }
 
     @Test
-    fun vaultWideHistoryUsesTheFullTabSurfaceInsteadOfTheListColumn() {
+    fun vaultWideTrashUsesTheFullTabSurfaceInsteadOfTheListColumn() {
         val mainScreenSource = projectFile(
             "app/src/main/java/takagi/ru/monica/ui/SimpleMainScreen.kt"
         ).readSourceText()
@@ -69,8 +69,8 @@ class AdaptiveLandscapeLayoutGuardTest {
         assertTrue(mainScreenSource.contains("if (passwordHistoryPageMode.isVisible)"))
         assertTrue(mainScreenSource.contains("useEmbeddedHistoryPages = false"))
         assertTrue(vaultSource.contains("useEmbeddedHistoryPages: Boolean = true"))
-        assertTrue(vaultSource.contains("onOpenHistory"))
         assertTrue(vaultSource.contains("onOpenTrashPage"))
+        assertTrue(vaultSource.contains("TrashScreen("))
     }
 
     @Test

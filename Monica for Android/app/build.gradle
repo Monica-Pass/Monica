@@ -294,6 +294,7 @@ dependencies {
     implementation libs.androidx.room.runtime
     implementation libs.androidx.room.ktx
     ksp libs.androidx.room.compiler
+    kspAndroidTest libs.androidx.room.compiler
     
     // Biometric
     implementation libs.androidx.biometric

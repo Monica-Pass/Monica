@@ -1,0 +1,662 @@
+{
+  "main09": [
+    {
+      "name": "takagi.ru.monica.attachments.backup.AttachmentBackupOwnerTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.105"
+    },
+    {
+      "name": "takagi.ru.monica.attachments.backup.AttachmentPayloadWriterTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.063"
+    },
+    {
+      "name": "takagi.ru.monica.attachments.backup.PortableAttachmentBackupTest",
+      "tests": "3",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.079"
+    },
+    {
+      "name": "takagi.ru.monica.bitwarden.BitwardenTransportBackupTest",
+      "tests": "10",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "8.545"
+    },
+    {
+      "name": "takagi.ru.monica.data.PasskeyBackupFlagsMigrationTest",
+      "tests": "2",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "5.161"
+    },
+    {
+      "name": "takagi.ru.monica.data.TotpContentCompatibilityTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.017"
+    },
+    {
+      "name": "takagi.ru.monica.localization.LocalizedOperationMessagesTest",
+      "tests": "2",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "2.671"
+    },
+    {
+      "name": "takagi.ru.monica.passkey.PasskeyBackupFlagsTest",
+      "tests": "8",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.665"
+    },
+    {
+      "name": "takagi.ru.monica.passkey.PasskeyBackupPortabilityPolicyTest",
+      "tests": "6",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.01"
+    },
+    {
+      "name": "takagi.ru.monica.security.SecurityAnswerHashTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.002"
+    },
+    {
+      "name": "takagi.ru.monica.security.SensitiveLocalStorageGuardTest",
+      "tests": "10",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.033"
+    },
+    {
+      "name": "takagi.ru.monica.steam.SteamBoundaryGuardTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.008"
+    },
+    {
+      "name": "takagi.ru.monica.steam.SteamMaFileParserTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.003"
+    },
+    {
+      "name": "takagi.ru.monica.sync.BitwardenCipherDeletionTest",
+      "tests": "2",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.286"
+    },
+    {
+      "name": "takagi.ru.monica.transfer.NativeTokenBackupAssetsTest",
+      "tests": "6",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.022"
+    },
+    {
+      "name": "takagi.ru.monica.ui.AdaptiveLandscapeLayoutGuardTest",
+      "tests": "7",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.015"
+    },
+    {
+      "name": "takagi.ru.monica.ui.AuthenticatorTileLayoutTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.006"
+    },
+    {
+      "name": "takagi.ru.monica.ui.components.ExpressiveTopBarCursorRegressionTest",
+      "tests": "3",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.029"
+    },
+    {
+      "name": "takagi.ru.monica.ui.components.ExpressiveTopBarKeyboardRegressionGuardTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.001"
+    },
+    {
+      "name": "takagi.ru.monica.ui.password.GeneratorFrequentValuesTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.003"
+    },
+    {
+      "name": "takagi.ru.monica.ui.Schema85SavedStateTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.005"
+    },
+    {
+      "name": "takagi.ru.monica.ui.screens.TrashScopeTest",
+      "tests": "3",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.028"
+    },
+    {
+      "name": "takagi.ru.monica.ui.vaultv2.VaultV2EmbeddedHistoryBackNavigationGuardTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.002"
+    },
+    {
+      "name": "takagi.ru.monica.util.ToolchainEncryptedImportCompatibilityTest",
+      "tests": "3",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.876"
+    },
+    {
+      "name": "takagi.ru.monica.utils.BackupContentPolicyTest",
+      "tests": "5",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.01"
+    },
+    {
+      "name": "takagi.ru.monica.utils.BackupEncryptionPolicyTest",
+      "tests": "4",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.0"
+    },
+    {
+      "name": "takagi.ru.monica.utils.BackupRetentionPolicyTest",
+      "tests": "14",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.02"
+    },
+    {
+      "name": "takagi.ru.monica.utils.BackupTemporaryFilesTest",
+      "tests": "6",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.109"
+    },
+    {
+      "name": "takagi.ru.monica.utils.ChangeTriggeredBackupTimingTest",
+      "tests": "5",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.001"
+    },
+    {
+      "name": "takagi.ru.monica.utils.EncryptionHelperHeaderTest",
+      "tests": "2",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.002"
+    },
+    {
+      "name": "takagi.ru.monica.utils.LocalNoteBackupSelectionTest",
+      "tests": "7",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "5.9"
+    },
+    {
+      "name": "takagi.ru.monica.utils.OrderingPersistenceGuardTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.163"
+    },
+    {
+      "name": "takagi.ru.monica.utils.PortableBackupCryptoTest",
+      "tests": "7",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "12.736"
+    },
+    {
+      "name": "takagi.ru.monica.utils.PortableTotpBackupCodecTest",
+      "tests": "4",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.002"
+    },
+    {
+      "name": "takagi.ru.monica.utils.WebDavBackupDirectoryFailureTest",
+      "tests": "5",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "2.624"
+    },
+    {
+      "name": "takagi.ru.monica.utils.WebDavBillingAddressBackupGuardTest",
+      "tests": "3",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.011"
+    },
+    {
+      "name": "takagi.ru.monica.utils.WebDavKeePassBackupPolicyTest",
+      "tests": "6",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "1.187"
+    },
+    {
+      "name": "takagi.ru.monica.utils.WebDavSettingsBackupRegressionGuardTest",
+      "tests": "4",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.02"
+    },
+    {
+      "name": "takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest",
+      "tests": "10",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.02"
+    },
+    {
+      "name": "takagi.ru.monica.viewmodel.TrashSafetyPolicyTest",
+      "tests": "2",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.001"
+    },
+    {
+      "name": "takagi.ru.monica.webdav.WebDavBackupTransportTest",
+      "tests": "4",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "16.364"
+    }
+  ],
+  "fd01": [
+    {
+      "name": "takagi.ru.monica.attachments.backup.AttachmentBackupOwnerTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.094"
+    },
+    {
+      "name": "takagi.ru.monica.attachments.backup.AttachmentPayloadWriterTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.055"
+    },
+    {
+      "name": "takagi.ru.monica.attachments.backup.PortableAttachmentBackupTest",
+      "tests": "3",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.029"
+    },
+    {
+      "name": "takagi.ru.monica.bitwarden.BitwardenTransportBackupTest",
+      "tests": "10",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "9.035"
+    },
+    {
+      "name": "takagi.ru.monica.data.PasskeyBackupFlagsMigrationTest",
+      "tests": "2",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "5.479"
+    },
+    {
+      "name": "takagi.ru.monica.data.TotpContentCompatibilityTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.019"
+    },
+    {
+      "name": "takagi.ru.monica.localization.LocalizedOperationMessagesTest",
+      "tests": "2",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "2.904"
+    },
+    {
+      "name": "takagi.ru.monica.passkey.PasskeyBackupFlagsTest",
+      "tests": "8",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.592"
+    },
+    {
+      "name": "takagi.ru.monica.passkey.PasskeyBackupPortabilityPolicyTest",
+      "tests": "6",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.008"
+    },
+    {
+      "name": "takagi.ru.monica.security.SecurityAnswerHashTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.004"
+    },
+    {
+      "name": "takagi.ru.monica.security.SensitiveLocalStorageGuardTest",
+      "tests": "10",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.032"
+    },
+    {
+      "name": "takagi.ru.monica.steam.SteamBoundaryGuardTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.006"
+    },
+    {
+      "name": "takagi.ru.monica.steam.SteamMaFileParserTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.002"
+    },
+    {
+      "name": "takagi.ru.monica.sync.BitwardenCipherDeletionTest",
+      "tests": "2",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.39"
+    },
+    {
+      "name": "takagi.ru.monica.transfer.NativeTokenBackupAssetsTest",
+      "tests": "6",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.034"
+    },
+    {
+      "name": "takagi.ru.monica.ui.AdaptiveLandscapeLayoutGuardTest",
+      "tests": "7",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.019"
+    },
+    {
+      "name": "takagi.ru.monica.ui.AuthenticatorTileLayoutTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.006"
+    },
+    {
+      "name": "takagi.ru.monica.ui.components.ExpressiveTopBarCursorRegressionTest",
+      "tests": "3",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.034"
+    },
+    {
+      "name": "takagi.ru.monica.ui.components.ExpressiveTopBarKeyboardRegressionGuardTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.001"
+    },
+    {
+      "name": "takagi.ru.monica.ui.password.GeneratorFrequentValuesTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.002"
+    },
+    {
+      "name": "takagi.ru.monica.ui.Schema85SavedStateTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.003"
+    },
+    {
+      "name": "takagi.ru.monica.ui.screens.TrashScopeTest",
+      "tests": "3",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.019"
+    },
+    {
+      "name": "takagi.ru.monica.ui.vaultv2.VaultV2EmbeddedHistoryBackNavigationGuardTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.007"
+    },
+    {
+      "name": "takagi.ru.monica.util.ToolchainEncryptedImportCompatibilityTest",
+      "tests": "3",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.876"
+    },
+    {
+      "name": "takagi.ru.monica.utils.BackupContentPolicyTest",
+      "tests": "5",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.009"
+    },
+    {
+      "name": "takagi.ru.monica.utils.BackupEncryptionPolicyTest",
+      "tests": "4",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.001"
+    },
+    {
+      "name": "takagi.ru.monica.utils.BackupRetentionPolicyTest",
+      "tests": "14",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.016"
+    },
+    {
+      "name": "takagi.ru.monica.utils.BackupTemporaryFilesTest",
+      "tests": "6",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.093"
+    },
+    {
+      "name": "takagi.ru.monica.utils.ChangeTriggeredBackupTimingTest",
+      "tests": "5",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.001"
+    },
+    {
+      "name": "takagi.ru.monica.utils.EncryptionHelperHeaderTest",
+      "tests": "2",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.003"
+    },
+    {
+      "name": "takagi.ru.monica.utils.LocalNoteBackupSelectionTest",
+      "tests": "7",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "5.041"
+    },
+    {
+      "name": "takagi.ru.monica.utils.OrderingPersistenceGuardTest",
+      "tests": "1",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.105"
+    },
+    {
+      "name": "takagi.ru.monica.utils.PortableBackupCryptoTest",
+      "tests": "7",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "12.658"
+    },
+    {
+      "name": "takagi.ru.monica.utils.PortableTotpBackupCodecTest",
+      "tests": "4",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.003"
+    },
+    {
+      "name": "takagi.ru.monica.utils.WebDavBackupDirectoryFailureTest",
+      "tests": "5",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "2.443"
+    },
+    {
+      "name": "takagi.ru.monica.utils.WebDavBillingAddressBackupGuardTest",
+      "tests": "3",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.009"
+    },
+    {
+      "name": "takagi.ru.monica.utils.WebDavKeePassBackupPolicyTest",
+      "tests": "6",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "1.096"
+    },
+    {
+      "name": "takagi.ru.monica.utils.WebDavSettingsBackupRegressionGuardTest",
+      "tests": "4",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.017"
+    },
+    {
+      "name": "takagi.ru.monica.viewmodel.MultiPasswordSaveRegressionGuardTest",
+      "tests": "10",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.013"
+    },
+    {
+      "name": "takagi.ru.monica.viewmodel.TrashSafetyPolicyTest",
+      "tests": "2",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.001"
+    },
+    {
+      "name": "takagi.ru.monica.webdav.WebDavBackupTransportTest",
+      "tests": "4",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "time": "16.393"
+    }
+  ]
+}

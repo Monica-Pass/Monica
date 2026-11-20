@@ -137,7 +137,7 @@ class ExistingPngIconCompatibilityTest {
             val preferences = BackupPreferences(includePasswords = true, includeAuthenticators = false,
                 includeDocuments = false, includeBankCards = false, includePasskeys = false,
                 includeGeneratorHistory = false, includeImages = false, includeNotes = false,
-                includeTimeline = false, includeTrash = false, includeTrashAndHistory = false,
+                includeTrash = false, includeTrashAndHistory = false,
                 includeWebDavConfig = false, includeLocalKeePass = false)
             val helper = WebDavHelper(context)
             val (archive, report) = helper.createBackupZip(entries, emptyList(), preferences,

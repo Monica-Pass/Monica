@@ -106,7 +106,7 @@ class WebDavBackupSequenceTest {
             val prefs = BackupPreferences(includePasswords = true, includeNotes = false,
                 includeAuthenticators = false, includeDocuments = false, includeBankCards = false,
                 includePasskeys = false, includeGeneratorHistory = false, includeImages = false,
-                includeTimeline = false, includeTrash = false, includeTrashAndHistory = false,
+                includeTrash = false, includeTrashAndHistory = false,
                 includeWebDavConfig = false, includeLocalKeePass = false)
             val report = helper.createAndUploadBackup(listOf(PasswordEntry(title = "Synthetic sequence",
                 username = "fixture", password = "synthetic-secret", website = "https://example.invalid")), emptyList(), prefs,

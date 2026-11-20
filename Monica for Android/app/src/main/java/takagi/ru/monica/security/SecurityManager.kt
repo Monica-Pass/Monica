@@ -1493,30 +1493,6 @@ class SecurityManager private constructor(
         }
     }
 
-    /**
-     * Timeline snapshots must never silently downgrade to the compatibility key
-     * when the vault has a master password. They are readable only while the
-     * main vault key is present in the authenticated runtime session.
-     */
-    fun encryptTimelineSnapshot(data: String): String {
-        if (!isMasterPasswordSet()) return encryptDataCompat(data)
-        check(isVaultRuntimeUnlocked()) { "Vault authentication required" }
-        val encrypted = encryptData(data)
-        check(encrypted.startsWith(DATA_PREFIX_MDK)) { "Timeline snapshot requires MDK encryption" }
-        return encrypted
-    }
-
-    fun decryptTimelineSnapshot(encryptedData: String): String {
-        if (isMasterPasswordSet()) {
-            check(isVaultRuntimeUnlocked()) { "Vault authentication required" }
-            check(
-                encryptedData.startsWith(DATA_PREFIX_MDK) ||
-                    encryptedData.startsWith(DATA_PREFIX_COMPAT)
-            ) { "Invalid timeline snapshot encryption" }
-        }
-        return decryptData(encryptedData)
-    }
-
     fun looksLikeMonicaCiphertext(value: String): Boolean {
         val trimmed = value.trim()
         return trimmed.startsWith(DATA_PREFIX_MDK) ||

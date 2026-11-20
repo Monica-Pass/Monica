@@ -2,18 +2,19 @@ package takagi.ru.monica.ui
 
 import androidx.compose.runtime.saveable.Saver
 import takagi.ru.monica.data.PasswordPageContentType
-import takagi.ru.monica.ui.screens.HistoryTab
 import takagi.ru.monica.ui.password.sanitizeSelectedPasswordPageTypes
 import takagi.ru.monica.viewmodel.CategoryFilter
 
-internal enum class PasswordHistoryPageMode(val tab: HistoryTab?) {
-    NONE(null),
-    TIMELINE(HistoryTab.TIMELINE),
-    TRASH(HistoryTab.TRASH)
+internal enum class PasswordHistoryPageMode {
+    NONE,
+    // Android can restore this enum from an activity saved by a development build.
+    @Deprecated("Only retained to decode old saved state; there is no timeline route")
+    TIMELINE,
+    TRASH
 }
 
 internal val PasswordHistoryPageMode.isVisible: Boolean
-    get() = this != PasswordHistoryPageMode.NONE
+    get() = this == PasswordHistoryPageMode.TRASH
 
 internal val passwordPageContentTypeSetSaver = Saver<Set<PasswordPageContentType>, ArrayList<String>>(
     save = { selectedTypes ->

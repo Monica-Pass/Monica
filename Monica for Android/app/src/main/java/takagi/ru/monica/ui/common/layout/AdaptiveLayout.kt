@@ -25,13 +25,13 @@ import kotlinx.coroutines.flow.map
 
 /** Width of the usable app region, not the physical display or device category. */
 val LocalAdaptiveWidth = staticCompositionLocalOf { Dp.Unspecified }
-val LocalAdaptiveHeight = staticCompositionLocalOf { Dp.Unspecified }
 
 data class AdaptivePanePolicy(val navigationRail: Boolean, val twoPanes: Boolean, val listWidth: Int)
 
-fun adaptivePanePolicy(widthDp: Int, heightDp: Int = 900): AdaptivePanePolicy = AdaptivePanePolicy(
+// Pane capacity depends on usable width; short landscape phones still have room for both panes.
+fun adaptivePanePolicy(widthDp: Int): AdaptivePanePolicy = AdaptivePanePolicy(
     navigationRail = widthDp >= 600,
-    twoPanes = widthDp >= 840 && heightDp >= 480,
+    twoPanes = widthDp >= 840,
     listWidth = ((widthDp - 80) * 0.38f).toInt().coerceIn(320, 420)
 )
 
@@ -40,13 +40,6 @@ fun adaptiveWindowWidth(): Dp {
     val provided = LocalAdaptiveWidth.current
     return if (provided != Dp.Unspecified) provided
     else with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
-}
-
-@Composable
-fun adaptiveWindowHeight(): Dp {
-    val provided = LocalAdaptiveHeight.current
-    return if (provided != Dp.Unspecified) provided
-    else with(LocalDensity.current) { LocalWindowInfo.current.containerSize.height.toDp() }
 }
 
 /** Keeps the full window background while giving forms and reading surfaces a usable line length. */
@@ -109,8 +102,7 @@ internal fun AdaptiveAppRegion(wideContent: Boolean, fold: FoldRegion?, content:
     val region = safeFoldRegion(windowSize.width, windowSize.height, fold)
     Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         val regionWidth = with(density) { (region.right - region.left).toDp() }
-        CompositionLocalProvider(LocalAdaptiveWidth provides regionWidth,
-            LocalAdaptiveHeight provides with(density) { (region.bottom - region.top).toDp() }) {
+        CompositionLocalProvider(LocalAdaptiveWidth provides regionWidth) {
             Layout(content = {
                 Box(Modifier.fillMaxSize().then(if (wideContent) Modifier else Modifier.readableWidth())) { content() }
             }) { measurables, constraints ->

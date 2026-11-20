@@ -1,5 +1,22 @@
 package takagi.ru.monica
 
+import android.os.Build
+import androidx.activity.compose.BackHandler
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
+import androidx.fragment.app.FragmentActivity
+import androidx.navigation.NavOptionsBuilder
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.CancellationException
+import takagi.ru.monica.data.ItemType
+import takagi.ru.monica.data.PasswordEntry
+import takagi.ru.monica.utils.LocaleHelper
+
 import takagi.ru.monica.navigation.nearbySyncDestinations
 
 import takagi.ru.monica.utils.AppLocaleStringResolver
@@ -9,7 +26,6 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -18,7 +34,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -39,22 +54,15 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.WindowCompat
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.Lifecycle
@@ -62,7 +70,6 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavHostController
-import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -72,16 +79,11 @@ import takagi.ru.monica.navigation.addRetiredFeatureDestinations
 import androidx.navigation.navArgument
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.Dispatchers
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import takagi.ru.monica.data.ItemType
-import takagi.ru.monica.data.PasswordEntry
 import takagi.ru.monica.data.PasswordHistoryManager
 import takagi.ru.monica.data.ThemeMode
 import takagi.ru.monica.data.ColorScheme
@@ -148,7 +150,6 @@ import takagi.ru.monica.ui.screens.MdbxWebDavOpenScreen
 import takagi.ru.monica.ui.screens.KeePassKdbxViewModel
 import takagi.ru.monica.ui.theme.MonicaTheme
 import takagi.ru.monica.ui.scale.ProvideMonicaInterfaceScale
-import takagi.ru.monica.utils.LocaleHelper
 import takagi.ru.monica.steam.ui.SteamQrScannerScreen
 import takagi.ru.monica.viewmodel.BankCardViewModel
 import takagi.ru.monica.viewmodel.BillingAddressViewModel
@@ -485,10 +486,7 @@ class MainActivity : BaseMonicaActivity() {
             takagi.ru.monica.attachments.repository.AttachmentRepository(database.attachmentDao())
         )
         val settingsManager = SettingsManager(this)
-        
-        // Initialize OperationLogger for timeline tracking
-        takagi.ru.monica.utils.OperationLogger.init(this)
-        
+
         // Initialize auto backup if enabled (deferred to reduce cold-start contention)
         initializeAutoBackupDeferred()
 
@@ -2679,18 +2677,8 @@ fun MonicaContent(
         }
 
         composable(Screen.FidoQrScan.route) {
-            val context = LocalContext.current
-            takagi.ru.monica.ui.screens.QrScannerScreen(
-                onQrCodeScanned = { qrData ->
-                    val messageRes = launchSystemFidoQrIntent(context, qrData)
-                    if (messageRes != null) {
-                        Toast.makeText(context, context.getString(messageRes), Toast.LENGTH_SHORT).show()
-                    }
-                    navController.popBackStack()
-                },
-                onNavigateBack = {
-                    navController.popBackStack()
-                }
+            takagi.ru.monica.ui.scanner.UnifiedQrScannerScreen(
+                onNavigateBack = { navController.popBackStack() }
             )
         }
 
@@ -2724,8 +2712,8 @@ fun MonicaContent(
             }
 
             if (pendingMigrationItems == null) {
-                takagi.ru.monica.ui.screens.QrScannerScreen(
-                    onQrCodeScanned = onQrCodeScanned@{ qrData ->
+                takagi.ru.monica.ui.scanner.UnifiedQrScannerScreen(
+                    onAuthenticatorScanned = onQrCodeScanned@{ qrData ->
                     fun resolveTitle(item: takagi.ru.monica.util.TotpParseResult): String {
                         return item.suggestedTitle.ifBlank { context.getString(R.string.untitled) }
                     }
@@ -4331,26 +4319,6 @@ fun MonicaContent(
             }
         }
     }
-}
-
-private fun launchSystemFidoQrIntent(context: Context, rawQrData: String): Int? {
-    val qrData = rawQrData.trim()
-    if (qrData.isBlank()) return R.string.passkey_qr_invalid
-    val uri = runCatching { Uri.parse(qrData) }.getOrNull()
-        ?: return R.string.passkey_qr_invalid
-    val scheme = uri.scheme.orEmpty()
-    if (scheme.isBlank()) return R.string.passkey_qr_invalid
-
-    val intent = Intent(Intent.ACTION_VIEW, uri).apply {
-        addCategory(Intent.CATEGORY_BROWSABLE)
-        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    }
-    return runCatching {
-        context.startActivity(intent)
-    }.fold(
-        onSuccess = { null },
-        onFailure = { R.string.passkey_qr_open_failed }
-    )
 }
 
 /**

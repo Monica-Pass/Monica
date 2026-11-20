@@ -1,5 +1,7 @@
 package takagi.ru.monica.viewmodel
 
+import takagi.ru.monica.utils.KeePassKdbxService
+
 import takagi.ru.monica.utils.StringResolver
 
 import takagi.ru.monica.R
@@ -29,7 +31,6 @@ import takagi.ru.monica.bitwarden.repository.BitwardenRepository
 import takagi.ru.monica.data.ItemType
 import takagi.ru.monica.data.LocalKeePassDatabaseDao
 import takagi.ru.monica.data.SecureItem
-import takagi.ru.monica.data.OperationLogItemType
 import takagi.ru.monica.data.SecureItemOwnership
 import takagi.ru.monica.data.asMonicaLocalCopy
 import takagi.ru.monica.data.hasOwnershipConflict
@@ -53,9 +54,6 @@ import takagi.ru.monica.sync.SyncRequest
 import takagi.ru.monica.sync.SyncTarget
 import takagi.ru.monica.sync.SyncTaskRunner
 import takagi.ru.monica.sync.SyncTrigger
-import takagi.ru.monica.utils.OperationLogger
-import takagi.ru.monica.utils.FieldChange
-import takagi.ru.monica.utils.KeePassKdbxService
 import java.util.Date
 import java.util.UUID
 
@@ -440,12 +438,7 @@ class DocumentViewModel internal constructor(
             rollbackItem = repository::deleteItemById
         ) ?: throw IllegalStateException("Secure item could not be saved")
 
-        // 记录创建操作
-        OperationLogger.logCreate(
-            itemType = OperationLogItemType.DOCUMENT,
-            itemId = newId,
-            itemTitle = title
-        )
+
         onCreated(newId)
         requestBitwardenMutationSync(bitwardenVaultId)
         newId
@@ -475,48 +468,6 @@ class DocumentViewModel internal constructor(
                 targetDatabaseId = keepassDatabaseId,
                 requestedGroupPath = keepassGroupPath
             )
-            val oldDocData = parseDocumentData(existingItem.itemData) ?: emptyDocumentData()
-            val changes = mutableListOf<FieldChange>()
-            fun addChange(fieldName: String, oldValue: Any?, newValue: Any?) {
-                val oldText = oldValue?.toString().orEmpty()
-                val newText = newValue?.toString().orEmpty()
-                if (oldText != newText) {
-                    changes.add(FieldChange(fieldName, oldText, newText))
-                }
-            }
-
-            addChange("标题", existingItem.title, title)
-            addChange("备注", existingItem.notes, notes)
-            addChange("证件类型", oldDocData.documentType, documentData.documentType)
-            addChange("证件号", oldDocData.documentNumber, documentData.documentNumber)
-            addChange("姓名", oldDocData.fullName, documentData.fullName)
-            addChange("签发日期", oldDocData.issuedDate, documentData.issuedDate)
-            addChange("有效期", oldDocData.expiryDate, documentData.expiryDate)
-            addChange("签发机关", oldDocData.issuedBy, documentData.issuedBy)
-            addChange("国籍", oldDocData.nationality, documentData.nationality)
-            addChange("附加信息", oldDocData.additionalInfo, documentData.additionalInfo)
-            addChange("称谓", oldDocData.title, documentData.title)
-            addChange("名", oldDocData.firstName, documentData.firstName)
-            addChange("中间名", oldDocData.middleName, documentData.middleName)
-            addChange("姓", oldDocData.lastName, documentData.lastName)
-            addChange("地址 1", oldDocData.address1, documentData.address1)
-            addChange("地址 2", oldDocData.address2, documentData.address2)
-            addChange("地址 3", oldDocData.address3, documentData.address3)
-            addChange("城市", oldDocData.city, documentData.city)
-            addChange("省/州", oldDocData.stateProvince, documentData.stateProvince)
-            addChange("邮编", oldDocData.postalCode, documentData.postalCode)
-            addChange("国家", oldDocData.country, documentData.country)
-            addChange("公司", oldDocData.company, documentData.company)
-            addChange("邮箱", oldDocData.email, documentData.email)
-            addChange("电话", oldDocData.phone, documentData.phone)
-            addChange("社保号", oldDocData.ssn, documentData.ssn)
-            addChange("用户名", oldDocData.username, documentData.username)
-            addChange("护照号", oldDocData.passportNumber, documentData.passportNumber)
-            addChange("驾照号", oldDocData.licenseNumber, documentData.licenseNumber)
-            addChange("自定义字段", oldDocData.customFields, documentData.customFields)
-            addChange("Wallet template", oldDocData.walletTemplate, documentData.walletTemplate)
-            addChange("Wallet fields", oldDocData.walletFields, documentData.walletFields)
-
             val updatedItem = existingItem.copy(
                 title = title,
                 itemData = encodeDocumentDataForLocalStorage(documentData),
@@ -587,32 +538,7 @@ class DocumentViewModel internal constructor(
                 throw IllegalStateException("Secure item could not be saved")
             }
 
-            // 记录更新操作 - 始终记录，即使没有检测到字段变更
-            OperationLogger.logUpdate(
-                itemType = OperationLogItemType.DOCUMENT,
-                itemId = id,
-                itemTitle = title,
-                changes = if (changes.isEmpty()) {
-                    listOf(
-                        FieldChange(
-                            "更新",
-                            "编辑于",
-                            java.text.SimpleDateFormat("HH:mm").format(java.util.Date())
-                        )
-                    )
-                } else {
-                    changes
-                },
-                snapshotChanges = if (changes.isEmpty()) {
-                    emptyList()
-                } else {
-                    changes + FieldChange(
-                        takagi.ru.monica.data.TIMELINE_SNAPSHOT_FIELD_ITEM_DATA,
-                        existingItem.itemData,
-                        finalUpdatedItem.itemData
-                    )
-                }
-            )
+
             requestBitwardenMutationSync(bitwardenVaultId)
             id
         } ?: throw IllegalStateException("Secure item no longer exists")
@@ -1082,12 +1008,7 @@ class DocumentViewModel internal constructor(
                         bitwardenLocalModified = true
                     )
                     repository.updateItem(softDeletedItem)
-                    OperationLogger.logDelete(
-                        itemType = OperationLogItemType.DOCUMENT,
-                        itemId = id,
-                        itemTitle = item.title,
-                        detail = "移入回收站（待同步删除）"
-                    )
+
                     return@launch
                 }
 
@@ -1095,12 +1016,7 @@ class DocumentViewModel internal constructor(
                     // 软删除：移动到回收站
                     repository.softDeleteItem(item)
                     // 记录移入回收站操作
-                    OperationLogger.logDelete(
-                        itemType = OperationLogItemType.DOCUMENT,
-                        itemId = id,
-                        itemTitle = item.title,
-                        detail = "移入回收站"
-                    )
+
 
                     if (!isBitwardenCipher && item.keepassDatabaseId != null) {
                         viewModelScope.launch keepassDeleteSync@{
@@ -1115,11 +1031,7 @@ class DocumentViewModel internal constructor(
                     }
                 } else {
                     // 永久删除
-                    OperationLogger.logDelete(
-                        itemType = OperationLogItemType.DOCUMENT,
-                        itemId = id,
-                        itemTitle = item.title
-                    )
+
                     repository.deleteItem(item)
                 }
             }

@@ -36,7 +36,7 @@ class AutofillRetentionBackupTest {
             val preferences = BackupPreferences(includePasswords = true, includeNotes = false,
                 includeAuthenticators = false, includeDocuments = false, includeBankCards = false,
                 includePasskeys = false, includeGeneratorHistory = false, includeImages = false,
-                includeTimeline = false, includeTrash = false, includeTrashAndHistory = false,
+                includeTrash = false, includeTrashAndHistory = false,
                 includeWebDavConfig = false, includeLocalKeePass = false)
             val (archive, report) = helper.createBackupZip(emptyList(), emptyList(), preferences).getOrThrow()
             try {

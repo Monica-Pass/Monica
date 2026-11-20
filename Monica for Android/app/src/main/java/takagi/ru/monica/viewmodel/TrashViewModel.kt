@@ -1,7 +1,9 @@
 package takagi.ru.monica.viewmodel
 
+
 import takagi.ru.monica.utils.AppLocaleStringResolver
 
+import androidx.room.withTransaction
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -23,12 +25,9 @@ import takagi.ru.monica.repository.MdbxRepository
 import takagi.ru.monica.repository.MdbxRepositoryFactory
 import takagi.ru.monica.repository.PasswordRepository
 import takagi.ru.monica.repository.SecureItemRepository
-import takagi.ru.monica.data.OperationLogItemType
 import takagi.ru.monica.mdbx.MdbxDiagLogger
 import takagi.ru.monica.security.SecurityManager
-import takagi.ru.monica.utils.FieldChange
 import takagi.ru.monica.utils.KeePassRestoreTarget
-import takagi.ru.monica.utils.OperationLogger
 import takagi.ru.monica.utils.SettingsManager
 import java.util.Date
 import java.util.concurrent.TimeUnit
@@ -236,7 +235,7 @@ class TrashViewModel(application: Application) : AndroidViewModel(application) {
                 if (local) {
                     val generation = takagi.ru.monica.security.SessionManager.lockGeneration.value
                     check(takagi.ru.monica.security.SessionManager.isUnlocked.value) { "Vault is locked" }
-                    database.timelineJournal.operation {
+                    database.withTransaction {
                         check(takagi.ru.monica.security.SessionManager.isUnlocked.value &&
                             takagi.ru.monica.security.SessionManager.lockGeneration.value == generation) { "Vault is locked" }
                         val unchanged = when (val data = item.originalData) {
@@ -271,7 +270,7 @@ class TrashViewModel(application: Application) : AndroidViewModel(application) {
                     restoreTarget = restoreTarget,
                     restoreOutcome = restoreOutcome
                 )
-                logTrashRestore(item)
+
                 onResult(true)
             } catch (e: CancellationException) {
                 throw e
@@ -290,9 +289,6 @@ class TrashViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             try {
                 val result = permanentlyDeleteWithSources(item.originalData)
-                if (result.isSuccess) {
-                    logTrashPermanentDelete(item)
-                }
                 onResult(result)
             } catch (e: CancellationException) {
                 throw e
@@ -307,12 +303,6 @@ class TrashViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             try {
                 val (deletedCount, failure) = permanentlyDeleteTrashItems(items)
-                if (deletedCount > 0) {
-                    logTrashSummaryDelete(
-                        title = getApplication<Application>().getString(R.string.timeline_permanent_delete_title),
-                        detail = getApplication<Application>().getString(R.string.timeline_deleted_items_count, deletedCount)
-                    )
-                }
                 onResult(if (failure == null) Result.success(Unit) else Result.failure(failure))
             } catch (e: CancellationException) {
                 throw e
@@ -453,13 +443,6 @@ class TrashViewModel(application: Application) : AndroidViewModel(application) {
                 }
                 val (deletedCount, failure) = permanentlyDeleteTrashItems(items)
 
-                if (deletedCount > 0) {
-                    logTrashSummaryDelete(
-                        title = getApplication<Application>().getString(R.string.timeline_empty_trash_title),
-                        detail = getApplication<Application>().getString(R.string.timeline_deleted_items_count, deletedCount)
-                    )
-                }
-
                 onResult(if (failure == null) Result.success(Unit) else Result.failure(failure))
             } catch (e: CancellationException) {
                 throw e
@@ -505,13 +488,6 @@ class TrashViewModel(application: Application) : AndroidViewModel(application) {
                     if (permanentlyDeleteWithSources(item).isSuccess) {
                         deletedCount += 1
                     }
-                }
-
-                if (deletedCount > 0) {
-                    logTrashSummaryDelete(
-                        title = getApplication<Application>().getString(R.string.timeline_trash_title),
-                        detail = getApplication<Application>().getString(R.string.timeline_auto_clear_in_days, settings.autoDeleteDays)
-                    )
                 }
             } catch (e: CancellationException) {
                 throw e
@@ -909,49 +885,6 @@ class TrashViewModel(application: Application) : AndroidViewModel(application) {
         ItemType.NOTE -> BitwardenPendingOperation.ITEM_TYPE_NOTE
     }
 
-    private fun ItemType.toOperationLogItemType(): OperationLogItemType = when (this) {
-        ItemType.PASSWORD -> OperationLogItemType.PASSWORD
-        ItemType.TOTP -> OperationLogItemType.TOTP
-        ItemType.BANK_CARD -> OperationLogItemType.BANK_CARD
-        ItemType.DOCUMENT -> OperationLogItemType.DOCUMENT
-        ItemType.BILLING_ADDRESS -> OperationLogItemType.BILLING_ADDRESS
-        ItemType.PAYMENT_ACCOUNT -> OperationLogItemType.PAYMENT_ACCOUNT
-        ItemType.NOTE -> OperationLogItemType.NOTE
-    }
-
-    private fun logTrashRestore(item: TrashItem) {
-        OperationLogger.logUpdate(
-            itemType = item.itemType.toOperationLogItemType(),
-            itemId = item.id,
-            itemTitle = item.title,
-            changes = listOf(
-                FieldChange(
-                    fieldName = getApplication<Application>().getString(R.string.timeline_trash_title),
-                    oldValue = getApplication<Application>().getString(R.string.timeline_op_delete),
-                    newValue = getApplication<Application>().getString(R.string.timeline_reverted)
-                )
-            )
-        )
-    }
-
-    private fun logTrashPermanentDelete(item: TrashItem) {
-        OperationLogger.logDelete(
-            itemType = item.itemType.toOperationLogItemType(),
-            itemId = item.id,
-            itemTitle = item.title,
-            detail = getApplication<Application>().getString(R.string.timeline_permanent_delete_title)
-        )
-    }
-
-    private fun logTrashSummaryDelete(title: String, detail: String) {
-        OperationLogger.logDelete(
-            itemType = OperationLogItemType.CATEGORY,
-            itemId = System.currentTimeMillis(),
-            itemTitle = title,
-            detail = detail
-        )
-    }
-    
     /**
      * 更新回收站设置
      */

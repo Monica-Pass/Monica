@@ -1,7 +1,6 @@
 package takagi.ru.monica.data
 
 import android.content.Context
-import takagi.ru.monica.timeline.*
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -22,8 +21,6 @@ import takagi.ru.monica.keepass.KeePassPendingChangeDao
         Category::class,
         OperationLog::class,
         TimelineVersionSnapshot::class,
-        TimelineRecord::class,
-        TimelineTarget::class,
         LocalKeePassDatabase::class,
         KeepassRemoteSource::class,
         KeepassRemoteSyncState::class,
@@ -52,21 +49,21 @@ import takagi.ru.monica.keepass.KeePassPendingChangeDao
         KeePassPendingChange::class,
         LegacyDedupRecoveryEntity::class
     ],
-    version = 86,
+    version = 85,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class PasswordDatabase : RoomDatabase() {
     
+    private val writeGuard by lazy { DatabaseWriteGuard(this) }
+    private val guardedPasswords by lazy { SessionPasswordEntryDao(rawPasswordEntryDao(), writeGuard) }
+    private val guardedItems by lazy { SessionSecureItemDao(rawSecureItemDao(), writeGuard) }
+    private val guardedFields by lazy { SessionCustomFieldDao(rawCustomFieldDao(), writeGuard) }
     abstract fun rawPasswordEntryDao(): PasswordEntryDao
-    private val journalPasswordEntryDao by lazy { JournalPasswordEntryDao(rawPasswordEntryDao(), timelineJournal) }
-    fun passwordEntryDao(): PasswordEntryDao = journalPasswordEntryDao
+    fun passwordEntryDao(): PasswordEntryDao = guardedPasswords
     abstract fun rawSecureItemDao(): SecureItemDao
-    private val journalSecureItemDao by lazy { JournalSecureItemDao(rawSecureItemDao(), timelineJournal) }
-    fun secureItemDao(): SecureItemDao = journalSecureItemDao
+    fun secureItemDao(): SecureItemDao = guardedItems
     abstract fun categoryDao(): CategoryDao
-    val timelineJournal by lazy { TimelineJournal(this) }
-    abstract fun timelineDao(): TimelineDao
     abstract fun operationLogDao(): OperationLogDao
     abstract fun timelineVersionSnapshotDao(): TimelineVersionSnapshotDao
     abstract fun localKeePassDatabaseDao(): LocalKeePassDatabaseDao
@@ -77,8 +74,7 @@ abstract class PasswordDatabase : RoomDatabase() {
     abstract fun mdbxRemoteSourceDao(): MdbxRemoteSourceDao
     abstract fun mdbxSyncStateDao(): MdbxSyncStateDao
     abstract fun rawCustomFieldDao(): CustomFieldDao
-    private val journalCustomFieldDao by lazy { JournalCustomFieldDao(rawCustomFieldDao(), timelineJournal) }
-    fun customFieldDao(): CustomFieldDao = journalCustomFieldDao  // 自定义字段 DAO
+    fun customFieldDao(): CustomFieldDao = guardedFields  // 自定义字段 DAO
     abstract fun passwordPageAggregateStackDao(): PasswordPageAggregateStackDao
     abstract fun passwordArchiveSyncMetaDao(): PasswordArchiveSyncMetaDao
     abstract fun passwordHistoryDao(): PasswordHistoryDao
@@ -104,17 +100,11 @@ abstract class PasswordDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: PasswordDatabase? = null
         
-        // Retain schema 85 and its inert table for existing development installs.
-        // Removing the feature must not downgrade Room or destroy encrypted recovery data.
-        internal val MIGRATION_85_86 = object : androidx.room.migration.Migration(85, 86) {
-            override fun migrate(database: androidx.sqlite.db.SupportSQLiteDatabase) {
-                database.execSQL("CREATE TABLE IF NOT EXISTS timeline_events (id TEXT NOT NULL PRIMARY KEY, occurredAt INTEGER NOT NULL, action TEXT NOT NULL, origin TEXT NOT NULL, scopeKey TEXT NOT NULL, sealedDetails TEXT, expiresAt INTEGER NOT NULL, recoveryCandidate INTEGER NOT NULL, parentId TEXT, format INTEGER NOT NULL)")
-                database.execSQL("CREATE INDEX IF NOT EXISTS index_timeline_events_occurredAt_id ON timeline_events(occurredAt, id)")
-                database.execSQL("CREATE INDEX IF NOT EXISTS index_timeline_events_parentId ON timeline_events(parentId)")
-                database.execSQL("CREATE TABLE IF NOT EXISTS timeline_targets (eventId TEXT NOT NULL, kind TEXT NOT NULL, itemId INTEGER NOT NULL, scopeKey TEXT NOT NULL, PRIMARY KEY(eventId,kind,itemId), FOREIGN KEY(eventId) REFERENCES timeline_events(id) ON UPDATE NO ACTION ON DELETE CASCADE)")
-                database.execSQL("CREATE INDEX IF NOT EXISTS index_timeline_targets_kind_itemId ON timeline_targets(kind,itemId)")
-                database.execSQL("CREATE INDEX IF NOT EXISTS index_timeline_targets_scopeKey ON timeline_targets(scopeKey)")
-            }
+        // Development timeline builds alone used schema 86. Return to the published
+        // schema without deleting their extra tables or rewriting any vault data.
+        // Room validates the schema-85 tables and restores its schema-85 identity hash.
+        internal val MIGRATION_86_85 = object : androidx.room.migration.Migration(86, 85) {
+            override fun migrate(database: androidx.sqlite.db.SupportSQLiteDatabase) = Unit
         }
 
         internal val MIGRATION_84_85 = object : androidx.room.migration.Migration(84, 85) {
@@ -2551,19 +2541,16 @@ abstract class PasswordDatabase : RoomDatabase() {
                         MIGRATION_82_83,   // Authenticated encrypted Send cache
                         MIGRATION_83_84,   // Protected account transport configuration
                         MIGRATION_84_85,   // Legacy recovery data retained; engine removed
-                        MIGRATION_85_86
+                        MIGRATION_86_85
                     )
                     // 启用多进程失效通知：IME 跑在 :ime 独立进程，主进程需要
                     // 感知 IME 进程对数据库的修改（例如最近填充时间戳等）。
                     .enableMultiInstanceInvalidation()
                     .build()
-                instance.timelineJournal.configure(context)
                 INSTANCE = instance
                 instance
             }
         }
     }
 }
-
-
 

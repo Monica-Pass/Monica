@@ -15,7 +15,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,11 +28,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.withResumed
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
@@ -43,12 +46,14 @@ import com.google.zxing.BarcodeFormat
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import takagi.ru.monica.R
 import takagi.ru.monica.ui.scanner.QrCameraScanSession
 import takagi.ru.monica.ui.scanner.QrScanRestartReason
 import takagi.ru.monica.ui.scanner.QrScannerDiagnostics
+import takagi.ru.monica.ui.scanner.selectScanCandidates
 import takagi.ru.monica.ui.scanner.DecodedBarcode
 import takagi.ru.monica.ui.scanner.ZxingBarcodeDecoder
 import java.util.concurrent.atomic.AtomicBoolean
@@ -87,6 +92,7 @@ fun QrScannerScreen(
     diagnosticLabel: String? = null,
     onDiagnostic: ((String) -> Unit)? = null,
     preserveWhitespace: Boolean = false,
+    requireSingleResult: Boolean = false,
     onBarcodeScanned: ((String, BarcodeFormat) -> Unit)? = null,
     bottomContent: @Composable (launchGallery: () -> Unit) -> Unit = { launchGallery ->
         DefaultQrScannerBottomContent(launchGallery = launchGallery)
@@ -117,6 +123,7 @@ fun QrScannerScreen(
                     diagnosticLabel = diagnosticLabel,
                     onDiagnostic = onDiagnostic,
                     preserveWhitespace = preserveWhitespace,
+                    requireSingleResult = requireSingleResult,
                     onBarcodeScanned = onBarcodeScanned,
                     bottomContent = bottomContent
                 )
@@ -188,6 +195,7 @@ private fun QrCodeScanner(
     diagnosticLabel: String?,
     onDiagnostic: ((String) -> Unit)?,
     preserveWhitespace: Boolean,
+    requireSingleResult: Boolean,
     onBarcodeScanned: ((String, BarcodeFormat) -> Unit)?,
     bottomContent: @Composable (launchGallery: () -> Unit) -> Unit
 ) {
@@ -206,6 +214,18 @@ private fun QrCodeScanner(
         }
     }
     val currentValidator = rememberUpdatedState(resultValidator)
+    val currentRequireSingleResult = rememberUpdatedState(requireSingleResult)
+    var galleryJob by remember { mutableStateOf<Job?>(null) }
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_PAUSE || event == Lifecycle.Event.ON_STOP) galleryJob?.cancel()
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            galleryJob?.cancel()
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
     val currentOnQrCodeScanned = rememberUpdatedState(onQrCodeScanned)
     val currentOnBarcodeScanned = rememberUpdatedState(onBarcodeScanned)
     val currentInvalidResultMessage = rememberUpdatedState(invalidResultMessage)
@@ -223,6 +243,7 @@ private fun QrCodeScanner(
     val usesScreenTransition = takagi.ru.monica.ui.LocalAnimatedVisibilityScope.current != null
     var showOverlay by remember { mutableStateOf(usesScreenTransition) }
     var invalidCandidateSeen by remember { mutableStateOf(false) }
+    var multipleCandidatesSeen by remember { mutableStateOf(false) }
 
     val acceptResult: (DecodedBarcode?) -> Boolean = acceptResult@{ raw ->
         val value = raw?.text?.let { if (preserveWhitespace) it else it.trim() }
@@ -249,6 +270,7 @@ private fun QrCodeScanner(
         allowedFormats,
         preserveWhitespace,
         scanGeneration,
+        requireSingleResult,
         diagnostics
     ) {
         QrCameraScanSession(
@@ -258,11 +280,16 @@ private fun QrCodeScanner(
             allowedFormats = allowedFormats,
             preserveWhitespace = preserveWhitespace,
             generation = scanGeneration,
+            confirmBothPolarities = requireSingleResult,
             diagnostics = diagnostics,
             onCandidates = { _, _, _ -> false },
             onDecodedCandidates = { candidates, _, _ ->
-                val value = candidates.firstOrNull { currentValidator.value(it.text) }
-                if (value == null && candidates.isNotEmpty()) invalidCandidateSeen = true
+                val selection = selectScanCandidates(candidates, currentRequireSingleResult.value, currentValidator.value)
+                val value = selection.singleOrNull()
+                if (candidates.isNotEmpty()) {
+                    multipleCandidatesSeen = selection.size > 1
+                    invalidCandidateSeen = selection.isEmpty()
+                }
                 // The camera session dispatches validation and acceptance together
                 // on the main thread, after releasing the frame and checking liveness.
                 value != null && acceptResult(value)
@@ -282,15 +309,25 @@ private fun QrCodeScanner(
     ) { uri ->
         if (uri != null) {
             diagnostics?.logGalleryStart()
-            scope.launch {
+            galleryJob?.cancel()
+            galleryJob = scope.launch {
                 processImageWithZxing(
                     context = context,
                     uri = uri,
                     decoder = galleryDecoder,
                     diagnostics = diagnostics,
                     resultValidator = currentValidator.value,
+                    requireSingleResult = currentRequireSingleResult.value,
+                    beforeDelivery = { lifecycleOwner.lifecycle.withResumed { } },
                     onResult = { acceptResult(it) },
+                    onMultiple = {
+                        multipleCandidatesSeen = true
+                        invalidCandidateSeen = false
+                        Toast.makeText(context, context.getString(R.string.qr_multiple_codes), Toast.LENGTH_SHORT).show()
+                    },
                     onInvalid = {
+                        multipleCandidatesSeen = false
+                        invalidCandidateSeen = true
                         Toast.makeText(
                             context,
                             currentInvalidResultMessage.value ?: context.getString(R.string.qr_not_found),
@@ -298,6 +335,8 @@ private fun QrCodeScanner(
                         ).show()
                     },
                     onNotFound = {
+                        multipleCandidatesSeen = false
+                        invalidCandidateSeen = false
                         Toast.makeText(context, context.getString(R.string.qr_not_found), Toast.LENGTH_SHORT).show()
                     }
                 )
@@ -376,6 +415,7 @@ private fun QrCodeScanner(
                     .padding(horizontal = 16.dp, vertical = 12.dp),
                 shape = RoundedCornerShape(24.dp),
                 color = MaterialTheme.colorScheme.surface.copy(alpha = 0.85f),
+                contentColor = MaterialTheme.colorScheme.onSurface,
                 tonalElevation = 6.dp,
                 shadowElevation = 8.dp
             ) {
@@ -404,7 +444,10 @@ private fun QrCodeScanner(
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
-                        if (invalidCandidateSeen && invalidResultMessage != null) {
+                        if (multipleCandidatesSeen) {
+                            Text(stringResource(R.string.qr_multiple_codes), style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.error)
+                        } else if (invalidCandidateSeen && invalidResultMessage != null) {
                             Text(invalidResultMessage, style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.error)
                         }
@@ -433,7 +476,8 @@ private fun QrCodeScanner(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(28.dp),
                 colors = CardDefaults.elevatedCardColors(
-                    containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.92f)
+                    containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.92f),
+                    contentColor = MaterialTheme.colorScheme.onSurface
                 )
             ) {
                 Column(
@@ -473,27 +517,11 @@ private fun DefaultQrScannerBottomContent(
 }
 
 @Composable
-private fun ScannerFrame(
+internal fun ScannerFrame(
     modifier: Modifier = Modifier
 ) {
-    val cornerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.95f)
-
-    Box(
-        modifier = modifier
-            .size(268.dp)
-            .clip(RoundedCornerShape(28.dp))
-            .border(
-                width = 2.dp,
-                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.65f),
-                shape = RoundedCornerShape(28.dp)
-            )
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.08f))
-        )
-
+    val cornerColor = Color(0xFF80CBC4)
+    Box(modifier = modifier.size(268.dp).testTag("scanner_frame")) {
         ScannerCorner(
             modifier = Modifier
                 .align(Alignment.TopStart)
@@ -580,12 +608,15 @@ private fun ScannerCorner(
     }
 }
 
-private suspend fun processImageWithZxing(
+internal suspend fun processImageWithZxing(
     context: Context,
     uri: Uri,
     decoder: ZxingBarcodeDecoder,
     diagnostics: QrScannerDiagnostics?,
     resultValidator: (String) -> Boolean,
+    requireSingleResult: Boolean = false,
+    beforeDelivery: suspend () -> Unit = {},
+    onMultiple: () -> Unit = {},
     onResult: (DecodedBarcode) -> Unit,
     onInvalid: () -> Unit,
     onNotFound: () -> Unit
@@ -610,38 +641,20 @@ private suspend fun processImageWithZxing(
         bitmap.recycle()
     }
 
-    when (val value = candidates.firstOrNull { resultValidator(it.text) }) {
-        null -> {
-            if (candidates.isEmpty()) {
-                diagnostics?.logGalleryResult(
-                    durationMs = SystemClock.elapsedRealtime() - startedAt,
-                    barcodeCount = candidates.size,
-                    candidateCount = candidates.size,
-                    matched = false,
-                    invalid = false
-                )
-                onNotFound()
-            } else {
-                diagnostics?.logGalleryResult(
-                    durationMs = SystemClock.elapsedRealtime() - startedAt,
-                    barcodeCount = candidates.size,
-                    candidateCount = candidates.size,
-                    matched = false,
-                    invalid = true
-                )
-                onInvalid()
-            }
-        }
-        else -> {
-            diagnostics?.logGalleryResult(
-                durationMs = SystemClock.elapsedRealtime() - startedAt,
-                barcodeCount = candidates.size,
-                candidateCount = candidates.size,
-                matched = true,
-                invalid = false
-            )
-            onResult(value)
-        }
+    beforeDelivery()
+    val selected = selectScanCandidates(candidates, requireSingleResult, resultValidator)
+    diagnostics?.logGalleryResult(
+        durationMs = SystemClock.elapsedRealtime() - startedAt,
+        barcodeCount = candidates.size,
+        candidateCount = selected.size,
+        matched = selected.size == 1,
+        invalid = candidates.isNotEmpty() && selected.isEmpty()
+    )
+    when {
+        selected.size > 1 -> onMultiple()
+        selected.size == 1 -> onResult(selected.single())
+        candidates.isEmpty() -> onNotFound()
+        else -> onInvalid()
     }
 }
 

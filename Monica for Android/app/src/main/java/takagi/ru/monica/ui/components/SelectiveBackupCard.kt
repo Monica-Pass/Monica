@@ -118,7 +118,6 @@ fun SelectiveBackupCard(
                                 includeImages = true,
                                 includeTrashAndHistory = true,  // ✅ 新增
                                 includeGeneratorHistory = true,
-                                includeTimeline = true,
                                 includeTrash = true,
                                 includeLocalKeePass = localKeePassCount > 0,
                                 encryptionFormat = preferences.encryptionFormat
@@ -137,7 +136,6 @@ fun SelectiveBackupCard(
                                 includeImages = false,
                                 includeTrashAndHistory = false,  // ✅ 新增
                                 includeGeneratorHistory = false,
-                                includeTimeline = false,
                                 includeTrash = false,
                                 includeLocalKeePass = false,
                                 encryptionFormat = preferences.encryptionFormat
@@ -214,7 +212,6 @@ fun SelectiveBackupCard(
                             includeTrashAndHistory = it,
                             // 同时更新旧字段以保持兼容性
                             includeGeneratorHistory = it,
-                            includeTimeline = it,
                             includeTrash = it
                         ))
                     },

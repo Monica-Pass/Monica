@@ -4,7 +4,9 @@ import takagi.ru.monica.utils.AppLocaleStringResolver
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.*
-import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
+import androidx.activity.ComponentActivity
+import android.content.pm.ActivityInfo
 import androidx.compose.ui.graphics.asAndroidBitmap
 import android.graphics.Bitmap
 import java.io.File
@@ -41,8 +43,13 @@ import takagi.ru.monica.viewmodel.TotpViewModel
 
 @RunWith(AndroidJUnit4::class)
 class TotpListInteractionTest {
-    @get:Rule val compose = createComposeRule()
+    @get:Rule val compose = createAndroidComposeRule<ComponentActivity>()
     private val context get() = InstrumentationRegistry.getInstrumentation().targetContext
+
+    @org.junit.Before fun phoneViewport() {
+        compose.activityRule.scenario.onActivity { it.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT }
+        compose.waitUntil(10_000) { compose.activity.resources.configuration.orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT }
+    }
 
     @Test
     fun standardListKeepsSelectionQrAndDeleteConfirmation() {
@@ -63,7 +70,6 @@ class TotpListInteractionTest {
         val visible = mutableStateOf(true)
         val selection = AtomicReference(Selection())
         val singleDeletes = mutableListOf<Long>()
-        var passkeyScans = 0
         var authenticatorScans = 0
         val first = "PR138 Alpha"
         val second = "PR138 Beta"
@@ -97,7 +103,6 @@ class TotpListInteractionTest {
                         onTotpClick = {},
                         onDeleteTotp = { singleDeletes += it.id },
                         onQuickScanTotp = { authenticatorScans++ },
-                        onScanFidoQr = { passkeyScans++ },
                         onSelectionModeChange = { active, count, exit, _, _, delete ->
                             selection.set(Selection(active, count, exit, delete))
                         }
@@ -107,18 +112,14 @@ class TotpListInteractionTest {
             awaitCard(first)
             awaitCard(second)
             compose.onAllNodesWithContentDescription(context.getString(R.string.more_options)).onFirst().performClick()
-            compose.onNodeWithText(context.getString(R.string.passkey_scan_qr_menu_title)).assertIsDisplayed()
+            compose.onNodeWithText(context.getString(R.string.passkey_scan_qr_menu_title)).assertDoesNotExist()
             val menu = compose.onNode(isPopup()).captureToImage().asAndroidBitmap()
             File(context.filesDir, "passkey-scan-totp-${layout.name}.png").outputStream().use {
                 menu.compress(Bitmap.CompressFormat.PNG, 100, it)
             }
             menu.recycle()
-            compose.onNodeWithText(context.getString(R.string.passkey_scan_qr_menu_title)).performClick()
-            compose.onNode(isPopup()).assertDoesNotExist()
-            compose.runOnIdle { assertEquals(1, passkeyScans); assertEquals(0, authenticatorScans) }
-            compose.onAllNodesWithContentDescription(context.getString(R.string.more_options)).onFirst().performClick()
             compose.onNodeWithText(context.getString(R.string.quick_action_scan_qr)).performClick()
-            compose.runOnIdle { assertEquals(1, passkeyScans); assertEquals(1, authenticatorScans) }
+            compose.runOnIdle { assertEquals(1, authenticatorScans) }
             // Measure the real list wrappers, not a fixture with its own spacing.
             val firstBounds = card(first).fetchSemanticsNode().boundsInRoot
             val secondBounds = card(second).fetchSemanticsNode().boundsInRoot

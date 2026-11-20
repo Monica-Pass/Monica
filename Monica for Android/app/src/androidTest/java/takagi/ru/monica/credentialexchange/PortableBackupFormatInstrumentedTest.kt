@@ -94,7 +94,7 @@ class PortableBackupFormatInstrumentedTest {
         val preferences = BackupPreferences(includePasswords = true, includeAuthenticators = false,
             includeDocuments = false, includeBankCards = false, includePasskeys = false,
             includeGeneratorHistory = false, includeImages = false, includeNotes = false,
-            includeTimeline = false, includeTrash = false, includeTrashAndHistory = false)
+            includeTrash = false, includeTrashAndHistory = false)
         try {
             assertEquals(BackupEncryptionFormat.COMPATIBLE_V1, preferences.encryptionFormat)
             helper.setEncryptionConfig(true, password)

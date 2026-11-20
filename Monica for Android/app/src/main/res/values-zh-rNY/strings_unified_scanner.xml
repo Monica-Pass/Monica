@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_credentials_hint">扫描验证器或通行密钥二维码</string>
+    <string name="qr_credentials_invalid">这不是受支持的验证器或通行密钥二维码</string>
+    <string name="qr_multiple_codes">检测到多个二维码，请只对准一个</string>
+</resources>

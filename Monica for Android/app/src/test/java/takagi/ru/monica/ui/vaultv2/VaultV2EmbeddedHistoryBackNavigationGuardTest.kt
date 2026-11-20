@@ -5,7 +5,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /**
- * Regression guard for the embedded timeline/trash route in the vault page.
+ * Regression guard for the embedded trash route in the vault page.
  *
  * The route is local to [VaultV2Pane], so the system back gesture must be
  * consumed there before the app-level exit handler gets a chance to run.
@@ -15,8 +15,8 @@ class VaultV2EmbeddedHistoryBackNavigationGuardTest {
     @Test
     fun `embedded history route owns system back and clears its local mode`() {
         val pane = source("ui/vaultv2/VaultV2Pane.kt")
-        val routeStart = pane.indexOf("if (useEmbeddedHistoryPages && vaultHistoryPageMode != 0)")
-        val backHandler = pane.indexOf("BackHandler(enabled = vaultHistoryPageMode != 0)")
+        val routeStart = pane.indexOf("if (useEmbeddedHistoryPages && vaultHistoryPageMode == 2)")
+        val backHandler = pane.indexOf("BackHandler(enabled = vaultHistoryPageMode == 2)")
 
         assertTrue("embedded history route must be present", routeStart >= 0)
         assertTrue(

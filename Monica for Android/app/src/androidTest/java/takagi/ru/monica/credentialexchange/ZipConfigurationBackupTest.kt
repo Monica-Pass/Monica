@@ -21,7 +21,7 @@ class ZipConfigurationBackupTest {
     private val configOnly = BackupPreferences(includePasswords = false, includeAuthenticators = false,
         includeDocuments = false, includeBankCards = false, includePasskeys = false,
         includeImages = false, includeNotes = false, includeGeneratorHistory = false,
-        includeTimeline = false, includeTrash = false, includeTrashAndHistory = false,
+        includeTrash = false, includeTrashAndHistory = false,
         includeWebDavConfig = true)
     private val secret = "Synthetic ZIP configuration password"
 

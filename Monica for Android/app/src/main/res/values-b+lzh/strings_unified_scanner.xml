@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_credentials_hint">掃驗證器或通行密鑰之碼</string>
+    <string name="qr_credentials_invalid">此碼非所支援之驗證器或通行密鑰碼</string>
+    <string name="qr_multiple_codes">得數碼，請僅對其一</string>
+</resources>

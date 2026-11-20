@@ -1,5 +1,7 @@
 package takagi.ru.monica.bitwarden.viewmodel
 
+import takagi.ru.monica.bitwarden.sync.SyncBlockReason
+
 import takagi.ru.monica.utils.AppLocaleStringResolver
 import android.app.Application
 import android.net.ConnectivityManager
@@ -47,14 +49,12 @@ import takagi.ru.monica.bitwarden.sync.BitwardenSyncNotificationHelper
 import takagi.ru.monica.bitwarden.sync.BitwardenSyncSummary
 import takagi.ru.monica.bitwarden.sync.NetworkGateResult
 import takagi.ru.monica.bitwarden.sync.classifyBitwardenSyncError
-import takagi.ru.monica.bitwarden.sync.SyncBlockReason
 import takagi.ru.monica.bitwarden.sync.SyncExecutionOutcome
 import takagi.ru.monica.bitwarden.sync.SyncTriggerReason
 import takagi.ru.monica.bitwarden.sync.VaultSyncStatus
 import takagi.ru.monica.bitwarden.sync.mergeBitwardenSyncStatuses
 import takagi.ru.monica.bitwarden.sync.syncViaCoordinator
 import takagi.ru.monica.bitwarden.sync.toBitwardenBlockReason
-import takagi.ru.monica.data.OperationLogItemType
 import takagi.ru.monica.data.PasswordEntry
 import takagi.ru.monica.data.bitwarden.BitwardenConflictBackup
 import takagi.ru.monica.data.bitwarden.BitwardenFolder
@@ -66,8 +66,6 @@ import takagi.ru.monica.sync.SyncNetworkPolicy
 import takagi.ru.monica.sync.SyncPriority
 import takagi.ru.monica.sync.SyncTaskRunner
 import takagi.ru.monica.sync.SyncTrigger
-import takagi.ru.monica.utils.FieldChange
-import takagi.ru.monica.utils.OperationLogger
 
 /**
  * Bitwarden ViewModel
@@ -1394,7 +1392,7 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
                     refreshSendsAcrossVaults()
                     _sendState.value = SendState.Idle
                     _sendCreateSuccessVersion.value = _sendCreateSuccessVersion.value + 1
-                    logBitwardenSendCreate(vault.id, result.send)
+
                     requestLocalMutationSync(vault.id)
                     _events.emit(BitwardenEvent.SendCreated(strings.get(R.string.legacy_ui_send_created)))
                 }
@@ -1456,7 +1454,7 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
                     refreshSendsAcrossVaults()
                     _sendState.value = SendState.Idle
                     _sendCreateSuccessVersion.value = _sendCreateSuccessVersion.value + 1
-                    logBitwardenSendCreate(vault.id, result.send)
+
                     requestLocalMutationSync(vault.id)
                     _events.emit(BitwardenEvent.SendCreated(strings.get(R.string.legacy_ui_file_send_created)))
                 }
@@ -1497,11 +1495,7 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
                     }
                     refreshSendsAcrossVaults()
                     _sendState.value = SendState.Idle
-                    logBitwardenSendDelete(
-                        vaultId = vault.id,
-                        sendId = result.sendId,
-                        sendName = deletingSend?.name
-                    )
+
                     requestLocalMutationSync(vault.id)
                     _events.emit(BitwardenEvent.SendDeleted(strings.get(R.string.legacy_ui_send_deleted)))
                 }
@@ -1562,7 +1556,7 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
             val conflictSnapshot = _conflicts.value.firstOrNull { it.id == conflictId }
             val success = repository.resolveConflictWithLocal(conflictId)
             if (success) {
-                logBitwardenConflictResolved(conflictSnapshot, "保留本地版本")
+
                 loadConflicts()
                 _events.emit(BitwardenEvent.ShowSuccess(strings.get(R.string.legacy_ui_conflict_resolved_local)))
             } else {
@@ -1579,7 +1573,7 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
             val conflictSnapshot = _conflicts.value.firstOrNull { it.id == conflictId }
             val success = repository.resolveConflictWithServer(conflictId)
             if (success) {
-                logBitwardenConflictResolved(conflictSnapshot, "使用服务器版本")
+
                 loadConflicts()
                 sync() // 重新同步以获取服务器版本
                 _events.emit(BitwardenEvent.ShowSuccess(strings.get(R.string.legacy_ui_conflict_resolved_remote)))
@@ -1775,93 +1769,6 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
         viewModelScope.launch { refreshSendsAcrossVaults() }
     }
 
-    private fun logBitwardenSendCreate(vaultId: Long, send: BitwardenSend) {
-        OperationLogger.logCreate(
-            itemType = OperationLogItemType.BITWARDEN_SEND,
-            itemId = buildBitwardenItemId(vaultId, "send:${send.bitwardenSendId}"),
-            itemTitle = send.name.ifBlank { "Send" },
-            details = listOf(
-                FieldChange("Vault", "", "Bitwarden #$vaultId"),
-                FieldChange("类型", "", if (send.isTextType) "文本 Send" else "文件 Send")
-            )
-        )
-    }
-
-    private fun logBitwardenSendDelete(vaultId: Long, sendId: String, sendName: String?) {
-        OperationLogger.logDelete(
-            itemType = OperationLogItemType.BITWARDEN_SEND,
-            itemId = buildBitwardenItemId(vaultId, "send:$sendId"),
-            itemTitle = sendName?.ifBlank { "Send" } ?: "Send",
-            detail = "从 Vault #$vaultId 删除"
-        )
-    }
-
-    private fun logBitwardenSyncSummary(
-        vaultId: Long,
-        appliedChangeCount: Int,
-        availableOfflineCount: Int,
-        remoteAddedCount: Int,
-        remoteUpdatedCount: Int,
-        uploadedCount: Int,
-        deletedCount: Int,
-        conflictCount: Int,
-        uploadFailedCount: Int,
-        skippedDueToLocalDirtyCount: Int,
-        silent: Boolean
-    ) {
-        OperationLogger.logSync(
-            itemType = OperationLogItemType.BITWARDEN_SYNC,
-            itemId = System.currentTimeMillis(),
-            itemTitle = "Bitwarden Vault #$vaultId",
-            scopeKey = "bitwarden:$vaultId",
-            automaticEmptySync = silent && appliedChangeCount == 0 && remoteAddedCount == 0 &&
-                remoteUpdatedCount == 0 && uploadedCount == 0 && deletedCount == 0 &&
-                conflictCount == 0 && uploadFailedCount == 0 && skippedDueToLocalDirtyCount == 0,
-            details = listOf(
-                FieldChange("模式", "", if (silent) "静默同步" else "手动同步"),
-                FieldChange("sync.changed", "", appliedChangeCount.toString()),
-                FieldChange("sync.offline", "", availableOfflineCount.toString()),
-                FieldChange("sync.added", "", remoteAddedCount.toString()),
-                FieldChange("sync.updated", "", remoteUpdatedCount.toString()),
-                FieldChange("sync.uploaded", "", uploadedCount.toString()),
-                FieldChange("sync.deleted", "", deletedCount.toString()),
-                FieldChange("sync.conflicts", "", conflictCount.toString()),
-                FieldChange("sync.failed", "", uploadFailedCount.toString()),
-                FieldChange("sync.pending", "", skippedDueToLocalDirtyCount.toString())
-            )
-        )
-    }
-
-    private fun logBitwardenConflictDetected(vaultId: Long, conflictCount: Int) {
-        OperationLogger.logCreate(
-            itemType = OperationLogItemType.BITWARDEN_CONFLICT,
-            itemId = System.currentTimeMillis(),
-            itemTitle = "Bitwarden Vault #$vaultId",
-            details = listOf(
-                FieldChange("状态", "", "检测到同步冲突"),
-                FieldChange("冲突数", "", conflictCount.toString())
-            )
-        )
-    }
-
-    private fun logBitwardenConflictResolved(
-        conflict: BitwardenConflictBackup?,
-        resolutionLabel: String
-    ) {
-        val vaultId = conflict?.vaultId ?: (_activeVault.value?.id ?: 0L)
-        val conflictKey = conflict?.bitwardenCipherId
-            ?: "conflict-${conflict?.id ?: System.currentTimeMillis()}"
-        OperationLogger.logUpdate(
-            itemType = OperationLogItemType.BITWARDEN_CONFLICT,
-            itemId = buildBitwardenItemId(vaultId, conflictKey),
-            itemTitle = conflict?.entryTitle?.ifBlank { "Bitwarden 冲突" } ?: "Bitwarden 冲突",
-            changes = listOf(
-                FieldChange("处理状态", "待处理", "已解决"),
-                FieldChange("解决策略", "", resolutionLabel)
-            )
-        )
-    }
-
     private fun buildBitwardenItemId(vaultId: Long, key: String): Long {
         return "${vaultId}:$key".hashCode().toLong() and 0x7FFFFFFFL
     }
@@ -2041,21 +1948,9 @@ class BitwardenViewModel(application: Application) : AndroidViewModel(applicatio
                     uploadFailedCount = result.uploadFailedCount,
                     skippedDueToLocalDirtyCount = result.skippedDueToLocalDirtyCount
                 )
-                logBitwardenSyncSummary(
-                    vaultId = vault.id,
-                    appliedChangeCount = result.appliedChangeCount,
-                    availableOfflineCount = offlineReadyCount,
-                    remoteAddedCount = result.remoteAddedCount,
-                    remoteUpdatedCount = result.remoteUpdatedCount,
-                    uploadedCount = result.uploadedCount,
-                    deletedCount = result.deletedCount,
-                    conflictCount = result.conflictCount,
-                    uploadFailedCount = result.uploadFailedCount,
-                    skippedDueToLocalDirtyCount = result.skippedDueToLocalDirtyCount,
-                    silent = silent
-                )
+
                 if (result.conflictCount > 0) {
-                    logBitwardenConflictDetected(vault.id, result.conflictCount)
+
                 }
                 if (!silent) {
                     _syncState.value = SyncState.Success(

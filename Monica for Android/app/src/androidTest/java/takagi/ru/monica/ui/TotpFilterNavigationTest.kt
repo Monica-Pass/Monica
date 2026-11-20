@@ -72,7 +72,7 @@ class TotpFilterNavigationTest {
                             AppSettings(biometricEnabled = false, disablePasswordVerification = true,
                                 iconCardsEnabled = false, validatorVibrationEnabled = false),
                             onAuthenticatorLayoutModeChange = {}, onTotpClick = { screen.value = "detail" },
-                            onDeleteTotp = {}, onQuickScanTotp = {}, onScanFidoQr = {},
+                            onDeleteTotp = {}, onQuickScanTotp = {},
                             onSelectionModeChange = { _, _, _, _, _, _ -> })
                         "detail" -> Button(onClick = { screen.value = "list" }) { Text("Return to OTP fixture list") }
                     }

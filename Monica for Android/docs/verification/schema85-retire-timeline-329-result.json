@@ -1,0 +1,196 @@
+{
+  "schema": 85,
+  "feature": "timeline retired",
+  "reverseMigrationRetained": true,
+  "destructiveFallback": false,
+  "legacy85Identity": "f1cc89b0bd71d086b7a81d230b3fe1b7",
+  "schema86AssetSha256": "4b7f99e1cd3f46e4862b6d5899788581d81e99acd13658088af67e873395eae3",
+  "device": {
+    "emulator": "existing MuMu",
+    "api": 35,
+    "abi": "x86_64",
+    "syntheticDataOnly": true
+  },
+  "editions": {
+    "main": {
+      "debugFullBuildSeconds": 196.044593334198,
+      "jvmTests": 165,
+      "devicePassingUniqueMethods": 58,
+      "releaseBuildSeconds": 657.8507161140442,
+      "releaseSha256": "21ec80df6d1684c021e47c6a3721567ad47eec802a431f988a62029329ae3c16",
+      "releaseSignatureSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "releaseStages": {
+        "new": {
+          "edition": "main",
+          "stage": "new",
+          "apkSha256": "21ec80df6d1684c021e47c6a3721567ad47eec802a431f988a62029329ae3c16",
+          "install": "Performing Streamed Install\nSuccess: streamed 38915065 bytes\nSuccess\n",
+          "package": "takagi.ru.monica.adaptivereleasemain20261119",
+          "uninstall": false,
+          "clearData": false,
+          "passed": true,
+          "oldMasterPassword": true,
+          "oldEditedRecord": true,
+          "newRecord": true,
+          "coldPids": [
+            "6971",
+            "7843"
+          ]
+        },
+        "old": {
+          "edition": "main",
+          "stage": "old",
+          "apkSha256": "f40e677dc91f1d50317e2421c4d6f2fe5cb4675ff5c3a133c8926bcaeeb5c0b9",
+          "install": "Performing Streamed Install\nSuccess: streamed 39077989 bytes\nSuccess\n",
+          "package": "takagi.ru.monica.adaptivereleasemain20261119",
+          "uninstall": false,
+          "clearData": false,
+          "passed": true,
+          "oldMasterPassword": true,
+          "oldEditedRecord": true,
+          "newRecord": true,
+          "coldPids": [
+            "8370",
+            "8871"
+          ]
+        },
+        "again": {
+          "edition": "main",
+          "stage": "again",
+          "apkSha256": "21ec80df6d1684c021e47c6a3721567ad47eec802a431f988a62029329ae3c16",
+          "install": "Performing Streamed Install\nSuccess: streamed 38915065 bytes\nSuccess\n",
+          "package": "takagi.ru.monica.adaptivereleasemain20261119",
+          "uninstall": false,
+          "clearData": false,
+          "passed": true,
+          "oldMasterPassword": true,
+          "oldEditedRecord": true,
+          "newRecord": true,
+          "coldPids": [
+            "9403",
+            "9821"
+          ]
+        }
+      },
+      "backupRestore": {
+        "passed": true,
+        "source": "schema85-main-from86.enc.zip",
+        "encryptedV1": true,
+        "passwordVerified": true,
+        "restoredCount": 1,
+        "oldUsername": "synthetic-main",
+        "oldRecordRead": true,
+        "newRecordPreserved": true,
+        "coldRestart": true,
+        "menuNoTimeline": true,
+        "softDeletedSyntheticOldBeforeRestore": true,
+        "backupOptionsNoTimeline": true,
+        "realRecycleBinRestoreAlsoPassed": true
+      }
+    },
+    "fd": {
+      "debugFullBuildSeconds": 782.0287454128265,
+      "jvmTests": 165,
+      "devicePassingUniqueMethods": 58,
+      "releaseBuildSeconds": 628.3442695140839,
+      "releaseSha256": "406e2dcf1f373b7f18f0df7a8bbbf89ae919de6ce9e4646f49fffc06d98666fc",
+      "releaseSignatureSha256": "6e1c4c795d062b74c28c3d4fa13833a71deef19f6501e917ee6b3df60797a4b0",
+      "releaseStages": {
+        "new": {
+          "edition": "fd",
+          "stage": "new",
+          "apkSha256": "406e2dcf1f373b7f18f0df7a8bbbf89ae919de6ce9e4646f49fffc06d98666fc",
+          "install": "Performing Streamed Install\nSuccess: streamed 36482473 bytes\nSuccess\n",
+          "package": "takagi.ru.monica.adaptivereleasefd20261119",
+          "uninstall": false,
+          "clearData": false,
+          "passed": true,
+          "oldMasterPassword": true,
+          "oldEditedRecord": true,
+          "newRecord": true,
+          "coldPids": [
+            "13876",
+            "14688"
+          ]
+        },
+        "old": {
+          "edition": "fd",
+          "stage": "old",
+          "apkSha256": "0a565bcf9f4a8142b439086a40e5ca440cdfcf4bebb0d70684e665831a3d2009",
+          "install": "Performing Streamed Install\nSuccess: streamed 36629105 bytes\nSuccess\n",
+          "package": "takagi.ru.monica.adaptivereleasefd20261119",
+          "uninstall": false,
+          "clearData": false,
+          "passed": true,
+          "oldMasterPassword": true,
+          "oldEditedRecord": true,
+          "newRecord": true,
+          "coldPids": [
+            "15199",
+            "15700"
+          ]
+        },
+        "again": {
+          "edition": "fd",
+          "stage": "again",
+          "apkSha256": "406e2dcf1f373b7f18f0df7a8bbbf89ae919de6ce9e4646f49fffc06d98666fc",
+          "install": "Performing Streamed Install\nSuccess: streamed 36482473 bytes\nSuccess\n",
+          "package": "takagi.ru.monica.adaptivereleasefd20261119",
+          "uninstall": false,
+          "clearData": false,
+          "passed": true,
+          "oldMasterPassword": true,
+          "oldEditedRecord": true,
+          "newRecord": true,
+          "coldPids": [
+            "16209",
+            "16624"
+          ]
+        }
+      },
+      "backupRestore": {
+        "passed": true,
+        "source": "schema85-fd-from86.enc.zip",
+        "encryptedV1": true,
+        "passwordVerified": true,
+        "restoredCount": 1,
+        "softDeletedSyntheticOldBeforeRestore": true,
+        "oldUsername": "synthetic-fd",
+        "oldRecordRead": true,
+        "newRecordPreserved": true,
+        "coldRestart": true,
+        "menuNoTimeline": true,
+        "backupOptionsNoTimeline": true
+      }
+    }
+  },
+  "cleanup": {
+    "removedSyntheticPackages": {
+      "takagi.ru.monica.timelineremoval20261120.test": "Success",
+      "takagi.ru.monica.timelineremoval20261120": "Success",
+      "takagi.ru.monica.timelineremovalfd20261120.test": "Success",
+      "takagi.ru.monica.timelineremovalfd20261120": "Success",
+      "takagi.ru.monica.adaptivereleasemain20261119": "Success",
+      "takagi.ru.monica.adaptivereleasefd20261119": "Success"
+    },
+    "removedSyntheticBackupFiles": [
+      "/sdcard/Documents/schema85-main-from86.enc.zip",
+      "/sdcard/Documents/schema85-fd-from86.enc.zip"
+    ],
+    "usersUnchanged": true,
+    "unrelatedPackagesPreserved": true,
+    "preexistingMuMuStillRunning": true,
+    "currentUser": "0",
+    "unrelatedPackageAdditions": []
+  },
+  "limitations": [
+    "MuMu API35 x86_64 with synthetic data; no user phone or user vault was accessed.",
+    "Old85 APK is pre-timeline development329, not official328; generated schema identity separately checked against old APK DEX.",
+    "Release build is actually R8-minified and nondebuggable, signed by isolated test certificate for same-signature upgrades.",
+    "Initial compilation/fixture and historical source-text guard failures are retained; selected final JVM suite excludes documented historical failures.",
+    "User must install the bridge85 build and open/unlock it before reverse migration can be removed."
+  ],
+  "status": "complete",
+  "committed": false,
+  "published": false
+}

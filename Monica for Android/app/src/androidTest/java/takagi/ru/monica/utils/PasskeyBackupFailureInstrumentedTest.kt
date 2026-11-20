@@ -23,7 +23,7 @@ class PasskeyBackupFailureInstrumentedTest {
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
     private val preferences = BackupPreferences(includePasswords = true, includeAuthenticators = false,
         includeDocuments = false, includeBankCards = false, includePasskeys = true, includeGeneratorHistory = false,
-        includeImages = false, includeNotes = false, includeTimeline = false, includeTrash = false,
+        includeImages = false, includeNotes = false, includeTrash = false,
         includeTrashAndHistory = false, includeWebDavConfig = false, includeLocalKeePass = false)
 
     @Test fun encryptedBackupIdentifiesUnavailableAndDeviceBoundKeysWithoutLosingHealthyKeys() = runBlocking {

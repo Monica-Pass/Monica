@@ -116,7 +116,7 @@ class VaultProjectCardTest {
                             localKeePassViewModel = keepass, mdbxViewModel = mdbx, settingsViewModel = settingsModel, state = state,
                             onOpenPassword = { detailId = it }, onOpenTotp = {}, onOpenBankCard = {}, onOpenDocument = {},
                             onOpenBillingAddress = {}, onOpenNote = {}, onOpenPasskey = {}, onOpenMdbxCommitHistory = {},
-                            onOpenHistory = {}, onOpenTrashPage = {}, onOpenArchivePage = {}, onOpenCommonAccountTemplates = {},
+                            onOpenTrashPage = {}, onOpenArchivePage = {}, onOpenCommonAccountTemplates = {},
                             appSettings = appSettings, securityManager = security, biometricEnabled = false,
                             modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background))
                     }

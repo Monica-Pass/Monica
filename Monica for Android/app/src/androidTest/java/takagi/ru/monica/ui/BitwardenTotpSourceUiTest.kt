@@ -62,7 +62,7 @@ class BitwardenTotpSourceUiTest {
                             AppSettings(biometricEnabled = false, disablePasswordVerification = true,
                                 iconCardsEnabled = false, validatorVibrationEnabled = false),
                             onAuthenticatorLayoutModeChange = {}, onTotpClick = {}, onDeleteTotp = {},
-                            onQuickScanTotp = {}, onScanFidoQr = {},
+                            onQuickScanTotp = {},
                             onSelectionModeChange = { _, _, _, _, _, _ -> })
                     }
                 }

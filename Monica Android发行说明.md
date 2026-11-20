@@ -4,7 +4,11 @@
 
 ## 中文
 
-- 时间线新增「变更／可恢复／同步」视图、密码库与日期筛选、分页和字段差异。纯本地多密码保存按操作记录；支持预览并恢复有完整校验的旧字段，拒绝覆盖后续修改，恢复形成新记录。旧日志继续可读，敏感值默认隐藏，过期或缺失材料不开放恢复。
+- 验证器页面合并验证器与通行密钥扫码入口，按协议自动分流；相册使用相同规则。拒绝不支持的二维码，识别到多个有效码时提示只对准一个；扫描框移除灰色外边框和内部填色，仅保留绿色四角。通行密钥交由支持 FIDO 扫码的系统组件处理。
+
+- 修复折叠屏适配后普通手机横屏退回整页单列的问题：可用宽度足够时，密码、卡包等页面恢复列表与详情双列，不再受窗口高度限制；窄屏和铰链避让保留。
+
+- 移除时间线页面、操作记录及备份选项，保留回收站和密码历史。数据库保持版本 85；已安装未发布 86 的开发版本可通过保留数据迁移回到 85，原有业务表和加密数据不重建。
 
 - 折叠屏与大屏布局按当前窗口切换：中等宽度使用侧边导航，宽屏列表与详情分栏；缩回窄屏保留正在查看和编辑的内容。登录、设置和独立内容页限制阅读宽度，矮窗口与大字号可滚动，避开系统报告的分隔铰链。
 
@@ -24,7 +28,11 @@
 
 ## English
 
-- Timeline adds Changes, Recoverable and Sync views, vault/date filters, paging and field differences. Local multi-password saves are recorded as operations. Preview and restore verified previous fields without overwriting later edits; recovery creates a new event. Legacy logs remain readable, values are hidden by default, and expired or missing material cannot be restored.
+- Unify authenticator and passkey scanning in the authenticator page, with protocol-based routing for camera and gallery. Reject unsupported codes and ask for one code when multiple valid results are detected. The scanner uses four green corners without a grey border or inner fill. Passkey requests are handed to a compatible system FIDO handler.
+
+- Fix phone landscape falling back to a stretched single list after the foldable update. Password, wallet and other list/detail pages keep two panes when the usable width allows, regardless of window height; narrow-window and hinge avoidance behavior is retained.
+
+- Remove the activity timeline, event recording and its backup option; keep the recycle bin and password history. Keep database schema 85, with a non-destructive migration from unreleased schema-86 development installs. Existing business tables and encrypted data are retained.
 
 - Foldable and large-screen layouts follow the current window: medium windows use a navigation rail, expanded windows show list and detail panes, and shrinking keeps the current item and draft. Login, settings and standalone content use readable widths, short windows and large text scroll, and content avoids reported separating hinges.
 

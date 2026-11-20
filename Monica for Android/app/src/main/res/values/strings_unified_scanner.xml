@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_credentials_hint">Scan an authenticator or passkey QR code</string>
+    <string name="qr_credentials_invalid">This is not a supported authenticator or passkey QR code</string>
+    <string name="qr_multiple_codes">Multiple QR codes detected. Point at just one code.</string>
+</resources>

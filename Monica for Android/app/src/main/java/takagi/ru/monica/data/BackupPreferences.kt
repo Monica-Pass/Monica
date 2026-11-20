@@ -13,7 +13,6 @@ data class BackupPreferences(
     val includeGeneratorHistory: Boolean = true,   // 保留用于向后兼容
     val includeImages: Boolean = true,
     val includeNotes: Boolean = true,
-    val includeTimeline: Boolean = true,           // 保留用于向后兼容
     val includeTrash: Boolean = true,              // 保留用于向后兼容
     val includeTrashAndHistory: Boolean = true,    // ✅ 新增：回收站与历史（合并项）
     val includeWebDavConfig: Boolean = false,      // Monica 配置（旧字段名，默认关闭，需手动开启）
@@ -54,10 +53,6 @@ data class BackupPreferences(
      */
     fun shouldIncludeGeneratorHistory(): Boolean = includeTrashAndHistory || includeGeneratorHistory
     
-    /**
-     * 获取实际的操作历史开关值（兼容旧逻辑）
-     */
-    fun shouldIncludeTimeline(): Boolean = includeTrashAndHistory || includeTimeline
     
     /**
      * 获取实际的回收站开关值（兼容旧逻辑）

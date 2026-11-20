@@ -1,11 +1,27 @@
 package takagi.ru.monica.ui.vaultv2
 
+import takagi.ru.monica.ui.screens.NativeTokenFilterChip
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.material.icons.filled.Archive
+import androidx.compose.material.icons.filled.DashboardCustomize
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
+import androidx.compose.runtime.setValue
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.conflate
+import kotlinx.serialization.json.Json
+import takagi.ru.monica.ui.components.UnifiedCategoryFilterChipMenuDropdown
+import takagi.ru.monica.ui.components.UnifiedCategoryFilterChipMenuOffset
+
 import takagi.ru.monica.ui.password.*
 
 import takagi.ru.monica.utils.AppLocaleStringResolver
 
 import takagi.ru.monica.ui.screens.NativeTokenListUi
-import takagi.ru.monica.ui.screens.NativeTokenFilterChip
 import takagi.ru.monica.ui.screens.rememberNativeTokenList
 
 
@@ -21,11 +37,9 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.stopScroll
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -49,17 +63,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.automirrored.filled.ArrowRight
-import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.Badge
 import androidx.compose.material.icons.filled.CreditCard
-import androidx.compose.material.icons.filled.DashboardCustomize
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Folder
-import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.VpnKey
@@ -77,15 +86,12 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -110,16 +116,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.json.Json
 import takagi.ru.monica.R
 import takagi.ru.monica.ui.screens.key
 import takagi.ru.monica.ui.screens.toTrashScopeFilter
@@ -163,8 +166,6 @@ import takagi.ru.monica.ui.PasswordListCategoryChipMenu
 import takagi.ru.monica.ui.passwordPageContentTypeSetSaver
 import takagi.ru.monica.ui.buildCategoryMenuQuickFilterBindings
 import takagi.ru.monica.ui.components.UnifiedCategoryFilterBottomSheet
-import takagi.ru.monica.ui.components.UnifiedCategoryFilterChipMenuDropdown
-import takagi.ru.monica.ui.components.UnifiedCategoryFilterChipMenuOffset
 import takagi.ru.monica.ui.components.UnifiedCategoryFilterSelection
 import takagi.ru.monica.ui.components.ExpressiveLazyListScrollbar
 import takagi.ru.monica.ui.components.GroupedItemDefaults
@@ -1571,7 +1572,6 @@ fun VaultV2Pane(
 	onOpenPasskey: (Long) -> Unit,
 	onOpenApiTokens: (Long?, String?) -> Unit = { _, _ -> },
 	onOpenMdbxCommitHistory: (Long) -> Unit,
-	onOpenHistory: () -> Unit,
 	onOpenTrashPage: () -> Unit,
 	onOpenScopedTrashPage: ((String) -> Unit)? = null,
 	onOpenArchivePage: () -> Unit,
@@ -1588,30 +1588,19 @@ fun VaultV2Pane(
 	modifier: Modifier = Modifier,
 ) {
 	// 内嵌历史/回收站页面状态（不切换底部 tab）
-	// 0 = 无, 1 = 时间线, 2 = 回收站
+	// 0 = closed, 2 = recycle bin (retain saved-state value).
 	val showOverview = appSettings.vaultOverviewEnabled && !state.overviewListOpen && !state.isArchiveView
 	val overviewListState = rememberLazyListState(state.overviewScrollIndex, state.overviewScrollOffset)
 	var vaultHistoryPageMode by rememberSaveable { mutableStateOf(0) }
 	var vaultHistoryTrashScope by rememberSaveable { mutableStateOf<String?>(null) }
-	val timelineViewModel: takagi.ru.monica.viewmodel.TimelineViewModel? = null
-	BackHandler(enabled = vaultHistoryPageMode != 0) {
+	BackHandler(enabled = vaultHistoryPageMode == 2) {
 		vaultHistoryPageMode = 0
 	}
 
-	// 历史/回收站页面优先渲染，覆盖整个 VaultV2Pane
-	if (useEmbeddedHistoryPages && vaultHistoryPageMode != 0) {
-		takagi.ru.monica.ui.screens.TimelineScreen(
-            onMdbxHistory = onOpenMdbxCommitHistory,
-			viewModel = timelineViewModel,
-			onLogSelected = {},
-			splitPaneMode = false,
-			initialTab = if (vaultHistoryPageMode == 2) {
-				takagi.ru.monica.ui.screens.HistoryTab.TRASH
-			} else {
-				takagi.ru.monica.ui.screens.HistoryTab.TIMELINE
-			},
+	// Recycle bin uses the entire pane; retired timeline saved-state value 1 is ignored.
+	if (useEmbeddedHistoryPages && vaultHistoryPageMode == 2) {
+		takagi.ru.monica.ui.screens.TrashScreen(
 			initialTrashScopeKey = vaultHistoryTrashScope,
-			enableTabSwitch = false,
 			showBackButton = true,
 			onNavigateBack = { vaultHistoryPageMode = 0 }
 		)
@@ -1619,11 +1608,7 @@ fun VaultV2Pane(
 	}
 
 	// 覆盖外部传入的导航回调，改为在 VaultV2 内部处理
-	val handleOpenHistory: () -> Unit = if (useEmbeddedHistoryPages) {
-		{ vaultHistoryPageMode = 1 }
-	} else {
-		onOpenHistory
-	}
+
 	val handleOpenTrashPage: () -> Unit = if (useEmbeddedHistoryPages) {
 		{
 			vaultHistoryTrashScope = state.toUnifiedCategoryFilterSelection().toTrashScopeFilter().key
@@ -3809,7 +3794,6 @@ fun VaultV2Pane(
 								onShowDisplayOptions = {},
 								onOpenCommonAccountTemplates = onOpenCommonAccountTemplates,
 								onScanFidoQr = onScanFidoQr,
-								onOpenHistory = handleOpenHistory,
 								onOpenTrash = handleOpenTrashPage,
 								onOpenArchive = handleOpenArchivePage,
 								showDisplayOptionsEntry = false,

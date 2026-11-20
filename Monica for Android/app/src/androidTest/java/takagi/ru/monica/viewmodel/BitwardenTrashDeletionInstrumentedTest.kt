@@ -30,6 +30,7 @@ import takagi.ru.monica.data.PasswordEntry
 import takagi.ru.monica.data.SecureItem
 import takagi.ru.monica.data.bitwarden.BitwardenVault
 import takagi.ru.monica.utils.SettingsManager
+import takagi.ru.monica.security.SessionManager
 
 /** Real recycle-bin ViewModel -> repository -> HTTP -> local Room deletion, using synthetic data. */
 @RunWith(AndroidJUnit4::class)
@@ -115,7 +116,10 @@ class BitwardenTrashDeletionInstrumentedTest {
         expired: Boolean = false,
         block: suspend Fixture.() -> Unit,
     ) {
-        MockWebServer().use { server ->
+        assertTrue(takagi.ru.monica.security.SecureStorageStartup.prepareForEntry(context) is takagi.ru.monica.security.SecureStartupResult.Ready)
+        val previouslyUnlocked = SessionManager.isUnlocked.value
+        SessionManager.markUnlocked()
+        try { MockWebServer().use { server ->
             val fixture = Fixture(server)
             try {
                 fixture.initialize(unlocked, expired)
@@ -123,6 +127,8 @@ class BitwardenTrashDeletionInstrumentedTest {
             } finally {
                 fixture.close()
             }
+        } } finally {
+            if (previouslyUnlocked) SessionManager.markUnlocked() else SessionManager.markLocked()
         }
     }
 
@@ -147,12 +153,14 @@ class BitwardenTrashDeletionInstrumentedTest {
             vaultId = database.bitwardenVaultDao().insert(BitwardenVault(
                 email = "$prefix@example.invalid", accountKey = prefix,
                 serverUrl = endpoint, identityUrl = endpoint, apiUrl = server.url("/api/").toString(),
+                isLocked = !unlocked, isConnected = true,
                 accessTokenExpiresAt = if (expired) 1L else System.currentTimeMillis() + 3_600_000,
             ))
             if (unlocked) {
                 // Seed only this fixture's auth caches; no real login, account or remote vault is used.
                 cache<SymmetricCryptoKey>("symmetricKeyCache")[vaultId] = key
                 cache<String>("accessTokenCache")[vaultId] = "synthetic-trash-token"
+                cache<Long>("vaultAppGenerations")[vaultId] = SessionManager.lockGeneration.value
             }
             server.dispatcher = object : Dispatcher() {
                 override fun dispatch(request: RecordedRequest): MockResponse {

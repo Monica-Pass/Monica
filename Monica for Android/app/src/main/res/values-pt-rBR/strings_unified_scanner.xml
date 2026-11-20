@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_credentials_hint">Escaneie um código QR de autenticação ou chave de acesso</string>
+    <string name="qr_credentials_invalid">Este código QR de autenticação ou chave de acesso não é compatível</string>
+    <string name="qr_multiple_codes">Vários códigos QR detectados. Aponte para apenas um.</string>
+</resources>

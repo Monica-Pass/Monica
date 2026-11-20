@@ -3265,7 +3265,7 @@ class PasswordViewModel internal constructor(
     fun addPasswordEntry(entry: PasswordEntry, onResult: (Long) -> Unit = {}) {
         addPasswordEntryWithResult(
             entry = entry,
-            includeDetailedLog = true
+
         ) { id ->
             if (id != null) {
                 onResult(id)
@@ -3275,7 +3275,7 @@ class PasswordViewModel internal constructor(
 
     fun addPasswordEntryWithResult(
         entry: PasswordEntry,
-        includeDetailedLog: Boolean = true,
+
         skipCategoryBinding: Boolean = false,
         passwordAlreadyEncrypted: Boolean = false,
         onResult: (Long?) -> Unit = {}
@@ -3284,7 +3284,7 @@ class PasswordViewModel internal constructor(
             val id = withContext(Dispatchers.IO) {
                 createPasswordEntryInternal(
                     entry = entry,
-                    includeDetailedLog = includeDetailedLog,
+
                     skipCategoryBinding = skipCategoryBinding,
                     passwordAlreadyEncrypted = passwordAlreadyEncrypted
                 )
@@ -3295,7 +3295,7 @@ class PasswordViewModel internal constructor(
 
     private suspend fun createPasswordEntryInternal(
         entry: PasswordEntry,
-        includeDetailedLog: Boolean,
+
         skipCategoryBinding: Boolean = false,
         passwordAlreadyEncrypted: Boolean = false,
         customFieldsOverride: List<CustomFieldDraft>? = null
@@ -3369,27 +3369,7 @@ class PasswordViewModel internal constructor(
             }
         }
 
-        if (includeDetailedLog) {
-            val createDetails = mutableListOf<takagi.ru.monica.utils.FieldChange>()
-            if (normalizedBoundEntry.username.isNotBlank()) {
-                createDetails.add(takagi.ru.monica.utils.FieldChange("用户名", "", normalizedBoundEntry.username))
-            }
-            if (normalizedBoundEntry.website.isNotBlank()) {
-                createDetails.add(takagi.ru.monica.utils.FieldChange("网站", "", normalizedBoundEntry.website))
-            }
-            if (normalizedBoundEntry.password.isNotBlank()) {
-                createDetails.add(takagi.ru.monica.utils.FieldChange("密码", "", "<redacted>"))
-            }
-            if (normalizedBoundEntry.notes.isNotBlank()) {
-                createDetails.add(takagi.ru.monica.utils.FieldChange("备注", "", "<redacted>"))
-            }
-            takagi.ru.monica.utils.OperationLogger.logCreate(
-                itemType = takagi.ru.monica.data.OperationLogItemType.PASSWORD,
-                itemId = id,
-                itemTitle = normalizedBoundEntry.title,
-                details = createDetails
-            )
-        }
+
         return id
     }
 
@@ -3400,7 +3380,7 @@ class PasswordViewModel internal constructor(
         requireTransferableOriginalReferences(entry)
         val newId = createPasswordEntryInternal(
             entry = buildMonicaLocalCopy(entry, categoryId),
-            includeDetailedLog = false,
+
             skipCategoryBinding = true,
             // 源条目的 password 已经是 Monica SecurityManager 加密过的密文，直接复用
             passwordAlreadyEncrypted = !takagi.ru.monica.keepass.KeePassMonicaPasswordStore.isUiId(entry.id)
@@ -3432,7 +3412,7 @@ class PasswordViewModel internal constructor(
             entries.forEach { source ->
                 check(store.get(source.id) == source) { "KeePass selection changed; reload before moving" }
                 val fields = store.fields(source.id).map(CustomFieldDraft::fromCustomField)
-                val id = createPasswordEntryInternal(target(source).copy(id = 0L), false,
+                val id = createPasswordEntryInternal(target(source).copy(id = 0L),
                     skipCategoryBinding = true, passwordAlreadyEncrypted = false, customFieldsOverride = fields)
                     ?: error("Destination password could not be saved; source retained")
                 created += id
@@ -3693,42 +3673,6 @@ class PasswordViewModel internal constructor(
             }
         }
         
-        // 记录更新操作
-        val changes = takagi.ru.monica.utils.OperationLogger.compareAndGetChanges(
-            old = oldEntry,
-            new = entryToUpdate,
-            fields = listOf(
-                "标题" to { it.title },
-                "用户名" to { it.username },
-                "网站" to { it.website },
-                "备注" to { it.notes }
-            )
-        )
-
-        // 原始值只交给加密版本快照；OperationLogger 写入审计日志前仍会脱敏。
-        if (oldEntry != null && oldPassword != newPassword) {
-            val updatedChanges = changes.toMutableList()
-            updatedChanges.add(
-                takagi.ru.monica.utils.FieldChange(
-                    fieldName = "密码",
-                    oldValue = oldPassword,
-                    newValue = newPassword
-                )
-            )
-            takagi.ru.monica.utils.OperationLogger.logUpdate(
-                itemType = takagi.ru.monica.data.OperationLogItemType.PASSWORD,
-                itemId = entryToUpdate.id,
-                itemTitle = entryToUpdate.title,
-                changes = updatedChanges
-            )
-            return true
-        }
-        takagi.ru.monica.utils.OperationLogger.logUpdate(
-            itemType = takagi.ru.monica.data.OperationLogItemType.PASSWORD,
-            itemId = entryToUpdate.id,
-            itemTitle = entryToUpdate.title,
-            changes = changes
-        )
         return true
     }
 
@@ -3929,12 +3873,7 @@ class PasswordViewModel internal constructor(
         )
         repository.updatePasswordEntry(tombstone)
         repository.deleteArchiveSyncMeta(entry.id)
-        takagi.ru.monica.utils.OperationLogger.logDelete(
-            itemType = takagi.ru.monica.data.OperationLogItemType.PASSWORD,
-            itemId = entry.id,
-            itemTitle = entry.title,
-            detail = "移入回收站（待同步删除）"
-        )
+
         Log.i("PasswordViewModel", "Delete queued as tombstone: id=${entry.id}")
         return true
     }
@@ -3957,23 +3896,14 @@ class PasswordViewModel internal constructor(
             repository.updatePasswordEntries(softDeletedEntries)
             repository.deleteArchiveSyncMeta(originalEntries.map { it.id })
             originalEntries.forEach { entry ->
-                takagi.ru.monica.utils.OperationLogger.logDelete(
-                    itemType = takagi.ru.monica.data.OperationLogItemType.PASSWORD,
-                    itemId = entry.id,
-                    itemTitle = entry.title,
-                    detail = "移入回收站"
-                )
+
                 Log.i("PasswordViewModel", "Delete moved to trash: id=${entry.id}")
             }
         } else {
             repository.deletePasswordEntries(originalEntries)
             repository.deleteArchiveSyncMeta(originalEntries.map { it.id })
             originalEntries.forEach { entry ->
-                takagi.ru.monica.utils.OperationLogger.logDelete(
-                    itemType = takagi.ru.monica.data.OperationLogItemType.PASSWORD,
-                    itemId = entry.id,
-                    itemTitle = entry.title
-                )
+
                 Log.i("PasswordViewModel", "Delete permanently removed: id=${entry.id}")
             }
         }
@@ -3991,12 +3921,7 @@ class PasswordViewModel internal constructor(
         )
         repository.updatePasswordEntry(softDeletedEntry)
         repository.deleteArchiveSyncMeta(entry.id)
-        takagi.ru.monica.utils.OperationLogger.logDelete(
-            itemType = takagi.ru.monica.data.OperationLogItemType.PASSWORD,
-            itemId = entry.id,
-            itemTitle = entry.title,
-            detail = "移入回收站"
-        )
+
         Log.i("PasswordViewModel", "Delete moved to trash: id=${entry.id}")
     }
 
@@ -4012,11 +3937,7 @@ class PasswordViewModel internal constructor(
     private suspend fun permanentlyDeleteEntryLocalOnly(entry: PasswordEntry) {
         repository.deletePasswordEntry(entry)
         repository.deleteArchiveSyncMeta(entry.id)
-        takagi.ru.monica.utils.OperationLogger.logDelete(
-            itemType = takagi.ru.monica.data.OperationLogItemType.PASSWORD,
-            itemId = entry.id,
-            itemTitle = entry.title
-        )
+
         Log.i("PasswordViewModel", "Delete permanently removed: id=${entry.id}")
     }
     
@@ -4617,16 +4538,7 @@ class PasswordViewModel internal constructor(
         return runCatching {
             val createdIds = secureRepository.insertItems(prepared.map { it.second })
             check(createdIds.size == prepared.size) { "MDBX secure item copy returned an incomplete ID list" }
-            prepared.zip(createdIds).forEach { (pair, createdId) ->
-                val source = pair.first
-                source.itemType.toOperationLogItemTypeOrNull()?.let { operationType ->
-                    takagi.ru.monica.utils.OperationLogger.logCreate(
-                        itemType = operationType,
-                        itemId = createdId,
-                        itemTitle = source.title
-                    )
-                }
-            }
+
             MdbxSecureItemBatchResult(
                 successCount = prepared.size,
                 failedCount = items.size - prepared.size,
@@ -4746,16 +4658,6 @@ class PasswordViewModel internal constructor(
         ItemType.BILLING_ADDRESS -> BitwardenPendingOperation.ITEM_TYPE_BILLING_ADDRESS
         ItemType.PAYMENT_ACCOUNT -> BitwardenPendingOperation.ITEM_TYPE_PAYMENT_ACCOUNT
         ItemType.NOTE -> BitwardenPendingOperation.ITEM_TYPE_NOTE
-    }
-
-    private fun ItemType.toOperationLogItemTypeOrNull(): takagi.ru.monica.data.OperationLogItemType? = when (this) {
-        ItemType.PASSWORD -> null
-        ItemType.TOTP -> takagi.ru.monica.data.OperationLogItemType.TOTP
-        ItemType.BANK_CARD -> takagi.ru.monica.data.OperationLogItemType.BANK_CARD
-        ItemType.DOCUMENT -> takagi.ru.monica.data.OperationLogItemType.DOCUMENT
-        ItemType.BILLING_ADDRESS -> takagi.ru.monica.data.OperationLogItemType.BILLING_ADDRESS
-        ItemType.PAYMENT_ACCOUNT -> takagi.ru.monica.data.OperationLogItemType.PAYMENT_ACCOUNT
-        ItemType.NOTE -> takagi.ru.monica.data.OperationLogItemType.NOTE
     }
 
     suspend fun copyBoundTotpsForPasswordCopies(idPairs: List<Pair<Long, Long>>): Int {
@@ -5696,7 +5598,7 @@ class PasswordViewModel internal constructor(
                         val initialFields = deferred?.initialFields(rowFields, emptyList()) ?: rowFields
                         val newId = createPasswordEntryInternal(entry.copy(id = 0,
                             replicaGroupId = entry.replicaGroupId.takeIf { entry.mdbxDatabaseId == null }),
-                            includeDetailedLog = false, skipCategoryBinding = true, customFieldsOverride = initialFields)
+                            skipCategoryBinding = true, customFieldsOverride = initialFields)
                             ?: error("Credential row create failed")
                         // Track immediately, including failures while publishing fields or copying assets.
                         created += newId
@@ -6003,7 +5905,7 @@ class PasswordViewModel internal constructor(
                     val entryCustomFields = if (index == 0) customFields else emptyList()
                     val newId = createPasswordEntryInternal(
                         entry = newEntry,
-                        includeDetailedLog = false,
+
                         skipCategoryBinding = skipCategoryBinding,
                         customFieldsOverride = entryCustomFields
                     )

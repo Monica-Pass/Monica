@@ -53,7 +53,6 @@ class Mdbx2BackupInstrumentedTest {
                 includeGeneratorHistory = false,
                 includeImages = false,
                 includeNotes = true,
-                includeTimeline = false,
                 includeTrash = false,
                 includeTrashAndHistory = false,
                 includeWebDavConfig = false,

@@ -1,5 +1,6 @@
 package takagi.ru.monica.viewmodel
 
+
 import takagi.ru.monica.utils.StringResolver
 
 import takagi.ru.monica.R
@@ -14,7 +15,6 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import takagi.ru.monica.data.LocalKeePassDatabaseDao
-import takagi.ru.monica.data.OperationLogItemType
 import takagi.ru.monica.data.PasskeyEntry
 import takagi.ru.monica.keepass.KeePassPasskeyDeleteExecutor
 import takagi.ru.monica.keepass.KeePassPasskeyUpdateExecutor
@@ -31,8 +31,6 @@ import takagi.ru.monica.sync.SyncRequest
 import takagi.ru.monica.sync.SyncTarget
 import takagi.ru.monica.sync.SyncTaskRunner
 import takagi.ru.monica.sync.SyncTrigger
-import takagi.ru.monica.utils.FieldChange
-import takagi.ru.monica.utils.OperationLogger
 import takagi.ru.monica.utils.SavedCategoryFilterState
 import takagi.ru.monica.utils.SettingsManager
 
@@ -246,9 +244,9 @@ class PasskeyViewModel internal constructor(
                 }
                 repository.savePasskey(passkey)
                 if (existing == null) {
-                    logPasskeyCreate(passkey)
+
                 } else {
-                    logPasskeyUpdate(existing, passkey)
+
                 }
             } catch (e: Exception) {
                 _errorMessage.value = strings.get(R.string.entry_message_passkey_save_failed, e.message.orEmpty())
@@ -270,7 +268,7 @@ class PasskeyViewModel internal constructor(
             keepassPasskeyUpdateExecutor.update(
                 existing = copy.copy(keepassDatabaseId = null), updated = copy,
                 persistUpdate = { repository.copyPasskey(it) }
-            ).onSuccess { logPasskeyCreate(it) }
+            ).onSuccess {  }
         } catch (error: Exception) {
             if (error is kotlinx.coroutines.CancellationException) throw error
             Result.failure(error)
@@ -291,7 +289,7 @@ class PasskeyViewModel internal constructor(
                 persistUpdate = repository::updatePasskey
             )
             result.onSuccess { updatedPasskey ->
-                logPasskeyUpdate(existing, updatedPasskey)
+
             }
             result
         } catch (e: Exception) {
@@ -325,7 +323,7 @@ class PasskeyViewModel internal constructor(
                     return@launch
                 }
                 repository.updateBoundPasswordId(recordId, passwordId)
-                logPasskeyUpdate(existing, existing.copy(boundPasswordId = passwordId))
+
             } catch (e: Exception) {
                 _errorMessage.value = strings.get(R.string.entry_message_passkey_binding_failed, e.message.orEmpty())
             }
@@ -356,7 +354,7 @@ class PasskeyViewModel internal constructor(
                 deleteLocal = repository::deletePasskeyLocalOnly
             )
             if (result.isSuccess) {
-                logPasskeyDelete(passkey)
+
             }
             result
         } catch (e: Exception) {
@@ -513,73 +511,6 @@ class PasskeyViewModel internal constructor(
 
     private suspend fun hasKeePassDatabase(databaseId: Long): Boolean {
         return localKeePassDatabaseDao?.getDatabaseById(databaseId) != null
-    }
-
-    private fun logPasskeyCreate(passkey: PasskeyEntry) {
-        val details = listOf(
-            FieldChange(fieldName = "RpId", oldValue = "", newValue = passkey.rpId),
-            FieldChange(fieldName = "Username", oldValue = "", newValue = passkey.userName)
-        ).filter { it.newValue.isNotBlank() }
-
-        OperationLogger.logCreate(
-            itemType = OperationLogItemType.PASSKEY,
-            itemId = passkeyTimelineItemId(passkey),
-            itemTitle = passkeyTimelineTitle(passkey),
-            details = details
-        )
-    }
-
-    private fun logPasskeyUpdate(oldPasskey: PasskeyEntry, newPasskey: PasskeyEntry) {
-        val changes = mutableListOf<FieldChange>()
-
-        fun addChange(fieldName: String, oldValue: String, newValue: String) {
-            if (oldValue != newValue) {
-                changes += FieldChange(fieldName = fieldName, oldValue = oldValue, newValue = newValue)
-            }
-        }
-
-        addChange("RpName", oldPasskey.rpName, newPasskey.rpName)
-        addChange("RpId", oldPasskey.rpId, newPasskey.rpId)
-        addChange("Username", oldPasskey.userName, newPasskey.userName)
-        addChange("DisplayName", oldPasskey.userDisplayName, newPasskey.userDisplayName)
-        addChange(
-            "BoundPasswordId",
-            oldPasskey.boundPasswordId?.toString().orEmpty(),
-            newPasskey.boundPasswordId?.toString().orEmpty()
-        )
-        addChange(
-            "CategoryId",
-            oldPasskey.categoryId?.toString().orEmpty(),
-            newPasskey.categoryId?.toString().orEmpty()
-        )
-        addChange("SyncStatus", oldPasskey.syncStatus, newPasskey.syncStatus)
-
-        if (changes.isEmpty()) return
-
-        OperationLogger.logUpdate(
-            itemType = OperationLogItemType.PASSKEY,
-            itemId = passkeyTimelineItemId(newPasskey),
-            itemTitle = passkeyTimelineTitle(newPasskey),
-            changes = changes
-        )
-    }
-
-    private fun logPasskeyDelete(passkey: PasskeyEntry) {
-        OperationLogger.logDelete(
-            itemType = OperationLogItemType.PASSKEY,
-            itemId = passkeyTimelineItemId(passkey),
-            itemTitle = passkeyTimelineTitle(passkey)
-        )
-    }
-
-    private fun passkeyTimelineItemId(passkey: PasskeyEntry): Long {
-        return passkey.id.takeIf { it > 0L } ?: passkey.credentialId.hashCode().toLong()
-    }
-
-    private fun passkeyTimelineTitle(passkey: PasskeyEntry): String {
-        return passkey.rpName.ifBlank {
-            passkey.rpId.ifBlank { "Passkey" }
-        }
     }
 
     private companion object {

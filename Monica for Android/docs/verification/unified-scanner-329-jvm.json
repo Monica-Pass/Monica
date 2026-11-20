@@ -1,0 +1,65 @@
+[
+  {
+    "name": "takagi.ru.monica.ui.scanner.FidoQrCodeTest",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "takagi.ru.monica.ui.scanner.QrScanHealthPolicyTest",
+    "tests": 9,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "takagi.ru.monica.ui.scanner.ScanCandidateSelectionTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "takagi.ru.monica.util.TotpDataResolverTest",
+    "tests": 8,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "takagi.ru.monica.util.TotpImportTitleTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "takagi.ru.monica.util.TotpMigrationBatchPlannerTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "takagi.ru.monica.util.TotpMigrationRoutingGuardTest",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "takagi.ru.monica.util.TotpUnreadableDataTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "takagi.ru.monica.util.TotpUriParserMigrationTest",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  }
+]

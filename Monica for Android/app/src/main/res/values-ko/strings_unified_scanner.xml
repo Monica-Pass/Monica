@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_credentials_hint">인증 앱 또는 패스키 QR 코드 스캔</string>
+    <string name="qr_credentials_invalid">지원되는 인증 앱 또는 패스키 QR 코드가 아닙니다</string>
+    <string name="qr_multiple_codes">QR 코드가 여러 개 감지되었습니다. 하나만 비춰 주세요.</string>
+</resources>

@@ -43,7 +43,6 @@ class LocalCredentialCreateAtomicityTest {
         previouslyUnlocked = SessionManager.isUnlocked.value
         SessionManager.markUnlocked()
         db = Room.inMemoryDatabaseBuilder(context, PasswordDatabase::class.java).build()
-        db.timelineJournal.configure(context)
         val passwords = db.passwordEntryDao()
         val passwordDao = object : PasswordEntryDao by passwords {
             override suspend fun insertPasswordEntry(entry: PasswordEntry): Long {
@@ -65,7 +64,7 @@ class LocalCredentialCreateAtomicityTest {
                 if (fieldWrites == failFieldWrite && failAfterFields) throw IOException("Synthetic failure after field write")
             }
         }
-        model = PasswordViewModel(PasswordRepository(passwordDao, categoryDao = db.categoryDao()), security,
+        model = PasswordViewModel(PasswordRepository(passwordDao, categoryDao = db.categoryDao(), passwordHistoryDao = db.passwordHistoryDao()), security,
             customFieldRepository = CustomFieldRepository(fieldDao), strings = AppLocaleStringResolver(context))
     }
 
@@ -93,21 +92,19 @@ class LocalCredentialCreateAtomicityTest {
     private fun groups() = List(2) { ProjectCredentialGroup.Group(username = "same-user",
         passwords = listOf(ProjectCredentialGroup.Password(value = "same-secret"))) }
 
-    @Test fun realEditorSaveGroupsThreePasswordsAndRecoveryKeepsProjectIdentity() = runBlocking {
+    @Test fun realEditorSaveKeepsProjectIdentityAndPasswordHistoryWithoutTimeline() = runBlocking {
         val oldSecrets = listOf("old-one", "old-two", "old-three")
         assertNotNull(save(passwords = oldSecrets))
         val original = rows().sortedBy { it.id }
-        fun sameProject() = original.map { it.id to it.passwordProjectKey() }
-        val eventsBefore = db.timelineDao().page("ALL", "", 0, Long.MAX_VALUE, Long.MAX_VALUE, "~", 0, 100)
-        assertEquals(1, eventsBefore.size)
-        assertNotNull(save(passwords = listOf("new-one", "new-two", "new-three"), ids = original.map { it.id }))
-        val eventsAfter = db.timelineDao().page("ALL", "", 0, Long.MAX_VALUE, Long.MAX_VALUE, "~", 0, 100)
-        val edit = eventsAfter.single { it.id != eventsBefore.single().id }
-        assertEquals(3, db.timelineJournal.read(edit).changes.size)
-        assertTrue("The actual editor edit must offer field recovery", edit.recoveryCandidate)
-        db.timelineJournal.confirm(db.timelineJournal.preview(edit.id))
-        assertEquals(oldSecrets, rows().sortedBy { it.id }.map { security.decryptData(it.password) })
-        assertEquals(sameProject(), rows().sortedBy { it.id }.map { it.id to it.passwordProjectKey() })
+        val identities = original.map { it.id to it.passwordProjectKey() }
+        val newSecrets = listOf("new-one", "new-two", "new-three")
+        assertNotNull(save(passwords = newSecrets, ids = original.map { it.id }))
+        assertEquals(newSecrets, rows().sortedBy { it.id }.map { security.decryptData(it.password) })
+        assertEquals(identities, rows().sortedBy { it.id }.map { it.id to it.passwordProjectKey() })
+        original.forEachIndexed { index, row ->
+            assertTrue(db.passwordHistoryDao().getHistoryByEntryIdSync(row.id).any { security.decryptData(it.password) == oldSecrets[index] })
+        }
+        assertEquals(0, db.operationLogDao().getLogCount())
     }
 
     @Test fun failedGroupedFieldsLeaveNoRowsAndRetryCreatesOneProject() = runBlocking {

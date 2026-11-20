@@ -1,23 +1,43 @@
 package takagi.ru.monica.ui.screens
 
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.snap
+import androidx.compose.animation.core.spring
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.unit.DpOffset
+import takagi.ru.monica.data.bitwarden.BitwardenVault
+import takagi.ru.monica.ui.cardwallet.toBillingAddressWalletListItem
+import takagi.ru.monica.ui.cardwallet.toBankCardWalletListItem
+import takagi.ru.monica.ui.cardwallet.toDocumentWalletListItem
+import takagi.ru.monica.ui.components.CreateCategoryDialog
+import takagi.ru.monica.ui.components.CreateDialogTarget
+import takagi.ru.monica.ui.PasswordListCategoryChipMenuBottomActions
+import takagi.ru.monica.ui.components.PullActionVisualState
+import takagi.ru.monica.security.SecurityManager
+import takagi.ru.monica.utils.planLocalCategoryMove
+
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -39,22 +59,16 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.snap
-import androidx.compose.animation.core.spring
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.produceState
@@ -62,22 +76,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.saveable.listSaver
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.gestures.stopScroll
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import kotlinx.coroutines.delay
@@ -115,7 +125,6 @@ import takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog
 import takagi.ru.monica.ui.cardwallet.toggleWalletSelectionGroup
 import takagi.ru.monica.data.isKeePassOwned
 import takagi.ru.monica.data.isLocalOnlyItem
-import takagi.ru.monica.data.bitwarden.BitwardenVault
 import takagi.ru.monica.data.model.StorageTarget
 import takagi.ru.monica.repository.KeePassCompatibilityBridge
 import takagi.ru.monica.repository.KeePassWorkspaceRepository
@@ -128,24 +137,17 @@ import takagi.ru.monica.ui.cardwallet.bitwardenVaultIdForWalletSync
 import takagi.ru.monica.ui.cardwallet.isBitwardenWalletScope
 import takagi.ru.monica.ui.cardwallet.mergeVisibleWalletOrder
 import takagi.ru.monica.ui.cardwallet.orderItemsByIds
-import takagi.ru.monica.ui.cardwallet.toBillingAddressWalletListItem
-import takagi.ru.monica.ui.cardwallet.toBankCardWalletListItem
-import takagi.ru.monica.ui.cardwallet.toDocumentWalletListItem
 import takagi.ru.monica.ui.components.BankCardCard
 import takagi.ru.monica.ui.components.BillingAddressCard
-import takagi.ru.monica.ui.components.CreateCategoryDialog
-import takagi.ru.monica.ui.components.CreateDialogTarget
 import takagi.ru.monica.ui.components.DocumentCard
 import takagi.ru.monica.ui.components.EmptyState
 import takagi.ru.monica.ui.components.ExpressiveTopBar
 import takagi.ru.monica.ui.components.LoadingIndicator
 import takagi.ru.monica.ui.components.M3IdentityVerifyDialog
 import takagi.ru.monica.ui.components.MonicaItemCardShape
-import takagi.ru.monica.ui.PasswordListCategoryChipMenuBottomActions
 import takagi.ru.monica.ui.category.CategoryManagementTrailingContent
 import takagi.ru.monica.ui.category.CategoryManagementCreateDialog
 import takagi.ru.monica.ui.category.rememberCategoryManagementState
-import takagi.ru.monica.ui.components.PullActionVisualState
 import takagi.ru.monica.ui.common.state.InitialListRenderState
 import takagi.ru.monica.ui.common.state.resolveMergedListRenderState
 import takagi.ru.monica.ui.components.UnifiedCategoryFilterChipMenu
@@ -159,7 +161,6 @@ import takagi.ru.monica.ui.components.UnifiedMoveToCategoryBottomSheet
 import takagi.ru.monica.ui.components.toUnifiedMoveInitialSource
 import takagi.ru.monica.ui.gestures.SwipeActions
 import takagi.ru.monica.ui.password.PasswordTopActionsDropdownMenu
-import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.sync.SyncDiagnostics
 import takagi.ru.monica.sync.SyncItemKind
 import takagi.ru.monica.sync.SyncMode
@@ -171,7 +172,6 @@ import takagi.ru.monica.sync.SyncTrigger
 import takagi.ru.monica.utils.BiometricHelper
 import takagi.ru.monica.utils.KeePassGroupInfo
 import takagi.ru.monica.utils.decodeKeePassPathForDisplay
-import takagi.ru.monica.utils.planLocalCategoryMove
 import takagi.ru.monica.utils.SavedCategoryFilterState
 import takagi.ru.monica.utils.SettingsManager
 import takagi.ru.monica.viewmodel.BankCardViewModel
@@ -863,7 +863,7 @@ fun CardWalletScreen(
     }
 
     if (showHistoryPage) {
-        TimelineScreen(
+        TrashScreen(
             showBackButton = true,
             onNavigateBack = { showHistoryPage = false }
         )
@@ -1079,7 +1079,7 @@ fun CardWalletScreen(
                                 )
                             }
                             DropdownMenuItem(
-                                text = { Text(stringResource(R.string.timeline_and_trash_title)) },
+                                text = { Text(stringResource(R.string.timeline_trash_title)) },
                                 leadingIcon = { Icon(Icons.Default.History, contentDescription = null) },
                                 onClick = {
                                     showTopActionsMenu = false

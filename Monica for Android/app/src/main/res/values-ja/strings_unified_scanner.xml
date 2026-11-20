@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_credentials_hint">認証アプリまたはパスキーの QR コードをスキャン</string>
+    <string name="qr_credentials_invalid">対応する認証アプリまたはパスキーの QR コードではありません</string>
+    <string name="qr_multiple_codes">複数の QR コードを検出しました。1 つだけを映してください。</string>
+</resources>

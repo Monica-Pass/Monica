@@ -1,5 +1,10 @@
 package takagi.ru.monica.viewmodel
 
+import takagi.ru.monica.attachments.model.AttachmentSource
+import takagi.ru.monica.data.model.CardType
+import takagi.ru.monica.data.model.CardFaceAttachment
+import takagi.ru.monica.utils.KeePassKdbxService
+
 import takagi.ru.monica.utils.StringResolver
 
 import takagi.ru.monica.R
@@ -24,13 +29,11 @@ import takagi.ru.monica.attachments.CardFaceAttachmentManager
 import takagi.ru.monica.attachments.AttachmentContainer
 import takagi.ru.monica.attachments.facade.AttachmentFacade
 import takagi.ru.monica.attachments.model.AttachmentOwner
-import takagi.ru.monica.attachments.model.AttachmentSource
 import takagi.ru.monica.bitwarden.SecureItemBitwardenTransitionResolver
 import takagi.ru.monica.bitwarden.repository.BitwardenRepository
 import takagi.ru.monica.data.ItemType
 import takagi.ru.monica.data.LocalKeePassDatabaseDao
 import takagi.ru.monica.data.SecureItem
-import takagi.ru.monica.data.OperationLogItemType
 import takagi.ru.monica.data.SecureItemOwnership
 import takagi.ru.monica.data.asMonicaLocalCopy
 import takagi.ru.monica.data.hasOwnershipConflict
@@ -42,8 +45,6 @@ import takagi.ru.monica.repository.KeePassWorkspaceRepository
 import takagi.ru.monica.repository.SecureItemRepository
 import takagi.ru.monica.data.model.BankCardData
 import takagi.ru.monica.data.model.CardWalletDataCodec
-import takagi.ru.monica.data.model.CardType
-import takagi.ru.monica.data.model.CardFaceAttachment
 import takagi.ru.monica.data.model.CardFaceConfig
 import takagi.ru.monica.data.model.StorageTarget
 import takagi.ru.monica.data.model.storageScopeKey
@@ -57,9 +58,6 @@ import takagi.ru.monica.sync.SyncRequest
 import takagi.ru.monica.sync.SyncTarget
 import takagi.ru.monica.sync.SyncTaskRunner
 import takagi.ru.monica.sync.SyncTrigger
-import takagi.ru.monica.utils.OperationLogger
-import takagi.ru.monica.utils.FieldChange
-import takagi.ru.monica.utils.KeePassKdbxService
 import java.util.Date
 import java.util.UUID
 
@@ -428,12 +426,7 @@ class BankCardViewModel internal constructor(
             rollbackItem = repository::deleteItemById
         ) ?: throw IllegalStateException("Secure item could not be saved")
 
-        // 记录创建操作
-        OperationLogger.logCreate(
-            itemType = OperationLogItemType.BANK_CARD,
-            itemId = newId,
-            itemTitle = title
-        )
+
         onCreated(newId)
         requestBitwardenMutationSync(bitwardenVaultId)
         newId
@@ -463,42 +456,6 @@ class BankCardViewModel internal constructor(
                 targetDatabaseId = keepassDatabaseId,
                 requestedGroupPath = keepassGroupPath
             )
-            val oldCardData = parseCardData(existingItem.itemData) ?: emptyBankCardData()
-            val changes = mutableListOf<FieldChange>()
-            fun addChange(fieldName: String, oldValue: Any?, newValue: Any?) {
-                val oldText = oldValue?.toString().orEmpty()
-                val newText = newValue?.toString().orEmpty()
-                if (oldText != newText) {
-                    changes.add(FieldChange(fieldName, oldText, newText))
-                }
-            }
-
-            addChange("标题", existingItem.title, title)
-            addChange("备注", existingItem.notes, notes)
-            addChange("卡号", oldCardData.cardNumber, cardData.cardNumber)
-            addChange("持卡人", oldCardData.cardholderName, cardData.cardholderName)
-            addChange("有效期月份", oldCardData.expiryMonth, cardData.expiryMonth)
-            addChange("有效期年份", oldCardData.expiryYear, cardData.expiryYear)
-            addChange("CVV", oldCardData.cvv, cardData.cvv)
-            addChange("银行", oldCardData.bankName, cardData.bankName)
-            addChange("开户行", oldCardData.bankBranch, cardData.bankBranch)
-            addChange("卡类型", oldCardData.cardType, cardData.cardType)
-            addChange("账单地址", oldCardData.billingAddress, cardData.billingAddress)
-            addChange("卡组织", oldCardData.brand, cardData.brand)
-            addChange("卡片昵称", oldCardData.nickname, cardData.nickname)
-            addChange("起始月份", oldCardData.validFromMonth, cardData.validFromMonth)
-            addChange("起始年份", oldCardData.validFromYear, cardData.validFromYear)
-            addChange("PIN", oldCardData.pin, cardData.pin)
-            addChange("IBAN", oldCardData.iban, cardData.iban)
-            addChange("SWIFT/BIC", oldCardData.swiftBic, cardData.swiftBic)
-            addChange("路由号码", oldCardData.routingNumber, cardData.routingNumber)
-            addChange("账户号码", oldCardData.accountNumber, cardData.accountNumber)
-            addChange("分行代码", oldCardData.branchCode, cardData.branchCode)
-            addChange("币种", oldCardData.currency, cardData.currency)
-            addChange("客服电话", oldCardData.customerServicePhone, cardData.customerServicePhone)
-            addChange("自定义字段", oldCardData.customFields, cardData.customFields)
-            addChange("自定义卡面", oldCardData.cardFace, cardData.cardFace)
-
             val updatedItem = existingItem.copy(
                 title = title,
                 itemData = encodeCardDataForLocalStorage(cardData),
@@ -569,32 +526,7 @@ class BankCardViewModel internal constructor(
                 throw IllegalStateException("Secure item could not be saved")
             }
 
-            // 记录更新操作 - 始终记录，即使没有检测到字段变更
-            OperationLogger.logUpdate(
-                itemType = OperationLogItemType.BANK_CARD,
-                itemId = id,
-                itemTitle = title,
-                changes = if (changes.isEmpty()) {
-                    listOf(
-                        FieldChange(
-                            "更新",
-                            "编辑于",
-                            java.text.SimpleDateFormat("HH:mm").format(java.util.Date())
-                        )
-                    )
-                } else {
-                    changes
-                },
-                snapshotChanges = if (changes.isEmpty()) {
-                    emptyList()
-                } else {
-                    changes + FieldChange(
-                        takagi.ru.monica.data.TIMELINE_SNAPSHOT_FIELD_ITEM_DATA,
-                        existingItem.itemData,
-                        finalUpdatedItem.itemData
-                    )
-                }
-            )
+
             requestBitwardenMutationSync(bitwardenVaultId)
             id
         } ?: throw IllegalStateException("Secure item no longer exists")
@@ -1072,12 +1004,7 @@ class BankCardViewModel internal constructor(
                         bitwardenLocalModified = true
                     )
                     repository.updateItem(softDeletedItem)
-                    OperationLogger.logDelete(
-                        itemType = OperationLogItemType.BANK_CARD,
-                        itemId = id,
-                        itemTitle = item.title,
-                        detail = "移入回收站（待同步删除）"
-                    )
+
                     return@launch
                 }
 
@@ -1085,12 +1012,7 @@ class BankCardViewModel internal constructor(
                     // 软删除：移动到回收站
                     repository.softDeleteItem(item)
                     // 记录移入回收站操作
-                    OperationLogger.logDelete(
-                        itemType = OperationLogItemType.BANK_CARD,
-                        itemId = id,
-                        itemTitle = item.title,
-                        detail = "移入回收站"
-                    )
+
 
                     if (!isBitwardenCipher && item.keepassDatabaseId != null) {
                         viewModelScope.launch keepassDeleteSync@{
@@ -1105,11 +1027,7 @@ class BankCardViewModel internal constructor(
                     }
                 } else {
                     // 永久删除
-                    OperationLogger.logDelete(
-                        itemType = OperationLogItemType.BANK_CARD,
-                        itemId = id,
-                        itemTitle = item.title
-                    )
+
                     repository.deleteItem(item)
                 }
             }

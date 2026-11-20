@@ -1,5 +1,7 @@
 package takagi.ru.monica.viewmodel
 
+import takagi.ru.monica.utils.KeePassKdbxService
+
 import takagi.ru.monica.utils.StringResolver
 
 import takagi.ru.monica.R
@@ -24,7 +26,6 @@ import takagi.ru.monica.data.ItemType
 import takagi.ru.monica.data.LocalKeePassDatabaseDao
 import takagi.ru.monica.data.SecureItem
 import takagi.ru.monica.data.model.SecureCustomField
-import takagi.ru.monica.data.OperationLogItemType
 import takagi.ru.monica.data.SecureItemOwnership
 import takagi.ru.monica.data.asMonicaLocalCopy
 import takagi.ru.monica.data.hasOwnershipConflict
@@ -55,9 +56,6 @@ import takagi.ru.monica.sync.SyncTarget
 import takagi.ru.monica.sync.SyncTaskRunner
 import takagi.ru.monica.sync.SyncTrigger
 import takagi.ru.monica.util.ImageManager
-import takagi.ru.monica.utils.OperationLogger
-import takagi.ru.monica.utils.FieldChange
-import takagi.ru.monica.utils.KeePassKdbxService
 import java.util.Date
 import java.util.UUID
 
@@ -435,12 +433,7 @@ class NoteViewModel internal constructor(
             ) ?: return@launch
             requestBitwardenMutationSync(bitwardenVaultId)
             
-            // 记录创建操作
-            OperationLogger.logCreate(
-                itemType = OperationLogItemType.NOTE,
-                itemId = newId,
-                itemTitle = resolvedTitle
-            )
+
             onCreated(newId)
         }
     }
@@ -539,51 +532,6 @@ class NoteViewModel internal constructor(
                 .orEmpty()
             cleanupUnreferencedNoteImagesInternal(removedImageIds)
             
-            // 记录更新操作 - 始终记录，即使没有检测到字段变更
-            val changes = mutableListOf<FieldChange>()
-            existingItem?.let { oldItem ->
-                val oldContent = NoteContentCodec.decodeFromItem(oldItem).content
-                if (oldContent != content) {
-                    changes.add(FieldChange("内容", oldContent, content))
-                }
-                // 检测标题变化
-                if (oldItem.title != resolvedTitle) {
-                    changes.add(FieldChange("标题", oldItem.title, resolvedTitle))
-                }
-            }
-            // 即使没有变更也记录更新操作，以便追踪编辑行为
-            OperationLogger.logUpdate(
-                itemType = OperationLogItemType.NOTE,
-                itemId = id,
-                itemTitle = resolvedTitle,
-                changes = if (changes.isEmpty()) {
-                    listOf(
-                        FieldChange(
-                            "更新",
-                            "编辑于",
-                            java.text.SimpleDateFormat("HH:mm").format(Date())
-                        )
-                    )
-                } else {
-                    changes
-                },
-                snapshotChanges = if (changes.isEmpty() || existingItem == null) {
-                    emptyList()
-                } else {
-                    changes + listOf(
-                        FieldChange(
-                            takagi.ru.monica.data.TIMELINE_SNAPSHOT_FIELD_ITEM_DATA,
-                            existingItem.itemData,
-                            item.itemData
-                        ),
-                        FieldChange(
-                            takagi.ru.monica.data.TIMELINE_SNAPSHOT_FIELD_NOTES,
-                            existingItem.notes,
-                            item.notes
-                        )
-                    )
-                }
-            )
         }
     }
 
@@ -1137,12 +1085,7 @@ class NoteViewModel internal constructor(
                         bitwardenLocalModified = true
                     )
                 )
-                OperationLogger.logDelete(
-                    itemType = OperationLogItemType.NOTE,
-                    itemId = item.id,
-                    itemTitle = item.title,
-                    detail = "移入回收站（待同步删除）"
-                )
+
                 return@launch
             }
 
@@ -1151,12 +1094,7 @@ class NoteViewModel internal constructor(
                 passwordRepository?.clearBoundNoteReferences(item.id)
                 repository.softDeleteItem(item)
                 // 记录移入回收站操作
-                OperationLogger.logDelete(
-                    itemType = OperationLogItemType.NOTE,
-                    itemId = item.id,
-                    itemTitle = item.title,
-                    detail = "移入回收站"
-                )
+
 
                 if (!isBitwardenCipher && item.keepassDatabaseId != null) {
                     viewModelScope.launch keepassDeleteSync@{
@@ -1172,11 +1110,7 @@ class NoteViewModel internal constructor(
             } else {
                 // 永久删除
                 passwordRepository?.clearBoundNoteReferences(item.id)
-                OperationLogger.logDelete(
-                    itemType = OperationLogItemType.NOTE,
-                    itemId = item.id,
-                    itemTitle = item.title
-                )
+
                 repository.deleteItem(item)
                 cleanupUnreferencedNoteImagesInternal(extractImageRefs(item))
             }
@@ -1222,12 +1156,7 @@ class NoteViewModel internal constructor(
                             bitwardenLocalModified = true
                         )
                     )
-                    OperationLogger.logDelete(
-                        itemType = OperationLogItemType.NOTE,
-                        itemId = item.id,
-                        itemTitle = item.title,
-                        detail = "移入回收站（待同步删除）"
-                    )
+
                     return@forEach
                 }
 
@@ -1235,12 +1164,7 @@ class NoteViewModel internal constructor(
                     // 软删除：移动到回收站
                     passwordRepository?.clearBoundNoteReferences(item.id)
                     repository.softDeleteItem(item)
-                    OperationLogger.logDelete(
-                        itemType = OperationLogItemType.NOTE,
-                        itemId = item.id,
-                        itemTitle = item.title,
-                        detail = "移入回收站"
-                    )
+
 
                     if (!isBitwardenCipher && item.keepassDatabaseId != null) {
                         viewModelScope.launch keepassDeleteSync@{
@@ -1256,11 +1180,7 @@ class NoteViewModel internal constructor(
                 } else {
                     // 永久删除
                     passwordRepository?.clearBoundNoteReferences(item.id)
-                    OperationLogger.logDelete(
-                        itemType = OperationLogItemType.NOTE,
-                        itemId = item.id,
-                        itemTitle = item.title
-                    )
+
                     repository.deleteItem(item)
                     cleanupUnreferencedNoteImagesInternal(extractImageRefs(item))
                 }

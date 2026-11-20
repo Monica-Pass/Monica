@@ -1,0 +1,93 @@
+[
+  {
+    "name": "takagi.ru.monica.data.TimelineSnapshotIntegrationGuardTest",
+    "tests": "5",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.data.TimelineSnapshotPolicyTest",
+    "tests": "4",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.localization.TimelineDatePatternTest",
+    "tests": "2",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.localization.TimelineTextPresentationTest",
+    "tests": "4",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.sync.BitwardenCipherDeletionTest",
+    "tests": "2",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.timeline.TimelinePolicyTest",
+    "tests": "3",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.ui.components.ExpressiveTopBarCursorRegressionTest",
+    "tests": "3",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.ui.components.ExpressiveTopBarKeyboardRegressionGuardTest",
+    "tests": "1",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.ui.password.GeneratorFrequentValuesTest",
+    "tests": "1",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.ui.screens.TimelineSafetyPolicyTest",
+    "tests": "5",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.ui.screens.TrashScopeTest",
+    "tests": "3",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.utils.LocalNoteBackupSelectionTest",
+    "tests": "1",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "takagi.ru.monica.viewmodel.TrashSafetyPolicyTest",
+    "tests": "2",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0"
+  }
+]

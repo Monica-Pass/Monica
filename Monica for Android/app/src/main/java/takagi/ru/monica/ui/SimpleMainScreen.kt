@@ -1,5 +1,7 @@
 package takagi.ru.monica.ui
 
+import androidx.compose.ui.text.font.FontWeight
+
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
@@ -37,7 +39,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.compose.runtime.collectAsState
@@ -56,7 +57,6 @@ import takagi.ru.monica.data.BottomNavContentTab
 import takagi.ru.monica.data.PasskeyEntry
 import takagi.ru.monica.data.PasswordQuickAccessManager
 import takagi.ru.monica.data.model.PasskeyBindingCodec
-import takagi.ru.monica.data.model.TimelineEvent
 import takagi.ru.monica.passkey.managementKey
 import takagi.ru.monica.viewmodel.PasswordViewModel
 import takagi.ru.monica.viewmodel.SettingsViewModel
@@ -68,11 +68,9 @@ import takagi.ru.monica.viewmodel.GeneratorViewModel
 import takagi.ru.monica.viewmodel.GeneratorType
 import takagi.ru.monica.viewmodel.NoteViewModel
 import takagi.ru.monica.viewmodel.PasskeyViewModel
-import takagi.ru.monica.viewmodel.TimelineViewModel
 import takagi.ru.monica.viewmodel.BillingAddressViewModel
 import takagi.ru.monica.ui.screens.CardWalletTab
-import takagi.ru.monica.ui.screens.HistoryTab
-import takagi.ru.monica.ui.screens.TimelineScreen
+import takagi.ru.monica.ui.screens.TrashScreen
 import takagi.ru.monica.steam.ui.SteamScreen
 
 import takagi.ru.monica.ui.components.ExpressiveTopBar
@@ -331,7 +329,6 @@ private data class MainScreenHandlers(
     val sendOpen: (BitwardenSend) -> Unit,
     val sendAddOpen: () -> Unit,
     val inlineSendEditorBack: () -> Unit,
-    val timelineLogOpen: (TimelineEvent.StandardLog) -> Unit
 )
 
 // Keep this file as orchestration layer: state wiring + tab routing + pane transitions.
@@ -532,49 +529,6 @@ private tailrec fun Context.findActivity(): Activity? = when (this) {
     else -> null
 }
 
-@Composable
-private fun TimelineDetailPane(
-    selectedLog: TimelineEvent.StandardLog,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(24.dp)
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        Text(
-            text = stringResource(R.string.history),
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.SemiBold
-        )
-        Text(
-            text = selectedLog.summary,
-            style = MaterialTheme.typography.titleMedium
-        )
-        Surface(
-            shape = RoundedCornerShape(16.dp),
-            color = MaterialTheme.colorScheme.surfaceContainerHigh
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Text(stringResource(R.string.legacy_ui_log_type, selectedLog.itemType.ifBlank { "-" }))
-                Text(stringResource(R.string.legacy_ui_log_operation, selectedLog.operationType.ifBlank { "-" }))
-                Text(
-                    text = stringResource(R.string.legacy_ui_log_timestamp, selectedLog.timestamp),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-        }
-    }
-}
-
 /**
  * 带有底部导航的主屏幕
  */
@@ -653,7 +607,6 @@ fun SimpleMainScreen(
 ) {
 
     // --- ViewModel wiring and global app-level state ---
-    val timelineViewModel: TimelineViewModel? = null
 
     // 双击返回退出相关状态
     var backPressedOnce by remember { mutableStateOf(false) }
@@ -891,7 +844,6 @@ fun SimpleMainScreen(
     var selectedPasskey by remember { mutableStateOf<PasskeyEntry?>(null) }
     var vaultV2DetailKind by rememberSaveable { mutableStateOf<VaultV2DetailKind?>(null) }
     var pendingPasskeyDelete by remember { mutableStateOf<PasskeyEntry?>(null) }
-    var selectedTimelineLog by remember { mutableStateOf<TimelineEvent.StandardLog?>(null) }
     val sendState by bitwardenViewModel.sendState.collectAsState()
     val activeBitwardenVault by bitwardenViewModel.activeVault.collectAsState()
     val bitwardenSyncStatusByVault by bitwardenViewModel.syncStatusByVault.collectAsState()
@@ -1128,10 +1080,7 @@ fun SimpleMainScreen(
     val passwordNewItemDefaults = remember(newItemFilter, currentTab) {
         defaultsFromPasswordFilter(newItemFilter).copy(explicit = currentTab == BottomNavItem.VaultV2)
     }
-    val openHistoryPage: () -> Unit = {
-        passwordHistoryInitialTrashScopeKey = null
-        passwordHistoryPageMode = PasswordHistoryPageMode.TIMELINE
-    }
+
     val openTrashPage: () -> Unit = {
         passwordHistoryInitialTrashScopeKey = newItemFilter.toTrashScopeFilter().key
         passwordHistoryPageMode = PasswordHistoryPageMode.TRASH
@@ -1226,8 +1175,7 @@ fun SimpleMainScreen(
 
 
     val adaptivePolicy = takagi.ru.monica.ui.common.layout.adaptivePanePolicy(
-        takagi.ru.monica.ui.common.layout.adaptiveWindowWidth().value.toInt(),
-        takagi.ru.monica.ui.common.layout.adaptiveWindowHeight().value.toInt())
+        takagi.ru.monica.ui.common.layout.adaptiveWindowWidth().value.toInt())
     val useNavigationRail = adaptivePolicy.navigationRail
     val isCompactWidth = !adaptivePolicy.twoPanes
     val wideListPaneWidth = adaptivePolicy.listWidth.dp
@@ -1544,11 +1492,7 @@ fun SimpleMainScreen(
         val handleInlineSendEditorBack: () -> Unit = {
             closeInlineSendEditor()
         }
-        val handleTimelineLogOpen: (TimelineEvent.StandardLog) -> Unit = { log ->
-            if (!isCompactWidth) {
-                selectedTimelineLog = log
-            }
-        }
+
 
         return MainScreenHandlers(
             passwordAddOpen = handlePasswordAddOpen,
@@ -1579,7 +1523,6 @@ fun SimpleMainScreen(
             sendOpen = handleSendOpen,
             sendAddOpen = handleSendAddOpen,
             inlineSendEditorBack = handleInlineSendEditorBack,
-            timelineLogOpen = handleTimelineLogOpen
         )
     }
 
@@ -1612,7 +1555,6 @@ fun SimpleMainScreen(
     val handleSendOpen = handlers.sendOpen
     val handleSendAddOpen = handlers.sendAddOpen
     val handleInlineSendEditorBack = handlers.inlineSendEditorBack
-    val handleTimelineLogOpen = handlers.timelineLogOpen
     val handleVaultV2PasskeyOpen: (Long) -> Unit = { passkeyId ->
         recordOverviewOpen { passkeyViewModel.allPasskeys.value.firstOrNull { it.id == passkeyId }?.vaultOverviewKey() }
         if (isCompactWidth) {
@@ -1666,7 +1608,6 @@ fun SimpleMainScreen(
         onResetSendPane = {
             resetSendPaneState()
         },
-        onResetTimelineSelection = { selectedTimelineLog = null }
     )
 
     BackHandler(enabled = isCompactWidth && currentTab == BottomNavItem.Passkey && selectedPasskey != null) {
@@ -1845,18 +1786,12 @@ fun SimpleMainScreen(
     @Composable
     fun RenderVaultV2Tab() {
         if (passwordHistoryPageMode.isVisible) {
-            TimelineScreen(
-                viewModel = timelineViewModel,
-                onLogSelected = handleTimelineLogOpen,
-                splitPaneMode = false,
-                initialTab = passwordHistoryPageMode.tab ?: HistoryTab.TIMELINE,
+            TrashScreen(
                 initialTrashScopeKey = passwordHistoryInitialTrashScopeKey,
-                enableTabSwitch = false,
                 showBackButton = true,
                 onNavigateBack = closeHistoryPage,
                 showReturnFab = false,
                 onTrashSelectionModeChange = onTrashSelectionModeChange ,
-                onMdbxHistory = onNavigateToMdbxCommitHistory
             )
             return
         }
@@ -1891,7 +1826,6 @@ fun SimpleMainScreen(
                     onOpenNote = { handleNoteOpen(it) },
                     onOpenPasskey = handleVaultV2PasskeyOpen,
                     onOpenMdbxCommitHistory = onNavigateToMdbxCommitHistory,
-                    onOpenHistory = openHistoryPage,
                     onOpenTrashPage = openTrashPage,
                     onOpenScopedTrashPage = { scopeKey ->
                         passwordHistoryInitialTrashScopeKey = scopeKey
@@ -2190,7 +2124,6 @@ fun SimpleMainScreen(
                         bitwardenVaults = bitwardenVaults,
                         localKeePassViewModel = localKeePassViewModel,
                         mdbxViewModel = mdbxViewModel,
-                        timelineViewModel = timelineViewModel,
                         groupMode = passwordGroupMode,
                         stackCardMode = stackCardMode,
                         visibleContentTypes = passwordPageVisibleContentTypes,
@@ -2211,7 +2144,6 @@ fun SimpleMainScreen(
                         onNavigateToNoteDetail = onNavigateToNoteDetail,
                         onNavigateToPasskeyDetail = onNavigateToPasskeyDetail,
                         onOpenMdbxCommitHistory = onNavigateToMdbxCommitHistory,
-                        onOpenHistoryPage = openHistoryPage,
                         onOpenTrashPage = openTrashPage,
                         onOpenCommonAccountTemplatesPage = onNavigateToCommonAccountTemplates,
                         onScanFidoQr = onNavigateToFidoQrScan,
@@ -2219,7 +2151,6 @@ fun SimpleMainScreen(
                         passwordHistoryPageMode = passwordHistoryPageMode,
                         passwordHistoryInitialTrashScopeKey = passwordHistoryInitialTrashScopeKey,
                         onTrashSelectionModeChange = onTrashSelectionModeChange,
-                        onTimelineLogSelected = handleTimelineLogOpen,
                         onSelectionModeChange = { isSelectionMode, count, onExit, onSelectAll, onFavorite, onMoveToCategory, onStack, onDelete ->
                             isPasswordSelectionMode = isSelectionMode
                             selectedPasswordCount = count
@@ -2263,7 +2194,6 @@ fun SimpleMainScreen(
                 }
                 BottomNavItem.Authenticator -> {
                     AuthenticatorTabPane(
-                        onScanFidoQr = onNavigateToFidoQrScan,
                         isCompactWidth = isCompactWidth,
                         wideListPaneWidth = wideListPaneWidth,
                         totpViewModel = totpViewModel,
@@ -2807,7 +2737,6 @@ private fun MainScreenTabResetEffects(
     onResetNotePane: () -> Unit,
     onResetPasskeyPane: () -> Unit,
     onResetSendPane: () -> Unit,
-    onResetTimelineSelection: () -> Unit,
 ) {
     // Each effect owns one tab domain reset. Keep them split to avoid hidden coupling.
     LaunchedEffect(currentTab.key) {
@@ -2863,11 +2792,7 @@ private fun MainScreenTabResetEffects(
             onResetSendPane()
         }
     }
-    LaunchedEffect(currentTab.key, passwordHistoryPageMode) {
-        if (currentTab != BottomNavItem.Passwords || !passwordHistoryPageMode.isVisible) {
-            onResetTimelineSelection()
-        }
-    }
+
 
     LaunchedEffect(cardWalletSubTab) {
         if (

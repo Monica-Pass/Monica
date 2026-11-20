@@ -3045,7 +3045,7 @@ class MultiPasswordSaveRegressionGuardTest {
     @Test
     fun trashScopeSelectorUsesUnifiedChipMenuInsteadOfLegacyBottomSheet() {
         val timelineSource = projectFile(
-            "app/src/main/java/takagi/ru/monica/ui/screens/TimelineScreen.kt"
+            "app/src/main/java/takagi/ru/monica/ui/screens/TrashScreen.kt"
         ).readSourceText()
 
         assertFalse(

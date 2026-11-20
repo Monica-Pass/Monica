@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_credentials_hint">Scannez un QR code d’authentification ou de clé d’accès</string>
+    <string name="qr_credentials_invalid">Ce QR code d’authentification ou de clé d’accès n’est pas pris en charge</string>
+    <string name="qr_multiple_codes">Plusieurs QR codes détectés. Visez un seul code.</string>
+</resources>

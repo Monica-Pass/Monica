@@ -1,5 +1,6 @@
 package takagi.ru.monica.bitwarden.service
 
+
 import takagi.ru.monica.R
 import takagi.ru.monica.utils.AppLocaleStringResolver
 import android.content.Context
@@ -22,7 +23,6 @@ import takagi.ru.monica.bitwarden.crypto.BitwardenCrypto.SymmetricCryptoKey
 import takagi.ru.monica.bitwarden.sync.EmptyVaultProtection
 import takagi.ru.monica.data.PasswordDatabase
 import takagi.ru.monica.data.PasswordEntry
-import takagi.ru.monica.data.OperationLogItemType
 import takagi.ru.monica.data.model.LOGIN_TYPE_SSH_KEY
 import takagi.ru.monica.data.model.LOGIN_TYPE_STEAM_MAFILE
 import takagi.ru.monica.data.model.SshKeyData
@@ -30,8 +30,6 @@ import takagi.ru.monica.data.model.SshKeyDataCodec
 import takagi.ru.monica.data.bitwarden.*
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.utils.PasswordWebsiteCodec
-import takagi.ru.monica.utils.FieldChange
-import takagi.ru.monica.utils.OperationLogger
 import takagi.ru.monica.util.TotpDataResolver
 import takagi.ru.monica.steam.data.SteamExternalMaFileContract
 import java.security.MessageDigest
@@ -139,7 +137,7 @@ class BitwardenSyncService(
     }
 
     init {
-        runCatching { OperationLogger.init(context.applicationContext) }
+
         runCatching { BitwardenDiagLogger.initialize(context.applicationContext) }
     }
 
@@ -1558,15 +1556,6 @@ class BitwardenSyncService(
             }
             passwordCustomFieldSyncState.markInitialized(vault.id, cipherId)
 
-            logBitwardenPasswordEditHistory(
-                vaultId = vault.id,
-                cipherId = cipherId,
-                title = entry.title,
-                baselineCipher = baselineCipher,
-                updateRequest = updateRequest,
-                symmetricKey = symmetricKey
-            )
-
             return UploadAttemptResult(success = true)
         } catch (e: Exception) {
             if (e is kotlinx.coroutines.CancellationException) throw e
@@ -1643,163 +1632,6 @@ class BitwardenSyncService(
         }.onFailure { captureError ->
             android.util.Log.w(TAG, "Capture raw exchange failed: ${captureError.message}")
         }
-    }
-
-    private fun logBitwardenPasswordEditHistory(
-        vaultId: Long,
-        cipherId: String,
-        title: String,
-        baselineCipher: CipherApiResponse?,
-        updateRequest: CipherUpdateRequest,
-        symmetricKey: SymmetricCryptoKey
-    ) {
-        val changes = buildPasswordEditHistoryChanges(
-            baselineCipher = baselineCipher,
-            updateRequest = updateRequest,
-            symmetricKey = symmetricKey
-        )
-        if (changes.isEmpty()) return
-
-        OperationLogger.logUpdate(
-            itemType = OperationLogItemType.BITWARDEN_SYNC,
-            itemId = buildBitwardenItemId(vaultId, cipherId),
-            itemTitle = title.ifBlank { "Bitwarden Password Entry" },
-            changes = changes
-        )
-    }
-
-    private fun buildPasswordEditHistoryChanges(
-        baselineCipher: CipherApiResponse?,
-        updateRequest: CipherUpdateRequest,
-        symmetricKey: SymmetricCryptoKey
-    ): List<FieldChange> {
-        val changes = mutableListOf<FieldChange>()
-
-        appendIfChanged(
-            changes = changes,
-            fieldName = "title",
-            oldValue = decryptOrPlain(baselineCipher?.name, symmetricKey),
-            newValue = decryptOrPlain(updateRequest.name, symmetricKey),
-            sensitive = false
-        )
-        appendIfChanged(
-            changes = changes,
-            fieldName = "username",
-            oldValue = decryptOrPlain(baselineCipher?.login?.username, symmetricKey),
-            newValue = decryptOrPlain(updateRequest.login?.username, symmetricKey),
-            sensitive = true
-        )
-        appendIfChanged(
-            changes = changes,
-            fieldName = "password",
-            oldValue = decryptOrPlain(baselineCipher?.login?.password, symmetricKey),
-            newValue = decryptOrPlain(updateRequest.login?.password, symmetricKey),
-            sensitive = true
-        )
-        appendIfChanged(
-            changes = changes,
-            fieldName = "totp",
-            oldValue = decryptOrPlain(baselineCipher?.login?.totp, symmetricKey),
-            newValue = decryptOrPlain(updateRequest.login?.totp, symmetricKey),
-            sensitive = true
-        )
-        appendIfChanged(
-            changes = changes,
-            fieldName = "notes",
-            oldValue = decryptOrPlain(baselineCipher?.notes, symmetricKey),
-            newValue = decryptOrPlain(updateRequest.notes, symmetricKey),
-            sensitive = true
-        )
-
-        val oldUriCount = baselineCipher?.login?.uris?.size ?: 0
-        val newUriCount = updateRequest.login?.uris?.size ?: 0
-        if (oldUriCount != newUriCount) {
-            changes += FieldChange("login_uri_count", oldUriCount.toString(), newUriCount.toString())
-        }
-
-        val oldFavorite = baselineCipher?.favorite ?: false
-        val newFavorite = updateRequest.favorite ?: false
-        if (oldFavorite != newFavorite) {
-            changes += FieldChange("favorite", oldFavorite.toString(), newFavorite.toString())
-        }
-
-        val oldArchived = baselineCipher?.archivedDate.orEmpty().ifBlank { "active" }
-        val newArchived = updateRequest.archivedDate.orEmpty().ifBlank { "active" }
-        if (oldArchived != newArchived) {
-            changes += FieldChange("archived", oldArchived, newArchived)
-        }
-
-        val oldFieldSummary = summarizeFieldCollection(baselineCipher?.fields, symmetricKey)
-        val newFieldSummary = summarizeFieldCollection(updateRequest.fields, symmetricKey)
-        if (oldFieldSummary != newFieldSummary) {
-            changes += FieldChange("custom_fields", oldFieldSummary, newFieldSummary)
-        }
-
-        return changes
-    }
-
-    private fun summarizeFieldCollection(
-        fields: List<CipherFieldApiData>?,
-        symmetricKey: SymmetricCryptoKey
-    ): String {
-        if (fields.isNullOrEmpty()) return "count=0"
-
-        val nameSamples = fields.mapNotNull { field ->
-            decryptOrPlain(field.name, symmetricKey)
-                ?.trim()
-                ?.takeIf { it.isNotBlank() }
-                ?.replace("\n", " ")
-                ?.replace("\r", "")
-                ?.take(24)
-        }.distinct().sorted().take(4)
-
-        val signatures = fields.map { field ->
-            val plainName = decryptOrPlain(field.name, symmetricKey).orEmpty().trim()
-            val plainValue = decryptOrPlain(field.value, symmetricKey)
-            val summarizedValue = summarizeHistoryValue(plainValue, sensitive = true)
-            "${field.type}|${field.linkedId}|$plainName|$summarizedValue"
-        }.sorted()
-
-        val sampleText = nameSamples.joinToString("|").ifBlank { "-" }
-        return "count=${fields.size},names=$sampleText,sha=${shortSha(signatures.joinToString("||"))}"
-    }
-
-    private fun appendIfChanged(
-        changes: MutableList<FieldChange>,
-        fieldName: String,
-        oldValue: String?,
-        newValue: String?,
-        sensitive: Boolean
-    ) {
-        val oldNormalized = oldValue.orEmpty()
-        val newNormalized = newValue.orEmpty()
-        if (oldNormalized == newNormalized) return
-
-        changes += FieldChange(
-            fieldName = fieldName,
-            oldValue = summarizeHistoryValue(oldNormalized, sensitive),
-            newValue = summarizeHistoryValue(newNormalized, sensitive)
-        )
-    }
-
-    private fun summarizeHistoryValue(value: String?, sensitive: Boolean): String {
-        val normalized = value.orEmpty()
-        if (normalized.isBlank()) return "(empty)"
-
-        if (sensitive) {
-            return summarizeSensitiveHistoryValue(normalized)
-        }
-
-        val sanitized = normalized
-            .replace("\n", "\\n")
-            .replace("\r", "")
-        if (sanitized.length <= 180) {
-            return sanitized
-        }
-        val head = sanitized.take(120)
-        val tail = sanitized.takeLast(40)
-        val omitted = (sanitized.length - 160).coerceAtLeast(0)
-        return "$head...(omitted=$omitted)...$tail"
     }
 
     private fun summarizeSensitiveHistoryValue(normalized: String): String {

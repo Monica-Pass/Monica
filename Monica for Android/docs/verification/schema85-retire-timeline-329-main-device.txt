@@ -1,0 +1,2103 @@
+RUN main-schema01
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.Schema85CompatibilityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.data.Schema85CompatibilityTest:
+INSTRUMENTATION_STATUS: test=new85DatabaseHasLegacyIdentityAndDoesNotCreateJournalTables
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.Schema85CompatibilityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=new85DatabaseHasLegacyIdentityAndDoesNotCreateJournalTables
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.Schema85CompatibilityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=futureSchemaIsRejectedWithoutDestructiveFallback
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.Schema85CompatibilityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=futureSchemaIsRejectedWithoutDestructiveFallback
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.Schema85CompatibilityTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=withoutReverseMigration86FailsAndKeepsOriginalDatabase
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.Schema85CompatibilityTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=withoutReverseMigration86FailsAndKeepsOriginalDatabase
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.Schema85CompatibilityTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=permanentDeletePurgesOnlyTheDeletedKindsLegacyMaterial
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.Schema85CompatibilityTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=permanentDeletePurgesOnlyTheDeletedKindsLegacyMaterial
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.Schema85CompatibilityTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedCancelledAndLockedGroupedWritesRemainAtomicWithoutJournal
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.Schema85CompatibilityTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedCancelledAndLockedGroupedWritesRemainAtomicWithoutJournal
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.Schema85CompatibilityTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=malformed86RollsBackVersionAndIdentityWithoutDeletingData
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.Schema85CompatibilityTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=malformed86RollsBackVersionAndIdentityWithoutDeletingData
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.Schema85CompatibilityTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=migration86To85PreservesEveryTableAndLegacy85CanWriteThenReopen
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.data.Schema85CompatibilityTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=7
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=migration86To85PreservesEveryTableAndLegacy85CanWriteThenReopen
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 4.39
+
+OK (7 tests)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN main-atomic01
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest:
+INSTRUMENTATION_STATUS: test=lockingAfterActualInsertRollsBackLocalSave
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockingAfterActualInsertRollsBackLocalSave
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=identicalBatchInputsRemainTwoIndependentProjects
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=identicalBatchInputsRemainTwoIndependentProjects
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=localBatchQueuedBeforeLockCannotInsertAfterLock
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=localBatchQueuedBeforeLockCannotInsertAfterLock
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=localSaveQueuedBeforeLockCannotInsertAfterLock
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=localSaveQueuedBeforeLockCannotInsertAfterLock
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedGroupedFieldsLeaveNoRowsAndRetryCreatesOneProject
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedGroupedFieldsLeaveNoRowsAndRetryCreatesOneProject
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedFirstBatchFieldsLeaveNoRowsAndRetryCreatesOnlyRequestedProjects
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedFirstBatchFieldsLeaveNoRowsAndRetryCreatesOnlyRequestedProjects
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=realEditorSaveKeepsProjectIdentityAndPasswordHistoryWithoutTimeline
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest$realEditorSaveKeepsProjectIdentityAndPasswordHistoryWithoutTimeline$1.invokeSuspend(LocalCredentialCreateAtomicityTest.kt:105)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest.realEditorSaveKeepsProjectIdentityAndPasswordHistoryWithoutTimeline(LocalCredentialCreateAtomicityTest.kt:95)
+
+INSTRUMENTATION_STATUS: stream=
+Error in realEditorSaveKeepsProjectIdentityAndPasswordHistoryWithoutTimeline(takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest):
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest$realEditorSaveKeepsProjectIdentityAndPasswordHistoryWithoutTimeline$1.invokeSuspend(LocalCredentialCreateAtomicityTest.kt:105)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest.realEditorSaveKeepsProjectIdentityAndPasswordHistoryWithoutTimeline(LocalCredentialCreateAtomicityTest.kt:95)
+
+INSTRUMENTATION_STATUS: test=realEditorSaveKeepsProjectIdentityAndPasswordHistoryWithoutTimeline
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=readersSeeOnlyCompleteLocalBatchAndFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=readersSeeOnlyCompleteLocalBatchAndFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedLocalEditPreservesOriginalCiphertextIdsAndUnknownFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedLocalEditPreservesOriginalCiphertextIdsAndUnknownFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cancellationAfterActualInsertRollsBackWithoutSuccessCallback
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cancellationAfterActualInsertRollsBackWithoutSuccessCallback
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failureAfterGroupedFieldsWriteRollsBackRowsAndFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failureAfterGroupedFieldsWriteRollsBackRowsAndFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedSecondLocalFolderRollsBackEarlierDestinationAndRetryCreatesOnlyTwoCopies
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedSecondLocalFolderRollsBackEarlierDestinationAndRetryCreatesOnlyTwoCopies
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedSecondBatchFieldsRollBackEarlierCredentialAndRetryCreatesOnlyRequestedProjects
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedSecondBatchFieldsRollBackEarlierCredentialAndRetryCreatesOnlyRequestedProjects
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=readersSeeOnlyCompleteGroupedPasswordsAndFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=readersSeeOnlyCompleteGroupedPasswordsAndFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=projectCredentialFieldFailureStillRollsBackAllCreatedRows
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=projectCredentialFieldFailureStillRollsBackAllCreatedRows
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=identicalProjectCredentialsKeepOneProjectAndOriginalIdsAcrossEdit
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=identicalProjectCredentialsKeepOneProjectAndOriginalIdsAcrossEdit
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 2.48
+There was 1 failure:
+1) realEditorSaveKeepsProjectIdentityAndPasswordHistoryWithoutTimeline(takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest)
+java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest$realEditorSaveKeepsProjectIdentityAndPasswordHistoryWithoutTimeline$1.invokeSuspend(LocalCredentialCreateAtomicityTest.kt:105)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest.realEditorSaveKeepsProjectIdentityAndPasswordHistoryWithoutTimeline(LocalCredentialCreateAtomicityTest.kt:95)
+
+FAILURES!!!
+Tests run: 16,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN main-atomic02
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest:
+INSTRUMENTATION_STATUS: test=lockingAfterActualInsertRollsBackLocalSave
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockingAfterActualInsertRollsBackLocalSave
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=identicalBatchInputsRemainTwoIndependentProjects
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=identicalBatchInputsRemainTwoIndependentProjects
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=localBatchQueuedBeforeLockCannotInsertAfterLock
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=localBatchQueuedBeforeLockCannotInsertAfterLock
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=localSaveQueuedBeforeLockCannotInsertAfterLock
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=localSaveQueuedBeforeLockCannotInsertAfterLock
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedGroupedFieldsLeaveNoRowsAndRetryCreatesOneProject
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedGroupedFieldsLeaveNoRowsAndRetryCreatesOneProject
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedFirstBatchFieldsLeaveNoRowsAndRetryCreatesOnlyRequestedProjects
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedFirstBatchFieldsLeaveNoRowsAndRetryCreatesOnlyRequestedProjects
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=realEditorSaveKeepsProjectIdentityAndPasswordHistoryWithoutTimeline
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=realEditorSaveKeepsProjectIdentityAndPasswordHistoryWithoutTimeline
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=readersSeeOnlyCompleteLocalBatchAndFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=readersSeeOnlyCompleteLocalBatchAndFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedLocalEditPreservesOriginalCiphertextIdsAndUnknownFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedLocalEditPreservesOriginalCiphertextIdsAndUnknownFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cancellationAfterActualInsertRollsBackWithoutSuccessCallback
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cancellationAfterActualInsertRollsBackWithoutSuccessCallback
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failureAfterGroupedFieldsWriteRollsBackRowsAndFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failureAfterGroupedFieldsWriteRollsBackRowsAndFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedSecondLocalFolderRollsBackEarlierDestinationAndRetryCreatesOnlyTwoCopies
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedSecondLocalFolderRollsBackEarlierDestinationAndRetryCreatesOnlyTwoCopies
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedSecondBatchFieldsRollBackEarlierCredentialAndRetryCreatesOnlyRequestedProjects
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedSecondBatchFieldsRollBackEarlierCredentialAndRetryCreatesOnlyRequestedProjects
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=readersSeeOnlyCompleteGroupedPasswordsAndFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=readersSeeOnlyCompleteGroupedPasswordsAndFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=projectCredentialFieldFailureStillRollsBackAllCreatedRows
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=projectCredentialFieldFailureStillRollsBackAllCreatedRows
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=identicalProjectCredentialsKeepOneProjectAndOriginalIdsAcrossEdit
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=16
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=identicalProjectCredentialsKeepOneProjectAndOriginalIdsAcrossEdit
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 2.12
+
+OK (16 tests)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN main-backup01
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.utils.RetiredFeaturesBackupTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.utils.RetiredFeaturesBackupTest:
+INSTRUMENTATION_STATUS: test=legacyFieldIsIgnoredAndNewBackupsDoNotExportIt
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.utils.RetiredFeaturesBackupTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=legacyFieldIsIgnoredAndNewBackupsDoNotExportIt
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.utils.LocalNoteBackupInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.utils.LocalNoteBackupInstrumentedTest:
+INSTRUMENTATION_STATUS: test=legacyLocalNotesRoundTripInPlainCloudArchive
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.utils.LocalNoteBackupInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=legacyLocalNotesRoundTripInPlainCloudArchive
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.utils.LocalNoteBackupInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=legacyLocalNotesRoundTripInEncryptedCloudArchive
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.utils.LocalNoteBackupInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=legacyLocalNotesRoundTripInEncryptedCloudArchive
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest:
+INSTRUMENTATION_STATUS: test=androidProviderMatchesAllPythonVectorsAndReadsBothFormats
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=androidProviderMatchesAllPythonVectorsAndReadsBothFormats
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=manualZipAndSharedCloudArchiveHonorExplicitFormatAndPersistCloudChoice
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=manualZipAndSharedCloudArchiveHonorExplicitFormatAndPersistCloudChoice
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=fileApiPreservesDestinationOnWrongPasswordCorruptionAndUnknownVersion
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=fileApiPreservesDestinationOnWrongPasswordCorruptionAndUnknownVersion
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unversionedConfigurationStringsRemainCompatibleWith100000Iterations
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.PortableBackupFormatInstrumentedTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unversionedConfigurationStringsRemainCompatibleWith100000Iterations
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest:
+INSTRUMENTATION_STATUS: test=configOptInKeepsSelectedDatabaseRecordsSeparate
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=configOptInKeepsSelectedDatabaseRecordsSeparate
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=encryptedConnectionBackupRestoresBitwardenLockedWithoutWebDavSetup
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=encryptedConnectionBackupRestoresBitwardenLockedWithoutWebDavSetup
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=encryptedConfigOnlyRoundTripHonorsKeepAndRestoreChoices
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=encryptedConfigOnlyRoundTripHonorsKeepAndRestoreChoices
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=webDavCredentialsRestoreOnlyWithOptInAndNeverReplaceExistingConnection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=webDavCredentialsRestoreOnlyWithOptInAndNeverReplaceExistingConnection
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=configOptInRequiresEncryptionAndDefaultArchiveHasNoSettings
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.ZipConfigurationBackupTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=12
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=configOptInRequiresEncryptionAndDefaultArchiveHasNoSettings
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 54.739
+
+OK (12 tests)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN main-trash01
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.TrashNavigationTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.TrashNavigationTest:
+INSTRUMENTATION_STATUS: test=trashKeepsItsDatabaseScopeBeforeDatabaseMetadataArrives
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.TrashNavigationTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=trashKeepsItsDatabaseScopeBeforeDatabaseMetadataArrives
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.TrashNavigationTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=returnFabMatchesAddFabWithTheBottomNavigationHidden
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.TrashNavigationTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=returnFabMatchesAddFabWithTheBottomNavigationHidden
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.TrashNavigationTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=classicPasswordMenuKeepsTheLocalDatabaseWhenOpeningTrash
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.TrashNavigationTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=classicPasswordMenuKeepsTheLocalDatabaseWhenOpeningTrash
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.TrashNavigationTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=ordinaryNavigationRetainsOrderSelectionAndFabAfterStateRestoration
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.TrashNavigationTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=ordinaryNavigationRetainsOrderSelectionAndFabAfterStateRestoration
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.TrashNavigationTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=returnFabAndSharedSelectionActionsWorkOnThePasswordPage
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.TrashNavigationTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=returnFabAndSharedSelectionActionsWorkOnThePasswordPage
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.CloudBackupUiTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.screens.CloudBackupUiTest:
+INSTRUMENTATION_STATUS: test=contentSelectionPreservesLegacyFlagsAndUnavailableSources
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.screens.CloudBackupUiTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=6
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=contentSelectionPreservesLegacyFlagsAndUnavailableSources
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 16.196
+
+OK (6 tests)
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN main-providers01
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest:
+INSTRUMENTATION_STATUS: test=otherReadersCannotSeeNewRecordBeforeItsFieldsAreSaved
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=otherReadersCannotSeeNewRecordBeforeItsFieldsAreSaved
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockAfterInsertAndRepeatedSaveCannotLeaveOrphanRecords
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockAfterInsertAndRepeatedSaveCannotLeaveOrphanRecords
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=emptyUsernameAndPasswordReportSuccessAndStoreOneCompleteRecord
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.BitwardenCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=emptyUsernameAndPasswordReportSuccessAndStoreOneCompleteRecord
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.keepass.KeePassStackContentRegressionTest:
+INSTRUMENTATION_STATUS: test=externalRevisionRejectsStackWithoutOverwritingAnotherWriter
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=externalRevisionRejectsStackWithoutOverwritingAnotherWriter
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=lockingOrRemovingASelectedIdentityRejectsWholeBatch
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockingOrRemovingASelectedIdentityRejectsWholeBatch
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=projectCredentialsResaveInOneCommitWithDistinctFieldsAndNewRows
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=projectCredentialsResaveInOneCommitWithDistinctFieldsAndNewRows
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=deniedProjectBatchCannotPartiallySaveAnExistingAccount
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=deniedProjectBatchCannotPartiallySaveAnExistingAccount
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=stackModesCommitTheWholeSelectionOnceAndSurviveColdReopen
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=stackModesCommitTheWholeSelectionOnceAndSurviveColdReopen
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=copiedContentRejectsChangedDestinationEvenAfterListRefresh
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=copiedContentRejectsChangedDestinationEvenAfterListRefresh
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=deniedBatchStackDoesNotPersistAnyMember
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=deniedBatchStackDoesNotPersistAnyMember
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=nativeCustomFieldsRoundTripWithoutLosingUnknownOrProtectedFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=nativeCustomFieldsRoundTripWithoutLosingUnknownOrProtectedFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=everyAddContentEncodingSurvivesEditAndColdReopenInOriginalKdbx
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=everyAddContentEncodingSurvivesEditAndColdReopenInOriginalKdbx
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=copiedContentPublishesAfterSavingAnotherCredentialInSameFile
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.keepass.KeePassStackContentRegressionTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=copiedContentPublishesAfterSavingAnotherCredentialInSameFile
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest:
+INSTRUMENTATION_STATUS: test=aLockedVaultReportsTheReasonWithoutDeletingTheLocalItem
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=aLockedVaultReportsTheReasonWithoutDeletingTheLocalItem
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stack=org.junit.ComparisonFailure: expected:<[Please login and unlock Bitwarden first]> but was:<[Bitwarden account request session changed]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem$1$1.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:106)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest.anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem(BitwardenTrashDeletionInstrumentedTest.kt:100)
+
+INSTRUMENTATION_STATUS: stream=
+Error in anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem(takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest):
+org.junit.ComparisonFailure: expected:<[Please login and unlock Bitwarden first]> but was:<[Bitwarden account request session changed]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem$1$1.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:106)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest.anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem(BitwardenTrashDeletionInstrumentedTest.kt:100)
+
+INSTRUMENTATION_STATUS: test=anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stack=org.junit.ComparisonFailure: expected:<Bitwarden [rejected the deletion (HTTP 403).]> but was:<Bitwarden [account request session changed]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish$1$1.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:69)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest.aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish(BitwardenTrashDeletionInstrumentedTest.kt:58)
+
+INSTRUMENTATION_STATUS: stream=
+Error in aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish(takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest):
+org.junit.ComparisonFailure: expected:<Bitwarden [rejected the deletion (HTTP 403).]> but was:<Bitwarden [account request session changed]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish$1$1.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:69)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest.aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish(BitwardenTrashDeletionInstrumentedTest.kt:58)
+
+INSTRUMENTATION_STATUS: test=aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=17
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failure(java.lang.IllegalStateException: Bitwarden account request session changed)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom$1$1.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:49)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest.clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom(BitwardenTrashDeletionInstrumentedTest.kt:41)
+
+INSTRUMENTATION_STATUS: stream=
+Error in clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom(takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest):
+java.lang.AssertionError: Failure(java.lang.IllegalStateException: Bitwarden account request session changed)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom$1$1.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:49)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest.clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom(BitwardenTrashDeletionInstrumentedTest.kt:41)
+
+INSTRUMENTATION_STATUS: test=clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 23.057
+There were 3 failures:
+1) anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem(takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest)
+org.junit.ComparisonFailure: expected:<[Please login and unlock Bitwarden first]> but was:<[Bitwarden account request session changed]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem$1$1.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:106)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest.anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem(BitwardenTrashDeletionInstrumentedTest.kt:100)
+2) aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish(takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest)
+org.junit.ComparisonFailure: expected:<Bitwarden [rejected the deletion (HTTP 403).]> but was:<Bitwarden [account request session changed]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish$1$1.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:69)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest.aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish(BitwardenTrashDeletionInstrumentedTest.kt:58)
+3) clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom(takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest)
+java.lang.AssertionError: Failure(java.lang.IllegalStateException: Bitwarden account request session changed)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom$1$1.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:49)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest.clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom(BitwardenTrashDeletionInstrumentedTest.kt:41)
+
+FAILURES!!!
+Tests run: 17,  Failures: 3
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN main-bwtrash02
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=4
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest:
+INSTRUMENTATION_STATUS: test=aLockedVaultReportsTheReasonWithoutDeletingTheLocalItem
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=4
+INSTRUMENTATION_STATUS: stack=takagi.ru.monica.security.SecureStorageUnavailableException: Secure storage unavailable: SECURE_STORAGE_NOT_READY
+	at takagi.ru.monica.security.PreparedSecureStore.open(PreparedSecureStore.kt:61)
+	at takagi.ru.monica.security.SecurityManager.<init>(SecurityManager.kt:37)
+	at takagi.ru.monica.viewmodel.TrashViewModel.<init>(TrashViewModel.kt:75)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$Fixture$initialize$3.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:175)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at android.os.Handler.handleCallback(Handler.java:991)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8971)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:597)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:919)
+
+INSTRUMENTATION_STATUS: stream=
+Error in aLockedVaultReportsTheReasonWithoutDeletingTheLocalItem(takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest):
+takagi.ru.monica.security.SecureStorageUnavailableException: Secure storage unavailable: SECURE_STORAGE_NOT_READY
+	at takagi.ru.monica.security.PreparedSecureStore.open(PreparedSecureStore.kt:61)
+	at takagi.ru.monica.security.SecurityManager.<init>(SecurityManager.kt:37)
+	at takagi.ru.monica.viewmodel.TrashViewModel.<init>(TrashViewModel.kt:75)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$Fixture$initialize$3.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:175)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at android.os.Handler.handleCallback(Handler.java:991)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8971)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:597)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:919)
+
+INSTRUMENTATION_STATUS: test=aLockedVaultReportsTheReasonWithoutDeletingTheLocalItem
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=4
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=4
+INSTRUMENTATION_STATUS: stack=takagi.ru.monica.security.SecureStorageUnavailableException: Secure storage unavailable: SECURE_STORAGE_NOT_READY
+	at takagi.ru.monica.security.PreparedSecureStore.open(PreparedSecureStore.kt:61)
+	at takagi.ru.monica.security.SecurityManager.<init>(SecurityManager.kt:37)
+	at takagi.ru.monica.viewmodel.TrashViewModel.<init>(TrashViewModel.kt:75)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$Fixture$initialize$3.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:175)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at android.os.Handler.handleCallback(Handler.java:991)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8971)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:597)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:919)
+
+INSTRUMENTATION_STATUS: stream=
+Error in anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem(takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest):
+takagi.ru.monica.security.SecureStorageUnavailableException: Secure storage unavailable: SECURE_STORAGE_NOT_READY
+	at takagi.ru.monica.security.PreparedSecureStore.open(PreparedSecureStore.kt:61)
+	at takagi.ru.monica.security.SecurityManager.<init>(SecurityManager.kt:37)
+	at takagi.ru.monica.viewmodel.TrashViewModel.<init>(TrashViewModel.kt:75)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$Fixture$initialize$3.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:175)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at android.os.Handler.handleCallback(Handler.java:991)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8971)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:597)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:919)
+
+INSTRUMENTATION_STATUS: test=anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=4
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=4
+INSTRUMENTATION_STATUS: stack=takagi.ru.monica.security.SecureStorageUnavailableException: Secure storage unavailable: SECURE_STORAGE_NOT_READY
+	at takagi.ru.monica.security.PreparedSecureStore.open(PreparedSecureStore.kt:61)
+	at takagi.ru.monica.security.SecurityManager.<init>(SecurityManager.kt:37)
+	at takagi.ru.monica.viewmodel.TrashViewModel.<init>(TrashViewModel.kt:75)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$Fixture$initialize$3.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:175)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at android.os.Handler.handleCallback(Handler.java:991)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8971)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:597)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:919)
+
+INSTRUMENTATION_STATUS: stream=
+Error in aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish(takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest):
+takagi.ru.monica.security.SecureStorageUnavailableException: Secure storage unavailable: SECURE_STORAGE_NOT_READY
+	at takagi.ru.monica.security.PreparedSecureStore.open(PreparedSecureStore.kt:61)
+	at takagi.ru.monica.security.SecurityManager.<init>(SecurityManager.kt:37)
+	at takagi.ru.monica.viewmodel.TrashViewModel.<init>(TrashViewModel.kt:75)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$Fixture$initialize$3.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:175)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at android.os.Handler.handleCallback(Handler.java:991)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8971)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:597)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:919)
+
+INSTRUMENTATION_STATUS: test=aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=4
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=4
+INSTRUMENTATION_STATUS: stack=takagi.ru.monica.security.SecureStorageUnavailableException: Secure storage unavailable: SECURE_STORAGE_NOT_READY
+	at takagi.ru.monica.security.PreparedSecureStore.open(PreparedSecureStore.kt:61)
+	at takagi.ru.monica.security.SecurityManager.<init>(SecurityManager.kt:37)
+	at takagi.ru.monica.viewmodel.TrashViewModel.<init>(TrashViewModel.kt:75)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$Fixture$initialize$3.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:175)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at android.os.Handler.handleCallback(Handler.java:991)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8971)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:597)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:919)
+
+INSTRUMENTATION_STATUS: stream=
+Error in clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom(takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest):
+takagi.ru.monica.security.SecureStorageUnavailableException: Secure storage unavailable: SECURE_STORAGE_NOT_READY
+	at takagi.ru.monica.security.PreparedSecureStore.open(PreparedSecureStore.kt:61)
+	at takagi.ru.monica.security.SecurityManager.<init>(SecurityManager.kt:37)
+	at takagi.ru.monica.viewmodel.TrashViewModel.<init>(TrashViewModel.kt:75)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$Fixture$initialize$3.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:175)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at android.os.Handler.handleCallback(Handler.java:991)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8971)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:597)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:919)
+
+INSTRUMENTATION_STATUS: test=clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 0.47
+There were 4 failures:
+1) aLockedVaultReportsTheReasonWithoutDeletingTheLocalItem(takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest)
+takagi.ru.monica.security.SecureStorageUnavailableException: Secure storage unavailable: SECURE_STORAGE_NOT_READY
+	at takagi.ru.monica.security.PreparedSecureStore.open(PreparedSecureStore.kt:61)
+	at takagi.ru.monica.security.SecurityManager.<init>(SecurityManager.kt:37)
+	at takagi.ru.monica.viewmodel.TrashViewModel.<init>(TrashViewModel.kt:75)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$Fixture$initialize$3.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:175)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at android.os.Handler.handleCallback(Handler.java:991)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8971)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:597)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:919)
+2) anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem(takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest)
+takagi.ru.monica.security.SecureStorageUnavailableException: Secure storage unavailable: SECURE_STORAGE_NOT_READY
+	at takagi.ru.monica.security.PreparedSecureStore.open(PreparedSecureStore.kt:61)
+	at takagi.ru.monica.security.SecurityManager.<init>(SecurityManager.kt:37)
+	at takagi.ru.monica.viewmodel.TrashViewModel.<init>(TrashViewModel.kt:75)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$Fixture$initialize$3.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:175)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at android.os.Handler.handleCallback(Handler.java:991)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8971)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:597)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:919)
+3) aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish(takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest)
+takagi.ru.monica.security.SecureStorageUnavailableException: Secure storage unavailable: SECURE_STORAGE_NOT_READY
+	at takagi.ru.monica.security.PreparedSecureStore.open(PreparedSecureStore.kt:61)
+	at takagi.ru.monica.security.SecurityManager.<init>(SecurityManager.kt:37)
+	at takagi.ru.monica.viewmodel.TrashViewModel.<init>(TrashViewModel.kt:75)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$Fixture$initialize$3.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:175)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at android.os.Handler.handleCallback(Handler.java:991)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8971)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:597)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:919)
+4) clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom(takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest)
+takagi.ru.monica.security.SecureStorageUnavailableException: Secure storage unavailable: SECURE_STORAGE_NOT_READY
+	at takagi.ru.monica.security.PreparedSecureStore.open(PreparedSecureStore.kt:61)
+	at takagi.ru.monica.security.SecurityManager.<init>(SecurityManager.kt:37)
+	at takagi.ru.monica.viewmodel.TrashViewModel.<init>(TrashViewModel.kt:75)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$Fixture$initialize$3.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:175)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at android.os.Handler.handleCallback(Handler.java:991)
+	at android.os.Handler.dispatchMessage(Handler.java:102)
+	at android.os.Looper.loopOnce(Looper.java:232)
+	at android.os.Looper.loop(Looper.java:317)
+	at android.app.ActivityThread.main(ActivityThread.java:8971)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:597)
+	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:919)
+
+FAILURES!!!
+Tests run: 4,  Failures: 4
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN main-bwtrash03
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest:
+INSTRUMENTATION_STATUS: test=lockingAfterActualInsertRollsBackLocalSave
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=lockingAfterActualInsertRollsBackLocalSave
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=identicalBatchInputsRemainTwoIndependentProjects
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=identicalBatchInputsRemainTwoIndependentProjects
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=localBatchQueuedBeforeLockCannotInsertAfterLock
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=localBatchQueuedBeforeLockCannotInsertAfterLock
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=localSaveQueuedBeforeLockCannotInsertAfterLock
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=localSaveQueuedBeforeLockCannotInsertAfterLock
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedGroupedFieldsLeaveNoRowsAndRetryCreatesOneProject
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedGroupedFieldsLeaveNoRowsAndRetryCreatesOneProject
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedFirstBatchFieldsLeaveNoRowsAndRetryCreatesOnlyRequestedProjects
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedFirstBatchFieldsLeaveNoRowsAndRetryCreatesOnlyRequestedProjects
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=realEditorSaveKeepsProjectIdentityAndPasswordHistoryWithoutTimeline
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=realEditorSaveKeepsProjectIdentityAndPasswordHistoryWithoutTimeline
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=readersSeeOnlyCompleteLocalBatchAndFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=readersSeeOnlyCompleteLocalBatchAndFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedLocalEditPreservesOriginalCiphertextIdsAndUnknownFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedLocalEditPreservesOriginalCiphertextIdsAndUnknownFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cancellationAfterActualInsertRollsBackWithoutSuccessCallback
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cancellationAfterActualInsertRollsBackWithoutSuccessCallback
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failureAfterGroupedFieldsWriteRollsBackRowsAndFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failureAfterGroupedFieldsWriteRollsBackRowsAndFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedSecondLocalFolderRollsBackEarlierDestinationAndRetryCreatesOnlyTwoCopies
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedSecondLocalFolderRollsBackEarlierDestinationAndRetryCreatesOnlyTwoCopies
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=failedSecondBatchFieldsRollBackEarlierCredentialAndRetryCreatesOnlyRequestedProjects
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=failedSecondBatchFieldsRollBackEarlierCredentialAndRetryCreatesOnlyRequestedProjects
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=readersSeeOnlyCompleteGroupedPasswordsAndFields
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=readersSeeOnlyCompleteGroupedPasswordsAndFields
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=projectCredentialFieldFailureStillRollsBackAllCreatedRows
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=15
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=projectCredentialFieldFailureStillRollsBackAllCreatedRows
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=identicalProjectCredentialsKeepOneProjectAndOriginalIdsAcrossEdit
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.credentialexchange.LocalCredentialCreateAtomicityTest
+INSTRUMENTATION_STATUS: current=16
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=identicalProjectCredentialsKeepOneProjectAndOriginalIdsAcrossEdit
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest:
+INSTRUMENTATION_STATUS: test=aLockedVaultReportsTheReasonWithoutDeletingTheLocalItem
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=17
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=aLockedVaultReportsTheReasonWithoutDeletingTheLocalItem
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=18
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stack=org.junit.ComparisonFailure: expected:<[Please login and unlock Bitwarden first]> but was:<[Bitwarden account request session changed]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem$1$1.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:107)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest.anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem(BitwardenTrashDeletionInstrumentedTest.kt:101)
+
+INSTRUMENTATION_STATUS: stream=
+Error in anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem(takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest):
+org.junit.ComparisonFailure: expected:<[Please login and unlock Bitwarden first]> but was:<[Bitwarden account request session changed]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem$1$1.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:107)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest.anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem(BitwardenTrashDeletionInstrumentedTest.kt:101)
+
+INSTRUMENTATION_STATUS: test=anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=19
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stack=org.junit.ComparisonFailure: expected:<Bitwarden [rejected the deletion (HTTP 403).]> but was:<Bitwarden [account request session changed]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish$1$1.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:70)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest.aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish(BitwardenTrashDeletionInstrumentedTest.kt:59)
+
+INSTRUMENTATION_STATUS: stream=
+Error in aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish(takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest):
+org.junit.ComparisonFailure: expected:<Bitwarden [rejected the deletion (HTTP 403).]> but was:<Bitwarden [account request session changed]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish$1$1.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:70)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest.aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish(BitwardenTrashDeletionInstrumentedTest.kt:59)
+
+INSTRUMENTATION_STATUS: test=aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=20
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=20
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failure(java.lang.IllegalStateException: Bitwarden account request session changed)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom$1$1.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:50)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest.clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom(BitwardenTrashDeletionInstrumentedTest.kt:42)
+
+INSTRUMENTATION_STATUS: stream=
+Error in clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom(takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest):
+java.lang.AssertionError: Failure(java.lang.IllegalStateException: Bitwarden account request session changed)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom$1$1.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:50)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest.clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom(BitwardenTrashDeletionInstrumentedTest.kt:42)
+
+INSTRUMENTATION_STATUS: test=clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 3.626
+There were 3 failures:
+1) anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem(takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest)
+org.junit.ComparisonFailure: expected:<[Please login and unlock Bitwarden first]> but was:<[Bitwarden account request session changed]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem$1$1.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:107)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest.anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem(BitwardenTrashDeletionInstrumentedTest.kt:101)
+2) aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish(takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest)
+org.junit.ComparisonFailure: expected:<Bitwarden [rejected the deletion (HTTP 403).]> but was:<Bitwarden [account request session changed]>
+	at org.junit.Assert.assertEquals(Assert.java:117)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish$1$1.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:70)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest.aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish(BitwardenTrashDeletionInstrumentedTest.kt:59)
+3) clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom(takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest)
+java.lang.AssertionError: Failure(java.lang.IllegalStateException: Bitwarden account request session changed)
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest$clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom$1$1.invokeSuspend(BitwardenTrashDeletionInstrumentedTest.kt:50)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+	at kotlinx.coroutines.internal.ScopeCoroutine.afterResume(Scopes.kt:28)
+	at kotlinx.coroutines.AbstractCoroutine.resumeWith(AbstractCoroutine.kt:100)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:47)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source:1)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source:1)
+	at takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest.clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom(BitwardenTrashDeletionInstrumentedTest.kt:42)
+
+FAILURES!!!
+Tests run: 20,  Failures: 3
+
+
+INSTRUMENTATION_CODE: -1
+
+
+RUN main-bwtrash04
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=4
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest:
+INSTRUMENTATION_STATUS: test=aLockedVaultReportsTheReasonWithoutDeletingTheLocalItem
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=4
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=aLockedVaultReportsTheReasonWithoutDeletingTheLocalItem
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=4
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=4
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=anExpiredSessionWithoutARefreshTokenReportsSignInAndPreservesTheItem
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=4
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=4
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=aFailedDeleteRemainsRetryableWhileOtherItemsAndAlreadyMissingCiphersFinish
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=4
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.viewmodel.BitwardenTrashDeletionInstrumentedTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=4
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=clearingTheSelectedScopeDeletesPasswordsAndNotesFromServerAndRoom
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 0.574
+
+OK (4 tests)
+
+
+INSTRUMENTATION_CODE: -1

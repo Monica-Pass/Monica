@@ -1,5 +1,8 @@
 package takagi.ru.monica.viewmodel
 
+import app.keemobile.kotpass.cryptography.EncryptedValue
+import takagi.ru.monica.data.KeePassCipherAlgorithm
+
 import android.app.Application
 import android.content.Context
 import android.content.Intent
@@ -12,7 +15,6 @@ import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import app.keemobile.kotpass.models.Meta
-import app.keemobile.kotpass.cryptography.EncryptedValue
 import app.keemobile.kotpass.database.Credentials
 import app.keemobile.kotpass.database.KeePassDatabase
 import app.keemobile.kotpass.database.encode
@@ -25,7 +27,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import takagi.ru.monica.data.KeePassCipherAlgorithm
 import takagi.ru.monica.data.ItemType
 import takagi.ru.monica.data.KeePassDatabaseCreationOptions
 import takagi.ru.monica.data.KeePassDatabaseSourceType
@@ -43,7 +44,6 @@ import takagi.ru.monica.data.LocalKeePassDatabase
 import takagi.ru.monica.data.LocalKeePassDatabaseDao
 import takagi.ru.monica.data.resolvedActiveFilePath
 import takagi.ru.monica.data.resolvedActiveStorageLocation
-import takagi.ru.monica.data.OperationLogItemType
 import takagi.ru.monica.data.PasswordDatabase
 import takagi.ru.monica.data.PasswordEntry
 import takagi.ru.monica.attachments.AttachmentContainer
@@ -97,7 +97,6 @@ import takagi.ru.monica.sync.SyncTaskAwaitResult
 import takagi.ru.monica.sync.SyncTaskRunner
 import takagi.ru.monica.sync.SyncTrigger
 import takagi.ru.monica.utils.AppLocaleStringResolver
-import takagi.ru.monica.utils.FieldChange
 import takagi.ru.monica.utils.FileSourceEntry
 import takagi.ru.monica.utils.GoogleDriveKeePassFileSource
 import takagi.ru.monica.utils.GoogleDriveKeePassSupport
@@ -114,7 +113,6 @@ import takagi.ru.monica.utils.readKeePassKeyFileBytes
 import takagi.ru.monica.utils.OneDriveKeePassFileSource
 import takagi.ru.monica.utils.OneDriveKeePassSupport
 import takagi.ru.monica.utils.toOneDriveUserMessage
-import takagi.ru.monica.utils.OperationLogger
 import takagi.ru.monica.utils.RemoteKeePassSyncService
 import takagi.ru.monica.utils.WebDavKeePassFileSource
 import takagi.ru.monica.utils.WebDavKeePassSupport
@@ -1329,12 +1327,7 @@ class LocalKeePassViewModel(
                 refreshGroups(databaseId)
                 val databaseName = dao.getDatabaseById(databaseId)?.name ?: "KeePass DB #$databaseId"
                 result.getOrNull()?.let { groupInfo ->
-                    logKeepassGroupCreate(
-                        databaseId = databaseId,
-                        databaseName = databaseName,
-                        group = groupInfo,
-                        parentPath = parentPath
-                    )
+
                 }
             }
             withContext(Dispatchers.Main) {
@@ -1386,12 +1379,7 @@ class LocalKeePassViewModel(
                 refreshGroups(databaseId)
                 val databaseName = dao.getDatabaseById(databaseId)?.name ?: "KeePass DB #$databaseId"
                 result.getOrNull()?.let { groupInfo ->
-                    logKeepassGroupRename(
-                        databaseId = databaseId,
-                        databaseName = databaseName,
-                        oldPath = groupPath,
-                        newGroup = groupInfo
-                    )
+
                 }
             }
             withContext(Dispatchers.Main) {
@@ -1413,11 +1401,7 @@ class LocalKeePassViewModel(
             if (result.isSuccess) {
                 refreshGroups(databaseId)
                 val databaseName = dao.getDatabaseById(databaseId)?.name ?: "KeePass DB #$databaseId"
-                logKeepassGroupDelete(
-                    databaseId = databaseId,
-                    databaseName = databaseName,
-                    groupPath = groupPath
-                )
+
             }
             withContext(Dispatchers.Main) {
                 onResult(result)
@@ -1447,14 +1431,7 @@ class LocalKeePassViewModel(
                 val sourceDatabaseName = dao.getDatabaseById(sourceDatabaseId)?.name ?: "KeePass DB #$sourceDatabaseId"
                 val targetDatabaseName = dao.getDatabaseById(targetDatabaseId)?.name ?: "KeePass DB #$targetDatabaseId"
                 result.getOrNull()?.let { groupInfo ->
-                    logKeepassGroupMove(
-                        sourceDatabaseId = sourceDatabaseId,
-                        sourceDatabaseName = sourceDatabaseName,
-                        sourcePath = groupPath,
-                        targetDatabaseId = targetDatabaseId,
-                        targetDatabaseName = targetDatabaseName,
-                        movedGroup = groupInfo
-                    )
+
                 }
             }
             withContext(Dispatchers.Main) {
@@ -1481,7 +1458,6 @@ class LocalKeePassViewModel(
             
             try {
                 var createdDatabaseId: Long? = null
-                var createLogDetails: List<FieldChange> = emptyList()
                 withContext(Dispatchers.IO) {
                     val encryptedPassword = if (password.isNotBlank()) securityManager.encryptData(password) else null
                     
@@ -1564,21 +1540,12 @@ class LocalKeePassViewModel(
                     )
                     
                     createdDatabaseId = dao.insertDatabase(database)
-                    createLogDetails = listOf(
-                        FieldChange("存储位置", "", storageLocationLabel(storageLocation)),
-                        FieldChange("格式版本", "", normalizedOptions.formatVersion.name),
-                        FieldChange("加密算法", "", normalizedOptions.cipherAlgorithm.name),
-                        FieldChange("KDF", "", normalizedOptions.kdfAlgorithm.name)
-                    )
+
                 }
                 
                 _operationState.value = OperationState.Success(strings.get(R.string.keepass_operation_created))
                 createdDatabaseId?.let { databaseId ->
-                    logKeepassDatabaseCreate(
-                        databaseId = databaseId,
-                        databaseName = name,
-                        details = createLogDetails
-                    )
+
                 }
             } catch (e: Exception) {
                 _operationState.value = OperationState.Error(strings.get(R.string.keepass_webdav_create_failed, formatOperationError(e)))
@@ -1651,10 +1618,6 @@ class LocalKeePassViewModel(
             
             try {
                 var verifyElapsedMs = 0L
-                var importLogAction: String? = null
-                var importLogDatabaseId = 0L
-                var importLogDatabaseName = name
-                var importLogChanges: List<FieldChange> = emptyList()
                 var importedDatabaseName = name
                 withContext(Dispatchers.IO) {
                     importedDatabaseName = KeePassFileNameResolver.chooseImportedDatabaseName(
@@ -1665,7 +1628,6 @@ class LocalKeePassViewModel(
                         ),
                         uriLastPathSegment = uri.lastPathSegment
                     )
-                    importLogDatabaseName = importedDatabaseName
 
                     // 验证文件是否可访问
                     context.contentResolver.openInputStream(uri)?.close()
@@ -1745,29 +1707,7 @@ class LocalKeePassViewModel(
                         dao.updateDatabase(updated)
                         KeePassKdbxService.invalidateProcessCache(existing.id)
 
-                        importLogAction = "update"
-                        importLogDatabaseId = updated.id
-                        importLogDatabaseName = updated.name
-                        importLogChanges = buildList {
-                            if (existing.name != updated.name) {
-                                add(FieldChange("名称", existing.name, updated.name))
-                            }
-                            if (existing.description.orEmpty() != updated.description.orEmpty()) {
-                                add(FieldChange("描述", existing.description.orEmpty(), updated.description.orEmpty()))
-                            }
-                            if (existing.entryCount != updated.entryCount) {
-                                add(FieldChange("条目数量", existing.entryCount.toString(), updated.entryCount.toString()))
-                            }
-                            if (existing.keyFileUri != updated.keyFileUri) {
-                                add(
-                                    FieldChange(
-                                        "密钥文件",
-                                        if (existing.keyFileUri.isNullOrBlank()) "未设置" else "已设置",
-                                        if (updated.keyFileUri.isNullOrBlank()) "未设置" else "已设置"
-                                    )
-                                )
-                            }
-                        }
+
                     } else {
                         val database = LocalKeePassDatabase(
                             name = importedDatabaseName,
@@ -1792,36 +1732,12 @@ class LocalKeePassViewModel(
                         val newId = dao.insertDatabase(database)
                         KeePassKdbxService.invalidateProcessCache(newId)
 
-                        importLogAction = "create"
-                        importLogDatabaseId = newId
-                        importLogDatabaseName = database.name
-                        importLogChanges = listOf(
-                            FieldChange("来源", "", "外部导入"),
-                            FieldChange("存储位置", "", storageLocationLabel(KeePassStorageLocation.EXTERNAL)),
-                            FieldChange("条目数量", "", entryCount.toString())
-                        )
+
                     }
                 }
                 
                 _operationState.value = OperationState.Success(strings.get(R.string.keepass_operation_added, verifyElapsedMs))
-                when (importLogAction) {
-                    "create" -> {
-                        logKeepassDatabaseCreate(
-                            databaseId = importLogDatabaseId,
-                            databaseName = importLogDatabaseName,
-                            details = importLogChanges
-                        )
-                    }
-                    "update" -> {
-                        logKeepassDatabaseUpdate(
-                            databaseId = importLogDatabaseId,
-                            databaseName = importLogDatabaseName,
-                            changes = importLogChanges.ifEmpty {
-                                listOf(FieldChange("外部引用", "已存在", "已刷新"))
-                            }
-                        )
-                    }
-                }
+
             } catch (e: Exception) {
                 _operationState.value = OperationState.Error(strings.get(R.string.keepass_operation_add_failed, formatOperationError(e)))
             }
@@ -1858,15 +1774,7 @@ class LocalKeePassViewModel(
                 }
 
                 _operationState.value = OperationState.Success(strings.get(R.string.keepass_operation_connected, "WebDAV"))
-                logKeepassDatabaseCreate(
-                    databaseId = attachResult.databaseId,
-                    databaseName = attachResult.databaseName,
-                    details = listOf(
-                        FieldChange("来源", "", "WebDAV"),
-                        FieldChange("打开方式", "", "工作副本"),
-                        FieldChange("条目数量", "", attachResult.entryCount.toString())
-                    )
-                )
+
             } catch (e: Exception) {
                 _operationState.value = OperationState.Error(strings.get(R.string.keepass_operation_connect_failed, formatOperationError(e)))
             }
@@ -1932,15 +1840,7 @@ class LocalKeePassViewModel(
                 }
 
                 _operationState.value = OperationState.Success(strings.get(R.string.keepass_operation_remote_created, "WebDAV"))
-                logKeepassDatabaseCreate(
-                    databaseId = attachResult.databaseId,
-                    databaseName = attachResult.databaseName,
-                    details = listOf(
-                        FieldChange("来源", "", "WebDAV"),
-                        FieldChange("创建方式", "", "远端新建"),
-                        FieldChange("条目数量", "", attachResult.entryCount.toString())
-                    )
-                )
+
             } catch (e: Exception) {
                 _operationState.value = OperationState.Error(strings.get(R.string.keepass_webdav_create_failed, formatOperationError(e)))
             }
@@ -1975,15 +1875,7 @@ class LocalKeePassViewModel(
                 }
 
                 _operationState.value = OperationState.Success(strings.get(R.string.keepass_operation_connected, "OneDrive"))
-                logKeepassDatabaseCreate(
-                    databaseId = attachResult.databaseId,
-                    databaseName = attachResult.databaseName,
-                    details = listOf(
-                        FieldChange("来源", "", "OneDrive"),
-                        FieldChange("打开方式", "", "工作副本"),
-                        FieldChange("条目数量", "", attachResult.entryCount.toString())
-                    )
-                )
+
             } catch (e: Exception) {
                 _operationState.value = OperationState.Error(strings.get(R.string.keepass_operation_connect_failed, formatOperationError(e)))
             }
@@ -2046,15 +1938,7 @@ class LocalKeePassViewModel(
                 }
 
                 _operationState.value = OperationState.Success(strings.get(R.string.keepass_operation_remote_created, "OneDrive"))
-                logKeepassDatabaseCreate(
-                    databaseId = attachResult.databaseId,
-                    databaseName = attachResult.databaseName,
-                    details = listOf(
-                        FieldChange("来源", "", "OneDrive"),
-                        FieldChange("创建方式", "", "远端新建"),
-                        FieldChange("条目数量", "", attachResult.entryCount.toString())
-                    )
-                )
+
             } catch (e: Exception) {
                 _operationState.value = OperationState.Error(strings.get(R.string.keepass_webdav_create_failed, formatOperationError(e)))
             }
@@ -2089,15 +1973,7 @@ class LocalKeePassViewModel(
                 }
 
                 _operationState.value = OperationState.Success(strings.get(R.string.keepass_operation_connected, "Google Drive"))
-                logKeepassDatabaseCreate(
-                    databaseId = attachResult.databaseId,
-                    databaseName = attachResult.databaseName,
-                    details = listOf(
-                        FieldChange("来源", "", "Google Drive"),
-                        FieldChange("打开方式", "", "工作副本"),
-                        FieldChange("条目数量", "", attachResult.entryCount.toString())
-                    )
-                )
+
             } catch (e: Exception) {
                 _operationState.value = OperationState.Error(strings.get(R.string.keepass_operation_connect_failed, formatOperationError(e)))
             }
@@ -2161,15 +2037,7 @@ class LocalKeePassViewModel(
                 }
 
                 _operationState.value = OperationState.Success(strings.get(R.string.keepass_operation_remote_created, "Google Drive"))
-                logKeepassDatabaseCreate(
-                    databaseId = attachResult.databaseId,
-                    databaseName = attachResult.databaseName,
-                    details = listOf(
-                        FieldChange("来源", "", "Google Drive"),
-                        FieldChange("创建方式", "", "远端新建"),
-                        FieldChange("条目数量", "", attachResult.entryCount.toString())
-                    )
-                )
+
             } catch (e: Exception) {
                 _operationState.value = OperationState.Error(strings.get(R.string.keepass_webdav_create_failed, formatOperationError(e)))
             }
@@ -2378,13 +2246,7 @@ class LocalKeePassViewModel(
                     clearVisibleRemoteAutoSyncFailure(databaseId)
                     if (!silent) {
                         _operationState.value = OperationState.Success(syncResult.message)
-                        logKeepassDatabaseUpdate(
-                            databaseId = databaseId,
-                            databaseName = syncResult.databaseName,
-                            changes = listOf(
-                                FieldChange("远端同步", "待同步", syncResult.message)
-                            )
-                        )
+
                     } else {
                         Log.i(TAG, "Silent remote sync success: databaseId=$databaseId, message=${syncResult.message}")
                     }
@@ -2671,14 +2533,7 @@ class LocalKeePassViewModel(
                 
                 _operationState.value = OperationState.Success(strings.get(R.string.keepass_operation_copied_internal))
                 copiedDatabaseId?.let { newDatabaseId ->
-                    logKeepassDatabaseCreate(
-                        databaseId = newDatabaseId,
-                        databaseName = copiedDatabaseName,
-                        details = listOf(
-                            FieldChange("来源", "", sourceDatabaseName),
-                            FieldChange("存储位置", "", storageLocationLabel(KeePassStorageLocation.INTERNAL))
-                        )
-                    )
+
                 }
             } catch (e: Exception) {
                 _operationState.value = OperationState.Error(strings.get(R.string.keepass_operation_copy_failed, formatOperationError(e)))
@@ -2743,7 +2598,6 @@ class LocalKeePassViewModel(
             
             try {
                 var transferDatabaseName = ""
-                var transferChanges: List<FieldChange> = emptyList()
                 withContext(Dispatchers.IO) {
                     val database = dao.getDatabaseById(databaseId)
                         ?: throw Exception(strings.get(R.string.keepass_connection_status_missing))
@@ -2814,26 +2668,11 @@ class LocalKeePassViewModel(
                         targetLocation.toSourceType(),
                         newPath
                     )
-                    transferChanges = listOf(
-                        FieldChange(
-                            "存储位置",
-                            storageLocationLabel(database.storageLocation),
-                            storageLocationLabel(targetLocation)
-                        ),
-                        FieldChange(
-                            "存储路径",
-                            storagePathLabel(database.filePath),
-                            storagePathLabel(newPath)
-                        )
-                    )
+
                 }
                 
                 _operationState.value = OperationState.Success(strings.get(R.string.keepass_operation_moved))
-                logKeepassDatabaseUpdate(
-                    databaseId = databaseId,
-                    databaseName = transferDatabaseName,
-                    changes = transferChanges
-                )
+
             } catch (e: Exception) {
                 _operationState.value = OperationState.Error(strings.get(R.string.keepass_operation_move_failed, formatOperationError(e)))
             }
@@ -2893,11 +2732,7 @@ class LocalKeePassViewModel(
                 _selectedDatabase.update { current -> current?.takeUnless { it.id == databaseId } }
                 
                 _operationState.value = OperationState.Success(strings.get(R.string.deleted))
-                logKeepassDatabaseDelete(
-                    databaseId = databaseId,
-                    databaseName = deletedDatabaseName,
-                    detail = if (deleteFile) "删除记录与本地文件" else "删除记录"
-                )
+
             } catch (e: Exception) {
                 _operationState.value = OperationState.Error(strings.get(R.string.delete_failed, formatOperationError(e)))
             }
@@ -2950,13 +2785,7 @@ class LocalKeePassViewModel(
                 }
                 
                 _operationState.value = OperationState.Success(strings.get(R.string.keepass_operation_password_updated, verifyElapsedMs))
-                logKeepassDatabaseUpdate(
-                    databaseId = databaseId,
-                    databaseName = databaseName,
-                    changes = listOf(
-                        FieldChange("主密码", "已设置", "已更新")
-                    )
-                )
+
             } catch (e: Exception) {
                 _operationState.value = OperationState.Error(strings.get(R.string.keepass_operation_update_failed, formatOperationError(e)))
             }
@@ -2976,13 +2805,7 @@ class LocalKeePassViewModel(
                     dao.setDefaultDatabase(databaseId)
                 }
                 defaultDatabaseName?.let { databaseName ->
-                    logKeepassDatabaseUpdate(
-                        databaseId = databaseId,
-                        databaseName = databaseName,
-                        changes = listOf(
-                            FieldChange("默认数据库", "否", "是")
-                        )
-                    )
+
                 }
             } catch (e: Exception) {
                 _operationState.value = OperationState.Error(strings.get(R.string.keepass_operation_setting_failed, formatOperationError(e)))
@@ -3416,133 +3239,8 @@ class LocalKeePassViewModel(
         _operationState.value = OperationState.Idle
     }
 
-    private fun logKeepassDatabaseCreate(
-        databaseId: Long,
-        databaseName: String,
-        details: List<FieldChange> = emptyList()
-    ) {
-        OperationLogger.logCreate(
-            itemType = OperationLogItemType.KEEPASS_DATABASE,
-            itemId = databaseId,
-            itemTitle = databaseName,
-            details = details
-        )
-    }
-
-    private fun logKeepassDatabaseUpdate(
-        databaseId: Long,
-        databaseName: String,
-        changes: List<FieldChange>
-    ) {
-        OperationLogger.logUpdate(
-            itemType = OperationLogItemType.KEEPASS_DATABASE,
-            itemId = databaseId,
-            itemTitle = databaseName,
-            changes = changes
-        )
-    }
-
-    private fun logKeepassDatabaseDelete(
-        databaseId: Long,
-        databaseName: String,
-        detail: String? = null
-    ) {
-        OperationLogger.logDelete(
-            itemType = OperationLogItemType.KEEPASS_DATABASE,
-            itemId = databaseId,
-            itemTitle = databaseName,
-            detail = detail
-        )
-    }
-
-    private fun logKeepassGroupCreate(
-        databaseId: Long,
-        databaseName: String,
-        group: KeePassGroupInfo,
-        parentPath: String?
-    ) {
-        OperationLogger.logCreate(
-            itemType = OperationLogItemType.KEEPASS_GROUP,
-            itemId = buildKeepassGroupItemId(databaseId, group.path),
-            itemTitle = "$databaseName · ${group.displayPath}",
-            details = listOf(
-                FieldChange("数据库", "", databaseName),
-                FieldChange("父级分组", "", parentPath?.takeIf { it.isNotBlank() } ?: "根目录")
-            )
-        )
-    }
-
-    private fun logKeepassGroupRename(
-        databaseId: Long,
-        databaseName: String,
-        oldPath: String,
-        newGroup: KeePassGroupInfo
-    ) {
-        val oldName = oldPath.substringAfterLast('/')
-        OperationLogger.logUpdate(
-            itemType = OperationLogItemType.KEEPASS_GROUP,
-            itemId = buildKeepassGroupItemId(databaseId, newGroup.path),
-            itemTitle = "$databaseName · ${newGroup.displayPath}",
-            changes = buildList {
-                add(FieldChange("名称", oldName, newGroup.name))
-                if (oldPath != newGroup.path) {
-                    add(FieldChange("路径", oldPath, newGroup.path))
-                }
-            }
-        )
-    }
-
-    private fun logKeepassGroupDelete(
-        databaseId: Long,
-        databaseName: String,
-        groupPath: String
-    ) {
-        OperationLogger.logDelete(
-            itemType = OperationLogItemType.KEEPASS_GROUP,
-            itemId = buildKeepassGroupItemId(databaseId, groupPath),
-            itemTitle = "$databaseName · $groupPath",
-            detail = "删除分组"
-        )
-    }
-
-    private fun logKeepassGroupMove(
-        sourceDatabaseId: Long,
-        sourceDatabaseName: String,
-        sourcePath: String,
-        targetDatabaseId: Long,
-        targetDatabaseName: String,
-        movedGroup: KeePassGroupInfo
-    ) {
-        OperationLogger.logUpdate(
-            itemType = OperationLogItemType.KEEPASS_GROUP,
-            itemId = buildKeepassGroupItemId(targetDatabaseId, movedGroup.path),
-            itemTitle = "$targetDatabaseName · ${movedGroup.displayPath}",
-            changes = buildList {
-                if (sourceDatabaseId != targetDatabaseId) {
-                    add(FieldChange("数据库", sourceDatabaseName, targetDatabaseName))
-                }
-                add(FieldChange("路径", sourcePath, movedGroup.path))
-            }
-        )
-    }
-
     private fun buildKeepassGroupItemId(databaseId: Long, groupPath: String): Long {
         return "${databaseId}:$groupPath".hashCode().toLong() and 0x7FFFFFFFL
-    }
-
-    private fun storageLocationLabel(location: KeePassStorageLocation): String {
-        return when (location) {
-            KeePassStorageLocation.INTERNAL -> strings.get(R.string.keepass_operation_internal)
-            KeePassStorageLocation.EXTERNAL -> strings.get(R.string.keepass_operation_external)
-        }
-    }
-
-    private fun storagePathLabel(path: String): String {
-        return if (path.startsWith("content://")) {
-            strings.get(R.string.keepass_operation_external_uri)
-        } else {
-            path
-        }
     }
 
     private fun buildWebDavFileSource(

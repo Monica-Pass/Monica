@@ -227,7 +227,7 @@ class KeePassMonicaUiInstrumentedTest {
                 val copy = model.buildEncryptedPasswordCopy(row, takagi.ru.monica.ui.components.UnifiedMoveCategoryTarget.Uncategorized)
                 assertNotEquals(row.password, copy.password)
                 val done = CompletableDeferred<Long?>()
-                withContext(Dispatchers.Main) { model.addPasswordEntryWithResult(copy, false, true, true) { done.complete(it) } }
+                withContext(Dispatchers.Main) { model.addPasswordEntryWithResult(copy, skipCategoryBinding = true, passwordAlreadyEncrypted = true) { done.complete(it) } }
                 val targetId = requireNotNull(withTimeout(30000) { done.await() })
                 val saved = requireNotNull(room.passwordEntryDao().getPasswordEntryById(targetId))
                 assertEquals(row.password, model.inspectSecretState(saved).plainValueOrEmpty())

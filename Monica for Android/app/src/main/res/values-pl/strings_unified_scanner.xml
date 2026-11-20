@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_credentials_hint">Zeskanuj kod QR uwierzytelniacza lub klucza dostępu</string>
+    <string name="qr_credentials_invalid">To nie jest obsługiwany kod QR uwierzytelniacza ani klucza dostępu</string>
+    <string name="qr_multiple_codes">Wykryto wiele kodów QR. Skieruj aparat tylko na jeden.</string>
+</resources>

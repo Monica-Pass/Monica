@@ -1,0 +1,89 @@
+{
+  "date": "2026-11-20",
+  "version": "1.0.329",
+  "versionCodes": {
+    "main": 12,
+    "fd": 36
+  },
+  "published": false,
+  "committed": false,
+  "device": "Existing MuMu, API 35, x86_64",
+  "scope": "Production Compose components and synthetic encrypted data in isolated application IDs; not full MainActivity navigation",
+  "sharedSourceSha256": {
+    "app/src/main/java/takagi/ru/monica/ui/screens/TimelineJournalHeader.kt": "4ff4c8c1c86393613be9e24888c2268ca1d138d4d6c496a5ed36696912923e55",
+    "app/src/main/java/takagi/ru/monica/ui/screens/TimelineJournalScreen.kt": "0c469762d1ca771325f958e7ea6b883c814511c98b4ab0f13def321351bc92a2",
+    "app/src/androidTest/java/takagi/ru/monica/timeline/TimelineJournalUiTest.kt": "c3dfc1ade21fd151e6ed2158e0dd0f0e51ca09dbf54e9a49d86eed15c15ff9fe",
+    "app/src/test/java/takagi/ru/monica/ui/components/ExpressiveTopBarKeyboardRegressionGuardTest.kt": "40a22f800ce426c2cf737d8ad7e79ce78046541b667ce8b5bbfaa19c6c76951e"
+  },
+  "editions": {
+    "main": {
+      "label": "main03",
+      "buildSeconds": 117.85742139816284,
+      "jvm": {
+        "tests": 36,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0
+      },
+      "deviceTests": 13,
+      "deviceRunnerSeconds": 13.41,
+      "apks": [
+        {
+          "file": "Monica-Android-x86_64-1.0.329-26112012-90.APK",
+          "sha256": "982c7ed6d8b189269dd4e2cc9a86b3dc875c05dbcdfa404a9608e169202356f5"
+        },
+        {
+          "file": "app-debug-androidTest.apk",
+          "sha256": "b14297156e6192c17322076cfd4d0abeadee0e9f6951166385a92a5e9cfdf139"
+        }
+      ]
+    },
+    "fd": {
+      "label": "fd02",
+      "buildSeconds": 33.487191915512085,
+      "jvm": {
+        "tests": 36,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0
+      },
+      "deviceTests": 13,
+      "deviceRunnerSeconds": 13.428,
+      "apks": [
+        {
+          "file": "Monica-Android-x86_64-1.0.329.apk",
+          "sha256": "c9e63b0756073a34e112f2b725eb2cb44b88c9abfda19d48bc7df80ccb4c5e73"
+        },
+        {
+          "file": "app-debug-androidTest.apk",
+          "sha256": "589d2193060a35161e045b9112e387be18b32612f3bbe97ccabac1fb49653e02"
+        }
+      ]
+    }
+  },
+  "fdroidMetadataPassed": true,
+  "fdroidScriptTests": 6,
+  "cleanup": {
+    "results": {
+      "takagi.ru.monica.timelineheader20261120.test": "Success",
+      "takagi.ru.monica.timelineheader20261120": "Success",
+      "takagi.ru.monica.timelineheaderfd20261120.test": "Success",
+      "takagi.ru.monica.timelineheaderfd20261120": "Success"
+    },
+    "usersUnchanged": true,
+    "packagesUnchanged": true,
+    "currentUser": "0",
+    "preexistingMuMuLeftRunning": true
+  },
+  "deviceSettingsUnchanged": true,
+  "limitations": [
+    "No physical OEM device",
+    "No new R8/Release or upgrade test for this UI-only change",
+    "Screenshots use component test host with local density/configuration; not full Activity screenshots",
+    "Representative English/Chinese light/dark layouts; not every locale or page"
+  ],
+  "earlierFailures": [
+    "main01: 1/36 JVM guard failed because it required obsolete LaunchedEffect(Unit); guard updated to match expanded-state focus effect",
+    "main02: 11/12 device tests passed; new filter test matched a popup label and card labels; selector restricted to popup, final main03/fd02 all passed"
+  ]
+}

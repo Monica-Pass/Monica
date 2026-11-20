@@ -25,8 +25,8 @@ class ExpressiveTopBarKeyboardRegressionGuardTest {
         )
         assertTrue(
             "The initial expanded search state must continue to focus the field automatically.",
-            source.contains("LaunchedEffect(Unit)") &&
-                source.contains("focusRequester.requestFocus()")
+            Regex("""LaunchedEffect\(isSearchExpanded\)\s*\{\s*if \(isSearchExpanded\)\s*\{\s*focusRequester\.requestFocus\(\)\s*keyboardController\?\.show\(\)""")
+                .containsMatchIn(source)
         )
     }
 

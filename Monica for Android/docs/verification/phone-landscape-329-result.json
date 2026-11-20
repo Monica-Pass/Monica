@@ -1,0 +1,148 @@
+{
+  "task": "phone-landscape-329",
+  "device": "Existing MuMu API35 x86_64",
+  "schemaChanged": false,
+  "schemaVersion": 85,
+  "releaseOrOemTested": false,
+  "editions": {
+    "main": {
+      "buildSeconds": 92.69949889183044,
+      "apks": [
+        {
+          "name": "Monica-Android-x86_64-1.0.329-26112012-91.APK",
+          "sha256": "eebfc326603a28a4f6931b41ddcd9a19586a318ff1feea72e2f23353ff70f011"
+        },
+        {
+          "name": "app-debug-androidTest.apk",
+          "sha256": "5735bcda55599c6a44745875cc37ec7e66efa27b95251f3c4a5019ca5d171e3a"
+        }
+      ],
+      "jvm": [
+        {
+          "name": "takagi.ru.monica.ui.AdaptiveLandscapeLayoutGuardTest",
+          "tests": "7",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        },
+        {
+          "name": "takagi.ru.monica.ui.AdaptivePaneLocalizationGuardTest",
+          "tests": "2",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        },
+        {
+          "name": "takagi.ru.monica.ui.common.layout.AdaptiveLayoutPolicyTest",
+          "tests": "3",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        },
+        {
+          "name": "takagi.ru.monica.ui.MainScreenFabFastScrollVisibilityTest",
+          "tests": "2",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        }
+      ],
+      "device": [
+        {
+          "receipt": "main03-device.txt",
+          "tests": 2,
+          "runnerSeconds": 15.42
+        },
+        {
+          "receipt": "main03-regression-device.txt",
+          "tests": 5,
+          "runnerSeconds": 21.899
+        }
+      ]
+    },
+    "fd": {
+      "buildSeconds": 180.7859206199646,
+      "apks": [
+        {
+          "name": "Monica-Android-x86_64-1.0.329.apk",
+          "sha256": "6eb37472a1431d51d9880db3d50981702a532de23a3358c0c34e849ed4f8d837"
+        },
+        {
+          "name": "app-debug-androidTest.apk",
+          "sha256": "19dc88f298788b6e7f08d0ae72fc750edd2647cc82453eafcdd4a22d2a6bec25"
+        }
+      ],
+      "jvm": [
+        {
+          "name": "takagi.ru.monica.ui.AdaptiveLandscapeLayoutGuardTest",
+          "tests": "7",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        },
+        {
+          "name": "takagi.ru.monica.ui.AdaptivePaneLocalizationGuardTest",
+          "tests": "2",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        },
+        {
+          "name": "takagi.ru.monica.ui.common.layout.AdaptiveLayoutPolicyTest",
+          "tests": "3",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        },
+        {
+          "name": "takagi.ru.monica.ui.MainScreenFabFastScrollVisibilityTest",
+          "tests": "2",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        }
+      ],
+      "device": [
+        {
+          "receipt": "fd01-device.txt",
+          "tests": 2,
+          "runnerSeconds": 14.178
+        },
+        {
+          "receipt": "fd01-regression-device.txt",
+          "tests": 5,
+          "runnerSeconds": 17.25
+        }
+      ]
+    }
+  },
+  "sourceHashes": {
+    "main": {
+      "app/src/main/java/takagi/ru/monica/ui/common/layout/AdaptiveLayout.kt": "0af903adb29c46d8e0926b25eb820aab032208e8c9b6e776ae5273999e88a0ad",
+      "app/src/main/java/takagi/ru/monica/ui/SimpleMainScreen.kt": "cc365f442b2570eb63ed907dce29c35fa22298b91cff5bd15924130d439bafe9",
+      "app/src/test/java/takagi/ru/monica/ui/common/layout/AdaptiveLayoutPolicyTest.kt": "d97e7fb7256eeafcea63e25f039ba88e8cb08fe79debcfe4313bd1308698a46b",
+      "app/src/androidTest/java/takagi/ru/monica/ui/common/layout/AdaptiveLayoutUiTest.kt": "ca17df46770af49eb816e084655dad27fd92292aa6109b7cb0083c8b5848b5d9",
+      "app/src/androidTest/java/takagi/ru/monica/ui/common/layout/AdaptivePhoneLandscapeTest.kt": "4b2b87e64bdfaa6d5acc3ea5a46bc9ccc6436c6975b3532ad329e20b73023567"
+    },
+    "fd": {
+      "app/src/main/java/takagi/ru/monica/ui/common/layout/AdaptiveLayout.kt": "0af903adb29c46d8e0926b25eb820aab032208e8c9b6e776ae5273999e88a0ad",
+      "app/src/main/java/takagi/ru/monica/ui/SimpleMainScreen.kt": "cc365f442b2570eb63ed907dce29c35fa22298b91cff5bd15924130d439bafe9",
+      "app/src/test/java/takagi/ru/monica/ui/common/layout/AdaptiveLayoutPolicyTest.kt": "d97e7fb7256eeafcea63e25f039ba88e8cb08fe79debcfe4313bd1308698a46b",
+      "app/src/androidTest/java/takagi/ru/monica/ui/common/layout/AdaptiveLayoutUiTest.kt": "ca17df46770af49eb816e084655dad27fd92292aa6109b7cb0083c8b5848b5d9",
+      "app/src/androidTest/java/takagi/ru/monica/ui/common/layout/AdaptivePhoneLandscapeTest.kt": "4b2b87e64bdfaa6d5acc3ea5a46bc9ccc6436c6975b3532ad329e20b73023567"
+    }
+  },
+  "cleanup": {
+    "results": {
+      "takagi.ru.monica.adaptive20261119.test": "Success",
+      "takagi.ru.monica.adaptive20261119": "Success",
+      "takagi.ru.monica.adaptivefd20261119.test": "Success",
+      "takagi.ru.monica.adaptivefd20261119": "Success"
+    },
+    "usersUnchanged": true,
+    "packagesUnchanged": true,
+    "currentUser": "0",
+    "preexistingMuMuLeftRunning": true,
+    "displaySettingsRestored": true
+  }
+}

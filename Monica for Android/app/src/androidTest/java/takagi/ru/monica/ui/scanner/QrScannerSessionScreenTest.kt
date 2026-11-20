@@ -1,6 +1,12 @@
 package takagi.ru.monica.ui.scanner
 
+import android.content.ContextWrapper
+import android.content.Intent
+import android.content.ActivityNotFoundException
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.LocalContext
 import android.Manifest
+import androidx.compose.ui.graphics.asAndroidBitmap
 import android.graphics.Bitmap
 import android.os.Looper
 import android.os.SystemClock
@@ -57,6 +63,7 @@ class QrScannerSessionScreenTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
     private val diagnostics = CopyOnWriteArrayList<String>()
     private val received = CopyOnWriteArrayList<String>()
+    private val launchedIntents = CopyOnWriteArrayList<Intent>()
     private val receivedFormats = CopyOnWriteArrayList<BarcodeFormat>()
     private val deliveredOnMain = AtomicBoolean(false)
     private val validationOnMain = AtomicBoolean(true)
@@ -69,6 +76,8 @@ class QrScannerSessionScreenTest {
     private lateinit var navigation: NavHostController
 
     @Before fun allowCamera() {
+        compose.activityRule.scenario.onActivity { it.requestedOrientation = android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT }
+        compose.waitUntil(10_000) { compose.activity.resources.configuration.orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT }
         instrumentation.uiAutomation.grantRuntimePermission(instrumentation.targetContext.packageName, Manifest.permission.CAMERA)
     }
 
@@ -82,7 +91,7 @@ class QrScannerSessionScreenTest {
         executors.forEach { it.shutdown() }
     }
 
-    private fun showScanner(steam: Boolean = true, failFirstAcceptance: Boolean = false, boarding: Boolean = false) {
+    private fun showScanner(steam: Boolean = true, failFirstAcceptance: Boolean = false, boarding: Boolean = false, unified: Boolean = false, noHandler: Boolean = false) {
         compose.setContent {
             MaterialTheme {
                 navigation = rememberNavController()
@@ -105,7 +114,25 @@ class QrScannerSessionScreenTest {
                             if (Looper.myLooper() != Looper.getMainLooper()) validationOnMain.set(false)
                             !steam || SteamQrChallenge.parse(it) != null
                         }
-                        if (boarding) QrScannerScreen({ error("Legacy callback must not receive typed results") }, { navigation.popBackStack() },
+                        if (unified) {
+                            val base = LocalContext.current
+                            val launchContext = androidx.compose.runtime.remember(base) {
+                                object : ContextWrapper(base) {
+                                    override fun startActivity(intent: Intent) {
+                                        if (noHandler) throw ActivityNotFoundException("Synthetic missing handler")
+                                        launchedIntents += intent
+                                    }
+                                }
+                            }
+                            CompositionLocalProvider(LocalContext provides launchContext) {
+                                UnifiedQrScannerScreen(
+                                    onNavigateBack = { navigation.popBackStack() },
+                                    onAuthenticatorScanned = onResult,
+                                    diagnosticLabel = "unified_test", onDiagnostic = diagnosticSink
+                                )
+                            }
+                        }
+                        else if (boarding) QrScannerScreen({ error("Legacy callback must not receive typed results") }, { navigation.popBackStack() },
                             onBarcodeScanned = { value, format -> receivedFormats += format; onResult(value) },
                             allowedFormats = listOf(BarcodeFormat.PDF_417, BarcodeFormat.QR_CODE, BarcodeFormat.AZTEC, BarcodeFormat.DATA_MATRIX),
                             preserveWhitespace = true,
@@ -263,6 +290,158 @@ class QrScannerSessionScreenTest {
         compose.waitForIdle()
         compose.onNodeWithTag("scanner_home").assertIsDisplayed()
         assertTrue("A retired camera session must not submit a queued code", received.isEmpty())
+    }
+
+    @Test fun unifiedCameraRoutesAuthenticatorExactlyOnce() {
+        showScanner(unified = true)
+        val feed = feedCamera()
+        feed.fixture.set(QrScannerFixtures.Frame().code(QrScannerFixtures.TOTP))
+        assertReturned(QrScannerFixtures.TOTP)
+        assertTrue(launchedIntents.isEmpty())
+    }
+
+    @Test fun unifiedCameraRoutesPasskeyToSystemOnly() {
+        showScanner(unified = true)
+        val code = UnifiedScannerFixtures.fido()
+        val feed = feedCamera()
+        feed.fixture.set(QrScannerFixtures.Frame().code(code))
+        compose.waitUntil(15_000) { launchedIntents.isNotEmpty() }
+        compose.onNodeWithTag("scanner_home").assertIsDisplayed()
+        assertEquals(1, launchedIntents.size)
+        assertEquals(Intent.ACTION_VIEW, launchedIntents.single().action)
+        assertEquals(code, launchedIntents.single().dataString)
+        assertTrue(received.isEmpty())
+    }
+
+    @Test fun unifiedCameraRejectsUnknownThenAcceptsValidCode() {
+        showScanner(unified = true)
+        val feed = feedCamera()
+        feed.fixture.set(QrScannerFixtures.Frame().code(QrScannerFixtures.UNRELATED))
+        compose.waitUntil(15_000) { compose.onAllNodesWithText(instrumentation.targetContext.getString(takagi.ru.monica.R.string.qr_credentials_invalid)).fetchSemanticsNodes().isNotEmpty() }
+        assertTrue(received.isEmpty())
+        assertTrue(launchedIntents.isEmpty())
+        feed.fixture.set(QrScannerFixtures.Frame().code(QrScannerFixtures.TOTP))
+        assertReturned(QrScannerFixtures.TOTP)
+    }
+
+    @Test fun unifiedCameraRequiresOneCodeAndCanRetry() {
+        showScanner(unified = true)
+        val feed = feedCamera()
+        feed.fixture.set(QrScannerFixtures.Frame()
+            .code(QrScannerFixtures.TOTP, left = 70, top = 290, size = 380)
+            .code(UnifiedScannerFixtures.fido(), left = 830, top = 290, size = 380))
+        compose.waitUntil(15_000) { compose.onAllNodesWithText(instrumentation.targetContext.getString(takagi.ru.monica.R.string.qr_multiple_codes)).fetchSemanticsNodes().isNotEmpty() }
+        assertTrue(received.isEmpty())
+        assertTrue(launchedIntents.isEmpty())
+        captureUnified("multiple")
+        feed.fixture.set(QrScannerFixtures.Frame().code(QrScannerFixtures.TOTP))
+        assertReturned(QrScannerFixtures.TOTP)
+    }
+
+    @Test fun unifiedCameraTreatsDuplicateCodesAsOne() {
+        showScanner(unified = true)
+        val feed = feedCamera()
+        feed.fixture.set(QrScannerFixtures.Frame()
+            .code(QrScannerFixtures.TOTP, left = 70, top = 290, size = 380)
+            .code(QrScannerFixtures.TOTP, left = 830, top = 290, size = 380))
+        assertReturned(QrScannerFixtures.TOTP)
+    }
+
+    @Test fun unifiedMissingSystemHandlerDoesNotCreateAuthenticator() {
+        showScanner(unified = true, noHandler = true)
+        val feed = feedCamera()
+        feed.fixture.set(QrScannerFixtures.Frame().code(UnifiedScannerFixtures.fido()))
+        compose.waitUntil(15_000) { compose.onAllNodesWithTag("scanner_home").fetchSemanticsNodes().isNotEmpty() }
+        assertTrue(received.isEmpty())
+        assertTrue(launchedIntents.isEmpty())
+    }
+
+    @Test fun unifiedScannerShowsGreenCornersAndBackLeavesWithoutResult() {
+        showScanner(unified = true)
+        feedCamera()
+        compose.onNodeWithTag("scanner_frame").assertIsDisplayed()
+        captureUnified("camera")
+        compose.onNodeWithContentDescription(instrumentation.targetContext.getString(takagi.ru.monica.R.string.go_back)).performClick()
+        compose.onNodeWithTag("scanner_home").assertIsDisplayed()
+        assertTrue(received.isEmpty())
+        assertTrue(launchedIntents.isEmpty())
+    }
+
+    @Test fun unifiedScannerLargeTextDarkThemeKeepsControlsVisible() {
+        var wentBack = false
+        compose.setContent {
+            val density = androidx.compose.ui.platform.LocalDensity.current
+            CompositionLocalProvider(androidx.compose.ui.platform.LocalDensity provides androidx.compose.ui.unit.Density(density.density, 1.5f)) {
+                MaterialTheme(colorScheme = androidx.compose.material3.darkColorScheme()) {
+                    UnifiedQrScannerScreen(onNavigateBack = { wentBack = true }, onAuthenticatorScanned = { error("No fixture was presented") })
+                }
+            }
+        }
+        awaitStreaming()
+        compose.onNodeWithTag("scanner_frame").assertIsDisplayed()
+        compose.onNodeWithText(instrumentation.targetContext.getString(takagi.ru.monica.R.string.qr_credentials_hint)).assertIsDisplayed()
+        compose.onNodeWithText(instrumentation.targetContext.getString(takagi.ru.monica.R.string.qr_pick_from_gallery)).assertIsDisplayed()
+        val titleImage = compose.onNodeWithText(instrumentation.targetContext.getString(takagi.ru.monica.R.string.scan_qr_code_title)).captureToImage().asAndroidBitmap()
+        val titlePixels = IntArray(titleImage.width * titleImage.height)
+        titleImage.getPixels(titlePixels, 0, titleImage.width, 0, 0, titleImage.width, titleImage.height)
+        assertTrue("Dark theme title must have light foreground pixels", titlePixels.count {
+            android.graphics.Color.red(it) > 180 && android.graphics.Color.green(it) > 180 && android.graphics.Color.blue(it) > 180
+        } > titlePixels.size / 100)
+        titleImage.recycle()
+        captureUnified("camera-dark-large")
+        compose.onNodeWithContentDescription(instrumentation.targetContext.getString(takagi.ru.monica.R.string.go_back)).performClick()
+        compose.runOnIdle { assertTrue(wentBack) }
+    }
+
+    @Test fun unifiedGalleryButtonDeliversSelectedOtpThroughActivityResult() {
+        showScanner(unified = true)
+        val file = File(instrumentation.targetContext.cacheDir, "unified-picker-fixture.png")
+        val bitmap = QrScannerFixtures.Frame().code(QrScannerFixtures.TOTP).bitmap()
+        file.outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
+        bitmap.recycle()
+        val monitor = object : android.app.Instrumentation.ActivityMonitor() {
+            override fun onStartActivity(intent: Intent): android.app.Instrumentation.ActivityResult? =
+                if (intent.action == Intent.ACTION_GET_CONTENT) android.app.Instrumentation.ActivityResult(android.app.Activity.RESULT_OK,
+                    Intent().setData(android.net.Uri.fromFile(file))) else null
+        }
+        instrumentation.addMonitor(monitor)
+        try {
+            compose.onNodeWithText(instrumentation.targetContext.getString(takagi.ru.monica.R.string.qr_pick_from_gallery)).performClick()
+            compose.waitUntil(15_000) { received.isNotEmpty() }
+            compose.onNodeWithTag("scanner_home").assertIsDisplayed()
+            assertEquals(listOf(QrScannerFixtures.TOTP), received.toList())
+            assertTrue(launchedIntents.isEmpty())
+        } finally { instrumentation.removeMonitor(monitor); file.delete() }
+    }
+
+    @Test fun cancellingGalleryLeavesUnifiedScannerReady() {
+        showScanner(unified = true)
+        val monitor = object : android.app.Instrumentation.ActivityMonitor() {
+            override fun onStartActivity(intent: Intent): android.app.Instrumentation.ActivityResult? =
+                if (intent.action == Intent.ACTION_GET_CONTENT) android.app.Instrumentation.ActivityResult(android.app.Activity.RESULT_CANCELED, null) else null
+        }
+        instrumentation.addMonitor(monitor)
+        try {
+            compose.onNodeWithText(instrumentation.targetContext.getString(takagi.ru.monica.R.string.qr_pick_from_gallery)).performClick()
+            compose.onNodeWithTag("scanner_frame").assertIsDisplayed()
+            assertTrue(received.isEmpty())
+            assertTrue(launchedIntents.isEmpty())
+            val feed = feedCamera()
+            feed.fixture.set(QrScannerFixtures.Frame().code(QrScannerFixtures.TOTP))
+            assertReturned(QrScannerFixtures.TOTP)
+        } finally { instrumentation.removeMonitor(monitor) }
+    }
+
+    private fun captureUnified(name: String) {
+        // Let any platform toast from the previous missing-handler test expire.
+        SystemClock.sleep(4_000)
+        compose.waitForIdle()
+        instrumentation.uiAutomation.takeScreenshot()?.let { bitmap ->
+            File(instrumentation.targetContext.filesDir, "unified-$name.png").outputStream().use {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
+            }
+            bitmap.recycle()
+        }
     }
 
     private class CameraFeed {

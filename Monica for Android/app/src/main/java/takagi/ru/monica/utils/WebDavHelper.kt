@@ -1,16 +1,22 @@
 package takagi.ru.monica.utils
 
+import android.net.NetworkInfo
+import android.widget.Toast
+import com.thegrizzlylabs.sardineandroid.impl.OkHttpSardine
+import kotlinx.coroutines.TimeoutCancellationException
+import takagi.ru.monica.data.resolveOwnership
+import takagi.ru.monica.data.model.TotpData
+import okhttp3.OkHttpClient
+import java.util.Currency
+import java.util.concurrent.TimeUnit
+
 import takagi.ru.monica.data.explicitPasswordGroupId
 import android.content.Context
 import android.net.Uri
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
-import android.widget.Toast
 import com.thegrizzlylabs.sardineandroid.Sardine
-import com.thegrizzlylabs.sardineandroid.impl.OkHttpSardine
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import kotlinx.serialization.Serializable
@@ -34,9 +40,7 @@ import takagi.ru.monica.data.ItemCounts
 import takagi.ru.monica.data.FailedItem
 import takagi.ru.monica.data.isLocalOnlyItem
 import takagi.ru.monica.data.isMdbxOwned
-import takagi.ru.monica.data.resolveOwnership
 import takagi.ru.monica.data.model.OtpType
-import takagi.ru.monica.data.model.TotpData
 import takagi.ru.monica.data.model.CardWalletDataCodec
 import takagi.ru.monica.data.model.isEmpty
 import takagi.ru.monica.passkey.PasskeyBackupPortabilityPolicy
@@ -62,12 +66,10 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.ensureActive
-import okhttp3.OkHttpClient
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
-import java.util.Currency
 import java.util.Date
 import java.util.Locale
 import java.util.zip.ZipEntry
@@ -78,7 +80,6 @@ import java.io.OutputStreamWriter
 import takagi.ru.monica.transfer.TransferPhase
 import takagi.ru.monica.transfer.TransferProgress
 import takagi.ru.monica.transfer.TransferProgressReporter
-import java.util.concurrent.TimeUnit
 
 private class PasskeyBackupEncryptionRequiredException(message: String) :
     IllegalStateException(message)
@@ -256,19 +257,6 @@ private data class CategoryBackupEntry(
     val sortOrder: Int = 0
 )
 
-@Serializable
-private data class OperationLogBackupEntry(
-    val id: Long = 0,
-    val itemType: String = "",
-    val itemId: Long = 0,
-    val itemTitle: String = "",
-    val operationType: String = "",
-    val changesJson: String = "",
-    val deviceId: String = "",
-    val deviceName: String = "",
-    val timestamp: Long = 0,
-    val isReverted: Boolean = false
-)
 
 @Serializable
 private data class TrashPasswordBackupEntry(
@@ -722,7 +710,6 @@ class WebDavHelper(
         private const val KEY_BACKUP_INCLUDE_GENERATOR_HISTORY = "backup_include_generator_history"
         private const val KEY_BACKUP_INCLUDE_IMAGES = "backup_include_images"
         private const val KEY_BACKUP_INCLUDE_NOTES = "backup_include_notes"
-        private const val KEY_BACKUP_INCLUDE_TIMELINE = "backup_include_timeline"
         private const val KEY_BACKUP_INCLUDE_TRASH = "backup_include_trash"
         private const val KEY_BACKUP_INCLUDE_TRASH_AND_HISTORY = "backup_include_trash_and_history"
         private const val KEY_BACKUP_INCLUDE_WEBDAV_CONFIG = "backup_include_webdav_config"
@@ -1379,7 +1366,6 @@ class WebDavHelper(
             .remove(KEY_BACKUP_INCLUDE_GENERATOR_HISTORY)
             .remove(KEY_BACKUP_INCLUDE_IMAGES)
             .remove(KEY_BACKUP_INCLUDE_NOTES)
-            .remove(KEY_BACKUP_INCLUDE_TIMELINE)
             .remove(KEY_BACKUP_INCLUDE_TRASH)
             .remove(KEY_BACKUP_INCLUDE_TRASH_AND_HISTORY)
             .remove(KEY_BACKUP_INCLUDE_WEBDAV_CONFIG)
@@ -1609,7 +1595,6 @@ class WebDavHelper(
             putBoolean(KEY_BACKUP_INCLUDE_GENERATOR_HISTORY, preferences.includeGeneratorHistory)
             putBoolean(KEY_BACKUP_INCLUDE_IMAGES, preferences.includeImages)
             putBoolean(KEY_BACKUP_INCLUDE_NOTES, preferences.includeNotes)
-            putBoolean(KEY_BACKUP_INCLUDE_TIMELINE, preferences.includeTimeline)
             putBoolean(KEY_BACKUP_INCLUDE_TRASH, preferences.includeTrash)
             putBoolean(KEY_BACKUP_INCLUDE_TRASH_AND_HISTORY, preferences.includeTrashAndHistory)
             putBoolean(KEY_BACKUP_INCLUDE_WEBDAV_CONFIG, preferences.includeWebDavConfig)
@@ -1635,7 +1620,6 @@ class WebDavHelper(
             includeGeneratorHistory = prefs.getBoolean(KEY_BACKUP_INCLUDE_GENERATOR_HISTORY, true),
             includeImages = prefs.getBoolean(KEY_BACKUP_INCLUDE_IMAGES, true),
             includeNotes = prefs.getBoolean(KEY_BACKUP_INCLUDE_NOTES, true),
-            includeTimeline = prefs.getBoolean(KEY_BACKUP_INCLUDE_TIMELINE, true),
             includeTrash = prefs.getBoolean(KEY_BACKUP_INCLUDE_TRASH, true),
             includeTrashAndHistory = prefs.getBoolean(KEY_BACKUP_INCLUDE_TRASH_AND_HISTORY, true),
             includeWebDavConfig = prefs.getBoolean(KEY_BACKUP_INCLUDE_WEBDAV_CONFIG, false),
@@ -2518,45 +2502,6 @@ class WebDavHelper(
                         }
                     }
                     
-                    // 7.5 备份操作历史记录 (时间线)
-                    if (preferences.includeTimeline) {
-                        try {
-                            val database = takagi.ru.monica.data.PasswordDatabase.getDatabase(context)
-                            val operationLogDao = database.operationLogDao()
-                            val allLogs = operationLogDao.getAllLogsSync()
-                            
-                            if (allLogs.isNotEmpty()) {
-                                val logBackups = allLogs.map { log ->
-                                    OperationLogBackupEntry(
-                                        id = log.id,
-                                        itemType = log.itemType,
-                                        itemId = log.itemId,
-                                        itemTitle = log.itemTitle,
-                                        operationType = log.operationType,
-                                        changesJson = log.changesJson,
-                                        deviceId = log.deviceId,
-                                        deviceName = log.deviceName,
-                                        timestamp = log.timestamp,
-                                        isReverted = log.isReverted
-                                    )
-                                }
-                                val json = Json { prettyPrint = false }
-                                val timelineJson = json.encodeToString(
-                                    kotlinx.serialization.builtins.ListSerializer(OperationLogBackupEntry.serializer()),
-                                    logBackups
-                                )
-                                val timelineFile = File(cacheBackupDir, "timeline_history.json")
-                                timelineFile.writeText(timelineJson, Charsets.UTF_8)
-                                addFileToZip(zipOut, timelineFile, timelineFile.name)
-                                timelineFile.delete()
-                                android.util.Log.d("WebDavHelper", "Backup ${allLogs.size} timeline entries")
-                            }
-                        } catch (e: Exception) {
-                            android.util.Log.w("WebDavHelper", "Failed to backup timeline: ${e.message}")
-                            warnings.add(strings.get(R.string.backup_report_backup_failed, strings.get(R.string.backup_content_timeline), e.message ?: strings.get(R.string.import_data_unknown_error)))
-                        }
-                    }
-                    
                     // 7.6 备份回收站数据
                     if (preferences.includeTrash) {
                         try {
@@ -3037,36 +2982,6 @@ class WebDavHelper(
                     cleanupResult.onFailure { error ->
                         android.util.Log.w("WebDavHelper", "Backup uploaded, but retention cleanup failed", error)
                     }
-                    
-                    // 记录 WebDAV 上传操作到时间线
-                    val uploadDetails = mutableListOf<FieldChange>()
-                    val backedUpCounts = report.successItems
-                    if (backedUpCounts.passwords > 0) {
-                        uploadDetails.add(FieldChange("密码", "", backedUpCounts.passwords.toString()))
-                    }
-                    if (backedUpCounts.totp > 0) {
-                        uploadDetails.add(FieldChange("验证器", "", backedUpCounts.totp.toString()))
-                    }
-                    if (backedUpCounts.bankCards > 0) {
-                        uploadDetails.add(FieldChange("卡片", "", backedUpCounts.bankCards.toString()))
-                    }
-                    if (backedUpCounts.notes > 0) {
-                        uploadDetails.add(FieldChange("笔记", "", backedUpCounts.notes.toString()))
-                    }
-                    if (backedUpCounts.documents > 0) {
-                        uploadDetails.add(FieldChange("证件", "", backedUpCounts.documents.toString()))
-                    }
-                    if (backedUpCounts.billingAddresses > 0) {
-                        uploadDetails.add(FieldChange("账单地址", "", backedUpCounts.billingAddresses.toString()))
-                    }
-                    if (backedUpCounts.paymentAccounts > 0) {
-                        uploadDetails.add(FieldChange("支付方式", "", backedUpCounts.paymentAccounts.toString()))
-                    }
-                    OperationLogger.logWebDavUpload(
-                        isAutomatic = !isManualTrigger,
-                        isPermanent = isPermanent,
-                        details = uploadDetails
-                    )
 
                     // A cleanup failure is a warning; the new backup is already safely uploaded.
                     val finalReport = report.copy(
@@ -4117,9 +4032,9 @@ class WebDavHelper(
                     entryName.equals("categories.json", ignoreCase = true) -> {
                         restoreCategoriesBackupEntry(tempFile, warnings)
                     }
-                    // ✅ 恢复操作历史记录 (时间线)
+                    // Ignore the retired timeline entry in older archives; restore other entries normally.
                     entryName.equals("timeline_history.json", ignoreCase = true) -> {
-                        restoreTimelineBackupEntry(tempFile, warnings)
+                        Unit
                     }
                     // ✅ 恢复回收站数据 - 密码
                     normalizedEntryName.contains("/trash/") && entryName.equals("trash_passwords.json", ignoreCase = true) -> {
@@ -4347,54 +4262,6 @@ class WebDavHelper(
         } catch (e: Exception) {
             android.util.Log.w("WebDavHelper", "Failed to restore categories: ${e.message}")
             warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.category), e.message ?: strings.get(R.string.import_data_unknown_error)))
-        }
-    }
-
-    private suspend fun restoreTimelineBackupEntry(
-        tempFile: File,
-        warnings: MutableList<String>,
-    ) {
-        try {
-            val timelineJson = tempFile.readText(Charsets.UTF_8)
-            val json = Json { ignoreUnknownKeys = true }
-            val logBackups = json.decodeFromString<List<OperationLogBackupEntry>>(timelineJson)
-
-            if (logBackups.isNotEmpty()) {
-                val database = takagi.ru.monica.data.PasswordDatabase.getDatabase(context)
-                val operationLogDao = database.operationLogDao()
-
-                // 获取现有日志的时间戳用于去重
-                val existingLogs = operationLogDao.getAllLogsSync()
-                val existingTimestamps = existingLogs.map { it.timestamp }.toSet()
-
-                // 只导入不存在的日志
-                val newLogs = logBackups.filter { backup ->
-                    backup.timestamp !in existingTimestamps
-                }.map { backup ->
-                    takagi.ru.monica.data.OperationLog(
-                        id = 0, // 使用新ID，避免冲突
-                        itemType = backup.itemType,
-                        itemId = backup.itemId,
-                        itemTitle = backup.itemTitle,
-                        operationType = backup.operationType,
-                        changesJson = backup.changesJson,
-                        deviceId = backup.deviceId,
-                        deviceName = backup.deviceName,
-                        timestamp = backup.timestamp,
-                        isReverted = backup.isReverted
-                    )
-                }
-
-                if (newLogs.isNotEmpty()) {
-                    operationLogDao.insertAll(newLogs)
-                    android.util.Log.d("WebDavHelper", "Restored ${newLogs.size} new timeline entries (${logBackups.size - newLogs.size} duplicates skipped)")
-                } else {
-                    android.util.Log.d("WebDavHelper", "All ${logBackups.size} timeline entries already exist, skipped")
-                }
-            }
-        } catch (e: Exception) {
-            android.util.Log.w("WebDavHelper", "Failed to restore timeline: ${e.message}")
-            warnings.add(strings.get(R.string.backup_report_restore_failed, strings.get(R.string.backup_content_timeline), e.message ?: strings.get(R.string.import_data_unknown_error)))
         }
     }
 
@@ -5122,100 +4989,7 @@ class WebDavHelper(
                     return@deliverOnIo Result.failure(ex ?: Exception(strings.get(R.string.legacy_ui_report_restore_failed)))
                 }
                 
-                // 记录 WebDAV 下载/同步操作到时间线
-                // 注意：此时数据还未真正写入数据库，result 包含的是备份文件中解析出的条目
-                // 实际新增/修改的统计需要在合并逻辑中完成
                 val result = restoreResult.getOrThrow().also { parsed = it }
-                val downloadDetails = mutableListOf<FieldChange>()
-                val newItemNames = mutableListOf<FieldChange>()
-                
-                // 密码统计
-                if (result.content.passwords.isNotEmpty()) {
-                    val passwordCount = result.content.passwords.size
-                    downloadDetails.add(FieldChange("密码", "", passwordCount.toString()))
-                    // 收集密码名称用于git-branch风格展示（最多10个）
-                    result.content.passwords.take(10).forEach { pwd ->
-                        newItemNames.add(FieldChange("密码", "", pwd.title.ifBlank { pwd.username }))
-                    }
-                    if (passwordCount > 10) {
-                        newItemNames.add(FieldChange("密码", "", strings.get(R.string.backup_report_more_items, passwordCount - 10)))
-                    }
-                }
-                
-                // 安全项统计
-                val secureItems = result.content.secureItems
-                val totpItems = secureItems.filter { it.itemType == "TOTP" }
-                if (totpItems.isNotEmpty()) {
-                    downloadDetails.add(FieldChange("验证器", "", totpItems.size.toString()))
-                    totpItems.take(10).forEach { item ->
-                        newItemNames.add(FieldChange("验证器", "", item.title))
-                    }
-                    if (totpItems.size > 10) {
-                        newItemNames.add(FieldChange("验证器", "", strings.get(R.string.backup_report_more_items, totpItems.size - 10)))
-                    }
-                }
-                
-                val cardItems = secureItems.filter { it.itemType == "BANK_CARD" }
-                if (cardItems.isNotEmpty()) {
-                    downloadDetails.add(FieldChange("卡片", "", cardItems.size.toString()))
-                    cardItems.take(10).forEach { item ->
-                        newItemNames.add(FieldChange("卡片", "", item.title))
-                    }
-                    if (cardItems.size > 10) {
-                        newItemNames.add(FieldChange("卡片", "", strings.get(R.string.backup_report_more_items, cardItems.size - 10)))
-                    }
-                }
-                
-                val noteItems = secureItems.filter { it.itemType == "NOTE" }
-                if (noteItems.isNotEmpty()) {
-                    downloadDetails.add(FieldChange("笔记", "", noteItems.size.toString()))
-                    noteItems.take(10).forEach { item ->
-                        newItemNames.add(FieldChange("笔记", "", item.title))
-                    }
-                    if (noteItems.size > 10) {
-                        newItemNames.add(FieldChange("笔记", "", strings.get(R.string.backup_report_more_items, noteItems.size - 10)))
-                    }
-                }
-                
-                val docItems = secureItems.filter { it.itemType == "DOCUMENT" }
-                if (docItems.isNotEmpty()) {
-                    downloadDetails.add(FieldChange("证件", "", docItems.size.toString()))
-                    docItems.take(10).forEach { item ->
-                        newItemNames.add(FieldChange("证件", "", item.title))
-                    }
-                    if (docItems.size > 10) {
-                        newItemNames.add(FieldChange("证件", "", strings.get(R.string.backup_report_more_items, docItems.size - 10)))
-                    }
-                }
-
-                val billingAddressItems = secureItems.filter { it.itemType == "BILLING_ADDRESS" }
-                if (billingAddressItems.isNotEmpty()) {
-                    downloadDetails.add(FieldChange("账单地址", "", billingAddressItems.size.toString()))
-                    billingAddressItems.take(10).forEach { item ->
-                        newItemNames.add(FieldChange("账单地址", "", item.title))
-                    }
-                    if (billingAddressItems.size > 10) {
-                        newItemNames.add(FieldChange("账单地址", "", strings.get(R.string.backup_report_more_items, billingAddressItems.size - 10)))
-                    }
-                }
-
-                val paymentAccountItems = secureItems.filter { it.itemType == "PAYMENT_ACCOUNT" }
-                if (paymentAccountItems.isNotEmpty()) {
-                    downloadDetails.add(FieldChange("支付方式", "", paymentAccountItems.size.toString()))
-                    paymentAccountItems.take(10).forEach { item ->
-                        newItemNames.add(FieldChange("支付方式", "", item.title))
-                    }
-                    if (paymentAccountItems.size > 10) {
-                        newItemNames.add(FieldChange("支付方式", "", strings.get(R.string.backup_report_more_items, paymentAccountItems.size - 10)))
-                    }
-                }
-                
-                if (downloadDetails.isNotEmpty()) {
-                    // 合并统计和详细条目列表
-                    val allDetails = downloadDetails + newItemNames
-                    OperationLogger.logWebDavDownload(addedItems = allDetails)
-                }
-                
                 Result.success(result).also { handedOff = true }
             } finally {
                 // 清理下载的文件

@@ -1,0 +1,50 @@
+{
+  "results": {
+    "main": {
+      "buildSeconds": 190.481,
+      "jvmTests": 42,
+      "deviceTests": 38,
+      "runnerSeconds": 81.695,
+      "apkSha256": [
+        "3ef6825b8f6632fa4248ff13a33afcf7aa22a3d4f3df7b338517944285b82bc6",
+        "ad4f993f081c9ac132f6fea65bcc48a7b61afdb71ceca5ae27065ef554212cee"
+      ]
+    },
+    "fd": {
+      "buildSeconds": 101.53,
+      "jvmTests": 42,
+      "deviceTests": 38,
+      "runnerSeconds": 84.285,
+      "apkSha256": [
+        "994dfd25aa6cc9d3a5d6742f47977e6905c75e555f8b67d5366acc6067f151e0",
+        "6ea8bbbeed1816462972763bffa99a188cde15da8a81f00fa5886308014fc6b8"
+      ]
+    }
+  },
+  "sharedFiles": 37,
+  "resourceConfigurations": 18,
+  "resourceValues": 54,
+  "databaseVersion": 85,
+  "databaseAndBridgeByteUnchanged": true,
+  "metadataScriptTests": 6,
+  "cleanup": {
+    "results": {
+      "takagi.ru.monica.unifiedscan20261120.test": "Success",
+      "takagi.ru.monica.unifiedscan20261120": "Success",
+      "takagi.ru.monica.unifiedscanfd20261120.test": "Success",
+      "takagi.ru.monica.unifiedscanfd20261120": "Success"
+    },
+    "usersUnchanged": true,
+    "packagesUnchanged": true,
+    "currentUser": "0",
+    "preexistingMuMuLeftRunning": true
+  },
+  "limitations": [
+    "Synthetic QR pixels on real CameraX; no optical camera validation",
+    "FIDO ACTION_VIEW captured; no real passkey/BLE authentication",
+    "No complete MainActivity navigation or R8/release upgrade validation"
+  ],
+  "screenshotsLocalOnly": true,
+  "committed": false,
+  "pushed": false
+}

@@ -35,7 +35,7 @@ class CloudFullBackupSafetyInstrumentedTest {
     private val prefs = BackupPreferences(includePasswords = true, includeNotes = true,
         includeAuthenticators = false, includeDocuments = false, includeBankCards = false,
         includePasskeys = false, includeGeneratorHistory = false, includeImages = false,
-        includeTimeline = false, includeTrash = false, includeTrashAndHistory = false,
+        includeTrash = false, includeTrashAndHistory = false,
         includeWebDavConfig = false, includeLocalKeePass = false)
     private fun field(helper: WebDavHelper, name: String, value: Any) {
         WebDavHelper::class.java.getDeclaredField(name).apply { isAccessible = true }.set(helper, value)

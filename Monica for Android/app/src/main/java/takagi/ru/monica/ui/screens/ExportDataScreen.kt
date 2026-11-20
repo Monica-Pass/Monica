@@ -424,7 +424,7 @@ fun ExportDataScreen(
                     }
                     ExportScopeToggle(stringResource(R.string.backup_content_trash), preferences.includeTrash, 6, 7) {
                         preferences = preferences.copy(includeTrash = it, includeTrashAndHistory = it,
-                            includeGeneratorHistory = false, includeTimeline = false)
+                            includeGeneratorHistory = false, )
                     }
                 }
                 ExportScopeToggle(stringResource(R.string.backup_content_webdav_config), preferences.includeWebDavConfig, 0, 1) {

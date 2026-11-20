@@ -63,7 +63,7 @@ class KeePassVaultDeleteUiTest {
                             localKeePassViewModel=keepass, settingsViewModel=settingsModel, state=state,
                             onOpenPassword={}, onOpenTotp={}, onOpenBankCard={}, onOpenDocument={},
                             onOpenBillingAddress={}, onOpenNote={}, onOpenPasskey={}, onOpenMdbxCommitHistory={},
-                            onOpenHistory={}, onOpenTrashPage={}, onOpenArchivePage={}, onOpenCommonAccountTemplates={},
+                            onOpenTrashPage={}, onOpenArchivePage={}, onOpenCommonAccountTemplates={},
                             appSettings=AppSettings(vaultOverviewEnabled=false, disablePasswordVerification=true),
                             securityManager=security, biometricEnabled=false, modifier=Modifier.fillMaxSize())
                     }

@@ -35,6 +35,7 @@ class AdaptiveLayoutUiTest {
 
     @Test fun resizingKeepsDraftAndListScrollWithoutRemountingSlots() {
         val width = mutableStateOf(1000)
+        val height = mutableStateOf(550)
         val selected = mutableStateOf(false)
         val locked = mutableStateOf(false)
         var listMounts = 0
@@ -43,8 +44,8 @@ class AdaptiveLayoutUiTest {
         compose.setContent {
             CompositionLocalProvider(LocalDensity provides Density(1f)) {
                 MaterialTheme {
-                    Box(Modifier.width(width.value.dp).height(550.dp)) {
-                        if (!locked.value) AdaptiveListDetailLayout(width.value < 840, 350.dp, selected.value,
+                    Box(Modifier.width(width.value.dp).height(height.value.dp)) {
+                        if (!locked.value) AdaptiveListDetailLayout(!adaptivePanePolicy(width.value).twoPanes, 350.dp, selected.value,
                             list = {
                                 val scroll = rememberLazyListState()
                                 SideEffect { scrollIndex = scroll.firstVisibleItemIndex }
@@ -71,10 +72,16 @@ class AdaptiveLayoutUiTest {
         compose.onNodeWithTag("draft").performTextInput("Synthetic resize draft")
         val before = scrollIndex
         shot("two-pane")
-        for (size in listOf(720, 400, 1000, 320, 840)) {
-            compose.runOnIdle { width.value = size }
+        for ((size, shortHeight) in listOf(960 to 432, 1000 to 400, 720 to 550, 400 to 550, 1000 to 550, 320 to 550, 840 to 320)) {
+            compose.runOnIdle { width.value = size; height.value = shortHeight }
             compose.onNodeWithTag("draft").assertTextContains("Synthetic resize draft").assertIsDisplayed()
             if (size < 840) compose.onNodeWithTag("items").assertIsNotDisplayed()
+            else {
+                val list = compose.onNodeWithTag("adaptive-list").assertIsDisplayed().getUnclippedBoundsInRoot()
+                val detail = compose.onNodeWithTag("adaptive-detail").assertIsDisplayed().getUnclippedBoundsInRoot()
+                assertTrue(list.right <= detail.left)
+                assertTrue((detail.right - detail.left).value >= 320f)
+            }
             assertEquals(before, scrollIndex)
             assertEquals(1, listMounts)
             assertEquals(1, detailMounts)

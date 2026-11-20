@@ -1,5 +1,10 @@
 package takagi.ru.monica.ui
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
@@ -10,11 +15,9 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -22,8 +25,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import java.util.Date
 import takagi.ru.monica.R
 import takagi.ru.monica.attachments.ui.attachmentErrorMessage
@@ -31,14 +32,7 @@ import takagi.ru.monica.bitwarden.repository.BitwardenRepository
 import takagi.ru.monica.data.Category
 import takagi.ru.monica.data.LocalKeePassDatabase
 import takagi.ru.monica.data.LocalMdbxDatabase
-import takagi.ru.monica.data.OperationLogItemType
 import takagi.ru.monica.data.PasswordEntry
-import takagi.ru.monica.data.model.TIMELINE_FIELD_BATCH_COPY_PAYLOAD
-import takagi.ru.monica.data.model.TIMELINE_FIELD_BATCH_MOVE_PAYLOAD
-import takagi.ru.monica.data.model.TimelineBatchCopyPayload
-import takagi.ru.monica.data.model.TimelineBatchMovePayload
-import takagi.ru.monica.data.model.TimelinePasswordLocationState
-import takagi.ru.monica.data.model.TimelinePasswordRecreatedEntry
 import takagi.ru.monica.ui.password.PasswordAggregateListItemUi
 import takagi.ru.monica.ui.password.PasswordBatchTransferGlobalProgressState
 import takagi.ru.monica.ui.password.PasswordBatchTransferProgressTracker
@@ -49,8 +43,6 @@ import takagi.ru.monica.ui.components.UnifiedMoveCategoryTarget
 import takagi.ru.monica.ui.components.UnifiedMoveInitialSource
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.utils.decodeKeePassPathForDisplay
-import takagi.ru.monica.utils.FieldChange
-import takagi.ru.monica.utils.OperationLogger
 import takagi.ru.monica.viewmodel.CategoryFilter
 import takagi.ru.monica.viewmodel.PasswordViewModel
 import takagi.ru.monica.sync.SyncErrorKind
@@ -227,173 +219,6 @@ internal fun resolvePasswordBatchMoveTargetRouting(
         monicaCategoryId = monicaCategoryId,
         isMonicaCopyTarget = isMonicaCopyTarget
     )
-}
-
-internal fun toLocationState(entry: PasswordEntry): TimelinePasswordLocationState {
-    return TimelinePasswordLocationState(
-        id = entry.id,
-        categoryId = entry.categoryId,
-        keepassDatabaseId = entry.keepassDatabaseId,
-        keepassGroupPath = entry.keepassGroupPath,
-        mdbxDatabaseId = entry.mdbxDatabaseId,
-        mdbxFolderId = entry.mdbxFolderId,
-        bitwardenVaultId = entry.bitwardenVaultId,
-        bitwardenCipherId = entry.bitwardenCipherId,
-        bitwardenFolderId = entry.bitwardenFolderId,
-        bitwardenRevisionDate = entry.bitwardenRevisionDate,
-        bitwardenLocalModified = entry.bitwardenLocalModified,
-        isArchived = entry.isArchived,
-        archivedAtMillis = entry.archivedAt?.time
-    )
-}
-
-internal fun toMovedLocationState(
-    entry: PasswordEntry,
-    target: UnifiedMoveCategoryTarget
-): TimelinePasswordLocationState {
-    val archivedAt = if (target is UnifiedMoveCategoryTarget.MonicaCategory &&
-        target.categoryId == UNIFIED_MOVE_ARCHIVE_SENTINEL_CATEGORY_ID
-    ) {
-        entry.archivedAt?.time ?: System.currentTimeMillis()
-    } else {
-        null
-    }
-
-    return when (target) {
-        UnifiedMoveCategoryTarget.Uncategorized -> TimelinePasswordLocationState(
-            id = entry.id,
-            categoryId = null,
-            keepassDatabaseId = null,
-            keepassGroupPath = null,
-            bitwardenVaultId = null,
-            bitwardenCipherId = null,
-            bitwardenFolderId = null,
-            bitwardenRevisionDate = null,
-            bitwardenLocalModified = false,
-            isArchived = false,
-            archivedAtMillis = null
-        )
-
-        is UnifiedMoveCategoryTarget.MonicaCategory -> {
-            if (target.categoryId == UNIFIED_MOVE_ARCHIVE_SENTINEL_CATEGORY_ID) {
-                TimelinePasswordLocationState(
-                    id = entry.id,
-                    categoryId = null,
-                    keepassDatabaseId = null,
-                    keepassGroupPath = null,
-                    bitwardenVaultId = null,
-                    bitwardenCipherId = null,
-                    bitwardenFolderId = null,
-                    bitwardenRevisionDate = null,
-                    bitwardenLocalModified = false,
-                    isArchived = true,
-                    archivedAtMillis = archivedAt
-                )
-            } else {
-                TimelinePasswordLocationState(
-                    id = entry.id,
-                    categoryId = target.categoryId,
-                    keepassDatabaseId = null,
-                    keepassGroupPath = null,
-                    bitwardenVaultId = null,
-                    bitwardenCipherId = null,
-                    bitwardenFolderId = null,
-                    bitwardenRevisionDate = null,
-                    bitwardenLocalModified = false,
-                    isArchived = false,
-                    archivedAtMillis = null
-                )
-            }
-        }
-
-        is UnifiedMoveCategoryTarget.BitwardenVaultTarget -> TimelinePasswordLocationState(
-            id = entry.id,
-            categoryId = null,
-            keepassDatabaseId = null,
-            keepassGroupPath = null,
-            bitwardenVaultId = target.vaultId,
-            bitwardenCipherId = null,
-            bitwardenFolderId = "",
-            bitwardenRevisionDate = null,
-            bitwardenLocalModified = false,
-            isArchived = false,
-            archivedAtMillis = null
-        )
-
-        is UnifiedMoveCategoryTarget.BitwardenFolderTarget -> TimelinePasswordLocationState(
-            id = entry.id,
-            categoryId = null,
-            keepassDatabaseId = null,
-            keepassGroupPath = null,
-            bitwardenVaultId = target.vaultId,
-            bitwardenCipherId = null,
-            bitwardenFolderId = target.folderId,
-            bitwardenRevisionDate = null,
-            bitwardenLocalModified = false,
-            isArchived = false,
-            archivedAtMillis = null
-        )
-
-        is UnifiedMoveCategoryTarget.KeePassDatabaseTarget -> TimelinePasswordLocationState(
-            id = entry.id,
-            categoryId = null,
-            keepassDatabaseId = target.databaseId,
-            keepassGroupPath = null,
-            bitwardenVaultId = null,
-            bitwardenCipherId = null,
-            bitwardenFolderId = null,
-            bitwardenRevisionDate = null,
-            bitwardenLocalModified = false,
-            isArchived = false,
-            archivedAtMillis = null
-        )
-
-        is UnifiedMoveCategoryTarget.KeePassGroupTarget -> TimelinePasswordLocationState(
-            id = entry.id,
-            categoryId = null,
-            keepassDatabaseId = target.databaseId,
-            keepassGroupPath = target.groupPath,
-            bitwardenVaultId = null,
-            bitwardenCipherId = null,
-            bitwardenFolderId = null,
-            bitwardenRevisionDate = null,
-            bitwardenLocalModified = false,
-            isArchived = false,
-            archivedAtMillis = null
-        )
-
-        is UnifiedMoveCategoryTarget.MdbxDatabaseTarget -> TimelinePasswordLocationState(
-            id = entry.id,
-            categoryId = null,
-            keepassDatabaseId = null,
-            keepassGroupPath = null,
-            mdbxDatabaseId = target.databaseId,
-            mdbxFolderId = null,
-            bitwardenVaultId = null,
-            bitwardenCipherId = null,
-            bitwardenFolderId = null,
-            bitwardenRevisionDate = null,
-            bitwardenLocalModified = false,
-            isArchived = false,
-            archivedAtMillis = null
-        )
-
-        is UnifiedMoveCategoryTarget.MdbxFolderTarget -> TimelinePasswordLocationState(
-            id = entry.id,
-            categoryId = null,
-            keepassDatabaseId = null,
-            keepassGroupPath = null,
-            mdbxDatabaseId = target.databaseId,
-            mdbxFolderId = target.folderId,
-            bitwardenVaultId = null,
-            bitwardenCipherId = null,
-            bitwardenFolderId = null,
-            bitwardenRevisionDate = null,
-            bitwardenLocalModified = false,
-            isArchived = false,
-            archivedAtMillis = null
-        )
-    }
 }
 
 internal fun buildCopiedEntryForTarget(
@@ -670,7 +495,6 @@ internal suspend fun executePasswordBatchCopy(
     addMdbxCopiedEntriesBatch: suspend (List<PasswordEntry>) -> List<Long>,
     buildCopiedEntryForTarget: (PasswordEntry, UnifiedMoveCategoryTarget) -> PasswordEntry,
     rollbackCopiedEntry: suspend (Long) -> Unit = {},
-    logTimeline: Boolean = true,
     onProgress: ((Int, Int) -> Unit)? = null
 ): PasswordBatchCopyResult {
     val copiedIds = mutableListOf<Long>()
@@ -746,90 +570,11 @@ internal suspend fun executePasswordBatchCopy(
         }
     }
 
-    if (logTimeline) {
-        logPasswordBatchCopyTimeline(
-            context = context,
-            copiedEntryIds = copiedIds.toList()
-        )
-    }
-
     return PasswordBatchCopyResult(
         successCount = copiedIds.size,
         failedCount = failedCount,
         copiedEntryIds = copiedIds.toList(),
         idPairs = idPairs.toList()
-    )
-}
-
-private val timelineBatchJson = Json {
-    ignoreUnknownKeys = true
-    prettyPrint = false
-}
-
-internal fun logPasswordBatchCopyTimeline(
-    context: Context,
-    copiedEntryIds: List<Long>,
-    copiedCountOverride: Int? = null
-) {
-    val copiedCount = copiedCountOverride ?: copiedEntryIds.size
-    if (copiedCount <= 0) return
-    val payload = TimelineBatchCopyPayload(copiedEntryIds = copiedEntryIds)
-    OperationLogger.logUpdate(
-        itemType = OperationLogItemType.PASSWORD,
-        itemId = System.currentTimeMillis(),
-        itemTitle = context.getString(
-            R.string.timeline_batch_copy_title,
-            copiedCount
-        ),
-        changes = listOf(
-            FieldChange(
-                fieldName = context.getString(R.string.timeline_field_batch_copy),
-                oldValue = "0",
-                newValue = copiedCount.toString()
-            ),
-            FieldChange(
-                fieldName = TIMELINE_FIELD_BATCH_COPY_PAYLOAD,
-                oldValue = "{}",
-                newValue = timelineBatchJson.encodeToString(payload)
-            )
-        )
-    )
-}
-
-internal fun logPasswordBatchMoveTimeline(
-    context: Context,
-    selectedEntries: List<PasswordEntry>,
-    oldStates: List<TimelinePasswordLocationState>,
-    newStates: List<TimelinePasswordLocationState>,
-    recreatedEntries: List<TimelinePasswordRecreatedEntry> = emptyList(),
-    targetLabel: String
-) {
-    if (selectedEntries.isEmpty()) return
-    val payload = TimelineBatchMovePayload(
-        oldStates = oldStates,
-        newStates = newStates,
-        recreatedEntries = recreatedEntries
-    )
-    val payloadJson = timelineBatchJson.encodeToString(payload)
-    OperationLogger.logUpdate(
-        itemType = OperationLogItemType.PASSWORD,
-        itemId = System.currentTimeMillis(),
-        itemTitle = context.getString(
-            R.string.timeline_batch_move_title,
-            selectedEntries.size
-        ),
-        changes = listOf(
-            FieldChange(
-                fieldName = context.getString(R.string.timeline_field_batch_move),
-                oldValue = context.getString(R.string.timeline_batch_source_multiple),
-                newValue = targetLabel
-            ),
-            FieldChange(
-                fieldName = TIMELINE_FIELD_BATCH_MOVE_PAYLOAD,
-                oldValue = payloadJson,
-                newValue = payloadJson
-            )
-        )
     )
 }
 
@@ -1391,11 +1136,7 @@ internal fun PasswordBatchMoveSheet(
                                     val addedCount = addResult.getOrThrow().coerceIn(0, selectedEntries.size)
                                     successCount = addedCount
                                     failedCount = (selectedEntries.size - addedCount).coerceAtLeast(0)
-                                    logPasswordBatchCopyTimeline(
-                                        context = context,
-                                        copiedEntryIds = emptyList(),
-                                        copiedCountOverride = successCount
-                                    )
+
                                 }
 
                                 else -> {
@@ -1444,7 +1185,6 @@ internal fun PasswordBatchMoveSheet(
                                                 viewModel.buildEncryptedPasswordCopy(entry, resolvedTarget)
                                             },
                                             rollbackCopiedEntry = viewModel::rollbackPasswordTransferTargetAwait,
-                                            logTimeline = false,
                                             onProgress = { processed, _ ->
                                                 onProgressUpdate(
                                                     (processedBeforeGroup + processed)
@@ -1459,10 +1199,7 @@ internal fun PasswordBatchMoveSheet(
                                         copiedEntryIds += copyResult.copiedEntryIds
                                         copiedIdPairs += copyResult.idPairs
                                     }
-                                    logPasswordBatchCopyTimeline(
-                                        context = context,
-                                        copiedEntryIds = copiedEntryIds
-                                    )
+
                                     if (copiedIdPairs.isNotEmpty() && target.passwordBatchStorageKey()?.startsWith("mdbx:") == true) {
                                         viewModel.copyBoundTotpsForPasswordCopies(copiedIdPairs)
                                     }
@@ -1481,18 +1218,7 @@ internal fun PasswordBatchMoveSheet(
                                 }
                             }
                         } else {
-                            val oldStates = selectedEntries.map(::toLocationState)
-                            val newStates = selectedEntries.map { entry ->
-                                toMovedLocationState(
-                                    entry,
-                                    passwordBatchTargetForEntry(
-                                        entry = entry,
-                                        selectedTarget = target,
-                                        targetOverrides = passwordTargetOverrides
-                                    )
-                                )
-                            }
-                            val recreatedEntries = mutableListOf<TimelinePasswordRecreatedEntry>()
+
                             val decryptSnapshot = buildPasswordDecryptSnapshot(
                                 entries = selectedEntries,
                                 securityManager = securityManager
@@ -1567,10 +1293,7 @@ internal fun PasswordBatchMoveSheet(
                                                         throw result.exceptionOrNull()
                                                             ?: IllegalStateException("Bitwarden move failed")
                                                     }
-                                                    recreatedEntries += TimelinePasswordRecreatedEntry(
-                                                        sourceEntryId = entry.id,
-                                                        recreatedEntryId = result.getOrThrow()
-                                                    )
+
                                                 }
                                                 if (mdbxEntries.isNotEmpty()) {
                                                     viewModel.moveMdbxPasswordsToMonicaCategoryAwait(
@@ -1689,14 +1412,7 @@ internal fun PasswordBatchMoveSheet(
                                 )
                             }
 
-                            logPasswordBatchMoveTimeline(
-                                context = context,
-                                selectedEntries = selectedEntries,
-                                oldStates = oldStates,
-                                newStates = newStates,
-                                recreatedEntries = recreatedEntries,
-                                targetLabel = targetLabel
-                            )
+
                             successCount = selectedEntries.size
                             failedCount = 0
                         }
@@ -1900,7 +1616,6 @@ private suspend fun PasswordViewModel.addPasswordEntryWithResultAwait(
     val deferred = CompletableDeferred<Long?>()
     addPasswordEntryWithResult(
         entry = entry,
-        includeDetailedLog = false,
         // batch copy / cross-container copy 的 entry.password 是源条目的已加密密文，
         // 不能再经一次 encryptData，否则存进去解不出来（KeePass → Bitwarden 常态）
         passwordAlreadyEncrypted = true,

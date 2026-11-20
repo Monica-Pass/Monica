@@ -1,5 +1,6 @@
 package takagi.ru.monica.viewmodel
 
+
 import takagi.ru.monica.utils.StringResolver
 
 import takagi.ru.monica.R
@@ -39,7 +40,6 @@ import takagi.ru.monica.data.model.StorageTarget
 import takagi.ru.monica.data.model.TotpData
 import takagi.ru.monica.data.model.storageScopeKey
 import takagi.ru.monica.data.model.toStorageTarget
-import takagi.ru.monica.data.OperationLogItemType
 import takagi.ru.monica.data.bitwarden.BitwardenPendingOperation
 import takagi.ru.monica.data.resolveOwnership
 import takagi.ru.monica.repository.KeePassCompatibilityBridge
@@ -55,8 +55,6 @@ import takagi.ru.monica.sync.SyncRequest
 import takagi.ru.monica.sync.SyncTarget
 import takagi.ru.monica.sync.SyncTaskRunner
 import takagi.ru.monica.sync.SyncTrigger
-import takagi.ru.monica.utils.OperationLogger
-import takagi.ru.monica.utils.FieldChange
 import takagi.ru.monica.utils.KeePassKdbxService
 import takagi.ru.monica.utils.readKeePassKeyFileBytes
 import takagi.ru.monica.utils.toKeePassOperationException
@@ -1652,25 +1650,6 @@ class TotpViewModel internal constructor(
                 return null
             }
             requestBitwardenMutationSync(resolvedBitwardenVaultId)
-            if (existing != null) {
-                val changes = mutableListOf<FieldChange>()
-                if (existing.title != title) {
-                    changes.add(FieldChange("标题", existing.title, title))
-                }
-                if (existing.notes != notes) {
-                    changes.add(FieldChange("备注", existing.notes, notes))
-                }
-                OperationLogger.logUpdate(
-                    itemType = OperationLogItemType.TOTP,
-                    itemId = id,
-                    itemTitle = title,
-                    changes = if (changes.isEmpty()) {
-                        listOf(FieldChange("更新", "编辑于", java.text.SimpleDateFormat("HH:mm").format(Date())))
-                    } else {
-                        changes
-                    }
-                )
-            }
             item.id
         } else {
             val newId = keepassSecureItemCreateExecutor.create(
@@ -1685,11 +1664,7 @@ class TotpViewModel internal constructor(
                 return null
             }
             requestBitwardenMutationSync(resolvedBitwardenVaultId)
-            OperationLogger.logCreate(
-                itemType = OperationLogItemType.TOTP,
-                itemId = newId,
-                itemTitle = title
-            )
+
             newId
         }
 
@@ -1959,12 +1934,7 @@ class TotpViewModel internal constructor(
                     )
                 )
                 requestBitwardenMutationSync(vaultId)
-                OperationLogger.logDelete(
-                    itemType = OperationLogItemType.TOTP,
-                    itemId = item.id,
-                    itemTitle = item.title,
-                    detail = "移入回收站（待同步删除）"
-                )
+
                 return@launch
             }
 
@@ -1972,12 +1942,7 @@ class TotpViewModel internal constructor(
                 // 软删除：移动到回收站
                 repository.softDeleteItem(item)
                 // 记录移入回收站操作
-                OperationLogger.logDelete(
-                    itemType = OperationLogItemType.TOTP,
-                    itemId = item.id,
-                    itemTitle = item.title,
-                    detail = "移入回收站"
-                )
+
 
                 if (!isBitwardenCipher && item.keepassDatabaseId != null) {
                     viewModelScope.launch keepassDeleteSync@{
@@ -1994,11 +1959,7 @@ class TotpViewModel internal constructor(
                 // 永久删除
                 repository.deleteItem(item)
                 // 删除操作 - 记录日志
-                OperationLogger.logDelete(
-                    itemType = OperationLogItemType.TOTP,
-                    itemId = item.id,
-                    itemTitle = item.title
-                )
+
             }
         }
     }

@@ -1,14 +1,16 @@
 package takagi.ru.monica.autofill_ng
 
+import android.app.assist.AssistStructure
+import android.content.Intent
+import android.view.autofill.AutofillManager
+import takagi.ru.monica.autofill_ng.ui.AppInfo
+
 import takagi.ru.monica.security.launchWithSecureStorage
 
 import android.content.Context
 import takagi.ru.monica.utils.LocaleHelper
 import takagi.ru.monica.utils.StartupLanguageCache
-import android.app.assist.AssistStructure
-import android.content.Intent
 import android.os.Bundle
-import android.view.autofill.AutofillManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -29,7 +31,6 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import takagi.ru.monica.R
-import takagi.ru.monica.autofill_ng.ui.AppInfo
 import takagi.ru.monica.autofill_ng.ui.AutofillScaffold
 import takagi.ru.monica.autofill_ng.ui.colorizePasswordString
 import takagi.ru.monica.data.PasswordDatabase
@@ -196,13 +197,7 @@ class AutofillSaveActivity : ComponentActivity() {
                     )
                     passwordRepository.updatePasswordEntry(updated)
                     
-                    // 记录更新操作
-                    takagi.ru.monica.utils.OperationLogger.logUpdate(
-                        itemType = takagi.ru.monica.data.OperationLogItemType.PASSWORD,
-                        itemId = updated.id,
-                        itemTitle = updated.title,
-                        changes = listOf(takagi.ru.monica.utils.FieldChange("密码", "***", "***"))
-                    )
+
                 } else {
                     // 创建新密码条目
                     val newEntry = PasswordEntry(
@@ -226,12 +221,7 @@ class AutofillSaveActivity : ComponentActivity() {
                         "[MDBX][autofill-save-complete] source=legacy target=${initialTarget.diagnosticLabel()} roomId=$newId"
                     )
                     
-                    // 记录创建操作
-                    takagi.ru.monica.utils.OperationLogger.logCreate(
-                        itemType = takagi.ru.monica.data.OperationLogItemType.PASSWORD,
-                        itemId = newId,
-                        itemTitle = newEntry.title
-                    )
+
                 }
                 
                 setResult(RESULT_OK)
@@ -652,6 +642,4 @@ private fun SaveInfoRow(
         }
     }
 }
-
-
 

@@ -32,6 +32,7 @@ internal data class DecodedBarcode(val text: String, val format: BarcodeFormat)
 internal class ZxingBarcodeDecoder(
     private val formats: Collection<BarcodeFormat>,
     private val preserveWhitespace: Boolean = false,
+    private val confirmBothPolarities: Boolean = false,
 ) {
 
     private val hints = mapOf(
@@ -82,7 +83,13 @@ internal class ZxingBarcodeDecoder(
                 PlanarYUVLuminanceSource(fullLuminance, width, height, 0, 0, width, height, false),
                 rotationQuarterTurns
             )
-            return decodeFullResolution(fullSource, inverted = frameNumber == 0)
+            val inverted = frameNumber == 0
+            val candidates = decodeFullResolution(fullSource, inverted)
+            // Unified credential scanning must not accept one polarity before checking
+            // for another valid code in the same frame. Empty-frame cost is unchanged.
+            return if (confirmBothPolarities && candidates.isNotEmpty()) {
+                (candidates + decodeFullResolution(fullSource, !inverted)).distinct()
+            } else candidates
         }
 
         // 常规帧同时检查正反色，保留 Hybrid 与 GlobalHistogram 对不同码制的覆盖。

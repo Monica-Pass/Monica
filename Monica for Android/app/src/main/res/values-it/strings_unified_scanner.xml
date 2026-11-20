@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_credentials_hint">Scansiona un codice QR di autenticazione o passkey</string>
+    <string name="qr_credentials_invalid">Questo codice QR di autenticazione o passkey non è supportato</string>
+    <string name="qr_multiple_codes">Rilevati più codici QR. Inquadra un solo codice.</string>
+</resources>

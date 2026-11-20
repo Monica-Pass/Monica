@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_credentials_hint">Сканируйте QR-код аутентификатора или ключа доступа</string>
+    <string name="qr_credentials_invalid">Этот QR-код аутентификатора или ключа доступа не поддерживается</string>
+    <string name="qr_multiple_codes">Обнаружено несколько QR-кодов. Наведите камеру только на один.</string>
+</resources>

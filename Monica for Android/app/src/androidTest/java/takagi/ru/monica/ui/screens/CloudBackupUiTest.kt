@@ -305,7 +305,6 @@ class CloudBackupUiTest {
         compose.onNodeWithText(label(R.string.deselect_all)).performScrollTo().performClick()
         assertFalse(preferences.hasAnyEnabled())
         assertFalse(preferences.includeGeneratorHistory)
-        assertFalse(preferences.includeTimeline)
         assertFalse(preferences.includeTrash)
         compose.onNodeWithText(label(R.string.select_all)).performScrollTo().performClick()
         assertTrue(preferences.includeTrashAndHistory)
@@ -315,7 +314,6 @@ class CloudBackupUiTest {
         compose.onNodeWithText(label(R.string.backup_content_passkeys)).performScrollTo().assertIsNotEnabled()
         compose.onNodeWithText(label(R.string.backup_content_trash_and_history)).performScrollTo().performClick()
         assertFalse(preferences.includeTrashAndHistory)
-        assertFalse(preferences.includeTimeline)
         assertFalse(preferences.includeGeneratorHistory)
         assertFalse(preferences.includeTrash)
     }

@@ -68,11 +68,6 @@ fun ZipBackupOptionsContent(
             onCheckedChange = { onBackupPreferencesChange(backupPreferences.copy(includeGeneratorHistory = it)) }
         )
         ExportContentCheckbox(
-            label = stringResource(R.string.backup_content_timeline),
-            checked = backupPreferences.includeTimeline,
-            onCheckedChange = { onBackupPreferencesChange(backupPreferences.copy(includeTimeline = it)) }
-        )
-        ExportContentCheckbox(
             label = stringResource(R.string.backup_content_trash),
             checked = backupPreferences.includeTrash,
             onCheckedChange = { onBackupPreferencesChange(backupPreferences.copy(includeTrash = it)) }
@@ -140,7 +135,6 @@ fun ZipBackupOptionsContent(
                             includeNotes = true,
                             includeGeneratorHistory = true,
                             includeImages = true,
-                            includeTimeline = true,
                             includeTrash = true
                         )
                     )
@@ -161,7 +155,6 @@ fun ZipBackupOptionsContent(
                             includeNotes = false,
                             includeGeneratorHistory = false,
                             includeImages = false,
-                            includeTimeline = false,
                             includeTrash = false
                         )
                     )

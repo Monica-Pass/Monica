@@ -1,5 +1,19 @@
 package takagi.ru.monica.ui
 
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.LockOpen
+import androidx.compose.material.icons.filled.Sync
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import takagi.ru.monica.ui.components.UnifiedCategoryFilterChipMenuDropdown
+import takagi.ru.monica.ui.components.UnifiedCategoryFilterChipMenuOffset
+import takagi.ru.monica.utils.KeePassKdbxService
+import takagi.ru.monica.ui.password.rememberKeePassFileActions
+import takagi.ru.monica.ui.password.KeePassFileStatus
+
 import takagi.ru.monica.ui.components.SecondaryPasswordVerificationDialog
 import takagi.ru.monica.ui.password.KeePassFileActions
 
@@ -12,29 +26,21 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Sync
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -58,12 +64,9 @@ import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.ui.components.CreateCategoryDialog
 import takagi.ru.monica.ui.components.CreateDialogTarget
 import takagi.ru.monica.ui.components.ExpressiveTopBar
-import takagi.ru.monica.ui.components.UnifiedCategoryFilterChipMenuDropdown
-import takagi.ru.monica.ui.components.UnifiedCategoryFilterChipMenuOffset
 import takagi.ru.monica.ui.components.UnifiedCategoryFilterSelection
 import takagi.ru.monica.ui.components.UnifiedMoveCategoryTarget
 import takagi.ru.monica.utils.BiometricHelper
-import takagi.ru.monica.utils.KeePassKdbxService
 import takagi.ru.monica.utils.decodeKeePassPathForDisplay
 import takagi.ru.monica.utils.planLocalCategoryMove
 import takagi.ru.monica.viewmodel.CategoryFilter
@@ -76,9 +79,7 @@ import takagi.ru.monica.ui.password.BitwardenReunlockTopActionsMenuItem
 import takagi.ru.monica.ui.password.BitwardenSyncTopActionsMenuItem
 import takagi.ru.monica.ui.password.CommonPasswordTopActionsMenuItems
 import takagi.ru.monica.ui.password.KeepassRefreshTopActionsMenuItem
-import takagi.ru.monica.ui.password.rememberKeePassFileActions
 import takagi.ru.monica.ui.password.KeePassFileMenuItems
-import takagi.ru.monica.ui.password.KeePassFileStatus
 import takagi.ru.monica.ui.password.KeepassNativeManagerTopActionsMenuItem
 import takagi.ru.monica.ui.password.MdbxCommitHistoryTopActionsMenuItem
 import takagi.ru.monica.ui.password.MdbxCreateSnapshotTopActionsMenuItem
@@ -162,7 +163,6 @@ internal fun PasswordListTopSection(
     onTransferCategory: (Category, UnifiedMoveCategoryTarget, takagi.ru.monica.ui.components.UnifiedMoveAction) -> Unit,
     onOpenCommonAccountTemplates: () -> Unit,
     onOpenMdbxCommitHistory: (Long) -> Unit,
-    onOpenHistory: () -> Unit,
     onOpenTrash: () -> Unit,
     onScanFidoQr: () -> Unit
 ) {
@@ -562,7 +562,6 @@ internal fun PasswordListTopSection(
                                 onDismissMenu = { onTopActionsMenuExpandedChange(false) },
                                 onShowDisplayOptions = { onShowDisplayOptionsSheetChange(true) },
                                 onOpenCommonAccountTemplates = onOpenCommonAccountTemplates,
-                                onOpenHistory = onOpenHistory,
                                 onOpenTrash = onOpenTrash,
                                 onOpenArchive = viewModel::openArchiveView,
                                 showSettingsEntry = showStandaloneSettingsEntry,

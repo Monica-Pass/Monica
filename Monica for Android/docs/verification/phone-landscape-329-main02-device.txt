@@ -1,0 +1,125 @@
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.common.layout.AdaptivePhoneLandscapeTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+takagi.ru.monica.ui.common.layout.AdaptivePhoneLandscapeTest:
+INSTRUMENTATION_STATUS: test=passwordListAndDetailStayBesideEachOtherInPhoneLandscape
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.common.layout.AdaptivePhoneLandscapeTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=androidx.test.espresso.NoActivityResumedException: Timed out waiting for Activity's orientation to update.
+	at dalvik.system.VMStack.getThreadStackTrace(Native Method)
+	at java.lang.Thread.getStackTrace(Thread.java:1955)
+	at androidx.test.espresso.base.EspressoExceptionHandler.handleSafely(EspressoExceptionHandler.java:34)
+	at androidx.test.espresso.base.EspressoExceptionHandler.handleSafely(EspressoExceptionHandler.java:26)
+	at androidx.test.espresso.base.DefaultFailureHandler$TypedFailureHandler.handle(DefaultFailureHandler.java:158)
+	at androidx.test.espresso.base.DefaultFailureHandler.handle(DefaultFailureHandler.java:120)
+	at androidx.test.espresso.ViewInteraction.waitForAndHandleInteractionResults(ViewInteraction.java:385)
+	at androidx.test.espresso.ViewInteraction.desugaredPerform(ViewInteraction.java:212)
+	at androidx.test.espresso.ViewInteraction.perform(ViewInteraction.java:140)
+	at androidx.test.espresso.Espresso.pressBack(Espresso.java:237)
+	at takagi.ru.monica.ui.common.layout.AdaptivePhoneLandscapeTest.verifyPhoneLandscape(AdaptivePhoneLandscapeTest.kt:154)
+	at takagi.ru.monica.ui.common.layout.AdaptivePhoneLandscapeTest.passwordListAndDetailStayBesideEachOtherInPhoneLandscape(AdaptivePhoneLandscapeTest.kt:65)
+
+INSTRUMENTATION_STATUS: stream=
+Error in passwordListAndDetailStayBesideEachOtherInPhoneLandscape(takagi.ru.monica.ui.common.layout.AdaptivePhoneLandscapeTest):
+androidx.test.espresso.NoActivityResumedException: Timed out waiting for Activity's orientation to update.
+	at dalvik.system.VMStack.getThreadStackTrace(Native Method)
+	at java.lang.Thread.getStackTrace(Thread.java:1955)
+	at androidx.test.espresso.base.EspressoExceptionHandler.handleSafely(EspressoExceptionHandler.java:34)
+	at androidx.test.espresso.base.EspressoExceptionHandler.handleSafely(EspressoExceptionHandler.java:26)
+	at androidx.test.espresso.base.DefaultFailureHandler$TypedFailureHandler.handle(DefaultFailureHandler.java:158)
+	at androidx.test.espresso.base.DefaultFailureHandler.handle(DefaultFailureHandler.java:120)
+	at androidx.test.espresso.ViewInteraction.waitForAndHandleInteractionResults(ViewInteraction.java:385)
+	at androidx.test.espresso.ViewInteraction.desugaredPerform(ViewInteraction.java:212)
+	at androidx.test.espresso.ViewInteraction.perform(ViewInteraction.java:140)
+	at androidx.test.espresso.Espresso.pressBack(Espresso.java:237)
+	at takagi.ru.monica.ui.common.layout.AdaptivePhoneLandscapeTest.verifyPhoneLandscape(AdaptivePhoneLandscapeTest.kt:154)
+	at takagi.ru.monica.ui.common.layout.AdaptivePhoneLandscapeTest.passwordListAndDetailStayBesideEachOtherInPhoneLandscape(AdaptivePhoneLandscapeTest.kt:65)
+
+INSTRUMENTATION_STATUS: test=passwordListAndDetailStayBesideEachOtherInPhoneLandscape
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.common.layout.AdaptivePhoneLandscapeTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=walletListAndDetailStayBesideEachOtherInPhoneLandscape
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=takagi.ru.monica.ui.common.layout.AdaptivePhoneLandscapeTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=2
+INSTRUMENTATION_STATUS: stack=androidx.test.espresso.NoActivityResumedException: Timed out waiting for Activity's orientation to update.
+	at dalvik.system.VMStack.getThreadStackTrace(Native Method)
+	at java.lang.Thread.getStackTrace(Thread.java:1955)
+	at androidx.test.espresso.base.EspressoExceptionHandler.handleSafely(EspressoExceptionHandler.java:34)
+	at androidx.test.espresso.base.EspressoExceptionHandler.handleSafely(EspressoExceptionHandler.java:26)
+	at androidx.test.espresso.base.DefaultFailureHandler$TypedFailureHandler.handle(DefaultFailureHandler.java:158)
+	at androidx.test.espresso.base.DefaultFailureHandler.handle(DefaultFailureHandler.java:120)
+	at androidx.test.espresso.ViewInteraction.waitForAndHandleInteractionResults(ViewInteraction.java:385)
+	at androidx.test.espresso.ViewInteraction.desugaredPerform(ViewInteraction.java:212)
+	at androidx.test.espresso.ViewInteraction.perform(ViewInteraction.java:140)
+	at androidx.test.espresso.Espresso.pressBack(Espresso.java:237)
+	at takagi.ru.monica.ui.common.layout.AdaptivePhoneLandscapeTest.verifyPhoneLandscape(AdaptivePhoneLandscapeTest.kt:154)
+	at takagi.ru.monica.ui.common.layout.AdaptivePhoneLandscapeTest.walletListAndDetailStayBesideEachOtherInPhoneLandscape(AdaptivePhoneLandscapeTest.kt:67)
+
+INSTRUMENTATION_STATUS: stream=
+Error in walletListAndDetailStayBesideEachOtherInPhoneLandscape(takagi.ru.monica.ui.common.layout.AdaptivePhoneLandscapeTest):
+androidx.test.espresso.NoActivityResumedException: Timed out waiting for Activity's orientation to update.
+	at dalvik.system.VMStack.getThreadStackTrace(Native Method)
+	at java.lang.Thread.getStackTrace(Thread.java:1955)
+	at androidx.test.espresso.base.EspressoExceptionHandler.handleSafely(EspressoExceptionHandler.java:34)
+	at androidx.test.espresso.base.EspressoExceptionHandler.handleSafely(EspressoExceptionHandler.java:26)
+	at androidx.test.espresso.base.DefaultFailureHandler$TypedFailureHandler.handle(DefaultFailureHandler.java:158)
+	at androidx.test.espresso.base.DefaultFailureHandler.handle(DefaultFailureHandler.java:120)
+	at androidx.test.espresso.ViewInteraction.waitForAndHandleInteractionResults(ViewInteraction.java:385)
+	at androidx.test.espresso.ViewInteraction.desugaredPerform(ViewInteraction.java:212)
+	at androidx.test.espresso.ViewInteraction.perform(ViewInteraction.java:140)
+	at androidx.test.espresso.Espresso.pressBack(Espresso.java:237)
+	at takagi.ru.monica.ui.common.layout.AdaptivePhoneLandscapeTest.verifyPhoneLandscape(AdaptivePhoneLandscapeTest.kt:154)
+	at takagi.ru.monica.ui.common.layout.AdaptivePhoneLandscapeTest.walletListAndDetailStayBesideEachOtherInPhoneLandscape(AdaptivePhoneLandscapeTest.kt:67)
+
+INSTRUMENTATION_STATUS: test=walletListAndDetailStayBesideEachOtherInPhoneLandscape
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 15.719
+There were 2 failures:
+1) passwordListAndDetailStayBesideEachOtherInPhoneLandscape(takagi.ru.monica.ui.common.layout.AdaptivePhoneLandscapeTest)
+androidx.test.espresso.NoActivityResumedException: Timed out waiting for Activity's orientation to update.
+	at dalvik.system.VMStack.getThreadStackTrace(Native Method)
+	at java.lang.Thread.getStackTrace(Thread.java:1955)
+	at androidx.test.espresso.base.EspressoExceptionHandler.handleSafely(EspressoExceptionHandler.java:34)
+	at androidx.test.espresso.base.EspressoExceptionHandler.handleSafely(EspressoExceptionHandler.java:26)
+	at androidx.test.espresso.base.DefaultFailureHandler$TypedFailureHandler.handle(DefaultFailureHandler.java:158)
+	at androidx.test.espresso.base.DefaultFailureHandler.handle(DefaultFailureHandler.java:120)
+	at androidx.test.espresso.ViewInteraction.waitForAndHandleInteractionResults(ViewInteraction.java:385)
+	at androidx.test.espresso.ViewInteraction.desugaredPerform(ViewInteraction.java:212)
+	at androidx.test.espresso.ViewInteraction.perform(ViewInteraction.java:140)
+	at androidx.test.espresso.Espresso.pressBack(Espresso.java:237)
+	at takagi.ru.monica.ui.common.layout.AdaptivePhoneLandscapeTest.verifyPhoneLandscape(AdaptivePhoneLandscapeTest.kt:154)
+	at takagi.ru.monica.ui.common.layout.AdaptivePhoneLandscapeTest.passwordListAndDetailStayBesideEachOtherInPhoneLandscape(AdaptivePhoneLandscapeTest.kt:65)
+2) walletListAndDetailStayBesideEachOtherInPhoneLandscape(takagi.ru.monica.ui.common.layout.AdaptivePhoneLandscapeTest)
+androidx.test.espresso.NoActivityResumedException: Timed out waiting for Activity's orientation to update.
+	at dalvik.system.VMStack.getThreadStackTrace(Native Method)
+	at java.lang.Thread.getStackTrace(Thread.java:1955)
+	at androidx.test.espresso.base.EspressoExceptionHandler.handleSafely(EspressoExceptionHandler.java:34)
+	at androidx.test.espresso.base.EspressoExceptionHandler.handleSafely(EspressoExceptionHandler.java:26)
+	at androidx.test.espresso.base.DefaultFailureHandler$TypedFailureHandler.handle(DefaultFailureHandler.java:158)
+	at androidx.test.espresso.base.DefaultFailureHandler.handle(DefaultFailureHandler.java:120)
+	at androidx.test.espresso.ViewInteraction.waitForAndHandleInteractionResults(ViewInteraction.java:385)
+	at androidx.test.espresso.ViewInteraction.desugaredPerform(ViewInteraction.java:212)
+	at androidx.test.espresso.ViewInteraction.perform(ViewInteraction.java:140)
+	at androidx.test.espresso.Espresso.pressBack(Espresso.java:237)
+	at takagi.ru.monica.ui.common.layout.AdaptivePhoneLandscapeTest.verifyPhoneLandscape(AdaptivePhoneLandscapeTest.kt:154)
+	at takagi.ru.monica.ui.common.layout.AdaptivePhoneLandscapeTest.walletListAndDetailStayBesideEachOtherInPhoneLandscape(AdaptivePhoneLandscapeTest.kt:67)
+
+FAILURES!!!
+Tests run: 2,  Failures: 2
+
+
+INSTRUMENTATION_CODE: -1

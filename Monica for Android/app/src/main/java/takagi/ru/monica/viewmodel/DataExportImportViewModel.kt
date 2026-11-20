@@ -1,5 +1,11 @@
 package takagi.ru.monica.viewmodel
 
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+import takagi.ru.monica.steam.data.SteamAccountRepository
+import takagi.ru.monica.steam.data.SteamDatabase
+import takagi.ru.monica.utils.BackupContentScope
+
 import takagi.ru.monica.utils.backupExportMessage
 
 import takagi.ru.monica.utils.AppLocaleStringResolver
@@ -7,13 +13,11 @@ import takagi.ru.monica.utils.AppLocaleStringResolver
 import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import takagi.ru.monica.R
 import takagi.ru.monica.credentialexchange.CxfCredentialCodec
@@ -24,7 +28,6 @@ import takagi.ru.monica.utils.BackupContent
 import takagi.ru.monica.utils.CustomFieldBackupEntry
 import takagi.ru.monica.data.BackupReport
 import takagi.ru.monica.data.ItemType
-import takagi.ru.monica.data.OperationLogItemType
 import takagi.ru.monica.data.SecureItem
 import takagi.ru.monica.data.PasswordEntry
 import takagi.ru.monica.data.CustomField
@@ -36,20 +39,15 @@ import takagi.ru.monica.repository.SecureItemRepository
 import takagi.ru.monica.repository.PasswordRepository
 import takagi.ru.monica.repository.CustomFieldRepository
 import takagi.ru.monica.security.SecurityManager
-import takagi.ru.monica.steam.data.SteamAccountRepository
-import takagi.ru.monica.steam.data.SteamDatabase
 import takagi.ru.monica.utils.BackupRestoreApplier
 import takagi.ru.monica.utils.EncryptionHelper
-import takagi.ru.monica.utils.FieldChange
 import takagi.ru.monica.utils.ImportedPasswordSnapshot
-import takagi.ru.monica.utils.OperationLogger
 import takagi.ru.monica.utils.PasswordImportDuplicateResolver
 import takagi.ru.monica.util.CsvPasswordData
 import takagi.ru.monica.util.DataExportImportManager
 import takagi.ru.monica.util.TotpDataResolver
 import takagi.ru.monica.util.TotpUriParser
 import takagi.ru.monica.notes.domain.NoteContentCodec
-import takagi.ru.monica.utils.BackupContentScope
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import takagi.ru.monica.steam.diagnostics.SteamDiagLogger
@@ -136,7 +134,7 @@ class DataExportImportViewModel(
             val summary = block()
             _lastImportSummary.value = summary
             DatabaseExportJobs.reportImportSummary(summary)
-            logImportSummary("TARGETED_IMPORT", summary.imported, summary.skipped, summary.failed)
+
             Result.success(summary.imported)
         } catch (cancelled: CancellationException) {
             throw cancelled
@@ -525,12 +523,7 @@ class DataExportImportViewModel(
                     }
                     
                     android.util.Log.d("DataImport", "导入完成: 成功=$count, 跳过=$skippedCount, 失败=$errorCount")
-                    logImportSummary(
-                        source = formatHint?.name ?: "CSV_AUTO",
-                        importedCount = count,
-                        skippedCount = skippedCount,
-                        failedCount = errorCount
-                    )
+
                     Result.success(count)
                 },
                 onFailure = { error ->
@@ -929,12 +922,7 @@ class DataExportImportViewModel(
                         }
                         
                         android.util.Log.d("AegisImport", "导入完成: 成功=$count, 跳过=$skippedCount, 失败=$errorCount")
-                        logImportSummary(
-                            source = "AEGIS_JSON",
-                            importedCount = count,
-                            skippedCount = skippedCount,
-                            failedCount = errorCount
-                        )
+
                         Result.success(count)
                     },
                     onFailure = { error ->
@@ -1020,12 +1008,7 @@ class DataExportImportViewModel(
                     }
                     
                     android.util.Log.d("EncryptedAegisImport", "导入完成: 成功=$count, 跳过=$skippedCount, 失败=$errorCount")
-                    logImportSummary(
-                        source = "AEGIS_JSON_ENCRYPTED",
-                        importedCount = count,
-                        skippedCount = skippedCount,
-                        failedCount = errorCount
-                    )
+
                     Result.success(count)
                 },
                 onFailure = { error ->
@@ -1222,10 +1205,7 @@ class DataExportImportViewModel(
 
         secureItemRepository.insertItem(secureItem)
         android.util.Log.d("SteamImport", "成功插入Steam Guard")
-        logImportSummary(
-            source = "STEAM_GUARD",
-            importedCount = 1
-        )
+
         return Result.success(1)
     }
 
@@ -1517,10 +1497,7 @@ class DataExportImportViewModel(
                             logTag = "DataImport",
                             progress = importProgressReporter,
                         )
-                        logImportSummary(
-                            source = "ZIP_BACKUP",
-                            importedCount = stats.totalImported()
-                        )
+
                         Result.success(stats.totalImported())
                     },
                     onFailure = { error ->
@@ -1614,56 +1591,8 @@ class DataExportImportViewModel(
                 failedCount++
             }
         }
-        logImportSummary(
-            source = "STRATUM_TOTP",
-            importedCount = count,
-            skippedCount = skippedCount,
-            failedCount = failedCount
-        )
+
         return Result.success(count)
-    }
-
-    private fun logImportSummary(
-        source: String,
-        importedCount: Int,
-        skippedCount: Int = 0,
-        failedCount: Int = 0
-    ) {
-        if (importedCount <= 0 && skippedCount <= 0 && failedCount <= 0) return
-
-        val details = mutableListOf(
-            FieldChange(
-                fieldName = context.getString(R.string.import_data),
-                oldValue = source,
-                newValue = source
-            ),
-            FieldChange(
-                fieldName = "Imported",
-                oldValue = "0",
-                newValue = importedCount.toString()
-            )
-        )
-        if (skippedCount > 0) {
-            details += FieldChange(
-                fieldName = "Skipped",
-                oldValue = "0",
-                newValue = skippedCount.toString()
-            )
-        }
-        if (failedCount > 0) {
-            details += FieldChange(
-                fieldName = "Failed",
-                oldValue = "0",
-                newValue = failedCount.toString()
-            )
-        }
-
-        OperationLogger.logCreate(
-            itemType = OperationLogItemType.CATEGORY,
-            itemId = System.currentTimeMillis(),
-            itemTitle = "${context.getString(R.string.import_data)} · $source",
-            details = details
-        )
     }
 
 }

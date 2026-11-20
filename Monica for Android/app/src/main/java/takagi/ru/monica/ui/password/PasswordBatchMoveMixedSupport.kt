@@ -1,5 +1,8 @@
 package takagi.ru.monica.ui
 
+import takagi.ru.monica.data.ItemType
+import takagi.ru.monica.data.LocalMdbxDatabase
+
 import android.content.Context
 import android.widget.Toast
 import kotlinx.coroutines.CompletableDeferred
@@ -8,9 +11,7 @@ import kotlinx.coroutines.withContext
 import takagi.ru.monica.R
 import takagi.ru.monica.bitwarden.repository.BitwardenRepository
 import takagi.ru.monica.data.Category
-import takagi.ru.monica.data.ItemType
 import takagi.ru.monica.data.LocalKeePassDatabase
-import takagi.ru.monica.data.LocalMdbxDatabase
 import takagi.ru.monica.data.PasskeyEntry
 import takagi.ru.monica.data.PasswordEntry
 import takagi.ru.monica.data.PasswordPageContentType
@@ -18,7 +19,6 @@ import takagi.ru.monica.data.SecureItem
 import takagi.ru.monica.data.bitwarden.BitwardenPendingOperation
 import takagi.ru.monica.data.isKeePassOwned
 import takagi.ru.monica.data.isLocalOnlyItem
-import takagi.ru.monica.data.model.TimelinePasswordRecreatedEntry
 import takagi.ru.monica.notes.domain.NoteContentCodec
 import takagi.ru.monica.passkey.PasskeyPrivateKeyStore
 import takagi.ru.monica.passkey.PasskeyBatchMoveExecutor
@@ -578,18 +578,7 @@ internal suspend fun executeMixedPasswordBatchMove(
         }
 
     } else {
-        val oldStates = selectedEntries.map(::toLocationState)
-        val newStates = selectedEntries.map { entry ->
-            toMovedLocationState(
-                entry,
-                passwordBatchTargetForEntry(
-                    entry = entry,
-                    selectedTarget = target,
-                    targetOverrides = passwordTargetOverrides
-                )
-            )
-        }
-        val recreatedEntries = mutableListOf<TimelinePasswordRecreatedEntry>()
+
         val decryptedPasswordSnapshot = selectedEntries
             .mapNotNull { entry ->
                 runCatching { securityManager.decryptData(entry.password) }
@@ -624,10 +613,7 @@ internal suspend fun executeMixedPasswordBatchMove(
                     bitwardenEntries.forEach { entry ->
                         val result = viewModel.moveBitwardenPasswordToMonicaLocal(entry, null)
                         if (result.isSuccess) {
-                            recreatedEntries += TimelinePasswordRecreatedEntry(
-                                sourceEntryId = entry.id,
-                                recreatedEntryId = result.getOrThrow()
-                            )
+
                             successCount++
                         } else {
                             failedCount++
@@ -679,10 +665,7 @@ internal suspend fun executeMixedPasswordBatchMove(
                             categoryId = target.categoryId
                         )
                         if (result.isSuccess) {
-                            recreatedEntries += TimelinePasswordRecreatedEntry(
-                                sourceEntryId = entry.id,
-                                recreatedEntryId = result.getOrThrow()
-                            )
+
                             successCount++
                         } else {
                             failedCount++
@@ -1063,14 +1046,7 @@ internal suspend fun executeMixedPasswordBatchMove(
                 categories = categories,
                 keepassDatabases = keepassDatabases
             )
-            logPasswordBatchMoveTimeline(
-                context = context,
-                selectedEntries = selectedEntries,
-                oldStates = oldStates,
-                newStates = newStates,
-                recreatedEntries = recreatedEntries,
-                targetLabel = targetLabel
-            )
+
         }
     }
 
@@ -1177,10 +1153,7 @@ internal suspend fun executeMixedPasswordBatchMove(
     }
 
     if (copiedPasswordIds.isNotEmpty()) {
-        logPasswordBatchCopyTimeline(
-            context = context,
-            copiedEntryIds = copiedPasswordIds
-        )
+
     }
 
     return MixedPasswordBatchMoveResult(
@@ -1199,7 +1172,6 @@ private suspend fun PasswordViewModel.addPasswordEntryWithResultAwait(
     val deferred = CompletableDeferred<Long?>()
     addPasswordEntryWithResult(
         entry = entry,
-        includeDetailedLog = false,
         // 来源 entry 的 password 已经是 Monica 加密过的密文，不能再加密一次
         passwordAlreadyEncrypted = true,
         // mixed batch 的 target 已经在 buildCopiedEntryForTarget 里明确指定，不走 categoryFilter

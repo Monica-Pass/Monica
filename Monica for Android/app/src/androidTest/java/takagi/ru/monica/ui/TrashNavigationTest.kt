@@ -33,8 +33,7 @@ import takagi.ru.monica.R
 import takagi.ru.monica.data.*
 import takagi.ru.monica.repository.*
 import takagi.ru.monica.security.SecurityManager
-import takagi.ru.monica.ui.screens.HistoryTab
-import takagi.ru.monica.ui.screens.TimelineScreen
+import takagi.ru.monica.ui.screens.TrashScreen
 import takagi.ru.monica.utils.SettingsManager
 import takagi.ru.monica.utils.SavedCategoryFilterState
 import takagi.ru.monica.viewmodel.*
@@ -118,14 +117,13 @@ class TrashNavigationTest {
         val mdbxId = runBlocking { database.localMdbxDatabaseDao().insertDatabase(mdbx) }
         insertedMdbxDatabases += mdbx.copy(id = mdbxId)
         addDeletedPassword("mdbx", mdbxDatabaseId = mdbxId)
-        val timeline = keep(TimelineViewModel(application))
         val trash = keep(TrashViewModel(application))
         var scopeKey by mutableStateOf("bitwarden_${Long.MAX_VALUE}")
         compose.setContent {
             MaterialTheme {
-                TimelineScreen(viewModel = timeline, trashViewModel = trash,
-                    initialTab = HistoryTab.TRASH, initialTrashScopeKey = scopeKey,
-                    enableTabSwitch = false, showBackButton = true)
+                TrashScreen(trashViewModel = trash,
+                    initialTrashScopeKey = scopeKey,
+                    showBackButton = true)
             }
         }
         listOf("bitwarden", "keepass", "mdbx", "local").forEach { source ->

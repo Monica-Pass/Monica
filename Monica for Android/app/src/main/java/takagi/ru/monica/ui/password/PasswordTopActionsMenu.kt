@@ -101,7 +101,6 @@ internal fun CommonPasswordTopActionsMenuItems(
     onDismissMenu: () -> Unit,
     onShowDisplayOptions: () -> Unit,
     onOpenCommonAccountTemplates: () -> Unit,
-    onOpenHistory: () -> Unit,
     onOpenTrash: () -> Unit,
     onOpenArchive: () -> Unit,
     showDisplayOptionsEntry: Boolean = true,
@@ -129,14 +128,6 @@ internal fun CommonPasswordTopActionsMenuItems(
         onClick = {
             onDismissMenu()
             onOpenCommonAccountTemplates()
-        }
-    )
-    DropdownMenuItem(
-        text = { Text(stringResource(R.string.timeline_title)) },
-        leadingIcon = { Icon(Icons.Default.History, contentDescription = null) },
-        onClick = {
-            onDismissMenu()
-            onOpenHistory()
         }
     )
     DropdownMenuItem(

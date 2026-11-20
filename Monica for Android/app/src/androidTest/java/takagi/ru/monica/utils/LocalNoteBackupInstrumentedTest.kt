@@ -65,7 +65,7 @@ class LocalNoteBackupInstrumentedTest {
             val preferences = BackupPreferences(includePasswords = false, includeNotes = true,
                 includeAuthenticators = false, includeDocuments = false, includeBankCards = false,
                 includePasskeys = false, includeGeneratorHistory = false, includeImages = false,
-                includeTimeline = false, includeTrash = false, includeTrashAndHistory = false,
+                includeTrash = false, includeTrashAndHistory = false,
                 includeWebDavConfig = false, includeLocalKeePass = false)
             val helper = WebDavHelper(context)
             val password = if (encrypted) "Synthetic archive password 325!" else null

@@ -98,7 +98,6 @@ class SensitiveLocalStorageGuardTest {
         val passkeyCreate = projectFile("app/src/main/java/takagi/ru/monica/passkey/PasskeyCreateActivity.kt")
         val passkeyAuth = projectFile("app/src/main/java/takagi/ru/monica/passkey/PasskeyAuthActivity.kt")
         val cipherSync = projectFile("app/src/main/java/takagi/ru/monica/bitwarden/service/CipherSyncProcessor.kt")
-        val operationLogger = projectFile("app/src/main/java/takagi/ru/monica/utils/OperationLogger.kt")
 
         assertFalse(importViewModel.contains("成功插入到PasswordEntry表: ${'$'}{exportItem.title}"))
         assertFalse(importViewModel.contains("跳过重复条目: ${'$'}{aegisEntry.name}"))
@@ -125,7 +124,6 @@ class SensitiveLocalStorageGuardTest {
         assertFalse(passkeyAuth.contains("Passkey not found: ${'$'}credentialId"))
         assertFalse(passkeyAuth.contains("Authentication successful for: ${'$'}{passkey.credentialId}"))
         assertFalse(cipherSync.contains("title=${'$'}name"))
-        assertFalse(operationLogger.contains("for ${'$'}itemType: ${'$'}itemTitle"))
     }
 
     @Test
@@ -145,14 +143,9 @@ class SensitiveLocalStorageGuardTest {
     }
 
     @Test
-    fun operationLogs_redactSensitivePayloadsBeforePersistence() {
-        val operationLogger = projectFile("app/src/main/java/takagi/ru/monica/utils/OperationLogger.kt")
+    fun legacyOperationLogs_keepTheirRedactionMigration() {
         val database = projectFile("app/src/main/java/takagi/ru/monica/data/PasswordDatabase.kt")
 
-        assertTrue(operationLogger.contains("sanitizeChanges(itemType, immutableChanges)"))
-        assertTrue(operationLogger.contains("sanitizeItemTitle(itemType, itemTitle, itemId)"))
-        assertTrue(operationLogger.contains("requiresSensitiveLogRedaction"))
-        assertTrue(operationLogger.contains("\"<redacted>\""))
         assertTrue(database.contains("MIGRATION_68_69"))
         assertTrue(database.contains("UPDATE operation_logs"))
         assertTrue(database.contains("changesJson = ''"))

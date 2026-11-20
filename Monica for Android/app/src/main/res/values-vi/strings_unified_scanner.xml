@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_credentials_hint">Quét mã QR của trình xác thực hoặc khóa truy cập</string>
+    <string name="qr_credentials_invalid">Đây không phải mã QR trình xác thực hoặc khóa truy cập được hỗ trợ</string>
+    <string name="qr_multiple_codes">Phát hiện nhiều mã QR. Chỉ hướng máy ảnh vào một mã.</string>
+</resources>

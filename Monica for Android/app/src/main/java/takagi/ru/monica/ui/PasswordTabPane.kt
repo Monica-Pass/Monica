@@ -16,14 +16,12 @@ import takagi.ru.monica.data.UnmatchedIconHandlingStrategy
 import takagi.ru.monica.data.bitwarden.BitwardenVault
 import takagi.ru.monica.data.LocalKeePassDatabase
 import takagi.ru.monica.data.LocalMdbxDatabase
-import takagi.ru.monica.data.model.TimelineEvent
 import takagi.ru.monica.security.SecurityManager
 import takagi.ru.monica.ui.password.PasswordListAggregateConfig
 import takagi.ru.monica.ui.password.StackCardMode
 import takagi.ru.monica.ui.screens.AddEditPasswordScreen
-import takagi.ru.monica.ui.screens.HistoryTab
 import takagi.ru.monica.ui.screens.PasswordDetailScreen
-import takagi.ru.monica.ui.screens.TimelineScreen
+import takagi.ru.monica.ui.screens.TrashScreen
 import takagi.ru.monica.viewmodel.BankCardViewModel
 import takagi.ru.monica.viewmodel.BillingAddressViewModel
 import takagi.ru.monica.viewmodel.DocumentViewModel
@@ -31,7 +29,6 @@ import takagi.ru.monica.viewmodel.NoteViewModel
 import takagi.ru.monica.viewmodel.PasskeyViewModel
 import takagi.ru.monica.viewmodel.PasswordViewModel
 import takagi.ru.monica.viewmodel.SettingsViewModel
-import takagi.ru.monica.viewmodel.TimelineViewModel
 import takagi.ru.monica.viewmodel.MdbxViewModel
 
 @OptIn(androidx.compose.animation.ExperimentalSharedTransitionApi::class)
@@ -47,7 +44,6 @@ internal fun PasswordTabPane(
     bitwardenVaults: List<BitwardenVault>,
     localKeePassViewModel: takagi.ru.monica.viewmodel.LocalKeePassViewModel,
     mdbxViewModel: MdbxViewModel? = null,
-    timelineViewModel: TimelineViewModel?,
     groupMode: String,
     stackCardMode: StackCardMode,
     visibleContentTypes: List<PasswordPageContentType>,
@@ -64,14 +60,12 @@ internal fun PasswordTabPane(
     onNavigateToNoteDetail: (Long) -> Unit,
     onNavigateToPasskeyDetail: (Long) -> Unit,
     onOpenMdbxCommitHistory: (Long) -> Unit,
-    onOpenHistoryPage: () -> Unit,
     onOpenTrashPage: () -> Unit,
     onOpenCommonAccountTemplatesPage: () -> Unit,
     onScanFidoQr: () -> Unit,
     onCloseHistoryPage: () -> Unit,
     passwordHistoryPageMode: PasswordHistoryPageMode,
     passwordHistoryInitialTrashScopeKey: String?,
-    onTimelineLogSelected: (TimelineEvent.StandardLog) -> Unit,
     onSelectionModeChange: (
         Boolean,
         Int,
@@ -137,7 +131,6 @@ internal fun PasswordTabPane(
             onBackToTopVisibilityChange = onBackToTopVisibilityChange,
             scrollToTopRequestKey = scrollToTopRequestKey,
             onOpenMdbxCommitHistory = onOpenMdbxCommitHistory,
-            onOpenHistory = onOpenHistoryPage,
             onOpenTrash = onOpenTrashPage,
             onOpenCommonAccountTemplates = onOpenCommonAccountTemplatesPage,
             onScanFidoQr = onScanFidoQr,
@@ -164,14 +157,8 @@ internal fun PasswordTabPane(
     }
 
     if (passwordHistoryPageMode.isVisible) {
-        TimelineScreen(
-            onMdbxHistory = onOpenMdbxCommitHistory,
-            viewModel = timelineViewModel,
-            onLogSelected = onTimelineLogSelected,
-            splitPaneMode = false,
-            initialTab = passwordHistoryPageMode.tab ?: HistoryTab.TIMELINE,
+        TrashScreen(
             initialTrashScopeKey = passwordHistoryInitialTrashScopeKey,
-            enableTabSwitch = false,
             showBackButton = true,
             onNavigateBack = onCloseHistoryPage,
             showReturnFab = false,

@@ -1,5 +1,6 @@
 package takagi.ru.monica.viewmodel
 
+
 import android.content.Context
 import takagi.ru.monica.attachments.AttachmentContainer
 import takagi.ru.monica.attachments.CardFaceAttachmentManager
@@ -19,7 +20,6 @@ import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import takagi.ru.monica.data.ItemType
-import takagi.ru.monica.data.OperationLogItemType
 import takagi.ru.monica.data.SecureItem
 import takagi.ru.monica.data.asMonicaLocalCopy
 import takagi.ru.monica.data.hasOwnershipConflict
@@ -27,8 +27,6 @@ import takagi.ru.monica.data.model.BillingAddressData
 import takagi.ru.monica.data.model.CardWalletDataCodec
 import takagi.ru.monica.repository.SecureItemRepository
 import takagi.ru.monica.security.SecurityManager
-import takagi.ru.monica.utils.FieldChange
-import takagi.ru.monica.utils.OperationLogger
 import java.util.Date
 
 data class ParsedBillingAddressItem(
@@ -152,11 +150,7 @@ class BillingAddressViewModel(
                 if (addressData.cardFace != null) {
                     cardFaceAttachmentManager.update(newId, addressData.cardFace, ownedImageBytes, null).getOrThrow()
                 }
-                OperationLogger.logCreate(
-                    itemType = OperationLogItemType.BILLING_ADDRESS,
-                    itemId = newId,
-                    itemTitle = safeLogTitle
-                )
+
                 newId
             } finally {
                 ownedImageBytes?.fill(0)
@@ -186,66 +180,6 @@ class BillingAddressViewModel(
                 if (ownedImageBytes == null && addressData.cardFace != null && backendChanged) {
                     ownedImageBytes = cardFaceAttachmentManager.readImage(id, addressData.cardFace.imageAttachmentName)
                 }
-                val changes = buildList {
-                    if (oldData?.cardFace != addressData.cardFace) {
-                        add(FieldChange("自定义卡面", oldData?.cardFace.toString(), addressData.cardFace.toString()))
-                    }
-                    if (existingItem.title != title) {
-                        add(FieldChange("标题", existingItem.title, title))
-                    }
-                    if (existingItem.notes != notes) {
-                        add(FieldChange("备注", existingItem.notes, notes))
-                    }
-                    if (oldData?.fullName != addressData.fullName) {
-                        add(FieldChange("姓名", oldData?.fullName.orEmpty(), addressData.fullName))
-                    }
-                    if (oldData?.company != addressData.company) {
-                        add(FieldChange("公司", oldData?.company.orEmpty(), addressData.company))
-                    }
-                    if (oldData?.streetAddress != addressData.streetAddress) {
-                        add(FieldChange("街道地址", oldData?.streetAddress.orEmpty(), addressData.streetAddress))
-                    }
-                    if (oldData?.apartment != addressData.apartment) {
-                        add(FieldChange("公寓/单元", oldData?.apartment.orEmpty(), addressData.apartment))
-                    }
-                    if (oldData?.city != addressData.city) {
-                        add(FieldChange("城市", oldData?.city.orEmpty(), addressData.city))
-                    }
-                    if (oldData?.stateProvince != addressData.stateProvince) {
-                        add(FieldChange("省/州", oldData?.stateProvince.orEmpty(), addressData.stateProvince))
-                    }
-                    if (oldData?.postalCode != addressData.postalCode) {
-                        add(FieldChange("邮编", oldData?.postalCode.orEmpty(), addressData.postalCode))
-                    }
-                    if (oldData?.country != addressData.country) {
-                        add(FieldChange("国家", oldData?.country.orEmpty(), addressData.country))
-                    }
-                    if (oldData?.email != addressData.email) {
-                        add(FieldChange("邮箱", oldData?.email.orEmpty(), addressData.email))
-                    }
-                    if (oldData?.phone != addressData.phone) {
-                        add(FieldChange("电话", oldData?.phone.orEmpty(), addressData.phone))
-                    }
-                    if (oldData?.isDefault != addressData.isDefault) {
-                        add(
-                            FieldChange(
-                                "默认状态",
-                                oldData?.isDefault?.toString().orEmpty(),
-                                addressData.isDefault.toString()
-                            )
-                        )
-                    }
-                    if (oldData?.customFields != addressData.customFields) {
-                        add(
-                            FieldChange(
-                                "自定义字段",
-                                oldData?.customFields?.toString().orEmpty(),
-                                addressData.customFields.toString()
-                            )
-                        )
-                    }
-                }
-
                 val updatedItem = existingItem.copy(
                     title = title,
                     itemData = encodeAddressDataForLocalStorage(addressData),
@@ -281,23 +215,7 @@ class BillingAddressViewModel(
                     throw error
                 }
 
-                OperationLogger.logUpdate(
-                    itemType = OperationLogItemType.BILLING_ADDRESS,
-                    itemId = id,
-                    itemTitle = safeLogTitle,
-                    changes = changes.ifEmpty {
-                        listOf(FieldChange("更新", "编辑前", "已保存"))
-                    },
-                    snapshotChanges = if (changes.isEmpty()) {
-                        emptyList()
-                    } else {
-                        changes + FieldChange(
-                            takagi.ru.monica.data.TIMELINE_SNAPSHOT_FIELD_ITEM_DATA,
-                            existingItem.itemData,
-                            updatedItem.itemData
-                        )
-                    }
-                )
+
                 id
             } finally {
                 ownedImageBytes?.fill(0)
@@ -310,19 +228,10 @@ class BillingAddressViewModel(
             val item = repository.getItemById(id) ?: return@launch
             if (softDelete) {
                 repository.softDeleteItem(item)
-                OperationLogger.logDelete(
-                    itemType = OperationLogItemType.BILLING_ADDRESS,
-                    itemId = id,
-                    itemTitle = safeLogTitle,
-                    detail = "移入回收站"
-                )
+
             } else {
                 repository.deleteItem(item)
-                OperationLogger.logDelete(
-                    itemType = OperationLogItemType.BILLING_ADDRESS,
-                    itemId = id,
-                    itemTitle = safeLogTitle
-                )
+
             }
         }
     }
