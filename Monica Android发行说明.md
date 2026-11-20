@@ -12,7 +12,7 @@
 
 已经遇到此问题的用户，请使用同一渠道、同一签名的 1.0.330 直接覆盖升级；不需要先回退到 326，也不要卸载或清除应用数据。本次补丁不修改密码算法、加密格式或数据库结构。已经验证旧版数据上的覆盖升级、原密码解锁、旧记录读取、新记录保存和加密备份恢复；用户的 HyperOS 真机仍需进一步反馈确认。
 
-最后保留一下我的调侃：**是因为我把代号写成千石抚子的原因吗？？？逆抚子来的。**
+是因为我把代号写成千石抚子的原因吗？？？逆抚子来的。
 
 ## English
 
@@ -24,4 +24,4 @@ Looking back, this regression may be related to the dependency upgrades at the t
 
 If you are affected, install 1.0.330 over your existing app using the same distribution channel and signing identity. You no longer need to roll back to 326 first. Please do not uninstall the app or clear its data. This patch does not change password algorithms, encryption formats or the database schema. Upgrade tests with existing data, original-password unlock, old-record reads, new writes and encrypted-backup restoration have passed; confirmation on users' physical HyperOS devices is still pending.
 
-And, keeping my joke: **Was this because I named the codename Sengoku Nadeko??? Must be Nadeko in her rebellious mood (逆抚子).**
+Was this because I named the codename Sengoku Nadeko??? Must be Nadeko in her rebellious mood (逆抚子).
