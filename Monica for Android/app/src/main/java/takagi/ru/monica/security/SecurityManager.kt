@@ -102,7 +102,7 @@ class SecurityManager private constructor(
             LocalVaultRecovery.GENERATION, SECURITY_QUESTION_1_ID_KEY, SECURITY_QUESTION_1_ANSWER_KEY,
             SECURITY_QUESTION_1_TEXT_KEY, SECURITY_QUESTION_2_ID_KEY, SECURITY_QUESTION_2_ANSWER_KEY,
             SECURITY_QUESTION_2_TEXT_KEY)
-        return keys.associateWith { values[it] } + ("store" to context.applicationInfo.dataDir)
+        return keys.associateWith { values[it] } + BiometricMdkBinding.snapshot(values) + ("store" to context.applicationInfo.dataDir)
     }
 
     internal fun recoveryAttemptStatus() = recoveryLimiter.status()
@@ -165,7 +165,7 @@ class SecurityManager private constructor(
             PasswordKdf.fromValues(original)
             // COMPAT may supply the original MDK only AFTER explicit recovery authorization.
             check(original[MDK_READY_KEY] == true && original[MDK_PASSWORD_BLOB_KEY] != null)
-            mdk = readKeystoreWrappedMdk(original[MDK_KEYSTORE_BLOB_KEY] as? String ?: return false)
+            mdk = readPersistentBiometricMdk(original)
             check(mdk.size == 32)
             commitLocalPassword(password, mdk, original, attempt, ensureActive, updates) {
                 check(recoveryAuthorization.consume(proof, recoveryBinding(), attempt.generation, attempt.credentialEpoch)) {
@@ -388,23 +388,34 @@ class SecurityManager private constructor(
         } finally { mdk?.fill(0) }
     }
 
-    fun unlockVaultWithBiometric(): Boolean {
-        if (!isMasterPasswordSet()) {
-            return true
-        }
+    fun unlockVaultWithBiometric(): Boolean = unlockVaultWithBiometric(null) {}
 
+    internal fun unlockVaultWithBiometric(attempt: PasswordVerificationAttempt?, ensureActive: () -> Unit): Boolean {
+        if (!isMasterPasswordSet()) return true
+        val generation = attempt?.generation ?: runtimeKeyGeneration.get()
+        var mdk: ByteArray? = null
         return try {
-            // A previous failed keystore read can set a short cooldown. Once the
-            // user has just passed biometric auth, retry immediately instead of
-            // reporting that the vault key is still unavailable.
+            ensureActive()
+            check(attempt?.isCurrent() != false)
+            localRecovery.validate(sharedPreferences)
+            val original = sharedPreferences.all
+            mdk = readPersistentBiometricMdk(original)
+            ensureActive()
+            check(attempt?.isCurrent() != false)
+            check(isDataReadCurrent(generation) && credentialsMatch(original) &&
+                BiometricMdkBinding.snapshot(sharedPreferences.all) == BiometricMdkBinding.snapshot(original))
+            if (attempt != null) attempt.stage(this, mdk, original)
+            else synchronized(runtimeKeyLock) {
+                check(runtimeKeyGeneration.get() == generation)
+                processCachedMdk = mdk.copyOf()
+            }
+            mdkWrapperUnavailable = false
             mdkAuthUnavailableUntilMillis = 0L
-            ensureMdkKeystoreWrapper()
-            val mdk = getMdkForCrypto()
-            mdk != null && mdk.isNotEmpty()
-        } catch (e: Exception) {
-            android.util.Log.w("SecurityManager", "Vault biometric unlock failed: ${e.message}")
+            true
+        } catch (_: Exception) {
+            mdkWrapperUnavailable = true
             false
-        }
+        } finally { mdk?.fill(0) }
     }
 
     fun isVaultRuntimeUnlocked(): Boolean {
@@ -466,6 +477,18 @@ class SecurityManager private constructor(
      */
     fun configureDeveloperVerificationBypass(enabled: Boolean): Boolean {
         if (!isMasterPasswordSet()) return true
+        if (sharedPreferences.contains(BiometricMdkBinding.ACTIVE)) {
+            val binding = runCatching { BiometricMdkBinding.selected(sharedPreferences.all) }.getOrNull() ?: return false
+            // A legacy shared alias cannot replace the selected repaired binding. Refuse an
+            // AUTH-to-COMPAT conversion here; it requires its own authenticated binding workflow.
+            if (enabled) return !binding.authenticated
+            if (binding.authenticated) return true
+            val editor = sharedPreferences.edit().remove(BiometricMdkBinding.ACTIVE)
+            if (sharedPreferences.getString(MDK_KEYSTORE_BLOB_KEY, null)?.startsWith(WRAPPER_PREFIX_COMPAT) == true) {
+                editor.remove(MDK_KEYSTORE_BLOB_KEY)
+            }
+            return editor.commit()
+        }
         if (!enabled) {
             val storedWrapper = sharedPreferences.getString(MDK_KEYSTORE_BLOB_KEY, null)
             if (storedWrapper?.startsWith(WRAPPER_PREFIX_COMPAT) == true) {
@@ -647,7 +670,7 @@ class SecurityManager private constructor(
         if (!ready) return false
         val hasPasswordBlob = sharedPreferences.contains(MDK_PASSWORD_BLOB_KEY)
         if (!hasPasswordBlob) return false
-        val hasKeystoreBlob = sharedPreferences.contains(MDK_KEYSTORE_BLOB_KEY)
+        val hasKeystoreBlob = sharedPreferences.contains(BiometricMdkBinding.ACTIVE) || sharedPreferences.contains(MDK_KEYSTORE_BLOB_KEY)
         val keystoreAliasMissing = hasKeystoreBlob && !hasRequiredAliasForStoredWrapper()
         val requires = mdkWrapperUnavailable || !hasKeystoreBlob || keystoreAliasMissing
         if (requires) {
@@ -662,22 +685,102 @@ class SecurityManager private constructor(
         return requires
     }
 
-    fun rebuildKeystoreWrapperFromRuntimeCacheIfNeeded(): Boolean {
-        if (sharedPreferences.contains(MDK_KEYSTORE_BLOB_KEY)) {
-            android.util.Log.d(logTag, "rebuildKeystoreWrapperFromRuntimeCacheIfNeeded: wrapper already exists")
-            SecurityDiagLogger.append("D/$logTag rebuildWrapper: wrapper already exists")
-            return true
+    enum class BiometricBindingHealth { AVAILABLE, DEVICE_AUTH_REQUIRED, REPAIR_REQUIRED, TEMPORARILY_UNAVAILABLE }
+    enum class BiometricRebindResult { SUCCESS, INVALID_PASSWORD, DEVICE_AUTH_REQUIRED, UNAVAILABLE }
+
+    /** Durable health never uses or publishes the current process's MDK or cached key handles. */
+    fun biometricBindingHealth(): BiometricBindingHealth {
+        var mdk: ByteArray? = null
+        return try {
+            localRecovery.validate(sharedPreferences)
+            val original = sharedPreferences.all
+            mdk = readPersistentBiometricMdk(original)
+            check(credentialsMatch(original) && BiometricMdkBinding.snapshot(sharedPreferences.all) == BiometricMdkBinding.snapshot(original))
+            BiometricBindingHealth.AVAILABLE
+        } catch (error: Exception) {
+            if (isDeviceAuthenticationRequired(error)) BiometricBindingHealth.DEVICE_AUTH_REQUIRED
+            else if (error is UnrecoverableKeyException || error is javax.crypto.AEADBadTagException ||
+                error is android.security.keystore.KeyPermanentlyInvalidatedException || error is IllegalArgumentException)
+                BiometricBindingHealth.REPAIR_REQUIRED
+            else BiometricBindingHealth.TEMPORARILY_UNAVAILABLE
+        } finally { mdk?.fill(0) }
+    }
+
+    /** Kept for older callers: a read can validate a binding, never authorize a repair. */
+    fun rebuildKeystoreWrapperFromRuntimeCacheIfNeeded(): Boolean =
+        biometricBindingHealth() == BiometricBindingHealth.AVAILABLE
+
+    class BiometricRebindAttempt {
+        internal val generation = runtimeKeyGeneration.get()
+        private val epoch = passwordCredentialEpoch.get()
+        private val state = java.util.concurrent.atomic.AtomicInteger(0)
+        internal val commitStarted: Boolean get() = state.get() == 1
+        fun cancel() { state.compareAndSet(0, 2) }
+        internal fun ensureCurrent() {
+            check(state.get() == 0 && runtimeKeyGeneration.get() == generation && passwordCredentialEpoch.get() == epoch) {
+                "Biometric rebind was revoked"
+            }
         }
-        val mdk = processCachedMdk
-        if (mdk == null || mdk.isEmpty()) {
-            android.util.Log.w(logTag, "rebuildKeystoreWrapperFromRuntimeCacheIfNeeded: runtime MDK cache missing")
-            SecurityDiagLogger.append("W/$logTag rebuildWrapper: runtime MDK cache missing")
-            return false
+        internal fun beginCommit(ensureActive: () -> Unit) = synchronized(runtimeKeyLock) {
+            ensureCurrent(); ensureActive()
+            check(state.compareAndSet(0, 1)) { "Biometric rebind was cancelled" }
         }
-        val persisted = persistKeystoreWrappedMdk(mdk)
-        android.util.Log.d(logTag, "rebuildKeystoreWrapperFromRuntimeCacheIfNeeded: persisted=$persisted")
-        SecurityDiagLogger.append("D/$logTag rebuildWrapper: persisted=$persisted")
-        return persisted
+    }
+
+    /** Explicit confirmed password submission only. Neither a warm cache nor biometric auth is proof. */
+    fun rebindBiometricWithPassword(
+        password: String,
+        attempt: BiometricRebindAttempt,
+        ensureActive: () -> Unit = {},
+    ): BiometricRebindResult {
+        var mdk: ByteArray? = null
+        var candidateId: String? = null
+        fun checkCurrent() { attempt.ensureCurrent(); ensureActive(); check(isDataReadCurrent(attempt.generation)) }
+        return try {
+            checkCurrent()
+            localRecovery.validate(sharedPreferences)
+            val original = sharedPreferences.all
+            if (!LocalPasswordCredentials.verify(password, original)) return BiometricRebindResult.INVALID_PASSWORD
+            // Require the independently password-wrapped original MDK. No legacy creation fallback.
+            mdk = LocalPasswordCredentials.unwrap(password, original)
+            check(mdk.size == 32 && original[MDK_READY_KEY] == true)
+            checkCurrent()
+            val selected = runCatching { BiometricMdkBinding.selected(original) }.getOrNull()
+            val authenticated = selected?.authenticated ?: if (original.containsKey(BiometricMdkBinding.ACTIVE)) true
+                else (original[MDK_KEYSTORE_BLOB_KEY] as? String)?.let { parseWrappedMdkBlob(it).mode == WrapperMode.AUTH } ?: true
+            val id = java.util.UUID.randomUUID().toString()
+            val candidate = BiometricMdkBinding.create(id, mdk, authenticated, { candidateId = id }, ::checkCurrent)
+            checkCurrent()
+            localRecovery.enroll(sharedPreferences, password, candidate.updates, expectedCredentials = original,
+                beforeCommit = {
+                    checkCurrent()
+                    check(BiometricMdkBinding.snapshot(sharedPreferences.all) == BiometricMdkBinding.snapshot(original)) {
+                        "Biometric binding changed during repair"
+                    }
+                    attempt.beginCommit(ensureActive)
+                })
+            // A completed transaction must be retained even when its UI request was cancelled.
+            // This operation never publishes an MDK or grants an application session.
+            BiometricRebindResult.SUCCESS
+        } catch (error: Exception) {
+            if (isDeviceAuthenticationRequired(error)) BiometricRebindResult.DEVICE_AUTH_REQUIRED
+            else BiometricRebindResult.UNAVAILABLE
+        } finally {
+            mdk?.fill(0)
+            // Once canonical publication starts, an IO failure can be ambiguous. Retain the key.
+            if (!attempt.commitStarted) candidateId?.let { runCatching { BiometricMdkBinding.discardUncommitted(it) } }
+            attempt.cancel()
+        }
+    }
+
+    private fun isDeviceAuthenticationRequired(error: Throwable): Boolean =
+        generateSequence(error) { it.cause }.take(8).any { it is UserNotAuthenticatedException }
+
+    private fun readPersistentBiometricMdk(values: Map<String, *>): ByteArray {
+        BiometricMdkBinding.selected(values)?.let { return BiometricMdkBinding.read(it) }
+        val blob = values[MDK_KEYSTORE_BLOB_KEY] as? String
+            ?: throw UnrecoverableKeyException("Existing biometric binding unavailable")
+        return readKeystoreWrappedMdk(blob)
     }
 
     private fun hasActiveSharedSession(context: Context, autoLockMinutes: Int): Boolean {
@@ -755,6 +858,7 @@ class SecurityManager private constructor(
             .remove(MDK_PASSWORD_BLOB_KEY)
             .remove(MDK_PASSWORD_SALT_KEY)
             .remove(MDK_KEYSTORE_BLOB_KEY)
+            .remove(BiometricMdkBinding.ACTIVE)
             .remove(MDK_READY_KEY)
             // V2 Bitwarden 凭据
             .remove(BITWARDEN_ACCESS_TOKEN_KEY)
@@ -1086,6 +1190,9 @@ class SecurityManager private constructor(
     }
 
     private fun hasRequiredAliasForStoredWrapper(): Boolean {
+        if (sharedPreferences.contains(BiometricMdkBinding.ACTIVE)) return runCatching {
+            hasSecureKeyAlias(requireNotNull(BiometricMdkBinding.selected(sharedPreferences.all)).alias)
+        }.getOrDefault(false)
         val rawBlob = sharedPreferences.getString(MDK_KEYSTORE_BLOB_KEY, null) ?: return true
         val wrapper = parseWrappedMdkBlob(rawBlob)
         return when (wrapper.mode) {
@@ -1237,7 +1344,7 @@ class SecurityManager private constructor(
         // but it is never permission to publish a runtime key into a subsequently locked session.
         ensureActive()
         publishPasswordMdk(mdk, committed, attempt.generation, attempt.credentialEpoch, null)
-        if (!sharedPreferences.contains(MDK_KEYSTORE_BLOB_KEY)) {
+        if (!sharedPreferences.contains(BiometricMdkBinding.ACTIVE) && !sharedPreferences.contains(MDK_KEYSTORE_BLOB_KEY)) {
             persistCompatKeystoreWrappedMdk(mdk, allowInitialKeyCreation = original[MASTER_PASSWORD_HASH_KEY] == null && original[MDK_READY_KEY] != true)
         }
     }
@@ -1286,7 +1393,7 @@ class SecurityManager private constructor(
                 android.util.Log.w(logTag, "Password protection upgrade deferred; original credentials retained")
             }
             ensureCurrent()
-            if (!sharedPreferences.contains(MDK_KEYSTORE_BLOB_KEY)) persistCompatKeystoreWrappedMdk(mdk)
+            if (!sharedPreferences.contains(BiometricMdkBinding.ACTIVE) && !sharedPreferences.contains(MDK_KEYSTORE_BLOB_KEY)) persistCompatKeystoreWrappedMdk(mdk)
             publishPasswordMdk(mdk, authenticatedCredentials, generation, epoch, attempt)
         } finally { mdk.fill(0) }
     }
@@ -1310,16 +1417,6 @@ class SecurityManager private constructor(
         }
     }
 
-    private fun ensureMdkKeystoreWrapper() {
-        if (sharedPreferences.contains(MDK_KEYSTORE_BLOB_KEY)) return
-        val mdk = getOrCreateMdkBytes()
-        if (mdk.isEmpty()) {
-            android.util.Log.w("SecurityManager", "Cannot create MDK keystore wrapper without current MDK")
-            return
-        }
-        persistKeystoreWrappedMdk(mdk)
-    }
-
     private fun getOrCreateMdkBytes(): ByteArray {
         processCachedMdk?.let { cached ->
             if (cached.isNotEmpty()) {
@@ -1331,6 +1428,7 @@ class SecurityManager private constructor(
         }
         val passwordBlob = sharedPreferences.getString(MDK_PASSWORD_BLOB_KEY, null)
         val keystoreBlob = sharedPreferences.getString(MDK_KEYSTORE_BLOB_KEY, null)
+        if (sharedPreferences.contains(BiometricMdkBinding.ACTIVE)) return readPersistentBiometricMdk(sharedPreferences.all)
         if (passwordBlob == null && keystoreBlob == null) {
             check(!sharedPreferences.getBoolean(MDK_READY_KEY, false)) { "Existing vault key unavailable" }
             return generateRandom(32)
@@ -1349,12 +1447,10 @@ class SecurityManager private constructor(
 
     private fun readKeystoreWrappedMdk(blob: String): ByteArray {
         val wrapped = parseWrappedMdkBlob(blob)
-        val key = getExistingDataKey(compat = wrapped.mode == WrapperMode.COMPAT)
-        val combined = android.util.Base64.decode(wrapped.payload, android.util.Base64.NO_WRAP)
-        require(combined.size == 60) { "Invalid existing MDK wrapper" }
-        val cipher = Cipher.getInstance("AES/GCM/NoPadding")
-        cipher.init(Cipher.DECRYPT_MODE, key, GCMParameterSpec(128, combined, 0, 12))
-        return cipher.doFinal(combined, 12, combined.size - 12).also { require(it.size == 32) }
+        return BiometricMdkBinding.decrypt(
+            if (wrapped.mode == WrapperMode.COMPAT) KEY_ALIAS_DATA_COMPAT else KEY_ALIAS_DATA,
+            wrapped.payload,
+        )
     }
 
     private fun getMdkForCrypto(): ByteArray? {
@@ -1374,19 +1470,8 @@ class SecurityManager private constructor(
         }
         val ready = sharedPreferences.getBoolean(MDK_READY_KEY, false)
         if (!ready) return null
-        val rawBlob = sharedPreferences.getString(MDK_KEYSTORE_BLOB_KEY, null) ?: return null
-        val wrapped = parseWrappedMdkBlob(rawBlob)
-        val usesCompatWrapper = wrapped.mode == WrapperMode.COMPAT
         return try {
-            val ksKey = getExistingDataKey(compat = usesCompatWrapper)
-            val combined = android.util.Base64.decode(wrapped.payload, android.util.Base64.NO_WRAP)
-            val iv = combined.copyOfRange(0, 12)
-            val enc = combined.copyOfRange(12, combined.size)
-            val cipher = Cipher.getInstance("AES/GCM/NoPadding")
-            val spec = GCMParameterSpec(128, iv)
-            cipher.init(Cipher.DECRYPT_MODE, ksKey, spec)
-            val mdk = cipher.doFinal(enc)
-            check(mdk.size == 32) { "Existing vault key unavailable" }
+            val mdk = readPersistentBiometricMdk(sharedPreferences.all)
             PreparedSecureStore.unwrap(sharedPreferences)
             synchronized(runtimeKeyLock) {
                 if (runtimeKeyGeneration.get() != generation) {
@@ -1399,9 +1484,6 @@ class SecurityManager private constructor(
             mdkAuthUnavailableUntilMillis = 0L
             hasLoggedMdkAuthExpiredWarning = false
             hasLoggedMdkFallbackEncryption = false
-            if (usesCompatWrapper) {
-                android.util.Log.w(logTag, "getMdkForCrypto: using compatibility wrapper mode")
-            }
             mdk
         } catch (e: Exception) {
             // KeyPermanentlyInvalidatedException: 生物识别已更改，密钥永久失效

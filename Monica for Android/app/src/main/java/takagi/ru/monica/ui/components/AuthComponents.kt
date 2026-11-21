@@ -114,12 +114,12 @@ fun PasswordVerificationContent(
     }
 
     DisposableEffect(passwordLifecycle, passwordSecurityManager) {
-        if (passwordSecurityManager == null) return@DisposableEffect onDispose { }
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_PAUSE || event == Lifecycle.Event.ON_STOP) {
                 passwordActive.set(false)
                 passwordForeground = false
                 revokePasswordRequest()
+                biometricHelper.cancelAuthentication()
             } else if (event == Lifecycle.Event.ON_RESUME) {
                 passwordActive.set(true)
                 passwordForeground = true
@@ -130,10 +130,11 @@ fun PasswordVerificationContent(
             passwordLifecycle.removeObserver(observer)
             passwordActive.set(false)
             revokePasswordRequest()
+            biometricHelper.cancelAuthentication()
         }
     }
     LaunchedEffect(passwordGeneration) {
-        if (passwordSecurityManager != null) revokePasswordRequest()
+        revokePasswordRequest()
     }
 
     fun completeAuthentication() {
@@ -226,47 +227,6 @@ fun PasswordVerificationContent(
         }
     }
 
-    fun canProceedAfterBiometricAuth(): PasswordVerificationBiometricAccessResult {
-        val manager = securityManager.value
-        if (!manager.isMasterPasswordSet()) return PasswordVerificationBiometricAccessResult.PROCEED
-        val directUnlock = runCatching {
-            manager.unlockVaultWithBiometric()
-        }.getOrDefault(false)
-        if (directUnlock) {
-            android.util.Log.d("PasswordVerification", "Biometric post-check: direct unlock succeeded")
-            return PasswordVerificationBiometricAccessResult.PROCEED
-        }
-        if (manager.canAccessVaultMaterialNow()) {
-            android.util.Log.d("PasswordVerification", "Biometric post-check: vault material accessible after retry")
-            return PasswordVerificationBiometricAccessResult.PROCEED
-        }
-        val vaultState = manager.getVaultAccessState(context.applicationContext, autoLockMinutes)
-        if (vaultState == SecurityManager.VaultAccessState.REQUIRES_PASSWORD_REENTRY) {
-            val rebuilt = manager.rebuildKeystoreWrapperFromRuntimeCacheIfNeeded()
-            if (rebuilt) {
-                android.util.Log.d("PasswordVerification", "Biometric post-check: wrapper rebuilt from runtime cache")
-                return PasswordVerificationBiometricAccessResult.PROCEED
-            }
-            if (manager.isVaultRuntimeUnlocked()) {
-                android.util.Log.w(
-                    "PasswordVerification",
-                    "Biometric post-check: wrapper rebuild failed but runtime MDK exists; allowing access to avoid lock loop"
-                )
-                return PasswordVerificationBiometricAccessResult.PROCEED
-            }
-        }
-        val result = when (vaultState) {
-            SecurityManager.VaultAccessState.ACCESSIBLE -> PasswordVerificationBiometricAccessResult.PROCEED
-            SecurityManager.VaultAccessState.REQUIRES_PASSWORD_REENTRY -> PasswordVerificationBiometricAccessResult.REQUIRE_PASSWORD_REENTRY
-            SecurityManager.VaultAccessState.LOCKED -> PasswordVerificationBiometricAccessResult.LOCKED
-        }
-        android.util.Log.w(
-            "PasswordVerification",
-            "Biometric post-check: direct unlock failed, result=$result, autoLockMinutes=$autoLockMinutes"
-        )
-        return result
-    }
-
     fun updateBiometricFailureMessage(result: PasswordVerificationBiometricAccessResult) {
         errorMessage = when (result) {
             PasswordVerificationBiometricAccessResult.REQUIRE_PASSWORD_REENTRY -> {
@@ -281,6 +241,40 @@ fun PasswordVerificationContent(
         }
     }
     
+    fun finishBiometricAuthentication() {
+        if (!passwordActive.get() || !passwordForeground || passwordBusy || authenticationCompleted) return
+        val request = passwordRequest.incrementAndGet()
+        val generation = SecurityManager.dataReadGeneration.value
+        val attempt = SecurityManager.PasswordVerificationAttempt()
+        verificationAttempt = attempt
+        passwordBusy = true
+        fun current() = passwordActive.get() && passwordRequest.get() == request &&
+            SecurityManager.dataReadGeneration.value == generation && attempt.isCurrent()
+        passwordJob = passwordScope.launch {
+            try {
+                val result = BoundedSecureDataRead.readChecked(isCurrent = ::current) {
+                    // Both cold construction and provider IO stay off the main looper.
+                    val manager = passwordSecurityManager ?: securityManager.value
+                    if (manager.unlockVaultWithBiometric(attempt) { ensureActive() }) {
+                        PasswordVerificationBiometricAccessResult.PROCEED
+                    } else when (manager.biometricBindingHealth()) {
+                        SecurityManager.BiometricBindingHealth.REPAIR_REQUIRED -> PasswordVerificationBiometricAccessResult.REQUIRE_PASSWORD_REENTRY
+                        else -> PasswordVerificationBiometricAccessResult.LOCKED
+                    }
+                }
+                if (!current() || !passwordForeground || !passwordLifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) ||
+                    context.getSystemService(android.os.PowerManager::class.java)?.isInteractive != true ||
+                    context.getSystemService(android.app.KeyguardManager::class.java)?.isKeyguardLocked != false) return@launch
+                if (result == PasswordVerificationBiometricAccessResult.PROCEED && attempt.commit()) completeAuthentication()
+                else updateBiometricFailureMessage(result ?: PasswordVerificationBiometricAccessResult.LOCKED)
+            } finally {
+                attempt.cancel()
+                if (verificationAttempt === attempt) verificationAttempt = null
+                if (passwordRequest.get() == request) passwordBusy = false
+            }
+        }
+    }
+
     // 自动触发生物识别
     LaunchedEffect(isFirstTime, isBiometricAvailable, biometricEnabled, activity) {
         if (!autoBiometricTried && canUseBiometric && activity != null) {
@@ -288,12 +282,7 @@ fun PasswordVerificationContent(
             biometricHelper.prepare(activity)
             biometricHelper.authenticate(
                 activity = activity,
-                onSuccess = {
-                    when (val result = canProceedAfterBiometricAuth()) {
-                        PasswordVerificationBiometricAccessResult.PROCEED -> completeAuthentication()
-                        else -> updateBiometricFailureMessage(result)
-                    }
-                },
+                onSuccess = { finishBiometricAuthentication() },
                 onError = { _, errorMsg ->
                     errorMessage = context.getString(R.string.biometric_error, errorMsg)
                 },
@@ -435,12 +424,7 @@ fun PasswordVerificationContent(
                 onClick = {
                     biometricHelper.authenticate(
                         activity = activity,
-                        onSuccess = {
-                            when (val result = canProceedAfterBiometricAuth()) {
-                                PasswordVerificationBiometricAccessResult.PROCEED -> completeAuthentication()
-                                else -> updateBiometricFailureMessage(result)
-                            }
-                        },
+                        onSuccess = { finishBiometricAuthentication() },
                         onError = { _, errorMsg ->
                             errorMessage = context.getString(R.string.biometric_error, errorMsg)
                         },

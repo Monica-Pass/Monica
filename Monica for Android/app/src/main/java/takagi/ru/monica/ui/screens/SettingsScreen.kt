@@ -160,7 +160,6 @@ fun SettingsScreen(
     var previewFeaturesExpanded by remember { mutableStateOf(false) }
     var developerPasswordInput by remember { mutableStateOf("") }
     var developerPasswordError by remember { mutableStateOf(false) }
-    var showWeakBiometricWarning by remember { mutableStateOf(false) }
     var settingsSearchQuery by rememberSaveable { mutableStateOf("") }
     var settingsSearchFocused by remember { mutableStateOf(false) }
 
@@ -247,12 +246,6 @@ fun SettingsScreen(
         developerRequest?.let { if (it.generation != developerLockGeneration) cancelDeveloperVerification() }
     }
 
-    // 使用本地状态跟踪生物识别开关,避免验证失败时状态不一致
-    var biometricSwitchState by remember(settings.biometricEnabled) { 
-        mutableStateOf(settings.biometricEnabled) 
-    }
-
-
     // 准备共享元素 Modifier
     val sharedTransitionScope = takagi.ru.monica.ui.LocalSharedTransitionScope.current
     val animatedVisibilityScope = takagi.ru.monica.ui.LocalAnimatedVisibilityScope.current
@@ -261,55 +254,6 @@ fun SettingsScreen(
     fun getSharedModifier(key: String): Modifier {
         // Disable card-to-page shared bounds for settings entries.
         return Modifier
-    }
-
-    val startBiometricEnable = {
-        if (activity != null) {
-            android.util.Log.d("SettingsScreen", "Starting biometric authentication...")
-            biometricHelper.authenticate(
-                activity = activity,
-                title = context.getString(R.string.biometric_login_title),
-                subtitle = context.getString(R.string.biometric_subtitle),
-                description = context.getString(R.string.biometric_login_description),
-                negativeButtonText = context.getString(R.string.cancel),
-                onSuccess = {
-                    android.util.Log.d("SettingsScreen", "Biometric authentication SUCCESS")
-                    biometricSwitchState = true
-                    viewModel.updateBiometricEnabled(true)
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.biometric_unlock_enabled),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                },
-                onError = { errorCode, errorMsg ->
-                    android.util.Log.e("SettingsScreen", "Biometric authentication ERROR: code=$errorCode, msg=$errorMsg")
-                    biometricSwitchState = false
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.biometric_auth_error, errorMsg),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                },
-                onCancel = {
-                    android.util.Log.d("SettingsScreen", "Biometric authentication CANCELLED")
-                    biometricSwitchState = false
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.cancel),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            )
-        } else {
-            android.util.Log.e("SettingsScreen", "Activity is NULL! Cannot authenticate")
-            biometricSwitchState = false
-            Toast.makeText(
-                context,
-                context.getString(R.string.biometric_cannot_enable),
-                Toast.LENGTH_SHORT
-            ).show()
-        }
     }
 
     val securityTitle = context.getString(R.string.security)
@@ -325,12 +269,6 @@ fun SettingsScreen(
             if (version.startsWith("v", ignoreCase = true)) version else "V$version"
         }
 
-    val biometricSubtitle = if (isBiometricAvailable) {
-        if (biometricSwitchState) context.getString(R.string.biometric_unlock_enabled)
-        else context.getString(R.string.biometric_unlock_disabled)
-    } else {
-        biometricHelper.getBiometricStatusMessage()
-    }
     val screenshotProtectionSubtitle = if (settings.screenshotProtectionEnabled) {
         context.getString(R.string.screenshot_protection_enabled)
     } else {
@@ -941,38 +879,6 @@ fun SettingsScreen(
                 onBiometricClick = if (canUseBiometricInDialog) ({ startDeveloperBiometric(currentDeveloperVerification) }) else null,
             )
         }
-    }
-
-    if (showWeakBiometricWarning) {
-        AlertDialog(
-            onDismissRequest = { showWeakBiometricWarning = false },
-            icon = {
-                Icon(
-                    Icons.Default.Fingerprint,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary
-                )
-            },
-            title = { Text(stringResource(R.string.biometric_weak_warning_title)) },
-            text = { Text(stringResource(R.string.biometric_weak_warning_message)) },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        showWeakBiometricWarning = false
-                        startBiometricEnable()
-                    }
-                ) {
-                    Text(stringResource(R.string.biometric_weak_warning_confirm))
-                }
-            },
-            dismissButton = {
-                TextButton(
-                    onClick = { showWeakBiometricWarning = false }
-                ) {
-                    Text(stringResource(R.string.biometric_weak_warning_cancel))
-                }
-            }
-        )
     }
 
     if (showVersionInfoDialog) {

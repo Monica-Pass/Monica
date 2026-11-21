@@ -121,7 +121,6 @@
     <string name="biometric_none_enrolled">등록된 생체 인식이 없습니다. 시스템 설정에서 지문 또는 얼굴을 설정하세요.</string>
     <string name="biometric_not_available">생체 인증을 사용할 수 없습니다.</string>
     <string name="biometric_error">생체 인증 오류: %s</string>
-    <string name="biometric_requires_password_reentry">생체 인식이 작동했습니다. 마스터 비밀번호로 한 번 잠금을 해제한 후 다시 시도해 보세요.</string>
     <string name="biometric_success">인증 성공</string>
     <string name="biometric_unlock">지문 잠금 해제</string>
     <string name="biometric_unlock_enabled">지문 잠금 해제 활성화</string>

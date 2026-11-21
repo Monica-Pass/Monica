@@ -121,7 +121,6 @@
     <string name="biometric_none_enrolled">No hay datos biométricos registrados. Configure la huella digital o el rostro en la configuración del sistema</string>
     <string name="biometric_not_available">Autenticación biométrica no disponible</string>
     <string name="biometric_error">Error de autenticación biométrica: %s</string>
-    <string name="biometric_requires_password_reentry">La biometría funcionó. Desbloquee con su contraseña maestra una vez y vuelva a intentarlo.</string>
     <string name="biometric_success">Autenticación exitosa</string>
     <string name="biometric_unlock">Desbloqueo por huella digital</string>
     <string name="biometric_unlock_enabled">Desbloqueo por huella digital habilitado</string>

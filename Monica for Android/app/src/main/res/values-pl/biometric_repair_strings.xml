@@ -1,0 +1,11 @@
+<resources>
+    <string name="biometric_repair_title">Napraw odblokowanie biometryczne</string>
+    <string name="biometric_repair_summary">Powiąż urządzenie ponownie, jeśli biometria nie działa po odblokowaniu hasłem</string>
+    <string name="biometric_repair_explanation">Wpisz oryginalne hasło główne, aby potwierdzić ponowne powiązanie urządzenia. Sejf, ochrona hasłem i wcześniejsze dane odzyskiwania zostaną zachowane. Biometria nie zostanie automatycznie włączona.</string>
+    <string name="biometric_repair_confirm">Potwierdź naprawę</string>
+    <string name="biometric_repair_working">Weryfikowanie i naprawianie…</string>
+    <string name="biometric_repair_success">Powiązanie odblokowania zostało naprawione. Sejf i wcześniejsze dane odzyskiwania zachowano. Możesz włączyć biometrię, jeśli jest dostępna.</string>
+    <string name="biometric_repair_failed">Nie udało się potwierdzić naprawy. Sejf i wcześniejsze dane odzyskiwania zachowano. Odblokuj hasłem głównym i spróbuj ponownie później.</string>
+    <string name="biometric_repair_device_auth">Odblokuj urządzenie za pomocą blokady ekranu i spróbuj ponownie. Dotychczasowy wymóg uwierzytelniania zostanie zachowany.</string>
+    <string name="biometric_requires_password_reentry">Odblokuj hasłem głównym. Jeśli biometria nadal nie działa, otwórz Ustawienia → Hasło główne i blokada → Napraw odblokowanie biometryczne.</string>
+</resources>

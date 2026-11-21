@@ -1,0 +1,11 @@
+<resources>
+    <string name="biometric_repair_title">修复生物识别解锁喵</string>
+    <string name="biometric_repair_summary">密码解锁后仍无法使用时，重新绑定当前设备喵</string>
+    <string name="biometric_repair_explanation">输入原主密码，确认重新绑定当前设备。密码库、密码保护与旧恢复材料都会保留。此操作不会自动开启生物识别解锁。喵</string>
+    <string name="biometric_repair_confirm">确认修复喵</string>
+    <string name="biometric_repair_working">正在验证并修复…喵</string>
+    <string name="biometric_repair_success">解锁绑定已修复，密码库与旧恢复材料已保留。设备支持时，可再开启生物识别解锁。喵</string>
+    <string name="biometric_repair_failed">未能确认修复完成。密码库与旧恢复材料已保留，请用主密码解锁，稍后重试。喵</string>
+    <string name="biometric_repair_device_auth">请先用系统锁屏凭据解锁设备，再重试。现有认证要求会保留。喵</string>
+    <string name="biometric_requires_password_reentry">请先用主密码解锁。如生物识别仍不可用，请进入“设置 → 主密码与锁定 → 修复生物识别解锁”。喵</string>
+</resources>

@@ -109,7 +109,6 @@
     <string name="biometric_none_enrolled">"Nessuna registrazione biometrica. Si prega di impostare l\'impronta digitale o il volto nelle impostazioni di sistema"</string>
     <string name="biometric_not_available">"Autenticazione biometrica non disponibile"</string>
     <string name="biometric_error">"Errore di autenticazione biometrica: %s"</string>
-    <string name="biometric_requires_password_reentry">"La biometria ha funzionato. Sblocca una volta con la tua password principale, quindi riprova."</string>
     <string name="biometric_success">"Autenticazione riuscita"</string>
     <string name="biometric_unlock">"Sblocca impronte digitali"</string>
     <string name="biometric_unlock_enabled">"Sblocco impronte digitali abilitato"</string>

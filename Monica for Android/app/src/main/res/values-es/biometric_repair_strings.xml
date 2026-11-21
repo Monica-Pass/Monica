@@ -1,0 +1,11 @@
+<resources>
+    <string name="biometric_repair_title">Reparar el desbloqueo biométrico</string>
+    <string name="biometric_repair_summary">Volver a vincular el dispositivo si la biometría sigue fallando tras desbloquear con contraseña</string>
+    <string name="biometric_repair_explanation">Introduce tu contraseña maestra original para confirmar la nueva vinculación. Se conservarán la bóveda, la protección con contraseña y los datos de recuperación anteriores. Esto no activa la biometría.</string>
+    <string name="biometric_repair_confirm">Confirmar reparación</string>
+    <string name="biometric_repair_working">Verificando y reparando…</string>
+    <string name="biometric_repair_success">Se reparó la vinculación de desbloqueo. Se conservaron la bóveda y los datos de recuperación anteriores. Puedes activar la biometría si está disponible.</string>
+    <string name="biometric_repair_failed">No se pudo confirmar la reparación. Se conservaron la bóveda y los datos de recuperación anteriores. Desbloquea con tu contraseña maestra y vuelve a intentarlo más tarde.</string>
+    <string name="biometric_repair_device_auth">Desbloquea el dispositivo con su bloqueo de pantalla y vuelve a intentarlo. Se mantendrá el requisito de autenticación existente.</string>
+    <string name="biometric_requires_password_reentry">Desbloquea con tu contraseña maestra. Si la biometría sigue fallando, abre Ajustes → Contraseña maestra y bloqueo → Reparar el desbloqueo biométrico.</string>
+</resources>

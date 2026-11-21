@@ -97,6 +97,34 @@ class LocalPasswordCrossProcessInstrumentedTest {
         } finally { fixture.cleanup() }
     }
 
+    @Test fun repairedBindingIsReadByRealImeProcessWithoutPasswordOrRuntimeCache() {
+        val fixture = LocalKdfProcessFixture(context, UUID.randomUUID().toString())
+        fixture.seedLegacy()
+        var bindingId: String? = null
+        try {
+            val main = fixture.freshManager()
+            assertTrue(main.unlockVaultWithPassword(fixture.password))
+            main.putProtectedString("mdk_keystore_blob", "CP|broken")
+            val before = fixture.recordFile.readBytes()
+            Remote(fixture.id).use { remote ->
+                val broken = remote.call(LocalKdfProcessTestService.OPEN_BIOMETRIC)
+                assertRemote(broken); assertFalse(broken.getBoolean("success"))
+                assertEquals(SecurityManager.BiometricRebindResult.SUCCESS,
+                    main.rebindBiometricWithPassword(fixture.password, SecurityManager.BiometricRebindAttempt()))
+                bindingId = main.getProtectedString(BiometricMdkBinding.ACTIVE)
+                assertNotNull(bindingId)
+                val repaired = remote.call(LocalKdfProcessTestService.OPEN_BIOMETRIC)
+                assertRemote(repaired); assertTrue(repaired.getBoolean("success"))
+                assertArrayEquals(before, fixture.recordFile.readBytes())
+                assertEquals("CP|broken", main.getProtectedString("mdk_keystore_blob"))
+                receipt("biometric-rebind-331", repaired, JSONObject().put("brokenRejected", true).put("repairedReadWithoutPassword", true))
+            }
+        } finally {
+            bindingId?.let(BiometricMdkBinding::discardUncommitted)
+            fixture.cleanup()
+        }
+    }
+
     private fun assertRemote(reply: Bundle) {
         assertNotEquals(Process.myPid(), reply.getInt("pid"))
         assertEquals(Process.myUid(), reply.getInt("uid"))

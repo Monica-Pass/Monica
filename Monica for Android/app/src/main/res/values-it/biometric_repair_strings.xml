@@ -1,0 +1,11 @@
+<resources>
+    <string name="biometric_repair_title">Ripara lo sblocco biometrico</string>
+    <string name="biometric_repair_summary">Associa di nuovo il dispositivo se la biometria non funziona dopo lo sblocco con password</string>
+    <string name="biometric_repair_explanation">Inserisci la password principale originale per confermare la nuova associazione. La cassaforte, la protezione con password e i precedenti dati di recupero saranno conservati. La biometria non verrà attivata automaticamente.</string>
+    <string name="biometric_repair_confirm">Conferma riparazione</string>
+    <string name="biometric_repair_working">Verifica e riparazione…</string>
+    <string name="biometric_repair_success">L’associazione per lo sblocco è stata riparata. La cassaforte e i precedenti dati di recupero sono conservati. Puoi attivare la biometria se disponibile.</string>
+    <string name="biometric_repair_failed">Non è stato possibile confermare la riparazione. La cassaforte e i precedenti dati di recupero sono conservati. Sblocca con la password principale e riprova più tardi.</string>
+    <string name="biometric_repair_device_auth">Sblocca il dispositivo tramite il blocco schermo e riprova. Il requisito di autenticazione esistente sarà mantenuto.</string>
+    <string name="biometric_requires_password_reentry">Sblocca con la password principale. Se la biometria continua a non funzionare, apri Impostazioni → Password principale e blocco → Ripara lo sblocco biometrico.</string>
+</resources>

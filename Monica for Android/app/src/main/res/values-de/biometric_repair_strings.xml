@@ -1,0 +1,11 @@
+<resources>
+    <string name="biometric_repair_title">Biometrische Entsperrung reparieren</string>
+    <string name="biometric_repair_summary">Gerät neu verknüpfen, wenn Biometrie nach der Passwortentsperrung weiter fehlschlägt</string>
+    <string name="biometric_repair_explanation">Gib dein ursprüngliches Master-Passwort ein, um dieses Gerät neu zu verknüpfen. Tresor, Passwortschutz und bisherige Wiederherstellungsdaten bleiben erhalten. Biometrie wird dadurch nicht aktiviert.</string>
+    <string name="biometric_repair_confirm">Reparatur bestätigen</string>
+    <string name="biometric_repair_working">Überprüfung und Reparatur…</string>
+    <string name="biometric_repair_success">Die Entsperrverknüpfung wurde repariert. Tresor und bisherige Wiederherstellungsdaten bleiben erhalten. Du kannst Biometrie aktivieren, sofern sie verfügbar ist.</string>
+    <string name="biometric_repair_failed">Die Reparatur konnte nicht bestätigt werden. Tresor und bisherige Wiederherstellungsdaten bleiben erhalten. Entsperre mit dem Master-Passwort und versuche es später erneut.</string>
+    <string name="biometric_repair_device_auth">Entsperre das Gerät mit seiner Bildschirmsperre und versuche es erneut. Die bisherige Authentifizierungsanforderung bleibt erhalten.</string>
+    <string name="biometric_requires_password_reentry">Entsperre mit deinem Master-Passwort. Falls Biometrie weiter fehlschlägt, öffne Einstellungen → Master-Passwort und Sperre → Biometrische Entsperrung reparieren.</string>
+</resources>

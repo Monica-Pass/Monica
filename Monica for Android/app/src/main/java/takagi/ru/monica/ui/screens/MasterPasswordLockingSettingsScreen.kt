@@ -1,6 +1,20 @@
 package takagi.ru.monica.ui.screens
 
 import android.widget.Toast
+import android.app.KeyguardManager
+import android.os.PowerManager
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import java.util.concurrent.atomic.AtomicBoolean
+import kotlinx.coroutines.launch
+import takagi.ru.monica.security.BoundedSecureDataRead
+import takagi.ru.monica.security.SecurityManager
+import takagi.ru.monica.ui.rememberUiSecurityManager
+import takagi.ru.monica.ui.components.BiometricRebindDialog
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -66,8 +80,35 @@ fun MasterPasswordLockingSettingsScreen(
     var showWeakBiometricWarning by remember { mutableStateOf(false) }
     var showAutoLockDialog by remember { mutableStateOf(false) }
 
-    val startBiometricEnable = {
-        if (activity != null) {
+    val manager = rememberUiSecurityManager()
+    val scope = rememberCoroutineScope()
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    val active = remember { AtomicBoolean(true) }
+    val generation by SecurityManager.dataReadGeneration.collectAsState()
+    var busy by remember { mutableStateOf(false) }
+    var showRepair by remember { mutableStateOf(false) }
+    var repairComplete by remember { mutableStateOf(false) }
+    var request by remember { mutableStateOf(0L) }
+    fun foreground() = active.get() && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) &&
+        context.getSystemService(PowerManager::class.java)?.isInteractive == true &&
+        context.getSystemService(KeyguardManager::class.java)?.isKeyguardLocked == false
+    fun revoke() {
+        request++; busy = false; showRepair = false; repairComplete = false
+        biometricHelper.cancelAuthentication()
+    }
+    DisposableEffect(lifecycle) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_PAUSE || event == Lifecycle.Event.ON_STOP) revoke()
+        }
+        lifecycle.addObserver(observer)
+        onDispose { active.set(false); revoke(); lifecycle.removeObserver(observer) }
+    }
+    LaunchedEffect(generation) { revoke() }
+    val startBiometricEnable: () -> Unit = {
+        if (activity != null && foreground() && !busy) {
+            val id = ++request
+            val startedGeneration = generation
+            busy = true
             biometricHelper.authenticate(
                 activity = activity,
                 title = context.getString(R.string.biometric_login_title),
@@ -75,38 +116,33 @@ fun MasterPasswordLockingSettingsScreen(
                 description = context.getString(R.string.biometric_login_description),
                 negativeButtonText = context.getString(R.string.cancel),
                 onSuccess = {
-                    biometricSwitchState = true
-                    viewModel.updateBiometricEnabled(true)
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.biometric_unlock_enabled),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    if (request == id && foreground()) scope.launch {
+                        val health = BoundedSecureDataRead.read(manager, startedGeneration) {
+                            manager.biometricBindingHealth()
+                        }
+                        if (request == id && foreground() && manager.isDataReadCurrent(startedGeneration)) {
+                            busy = false
+                            if (health == SecurityManager.BiometricBindingHealth.AVAILABLE) {
+                                biometricSwitchState = true
+                                viewModel.updateBiometricEnabled(true)
+                            } else {
+                                biometricSwitchState = false
+                                if (health == SecurityManager.BiometricBindingHealth.REPAIR_REQUIRED) showRepair = true
+                                else Toast.makeText(context, context.getString(
+                                    if (health == SecurityManager.BiometricBindingHealth.DEVICE_AUTH_REQUIRED)
+                                        R.string.biometric_repair_device_auth else R.string.biometric_repair_failed), Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    }
                 },
                 onError = { _, errorMsg ->
-                    biometricSwitchState = false
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.biometric_auth_error, errorMsg),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    if (request == id && foreground()) {
+                        busy = false; biometricSwitchState = false
+                        Toast.makeText(context, context.getString(R.string.biometric_auth_error, errorMsg), Toast.LENGTH_SHORT).show()
+                    }
                 },
-                onCancel = {
-                    biometricSwitchState = false
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.cancel),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                onCancel = { if (request == id) { busy = false; biometricSwitchState = false } }
             )
-        } else {
-            biometricSwitchState = false
-            Toast.makeText(
-                context,
-                context.getString(R.string.biometric_cannot_enable),
-                Toast.LENGTH_SHORT
-            ).show()
         }
     }
 
@@ -149,7 +185,7 @@ fun MasterPasswordLockingSettingsScreen(
                 setting = Setting.BIOMETRIC_UNLOCK,
                 subtitle = biometricSubtitle,
                 checked = biometricSwitchState,
-                enabled = isBiometricAvailable,
+                enabled = isBiometricAvailable && !busy,
                 onCheckedChange = { newState ->
                     if (newState) {
                         if (biometricHelper.isWeakBiometricOnly()) {
@@ -167,6 +203,12 @@ fun MasterPasswordLockingSettingsScreen(
                         ).show()
                     }
                 }
+            )
+
+            SettingsItem(
+                icon = Icons.Default.Fingerprint,
+                setting = Setting.BIOMETRIC_REPAIR,
+                onClick = { if (!busy && foreground()) showRepair = true }
             )
 
             SettingsItem(
@@ -190,6 +232,20 @@ fun MasterPasswordLockingSettingsScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
         }
+    }
+
+    if (showRepair) {
+        BiometricRebindDialog(manager,
+            onDismiss = { showRepair = false },
+            onSuccess = { showRepair = false; repairComplete = true })
+    }
+    if (repairComplete) {
+        AlertDialog(
+            onDismissRequest = { repairComplete = false },
+            title = { Text(stringResource(R.string.biometric_repair_title)) },
+            text = { Text(stringResource(R.string.biometric_repair_success)) },
+            confirmButton = { TextButton(onClick = { repairComplete = false }) { Text(stringResource(R.string.confirm)) } }
+        )
     }
 
     if (showAutoLockDialog) {

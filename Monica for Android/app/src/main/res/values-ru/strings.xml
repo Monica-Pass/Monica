@@ -108,7 +108,6 @@
     <string name="biometric_none_enrolled">Биометрия не настроена. Настройте отпечаток или распознавание лица в системных настройках</string>
     <string name="biometric_not_available">Биометрическая аутентификация недоступна</string>
     <string name="biometric_error">Ошибка биометрии: %s</string>
-    <string name="biometric_requires_password_reentry">Биометрия сработала. Разблокируйте один раз мастер-паролем, затем попробуйте снова.</string>
     <string name="biometric_success">Аутентификация прошла успешно</string>
     <string name="biometric_unlock">Разблокировка по отпечатку</string>
     <string name="biometric_unlock_enabled">Разблокировка по отпечатку включена</string>

@@ -38,6 +38,11 @@ class LocalKdfProcessTestService : Service() {
                         current.unlockVaultWithPassword(f.password) && f.verifyContents(current)
                     }
                     READ_EXISTING -> f.verifyContents(checkNotNull(manager))
+                    OPEN_BIOMETRIC -> {
+                        manager = f.freshManager()
+                        val current = checkNotNull(manager)
+                        current.unlockVaultWithBiometric() && f.verifyContents(current)
+                    }
                     RACE -> {
                         val current = checkNotNull(manager)
                         var callbacks = 0
@@ -67,5 +72,6 @@ class LocalKdfProcessTestService : Service() {
         const val READ_EXISTING = 2
         const val RACE = 3
         const val CLOSE = 4
+        const val OPEN_BIOMETRIC = 5
     }
 }

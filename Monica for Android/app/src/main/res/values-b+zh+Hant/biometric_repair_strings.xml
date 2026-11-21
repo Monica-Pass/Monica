@@ -1,0 +1,11 @@
+<resources>
+    <string name="biometric_repair_title">修復生物辨識解鎖</string>
+    <string name="biometric_repair_summary">密碼解鎖後仍無法使用時，重新綁定目前裝置</string>
+    <string name="biometric_repair_explanation">輸入原主密碼，確認重新綁定目前裝置。密碼庫、密碼保護與舊復原資料都會保留。此操作不會自動開啟生物辨識解鎖。</string>
+    <string name="biometric_repair_confirm">確認修復</string>
+    <string name="biometric_repair_working">正在驗證並修復…</string>
+    <string name="biometric_repair_success">解鎖綁定已修復，密碼庫與舊復原資料已保留。裝置支援時，可再開啟生物辨識解鎖。</string>
+    <string name="biometric_repair_failed">未能確認修復完成。密碼庫與舊復原資料已保留，請用主密碼解鎖，稍後重試。</string>
+    <string name="biometric_repair_device_auth">請先用系統螢幕鎖定憑證解鎖裝置，再重試。現有驗證要求會保留。</string>
+    <string name="biometric_requires_password_reentry">請先用主密碼解鎖。如生物辨識仍無法使用，請前往「設定 → 主密碼與鎖定 → 修復生物辨識解鎖」。</string>
+</resources>

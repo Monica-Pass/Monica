@@ -1,0 +1,11 @@
+<resources>
+    <string name="biometric_repair_title">生体認証によるロック解除を修復</string>
+    <string name="biometric_repair_summary">パスワードで解除しても生体認証が使えない場合に再登録</string>
+    <string name="biometric_repair_explanation">元のマスターパスワードを入力して、この端末への再登録を確認してください。保管庫、パスワードによる保護、以前の復旧情報は保持されます。生体認証は自動で有効になりません。</string>
+    <string name="biometric_repair_confirm">修復を確認</string>
+    <string name="biometric_repair_working">検証・修復中…</string>
+    <string name="biometric_repair_success">ロック解除の登録を修復しました。保管庫と以前の復旧情報は保持されています。対応端末では生体認証を有効にできます。</string>
+    <string name="biometric_repair_failed">修復の完了を確認できませんでした。保管庫と以前の復旧情報は保持されています。マスターパスワードで解除し、後でもう一度お試しください。</string>
+    <string name="biometric_repair_device_auth">端末の画面ロック認証で解除してから、もう一度お試しください。既存の認証要件は保持されます。</string>
+    <string name="biometric_requires_password_reentry">マスターパスワードで解除してください。生体認証が引き続き使えない場合は、設定 → マスターパスワードとロック → 生体認証によるロック解除を修復を開いてください。</string>
+</resources>

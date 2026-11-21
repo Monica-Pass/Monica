@@ -109,7 +109,6 @@
     <string name="biometric_none_enrolled">Brak zapisanych danych biometrycznych. Dodaj odcisk palca lub twarz w ustawieniach systemu</string>
     <string name="biometric_not_available">Biometria jest niedostępna</string>
     <string name="biometric_error">Błąd biometrii: %s</string>
-    <string name="biometric_requires_password_reentry">Biometria zadziałała. Odblokuj raz hasłem głównym, a potem spróbuj ponownie.</string>
     <string name="biometric_success">Tożsamość potwierdzona</string>
     <string name="biometric_unlock">Odcisk palca</string>
     <string name="biometric_unlock_enabled">Odblokowanie odciskiem włączone</string>

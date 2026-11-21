@@ -61,12 +61,13 @@ fun M3IdentityVerifyDialog(
         icon = {
             Surface(
                 shape = CircleShape,
-                color = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.35f)
+                color = (if (destructiveConfirm) MaterialTheme.colorScheme.errorContainer
+                    else MaterialTheme.colorScheme.primaryContainer).copy(alpha = 0.35f)
             ) {
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.error,
+                    tint = if (destructiveConfirm) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(10.dp)
                 )
             }

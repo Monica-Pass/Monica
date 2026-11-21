@@ -109,7 +109,6 @@
     <string name="biometric_none_enrolled">"Nenhuma biometria registada. Configure a impressão digital ou o rosto nas definições do sistema"</string>
     <string name="biometric_not_available">"Autenticação biométrica indisponível"</string>
     <string name="biometric_error">"Erro de autenticação biométrica: %s"</string>
-    <string name="biometric_requires_password_reentry">"A biometria funcionou. Desbloqueie uma vez com a sua palavra-passe mestra e tente novamente."</string>
     <string name="biometric_success">"Autenticação concluída"</string>
     <string name="biometric_unlock">"Desbloqueio por impressão digital"</string>
     <string name="biometric_unlock_enabled">"Desbloqueio por impressão digital ativado"</string>

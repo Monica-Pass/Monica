@@ -121,7 +121,6 @@
     <string name="biometric_none_enrolled">No biometric enrolled. Please set up fingerprint or face in system settings</string>
     <string name="biometric_not_available">Biometric authentication not available</string>
     <string name="biometric_error">Biometric authentication error: %s</string>
-    <string name="biometric_requires_password_reentry">Biometrics worked. Unlock with your master password once, then try again.</string>
     <string name="biometric_success">Authentication successful</string>
     <string name="biometric_unlock">Fingerprint Unlock</string>
     <string name="biometric_unlock_enabled">Fingerprint unlock enabled</string>

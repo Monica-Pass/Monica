@@ -109,7 +109,6 @@
     <string name="biometric_none_enrolled">Aucune biométrie enregistrée. Veuillez configurer l\'empreinte ou le visage dans les paramètres système</string>
     <string name="biometric_not_available">Biométrie indisponible</string>
     <string name="biometric_error">Erreur biométrique : %s</string>
-    <string name="biometric_requires_password_reentry">La biométrie a fonctionné. Déverrouillez une fois avec votre mot de passe principal, puis réessayez.</string>
     <string name="biometric_success">Authentification réussie</string>
     <string name="biometric_unlock">Déverrouillage par empreinte</string>
     <string name="biometric_unlock_enabled">Déverrouillage par empreinte activé</string>

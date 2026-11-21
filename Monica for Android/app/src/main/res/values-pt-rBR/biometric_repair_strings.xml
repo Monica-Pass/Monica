@@ -1,0 +1,11 @@
+<resources>
+    <string name="biometric_repair_title">Reparar o desbloqueio biométrico</string>
+    <string name="biometric_repair_summary">Vincular o dispositivo novamente se a biometria falhar após desbloquear com senha</string>
+    <string name="biometric_repair_explanation">Digite a senha mestra original para confirmar o novo vínculo. O cofre, a proteção por senha e os dados de recuperação anteriores serão mantidos. Isso não ativa a biometria.</string>
+    <string name="biometric_repair_confirm">Confirmar reparo</string>
+    <string name="biometric_repair_working">Verificando e reparando…</string>
+    <string name="biometric_repair_success">O vínculo de desbloqueio foi reparado. O cofre e os dados de recuperação anteriores foram mantidos. Você pode ativar a biometria se estiver disponível.</string>
+    <string name="biometric_repair_failed">Não foi possível confirmar o reparo. O cofre e os dados de recuperação anteriores foram mantidos. Desbloqueie com a senha mestra e tente novamente mais tarde.</string>
+    <string name="biometric_repair_device_auth">Desbloqueie o dispositivo com o bloqueio de tela e tente novamente. O requisito de autenticação existente será mantido.</string>
+    <string name="biometric_requires_password_reentry">Desbloqueie com a senha mestra. Se a biometria continuar falhando, abra Configurações → Senha mestra e bloqueio → Reparar o desbloqueio biométrico.</string>
+</resources>

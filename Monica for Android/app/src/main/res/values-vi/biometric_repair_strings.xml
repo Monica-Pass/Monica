@@ -1,0 +1,11 @@
+<resources>
+    <string name="biometric_repair_title">Sửa mở khóa sinh trắc học</string>
+    <string name="biometric_repair_summary">Liên kết lại thiết bị nếu sinh trắc học vẫn lỗi sau khi mở khóa bằng mật khẩu</string>
+    <string name="biometric_repair_explanation">Nhập mật khẩu chính ban đầu để xác nhận liên kết lại thiết bị. Kho dữ liệu, bảo vệ bằng mật khẩu và dữ liệu khôi phục cũ sẽ được giữ lại. Thao tác này không tự bật sinh trắc học.</string>
+    <string name="biometric_repair_confirm">Xác nhận sửa</string>
+    <string name="biometric_repair_working">Đang xác minh và sửa…</string>
+    <string name="biometric_repair_success">Đã sửa liên kết mở khóa. Kho dữ liệu và dữ liệu khôi phục cũ được giữ lại. Bạn có thể bật sinh trắc học nếu thiết bị hỗ trợ.</string>
+    <string name="biometric_repair_failed">Không thể xác nhận việc sửa đã hoàn tất. Kho dữ liệu và dữ liệu khôi phục cũ được giữ lại. Hãy mở khóa bằng mật khẩu chính và thử lại sau.</string>
+    <string name="biometric_repair_device_auth">Hãy mở khóa thiết bị bằng khóa màn hình rồi thử lại. Yêu cầu xác thực hiện có sẽ được giữ nguyên.</string>
+    <string name="biometric_requires_password_reentry">Hãy mở khóa bằng mật khẩu chính. Nếu sinh trắc học vẫn lỗi, mở Cài đặt → Mật khẩu chính và khóa → Sửa mở khóa sinh trắc học.</string>
+</resources>

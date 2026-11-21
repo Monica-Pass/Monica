@@ -110,7 +110,6 @@
     <string name="biometric_none_enrolled">尚未录指印或面容，请往系统之设补录。</string>
     <string name="biometric_not_available">生体之辨不可用</string>
     <string name="biometric_error">生体之辨有误：%s</string>
-    <string name="biometric_requires_password_reentry">生体已验。请先以总钥启封一次，而后再试。</string>
     <string name="biometric_success">验明矣</string>
     <string name="biometric_unlock">指印启封</string>
     <string name="biometric_unlock_enabled">指印启封已用</string>

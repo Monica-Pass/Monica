@@ -142,7 +142,6 @@
     <string name="biometric_none_enrolled">未錄入生物資料。請在系統設定中設定指紋或面部識別</string>
     <string name="biometric_not_available">生物辨識認證不可用</string>
     <string name="biometric_error">生物辨識認證錯誤: %s</string>
-    <string name="biometric_requires_password_reentry">生物辨識已通過，但安全密鑰尚未完成初始化。請先使用主密碼解鎖一次，隨後即可繼續使用生物辨識。</string>
     <string name="biometric_success">認證成功</string>
     <string name="biometric_unlock">指紋解鎖</string>
     <string name="biometric_unlock_enabled">指紋解鎖已啟用</string>

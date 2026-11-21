@@ -1,0 +1,11 @@
+<resources>
+    <string name="biometric_repair_title">Repair biometric unlock</string>
+    <string name="biometric_repair_summary">Rebind this device if biometric unlock still fails after password unlock</string>
+    <string name="biometric_repair_explanation">Enter your original master password to rebind this device. Your vault, password protection and previous recovery material will be kept. This does not enable biometric unlock.</string>
+    <string name="biometric_repair_confirm">Confirm repair</string>
+    <string name="biometric_repair_working">Verifying and repairing…</string>
+    <string name="biometric_repair_success">The unlock binding was repaired. Your vault and previous recovery material were kept. You can now enable biometric unlock if it is available.</string>
+    <string name="biometric_repair_failed">Repair could not be confirmed. Your vault and previous recovery material were kept. Unlock with your master password and retry later.</string>
+    <string name="biometric_repair_device_auth">Unlock the device with its screen lock, then retry. The existing authentication requirement will be preserved.</string>
+    <string name="biometric_requires_password_reentry">Unlock with your master password. If biometric unlock still fails, open Settings → Master password and locking → Repair biometric unlock.</string>
+</resources>

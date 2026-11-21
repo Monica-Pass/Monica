@@ -35,7 +35,7 @@ class BiometricUnlockRegressionGuardTest {
         val ensureBody = source.substringAfter("private fun ensureMdkInitializedWithPassword(")
             .substringBefore("private fun publishPasswordMdk(")
         val publishBody = source.substringAfter("private fun publishPasswordMdk(")
-            .substringBefore("private fun ensureMdkKeystoreWrapper()")
+            .substringBefore("private fun getOrCreateMdkBytes()")
         val compatBody = source.substringAfter("private fun persistCompatKeystoreWrappedMdk(")
             .substringBefore("private fun generateRandom(")
         val commitBody = source.substringAfter("private fun commitLocalPassword(")
@@ -45,7 +45,7 @@ class BiometricUnlockRegressionGuardTest {
         assertFalse("A failed key read is not authority to delete the original alias", persistBody.contains("deleteSecureKeyAlias("))
         assertFalse("An existing unreadable wrapper must remain available for recovery", ensureBody.contains("hasKeystoreBlob = false"))
         assertTrue("Normal password auth may only add a missing compatibility wrapper using an existing device key",
-            ensureBody.contains("if (!sharedPreferences.contains(MDK_KEYSTORE_BLOB_KEY)) persistCompatKeystoreWrappedMdk(mdk)") &&
+            ensureBody.contains("if (!sharedPreferences.contains(BiometricMdkBinding.ACTIVE) && !sharedPreferences.contains(MDK_KEYSTORE_BLOB_KEY)) persistCompatKeystoreWrappedMdk(mdk)") &&
                 compatBody.contains("allowInitialKeyCreation: Boolean = false") &&
                 compatBody.contains("else getExistingDataKey(compat = true)"))
         assertTrue("New device keys remain limited to initial enrollment without a password or ready MDK",
@@ -62,7 +62,7 @@ class BiometricUnlockRegressionGuardTest {
         val source = projectFile(
             "app/src/main/java/takagi/ru/monica/security/SecurityManager.kt"
         ).readSourceText()
-        val biometricBody = source.substringAfter("fun unlockVaultWithBiometric(): Boolean {")
+        val biometricBody = source.substringAfter("internal fun unlockVaultWithBiometric(attempt:")
             .substringBefore("fun isVaultRuntimeUnlocked()")
 
         assertTrue(

@@ -2065,7 +2065,6 @@
     <string name="ime_key_enter">入力</string>
     <string name="ime_show">見せる</string>
     <string name="ime_hide">隠れる</string>
-    <string name="biometric_requires_password_reentry">生体認証は機能しました。マスターパスワードで一度ロックを解除してから、もう一度お試しください。</string>
     <string name="password_list_quick_folder_root_empty">このフォルダには何もありません</string>
     <string name="password_list_quick_folder_root_empty_hint">上のフォルダー カードを開いて参照します。</string>
     <string name="tile_autofill_label">Monica 塗りつぶし</string>

@@ -1,0 +1,85 @@
+Group 0
+INSTRUMENTATION_RESULT: stream=
+
+
+
+Time: 21.631
+
+
+
+OK (23 tests)
+
+
+
+
+
+INSTRUMENTATION_CODE: -1
+
+Group 1
+INSTRUMENTATION_RESULT: stream=
+
+
+
+Time: 159.294
+
+
+
+OK (56 tests)
+
+
+
+
+
+INSTRUMENTATION_CODE: -1
+
+Group 2
+INSTRUMENTATION_RESULT: stream=
+
+
+
+Time: 73.298
+
+There was 1 failure:
+
+1) hyperOsSearchReachesRealPageAfterPasswordVerificationInLargeText(takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest)
+
+java.lang.IllegalStateException: Isolated search fixture required
+
+	at takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest.hyperOsSearchReachesRealPageAfterPasswordVerificationInLargeText$lambda$0(SettingsSearchInstrumentedTest.kt:270)
+
+	at takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest$$ExternalSyntheticLambda54.invoke(D8$$SyntheticClass:0)
+
+	at takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest.recordSearchFailure(SettingsSearchInstrumentedTest.kt:153)
+
+	at takagi.ru.monica.ui.screens.SettingsSearchInstrumentedTest.hyperOsSearchReachesRealPageAfterPasswordVerificationInLargeText(SettingsSearchInstrumentedTest.kt:267)
+
+
+
+FAILURES!!!
+
+Tests run: 17,  Failures: 1
+
+
+
+
+
+INSTRUMENTATION_CODE: -1
+
+Release: {
+  "sourceVersion": "1.0.329",
+  "targetVersion": "1.0.331",
+  "samePackageAndSignature": true,
+  "minified": true,
+  "originalPassword": true,
+  "oldNewRecords": true,
+  "encryptedOldBackupRestore": true,
+  "realRepairUI": true,
+  "coldPersistentRead": true,
+  "postRepairData": {
+    "pid": "29648",
+    "oldRecord": true,
+    "newRecord": true,
+    "password": true,
+    "edition": "main"
+  }
+}

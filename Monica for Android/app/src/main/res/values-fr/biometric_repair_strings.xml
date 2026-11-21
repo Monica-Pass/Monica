@@ -1,0 +1,11 @@
+<resources>
+    <string name="biometric_repair_title">Réparer le déverrouillage biométrique</string>
+    <string name="biometric_repair_summary">Réassocier cet appareil si la biométrie échoue encore après le déverrouillage par mot de passe</string>
+    <string name="biometric_repair_explanation">Saisissez votre mot de passe maître initial pour confirmer la réassociation de cet appareil. Le coffre, sa protection par mot de passe et les anciennes données de récupération seront conservés. La biométrie ne sera pas activée automatiquement.</string>
+    <string name="biometric_repair_confirm">Confirmer la réparation</string>
+    <string name="biometric_repair_working">Vérification et réparation…</string>
+    <string name="biometric_repair_success">L’association de déverrouillage a été réparée. Le coffre et les anciennes données de récupération sont conservés. Vous pouvez activer la biométrie si elle est disponible.</string>
+    <string name="biometric_repair_failed">La réparation n’a pas pu être confirmée. Le coffre et les anciennes données de récupération sont conservés. Déverrouillez avec le mot de passe maître et réessayez plus tard.</string>
+    <string name="biometric_repair_device_auth">Déverrouillez l’appareil avec son verrouillage d’écran, puis réessayez. L’exigence d’authentification existante sera conservée.</string>
+    <string name="biometric_requires_password_reentry">Déverrouillez avec votre mot de passe maître. Si la biométrie échoue encore, ouvrez Paramètres → Mot de passe maître et verrouillage → Réparer le déverrouillage biométrique.</string>
+</resources>

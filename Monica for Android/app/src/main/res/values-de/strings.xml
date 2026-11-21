@@ -121,7 +121,6 @@
     <string name="biometric_none_enrolled">Keine biometrischen Daten registriert. Bitte richten Sie Fingerabdruck oder Gesicht in den Systemeinstellungen ein</string>
     <string name="biometric_not_available">Biometrische Authentifizierung nicht verfügbar</string>
     <string name="biometric_error">Biometrische Authentifizierungsfehler: %s</string>
-    <string name="biometric_requires_password_reentry">Biometrische Authentifizierung hat funktioniert. Entsperren Sie es einmal mit Ihrem Master-Passwort und versuchen Sie es dann erneut.</string>
     <string name="biometric_success">Authentifizierung erfolgreich</string>
     <string name="biometric_unlock">Fingerabdruck-Entsperrung</string>
     <string name="biometric_unlock_enabled">Fingerabdruck-Entsperrung aktiviert</string>

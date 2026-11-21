@@ -1,0 +1,11 @@
+<resources>
+    <string name="biometric_repair_title">修復生物辨識解鎖</string>
+    <string name="biometric_repair_summary">密碼解鎖後仍不可用，可重繫此機</string>
+    <string name="biometric_repair_explanation">請輸原主密碼，確認重繫此機。密碼庫、密碼之護與舊復原資料皆留。此舉不自啟生物辨識解鎖。</string>
+    <string name="biometric_repair_confirm">確認修復</string>
+    <string name="biometric_repair_working">正驗證修復…</string>
+    <string name="biometric_repair_success">解鎖之繫已修。密碼庫與舊復原資料皆留。此機若支援，可再啟生物辨識解鎖。</string>
+    <string name="biometric_repair_failed">未能確認修復已成。密碼庫與舊復原資料皆留。請以主密碼解鎖，稍後再試。</string>
+    <string name="biometric_repair_device_auth">請先以系統鎖屏憑據解鎖此機，再試。原有認證之需不變。</string>
+    <string name="biometric_requires_password_reentry">請先以主密碼解鎖。生物辨識若仍不可用，請至「設定 → 主密碼與鎖定 → 修復生物辨識解鎖」。</string>
+</resources>

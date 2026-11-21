@@ -2084,7 +2084,6 @@
     <string name="ime_key_enter">Đi vào</string>
     <string name="ime_show">Trình diễn</string>
     <string name="ime_hide">Trốn</string>
-    <string name="biometric_requires_password_reentry">Sinh trắc học đã hoạt động. Mở khóa bằng mật khẩu chính của bạn một lần, sau đó thử lại.</string>
     <string name="password_list_quick_folder_root_empty">Không có gì trong thư mục này</string>
     <string name="password_list_quick_folder_root_empty_hint">Mở một thẻ thư mục ở trên để duyệt.</string>
     <string name="tile_autofill_label">Điền vào Monica</string>
